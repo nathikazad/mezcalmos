@@ -68,6 +68,7 @@ const String defaultUserImgUrl =
 
 // ----------------- Assets Strings ----------------- //
 const String aDefaultNotificationsSound = 'assets/sounds/notif-alert.mp3';
+const String aDefaultCallingSound = 'assets/sounds/calling.mp3';
 const String aLogoPath = "assets/images/shared/logo.png";
 const String aNoImage = "assets/images/shared/noImage.png";
 const String a404 = "assets/images/shared/404.png";

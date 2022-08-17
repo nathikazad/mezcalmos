@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
+import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -16,6 +17,7 @@ class AgoraCall extends StatefulWidget {
 
 class _AgoraCallState extends State<AgoraCall> {
   final MessageController _msgController = MessageController();
+  final SettingsController _settingsController = Get.find<SettingsController>();
   final Sagora _sagora = Get.find<Sagora>();
   final Participant? talkingTo = Get.arguments?['talkingTo'] as Participant?;
   final String chatId = Get.arguments?['chatId'];
@@ -25,6 +27,7 @@ class _AgoraCallState extends State<AgoraCall> {
   // used for call timing
   Timer? callTimer;
   RxInt callSeconds = 0.obs;
+  int? callingRingtoneId;
 
   @override
   void initState() {
@@ -32,7 +35,26 @@ class _AgoraCallState extends State<AgoraCall> {
       callStatus = _sagora.callStatus.value;
     });
     initCallTimer();
+    // start the calling ringtone if callStatus == calling
+    if (callStatus == CallStatus.calling) {
+      mezDbgPrint("Status ::: Calling");
+      _settingsController
+          .playCallingRingtone(autoRepeat: true)
+          .then((int? streamId) {
+        mezDbgPrint("callingRingtoneId ::: $streamId");
+        callingRingtoneId = streamId;
+      });
+    }
+
     callStatusStream = _sagora.callStatus.stream.listen((CallStatus event) {
+      mezDbgPrint("Stream::Status ::: $event");
+
+      // in case callStatus changed to something else than [calling] for the first time , we stop playing the ringtone.
+      if (event != CallStatus.calling && event != callStatus) {
+        mezDbgPrint(
+            "callStatusStream ::: [event != CallStatus.calling && event != callStatus]");
+        _settingsController.stopCallingRingtone(streamId: callingRingtoneId);
+      }
       if ((event == CallStatus.inCall) && event != callStatus) {
         resetTimer();
         initCallTimer();
@@ -71,7 +93,7 @@ class _AgoraCallState extends State<AgoraCall> {
   Future<void> initCallTimer() async {
     callTimer = Timer.periodic(Duration(seconds: 1), (Timer _subTimer) {
       callSeconds.value += 1;
-      mezDbgPrint('yyyyyyYYYYYYYYYYYYYYYYYYYYY:${callSeconds.value}');
+      mezDbgPrint('$callStatus - duration --> ${callSeconds.value}');
       if (callSeconds.value == 60 && callStatus == CallStatus.calling) {
         _sagora.callStatus.value = CallStatus.timedOut;
         _subTimer.cancel();
