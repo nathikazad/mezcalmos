@@ -3,7 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OptionView/controllers/ROpOptionViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpOptionView"]["ROpOptionChoice"];
+//
 
 class ROpOptionChoice extends StatelessWidget {
   const ROpOptionChoice({
@@ -24,7 +30,8 @@ class ROpOptionChoice extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (isSecondary)
-            Text(" Choice name: ${viewController.prChoicesNames[index].text}"),
+            Text(
+                " ${_i18n()["chName"]}: ${viewController.prChoicesNames[index].text}"),
           SizedBox(
             height: 5,
           ),
@@ -39,7 +46,7 @@ class ROpOptionChoice extends StatelessWidget {
                         : viewController.prChoicesNames[index],
                     validator: (String? v) {
                       if (v == null || v.isEmpty) {
-                        return "Required";
+                        return "${_i18n()["required"]}";
                       } else {
                         return null;
                       }
@@ -64,7 +71,7 @@ class ROpOptionChoice extends StatelessWidget {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (String? v) {
                         if (num.tryParse(v!) == null) {
-                          return "Required";
+                          return "${_i18n()["required"]}";
                         } else {
                           return null;
                         }
@@ -107,9 +114,9 @@ class ROpOptionChoice extends StatelessWidget {
 
   String _getLabel() {
     if (isSecondary) {
-      return "Choice name in ${viewController.restaurant.value!.secondaryLanguage!.toLanguageName()}";
+      return "${_i18n()["chNameIn"]} ${viewController.restaurant.value!.secondaryLanguage!.toLanguageName()}";
     } else {
-      return "Choice name in ${viewController.restaurant.value!.primaryLanguage.toLanguageName()}";
+      return "${_i18n()["chNameIn"]} ${viewController.restaurant.value!.primaryLanguage.toLanguageName()}";
     }
   }
 }

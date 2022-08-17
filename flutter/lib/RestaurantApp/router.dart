@@ -29,7 +29,7 @@ String getROpEditInfoRoute({required String restaurantId}) {
   return kEditInfoView.replaceFirst(":restaurantId", restaurantId);
 }
 
-String getROpOptionRoute({required String restaurantId}) {
+String getROpOptionRoute({required String restaurantId, String? itemId}) {
   return kOptionView.replaceFirst(":restaurantId", restaurantId);
 }
 
@@ -47,9 +47,8 @@ String getROpCategoryRoute({required String restaurantId}) {
 
 String getCategoryEditRoute(
     {required String categoryId, required String restaurantId}) {
-  final String route =
-      kEditCategoryScreen.replaceFirst(":categoryId", categoryId);
-  route.replaceFirst(":restaurantId", restaurantId);
+  String route = kEditCategoryScreen.replaceFirst(":categoryId", categoryId);
+  route = route.replaceFirst(":restaurantId", restaurantId);
   return route;
 }
 
@@ -57,8 +56,11 @@ String getROpOrderRoute(String orderId) {
   return kOrderView.replaceFirst(":orderId", orderId);
 }
 
-String getEditItemRoute({required String itemId, String? categoryId}) {
-  String route = kEditItemView.replaceFirst(":itemId", itemId);
+String getEditItemRoute(
+    {required String itemId, String? categoryId, required String restaurntID}) {
+  String route = kEditItemView.replaceFirst(":restaurantId", restaurntID);
+
+  route = route.replaceFirst(":itemId", itemId);
 
   if (categoryId != null) {
     route = route.replaceFirst(":categoryId", categoryId);

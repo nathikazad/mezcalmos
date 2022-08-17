@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:sizer/sizer.dart';
 
-// dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
-//     ['OrderView']['Components']['ROpOrderSummaryCard'];
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpOrderView"]["components"]["ROpOrderSummaryCard"];
 
 class ROpOrderSummaryCard extends StatelessWidget {
   final RestaurantOrder order;
   const ROpOrderSummaryCard({Key? key, required this.order}) : super(key: key);
-
-  // TODO FIX LANG
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +24,7 @@ class ROpOrderSummaryCard extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             alignment: Alignment.centerLeft,
             child: Text(
-              'Order summary',
+              '${_i18n()["orderSummary"]}',
               style: Get.textTheme.bodyText1,
             ),
           ),
@@ -38,7 +37,7 @@ class ROpOrderSummaryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'Order Cost',
+                      '${_i18n()["orderCost"]}',
                       style: Get.textTheme.bodyText2,
                     ),
                     Text((order.itemsCost).toPriceString(),
@@ -52,7 +51,7 @@ class ROpOrderSummaryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'Delivery cost',
+                      '${_i18n()["deliveryCost"]}',
                       style: Get.textTheme.bodyText2,
                     ),
                     Flexible(
@@ -68,7 +67,7 @@ class ROpOrderSummaryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'Total cost',
+                      '${_i18n()["totalCost"]}',
                       style: Get.textTheme.bodyText1,
                     ),
                     Text(
@@ -87,7 +86,7 @@ class ROpOrderSummaryCard extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
             alignment: Alignment.centerLeft,
             child: Text(
-              'Delivery location',
+              '${_i18n()["deliveryLocation"]}',
               style: Get.textTheme.bodyText1,
             ),
           ),

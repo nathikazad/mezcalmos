@@ -114,11 +114,11 @@ class CustomerAuthController extends GetxController {
 
   Location? getLocationById(String locationId) {
     // we get the user Location by it's id!
-    return _customer.value?.savedLocations
-        .firstWhere(
-            (SavedLocation savedLocation) => savedLocation.id == locationId,
-            orElse: null)
-        .location;
+
+    return customer.value?.savedLocations.firstWhere(
+        (SavedLocation savedLocation) {
+      return savedLocation.id == locationId;
+    }, orElse: null).location;
   }
 
   @override

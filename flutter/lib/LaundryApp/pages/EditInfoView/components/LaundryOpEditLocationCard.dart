@@ -16,6 +16,7 @@ class LaundryOpEditLocationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => Card(
+        elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         color: Colors.grey.shade200,
         child: InkWell(

@@ -47,6 +47,8 @@ class ItemViewController {
   RxBool newCategoryAdded = RxBool(false);
   Rxn<Category> addedCatgeory = Rxn();
   RxBool isLoading = RxBool(false);
+  bool firstFormValid = false;
+  bool secondFormValid = false;
 
   // initalisation //
   // the itemId arguments for edit mode //
@@ -92,6 +94,7 @@ class ItemViewController {
     editableItem.value = restaurant.value!.findItemById(itemId);
     mezDbgPrint(editableItem.value!.toJson());
     prItemNameController.text = editableItem.value!.name[prLang]!;
+    newImageUrl.value = editableItem.value!.image;
     scItemNameController.text = editableItem.value!.name[scLang]!;
     prItemDescController.text = editableItem.value?.name[prLang]! ?? "";
     scItemDescController.text = editableItem.value!.description?[scLang]! ?? "";
@@ -280,10 +283,6 @@ class ItemViewController {
       return CachedNetworkImageProvider(newImageUrl.value!);
     } else
       return null;
-  }
-
-  bool get isSecondLangValid {
-    return scItemNameController.text.isNotEmpty;
   }
 
   void dispose() {

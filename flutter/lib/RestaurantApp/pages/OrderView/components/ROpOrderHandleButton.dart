@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+
+//
+dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
+    ['pages']['ROpOrderView']["components"]["ROpOrderHandleButton"];
 
 class ROpOrderHandleButton extends StatefulWidget {
   const ROpOrderHandleButton({Key? key, required this.order}) : super(key: key);
@@ -39,9 +44,9 @@ class _ROpOrderHandleButtonState extends State<ROpOrderHandleButton> {
 
   String? get getBtnTitle {
     if (widget.order.status == RestaurantOrderStatus.OrderReceieved) {
-      return "Prepare order";
+      return '${_i18n()["prepareOrder"]}';
     } else if (widget.order.status == RestaurantOrderStatus.PreparingOrder) {
-      return "Order is ready";
+      return '${_i18n()["orderReady"]}';
     }
     return null;
   }

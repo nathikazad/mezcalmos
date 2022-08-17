@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -19,7 +21,7 @@ class IOrderViewWidgets {
   IOrderViewWidgets({required this.iOrderViewController});
 
   /// this holds the two Accept / Offer buttons.
-  Positioned acceptAndOfferButtons() {
+  Positioned acceptAndOfferButtons({required VoidCallback onOfferBtnClick}) {
     return Positioned(
       bottom: 12, // GetStorage().read(getxGmapBottomPaddingKey),
       left: 10,
@@ -57,7 +59,12 @@ class IOrderViewWidgets {
               ),
             ),
             SizedBox(width: 4),
-            Expanded(flex: 1, child: offerBtn()),
+            Expanded(
+              flex: 1,
+              child: offerBtn(
+                onOfferBtnClick: onOfferBtnClick,
+              ),
+            ),
           ],
         ),
       ),
@@ -65,10 +72,12 @@ class IOrderViewWidgets {
   }
 
   /// this holds the BottomSheet when the TaxiDriver clicks offer Price.
-  AnimatedSlider counterOfferBottomSheet() {
-    mezDbgPrint(
-        "submittedCounterOffer => ${iOrderViewController.submittedCounterOffer.value}");
-    mezDbgPrint("CounterOffer => ${iOrderViewController.counterOffer.value}");
+  AnimatedSlider counterOfferBottomSheet({
+    required VoidCallback onCloseClick,
+    required VoidCallback onCancelClick,
+    required VoidCallback onMakeNewOffer,
+    required VoidCallback onCounterEnd,
+  }) {
     return AnimatedSlider(
       isPositionedCoordinates:
           AnimatedSliderCoordinates(left: 0, right: 0, bottom: 0),
@@ -80,31 +89,19 @@ class IOrderViewWidgets {
           () => iOrderViewController.counterOffer.value != null &&
                   iOrderViewController.submittedCounterOffer.value
               ? CounterOfferSentBottomSheet(
-                  onCloseClick: () {
-                    iOrderViewController.animatedSliderController.slideDown();
-                  },
-                  onCancelClick: () async =>
-                      iOrderViewController.updateCounterOfferStatus(
-                    newStatus: CounterOfferStatus.Cancelled,
-                  ),
-                  onMakeNewOffer: () {
-                    iOrderViewController.submittedCounterOffer.value = false;
-                  },
+                  onCloseClick: onCloseClick,
+                  onCancelClick: onCancelClick,
+                  onMakeNewOffer: onMakeNewOffer,
                   counterOffer: iOrderViewController.counterOffer.value!,
                   controller: iOrderViewController.controller,
                   order: iOrderViewController.order.value!,
                   duration: iOrderViewController.counterOffer.value!
                       .validityTimeDifference()
                       .abs(),
-                  onCounterEnd: () async =>
-                      iOrderViewController.updateCounterOfferStatus(
-                    newStatus: CounterOfferStatus.Expired,
-                  ),
+                  onCounterEnd: onCounterEnd,
                 )
               : CounterOfferPriceSetter(
-                  onCloseClick: () {
-                    iOrderViewController.animatedSliderController.slideDown();
-                  },
+                  onCloseClick: onCloseClick,
                   counterOffer: iOrderViewController.counterOffer,
                   controller: iOrderViewController.controller,
                   order: iOrderViewController.order.value!,
@@ -145,12 +142,9 @@ class IOrderViewWidgets {
     );
   }
 
-  Widget offerBtn() {
+  Widget offerBtn({required VoidCallback onOfferBtnClick}) {
     return InkWell(
-      onTap: () {
-        iOrderViewController.submittedCounterOffer.value = true;
-        iOrderViewController.animatedSliderController.slideUp();
-      },
+      onTap: onOfferBtnClick,
       child: Container(
         height: 45,
         decoration: BoxDecoration(

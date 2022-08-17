@@ -17,9 +17,9 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/LaundryOrderPricingCompenent.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
@@ -183,15 +183,17 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
     return mezcalmosAppBar(
       AppBarLeftButtonType.Back,
       autoBack: true,
-      titleWidget: Obx(() => Text(
-            '${order.value?.laundry?.name ?? ""}',
-            style: TextStyle(
-              fontFamily: "Poppins",
-              fontWeight: FontWeight.w600,
-              fontSize: 15.sp,
-              color: Colors.black,
-            ),
-          )),
+      titleWidget: Obx(
+        () => Text(
+          '${order.value?.laundry?.name ?? ""}',
+          style: TextStyle(
+            fontFamily: "Poppins",
+            fontWeight: FontWeight.w600,
+            fontSize: 15.sp,
+            color: Colors.black,
+          ),
+        ),
+      ),
       showNotifications: true,
       ordersRoute: kOrdersRoute,
     );
@@ -201,7 +203,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
         Container(
           height: 350,
           child: MGoogleMap(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.zero,
             mGoogleMapController: mapController,
             recenterBtnBottomPadding: 20,
             // rerenderDuration: Duration(seconds: 10),
@@ -277,7 +279,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
             fitWithinBounds: true,
           );
         }
-        // mapController.animateAndUpdateBounds(shouldFitPolylineInBound: false);
+
         break;
 
       case LaundryOrderPhase.Dropoff:
@@ -312,7 +314,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
             fitWithinBounds: true,
           );
         }
-        // mapController.animateAndUpdateBounds();
+        mapController.animateAndUpdateBounds();
         break;
       default:
     }

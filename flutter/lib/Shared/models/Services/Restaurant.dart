@@ -389,7 +389,7 @@ extension ParseOrderTypeToString on OptionType {
     if (str.length > 6) {
       str = str.substring(6, str.length);
     }
-    str[0].toUpperCase();
+    str[0].toLowerCase();
     return str;
   }
 }

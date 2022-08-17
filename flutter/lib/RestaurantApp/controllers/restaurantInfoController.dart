@@ -43,11 +43,13 @@ class RestaurantInfoController extends GetxController {
     });
   }
 
-  Future<Restaurant> getRestaurantAsFuture(String restaurantId) async {
+  Future<Restaurant> getRestaurantAsFuture(String restId) async {
+    mezDbgPrint(
+        "PAth ==========>${serviceProviderInfos(orderType: OrderType.Restaurant, providerId: restId)}");
     return _databaseHelper.firebaseDatabase
         .ref()
         .child(serviceProviderInfos(
-            orderType: OrderType.Restaurant, providerId: restaurantId))
+            orderType: OrderType.Restaurant, providerId: restId))
         .once()
         .then<Restaurant>((DatabaseEvent event) {
       return Restaurant.fromRestaurantData(
@@ -77,26 +79,30 @@ class RestaurantInfoController extends GetxController {
   // }
 
   Future<void> setRestaurantName(String newName) async {
-    mezDbgPrint(
-        "------->>> ${serviceProviderInfos(orderType: OrderType.Restaurant, providerId: restaurant.value!.info.id)}/name");
     await _databaseHelper.firebaseDatabase
         .ref()
         .child(serviceProviderInfos(
-                orderType: OrderType.Restaurant,
-                providerId: restaurant.value!.info.id) +
+                orderType: OrderType.Restaurant, providerId: restaurantId) +
             '/info')
         .child('name')
         .set(newName);
   }
 
-  Future<void> setRestaurantImage(String newImage) async {
-    mezDbgPrint(
-        "------->>> ${serviceProviderInfos(orderType: OrderType.Restaurant, providerId: restaurant.value!.info.id)}/name");
+  Future<void> setRestaurantDesc(LanguageMap newDesc) async {
     await _databaseHelper.firebaseDatabase
         .ref()
         .child(serviceProviderInfos(
-                orderType: OrderType.Restaurant,
-                providerId: restaurant.value!.info.id) +
+                orderType: OrderType.Restaurant, providerId: restaurantId) +
+            '/details')
+        .child('description')
+        .set(newDesc.toFirebaseFormat());
+  }
+
+  Future<void> setRestaurantImage(String newImage) async {
+    await _databaseHelper.firebaseDatabase
+        .ref()
+        .child(serviceProviderInfos(
+                orderType: OrderType.Restaurant, providerId: restaurantId) +
             '/info')
         .child('image')
         .set(newImage);

@@ -21,26 +21,22 @@ class OrderStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Card(
-          child: Container(
-            width: double.infinity,
-            margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                order.orderStatusImage(),
-                _orderStatusText(context),
-                Spacer(
-                  flex: 1,
-                ),
-              ],
+    return Card(
+      child: Container(
+        width: double.infinity,
+        margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            order.orderStatusImage(),
+            _orderStatusText(context),
+            Spacer(
+              flex: 1,
             ),
-          ),
+          ],
         ),
-      ],
+      ),
     );
   }
 

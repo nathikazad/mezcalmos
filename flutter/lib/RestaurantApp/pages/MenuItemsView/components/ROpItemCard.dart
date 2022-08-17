@@ -8,8 +8,13 @@ import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpMenuView"]["components"]["ROpItemCard"];
+//
 
 class ROpItemCard extends StatefulWidget {
   const ROpItemCard(
@@ -47,7 +52,9 @@ class _ROpItemCardState extends State<ROpItemCard> {
               : () {
                   Get.toNamed(getEditItemRoute(
                       itemId: widget.item.id!,
-                      categoryId: widget.category?.id ?? null));
+                      categoryId: widget.category?.id ?? null,
+                      restaurntID:
+                          widget.viewController.restaurant.value!.info.id));
                 },
           child: Container(
             padding: const EdgeInsets.all(5),
@@ -88,17 +95,17 @@ class _ROpItemCardState extends State<ROpItemCard> {
                 ),
                 Row(
                   children: [
-                    Text("Category: "),
+                    Text('${_i18n()["category"]}: '),
                     Flexible(
                       flex: 6,
                       fit: FlexFit.tight,
                       child: Text(
-                        widget.category?.name![userLanguage] ?? "None",
+                        widget.category?.name![userLanguage] ?? "Error",
                         style: Get.textTheme.bodyText1,
                       ),
                     ),
                     Spacer(),
-                    Text("Item status"),
+                    Text('${_i18n()["itemStatus"]}'),
                     Switch(
                       value: widget.item.available,
                       onChanged: (widget.viewController.reOrderMode.isTrue)

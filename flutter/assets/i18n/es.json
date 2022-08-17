@@ -19,6 +19,7 @@
                 "privacyPolicy": "Privacy policy"
             },
             "DropDownLocationList": {
+                "chooseLoc": "Elegir la ubicación",
                 "pickLocation": "Elegir del mapa"
             },
             "LocationPicker": {
@@ -216,9 +217,9 @@
                         "CustomerRestaurantOrderEst": {
                             "estTimes": "Tiempos estimados",
                             "foodReady": "preparación de la comida",
+                            "toBeCalculated": "Para ser calculado",
                             "delivery": "Entrega"
                         },
-
                         "OrderStatusCard": {
                             "willBeReady": "Tiempo de preparación estimado",
                             "willBePicked": "Tiempo de recogida estimado",
@@ -395,19 +396,19 @@
             "CustomerWrapper": {
                 "savedLocations": "Ubicaciones guardadas",
                 "welcomeText": "Bienvenido a MEZCALMOS 👋",
-                "appDescription": "Su lugar único para encontrar todos sus servicios locales que necesita y donde puede disfrutar de servicios rápidos y de alta calidad .",
+                "appDescription": " Un lugar único para encontrar todos los servicios locales que necesitas de manera rápida y de alta calidad",
                 "services": "Servicios",
                 "taxi": {
                     "title": "Taxi",
-                    "subtitle": "Consiga el taxi más cercano y obtenga su destino lo antes posible."
+                    "subtitle": "Consiga el taxi más cercano y obtenga su destino lo antes posible"
                 },
                 "food": {
                     "title": "Comida",
-                    "subtitle": "Descubre los platos más deliciosos de los restaurantes más cercanos."
+                    "subtitle": "Descubre los platillos más deliciosos de los restaurantes más cercanos"
                 },
                 "laundry": {
                     "title": "Lavandería",
-                    "subtitle": "Haz que tu ropa lave tu lavandería más cercana"
+                    "subtitle": "Haz que tu lavandería más cercana lave tu ropa"
                 },
                 "comingSoon": "Próximamente...",
                 "supportText": "Necesitas ayuda ? Contacta con nuestro equipo de soporte"
@@ -848,7 +849,7 @@
 
 
             "LocationSearchComponent": {
-                "address": "Ingresa Dirección"
+                "address": "Ingresa dirección"
             },
             "MezClearButton": {
                 "clear": "Borrar"
@@ -1382,6 +1383,7 @@
                         "DriverBottomRestaurantOrderCard": {
                             "restaurantDelivery": "Entrega de restaurantes",
                             "oops": "Ups",
+                            "foodReady": "preparación de la comida",
                             "set": "Establecer",
                             "time": "Tiempo",
                             "dropoff": "Entregar",
@@ -1485,9 +1487,12 @@
                 },
                 "addCategory": "Añadir categoría",
                 "editCategory": "Editar categoria",
+                "catDesc": "Descripción de categoría",
+                "catDescIn": "Descripción de la categoría en",
                 "saveCategory": "Guardar categoría",
                 "categoryName": "Nombre de la categoría",
                 "categoryNameIn": "Nombre de categoría en",
+                "categoryDescHint": "Ingrese una descripción de categoría",
                 "categoryNameHint": "Ingrese un nombre de categoría",
                 "categoryPrice": "Categoría Precios por kilogramo",
                 "categoryPriceHint": "Entrar en la categoría Precios por kilogramo ...",
@@ -1673,6 +1678,119 @@
     },
     "RestaurantApp": {
         "pages": {
+
+            "ROpItemView": {
+                "item": "Artículo",
+                "addItem": "Añadir artículo",
+                "saveItem": "Guardar el artículo",
+                "itemName": "Nombre del árticulo",
+                "itemDesc": "Descripción del Artículo",
+                "required": "Requerida",
+                "itemPrice": "Precio del articulo",
+                "category": "Categoría",
+                "itemOptions": "Opciones de artículos",
+                "addOption": "Añadir opción",
+                "deleteBtn": "Sí, eliminar el artículo",
+                "deleteHelper": "¿Estás seguro de que quieres eliminar este artículo?",
+                "deleteTitle": "Eliminar este artículo",
+                "deleteItem": "Eliminar elemento",
+                "components": {
+                    "ROpItemCategorySelector": {
+                        "errorText": "Porfavor seleccione una categoría",
+                        "none": "Ninguna"
+                    },
+                    "ROpItemAvChips": {
+                        "available": "Disponible",
+                        "unavailable": "Indisponible"
+                    },
+                    "ROpItemImage": {
+                        "addImage": "Agregar imagen del artículo",
+                        "errorText": "Se requiere una imagen"
+                    }
+                }
+
+            },
+
+            "ROpOrderView": {
+                "cancelOrder": "Cancelar orden",
+                "orderItems": "Encargar artículos",
+                "components": {
+                    "ROpOrderHandleButton": {
+                        "prepareOrder": "Preparar orden",
+                        "orderReady": "El pedido está listo"
+                    },
+                    "ROpOrderEstTime": {
+                        "title": "Tiempo estimado de comida",
+                        "set": "Establecer",
+                        "confirm": "Confirmar",
+                        "cancel": "Cancelar",
+                        "Error": "Error",
+                        "minTimes": "Mínimo 5 Miutes Prepare el tiempo"
+                    },
+                    "ROpDriverCard": {
+                        "noDriver": "No hay controlador asignado todavía"
+                    },
+                    "ROpOrderCustomer": {
+                        "customer": "Cliente"
+                    },
+                    "ROpOrderItems": {
+                        "note": "Nota"
+                    },
+                    "ROpOrderSummaryCard": {
+                        "orderSummary": "Resumen",
+                        "orderCost": "Costo de la orden",
+                        "deliveryCost": "Coste de envío",
+                        "totalCost": "Coste total",
+                        "deliveryLocation": "Lugar de entrega"
+                    },
+                    "ROpOrderNote": {
+                        "notes": "Notas"
+                    }
+                }
+            },
+            "ROpOptionView": {
+                "addOption": "Añadir opción",
+                "editOption": "editar opción",
+                "optionName": "Nombre de opción",
+                "required": "Requeridaa",
+                "optionChoices": "Opciones de opcionesciones",
+                "optionType": "Tipo de opción ",
+                "deleteOp": "Opción Eliminar",
+                "deleteOpHelper": "¿Estás seguro de que quieres eliminar esta opción?",
+                "deleteOpBtn": "Eliminar esta opción",
+                "components": {
+                    "ROpOptionChoice": {
+                        "chName": "Nombre de elección",
+                        "chNameIn": "Nombre de elección en",
+                        "required": "Requerida"
+                    },
+                    "ROpOptionSelector": {
+                        "one": "Una",
+                        "many": "Muchas",
+                        "custom": "Disfraz",
+                        "opChoiches": "Opciones de opciones",
+                        "min": "Mínimo",
+                        "free": "Gratis",
+                        "max": "Máximo",
+                        "costAboveLimit": "Costo de elección por encima del límite gratuito",
+                        "choooseManyHelper": "El cliente puede elegir muchas opciones",
+                        "chooseOneHelper": "El cliente puede elegir solo una opción"
+                    }
+                }
+            },
+            "ROpPastOrdersList": {
+                "components": {
+                    "ROpOrderCard": {
+                        "date": "Fecha :",
+                        "totalCost": "Coste total :",
+                        "waiting": "Esperando",
+                        "delivered": "Entregada",
+                        "canceled": "Cancelada"
+                    }
+                },
+                "currentOrders": "Órdenes actuales",
+                "pastOrders": "Órdenes pasadas"
+            },
             "ROpMenuView": {
                 "menu": "Menú",
                 "addCategory": "Añadir categoría",
@@ -1687,13 +1805,59 @@
                 "prCancelBtn": "Sí, cancelar reorden",
                 "cancelHelperText": "¿Estás seguro de que quieres cancelar el proceso de reorden?",
                 "components": {
+                    "ROpSpecialsComponent": {
+                        "currentSp": "Artículos especiales actuales",
+                        "recentSp": "Artículos especiales recientes"
+                    },
+                    "ROpItemCard": {
+                        "category": "Categoría",
+                        "itemStatus": "Estado del artículo"
+                    },
                     "ROpCategoryItems": {
                         "noItems": "No hay artículos",
                         "editCatgeory": "Editar categoria",
-                        "deleteCatgeory": "Eliminar la categoría"
+                        "deleteCatgeory": "Eliminar la categoría",
+                        "deleteTitle": "Eliminar la categoría",
+                        "deleteHelper": "¿Estás seguro de que quieres eliminar esta categoría?",
+                        "deleteBtn": "Sí, eliminar la categoría"
 
                     }
 
+                }
+            },
+            "ROpEditInfoView": {
+                "controllers": {
+                    "ROpEditInfoController": {
+                        "error": "error",
+                        "selectPrimaryFirst": "Seleccione primero el idioma primario"
+
+                    }
+                },
+                "components": {
+                    "ROpLanguageSelectorComponent": {
+                        "none": "Ninguna",
+                        "errorText": "Seleccione el idioma"
+                    },
+                    "ROpAcceptedPayments": {
+                        "cash": "Dinero",
+                        "card": "Tarjeta",
+                        "acceptedPayments": "Pagos aceptados",
+                        "setup": "Configuración",
+
+                        "setupHelper": "Gracias por la configuración, ahora puede recibir pagos, pero no podrá retirar dinero a su cuenta bancaria.",
+                        "reqs": "Requisitos",
+                        "emailId": "Identificación de correo",
+                        "empty": "Vacía",
+                        "reqsHelper": "Inicie sesión en su cuenta de Stripe y asegúrese de completar todos los requisitos a continuación"
+                    }
+                },
+                "ROpEditInfoView": {
+                    "restaurantName": "Nombre del restaurante",
+                    "nameErrorText": "Proporcione un nombre",
+                    "defaultLanguage": "Idioma predeterminado",
+                    "secondaryLanguage": "Lenguaje secundario",
+                    "location": "Ubicación",
+                    "saveInfo": "Guardar información"
                 }
             }
         }

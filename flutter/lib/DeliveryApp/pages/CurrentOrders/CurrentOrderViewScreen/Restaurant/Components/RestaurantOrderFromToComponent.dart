@@ -4,14 +4,15 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
@@ -41,8 +42,8 @@ class _RestaurantOrderFromToComponentState
   final Rx<OrderInfoCardState> orderInfoCardState =
       OrderInfoCardState.Maximized.obs;
 
-  // This will lock the setEstimatedTime button click and show loading instead.
-  bool _edittingEstimatedTime = false;
+  RxBool isSettingPickUpTime = false.obs;
+  RxBool isSettingDropoffTime = false.obs;
   @override
   void initState() {
     super.initState();
@@ -56,50 +57,56 @@ class _RestaurantOrderFromToComponentState
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(8),
-      child: AnimatedOrderInfoCard(
-        // customer
-        customerImage: widget.order.customer.image,
-        customerName: widget.order.customer.name,
-        // enableExpand: (widget.order.inProcess()) ? _isTimesSetted() : true,
-        customerTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff, context),
-        onCustomerMsgClick: () {
-          if (widget.order.customerDropOffDriverChatId != null) {
-            Get.toNamed(
-              getMessagesRoute(
-                  orderType: OrderType.Restaurant,
-                  chatId: widget.order.customerDropOffDriverChatId!,
-                  orderId: widget.order.orderId,
-                  recipientType: ParticipantType.Customer),
-            );
-          }
-        },
-        // landry
-        serviceProviderImage: widget.order.restaurant.image,
-        serviceProviderName: widget.order.restaurant.name,
-        serviceProviderTimeWidgets:
-            _dateTimeSetter(DeliveryAction.Pickup, context),
-        onServiceMsgClick: () {
-          if (widget.order.serviceProviderDropOffDriverChatId != null) {
-            Get.toNamed(
-              getMessagesRoute(
-                  orderType: OrderType.Restaurant,
-                  chatId: widget.order.serviceProviderDropOffDriverChatId!,
-                  orderId: widget.order.orderId,
-                  recipientType: ParticipantType.DeliveryAdmin),
-            );
-          }
-        },
-        // order
-        formattedOrderStatus: _getOrderStatus(),
-        order: widget.order,
-        // card Settings
-        isCustomerRowFirst: false,
-        showMsgIconInOneLine: !widget.order.inProcess(),
-        initialCardState: orderInfoCardState.value,
-        onCardStateChange: (OrderInfoCardState nwState) {
-          orderInfoCardState.value = nwState;
-          widget.onCardStateChange?.call(nwState);
-        },
+      child: Obx(
+        () => AnimatedOrderInfoCard(
+          // customer
+          customerImage: widget.order.customer.image,
+          subtitle: (widget.order.estimatedFoodReadyTime != null)
+              ? "${_i18n()["foodReady"]} ${widget.order.estimatedFoodReadyTime!.getEstimatedTime()}"
+              : null,
+          customerName: widget.order.customer.name,
+          // enableExpand: (widget.order.inProcess()) ? _isTimesSetted() : true,
+          customerTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff, context),
+          onCustomerMsgClick: () {
+            if (widget.order.customerDropOffDriverChatId != null) {
+              Get.toNamed(
+                getMessagesRoute(
+                    orderType: OrderType.Restaurant,
+                    chatId: widget.order.customerDropOffDriverChatId!,
+                    orderId: widget.order.orderId,
+                    recipientType: ParticipantType.Customer),
+              );
+            }
+          },
+          // landry
+          serviceProviderImage: widget.order.restaurant.image,
+          serviceProviderName: widget.order.restaurant.name,
+          serviceProviderTimeWidgets:
+              _dateTimeSetter(DeliveryAction.Pickup, context),
+          onServiceMsgClick: () {
+            if (widget.order.serviceProviderDropOffDriverChatId != null) {
+              Get.toNamed(
+                getMessagesRoute(
+                    orderType: OrderType.Restaurant,
+                    chatId: widget.order.serviceProviderDropOffDriverChatId!,
+                    orderId: widget.order.orderId,
+                    recipientType: ParticipantType.DeliveryAdmin),
+              );
+            }
+          },
+          // order
+          formattedOrderStatus: _getOrderStatus(),
+
+          order: widget.order,
+          // card Settings
+          isCustomerRowFirst: false,
+          showMsgIconInOneLine: !widget.order.inProcess(),
+          initialCardState: orderInfoCardState.value,
+          onCardStateChange: (OrderInfoCardState nwState) {
+            orderInfoCardState.value = nwState;
+            widget.onCardStateChange?.call(nwState);
+          },
+        ),
       ),
     );
   }
@@ -143,7 +150,7 @@ class _RestaurantOrderFromToComponentState
       final DateTime? pickedDate = await getDatePicker(
         context,
         initialDate: initialDate ?? DateTime.now(),
-        firstDate: DateTime.now(),
+        firstDate: widget.order.estimatedFoodReadyTime ?? DateTime.now(),
         lastDate: DateTime.now().add(
           Duration(days: 3),
         ),
@@ -153,12 +160,13 @@ class _RestaurantOrderFromToComponentState
         final TimeOfDay? pickedTime = await getTimePicker(
           context,
           initialTime: TimeOfDay.fromDateTime(
-            initialDate ?? DateTime.now(),
+            widget.order.estimatedFoodReadyTime?.toLocal() ?? DateTime.now(),
           ),
         );
         if (pickedTime != null) {
           final DateTime _finalDt = pickedDate.copyWithTimeOfDay(pickedTime);
-          if (_finalDt.isAfter(DateTime.now())) {
+          if (_finalDt.isAfter(widget.order.estimatedFoodReadyTime?.toLocal() ??
+              DateTime.now())) {
             return _finalDt;
           } else
             MezSnackbar('${_i18n()['oops']}', '${_i18n()['wrongTime']}');
@@ -168,37 +176,37 @@ class _RestaurantOrderFromToComponentState
       return null;
     }
 
-    List<Widget> _getRightContainer(DateTime? dt,
-        {required void Function(DateTime) onNewDateTimeSet}) {
+    List<Widget> _getRightContainer(
+      DateTime? dt, {
+      required void Function(DateTime) onNewDateTimeSet,
+      required RxBool isSettingTime,
+    }) {
       if (dt != null) {
         return [
           Text(DateFormat('EE, hh:mm a').format(dt)),
           SizedBox(width: 7),
           InkWell(
-            onTap: _edittingEstimatedTime
+            onTap: isSettingTime.value
                 ? null
                 : () async {
-                    setState(() {
-                      _edittingEstimatedTime = true;
-                    });
+                    isSettingTime.value = true;
                     final DateTime? _dt =
                         await _dateTimePicker(initialDate: dt);
-                    if (_dt != null) onNewDateTimeSet(_dt);
-
-                    setState(() {
-                      _edittingEstimatedTime = false;
-                    });
+                    if (_dt != null)
+                      onNewDateTimeSet(_dt);
+                    else
+                      isSettingTime.value = false;
                   },
             child: Container(
               padding: const EdgeInsets.all(4),
-              decoration: _edittingEstimatedTime
+              decoration: isSettingTime.value
                   ? null
                   : BoxDecoration(
                       color: Color.fromRGBO(237, 237, 237, 1),
                       shape: BoxShape.circle,
                     ),
               child: Center(
-                child: _edittingEstimatedTime
+                child: isSettingTime.value
                     ? Container(
                         height: 16,
                         width: 16,
@@ -220,28 +228,26 @@ class _RestaurantOrderFromToComponentState
       } else {
         return [
           InkWell(
-            onTap: _edittingEstimatedTime
+            onTap: isSettingTime.value
                 ? null
                 : () async {
-                    setState(() {
-                      _edittingEstimatedTime = true;
-                    });
+                    isSettingTime.value = true;
                     final DateTime? _dt = await _dateTimePicker();
-                    if (_dt != null) onNewDateTimeSet(_dt);
-                    setState(() {
-                      _edittingEstimatedTime = false;
-                    });
+                    if (_dt != null)
+                      onNewDateTimeSet(_dt);
+                    else
+                      isSettingTime.value = false;
                   },
             child: Container(
               padding: EdgeInsets.all(5),
-              decoration: _edittingEstimatedTime
+              decoration: isSettingTime.value
                   ? null
                   : BoxDecoration(
                       color: Color.fromRGBO(226, 18, 51, 1),
                       borderRadius: BorderRadius.circular(4),
                     ),
               child: Center(
-                child: _edittingEstimatedTime
+                child: isSettingTime.value
                     ? ThreeDotsLoading(dotsColor: Colors.black)
                     : Text(
                         '${_i18n()['set']} ${deliveryAction == DeliveryAction.DropOff ? "${_i18n()['dropoff']}" : "${_i18n()['pickup']}"} ${_i18n()['time']}',
@@ -264,6 +270,9 @@ class _RestaurantOrderFromToComponentState
         deliveryAction == DeliveryAction.Pickup
             ? widget.order.estimatedPickupFromServiceProviderTime?.toLocal()
             : widget.order.estimatedDropoffAtCustomerTime?.toLocal(),
+        isSettingTime: deliveryAction == DeliveryAction.Pickup
+            ? isSettingPickUpTime
+            : isSettingDropoffTime,
         onNewDateTimeSet: (DateTime newDt) async {
           // DropOff
           if (deliveryAction == DeliveryAction.DropOff) {
@@ -288,25 +297,35 @@ class _RestaurantOrderFromToComponentState
               return;
             }
           }
-
-          final ServerResponse _resp =
-              await Get.find<OrderController>().setEstimatedTime(
+          if (deliveryAction == DeliveryAction.Pickup) {
+            isSettingPickUpTime.value = true;
+          } else {
+            isSettingDropoffTime.value = true;
+          }
+          // ignore: unawaited_futures
+          Get.find<OrderController>()
+              .setEstimatedTime(
             widget.order.orderId,
             newDt.toUtc(),
             DeliveryDriverType.DropOff,
             deliveryAction,
             OrderType.Restaurant,
-          );
-
-          mezDbgPrint("Responsoooooo ===> $_resp");
-          if (_resp.success) {
-            if (deliveryAction == DeliveryAction.Pickup)
-              widget.order.estimatedPickupFromServiceProviderTime = newDt;
-            else
-              widget.order.estimatedDropoffAtCustomerTime = newDt;
-
-            setState(() {});
-          }
+          )
+              .then((ServerResponse _resp) {
+            mezDbgPrint("Responsoooooo ===> $_resp");
+            if (_resp.success) {
+              if (deliveryAction == DeliveryAction.Pickup)
+                widget.order.estimatedPickupFromServiceProviderTime = newDt;
+              else
+                widget.order.estimatedDropoffAtCustomerTime = newDt;
+            }
+          }).whenComplete(() {
+            if (deliveryAction == DeliveryAction.Pickup) {
+              isSettingPickUpTime.value = false;
+            } else {
+              isSettingDropoffTime.value = false;
+            }
+          });
         },
       );
     }

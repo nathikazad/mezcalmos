@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpOrderView"]["components"]["ROpOrderNote"];
+
+//
 class ROpOrderNote extends StatelessWidget {
   const ROpOrderNote({
     Key? key,
     required this.order,
   }) : super(key: key);
-// TODO FIX LANG
   final RestaurantOrder order;
-
-  // dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']
-  //     ['pages']['OrderView']['Components']['ROpOrderNote'];
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class ROpOrderNote extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "Notes :",
+                '${_i18n()["notes"]} : ',
                 style: Get.textTheme.bodyText1,
                 textAlign: TextAlign.left,
               ),

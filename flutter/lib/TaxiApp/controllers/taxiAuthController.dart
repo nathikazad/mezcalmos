@@ -1,21 +1,22 @@
 import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/taxiNodes.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/models/Drivers/TaxiDriver.dart';
-import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
-import 'package:location/location.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 
 class TaxiAuthController extends GetxController {
   Rxn<TaxiState> _state = Rxn();
@@ -61,7 +62,7 @@ class TaxiAuthController extends GetxController {
         .ref()
         .child(taxiStateNode(user.uid))
         .onValue
-        .listen((dynamic event) async {
+        .listen((DatabaseEvent event) async {
       if (event.snapshot.value.toString() == _previousStateValue) {
         return;
       }
@@ -82,14 +83,14 @@ class TaxiAuthController extends GetxController {
       }
       if (_state.value?.isAuthorized ?? false) {
         saveAppVersionIfNecessary();
-        saveNotificationToken();
+        await saveNotificationToken();
       }
     });
-    await _locationListener?.cancel();
-    _locationListener = await _listenForLocation();
+    // await _locationListener?.cancel();
+    // _locationListener = await _listenForLocation();
   }
 
-  void saveNotificationToken() async {
+  Future<void> saveNotificationToken() async {
     mezDbgPrint(
         "TaxiAuthController  Messaging Token>> ${await _notificationsController.getToken()}");
     final String? deviceNotificationToken =
@@ -119,17 +120,17 @@ class TaxiAuthController extends GetxController {
 
   Future<StreamSubscription<LocationData>> _listenForLocation() async {
     mezDbgPrint("Listening for location !");
-    Location location = Location();
+    final Location location = Location();
     await location.changeSettings(interval: 1000);
     // location.enableBackgroundMode(enable: true);
     return location.onLocationChanged.listen((LocationData currentLocation) {
       // mezDbgPrint("\t\t [TAXI AUTH CONTROLLER] LOCATION GOT UPDAAAATED !!");
-      DateTime currentTime = DateTime.now();
+      final DateTime currentTime = DateTime.now();
       if (currentLocation.latitude != null &&
           currentLocation.longitude != null) {
         _currentLocation.value = currentLocation;
 
-        Map<String, dynamic> positionUpdate = <String, dynamic>{
+        final Map<String, dynamic> positionUpdate = <String, dynamic>{
           "lastUpdateTime": currentTime.toUtc().toString(),
           "position": <String, dynamic>{
             "lat": currentLocation.latitude,
@@ -137,7 +138,7 @@ class TaxiAuthController extends GetxController {
           }
         };
         try {
-          // mezDbgPrint(positionUpdate);
+          // // mezDbgPrint(positionUpdate);
           _databaseHelper.firebaseDatabase
               .ref()
               .child(taxiAuthNode(_authController.fireAuthUser!.uid))
@@ -160,7 +161,7 @@ class TaxiAuthController extends GetxController {
                 .set(positionUpdate);
 
             // updating driver location in customers/inProcessOrders
-            String? currentOrderCustomerId = Get.find<OrderController>()
+            final String? currentOrderCustomerId = Get.find<OrderController>()
                 .getOrder(_state.value!.currentOrder!)
                 ?.customer
                 .id;
@@ -193,7 +194,7 @@ class TaxiAuthController extends GetxController {
   @override
   void onClose() {
     mezDbgPrint(
-        "[+] TaxiAuthController::dispose ---------> Was invoked ! ${this.hashCode}");
+        "[+] TaxiAuthController::dispose ---------> Was invoked ! $hashCode");
 
     _taxiStateNodeListener?.cancel();
     _taxiStateNodeListener = null;

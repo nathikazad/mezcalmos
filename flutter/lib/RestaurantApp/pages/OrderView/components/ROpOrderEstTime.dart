@@ -4,13 +4,14 @@ import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
-// dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
-//     ["OrderView"]["Components"]["ROpOrderEstTime"];
+dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
+    ['pages']['ROpOrderView']["components"]["ROpOrderEstTime"];
 
 class ROpOrderEstTime extends StatefulWidget {
   const ROpOrderEstTime({Key? key, required this.order}) : super(key: key);
@@ -50,7 +51,7 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Estimated food ready time",
+                    '${_i18n()["title"]}',
                     style: Get.theme.textTheme.bodyText1,
                   ),
                   SizedBox(
@@ -98,7 +99,7 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
                         height: 15,
                       ),
                       Text(
-                        "Estimated finish time",
+                        "${_i18n()["title"]}",
                         style: Get.textTheme.bodyText1,
                       ),
                       SizedBox(
@@ -139,7 +140,7 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
                   size: 18,
                 )
               : Text(
-                  "Set",
+                  '${_i18n()["set"]}',
                   style: Get.textTheme.bodyText1
                       ?.copyWith(color: primaryBlueColor),
                 ),
@@ -173,7 +174,7 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
                     ),
                   )
                 : Text(
-                    "Confirm",
+                    '${_i18n()["confirm"]}',
                     style:
                         Get.textTheme.bodyText1?.copyWith(color: Colors.white),
                   ),
@@ -199,7 +200,7 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
           padding: const EdgeInsets.all(5),
           alignment: Alignment.center,
           child: Text(
-            "Cancel",
+            "${_i18n()["cancel"]}",
             style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
           ),
         ),
@@ -232,8 +233,8 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
                   );
                 },
                 initialTime: TimeOfDay(
-                    hour: widget.order.orderTime.hour,
-                    minute: widget.order.orderTime.minute))
+                    hour: widget.order.orderTime.toLocal().hour,
+                    minute: widget.order.orderTime.toLocal().minute))
             .then((TimeOfDay? value) {
           if (value != null) {
             selectedTime.value = value;
@@ -299,7 +300,7 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
             ),
             Obx(
               () => Text(
-                  "${DateFormat("dd MMMM yyyy").format(selectedDate.value?.toLocal() ?? DateTime.now())}"),
+                  "${DateFormat("dd MMMM yyyy").format(selectedDate.value?.toLocal() ?? DateTime.now().toLocal())}"),
             ),
             Spacer(),
             Icon(Icons.chevron_right_rounded)
@@ -311,7 +312,7 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
 
   void _setOrderEstTime(DateTime value) {
     isClicked.value = true;
-    if (value.difference(widget.order.orderTime).inMinutes > 30) {
+    if (value.difference(widget.order.orderTime).inMinutes > 5) {
       orderController
           .setEstimatedFoodReadyTime(widget.order.orderId, value)
           .whenComplete(() {
@@ -328,8 +329,8 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
       isClicked.value = false;
       Get.showSnackbar(GetSnackBar(
         snackPosition: SnackPosition.TOP,
-        title: "Error",
-        message: "Error text",
+        title: '${_i18n()["error"]}',
+        message: '${_i18n()["minTimes"]}',
       ));
     }
   }

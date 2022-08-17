@@ -142,7 +142,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
                 height: 25,
               ),
               Text(
-                "Category Description",
+                "${_i18n()["catDesc"]}",
                 style: Get.textTheme.bodyText1,
               ),
               SizedBox(
@@ -154,14 +154,14 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
                 style: Get.textTheme.bodyText1,
                 controller: _viewController.primaryCatDesc,
                 decoration: InputDecoration(
-                  hintText: '${_i18n()["categoryNameHint"]}',
+                  hintText: '${_i18n()["categoryDescHint"]}',
                 ),
               ),
               SizedBox(
                 height: 25,
               ),
               Text(
-                "Category Description in ${_viewController.secondaryLang.value!.toLanguageName()}",
+                "${_i18n()["catDescIn"]} ${_viewController.secondaryLang.value!.toLanguageName()}",
                 style: Get.textTheme.bodyText1,
               ),
               SizedBox(
@@ -173,7 +173,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
                 style: Get.textTheme.bodyText1,
                 controller: _viewController.secondaryCatDesc,
                 decoration: InputDecoration(
-                  hintText: '${_i18n()["categoryNameHint"]}',
+                  hintText: '${_i18n()["categoryDescHint"]}',
                 ),
               ),
             ],

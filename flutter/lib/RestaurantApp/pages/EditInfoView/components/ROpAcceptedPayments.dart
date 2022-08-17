@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
+    ['pages']['ROpEditInfoView']['components']['ROpAcceptedPayments'];
 
 class ROpAcceptedPayments extends StatefulWidget {
   const ROpAcceptedPayments({Key? key, required this.viewController})
@@ -27,7 +31,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Accepted payments",
+            '${_i18n()["acceptedPayments"]}',
             style: Get.textTheme.bodyText1,
           ),
           SizedBox(
@@ -41,7 +45,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
                 Flexible(
                   fit: FlexFit.tight,
                   child: Text(
-                    "Cash",
+                    '${_i18n()["cash"]}',
                     style: Get.textTheme.bodyText1,
                   ),
                 ),
@@ -73,7 +77,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
                     Flexible(
                       flex: 3,
                       child: Text(
-                        "Card",
+                        '${_i18n()["card"]}',
                         style: Get.textTheme.bodyText1,
                       ),
                     ),
@@ -96,23 +100,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
               }),
 
           //       ),
-          //     SizedBox(
-          //       width: 5,
-          //     ),
-          //     Flexible(
-          //       flex: 1,
-          //       child: Checkbox(
-          //           shape: CircleBorder(),
-          //           activeColor: primaryBlueColor,
-          //           value: widget.viewController.restaurant.value!.paymentInfo
-          //                   .acceptedPayments[PaymentType.Card] ==
-          //               true,
-          //           onChanged: (bool? v) {
-          //             widget.viewController.handleCardCheckBoxClick();
-          //           }),
-          //     )
-          //   ],
-          // ),
+
           SizedBox(
             height: 15,
           ),
@@ -143,7 +131,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
             width: 5,
           )),
           TextSpan(
-            text: "Setup",
+            text: '${_i18n()["setup"]}',
             style: Get.textTheme.bodyText1?.copyWith(color: Colors.white),
           )
         ])),
@@ -196,7 +184,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
     return Obx(() {
       if (widget
           .viewController.restaurant.value!.paymentInfo.getReqs.isNotEmpty)
-        return Container(
+        return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -205,8 +193,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
                   .shouldFixPayouts)
                 Container(
                   margin: const EdgeInsets.only(bottom: 5),
-                  child: Text(
-                      "Thanks for setup , you can now receive payments but you will not be able to withdraw money to your bank account"),
+                  child: Text('${_i18n()["stripeHelper"]}'),
                 ),
               RichText(
                 text: TextSpan(
@@ -222,15 +209,14 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
                       width: 5,
                     )),
                     TextSpan(
-                        text:
-                            "Please sign in to your stripe account and make sure you fill in all the requiremnts below",
+                        text: '${_i18n()["reqsHelper"]}',
                         style: Get.textTheme.bodyText2),
                   ],
                 ),
               ),
               Divider(),
               Text(
-                "Requirements :",
+                "${_i18n()["reqs"]} :",
                 style: Get.textTheme.bodyText1,
               ),
               SizedBox(
@@ -256,7 +242,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
                   children: [
                     Divider(),
                     Text(
-                      "Email ID : ${widget.viewController.restaurant.value!.paymentInfo.stripe?.email}",
+                      "${_i18n()["emailId"]} : ${widget.viewController.restaurant.value!.paymentInfo.stripe?.email}",
                       style: Get.textTheme.bodyText1,
                     ),
                   ],
@@ -266,7 +252,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
         );
       else {
         return Container(
-          child: Text("Empty"),
+          child: Text("${_i18n()["empty"]}"),
         );
       }
     });

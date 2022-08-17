@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/controllers/ItemViewController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:sizer/sizer.dart';
 
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpItemView"]["components"]["ROpItemAvChips"];
+
+//
 class ROpItemAvChips extends StatelessWidget {
   const ROpItemAvChips({Key? key, required this.viewController})
       : super(key: key);
@@ -22,7 +28,7 @@ class ROpItemAvChips extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Available",
+                    '${_i18n()["available"]}',
                     style: Get.textTheme.bodyText1,
                   ),
                   radioCircleButton(
@@ -42,7 +48,7 @@ class ROpItemAvChips extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Unavailable",
+                    "${_i18n()["unavailable"]}",
                     style: Get.textTheme.bodyText1,
                   ),
                   radioCircleButton(

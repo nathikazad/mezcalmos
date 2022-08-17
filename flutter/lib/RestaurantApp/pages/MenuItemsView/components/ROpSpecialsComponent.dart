@@ -3,8 +3,14 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpSpecialItemCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/controllers/ROpMenuViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpMenuView"]["components"]["ROpSpecialsComponent"];
+
+//
 class ROpSpecialsComponent extends StatelessWidget {
   const ROpSpecialsComponent(
       {Key? key, required this.viewController, required this.restaurantID})
@@ -25,7 +31,7 @@ class ROpSpecialsComponent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Current special items",
+                  '${_i18n()["currentSp"]}',
                   style: Get.textTheme.bodyText1,
                 ),
                 SizedBox(
@@ -52,7 +58,7 @@ class ROpSpecialsComponent extends StatelessWidget {
                   height: 25,
                 ),
                 Text(
-                  "Recent special items",
+                  '${_i18n()["recentSp"]}',
                   style: Get.textTheme.bodyText1,
                 ),
                 SizedBox(

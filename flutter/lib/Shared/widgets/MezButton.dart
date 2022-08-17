@@ -8,6 +8,8 @@ class MezButton extends StatefulWidget {
     Key? key,
     this.enabled = true,
     this.withGradient = false,
+    this.backgroundColor,
+    this.textColor,
     this.borderRadius = 10,
     this.height = 55,
     required this.label,
@@ -18,6 +20,8 @@ class MezButton extends StatefulWidget {
   final bool withGradient;
   final String label;
   final double height;
+  final Color? backgroundColor;
+  final Color? textColor;
   final Future<void> Function()? onClick;
   final double? borderRadius;
 
@@ -56,7 +60,9 @@ class _MezButtonState extends State<MezButton> {
               height: widget.height,
               decoration: BoxDecoration(
                   color: (widget.enabled && widget.onClick != null)
-                      ? primaryBlueColor
+                      ? (widget.backgroundColor != null)
+                          ? widget.backgroundColor
+                          : primaryBlueColor
                       : Colors.grey.shade400,
                   gradient: (widget.withGradient &&
                           widget.enabled &&
@@ -77,7 +83,7 @@ class _MezButtonState extends State<MezButton> {
                     : Text(
                         widget.label,
                         style: Get.textTheme.bodyText1
-                            ?.copyWith(color: Colors.white),
+                            ?.copyWith(color: widget.textColor ?? Colors.white),
                       ),
               ),
             )),

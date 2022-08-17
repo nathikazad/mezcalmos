@@ -9,15 +9,14 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
-    ['DashboardView']['OrdersListView']['LaundryOpOrdersListView'];
+dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
+    ['pages']['ROpPastOrdersList'];
 
 class ROpPastOrdersList extends StatefulWidget {
   const ROpPastOrdersList({Key? key}) : super(key: key);
 
   @override
-  State<ROpPastOrdersList> createState() =>
-      _ROpPastOrdersListState();
+  State<ROpPastOrdersList> createState() => _ROpPastOrdersListState();
 }
 
 class _ROpPastOrdersListState extends State<ROpPastOrdersList> {

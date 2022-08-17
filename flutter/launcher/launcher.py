@@ -7,7 +7,165 @@ from sys import argv, stderr, platform
 from enum import Enum
 import subprocess as proc
 import sys
+from time import sleep
+from typing import Type
 
+SHOULD_ASK_4_INPUT = False
+CHECK_INPUT  = lambda:input() if SHOULD_ASK_4_INPUT else None
+
+
+class TaxiDriver:
+    def __init__(self , driverId:str , image:str, name:str , price:int , sleep_time:int) -> None:
+        self.driverId = driverId
+        self.image = image
+        self.name = name
+        self.price = price
+        self.sleep_time = sleep_time
+
+    def driverInfos(self) -> dict:
+        return { 
+            "id" : self.driverId,
+            "image" : self.image,
+            "language" : "en",
+            "name" : self.name
+        }
+
+
+
+
+def simulate_counter_offers(orderId:str , customerId:str) -> None:
+    from requests import get
+    import polyline
+    import firebase_admin
+    from firebase_admin import credentials
+    from firebase_admin import db
+    # Fetch the service account key JSON file contents
+    cred = credentials.Certificate('mezcalmos-staging-6694f0583889.json')
+    # Initialize the app with a service account, granting admin privileges
+    firebase_admin.initialize_app(cred, {
+        'databaseURL': 'https://mezcalmos-staging-default-rtdb.firebaseio.com'
+    })
+    ref = db.reference('/')
+    from datetime import datetime as d, timedelta as t
+    import math, json
+
+    drivers = [
+        TaxiDriver(
+            "y6bO8Pzp7eRdJULMtMgUCVhjBOm2",
+            "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+            "Anna Dalson",
+            price=50,
+            sleep_time=10
+        ),
+        TaxiDriver(
+            "pL7tWGSuEaWEkTv4i2U3yiss3sV2",
+            "https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?ixlib=rb-1.2.1&w=1080&fit=max&q=80&fm=jpg&crop=entropy&cs=tinysrgb",
+            "Roberto Sal" ,
+            price=43,
+            sleep_time=6
+        ),
+        TaxiDriver(
+            "kdm7xmAgCoTAqU4kj4xdhzBnSrY2",
+            "https://images.unsplash.com/photo-1617171594279-3aa1f300a0f2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cmVkJTIwbWFufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+            "Sam Kito",
+            price=40,
+            sleep_time=None
+        ),
+    ]
+
+    for driver in drivers:
+        validISOdate = d.now() + t(seconds=30, hours=-1)
+        offerValidTimeEpoch = validISOdate.strftime("%s")
+
+        payload = {
+            "driverInfo" : driver.driverInfos(),
+            "price"  : driver.price,
+            "status" : "submitted",
+            "offerValidTime" : validISOdate.strftime('%Y-%m-%dT%H:%M:%SZ'),
+            "offerValidTimeEpoch" : offerValidTimeEpoch
+        }
+        print(f"Setting Payload : \n{json.dumps(payload, indent=4)}\n------------------------------")
+        path = f"customers/inProcessOrders/{customerId}/{orderId}/counterOffers/{driver.driverId}"
+        ref.child(path).set(payload)
+        if driver.sleep_time != None:
+            sleep(driver.sleep_time)
+  
+    
+
+# driverId, driverType, From, To, Duration
+def simulateDriverMovements(customerId, orderId, orderType, driverId, driverType, start, end , duration_sec, providerId=None):
+	# google-token : AIzaSyBPDCJv6MUMO-cDhVrcJ2g7JZU-bg_6Kq8
+    from requests import get
+    import polyline
+    import firebase_admin
+    from firebase_admin import credentials
+    from firebase_admin import db
+    # Fetch the service account key JSON file contents
+    cred = credentials.Certificate('mezcalmos-staging-6694f0583889.json')
+    # Initialize the app with a service account, granting admin privileges
+    firebase_admin.initialize_app(cred, {
+        'databaseURL': 'https://mezcalmos-staging-default-rtdb.firebaseio.com'
+    })
+    ref = db.reference('/')
+
+    paths_resto = [
+
+        f'deliveryDrivers/inProcessOrders/{driverId}/{orderId}/{driverType}/location/',
+        f'orders/inProcess/{orderType}/{orderId}/{driverType}/location/',
+        f'restaurants/inProcessOrders/{providerId}/{orderId}/{driverType}/location/',
+        f'customers/inProcessOrders/{customerId}/{orderId}/{driverType}/location/',
+
+    ]
+
+    paths_laundry = [
+
+        f'deliveryDrivers/inProcessOrders/{driverId}/{orderId}/{driverType}/location/',
+        f'orders/inProcess/{orderType}/{orderId}/{driverType}/location/',
+        f'laundries/inProcessOrders/{providerId}/{orderId}/{driverType}/location/',
+        f'customers/inProcessOrders/{customerId}/{orderId}/{driverType}/location/',
+
+    ]
+
+    paths_taxi = [
+
+        f'deliveryDrivers/inProcessOrders/{driverId}/{orderId}/{driverType}/location/',
+        f'orders/inProcess/{orderType}/{orderId}/{driverType}/location/',
+        f'laundries/inProcessOrders/{providerId}/{orderId}/{driverType}/location/',
+        f'customers/inProcessOrders/{customerId}/{orderId}/{driverType}/location/',
+
+    ]
+
+
+    link = f'https://maps.googleapis.com/maps/api/directions/json?origin={start}&destination={end}&key=AIzaSyBPDCJv6MUMO-cDhVrcJ2g7JZU-bg_6Kq8'
+    res  = get(link).content
+    res  = json.loads(res)
+    poly = res['routes'][0]['overview_polyline']['points']
+    print(f"Poly generated from maps : {poly} ")
+    coords = polyline.decode(poly)
+    sleep_time = duration_sec // len(coords)
+    print(f"[~] Updating location each {sleep_time}s")
+    # print(coords)
+    # exit(0)
+    # r = False
+    for coord in coords:
+        # if coord[0] == 16.77054:
+        #     r = True
+        # if r:
+        to_write  = {
+            "lastUpdateTime" : "2022-07-29 17:52:12.014026Z",
+            "position" : {
+                "lat" : coord[0], 
+                "lng" : coord[1],
+            }
+        }
+
+        for path in paths_laundry:
+            print(f"[+] Applying {path} => lat:{coord[0]}, lng:{coord[1]}")
+            CHECK_INPUT()
+            ref.child(path).set(to_write)
+        sleep(sleep_time)
+
+    exit(0)
 # LAST UPDATE INFOS : 
 # ADDED Patching Android - Ios icons.
 # ADDED .ipa support with versioning and removed auto IOS_TARGETED_DEVICES = 1,2 TO 1 only.
@@ -741,5 +899,31 @@ class Config:
         #     open('.checksum', 'w+').write(currentBuild)
 
 if __name__ == "__main__":
+    if 'offers' in argv:
+        simulate_counter_offers(
+            orderId= "-N8_J16QRVKzS9rnI4DH",
+            customerId= "tSG0eSFZNGNA7grjBPFEBbpYwjE3"
+        )
+        exit(0)
+    if 'drive' in argv:
+        # Taxi called from : 
+        # Customer's destination To :
+        simulateDriverMovements( 
+            customerId="tSG0eSFZNGNA7grjBPFEBbpYwjE3", # Montassar's customer id
+            orderId="-N8kdMdTJ5VOwEBXZu5h", # taxi order id
+            orderType="laundry",
+            driverId="oAxB9JquC1S7zQyRUuZF2gI1suL2", # driverId
+            driverType="dropoffDriver",
+            providerId="-N5kJoc2aVz9Qdm9X9yP",
+            # Customer's Home : 15.835299822564249,-97.0356907323003
+            # Provider location : 15.835502076340775,-97.04348623752594
+            # driver location - 15.8330619,-97.0368584,17
+            end="15.835299822564249,-97.0356907323003",
+            start="15.835502076340775,-97.04348623752594",
+            # start="15.835299822564249,-97.0356907323003",
+            # start="15.8330619,-97.0368584", # sense interdit
+            # start="15.8337,-97.04205", # driver near restaurant
+            duration_sec=20
+        )
     Config(argv)
     exit(DW_EXIT_REASONS.NORMAL)

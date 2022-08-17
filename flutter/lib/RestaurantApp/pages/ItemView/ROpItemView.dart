@@ -8,6 +8,7 @@ import 'package:mezcalmos/RestaurantApp/pages/ItemView/components/RopItemOptionC
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -17,6 +18,11 @@ import 'package:mezcalmos/Shared/widgets/CallToActionButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpItemView"];
+
+//
 class ROpItemView extends StatefulWidget {
   const ROpItemView({Key? key}) : super(key: key);
 
@@ -32,13 +38,15 @@ class _ROpItemViewState extends State<ROpItemView>
   String? categoryId;
   bool? specials;
   ItemViewController viewController = ItemViewController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _prformKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _scformKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     itemId = Get.parameters["itemId"];
     categoryId = Get.parameters["categoryId"];
     restuarantID = Get.parameters["restaurantId"];
+    mezDbgPrint("Restuarnt id in item view ============> $restuarantID");
     if (restuarantID != null) {
       if (Get.arguments != null) {
         specials = Get.arguments["specials"] as bool;
@@ -74,15 +82,12 @@ class _ROpItemViewState extends State<ROpItemView>
             body: Obx(
               () {
                 if (viewController.restaurant.value != null) {
-                  return Form(
-                    key: _formKey,
-                    child: TabBarView(
-                      controller: _tabController,
-                      children: [
-                        _primaryTab(),
-                        _secondaryTab(),
-                      ],
-                    ),
+                  return TabBarView(
+                    controller: _tabController,
+                    children: [
+                      _primaryTab(),
+                      _secondaryTab(),
+                    ],
                   );
                 } else {
                   return CircularProgressIndicator();
@@ -105,18 +110,11 @@ class _ROpItemViewState extends State<ROpItemView>
     return Obx(
       () => CallToActionButton(
         height: 65,
-        text: (viewController.editMode.isTrue) ? "Save item" : "Add item",
+        text: (viewController.editMode.isTrue)
+            ? '${_i18n()["saveItem"]}'
+            : '${_i18n()["addItem"]}',
         onTap: () async {
-          if (viewController.isSecondLangValid) {
-            _tabController.index = 0;
-            if (_formKey.currentState!.validate()) {
-              mezDbgPrint("Calling save");
-              await viewController.saveItem();
-            }
-          } else {
-            _tabController.index = _tabController.length - 1;
-            _formKey.currentState!.validate();
-          }
+          await _handleSaveBtn();
         },
       ),
     );
@@ -125,7 +123,7 @@ class _ROpItemViewState extends State<ROpItemView>
   AppBar _appBar() {
     return mezcalmosAppBar(AppBarLeftButtonType.Back,
         onClick: Get.back,
-        title: "Item",
+        title: '${_i18n()["item"]}',
         showNotifications: true,
         tabBar: TabBar(controller: _tabController, tabs: [
           Tab(
@@ -142,46 +140,49 @@ class _ROpItemViewState extends State<ROpItemView>
   Widget _secondaryTab() {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 8,
-          ),
-          Text(
-            "Item name",
-            style: Get.textTheme.bodyText1,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          TextFormField(
-            style: Get.textTheme.bodyText1,
-            controller: viewController.scItemNameController,
-            validator: (String? value) {
-              if (value == null || value.isEmpty) {
-                return "Required";
-              }
-              return null;
-            },
-          ),
-          SizedBox(
-            height: 25,
-          ),
-          Text(
-            "Item Description",
-            style: Get.textTheme.bodyText1,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          TextFormField(
-            style: Get.textTheme.bodyText1,
-            minLines: 4,
-            maxLines: 6,
-            controller: viewController.scItemDescController,
-          ),
-        ],
+      child: Form(
+        key: _scformKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 8,
+            ),
+            Text(
+              '${_i18n()["itemName"]}',
+              style: Get.textTheme.bodyText1,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              style: Get.textTheme.bodyText1,
+              controller: viewController.scItemNameController,
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return '${_i18n()["required"]}';
+                }
+                return null;
+              },
+            ),
+            SizedBox(
+              height: 25,
+            ),
+            Text(
+              '${_i18n()["itemDesc"]}',
+              style: Get.textTheme.bodyText1,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              style: Get.textTheme.bodyText1,
+              minLines: 4,
+              maxLines: 6,
+              controller: viewController.scItemDescController,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -189,125 +190,128 @@ class _ROpItemViewState extends State<ROpItemView>
   Widget _primaryTab() {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ROpItemImage(
-            viewController: viewController,
-          ),
-          if (viewController.editMode.isTrue)
-            ROpItemAvChips(
+      child: Form(
+        key: _prformKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ROpItemImage(
               viewController: viewController,
             ),
-          const SizedBox(
-            height: 35,
-          ),
-          Text(
-            "Item name",
-            style: Get.textTheme.bodyText1,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          TextFormField(
-            style: Get.textTheme.bodyText1,
-            controller: viewController.prItemNameController,
-            validator: (String? value) {
-              if (value == null || value.isEmpty) {
-                return "Required";
-              }
-              return null;
-            },
-          ),
-          const SizedBox(
-            height: 25,
-          ),
-          Text(
-            "Item Price",
-            style: Get.textTheme.bodyText1,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          TextFormField(
-            controller: viewController.itemPriceController,
-            validator: (String? value) {
-              if (value == null || value.isEmpty) {
-                return "Required";
-              }
-              return null;
-            },
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
-            ],
-            textAlignVertical: TextAlignVertical.center,
-            style: Get.textTheme.bodyText1,
-            decoration: InputDecoration(
-                prefixIconColor: primaryBlueColor,
-                prefixIcon: Icon(Icons.attach_money)),
-          ),
-          const SizedBox(
-            height: 25,
-          ),
-          Text(
-            "Item Description",
-            style: Get.textTheme.bodyText1,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          TextFormField(
-            style: Get.textTheme.bodyText1,
-            maxLines: 6,
-            minLines: 4,
-            controller: viewController.prItemDescController,
-          ),
-          const SizedBox(
-            height: 25,
-          ),
-          if (viewController.specialMode.value == null ||
-              viewController.specialMode.value == false)
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Category",
-                  style: Get.textTheme.bodyText1,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                ROpItemCategorySelector(viewController: viewController),
-              ],
+            if (viewController.editMode.isTrue)
+              ROpItemAvChips(
+                viewController: viewController,
+              ),
+            const SizedBox(
+              height: 35,
             ),
-          const SizedBox(
-            height: 25,
-          ),
-          Text(
-            "Item options",
-            style: Get.textTheme.bodyText1,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          ROpItemOptionCard(
-            viewController: viewController,
-            itemId: itemId,
-            categoryID: categoryId,
-          ),
-          MezAddButton(
-            title: "Add option",
-            onClick: () async {
-              final Option? newOption = await Get.toNamed(
-                  getROpOptionRoute(restaurantId: restuarantID!)) as Option?;
-              if (newOption != null) {
-                mezDbgPrint("From item view ===> ${newOption.toJson()}");
-                viewController.addOption(newOption);
-              }
-            },
-          ),
-          _deleteItemBtn()
-        ],
+            Text(
+              '${_i18n()["itemName"]}',
+              style: Get.textTheme.bodyText1,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              style: Get.textTheme.bodyText1,
+              controller: viewController.prItemNameController,
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return '${_i18n()["required"]}';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            Text(
+              '${_i18n()["itemPrice"]}',
+              style: Get.textTheme.bodyText1,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              controller: viewController.itemPriceController,
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return '${_i18n()["required"]}';
+                }
+                return null;
+              },
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+              ],
+              textAlignVertical: TextAlignVertical.center,
+              style: Get.textTheme.bodyText1,
+              decoration: InputDecoration(
+                  prefixIconColor: primaryBlueColor,
+                  prefixIcon: Icon(Icons.attach_money)),
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            Text(
+              '${_i18n()["itemDesc"]}',
+              style: Get.textTheme.bodyText1,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              style: Get.textTheme.bodyText1,
+              maxLines: 6,
+              minLines: 4,
+              controller: viewController.prItemDescController,
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            if (viewController.specialMode.value == null ||
+                viewController.specialMode.value == false)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${_i18n()["category"]}',
+                    style: Get.textTheme.bodyText1,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ROpItemCategorySelector(viewController: viewController),
+                ],
+              ),
+            const SizedBox(
+              height: 25,
+            ),
+            Text(
+              '${_i18n()["itemOptions"]}',
+              style: Get.textTheme.bodyText1,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ROpItemOptionCard(
+              viewController: viewController,
+              itemId: itemId,
+              restaurantID: restuarantID!,
+              categoryID: categoryId,
+            ),
+            MezAddButton(
+              title: '${_i18n()["addOption"]}',
+              onClick: () async {
+                final Option? newOption = await Get.toNamed(
+                    getROpOptionRoute(restaurantId: restuarantID!)) as Option?;
+                if (newOption != null) {
+                  viewController.addOption(newOption);
+                }
+              },
+            ),
+            _deleteItemBtn()
+          ],
+        ),
       ),
     );
   }
@@ -326,9 +330,9 @@ class _ROpItemViewState extends State<ROpItemView>
                           .deleteItem(itemId: itemId!, catgeoryId: categoryId)
                           .then((value) => Get.back());
                     },
-                        title: "Delete this item",
-                        helperText:
-                            "Are you sure you want to delete this item ");
+                        title: '${_i18n()["deleteTitle"]}',
+                        primaryButtonText: '${_i18n()["deleteBtn"]}',
+                        helperText: "${_i18n()["deleteHelper"]}");
                   },
                   child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 5),
@@ -343,10 +347,42 @@ class _ROpItemViewState extends State<ROpItemView>
                           SizedBox(
                             width: 10,
                           ),
-                          Text("Delete item"),
+                          Text("${_i18n()["deleteItem"]}"),
                         ],
                       )))
               : null);
     });
+  }
+
+  Future<void> _handleSaveBtn() async {
+    if (_tabController.index == 0) {
+      await _handleFirstTab();
+    } else {
+      await _handleSecondTab();
+    }
+  }
+
+  Future<void> _handleSecondTab() async {
+    if (viewController.firstFormValid == true &&
+        _scformKey.currentState?.validate() == true) {
+      await viewController.saveItem();
+    } else if (_scformKey.currentState?.validate() == true &&
+        _prformKey.currentState?.validate() != true) {
+      viewController.secondFormValid = true;
+      _tabController.index = 0;
+    }
+  }
+
+  Future<void> _handleFirstTab() async {
+    if (_prformKey.currentState?.validate() == true &&
+        (_scformKey.currentState?.validate() == true ||
+            viewController.secondFormValid)) {
+      await viewController.saveItem();
+    } else if (_prformKey.currentState?.validate() == true &&
+        _scformKey.currentState?.validate() != true) {
+      viewController.firstFormValid = true;
+
+      _tabController.index = 1;
+    }
   }
 }

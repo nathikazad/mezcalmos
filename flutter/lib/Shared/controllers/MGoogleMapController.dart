@@ -162,7 +162,7 @@ class MGoogleMapController {
 
   Future<void> addOrUpdateTaxiDriverMarker(String? markerId, LatLng? latLng,
       {String? markerTitle, bool fitWithinBounds = true}) async {
-    if (latLng != null || markerId != null) {
+    if (latLng != null && markerId != null) {
       // this check so we keep one single copy of the asset Bytes instead of re-croping again n again
       if (_taxiDriverImgDescruptorCopy == null) {
         _taxiDriverImgDescruptorCopy = await cropRonded(
@@ -173,23 +173,24 @@ class MGoogleMapController {
 
       _addOrUpdateMarker(
         MezMarker(
-            fitWithinBounds: fitWithinBounds,
-            infoWindow: markerTitle == null
-                ? InfoWindow.noText
-                : InfoWindow(title: markerTitle),
-            markerId: MarkerId(markerId!),
-            icon: await bitmapDescriptorLoader(
-              (await cropRonded(
-                (await rootBundle.load(taxi_driver_marker_asset))
-                    .buffer
-                    .asUint8List(),
-              )),
-              _calculateMarkersSize(),
-              _calculateMarkersSize(),
-              isBytes: true,
-            ),
-            flat: true,
-            position: latLng!),
+          fitWithinBounds: fitWithinBounds,
+          infoWindow: markerTitle == null
+              ? InfoWindow.noText
+              : InfoWindow(title: markerTitle),
+          markerId: MarkerId(markerId!),
+          icon: await bitmapDescriptorLoader(
+            (await cropRonded(
+              (await rootBundle.load(taxi_driver_marker_asset))
+                  .buffer
+                  .asUint8List(),
+            )),
+            _calculateMarkersSize(),
+            _calculateMarkersSize(),
+            isBytes: true,
+          ),
+          flat: true,
+          position: latLng,
+        ),
       );
     } else
       mezDbgPrint(

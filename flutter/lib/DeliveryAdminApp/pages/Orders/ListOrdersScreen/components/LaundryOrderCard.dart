@@ -143,7 +143,7 @@ Widget getOrderWidget(LaundryOrderStatus status) {
         height: 50,
         width: 60,
         child: RiveAnimation.asset(
-          "assets/animation/motorbikeWithSmokeAnimation.riv",
+          "assets/animation/scooterWashingMachine.riv",
           fit: BoxFit.cover,
         ),
       );
@@ -181,7 +181,7 @@ Widget getOrderWidget(LaundryOrderStatus status) {
         height: 50,
         width: 60,
         child: RiveAnimation.asset(
-          "assets/animation/motorbikeWithSmokeAnimation.riv",
+          "assets/animation/scooterWashingMachine.riv",
           fit: BoxFit.cover,
         ),
       );

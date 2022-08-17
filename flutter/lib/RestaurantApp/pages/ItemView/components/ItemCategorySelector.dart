@@ -3,12 +3,11 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
-    ['EditInfoView']['components']['LanguageSelectorComponent'];
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpItemView"]["components"]["ROpItemCategorySelector"];
 
 class ROpItemCategorySelector extends StatefulWidget {
   const ROpItemCategorySelector({Key? key, required this.viewController})
@@ -53,12 +52,9 @@ class _ROpItemCategorySelectorState extends State<ROpItemCategorySelector> {
           onChanged: (Category? newValue) async {
             if (newValue != null) {
               if (newValue.id == "addNew") {
-                mezDbgPrint("ADDING NEW CATEGORY");
                 // ignore: unawaited_futures
                 final Category? newCat = await Get.toNamed(kCategoryView,
                     arguments: {"shouldSave": false}) as Category?;
-
-                mezDbgPrint("Done adding ✅");
 
                 if (newCat != null) {
                   widget.viewController.categories.add(newCat);
@@ -77,7 +73,7 @@ class _ROpItemCategorySelectorState extends State<ROpItemCategorySelector> {
           },
           validator: (Category? value) {
             if (value == null) {
-              return "Please select a category";
+              return '${_i18n()["errorText"]}';
             } else {
               return null;
             }
@@ -88,7 +84,7 @@ class _ROpItemCategorySelectorState extends State<ROpItemCategorySelector> {
                 value: value,
                 // enabled: (widget.oppositeLanguageValue != null &&
                 //     widget.oppositeLanguageValue!.value != value),
-                child: Text(value.name![userLanguage] ?? "Category name error",
+                child: Text(value.name![userLanguage] ?? "error",
                     style: Get.textTheme.bodyText2?.copyWith(
                       fontWeight: FontWeight.w700,
                     )));

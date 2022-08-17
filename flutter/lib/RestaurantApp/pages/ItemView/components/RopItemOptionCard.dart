@@ -5,14 +5,18 @@ import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class ROpItemOptionCard extends StatefulWidget {
   const ROpItemOptionCard(
-      {Key? key, this.itemId, this.categoryID, required this.viewController})
+      {Key? key,
+      this.itemId,
+      this.categoryID,
+      required this.viewController,
+      required this.restaurantID})
       : super(key: key);
-
+  final String restaurantID;
   final String? categoryID;
   final String? itemId;
   final ItemViewController viewController;
@@ -96,11 +100,13 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
   Widget _editBtn({required Option option}) {
     return InkWell(
       onTap: () async {
-        final Option? newOp = await Get.toNamed(kOptionView, arguments: {
-          "option": option,
-          "itemId": widget.itemId,
-          "categoryId": widget.categoryID
-        }) as Option?;
+        final Option? newOp = await Get.toNamed(
+            getROpOptionRoute(restaurantId: widget.restaurantID),
+            arguments: {
+              "option": option,
+              "itemId": widget.itemId,
+              "categoryId": widget.categoryID
+            }) as Option?;
         if (newOp != null) {
           widget.viewController.editOption(option.id, newOp);
         } else {

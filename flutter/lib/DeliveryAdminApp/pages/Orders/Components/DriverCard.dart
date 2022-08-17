@@ -16,24 +16,27 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["Orders"]["components"]["driverOrderCard"];
 
-class DriverCard extends StatelessWidget {
+class DriverCard extends StatefulWidget {
   const DriverCard({
     Key? key,
     required this.driver,
     required this.assignDriverCallback,
     required this.order,
-    this.driverUserInfoAndUpdateStatus,
   }) : super(key: key);
 
   final Order order;
   final DeliveryDriverUserInfo? driver;
-  final void Function({
+  final Future<void> Function({
     required DeliveryDriver deliveryDriver,
     required bool changeDriver,
   }) assignDriverCallback;
 
-  final DriverUserInfoAndUpdateStatus? driverUserInfoAndUpdateStatus;
+  @override
+  State<DriverCard> createState() => _DriverCardState();
+}
 
+class _DriverCardState extends State<DriverCard> {
+  RxBool loading = RxBool(false);
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
@@ -50,21 +53,18 @@ class DriverCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 1200),
-              child: (driverUserInfoAndUpdateStatus == null ||
-                      (driverUserInfoAndUpdateStatus != null &&
-                          driverUserInfoAndUpdateStatus ==
-                              DriverUserInfoAndUpdateStatus.staring))
+            Container(
+              child: (loading.isFalse)
                   ? Card(
-                      color: (navigateAndGetDriver() != null || driver != null)
+                      color: (navigateAndGetDriver() != null ||
+                              widget.driver != null)
                           ? Colors.white
                           : Colors.grey.shade400,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                         side: BorderSide(
                           width: 1.5,
-                          color: (driver != null)
+                          color: (widget.driver != null)
                               ? Colors.green
                               : Colors.redAccent,
                         ),
@@ -76,19 +76,17 @@ class DriverCard extends StatelessWidget {
                           width: double.infinity,
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16, vertical: 10),
-                          child: (driver != null)
+                          child: (widget.driver != null)
                               ? driverInfoComponent(textTheme, context)
                               : noDriverComponent(context, textTheme),
                         ),
                       ),
                     )
-                  :
-                  // else if (driverUserInfoAndUpdateStatus ==
-                  //     DriverUserInfoAndUpdateStatus.uploading)
-                  Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                  : Card(
+                      child: Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 10),
                         child: CircularProgressIndicator(),
                       ),
                     ),
@@ -102,35 +100,45 @@ class DriverCard extends StatelessWidget {
   Future<void> _getNewDriverWhenDriverIsNull() async {
     final DeliveryDriver? newDriver = await Get.toNamed<dynamic>(
       kDriversListRoute,
-      arguments: order,
+      arguments: widget.order,
     );
-    if (newDriver != null)
-      assignDriverCallback(
-        deliveryDriver: newDriver,
-        changeDriver: false,
-      );
+    if (newDriver != null) {
+      loading.value = true;
+      // ignore: unawaited_futures
+      widget
+          .assignDriverCallback(
+            deliveryDriver: newDriver,
+            changeDriver: false,
+          )
+          .whenComplete(() => loading.value = false);
+    }
   }
 
   Future<void> _getNewDriverWhenDriverIsNotNull() async {
     /// Navigate to kDriversListRoute and get DeliveryDriver.
     final DeliveryDriver? newDriver = await Get.toNamed<dynamic>(
       kDriversListRoute,
-      arguments: order,
+      arguments: widget.order,
     ) as DeliveryDriver?;
     mezDbgPrint(
         '_getNewDriverWhenDriverIsNotNull: newDriver ${newDriver.toString()}');
-    if (newDriver != null)
-      assignDriverCallback(
-        deliveryDriver: newDriver,
-        changeDriver: true,
-      );
+    if (newDriver != null) {
+      loading.value = true;
+      // ignore: unawaited_futures
+      widget
+          .assignDriverCallback(
+            deliveryDriver: newDriver,
+            changeDriver: true,
+          )
+          .whenComplete(() => loading.value = false);
+    }
   }
 
   void Function()? navigateAndGetDriver() {
-    if (driver == null) {
+    if (widget.driver == null) {
       mezDbgPrint('navigateAndGetDriver driver ');
-      if (order.orderType == OrderType.Laundry) {
-        if ((order as LaundryOrder).laundry == null) {
+      if (widget.order.orderType == OrderType.Laundry) {
+        if ((widget.order as LaundryOrder).laundry == null) {
           return null;
         } else {
           return () async {
@@ -144,8 +152,8 @@ class DriverCard extends StatelessWidget {
       }
     } else {
       // TODO: @hamza change driver funcitonality
-      if (order.orderType == OrderType.Laundry) {
-        if ((order as LaundryOrder).laundry == null) {
+      if (widget.order.orderType == OrderType.Laundry) {
+        if ((widget.order as LaundryOrder).laundry == null) {
           return null;
         } else {
           return () async {
@@ -186,7 +194,7 @@ class DriverCard extends StatelessWidget {
       children: <Widget>[
         CircleAvatar(
           radius: 25,
-          backgroundImage: CachedNetworkImageProvider(driver!.image),
+          backgroundImage: CachedNetworkImageProvider(widget.driver!.image),
         ),
         const SizedBox(width: 10),
         Flexible(
@@ -196,7 +204,7 @@ class DriverCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                driver!.name,
+                widget.driver!.name,
                 style: textTheme.bodyText2,
               ),
               const SizedBox(height: 5),
@@ -204,7 +212,7 @@ class DriverCard extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        if (order.inProcess())
+        if (widget.order.inProcess())
           Row(
             children: <Widget>[
               CircleAvatar(
@@ -227,7 +235,7 @@ class DriverCard extends StatelessWidget {
                         Icons.textsms_rounded,
                         color: Get.theme.primaryColorLight,
                       )),
-                  order.orderType == OrderType.Restaurant
+                  widget.order.orderType == OrderType.Restaurant
                       ? _restaurantMessagesDot(context)
                       : _laundryMessagesRedDot(context),
                 ],
@@ -241,11 +249,13 @@ class DriverCard extends StatelessWidget {
   Widget _restaurantMessagesDot(BuildContext context) {
     return Obx(
       () {
-        if ((order as RestaurantOrder).serviceProviderDropOffDriverChatId !=
+        if ((widget.order as RestaurantOrder)
+                .serviceProviderDropOffDriverChatId !=
             null) {
           return Get.find<RestaurantOrderController>()
-                  .orderHaveNewMessageNotifications((order as RestaurantOrder)
-                      .serviceProviderDropOffDriverChatId!)
+                  .orderHaveNewMessageNotifications(
+                      (widget.order as RestaurantOrder)
+                          .serviceProviderDropOffDriverChatId!)
               ? _newMessageRedDot(context)
               : Container();
         } else {
@@ -256,21 +266,22 @@ class DriverCard extends StatelessWidget {
   }
 
   Widget _laundryMessagesRedDot(BuildContext context) {
-    if ((order as LaundryOrder).getCurrentPhase() == LaundryOrderPhase.Pickup) {
+    if ((widget.order as LaundryOrder).getCurrentPhase() ==
+        LaundryOrderPhase.Pickup) {
       return Obx(
         () => Get.find<LaundryOrderController>()
                 .orderHaveNewMessageNotifications(
-                    (order as TwoWayDeliverableOrder)
+                    (widget.order as TwoWayDeliverableOrder)
                         .serviceProviderPickupDriverChatId!)
             ? _newMessageRedDot(context)
             : Container(),
       );
-    } else if ((order as LaundryOrder).getCurrentPhase() ==
+    } else if ((widget.order as LaundryOrder).getCurrentPhase() ==
         LaundryOrderPhase.Dropoff) {
       return Obx(
         () => Get.find<LaundryOrderController>()
                 .orderHaveNewMessageNotifications(
-                    (order as TwoWayDeliverableOrder)
+                    (widget.order as TwoWayDeliverableOrder)
                         .serviceProviderDropOffDriverChatId!)
             ? _newMessageRedDot(context)
             : Container(),
@@ -308,16 +319,16 @@ class DriverCard extends StatelessWidget {
 
 // ------ FUNCTIONS ---------//
   void getRightMessageRoute() {
-    if (order.orderType == OrderType.Laundry) {
+    if (widget.order.orderType == OrderType.Laundry) {
       // START OF LAUNDRY ORDER LOGIC (PHASES)
-      if (((order as LaundryOrder).getCurrentPhase() ==
+      if (((widget.order as LaundryOrder).getCurrentPhase() ==
           LaundryOrderPhase.Pickup)) {
         _laundryPickupDriverMessageRoute();
       } else {
         _laundryDropOffDriverMessageRoute();
       }
       // END OF LAUNDRY ORDER LOGIC
-    } else if (order.orderType == OrderType.Restaurant) {
+    } else if (widget.order.orderType == OrderType.Restaurant) {
       // RESTAURANT  ORDER LOGIC
       restaurantDriverMessageRoute();
     }
@@ -326,27 +337,29 @@ class DriverCard extends StatelessWidget {
 // restaurant order driver message route function
   void restaurantDriverMessageRoute() {
     Get.toNamed<dynamic>(getMessagesRoute(
-        orderId: order.orderId,
+        orderId: widget.order.orderId,
         orderType: OrderType.Restaurant,
-        chatId: (order as DeliverableOrder).serviceProviderDropOffDriverChatId!,
+        chatId: (widget.order as DeliverableOrder)
+            .serviceProviderDropOffDriverChatId!,
         recipientType: ParticipantType.DeliveryDriver));
   }
 
 // laundry order  dropoff driver message route function
   void _laundryDropOffDriverMessageRoute() {
     Get.toNamed<dynamic>(getMessagesRoute(
-        orderId: order.orderId,
+        orderId: widget.order.orderId,
         orderType: OrderType.Laundry,
-        chatId: (order as DeliverableOrder).serviceProviderDropOffDriverChatId!,
+        chatId: (widget.order as DeliverableOrder)
+            .serviceProviderDropOffDriverChatId!,
         recipientType: ParticipantType.DeliveryDriver));
   }
 
 // laundry order pickup driver message route function
   void _laundryPickupDriverMessageRoute() {
     Get.toNamed<dynamic>(getMessagesRoute(
-        orderId: order.orderId,
+        orderId: widget.order.orderId,
         orderType: OrderType.Laundry,
-        chatId: (order as TwoWayDeliverableOrder)
+        chatId: (widget.order as TwoWayDeliverableOrder)
             .serviceProviderPickupDriverChatId!,
         recipientType: ParticipantType.DeliveryDriver));
   }

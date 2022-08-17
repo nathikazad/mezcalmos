@@ -10,12 +10,13 @@ import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/components/ROplanguag
 import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
-    ['EditInfoView']['EditInfoView'];
+dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
+    ['pages']['ROpEditInfoView']['ROpEditInfoView'];
 
 class ROpEditInfoView extends StatefulWidget {
   const ROpEditInfoView({Key? key}) : super(key: key);
@@ -80,11 +81,11 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
                 SizedBox(
                   height: 25,
                 ),
-                Text("Restaurant name"),
+                Text('${_i18n()["restaurantName"]}'),
                 SizedBox(
                   height: 5,
                 ),
-                _laundryNameTextField(),
+                _restNameTextField(),
                 SizedBox(
                   height: 15,
                 ),
@@ -94,9 +95,6 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
                     oppositeLanguageValue: editInfoController.secondaryLang,
                     onChangeShouldUpdateLang:
                         editInfoController.validatePrimaryLanguUpdate),
-                SizedBox(
-                  height: 5,
-                ),
                 SizedBox(
                   height: 15,
                 ),
@@ -111,6 +109,24 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
                       editInfoController.validateSecondaryLanguUpdate,
                   showDeleteIcon: true,
                 ),
+                SizedBox(
+                  height: 15,
+                ),
+                Text(
+                    'Description in ${editInfoController.primaryLang.value!.toLanguageName()}'),
+                SizedBox(
+                  height: 5,
+                ),
+                _prdescTextField(),
+                SizedBox(
+                  height: 15,
+                ),
+                Text(
+                    'Description in ${editInfoController.secondaryLang.value!.toLanguageName()}'),
+                SizedBox(
+                  height: 5,
+                ),
+                _scdescTextField(),
                 SizedBox(
                   height: 15,
                 ),
@@ -148,10 +164,28 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
     });
   }
 
-  TextFormField _laundryNameTextField() {
+  TextFormField _restNameTextField() {
     return TextFormField(
       controller: editInfoController.restaurantNameTxt,
       style: Get.textTheme.bodyText1,
+    );
+  }
+
+  TextFormField _prdescTextField() {
+    return TextFormField(
+      controller: editInfoController.prRestaurantDescTxt,
+      style: Get.textTheme.bodyText1,
+      maxLines: 5,
+      minLines: 3,
+    );
+  }
+
+  TextFormField _scdescTextField() {
+    return TextFormField(
+      controller: editInfoController.scRestaurantDescTxt,
+      style: Get.textTheme.bodyText1,
+      maxLines: 5,
+      minLines: 3,
     );
   }
   // SAVE BUTTON ON THE FOOTER OF SCREEN

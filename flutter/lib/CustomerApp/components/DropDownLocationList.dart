@@ -98,6 +98,10 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
               isDense: true,
               isExpanded: true,
               icon: Icon(Icons.expand_more),
+              hint: Text(
+                '${_i18n()["chooseLoc"]}',
+                style: Get.textTheme.bodyText1,
+              ),
               items: listOfSavedLoacations
                   .map<DropdownMenuItem<SavedLocation>>(
                       (SavedLocation e) => buildItems(e, textTheme))

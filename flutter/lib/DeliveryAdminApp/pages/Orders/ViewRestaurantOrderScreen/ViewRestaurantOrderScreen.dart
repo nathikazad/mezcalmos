@@ -14,15 +14,16 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScree
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderShippingLocation.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderTotalCostCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/PastOrderInfo.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/SetOrderEstTime.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -152,6 +153,11 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                         : PastOrderInfo(order: order.value!),
 
                     //============================= Customer info====================
+
+                    if (order.value?.inProcess() ?? false)
+                      DaRestaurantOrderTime(
+                        order: order.value!,
+                      ),
                     if (order.value?.inProcess() ?? false)
                       DriverCard(
                         driver: order.value!.dropoffDriver,
@@ -168,7 +174,10 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                           );
                         },
                       ),
-
+                    if (order.value?.inProcess() ?? false)
+                      DaRestaurantOrderTime(
+                        order: order.value!,
+                      ),
                     if (order.value!.inDeliveryPhase()) ..._mapWidget,
 
                     OrderInfoCard(order: order),

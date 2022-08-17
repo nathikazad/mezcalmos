@@ -52,7 +52,7 @@ class RequestTaxiScreenWidgets {
 
   Widget topTimeBar({required void Function() onTap}) {
     return Positioned(
-      top: 60,
+      top: 101,
       left: 10,
       right: 10,
       child: InkWell(

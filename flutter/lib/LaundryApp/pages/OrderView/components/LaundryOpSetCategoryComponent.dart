@@ -58,7 +58,7 @@ class _LaundyOpSetCategoryComponentState
               height: 5,
             ),
             Container(
-              padding: const EdgeInsets.all(5),
+              //  padding: const EdgeInsets.all(5),
               child: Text(
                 "${_i18n()["itemsWeight"]}",
                 style: Theme.of(context).textTheme.bodyText1,
@@ -196,47 +196,31 @@ class _LaundyOpSetCategoryComponentState
             child: Text(
               item.name[userLanguage] ?? "",
               maxLines: 1,
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyText2,
             ),
           ),
-          SizedBox(
-            width: 8,
-          ),
           Text(
-            "\$${item.cost} x ${item.weight}KG = \$${item.weighedCost}",
+            "\$${item.cost.round()} x ${item.weight}KG = \$${item.weighedCost.round()}",
           ),
-          SizedBox(
-            width: 8,
-          ),
-          InkWell(
-            onTap: assignNewCategory(
-                context: context,
-                laundryOrderCostLineItem: item,
-                editMode: true),
-            customBorder: CircleBorder(),
-            child: Ink(
-                padding: const EdgeInsets.all(3),
-                decoration: BoxDecoration(
-                    color: Colors.grey.shade300, shape: BoxShape.circle),
-                child: Icon(Icons.edit)),
-          ),
-          SizedBox(
-            width: 8,
-          ),
-          InkWell(
-            onTap: () {
-              deleteItem(item);
-            },
-            customBorder: CircleBorder(),
-            child: Ink(
-                padding: const EdgeInsets.all(3),
-                decoration:
-                    BoxDecoration(color: offRedColor, shape: BoxShape.circle),
-                child: Icon(
-                  Icons.delete,
-                  color: Colors.red,
-                )),
-          )
+          if (widget.order.isAtLaundry())
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: InkWell(
+                onTap: assignNewCategory(
+                    context: context,
+                    laundryOrderCostLineItem: item,
+                    editMode: true),
+                customBorder: CircleBorder(),
+                child: Ink(
+                    padding: const EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                        color: Colors.grey.shade300, shape: BoxShape.circle),
+                    child: Icon(
+                      Icons.edit_outlined,
+                      color: Colors.grey.shade600,
+                    )),
+              ),
+            ),
         ],
       ),
     );

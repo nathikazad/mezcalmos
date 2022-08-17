@@ -14,40 +14,45 @@ class NoOrdersComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // margin: const EdgeInsets.all(12),
-      alignment: Alignment.center,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: 10,
+    return Obx(
+      () {
+        Get.find<LanguageController>().notifyChildrens();
+        return Container(
+          // margin: const EdgeInsets.all(12),
+          alignment: Alignment.center,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: 25.h,
+                width: 70.w,
+                child: Image.asset(noOrdersAsset),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Text(
+                "${_i18n()["title"]}",
+                style: Get.textTheme.bodyText1,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                "${_i18n()["subtitle"]}",
+                style: Get.textTheme.bodyText1?.copyWith(
+                    fontSize: 11.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.grey.shade800),
+              ),
+              SizedBox(
+                height: 20.h,
+              )
+            ],
           ),
-          Container(
-            height: 220,
-            width: 200,
-            child: Image.asset(noOrdersAsset),
-          ),
-          SizedBox(
-            height: 25,
-          ),
-          Text(
-            "${_i18n()["title"]}",
-            style: Get.textTheme.bodyText1,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            "${_i18n()["subtitle"]}",
-            style: Get.textTheme.bodyText1?.copyWith(
-                fontSize: 11.sp,
-                fontWeight: FontWeight.w500,
-                color: Colors.grey.shade800),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

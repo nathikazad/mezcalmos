@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -81,7 +80,7 @@ Widget getOrderWidget(LaundryOrderStatus status) {
         height: 50,
         width: 60,
         child: RiveAnimation.asset(
-          "assets/animation/motorbikeWithSmokeAnimation.riv",
+          "assets/animation/scooterWashingMachine.riv",
           fit: BoxFit.cover,
         ),
       );
@@ -119,7 +118,7 @@ Widget getOrderWidget(LaundryOrderStatus status) {
         height: 50,
         width: 60,
         child: RiveAnimation.asset(
-          "assets/animation/motorbikeWithSmokeAnimation.riv",
+          "assets/animation/scooterWashingMachine.riv",
           fit: BoxFit.cover,
         ),
       );
