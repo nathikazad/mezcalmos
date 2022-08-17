@@ -6,7 +6,6 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/controllers/ROpMenuV
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
@@ -36,7 +35,6 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
   Widget build(BuildContext context) {
     return Obx(
       () {
-        mezDbgPrint(getName());
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 5),
           child: Column(
@@ -49,13 +47,6 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                     fit: FlexFit.tight,
                     child: Text(
                       widget.category.name![userLanguage]!,
-                      style: Get.textTheme.bodyText1,
-                    ),
-                  ),
-                  Flexible(
-                    fit: FlexFit.tight,
-                    child: Text(
-                      getName(),
                       style: Get.textTheme.bodyText1,
                     ),
                   ),
@@ -122,10 +113,6 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
         );
       },
     );
-  }
-
-  String getName() {
-    return widget.category.name![userLanguage]!;
   }
 
   Widget _categoryMenuBtn(BuildContext context) {

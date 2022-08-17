@@ -184,7 +184,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
     return Obx(() {
       if (widget
           .viewController.restaurant.value!.paymentInfo.getReqs.isNotEmpty)
-        return Container(
+        return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
