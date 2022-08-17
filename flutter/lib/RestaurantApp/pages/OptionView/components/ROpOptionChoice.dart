@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
-    ["pages"]["ROpOptionView"]["ROpOptionChoice"];
+    ["pages"]["ROpOptionView"]["components"]["ROpOptionChoice"];
 //
 
 class ROpOptionChoice extends StatelessWidget {
