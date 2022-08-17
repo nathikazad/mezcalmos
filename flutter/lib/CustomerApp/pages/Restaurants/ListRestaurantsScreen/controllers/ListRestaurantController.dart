@@ -30,6 +30,7 @@ class ListRestaurantsController {
     getShippingPrice();
     _restaurantsInfoController.getRestaurants().then((List<Restaurant> list) {
       _restaurants = list;
+      getAllItems();
       filter();
     }).whenComplete(() {
       isLoading.value = false;
@@ -73,6 +74,15 @@ class ListRestaurantsController {
 
   bool get byRestaurants {
     return searchType.value == SearchType.searchByRestaurantName;
+  }
+
+  void getAllItems() {
+    _restaurants.forEach((Restaurant element) {
+      filteredItems.addAll(element.itemsWithoutCategory);
+      element.getCategories.forEach((Category cat) {
+        filteredItems.addAll(cat.items);
+      });
+    });
   }
 }
 

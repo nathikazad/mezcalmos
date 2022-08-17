@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
 
@@ -425,12 +426,19 @@ class _CardFormState extends State<CardForm> {
           const SizedBox(
             height: 8,
           ),
-          TextButton(
-              child: Container(
-                  margin: const EdgeInsets.symmetric(vertical: 5),
-                  alignment: Alignment.center,
-                  child: Text("Save")),
-              onPressed: _isButtonEnabled ? createCard : null),
+          MezButton(
+            label: "Save",
+            onClick: () async {
+              if (_isButtonEnabled) {
+                await createCard();
+              }
+            },
+          ), // TextButton(
+          //     child: Container(
+          //         margin: const EdgeInsets.symmetric(vertical: 5),
+          //         alignment: Alignment.center,
+          //         child: Text("Save")),
+          //     onPressed: _isButtonEnabled ? createCard : null),
           const SizedBox(
             height: 8,
           ),

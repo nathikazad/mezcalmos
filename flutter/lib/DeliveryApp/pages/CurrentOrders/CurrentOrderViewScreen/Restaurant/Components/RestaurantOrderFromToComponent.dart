@@ -108,7 +108,7 @@ class _RestaurantOrderFromToComponentState
           },
         ),
       ),
-    )
+    );
   }
 
   bool _isTimesSetted() {
