@@ -37,22 +37,16 @@ class _AgoraCallState extends State<AgoraCall> {
     initCallTimer();
     // start the calling ringtone if callStatus == calling
     if (callStatus == CallStatus.calling) {
-      mezDbgPrint("Status ::: Calling");
       _settingsController
           .playCallingRingtone(autoRepeat: true)
           .then((int? streamId) {
-        mezDbgPrint("callingRingtoneId ::: $streamId");
         callingRingtoneId = streamId;
       });
     }
 
     callStatusStream = _sagora.callStatus.stream.listen((CallStatus event) {
-      mezDbgPrint("Stream::Status ::: $event");
-
       // in case callStatus changed to something else than [calling] for the first time , we stop playing the ringtone.
       if (event != CallStatus.calling && event != callStatus) {
-        mezDbgPrint(
-            "callStatusStream ::: [event != CallStatus.calling && event != callStatus]");
         _settingsController.stopCallingRingtone(streamId: callingRingtoneId);
       }
       if ((event == CallStatus.inCall) && event != callStatus) {

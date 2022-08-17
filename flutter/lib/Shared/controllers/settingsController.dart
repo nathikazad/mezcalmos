@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -10,7 +9,6 @@ import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/controllers/themeContoller.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:soundpool/soundpool.dart';
@@ -26,7 +24,7 @@ class SettingsController extends GetxController {
   int? _selectedNotificationsSoundId;
   // CALLS RINGTONES
   Soundpool _userCallingSoundPool = Soundpool.fromOptions(
-      options: SoundpoolOptions(streamType: StreamType.notification));
+      options: SoundpoolOptions(streamType: StreamType.music));
 
   int? _selectedCallingSoundId;
 
@@ -51,31 +49,21 @@ class SettingsController extends GetxController {
         sideMenuItems;
 
     // NOTIFICATION SOUND SETUP
-    if (GetStorage().read('notifSound') != null) {
-      // if it's not null then the user already specified a path to the Notification SOund (cached),
-      // which we will use it here.
-    } else {
-      final ByteData _soundData =
-          await rootBundle.load(aDefaultNotificationsSound);
-      _selectedNotificationsSoundId =
-          await _userNotificationsSoundPool.load(_soundData);
-    }
+
+    final ByteData _soundDataNotif =
+        await rootBundle.load(aDefaultNotificationsSound);
+    _selectedNotificationsSoundId =
+        await _userNotificationsSoundPool.load(_soundDataNotif);
     // CALL SOUND SETUP
-    final ByteData _soundData = await rootBundle.load(aDefaultCallingSound);
-    mezDbgPrint(
-      "[👨🏻][👨🏻][👨🏻][👨🏻][👨🏻][👨🏻][👨🏻][👨🏻][👨🏻] CALLING SOUND DATA =====> $_soundData",
-    );
-    _selectedCallingSoundId = await _userCallingSoundPool.load(_soundData);
-    mezDbgPrint(
-      "[👨🏻][👨🏻][👨🏻][👨🏻][👨🏻][👨🏻][👨🏻][👨🏻][👨🏻] _selectedCallingSoundId =====> $_selectedCallingSoundId",
-    );
+    final ByteData _soundDataCall = await rootBundle.load(aDefaultCallingSound);
+    _selectedCallingSoundId = await _userCallingSoundPool.load(_soundDataCall);
 
     // start Listening on Internet Connectivity !
     // startListeningForConnectivity();
     super.onInit();
   }
 
-  Future playNotificationSound({int? soundId}) async {
+  Future<void> playNotificationSound({int? soundId}) async {
     if (_selectedNotificationsSoundId != null)
       await _userNotificationsSoundPool.play(_selectedNotificationsSoundId!);
   }
@@ -84,11 +72,10 @@ class SettingsController extends GetxController {
   ///
   /// that way you can call [stopCallingRingtone] using that streamID.
   Future<int?> playCallingRingtone({bool autoRepeat = false}) async {
-    mezDbgPrint("CallinfSoundId =---> #$_selectedCallingSoundId");
     if (_selectedCallingSoundId != null) {
       return _userCallingSoundPool.play(
         _selectedCallingSoundId!,
-        repeat: autoRepeat ? 1 : 0,
+        repeat: autoRepeat ? 100 : 0,
       );
     }
     return Future<int?>.value(null);
