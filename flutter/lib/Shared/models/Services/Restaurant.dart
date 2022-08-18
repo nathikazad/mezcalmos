@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:collection/collection.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -141,7 +140,6 @@ class Restaurant extends Service {
   }
 
   Category? get getNoCategory {
-    mezDbgPrint("Getttting no cat =========> ${itemsWithoutCategory.length}");
     if (itemsWithoutCategory.isNotEmpty) {
       final Category noCategory = Category(id: 'noCategory');
       noCategory.items = itemsWithoutCategory;
