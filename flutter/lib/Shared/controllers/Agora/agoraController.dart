@@ -11,7 +11,7 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/chatNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -56,7 +56,7 @@ class Sagora extends GetxController {
   Future<void> handleIfInChannelAlready() async {
     try {
       final String? currentCallId = await _engine.getCallId();
-      bool _isInCall = await isInActiveCall();
+      final bool _isInCall = await isInActiveCall();
       if (_isInCall) {
         await _engine.leaveChannel();
       }

@@ -1,18 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
-import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Chat.dart';
-import 'package:mezcalmos/Shared/models/Generic.dart' as Gen;
-import 'package:mezcalmos/Shared/models/Notification.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart' as Gen;
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:uuid/uuid.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
@@ -153,7 +153,7 @@ class BackgroundNotificationsController extends GetxController {
 
     onMessageListener =
         FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      Sagora agora = Get.find<Sagora>();
+      final Sagora agora = Get.find<Sagora>();
       mezDbgPrint(
           "FirebaseMessage ======> ${message.data} | ${message.contentAvailable}");
       if (message.data["notificationType"] ==
@@ -209,7 +209,6 @@ class BackgroundNotificationsController extends GetxController {
           ),
         );
       }
-      ;
     } else
       Future<void>.delayed(
         Duration(milliseconds: 100),

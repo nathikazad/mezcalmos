@@ -1,4 +1,4 @@
-import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 
 String messagesNode(String chatId) {
   return '${chatNode(chatId)}/messages';
