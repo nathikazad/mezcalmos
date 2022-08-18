@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -98,15 +100,25 @@ class Restaurant extends Service {
         secondaryLanguage: secondaryLanguage,
         paymentInfo: paymentInfo);
     if (restaurantData["menu"] != null) {
-      restaurantData["menu"]?["specials"]?["current"]?.forEach((key, element) {
-        restaurant.currentSpecials.add(Item.itemFromData(key, element));
-      });
-      restaurantData["menu"]?["specials"]?["past"]?.forEach((key, element) {
-        restaurant.pastSpecials.add(Item.itemFromData(key, element));
-      });
-      restaurantData["menu"]?["daily"]?.forEach((categoryId, categoryData) {
-        restaurant._categories.add(Category.fromData(categoryId, categoryData));
-      });
+      if (restaurantData["menu"]?["specials"] != null ||
+          restaurantData["menu"]?["daily"] != null) {
+        restaurantData["menu"]?["specials"]?["current"]
+            ?.forEach((key, element) {
+          restaurant.currentSpecials.add(Item.itemFromData(key, element));
+        });
+        restaurantData["menu"]?["specials"]?["past"]?.forEach((key, element) {
+          restaurant.pastSpecials.add(Item.itemFromData(key, element));
+        });
+        restaurantData["menu"]?["daily"]?.forEach((categoryId, categoryData) {
+          restaurant._categories
+              .add(Category.fromData(categoryId, categoryData));
+        });
+      } else {
+        restaurantData["menu"].forEach((itemId, itemdata) {
+          restaurant.itemsWithoutCategory
+              .add(Item.itemFromData(itemId, itemdata));
+        });
+      }
     } else {
       restaurantData["menu2"].forEach((categoryId, categoryData) {
         restaurant._categories.add(Category.fromData(categoryId, categoryData));
@@ -129,10 +141,10 @@ class Restaurant extends Service {
   }
 
   Category? get getNoCategory {
-    if (getItemsWithoutCategory != null &&
-        getItemsWithoutCategory!.isNotEmpty) {
+    mezDbgPrint("Getttting no cat =========> ${itemsWithoutCategory.length}");
+    if (itemsWithoutCategory.isNotEmpty) {
       final Category noCategory = Category(id: 'noCategory');
-      noCategory.items = getItemsWithoutCategory!;
+      noCategory.items = itemsWithoutCategory;
       return noCategory;
     } else {
       return null;
@@ -265,7 +277,8 @@ class Category {
         other.id == id &&
         other.dialog == dialog &&
         other.position == position &&
-        listEquals(other.items, items);
+        listEquals(other.items, items) &&
+        other.restaurant == restaurant;
   }
 
   @override
@@ -274,7 +287,8 @@ class Category {
         id.hashCode ^
         dialog.hashCode ^
         position.hashCode ^
-        items.hashCode;
+        items.hashCode ^
+        restaurant.hashCode;
   }
 }
 

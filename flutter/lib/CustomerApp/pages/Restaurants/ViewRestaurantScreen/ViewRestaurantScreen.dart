@@ -162,8 +162,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
 
   List<Category> _getList() {
     final List<Category> data = restaurant.getCategories;
-    if (restaurant.getItemsWithoutCategory != null &&
-        restaurant.getItemsWithoutCategory!.isNotEmpty) {
+    if (restaurant.itemsWithoutCategory.isNotEmpty) {
       data.add(restaurant.getNoCategory!);
     }
     return data;
