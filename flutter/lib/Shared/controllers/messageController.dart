@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/chatNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -35,19 +36,27 @@ class MessageController extends GetxController {
       {required String chatId, material.VoidCallback? onValueCallBack}) {
     mezDbgPrint("Load chat id ------------->>>> $chatId");
     chatListener?.cancel();
-    chatListener = _databaseHelper.firebaseDatabase
+    _databaseHelper.firebaseDatabase
         .ref()
         .child(chatNode(chatId))
-        .onValue
-        .listen((DatabaseEvent event) {
-      if (event.snapshot.value != null) {
-        // mezDbgPrint("\n\n\n ${event.snapshot.value} \n\n\n");
-        chat.value = Chat.fromJson(chatId, event.snapshot.value);
-        if (onValueCallBack != null) onValueCallBack();
-        // mezDbgPrint(
-        //     "--------------------> messageController Listener Invoked with Messages > ${_model.value.messages} ");
-      }
+        .onValueWitchCatch()
+        .then((Stream<DatabaseEvent> value) {
+      chatListener = value.listen((DatabaseEvent event) {
+        if (event.snapshot.value != null) {
+          mezDbgPrint(
+              "PRINTING CHATING EVENT ==========================>>>> ${event.snapshot.value}");
+          // mezDbgPrint("\n\n\n ${event.snapshot.value} \n\n\n");
+          chat.value = Chat.fromJson(chatId, event.snapshot.value);
+          if (onValueCallBack != null) onValueCallBack();
+          // mezDbgPrint(
+          //     "--------------------> messageController Listener Invoked with Messages > ${_model.value.messages} ");
+        }
+      });
     });
+  }
+
+  bool isUserAuthorizedToCall() {
+    return [AppType.CustomerApp, AppType.DeliveryApp].contains(appType);
   }
 
   Future<void> sendMessage(
@@ -57,7 +66,7 @@ class MessageController extends GetxController {
       String? orderId}) async {
     final DatabaseReference messageNode = _databaseHelper.firebaseDatabase
         .ref()
-        .child('${chatNode(chatId)}/messages')
+        .child(messagesNode(chatId))
         .push();
 
     // ignore: unawaited_futures
@@ -77,7 +86,7 @@ class MessageController extends GetxController {
     // ignore: unawaited_futures
     _databaseHelper.firebaseDatabase
         .ref()
-        .child('notificationQueue/${messageNode.key}')
+        .child(notificationQueueNode(messageNode.key))
         .set(MessageNotificationForQueue(
                 message: message,
                 userId: _authController.user!.id,
@@ -85,6 +94,52 @@ class MessageController extends GetxController {
                 messageId: messageNode.key!,
                 participantType:
                     _settingsController.appType.toParticipantTypefromAppType(),
+                orderId: orderId)
+            .toFirebaseFormatJson());
+  }
+
+  Future<void> callUser(
+      {required String chatId,
+      required Participant callee,
+      String? orderId}) async {
+    return sendUserCallNotification(
+        chatId: chatId,
+        callee: callee,
+        callNotificationType: CallNotificationtType.Incoming);
+  }
+
+  Future<void> endCall(
+      {required String chatId,
+      required Participant callee,
+      String? orderId}) async {
+    return sendUserCallNotification(
+        chatId: chatId,
+        callee: callee,
+        callNotificationType: CallNotificationtType.EndCall);
+  }
+
+  Future<void> sendUserCallNotification(
+      {required String chatId,
+      required Participant callee,
+      required CallNotificationtType callNotificationType,
+      String? orderId}) async {
+    final DatabaseReference notificationNode = _databaseHelper.firebaseDatabase
+        .ref()
+        .child(notificationQueueNode())
+        .push();
+
+    // ignore: unawaited_futures
+    _databaseHelper.firebaseDatabase
+        .ref()
+        .child(notificationQueueNode(notificationNode.key))
+        .set(CallNotificationForQueue(
+                chatId: chatId,
+                callerId: _authController.user!.id,
+                callerParticipantType:
+                    _settingsController.appType.toParticipantTypefromAppType(),
+                calleeId: callee.id,
+                calleeParticipantType: callee.participantType,
+                callNotificationType: callNotificationType,
                 orderId: orderId)
             .toFirebaseFormatJson());
   }

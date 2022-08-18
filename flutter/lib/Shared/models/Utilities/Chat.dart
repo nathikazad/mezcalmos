@@ -65,6 +65,34 @@ class Participant {
       required this.name,
       required this.participantType,
       required this.id});
+
+  @override
+  String toString() {
+    return "{name : $name , image: $image , id: $id , type: $participantType}";
+  }
+}
+
+class AgoraDetails {
+  num uid;
+  String token;
+  AgoraDetails({required this.uid, required this.token});
+
+  factory AgoraDetails.fromData(dynamic data) {
+    mezDbgPrint("AGORAAAAAATO DATA ===> $data");
+    return AgoraDetails(uid: data['uid'], token: data['token']);
+  }
+}
+
+class ParticipantWithAgora extends Participant {
+  AgoraDetails? agora;
+  ParticipantWithAgora(
+      {required String image,
+      required String name,
+      required ParticipantType participantType,
+      required String id,
+      this.agora})
+      : super(
+            id: id, image: image, participantType: participantType, name: name);
 }
 
 class Message {
@@ -86,8 +114,8 @@ class Chat {
   String chatType;
   OrderType? orderType;
   String? orderId;
-  Map<ParticipantType?, Map<String, Participant>> _participants =
-      <ParticipantType?, Map<String, Participant>>{};
+  Map<ParticipantType?, Map<String, ParticipantWithAgora>> _participants =
+      <ParticipantType?, Map<String, ParticipantWithAgora>>{};
   List<Message> _messages = <Message>[];
 
   List<Message> get messages {
@@ -124,12 +152,20 @@ class Chat {
       chatData['participants'][participantTypeAsString]
           .forEach((dynamic participantId, dynamic participantData) {
         if (chat._participants[participantType] == null)
-          chat._participants[participantType] = <String, Participant>{};
-        chat._participants[participantType]![participantId] = Participant(
-            image: participantData['image'],
-            name: participantData['name'],
-            participantType: participantType,
-            id: participantId);
+          chat._participants[participantType] =
+              <String, ParticipantWithAgora>{};
+        chat._participants[participantType]![participantId] =
+            ParticipantWithAgora(
+          image: participantData['image'],
+          name: participantData['name'],
+          participantType: participantType,
+          id: participantId,
+          agora: participantData['agora'] == null
+              ? null
+              : AgoraDetails.fromData(
+                  participantData['agora'],
+                ),
+        );
       });
     });
 
@@ -186,6 +222,59 @@ class MessageNotificationForQueue extends NotificationForQueue {
         "participantType": participantType.toFirebaseFormattedString(),
         "userId": userId,
         "message": message,
+        "orderId": orderId
+      };
+}
+
+enum CallNotificationtType { Incoming, EndCall }
+
+extension ParseCallNotificationtTypeToString on CallNotificationtType {
+  String toFirebaseFormattedString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToCallNotificationtType on String {
+  CallNotificationtType toCallNotificationtType() {
+    return CallNotificationtType.values.firstWhere(
+        (CallNotificationtType callNotificationtType) =>
+            callNotificationtType.toFirebaseFormattedString() == this);
+  }
+}
+
+class CallNotificationForQueue extends NotificationForQueue {
+  String chatId;
+  String callerId;
+  ParticipantType callerParticipantType;
+  String calleeId;
+  ParticipantType calleeParticipantType;
+  String? orderId;
+  CallNotificationtType callNotificationType;
+  CallNotificationForQueue({
+    required this.chatId,
+    required this.callerId,
+    required this.callerParticipantType,
+    required this.calleeId,
+    required this.calleeParticipantType,
+    required this.callNotificationType,
+    this.orderId,
+  }) : super(
+          notificationType: NotificationType.Call,
+          timeStamp: DateTime.now().toUtc(),
+        );
+
+  Map<String, dynamic> toFirebaseFormatJson() => {
+        ...super.toFirebaseFormatJson(),
+        "chatId": chatId,
+        "callerId": callerId,
+        "callerParticipantType":
+            callerParticipantType.toFirebaseFormattedString(),
+        "calleeId": calleeId,
+        "calleeParticipantType":
+            calleeParticipantType.toFirebaseFormattedString(),
+        "callNotificationType":
+            callNotificationType.toFirebaseFormattedString(),
         "orderId": orderId
       };
 }

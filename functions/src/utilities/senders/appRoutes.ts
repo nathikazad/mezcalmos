@@ -56,7 +56,8 @@ export function chatUrl(
         str += `&recipientType=${ParticipantType.DeliveryAdmin}`;
       break;
     default:
-      str += `&recipientType=${recipientType}`;
+      if (recipientType)
+        str += `&recipientType=${recipientType}`;
       break;
   }
 

@@ -91,7 +91,6 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
       markerId: order.value?.restaurantId,
       customImgHttpUrl: order.value?.restaurant.image,
     );
-
     if (order.value != null)
       handleRestaurantOrder(order.value as RestaurantOrder);
 

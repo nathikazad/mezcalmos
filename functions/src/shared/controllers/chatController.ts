@@ -1,5 +1,5 @@
-import { chatMessageNotifiedNode, chatNode } from "../databaseNodes/chat";
-import { ChatData, ChatObject, ParticipantType } from "../models/Generic/Chat";
+import { chatMessageNotifiedNode, chatNode, participantAgoraNode } from "../databaseNodes/chat";
+import { ParticipantAgoraDetails, ChatData, ChatObject, ParticipantType } from "../models/Generic/Chat";
 import { UserInfo } from "../models/Generic/User";
 import { getUserInfo } from "./rootController";
 
@@ -15,6 +15,10 @@ export async function getChat(chatId: string): Promise<ChatObject> {
 
 export async function setChat(chatId: string, chat: ChatData) {
   return (await chatNode(chatId).set(chat))
+}
+
+export async function setUserAgoraInfo(chatId: string, participantType: ParticipantType, userId: string, agora: ParticipantAgoraDetails) {
+  return (await participantAgoraNode(chatId, participantType, userId).set(agora))
 }
 
 export async function updateChat(chatId: string, chat: ChatData) {

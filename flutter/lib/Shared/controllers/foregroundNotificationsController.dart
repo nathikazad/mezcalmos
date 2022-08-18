@@ -43,56 +43,64 @@ class ForegroundNotificationsController extends GetxController {
     // mezDbgPrint(notificationNode);
     _notificationNode = notificationNode;
     _notificationNodeAddListener?.cancel();
-    _notificationNodeAddListener = _databaseHelper.firebaseDatabase
+    _databaseHelper.firebaseDatabase
         .ref()
         .child(notificationNode)
-        .onChildAdded
-        .listen((DatabaseEvent event) {
-      mezDbgPrint("sd@s:ForegroundNotificationsController:: NEW NOTIFICATION");
-      mezDbgPrint(event.snapshot.value);
-      try {
-        final Notification _notification =
-            notificationHandler(event.snapshot.key!, event.snapshot.value);
-        final bool alreadyOnLinkPage = isCurrentRoute(_notification.linkUrl);
-        switch (_notification.notificationAction) {
-          case NotificationAction.ShowPopUp:
-            if (Get.find<AppLifeCycleController>().appState ==
-                material.AppLifecycleState.resumed) {
-              _displayNotificationsStreamController.add(_notification);
-            }
-            break;
-          case NotificationAction.ShowSnackBarAlways:
-            _displayNotificationsStreamController.add(_notification);
-            break;
-          case NotificationAction.ShowSnackbarOnlyIfNotOnPage:
-            if (!alreadyOnLinkPage) {
-              _displayNotificationsStreamController.add(_notification);
-            }
-            break;
-        }
+        .onChildAddedWitchCatch()
+        .then((Stream<DatabaseEvent> stream) {
+      _notificationNodeAddListener = stream.listen((event) {
+        try {
+          final Notification _notification =
+              notificationHandler(event.snapshot.key!, event.snapshot.value);
+          final bool alreadyOnLinkPage = isCurrentRoute(_notification.linkUrl);
 
-        if (!alreadyOnLinkPage) {
-          notifications.add(_notification);
-        } else {
-          removeNotification(_notification.id);
+          switch (_notification.notificationAction) {
+            case NotificationAction.ShowPopUp:
+              if (Get.find<AppLifeCycleController>().appState ==
+                  material.AppLifecycleState.resumed) {
+                _displayNotificationsStreamController.add(_notification);
+              }
+              break;
+            case NotificationAction.ShowSnackBarAlways:
+              _displayNotificationsStreamController.add(_notification);
+              break;
+            case NotificationAction.ShowSnackbarOnlyIfNotOnPage:
+              if (!alreadyOnLinkPage) {
+                _displayNotificationsStreamController.add(_notification);
+              }
+              break;
+          }
+
+          if (!alreadyOnLinkPage) {
+            notifications.add(_notification);
+          } else {
+            removeNotification(_notification.id);
+          }
+        } on StateError {
+          mezDbgPrint("Invalid notification");
         }
-      } catch (e) {
-        mezDbgPrint("Invalid notification");
-        mezDbgPrint(e);
-      }
+      });
     });
 
+    //     .listen((dynamic event) {
+    //   // mezDbgPrint("sd@s:ForegroundNotificationsController:: NEW NOTIFICATION");
+    //   // mezDbgPrint(event.snapshot.value);
+
+    // });
+
     _notificationNodeRemoveListener?.cancel();
-    _notificationNodeRemoveListener = _databaseHelper.firebaseDatabase
+    _databaseHelper.firebaseDatabase
         .ref()
         .child(notificationNode)
-        .onChildRemoved
-        .listen((DatabaseEvent event) {
-      final Notification _notifaction =
-          notificationHandler(event.snapshot.key!, event.snapshot.value);
-      notifications.value = notifications
-          .where((Notification element) => element.id != _notifaction.id)
-          .toList();
+        .onChildRemovedWitchCatch()
+        .then((value) {
+      _notificationNodeRemoveListener = value.listen((event) {
+        final Notification _notifaction =
+            notificationHandler(event.snapshot.key!, event.snapshot.value);
+        notifications.value = notifications
+            .where((Notification element) => element.id != _notifaction.id)
+            .toList();
+      });
     });
   }
 

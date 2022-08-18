@@ -92,28 +92,32 @@ class AuthController extends GetxController {
         _authStateStreamController.add(user);
         GetStorage().write(getxUserId, user.uid);
         _userNodeListener?.cancel();
-        _userNodeListener = _databaseHelper.firebaseDatabase
+        // ignore: unawaited_futures
+        _databaseHelper.firebaseDatabase
             .ref()
             .child(userInfoNode(user.uid))
-            .onValue
-            .listen((event) {
-          if (event.snapshot.value == null) return;
-          if ((event.snapshot.value as dynamic)['language'] == null) {
-            (event.snapshot.value as dynamic)['language'] =
-                Get.find<LanguageController>()
-                    .userLanguageKey
-                    .toFirebaseFormatString();
-            _databaseHelper.firebaseDatabase
-                .ref()
-                .child(userLanguageNode(user.uid))
-                .set(Get.find<LanguageController>()
-                    .userLanguageKey
-                    .toFirebaseFormatString());
-          }
-          _user.value = MainUserInfo.fromData(event.snapshot.value);
-          _userInfoStreamController.add(_user.value);
-          if (_user.value!.language != null)
-            Get.find<LanguageController>().setLanguage(_user.value!.language!);
+            .onValueWitchCatch()
+            .then((value) {
+          _userNodeListener = value.listen((event) {
+            if (event.snapshot.value == null) return;
+            if ((event.snapshot.value as dynamic)['language'] == null) {
+              (event.snapshot.value as dynamic)['language'] =
+                  Get.find<LanguageController>()
+                      .userLanguageKey
+                      .toFirebaseFormatString();
+              _databaseHelper.firebaseDatabase
+                  .ref()
+                  .child(userLanguageNode(user.uid))
+                  .set(Get.find<LanguageController>()
+                      .userLanguageKey
+                      .toFirebaseFormatString());
+            }
+            _user.value = MainUserInfo.fromData(event.snapshot.value);
+            _userInfoStreamController.add(_user.value);
+            if (_user.value!.language != null)
+              Get.find<LanguageController>()
+                  .setLanguage(_user.value!.language!);
+          });
         });
       }
     });

@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 // Extends GetView<MessagingController> after Nathik implements the controller
 import 'package:intl/intl.dart' as intl;
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
@@ -19,6 +20,7 @@ import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 DateTime now = DateTime.now().toLocal();
@@ -37,12 +39,14 @@ class _MessagingScreenState extends State<MessagingScreen> {
   late final OrderType? orderType;
   late final String? orderId;
   late final String chatId;
+  // late final Sagora sagora;
 
   ParticipantType recipientType = ParticipantType.Customer;
   // ParticipantType? senderType;
   String? recipientId;
   MessageController controller =
       Get.put<MessageController>(MessageController());
+  final Sagora sagora = Get.put<Sagora>(Sagora());
   bool isChatLoaded = false;
   @override
   void initState() {
@@ -52,6 +56,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
       Get.snackbar("Error", "Does not have a valid chatId!");
       Get.back<void>();
     }
+
     chatId = Get.parameters['chatId']!;
     orderLink = Get.parameters['orderLink'];
     orderId = Get.parameters['orderId'];
@@ -82,6 +87,12 @@ class _MessagingScreenState extends State<MessagingScreen> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    sagora.engine.destroy();
+    super.dispose();
+  }
+
   AuthController _authController = Get.find<AuthController>();
 
   TextEditingController _textEditingController = new TextEditingController();
@@ -89,6 +100,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
   RxList<Widget> chatLines = <Widget>[].obs;
 
   RxString _typedMsg = "".obs;
+  // RxBool clickedCall = false.obs;
 
   void scrollDown({Duration? mezChatScrollDuration}) {
     Timer(mezChatScrollDuration ?? Duration(milliseconds: 200), () {
@@ -171,48 +183,70 @@ class _MessagingScreenState extends State<MessagingScreen> {
         actions: <Widget>[
           if (orderLink != null)
             InkWell(
-                child: Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 20),
-                    child: Text(
-                      _i18n()['order'],
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.black),
-                    ),
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.only(right: 20),
+                  child: Text(
+                    "View\nOrder",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.black),
                   ),
                 ),
-                onTap: () => Get.toNamed<void>(orderLink!))
+              ),
+              onTap: () => Get.toNamed<void>(orderLink!),
+            ),
+          if (controller.isUserAuthorizedToCall())
+            InkWell(
+              onTap: () async => await _onCallPress(),
+              child: Container(
+                padding: EdgeInsets.all(5),
+                margin: EdgeInsets.only(right: 10),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.grey.shade300,
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.call,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
       body: isChatLoaded
           ? Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Stack(
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10.1),
-                    child: Center(
-                      child: Text(formattedDate),
-                    ),
-                  ),
-                  Expanded(
-                    child: Obx(
-                      () => ListView(
-                        shrinkWrap: true,
-                        controller: _listViewScrollController,
-                        children: List<Widget>.from(chatLines.reversed),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.1),
+                        child: Center(
+                          child: Text(formattedDate),
+                        ),
                       ),
-                    ),
+                      Expanded(
+                        child: Obx(
+                          () => ListView(
+                            shrinkWrap: true,
+                            controller: _listViewScrollController,
+                            children: List<Widget>.from(chatLines.reversed),
+                          ),
+                        ),
+                      ),
+                      SendMessageBox(
+                        typedMsg: _typedMsg,
+                        textEditingController: _textEditingController,
+                        controller: controller,
+                        chatId: chatId,
+                        orderId: orderId,
+                      )
+                    ],
                   ),
-                  SendMessageBox(
-                    typedMsg: _typedMsg,
-                    textEditingController: _textEditingController,
-                    controller: controller,
-                    chatId: chatId,
-                    orderId: orderId,
-                    orderType: orderType,
-                  )
                 ],
               ),
             )
@@ -220,6 +254,79 @@ class _MessagingScreenState extends State<MessagingScreen> {
               centered: true,
             ),
     );
+  }
+
+  Future<void> _onCallPress() async {
+    if (await sagora.checkAgoraPermissions()) {
+      ParticipantType _calleeType = ParticipantType.DeliveryDriver;
+      switch (controller.appType) {
+        case AppType.DeliveryApp:
+          _calleeType = ParticipantType.Customer;
+          break;
+        default:
+      }
+      // we get the one We're trying to call first.
+      final Participant? _recipient = controller.recipient(
+        recipientType: _calleeType,
+      );
+      mezDbgPrint("1 [RECIPIENT::calleeType ] $_calleeType");
+
+      if (_recipient != null) {
+        await controller.callUser(
+          chatId: chatId,
+          callee: _recipient,
+          orderId: orderId,
+        );
+        mezDbgPrint("3 - sender id ${controller.sender()?.id}");
+        mezDbgPrint("3 - sender name ${controller.sender()?.participantType}");
+
+        // Request Agora auth
+        // @Nathik this part does not work
+        final dynamic _agoraAuth = (await sagora.getAgoraToken(
+          chatId,
+          controller.sender()!.id,
+          controller.sender()!.participantType,
+        ))
+            .snapshot
+            .value;
+
+        mezDbgPrint("4 - A_agoraAuth $_agoraAuth");
+
+        // then we join if it's not null && it's not expired
+        if (_agoraAuth != null) {
+          mezDbgPrint("AgoraAuth  :: passed validation test !");
+          // await FlutterCallkitIncoming.startCall(chatId);
+          // then join channel
+          // ignore: unawaited_futures
+          await sagora.handleIfInChannelAlready();
+
+          // ignore: unawaited_futures
+          sagora
+              .joinChannel(
+            token: _agoraAuth['token'],
+            channelId: chatId,
+            uid: _agoraAuth['uid'],
+          )
+              .then((value) {
+            mezDbgPrint(
+                "[][][] MessageScreen :: sagora.joinChannel :: done ! ==> pushing to AgoraCall Screen !!!!");
+
+            sagora.callStatus.value = CallStatus.calling;
+            Get.toNamed<void>(kAgoraCallScreen, arguments: {
+              "chatId": chatId,
+              "talkingTo": _recipient,
+            });
+          }).onError((Object? error, StackTrace stackTrace) {
+            mezDbgPrint("Error ===> $error | $stackTrace");
+            sagora.callStatus.value = CallStatus.none;
+          });
+        } else {
+          sagora.callStatus.value = CallStatus.none;
+        }
+      }
+    } else {
+      mezDbgPrint("AGORA :: PERMISSIONS :: NOT :: DONE ");
+    }
   }
 
   Widget singleChatComponent({

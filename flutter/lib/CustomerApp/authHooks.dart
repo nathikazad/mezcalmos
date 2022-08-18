@@ -3,6 +3,7 @@ import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
+import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
@@ -14,6 +15,7 @@ class AuthHooks {
       "[+] CustomerApp::AuthHooks::onSignOutHook -> Callback Executed.",
     );
 // TODO : these deletes should not delete stuff that should be Globaly injected (on Signin And SiGnout)
+    await Get.delete<Sagora>(force: true);
     await Get.delete<CustomerAuthController>(force: true);
     await Get.delete<OrderController>(force: true);
     await Get.delete<TaxiController>(force: true);
@@ -37,6 +39,7 @@ class AuthHooks {
     );
 
     /// Put CustomerAuthController
+    Get.put<Sagora>(Sagora(), permanent: true);
     Get.put<CustomerAuthController>(CustomerAuthController(), permanent: true);
     Get.put<ForegroundNotificationsController>(
         ForegroundNotificationsController(),

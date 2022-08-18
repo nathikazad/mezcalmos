@@ -75,7 +75,7 @@ async function checkdeliverableOrders() {
           let notification: fcmPayload = clone(payloadTemplate);
           if (deliveryAdmin.notificationInfo) {
           notification.token = deliveryAdmin.notificationInfo.deviceNotificationToken
-          notification.payload.data.linkUrl = linkUrl;
+          notification.payload.data = { linkUrl: linkUrl };
           push(notification)
           }
         }
@@ -87,7 +87,7 @@ async function checkdeliverableOrders() {
           let notificationInfo: NotificationInfo = getNotificationInfo(orderType, operatorId)
           let notification: fcmPayload = clone(payloadTemplate);
           notification.token = notificationInfo.deviceNotificationToken
-          notification.payload.data.linkUrl = linkUrl;
+          notification.payload.data = { linkUrl: linkUrl };
           push(notification)
         }
       }

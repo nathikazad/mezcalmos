@@ -21,6 +21,8 @@ const int functionPort = 5001;
 const String placesApikey = "AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY";
 const String stripePublishableKey =
     "pk_test_51KxdsRDV5wKm9SNKkEwYTuMUdxRAULh7UUy2w42pV27dDtUc9CBNioU426ftPLzxU5dRd8sZv3UnGgpt8RsDF9xf000oUAmiZS";
+const String agoraAppId = "6def50fdd2804ffaaa70d807ee445d28";
+
 // can be dev / prod
 
 // ----------------- TEST STRINGS ----------------- //
@@ -69,6 +71,7 @@ const String defaultUserImgUrl =
 
 // ----------------- Assets Strings ----------------- //
 const String aDefaultNotificationsSound = 'assets/sounds/notif-alert.mp3';
+const String aDefaultCallingSound = 'assets/sounds/calling.mp3';
 const String aLogoPath = "assets/images/shared/logo.png";
 const String aNoImage = "assets/images/shared/noImage.png";
 const String a404 = "assets/images/shared/404.png";

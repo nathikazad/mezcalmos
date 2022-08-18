@@ -13,6 +13,10 @@ export interface Stripe {
   secretkey: string,
   accountupdatedsigningsecret: string
 }
+export interface Agora {
+  certificate: string;
+  appId: string;
+}
 
 export interface Fcm {
   key: string;
@@ -25,4 +29,5 @@ export interface Keys {
   stripe: Stripe,
   serviceAccount?: string | undefined;
   databaseURL?: string | undefined;
+  agora?: Agora
 }

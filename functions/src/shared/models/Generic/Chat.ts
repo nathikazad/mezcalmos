@@ -85,5 +85,29 @@ export interface MessageNotificationForQueue extends NotificationForQueue {
   participantType: ParticipantType,
   messageId: string,
   orderId?: string
-  orderType: string
+}
+
+export enum CallNotificationtType {
+  Incoming = "incoming",
+  EndCall = "endCall"
+
+}
+export interface CallNotificationForQueue extends NotificationForQueue {
+  chatId: string,
+  callerId: string,
+  callerParticipantType: ParticipantType,
+  calleeId: string,
+  calleeParticipantType: ParticipantType,
+  callNotificationType: CallNotificationtType,
+  orderId?: string
+}
+
+export interface ParticipantAgoraDetails {
+  uid: number,
+  token: string,
+  expirationTime: string
+}
+
+export interface ParticipantWithAgora extends Participant {
+  agora: ParticipantAgoraDetails
 }

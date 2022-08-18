@@ -41,16 +41,18 @@ class LaundryOrderController extends GetxController {
       inProcessOrders.value = orders;
     });
 
-    _pastOrdersListener = _databaseHelper.firebaseDatabase
+    _databaseHelper.firebaseDatabase
         .ref()
         .child(rootPastOrdersNode(orderType: OrderType.Laundry))
         .orderByChild('orderTime')
         .limitToLast(5)
-        .onChildAdded
-        .listen((dynamic event) {
-      pastOrders
-          .add(LaundryOrder.fromData(event.snapshot.key, event.snapshot.value));
-    });
+        .onChildAddedWitchCatch()
+        .then(
+          (value) => value.listen((dynamic event) {
+            pastOrders.add(LaundryOrder.fromData(
+                event.snapshot.key, event.snapshot.value));
+          }),
+        );
 
     super.onInit();
   }

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -17,10 +16,17 @@ import 'package:soundpool/soundpool.dart';
 class SettingsController extends GetxController {
   late final ThemeController _appTheme;
   late final LanguageController _appLanguage;
+
+  // NOTIFICATION RINGTONES
   // this will be customized by the user in future.
   Soundpool _userNotificationsSoundPool = Soundpool.fromOptions(
       options: SoundpoolOptions(streamType: StreamType.notification));
   int? _selectedNotificationsSoundId;
+  // CALLS RINGTONES
+  Soundpool _userCallingSoundPool = Soundpool.fromOptions(
+      options: SoundpoolOptions(streamType: StreamType.music));
+
+  int? _selectedCallingSoundId;
 
   final List<SideMenuItem> sideMenuItems;
   final LocationPermissionType locationType;
@@ -42,23 +48,41 @@ class SettingsController extends GetxController {
     Get.put(SideMenuDrawerController(), permanent: false).sideMenuItems =
         sideMenuItems;
 
-    if (GetStorage().read('notifSound') != null) {
-      // if it's not null then the user already specified a path to the Notification SOund (cached),
-      // which we will use it here.
-    } else {
-      final ByteData _soundData =
-          await rootBundle.load(aDefaultNotificationsSound);
-      _selectedNotificationsSoundId =
-          await _userNotificationsSoundPool.load(_soundData);
-    }
+    // NOTIFICATION SOUND SETUP
+
+    final ByteData _soundDataNotif =
+        await rootBundle.load(aDefaultNotificationsSound);
+    _selectedNotificationsSoundId =
+        await _userNotificationsSoundPool.load(_soundDataNotif);
+    // CALL SOUND SETUP
+    final ByteData _soundDataCall = await rootBundle.load(aDefaultCallingSound);
+    _selectedCallingSoundId = await _userCallingSoundPool.load(_soundDataCall);
+
     // start Listening on Internet Connectivity !
     // startListeningForConnectivity();
     super.onInit();
   }
 
-  Future playNotificationSound({int? soundId}) async {
+  Future<void> playNotificationSound({int? soundId}) async {
     if (_selectedNotificationsSoundId != null)
       await _userNotificationsSoundPool.play(_selectedNotificationsSoundId!);
+  }
+
+  /// This returns [StreamId], Useful it in case you play it repeatedly through param: [autoRepeat=false],
+  ///
+  /// that way you can call [stopCallingRingtone] using that streamID.
+  Future<int?> playCallingRingtone({bool autoRepeat = false}) async {
+    if (_selectedCallingSoundId != null) {
+      return _userCallingSoundPool.play(
+        _selectedCallingSoundId!,
+        repeat: autoRepeat ? 100 : 0,
+      );
+    }
+    return Future<int?>.value(null);
+  }
+
+  Future<void> stopCallingRingtone({required int? streamId}) async {
+    if (streamId != null) await _userCallingSoundPool.stop(streamId);
   }
 
   void startListeningForConnectivity() {

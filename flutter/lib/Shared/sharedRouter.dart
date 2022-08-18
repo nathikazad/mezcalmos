@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
 import 'package:mezcalmos/Shared/pages/AppNeedsUpdateScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
@@ -33,6 +34,7 @@ const String kUserProfile = '/user_profile';
 const String kPickToLocation = '/pick_to_location';
 const String kNotificationsRoute = '/notifications';
 const String kAppNeedsUpdate = '/needs_update';
+const String kAgoraCallScreen = '/agora';
 // const String kInAppReview = '/in-app_review';
 const String kPickLocationWithoutAuth = "/pick_location/noAuth";
 const String kPickLocationEdit = "/pick_location/edit";
@@ -127,5 +129,6 @@ class SharedRouter {
     GetPage(
         name: kPickLocationEdit,
         page: () => PickLocationView(PickLocationMode.EditLocation)),
+    GetPage(name: kAgoraCallScreen, page: () => AgoraCall()),
   ];
 }
