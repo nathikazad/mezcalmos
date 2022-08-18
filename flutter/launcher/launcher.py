@@ -336,16 +336,28 @@ class Launcher:
         project_kotlin_folder = "../android/app/src/main/kotlin/"
         main_activity_kt_path = project_kotlin_folder+'/'.join(dot_separated_package_name)+'/'+'MainActivity.kt'
 
-        # if condition to pass this process!
+        # if there is no existing ktMainActivity dir, we make it.
         if not os.path.exists(os.path.dirname(main_activity_kt_path)):
             rm_lambda(project_kotlin_folder) # this will delete the tree starting with com folder.
             # then we create our own correct tree:
             os.makedirs(os.path.dirname(main_activity_kt_path), exist_ok=True)
-            # then we write our correct Activity.kt
-            _cloned = open('patches/android/MainActivity.kt').read().replace('<mez-package-name>', _appPackageName)
-            open(main_activity_kt_path , 'w+').write(_cloned)
-            PRINTLN(f"[+] Set up of : {main_activity_kt_path} .. done!")
+       
+        # Get if there is any extra imports / superClasses for the specific app we're running:
+        _main_activity_kt_cfg = self.conf['apps'][self.user_args["app"]].get("MainActivityKt")
+        _super_class = "FlutterActivity"
+        global _kt_imports
+        _kt_imports = []
+        if _main_activity_kt_cfg != None:
+            _super_class = _main_activity_kt_cfg['super']
+            _tmp_imps = _main_activity_kt_cfg.get('imports')
+            if _tmp_imps != None:
+                _kt_imports = _tmp_imps
 
+        # then we write our correct Activity.kt
+        _cloned = open('patches/android/MainActivity.kt').read().replace('<mez-package-name>', _appPackageName).replace('<kt_imports>', '\n'.join(_kt_imports)).replace('<kt_super>', _super_class)
+        open(main_activity_kt_path , 'w+').write(_cloned)
+        PRINTLN(f"[+] Set up of : {main_activity_kt_path} .. done!")
+        
         # Manifest Permissions
         # Shared Permissions are already stored in self.conf['gen::permissions'] as String
 
