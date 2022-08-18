@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
-import 'package:mezcalmos/CustomerApp/components/ButtonComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
@@ -21,6 +20,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 // ignore: constant_identifier_names
 enum DropDownResult { Null, String }
@@ -113,12 +113,19 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         }
       }),
       bottomSheet: (_restaurantController.cart.value.cartItems.length > 0)
-          ? ButtonComponent(
-              bgColor: getTheRightButtonColor(),
-              canClick: canClick(),
-              widget: Center(
-                  child: getTheRightWidgetForOrderNowButton(_clickedOrderNow)),
-              function: !_clickedOrderNow ? checkoutActionButton : () {},
+          ? MezButton(
+              label: '${_i18n()["orderNow"]}',
+              enabled: canClick(),
+              withGradient: true,
+              borderRadius: 0,
+              onClick: () async {
+                await checkoutActionButton();
+              },
+              // bgColor: getTheRightButtonColor(),
+              // canClick: canClick(),
+              // label: Center(
+              //     child: getTheRightWidgetForOrderNowButton(_clickedOrderNow)),
+              // function: !_clickedOrderNow ? checkoutActionButton : () {},
             )
           : null,
     );
@@ -195,26 +202,28 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
 //itemviewscreen
   Future<void> checkoutActionButton() async {
-    setState(() {
-      _clickedOrderNow = true;
-    });
-    try {
-      _restaurantController.cart.value.toLocation = orderToLocation;
-      _restaurantController.cart.value.notes = _textEditingController.text;
+    _restaurantController.cart.value.toLocation = orderToLocation;
+    _restaurantController.cart.value.notes = _textEditingController.text;
+    MapHelper.Route? routeInfo;
 
-      final MapHelper.Route routeInfo = await MapHelper.getDurationAndDistance(
-        _restaurantController.cart.value.restaurant!.info.location,
-        orderToLocation!,
-      );
-
+    await MapHelper.getDurationAndDistance(
+      _restaurantController.cart.value.restaurant!.info.location,
+      orderToLocation!,
+    )
+        //    ).catchError((Object? e, StackTrace stk) {
+        // MezSnackbar("Error", "${_i18n()["errorText"]}",
+        //     position: SnackPosition.TOP);
+        // })
+        .then((MapHelper.Route value) {
       mezDbgPrint("Route info succesfully ===================> $routeInfo");
+      routeInfo = value;
       _restaurantController.cart.value.setRouteInformation =
           MapHelper.RouteInformation(
-        polyline: routeInfo.encodedPolyLine,
-        distance: routeInfo.distance,
-        duration: routeInfo.duration,
+        polyline: routeInfo!.encodedPolyLine,
+        distance: routeInfo!.distance,
+        duration: routeInfo!.duration,
       );
-
+    }).whenComplete(() async {
       String? stripePaymentId;
 
       if (_restaurantController.cart.value.paymentType == PaymentType.Card) {
@@ -278,10 +287,6 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           // do something
         }
       }
-    } finally {
-      setState(() {
-        _clickedOrderNow = false;
-      });
-    }
+    });
   }
 }

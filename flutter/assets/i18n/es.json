@@ -178,7 +178,8 @@
                     "ViewCartScreen": {
                         "myCart": "Mi Carrito",
                         "notAvailable": "Su restaurante está cerrado",
-                        "orderNow": "ORDENAR AHORA"
+                        "orderNow": "ORDENAR AHORA",
+                        "errorText": "Lo siento, todavía no apoyamos tu área"
                     }
                 },
                 "ViewItemScreen": {

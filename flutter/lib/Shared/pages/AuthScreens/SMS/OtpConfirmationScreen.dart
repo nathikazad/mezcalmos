@@ -124,6 +124,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
               height: 10,
             ),
             PinCodeTextField(
+              backgroundColor: Colors.white,
               onTap: () {
                 canConfirmOtp.value = false;
                 _otpCodeTextController.clear();

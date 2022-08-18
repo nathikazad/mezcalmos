@@ -175,7 +175,8 @@
                     "ViewCartScreen": {
                         "myCart": "My Cart",
                         "notAvailable": "This restaurant is closed",
-                        "orderNow": "ORDER NOW"
+                        "orderNow": "ORDER NOW",
+                        "errorText": "Sorry, we don't support your area yet"
                     }
                 },
                 "ViewItemScreen": {

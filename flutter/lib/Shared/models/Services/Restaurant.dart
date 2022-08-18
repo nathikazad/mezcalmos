@@ -122,6 +122,13 @@ class Restaurant extends Service {
       restaurantData["menu2"].forEach((categoryId, categoryData) {
         restaurant._categories.add(Category.fromData(categoryId, categoryData));
       });
+      if (restaurantData["menu2"]["noCategory"] != null) {
+        restaurantData["menu2"]["noCategory"]["items"]
+            .forEach((itemId, itemdata) {
+          restaurant.itemsWithoutCategory
+              .add(Item.itemFromData(itemId, itemdata));
+        });
+      }
     }
 
     restaurant._categories
@@ -326,7 +333,7 @@ class Item {
   ) {
     final Item item = Item(
         id: itemId,
-        available: itemData["available"] ?? false,
+        available: itemData?["available"] ?? false,
         description: itemData["description"] != null
             ? convertToLanguageMap(itemData["description"])
             : null,
