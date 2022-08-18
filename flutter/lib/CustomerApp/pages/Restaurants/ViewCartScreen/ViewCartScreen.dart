@@ -71,6 +71,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     if (Get.find<CustomerAuthController>().customer.value?.savedCards == null)
       savedCardChoice =
           Get.find<CustomerAuthController>().customer.value!.savedCards.first;
+    orderToLocation = Get.find<CustomerAuthController>()
+        .customer
+        .value!
+        .defaultLocation
+        ?.location;
     // check if cart empty
     // if yes redirect to home page
     _restaurantController.cart.value.cartItems.map((CartItem item) {});

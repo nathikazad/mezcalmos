@@ -148,7 +148,7 @@ class OrderSummaryCard extends StatelessWidget {
                 ),
                 Flexible(
                   child: Text(
-                    order.restaurant.location.address,
+                    order.to.address,
                     style: Get.textTheme.bodyText2,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
