@@ -149,15 +149,14 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
           ),
           if (widget.item.name[userLanguage] != null)
             Flexible(
-              flex: 6,
-              fit: FlexFit.tight,
+              //flex: 4, fit: FlexFit.tight,
+              flex: 5,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
                       Flexible(
-                        flex: 3,
                         child: Text(
                           widget.item.name[userLanguage]!,
                           style: txt.bodyText1?.copyWith(
@@ -194,21 +193,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                     child: Text('\$' + widget.item.totalCost.toInt().toString(),
                         style: txt.bodyText1),
                   ),
-                  MezButton(
-                    label: "${_i18n()["itemUnav"]}",
-                    backgroundColor: widget.item.unavailable
-                        ? offRedColor
-                        : primaryBlueColor,
-                    textColor:
-                        widget.item.unavailable ? Colors.red : Colors.white,
-                    enabled:
-                        (widget.order.inProcess() && !widget.item.unavailable),
-                    borderRadius: 20,
-                    onClick: () async {
-                      await Get.find<ROpOrderController>().markItemUnavailable(
-                          widget.order.orderId, widget.item.idInCart);
-                    },
-                  ),
+
                   // InkWell(
                   //   onTap: (widget.order.inProcess())
                   //       ? null
@@ -241,6 +226,22 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                 ],
               ),
             ),
+          Flexible(
+            flex: 4,
+            child: MezButton(
+              label: "${_i18n()["itemUnav"]}",
+              height: 35,
+              backgroundColor:
+                  widget.item.unavailable ? offRedColor : primaryBlueColor,
+              textColor: Colors.white,
+              enabled: (widget.order.inProcess() && !widget.item.unavailable),
+              borderRadius: 20,
+              onClick: () async {
+                await Get.find<ROpOrderController>().markItemUnavailable(
+                    widget.order.orderId, widget.item.idInCart);
+              },
+            ),
+          ),
         ],
       ),
     );

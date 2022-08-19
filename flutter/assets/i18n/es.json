@@ -1751,7 +1751,7 @@
                     },
                     "ROpOrderItems": {
                         "note": "Nota",
-                        "itemUnav": "Artículo no disponible"
+                        "itemUnav": "no disponible"
                     },
                     "ROpOrderSummaryCard": {
                         "orderSummary": "Resumen",
