@@ -76,6 +76,11 @@ extension ParseCardBrandToString on CardBrand {
     final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
+
+  String toName() {
+    final String str = toString().split('.').last;
+    return str[0].toUpperCase() + str.substring(1);
+  }
 }
 
 extension ParseCardBrandToIcon on CardBrand {

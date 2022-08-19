@@ -2,9 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpOrderView"]["components"]["ROpRefundButton"];
 
 class ROpRefundButton extends StatefulWidget {
   const ROpRefundButton({
@@ -21,20 +30,42 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
   TextEditingController refundAmount = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
+  void dispose() {
+    refundAmount.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
-      child: TextButton(
-          onPressed: canRefund()
-              ? () {
-                  showModalBottomSheet(
-                      context: context,
-                      builder: (BuildContext ctx) {
-                        return Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 16, horizontal: 12),
-                          child: Form(
-                            key: _formKey,
+      child: MezButton(
+        label: "${_i18n()["refundCustomer"]}",
+        withGradient: true,
+        enabled: canRefund(),
+        onClick: canRefund()
+            ? () async {
+                // ignore: unawaited_futures
+                showModalBottomSheet(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  context: context,
+                  isDismissible: false,
+                  enableDrag: false,
+                  isScrollControlled: true,
+                  builder: (BuildContext builder) {
+                    return SingleChildScrollView(
+                      keyboardDismissBehavior:
+                          ScrollViewKeyboardDismissBehavior.manual,
+                      child: Container(
+                        //  height: MediaQuery.of(context).size.height - 40,
+                        padding: MediaQuery.of(context).viewInsets,
+                        child: Form(
+                          key: _formKey,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 16, horizontal: 12),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,7 +74,7 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
                                 Container(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    "Refund",
+                                    '${_i18n()["refundYourCustomer"]}',
                                     style: Get.textTheme.headline3,
                                   ),
                                 ),
@@ -52,77 +83,144 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
                                   height: 8,
                                 ),
                                 Text(
-                                  "Amount :",
+                                  "${_i18n()["amount"]} :",
                                   style: Get.textTheme.bodyText1,
                                 ),
                                 const SizedBox(
                                   height: 8,
                                 ),
-                                TextFormField(
-                                    controller: refundAmount,
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    validator: (String? v) {
-                                      if (v == null ||
-                                          num.tryParse(v) == null) {
-                                        return "Required a valid number";
-                                      } else if (num.parse(v) >
-                                          maximumRefund()) {
-                                        return "Maximum is : ${maximumRefund()}";
-                                      }
-                                      return null;
-                                    },
-                                    style: Get.textTheme.bodyText1,
-                                    textAlignVertical: TextAlignVertical.center,
-                                    decoration: InputDecoration(
-                                        prefixIcon:
-                                            Icon(Icons.attach_money_rounded)),
-                                    keyboardType:
-                                        TextInputType.numberWithOptions(
-                                            decimal: true),
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.allow(
-                                          RegExp('[0-9.,]')),
-                                    ]),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: MediaQuery.of(context)
+                                          .viewInsets
+                                          .bottom),
+                                  child: TextFormField(
+                                      controller: refundAmount,
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      validator: (String? v) {
+                                        if (v == null ||
+                                            num.tryParse(v) == null) {
+                                          return "${_i18n()["req"]}";
+                                        } else if (num.parse(v) >
+                                            maximumRefund()) {
+                                          return "${_i18n()["maxError"]}${maximumRefund()}";
+                                        }
+                                        return null;
+                                      },
+                                      style: Get.textTheme.bodyText1,
+                                      textAlignVertical:
+                                          TextAlignVertical.center,
+                                      decoration: InputDecoration(
+                                          suffix: Text(
+                                            "| ${_i18n()["max"]} ${maximumRefund().toPriceString()}",
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          prefixIcon:
+                                              Icon(Icons.attach_money_rounded)),
+                                      keyboardType:
+                                          TextInputType.numberWithOptions(
+                                              decimal: true),
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp('[0-9.,]')),
+                                      ]),
+                                ),
                                 const SizedBox(
                                   height: 12,
                                 ),
-                                TextButton(
-                                    onPressed: () {
-                                      if (_formKey.currentState!.validate()) {
-                                        Get.find<ROpOrderController>()
-                                            .refundCustomerCustomAmount(
-                                                widget.order.orderId,
-                                                num.parse(refundAmount.text))
-                                            .then((ServerResponse value) {
-                                          mezDbgPrint("$value");
-                                          Get.back();
-                                        });
-                                      }
-                                    },
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      padding: const EdgeInsets.all(5),
-                                      child: Text("Refund"),
-                                    ))
+                                Text(
+                                  "${_i18n()["to"]}",
+                                  style: Get.textTheme.bodyText1,
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  "${widget.order.customer.name}",
+                                  style: Get.textTheme.bodyText1,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(widget.order.stripePaymentInfo?.brand!
+                                        .toIcon()),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      "${widget.order.stripePaymentInfo?.brand!.toName()}",
+                                      style: Get.textTheme.bodyText1,
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text("•" * 12 +
+                                        "${widget.order.stripePaymentInfo?.last4}")
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  children: [
+                                    Flexible(
+                                        child: MezButton(
+                                      label: "${_i18n()["cancel"]}",
+                                      height: 50,
+                                      onClick: () async {
+                                        Get.back();
+                                      },
+                                      backgroundColor: offRedColor,
+                                      textColor: Colors.red,
+                                    )),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Flexible(
+                                        child: MezButton(
+                                      label: "${_i18n()["confirmRefund"]}",
+                                      height: 50,
+                                      withGradient: true,
+                                      onClick: () async {
+                                        if (_formKey.currentState!.validate()) {
+                                          await Get.find<ROpOrderController>()
+                                              .refundCustomerCustomAmount(
+                                                  widget.order.orderId,
+                                                  num.parse(refundAmount.text))
+                                              .then((ServerResponse value) {
+                                            mezDbgPrint("$value");
+                                            Get.back();
+
+                                            showStatusInfoDialog(context,
+                                                primaryIcon: Icons.price_check,
+                                                showSmallIcon: false,
+                                                status:
+                                                    "${_i18n()["dialogTitle"]}",
+                                                description:
+                                                    "${_i18n()["dialogDesc"]}");
+                                          });
+                                        }
+                                      },
+                                    )),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
                               ],
                             ),
                           ),
-                        );
-                      });
-                }
-              : null,
-          style: TextButton.styleFrom(
-            backgroundColor: canRefund() ? Colors.black : Colors.grey,
-            primary: Colors.white,
-          ),
-          child: Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(8),
-            child: Text(
-              "Refund customer",
-            ),
-          )),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }
+            : null,
+      ),
     );
   }
 

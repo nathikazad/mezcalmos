@@ -1717,6 +1717,20 @@
                 "cancelOrder": "Cancelar orden",
                 "orderItems": "Encargar artículos",
                 "components": {
+                    "ROpRefundButton": {
+                        "refundCustomer": "Reembolso del cliente",
+                        "refundYourCustomer": "Reembolsar a su cliente",
+                        "refundMax": "Máximo",
+                        "amount": "Monto",
+                        "to": "To",
+                        "req": "Requirió un número válido",
+                        "maxError": "Máximo es:",
+                        "cancel": "Cancelar",
+                        "confirmRefund": "Confirmar el reembolso",
+                        "dialogTitle": "Reembolso confirmado",
+                        "dialogDesc": "Su cliente recibirá el reembolso pronto."
+
+                    },
                     "ROpOrderHandleButton": {
                         "prepareOrder": "Preparar orden",
                         "orderReady": "El pedido está listo"
@@ -1736,7 +1750,8 @@
                         "customer": "Cliente"
                     },
                     "ROpOrderItems": {
-                        "note": "Nota"
+                        "note": "Nota",
+                        "itemUnav": "Artículo no disponible"
                     },
                     "ROpOrderSummaryCard": {
                         "orderSummary": "Resumen",
