@@ -73,17 +73,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
     setState(() {
       isChatLoaded = true;
     });
-    // if (controller.chat.value == null) {
-    //   controller.chat.stream.first.then((_) {
-    //     setState(() {
-
-    //       isChatLoaded = true;
-    //     });
-    //   });
-    // } else
-    //   setState(() {
-    //     isChatLoaded = true;
-    //   });
     super.initState();
   }
 
@@ -138,6 +127,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 253, 249, 249),
       appBar: AppBar(
+        centerTitle: true,
         leading: Center(
           child: GestureDetector(
             onTap: () => Get.back<void>(closeOverlays: true),
@@ -169,7 +159,12 @@ class _MessagingScreenState extends State<MessagingScreen> {
                         .recipient(recipientType: recipientType)
                         ?.participantType ==
                     ParticipantType.DeliveryAdmin)
-                ? Text("Administrador")
+                ? Text(
+                    "Administrador",
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  )
                 : Text(
                     controller
                             .recipient(
@@ -177,19 +172,32 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                 recipientId: recipientId)
                             ?.name ??
                         "User",
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
                   );
           },
         ),
         actions: <Widget>[
           if (orderLink != null)
             InkWell(
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 20),
+              child: Container(
+                width: 60,
+                padding: EdgeInsets.all(5),
+                margin: EdgeInsets.symmetric(horizontal: 7, vertical: 12),
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(225, 228, 255, 1),
+                  borderRadius: BorderRadius.circular(14.9),
+                ),
+                child: Center(
                   child: Text(
-                    "View\nOrder",
+                    "order",
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w600,
+                      color: Color.fromRGBO(103, 121, 254, 1),
+                    ),
                   ),
                 ),
               ),
@@ -197,18 +205,22 @@ class _MessagingScreenState extends State<MessagingScreen> {
             ),
           if (controller.isUserAuthorizedToCall())
             InkWell(
-              onTap: () async => await _onCallPress(),
+              onTap: () async => _onCallPress(),
               child: Container(
+                width: 30,
+                height: 30,
                 padding: EdgeInsets.all(5),
-                margin: EdgeInsets.only(right: 10),
+                margin: EdgeInsets.only(right: 7),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.grey.shade300,
+                  color: Color.fromRGBO(103, 121, 254, 1),
                 ),
                 child: Center(
-                  child: Icon(
-                    Icons.call,
-                    color: Colors.black,
+                  child: FittedBox(
+                    child: Icon(
+                      Icons.call,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
