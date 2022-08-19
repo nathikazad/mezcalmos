@@ -5,6 +5,7 @@ import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
@@ -64,6 +65,7 @@ class ROpDriverCard extends StatelessWidget {
                       onTap: () {
                         Get.toNamed(getMessagesRoute(
                             chatId: order.serviceProviderDropOffDriverChatId!,
+                            recipientType: ParticipantType.DeliveryDriver,
                             orderId: order.orderId));
                       },
                       showRedDot: Get.find<ROpOrderController>()

@@ -77,10 +77,19 @@ class ListRestaurantsController {
   }
 
   void getAllItems() {
-    _restaurants.forEach((Restaurant element) {
-      filteredItems.addAll(element.itemsWithoutCategory);
-      element.getCategories.forEach((Category cat) {
-        filteredItems.addAll(cat.items);
+    _restaurants.forEach((Restaurant restaurant) {
+      restaurant.itemsWithoutCategory.forEach((Item item) {
+        final Item _item = item;
+        _item.restaurant = restaurant;
+        filteredItems.add(_item);
+      });
+      // filteredItems.addAll(element.itemsWithoutCategory);
+      restaurant.getCategories.forEach((Category cat) {
+        cat.items.forEach((Item item) {
+          final Item _item = item;
+          _item.restaurant = restaurant;
+          filteredItems.add(_item);
+        });
       });
     });
   }
