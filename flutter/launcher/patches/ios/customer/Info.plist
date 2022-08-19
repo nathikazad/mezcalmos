@@ -63,7 +63,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>App Needs camera access in case the user wanted to change his/her profile picture directly using his iPhone's camera.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Need microphone access for uploading videos</string>
+	<string>We need microphone access in order to give the ability for our customers to call their delivery drivers.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
