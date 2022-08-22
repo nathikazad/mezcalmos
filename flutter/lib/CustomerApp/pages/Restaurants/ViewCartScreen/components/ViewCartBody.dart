@@ -111,7 +111,9 @@ class _ViewCartBodyState extends State<ViewCartBody> {
                   controller: widget.notesTextController,
                   maxLines: 7,
                   minLines: 4,
-                  decoration: InputDecoration(hintText: "${_i18n()["notes"]}")),
+                  decoration: InputDecoration(
+                      hintText: "${_i18n()["notes"]}",
+                      fillColor: Colors.white)),
             ),
             SizedBox(
               height: 25,
