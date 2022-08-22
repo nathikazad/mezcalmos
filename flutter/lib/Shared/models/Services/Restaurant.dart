@@ -98,7 +98,19 @@ class Restaurant extends Service {
         primaryLanguage: primaryLanguage,
         secondaryLanguage: secondaryLanguage,
         paymentInfo: paymentInfo);
-    if (restaurantData["menu"] != null) {
+
+    if (restaurantData['menu2'] != null) {
+      restaurantData["menu2"].forEach((categoryId, categoryData) {
+        restaurant._categories.add(Category.fromData(categoryId, categoryData));
+      });
+      if (restaurantData["menu2"]["noCategory"] != null) {
+        restaurantData["menu2"]["noCategory"]["items"]
+            .forEach((itemId, itemdata) {
+          restaurant.itemsWithoutCategory
+              .add(Item.itemFromData(itemId, itemdata));
+        });
+      }
+    } else if (restaurantData["menu"] != null) {
       if (restaurantData["menu"]?["specials"] != null ||
           restaurantData["menu"]?["daily"] != null) {
         restaurantData["menu"]?["specials"]?["current"]
@@ -114,17 +126,6 @@ class Restaurant extends Service {
         });
       } else {
         restaurantData["menu"].forEach((itemId, itemdata) {
-          restaurant.itemsWithoutCategory
-              .add(Item.itemFromData(itemId, itemdata));
-        });
-      }
-    } else {
-      restaurantData["menu2"].forEach((categoryId, categoryData) {
-        restaurant._categories.add(Category.fromData(categoryId, categoryData));
-      });
-      if (restaurantData["menu2"]["noCategory"] != null) {
-        restaurantData["menu2"]["noCategory"]["items"]
-            .forEach((itemId, itemdata) {
           restaurant.itemsWithoutCategory
               .add(Item.itemFromData(itemId, itemdata));
         });

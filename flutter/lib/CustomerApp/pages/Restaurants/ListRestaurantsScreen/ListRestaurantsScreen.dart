@@ -189,19 +189,20 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
         );
       } else if (viewController.filteredRestaurants.isNotEmpty) {
         return Column(
-          children: List.generate(
-              viewController.filteredRestaurants.length,
-              (int index) => RestaurantCard(
-                    restaurant: viewController.filteredRestaurants[index],
-                    shippingPrice: viewController.baseShippingPrice,
-                    onClick: () {
-                      Get.toNamed<void>(
-                        getRestaurantRoute(
-                            viewController.filteredRestaurants[index].info.id),
-                        arguments: viewController.filteredRestaurants[index],
-                      );
-                    },
-                  )),
+          children: List.generate(viewController.filteredRestaurants.length,
+              (int index) {
+            return RestaurantCard(
+              restaurant: viewController.filteredRestaurants[index],
+              shippingPrice: viewController.baseShippingPrice,
+              onClick: () {
+                Get.toNamed<void>(
+                  getRestaurantRoute(
+                      viewController.filteredRestaurants[index].info.id),
+                  arguments: viewController.filteredRestaurants[index],
+                );
+              },
+            );
+          }),
         );
       } else {
         return Column(
