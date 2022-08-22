@@ -69,7 +69,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
     mezDbgPrint("Args : ${Get.arguments.toString()}");
     mezDbgPrint("params : ${Get.parameters.toString()}");
     mezDbgPrint("widget.viewItemScreenMode => ${widget.viewItemScreenMode}");
-    showViewRestaurant = Get.arguments["showViewRestaurant"] ?? false;
+    showViewRestaurant = Get.arguments?["showViewRestaurant"] ?? false;
     if (widget.viewItemScreenMode == ViewItemScreenMode.AddItemMode) {
       final String? restaurantId = Get.parameters['restaurantId'];
       controller.getRestaurant("$restaurantId").then((Restaurant? value) {
