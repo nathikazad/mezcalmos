@@ -343,12 +343,13 @@ class Item {
         name: convertToLanguageMap(itemData["name"]),
         //itemData["name"].toLanguageMap(),
         cost: itemData["cost"]);
-    if (itemData["options"] != null) {
-      itemData["options"]?.forEach((opId, opData) {
+
+    if (itemData["options2"] != null) {
+      itemData["options2"]?.forEach((opId, opData) {
         item.options.add(Option.fromData(opId, opData));
       });
     } else {
-      itemData["options2"]?.forEach((opId, opData) {
+      itemData["options"]?.forEach((opId, opData) {
         item.options.add(Option.fromData(opId, opData));
       });
     }
@@ -550,7 +551,7 @@ class Choice {
     return Choice(
         id: key,
         name: convertToLanguageMap(data["name"]),
-        cost: data["cost"],
+        cost: data["cost"] ?? 0,
         available: data["available"] ?? true,
         position: data["position"] ?? 0);
   }
