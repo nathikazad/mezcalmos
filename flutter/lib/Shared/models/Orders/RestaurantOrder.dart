@@ -1,4 +1,5 @@
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -135,8 +136,10 @@ class RestaurantOrder extends DeliverableOrder {
       restaurantOrder.stripePaymentInfo =
           StripeOrderPaymentInfo.fromJson(data["stripePaymentInfo"]);
     }
-
-    data["items"].forEach((dynamic itemId, dynamic itemData) {
+    mezDbgPrint("---$id---");
+    mezDbgPrint("- $data -");
+    mezDbgPrint("------");
+    data["items"]?.forEach((dynamic itemId, dynamic itemData) {
       final RestaurantOrderItem restaurantOrderItem =
           RestaurantOrderItem.fromData(itemId, itemData);
       restaurantOrder.items.add(restaurantOrderItem);
