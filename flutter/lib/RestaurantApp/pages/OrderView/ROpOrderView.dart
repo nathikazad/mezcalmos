@@ -167,9 +167,10 @@ class _ROpOrderViewState extends State<ROpOrderView> {
                 order: order.value!,
               ),
               ROpOrderNote(order: order.value!),
-              ROpRefundButton(
-                order: order.value!,
-              ),
+              if (order.value!.stripePaymentInfo != null)
+                ROpRefundButton(
+                  order: order.value!,
+                ),
               if (order.value!.inProcess())
                 TextButton(
                     style: TextButton.styleFrom(
