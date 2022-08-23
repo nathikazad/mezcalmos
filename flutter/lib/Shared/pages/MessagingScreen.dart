@@ -273,6 +273,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
     // all the none-null forcing used down below, are garanteed to work 100%
     // and will never throw a null check error/exception.
     if (await sagora!.checkAgoraPermissions()) {
+      mezDbgPrint("#############----1-----######");
       ParticipantType _calleeType = ParticipantType.DeliveryDriver;
       switch (controller.appType) {
         case AppType.DeliveryApp:
@@ -280,6 +281,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
           break;
         default:
       }
+      mezDbgPrint("#############----2-----######");
+      mezDbgPrint(_calleeType);
       // we get the one We're trying to call first.
       final Participant? _recipient = controller.recipient(
         recipientType: _calleeType,
@@ -296,7 +299,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
         mezDbgPrint("3 - sender name ${controller.sender()?.participantType}");
 
         // Request Agora auth
-        // @Nathik this part does not work
+
         final dynamic _agoraAuth = (await sagora!.getAgoraToken(
           chatId,
           controller.sender()!.id,

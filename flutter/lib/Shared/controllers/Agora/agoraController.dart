@@ -55,7 +55,7 @@ class Sagora extends GetxController {
 
   Future<void> handleIfInChannelAlready() async {
     try {
-      final String? currentCallId = await _engine.getCallId();
+      //   final String? currentCallId = await _engine.getCallId();
       final bool _isInCall = await isInActiveCall();
       if (_isInCall) {
         await _engine.leaveChannel();

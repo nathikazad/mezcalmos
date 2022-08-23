@@ -4,11 +4,11 @@ import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -208,7 +208,13 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
 Notification newMessageNotification(String key, value) {
   return Notification(
       id: key,
-      linkUrl: value["linkUrl"],
+      linkUrl: value["linkUrl"] ??
+          getMessagesRoute(
+              chatId: value["chatId"],
+              orderId: value["orderId"],
+              recipientType: value["sender"]["particpantType"]
+                  .toString()
+                  .toParticipantType()),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],
