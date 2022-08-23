@@ -41,6 +41,7 @@ class TaxiOrderController extends GetxController {
           mezDbgPrint("Priiiiint ------> Data ${event.snapshot.value}");
           mezDbgPrint("Priiiiint ------> orderID $orderId");
           final dynamic orderData = event.snapshot.value[orderId];
+          mezDbgPrint(orderData);
           orders.add(TaxiOrder.fromData(orderId, orderData));
         }
       }
