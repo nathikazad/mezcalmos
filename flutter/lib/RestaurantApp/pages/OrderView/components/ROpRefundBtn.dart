@@ -6,7 +6,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
@@ -104,7 +103,9 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
                                           return "${_i18n()["req"]}";
                                         } else if (num.parse(v) >
                                             maximumRefund()) {
-                                          return "${_i18n()["maxError"]}${maximumRefund()}";
+                                          return "${_i18n()["maxError"]}${maximumRefund().toPriceString()}";
+                                        } else if (!(num.parse(v) > 0)) {
+                                          return "${_i18n()["minError"]}";
                                         }
                                         return null;
                                       },
@@ -113,7 +114,7 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
                                           TextAlignVertical.center,
                                       decoration: InputDecoration(
                                           suffix: Text(
-                                            "| ${_i18n()["max"]} ${maximumRefund().toPriceString()}",
+                                            "| ${_i18n()["refundMax"]} ${maximumRefund().toPriceString()}",
                                             textAlign: TextAlign.center,
                                           ),
                                           prefixIcon:
@@ -191,16 +192,23 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
                                                   widget.order.orderId,
                                                   num.parse(refundAmount.text))
                                               .then((ServerResponse value) {
-                                            mezDbgPrint("$value");
-                                            Get.back();
+                                            if (value.success) {
+                                              Get.back();
 
-                                            showStatusInfoDialog(context,
-                                                primaryIcon: Icons.price_check,
-                                                showSmallIcon: false,
-                                                status:
-                                                    "${_i18n()["dialogTitle"]}",
-                                                description:
-                                                    "${_i18n()["dialogDesc"]}");
+                                              showStatusInfoDialog(context,
+                                                  primaryIcon:
+                                                      Icons.price_check,
+                                                  showSmallIcon: false,
+                                                  status:
+                                                      "${_i18n()["dialogTitle"]}",
+                                                  description:
+                                                      "${_i18n()["dialogDesc"]}");
+                                            } else {
+                                              Get.snackbar(
+                                                  "Error",
+                                                  value.errorMessage ??
+                                                      "Error");
+                                            }
                                           });
                                         }
                                       },

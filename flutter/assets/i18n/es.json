@@ -1725,6 +1725,7 @@
                         "to": "To",
                         "req": "Requirió un número válido",
                         "maxError": "Máximo es:",
+                        "minError": "El monto mínimo de reembolso debería ser más que 0 ",
                         "cancel": "Cancelar",
                         "confirmRefund": "Confirmar el reembolso",
                         "dialogTitle": "Reembolso confirmado",

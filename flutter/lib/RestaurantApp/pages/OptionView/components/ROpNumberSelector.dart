@@ -9,8 +9,11 @@ class ROpNumberSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => DropdownButtonFormField<int>(
+        // isDense: true,
+        // isExpanded: false,
         decoration: InputDecoration(
           filled: true,
+          isDense: true,
           fillColor: Colors.grey.shade200,
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:collection/collection.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -99,18 +98,7 @@ class Restaurant extends Service {
         secondaryLanguage: secondaryLanguage,
         paymentInfo: paymentInfo);
 
-    if (restaurantData['menu2'] != null) {
-      restaurantData["menu2"].forEach((categoryId, categoryData) {
-        restaurant._categories.add(Category.fromData(categoryId, categoryData));
-      });
-      if (restaurantData["menu2"]["noCategory"] != null) {
-        restaurantData["menu2"]["noCategory"]["items"]
-            .forEach((itemId, itemdata) {
-          restaurant.itemsWithoutCategory
-              .add(Item.itemFromData(itemId, itemdata));
-        });
-      }
-    } else if (restaurantData["menu"] != null) {
+    if (restaurantData['menu'] != null) {
       if (restaurantData["menu"]?["specials"] != null ||
           restaurantData["menu"]?["daily"] != null) {
         restaurantData["menu"]?["specials"]?["current"]
@@ -126,6 +114,17 @@ class Restaurant extends Service {
         });
       } else {
         restaurantData["menu"].forEach((itemId, itemdata) {
+          restaurant.itemsWithoutCategory
+              .add(Item.itemFromData(itemId, itemdata));
+        });
+      }
+    } else if (restaurantData["menu2"] != null) {
+      restaurantData["menu2"].forEach((categoryId, categoryData) {
+        restaurant._categories.add(Category.fromData(categoryId, categoryData));
+      });
+      if (restaurantData["menu2"]["noCategory"] != null) {
+        restaurantData["menu2"]["noCategory"]["items"]
+            .forEach((itemId, itemdata) {
           restaurant.itemsWithoutCategory
               .add(Item.itemFromData(itemId, itemdata));
         });
@@ -165,20 +164,32 @@ class Restaurant extends Service {
     return items;
   }
 
-  Item? findItemById(String id) {
+  Item? findItemById({required String id, bool isSpecial = false}) {
     Item? returnVal;
-    _categories.forEach((Category category) {
-      category.items.forEach((Item item) {
+    if (isSpecial) {
+      currentSpecials.forEach((Item item) {
         if (item.id == id) returnVal = item;
       });
-    });
-    if (returnVal == null) {
-      getItemsWithoutCategory?.forEach((Item element) {
-        if (element.id == id) {
-          returnVal = element;
-        }
+      if (returnVal == null) {
+        pastSpecials.forEach((Item item) {
+          if (item.id == id) returnVal = item;
+        });
+      }
+    } else {
+      _categories.forEach((Category category) {
+        category.items.forEach((Item item) {
+          if (item.id == id) returnVal = item;
+        });
       });
+      if (returnVal == null) {
+        getItemsWithoutCategory?.forEach((Item element) {
+          if (element.id == id) {
+            returnVal = element;
+          }
+        });
+      }
     }
+
     return returnVal;
   }
 
@@ -275,15 +286,15 @@ class Category {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    final bool Function(dynamic e1, dynamic e2) listEquals =
-        const DeepCollectionEquality().equals;
+    // final bool Function(e1, e2) listEquals =
+    //     const DeepCollectionEquality().equals;
 
     return other is Category &&
         other.name == name &&
         other.id == id &&
         other.dialog == dialog &&
         other.position == position &&
-        listEquals(other.items, items) &&
+        //  listEquals(other.items, items) &&
         other.restaurant == restaurant;
   }
 
@@ -393,6 +404,40 @@ class Item {
   Option? findOption(String id) {
     if (options.length == 0) return null;
     return options.firstWhereOrNull((Option element) => element.id == id);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    // final bool Function(e1, e2) collectionEquals =
+    //     const DeepCollectionEquality().equals;
+
+    return other is Item && other.id == id;
+    // other.available == available &&
+    // other.description == description &&
+    // other.image == image &&
+    // //   collectionEquals(other.name, name) &&
+    // other.cost == cost &&
+    // //   collectionEquals(other.options, options) &&
+    // other.category == category &&
+    // other.restaurant == restaurant &&
+    // other.linkUrl == linkUrl &&
+    // other.position == position;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        available.hashCode ^
+        description.hashCode ^
+        image.hashCode ^
+        name.hashCode ^
+        cost.hashCode ^
+        options.hashCode ^
+        category.hashCode ^
+        restaurant.hashCode ^
+        linkUrl.hashCode ^
+        position.hashCode;
   }
 }
 

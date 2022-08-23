@@ -48,9 +48,8 @@ class _ROpItemViewState extends State<ROpItemView>
     restuarantID = Get.parameters["restaurantId"];
     mezDbgPrint("Restuarnt id in item view ============> $restuarantID");
     if (restuarantID != null) {
-      if (Get.arguments != null) {
-        specials = Get.arguments["specials"] as bool;
-      }
+      specials = Get.arguments?["specials"] ?? false;
+
       _tabController = TabController(length: 2, vsync: this);
       viewController.init(
           itemId: itemId,

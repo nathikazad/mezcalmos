@@ -53,7 +53,10 @@ class _ROpItemCategorySelectorState extends State<ROpItemCategorySelector> {
             if (newValue != null) {
               if (newValue.id == "addNew") {
                 // ignore: unawaited_futures
-                final Category? newCat = await Get.toNamed(kCategoryView,
+                final Category? newCat = await Get.toNamed(
+                    getROpCategoryRoute(
+                        restaurantId:
+                            widget.viewController.restaurant.value!.info.id),
                     arguments: {"shouldSave": false}) as Category?;
 
                 if (newCat != null) {

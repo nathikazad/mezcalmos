@@ -28,7 +28,7 @@ class Cart {
   Cart.fromCartData(dynamic cartData, this.restaurant, num? shippingPrice) {
     if (restaurant != null) {
       cartData["items"]?.forEach((itemIdInCart, itemData) {
-        final Item? item = restaurant!.findItemById(itemData["id"]);
+        final Item? item = restaurant!.findItemById(id: itemData["id"]);
 
         if (item != null)
           cartItems.add(CartItem.fromData(

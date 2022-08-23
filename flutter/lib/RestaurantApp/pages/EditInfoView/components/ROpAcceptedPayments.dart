@@ -193,7 +193,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
                   .shouldFixPayouts)
                 Container(
                   margin: const EdgeInsets.only(bottom: 5),
-                  child: Text('${_i18n()["stripeHelper"]}'),
+                  child: Text('${_i18n()["setupHelper"]}'),
                 ),
               RichText(
                 text: TextSpan(

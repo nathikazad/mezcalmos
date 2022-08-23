@@ -80,9 +80,9 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       final String? itemId = Get.parameters['itemId'];
 
       controller.getRestaurant(restaurantId!).then((Restaurant? restaurant) {
-        if (restaurant?.findItemById(itemId!) != null) {
+        if (restaurant?.findItemById(id: itemId!) != null) {
           cartItem.value =
-              CartItem(restaurant!.findItemById(itemId!)!, restaurantId);
+              CartItem(restaurant!.findItemById(id: itemId!)!, restaurantId);
         } else {
           Future.delayed(Duration.zero, () {
             Get.back();

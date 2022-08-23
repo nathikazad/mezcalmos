@@ -1503,7 +1503,8 @@
                 "categoryPrice": "Category pricing per kilogramme",
                 "categoryPriceHint": "Enter category pricing per kilogramme...",
                 "categoryNameError": "Please add a category name",
-                "catgeoryPriceError": "Please add a correct category price"
+                "catgeoryPriceError": "Please add a correct category price",
+                "categoryDescHint": "Enter a category description"
 
             },
             "DashboardView": {
@@ -1693,6 +1694,7 @@
                         "refundMax": "Max",
                         "req": "Required a valid number",
                         "maxError": "Maximum is : ",
+                        "minError": "Minimum refund amount should be more than 0 ",
                         "to": "To",
                         "cancel": "Cancel",
                         "confirmRefund": "Confirm refund",

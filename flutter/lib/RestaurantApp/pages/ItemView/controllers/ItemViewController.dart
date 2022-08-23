@@ -91,7 +91,8 @@ class ItemViewController {
   // edit item init //
   void initEditMode({required String itemId, String? categoryId}) {
     editMode.value = true;
-    editableItem.value = restaurant.value!.findItemById(itemId);
+    editableItem.value = restaurant.value!
+        .findItemById(id: itemId, isSpecial: specialMode.value ?? false);
     mezDbgPrint(editableItem.value!.toJson());
     prItemNameController.text = editableItem.value!.name[prLang]!;
     newImageUrl.value = editableItem.value!.image;
@@ -207,7 +208,7 @@ class ItemViewController {
         }
       });
     }
-    if (specialMode.value != null && specialMode.value == true) {
+    if ((specialMode.value ?? false) && editMode.value == false) {
       // ignore: unawaited_futures
       _restaurantInfoController
           .addSpecialItem(item: _contructItem())
@@ -223,11 +224,14 @@ class ItemViewController {
         mezDbgPrint(stackTrace);
       }).then((value) => Get.back());
     } else {
+      mezDbgPrint("From controlllllllleeeeer =====>$isCurrentSpec");
       // ignore: unawaited_futures
       _restaurantInfoController
           .editItem(
               item: _contructItem(),
               itemId: editableItem.value!.id!,
+              isSpecial: specialMode.value ?? false,
+              currentSpecial: isCurrentSpec,
               categoryId: currentCategory.value?.id)
           .onError((Object? error, StackTrace stackTrace) {
         mezDbgPrint(error);
@@ -240,7 +244,11 @@ class ItemViewController {
   // delete item
   Future<void> deleteItem({required String itemId, String? catgeoryId}) async {
     await _restaurantInfoController
-        .deleteItem(itemId: itemId, categoryId: catgeoryId)
+        .deleteItem(
+            itemId: itemId,
+            categoryId: catgeoryId,
+            isSpecial: specialMode.value ?? false,
+            currentSpecial: isCurrentSpec)
         .then((value) => Get.back());
   }
 
@@ -274,6 +282,12 @@ class ItemViewController {
             "[+] MEZEXCEPTION => ERROR HAPPEND WHILE BROWING - SELECTING THE IMAGE !\nMore Details :\n$e ");
       }
     }
+  }
+
+  bool get isCurrentSpec {
+    mezDbgPrint(
+        "Current spec ====> ${restaurant.value!.currentSpecials.contains(editableItem.value)}");
+    return restaurant.value!.currentSpecials.contains(editableItem.value);
   }
 
   ImageProvider? get getRightImage {

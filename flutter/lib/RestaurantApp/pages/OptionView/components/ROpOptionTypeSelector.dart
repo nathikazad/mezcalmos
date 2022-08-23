@@ -5,6 +5,7 @@ import 'package:mezcalmos/RestaurantApp/pages/OptionView/controllers/ROpOptionVi
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:sizer/sizer.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -48,47 +49,59 @@ class ROpOptionSelector extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-                  Row(
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 5,
+                    runSpacing: 8,
                     children: [
-                      Flexible(
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Text(
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
                             '${_i18n()["min"]}',
                             style: Get.textTheme.bodyText1,
                           ),
-                        ),
+                          Container(
+                            width: 20.w,
+                            margin: const EdgeInsets.only(left: 5),
+                            child: ROpNumberSelector(
+                              value: viewController.min,
+                            ),
+                          ),
+                        ],
                       ),
-                      Flexible(
-                          child: ROpNumberSelector(
-                        value: viewController.min,
-                      )),
-                      Flexible(
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Text(
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
                             '${_i18n()["free"]}',
                             style: Get.textTheme.bodyText1,
                           ),
-                        ),
+                          Container(
+                            width: 20.w,
+                            margin: const EdgeInsets.only(left: 5),
+                            child: ROpNumberSelector(
+                              value: viewController.free,
+                            ),
+                          ),
+                        ],
                       ),
-                      Flexible(
-                          child: ROpNumberSelector(
-                        value: viewController.free,
-                      )),
-                      Flexible(
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Text(
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
                             '${_i18n()["max"]}',
                             style: Get.textTheme.bodyText1,
                           ),
-                        ),
+                          Container(
+                            width: 20.w,
+                            margin: const EdgeInsets.only(left: 5),
+                            child: ROpNumberSelector(
+                              value: viewController.max,
+                            ),
+                          ),
+                        ],
                       ),
-                      Flexible(
-                          child: ROpNumberSelector(
-                        value: viewController.max,
-                      )),
                     ],
                   ),
                   if (_shouldShowCostAboveFree())

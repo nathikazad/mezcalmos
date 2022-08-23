@@ -145,6 +145,8 @@ class RestaurantInfoController extends GetxController {
   Future<void> addItem({required Item item, String? categoryId}) async {
     mezDbgPrint(
         "Adding  item to db ===========================>>>>>${item.toJson()}");
+    mezDbgPrint(
+        "Adding  item to db ===========================>>>>>$categoryId");
     final DatabaseReference newItemNode;
     // adding to new category
     if (categoryId != null) {
@@ -164,8 +166,13 @@ class RestaurantInfoController extends GetxController {
     await newItemNode.set(item.toJson());
   }
 
-  Future<void> editItem(
-      {required Item item, required String itemId, String? categoryId}) async {
+  Future<void> editItem({
+    required Item item,
+    required String itemId,
+    String? categoryId,
+    bool isSpecial = false,
+    bool currentSpecial = true,
+  }) async {
     mezDbgPrint("Final item ===========================>>>>>${item.toJson()}");
 
     // adding to new category
@@ -178,10 +185,31 @@ class RestaurantInfoController extends GetxController {
     }
     // adding to noCatgeory
     else {
-      await _databaseHelper.firebaseDatabase
-          .ref()
-          .child(itemNode(uid: restaurantId, itemId: itemId))
-          .set(item.toJson());
+      if (!isSpecial) {
+        await _databaseHelper.firebaseDatabase
+            .ref()
+            .child(itemNode(uid: restaurantId, itemId: itemId))
+            .set(item.toJson());
+      } else {
+        mezDbgPrint("From controlller =======> current ==> $currentSpecial");
+        if (currentSpecial) {
+          await _databaseHelper.firebaseDatabase
+              .ref()
+              .child(currentSpecialsNode(
+                    uid: restaurantId,
+                  ) +
+                  "/$itemId")
+              .set(item.toJson());
+        } else {
+          await _databaseHelper.firebaseDatabase
+              .ref()
+              .child(pastSpecialsNode(
+                    uid: restaurantId,
+                  ) +
+                  "/$itemId")
+              .set(item.toJson());
+        }
+      }
     }
   }
 
@@ -207,28 +235,100 @@ class RestaurantInfoController extends GetxController {
     }
   }
 
-  Future<void> deleteItem({required String itemId, String? categoryId}) async {
-    // ignore: unawaited_futures
-    if (categoryId != null) {
-      await _databaseHelper.firebaseDatabase
-          .ref()
-          .child(itemNode(
-              uid: restaurantId, categoryId: categoryId, itemId: itemId))
-          .remove()
-          .catchError((e, stk) {
-        mezDbgPrint(e);
-        mezDbgPrint(stk);
-      });
+  Future<void> deleteItem({
+    required String itemId,
+    String? categoryId,
+    bool isSpecial = false,
+    bool currentSpecial = true,
+  }) async {
+    mezDbgPrint(
+        "Deleteing item : special ===> $isSpecial ===== current ====== $currentSpecial");
+    if (isSpecial) {
+      mezDbgPrint("Deleting special ");
+
+      if (currentSpecial == true) {
+        await _databaseHelper.firebaseDatabase
+            .ref()
+            .child(currentSpecialsNode(
+                  uid: restaurantId,
+                ) +
+                "/$itemId")
+            .remove();
+      } else {
+        mezDbgPrint("Deleting recent  special item");
+        await _databaseHelper.firebaseDatabase
+            .ref()
+            .child(pastSpecialsNode(
+                  uid: restaurantId,
+                ) +
+                "/$itemId")
+            .remove();
+      }
     } else {
-      await _databaseHelper.firebaseDatabase
-          .ref()
-          .child(itemNode(uid: restaurantId, itemId: itemId))
-          .remove()
-          .catchError((e, stk) {
-        mezDbgPrint(e);
-        mezDbgPrint(stk);
-      });
+      if (categoryId != null) {
+        await _databaseHelper.firebaseDatabase
+            .ref()
+            .child(itemNode(
+                uid: restaurantId, categoryId: categoryId, itemId: itemId))
+            .remove()
+            .catchError((e, stk) {
+          mezDbgPrint(e);
+          mezDbgPrint(stk);
+        });
+      } else {
+        await _databaseHelper.firebaseDatabase
+            .ref()
+            .child(itemNode(uid: restaurantId, itemId: itemId))
+            .remove()
+            .catchError((e, stk) {
+          mezDbgPrint(e);
+          mezDbgPrint(stk);
+        });
+      }
     }
+
+    // ignore: unawaited_futures
+    // if (categoryId != null) {
+    //   await _databaseHelper.firebaseDatabase
+    //       .ref()
+    //       .child(itemNode(
+    //           uid: restaurantId, categoryId: categoryId, itemId: itemId))
+    //       .remove()
+    //       .catchError((e, stk) {
+    //     mezDbgPrint(e);
+    //     mezDbgPrint(stk);
+    //   });
+    // } else {
+    //   if (!isSpecial) {
+    //     await _databaseHelper.firebaseDatabase
+    //         .ref()
+    //         .child(itemNode(uid: restaurantId, itemId: itemId))
+    //         .remove()
+    //         .catchError((e, stk) {
+    //       mezDbgPrint(e);
+    //       mezDbgPrint(stk);
+    //     });
+    //   } else {
+    //     mezDbgPrint("Deleting special item");
+    //     if (currentSpecial) {
+    //       await _databaseHelper.firebaseDatabase
+    //           .ref()
+    //           .child(currentSpecialsNode(
+    //                 uid: restaurantId,
+    //               ) +
+    //               "/$itemId")
+    //           .remove();
+    //     } else {
+    //       await _databaseHelper.firebaseDatabase
+    //           .ref()
+    //           .child(pastSpecialsNode(
+    //                 uid: restaurantId,
+    //               ) +
+    //               "/$itemId")
+    //           .remove();
+    //     }
+    //   }
+    // }
   }
 
   Future<void> switchItemAvailable(
