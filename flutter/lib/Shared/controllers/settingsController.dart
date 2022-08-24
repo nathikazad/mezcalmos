@@ -65,7 +65,8 @@ class SettingsController extends GetxController {
         .onConnectivityChanged
         .listen((ConnectivityResult result) async {
       if (result != ConnectivityResult.none) {
-        if (await InternetConnectionChecker().hasConnection) {
+        if (await InternetConnectionChecker().hasConnection &&
+            await lookUpCheck()) {
           if (isCurrentRoute(kNoInternetConnectionPage))
             Future<void>.delayed(
               Duration.zero,
@@ -112,6 +113,20 @@ class SettingsController extends GetxController {
     //   }
     // });
     super.onInit();
+  }
+
+  Future<bool> lookUpCheck() async {
+    bool _doubleCheck = false;
+    try {
+      final dynamic result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        _doubleCheck = true;
+      }
+    } on SocketException catch (_) {
+      _doubleCheck = false;
+    }
+    mezDbgPrint("await lookUpCheck() ======> $_doubleCheck");
+    return Future<bool>.value(_doubleCheck);
   }
 
   Future<void> playNotificationSound({int? soundId}) async {
