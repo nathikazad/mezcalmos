@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -17,7 +17,7 @@ import 'package:soundpool/soundpool.dart';
 class SettingsController extends GetxController {
   late final ThemeController _appTheme;
   late final LanguageController _appLanguage;
-
+  final Connectivity _connectivity = Connectivity();
   // NOTIFICATION RINGTONES
   // this will be customized by the user in future.
   Soundpool _userNotificationsSoundPool = Soundpool.fromOptions(
@@ -60,7 +60,15 @@ class SettingsController extends GetxController {
     _selectedCallingSoundId = await _userCallingSoundPool.load(_soundDataCall);
 
     // start Listening on Internet Connectivity !
-    startListeningForConnectivity();
+    // _internetConnectionStatusListener =
+    // _connectivity.onConnectivityChanged.listen(_connectivityHandler);
+    ConnectionStatusSingleton.getInstance().initialize();
+    ConnectionStatusSingleton.getInstance()
+        .connectionChangeController
+        .stream
+        .listen((bool event) {
+      mezDbgPrint("Chaaaaaanged network ===> isConnected : $event");
+    });
     super.onInit();
   }
 
@@ -86,35 +94,32 @@ class SettingsController extends GetxController {
     if (streamId != null) await _userCallingSoundPool.stop(streamId);
   }
 
-  void startListeningForConnectivity() {
-    // actively listen for status updates
-    _internetConnectionStatusListener = Connectivity()
-        .onConnectivityChanged
-        .listen((ConnectivityResult conResult) {
-      mezDbgPrint("Chaaaaaanged network connectivity $conResult !");
-      switch (conResult) {
-        case ConnectivityResult.bluetooth:
-        case ConnectivityResult.ethernet:
-        case ConnectivityResult.mobile:
-        case ConnectivityResult.wifi:
-          if (isCurrentRoute(kNoInternetConnectionPage))
-            Future<void>.delayed(
-              Duration.zero,
-              () => Get.back<void>(),
-            );
-          break;
-        case ConnectivityResult.none:
-          if (!isCurrentRoute(kNoInternetConnectionPage)) {
-            Future<void>.delayed(
-              Duration.zero,
-              () => Get.toNamed<void>(kNoInternetConnectionPage),
-            );
-          }
-          break;
-        default:
-      }
-    });
-  }
+  // void _connectivityHandler(ConnectivityResult conResult) async {
+  //   final ConnectivityResult _ch = await _connectivity.checkConnectivity();
+  //   mezDbgPrint("Chaaaaaanged network connectivity $conResult | $_ch !");
+
+  //   switch (_ch) {
+  //     case ConnectivityResult.bluetooth:
+  //     case ConnectivityResult.ethernet:
+  //     case ConnectivityResult.mobile:
+  //     case ConnectivityResult.wifi:
+  //       if (isCurrentRoute(kNoInternetConnectionPage))
+  //         Future<void>.delayed(
+  //           Duration.zero,
+  //           () => Get.back<void>(),
+  //         );
+  //       break;
+  //     case ConnectivityResult.none:
+  //       if (!isCurrentRoute(kNoInternetConnectionPage)) {
+  //         Future<void>.delayed(
+  //           Duration.zero,
+  //           () => Get.toNamed<void>(kNoInternetConnectionPage),
+  //         );
+  //       }
+  //       break;
+  //     default:
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -122,5 +127,69 @@ class SettingsController extends GetxController {
     _appTheme.dispose();
     _appLanguage.dispose();
     super.dispose();
+  }
+}
+
+class ConnectionStatusSingleton {
+  //This creates the single instance by calling the `_internal` constructor specified below
+  static final ConnectionStatusSingleton _singleton =
+      new ConnectionStatusSingleton._internal();
+  ConnectionStatusSingleton._internal();
+
+  //This is what's used to retrieve the instance through the app
+  static ConnectionStatusSingleton getInstance() => _singleton;
+
+  //This tracks the current connection status
+  bool hasConnection = false;
+
+  //This is how we'll allow subscribing to connection changes
+  StreamController<bool> connectionChangeController =
+      new StreamController<bool>.broadcast();
+
+  //flutter_connectivity
+  final Connectivity _connectivity = Connectivity();
+
+  //Hook into flutter_connectivity's Stream to listen for changes
+  //And check the connection status out of the gate
+  void initialize() {
+    _connectivity.onConnectivityChanged.listen(_connectionChange);
+    checkConnection();
+  }
+
+  Stream get connectionChange => connectionChangeController.stream;
+
+  //A clean up method to close our StreamController
+  //   Because this is meant to exist through the entire application life cycle this isn't
+  //   really an issue
+  void dispose() {
+    connectionChangeController.close();
+  }
+
+  //flutter_connectivity's listener
+  void _connectionChange(ConnectivityResult result) {
+    checkConnection();
+  }
+
+  //The test to actually see if there is a connection
+  Future<bool> checkConnection() async {
+    bool previousConnection = hasConnection;
+
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        hasConnection = true;
+      } else {
+        hasConnection = false;
+      }
+    } on SocketException catch (_) {
+      hasConnection = false;
+    }
+
+    //The connection status changed send out an update to all listeners
+    if (previousConnection != hasConnection) {
+      connectionChangeController.add(hasConnection);
+    }
+
+    return hasConnection;
   }
 }
