@@ -80,7 +80,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
   @override
   void dispose() {
     // safe dispose of the engine, only when it was instanciated.
-    sagora?.engine.destroy();
     super.dispose();
   }
 

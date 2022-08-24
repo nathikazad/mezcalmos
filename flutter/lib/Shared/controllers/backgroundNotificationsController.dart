@@ -153,6 +153,7 @@ class BackgroundNotificationsController extends GetxController {
 
     onMessageListener =
         FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      final Sagora agora = Get.find<Sagora>();
       mezDbgPrint(
           "FirebaseMessage ======> ${message.data} | ${message.contentAvailable}");
       if (message.data["notificationType"] ==
@@ -162,7 +163,7 @@ class BackgroundNotificationsController extends GetxController {
                 .toCallNotificationtType() ==
             CallNotificationtType.Incoming) {
           // handle incoming
-          await Get.find<Sagora>().handleIfInChannelAlready();
+          await agora.handleIfInChannelAlready();
           await triggerIncomingCallAlert(
               callerName: message.data["callerName"],
               callerImage: message.data["callerImage"],
@@ -178,7 +179,7 @@ class BackgroundNotificationsController extends GetxController {
         } else {
           mezDbgPrint("LOG ===> GOT END CALL BG NOTIF ===> ${message.data}");
           await FlutterCallkitIncoming.endAllCalls();
-          await Get.find<Sagora>().engine.leaveChannel();
+          await agora.engine.leaveChannel();
           Get.find<Sagora>().callStatus.value = CallStatus.none;
         }
       }
