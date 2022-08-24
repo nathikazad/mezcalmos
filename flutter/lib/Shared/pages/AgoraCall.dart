@@ -59,6 +59,7 @@ class _AgoraCallState extends State<AgoraCall> {
       callStatusStream = null;
       callTimer?.cancel();
       callTimer = null;
+      _settingsController.stopCallingRingtone(streamId: callingRingtoneId);
       // leave it with Get.find, because the _sagora instance might get disposed .
       Get.find<Sagora>().callStatus.value = CallStatus.none;
     });
