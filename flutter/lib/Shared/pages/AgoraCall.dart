@@ -35,15 +35,7 @@ class _AgoraCallState extends State<AgoraCall> {
       callStatus = _sagora.callStatus.value;
     });
     initCallTimer();
-    // start the calling ringtone if callStatus == calling
-    if (callStatus == CallStatus.calling) {
-      _settingsController
-          .playCallingRingtone(autoRepeat: true)
-          .then((int? streamId) {
-        callingRingtoneId = streamId;
-      });
-    }
-
+    _startCallingRingtone();
     callStatusStream = _sagora.callStatus.stream.listen((CallStatus event) {
       // in case callStatus changed to something else than [calling] for the first time , we stop playing the ringtone.
       if (event != CallStatus.calling && event != callStatus) {
@@ -67,6 +59,7 @@ class _AgoraCallState extends State<AgoraCall> {
       callStatusStream = null;
       callTimer?.cancel();
       callTimer = null;
+      _settingsController.stopCallingRingtone(streamId: callingRingtoneId);
       // leave it with Get.find, because the _sagora instance might get disposed .
       Get.find<Sagora>().callStatus.value = CallStatus.none;
     });
@@ -82,6 +75,17 @@ class _AgoraCallState extends State<AgoraCall> {
 
   String formatTime(int seconds) {
     return '${(Duration(seconds: seconds))}'.split('.')[0].padLeft(8, '0');
+  }
+
+  void _startCallingRingtone() {
+    // start the calling ringtone if callStatus == calling
+    if (callStatus == CallStatus.calling) {
+      _settingsController
+          .playCallingRingtone(autoRepeat: true)
+          .then((int? streamId) {
+        callingRingtoneId = streamId;
+      });
+    }
   }
 
   Future<void> initCallTimer() async {
@@ -365,6 +369,7 @@ class _AgoraCallState extends State<AgoraCall> {
                     uid: _agoraAuth['uid'],
                   );
                   await initCallTimer();
+                  _startCallingRingtone();
                   _sagora.callStatus.value = CallStatus.calling;
                 } else {
                   _sagora.callStatus.value = CallStatus.none;
