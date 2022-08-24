@@ -17,7 +17,7 @@ import 'package:soundpool/soundpool.dart';
 class SettingsController extends GetxController {
   late final ThemeController _appTheme;
   late final LanguageController _appLanguage;
-  final Connectivity _connectivity = Connectivity();
+  // final Connectivity _connectivity = Connectivity();
   // NOTIFICATION RINGTONES
   // this will be customized by the user in future.
   Soundpool _userNotificationsSoundPool = Soundpool.fromOptions(
@@ -37,7 +37,7 @@ class SettingsController extends GetxController {
   SettingsController(this.appType, this.locationType,
       {this.sideMenuItems = const []});
 
-  StreamSubscription<ConnectivityResult>? _internetConnectionStatusListener;
+  // StreamSubscription<ConnectivityResult>? _internetConnectionStatusListener;
 
   @override
   Future<void> onInit() async {
@@ -68,6 +68,21 @@ class SettingsController extends GetxController {
         .stream
         .listen((bool event) {
       mezDbgPrint("Chaaaaaanged network ===> isConnected : $event");
+
+      if (event) {
+        if (isCurrentRoute(kNoInternetConnectionPage))
+          Future<void>.delayed(
+            Duration.zero,
+            () => Get.back<void>(),
+          );
+      } else {
+        if (!isCurrentRoute(kNoInternetConnectionPage)) {
+          Future<void>.delayed(
+            Duration.zero,
+            () => Get.toNamed<void>(kNoInternetConnectionPage),
+          );
+        }
+      }
     });
     super.onInit();
   }
@@ -123,7 +138,7 @@ class SettingsController extends GetxController {
 
   @override
   void dispose() {
-    _internetConnectionStatusListener?.cancel();
+    ConnectionStatusSingleton.getInstance().dispose();
     _appTheme.dispose();
     _appLanguage.dispose();
     super.dispose();
