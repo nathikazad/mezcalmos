@@ -226,22 +226,23 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                 ],
               ),
             ),
-          Flexible(
-            flex: 4,
-            child: MezButton(
-              label: "${_i18n()["itemUnav"]}",
-              height: 35,
-              backgroundColor:
-                  widget.item.unavailable ? offRedColor : primaryBlueColor,
-              textColor: Colors.white,
-              enabled: (widget.order.inProcess() && !widget.item.unavailable),
-              borderRadius: 20,
-              onClick: () async {
-                await Get.find<ROpOrderController>().markItemUnavailable(
-                    widget.order.orderId, widget.item.idInCart);
-              },
+          if (widget.order.stripePaymentInfo != null)
+            Flexible(
+              flex: 4,
+              child: MezButton(
+                label: "${_i18n()["itemUnav"]}",
+                height: 35,
+                backgroundColor:
+                    widget.item.unavailable ? offRedColor : primaryBlueColor,
+                textColor: Colors.white,
+                enabled: (widget.order.inProcess() && !widget.item.unavailable),
+                borderRadius: 20,
+                onClick: () async {
+                  await Get.find<ROpOrderController>().markItemUnavailable(
+                      widget.order.orderId, widget.item.idInCart);
+                },
+              ),
             ),
-          ),
         ],
       ),
     );

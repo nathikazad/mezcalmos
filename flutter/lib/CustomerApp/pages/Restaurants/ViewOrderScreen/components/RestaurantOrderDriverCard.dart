@@ -65,18 +65,20 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                   ),
                 ),
                 if (order.customerDropOffDriverChatId != null)
-                  MessageButton(
-                      showRedDot: Get.find<OrderController>()
-                          .hasNewMessageNotification(
-                              order.customerDropOffDriverChatId!),
-                      onTap: () {
-                        Get.toNamed(getMessagesRoute(
-                          recipientType: ParticipantType.DeliveryDriver,
-                          orderType: OrderType.Restaurant,
-                          orderId: order.orderId,
-                          chatId: order.customerDropOffDriverChatId!,
-                        ));
-                      })
+                  Obx(
+                    () => MessageButton(
+                        showRedDot: Get.find<OrderController>()
+                            .hasNewMessageNotification(
+                                order.customerDropOffDriverChatId!),
+                        onTap: () {
+                          Get.toNamed(getMessagesRoute(
+                            recipientType: ParticipantType.DeliveryDriver,
+                            orderType: OrderType.Restaurant,
+                            orderId: order.orderId,
+                            chatId: order.customerDropOffDriverChatId!,
+                          ));
+                        }),
+                  )
               ],
             ),
           )),
