@@ -1,14 +1,15 @@
 import 'dart:async';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/controllers/themeContoller.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:soundpool/soundpool.dart';
@@ -35,8 +36,8 @@ class SettingsController extends GetxController {
   LanguageController get appLanguage => _appLanguage;
   SettingsController(this.appType, this.locationType,
       {this.sideMenuItems = const []});
-  StreamSubscription<InternetConnectionStatus>?
-      _internetConnectionStatusListener;
+
+  StreamSubscription<ConnectivityResult>? _internetConnectionStatusListener;
 
   @override
   Future<void> onInit() async {
@@ -59,7 +60,7 @@ class SettingsController extends GetxController {
     _selectedCallingSoundId = await _userCallingSoundPool.load(_soundDataCall);
 
     // start Listening on Internet Connectivity !
-    // startListeningForConnectivity();
+    startListeningForConnectivity();
     super.onInit();
   }
 
@@ -87,23 +88,32 @@ class SettingsController extends GetxController {
 
   void startListeningForConnectivity() {
     // actively listen for status updates
-    _internetConnectionStatusListener =
-        InternetConnectionChecker().onStatusChange.listen(
-      (InternetConnectionStatus status) {
-        if (status == InternetConnectionStatus.disconnected &&
-            !isCurrentRoute(kNoInternetConnectionPage)) {
-          Future.delayed(Duration.zero, () {
-            Get.toNamed(kNoInternetConnectionPage);
-          });
-        } else {
-          if (isCurrentRoute(kNoInternetConnectionPage)) {
-            Future.delayed(Duration.zero, () {
-              Get.back();
-            });
+    _internetConnectionStatusListener = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult conResult) {
+      mezDbgPrint("Chaaaaaanged network connectivity $conResult !");
+      switch (conResult) {
+        case ConnectivityResult.bluetooth:
+        case ConnectivityResult.ethernet:
+        case ConnectivityResult.mobile:
+        case ConnectivityResult.wifi:
+          if (isCurrentRoute(kNoInternetConnectionPage))
+            Future<void>.delayed(
+              Duration.zero,
+              () => Get.back<void>(),
+            );
+          break;
+        case ConnectivityResult.none:
+          if (!isCurrentRoute(kNoInternetConnectionPage)) {
+            Future<void>.delayed(
+              Duration.zero,
+              () => Get.toNamed<void>(kNoInternetConnectionPage),
+            );
           }
-        }
-      },
-    );
+          break;
+        default:
+      }
+    });
   }
 
   @override
