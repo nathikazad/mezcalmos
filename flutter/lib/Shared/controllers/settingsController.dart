@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
@@ -37,7 +38,7 @@ class SettingsController extends GetxController {
   SettingsController(this.appType, this.locationType,
       {this.sideMenuItems = const []});
 
-  // StreamSubscription<ConnectivityResult>? _internetConnectionStatusListener;
+  StreamSubscription<ConnectivityResult>? _internetConnectionStatusListener;
 
   @override
   Future<void> onInit() async {
@@ -60,21 +61,24 @@ class SettingsController extends GetxController {
     _selectedCallingSoundId = await _userCallingSoundPool.load(_soundDataCall);
 
     // start Listening on Internet Connectivity !
-    // _internetConnectionStatusListener =
-    // _connectivity.onConnectivityChanged.listen(_connectivityHandler);
-    ConnectionStatusSingleton.getInstance().initialize();
-    ConnectionStatusSingleton.getInstance()
-        .connectionChangeController
-        .stream
-        .listen((bool event) {
-      mezDbgPrint("Chaaaaaanged network ===> isConnected : $event");
-
-      if (event) {
-        if (isCurrentRoute(kNoInternetConnectionPage))
-          Future<void>.delayed(
-            Duration.zero,
-            () => Get.back<void>(),
-          );
+    _internetConnectionStatusListener = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) async {
+      if (result != ConnectivityResult.none) {
+        if (await InternetConnectionChecker().hasConnection) {
+          if (isCurrentRoute(kNoInternetConnectionPage))
+            Future<void>.delayed(
+              Duration.zero,
+              () => Get.back<void>(),
+            );
+        } else {
+          if (!isCurrentRoute(kNoInternetConnectionPage)) {
+            Future<void>.delayed(
+              Duration.zero,
+              () => Get.toNamed<void>(kNoInternetConnectionPage),
+            );
+          }
+        }
       } else {
         if (!isCurrentRoute(kNoInternetConnectionPage)) {
           Future<void>.delayed(
@@ -84,6 +88,29 @@ class SettingsController extends GetxController {
         }
       }
     });
+
+    // ConnectionStatusSingleton.getInstance().initialize();
+    // ConnectionStatusSingleton.getInstance()
+    //     .connectionChangeController
+    //     .stream
+    //     .listen((bool event) {
+    //   mezDbgPrint("Chaaaaaanged network ===> isConnected : $event");
+
+    //   if (event) {
+    //     if (isCurrentRoute(kNoInternetConnectionPage))
+    //       Future<void>.delayed(
+    //         Duration.zero,
+    //         () => Get.back<void>(),
+    //       );
+    //   } else {
+    //     if (!isCurrentRoute(kNoInternetConnectionPage)) {
+    //       Future<void>.delayed(
+    //         Duration.zero,
+    //         () => Get.toNamed<void>(kNoInternetConnectionPage),
+    //       );
+    //     }
+    //   }
+    // });
     super.onInit();
   }
 
@@ -138,7 +165,8 @@ class SettingsController extends GetxController {
 
   @override
   void dispose() {
-    ConnectionStatusSingleton.getInstance().dispose();
+    // ConnectionStatusSingleton.getInstance().dispose();
+    _internetConnectionStatusListener?.cancel();
     _appTheme.dispose();
     _appLanguage.dispose();
     super.dispose();
