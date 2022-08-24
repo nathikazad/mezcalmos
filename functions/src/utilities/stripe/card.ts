@@ -113,6 +113,9 @@ export const chargeCard =
       stripeOptions
     );
 
+    if (paymentIntent.status == 'requires_confirmation') {
+      await stripe.paymentIntents.confirm(paymentIntent.id, stripeOptions);
+    }
     return {
       status: ServerResponseStatus.Success,
       paymentIntent: paymentIntent.client_secret,
