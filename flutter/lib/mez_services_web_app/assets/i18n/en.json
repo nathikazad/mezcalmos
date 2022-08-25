@@ -1,0 +1,1511 @@
+{
+    "CustomerApp": {
+        "main": {
+            "savedLocations": "Saved Locations"
+        },
+        "components": {
+            "Menu": {
+                "UserMenuComponent": {
+                    "savedLocations": "Saved Locations",
+                    "userInfo": "User Information",
+                    "logout": "Logout",
+                    "notifications": "Notifications",
+                    "orders": "Orders"
+                }
+            },
+            "CustomerHomeFooterButtons": {
+                "privacyPolicy": "Privacy policy"
+            },
+            "DropDownLocationList": {
+                "pickLocation": "Pick from map"
+            },
+            "LocationPicker": {
+                "pick": "PICK",
+                "confirm": "confirm",
+                "signInToMakeOrder": "Sign in to make order",
+                "moveMapIfNotPrecise": "You can move the map if the location is not exact."
+            },
+            "ServicesCard": {
+                "comingSoon": "Coming soon ..."
+            }
+        },
+        "pages": {
+            "ListOrdersScreen": {
+                "components": {
+                    "RestaurantOngoingOrderCard": {
+                        "totalCost": "Total Cost"
+                    },
+                    "RestaurantPastOrderCard": {
+                        "totalCost": "Total Cost"
+                    },
+                    "TaxiOrderOngoingCard": {
+                        "taxiOrder": "Taxi order",
+                        "totalCost": "Total Cost",
+                        "orderStatus": {
+                            "canceledByTaxi": "Cancelled",
+                            "canceledByCustomer": "Cancelled",
+                            "onTheWay": "Taxi on the way",
+                            "lookingForTaxi": "Looking for Taxi",
+                            "inTransit": "Taxi in transit",
+                            "droppedOff": "Dropped off",
+                            "expired": "Expired",
+                            "forwarding": "Forwarding to company",
+                            "forwardSuccess": "Forwarded",
+                            "forwardUnsuccess": "Forwarding canceled"
+                        }
+                    },
+                    "TaxiPastOrderCard": {
+                        "taxiOrder": "Taxi order",
+                        "totalCost": "Total Cost"
+                    },
+                    "LaundryOngoingOrderCard": {
+                        "totalCost": "Total Cost",
+                        "status": {
+                            "canceled": "Order Cancelled",
+                            "orderReceived": "Order Received",
+                            "otwPickUp": "Pick-up on the way",
+                            "pickedUp": "Order Picked-up",
+                            "atLaundry": "At laundry",
+                            "readyForDelivery": "Ready for Delivery",
+                            "otwDelivery": "Delivery on the way",
+                            "delivered": "Order Delivered"
+                        }
+                    },
+                    "LaundryPastOrderCard": {
+                        "totalCost": "Total Cost",
+                        "status": {
+                            "orderReceived": "Order Received",
+                            "otwPickUp": "Pick-up on the way",
+                            "pickedUp": "Order Picked-up",
+                            "atLaundry": "At laundry",
+                            "readyForDelivery": "Ready for Delivery",
+                            "otwDelivery": "Delivery on the way",
+                            "delivered": "Order Delivered"
+                        }
+                    }
+                },
+                "ListOrdersScreen": {
+                    "title": "Orders",
+                    "shared": {
+                        "notification": {
+                            "today": "Today",
+                            "yesterday": "Yesterday"
+                        }
+                    },
+                    "orders": {
+                        "noOrders": "No orders found",
+                        "onGoingOrders": "Ongoing Orders"
+                    }
+                }
+            },
+            "PickLocationScreen": {
+                "PickLocationView": {
+                    "pickLocation": "Pick Location",
+                    "pickLabele": "Search for location or move map and pick location"
+                }
+            },
+            "Restaurants": {
+                "ListRestaurantsScreen": {
+                    "components": {
+                        "RestaurandCard": {
+                            "items": "Items",
+                            "closed": "CLOSED"
+                        },
+                        "searchField": {
+                            "search": "Search"
+                        }
+                    },
+                    "ListRestaurantScreen": {
+                        "restaurants": "Restaurants",
+                        "search": "Search",
+                        "showOnlyOpen": "Show only open restaurents",
+                        "emptRestaurantList": "Sorry no restaurant found."
+                    }
+                },
+                "ViewCartScreen": {
+                    "components": {
+                        "BuildCart": {
+                            "inCart": "My orders",
+                            "yesClear": "Yes clear",
+                            "no": "No",
+                            "clearCart": "Clear Cart",
+                            "clearCartConfirm": "Are you sure you want to clear the cart ?",
+                            "clear": "Clear"
+                        },
+                        "BuildItems": {
+                            "deleteItem": "Delete  item",
+                            "deleteItemConfirm": "Are you sure you would like to delete?",
+                            "deleteBtn": "Yes, delete item",
+                            "itemNotes": "Item notes :"
+                        },
+                        "ChoosenManyOption": {
+                            "options": "Options"
+                        },
+                        "DropDownListCartView": {
+                            "pickLocation": "Pick from map"
+                        },
+                        "OrderSummaryCard": {
+                            "orderSummary": "Order Summary",
+                            "orderCost": "Order Cost",
+                            "deliveryCost": "Delivery Cost",
+                            "totalCost": "Total Cost",
+                            "deliveryLocation": "Delivery Location"
+                        },
+                        "SaveLocationDailog": {
+                            "addLocationDialogTitle": "enter location name, if you want to save for future use, else you may skip",
+                            "editLocationDialogTitle": "Enter location name",
+                            "addLocationDialogButton": "OK",
+                            "editLocationDialogButton": "EDIT",
+                            "addLocationDialogSkip": "Skip"
+                        },
+                        "ViewCartBody": {
+                            "notesTitle": "Notes",
+                            "notes": "Write your notes here"
+                        }
+                    },
+                    "ViewCartScreen": {
+                        "myCart": "My Cart",
+                        "notAvailable": "This restaurant is closed",
+                        "orderNow": "ORDER NOW"
+                    }
+                },
+                "ViewItemScreen": {
+                    "components": {
+                        "BottomBarItemViewScreen": {
+                            "notAvailable": "This restaurant is closed",
+                            "title": "Warning",
+                            "leftBtn": "Checkout first",
+                            "rightBtn": "Overwrite",
+                            "subtitle": "You already have some items in your cart from another restaurant, do you want to check them out first or overwrite them?",
+                            "addToCart": "Add item",
+                            "modifyItem": "Modify item"
+                        },
+                        "ChoosenManyCheckBox": {
+                            "optional": "Optional"
+                        },
+                        "DialogRequiredSignIn": {
+                            "title": "You need to be signed in to add items to your cart",
+                            "signBtn": "Sign me in",
+                            "notNowBtn": "Not now ?"
+                        }
+                    },
+                    "ViewItemScreen": {
+                        "notes": "Notes",
+                        "itemNotes": "Item notes :",
+                        "itemDescription": "Item Description"
+                    }
+                },
+                "ViewOrderScreen": {
+                    "components": {
+                        "OrderStatusCard": {
+                            "willBePicked": "Will be picked up",
+                            "willBeDelivered": "Will be delivered"
+                        },
+                        "RestaurantOrderDriverCard": {
+                            "dropOffTime": "Drop-off time"
+                        },
+                        "notesWidget": {
+                            "notes": "Order note :"
+                        },
+                        "OrderFooterCard": {
+                            "cancelOrder": "Cancel Order",
+                            "orderCanceled": "Order is being cancelled ...",
+                            "cancelOrderConfirm": "Are you sure you want to\ncancel this order?",
+                            "titleSuccess": "Success :)",
+                            "orderCancelSuccess": "Order cancelled successfully.",
+                            "titleFailed": "Oops :(",
+                            "orderCancelFailed": "Failed to cancel the order.",
+                            "yes": "Yes, I'm sure!",
+                            "no": "No",
+                            "orderDelivered": "Order Delivered",
+                            "orderCancelled": "Order Cancelled"
+                        },
+                        "OrdersItemsCard": {
+                            "orderItems": "Order Items",
+                            "canceledByAdmin": "Cancelled",
+                            "canceledByCustomer": "Cancelled",
+                            "received": "Order Received",
+                            "preparing": "Preparing the order",
+                            "onTheWay": "On The Way",
+                            "readyForPickUp": "Ready For Pickup",
+                            "delivered": "Order Delivered",
+                            "helperText-canceledByAdmin": "Your order has been cancelled by the restaurant",
+                            "helperText-canceledByCustomer": "Your order has been cancelled",
+                            "helperText-received": "Your order is received by the restaurant",
+                            "helperText-preparing": "Your order is being prepared by the restaurant",
+                            "helperText-onTheWay": "Your order is on the way",
+                            "helperText-readyForPickUp": "Your order is prepared and ready for pickup by the delivery driver",
+                            "helperText-delivered": "Your order has been successfully delivered",
+                            "itemNotes": "Note : "
+                        },
+                        "OrderSummaryCard": {
+                            "totalCost": "Total Cost",
+                            "orderSummary": "Summary",
+                            "orderCost": "Order Cost",
+                            "deliveryCost": "Delivery Cost",
+                            "free": "Free",
+                            "total": "Total",
+                            "deliveryLocation": "Delivery Location"
+                        }
+                    },
+                    "ViewRestaurantOrderScreen": {
+                        "orderStatus": "Order Status"
+                    }
+                },
+                "ViewRestaurantScreen": {
+                    "components": {
+                        "restaurantInfoTab": {
+                            "description": "Description",
+                            "location": "Location",
+                            "workingHours": "Working Hours",
+                            "weekDays": {
+                                "monday": "Monday",
+                                "tuesday": "Tuesday",
+                                "wednesday": "Wednesday",
+                                "thursday": "Thursday",
+                                "friday": "Friday",
+                                "saturday": "Saturday",
+                                "sunday": "Sunday"
+                            }
+                        },
+                        "workinHoursCart": {
+                            "open": "Open",
+                            "closed": "Closed"
+                        }
+                    },
+                    "ViewRestaurantScreen": {
+                        "menu": "Menu",
+                        "info": "Information"
+                    }
+                }
+            },
+            "SavedLocations": {
+                "components": {
+                    "SavedLocationBody": {
+                        "title": "Saved Locations",
+                        "location": "Location"
+                    },
+                    "SavedLocationComponent": {
+                        "editLocation": "Edit Location",
+                        "deleteLocation": "Delete Location"
+                    },
+                    "SavedLocationIsEmpty": {
+                        "savedLocationsListEmpty": "Your Saved locations list is empty",
+                        "clickBtnToAddNewLocation": "Add new location by clicking the button below"
+                    }
+                },
+                "SavedLocationView": {
+                    "title": "Saved Locations",
+                    "addNewLoc": "Add New Location"
+                }
+            },
+            "Taxi": {
+                "components": {
+                    "Hints": {
+                        "RideReadByTaxisHint": {
+                            "taxiRideCheckedTooltip": "This shows how many drivers have received your offer but did not find the offer acceptable."
+                        }
+                    },
+                    "TaxiBottomBars": {
+                        "TaxiOrderBottomBar": {
+                            "rideFinished": "Ride finished",
+                            "ride": "ride",
+                            "rideExpired": "Your ride has been expired",
+                            "rideCancelledByTaxi": "Ride cancelled by taxi",
+                            "rideCancelledByCustomer": "You have cancelled your ride",
+                            "forwarding": "Calling local company by phone to find you taxi",
+                            "taxiNumber": "Taxi number",
+                            "forwardSuccess": "A taxi from local company is on the way",
+                            "forwardUnsuccess": "Unable to find you taxi from local company"
+                        },
+                        "TaxiReqBottomBar": {
+                            "decreasePrice": "Decrease the price",
+                            "increasePrice": "Increase the price"
+                        }
+                    },
+                    "BottomBarComponents": {
+                        "confirmation_header": "Please confirm",
+                        "confirmation_text": "Are you sure you want to cancel the current ride?",
+                        "serverCommunicationError": "Failed to communicate with the server :("
+                    },
+                    "LocationSearchBar": {
+                        "from": "From",
+                        "to": "To",
+                        "currentLocation": "Current location",
+                        "pickFromMap": "Pick from map"
+                    },
+                    "TopBar": {
+                        "from": "From",
+                        "to": "To"
+                    }
+                },
+                "RequestTaxiScreen": {
+                    "failedToRequestTaxi": "Failed to request a taxi !",
+                    "taxiRequestPriceTooltip": "How much are you willing to offer for this ride? We will broadcast your offer to all taxi drivers near you, they will accept your order only if they find the offered price acceptable."
+                },
+                "ViewTaxiOrder": {
+                    "components": {
+                        "CounterOfferWidgets": {
+                            "offers": "Offers",
+                            "failedToAcceptOffer": "Failed to accept the offer!"
+                        },
+                        "ViewTaxiOrderScreenWidgets": {
+                            "title": "Confirm Cancelation.",
+                            "question": "Are you sure you want to cancel your Order ?",
+                            "cancel": "Cancel",
+                            "taxiRidePriceTooltip": "Click + - to increase/decrease your price by 5. If you see your order not being accepted try them out.",
+                            "serverCommunicationError": "Failed to communicate with the server :("
+                        }
+                    },
+                    "ViewTaxiOrderScreen": {
+                        "orderCancelSuccess": "Order cancelled successfully."
+                    }
+                }
+            },
+            "CustomerWrapper": {
+                "savedLocations": "Saved Locations",
+                "welcomeText": "Welcome to MEZCALMOS 👋",
+                "appDescription": "Your one stop place to find all your needed local services and where you can enjoy fast and hight quality services.",
+                "services": "Services",
+                "taxi": {
+                    "subtitle": "Get the nearest taxi around and get your destinatiion asap .",
+                    "title": "Taxi"
+                },
+                "food": {
+                    "subtitle": "Discover most delicious dishes from the nearest restaurants .",
+                    "title": "Food"
+                },
+                "laundry": {
+                    "subtitle": "Get your clothes cleaned by your nearest laundry service",
+                    "title": "Laundry"
+                },
+                "comingSoon": "Coming soon ...",
+                "supportText": "need help ? Contact our support team"
+            },
+            "Laundry": {
+                "Components": {
+                    "LaundryLocPicker": {
+                        "pickLocation": "Pick from map"
+                    }
+                },
+                "LaundryCurrentOrderView": {
+                    "Components": {
+                        "LaundryOrderDriverCard": {
+                            "dropOffTime": "Drop-off time",
+                            "pickUpTime": "Pick-up time"
+                        },
+                        "LaundryOrderComponent": {
+                            "notes": "Notes"
+                        },
+                        "LaundryOrderFooterCard": {
+                            "cancelOrder": "Cancel Order",
+                            "orderCanceled": "Order is being cancelled ...",
+                            "orderStatusCanceled": "Order Cancelled",
+                            "orderStatusDeliverd": "Order Delivered",
+                            "cancelOrderConfirm": "Are you sure you want to\ncancel this order?",
+                            "titleSuccess": "Success :)",
+                            "orderCancelSuccess": "Order cancelled successfully.",
+                            "titleFailed": "Oops :(",
+                            "orderCancelFailed": "Failed to cancel the order.",
+                            "cancelOrderDialogYes": "Yes, I'm sure!",
+                            "cancelOrderDialogNo": "No"
+                        },
+                        "LaundryOrderStatusCard": {
+                            "orderReceived": "Order Received",
+                            "otwPickUp": "Pick-up on the way",
+                            "pickedUp": "Order Picked-up",
+                            "atLaundry": "At laundry",
+                            "readyForDelivery": "Ready for Delivery",
+                            "otwDelivery": "Delivery on the way",
+                            "delivered": "Order Delivered",
+                            "canceled": "Order Cancelled",
+                            "otwToCustomer": "On the way to customer",
+                            "otwToLaundry": "On the way to laundry",
+                            "pickedUpFromCustomer": "On the way to laundry",
+                            "pickedUpFromLaundry": "Delivery on the way",
+                            "cancelByAdmin": " Order Canceled by the admin",
+                            "cancelByUser": " You canceled the order",
+                            "received": " Order received and will be proceed as soon as possible",
+                            "orderHelperOtwPickup": "Our driver is on the way to pick up your order from your location ",
+                            "orderHelperPickedUp": " order picked up from your location successfully",
+                            "orderHelperAtLaundry": " the laundry is processing your order",
+                            "orderHelperReady": "your order is ready for delivery",
+                            "orderHelperOtwDelivery": "Our driver is on the way to deliver back your order",
+                            "orderHelperDelivered": "Order has been successfully delivered",
+                            "willBePickedUp": "Will be picked up",
+                            "willBeReady": "Will be ready",
+                            "willBeDropped": "Will be dropped"
+                        },
+                        "LaundryPricingComponent": {
+                            "laundryPricing": "Laundry cost",
+                            "fixedRate": "Cost Per Kilo",
+                            "orderWeight": "Order Weight",
+                            "minimumCost": "Minimum Cost",
+                            "totalCost": "Total Cost",
+                            "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order.",
+                            "item": "Item",
+                            "perKilo": "Per kilo",
+                            "weight": "Weight",
+                            "cost": "Cost"
+                        },
+                        "OrderSummaryComponent": {
+                            "orderSummary": "Summary",
+                            "orderCost": "Order Cost",
+                            "deliveryCost": "Delivery Cost",
+                            "totalCost": "Total Cost",
+                            "deliveryLocation": "Delivery Location",
+                            "laundryPricing": "Laundry Pricing",
+                            "fixedRate": "Cost Per Kilo",
+                            "orderWeight": "Order Weight",
+                            "free": "Free",
+                            "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order."
+                        }
+                    },
+                    "LaundryCurrentOrderView": {
+                        "orderStatus": "Order Status",
+                        "laundry": "Laundry",
+                        "estimatedDeliveryTime": "Estimated delivery time"
+                    }
+                },
+                "LaundriesListView": {
+                    "components": {
+                        "laundrySelectCard": {
+                            "available": "Available",
+                            "unavailable": "Unavailable"
+                        },
+                        "CustomerLaundrySelectCard": {
+                            "days": "days",
+                            "startingFrom": "Starting"
+                        }
+                    },
+                    "laundries": "Laundries",
+                    "title": "Find your closest laundries\nor dry cleaners "
+                },
+                "SingleLaundryScreen": {
+                    "startingFrom": "Starting from ",
+                    "minimumCost": "Minimum Cost",
+                    "description": "Description",
+                    "openHours": "openHours",
+                    "sendMyLaundry": "Send my laundry"
+                },
+                "LaundryRequestView": {
+                    "LaundryOrderRequestView": {
+                        "howItWorks": "How it works",
+                        "deliveryLocation": "Delivery Location",
+                        "orderSummary": "Order Summary",
+                        "orderCost": "Order Cost",
+                        "minimumCost": "Minimum Cost",
+                        "deliveryCost": "Delivery Cost",
+                        "noLocation": "No location selected",
+                        "pickLocation": "Pick from map",
+                        "orderNow": "Order Now",
+                        "signInToMakeOrder": "Sign in to make order",
+                        "notes": "Notes",
+                        "error": "Error",
+                        "errorText": "Can't make an order please try again",
+                        "noteHint": "Write your notes here"
+                    }
+                },
+                "LaundryPickLocView": {
+                    "pickLocation": "Pick Location",
+                    "pickLabele": "Search for location or move map and pick location"
+                }
+            }
+        },
+        "notificationHandler": {
+            "viewOrder": "View Order",
+            "preparingOrderTitle": "Preparing Order",
+            "preparingOrderBody": "Your order is being prepared",
+            "readyForPickUpTitle": "Ready For Pickup",
+            "readyForPickUpBody": "Your order is ready for pickup",
+            "onTheWayRestaurantTitle": "On the Way",
+            "onTheWayRestaurantBody": "Your order is on the way",
+            "deliveredTitle": "Delivered",
+            "deliveredBody": "Your order has been delivered",
+            "cancelledTitle": "Order Cancelled",
+            "cancelledBody": "Your order has been cancelled",
+            "taxiOnTheWayTitle": "On the Way",
+            "taxiOnTheWayBody": "Your taxi is on the way",
+            "taxiInTransitTitle": "In Transit",
+            "taxiInTransitBody": "You are on the way to your destination",
+            "taxiDroppedOffTitle": "Reached",
+            "taxiDroppedOffBody": "Your have reached your destination",
+            "taxiCancelledTitle": "Order Cancelled",
+            "taxiCancelledBody": "Your order has been cancelled",
+            "taxiExpiredTitle": "No taxis available",
+            "taxiExpiredBody": "Unfortunately, we could not find a taxi for you. Please try again later",
+            "taxiFwdToCompanyTitle": "Forwarding to company",
+            "taxiFwdToCompanyBody": "We are calling a local company to find you a taxi",
+            "taxiFwdSuccessTitle": "Forwarded",
+            "taxiFwdSuccessBody": "Local taxi driver found ",
+            "taxiFwdCancelTitle": "Forwarding Cancelled ",
+            "taxiFwdCancelBody": "You order has been cancelled ",
+            "laundryOtwPickupTitle": "Pickup on the way",
+            "laundryOtwPickupBody": "Driver on the way to pick up your order",
+            "laundryPickedTitle": "Order Picked-up",
+            "laundryPickedBody": "Order is picked up successfuly",
+            "laundryAtLaundryTitle": "At laundry",
+            "laundryAtLaundryBody": "You order is received by the laundry",
+            "laundryReadyForDeliveryTitle": "Ready for delivery",
+            "laundryReadyForDeliveryBody": "You order is ready for delivery",
+            "laundryOtwDeliveryTitle": "Delivery on the way",
+            "laundryOtwDeliveryBody": "You order is on the way",
+            "laundryDeliveredTitle": "Delivered",
+            "LaundryDeliveredBody": "Your order has been delivered",
+            "LaundryCancelledTitle": "Order Cancelled",
+            "LaundryCancelledBody": "Your order has been cancelled",
+            "counterOfferTitle": "New Counter Offer",
+            "counterOfferBody": "New offer from "
+        }
+    },
+    "Shared": {
+        "controllers": {
+            "authController": {
+                "failedOTPConfirmRequest": "OTP Code confirmation failed :("
+            }
+        },
+        "helpers": {
+            "ImageHelper": {
+                "camera": "Camera",
+                "gallery": "Gallery",
+                "cameraAccessOffTitle": "App can't access Camera.",
+                "cameraAccessOffBody": "Apparently you denied the app from Camera access, go to General > APP > Allow Camera!",
+                "photoAccessOffTitle": "App can't access Photos.",
+                "photoAccessOffBody": "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else."
+            },
+            "GeneralPurposeHelper": {
+                "yesCancel": "Yes, cancel order",
+                "no": "No",
+                "cancelOrder": "Cancel Order",
+                "cancelConfirmationText": "Are you sure you would like to cancel ?",
+                "subtitle": "This action cannot be undone."
+            },
+            "NotificationsHelper": {
+                "view": "View"
+            },
+            "DateTimeHelper": {
+                "today": "Today",
+                "in": "in: ",
+                "at": "at: "
+            }
+        },
+        "pages": {
+            "AuthScreens": {
+                "SMS": {
+                    "OtpConfirmationScreen": {
+                        "confirmation": "Confirmation",
+                        "OtpConfirmation": "OTP Code Confirmation",
+                        "twilioNote": "By continuing you will receive a verification code to your phone number by SMS. Message and data rates may apply.",
+                        "enterOtpCode": "Enter OTP code sent to",
+                        "otpDidnReceiveTxt": "You haven't receive the text ?",
+                        "resend": "Resend",
+                        "resendAfter": "Resend after",
+                        "seconds": "seconds",
+                        "wrongOTPCode": "The Confirmation code is Wrong, please try again.",
+                        "confirm": "Confirm"
+                    },
+                    "PhoneNumberScreen": {
+                        "otpCode": "OTP Code",
+                        "twilioNote": "By continuing you will receive a verification code to your phone number by SMS. Message and data rates may apply.",
+                        "enterPhoneNumber": "Enter phone number to recieve OTP code",
+                        "submit": "SUBMIT"
+                    }
+                },
+                "SignInScreen": {
+                    "title": "Connect using Facebook or using SMS ! ",
+                    "loginWithApple": " LOGIN WITH APPLE",
+                    "loginWithSms": "LOGIN WITH SMS",
+                    "fbBtn": "LOGIN WITH FACEBOOK"
+                },
+                "UnauthorizedScreen": {
+                    "unauthorized": "Unauthorized",
+                    "subTitle1": "You are not authorized, please contact Alejandro ",
+                    "subTitle2": " ,to get authorization."
+                }
+            },
+            "Notifications": {
+                "components": {
+                    "ClearNotificationButton": {
+                        "latest": "Latest",
+                        "today": "Today",
+                        "alertClearNotificationTitle": "Clear All Notifications"
+                    }
+                },
+                "ViewNotifications": {
+                    "title": "Notifications",
+                    "latest": "Latest",
+                    "today": "Today",
+                    "alertClearNotificationTitle": "Clear All Notifications",
+                    "clear": "Clear",
+                    "no": "No"
+                }
+            },
+            "UserProfileScreen": {
+                "UserProfileScreen": {
+                    "mustSetUserNameError": "Please enter your first name.",
+                    "mustSetUserImgError": "Please upload an image.",
+                    "nameMustBeLettersOnly": "Your first name must only have letters.",
+                    "nameMustBeFourLettersOrMore": "Your name must have at least 4 letters."
+                },
+                "UserProfileWidgets": {
+                    "namePlaceHolder": "Enter your first name",
+                    "uploadPic": "Upload Image",
+                    "title": " User Information",
+                    "cancel": "Cancel",
+                    "name": "Name",
+                    "memberSince": "Member since",
+                    "editInfo": "Edit Information",
+                    "noChangesToApply": "No Changes to be applied!",
+                    "saveBtn": "Save"
+                }
+            },
+            "NoInternetConnectionScreen": {
+                "noInternetConnection": "No internet connection",
+                "reconnecting": "Reconnecting"
+            },
+            "MessagingScreen": {
+                "writeMsgPlaceholder": "Write your message here ..."
+            },
+            "ViewNotifications": {
+                "title": "Notifications",
+                "latest": "Latest",
+                "alertClearNotificationTitle": "Clear All Notifications"
+            },
+            "LocationPermissionScreen": {
+                "permissionBtn": "GIVE PERMISSION",
+                "askForNotif": "The app collects your location Data to match you with the best rides and share your location with customers, even when the app is in background.",
+                "locationPermissionDenied": "Oops, Sadly without location permissions you can not use our application!",
+                "locationPermissionDeniedForever": "Location permissions are denied forever! Please change that.",
+                "locationIsOff": "Location Service Turned Off",
+                "locationPermissionStatus": {
+                    "denied": "Access to your location is denied :(",
+                    "backgroundAccessDenied": "Access to background location is denied :(",
+                    "foreverDenied": "Click the button then go to permissions->location and check `Always`",
+                    "serviceOff": "Phone's Location service is disabled / off :("
+                },
+                "locationPermissionText": {
+                    "ios": {
+                        "foreground": "We need to access your location while using the app. Please Click `Keep Only While Using` .",
+                        "background": "We need to access your location even when the app is in background. Please change the location permissions on App's Settings to `Always Allow` ."
+                    },
+                    "android": {
+                        "foreground": {
+                            "android9": "We need to access your location while using the app. Please Click `Allow` .",
+                            "android10": "We need to access your location while using the app. Please Click `KEEP AND DON'T ASK AGAIN` .",
+                            "android11": "We need to access your location while using the app. Please Click `WHILE USING THE APP` ."
+                        },
+                        "background": {
+                            "android9": "We need to access your location even when the app is in background. Please Click  `Allow` .",
+                            "android10": "We need to access your location even when the app is in background. Please Click `ALLOW ALL THE TIME` .",
+                            "android11": "We need to access your location even when the app is in background. Please Click Give Permissions -> Permissions -> Location -> All the time."
+                        }
+                    }
+                }
+            },
+            "AppNeedsUpdateScreen": {
+                "newVersion": "New version is out!",
+                "downloadNewVersion": "Download the new version!",
+                "downloading": "A new version is being downloaded.",
+                "news": "News",
+                "update": "Update now!"
+            }
+        },
+        "widgets": {
+            "NoOrdersComponent": {
+                "title": "No orders at the moment",
+                "subtitle": "Try again later"
+            },
+            "FreeShippingComponent": {
+                "free": "Free"
+            },
+            "MezServiceOpenHours": {
+                "openHours": "Open hours",
+                "weekDays": {
+                    "monday": "Monday",
+                    "tuesday": "Tuesday",
+                    "wednesday": "Wednesday",
+                    "thursday": "Thursday",
+                    "friday": "Friday",
+                    "saturday": "Saturday",
+                    "sunday": "Sunday"
+                }
+            },
+            "MezWorkingHours": {
+                "save": "Save",
+                "cancel": "Cancel",
+                "workingHours": "Working Hours",
+                "weekDays": {
+                    "monday": "Monday",
+                    "tuesday": "Tuesday",
+                    "wednesday": "Wednesday",
+                    "thursday": "Thursday",
+                    "friday": "Friday",
+                    "saturday": "Saturday",
+                    "sunday": "Sunday"
+                },
+                "workingHoursCard": {
+                    "open": "Open",
+                    "closed": "Closed",
+                    "from": "From :",
+                    "to": "To :"
+                }
+            },
+            "LocationSearchComponent": {
+                "address": "Enter Address"
+            },
+            "MezClearButton": {
+                "clear": "Clear"
+            },
+            "MezDialogs": {
+                "yes": "Yes",
+                "no": "No",
+                "mezUpdaterDialog": {
+                    "updateAvailable": "Update Available!",
+                    "updatePlease": "It is always recommended to install new updates in order to get all the new features!",
+                    "doNotUpdate": "No Thanks",
+                    "update": "UPDATE"
+                }
+            },
+            "MezSideMenu": {
+                "userInfo": "User Information",
+                "profile": "Profile",
+                "notifications": "Notifications",
+                "pastOrders": "Past orders",
+                "login": "Login",
+                "language": "Language",
+                "logout": "Logout",
+                "legal": "Privacy policy"
+            }
+        }
+    },
+    "TaxiApp": {
+        "components": {
+            "taxiDialogs": {
+                "rideUnavailable": "Sorry to inform you that the ride is not available any more.",
+                "customerCancelled": "Sorry to inform you the customer cancelled the ride."
+            }
+        },
+        "pages": {
+            "Orders": {
+                "CurrentOrderScreen": {
+                    "CPositionedBottomBar": {
+                        "startRide": "Start Ride",
+                        "finishRide": "Finish Ride",
+                        "orderCancelled": "Order Canceled by the Customer",
+                        "confirmation_header": "Please confirm",
+                        "confirmation_text": "Are you sure you want to cancel the current ride?",
+                        "yes": "Yes",
+                        "no": "No",
+                        "tooFarFromfinishRide": "Click Finish after the customer has exited your vehicle. Based on your GPS it seems you are still far from customer's end location, are you sure you still want to end the ride?",
+                        "tooFarFromstartRide": "Click start ride after the customer has reached your vehicle. Based on your GPS it seems you are still far from customer location, are you sure you still want to start the ride?"
+                    },
+                    "CPositionedFromToBar": {
+                        "from": "From",
+                        "to": "To"
+                    },
+                    "CurrentOrderScreen": {
+                        "cancelledMessage": "Your ride has been cancelled"
+                    }
+                },
+                "IncomingOrders": {
+                    "IncomingListScreen": {
+                        "IncomingListScreen": {
+                            "title": "Incoming  Orders",
+                            "noOrdersTitle": "No Orders Found",
+                            "noOrdersDesc": "Try again later",
+                            "toggleTitle": "Turn On Incoming Orders",
+                            "toggleDesc": "Turn on to see new orders"
+                        }
+                    },
+                    "IncomingViewScreen": {
+                        "components": {
+                            "CounterOfferBottomSheet": {
+                                "CounterOfferPriceSetter": {
+                                    "rideOffer": "Make a ride offer",
+                                    "firstTxt": "The customer will be notified with your offer once the offer accepted the ride will automatically starts",
+                                    "sendOffer": "Send Offer",
+                                    "secondTxt": "Every offer you make have a timeout of 60 seconds if the customer doesn’t accept your offer the offer will be cancelled"
+                                },
+                                "CounterOfferSentBottomSheet": {
+                                    "offer": "offer",
+                                    "offerPrice": "Offer's price",
+                                    "offerStatus": "Offer's status",
+                                    "offerTip": "Every offer you make have a timeout of 60 seconds if the customer doesn’t accept your offer the offer will be canceled."
+                                }
+                            },
+                            "iOrderViewWidgets": {
+                                "acceptOrders": "Accept Order",
+                                "offerPrice": "Offer's price"
+                            },
+                            "IPositionedBottomBar": {
+                                "far": "far"
+                            },
+                            "IPositionedFromToBar": {
+                                "from": "From",
+                                "to": "To"
+                            }
+                        },
+                        "IncomingOrderViewScreen": {
+                            "rideUnavailable": "Sorry to inform you that the ride is not available any more.",
+                            "acceptOrders": "Accept Order"
+                        }
+                    }
+                }
+            }
+        },
+        "notificationHandler": {
+            "cancelledTitle": "Order Cancelled",
+            "cancelledBody": "Your order has been cancelled"
+        }
+    },
+    "TaxiAdminApp": {
+        "pages": {
+            "Driver": {
+                "DriverPage": {
+                    "orderId": "Order Id",
+                    "appVersion": "App Version",
+                    "totalOrders": "Total Orders",
+                    "droppedOff": "Dropped Off",
+                    "firstOrder": "First Order",
+                    "lastOrder": "Last Order",
+                    "notifications": "Notifications",
+                    "sent": "Sent",
+                    "received": "Received",
+                    "read": "Read",
+                    "orders": "Orders"
+                }
+            },
+            "Notifications": {
+                "NotifCountOnDayByDriverPage": {
+                    "notifications": "Notifications",
+                    "driver": "Driver"
+                }
+            },
+            "Orders": {
+                "OrdersCumOnDayPage": {
+                    "cumulative": "Cumulative",
+                    "totalOrders": "Total Orders",
+                    "finished": "Finished",
+                    "cancelled": "Cancelled",
+                    "expired": "Expired",
+                    "inProcess": "In Process",
+                    "isLooking": "Is Looking"
+                },
+                "OrdersCumOnMonthPage": {
+                    "orders": "Orders"
+                },
+                "OrdersFulfillmentOnMonthPage": {
+                    "orderFR": "Order Fulfillment Ratio"
+                },
+                "OrdersOnDayPage": {
+                    "orders": "Orders",
+                    "time": "Time",
+                    "driver": "Driver",
+                    "cust": "Cust"
+                },
+                "OrderViewPage": {
+                    "orderId": "Order Id",
+                    "orderT": "Order Time",
+                    "status": "Status",
+                    "price": "Price",
+                    "rideStart": "Ride Start Time",
+                    "rideEnd": "Ride End Time",
+                    "notifications": "Notifications",
+                    "sent": "Sent",
+                    "received": "Received",
+                    "read": "Read"
+                }
+            }
+        }
+    },
+    "DeliveryAdminApp": {
+        "notificationHandler": {
+            "restaurantTitle": "New Restaurant Order",
+            "laundryTitle": "New Laundry Order",
+            "laundryBody": "New order from laundry",
+            "taxiTitle": "New Taxi Order",
+            "taxiBody": "New order from taxi"
+        },
+        "components": {
+            "buildWidgetOnOrderStatus": {
+                "preparing": "Preparing the order",
+                "readyForPickUp": "Ready For Pickup",
+                "onTheWay": "On The Way",
+                "delivered": "Order Delivered",
+                "received": "Order Received",
+                "canceledByCustomer": "Order Cancelled",
+                "canceledByAdmin": "Order Cancelled"
+            }
+        },
+        "pages": {
+            "Orders": {
+                "components": {
+                    "driverOrderCard": {
+                        "driver": "Driver",
+                        "noDriver": "Pick a driver"
+                    },
+                    "laundryProviderCard": {
+                        "laundry": "Laundry",
+                        "noLaundry": "Pick a laundry"
+                    }
+                },
+                "driversListView": {
+                    "driversListScreen": {
+                        "title": "Pick a driver",
+                        "components": {
+                            "driverSelectCard": {
+                                "available": "Available",
+                                "unavailable": "Unavailable"
+                            }
+                        }
+                    }
+                },
+                "SingleLaundryScreen": {
+                    "startingFrom": "Starting from :",
+                    "minimumCost": "Minimum Cost",
+                    "description": "Description",
+                    "openHours": "openHours",
+                    "sendMyLaundry": "Send my laundry"
+                },
+                "laundryListView": {
+                    "laundriesListView": {
+                        "title": "Pick a laundry",
+                        "laundries": "Laundries",
+                        "components": {
+                            "laundrySelectCard": {
+                                "available": "Available",
+                                "unavailable": "Unavailable"
+                            },
+                            "CustomerLaundrySelectCard": {
+                                "days": "days",
+                                "startingFrom": "Starting from :"
+                            }
+                        }
+                    }
+                },
+                "LaundryOrder": {
+                    "Components": {
+                        "LaundryOrderButtons": {
+                            "error": "Error",
+                            "driverErrorAlert": "Please select a driver",
+                            "title": "Cancel",
+                            "subTitle": "Are you sure you want\nto cancel the order?",
+                            "cancel": "Cancel",
+                            "startPickUp": "Start pickup",
+                            "startPickUpText": "The driver should be notified to pick up the order",
+                            "startPickUpTitle": "Start order Pickup",
+                            "pickedUp": "Order Picked-up",
+                            "atLaundry": "At laundry",
+                            "atLaundryText": "Confirm the order received by the laundry by setting the order weight ",
+                            "atLaundryTitle": "Order at laundry",
+                            "orderWeightError": " Error, please insert a valid order weight",
+                            "readyForDelivery": "Ready for Delivery",
+                            "readyForDeliveryText": "Confirm that the order is ready for delivery",
+                            "readyForDeliveryTitle": "Order ready for delivery",
+                            "otwDelivery": "Delivery on the way",
+                            "otwDeliveryText": "Confirm that the order is being delivered to the customer",
+                            "otwDeliveryTitle": "Delivery On the way",
+                            "delivered": "Order Delivered",
+                            "deliveredText": "Confirm that the order is delivered to the customer",
+                            "deliveredTitle": "Order delivered"
+                        },
+                        "LaundryOrderCustomer": {
+                            "customer": "Customer"
+                        },
+                        "LaundryOrderStatusCard": {
+                            "orderReceived": "Order Received",
+                            "otwPickUp": "Pick-up on the way",
+                            "pickedUp": "Order Picked-up",
+                            "atLaundry": "At laundry",
+                            "readyForDelivery": "Ready for Delivery",
+                            "otwDelivery": "Delivery on the way",
+                            "delivered": "Order Delivered"
+                        },
+                        "LaundryOrderSummary": {
+                            "orderSummary": "Order Summary",
+                            "orderWeight": "Order Weight",
+                            "orderCost": "Order Cost",
+                            "totalCost": "Total Cost",
+                            "deliveryCost": "Shipping Cost",
+                            "free": "Free"
+                        }
+                    },
+                    "LaundryOrderScreen": {
+                        "notes": "Notes",
+                        "deliveryLocation": "Delivery Location"
+                    }
+                },
+                "ListOrdersScreen": {
+                    "components": {
+                        "taxiOrderCard": {
+                            "orderExpired": "Order Expired",
+                            "driver": "Driver",
+                            "drivers": "Drivers",
+                            "sentTo": "Sent to : ",
+                            "readBy": "Read by : ",
+                            "to": "To :"
+                        },
+                        "taxiOrdersListComponent": {
+                            "taxiOrders": "Taxi Orders",
+                            "openOrders": "Open orders",
+                            "currentOrders": "Current orders",
+                            "pastOrders": "Past orders",
+                            "noOrders": "No orders found"
+                        }
+                    },
+                    "ListOrdersScreen": {
+                        "title": "Orders",
+                        "noOrders": "No orders found",
+                        "openOrders": "Open orders",
+                        "pastOrders": "Past orders",
+                        "restaurantOrders": "Restaurant",
+                        "laundryOrders": "Laundry",
+                        "taxiOrders": "Taxi",
+                        "today": "Today",
+                        "yesterday": "Yesterday"
+                    }
+                },
+                "ViewRestaurantOrderScreen": {
+                    "components": {
+                        "ButtonStyles": {
+                            "error": "Error",
+                            "driverErrorAlert": "Please select a driver",
+                            "cancelAlertTitle": "Cancel",
+                            "cancelAlertSubTitle": "Are you sure you want\nto cancel the order?",
+                            "cancel": "Cancel",
+                            "readyForPickUp": "FOOD READY",
+                            "readyAlertTitle": "READY",
+                            "readyAlertSubTitle": "Are you sure you want\nto mark the order as ready?",
+                            "deliver": "START DELIVERY",
+                            "onTheWayAlertTitle": "On the Way",
+                            "onTheWayAlertSubTitle": "Are you sure you want\nto start the order delivery?",
+                            "preparing": "PREPARE",
+                            "prepareAlertTitle": "Prepare Order",
+                            "prepareAlertSubTitle": "Are you sure you want\nto prepare order?",
+                            "received": "DROPPED",
+                            "deliveredAlertTitle": "Deliver",
+                            "deliveredAlertSubTitle": "Are you sure you want\nto deliver the order?"
+                        },
+                        "OrderInfoCard": {
+                            "orderItems": "Order Items"
+                        },
+                        "OrderNoteCard": {
+                            "notes": "Notes"
+                        },
+                        "OrderTotalCostCard": {
+                            "totalCost": "Total Cost",
+                            "deliveryCost": "Delivery Cost",
+                            "total": "Total",
+                            "free": "Free"
+                        },
+                        "PastOrderInfo": {
+                            "canceledByAdmin": "Order Cancelled",
+                            "canceledByCustomer": "Order Cancelled",
+                            "received": "Order Received",
+                            "preparing": "Preparing the order",
+                            "onTheWay": "On The Way",
+                            "readyForPickUp": "Ready For Pickup",
+                            "delivered": "Order Delivered",
+                            "helperTextCanceledByAdmin": "Your order has been cancelled by the restaurant",
+                            "helperTextCanceledByCustomer": "Your order has been cancelled",
+                            "helperTextReceived": "Your order is received by the restaurant",
+                            "helperTextPreparing": "Your order is being prepared by the restaurant",
+                            "helperTextOnTheWay": "Your order is on the way",
+                            "helperTextReadyForPickUp": "Your order is prepared and ready for pickup by the delivery driver'",
+                            "helperTextDelivered": "Your order has been successfully delivered"
+                        },
+                        "OrderShippingLocation": {
+                            "deliveryLocation": "Delivery Location"
+                        }
+                    }
+                },
+                "TaxiOrder": {
+                    "components": {
+                        "taxiOrderBottomCard": {
+                            "customer": "Customer",
+                            "driver": "Driver",
+                            "drivers": "Drivers",
+                            "sentTo": "Sent to : ",
+                            "readBy": "Read by : ",
+                            "from": "From :",
+                            "to": "To :",
+                            "distance": "Distance : ",
+                            "at": "at : ",
+                            "orderExpired": "Order Expired",
+                            "orderStatus": {
+                                "canceledByTaxi": "Cancelled",
+                                "canceledByCustomer": "Cancelled",
+                                "onTheWay": "Taxi on the way",
+                                "lookingForTaxi": "Looking for Taxi",
+                                "inTransit": "Taxi in transit",
+                                "droppedOff": "Dropped off",
+                                "expired": "Expired",
+                                "forwarding": "Forwarding to company",
+                                "forwardSuccess": "Forwarded",
+                                "forwardUnsuccess": "Forwarding canceled"
+                            },
+                            "TaxiOpenOrderControllButton": {
+                                "fwdToCompany": "Forward to company",
+                                "cancel": "Cancel",
+                                "confirmFwd": "Confirm taxi number",
+                                "fwdAlertErrorText": "Please enter a valid taxi number",
+                                "taxiNumber": "Taxi number",
+                                "confirmTaxi": "Confirm local taxi"
+                            }
+                        }
+                    },
+                    "TaxiOrderView": {
+                        "order": "Order"
+                    }
+                }
+            }
+        }
+    },
+    "DeliveryApp": {
+        "pages": {
+            "OrderDetailsScreen": {},
+            "CurrentOrders": {
+                "CurrentOrdersListScreen": {
+                    "currentOrders": "Current orders",
+                    "pastOrders": "Past orders",
+                    "title": "Incoming  Orders",
+                    "Components": {
+                        "DriverNoOrdersComponent": {
+                            "noOrdersTitle": "No Orders Found",
+                            "noOrdersDesc": "Try again later"
+                        },
+                        "DriverNotLookingComponent": {
+                            "toggleTitle": "Turn On Incoming Orders",
+                            "toggleDesc": "Turn on to see new orders"
+                        },
+                        "DriverOrderCard": {
+                            "orderTitle": {
+                                "restaurantDelivery": "Restaurant Delivery",
+                                "laundryPickup": "Laundry Pick-up",
+                                "laundryDelivery": "Laundry Delivery"
+                            }
+                        }
+                    },
+                    "CurrentOrdersListScreen": {
+                        "title": "Incoming  Orders"
+                    }
+                },
+                "CurrentOrderViewScreen": {
+                    "Components": {
+                        "DriverBottomLaundryOrderCard": {
+                            "orderStatus": {
+                                "readyForPickup": "Ready for pickup",
+                                "pickupOtw": "Pickup on the way",
+                                "pickedUp": "Order Picked-up",
+                                "atLaundry": "At laundry",
+                                "readyForDelivery": "Ready for Delivery",
+                                "deliveryOtw": "Delivery on the way",
+                                "delivered": "Order Delivered",
+                                "canceled": "Order Cancelled"
+                            },
+                            "laundeyOrderHeader": {
+                                "laundryOrder": "Laundry Order"
+                            },
+                            "laundryControllButtons": {
+                                "pickupOrder": "Start Pickup",
+                                "confirmPickup": "Confirm Order Pickup",
+                                "atLaundry": "At laundry",
+                                "deliverOrder": "Start Delivery",
+                                "confirmDelivery": "Confirm Delivery",
+                                "confirmOrderWeight": "Confirm Order weight",
+                                "orderWeightAlert": "Please enter a valid weight",
+                                "confirm": "Confirm",
+                                "cancel": "Cancel",
+                                "orderWeight": "Order Weight"
+                            }
+                        },
+                        "DriverBottomRestaurantOrderCard": {
+                            "restaurantDelivery": "Restaurant Delivery",
+                            "orderStatus": {
+                                "waiting": "Waiting for restaurant",
+                                "preparing": "Order is being prepared",
+                                "readyForPickup": "Ready for pickup",
+                                "deliveryOtw": "Delivery on the way",
+                                "delivered": "Order Delivered",
+                                "canceled": "Order Cancelled"
+                            },
+                            "RestaurantControllButtons": {
+                                "confirmPickup": "Confirm Order Pickup",
+                                "confirmDelivery": "Confirm Delivery"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "notificationHandler": {
+            "preparingOrderTitle": "Preparing Order",
+            "preparingOrderBody": "Your order is being prepared",
+            "readyForPickupTitle": "Ready For Pickup",
+            "readyForPickupBody": "Your order is ready for pickup",
+            "cancelledTitle": "Order Cancelled",
+            "cancelledBody": "Your order has been cancelled",
+            "laundryOtwPickupTitle": "Pickup on the way",
+            "laundryOtwPickupBody": " on the way to pick up the order",
+            "laundryPickedTitle": "Order Picked-up",
+            "laundryPickedBody": "Order is picked up successfuly",
+            "laundryAtLaundryTitle": "At laundry",
+            "laundryAtLaundryBody": "Order is received by the laundry",
+            "laundryReadyForDeliveryTitle": "Ready for delivery",
+            "laundryReadyForDeliveryBody": "Order is ready for delivery",
+            "laundryOtwDeliveryTitle": "Delivery on the way",
+            "laundryOtwDeliveryBody": "order is on the way to the customer",
+            "laundryDeliveredTitle": "Delivered",
+            "LaundryDeliveredBody": "Order has been delivered",
+            "driverNotifTitle": "New Order",
+            "driverNotifBody": "You got a new order"
+        }
+    },
+    "LaundryApp": {
+        "components": {
+            "LaundryAppDrawer": {
+                "profile": "Profile",
+                "admin": "Admin",
+                "notifications": "Notifications",
+                "pastOrders": "Past orders",
+                "language": "Language",
+                "to": "To :",
+                "privacyPolicies": "Privacy Policies",
+                "logout": "Logout"
+            }
+        },
+        "pages": {
+            "CategoryView": {
+                "components": {
+                    "AddCategorySlide": {
+                        "categoryName": "Category name",
+                        "categoryNameIn": "Category name in ",
+                        "categoryNameHint": "Enter a category name",
+                        "categoryPrice": "Category pricing per kilogramme",
+                        "categoryPriceHint": "Enter category pricing per kilogramme..."
+                    }
+                },
+                "addCategory": "Add category",
+                "editCategory": "Edit category",
+                "categoryName": "Category name",
+                "categoryNameIn": "Category name in ",
+                "categoryNameHint": "Enter a category name",
+                "categoryPrice": "Category pricing per kilogramme",
+                "categoryPriceHint": "Enter category pricing per kilogramme...",
+                "categoryNameError": "Please add a category name",
+                "catgeoryPriceError": "Please add a correct category price"
+            },
+            "DashboardView": {
+                "orders": "Orders",
+                "info": "Info",
+                "InfoView": {
+                    "LaundryOpInfoView": {
+                        "components": {},
+                        "location": "Location",
+                        "categories": "Categories",
+                        "addCategory": "Add category",
+                        "editMyInfo": "Edit my informations"
+                    }
+                },
+                "OrdersListView": {
+                    "LaundryOpOrdersListView": {
+                        "components": {
+                            "LaundryOpOrderCard": {
+                                "date": "Date : ",
+                                "totalCost": "Total Cost : ",
+                                "waiting": "Waiting",
+                                "delivered": "Delivered",
+                                "canceled": "Cancelled"
+                            }
+                        },
+                        "currentOrders": "Current orders",
+                        "pastOrders": "Past orders"
+                    }
+                }
+            },
+            "EditInfoView": {
+                "controllers": {
+                    "EditInfoController": {
+                        "error": "Error",
+                        "selectPrimaryFirst": "Select Primary language first"
+                    }
+                },
+                "components": {
+                    "LanguageSelectorComponent": {
+                        "none": "None",
+                        "errorText": "Please select language "
+                    }
+                },
+                "EditInfoView": {
+                    "laundryName": "Laundry name",
+                    "nameErrorText": "please provide a name",
+                    "defaultLanguage": "Default language",
+                    "secondaryLanguage": "Secondary language",
+                    "location": "Location",
+                    "saveInfo": "Save info"
+                }
+            },
+            "AdminView": {
+                "LaundryOpAdminView": {
+                    "save": "Save",
+                    "categories": "Categories"
+                },
+                "components": {
+                    "CategoryGridCard": {
+                        "nameTooltip": "Name missing in your selected primary language",
+                        "deleteTitle": "Delete Category",
+                        "deleteHelperText": "are you sure you would like to delete ?",
+                        "yesDelete": "Yes, delete category"
+                    },
+                    "LaundryOpNormalDeliveryTime": {
+                        "normalDeliverytime": "Normal delivery time",
+                        "days": "days"
+                    }
+                }
+            },
+            "OrderView": {
+                "Components": {
+                    "LaundryOpOrderStatusCard": {
+                        "status": {
+                            "canceled": "Order Cancelled",
+                            "orderReceived": "Order Received",
+                            "otwPickUp": "Pick-up on the way",
+                            "pickedUp": "Order Picked-up",
+                            "atLaundry": "At laundry",
+                            "readyForDelivery": "Ready for Delivery",
+                            "otwDelivery": "Delivery on the way",
+                            "delivered": "Order Delivered"
+                        },
+                        "estTimes": {
+                            "laundryArriving": "Laundry arriving",
+                            "laundryFinish": "Finishing",
+                            "driverArriving": "Driver arriving",
+                            "willBeDropped": "Will be dropped"
+                        }
+                    },
+                    "OrderEstimatedTimeComponent": {
+                        "estFinishTime": "Estimated finish time",
+                        "noEstTime": "No estimated time has been added",
+                        "set": "Set",
+                        "estLaundryFinish": "Estimated laundry ready time",
+                        "confirm": "Confirm",
+                        "cancel": "Cancel"
+                    },
+                    "LaundryOpOrderDriverCard": {
+                        "driver": "Driver",
+                        "noDriver": "No driver assigned yet",
+                        "dropOffTime": "Drop-off time",
+                        "pickUpTime": "Pick-up time"
+                    },
+                    "LaundryOpSetCategoryComponent": {
+                        "deleteTitle": "Yes, delete item",
+                        "deleteBody": " are you sure you'd like to delete ?",
+                        "deleteItem": "Delete item",
+                        "itemsWeights": "Items weights",
+                        "newItemsWeight": "New items weight",
+                        "itemsCategory": "Items Category",
+                        "itemsWeight": "Items weight",
+                        "itemsWeightErrorText": "Please enter a valid weight",
+                        "saveItemsWeight": "Save items weight",
+                        "cancel": "Cancel",
+                        "setNewItemsWeight": "Set new items weight",
+                        "error": "Error",
+                        "categoryExistError": "This category already exists",
+                        "categoryError": "Please select a category first",
+                        "itemsWeightError": "Please enter a valid items weight",
+                        "deleteLast": "Every laundry order must have at least one oder items weight",
+                        "item": "Item",
+                        "perKilo": "Per kilo",
+                        "weight": "Weight",
+                        "cost": "Cost"
+                    },
+                    "LaundryOpOrderNote": {
+                        "notes": "Notes"
+                    },
+                    "LaundryOpOrderSummaryCard": {
+                        "orderSummary": "Summary",
+                        "orderCost": "Order Cost",
+                        "deliveryCost": "Delivery Cost",
+                        "totalCost": "Total Cost",
+                        "deliveryLocation": "Delivery Location",
+                        "laundryPricing": "Laundry Pricing",
+                        "fixedRate": "Cost Per Kilo",
+                        "orderWeight": "Order Weight",
+                        "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order."
+                    }
+                },
+                "LaundryOpOrderView": {
+                    "customer": "Customer info : ",
+                    "orderDate": "Order Date",
+                    "total": "Total",
+                    "orderReady": "Order ready for delivery"
+                }
+            }
+        },
+        "notificationHandler": {
+            "newOrderTitle": "Order received",
+            "newOrderBody": "You got a new order",
+            "canceledOrderTitle": "Order cancelled",
+            "canceledOrderBody": "Your order has been cancelled"
+        }
+    },
+    "WebApp": {
+        "appBarActions": {
+            "Services": "Services",
+            "FAQ": "FAQ",
+            "Blog": "Blog",
+            "ContactUs": "Contact us"
+        },
+        "title": "Built for all your transportation needs",
+        "subtitle": "Your one stop place to find all your needed local services and where you can enjoy fast and high quality services.",
+        "getAppBtn": "Get the app",
+        "food": "Food",
+        "foodDescription": "Discover most delicious dishes from the nearest restaurents.",
+        "viewAllRestaurants":"View current restaurants",
+        "laundry": "Laundry",
+        "laundryDescription": "Get your clothes cleaned by your nearest laundry service.",
+        "viewAllLaundries":"View current laundries",
+        "taxi": "Taxi",
+        "taxiDescription": "Coming soon",
+        "FAQ(FAQ)": "Frequently asked questions(FAQ)",
+        "blogTitle": "Our latest blog",
+        "showAll": "View all blogs",
+        "questionText": "Questions about our product?",
+        "questionTitle": "Our team of experts is ready to answer your questions, give you more info and help you.",
+        "questionSubtitle": "Fill in the form below and you will receive an answer within 2 working days.",
+        "fullName":"Full name",
+        "email":"Email",
+        "messageOrQuestion":"Message or question",
+        "submitBtn":"Send message",
+        "getAppNow":"Get your app now.",
+        "fotterBar":{
+            "desktopAndTablet":{
+                "services":"Our services",
+                "vision":"Our vision",
+                "business":"For business",
+                "blog":"Blog",
+                "fAQ":"FAQ",
+                "contactUs":"Contact us"
+            },
+            "mobile":{
+                "services":"Services",
+                "blog":"Blog",
+                "fAQ":"FAQ",
+                "contactUs":"Contact us"
+            },
+            "allRightReserved":"All right reserved",
+            "policy":"Privacy policy"
+        },
+        "formForQuestionsValidator":{
+            "fullName":"Please enter your full name",
+            "email":{
+                "empty":"Please enter your email",
+                "notValid":"This email not correct"
+            },
+            "message":"Please enter a message"
+        },
+        "blogsView":{
+            "title":"Our news & tips, let's go behind the scenes at Mezcalmos"
+        }
+    }
+}
