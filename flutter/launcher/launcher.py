@@ -515,7 +515,7 @@ class Launcher:
     
     def __build_temp(self):
         # TODO : Auto versioning checks.
-        isVerbose = " --verbose" if self.user_args['verbose'] else ""
+        isVerbose = " --verbose " if self.user_args['verbose'] else ""
         
         if not self.user_args['lmode']:
             PRINTLN("In order to build you have to specify env=<stage, dev, prod>")
@@ -533,7 +533,10 @@ class Launcher:
                 PRINTLN("[+] Generating .ipa from xcarchive file for you ..")
             os.system(f'flutter build ipa --target lib/{self.user_args["app"]}/main.dart{ios_export_options_plist_arg}{isVerbose}')
         else:
-            os.system(f'flutter build {self.user_args["build"]} -t lib/{self.user_args["app"]}/main.dart {isVerbose}')
+            cmd_build = f'flutter build {self.user_args["build"]} -t lib/{self.user_args["app"]}/main.dart {isVerbose}--split-per-abi'
+            if self.user_args["build"] == 'apk':
+                PRINTLN(f"[⚒️] Building : app-armeabi-v7a-release.apk ...")
+            os.system(cmd_build)
 
     def __launch__(self):
         # self.__f_checker__()
