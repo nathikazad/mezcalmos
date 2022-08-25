@@ -120,7 +120,6 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
 }
 
 export const setEstimatedFoodReadyTime = functions.https.onCall(async (data, context) => {
-
   if (data.estimatedFoodReadyTime == null) {
     return {
       status: ServerResponseStatus.Error,
@@ -129,7 +128,7 @@ export const setEstimatedFoodReadyTime = functions.https.onCall(async (data, con
     }
   }
 
-  let validationPass = await passChecksForRestaurant(data, context.auth);
+  let validationPass: ValidationPass = await passChecksForRestaurant(data, context.auth);
   if (!validationPass.ok) {
     return validationPass.error;
   }
