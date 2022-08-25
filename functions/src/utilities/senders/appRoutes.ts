@@ -5,18 +5,7 @@ export function orderUrl(
   participantType: ParticipantType,
   orderType: OrderType,
   orderId: string): string {
-  switch (participantType) {
-    case ParticipantType.Customer:
-      return `/${orderType}Orders/${orderId}`
-    case ParticipantType.DeliveryAdmin:
-      return `/${orderType}Orders/${orderId}`
-    case ParticipantType.DeliveryDriver:
-      return `/${orderType}Orders/${orderId}`
-    case ParticipantType.Taxi:
-      return `/${orderType}Orders/${orderId}`;
-    default:
-      return "/";
-  }
+  return `/${orderType}Orders/${orderId}`
 }
 
 export function chatUrl(
@@ -28,8 +17,9 @@ export function chatUrl(
   let str = `/messages/${chatId}`;
   if (orderId != null)
     str += `?orderId=${orderId}`
-  if (orderType != null && recipientType != null)
+  if (orderType != null && recipientType != null) 
     str += `&orderLink=${orderUrl(recipientType, orderType, orderId!)}`
+
   switch (recipientType) {
     case null:
       break;
