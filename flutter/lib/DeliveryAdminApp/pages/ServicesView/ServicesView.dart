@@ -91,7 +91,8 @@ class _ServicesViewState extends State<ServicesView> {
                               children: List.generate(
                                   snapshot.data!.length,
                                   (int index) => DaRestaurantCard(
-                                      restaurant: snapshot.data![index])),
+                                      restaurantId:
+                                          snapshot.data![index].info.id)),
                             );
                           } else {
                             return Container(

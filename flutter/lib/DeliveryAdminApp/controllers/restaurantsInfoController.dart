@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/restaurantNodes.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 class RestaurantsInfoController extends GetxController {
@@ -30,6 +33,29 @@ class RestaurantsInfoController extends GetxController {
       });
       return restaurants;
     });
+  }
+
+  Stream<Restaurant?> getRestaurantAsStream(String restaurantId) {
+    return _databaseHelper.firebaseDatabase
+        .ref()
+        .child(serviceProviderInfos(
+            orderType: OrderType.Restaurant, providerId: restaurantId))
+        .onValue
+        .map<Restaurant?>((DatabaseEvent event) {
+      if (event.snapshot.value != null) {
+        return Restaurant.fromRestaurantData(
+            restaurantId: restaurantId, restaurantData: event.snapshot.value);
+      }
+      return null;
+    });
+  }
+
+  Future<void> setAvailabilty(
+      {required bool isAv, required String restaurantId}) {
+    return _databaseHelper.firebaseDatabase
+        .ref()
+        .child(restaurantAvailabeNode(uid: restaurantId))
+        .set(isAv);
   }
 
   Future<Restaurant> getRestaurant(String restaurantId) async {
