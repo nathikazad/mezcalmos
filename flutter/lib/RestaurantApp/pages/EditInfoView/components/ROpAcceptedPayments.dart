@@ -161,8 +161,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
             textAlign: TextAlign.center,
             text: TextSpan(children: [
               TextSpan(
-                text:
-                    "${widget.viewController.restaurant.value!.paymentInfo.stripe?.status.toNormalString()}",
+                text: '${_i18n()["requirements"]}',
                 style: Get.textTheme.bodyText1?.copyWith(color: Colors.black),
               ),
               WidgetSpan(

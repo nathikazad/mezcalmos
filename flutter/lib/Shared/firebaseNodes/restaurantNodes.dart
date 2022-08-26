@@ -4,6 +4,14 @@ String restuarantAuthNode({
   return 'restaurants/info/$uid';
 }
 
+String restaurantAvailabeNode({required String uid}) {
+  return restuarantAuthNode(uid: uid) + "/state/available";
+}
+
+String restaurantOpenNode({required String uid}) {
+  return restuarantAuthNode(uid: uid) + "/state/open";
+}
+
 String dailyMenuNode({required String uid}) {
   return restuarantAuthNode(uid: uid) + "/menu/daily/";
 }

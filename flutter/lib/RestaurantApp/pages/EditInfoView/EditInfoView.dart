@@ -5,6 +5,7 @@ import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/components/ROpAccepte
 import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/components/ROpEditInfoWidgets.dart';
 import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/components/ROpEditLocationCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/components/ROpImageEditComponent.dart';
+import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/components/ROpOpenClose.dart';
 import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/components/ROpStripePaymentSetup.dart';
 import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/components/ROplanguageSelectorComponent.dart';
 import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/controllers/EditInfoController.dart';
@@ -145,8 +146,18 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
                   child: viewWidgets.editWorkingHoursComponent(),
                 ),
                 SizedBox(
-                  height: 15,
+                  height: 25,
                 ),
+                ROpOpenClose(
+                    title: '${_i18n()["openTitle"]}',
+                    subtitle: '${_i18n()["openSubtitle"]}',
+                    onTurnedOn: () {
+                      editInfoController.switchAv(true);
+                    },
+                    onTurnedOff: () {
+                      editInfoController.switchAv(false);
+                    },
+                    initialSwitcherValue: editInfoController.isAvailable.value),
               ],
             ),
           ),

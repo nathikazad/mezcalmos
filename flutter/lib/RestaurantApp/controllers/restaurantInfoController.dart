@@ -116,6 +116,13 @@ class RestaurantInfoController extends GetxController {
         .set(schedule.toFirebaseFormattedJson());
   }
 
+  Future<void> setAvailabilty(bool isAv) {
+    return _databaseHelper.firebaseDatabase
+        .ref()
+        .child(restaurantAvailabeNode(uid: restaurantId))
+        .set(isAv);
+  }
+
   Future<void> setPrimaryLanguage(LanguageType lang) {
     return _databaseHelper.firebaseDatabase
         .ref()

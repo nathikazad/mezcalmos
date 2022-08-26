@@ -42,6 +42,7 @@ class ROpEditInfoController {
   final Rxn<File> newImageFile = Rxn();
 
   final RxBool imageLoading = RxBool(false);
+  final RxBool isAvailable = RxBool(false);
   final RxBool btnClicked = RxBool(false);
   final Rxn<Schedule> newSchedule = Rxn();
   final Rxn<Schedule> schedulePreview = Rxn();
@@ -70,6 +71,7 @@ class ROpEditInfoController {
     });
     if (restaurant.value != null) {
       _settingSchedules();
+      isAvailable.value = restaurant.value!.state.available;
       restaurantNameTxt.text = restaurant.value?.info.name ?? '';
 
       newLocation.value = restaurant.value!.info.location;
@@ -132,8 +134,15 @@ class ROpEditInfoController {
     if (newSchedule.value != null && newSchedule.value != oldSchedule.value) {
       await restaurantInfoController.setSchedule(newSchedule.value!);
     }
+    if (isAvailable.value != restaurant.value!.state.available) {
+      await restaurantInfoController.setAvailabilty(isAvailable.value);
+    }
 
     btnClicked.value = false;
+  }
+
+  void switchAv(bool value) {
+    isAvailable.value = value;
   }
 
   void setNewLocation(Location? newLoc) {
@@ -241,6 +250,10 @@ class ROpEditInfoController {
   bool get showStatusIcon {
     return (restaurant.value!.paymentInfo.stripe?.requirements.isNotEmpty ==
         true);
+  }
+
+  bool get getAvailable {
+    return restaurant.value!.state.available;
   }
 
   bool validateSecondaryLanguUpdate(LanguageType value) {

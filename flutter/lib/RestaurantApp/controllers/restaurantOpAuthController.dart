@@ -10,9 +10,11 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/operatorNodes.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/restaurantNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class RestaurantOpAuthController extends GetxController {
   Rxn<RestaurantOperator> operator = Rxn();
@@ -113,6 +115,28 @@ class RestaurantOpAuthController extends GetxController {
           .set(version);
       _checkedAppVersion = true;
     }
+  }
+
+  void turnOpenOff() {
+    _databaseHelper.firebaseDatabase
+        .ref()
+        .child(restaurantOpenNode(uid: restaurantId!))
+        .set(false)
+        .catchError((err) {
+      mezDbgPrint("Error turning [ isLooking = false ] -> $err");
+      MezSnackbar("Error ~", "Failed turning it off!");
+    });
+  }
+
+  void turnOpenOn() {
+    _databaseHelper.firebaseDatabase
+        .ref()
+        .child(restaurantOpenNode(uid: restaurantId!))
+        .set(true)
+        .catchError((err) {
+      mezDbgPrint("Error turning [ isLooking = true ] -> $err");
+      MezSnackbar("Error ~", "Failed turning_listenForLocation it on!");
+    });
   }
 
   @override

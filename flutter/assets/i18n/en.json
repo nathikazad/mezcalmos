@@ -1808,7 +1808,11 @@
                     }
                 },
                 "currentOrders": "Current orders",
-                "pastOrders": "Past orders"
+                "pastOrders": "Past orders",
+                "incomingOrders": "Incoming orders",
+                "offlineTitle": "You are offline",
+                "offlineBody": "Turn on to see incoming orders"
+
             },
             "ROpMenuView": {
                 "menu": "Menu",
@@ -1860,6 +1864,7 @@
                     "ROpAcceptedPayments": {
                         "cash": "Cash",
                         "card": "Card",
+                        "requirements": "Requirements",
                         "acceptedPayments": "Accepted payments",
                         "setup": "Setup",
 
@@ -1871,12 +1876,21 @@
                     }
                 },
                 "ROpEditInfoView": {
+                    "openTitle": "Restaurant Availibility",
+                    "openSubtitle": "This will close your restaurant indefinitely",
                     "restaurantName": "Restaurant name",
                     "nameErrorText": "please provide a name",
                     "defaultLanguage": "Default language",
                     "secondaryLanguage": "Secondary language",
                     "location": "Location",
-                    "saveInfo": "Save info"
+                    "saveInfo": "Save info",
+                    "components": {
+                        "ROpOpenClose": {
+                            "open": "Open",
+                            "closed": "Closed"
+                        }
+
+                    }
                 }
             }
         }
