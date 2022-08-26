@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class ItemChosenChoiceComponent extends StatelessWidget {
   ItemChosenChoiceComponent({
@@ -40,9 +40,13 @@ class ItemChosenChoiceComponent extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          choices[index].name[userLanguage] ?? "choiceName",
-                          style: Get.theme.textTheme.bodyText2,
+                        Flexible(
+                          flex: 3,
+                          child: Text(
+                            choices[index].name[userLanguage] ?? "choiceName",
+                            style: Get.theme.textTheme.bodyText2,
+                            maxLines: 2,
+                          ),
                         ),
                         if (choices[index].cost > 0)
                           Text(

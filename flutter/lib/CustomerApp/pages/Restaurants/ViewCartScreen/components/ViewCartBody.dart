@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/Controllers/ViewCartController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/BuildCart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/BuildItems.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/DeliveryTimePicker.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/OrderSummaryCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/PaymentMethodPicker.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -49,7 +51,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SingleChildScrollView(
       child: Obx(
         () => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,59 +66,88 @@ class _ViewCartBodyState extends State<ViewCartBody> {
                     ],
                   )
                 : Container(),
-            SizedBox(
-              height: 10,
-            ),
-            Obx(() => OrderSummaryCard(
-                  setLocationCallBack: widget.setLocationCallBack,
-                  deliveryCost: controller.cart.value.shippingCost ?? 50,
-                  showStripeFees:
-                      controller.cart.value.paymentType == PaymentType.Card,
-                  stripeFees: controller.cart.value.stripeFees,
-                  orderCost: controller.cart.value.itemsCost().toPriceString(),
-                  totalCost: controller.cart.value.totalCost.toPriceString(),
-                )),
-            SizedBox(
-              height: 15,
-            ),
             Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 14,
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 15,
+                  ),
+                  DeliveryTimePicker(
+                      viewCartController: widget.viewCartController),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  //=======================Delivery location :===========
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "${_i18n()["deliveryLocation"]} :",
+                      style: Get.textTheme.bodyText1,
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  DropDownLocationList(
+                    onValueChangeCallback: widget.setLocationCallBack,
+                    bgColor: Colors.white,
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Divider(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    child: PaymentMethodPicker(
+                      viewCartController: widget.viewCartController,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Text("${_i18n()['notesTitle']}",
+                        style: Get.textTheme.bodyText1),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    child: TextFormField(
+                        style: Get.textTheme.bodyText2
+                            ?.copyWith(fontWeight: FontWeight.w700),
+                        controller: widget.notesTextController,
+                        maxLines: 7,
+                        minLines: 4,
+                        decoration: InputDecoration(
+                            hintText: "${_i18n()["notes"]}",
+                            fillColor: Colors.white)),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Obx(() => OrderSummaryCard(
+                        setLocationCallBack: widget.setLocationCallBack,
+                        deliveryCost: controller.cart.value.shippingCost ?? 50,
+                        showStripeFees: controller.cart.value.paymentType ==
+                            PaymentType.Card,
+                        stripeFees: controller.cart.value.stripeFees,
+                        orderCost:
+                            controller.cart.value.itemsCost().toPriceString(),
+                        totalCost:
+                            controller.cart.value.totalCost.toPriceString(),
+                      )),
+                  SizedBox(
+                    height: 30,
+                  ),
+                ],
               ),
-              child: PaymentMethodPicker(
-                viewCartController: widget.viewCartController,
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 14,
-              ),
-              alignment: Alignment.centerLeft,
-              child: Text("${_i18n()['notesTitle']}",
-                  style: Get.textTheme.bodyText1),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 14,
-              ),
-              child: TextFormField(
-                  style: Get.textTheme.bodyText2
-                      ?.copyWith(fontWeight: FontWeight.w700),
-                  controller: widget.notesTextController,
-                  maxLines: 7,
-                  minLines: 4,
-                  decoration: InputDecoration(
-                      hintText: "${_i18n()["notes"]}",
-                      fillColor: Colors.white)),
-            ),
-            SizedBox(
-              height: 25,
             ),
           ],
         ),

@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/DeliveryType.dart';
 // ignore_for_file: avoid_annotating_with_dynamic
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
@@ -15,6 +16,9 @@ class Cart {
   List<CartItem> cartItems = <CartItem>[];
   Location? toLocation;
   Restaurant? restaurant;
+  DateTime? deliveryTime;
+  DeliveryType? deliveryType;
+
   String? notes;
   PaymentType paymentType = PaymentType.Cash;
 
@@ -41,6 +45,12 @@ class Cart {
           ? Location.fromFirebaseData(cartData["to"])
           : null;
       notes = cartData["notes"];
+      deliveryTime = (cartData["deliveryTime"] != null)
+          ? DateTime.tryParse(cartData["deliveryTime"])
+          : null;
+      deliveryType = (cartData["deliveryType"] != null)
+          ? cartData["deliveryType"].toString().toDeliveryType()
+          : null;
       paymentType = cartData["paymentType"].toString().toPaymentType();
       shippingCost = shippingPrice ?? 50;
       _routeInformation = cartData['routeInformation'] == null
@@ -75,7 +85,9 @@ class Cart {
       "items": items,
       "notes": notes,
       "to": toLocation?.toFirebaseFormattedJson(),
-      "paymentType": paymentType.toFirebaseFormatString()
+      "paymentType": paymentType.toFirebaseFormatString(),
+      "deliveryType": deliveryType?.toFirebaseFormatString() ?? null,
+      "deliveryTime": deliveryTime?.toUtc().toString() ?? null,
     };
   }
 

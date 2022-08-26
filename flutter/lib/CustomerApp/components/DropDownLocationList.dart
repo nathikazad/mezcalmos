@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
@@ -74,41 +73,43 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: widget.bgColor,
-        // border: Border.all(
-        //   // width: 1.5,
-        //   // color: (dropDownListValue != pickLocationPlaceholder)
-        //   //     ? Theme.of(context).primaryColorLight
-        //   //     : Colors.red,
-        // ),
+    return Card(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: widget.bgColor,
+          // border: Border.all(
+          //   // width: 1.5,
+          //   // color: (dropDownListValue != pickLocationPlaceholder)
+          //   //     ? Theme.of(context).primaryColorLight
+          //   //     : Colors.red,
+          // ),
+        ),
+        child: DropdownButtonHideUnderline(
+            child: DropdownButton<SavedLocation>(
+                selectedItemBuilder: (BuildContext context) {
+                  return dropDownSelectedItemBuilder(textTheme);
+                },
+                iconDisabledColor: Colors.grey.shade800,
+                iconEnabledColor: Colors.grey.shade800,
+                value: dropDownListValue,
+                dropdownColor: widget.bgColor,
+                isDense: true,
+                isExpanded: true,
+                icon: Icon(Icons.expand_more),
+                hint: Text(
+                  '${_i18n()["chooseLoc"]}',
+                  style: Get.textTheme.bodyText1,
+                ),
+                items: listOfSavedLoacations
+                    .map<DropdownMenuItem<SavedLocation>>(
+                        (SavedLocation e) => buildItems(e, textTheme))
+                    .toList(),
+                onChanged: (SavedLocation? newLocation) async {
+                  await locationChangedHandler(newLocation);
+                })),
       ),
-      child: DropdownButtonHideUnderline(
-          child: DropdownButton<SavedLocation>(
-              selectedItemBuilder: (BuildContext context) {
-                return dropDownSelectedItemBuilder(textTheme);
-              },
-              iconDisabledColor: Colors.grey.shade800,
-              iconEnabledColor: Colors.grey.shade800,
-              value: dropDownListValue,
-              dropdownColor: widget.bgColor,
-              isDense: true,
-              isExpanded: true,
-              icon: Icon(Icons.expand_more),
-              hint: Text(
-                '${_i18n()["chooseLoc"]}',
-                style: Get.textTheme.bodyText1,
-              ),
-              items: listOfSavedLoacations
-                  .map<DropdownMenuItem<SavedLocation>>(
-                      (SavedLocation e) => buildItems(e, textTheme))
-                  .toList(),
-              onChanged: (SavedLocation? newLocation) async {
-                await locationChangedHandler(newLocation);
-              })),
     );
   }
 
@@ -156,9 +157,9 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
           child: Row(
         children: <Widget>[
           Icon(
-            Icons.place,
-            size: 18,
-            color: primaryBlueColor,
+            Icons.fmd_good,
+            //  size: 18,
+            color: Colors.black,
           ),
           const SizedBox(width: 15),
           Flexible(
@@ -183,10 +184,25 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
             alignment: Alignment.center,
             child: Container(
               alignment: Alignment.centerLeft,
-              child: Text(
-                item.name,
-                style: Get.textTheme.bodyText2
-                    ?.copyWith(fontSize: 12.sp, fontWeight: FontWeight.w600),
+              child: Row(
+                children: [
+                  Container(
+                    // margin: const EdgeInsets.only(top: 3),
+                    child: Icon(
+                      Icons.fmd_good,
+                      //    size: 18,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    item.name,
+                    style: Get.textTheme.bodyText2?.copyWith(
+                        fontSize: 12.sp, fontWeight: FontWeight.w600),
+                  ),
+                ],
               ),
             ),
           ),

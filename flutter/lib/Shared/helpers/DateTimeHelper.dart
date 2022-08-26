@@ -6,6 +6,8 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
     ["DateTimeHelper"];
+String userLangCode =
+    Get.find<LanguageController>().userLanguageKey.toLanguageCode();
 
 extension DurationParser on Duration {
   String _padZeros(int n) => n.toString().padLeft(2, "0");

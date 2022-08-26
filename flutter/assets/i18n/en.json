@@ -169,7 +169,10 @@
                         },
                         "ViewCartBody": {
                             "notesTitle": "Notes",
-                            "notes": "Write your notes here"
+                            "notes": "Write your notes here",
+                            "deliveryLocation": "Delivery Location",
+                            "deliveryType": "Delivery type",
+                            "paymentMethod": "Payment method"
                         }
                     },
                     "ViewCartScreen": {

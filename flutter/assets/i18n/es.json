@@ -172,7 +172,10 @@
                         },
                         "ViewCartBody": {
                             "notesTitle": "Notas",
-                            "notes": "Escribe tus notas aquí"
+                            "notes": "Escribe tus notas aquí",
+                            "deliveryLocation": "Lugar de entrega",
+                            "deliveryType": "Tipo de entrega",
+                            "paymentMethod": "Método de pago"
                         }
                     },
                     "ViewCartScreen": {
