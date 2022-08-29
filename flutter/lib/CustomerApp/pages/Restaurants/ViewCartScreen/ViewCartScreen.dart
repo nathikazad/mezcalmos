@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
@@ -90,47 +89,45 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: CustomerAppBar(
-          autoBack: true,
-          title: "${_i18n()["myCart"]}",
-        ),
-        body: Obx(() {
-          if (_restaurantController.cart.value.cartItems.length > 0) {
-            return SingleChildScrollView(
-              child: ViewCartBody(
-                viewCartController: viewCartController,
-                setLocationCallBack: ({Location? location}) {
-                  setState(() {
-                    orderToLocation = location;
-                  });
-                },
-                notesTextController: _textEditingController,
-              ),
-            );
-          } else {
-            return CartIsEmptyScreen();
-          }
-        }),
-        bottomSheet: (_restaurantController.cart.value.cartItems.length > 0)
-            ? MezButton(
-                label: '${_i18n()["orderNow"]}',
-                enabled: canClick(),
-                withGradient: true,
-                borderRadius: 0,
-                onClick: () async {
-                  await checkoutActionButton();
-                },
-                // bgColor: getTheRightButtonColor(),
-                // canClick: canClick(),
-                // label: Center(
-                //     child: getTheRightWidgetForOrderNowButton(_clickedOrderNow)),
-                // function: !_clickedOrderNow ? checkoutActionButton : () {},
-              )
-            : null,
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      appBar: CustomerAppBar(
+        autoBack: true,
+        title: "${_i18n()["myCart"]}",
       ),
+      body: Obx(() {
+        if (_restaurantController.cart.value.cartItems.length > 0) {
+          return SingleChildScrollView(
+            child: ViewCartBody(
+              viewCartController: viewCartController,
+              setLocationCallBack: ({Location? location}) {
+                setState(() {
+                  orderToLocation = location;
+                });
+              },
+              notesTextController: _textEditingController,
+            ),
+          );
+        } else {
+          return CartIsEmptyScreen();
+        }
+      }),
+      bottomSheet: (_restaurantController.cart.value.cartItems.length > 0)
+          ? MezButton(
+              label: '${_i18n()["orderNow"]}',
+              enabled: canClick(),
+              withGradient: true,
+              borderRadius: 0,
+              onClick: () async {
+                await checkoutActionButton();
+              },
+              // bgColor: getTheRightButtonColor(),
+              // canClick: canClick(),
+              // label: Center(
+              //     child: getTheRightWidgetForOrderNowButton(_clickedOrderNow)),
+              // function: !_clickedOrderNow ? checkoutActionButton : () {},
+            )
+          : null,
     );
   }
 

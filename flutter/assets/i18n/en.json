@@ -784,6 +784,14 @@
             }
         },
         "widgets": {
+            "MezDateTimePicker": {
+                "title": "Pick your time",
+                "sDate": "Select date",
+                "sTime": "Select time",
+                "cancel": "Cancel",
+                "confirm": "Confirm"
+
+            },
             "CreditCardInfo": {
                 "creditCardInfo": "Credit card info",
                 "cardType": "Card type",

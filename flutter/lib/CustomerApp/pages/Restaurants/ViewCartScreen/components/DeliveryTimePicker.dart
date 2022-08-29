@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryType.dart';
+import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/MezDateTimePicker.dart';
 
 class DeliveryTimePicker extends StatefulWidget {
   const DeliveryTimePicker({Key? key, required this.viewCartController})
@@ -35,111 +36,116 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Delivery time",
-          style: Get.textTheme.bodyText1,
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Card(
-          child: InkWell(
-            onTap: (controller.cart.value.deliveryTime != null)
-                ? null
-                : () async {
-                    await _pickDeliveryTime(context);
-                  },
-            borderRadius: BorderRadius.circular(10),
-            child: Obx(
-              () => Container(
-                padding: const EdgeInsets.all(10),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.watch_later,
-                      color: (controller.cart.value.deliveryTime != null)
-                          ? primaryBlueColor
-                          : Colors.black,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    (controller.cart.value.deliveryTime == null)
-                        ? Flexible(fit: FlexFit.tight, child: Text("Now"))
-                        : Flexible(
-                            fit: FlexFit.tight,
-                            child: Text(
-                              "${DateFormat.MMMd(userLangCode).format(controller.cart.value.deliveryTime!)}, ${DateFormat("hh:mm a").format(controller.cart.value.deliveryTime!)}",
-                              style: Get.textTheme.bodyText1,
-                            ),
-                          ),
-                    if (controller.cart.value.deliveryTime == null)
-                      Icon(Icons.chevron_right),
-                    if (controller.cart.value.deliveryTime != null)
-                      InkWell(
-                        onTap: () {
-                          _pickDeliveryTime(context);
-                        },
-                        customBorder: CircleBorder(),
-                        child: Ink(
-                          padding: const EdgeInsets.all(3),
-                          decoration: BoxDecoration(
-                              color: secondaryLightBlueColor,
-                              shape: BoxShape.circle),
-                          child: Icon(
-                            Icons.edit_outlined,
-                            size: 20,
-                            color: primaryBlueColor,
-                          ),
-                        ),
+    return CupertinoPageScaffold(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Delivery time",
+            style: Get.textTheme.bodyText1,
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Card(
+            child: InkWell(
+              onTap: (controller.cart.value.deliveryTime != null)
+                  ? null
+                  : () async {
+                      await _pickDeliveryTime(context);
+                    },
+              borderRadius: BorderRadius.circular(10),
+              child: Obx(
+                () => Container(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.watch_later,
+                        color: (controller.cart.value.deliveryTime != null)
+                            ? primaryBlueColor
+                            : Colors.black,
                       ),
-                    if (controller.cart.value.deliveryTime != null)
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8),
-                        child: InkWell(
-                          customBorder: CircleBorder(),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      (controller.cart.value.deliveryTime == null)
+                          ? Flexible(fit: FlexFit.tight, child: Text("Now"))
+                          : Flexible(
+                              fit: FlexFit.tight,
+                              child: Text(
+                                "${DateFormat.MMMEd(userLangCode).format(controller.cart.value.deliveryTime!).replaceAll(".", "")}, ${DateFormat("hh:mm a").format(controller.cart.value.deliveryTime!.toLocal())}",
+                                style: Get.textTheme.bodyText1,
+                              ),
+                            ),
+                      if (controller.cart.value.deliveryTime == null)
+                        Icon(Icons.chevron_right),
+                      if (controller.cart.value.deliveryTime != null)
+                        InkWell(
                           onTap: () {
-                            controller.cart.value.deliveryTime = null;
-                            controller.cart.value.deliveryType =
-                                DeliveryType.Now;
-                            controller.saveCart();
+                            _pickDeliveryTime(context);
                           },
+                          customBorder: CircleBorder(),
                           child: Ink(
                             padding: const EdgeInsets.all(3),
                             decoration: BoxDecoration(
-                                color: offRedColor, shape: BoxShape.circle),
+                                color: secondaryLightBlueColor,
+                                shape: BoxShape.circle),
                             child: Icon(
-                              Icons.close,
+                              Icons.edit_outlined,
                               size: 20,
-                              color: Colors.red,
+                              color: primaryBlueColor,
                             ),
                           ),
                         ),
-                      )
-                  ],
+                      if (controller.cart.value.deliveryTime != null)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: InkWell(
+                            customBorder: CircleBorder(),
+                            onTap: () {
+                              controller.cart.value.deliveryTime = null;
+                              controller.cart.value.deliveryType =
+                                  DeliveryType.Now;
+                              controller.saveCart();
+                            },
+                            child: Ink(
+                              padding: const EdgeInsets.all(3),
+                              decoration: BoxDecoration(
+                                  color: offRedColor, shape: BoxShape.circle),
+                              child: Icon(
+                                Icons.close,
+                                size: 20,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
+                        )
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
   Future<void> _pickDeliveryTime(BuildContext context) async {
-    _showDialog(
-      CupertinoDatePicker(
-        initialDateTime: DateTime.now(),
-
-        // This is called when the user changes the dateTime.
-        onDateTimeChanged: (DateTime newDateTime) {
-          //  setState(() => dateTime = newDateTime);
-        },
-      ),
-    );
+    await showModalBottomSheet<DateTime>(
+        context: context,
+        isDismissible: false,
+        builder: (BuildContext ctx) {
+          return MezDateTimePicker(
+            startDate: DateTime.now(),
+            numberOfDaysInterval: 7,
+            serviceSchedule: controller.cart.value.restaurant!.schedule!,
+          );
+        }).then((DateTime? value) {
+      controller.cart.value.deliveryTime = value;
+      controller.saveCart();
+    });
   }
 
   IconData _getIcon({required PickerChoice paymentType, CreditCard? card}) {
