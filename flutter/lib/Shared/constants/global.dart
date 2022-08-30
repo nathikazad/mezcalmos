@@ -19,8 +19,10 @@ const String authPort = ":9099";
 const String dbRoot = ":9000/?ns=$db";
 const int functionPort = 5001;
 const String placesApikey = "AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY";
-const String stripePublishableKey =
+const String stripePubTestKey =
     "pk_test_51KxdsRDV5wKm9SNKkEwYTuMUdxRAULh7UUy2w42pV27dDtUc9CBNioU426ftPLzxU5dRd8sZv3UnGgpt8RsDF9xf000oUAmiZS";
+const String stripePubProdKey =
+    "pk_live_51KxdsRDV5wKm9SNKwQNz1HPWMktW0DlhlsewJKUPQDwrJUv8LtB9oNFPHUKQ448oj1u5Jq8oIa1ihA5MJPYw8Wa300ikC6xyTA";
 const String agoraAppId = "6def50fdd2804ffaaa70d807ee445d28";
 
 // can be dev / prod

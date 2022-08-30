@@ -180,7 +180,7 @@ ACTIVE_DEBUG = True
 PRINTLN = lambda x,end='\n' : print(x , end=end) if ACTIVE_DEBUG else None
 
 VALID_CONFIG_KEYS_LEN = 2
-rm_lambda = lambda path : 'rm -rf {path}*'
+rm_lambda = lambda path : f'rm -rf {path}*'
 
 
 class OUTPUT_FILTERS(Enum):
