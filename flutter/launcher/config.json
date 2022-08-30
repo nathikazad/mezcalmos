@@ -233,12 +233,17 @@
                 },
                 "dev": {
                     "appName": "MezChef Dev",
-                    "packageName": "com.mezcalmos.customer",
+                    "packageName": "com.mezcalmos.restaurant",
                     "googe-service-file": "services/prod/android/restaurant.json",
                     "apple-service-file": "services/prod/ios/restaurant.plist"
                 }
+            },
+            "MainActivityKt": {
+                "imports": [
+                    "import io.flutter.embedding.android.FlutterFragmentActivity"
+                ],
+                "super": "FlutterFragmentActivity"
             }
         }
-
     }
 }
