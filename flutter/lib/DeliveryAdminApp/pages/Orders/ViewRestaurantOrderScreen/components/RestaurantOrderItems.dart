@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/itemChosenChoices.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:sizer/sizer.dart';
 
 class RestaurantOrderItemsComponent extends StatefulWidget {
@@ -109,26 +109,32 @@ class _RestaurantOrderItemsComponentState
                   children: _buildChoices(item.chosenChoices),
                 ),
               ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Item Notes",
-                  textAlign: TextAlign.left,
+              if (item.notes != null && item.notes!.isNotEmpty)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Item Notes",
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        '\t\t${item.notes ?? "Nothing"}',
+                        style: Get.theme.textTheme.bodyText1,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                  ],
                 ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '\t\t${item.notes ?? "Nothing"}',
-                  style: Get.theme.textTheme.bodyText1,
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
               Divider(height: 2, color: Colors.grey),
               SizedBox(
                 height: 5,
