@@ -25,6 +25,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpOrderView'];
@@ -157,6 +158,7 @@ class _ROpOrderViewState extends State<ROpOrderView> {
               ROpOrderStatusCard(order: order.value!),
 
               ROpOrderHandleButton(order: order.value!),
+              RestaurantOrderDeliveryTimeCard(order: order.value!),
               ROpOrderEstTime(order: order.value!),
               ROpDriverCard(order: order.value!),
               _getMapWidget(),

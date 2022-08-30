@@ -43,6 +43,8 @@ class RestaurantOrder extends DeliverableOrder {
   RestaurantOrderStatus status;
   ServiceInfo get restaurant => serviceProvider! as ServiceInfo;
   DateTime? estimatedFoodReadyTime;
+  DateTime? deliveryTime;
+
   RestaurantOrder(
       {required super.orderId,
       super.orderType = OrderType.Restaurant,
@@ -57,6 +59,7 @@ class RestaurantOrder extends DeliverableOrder {
       required super.to,
       this.estimatedFoodReadyTime,
       super.dropoffDriver,
+      this.deliveryTime,
       String? dropOffDriverChatId,
       required this.itemsCost,
       required this.shippingCost,
@@ -103,6 +106,9 @@ class RestaurantOrder extends DeliverableOrder {
                 : null,
         cost: data["cost"],
         notes: data["notes"],
+        deliveryTime: (data["deliveryTime"] != null)
+            ? DateTime.tryParse(data["deliveryTime"])
+            : null,
         to: Location.fromFirebaseData(data['to']),
         restaurant: ServiceInfo.fromData(data["restaurant"]),
         customer: UserInfo.fromData(data["customer"]),
