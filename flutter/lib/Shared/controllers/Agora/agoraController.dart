@@ -28,8 +28,12 @@ class Sagora extends GetxController {
   final Rx<CallStatus> callStatus = CallStatus.none.obs;
   @override
   void onInit() {
-    checkAgoraPermissions();
-    _initAgora().then((value) => _startListeningOnCallEvents());
+    // checkAgoraPermissions();
+    _initAgora()
+        .then((value) => _startListeningOnCallEvents())
+        .catchError((_, s) {
+      mezDbgPrint("GOT ERRRRROOOOR ---<  $_ >-----\n $s");
+    });
     super.onInit();
   }
 
