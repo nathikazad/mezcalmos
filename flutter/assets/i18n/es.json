@@ -182,6 +182,7 @@
                         "myCart": "Mi Carrito",
                         "notAvailable": "Su restaurante está cerrado",
                         "orderNow": "ORDENAR AHORA",
+                        "scheduleOrder": "programar pedido",
                         "errorText": "Lo siento, todavía no apoyamos tu área"
                     }
                 },

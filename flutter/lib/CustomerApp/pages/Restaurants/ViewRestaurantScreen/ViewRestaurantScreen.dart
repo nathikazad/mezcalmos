@@ -104,12 +104,39 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
     return Scaffold(
       extendBodyBehindAppBar: true,
       floatingActionButton: FloatingCartComponent(),
+      bottomSheet: (restaurant.isOpen() == false)
+          ? _schedulingOrdersBottomWidget()
+          : null,
       body: RectGetter(
         key: listViewKey,
         child: NotificationListener<ScrollNotification>(
           child: buildSliverScrollView(),
           onNotification: onScrollNotification,
         ),
+      ),
+    );
+  }
+
+  Container _schedulingOrdersBottomWidget() {
+    return Container(
+      height: 60,
+      decoration: BoxDecoration(color: Colors.grey.shade400),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(Icons.info),
+          SizedBox(
+            width: 5,
+          ),
+          Flexible(
+            child: Text(
+              "Only available for scheduling orders",
+              style: Get.textTheme.bodyText1,
+              maxLines: 2,
+            ),
+          ),
+        ],
       ),
     );
   }

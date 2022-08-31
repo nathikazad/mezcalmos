@@ -23,6 +23,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/widgets/CreditCardInfo.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewOrderScreen"]["ViewRestaurantOrderScreen"];
@@ -177,6 +178,10 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                           OrderStatusCard(
                             order: order.value!,
                             ordersStates: order.value!.status,
+                          ),
+                          RestaurantOrderDeliveryTimeCard(
+                            order: order.value!,
+                            margin: EdgeInsets.only(top: 20),
                           ),
                           CustomerRestaurantOrderEst(order: order.value!),
 

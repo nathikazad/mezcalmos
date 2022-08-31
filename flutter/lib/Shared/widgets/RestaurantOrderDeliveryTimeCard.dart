@@ -12,15 +12,17 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
 //
 
 class RestaurantOrderDeliveryTimeCard extends StatelessWidget {
-  const RestaurantOrderDeliveryTimeCard({Key? key, required this.order})
+  const RestaurantOrderDeliveryTimeCard(
+      {Key? key, required this.order, this.margin})
       : super(key: key);
   final RestaurantOrder order;
+  final EdgeInsets? margin;
 
   @override
   Widget build(BuildContext context) {
     if (order.deliveryTime != null) {
       return Card(
-        margin: const EdgeInsets.only(bottom: 20),
+        margin: margin ?? const EdgeInsets.only(bottom: 20),
         child: Container(
             width: double.infinity,
             padding: const EdgeInsets.all(8),

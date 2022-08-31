@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryType.dart';
 import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/MezDateTimePicker.dart';
+import 'package:sizer/sizer.dart';
 
 class DeliveryTimePicker extends StatefulWidget {
   const DeliveryTimePicker({Key? key, required this.viewCartController})
@@ -44,8 +45,32 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
             "Delivery time",
             style: Get.textTheme.bodyText1,
           ),
+          if (controller.associatedRestaurant?.isOpen() == false)
+            Container(
+              margin: const EdgeInsets.only(
+                top: 5,
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.info_outline,
+                    size: 14.sp,
+                    color: Color(0xFF494949),
+                  ),
+                  SizedBox(
+                    width: 3,
+                  ),
+                  Flexible(
+                    child: Text(
+                      "Restaurant is closed now",
+                      style: Get.textTheme.bodyText2,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           SizedBox(
-            height: 15,
+            height: 8,
           ),
           Card(
             child: InkWell(
@@ -70,7 +95,13 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                         width: 10,
                       ),
                       (controller.cart.value.deliveryTime == null)
-                          ? Flexible(fit: FlexFit.tight, child: Text("Now"))
+                          ? Flexible(
+                              fit: FlexFit.tight,
+                              child: Text(
+                                  (controller.associatedRestaurant?.isOpen() ==
+                                          false)
+                                      ? "Pick your time"
+                                      : "Now"))
                           : Flexible(
                               fit: FlexFit.tight,
                               child: Text(
@@ -138,13 +169,15 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
         isDismissible: false,
         builder: (BuildContext ctx) {
           return MezDateTimePicker(
-            startDate: DateTime.now(),
+            startDate: controller.cart.value.deliveryTime,
             numberOfDaysInterval: 7,
             serviceSchedule: controller.cart.value.restaurant!.schedule!,
           );
         }).then((DateTime? value) {
-      controller.cart.value.deliveryTime = value;
-      controller.saveCart();
+      if (value != null) {
+        controller.cart.value.deliveryTime = value;
+        controller.saveCart();
+      }
     });
   }
 

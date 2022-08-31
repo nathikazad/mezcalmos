@@ -88,6 +88,7 @@ class XRouter {
         GetPage(
           name: kRestaurantRoute,
           page: () => ViewRestaurantScreen(),
+          // page: () => CustomerRestaurantView(),
           transitionDuration: Duration(milliseconds: 500),
           transition: Transition.rightToLeft,
         ),

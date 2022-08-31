@@ -21,14 +21,12 @@ class BottomBarItemViewScreen extends StatefulWidget {
     Key? key,
     required this.cartItem,
     required this.mode,
-    required this.isAvailable,
     this.currentRestaurantId,
   }) : super(key: key);
 
   final Rxn<CartItem> cartItem;
   final ViewItemScreenMode mode;
   final String? currentRestaurantId;
-  final bool isAvailable;
 
   @override
   _BottomBarItemViewScreenState createState() =>
@@ -44,9 +42,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
 
-    return widget.isAvailable
-        ? addItemToCartButton(txt)
-        : restaurantClosedNow();
+    return addItemToCartButton(txt);
   }
 
   Widget restaurantClosedNow() {

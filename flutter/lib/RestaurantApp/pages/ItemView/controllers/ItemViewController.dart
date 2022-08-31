@@ -49,6 +49,8 @@ class ItemViewController {
   RxBool isLoading = RxBool(false);
   bool firstFormValid = false;
   bool secondFormValid = false;
+  Rxn<DateTime> startDay = Rxn();
+  Rxn<DateTime> endDate = Rxn();
 
   // initalisation //
   // the itemId arguments for edit mode //

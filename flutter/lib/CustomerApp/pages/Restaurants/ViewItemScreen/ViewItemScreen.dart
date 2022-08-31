@@ -115,7 +115,6 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
         bottomSheet: (cartItem.value != null && currentRestaurant != null)
             ? BottomBarItemViewScreen(
                 currentRestaurantId: currentRestaurant?.info.id,
-                isAvailable: (currentRestaurant!.isOpen()),
                 cartItem: cartItem,
                 mode: widget.viewItemScreenMode,
               )

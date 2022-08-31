@@ -113,19 +113,19 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         }
       }),
       bottomSheet: (_restaurantController.cart.value.cartItems.length > 0)
-          ? MezButton(
-              label: '${_i18n()["orderNow"]}',
-              enabled: canClick(),
-              withGradient: true,
-              borderRadius: 0,
-              onClick: () async {
-                await checkoutActionButton();
-              },
-              // bgColor: getTheRightButtonColor(),
-              // canClick: canClick(),
-              // label: Center(
-              //     child: getTheRightWidgetForOrderNowButton(_clickedOrderNow)),
-              // function: !_clickedOrderNow ? checkoutActionButton : () {},
+          ? Obx(
+              () => MezButton(
+                label: (_restaurantController.associatedRestaurant?.isOpen() ==
+                        false)
+                    ? '${_i18n()["scheduleOrder"]}'
+                    : '${_i18n()["orderNow"]}',
+                enabled: canClick(),
+                withGradient: true,
+                borderRadius: 0,
+                onClick: () async {
+                  await checkoutActionButton();
+                },
+              ),
             )
           : null,
     );
@@ -134,7 +134,8 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   bool canClick() {
     // it returns the pruple or the grey color for the order now button
     if (orderToLocation == null ||
-        !(_restaurantController.associatedRestaurant?.isOpen() ?? true)) {
+        (_restaurantController.associatedRestaurant?.isOpen() == false &&
+            _restaurantController.cart.value.deliveryTime == null)) {
       return false;
     } else {
       return true;

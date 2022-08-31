@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/components/ItemCategorySelector.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/components/ROpItemAvChips.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/components/ROpItemImage.dart';
+import 'package:mezcalmos/RestaurantApp/pages/ItemView/components/ROpSpecialItemTime.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/components/RopItemOptionCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
@@ -204,6 +205,8 @@ class _ROpItemViewState extends State<ROpItemView>
             const SizedBox(
               height: 35,
             ),
+            if (viewController.specialMode.isTrue ?? false)
+              ROpSpecialItemTime(viewController: viewController),
             Text(
               '${_i18n()["itemName"]}',
               style: Get.textTheme.bodyText1,
