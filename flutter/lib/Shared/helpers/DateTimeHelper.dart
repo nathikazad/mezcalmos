@@ -23,6 +23,37 @@ extension DurationParser on Duration {
 // wit will alse do the needed format on the string
 
 extension parseDateTime on DateTime {
+  String toDayName() {
+    if (isToday) {
+      return "Today";
+    } else if (isTomorrow) {
+      return "Tomorrow";
+    } else if (isYesterday) {
+      return "Yesterday";
+    } else {
+      return "${DateFormat.EEEE(userLangCode).format(this)}";
+    }
+  }
+
+  bool get isToday {
+    final DateTime now = DateTime.now();
+    return now.day == day && now.month == month && now.year == year;
+  }
+
+  bool get isTomorrow {
+    final DateTime tomorrow = DateTime.now().add(const Duration(days: 1));
+    return tomorrow.day == day &&
+        tomorrow.month == month &&
+        tomorrow.year == year;
+  }
+
+  bool get isYesterday {
+    final DateTime yesterday = DateTime.now().subtract(const Duration(days: 1));
+    return yesterday.day == day &&
+        yesterday.month == month &&
+        yesterday.year == year;
+  }
+
   String getEstimatedTime() {
     final DateTime now = DateTime.now();
 

@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -33,10 +34,10 @@ class NewRestaurantAppBar extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColorLight,
         elevation: 0.4,
         centerTitle: true,
-        expandedHeight: 220,
+        expandedHeight: 270,
         leadingWidth: 35,
         automaticallyImplyLeading: false,
-        bottom: controller.showCategoriesChips ? bottom : null,
+        bottom: bottom,
         leading: _BackButtonAppBar(),
         actions: <Widget>[
           getAppbarIconsButton(),
@@ -44,8 +45,8 @@ class NewRestaurantAppBar extends StatelessWidget {
         pinned: true,
         flexibleSpace: FlexibleSpaceBar(
           expandedTitleScale: 1.6,
-          titlePadding:
-              EdgeInsets.only(bottom: controller.showCategoriesChips ? 60 : 12),
+          titlePadding: EdgeInsets.only(
+              bottom: controller.showCategoriesChips ? 110 : 12),
           centerTitle: true,
           title: Container(
             alignment: Alignment.bottomCenter,
@@ -158,19 +159,27 @@ class NewRestaurantAppBar extends StatelessWidget {
     final LanguageType userLanguage =
         Get.find<LanguageController>().userLanguageKey;
     return PreferredSize(
-      preferredSize: const Size.fromHeight(48),
-      child: Container(
+      preferredSize: const Size.fromHeight(100),
+      child: Column(
+        children: [
+          if (controller.showSpecials) _mainMenuTabs(),
+          _menuFilterChips(userLanguage),
+        ],
+      ),
+    );
+  }
+
+  Widget _menuFilterChips(LanguageType userLanguage) {
+    return Obx(
+      () => Container(
         width: double.infinity,
         color: Colors.white,
-        margin: const EdgeInsets.only(
-          top: 8,
-        ),
         padding: const EdgeInsets.all(4),
         child: TabBar(
-          isScrollable: (controller.showSpecials) ? false : true,
-          controller: (controller.showSpecials)
-              ? controller.mainTabsController
-              : controller.categoriesTabsController,
+          isScrollable: true,
+          controller: controller.isOnMenuView
+              ? controller.tabsController
+              : controller.specialstabsController,
           labelColor: primaryBlueColor,
           labelStyle: Get.textTheme.bodyText1,
           unselectedLabelStyle: Get.textTheme.bodyText1?.copyWith(
@@ -183,15 +192,15 @@ class NewRestaurantAppBar extends StatelessWidget {
               borderRadius: BorderRadius.circular(25),
               shape: BoxShape.rectangle,
               color: secondaryLightBlueColor),
-          tabs: (controller.showSpecials)
-              ? [
-                  Tab(
-                    text: "Items",
-                  ),
-                  Tab(
-                    text: "Specials",
-                  ),
-                ]
+          tabs: (controller.isOnSpecialView)
+              ? List.generate(controller.getGroupedSpecials.length,
+                  (int index) {
+                  return Tab(
+                    text: controller.getGroupedSpecials.keys
+                        .toList()[index]!
+                        .toDayName(),
+                  );
+                })
               : List.generate(controller.restaurant.value!.getCategories.length,
                   (int index) {
                   return Tab(
@@ -199,7 +208,64 @@ class NewRestaurantAppBar extends StatelessWidget {
                         .name?[userLanguage],
                   );
                 }),
-          //  onTap: onTap,
+          onTap: controller.animateAndScrollTo,
+        ),
+      ),
+    );
+  }
+
+  Widget _mainMenuTabs() {
+    return Obx(
+      () => Container(
+        width: double.infinity,
+        color: Colors.white,
+        height: 50,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Flexible(
+              child: Card(
+                shape: RoundedRectangleBorder(),
+                elevation: 0,
+                child: InkWell(
+                  onTap: () {
+                    controller.mainTab.value = RestaurantViewTab.Menu;
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: controller.isOnMenuView
+                            ? Border(
+                                bottom: BorderSide(
+                                    color: primaryBlueColor, width: 2))
+                            : null),
+                    alignment: Alignment.center,
+                    child: Text("Menu"),
+                  ),
+                ),
+              ),
+            ),
+            Flexible(
+              child: Card(
+                shape: RoundedRectangleBorder(),
+                elevation: 0,
+                child: InkWell(
+                  onTap: () {
+                    controller.mainTab.value = RestaurantViewTab.Specials;
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        border: controller.isOnSpecialView
+                            ? Border(
+                                bottom: BorderSide(
+                                    color: primaryBlueColor, width: 2))
+                            : null),
+                    child: Text("Specials"),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

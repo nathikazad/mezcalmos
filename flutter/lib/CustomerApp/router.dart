@@ -11,7 +11,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreen/Li
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/ViewCartScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/ViewRestaurantOrderScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/ViewRestaurantScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/CustomerRestaurantView.dart';
 import 'package:mezcalmos/CustomerApp/pages/SavedLocations/SavedLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/RequestTaxiScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/ViewTaxiOrderScreen.dart';
@@ -87,8 +87,8 @@ class XRouter {
         ),
         GetPage(
           name: kRestaurantRoute,
-          page: () => ViewRestaurantScreen(),
-          // page: () => CustomerRestaurantView(),
+          //  page: () => ViewRestaurantScreen(),
+          page: () => CustomerRestaurantView(),
           transitionDuration: Duration(milliseconds: 500),
           transition: Transition.rightToLeft,
         ),

@@ -1,5 +1,7 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -7,14 +9,16 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 class CustomerRestaurantController {
   // controllers //
   late AutoScrollController scrollController;
-  late TabController mainTabsController;
-  late TabController categoriesTabsController;
+
+  late TabController tabsController;
+  late TabController specialstabsController;
   // keys //
   final GlobalKey<RectGetterState> listViewKey = RectGetter.createGlobalKey();
 
   // obs //
   Rxn<Restaurant> restaurant = Rxn<Restaurant>();
   RxBool showInfo = RxBool(false);
+  Rx<RestaurantViewTab> mainTab = Rx<RestaurantViewTab>(RestaurantViewTab.Menu);
   Map<int, dynamic> itemKeys = {};
   RxBool pauseRectGetterIndex = RxBool(false);
 
@@ -25,15 +29,19 @@ class CustomerRestaurantController {
   }
 
   void _assignKeys(Restaurant restaurant) {
-    itemKeys.assign((restaurant.getCategories.length + 1), "info");
-    itemKeys[(restaurant.getCategories.length + 1)] =
-        RectGetter.createGlobalKey();
+    if (isOnMenuView) {
+      itemKeys.assign((restaurant.getCategories.length + 1), "info");
+      itemKeys[(restaurant.getCategories.length + 1)] =
+          RectGetter.createGlobalKey();
+    }
   }
 
   void _initControllers(TickerProvider vsync, Restaurant restaurant) {
-    mainTabsController = TabController(length: 2, vsync: vsync);
-    categoriesTabsController =
+    tabsController =
         TabController(length: restaurant.getCategories.length, vsync: vsync);
+    specialstabsController =
+        TabController(length: getGroupedSpecials.length, vsync: vsync);
+
     scrollController = AutoScrollController();
   }
 
@@ -55,19 +63,19 @@ class CustomerRestaurantController {
 
   bool onScrollNotification(ScrollNotification notification) {
     if (pauseRectGetterIndex.value) return false;
-    final int lastTabIndex = categoriesTabsController.length - 1;
+    final int lastTabIndex = tabsController.length - 1;
     final List<int> visibleItems = getVisibleItemsIndex();
 
     final bool reachLastTabIndex =
         visibleItems.length <= 2 && visibleItems.last == lastTabIndex;
     if (reachLastTabIndex) {
-      categoriesTabsController.animateTo(lastTabIndex);
+      tabsController.animateTo(lastTabIndex);
     } else {
       final int sumIndex =
           visibleItems.reduce((int value, int element) => value + element);
       final int middleIndex = sumIndex ~/ visibleItems.length;
-      if (categoriesTabsController.index != middleIndex)
-        categoriesTabsController.animateTo(middleIndex);
+      if (tabsController.index != middleIndex)
+        tabsController.animateTo(middleIndex);
     }
 
     return false;
@@ -75,7 +83,7 @@ class CustomerRestaurantController {
 
   void animateAndScrollTo(int index) {
     pauseRectGetterIndex.value = true;
-    categoriesTabsController.animateTo(index);
+    tabsController.animateTo(index);
     scrollController
         .scrollToIndex(index, preferPosition: AutoScrollPosition.begin)
         .whenComplete(() => pauseRectGetterIndex.value = false);
@@ -88,6 +96,20 @@ class CustomerRestaurantController {
   }
 
   // getters //
+  Map<DateTime?, List<Item>> get getGroupedSpecials {
+    final Map<DateTime?, List<Item>> data = restaurant.value!.currentSpecials
+        .groupListsBy((Item element) => element.startsAt);
+    mezDbgPrint(data);
+    return data;
+  }
+
+  bool get isOnSpecialView {
+    return mainTab.value == RestaurantViewTab.Specials;
+  }
+
+  bool get isOnMenuView {
+    return mainTab.value == RestaurantViewTab.Menu;
+  }
 
   List<Category> get catsList {
     final List<Category> data = restaurant.value!.getCategories;
@@ -107,7 +129,9 @@ class CustomerRestaurantController {
 
   void dispose() {
     scrollController.dispose();
-    mainTabsController.dispose();
-    categoriesTabsController.dispose();
+
+    tabsController.dispose();
   }
 }
+
+enum RestaurantViewTab { Menu, Specials }
