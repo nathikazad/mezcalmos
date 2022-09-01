@@ -205,24 +205,23 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   Future<void> checkoutActionButton() async {
     _restaurantController.cart.value.toLocation = orderToLocation;
     _restaurantController.cart.value.notes = _textEditingController.text;
-    MapHelper.Route? routeInfo;
+    try {
+      final MapHelper.Route routeInfo = await MapHelper.getDurationAndDistance(
+        _restaurantController.cart.value.restaurant!.info.location,
+        orderToLocation!,
+      );
 
-    await MapHelper.getDurationAndDistance(
-      _restaurantController.cart.value.restaurant!.info.location,
-      orderToLocation!,
-    ).then((MapHelper.Route value) async {
       mezDbgPrint("Route info succesfully ===================> $routeInfo");
-      routeInfo = value;
       _restaurantController.cart.value.setRouteInformation =
           MapHelper.RouteInformation(
-        polyline: routeInfo!.encodedPolyLine,
-        distance: routeInfo!.distance,
-        duration: routeInfo!.duration,
+        polyline: routeInfo.encodedPolyLine,
+        distance: routeInfo.distance,
+        duration: routeInfo.duration,
       );
       mezDbgPrint(
           "😇😇😇😇😇😇😇 DISTANCE 😇😇😇😇😇😇😇 ==> ${routeInfo?.distance.distanceInMeters}");
 
-      if (routeInfo != null && routeInfo!.distance.distanceInMeters <= 10000) {
+      if (routeInfo.distance.distanceInMeters <= 10000) {
         final String? stripePaymentId =
             await acceptPaymentByCardChoice(viewCartController.getCardChoice);
 
@@ -251,11 +250,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           "Distance between you and restaurat is more than 10km!",
         );
       }
-    }).catchError((e, s) {
+    } catch (e, s) {
       mezDbgPrint(
         "Error happened during generating order's routeInfos / Stripe payment ===> #$e\n\nStackTrace ==> #$s",
       );
-    });
+    }
   }
 
   /// returns stripePaymentId
