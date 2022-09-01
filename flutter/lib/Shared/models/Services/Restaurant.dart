@@ -321,6 +321,8 @@ class Item {
   Category? category;
   Restaurant? restaurant;
   String? linkUrl;
+  DateTime? startsAt;
+  DateTime? endsAt;
 
   List<Option> get getOptions {
     sortOptions();
@@ -333,6 +335,8 @@ class Item {
       this.available = false,
       this.description,
       this.image,
+      this.startsAt,
+      this.endsAt,
       List<Option>? newOptions,
       required this.name,
       required this.cost,
@@ -350,6 +354,12 @@ class Item {
             ? convertToLanguageMap(itemData["description"])
             : null,
         //itemData["description"].toLanguageMap(),
+        startsAt: (itemData["startsAt"] != null)
+            ? DateTime.tryParse(itemData["startsAt"])
+            : null,
+        endsAt: (itemData["endsAt"] != null)
+            ? DateTime.tryParse(itemData["endsAt"])
+            : null,
         image: itemData["image"],
         position: itemData["position"] ?? 0,
         name: convertToLanguageMap(itemData["name"]),
@@ -394,6 +404,8 @@ class Item {
       "description": description?.toFirebaseFormat(),
       "image": image,
       "cost": cost,
+      "startsAt": startsAt?.toUtc().toString() ?? null,
+      "endsAt": endsAt?.toUtc().toString() ?? null,
       "name": name.toFirebaseFormat(),
       "options": _parseOptionsListToFirebaseFormattedStriing(
           options), //options.map<List<Option>>((Option x) => <String, dynamic>{x.id: x.toJson()}),

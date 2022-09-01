@@ -42,7 +42,7 @@ class ItemViewController {
   final RxBool imageLoading = RxBool(false);
   final RxList<Option> itemOptions = RxList([]);
   RxBool editMode = RxBool(false);
-  RxnBool specialMode = RxnBool();
+  RxBool specialMode = RxBool(false);
   final Rxn<Item> editableItem = Rxn();
   RxBool newCategoryAdded = RxBool(false);
   Rxn<Category> addedCatgeory = Rxn();
@@ -119,6 +119,8 @@ class ItemViewController {
     final Item newItem = Item(
         image: newImageUrl.value,
         id: generateRandomString(5),
+        startsAt: specialMode.value ? startDay.value : null,
+        endsAt: specialMode.value ? endDate.value : null,
         available: editableItem.value?.available ?? false,
         name: {
           restaurant.value!.primaryLanguage: prItemNameController.text,
