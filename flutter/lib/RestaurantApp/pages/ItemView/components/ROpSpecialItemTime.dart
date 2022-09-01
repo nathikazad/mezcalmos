@@ -67,6 +67,7 @@ class _ROpSpecialItemTimeState extends State<ROpSpecialItemTime> {
               onTap: () {
                 showModalBottomSheet<List<DateTime>>(
                     context: context,
+                    isScrollControlled: true,
                     builder: (BuildContext ctx) {
                       return MezDateTimePicker(
                           startDate: DateTime.now(),

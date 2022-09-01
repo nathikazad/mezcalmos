@@ -48,8 +48,8 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
+    return SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -208,6 +208,9 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
                 )),
               ],
             ),
+            const SizedBox(
+              height: 15,
+            )
           ],
         ));
   }
