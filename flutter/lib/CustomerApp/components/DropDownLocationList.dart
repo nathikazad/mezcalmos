@@ -124,18 +124,27 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     mezDbgPrint(widget.passedInLocation);
     // we will route the user back to the Map
     if (newLocation?.id == "_pick_") {
-      final SavedLocation? saveLocation = await Get.toNamed(
+      final SavedLocation? _savedLocation = await Get.toNamed(
         kPickLocationRoute,
         arguments: true,
       ) as SavedLocation;
-      mezDbgPrint("View Got result : $saveLocation");
-      if (saveLocation != null) {
+      mezDbgPrint("View Got result : $_savedLocation");
+      if (_savedLocation != null) {
+        // in case it's repeated with the same name or same address
+        listOfSavedLoacations.removeWhere(
+          (savedLoc) =>
+              savedLoc.name == _savedLocation.name ||
+              (_savedLocation.location?.address != null &&
+                  savedLoc.location?.address ==
+                      _savedLocation.location?.address),
+        );
+
         setState(() {
-          listOfSavedLoacations.add(saveLocation);
+          listOfSavedLoacations.add(_savedLocation);
           dropDownListValue =
               listOfSavedLoacations[listOfSavedLoacations.length - 1];
         });
-        widget.onValueChangeCallback?.call(location: saveLocation.location);
+        widget.onValueChangeCallback?.call(location: _savedLocation.location);
       }
     } else {
       if (newLocation != null) {

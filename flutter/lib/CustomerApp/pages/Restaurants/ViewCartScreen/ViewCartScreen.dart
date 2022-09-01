@@ -21,6 +21,7 @@ import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 // ignore: constant_identifier_names
 enum DropDownResult { Null, String }
@@ -209,12 +210,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     await MapHelper.getDurationAndDistance(
       _restaurantController.cart.value.restaurant!.info.location,
       orderToLocation!,
-    )
-        //    ).catchError((Object? e, StackTrace stk) {
-        // MezSnackbar("Error", "${_i18n()["errorText"]}",
-        //     position: SnackPosition.TOP);
-        // })
-        .then((MapHelper.Route value) {
+    ).then((MapHelper.Route value) async {
       mezDbgPrint("Route info succesfully ===================> $routeInfo");
       routeInfo = value;
       _restaurantController.cart.value.setRouteInformation =
@@ -223,70 +219,90 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         distance: routeInfo!.distance,
         duration: routeInfo!.duration,
       );
-    }).whenComplete(() async {
-      String? stripePaymentId;
+      mezDbgPrint(
+          "😇😇😇😇😇😇😇 DISTANCE 😇😇😇😇😇😇😇 ==> ${routeInfo?.distance.distanceInMeters}");
 
-      if (_restaurantController.cart.value.paymentType == PaymentType.Card) {
-        switch (viewCartController.getCardChoice) {
-          case CardChoice.ApplePay:
-            final ServerResponse paymentIntentResponse = await getPaymentIntent(
-                customerId: Get.find<AuthController>().user!.id,
-                serviceProviderId:
-                    _restaurantController.cart.value.restaurant!.info.id,
-                orderType: OrderType.Restaurant,
-                paymentAmount: _restaurantController.cart.value.totalCost);
-            stripePaymentId = extractPaymentIdFromIntent(
-                paymentIntentResponse.data['paymentIntent'].toString());
-            await acceptPaymentWithApplePay(
-                paymentAmount: _restaurantController.cart.value.totalCost,
-                paymentIntentData: paymentIntentResponse.data,
-                merchantName:
-                    _restaurantController.cart.value.restaurant!.info.name);
-            break;
-          case CardChoice.GooglePay:
-            final ServerResponse paymentIntentResponse = await getPaymentIntent(
-                customerId: Get.find<AuthController>().user!.id,
-                serviceProviderId:
-                    _restaurantController.cart.value.restaurant!.info.id,
-                orderType: OrderType.Restaurant,
-                paymentAmount: _restaurantController.cart.value.totalCost);
-            stripePaymentId = extractPaymentIdFromIntent(
-                paymentIntentResponse.data['paymentIntent'].toString());
-            await acceptPaymentWithGooglePay(
-                paymentAmount: _restaurantController.cart.value.totalCost,
-                paymentIntentData: paymentIntentResponse.data,
-                merchantName:
-                    _restaurantController.cart.value.restaurant!.info.name);
-            break;
-          case CardChoice.SavedCard:
-            stripePaymentId = await acceptPaymentWithSavedCard(
-                serviceProviderId:
-                    _restaurantController.cart.value.restaurant!.info.id,
-                paymentAmount: _restaurantController.cart.value.totalCost,
-                card: viewCartController.card.value!);
-            break;
-        }
-      }
+      if (routeInfo != null && routeInfo!.distance.distanceInMeters <= 10000) {
+        final String? stripePaymentId =
+            await acceptPaymentByCardChoice(viewCartController.getCardChoice);
 
-      final ServerResponse _serverResponse = await _restaurantController
-          .checkout(stripePaymentId: stripePaymentId);
+        final ServerResponse _serverResponse = await _restaurantController
+            .checkout(stripePaymentId: stripePaymentId);
 
-      if (_serverResponse.success) {
-        _restaurantController.clearCart();
-        popEverythingAndNavigateTo(
-            getRestaurantOrderRoute(_serverResponse.data["orderId"]));
-      } else {
-        print(_serverResponse);
-        if (_serverResponse.errorCode == "serverError") {
-          // do something
-        } else if (_serverResponse.errorCode == "inMoreThanThreeOrders") {
-          // do something
-        } else if (_serverResponse.errorCode == "restaurantClosed") {
-          // do something
+        if (_serverResponse.success) {
+          _restaurantController.clearCart();
+          popEverythingAndNavigateTo(
+              getRestaurantOrderRoute(_serverResponse.data["orderId"]));
         } else {
-          // do something
+          print(_serverResponse);
+          if (_serverResponse.errorCode == "serverError") {
+            // do something
+          } else if (_serverResponse.errorCode == "inMoreThanThreeOrders") {
+            // do something
+          } else if (_serverResponse.errorCode == "restaurantClosed") {
+            // do something
+          } else {
+            // do something
+          }
         }
+      } else {
+        MezSnackbar(
+          "Oops",
+          "Distance between you and restaurat is more than 10km!",
+        );
       }
+    }).catchError((e, s) {
+      mezDbgPrint(
+        "Error happened during generating order's routeInfos / Stripe payment ===> #$e\n\nStackTrace ==> #$s",
+      );
     });
+  }
+
+  /// returns stripePaymentId
+  Future<String?> acceptPaymentByCardChoice(CardChoice choice) async {
+    String? stripePaymentId;
+    //viewCartController.getCardChoice
+    if (_restaurantController.cart.value.paymentType == PaymentType.Card) {
+      switch (choice) {
+        case CardChoice.ApplePay:
+          final ServerResponse paymentIntentResponse = await getPaymentIntent(
+              customerId: Get.find<AuthController>().user!.id,
+              serviceProviderId:
+                  _restaurantController.cart.value.restaurant!.info.id,
+              orderType: OrderType.Restaurant,
+              paymentAmount: _restaurantController.cart.value.totalCost);
+          stripePaymentId = extractPaymentIdFromIntent(
+              paymentIntentResponse.data['paymentIntent'].toString());
+          await acceptPaymentWithApplePay(
+              paymentAmount: _restaurantController.cart.value.totalCost,
+              paymentIntentData: paymentIntentResponse.data,
+              merchantName:
+                  _restaurantController.cart.value.restaurant!.info.name);
+          break;
+        case CardChoice.GooglePay:
+          final ServerResponse paymentIntentResponse = await getPaymentIntent(
+              customerId: Get.find<AuthController>().user!.id,
+              serviceProviderId:
+                  _restaurantController.cart.value.restaurant!.info.id,
+              orderType: OrderType.Restaurant,
+              paymentAmount: _restaurantController.cart.value.totalCost);
+          stripePaymentId = extractPaymentIdFromIntent(
+              paymentIntentResponse.data['paymentIntent'].toString());
+          await acceptPaymentWithGooglePay(
+              paymentAmount: _restaurantController.cart.value.totalCost,
+              paymentIntentData: paymentIntentResponse.data,
+              merchantName:
+                  _restaurantController.cart.value.restaurant!.info.name);
+          break;
+        case CardChoice.SavedCard:
+          stripePaymentId = await acceptPaymentWithSavedCard(
+              serviceProviderId:
+                  _restaurantController.cart.value.restaurant!.info.id,
+              paymentAmount: _restaurantController.cart.value.totalCost,
+              card: viewCartController.card.value!);
+          break;
+      }
+    }
+    return stripePaymentId;
   }
 }
