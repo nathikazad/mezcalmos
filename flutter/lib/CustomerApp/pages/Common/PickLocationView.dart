@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
 
 enum PickLocationMode { AddNewLocation, EditLocation, NonLoggedInPick }
@@ -201,6 +202,19 @@ class _PickLocationViewState extends State<PickLocationView> {
         await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
         savedLocation = SavedLocation(
             name: _result, location: locationPickerController.location.value!);
+        Get.find<CustomerAuthController>()
+            .customer
+            .value
+            ?.savedLocations
+            .forEach((SavedLocation location) {
+          if (location.name.toLowerCase() ==
+                  savedLocation?.name.toLowerCase() ||
+              location.location?.address.toLowerCase() ==
+                  savedLocation?.location?.address.toLowerCase()) {
+            // delete from db
+            Get.find<CustomerAuthController>().deleteLocation(location);
+          }
+        });
         Get.find<CustomerAuthController>().saveNewLocation(savedLocation!);
       } else {
         await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
@@ -220,6 +234,7 @@ class _PickLocationViewState extends State<PickLocationView> {
           context: context,
           nameVal: savedLocation!.name,
           mode: PickLocationMode.EditLocation);
+      SavedLocation? _isDuplicatedSavedLocation;
       if (_result != null && _result != "") {
         await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
         savedLocation = SavedLocation(
@@ -227,14 +242,29 @@ class _PickLocationViewState extends State<PickLocationView> {
             name: _result,
             location: locationPickerController.location.value!);
 
-        Get.find<CustomerAuthController>().editLocation(savedLocation!);
+        _isDuplicatedSavedLocation = Get.find<CustomerAuthController>()
+            .customer
+            .value
+            ?.savedLocations
+            .firstWhereOrNull((SavedLocation location) =>
+                location.name.toLowerCase() ==
+                    savedLocation?.name.toLowerCase() ||
+                location.location?.address.toLowerCase() ==
+                    savedLocation?.location?.address.toLowerCase());
       }
-      setState(() {
-        locationPickerController
-            .setLocation(locationPickerController.location.value!);
-      });
+      if (_isDuplicatedSavedLocation != null) {
+        MezSnackbar("Oops",
+            "You already have a saved location with the same name / address !");
+      } else {
+        Get.find<CustomerAuthController>().editLocation(savedLocation!);
 
-      Get.back<SavedLocation?>(result: savedLocation);
+        setState(() {
+          locationPickerController
+              .setLocation(locationPickerController.location.value!);
+        });
+
+        Get.back<SavedLocation?>(result: savedLocation);
+      }
     } else if (widget.pickLocationMode == PickLocationMode.NonLoggedInPick) {
       Get.back<Location>(result: locationPickerController.location.value);
     }

@@ -54,12 +54,6 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   CustomerAuthController customerAuthController =
       Get.find<CustomerAuthController>();
 
-  /// listOfSavedLocations
-  List<SavedLocation> listOfSavedLocations = <SavedLocation>[];
-
-  /// dropDownListValue
-  SavedLocation? dropDownListValue;
-
   /// orderToLocation
   Location? orderToLocation;
 
