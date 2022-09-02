@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -25,14 +24,17 @@ class CustomerRestaurantController {
   void init({required Restaurant restaurant, required TickerProvider vsync}) {
     this.restaurant.value = restaurant;
     _initControllers(vsync, restaurant);
-    _assignKeys(restaurant);
+    assignKeys();
   }
 
-  void _assignKeys(Restaurant restaurant) {
+  void assignKeys() {
     if (isOnMenuView) {
-      itemKeys.assign((restaurant.getCategories.length + 1), "info");
-      itemKeys[(restaurant.getCategories.length + 1)] =
+      itemKeys.assign((restaurant.value!.getCategories.length + 1), "info");
+      itemKeys[(restaurant.value!.getCategories.length + 1)] =
           RectGetter.createGlobalKey();
+    } else {
+      itemKeys.assign((getGroupedSpecials.length + 1), "info");
+      itemKeys[(getGroupedSpecials.length + 1)] = RectGetter.createGlobalKey();
     }
   }
 
@@ -63,19 +65,19 @@ class CustomerRestaurantController {
 
   bool onScrollNotification(ScrollNotification notification) {
     if (pauseRectGetterIndex.value) return false;
-    final int lastTabIndex = tabsController.length - 1;
+    final int lastTabIndex = getTabController.length - 1;
     final List<int> visibleItems = getVisibleItemsIndex();
 
     final bool reachLastTabIndex =
         visibleItems.length <= 2 && visibleItems.last == lastTabIndex;
     if (reachLastTabIndex) {
-      tabsController.animateTo(lastTabIndex);
+      getTabController.animateTo(lastTabIndex);
     } else {
       final int sumIndex =
           visibleItems.reduce((int value, int element) => value + element);
       final int middleIndex = sumIndex ~/ visibleItems.length;
-      if (tabsController.index != middleIndex)
-        tabsController.animateTo(middleIndex);
+      if (getTabController.index != middleIndex)
+        getTabController.animateTo(middleIndex);
     }
 
     return false;
@@ -83,7 +85,7 @@ class CustomerRestaurantController {
 
   void animateAndScrollTo(int index) {
     pauseRectGetterIndex.value = true;
-    tabsController.animateTo(index);
+    getTabController.animateTo(index);
     scrollController
         .scrollToIndex(index, preferPosition: AutoScrollPosition.begin)
         .whenComplete(() => pauseRectGetterIndex.value = false);
@@ -98,8 +100,9 @@ class CustomerRestaurantController {
   // getters //
   Map<DateTime?, List<Item>> get getGroupedSpecials {
     final Map<DateTime?, List<Item>> data = restaurant.value!.currentSpecials
-        .groupListsBy((Item element) => element.startsAt);
-    mezDbgPrint(data);
+        .groupListsBy((Item element) => DateTime(element.startsAt!.year,
+            element.startsAt!.month, element.startsAt!.day));
+
     return data;
   }
 
@@ -125,6 +128,14 @@ class CustomerRestaurantController {
 
   bool get showCategoriesChips {
     return restaurant.value!.getCategories.length > 1 && showInfo.isFalse;
+  }
+
+  TabController get getTabController {
+    if (isOnMenuView) {
+      return tabsController;
+    } else {
+      return specialstabsController;
+    }
   }
 
   void dispose() {

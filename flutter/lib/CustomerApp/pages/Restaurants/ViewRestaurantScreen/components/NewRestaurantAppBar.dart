@@ -45,8 +45,7 @@ class NewRestaurantAppBar extends StatelessWidget {
         pinned: true,
         flexibleSpace: FlexibleSpaceBar(
           expandedTitleScale: 1.6,
-          titlePadding: EdgeInsets.only(
-              bottom: controller.showCategoriesChips ? 110 : 12),
+          titlePadding: EdgeInsets.only(bottom: _getBottomPadding()),
           centerTitle: true,
           title: Container(
             alignment: Alignment.bottomCenter,
@@ -177,9 +176,7 @@ class NewRestaurantAppBar extends StatelessWidget {
         padding: const EdgeInsets.all(4),
         child: TabBar(
           isScrollable: true,
-          controller: controller.isOnMenuView
-              ? controller.tabsController
-              : controller.specialstabsController,
+          controller: controller.getTabController,
           labelColor: primaryBlueColor,
           labelStyle: Get.textTheme.bodyText1,
           unselectedLabelStyle: Get.textTheme.bodyText1?.copyWith(
@@ -230,6 +227,7 @@ class NewRestaurantAppBar extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     controller.mainTab.value = RestaurantViewTab.Menu;
+                    controller.assignKeys();
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -251,6 +249,7 @@ class NewRestaurantAppBar extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     controller.mainTab.value = RestaurantViewTab.Specials;
+                    controller.assignKeys();
                   },
                   child: Container(
                     alignment: Alignment.center,
@@ -398,5 +397,15 @@ class NewRestaurantAppBar extends StatelessWidget {
         ],
       );
     });
+  }
+
+  double _getBottomPadding() {
+    if (controller.showCategoriesChips && controller.showSpecials) {
+      return 110;
+    } else if (controller.showCategoriesChips) {
+      return 60;
+    } else {
+      return 12;
+    }
   }
 }

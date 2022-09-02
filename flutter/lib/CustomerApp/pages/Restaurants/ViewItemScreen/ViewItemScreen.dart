@@ -57,6 +57,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   TextEditingController _noteTextEdittingController = TextEditingController();
   RxBool showImage = RxBool(true);
   bool showViewRestaurant = false;
+  bool isSpecial = false;
 
   @override
   void dispose() {
@@ -70,6 +71,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
     mezDbgPrint("params : ${Get.parameters.toString()}");
     mezDbgPrint("widget.viewItemScreenMode => ${widget.viewItemScreenMode}");
     showViewRestaurant = Get.arguments?["showViewRestaurant"] ?? false;
+    isSpecial = Get.arguments?["isSpecial"] ?? false;
     if (widget.viewItemScreenMode == ViewItemScreenMode.AddItemMode) {
       final String? restaurantId = Get.parameters['restaurantId'];
       controller.getRestaurant("$restaurantId").then((Restaurant? value) {
@@ -78,11 +80,13 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
         });
       });
       final String? itemId = Get.parameters['itemId'];
-
+      mezDbgPrint("IS SPECIAL ITEM==========>>>>$isSpecial");
       controller.getRestaurant(restaurantId!).then((Restaurant? restaurant) {
-        if (restaurant?.findItemById(id: itemId!) != null) {
-          cartItem.value =
-              CartItem(restaurant!.findItemById(id: itemId!)!, restaurantId);
+        if (restaurant?.findItemById(id: itemId!, isSpecial: isSpecial) !=
+            null) {
+          cartItem.value = CartItem(
+              restaurant!.findItemById(id: itemId!, isSpecial: isSpecial)!,
+              restaurantId);
         } else {
           Future.delayed(Duration.zero, () {
             Get.back();

@@ -5,15 +5,19 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemS
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class RestaurantgridItemCard extends StatefulWidget {
   const RestaurantgridItemCard(
-      {Key? key, required this.item, required this.restaurant})
+      {Key? key,
+      required this.item,
+      required this.restaurant,
+      this.isSpecial = false})
       : super(key: key);
   final Item item;
   final Restaurant restaurant;
+  final bool isSpecial;
 
   @override
   State<RestaurantgridItemCard> createState() => _RestaurantgridItemCardState();
@@ -31,7 +35,10 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
         onTap: () {
           Get.toNamed(
             getItemRoute(widget.restaurant.info.id, widget.item.id!),
-            arguments: {"mode": ViewItemScreenMode.AddItemMode},
+            arguments: {
+              "mode": ViewItemScreenMode.AddItemMode,
+              "isSpecial": widget.isSpecial
+            },
           );
         },
         child: Column(

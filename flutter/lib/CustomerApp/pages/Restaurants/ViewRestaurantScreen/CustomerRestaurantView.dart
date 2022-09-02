@@ -173,7 +173,11 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
                     fontFamily: "Montserrat", color: Colors.grey.shade700),
               ),
             ),
-          _buildResturantItems(category.items, restaurant.info.id),
+          _buildResturantItems(
+            items: category.items,
+            restaurantId: restaurant.info.id,
+            isSpecial: false,
+          ),
           SizedBox(
             height: 20,
           )
@@ -196,7 +200,10 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             ),
           ),
           _buildResturantItems(
-              specItems.values.toList()[index], restaurant.info.id),
+            items: specItems.values.toList()[index],
+            restaurantId: restaurant.info.id,
+            isSpecial: true,
+          ),
           SizedBox(
             height: 20,
           )
@@ -205,7 +212,10 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
     );
   }
 
-  Widget _buildResturantItems(List<Item> items, String restaurantId) {
+  Widget _buildResturantItems(
+      {required List<Item> items,
+      required String restaurantId,
+      bool isSpecial = false}) {
     if (restaurant.restaurantsView == RestaurantsView.Rows) {
       return Container(
         margin: const EdgeInsets.only(top: 5),
@@ -217,7 +227,10 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
                 function: () {
                   Get.toNamed(
                     getItemRoute(restaurantId, item.id!),
-                    arguments: {"mode": ViewItemScreenMode.AddItemMode},
+                    arguments: {
+                      "mode": ViewItemScreenMode.AddItemMode,
+                      "isSpecial": isSpecial
+                    },
                   );
                 }));
 
@@ -235,7 +248,10 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
         physics: NeverScrollableScrollPhysics(),
         children: List.generate(items.length, (int index) {
           return RestaurantgridItemCard(
-              item: items[index], restaurant: restaurant);
+            item: items[index],
+            restaurant: restaurant,
+            isSpecial: isSpecial,
+          );
         }),
       );
     }
