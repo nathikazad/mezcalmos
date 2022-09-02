@@ -280,7 +280,8 @@ class _StartingPointState extends State<StartingPoint> {
   }
 
   void initializeThirdParties() {
-    Stripe.publishableKey = stripePublishableKey;
+    Stripe.publishableKey =
+        _launchMode == AppLaunchMode.prod ? stripePubProdKey : stripePubTestKey;
     Stripe.instance.applySettings();
   }
 

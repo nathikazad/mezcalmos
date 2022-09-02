@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
@@ -55,17 +56,10 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
           child: Column(
             children: <Widget>[
               BasicCellComponent(
-                url: (widget.order.value)!.customer.image,
-                title: (widget.order.value)!.customer.name,
-                traillingIcon: Container(
-                  child: Stack(
-                    children: <Widget>[
-                      IconButton(
-                        icon: Icon(
-                          Icons.chat_bubble_outline,
-                          color: Color(0xff5c7fff),
-                        ),
-                        onPressed: () {
+                  url: (widget.order.value)!.customer.image,
+                  title: (widget.order.value)!.customer.name,
+                  traillingIcon: Obx(() => MessageButton(
+                        onTap: () {
                           Get.toNamed(
                             getMessagesRoute(
                                 orderType: OrderType.Restaurant,
@@ -74,28 +68,9 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
                                 recipientType: ParticipantType.Customer),
                           );
                         },
-                      ),
-                      Positioned(
-                        left: 28,
-                        top: 10,
-                        child: (controller.orderHaveNewMessageNotifications(
-                                widget.order.value!.orderId))
-                            ? Container(
-                                width: 10,
-                                height: 10,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                      color: const Color(0xfff6efff), width: 2),
-                                  color: const Color(0xffff0000),
-                                ),
-                              )
-                            : Container(),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                        showRedDot: controller.orderHaveNewMessageNotifications(
+                            widget.order.value!.orderId),
+                      ))),
               Container(
                 width: Get.width,
                 height: 1,

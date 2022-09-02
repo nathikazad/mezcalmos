@@ -68,9 +68,9 @@ class _DaRestaurantCardState extends State<DaRestaurantCard> {
                         ),
                       ),
                       Switch(
-                        value: restaurant.value!.state.available,
+                        value: restaurant.value!.state.open,
                         onChanged: (bool v) {
-                          Get.find<RestaurantsInfoController>().setAvailabilty(
+                          Get.find<RestaurantsInfoController>().setOpen(
                               isAv: v, restaurantId: restaurant.value!.info.id);
                         },
                         activeColor: primaryBlueColor,

@@ -137,13 +137,22 @@ class _LaundryLocPickerState extends State<LaundryLocPicker> {
               });
               // we will route the user back to the Map
               if (newValue?.id == "_pick_") {
-                final SavedLocation? saveLocation =
+                final SavedLocation? _savedLocation =
                     await Get.toNamed<void>(kPickLocationRoute, arguments: true)
                         as SavedLocation?;
-                mezDbgPrint("View Got result : $saveLocation");
-                if (saveLocation != null) {
+                mezDbgPrint("View Got result : $_savedLocation");
+                if (_savedLocation != null) {
+                  // in case it's repeated with the same name or same address
+                  listOfSavedLoacations.removeWhere(
+                    (savedLoc) =>
+                        savedLoc.name == _savedLocation.name ||
+                        (_savedLocation.location?.address != null &&
+                            savedLoc.location?.address ==
+                                _savedLocation.location?.address),
+                  );
+
                   setState(() {
-                    listOfSavedLoacations.add(saveLocation);
+                    listOfSavedLoacations.add(_savedLocation);
                     dropDownListValue =
                         listOfSavedLoacations[listOfSavedLoacations.length - 1];
                     // controller.cart.value.toLocation = saveLocation.location;
@@ -152,7 +161,7 @@ class _LaundryLocPickerState extends State<LaundryLocPicker> {
                   });
                 }
                 widget.onValueChangeCallback
-                    ?.call(newValue: saveLocation?.name);
+                    ?.call(newValue: _savedLocation?.name);
               } else {
                 widget.onValueChangeCallback?.call(newValue: newValue?.name);
 

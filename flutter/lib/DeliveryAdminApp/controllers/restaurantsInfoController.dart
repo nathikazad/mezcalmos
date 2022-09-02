@@ -50,11 +50,10 @@ class RestaurantsInfoController extends GetxController {
     });
   }
 
-  Future<void> setAvailabilty(
-      {required bool isAv, required String restaurantId}) {
+  Future<void> setOpen({required bool isAv, required String restaurantId}) {
     return _databaseHelper.firebaseDatabase
         .ref()
-        .child(restaurantAvailabeNode(uid: restaurantId))
+        .child(restaurantOpenNode(uid: restaurantId))
         .set(isAv);
   }
 

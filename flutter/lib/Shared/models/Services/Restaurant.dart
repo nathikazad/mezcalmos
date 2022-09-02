@@ -118,17 +118,6 @@ class Restaurant extends Service {
               .add(Item.itemFromData(itemId, itemdata));
         });
       }
-    } else if (restaurantData["menu2"] != null) {
-      restaurantData["menu2"].forEach((categoryId, categoryData) {
-        restaurant._categories.add(Category.fromData(categoryId, categoryData));
-      });
-      if (restaurantData["menu2"]["noCategory"] != null) {
-        restaurantData["menu2"]["noCategory"]["items"]
-            .forEach((itemId, itemdata) {
-          restaurant.itemsWithoutCategory
-              .add(Item.itemFromData(itemId, itemdata));
-        });
-      }
     }
 
     restaurant._categories
