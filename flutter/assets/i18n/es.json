@@ -1054,8 +1054,17 @@
                 "required": "Requerida",
                 "emailNotCorrect": "Correo electrónico no es correcta",
                 "phoneNotCorrect": "El número de teléfono no es correcto"
-
-
+            },
+            "AddRestaurantServiceView": {
+                "newRestaurant": "Nuevo restaurante",
+                "createRestaurant": "Crear restaurante",
+                "restaurantName": "Nombre del restaurante",
+                "email": "Correo electrónico",
+                "phoneNumber": "Número de teléfono",
+                "helperText": "Debe proporcionar la dirección de correo electrónico o el número de teléfono del restaurante.",
+                "required": "Requerida",
+                "emailNotCorrect": "La dirección de correo electrónico no es correcta",
+                "phoneNotCorrect": "El número de teléfono no es correcto"
             },
 
             "ServicesView": {

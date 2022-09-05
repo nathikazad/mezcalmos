@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryInfoController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 enum ServiceContact { Phone, Email }
 
-class AddLaundryServiceViewController {
+enum ServiceType { Laundry, Restaurant }
+
+class AddServiceViewController {
   // instances //
   dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
       ["pages"]["AddLaundryServiceView"];
   LaundryInfoController laundryInfoController =
       Get.find<LaundryInfoController>();
+  RestaurantsInfoController _restaurantInfoController =
+      Get.find<RestaurantsInfoController>();
   // inputs //
   final TextEditingController phone = TextEditingController();
   final TextEditingController email = TextEditingController();
@@ -20,10 +25,12 @@ class AddLaundryServiceViewController {
   final TextEditingController name = TextEditingController();
 
   Rx<ServiceContact> serviceContact = Rx(ServiceContact.Email);
+  Rx<ServiceType> serviceType = Rx(ServiceType.Laundry);
 
   // init //
-  void init() {
+  void init({required ServiceType serviceType}) {
     phoneCountry.text = "+52";
+    this.serviceType.value = serviceType;
   }
 
 // dispose //
@@ -82,10 +89,36 @@ class AddLaundryServiceViewController {
     }
   }
 
-  Future<void> createLaundry() async {
+  Future<void> saveService() async {
+    if (serviceType == ServiceType.Laundry) {
+      await _createLaundry();
+    } else {
+      await _createRestaurant();
+    }
+  }
+
+  Future<void> _createLaundry() async {
     await laundryInfoController
         .createLaundry(
             laundryName: name.text, laundryPhoneOrEmail: _getServiceContact)
+        .then((ServerResponse value) {
+      if (value.success) {
+        Get.back();
+      } else {
+        Get.snackbar(
+          "Error",
+          "${value.errorMessage}",
+          backgroundColor: Colors.black,
+          colorText: Colors.white,
+        );
+      }
+    });
+  }
+
+  Future<void> _createRestaurant() async {
+    await _restaurantInfoController
+        .createRestaurant(
+            restaurantName: name.text, laundryPhoneOrEmail: _getServiceContact)
         .then((ServerResponse value) {
       if (value.success) {
         Get.back();

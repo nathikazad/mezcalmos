@@ -1,19 +1,40 @@
 import 'dart:async';
 
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/restaurantNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class RestaurantsInfoController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
+  RxList<Restaurant> restaurants = <Restaurant>[].obs;
+  StreamSubscription? _restaurantsListener;
   @override
   void onInit() {
     super.onInit();
     print("--------------------> RestaurantsInfoController Initialized !");
+    _restaurantsListener = _databaseHelper.firebaseDatabase
+        .ref()
+        .child(serviceProviderInfos(orderType: OrderType.Restaurant))
+        .onValue
+        .listen((DatabaseEvent element) {
+      final List<Restaurant> data = [];
+      if (element.snapshot.value != null) {
+        for (var laundryId in (element.snapshot.value as dynamic).keys) {
+          final dynamic laundryData =
+              (element.snapshot.value as dynamic)[laundryId];
+          data.add(Restaurant.fromRestaurantData(
+              restaurantData: laundryData, restaurantId: laundryId));
+        }
+      } else {}
+      restaurants.value = data;
+    });
   }
 
   Future<List<Restaurant>> getRestaurants() {
@@ -75,5 +96,31 @@ class RestaurantsInfoController extends GetxController {
         .once()
         .then<Item>((DatabaseEvent event) =>
             Item.itemFromData(itemId, event.snapshot.value));
+  }
+
+  Future<ServerResponse> createRestaurant(
+      {required String restaurantName,
+      required String laundryPhoneOrEmail}) async {
+    final HttpsCallable createLaundryFunc =
+        FirebaseFunctions.instance.httpsCallable('restaurant-createRestaurant');
+    mezDbgPrint(
+        "name : $restaurantName ========= email : $laundryPhoneOrEmail");
+    try {
+      final HttpsCallableResult<dynamic> response = await createLaundryFunc
+          .call({
+        "restaurantName": restaurantName,
+        "emailIdOrPhoneNumber": laundryPhoneOrEmail
+      });
+      mezDbgPrint('HttpsCallableResult response: ${response.data}');
+      return ServerResponse.fromJson(response.data);
+    } catch (e) {
+      mezDbgPrint(e);
+
+      return ServerResponse(
+        ResponseStatus.Error,
+        errorMessage: "Server Error",
+        errorCode: "serverError",
+      );
+    }
   }
 }
