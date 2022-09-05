@@ -118,6 +118,14 @@ class _MessagingScreenState extends State<MessagingScreen> {
     scrollDown();
   }
 
+  /// Using this for now, to limit the calls only between deliveryDrivers<->Customers
+  bool isReciepientNotAdmin() {
+    final ParticipantType? _pType =
+        controller.recipient(recipientType: recipientType)?.participantType;
+    return [ParticipantType.Customer, ParticipantType.DeliveryDriver]
+        .contains(_pType);
+  }
+
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
@@ -203,28 +211,33 @@ class _MessagingScreenState extends State<MessagingScreen> {
               ),
               onTap: () => Get.toNamed<void>(orderLink!),
             ),
-          if (controller.isUserAuthorizedToCall() && sagora != null)
-            InkWell(
-              onTap: () async => _onCallPress(),
-              child: Container(
-                width: 30,
-                height: 30,
-                padding: EdgeInsets.all(5),
-                margin: EdgeInsets.only(right: 7),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color.fromRGBO(103, 121, 254, 1),
-                ),
-                child: Center(
-                  child: FittedBox(
-                    child: Icon(
-                      Icons.call,
-                      color: Colors.white,
+          Obx(() {
+            return controller.isUserAuthorizedToCall() &&
+                    isReciepientNotAdmin() &&
+                    sagora != null
+                ? InkWell(
+                    onTap: () async => _onCallPress(),
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      padding: EdgeInsets.all(5),
+                      margin: EdgeInsets.only(right: 7),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color.fromRGBO(103, 121, 254, 1),
+                      ),
+                      child: Center(
+                        child: FittedBox(
+                          child: Icon(
+                            Icons.call,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-            ),
+                  )
+                : SizedBox();
+          }),
         ],
       ),
       body: isChatLoaded
