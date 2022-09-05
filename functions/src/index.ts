@@ -38,6 +38,7 @@ export const stripe = {
 
 import * as restaurantStatusChange from './restaurant/adminStatusChanges'
 export const restaurant = {
+  createRestaurant: require("./restaurant/createNewRestaurant"),
   checkoutCart: require("./restaurant/checkoutCart"),
   prepareOrder: restaurantStatusChange.prepareOrder,
   readyForOrderPickup: restaurantStatusChange.readyForPickupOrder,
