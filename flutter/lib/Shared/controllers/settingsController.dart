@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -7,15 +8,19 @@ import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/controllers/themeContoller.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:soundpool/soundpool.dart';
 
 class SettingsController extends GetxController {
   late final ThemeController _appTheme;
   late final LanguageController _appLanguage;
-  // final Connectivity _connectivity = Connectivity();
-  // NOTIFICATION RINGTONES
-  // this will be customized by the user in future.
+  RxBool internetCheckerOn = true.obs;
+  // for testing purposes
+  void switchInternetChecker() =>
+      internetCheckerOn.value = !internetCheckerOn.value;
+
   Soundpool _userNotificationsSoundPool = Soundpool.fromOptions(
       options: SoundpoolOptions(streamType: StreamType.notification));
   int? _selectedNotificationsSoundId;
@@ -32,6 +37,8 @@ class SettingsController extends GetxController {
   LanguageController get appLanguage => _appLanguage;
   SettingsController(this.appType, this.locationType,
       {this.sideMenuItems = const []});
+
+  StreamSubscription<bool>? internetCheckerStream;
 
   @override
   Future<void> onInit() async {
@@ -52,6 +59,30 @@ class SettingsController extends GetxController {
     // CALL SOUND SETUP
     final ByteData _soundDataCall = await rootBundle.load(aDefaultCallingSound);
     _selectedCallingSoundId = await _userCallingSoundPool.load(_soundDataCall);
+
+    internetCheckerStream = checkConnectionStream().listen((bool isInternetOn) {
+      if (internetCheckerOn.value) {
+        // if No internet
+        if (!isInternetOn) {
+          if (!isCurrentRoute(kNoInternetConnectionPage)) {
+            mezDbgPrint("pushiiiiing => kNoInternetConnectionPage ");
+            Future<void>.delayed(
+              Duration.zero,
+              () => Get.toNamed<void>(kNoInternetConnectionPage),
+            );
+          }
+        } else {
+          mezDbgPrint("popping => kNoInternetConnectionPage ");
+
+          if (isCurrentRoute(kNoInternetConnectionPage)) {
+            Future<void>.delayed(
+              Duration.zero,
+              () => Get.back<void>(),
+            );
+          }
+        }
+      }
+    });
 
     super.onInit();
   }
@@ -78,10 +109,36 @@ class SettingsController extends GetxController {
     if (streamId != null) await _userCallingSoundPool.stop(streamId);
   }
 
+  Stream<bool> checkConnectionStream() async* {
+    yield* Stream<Future<bool>>.periodic(Duration(milliseconds: 500), (_) {
+      return _lookupGoogle();
+    }).asyncMap((Future<bool> future) async => await future);
+  }
+
+  /// this basically do a DNS look up on google.com if results are None this means that there's no active connection
+  Future<bool> _lookupGoogle() async {
+    bool _hasInternet = false;
+    try {
+      final List<InternetAddress> _pong =
+          await InternetAddress.lookup('google.com');
+      if (_pong.isNotEmpty && _pong[0].rawAddress.isNotEmpty) {
+        mezDbgPrint('😁 VALID INTERNET CONNECTION!');
+
+        _hasInternet = true;
+      }
+    } on SocketException catch (_) {
+      mezDbgPrint('🫥 NO INTERNET CONNECTION!');
+    }
+
+    return Future<bool>.value(_hasInternet);
+  }
+
   @override
   void dispose() {
     _appTheme.dispose();
     _appLanguage.dispose();
+    internetCheckerStream?.cancel();
+    internetCheckerStream = null;
     super.dispose();
   }
 }
