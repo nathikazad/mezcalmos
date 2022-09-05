@@ -25,6 +25,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="mez_services_web_app">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link href="main.css" rel="stylesheet"/>
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
@@ -40,8 +41,69 @@
   <script src="flutter.js" defer></script>
 </head>
 <body>
+
+  <div id="loading"></div>
+  <script type="text/javascript">
+   
+    window.flutterWebRenderer = "html";
+  
+</script>
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js";
+  
+  document.addEventListener("dart_loaded", function (){
+    //Here my_dart_var is defined
+    console.log("dart_loaded event");
+    console.log(`my_dart_var: ${window.my_dart_var}`);
+   if (window.my_dart_var=="stage") {
+    const firebaseConfig = {
+    apiKey: "AIzaSyBRQTIUx_-oMdp5_S5e9F8h4Uc4ViZKM4U",
+    authDomain: "mezcalmos-staging.firebaseapp.com",
+    databaseURL: "https://mezcalmos-staging-default-rtdb.firebaseio.com",
+    projectId: "mezcalmos-staging",
+    storageBucket: "mezcalmos-staging.appspot.com",
+    messagingSenderId: "606383265109",
+    appId: "1:606383265109:web:a2050a8335ee6e37d8cbdc"
+  };
+  const app = initializeApp(firebaseConfig);
+   }else{
+  const firebaseConfig = {
+apiKey: "AIzaSyB9vaAB9ptXhpeRs_JjxODEyuA_eO0tYu0",
+authDomain: "mezcalmos-31f1c.firebaseapp.com",
+databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com",
+projectId: "mezcalmos-31f1c",
+storageBucket: "mezcalmos-31f1c.appspot.com",
+messagingSenderId: "804036698204",
+appId: "1:804036698204:web:39b22436cbb4ef633f8699",
+measurementId: "G-5R20EL7CL9"
+};
+const app = initializeApp(firebaseConfig);
+   }
+  
+
+  });
+
+  //// Your web app's Firebase configuration for stage 
+  //// if this commented ,uncomment and run the app
+ 
+//// Your web app's Firebase configuration for prod 
+//// if this commented ,uncomment and run the app
+
+
+  // Initialize Firebase
+
+</script>
   <script>
     window.addEventListener('load', function(ev) {
+      var loading = document.querySelector('#loading');
+      loading.innerHTML = `<div class="everythingOnOneLine"><span style="display: inline-block;">Mezcalmos Loading</span><div class="waviy">
+   <span style="--i:1">.</span>
+   <span style="--i:2">.</span>
+   <span style="--i:3">.</span>
+   
+  </div> </div>`;
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
         serviceWorker: {

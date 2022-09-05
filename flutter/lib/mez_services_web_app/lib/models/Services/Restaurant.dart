@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart';
-import 'package:mezcalmos/Shared/models/Generic.dart';
-import 'package:mezcalmos/Shared/models/Schedule.dart';
-import 'package:mezcalmos/Shared/models/Services/Service.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mez_services_web_app/models/Generic.dart';
+import 'package:mez_services_web_app/models/Schedule.dart';
+import 'package:mez_services_web_app/models/Services/Service.dart';
+import 'package:mez_services_web_app/models/User.dart';
 
 enum RestaurantsView { Rows, Grid }
 
@@ -71,6 +71,14 @@ class Restaurant extends Service {
       });
     }
 
+    // if (restaurantData["menu"] != null)
+    //   restaurantData["menu2"].forEach((categoryId, categoryData) {
+    //     restaurant._categories.add(Category.fromData(categoryId, categoryData));
+    //   });
+    // if (restaurantData["menu2"] != null)
+    //   restaurantData["menu2"].forEach((categoryId, categoryData) {
+    //     restaurant._categories.add(Category.fromData(categoryId, categoryData));
+    //   });
     restaurant._categories
         .sort((Category a, Category b) => a.position.compareTo(b.position));
     return restaurant;

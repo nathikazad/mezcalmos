@@ -74,12 +74,16 @@ typedef LanguageMap = Map<LanguageType, String>;
 LanguageMap convertToLanguageMap(Map data) {
   // mezDbgPrint("@sa@d@: Trying to convert $data convertToLanguageMap !");
   final LanguageMap map = {};
-  data.forEach((language, string) {
-    if (language == LanguageType.EN.toFirebaseFormatString() ||
-        language == LanguageType.ES.toFirebaseFormatString()) {
-      map[language.toString().toLanguageType()] = string;
-    }
-  });
+  try {
+    data.forEach((language, string) {
+      if (language == LanguageType.EN.toFirebaseFormatString() ||
+          language == LanguageType.ES.toFirebaseFormatString()) {
+        map[language.toString().toLanguageType()] = string;
+      }
+    });
+  } on Exception catch (e) {
+    print("exception ouccuerd convertToLanguageMap func ${e.toString()}");
+  }
   return map;
 }
 
