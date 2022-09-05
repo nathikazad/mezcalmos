@@ -66,7 +66,7 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
               ),
             ),
             Spacer(),
-            _editSetButton(context)
+            if (_showBtn) _editSetButton(context)
           ],
         ),
       ),
@@ -333,5 +333,10 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
         message: '${_i18n()["minTimes"]}',
       ));
     }
+  }
+
+  bool get _showBtn {
+    return widget.order.status == RestaurantOrderStatus.OrderReceieved ||
+        widget.order.status == RestaurantOrderStatus.PreparingOrder;
   }
 }

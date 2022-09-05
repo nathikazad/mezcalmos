@@ -1645,6 +1645,7 @@
                         "itemsWeight": "Artículos de peso",
                         "itemsWeightErrorText": "Por favor ingrese un peso válido",
                         "saveItemsWeight": "Guardar artículos de peso",
+                        "editItemsWeight": "Editar elementos de peso",
                         "cancel": "Cancelar",
                         "setNewItemsWeight": "Set nuevos artículos de peso",
                         "error": "Error",

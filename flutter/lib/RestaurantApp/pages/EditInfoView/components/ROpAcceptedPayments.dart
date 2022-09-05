@@ -156,7 +156,8 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
       child: Ink(
           padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
-              color: Colors.amber, borderRadius: BorderRadius.circular(8)),
+              color: Colors.red.shade400,
+              borderRadius: BorderRadius.circular(8)),
           child: RichText(
             textAlign: TextAlign.center,
             text: TextSpan(children: [

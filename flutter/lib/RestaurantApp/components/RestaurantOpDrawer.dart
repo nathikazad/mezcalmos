@@ -73,7 +73,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 40,
+                      height: 50,
                     ),
                     // Laundry IMAGE AND NAME
 
@@ -240,7 +240,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
                       style: Get.textTheme.headline3,
                     ),
                     SizedBox(
-                      height: 15,
+                      height: 30,
                     ),
                   ],
                 ),
@@ -261,13 +261,16 @@ class _ROpDrawerState extends State<ROpDrawer> {
     return InkWell(
       onTap: onClick,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+        margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         child: Row(
           children: [
+            SizedBox(
+              width: 10,
+            ),
             Icon(
               icon,
               color: Colors.grey.shade400,
-              size: 35,
+              size: 25,
             ),
             SizedBox(
               width: 25,

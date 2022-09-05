@@ -72,25 +72,22 @@ class ROpOrderCard extends StatelessWidget {
                 ],
               ),
               const Divider(),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.0),
-                child: Row(
-                  //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Image.asset(
-                      aMoney,
-                      width: 20,
-                      height: 20,
-                      fit: BoxFit.contain,
-                    ),
-                    Text(
-                      " \$${order.itemsCost}",
-                      style: Get.textTheme.bodyText1,
-                    ),
-                    Spacer(),
-                    getOrderWidget()
-                  ],
-                ),
+              Row(
+                //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Image.asset(
+                    aMoney,
+                    width: 20,
+                    height: 20,
+                    fit: BoxFit.contain,
+                  ),
+                  Text(
+                    " \$${order.itemsCost}",
+                    style: Get.textTheme.bodyText1,
+                  ),
+                  Spacer(),
+                  getOrderWidget()
+                ],
               )
             ],
           ),

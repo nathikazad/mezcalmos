@@ -88,6 +88,7 @@ Widget _workingHourCard(
                 openHours.isOpen
                     ? "${_i18n()["workingHoursCard"]["open"]}"
                     : "${_i18n()["workingHoursCard"]["closed"]}",
+                textAlign: TextAlign.center,
                 style: Get.textTheme.bodyText2?.copyWith(
                     color: openHours.isOpen ? Colors.green : Colors.red),
               )),

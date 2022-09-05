@@ -1648,6 +1648,7 @@
                         "total": "Total",
                         "itemsWeightErrorText": "Please enter a valid weight",
                         "saveItemsWeight": "Save items weight",
+                        "editItemsWeight": "Edit items weight",
                         "cancel": "Cancel",
                         "setNewItemsWeight": "Set new items weight",
                         "error": "Error",

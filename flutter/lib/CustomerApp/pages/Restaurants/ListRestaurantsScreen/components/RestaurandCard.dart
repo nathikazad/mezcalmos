@@ -100,7 +100,7 @@ class RestaurantCard extends StatelessWidget {
                               flex: 1,
                               child: Icon(
                                 Icons.payments_sharp,
-                                color: Colors.green.shade500,
+                                color: Colors.grey.shade800,
                               ),
                             ),
                             if (restaurant.paymentInfo.acceptCard)
