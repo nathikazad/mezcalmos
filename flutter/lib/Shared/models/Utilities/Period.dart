@@ -23,6 +23,14 @@ class PeriodOfTime {
         other.end.minute == end.minute;
   }
 
+  bool include(PeriodOfTime p2) {
+    return (p2.start.isAfter(start) || p2.start.isAtSameMomentAs(start)) &&
+        (p2.end.isBefore(end) || p2.end.isAtSameMomentAs(end));
+  }
+
   @override
   int get hashCode => start.hashCode ^ end.hashCode;
+
+  @override
+  String toString() => 'PeriodOfTime(start: $start, end: $end)';
 }

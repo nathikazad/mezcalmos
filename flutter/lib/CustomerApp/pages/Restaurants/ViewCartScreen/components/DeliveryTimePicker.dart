@@ -8,8 +8,10 @@ import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/Controllers/ViewCartController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryType.dart';
+import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/Controllers/MezDateTimePickerController.dart';
 import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/MezDateTimePicker.dart';
 import 'package:sizer/sizer.dart';
 
@@ -164,13 +166,20 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
   }
 
   Future<void> _pickDeliveryTime(BuildContext context) async {
+    mezDbgPrint(controller.cart.value.isSpecial);
+    mezDbgPrint(controller.cart.value.cartPeriod.toString());
     await showModalBottomSheet<DateTime>(
         context: context,
         isDismissible: false,
         builder: (BuildContext ctx) {
           return MezDateTimePicker(
             startDate: controller.cart.value.deliveryTime,
-            numberOfDaysInterval: 7,
+            pickerMode: MezTimePickerMode.PickDeliveryTime,
+            maxHours: controller.cart.value.cartPeriod?.end.hour,
+            minHours: controller.cart.value.cartPeriod?.start.hour,
+            maxMinutes: controller.cart.value.cartPeriod?.end.minute,
+            minMinutes: controller.cart.value.cartPeriod?.start.minute,
+            numberOfDaysInterval: controller.cart.value.isSpecial ? 1 : 7,
             serviceSchedule: controller.cart.value.restaurant!.schedule!,
           );
         }).then((DateTime? value) {

@@ -104,63 +104,79 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                       fontWeight: FontWeight.bold,
                     ),
               ),
-              onPressed: () async {
-                if (auth.fireAuthUser != null) {
-                  if (ViewItemScreenMode.AddItemMode == widget.mode) {
-                    if (restaurantCartController
-                            .associatedRestaurant?.info.id !=
-                        null) {
-                      if (restaurantCartController
-                              .associatedRestaurant?.info.id ==
-                          widget.currentRestaurantId) {
-                        mezDbgPrint(
-                            "the first id is ${restaurantCartController.associatedRestaurant?.info.id} and the scond is ${widget.currentRestaurantId}");
-                        await restaurantCartController
-                            .addItem(widget.cartItem.value!);
-                        await Get.offNamed<void>(kCartRoute);
-                      } else {
-                        mezDbgPrint(
-                            "not true ${restaurantCartController.associatedRestaurant?.info.id} and the other is ${widget.currentRestaurantId}");
+              onPressed: (restaurantCartController.cart.value
+                          .canAddSpecial(item: widget.cartItem.value!) ==
+                      false)
+                  ? null
+                  : () async {
+                      if (auth.fireAuthUser != null) {
+                        if (ViewItemScreenMode.AddItemMode == widget.mode) {
+                          if (restaurantCartController
+                                  .associatedRestaurant?.info.id !=
+                              null) {
+                            if (restaurantCartController
+                                    .associatedRestaurant?.info.id ==
+                                widget.currentRestaurantId) {
+                              mezDbgPrint(
+                                  "the first id is ${restaurantCartController.associatedRestaurant?.info.id} and the scond is ${widget.currentRestaurantId}");
+                              await restaurantCartController
+                                  .addItem(widget.cartItem.value!);
+                              await Get.offNamed<void>(kCartRoute);
+                            } else {
+                              mezDbgPrint(
+                                  "not true ${restaurantCartController.associatedRestaurant?.info.id} and the other is ${widget.currentRestaurantId}");
 
-                        await showStatusInfoDialog(
-                          context,
-                          bottomRightIcon: Icons.shopping_cart,
-                          btnRightIconBgColor: Colors.white,
-                          primaryImageUrl: restaurantCartController
-                              .associatedRestaurant?.info.image,
-                          btnRightIconColor: primaryBlueColor,
-                          status: restaurantCartController
-                                  .associatedRestaurant?.info.name ??
-                              "",
-                          primaryClickTitle: _i18n()["rightBtn"],
-                          secondaryClickTitle: _i18n()["leftBtn"],
-                          description: _i18n()["subtitle"],
-                          secondaryCallBack: () async {
-                            Get.back<void>();
-                            await Get.toNamed<void>(kCartRoute);
-                          },
-                          primaryCallBack: () async {
-                            Get.back<void>();
-                            await restaurantCartController
-                                .addItem(widget.cartItem.value!);
-                            await Get.offNamed<void>(kCartRoute);
-                          },
-                        );
+                              await showStatusInfoDialog(
+                                context,
+                                bottomRightIcon: Icons.shopping_cart,
+                                btnRightIconBgColor: Colors.white,
+                                primaryImageUrl: restaurantCartController
+                                    .associatedRestaurant?.info.image,
+                                btnRightIconColor: primaryBlueColor,
+                                status: restaurantCartController
+                                        .associatedRestaurant?.info.name ??
+                                    "",
+                                primaryClickTitle: _i18n()["rightBtn"],
+                                secondaryClickTitle: _i18n()["leftBtn"],
+                                description: _i18n()["subtitle"],
+                                secondaryCallBack: () async {
+                                  Get.back<void>();
+                                  await Get.toNamed<void>(kCartRoute);
+                                },
+                                primaryCallBack: () async {
+                                  Get.back<void>();
+                                  await restaurantCartController
+                                      .addItem(widget.cartItem.value!);
+                                  await Get.offNamed<void>(kCartRoute);
+                                },
+                              );
+                            }
+                          } else {
+                            mezDbgPrint(
+                                restaurantCartController.cart.value.isSpecial);
+                            // if (restaurantCartController.cart.value.canAddSpecial(
+                            //             item: widget.cartItem.value!) !=
+                            //         null &&
+                            //     restaurantCartController.cart.value.canAddSpecial(
+                            //             item: widget.cartItem.value!) ==
+                            //         false) {
+                            //   mezDbgPrint("Error");
+                            //   MezSnackbar("Error", "Special time error");
+                            // } else {
+                            //   await restaurantCartController
+                            //       .addItem(widget.cartItem.value!);
+                            //   await Get.offNamed<void>(kCartRoute);
+                            // }
+                          }
+                        } else {
+                          await restaurantCartController
+                              .addItem(widget.cartItem.value!);
+                          Get.back<void>();
+                        }
+                      } else {
+                        dialogRequiredSignIn();
                       }
-                    } else {
-                      await restaurantCartController
-                          .addItem(widget.cartItem.value!);
-                      await Get.offNamed<void>(kCartRoute);
-                    }
-                  } else {
-                    await restaurantCartController
-                        .addItem(widget.cartItem.value!);
-                    Get.back<void>();
-                  }
-                } else {
-                  dialogRequiredSignIn();
-                }
-              },
+                    },
               child: Text(
                 widget.mode == ViewItemScreenMode.AddItemMode
                     ? _i18n()['addToCart']

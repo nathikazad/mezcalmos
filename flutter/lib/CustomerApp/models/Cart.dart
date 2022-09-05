@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/models/Utilities/DeliveryType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 
 class Cart {
   List<CartItem> cartItems = <CartItem>[];
@@ -113,13 +114,18 @@ class Cart {
 
   void addItem(CartItem cartItem) {
     if (cartItem.idInCart == null) {
+      mezDbgPrint("first if");
       cartItem.idInCart = getRandomString(5);
     } else {
+      mezDbgPrint("second if");
       final int index = cartItems.indexWhere(
           (CartItem element) => element.idInCart == cartItem.idInCart);
       cartItems.removeAt(index);
     }
+    mezDbgPrint("Cart item =======>>> $cartItem");
+
     cartItems.add(CartItem.clone(cartItem));
+    mezDbgPrint("Cart itemsssss =======>>> $cartItems");
   }
 
   void incrementItem(String id, int quantity) {
@@ -137,6 +143,31 @@ class Cart {
   }
 
   void setCartNotes(String? notes) => this.notes = notes;
+  bool get isSpecial {
+    return cartItems.firstWhereOrNull(
+            (CartItem element) => element.isSpecial == true) !=
+        null;
+  }
+
+  PeriodOfTime? get cartPeriod {
+    final CartItem? citem = cartItems
+        .firstWhereOrNull((CartItem element) => element.isSpecial == true);
+    if (citem != null) {
+      return PeriodOfTime(start: citem.item.startsAt!, end: citem.item.endsAt!);
+    }
+    return null;
+  }
+
+  bool? canAddSpecial({required CartItem item}) {
+    if (item.isSpecial && cartPeriod != null) {
+      final PeriodOfTime itemPeriod =
+          PeriodOfTime(start: item.item.startsAt!, end: item.item.endsAt!);
+      mezDbgPrint(
+          "Checking special times :: \n item time = ${itemPeriod.toString()} \n cart time == ${cartPeriod!.toString()} \n final result ===> ${cartPeriod!.include(itemPeriod)}");
+      return cartPeriod!.include(itemPeriod);
+    } else
+      return null;
+  }
 }
 
 class CartItem {
@@ -144,6 +175,7 @@ class CartItem {
   String? idInCart;
   Item item;
   int quantity;
+
   String? notes;
   //optionId and list of choices for that option
   Map<String, List<Choice>> chosenChoices = <String, List<Choice>>{};
@@ -264,6 +296,10 @@ class CartItem {
     // return 0;
 
     return quantity * costPerOne();
+  }
+
+  bool get isSpecial {
+    return item.isSpecial;
   }
 }
 

@@ -150,4 +150,12 @@ extension timeHelper on int {
       return "$this";
     }
   }
+
+  int toAmpPmInt() {
+    if (this <= 12) {
+      return this;
+    } else {
+      return this - 12;
+    }
+  }
 }

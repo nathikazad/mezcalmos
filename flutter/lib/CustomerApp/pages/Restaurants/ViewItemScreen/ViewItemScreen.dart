@@ -82,10 +82,11 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       final String? itemId = Get.parameters['itemId'];
       mezDbgPrint("IS SPECIAL ITEM==========>>>>$isSpecial");
       controller.getRestaurant(restaurantId!).then((Restaurant? restaurant) {
-        if (restaurant?.findItemById(id: itemId!, isSpecial: isSpecial) !=
-            null) {
+        if (restaurant?.findItemById(id: itemId!) != null) {
           cartItem.value = CartItem(
-              restaurant!.findItemById(id: itemId!, isSpecial: isSpecial)!,
+              restaurant!.findItemById(
+                id: itemId!,
+              )!,
               restaurantId);
         } else {
           Future.delayed(Duration.zero, () {
@@ -93,6 +94,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
           });
         }
       });
+      mezDbgPrint(cartItem.value);
     } else {
       cartItem.value = CartItem.clone(restaurantCartController
           .cart.value.cartItems
@@ -108,6 +110,8 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       });
     }
     cartItem.refresh();
+    // mezDbgPrint(
+    //     "cart item ===============>${cartItem.value!.toFirebaseFunctionFormattedJson()}");
     super.initState();
   }
 

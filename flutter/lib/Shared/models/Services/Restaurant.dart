@@ -153,30 +153,33 @@ class Restaurant extends Service {
     return items;
   }
 
-  Item? findItemById({required String id, bool isSpecial = false}) {
+  Item? findItemById({
+    required String id,
+  }) {
     Item? returnVal;
-    if (isSpecial) {
-      currentSpecials.forEach((Item item) {
+
+    currentSpecials.forEach((Item item) {
+      if (item.id == id) returnVal = item;
+    });
+    if (returnVal == null) {
+      pastSpecials.forEach((Item item) {
         if (item.id == id) returnVal = item;
       });
-      if (returnVal == null) {
-        pastSpecials.forEach((Item item) {
-          if (item.id == id) returnVal = item;
-        });
-      }
-    } else {
+    }
+
+    if (returnVal == null) {
       _categories.forEach((Category category) {
         category.items.forEach((Item item) {
           if (item.id == id) returnVal = item;
         });
       });
-      if (returnVal == null) {
-        getItemsWithoutCategory?.forEach((Item element) {
-          if (element.id == id) {
-            returnVal = element;
-          }
-        });
-      }
+    }
+    if (returnVal == null) {
+      getItemsWithoutCategory?.forEach((Item element) {
+        if (element.id == id) {
+          returnVal = element;
+        }
+      });
     }
 
     return returnVal;
@@ -424,6 +427,18 @@ class Item {
     // other.restaurant == restaurant &&
     // other.linkUrl == linkUrl &&
     // other.position == position;
+  }
+
+  // bool get isCurrentSpecial {
+  //   return restaurant!.currentSpecials.contains(this);
+  // }
+
+  // bool get isPastSpecial {
+  //   return restaurant!.pastSpecials.contains(this);
+  // }
+
+  bool get isSpecial {
+    return startsAt != null && endsAt != null;
   }
 
   @override

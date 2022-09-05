@@ -104,6 +104,8 @@ class RestaurantController extends GetxController {
   }
 
   Future<void> addItem(CartItem cartItem) async {
+    mezDbgPrint(
+        "@m66are adding this to cart ==========>${cartItem.toFirebaseFunctionFormattedJson()}");
     final String restaurantId = cartItem.restaurantId;
     if (associatedRestaurant == null) {
       mezDbgPrint(

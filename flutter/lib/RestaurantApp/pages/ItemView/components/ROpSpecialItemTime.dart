@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/MezDateTimePicker.dart';
 import 'package:sizer/sizer.dart';
 
@@ -18,6 +18,7 @@ class ROpSpecialItemTime extends StatefulWidget {
 }
 
 class _ROpSpecialItemTimeState extends State<ROpSpecialItemTime> {
+  Rxn<PeriodOfTime> periodTime = Rxn();
   @override
   void initState() {
     super.initState();
@@ -76,21 +77,22 @@ class _ROpSpecialItemTimeState extends State<ROpSpecialItemTime> {
                           ],
                         )),
                     onTap: () {
-                      showModalBottomSheet<List<DateTime>>(
+                      showModalBottomSheet<PeriodOfTime>(
                           context: context,
                           isScrollControlled: true,
                           builder: (BuildContext ctx) {
                             return MezDateTimePicker(
                                 startDate: DateTime.now(),
                                 numberOfDaysInterval: 7,
-                                periodTime: true,
+                                isPeriodic: true,
+                                periodOfTime: periodTime.value,
                                 serviceSchedule: widget.viewController
                                     .restaurant.value!.schedule!);
-                          }).then((List<DateTime>? value) {
+                          }).then((PeriodOfTime? value) {
                         if (value != null) {
-                          mezDbgPrint("Value ========>$value");
-                          widget.viewController.startDay.value = value.first;
-                          widget.viewController.endDate.value = value.last;
+                          periodTime.value = value;
+                          widget.viewController.startDay.value = value.start;
+                          widget.viewController.endDate.value = value.end;
                         }
                       });
                     },

@@ -63,6 +63,8 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   @override
   void initState() {
     super.initState();
+    mezDbgPrint(
+        "Cart items =====================>>>${_restaurantController.cart.value.cartItems}");
     if (Get.find<CustomerAuthController>().customer.value?.savedCards == null)
       savedCardChoice =
           Get.find<CustomerAuthController>().customer.value!.savedCards.first;
@@ -74,6 +76,8 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     // check if cart empty
     // if yes redirect to home page
     _restaurantController.cart.value.cartItems.map((CartItem item) {});
+    mezDbgPrint(
+        "item is special ===== ${_restaurantController.cart.value.cartItems.first.isSpecial}");
   }
 
   @override
@@ -214,7 +218,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         duration: routeInfo.duration,
       );
       mezDbgPrint(
-          "😇😇😇😇😇😇😇 DISTANCE 😇😇😇😇😇😇😇 ==> ${routeInfo?.distance.distanceInMeters}");
+          "😇😇😇😇😇😇😇 DISTANCE 😇😇😇😇😇😇😇 ==> ${routeInfo.distance.distanceInMeters}");
 
       if (routeInfo.distance.distanceInMeters <= 10000) {
         final String? stripePaymentId =

@@ -93,14 +93,16 @@ class ItemViewController {
   // edit item init //
   void initEditMode({required String itemId, String? categoryId}) {
     editMode.value = true;
-    editableItem.value = restaurant.value!
-        .findItemById(id: itemId, isSpecial: specialMode.value ?? false);
+    editableItem.value = restaurant.value!.findItemById(
+      id: itemId,
+    );
     mezDbgPrint(editableItem.value!.toJson());
     prItemNameController.text = editableItem.value!.name[prLang]!;
     newImageUrl.value = editableItem.value!.image;
     scItemNameController.text = editableItem.value!.name[scLang]!;
     prItemDescController.text = editableItem.value?.name[prLang]! ?? "";
     scItemDescController.text = editableItem.value!.description?[scLang]! ?? "";
+
     itemPriceController.text = editableItem.value!.cost.toString();
     mezDbgPrint(editableItem.value!.options.length);
     editableItem.value!.options.forEach((Option element) {
