@@ -24,10 +24,6 @@ class MezDateTimePicker extends StatefulWidget {
       this.title,
       this.periodOfTime,
       this.isPeriodic = false,
-      this.maxHours,
-      this.maxMinutes,
-      this.minHours,
-      this.minMinutes,
       this.confirmBtnText})
       : super(key: key);
   final DateTime? startDate;
@@ -38,10 +34,6 @@ class MezDateTimePicker extends StatefulWidget {
   final String? title;
   final String? confirmBtnText;
   final MezTimePickerMode pickerMode;
-  final int? maxHours;
-  final int? maxMinutes;
-  final int? minHours;
-  final int? minMinutes;
 
   @override
   State<MezDateTimePicker> createState() => _MezDateTimePickerState();
@@ -54,10 +46,6 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
     _controller.init(
         initialDate: widget.startDate,
         numberOfdays: widget.numberOfDaysInterval,
-        maxHours: widget.maxHours,
-        minHours: widget.minHours,
-        maxMinutes: widget.maxMinutes,
-        minMinutes: widget.minMinutes,
         period: widget.isPeriodic,
         mode: widget.pickerMode,
         initPeriod: widget.periodOfTime,

@@ -178,10 +178,6 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
             startDate: controller.cart.value.deliveryTime,
             pickerMode: MezTimePickerMode.PickDeliveryTime,
             periodOfTime: controller.cart.value.cartPeriod,
-            maxHours: controller.cart.value.cartPeriod?.end.hour,
-            minHours: controller.cart.value.cartPeriod?.start.hour,
-            maxMinutes: controller.cart.value.cartPeriod?.end.minute,
-            minMinutes: controller.cart.value.cartPeriod?.start.minute,
             numberOfDaysInterval: controller.cart.value.isSpecial ? 1 : 7,
             serviceSchedule: controller.cart.value.restaurant!.schedule!,
           );

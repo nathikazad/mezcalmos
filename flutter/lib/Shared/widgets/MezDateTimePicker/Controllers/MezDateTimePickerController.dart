@@ -36,27 +36,30 @@ class MezDateTimePickerController {
     Schedule? schedule,
     bool? period,
     PeriodOfTime? initPeriod,
-    int? maxHours,
-    int? minHours,
-    int? maxMinutes,
-    int? minMinutes,
   }) {
-    this.mode.value = mode;
-    periodic.value = period ?? false;
-    this.maxHours.value = maxHours ?? null;
-    this.minHours.value = minHours ?? null;
-    this.maxMinutes.value = maxMinutes ?? null;
-    this.minMinutes.value = minMinutes ?? null;
+    _initVariables(mode, initPeriod, period, numberOfdays);
     _initStartDateValue(initialDate);
-
-    periodOfTime.value = initPeriod;
-
-    numberOfDaysInterval = numberOfdays;
 
     if (schedule != null) {
       serviceSchedule = schedule;
-      setTime(p: initPeriod);
+      _initTimeValue(p: initPeriod);
     }
+  }
+
+  void _initVariables(
+    MezTimePickerMode mode,
+    PeriodOfTime? initPeriod,
+    bool? period,
+    int numberOfdays,
+  ) {
+    this.mode.value = mode;
+    periodOfTime.value = initPeriod;
+    periodic.value = period ?? false;
+    numberOfDaysInterval = numberOfdays;
+    maxHours.value = periodOfTime.value?.end.hour ?? null;
+    minHours.value = periodOfTime.value?.start.hour ?? null;
+    maxMinutes.value = periodOfTime.value?.end.minute ?? null;
+    minMinutes.value = periodOfTime.value?.start.minute ?? null;
   }
 
   void _initStartDateValue(DateTime? initialDate) {
@@ -74,28 +77,6 @@ class MezDateTimePickerController {
     pickedDate.value = startDate;
     hours.value = startDate.hour;
     minutes.value = startDate.minute;
-  }
-
-  List<DateTime> _constructDateChoices() {
-    final List<DateTime> dates = [startDate];
-
-    for (int i = 1; i < numberOfDaysInterval; i++) {
-      final DateTime newDate = DateTime(
-        DateTime.now().year,
-        DateTime.now().month,
-        DateTime.now().day + i,
-      );
-      if (_getServiceDates()
-          .contains(DateFormat("EEEE").format(newDate).toLowerCase())) {
-        dates.add(newDate);
-      }
-    }
-
-    return dates;
-  }
-
-  List<DateTime> get getDates {
-    return _constructDateChoices();
   }
 
   List<int> get getHours {
@@ -203,21 +184,12 @@ class MezDateTimePickerController {
     return data.toSet().toList();
   }
 
-  List<String> _getServiceDates() {
-    final List<String> data = [];
-    serviceSchedule?.openHours.keys.forEach((Weekday element) {
-      if (serviceSchedule!.openHours[element]!.isOpen) {
-        data.add(element.toFirebaseFormatString());
-      }
-    });
-
-    return data;
-  }
-
-  void setTime({PeriodOfTime? p}) {
+  void _initTimeValue({PeriodOfTime? p}) {
+    // init of single datetime
     if (periodic.isFalse) {
       hours.value = startDate.hour;
       minutes.value = getMinutes.closest(startDate.minute);
+      // init with old period of time //
     } else if (p != null) {
       pickedDate.value = DateTime(
         p.start.year,
@@ -228,6 +200,7 @@ class MezDateTimePickerController {
       startMinutes.value = p.start.minute;
       endtHours.value = p.end.toLocal().hour..toAmpPmInt();
       endMinutes.value = p.end.minute;
+      // init period selctor without old data
     } else {
       startHours.value = selectedWorkDay.value.from.first;
       startMinutes.value = selectedWorkDay.value.from[1];
@@ -237,6 +210,7 @@ class MezDateTimePickerController {
     setAmPm();
   }
 
+  /// Set period of time based on picked date or the object passed in
   void _setPeriodOfTime({PeriodOfTime? period}) {
     if (period == null) {
       periodOfTime.value = PeriodOfTime(
@@ -259,6 +233,7 @@ class MezDateTimePickerController {
       periodOfTime.value = period;
   }
 
+  /// Called whenever the date changes
   void changeDate(DateTime newValue) {
     pickedDate.value = newValue;
     hours.value = selectedWorkDay.value.from.first;
@@ -266,6 +241,7 @@ class MezDateTimePickerController {
     setAmPm();
   }
 
+  /// Called whenever the hours changes
   void changeHours({required int hour, bool? start}) {
     if (periodic.isTrue) {
       if (start != null && start) {
@@ -283,6 +259,7 @@ class MezDateTimePickerController {
     setAmPm();
   }
 
+  /// Called whenever the minutes changes
   void changeMinutes({required int minuteValue, bool? start}) {
     if (periodic.isTrue) {
       if (start != null && start) {
@@ -296,6 +273,7 @@ class MezDateTimePickerController {
     }
   }
 
+  /// Updates the AM/PM dropdown based on hours
   void setAmPm() {
     if (startHours.value != null && startHours.value! >= 12) {
       startAmpPm.value = AmPmEnum.PM;
@@ -314,12 +292,50 @@ class MezDateTimePickerController {
     }
   }
 
-  // getters //
+  // Getters && Helpers //
+  // -------------------//
+  /// Getting available dates based on service schedule
+  List<DateTime> get getDates {
+    return _constructDateChoices();
+  }
+
+  /// Constructing a list of DateTime based on schedule
+  List<DateTime> _constructDateChoices() {
+    final List<DateTime> dates = [startDate];
+
+    for (int i = 1; i < numberOfDaysInterval; i++) {
+      final DateTime newDate = DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day + i,
+      );
+      if (_getServiceDates()
+          .contains(DateFormat("EEEE").format(newDate).toLowerCase())) {
+        dates.add(newDate);
+      }
+    }
+
+    return dates;
+  }
+
+  /// Filtering and creating an array of weekdays based on service schedule
+  List<String> _getServiceDates() {
+    final List<String> data = [];
+    serviceSchedule?.openHours.keys.forEach((Weekday element) {
+      if (serviceSchedule!.openHours[element]!.isOpen) {
+        data.add(element.toFirebaseFormatString());
+      }
+    });
+
+    return data;
+  }
+
   bool get pickFromPeriod {
     return mode.value == MezTimePickerMode.PickDeliveryTime &&
         periodOfTime.value != null;
   }
 
+  /// return the selected date on Weekday format
   MapEntry<Weekday, OpenHours> get selectedWorkDay {
     return serviceSchedule!.getOpenHours.entries.firstWhere(
         (MapEntry<Weekday, OpenHours> element) =>
