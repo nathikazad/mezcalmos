@@ -5,6 +5,7 @@ import 'package:mezcalmos/RestaurantApp/pages/ItemView/controllers/ItemViewContr
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
+import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/Controllers/MezDateTimePickerController.dart';
 import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/MezDateTimePicker.dart';
 import 'package:sizer/sizer.dart';
 
@@ -82,12 +83,14 @@ class _ROpSpecialItemTimeState extends State<ROpSpecialItemTime> {
                           isScrollControlled: true,
                           builder: (BuildContext ctx) {
                             return MezDateTimePicker(
-                                startDate: DateTime.now(),
-                                numberOfDaysInterval: 7,
-                                isPeriodic: true,
-                                periodOfTime: periodTime.value,
-                                serviceSchedule: widget.viewController
-                                    .restaurant.value!.schedule!);
+                              startDate: DateTime.now(),
+                              numberOfDaysInterval: 7,
+                              isPeriodic: true,
+                              periodOfTime: periodTime.value,
+                              serviceSchedule: widget
+                                  .viewController.restaurant.value!.schedule!,
+                              pickerMode: MezTimePickerMode.PickTimeRange,
+                            );
                           }).then((PeriodOfTime? value) {
                         if (value != null) {
                           periodTime.value = value;
