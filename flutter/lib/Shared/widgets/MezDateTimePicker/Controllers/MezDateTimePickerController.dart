@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
@@ -46,21 +47,33 @@ class MezDateTimePickerController {
     this.minHours.value = minHours ?? null;
     this.maxMinutes.value = maxMinutes ?? null;
     this.minMinutes.value = minMinutes ?? null;
+    _initStartDateValue(initialDate);
 
-    if (initialDate != null) {
-      startDate = initialDate;
-      hours.value = this.minHours.value ?? initialDate.hour;
-      minutes.value = this.minMinutes.value ?? initialDate.minute;
-    } else {
-      startDate = DateTime.now();
-    }
+    periodOfTime.value = initPeriod;
 
     numberOfDaysInterval = numberOfdays;
-    pickedDate.value = startDate;
+
     if (schedule != null) {
       serviceSchedule = schedule;
       setTime(p: initPeriod);
     }
+  }
+
+  void _initStartDateValue(DateTime? initialDate) {
+    if (initialDate != null) {
+      startDate = initialDate.toLocal();
+      hours.value = initialDate.toLocal().hour;
+      minutes.value = initialDate.toLocal().minute;
+    } else {
+      startDate = DateTime.now().toLocal();
+    }
+    pickedDate.value = startDate.toLocal();
+  }
+
+  void initPickerModePeriodic() {
+    pickedDate.value = startDate;
+    hours.value = startDate.hour;
+    minutes.value = startDate.minute;
   }
 
   List<DateTime> _constructDateChoices() {
@@ -203,17 +216,17 @@ class MezDateTimePickerController {
 
   void setTime({PeriodOfTime? p}) {
     if (periodic.isFalse) {
-      hours.value = minHours.value ?? selectedWorkDay.value.from.first;
-      minutes.value = minMinutes.value ?? selectedWorkDay.value.from[1];
+      hours.value = startDate.hour;
+      minutes.value = getMinutes.closest(startDate.minute);
     } else if (p != null) {
       pickedDate.value = DateTime(
         p.start.year,
         p.start.month,
         p.start.day,
       );
-      startHours.value = p.start.hour.toAmpPmInt();
+      startHours.value = p.start.toLocal().hour.toAmpPmInt();
       startMinutes.value = p.start.minute;
-      endtHours.value = p.end.hour.toAmpPmInt();
+      endtHours.value = p.end.toLocal().hour..toAmpPmInt();
       endMinutes.value = p.end.minute;
     } else {
       startHours.value = selectedWorkDay.value.from.first;
@@ -244,6 +257,13 @@ class MezDateTimePickerController {
       );
     } else
       periodOfTime.value = period;
+  }
+
+  void changeDate(DateTime newValue) {
+    pickedDate.value = newValue;
+    hours.value = selectedWorkDay.value.from.first;
+    minutes.value = selectedWorkDay.value.from[1];
+    setAmPm();
   }
 
   void changeHours({required int hour, bool? start}) {
@@ -294,6 +314,12 @@ class MezDateTimePickerController {
     }
   }
 
+  // getters //
+  bool get pickFromPeriod {
+    return mode.value == MezTimePickerMode.PickDeliveryTime &&
+        periodOfTime.value != null;
+  }
+
   MapEntry<Weekday, OpenHours> get selectedWorkDay {
     return serviceSchedule!.getOpenHours.entries.firstWhere(
         (MapEntry<Weekday, OpenHours> element) =>
@@ -302,6 +328,8 @@ class MezDateTimePickerController {
                 .format(pickedDate.value ?? DateTime.now())
                 .toLowerCase());
   }
+
+  // Confirm CallBack //
 
   void confirmCallBack() {
     if (periodic.isFalse) {

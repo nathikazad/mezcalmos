@@ -2,14 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
-import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/Controllers/ViewCartController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryType.dart';
 import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/Controllers/MezDateTimePickerController.dart';
 import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/MezDateTimePicker.dart';
@@ -29,6 +26,11 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
 
   @override
   void initState() {
+    // if (controller.cart.value.cartPeriod != null) {
+    //   controller.cart.value.deliveryTime =
+    //       controller.cart.value.cartPeriod!.start.toLocal();
+    //   controller.saveCart();
+    // }
     super.initState();
   }
 
@@ -107,7 +109,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                           : Flexible(
                               fit: FlexFit.tight,
                               child: Text(
-                                "${DateFormat.MMMEd(userLangCode).format(controller.cart.value.deliveryTime!).replaceAll(".", "")}, ${DateFormat("hh:mm a").format(controller.cart.value.deliveryTime!.toLocal())}",
+                                "${DateFormat.MMMEd(userLangCode).format(controller.cart.value.deliveryTime!.toLocal()).replaceAll(".", "")}, ${DateFormat("hh:mm a").format(controller.cart.value.deliveryTime!.toLocal())}",
                                 style: Get.textTheme.bodyText1,
                               ),
                             ),
@@ -170,11 +172,12 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
     mezDbgPrint(controller.cart.value.cartPeriod.toString());
     await showModalBottomSheet<DateTime>(
         context: context,
-        isDismissible: false,
+        isDismissible: true,
         builder: (BuildContext ctx) {
           return MezDateTimePicker(
             startDate: controller.cart.value.deliveryTime,
             pickerMode: MezTimePickerMode.PickDeliveryTime,
+            periodOfTime: controller.cart.value.cartPeriod,
             maxHours: controller.cart.value.cartPeriod?.end.hour,
             minHours: controller.cart.value.cartPeriod?.start.hour,
             maxMinutes: controller.cart.value.cartPeriod?.end.minute,
@@ -188,46 +191,5 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
         controller.saveCart();
       }
     });
-  }
-
-  IconData _getIcon({required PickerChoice paymentType, CreditCard? card}) {
-    switch (paymentType) {
-      case PickerChoice.SavedCard:
-        if (card != null) {
-          return card.brand.toIcon();
-        } else {
-          return Icons.credit_card;
-        }
-      case PickerChoice.SavedCard:
-        return Icons.credit_card;
-      case PickerChoice.NewCard:
-        return Icons.add_card;
-      case PickerChoice.Cash:
-        return Icons.payments;
-      case PickerChoice.ApplePay:
-        return Icons.apple;
-      case PickerChoice.GooglePay:
-        return Ionicons.logo_google;
-    }
-  }
-
-  void _showDialog(Widget child) {
-    showCupertinoModalPopup<void>(
-        context: context,
-        builder: (BuildContext context) => Container(
-              height: 216,
-              padding: const EdgeInsets.only(top: 6.0),
-              // The Bottom margin is provided to align the popup above the system navigation bar.
-              margin: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom,
-              ),
-              // Provide a background color for the popup.
-              color: CupertinoColors.systemBackground.resolveFrom(context),
-              // Use a SafeArea widget to avoid system overlaps.
-              child: SafeArea(
-                top: false,
-                child: child,
-              ),
-            ));
   }
 }

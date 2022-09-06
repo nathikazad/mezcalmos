@@ -249,9 +249,7 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
           value: _controller.pickedDate.value,
           onChanged: (DateTime? newValue) async {
             if (newValue != null) {
-              _controller.pickedDate.value = newValue;
-              _controller.setTime();
-              _controller.setAmPm();
+              _controller.changeDate(newValue);
             }
           },
           items: _controller.getDates

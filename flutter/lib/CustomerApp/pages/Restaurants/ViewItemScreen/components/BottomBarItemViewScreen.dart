@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
         ["pages"]["Restaurants"]["ViewItemScreen"]["components"]
@@ -152,21 +153,21 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                               );
                             }
                           } else {
-                            mezDbgPrint(
-                                restaurantCartController.cart.value.isSpecial);
-                            // if (restaurantCartController.cart.value.canAddSpecial(
-                            //             item: widget.cartItem.value!) !=
-                            //         null &&
-                            //     restaurantCartController.cart.value.canAddSpecial(
-                            //             item: widget.cartItem.value!) ==
-                            //         false) {
-                            //   mezDbgPrint("Error");
-                            //   MezSnackbar("Error", "Special time error");
-                            // } else {
-                            //   await restaurantCartController
-                            //       .addItem(widget.cartItem.value!);
-                            //   await Get.offNamed<void>(kCartRoute);
-                            // }
+                            if (restaurantCartController.cart.value
+                                        .canAddSpecial(
+                                            item: widget.cartItem.value!) !=
+                                    null &&
+                                restaurantCartController.cart.value
+                                        .canAddSpecial(
+                                            item: widget.cartItem.value!) ==
+                                    false) {
+                              mezDbgPrint("Error");
+                              MezSnackbar("Error", "Special time error");
+                            } else {
+                              await restaurantCartController
+                                  .addItem(widget.cartItem.value!);
+                              await Get.offNamed<void>(kCartRoute);
+                            }
                           }
                         } else {
                           await restaurantCartController
