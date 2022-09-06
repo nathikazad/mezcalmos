@@ -158,6 +158,11 @@ class Cart {
     return null;
   }
 
+  CartItem? get getFirstSpecialItem {
+    return cartItems
+        .firstWhereOrNull((CartItem element) => element.isSpecial == true);
+  }
+
   bool? canAddSpecial({required CartItem item}) {
     if (item.isSpecial && cartPeriod != null) {
       final PeriodOfTime itemPeriod =

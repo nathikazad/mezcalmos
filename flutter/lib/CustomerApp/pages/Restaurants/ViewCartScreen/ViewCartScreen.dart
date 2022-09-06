@@ -76,6 +76,10 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     // check if cart empty
     // if yes redirect to home page
     _restaurantController.cart.value.cartItems.map((CartItem item) {});
+    if (_restaurantController.cart.value.cartPeriod != null) {
+      _restaurantController.cart.value.deliveryTime =
+          _restaurantController.cart.value.cartPeriod?.start;
+    }
     mezDbgPrint(
         "item is special ===== ${_restaurantController.cart.value.cartItems.first.isSpecial}");
   }

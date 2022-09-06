@@ -197,7 +197,10 @@
                             "title": "Advertencia",
                             "leftBtn": "Primero de pago",
                             "rightBtn": "Sobrescribir",
+
                             "subtitle": "Ya tiene algunos artículos en su carrito de otro restaurante, ¿quiere revisarlos primero o sobrescribirlos?",
+                            "specialSubtitle": "Ya tiene algunos artículos especiales en su carrito con un tiempo de disponibilidad diferente, ¿desea verlos primero o sobrescribirlos?",
+
                             "addToCart": "Añadir artículo",
                             "modifyItem": "Modificar"
                         },

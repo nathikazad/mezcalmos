@@ -147,8 +147,8 @@ class RestaurantController extends GetxController {
     saveCart();
   }
 
-  void clearCart() {
-    _databaseHelper.firebaseDatabase
+  Future<void> clearCart() async {
+    await _databaseHelper.firebaseDatabase
         .ref()
         .child(customerCart(_authController.user!.id))
         .remove()

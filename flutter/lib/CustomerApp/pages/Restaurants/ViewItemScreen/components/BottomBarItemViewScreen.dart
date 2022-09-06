@@ -108,7 +108,9 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
               onPressed: (restaurantCartController.cart.value
                           .canAddSpecial(item: widget.cartItem.value!) ==
                       false)
-                  ? null
+                  ? () async {
+                      await _addSpecialItemCallBack();
+                    }
                   : () async {
                       if (auth.fireAuthUser != null) {
                         if (ViewItemScreenMode.AddItemMode == widget.mode) {
@@ -188,6 +190,30 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> _addSpecialItemCallBack() async {
+    await showStatusInfoDialog(
+      context,
+      bottomRightIcon: Icons.shopping_cart,
+      btnRightIconBgColor: Colors.white,
+      primaryImageUrl:
+          restaurantCartController.cart.value.getFirstSpecialItem?.item.image,
+      btnRightIconColor: primaryBlueColor,
+      status: restaurantCartController.associatedRestaurant?.info.name ?? "",
+      primaryClickTitle: _i18n()["rightBtn"],
+      secondaryClickTitle: _i18n()["leftBtn"],
+      description: _i18n()["specialSubtitle"],
+      secondaryCallBack: () async {
+        Get.back<void>();
+        await Get.toNamed<void>(kCartRoute);
+      },
+      primaryCallBack: () async {
+        await restaurantCartController.clearCart();
+        await restaurantCartController.addItem(widget.cartItem.value!);
+        await Get.offNamed<void>(kCartRoute);
+      },
     );
   }
 }
