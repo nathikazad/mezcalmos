@@ -10,22 +10,23 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
-    ["pages"]["AddLaundryServiceView"];
+    ["pages"]["AddRestaurantServiceView"];
 
 //
-class AddLaundryServiceView extends StatefulWidget {
-  const AddLaundryServiceView({Key? key}) : super(key: key);
+class AddRestaurantServiceView extends StatefulWidget {
+  const AddRestaurantServiceView({Key? key}) : super(key: key);
 
   @override
-  State<AddLaundryServiceView> createState() => _AddLaundryServiceViewState();
+  State<AddRestaurantServiceView> createState() =>
+      _AddLaundryServiceViewState();
 }
 
-class _AddLaundryServiceViewState extends State<AddLaundryServiceView> {
+class _AddLaundryServiceViewState extends State<AddRestaurantServiceView> {
   AddServiceViewController viewController = AddServiceViewController();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    viewController.init(serviceType: ServiceType.Laundry);
+    viewController.init(serviceType: ServiceType.Restaurant);
     super.initState();
   }
 
@@ -39,10 +40,10 @@ class _AddLaundryServiceViewState extends State<AddLaundryServiceView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          title: '${_i18n()["newLaundry"]}'),
+          onClick: Get.back, title: '${_i18n()["newRestaurant"]}'),
       bottomNavigationBar: MezButton(
         height: 65,
-        label: '${_i18n()["createLaundry"]}',
+        label: '${_i18n()["createRestaurant"]}',
         onClick: () async {
           if (_formKey.currentState!.validate()) {
             await viewController.saveService();
@@ -111,7 +112,7 @@ class _AddLaundryServiceViewState extends State<AddLaundryServiceView> {
                       ],
                     ),
                   Text(
-                    '${_i18n()["laundryName"]}',
+                    '${_i18n()["restaurantName"]}',
                     style: Get.textTheme.bodyText1,
                   ),
                   const SizedBox(

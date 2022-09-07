@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,36 +11,16 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["ServicesView"];
 
-class DaRestaurantCard extends StatefulWidget {
-  const DaRestaurantCard({Key? key, required this.restaurantId})
+class DaRestaurantCard extends StatelessWidget {
+  const DaRestaurantCard({Key? key, required this.restaurant})
       : super(key: key);
-  final String restaurantId;
-
-  @override
-  State<DaRestaurantCard> createState() => _DaRestaurantCardState();
-}
-
-class _DaRestaurantCardState extends State<DaRestaurantCard> {
-  StreamSubscription? stream;
-  Rxn<Restaurant> restaurant = Rxn<Restaurant>();
-  @override
-  void initState() {
-    // TODO: implement initState
-    stream = Get.find<RestaurantsInfoController>()
-        .getRestaurantAsStream(widget.restaurantId)
-        .listen((Restaurant? event) {
-      if (event != null) {
-        restaurant.value = event;
-      }
-    });
-    super.initState();
-  }
+  final Restaurant restaurant;
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () {
-        if (restaurant.value != null) {
+        if (restaurant != null) {
           return Card(
             margin: const EdgeInsets.only(bottom: 5),
             child: Container(
@@ -54,8 +32,8 @@ class _DaRestaurantCardState extends State<DaRestaurantCard> {
                     children: [
                       CircleAvatar(
                         radius: 25,
-                        backgroundImage: CachedNetworkImageProvider(
-                            restaurant.value!.info.image),
+                        backgroundImage:
+                            CachedNetworkImageProvider(restaurant.info.image),
                       ),
                       SizedBox(
                         width: 8,
@@ -63,15 +41,15 @@ class _DaRestaurantCardState extends State<DaRestaurantCard> {
                       Flexible(
                         fit: FlexFit.tight,
                         child: Text(
-                          restaurant.value!.info.name,
+                          restaurant.info.name,
                           style: Get.textTheme.bodyText1,
                         ),
                       ),
                       Switch(
-                        value: restaurant.value!.state.open,
+                        value: restaurant.state.open,
                         onChanged: (bool v) {
                           Get.find<RestaurantsInfoController>().setOpen(
-                              isAv: v, restaurantId: restaurant.value!.info.id);
+                              isAv: v, restaurantId: restaurant.info.id);
                         },
                         activeColor: primaryBlueColor,
                       )
@@ -90,7 +68,7 @@ class _DaRestaurantCardState extends State<DaRestaurantCard> {
                               primary: primaryBlueColor),
                           onPressed: () {
                             Get.toNamed(getROpEditInfoRoute(
-                                restaurantId: restaurant.value!.info.id));
+                                restaurantId: restaurant.info.id));
                           },
                           icon: Icon(Icons.person),
                           label: Text('${_i18n()["editProfile"]}'),
@@ -100,7 +78,7 @@ class _DaRestaurantCardState extends State<DaRestaurantCard> {
                         child: TextButton.icon(
                           onPressed: () {
                             Get.toNamed(getROpMenuRoute(
-                                restaurantId: restaurant.value!.info.id));
+                                restaurantId: restaurant.info.id));
                           },
                           style: TextButton.styleFrom(
                               backgroundColor: Colors.transparent,

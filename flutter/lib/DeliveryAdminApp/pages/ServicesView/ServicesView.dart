@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
@@ -31,6 +32,7 @@ class _ServicesViewState extends State<ServicesView> {
   LaundryInfoController laundryInfoController =
       Get.find<LaundryInfoController>();
   StreamSubscription? laundiesStream;
+  StreamSubscription? restStream;
   RestaurantsInfoController _restaurantsInfoController =
       Get.find<RestaurantsInfoController>();
 
@@ -48,6 +50,17 @@ class _ServicesViewState extends State<ServicesView> {
         laundryInfoController.laundries.stream.listen((List<Laundry> event) {
       laundries.value = event;
     });
+    restStream = _restaurantsInfoController.restaurants.stream
+        .listen((List<Restaurant> event) {
+      restaurants.value = event;
+    });
+  }
+
+  @override
+  void dispose() {
+    laundiesStream?.cancel();
+    restStream?.cancel();
+    super.dispose();
   }
 
   @override
@@ -72,40 +85,32 @@ class _ServicesViewState extends State<ServicesView> {
             padding: const EdgeInsets.all(12),
             child: Column(
               children: [
+                MezAddButton(onClick: () {
+                  Get.toNamed(kAddRestaurantServiceRoute);
+                }),
                 SizedBox(
                   height: 15,
                 ),
-                FutureBuilder<List<Restaurant>>(
-                    future: _restaurantsInfoController.getRestaurants(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<List<Restaurant>> snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.waiting:
-                          return Container(
-                            alignment: Alignment.center,
-                            child: CircularProgressIndicator(),
-                          );
-                        case ConnectionState.done:
-                          if (snapshot.data != null) {
-                            return Column(
-                              children: List.generate(
-                                  snapshot.data!.length,
-                                  (int index) => DaRestaurantCard(
-                                      restaurantId:
-                                          snapshot.data![index].info.id)),
-                            );
-                          } else {
-                            return Container(
-                              child: Text("Error getting restuarnts"),
-                            );
-                          }
-
-                        default:
-                          return Container(
-                            child: Text("Error getting restuarnts"),
-                          );
-                      }
-                    })
+                Obx(() {
+                  if (restaurants.isNotEmpty) {
+                    return Column(
+                      children: List.generate(
+                          restaurants.value.length,
+                          (int index) => DaRestaurantCard(
+                                restaurant: restaurants[index],
+                              )),
+                    );
+                  } else {
+                    return Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(12),
+                      child: Text(
+                        '${_i18n()["noLaundries"]}',
+                        style: Get.textTheme.bodyText1,
+                      ),
+                    );
+                  }
+                })
               ],
             ),
           ),
@@ -121,7 +126,9 @@ class _ServicesViewState extends State<ServicesView> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _addLaundryBtn(),
+          MezAddButton(onClick: () {
+            Get.toNamed(kAddLaundryServiceRoute);
+          }),
           SizedBox(
             height: 10,
           ),

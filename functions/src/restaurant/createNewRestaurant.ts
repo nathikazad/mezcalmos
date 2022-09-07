@@ -1,8 +1,8 @@
 import * as functions from "firebase-functions";
-import { ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import * as firebase from "firebase-admin";
 import { UserRecord } from "firebase-functions/v1/auth";
-import * as laundryNodes from "../shared/databaseNodes/services/laundry";
+import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
 import * as operatorNodes from "../shared/databaseNodes/operators/operator";
 import { OrderType } from "../shared/models/Generic/Order";
 import { userInfoNode } from "../shared/databaseNodes/root";
@@ -10,7 +10,7 @@ import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
 
 
 export = functions.https.onCall(async (data, context) => {
-  let response = await isSignedIn(context.auth)
+  let response: ServerResponse | undefined = await isSignedIn(context.auth)
   if (response != undefined) {
     return {
       ok: false,
@@ -27,10 +27,10 @@ export = functions.https.onCall(async (data, context) => {
   }
 
 
-  if (!data.emailIdOrPhoneNumber && !data.laundryName) {
+  if (!data.emailIdOrPhoneNumber && !data.restaurantName) {
     return {
       status: ServerResponseStatus.Error,
-      errorMessage: "required parameters emailIdOrPhoneNumber and laundryName"
+      errorMessage: "required parameters emailIdOrPhoneNumber and restaurantName"
     }
   }
   let user: UserRecord;
@@ -49,36 +49,22 @@ export = functions.https.onCall(async (data, context) => {
     }
   }
 
-  let laundryId: string = (await laundryNodes.info().push()).key!;
-  let newLaundry = JSON.parse(laundryTemplateInJson);
-  newLaundry.info.id = laundryId
-  newLaundry.info.name = data.laundryName;
-  newLaundry.state.operators[user.uid] = true;
-  laundryNodes.info(laundryId).set(newLaundry);
+  let restaurantId: string = (await restaurantNodes.info().push()).key!;
+  let newRestaurant = JSON.parse(restaurantTemplateInJson);
+  newRestaurant.info.id = restaurantId
+  newRestaurant.info.name = data.restaurantName;
+  newRestaurant.state.operators[user.uid] = true;
+  restaurantNodes.info(restaurantId).set(newRestaurant);
 
   let operatorInfo = (await userInfoNode(user.uid).once('value')).val();
-  let newOperator = { info: operatorInfo, state: { laundryId: laundryId } };
-  operatorNodes.operatorInfo(OrderType.Laundry, user.uid).set(newOperator);
+  let newOperator = { info: operatorInfo, state: { restaurantId: restaurantId } };
+  operatorNodes.operatorInfo(OrderType.Restaurant, user.uid).set(newOperator);
   return { status: ServerResponseStatus.Success }
 })
 
 
-let laundryTemplateInJson = `{
+let restaurantTemplateInJson = `{
   "details": {
-    "averageNumberOfDays": 1,
-    "costs": {
-      "byType": [
-        {
-          "cost": 16,
-          "id": "RvN3XAfsD8WR",
-          "name": {
-            "en": "regular wash",
-            "es": "lavado normal"
-          }
-        }
-      ],
-      "minimumCost": 50
-    },
     "schedule": {
       "friday": {
         "from": "8:00",
@@ -115,6 +101,10 @@ let laundryTemplateInJson = `{
         "isOpen": true,
         "to": "20:00"
       }
+    },
+    "description":{
+      "en": "description",
+      "es": "descripcion"
     }
   },
   "info": {
@@ -130,6 +120,7 @@ let laundryTemplateInJson = `{
   "state": {
     "authorizationStatus": "authorized",
     "available": false,
+    "open": false
     "operators": {}
   }
 }`;

@@ -1038,6 +1038,17 @@
                 "emailNotCorrect": "Email adress is not correct",
                 "phoneNotCorrect": "Phone number is not correct"
             },
+            "AddRestaurantServiceView": {
+                "newRestaurant": "New Restuarnt",
+                "createRestaurant": "Create Restuarant",
+                "restaurantName": "Restaurant name",
+                "email": "Email",
+                "phoneNumber": "Phone number",
+                "helperText": "You should provide either the email adress or the phone number of the restaurant",
+                "required": "Required",
+                "emailNotCorrect": "Email adress is not correct",
+                "phoneNotCorrect": "Phone number is not correct"
+            },
             "ServicesView": {
                 "services": "Services",
                 "noLaundries": "No laundries are available",
