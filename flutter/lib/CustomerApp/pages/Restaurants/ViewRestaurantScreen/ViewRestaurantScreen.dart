@@ -214,11 +214,13 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
   }
 
   Widget _buildResturantItems(List<Item> items, String restaurantId) {
+    final List<Item> data =
+        items.where((Item element) => element.available == true).toList();
     if (restaurant.restaurantsView == RestaurantsView.Rows) {
       return Container(
         margin: const EdgeInsets.only(top: 5),
         child: Column(
-          children: items.fold<List<Widget>>(<Widget>[],
+          children: data.fold<List<Widget>>(<Widget>[],
               (List<Widget> children, Item item) {
             children.add(RestaurantsListOfItemsComponent(
                 item: item,
@@ -241,9 +243,9 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
         shrinkWrap: true,
         padding: EdgeInsets.only(top: 17),
         physics: NeverScrollableScrollPhysics(),
-        children: List.generate(items.length, (int index) {
+        children: List.generate(data.length, (int index) {
           return RestaurantgridItemCard(
-              item: items[index], restaurant: restaurant);
+              item: data[index], restaurant: restaurant);
         }),
       );
     }
