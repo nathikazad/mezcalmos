@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 enum RestaurantsView { Rows, Grid }
@@ -439,6 +440,13 @@ class Item {
 
   bool get isSpecial {
     return startsAt != null && endsAt != null;
+  }
+
+  PeriodOfTime? get getPeriod {
+    if (isSpecial) {
+      return PeriodOfTime(start: startsAt!, end: endsAt!);
+    }
+    return null;
   }
 
   @override

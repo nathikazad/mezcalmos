@@ -1,3 +1,5 @@
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+
 class PeriodOfTime {
   DateTime start;
   DateTime end;
@@ -26,6 +28,15 @@ class PeriodOfTime {
   bool include(PeriodOfTime p2) {
     return (p2.start.isAfter(start) || p2.start.isAtSameMomentAs(start)) &&
         (p2.end.isBefore(end) || p2.end.isAtSameMomentAs(end));
+  }
+
+  PeriodOfTime? merge(PeriodOfTime p2) {
+    mezDbgPrint("Trying to merge : \n ${toString()} \n ${p2.toString()} ");
+    if (include(p2)) {
+      mezDbgPrint("Merge two period of time success : $p2");
+      return p2;
+    }
+    return null;
   }
 
   @override

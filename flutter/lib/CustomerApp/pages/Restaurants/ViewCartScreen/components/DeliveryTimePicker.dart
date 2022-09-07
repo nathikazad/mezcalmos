@@ -26,11 +26,13 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
 
   @override
   void initState() {
-    // if (controller.cart.value.cartPeriod != null) {
-    //   controller.cart.value.deliveryTime =
-    //       controller.cart.value.cartPeriod!.start.toLocal();
-    //   controller.saveCart();
-    // }
+    if (controller.cart.value.cartPeriod != null) {
+      controller.cart.value.deliveryTime =
+          controller.cart.value.cartPeriod!.start;
+      mezDbgPrint("Delivery time =================");
+      mezDbgPrint(controller.cart.value.cartPeriod!.start);
+      controller.saveCart();
+    }
     super.initState();
   }
 
@@ -175,7 +177,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
         isDismissible: true,
         builder: (BuildContext ctx) {
           return MezDateTimePicker(
-            startDate: controller.cart.value.deliveryTime,
+            startDate: controller.cart.value.deliveryTime?.toLocal(),
             pickerMode: MezTimePickerMode.PickDeliveryTime,
             periodOfTime: controller.cart.value.cartPeriod,
             numberOfDaysInterval: controller.cart.value.isSpecial ? 1 : 7,

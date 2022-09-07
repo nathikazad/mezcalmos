@@ -150,6 +150,20 @@ class Cart {
   }
 
   PeriodOfTime? get cartPeriod {
+    PeriodOfTime? periodOfTime = firstItemPeriod;
+
+    cartItems.forEach((CartItem element) {
+      if (element.item.getPeriod != null) {
+        if (element.item.getPeriod?.merge(periodOfTime!) != null) {
+          periodOfTime = element.item.getPeriod?.merge(periodOfTime!);
+        }
+      }
+    });
+
+    return periodOfTime;
+  }
+
+  PeriodOfTime? get firstItemPeriod {
     final CartItem? citem = cartItems
         .firstWhereOrNull((CartItem element) => element.isSpecial == true);
     if (citem != null) {
@@ -164,12 +178,8 @@ class Cart {
   }
 
   bool? canAddSpecial({required CartItem item}) {
-    if (item.isSpecial && cartPeriod != null) {
-      final PeriodOfTime itemPeriod =
-          PeriodOfTime(start: item.item.startsAt!, end: item.item.endsAt!);
-      mezDbgPrint(
-          "Checking special times :: \n item time = ${itemPeriod.toString()} \n cart time == ${cartPeriod!.toString()} \n final result ===> ${cartPeriod!.include(itemPeriod)}");
-      return cartPeriod!.include(itemPeriod);
+    if (item.item.getPeriod != null && cartPeriod != null) {
+      return cartPeriod!.include(item.item.getPeriod!);
     } else
       return null;
   }

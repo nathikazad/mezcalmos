@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
@@ -37,8 +38,13 @@ class MezDateTimePickerController {
     bool? period,
     PeriodOfTime? initPeriod,
   }) {
+    mezDbgPrint(
+        "INITIAL DATE ====================>>> ${initialDate?.toLocal()}");
     _initVariables(mode, initPeriod, period, numberOfdays);
-    _initStartDateValue(initialDate);
+    _initStartDateValue(initialDate?.toLocal());
+    if (pickFromPeriod) {
+      _initPickerModePeriodic();
+    }
 
     if (schedule != null) {
       serviceSchedule = schedule;
@@ -56,36 +62,43 @@ class MezDateTimePickerController {
     periodOfTime.value = initPeriod;
     periodic.value = period ?? false;
     numberOfDaysInterval = numberOfdays;
-    maxHours.value = periodOfTime.value?.end.hour ?? null;
-    minHours.value = periodOfTime.value?.start.hour ?? null;
+    maxHours.value =
+        periodOfTime.value?.end.toLocal().hour.toAmpPmInt() ?? null;
+    minHours.value =
+        periodOfTime.value?.start.toLocal().hour.toAmpPmInt() ?? null;
     maxMinutes.value = periodOfTime.value?.end.minute ?? null;
     minMinutes.value = periodOfTime.value?.start.minute ?? null;
+    mezDbgPrint("min hours =========>>>> ${minHours.value}");
+    mezDbgPrint("max hours =========>>>> ${maxHours.value}");
   }
 
   void _initStartDateValue(DateTime? initialDate) {
     if (initialDate != null) {
       startDate = initialDate.toLocal();
-      hours.value = initialDate.toLocal().hour;
-      minutes.value = initialDate.toLocal().minute;
+      hours.value = initialDate.hour;
+      minutes.value = initialDate.minute;
     } else {
       startDate = DateTime.now().toLocal();
     }
     pickedDate.value = startDate.toLocal();
   }
 
-  void initPickerModePeriodic() {
+  void _initPickerModePeriodic() {
     pickedDate.value = startDate;
-    hours.value = startDate.hour;
+    hours.value = startDate.hour.toAmpPmInt();
     minutes.value = startDate.minute;
+    mezDbgPrint("Start oicker from period =======>>>>> ${hours.value}");
   }
 
   List<int> get getHours {
     final List<int> hours = [];
+
     for (int i = minHours.value ?? selectedWorkDay.value.from.first;
         i <= (maxHours.value ?? selectedWorkDay.value.to.first);
         i++) {
-      hours.add(i);
+      hours.add(i.toAmpPmInt());
     }
+    mezDbgPrint("HOURS ==============>>>> ${hours.toString()}");
 
     return hours;
   }
@@ -187,7 +200,7 @@ class MezDateTimePickerController {
   void _initTimeValue({PeriodOfTime? p}) {
     // init of single datetime
     if (periodic.isFalse) {
-      hours.value = startDate.hour;
+      hours.value = startDate.hour.toAmpPmInt();
       minutes.value = getMinutes.closest(startDate.minute);
       // init with old period of time //
     } else if (p != null) {
@@ -196,9 +209,9 @@ class MezDateTimePickerController {
         p.start.month,
         p.start.day,
       );
-      startHours.value = p.start.toLocal().hour.toAmpPmInt();
+      startHours.value = p.start.hour.toAmpPmInt();
       startMinutes.value = p.start.minute;
-      endtHours.value = p.end.toLocal().hour..toAmpPmInt();
+      endtHours.value = p.end.hour..toAmpPmInt();
       endMinutes.value = p.end.minute;
       // init period selctor without old data
     } else {
@@ -236,8 +249,13 @@ class MezDateTimePickerController {
   /// Called whenever the date changes
   void changeDate(DateTime newValue) {
     pickedDate.value = newValue;
-    hours.value = selectedWorkDay.value.from.first;
-    minutes.value = selectedWorkDay.value.from[1];
+    if (!pickFromPeriod) {
+      hours.value = selectedWorkDay.value.from.first;
+      minutes.value = selectedWorkDay.value.from[1];
+    } else {
+      hours.value = minHours.value;
+      minutes.value = minMinutes.value;
+    }
     setAmPm();
   }
 
