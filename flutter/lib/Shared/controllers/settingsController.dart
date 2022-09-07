@@ -16,10 +16,6 @@ import 'package:soundpool/soundpool.dart';
 class SettingsController extends GetxController {
   late final ThemeController _appTheme;
   late final LanguageController _appLanguage;
-  RxBool internetCheckerOn = true.obs;
-  // for testing purposes
-  void switchInternetChecker() =>
-      internetCheckerOn.value = !internetCheckerOn.value;
 
   Soundpool _userNotificationsSoundPool = Soundpool.fromOptions(
       options: SoundpoolOptions(streamType: StreamType.notification));
@@ -61,25 +57,23 @@ class SettingsController extends GetxController {
     _selectedCallingSoundId = await _userCallingSoundPool.load(_soundDataCall);
 
     internetCheckerStream = checkConnectionStream().listen((bool isInternetOn) {
-      if (internetCheckerOn.value) {
-        // if No internet
-        if (!isInternetOn) {
-          if (!isCurrentRoute(kNoInternetConnectionPage)) {
-            mezDbgPrint("pushiiiiing => kNoInternetConnectionPage ");
-            Future<void>.delayed(
-              Duration.zero,
-              () => Get.toNamed<void>(kNoInternetConnectionPage),
-            );
-          }
-        } else {
-          mezDbgPrint("popping => kNoInternetConnectionPage ");
+      // if No internet
+      if (!isInternetOn) {
+        if (!isCurrentRoute(kNoInternetConnectionPage)) {
+          mezDbgPrint("pushiiiiing => kNoInternetConnectionPage ");
+          Future<void>.delayed(
+            Duration.zero,
+            () => Get.toNamed<void>(kNoInternetConnectionPage),
+          );
+        }
+      } else {
+        mezDbgPrint("popping => kNoInternetConnectionPage ");
 
-          if (isCurrentRoute(kNoInternetConnectionPage)) {
-            Future<void>.delayed(
-              Duration.zero,
-              () => Get.back<void>(),
-            );
-          }
+        if (isCurrentRoute(kNoInternetConnectionPage)) {
+          Future<void>.delayed(
+            Duration.zero,
+            () => Get.back<void>(),
+          );
         }
       }
     });
