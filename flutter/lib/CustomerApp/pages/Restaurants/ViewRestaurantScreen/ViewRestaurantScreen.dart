@@ -183,44 +183,46 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
   }
 
   Widget _buildCategory(Category category, int index) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (category.name?[userLanguage] != null)
-            Container(
-              margin: const EdgeInsets.only(top: 10, bottom: 5),
-              child: Text(
-                category.name![userLanguage]!,
-                style: Get.theme.textTheme.headline3
-                    ?.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700),
+    if (category.getAvailableItems.isNotEmpty) {
+      return Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (category.name?[userLanguage] != null)
+              Container(
+                margin: const EdgeInsets.only(top: 10, bottom: 5),
+                child: Text(
+                  category.name![userLanguage]!,
+                  style: Get.theme.textTheme.headline3
+                      ?.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700),
+                ),
               ),
-            ),
-          if (category.dialog?[userLanguage] != null)
-            Container(
-              child: Text(
-                category.dialog![userLanguage]!,
-                style: Get.textTheme.bodyText2?.copyWith(
-                    fontFamily: "Montserrat", color: Colors.grey.shade700),
+            if (category.dialog?[userLanguage] != null)
+              Container(
+                child: Text(
+                  category.dialog![userLanguage]!,
+                  style: Get.textTheme.bodyText2?.copyWith(
+                      fontFamily: "Montserrat", color: Colors.grey.shade700),
+                ),
               ),
-            ),
-          _buildResturantItems(category.items, restaurant.info.id),
-          SizedBox(
-            height: 20,
-          )
-        ],
-      ),
-    );
+            _buildResturantItems(
+                category.getAvailableItems, restaurant.info.id),
+            SizedBox(
+              height: 20,
+            )
+          ],
+        ),
+      );
+    } else
+      return Container();
   }
 
   Widget _buildResturantItems(List<Item> items, String restaurantId) {
-    final List<Item> data =
-        items.where((Item element) => element.available == true).toList();
     if (restaurant.restaurantsView == RestaurantsView.Rows) {
       return Container(
         margin: const EdgeInsets.only(top: 5),
         child: Column(
-          children: data.fold<List<Widget>>(<Widget>[],
+          children: items.fold<List<Widget>>(<Widget>[],
               (List<Widget> children, Item item) {
             children.add(RestaurantsListOfItemsComponent(
                 item: item,
@@ -243,9 +245,9 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
         shrinkWrap: true,
         padding: EdgeInsets.only(top: 17),
         physics: NeverScrollableScrollPhysics(),
-        children: List.generate(data.length, (int index) {
+        children: List.generate(items.length, (int index) {
           return RestaurantgridItemCard(
-              item: data[index], restaurant: restaurant);
+              item: items[index], restaurant: restaurant);
         }),
       );
     }

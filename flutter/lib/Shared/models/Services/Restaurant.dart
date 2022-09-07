@@ -126,8 +126,11 @@ class Restaurant extends Service {
   }
 
   List<Category> get getCategories {
-    final List<Category> categories = _categories
+    List<Category> categories = _categories
         .where((Category category) => category.id != kNoCategoryNode)
+        .toList();
+    categories = categories
+        .where((Category element) => element.getAvailableItems.isNotEmpty)
         .toList();
     categories.forEach((Category category) {
       category.sortItems();
@@ -146,9 +149,10 @@ class Restaurant extends Service {
   }
 
   List<Item>? get getItemsWithoutCategory {
-    final List<Item>? items = _categories
+    List<Item>? items = _categories
         .firstWhereOrNull((Category category) => category.id == kNoCategoryNode)
         ?.items;
+    items = items?.where((Item element) => element.available == true).toList();
     items?.sort((Item a, Item b) => a.position.compareTo(b.position));
     return items;
   }
@@ -261,6 +265,13 @@ class Category {
 
   void sortItems() {
     items.sort((Item a, Item b) => a.position.compareTo(b.position));
+  }
+
+  List<Item> get getAvailableItems {
+    final List<Item> data =
+        items.where((Item element) => element.available == true).toList();
+    data.sort((Item a, Item b) => a.position.compareTo(b.position));
+    return data;
   }
 
   Map<String, dynamic> toJson() {
