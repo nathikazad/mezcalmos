@@ -31,7 +31,7 @@ class Restaurant extends Service {
   Restaurant(
       {required ServiceInfo userInfo,
       required this.description,
-      this.restaurantsView = RestaurantsView.Rows,
+      this.restaurantsView = RestaurantsView.Grid,
       Schedule? schedule,
       required ServiceState restaurantState})
       : super(info: userInfo, schedule: schedule, state: restaurantState);

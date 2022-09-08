@@ -28,8 +28,8 @@ class RestaurantCardForDesktopAndTablet extends StatefulWidget {
 
 class _RestaurantCardForDesktopAndTabletState
     extends State<RestaurantCardForDesktopAndTablet> {
-  final LanguageType userLanguage =
-      Get.find<LanguageController>().userLanguageKey;
+  LanguageController lang = Get.find<LanguageController>();
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -81,9 +81,16 @@ class _RestaurantCardForDesktopAndTabletState
                         child: widget.restaurant.isOpen()
                             ? null
                             : Center(
-                                child: Text(
-                                  "closed",
-                                  style: TextStyle(color: Colors.white),
+                                child: Obx(
+                                  () => Text(
+                                    lang.strings["CustomerApp"]["pages"]
+                                                    ["Restaurants"]
+                                                ["ListRestaurantsScreen"]
+                                            ["components"]["RestaurandCard"]
+                                        ["closed"],
+                                    style: const TextStyle(
+                                        color: Colors.white, fontSize: 13),
+                                  ),
                                 ),
                               ),
                       ),
@@ -121,7 +128,8 @@ class _RestaurantCardForDesktopAndTabletState
                       children: [
                         if (widget.restaurant.description != null)
                           Text(
-                            widget.restaurant.description![userLanguage]!,
+                            widget
+                                .restaurant.description![lang.userLanguageKey]!,
                             style: GoogleFonts.montserrat(
                                 textStyle: TextStyle(
                               fontSize: 13,

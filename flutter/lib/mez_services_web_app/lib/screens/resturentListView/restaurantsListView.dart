@@ -152,6 +152,7 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
   }
 
   Widget _sortingSwitcher(BuildContext context) {
+    LanguageController lang = Get.find<LanguageController>();
     var viewController = Get.find<ListRestaurantsController>();
     return Obx(
       () => Container(
@@ -165,10 +166,14 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
           },
           activeColor: primaryBlueColor,
           contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-          title: Text(
-            "Show only open restaurants",
-            style: Get.textTheme.bodyText2
-                ?.copyWith(fontWeight: FontWeight.w700, fontSize: 14),
+          title: Obx(
+            () => Text(
+              lang.strings["CustomerApp"]["pages"]["Restaurants"]
+                      ["ListRestaurantsScreen"]["ListRestaurantScreen"]
+                  ["showOnlyOpen"],
+              style: Get.textTheme.bodyText2
+                  ?.copyWith(fontWeight: FontWeight.w700, fontSize: 14),
+            ),
           ),
         ),
       ),
@@ -176,33 +181,33 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
   }
 
   Widget _searchInput(BuildContext context) {
+    LanguageController lang = Get.find<LanguageController>();
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: MezCalmosResizer.getWepPageHorizontalPadding(context),
         vertical: 20,
       ),
-      child: TextFormField(
-          textAlignVertical: TextAlignVertical.center,
-          style: Get.textTheme.bodyText1!.copyWith(fontSize: 13),
-          onChanged: (String value) {
-            print("this is a test");
-            // viewController.searchQuery.value = value;
-            // viewController.filterRestaurants();
-            // mezDbgPrint(viewController.searchQuery);
-          },
-          decoration: InputDecoration(
-            contentPadding: const EdgeInsets.only(top: 8.0),
-            prefixIcon: Icon(
-              Icons.search,
-              color: Colors.grey.shade300,
-            ),
-            hintStyle: TextStyle(color: Colors.grey.shade300, fontSize: 13),
-            hintText: "Search",
-          )),
+      child: Obx(
+        () => TextFormField(
+            textAlignVertical: TextAlignVertical.center,
+            style: Get.textTheme.bodyText1!.copyWith(fontSize: 13),
+            onChanged: (String value) {
+              print("this is a test");
+              // viewController.searchQuery.value = value;
+              // viewController.filterRestaurants();
+              // mezDbgPrint(viewController.searchQuery);
+            },
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.only(top: 8.0),
+              prefixIcon: Icon(
+                Icons.search,
+                color: Colors.grey.shade300,
+              ),
+              hintStyle: TextStyle(color: Colors.grey.shade300, fontSize: 13),
+              hintText: lang.strings["CustomerApp"]["pages"]["Restaurants"]
+                  ["ListRestaurantsScreen"]["ListRestaurantScreen"]["search"],
+            )),
+      ),
     );
-  }
-
-  Widget buildListOFCardsForMobile(BuildContext context) {
-    return Container();
   }
 }

@@ -1,38 +1,10 @@
-// //import 'package:flutter_dotenv/flutter_dotenv.dart';
-
-// import 'package:get/get.dart';
-// import 'package:mez_services_web_app/screens/restaurantsItemsViiew/restaurnatsItemsView.dart';
-// import 'package:mez_services_web_app/screens/resturentListView/restaurantsListView.dart';
-
-// const String restaurantByID = "/restaurant";
-// const String restaurants = "/restaurants";
-// const String laundries = "/laundries";
-// const String singleLaundryView = "/:laundryId";
-// const String restaurantView = "/:id";
-// const String showRestaurantInfo = "/:itemId";
-// const String blogsView = "/blogs";
-// const String blogDetails = "/blog";
-// //const String INITIAL = "/";
-
-// class AppRoutes {
-//   static final List<GetPage> getRoutes = <GetPage<dynamic>>[
-//     GetPage(
-//       name: restaurants,
-//       page: () => RestaurantsListView(),
-//     ),
-//     GetPage(
-//       name: "/items",
-//       page: () => RestaurantsItemsView(),
-//     ),
-//   ];
-// }
-
 import 'package:get/get.dart';
 import 'package:mez_services_web_app/helpers/GeneralPurposeHelper.dart';
 import 'package:mez_services_web_app/helpers/setUpHelper.dart';
-import 'package:mez_services_web_app/screens/restaurantsItemsViiew/restaurnatsItemsView.dart';
+import 'package:mez_services_web_app/screens/viewRestaurantsScreen/restaurnatsItemsView.dart';
 import 'package:mez_services_web_app/screens/resturentListView/restaurantsListView.dart';
 import 'package:mez_services_web_app/screens/unFoundPage.dart';
+import 'package:mez_services_web_app/screens/viewRestaurantsScreenInfo/viewRestaurnatsScreenInfo.dart';
 import 'package:mez_services_web_app/services/values/constants.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -42,6 +14,7 @@ class AppRoutes {
   static const String restaurants = "restaurants";
   static const String restaurantitems = "items";
   static const String restaurants_id = "restaurants_id";
+  static const String restaurant_info = "info";
 
   void setup() {
     // enable debug logging for all routes
@@ -89,11 +62,18 @@ class AppRoutes {
         builder: () => RestaurantsListView(),
         children: [
           QRoute(
-            path: '/:id',
-            name: restaurants_id,
-            middleware: [],
-            builder: () => RestaurantsItemsView(),
-          ),
+              path: '/:id',
+              name: restaurants_id,
+              middleware: [],
+              builder: () => RestaurantsItemsView(),
+              children: [
+                QRoute(
+                  path: '/info',
+                  name: restaurant_info,
+                  middleware: [],
+                  builder: () => ViewRestaurantsScrennInfo(),
+                )
+              ]),
         ]),
     QRoute(
       path: '/items',

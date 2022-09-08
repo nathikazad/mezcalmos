@@ -282,7 +282,8 @@
                     },
                     "ViewRestaurantScreen": {
                         "menu": "Menú",
-                        "info": "Información"
+                        "info": "Información",
+                        "moreInfo":"Más información"
                     }
                 }
             },
