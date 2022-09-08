@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/controllers/ROpMenuViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
@@ -21,6 +22,7 @@ class ROpSpecialItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: const EdgeInsets.only(bottom: 10),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
@@ -31,7 +33,7 @@ class ROpSpecialItemCard extends StatelessWidget {
               arguments: {"specials": true});
         },
         child: Container(
-          margin: const EdgeInsets.all(12),
+          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
           child: Row(
             children: [
               CircleAvatar(
@@ -45,10 +47,26 @@ class ROpSpecialItemCard extends StatelessWidget {
               ),
               Flexible(
                 fit: FlexFit.tight,
-                child: Text(
-                  item.name[userLanguage] ?? "",
-                  style: Get.textTheme.bodyText1,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.name[userLanguage] ?? "",
+                      style: Get.textTheme.bodyText1,
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(item.getPeriod!.toString())
+                  ],
                 ),
+              ),
+              SizedBox(
+                width: 15,
+              ),
+              Text(item.cost.toPriceString(), style: Get.textTheme.bodyText1),
+              SizedBox(
+                width: 25,
               ),
               InkWell(
                 onTap: () {

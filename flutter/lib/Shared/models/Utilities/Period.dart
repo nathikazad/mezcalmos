@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class PeriodOfTime {
@@ -43,5 +45,7 @@ class PeriodOfTime {
   int get hashCode => start.hashCode ^ end.hashCode;
 
   @override
-  String toString() => 'PeriodOfTime(start: $start, end: $end)';
+  String toString() =>
+      '${DateFormat.MMMEd(userLangCode).format(start.toLocal())}, ${DateFormat("hh:mm a").format(start.toLocal())} to ${DateFormat("hh:mm a").format(end.toLocal())}'
+          .replaceAll(".", "");
 }

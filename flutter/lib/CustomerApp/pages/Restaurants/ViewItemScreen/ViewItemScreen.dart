@@ -11,7 +11,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
-import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -238,8 +237,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
             width: 5,
           ),
           Flexible(
-            child: Text(
-                "${DateFormat.MMMEd(userLangCode).format(item.getPeriod!.start)}, ${DateFormat("hh:mm a").format(item.getPeriod!.start)} to ${DateFormat("hh:mm a").format(item.getPeriod!.end)}"),
+            child: Text(item.getPeriod.toString()),
           )
         ],
       ),
