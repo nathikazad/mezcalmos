@@ -249,12 +249,19 @@ class MezDateTimePickerController {
   /// Called whenever the date changes
   void changeDate(DateTime newValue) {
     pickedDate.value = newValue;
-    if (!pickFromPeriod) {
-      hours.value = selectedWorkDay.value.from.first;
-      minutes.value = selectedWorkDay.value.from[1];
+    if (periodic.isFalse) {
+      if (!pickFromPeriod) {
+        hours.value = selectedWorkDay.value.from.first;
+        minutes.value = selectedWorkDay.value.from[1];
+      } else {
+        hours.value = minHours.value;
+        minutes.value = minMinutes.value;
+      }
     } else {
-      hours.value = minHours.value;
-      minutes.value = minMinutes.value;
+      startHours.value = selectedWorkDay.value.from.first;
+      startMinutes.value = selectedWorkDay.value.from[1];
+      endtHours.value = selectedWorkDay.value.to.first;
+      endMinutes.value = 0;
     }
     setAmPm();
   }

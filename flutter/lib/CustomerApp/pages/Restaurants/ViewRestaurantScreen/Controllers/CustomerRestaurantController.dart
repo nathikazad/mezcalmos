@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -98,12 +100,17 @@ class CustomerRestaurantController {
   }
 
   // getters //
-  Map<DateTime?, List<Item>> get getGroupedSpecials {
-    final Map<DateTime?, List<Item>> data = restaurant.value!.currentSpecials
+  Map<DateTime, List<Item>> get getGroupedSpecials {
+    // Creating the map
+    final Map<DateTime, List<Item>> data = restaurant.value!.currentSpecials
         .groupListsBy((Item element) => DateTime(element.startsAt!.year,
             element.startsAt!.month, element.startsAt!.day));
+    // sorting the map
+    final SplayTreeMap<DateTime, List<Item>> sortedMap =
+        SplayTreeMap<DateTime, List<Item>>.from(
+            data, (DateTime a, DateTime b) => b.compareTo(a));
 
-    return data;
+    return sortedMap;
   }
 
   bool get isOnSpecialView {
