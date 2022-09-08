@@ -262,6 +262,7 @@ class MezDateTimePickerController {
       startMinutes.value = selectedWorkDay.value.from[1];
       endtHours.value = selectedWorkDay.value.to.first;
       endMinutes.value = 0;
+      _setPeriodOfTime();
     }
     setAmPm();
   }

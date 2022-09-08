@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/Controllers/MezDateTimePickerController.dart';
@@ -93,6 +94,7 @@ class _ROpSpecialItemTimeState extends State<ROpSpecialItemTime> {
                             );
                           }).then((PeriodOfTime? value) {
                         if (value != null) {
+                          mezDbgPrint("Finish =======>>>$value");
                           periodTime.value = value;
                           widget.viewController.startDay.value = value.start;
                           widget.viewController.endDate.value = value.end;
