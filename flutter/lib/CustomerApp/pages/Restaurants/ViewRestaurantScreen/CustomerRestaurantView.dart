@@ -114,7 +114,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             List.generate(
                 _viewController.isOnMenuView
                     ? _viewController.catsList.length
-                    : _viewController.getGroupedSpecials.length, (int index) {
+                    : _viewController.getGroupedSpecials().length, (int index) {
               _viewController.itemKeys[index] = RectGetter.createGlobalKey();
               return _viewController.isOnMenuView
                   ? _scrollableCategoryItems(index)
@@ -147,7 +147,8 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           key: ValueKey(index),
           index: index,
           controller: _viewController.scrollController,
-          child: _buildSpecialItems(_viewController.getGroupedSpecials, index)),
+          child:
+              _buildSpecialItems(_viewController.getGroupedSpecials(), index)),
     );
   }
 

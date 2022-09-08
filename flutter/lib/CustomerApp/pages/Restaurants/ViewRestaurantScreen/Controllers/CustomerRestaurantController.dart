@@ -35,8 +35,9 @@ class CustomerRestaurantController {
       itemKeys[(restaurant.value!.getCategories.length + 1)] =
           RectGetter.createGlobalKey();
     } else {
-      itemKeys.assign((getGroupedSpecials.length + 1), "info");
-      itemKeys[(getGroupedSpecials.length + 1)] = RectGetter.createGlobalKey();
+      itemKeys.assign((getGroupedSpecials().length + 1), "info");
+      itemKeys[(getGroupedSpecials().length + 1)] =
+          RectGetter.createGlobalKey();
     }
   }
 
@@ -44,7 +45,7 @@ class CustomerRestaurantController {
     tabsController =
         TabController(length: restaurant.getCategories.length, vsync: vsync);
     specialstabsController =
-        TabController(length: getGroupedSpecials.length, vsync: vsync);
+        TabController(length: getGroupedSpecials().length, vsync: vsync);
 
     scrollController = AutoScrollController();
   }
@@ -99,20 +100,25 @@ class CustomerRestaurantController {
     pauseRectGetterIndex.value = !pauseRectGetterIndex.value;
   }
 
-  // getters //
-  Map<DateTime, List<Item>> get getGroupedSpecials {
+  Map<DateTime, List<Item>> getGroupedSpecials() {
     // Creating the map
+
     final Map<DateTime, List<Item>> data = restaurant.value!.currentSpecials
+        .where((Item element) =>
+            element.available &&
+            (element.startsAt!.isAfter(DateTime.now()) ||
+                element.startsAt!.isAtSameMomentAs(DateTime.now())))
         .groupListsBy((Item element) => DateTime(element.startsAt!.year,
             element.startsAt!.month, element.startsAt!.day));
     // sorting the map
     final SplayTreeMap<DateTime, List<Item>> sortedMap =
         SplayTreeMap<DateTime, List<Item>>.from(
-            data, (DateTime a, DateTime b) => b.compareTo(a));
+            data, (DateTime a, DateTime b) => a.compareTo(b));
 
     return sortedMap;
   }
 
+  // getters //
   bool get isOnSpecialView {
     return mainTab.value == RestaurantViewTab.Specials;
   }

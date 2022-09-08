@@ -190,11 +190,13 @@ class NewRestaurantAppBar extends StatelessWidget {
               shape: BoxShape.rectangle,
               color: secondaryLightBlueColor),
           tabs: (controller.isOnSpecialView)
-              ? List.generate(controller.getGroupedSpecials.length,
+              ? List.generate(controller.getGroupedSpecials().length,
                   (int index) {
                   return Tab(
-                    text: controller.getGroupedSpecials.keys
-                        .toList()[index]!
+                    text: controller
+                        .getGroupedSpecials()
+                        .keys
+                        .toList()[index]
                         .toDayName(),
                   );
                 })
@@ -237,7 +239,13 @@ class NewRestaurantAppBar extends StatelessWidget {
                                     color: primaryBlueColor, width: 2))
                             : null),
                     alignment: Alignment.center,
-                    child: Text("Menu"),
+                    child: Text(
+                      "Menu",
+                      style: controller.isOnMenuView
+                          ? Get.textTheme.bodyText1
+                              ?.copyWith(color: primaryBlueColor)
+                          : null,
+                    ),
                   ),
                 ),
               ),
@@ -259,7 +267,13 @@ class NewRestaurantAppBar extends StatelessWidget {
                                 bottom: BorderSide(
                                     color: primaryBlueColor, width: 2))
                             : null),
-                    child: Text("Specials"),
+                    child: Text(
+                      "Specials",
+                      style: controller.isOnSpecialView
+                          ? Get.textTheme.bodyText1
+                              ?.copyWith(color: primaryBlueColor)
+                          : null,
+                    ),
                   ),
                 ),
               ),
