@@ -136,7 +136,7 @@ class CustomerRestaurantController {
   }
 
   bool get showSpecials {
-    return restaurant.value!.currentSpecials.isNotEmpty;
+    return getGroupedSpecials().isNotEmpty;
   }
 
   bool get showCategoriesChips {
