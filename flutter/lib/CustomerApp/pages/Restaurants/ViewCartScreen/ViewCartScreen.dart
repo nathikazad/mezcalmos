@@ -12,6 +12,8 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/settingsController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
@@ -215,7 +217,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       mezDbgPrint(
           "😇😇😇😇😇😇😇 DISTANCE 😇😇😇😇😇😇😇 ==> ${routeInfo?.distance.distanceInMeters}");
 
-      if (routeInfo.distance.distanceInMeters <= 10000) {
+      if (routeInfo.distance.distanceInMeters <= 10000 ||
+          getAppLaunchMode() == AppLaunchMode.stage ||
+          Get.find<AuthController>().user?.id ==
+              // BUhQ74BrbBNeYZz60fK4ocrgpqz1 the test user for apple test
+              "BUhQ74BrbBNeYZz60fK4ocrgpqz1") {
         final String? stripePaymentId =
             await acceptPaymentByCardChoice(viewCartController.getCardChoice);
 
