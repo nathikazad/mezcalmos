@@ -85,45 +85,41 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: CustomerAppBar(
-        autoBack: true,
-        title: "${_i18n()["myCart"]}",
-      ),
-      body: Obx(() {
-        if (_restaurantController.cart.value.cartItems.length > 0) {
-          return SingleChildScrollView(
-            child: ViewCartBody(
-              viewCartController: viewCartController,
-              setLocationCallBack: ({Location? location}) {
-                setState(() {
-                  orderToLocation = location;
-                });
-              },
-              notesTextController: _textEditingController,
-            ),
-          );
-        } else {
-          return CartIsEmptyScreen();
-        }
-      }),
-      bottomSheet: (_restaurantController.cart.value.cartItems.length > 0)
-          ? MezButton(
-              label: '${_i18n()["orderNow"]}',
-              enabled: canClick(),
-              withGradient: true,
-              borderRadius: 0,
-              onClick: () async {
-                await checkoutActionButton();
-              },
-              // bgColor: getTheRightButtonColor(),
-              // canClick: canClick(),
-              // label: Center(
-              //     child: getTheRightWidgetForOrderNowButton(_clickedOrderNow)),
-              // function: !_clickedOrderNow ? checkoutActionButton : () {},
-            )
-          : null,
-    );
+        resizeToAvoidBottomInset: true,
+        appBar: CustomerAppBar(
+          autoBack: true,
+          title: "${_i18n()["myCart"]}",
+        ),
+        body: Obx(() {
+          if (_restaurantController.cart.value.cartItems.length > 0) {
+            return SingleChildScrollView(
+              child: ViewCartBody(
+                viewCartController: viewCartController,
+                setLocationCallBack: ({Location? location}) {
+                  setState(() {
+                    orderToLocation = location;
+                  });
+                },
+                notesTextController: _textEditingController,
+              ),
+            );
+          } else {
+            return CartIsEmptyScreen();
+          }
+        }),
+        bottomSheet: Obx(
+          () => (_restaurantController.cart.value.cartItems.length > 0)
+              ? MezButton(
+                  label: '${_i18n()["orderNow"]}',
+                  enabled: canClick(),
+                  withGradient: true,
+                  borderRadius: 0,
+                  onClick: () async {
+                    await checkoutActionButton();
+                  },
+                )
+              : SizedBox(),
+        ));
   }
 
   bool canClick() {
@@ -213,7 +209,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         duration: routeInfo.duration,
       );
       mezDbgPrint(
-          "😇😇😇😇😇😇😇 DISTANCE 😇😇😇😇😇😇😇 ==> ${routeInfo?.distance.distanceInMeters}");
+          "😇😇😇😇😇😇😇 DISTANCE 😇😇😇😇😇😇😇 ==> ${routeInfo.distance.distanceInMeters}");
 
       if (routeInfo.distance.distanceInMeters <= 10000) {
         final String? stripePaymentId =
