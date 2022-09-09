@@ -54,6 +54,12 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
     return Obx(() {
       if (editInfoController.showStripe.isTrue) {
         return ROpStripePaymentSetup(viewController: editInfoController);
+      } else if (editInfoController.setupClicked.isTrue) {
+        return Container(
+          alignment: Alignment.center,
+          color: Colors.white,
+          child: CircularProgressIndicator(),
+        );
       } else if (editInfoController.restaurant.value != null) {
         return Scaffold(
           backgroundColor: Colors.white,

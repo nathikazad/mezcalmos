@@ -74,8 +74,8 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Flexible(
-                      flex: 3,
+                    Container(
+                      // flex: 5,
                       child: Text(
                         '${_i18n()["card"]}',
                         style: Get.textTheme.bodyText1,
@@ -86,10 +86,10 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
                     ),
                     if (widget.viewController.showStatusIcon)
                       _stripeStatusWidget(context),
-                    Spacer(
-                      flex: 4,
+                    SizedBox(
+                      width: 8,
                     ),
-                    if (widget.viewController.showSetupBtn) _stripeSetupBtn()
+                    if (!widget.viewController.showSetupBtn) _stripeSetupBtn()
                   ]),
               activeColor: primaryBlueColor,
               value: widget.viewController.restaurant.value!.paymentInfo
@@ -109,32 +109,22 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
     );
   }
 
-  InkWell _stripeSetupBtn() {
-    return InkWell(
-      onTap: () {
-        widget.viewController.showPaymentSetup();
-      },
-      child: Ink(
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8), color: primaryBlueColor),
-        child: RichText(
-            text: TextSpan(children: [
-          WidgetSpan(
-              child: Icon(
-            Icons.store,
-            size: 18,
-            color: Colors.white,
-          )),
-          WidgetSpan(
-              child: SizedBox(
-            width: 5,
-          )),
-          TextSpan(
-            text: '${_i18n()["setup"]}',
-            style: Get.textTheme.bodyText1?.copyWith(color: Colors.white),
-          )
-        ])),
+  Widget _stripeSetupBtn() {
+    return Flexible(
+      flex: 5,
+      child: InkWell(
+        onTap: () {
+          widget.viewController.showPaymentSetup();
+        },
+        child: Ink(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: primaryBlueColor),
+            child: Text(
+              '${_i18n()["setup"]}',
+              style: Get.textTheme.bodyText1?.copyWith(color: Colors.white),
+            )),
       ),
     );
   }

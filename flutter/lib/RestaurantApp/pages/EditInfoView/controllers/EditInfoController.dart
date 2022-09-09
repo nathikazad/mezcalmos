@@ -50,6 +50,7 @@ class ROpEditInfoController {
   final RxBool showStripe = RxBool(false);
   String? stripeUrl;
   final RxBool showSetupStripe = RxBool(false);
+  final RxBool setupClicked = RxBool(false);
   final RxBool showStripeReqs = RxBool(false);
   RxString currentUrl = RxString("");
 
@@ -223,13 +224,16 @@ class ROpEditInfoController {
   }
 
   void showPaymentSetup() {
+    setupClicked.value = true;
     onboardServiceProvider(restaurant.value!.info.id, OrderType.Restaurant)
         .then((ServerResponse value) {
       if (value.success) {
         stripeUrl = value.data["url"];
         showStripe.value = true;
+      } else {
+        Get.snackbar("Error", value.errorMessage ?? "Error");
       }
-    });
+    }).whenComplete(() => setupClicked.value = false);
   }
 
   void closePaymentSetup() {
