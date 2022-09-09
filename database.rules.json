@@ -1,415 +1,342 @@
 {
     "rules": {
-        ".read": "false",
-        ".write": "false",
-        "users": {
-            ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
-            "$uid": {
-                ".read": "$uid === auth.uid",
-                "notificationInfo": {
-                    ".write": "$uid === auth.uid"
-                },
-                "info": {
-                    "language": {
-                        ".write": "$uid === auth.uid"
-                    },
-                    "image": {
-                        ".write": "$uid === auth.uid"
-                    },
-                    "bigImage": {
-                        ".write": "$uid === auth.uid"
-                    },
-                    "name": {
-                        ".write": "$uid === auth.uid"
-                    },
-                    "phone": {
-                        ".write": "$uid === auth.uid"
-                    },
-                    "deleted": {
-                        ".write": "$uid === auth.uid"
-                    }
-                },
-                "auth": {
-                    ".read": "false",
-                    ".write": "false"
-                }
-            }
-        },
-        "customers": {
-            "info": {
-                "$uid": {
-                    ".read": "$uid === auth.uid",
-                    ".write": "$uid === auth.uid",
-                    "notificationInfo": {
-                        ".write": "$uid === auth.uid"
-                    },
-                    "savedLocations": {
-                        ".write": "$uid === auth.uid"
-                    }
-                }
-            },
-            "pastOrders": {
-                "$uid": {
-                    ".read": "$uid === auth.uid"
-                }
-            },
-            "inProcessOrders": {
-                "$uid": {
-                    ".read": "$uid === auth.uid",
-                    "$orderId": {
-                        "cost": {
-                            ".write": "data.parent().exists() && data.parent().child('/customer/id').val() === auth.uid"
-                        },
-                        "counterOffers": {
-                            "$driverId": {
-                                ".write": "$driverId === auth.uid",
-                                ".read": "$driverId === auth.uid",
-                                "status": {
-                                    ".write": "auth.uid === $uid"
-                                }
-                            }
-                        },
-                        "notificationStatus": {
-                            "$driverId": {
-                                "received": {
-                                    ".write": "root.child('customers/inProcessOrders/' + $uid + '/' + $orderId).exists() && true"
-                                },
-                                "read": {
-                                    ".write": "root.child('customers/inProcessOrders/' + $uid + '/' + $orderId).exists() && $driverId === auth.uid"
-                                }
-                            }
-                        },
-                        "$driverType": {
-                            "location": {
-                                ".write": "data.parent().parent().exists() && data.parent().parent().child('/' + $driverType + '/id').val() === auth.uid"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "taxis": {
-            ".read": "root.child('taxiAdmins/' + auth.uid + '/authorized').val() === true",
-            "info": {
-                "$uid": {
-                    ".read": "$uid === auth.uid",
-                    "notificationInfo": {
-                        ".write": "$uid === auth.uid"
-                    },
-                    "details": {
-                        ".write": "root.child('taxiAdmins/' + auth.uid + '/authorized').val() === true"
-                    },
-                    "state": {
-                        "isLooking": {
-                            ".write": "$uid === auth.uid"
-                        },
-                        "inNegotiation": {
-                            ".write": "$uid === auth.uid"
-                        }
-                    },
-                    "versionNumber": {
-                        ".write": "$uid === auth.uid"
-                    },
-                    "location": {
-                        ".write": "data.parent().exists() && $uid === auth.uid"
-                    }
-                }
-            },
-            "inProcessOrders": {
-                "$uid": {
-                    ".read": "$uid === auth.uid",
-                    "$orderId": {
-                        "driver": {
-                            "location": {
-                                ".write": "data.parent().parent().exists() && $uid === auth.uid"
-                            }
-                        }
-                    }
-                }
-            },
-            "pastOrders": {
-                "$uid": {
-                    ".read": "$uid === auth.uid"
-                }
-            }
-        },
-        "orders": {
-            ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
-            "inProcess": {
-                "$orderType": {
-                    "$orderId": {
-                        "notified": {
-                            ".write": "root.child('orders/inProcess/' + $orderType +'/' + $orderId).exists()"
-                        },
-                        "$driverType": {
-                            "location": {
-                                ".write": "data.parent().parent().exists() && root.child('orders/inProcess/' + $orderType + '/' + $orderId + '/' + $driverType + '/id').val() === auth.uid"
-                            }
-                        }
-                    }
-                }
-            },
-            "past": {
-                "$orderType": {
-                    ".indexOn": [
-                        "orderTime"
-                    ]
-                }
-            },
-            "open": {
-                ".read": "root.child('taxis/info/' + auth.uid + '/state/authorizationStatus').val() === 'authorized'",
-                "taxi": {
-                    "$orderId": {
-                        "cost": {
-                            ".write": "data.parent().exists() && data.parent().child('/customer/id').val() === auth.uid"
-                        },
-                        "notificationStatus": {
-                            "$driverId": {
-                                "received": {
-                                    ".write": "root.child('orders/open/taxi/' + $orderId).exists() && true"
-                                },
-                                "read": {
-                                    ".write": "root.child('orders/open/taxi/' + $orderId).exists() && $driverId === auth.uid"
-                                }
-                            }
-                        },
-                        "counterOffers": {
-                            "$driverId": {
-                                ".write": "(auth.uid == $driverId && (!data.hasChild('status') || data.child('status').val() == 'submitted')) || (auth.uid == data.parent().parent().child('customer').child('id').val() && data.child('status').val() == 'submitted' && data.child('offerValidTimeEpoch').val() > now)"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "chat": {
-            "$orderId": {
-                ".read": "root.child('chat/' + $orderId + '/authorizedUsers/' + auth.uid).exists()",
-                "messages": {
-                    "$messageId": {
-                        ".write": "root.child('chat/' + $orderId + '/authorizedUsers/' + auth.uid).exists()",
-                        "notified": {
-                            ".write": "false"
-                        }
-                    }
-                }
-            }
-        },
-        "notifications": {
-            "$userType": {
-                "$uid": {
-                    ".write": "$uid === auth.uid",
-                    ".read": "$uid === auth.uid"
-                }
-            }
-        },
-        "taxiAdmins": {
-            "$uid": {
-                ".read": "$uid === auth.uid",
-                ".write": "$uid === auth.uid && root.child('taxiAdmins/' + $uid).exists()"
-            }
-        },
-        "deliveryAdmins": {
-            "info": {
-                "$uid": {
-                    ".read": "$uid === auth.uid",
-                    ".write": "$uid === auth.uid && root.child('deliveryAdmins/info/' + $uid).exists()"
-                }
-            }
-        },
-        "adminChat": {
-            ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
-            ".write": "false",
-            "$userType": {
-                "current": {
-                    "$uid": {
-                        ".read": "$uid === auth.uid",
-                        "$chatId": {
-                            "messages": {
-                                ".write": "$uid === auth.uid || root.child('admins/' + auth.uid + '/authorized').val() === true"
-                            },
-                            "admins": {
-                                ".write": "root.child('admins/' + auth.uid + '/authorized').val() === true"
-                            }
-                        }
-                    }
-                },
-                "past": {
-                    "$uid": {
-                        ".read": "$uid === auth.uid"
-                    }
-                }
-            }
-        },
-        "restaurants": {
-            ".read": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
-            ".write": "false",
-            "info": {
-                ".read": "true",
-                "$uid": {
-                    "menu": {
-                        ".write": "$uid === auth.uid",
-                        "$itemid": {
-                            ".validate": "newData.hasChildren(['name', 'description', 'available', 'image', 'cost'])",
-                            "cost": {
-                                ".validate": "newData.isNumber()"
-                            },
-                            "options": {
-                                "chooseOne": {
-                                    "$optionId": {
-                                        ".validate": "newData.hasChildren(['optionName', 'options'])",
-                                        "optionName": {
-                                            ".validate": "newData.hasChildren(['en', 'es'])"
-                                        },
-                                        "optionDialogText": {
-                                            ".validate": "newData.hasChildren(['en', 'es'])"
-                                        },
-                                        "options": {
-                                            "$optionChoiceId": {
-                                                ".validate": "newData.hasChildren(['name', 'cost'])",
-                                                "cost": {
-                                                    ".validate": "newData.isNumber()"
-                                                }
-                                            }
-                                        }
-                                    }
-                                },
-                                "chooseMany": {
-                                    "$optionId": {
-                                        ".validate": "newData.hasChildren(['name', 'cost'])",
-                                        "name": {
-                                            ".validate": "newData.hasChildren(['en', 'es'])"
-                                        },
-                                        "cost": {
-                                            ".validate": "newData.isNumber()"
-                                        }
-                                    }
-                                },
-                                "sides": {
-                                    "$optionId": {
-                                        ".validate": "newData.hasChildren(['name', 'cost'])",
-                                        "name": {
-                                            ".validate": "newData.hasChildren(['en', 'es'])"
-                                        },
-                                        "cost": {
-                                            ".validate": "newData.isNumber()"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "state": {
-                        "available": {
-                            ".write": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
-                        }
-                    }
-                }
-            },
-            "pastOrders": {
-                "$uid": {
-                    ".read": "$uid === auth.uid"
-                }
-            },
-            "inProcessOrders": {
-                "$uid": {
-                    ".read": "$uid === auth.uid"
-                }
-            }
-        },
-        "notificationQueue": {
-            ".write": "true",
-            ".read": "false"
-        },
-        "online": {
-            ".read": "auth.uid != null",
-            "$transporterType": {
-                "$transporterId": {
-                    ".write": "auth.uid == $transporterId"
-                }
-            }
-        },
-        "deliveryDrivers": {
-            ".read": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true  ",
-            "info": {
-                "$uid": {
-                    ".read": "$uid === auth.uid",
-                    "info": {
-                        ".write": "$uid === auth.uid && root.child('deliveryDrivers/info/' + auth.uid + '/state/authorizationStatus').val() === 'authorized'"
-                    },
-                    "notificationInfo": {
-                        ".write": "$uid === auth.uid && root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
-                    },
-                    "details": {
-                        ".write": "$uid === auth.uid && root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
-                    },
-                    "state": {
-                        "isOnline": {
-                            ".write": "$uid === auth.uid && root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
-                        }
-                    },
-                    "versionNumber": {
-                        ".write": "$uid === auth.uid && root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
-                    },
-                    "location": {
-                        ".write": "$uid === auth.uid && root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
-                    }
-                }
-            },
-            "inProcessOrders": {
-                "$uid": {
-                    ".read": "$uid === auth.uid",
-                    "$orderId": {
-                        "$driverType": {
-                            "location": {
-                                ".write": "($driverType == 'dropoffDriver' || $driverType == 'pickupDriver') && data.parent().parent().exists() && $uid === auth.uid"
-                            }
-                        }
-                    }
-                }
-            },
-            "pastOrders": {
-                "$uid": {
-                    ".read": "$uid === auth.uid"
-                }
-            }
-        },
-        "laundries": {
-            ".read": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true || root.child('deliveryDrivers/info/' + auth.uid + '/state/authorizationStatus').val() === 'authorized'",
-            "info": {
-                "$laundryId": {
-                    ".read": "root.child('laundries/info/' + $laundryId + '/state/operators').hasChild(auth.uid)",
-                    ".write": "root.child('laundries/info/' + $laundryId + '/state/operators').hasChild(auth.uid)"
-                }
-            },
-            "inProcessOrders": {
-                "$uid": {
-                    ".read": "root.child('laundries/info/' + $uid + '/state/operators').hasChild(auth.uid)"
-                }
-            },
-            "pastOrders": {
-                "$uid": {
-                    ".read": "root.child('laundries/info/' + $uid + '/state/operators').hasChild(auth.uid)"
-                }
-            }
-        },
-        "version": {
-            "$app": {
-                ".read": "true"
-            }
-        },
-        "operators": {
-            "$operatorType": {
-                "info": {
-                    "$operatorId": {
-                        ".read": "$operatorId === auth.uid",
-                        ".write": "$operatorId === auth.uid",
-                        "state": {
-                            ".write": "false"
-                        }
-                    }
-                }
-            }
+      ".read": "false",
+      ".write": "false",
+      "metadata": {
+        ".read": "true"
+      },
+      "users": {
+        ".read": "root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true",
+        "$uid": {
+          ".read": "$uid === auth.uid",
+          ".write": "$uid === auth.uid"
         }
+      },
+      "blog": {
+        ".read": "true"
+      },
+      "customers": {
+        "info": {
+          "$uid": {
+            ".read": "$uid === auth.uid",
+            ".write": "$uid === auth.uid"
+          }
+        },
+        "pastOrders": {
+          "$uid": {
+            ".read": "$uid === auth.uid"
+          }
+        },
+        "inProcessOrders": {
+          "$uid": {
+            ".read": "$uid === auth.uid",
+            "$orderId": {
+              "cost": {
+                ".write": "data.parent().exists() && data.parent().child('/customer/id').val() === auth.uid"
+              },
+              "counterOffers": {
+                "$driverId": {
+                  ".write": "$driverId === auth.uid",
+                  ".read": "$driverId === auth.uid",
+                  "status": {
+                    ".write": "auth.uid === $uid"
+                  }
+                }
+              },
+              "notificationStatus": {
+                "$driverId": {
+                  "received": {
+                    ".write": "root.child('customers/inProcessOrders/' + $uid + '/' + $orderId).exists() && true"
+                  },
+                  "read": {
+                    ".write": "root.child('customers/inProcessOrders/' + $uid + '/' + $orderId).exists() && $driverId === auth.uid"
+                  }
+                }
+              },
+              "$driverType": {
+                "location": {
+                  ".write": "($driverType == 'dropoffDriver' || $driverType == 'pickupDriver') && data.parent().parent().exists() && data.parent().parent().child('/' + $driverType + '/id').val() === auth.uid"
+                }
+              }
+            }
+          }
+        }
+      },
+      "taxis": {
+        ".read": "root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true",
+        "info": {
+          "$uid": {
+            ".read": "$uid === auth.uid",
+            "notificationInfo": {
+              ".write": "$uid === auth.uid"
+            },
+            "details": {
+              ".write": "root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true"
+            },
+            "state": {
+              "isLooking": {
+                ".write": "$uid === auth.uid"
+              },
+              "inNegotiation": {
+                ".write": "$uid === auth.uid"
+              }
+            },
+            "versionNumber": {
+              ".write": "$uid === auth.uid"
+            },
+            "location": {
+              ".write": "data.parent().exists() && $uid === auth.uid"
+            }
+          }
+        },
+        "inProcessOrders": {
+          "$uid": {
+            ".read": "$uid === auth.uid",
+            "$orderId": {
+              "driver": {
+                "location": {
+                  ".write": "data.parent().parent().exists() && $uid === auth.uid"
+                }
+              }
+            }
+          }
+        },
+        "pastOrders": {
+          "$uid": {
+            ".read": "$uid === auth.uid"
+          }
+        }
+      },
+      "orders": {
+        ".read": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
+        "inProcess": {
+          "$orderType": {
+            "$orderId": {
+              "notified": {
+                ".write": "root.child('orders/inProcess/' + $orderType +'/' + $orderId).exists()"
+              },
+              "$driverType": {
+                "location": {
+                  ".write": "($driverType == 'dropoffDriver' || $driverType == 'pickupDriver') && data.parent().parent().exists() && data.parent().parent().child('/' + $driverType + '/id').val() === auth.uid"
+                }
+              }
+            }
+          }
+        },
+        "past": {
+          "$orderType": {
+            ".indexOn": [
+              "orderTime"
+            ]
+          }
+        },
+        "open": {
+          ".read": "root.child('taxis/info/' + auth.uid + '/state/authorizationStatus').val() === 'authorized'",
+          "taxi": {
+            "$orderId": {
+              "cost": {
+                ".write": "data.parent().exists() && data.parent().child('/customer/id').val() === auth.uid"
+              },
+              "notificationStatus": {
+                "$driverId": {
+                  "received": {
+                    ".write": "root.child('orders/open/taxi/' + $orderId).exists() && true"
+                  },
+                  "read": {
+                    ".write": "root.child('orders/open/taxi/' + $orderId).exists() && $driverId === auth.uid"
+                  }
+                }
+              },
+              "counterOffers": {
+                "$driverId": {
+                  ".write": "(auth.uid == $driverId && (!data.hasChild('status') || data.child('status').val() == 'submitted')) || (auth.uid == data.parent().parent().child('customer').child('id').val() && data.child('status').val() == 'submitted' && data.child('offerValidTimeEpoch').val() > now)"
+                }
+              }
+            }
+          }
+        }
+      },
+      "chat": {
+        "$orderId": {
+          ".read": "root.child('chat/' + $orderId + '/authorizedUsers/' + auth.uid).exists()",
+          "messages": {
+            "$messageId": {
+              ".write": "root.child('chat/' + $orderId + '/authorizedUsers/' + auth.uid).exists()",
+              "notified": {
+                ".write": "false"
+              }
+            }
+          }
+        }
+      },
+      "notifications": {
+        "$userType": {
+          "$uid": {
+            ".write": "$uid === auth.uid",
+            ".read": "$uid === auth.uid"
+          }
+        }
+      },
+      "deliveryAdmins": {
+        "info": {
+          "$uid": {
+            ".read": "$uid === auth.uid",
+            ".write": "$uid === auth.uid && root.child('deliveryAdmins/info/' + $uid).exists()"
+          }
+        }
+      },
+      "adminChat": {
+        ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
+        ".write": "false",
+        "$userType": {
+          "current": {
+            "$uid": {
+              ".read": "$uid === auth.uid",
+              "$chatId": {
+                "messages": {
+                  ".write": "$uid === auth.uid || root.child('admins/' + auth.uid + '/authorized').val() === true"
+                },
+                "admins": {
+                  ".write": "root.child('admins/' + auth.uid + '/authorized').val() === true"
+                }
+              }
+            }
+          },
+          "past": {
+            "$uid": {
+              ".read": "$uid === auth.uid"
+            }
+          }
+        }
+      },
+      "restaurants": {
+        ".read": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
+        ".write": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
+        "info": {
+          ".read": "true",
+          "$restaurantId": {
+            ".write": "root.child('restaurants/info/' + $restaurantId + '/state/operators').hasChild(auth.uid)"
+          }
+        },
+        "pastOrders": {
+          "$restaurantId": {
+            ".read": "root.child('restaurants/info/' + $restaurantId + '/state/operators').hasChild(auth.uid)"
+          }
+        },
+        "inProcessOrders": {
+          "$restaurantId": {
+            ".read": "root.child('restaurants/info/' + $restaurantId + '/state/operators').hasChild(auth.uid)",
+            "$orderId": {
+              "$driverType": {
+                "location": {
+                  ".write": "($driverType == 'dropoffDriver' || $driverType == 'pickupDriver') && data.parent().parent().exists() && data.parent().parent().child('/' + $driverType + '/id').val() === auth.uid"
+                }
+              }
+            }
+          }
+        }
+      },
+      "notificationQueue": {
+        ".write": "true",
+        ".read": "false"
+      },
+      "online": {
+        ".read": "auth.uid != null",
+        "$transporterType": {
+          "$transporterId": {
+            ".write": "auth.uid == $transporterId"
+          }
+        }
+      },
+      "deliveryDrivers": {
+        ".read": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true  ",
+        "info": {
+          "$uid": {
+            ".read": "$uid === auth.uid",
+            "info": {
+              ".write": "$uid === auth.uid && root.child('deliveryDrivers/info/' + auth.uid + '/state/authorizationStatus').val() === 'authorized'"
+            },
+            "notificationInfo": {
+              ".write": "$uid === auth.uid"
+            },
+            "details": {
+              ".write": "$uid === auth.uid && root.child('deliveryDrivers/info/' + auth.uid + '/state/authorizationStatus').val() === 'authorized'"
+            },
+            "state": {
+              "isOnline": {
+                ".write": "$uid === auth.uid"
+              }
+            },
+            "versionNumber": {
+              ".write": "$uid === auth.uid"
+            },
+            "location": {
+              ".write": "$uid === auth.uid"
+            }
+          }
+        },
+        "inProcessOrders": {
+          "$uid": {
+            ".read": "$uid === auth.uid",
+            "$orderId": {
+              "$driverType": {
+                "location": {
+                  ".write": "($driverType == 'dropoffDriver' || $driverType == 'pickupDriver') && data.parent().parent().exists() && data.parent().parent().child('/' + $driverType + '/id').val() === auth.uid"
+                }
+              }
+            }
+          }
+        },
+        "pastOrders": {
+          "$uid": {
+            ".read": "$uid === auth.uid"
+          }
+        }
+      },
+      "laundries": {
+        ".read": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
+        ".write": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
+        "info": {
+          ".read": "true",
+          "$laundryId": {
+            ".write": "root.child('laundries/info/' + $laundryId + '/state/operators').hasChild(auth.uid)"
+          }
+        },
+        "inProcessOrders": {
+          "$laundryId": {
+            ".read": "root.child('laundries/info/' + $laundryId + '/state/operators').hasChild(auth.uid)",
+            "$orderId": {
+              "$driverType": {
+                "location": {
+                  ".write": "($driverType == 'dropoffDriver' || $driverType == 'pickupDriver') && data.parent().parent().exists() && data.parent().parent().child('/' + $driverType + '/id').val() === auth.uid"
+                }
+              }
+            }
+          }
+        },
+        "pastOrders": {
+          "$laundryId": {
+            ".read": "root.child('laundries/info/' + $laundryId + '/state/operators').hasChild(auth.uid)"
+          }
+        }
+      },
+      "version" : {
+        "$app":{
+          ".read" : "true"
+        }
+      },
+      "operators": {
+        "$operatorType": {
+          "info": {
+            "$operatorId": {
+              ".read": "$operatorId === auth.uid",
+              ".write": "$operatorId === auth.uid",
+              "state": {
+                ".write": "false"
+              }
+            }
+          }
+        }
+      }
     }
-}
+  }

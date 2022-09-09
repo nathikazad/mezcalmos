@@ -662,7 +662,7 @@
                 },
                 "SignInScreen": {
                     "title": "Connect using Facebook or using SMS ! ",
-                    "loginWithApple": " LOGIN WITH APPLE",
+                    "loginWithApple": "SIGN IN WITH APPLE",
                     "loginWithSms": "LOGIN WITH SMS",
                     "fbBtn": "LOGIN WITH FACEBOOK"
                 },
