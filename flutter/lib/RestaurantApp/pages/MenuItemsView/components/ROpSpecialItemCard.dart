@@ -57,7 +57,7 @@ class ROpSpecialItemCard extends StatelessWidget {
                     SizedBox(
                       height: 5,
                     ),
-                    Text(item.getPeriod!.toString())
+                    if (item.getPeriod != null) Text(item.getPeriod!.toString())
                   ],
                 ),
               ),

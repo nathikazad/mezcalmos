@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]
@@ -85,6 +86,18 @@ class _ROpDrawerState extends State<ROpDrawer> {
                                 .operator.value?.state.restaurantId !=
                             null)
                       _operatorNavLinks(),
+                    _navigationLink(
+                      onClick: () {
+                        _drawerController.closeMenu();
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return ContactUsPopUp();
+                            });
+                      },
+                      icon: Icons.alternate_email,
+                      titleWidget: Text('${_i18n()["contact"]}'),
+                    ),
                     _languageSwitcher(),
                     _navigationLink(
                         onClick: () {

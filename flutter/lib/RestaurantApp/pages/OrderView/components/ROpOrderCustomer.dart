@@ -60,15 +60,17 @@ class ROpOrderCustomer extends StatelessWidget {
                       ],
                     ),
                   ),
-                  MessageButton(
-                      showRedDot: Get.find<ROpOrderController>()
-                          .hasNewMessageNotification(order.orderId),
-                      onTap: () {
-                        Get.toNamed(getMessagesRoute(
-                            orderId: order.orderId,
-                            chatId: order.orderId,
-                            recipientType: ParticipantType.Customer));
-                      })
+                  Obx(
+                    () => MessageButton(
+                        showRedDot: Get.find<ROpOrderController>()
+                            .hasNewMessageNotification(order.orderId),
+                        onTap: () {
+                          Get.toNamed(getMessagesRoute(
+                              orderId: order.orderId,
+                              chatId: order.orderId,
+                              recipientType: ParticipantType.Customer));
+                        }),
+                  )
                 ],
               ),
             ),

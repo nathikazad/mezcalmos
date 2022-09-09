@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/controllers/ItemViewController.dart';
-import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
@@ -10,6 +9,11 @@ import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/Controllers/MezDateTi
 import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/MezDateTimePicker.dart';
 import 'package:sizer/sizer.dart';
 
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpOrderView"]["components"]["ROpSpecialItemTime"];
+
+//
 class ROpSpecialItemTime extends StatefulWidget {
   const ROpSpecialItemTime({Key? key, required this.viewController})
       : super(key: key);
@@ -23,6 +27,11 @@ class _ROpSpecialItemTimeState extends State<ROpSpecialItemTime> {
   Rxn<PeriodOfTime> periodTime = Rxn();
   @override
   void initState() {
+    if (widget.viewController.editMode.isTrue) {
+      mezDbgPrint(
+          "Edit mode ========>${widget.viewController.periodOfTime.value}");
+      periodTime.value = widget.viewController.periodOfTime.value;
+    }
     super.initState();
   }
 
@@ -32,16 +41,15 @@ class _ROpSpecialItemTimeState extends State<ROpSpecialItemTime> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Item availability",
+          '${_i18n()["itemAv"]}',
           style: Get.textTheme.bodyText1,
         ),
         const SizedBox(
           height: 10,
         ),
         FormField(validator: (Object? v) {
-          if (widget.viewController.startDay.value == null ||
-              widget.viewController.endDate.value == null) {
-            return "required";
+          if (widget.viewController.periodOfTime.value == null) {
+            return '${_i18n()["required"]}';
           }
           return null;
         }, builder: (FormFieldState<Object?> state) {
@@ -94,8 +102,8 @@ class _ROpSpecialItemTimeState extends State<ROpSpecialItemTime> {
                             );
                           }).then((PeriodOfTime? value) {
                         if (value != null) {
-                          mezDbgPrint("Finish =======>>>$value");
                           periodTime.value = value;
+                          widget.viewController.periodOfTime.value = value;
                           widget.viewController.startDay.value = value.start;
                           widget.viewController.endDate.value = value.end;
                         }
@@ -120,11 +128,9 @@ class _ROpSpecialItemTimeState extends State<ROpSpecialItemTime> {
   }
 
   String _getFormattedString() {
-    String data = "Select your time";
-    if (widget.viewController.startDay.value != null &&
-        widget.viewController.endDate.value != null) {
-      data =
-          "${DateFormat.MMMEd(userLangCode).format(widget.viewController.startDay.value!).replaceAll(".", "")}, ${DateFormat("hh:mm a").format(widget.viewController.startDay.value!.toLocal())} - ${DateFormat("hh:mm a").format(widget.viewController.endDate.value!.toLocal())} ";
+    String data = '${_i18n()["selectTime"]}';
+    if (widget.viewController.periodOfTime.value != null) {
+      data = widget.viewController.periodOfTime.value!.toString();
     }
     return data;
   }

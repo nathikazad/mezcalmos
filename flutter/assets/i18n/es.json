@@ -1488,6 +1488,7 @@
                 "pastOrders": "Órdenes pasadas",
                 "language": "Idioma",
                 "to": "A :",
+                "contact": "Contáctenos",
                 "privacyPolicies": "Políticas de privacidad",
                 "logout": "Cerrar sesión"
             }
@@ -1736,6 +1737,11 @@
                 "cancelOrder": "Cancelar orden",
                 "orderItems": "Encargar artículos",
                 "components": {
+                    "ROpSpecialItemTime": {
+                        "selectTime": "Seleccione su tiempo",
+                        "itemAv": "Disponibilidad de artículos",
+                        "required": "Requerida"
+                    },
                     "ROpRefundButton": {
                         "refundCustomer": "Reembolso del cliente",
                         "refundYourCustomer": "Reembolsar a su cliente",

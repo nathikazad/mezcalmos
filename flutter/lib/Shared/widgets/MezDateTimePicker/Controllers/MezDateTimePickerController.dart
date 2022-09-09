@@ -45,6 +45,11 @@ class MezDateTimePickerController {
     if (pickFromPeriod) {
       _initPickerModePeriodic();
     }
+    if (pickTimeRange) {
+      mezDbgPrint(
+          "pick from range init =======>${periodOfTime.value.toString()}");
+      _initPickerModeRange();
+    }
 
     if (schedule != null) {
       serviceSchedule = schedule;
@@ -88,6 +93,20 @@ class MezDateTimePickerController {
     hours.value = startDate.hour.toAmpPmInt();
     minutes.value = startDate.minute;
     mezDbgPrint("Start oicker from period =======>>>>> ${hours.value}");
+  }
+
+  void _initPickerModeRange() {
+    pickedDate.value = periodOfTime.value!.start;
+    pickedDate.value = DateTime(
+      periodOfTime.value!.start.year,
+      periodOfTime.value!.start.month,
+      periodOfTime.value!.start.day,
+    );
+    startHours.value = periodOfTime.value!.start.toLocal().hour.toAmpPmInt();
+    startMinutes.value = periodOfTime.value!.start.minute;
+    endtHours.value = periodOfTime.value!.end.toLocal().hour.toAmpPmInt();
+    endMinutes.value = periodOfTime.value!.end.minute;
+    // init period selctor without old data
   }
 
   List<int> get getHours {
@@ -358,6 +377,11 @@ class MezDateTimePickerController {
 
   bool get pickFromPeriod {
     return mode.value == MezTimePickerMode.PickDeliveryTime &&
+        periodOfTime.value != null;
+  }
+
+  bool get pickTimeRange {
+    return mode.value == MezTimePickerMode.PickTimeRange &&
         periodOfTime.value != null;
   }
 

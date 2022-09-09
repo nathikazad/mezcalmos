@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 
 class ItemViewController {
   /// Class to control the item view on edit and add mode for restaurant app ///
@@ -51,6 +52,7 @@ class ItemViewController {
   bool secondFormValid = false;
   Rxn<DateTime> startDay = Rxn();
   Rxn<DateTime> endDate = Rxn();
+  Rxn<PeriodOfTime> periodOfTime = Rxn();
 
   // initalisation //
   // the itemId arguments for edit mode //
@@ -102,6 +104,7 @@ class ItemViewController {
     scItemNameController.text = editableItem.value!.name[scLang]!;
     prItemDescController.text = editableItem.value?.name[prLang]! ?? "";
     scItemDescController.text = editableItem.value!.description?[scLang]! ?? "";
+    periodOfTime.value = editableItem.value!.getPeriod;
 
     itemPriceController.text = editableItem.value!.cost.toString();
     mezDbgPrint(editableItem.value!.options.length);
@@ -121,8 +124,8 @@ class ItemViewController {
     final Item newItem = Item(
         image: newImageUrl.value,
         id: generateRandomString(5),
-        startsAt: specialMode.value ? startDay.value : null,
-        endsAt: specialMode.value ? endDate.value : null,
+        startsAt: specialMode.value ? periodOfTime.value?.start : null,
+        endsAt: specialMode.value ? periodOfTime.value?.end : null,
         available: editableItem.value?.available ?? false,
         name: {
           restaurant.value!.primaryLanguage: prItemNameController.text,
