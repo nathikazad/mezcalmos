@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mez_services_web_app/controllers/languageController.dart';
 import 'package:mez_services_web_app/models/Services/Restaurant.dart';
-import 'package:mez_services_web_app/screens/restaurantItemView/components/ItemOptionCard.dart';
+import 'package:mez_services_web_app/screens/Restaurants/restaurantItemView/components/ItemOptionCard.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
 
 class RestaurantItemViewForDesktop extends StatelessWidget {

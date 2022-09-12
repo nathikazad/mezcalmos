@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mez_services_web_app/controllers/languageController.dart';
 import 'package:mez_services_web_app/models/Generic.dart';
 import 'package:mez_services_web_app/models/Services/Restaurant.dart';
-import 'package:mez_services_web_app/screens/components/webAppExpensionPanelComponent.dart';
+import 'package:mez_services_web_app/screens/Restaurants/components/webAppExpensionPanelComponent.dart';
 
 class ItemOptionCard extends StatefulWidget {
   const ItemOptionCard(

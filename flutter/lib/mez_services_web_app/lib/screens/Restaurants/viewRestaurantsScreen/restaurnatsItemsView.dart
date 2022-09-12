@@ -3,15 +3,14 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mez_services_web_app/controllers/languageController.dart';
 import 'package:mez_services_web_app/helpers/GeneralPurposeHelper.dart';
-import 'package:mez_services_web_app/screens/components/installAppBarComponent.dart';
-import 'package:mez_services_web_app/screens/viewRestaurantsScreen/components/viewRestaurantScreenFroDesktop.dart';
-import 'package:mez_services_web_app/screens/viewRestaurantsScreen/components/viewRestaurantScreenFroMobile.dart';
+import 'package:mez_services_web_app/helpers/setUpHelper.dart';
+import 'package:mez_services_web_app/screens/Restaurants/components/installAppBarComponent.dart';
+import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/components/viewRestaurantScreenFroDesktop.dart';
+import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/components/viewRestaurantScreenFroMobile.dart';
 import 'package:mez_services_web_app/services/values/constants.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
-
-import '../../helpers/setUpHelper.dart';
 
 class RestaurantsItemsView extends StatefulWidget {
   RestaurantsItemsView({Key? key}) : super(key: key);

@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:mez_services_web_app/controllers/LaundryController.dart';
 import 'package:mez_services_web_app/controllers/languageController.dart';
 import 'package:get/get.dart';
 import 'package:mez_services_web_app/controllers/restaurantsInfoController.dart';
@@ -28,12 +29,12 @@ Future<void> putControllers() async {
   //     permanent: true,
   //   );
   // }
-  // if (!Get.isRegistered<BolgController>()) {
-  //   Get.put<BolgController>(
-  //     BolgController(),
-  //     permanent: true,
-  //   );
-  // }
+  if (!Get.isRegistered<LaundryController>()) {
+    Get.put<LaundryController>(
+      LaundryController(),
+      permanent: true,
+    );
+  }
 }
 
 Future<bool> setupFirebase(

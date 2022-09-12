@@ -6,8 +6,8 @@ import 'package:mez_services_web_app/controllers/restaurantsInfoController.dart'
 import 'package:mez_services_web_app/helpers/StringHelper.dart';
 import 'package:mez_services_web_app/models/Generic.dart';
 import 'package:mez_services_web_app/models/Services/Restaurant.dart';
-import 'package:mez_services_web_app/screens/restaurantItemView/components/ITemSliverAppBar.dart';
-import 'package:mez_services_web_app/screens/restaurantItemView/components/ItemOptionCard.dart';
+import 'package:mez_services_web_app/screens/Restaurants/restaurantItemView/components/ITemSliverAppBar.dart';
+import 'package:mez_services_web_app/screens/Restaurants/restaurantItemView/components/ItemOptionCard.dart';
 
 import 'package:sizer/sizer.dart';
 

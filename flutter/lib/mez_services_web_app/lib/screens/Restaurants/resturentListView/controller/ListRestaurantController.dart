@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:mez_services_web_app/controllers/restaurantsInfoController.dart';
-
-import '../../../models/Services/Restaurant.dart';
+import 'package:mez_services_web_app/models/Services/Restaurant.dart';
 
 enum UserInteraction { isSearching, isSorting, isSearchingAndSorting, Nothing }
 

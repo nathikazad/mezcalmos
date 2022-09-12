@@ -4,10 +4,10 @@ import 'package:mez_services_web_app/controllers/languageController.dart';
 import 'package:mez_services_web_app/controllers/restaurantsInfoController.dart';
 import 'package:mez_services_web_app/models/Generic.dart';
 import 'package:mez_services_web_app/models/Services/Restaurant.dart';
-import 'package:mez_services_web_app/screens/viewRestaurantsScreen/components/RestaurantGridItemCard.dart';
-import 'package:mez_services_web_app/screens/viewRestaurantsScreen/components/RestaurantListItemComponent.dart';
-import 'package:mez_services_web_app/screens/viewRestaurantsScreen/components/RestaurantSliverAppbar.dart';
-import 'package:mez_services_web_app/screens/viewRestaurantsScreenInfo/components/restaurantInfoTabForMobile.dart';
+import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/components/RestaurantGridItemCard.dart';
+import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/components/RestaurantListItemComponent.dart';
+import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/components/RestaurantSliverAppbar.dart';
+import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreenInfo/components/restaurantInfoTabForMobile.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 //import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 

@@ -5,9 +5,9 @@ import 'package:mez_services_web_app/controllers/restaurantsInfoController.dart'
 import 'package:mez_services_web_app/helpers/GeneralPurposeHelper.dart';
 import 'package:mez_services_web_app/helpers/setUpHelper.dart';
 import 'package:mez_services_web_app/models/Services/Restaurant.dart';
-import 'package:mez_services_web_app/screens/components/installAppBarComponent.dart';
-import 'package:mez_services_web_app/screens/restaurantItemView/components/restauarntItemViewForDesktop.dart';
-import 'package:mez_services_web_app/screens/restaurantItemView/components/restaurantItemViewForMobile.dart';
+import 'package:mez_services_web_app/screens/Restaurants/components/installAppBarComponent.dart';
+import 'package:mez_services_web_app/screens/Restaurants/restaurantItemView/components/restauarntItemViewForDesktop.dart';
+import 'package:mez_services_web_app/screens/Restaurants/restaurantItemView/components/restaurantItemViewForMobile.dart';
 import 'package:mez_services_web_app/services/values/constants.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
 import 'package:qlevar_router/qlevar_router.dart';
