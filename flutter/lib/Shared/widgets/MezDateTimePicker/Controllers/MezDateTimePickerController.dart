@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
@@ -37,6 +36,7 @@ class MezDateTimePickerController {
     bool? period,
     PeriodOfTime? initPeriod,
   }) {
+    serviceSchedule = schedule;
     _initVariables(mode, initPeriod, period, numberOfdays);
     _initStartDateValue(initialDate?.toLocal());
     if (pickFromPeriod) {
@@ -47,8 +47,7 @@ class MezDateTimePickerController {
     }
 
     if (schedule != null) {
-      serviceSchedule = schedule;
-      //   _initTimeValue(p: initPeriod?.toLocal());
+      _initTimeValue(p: initPeriod?.toLocal());
     }
     setAmPm();
   }
@@ -62,6 +61,7 @@ class MezDateTimePickerController {
     this.mode.value = mode;
     periodOfTime.value = initPeriod?.toLocal();
     periodic.value = period ?? false;
+
     numberOfDaysInterval = numberOfdays;
     if (pickFromPeriod) {
       maxHours.value = periodOfTime.value?.end.toLocal().hour ?? null;
@@ -83,24 +83,30 @@ class MezDateTimePickerController {
   }
 
   void _initPickerModePeriodic() {
-    mezDbgPrint("LLLLLLLLLLL   ${startDate.toLocal()}");
     pickedDate.value = DateTime(startDate.year, startDate.month, startDate.day);
     hours.value = startDate.toLocal().hour;
     minutes.value = startDate.toLocal().minute;
   }
 
   void _initPickerModeRange() {
-    mezDbgPrint(
-        "pick from range init =======>${periodOfTime.value.toString()}");
-    startDate = periodOfTime.value!.start;
-    pickedDate.value = periodOfTime.value!.end;
+    if (periodOfTime.value != null) {
+      startDate = periodOfTime.value!.start;
+      pickedDate.value = periodOfTime.value!.start;
 
-    startHours.value = periodOfTime.value!.start.toLocal().hour;
-    startMinutes.value = periodOfTime.value!.start.minute;
-    endtHours.value = periodOfTime.value!.end.toLocal().hour;
-    endMinutes.value = periodOfTime.value!.end.minute;
+      startHours.value = periodOfTime.value!.start.toLocal().hour;
+      startMinutes.value = periodOfTime.value!.start.minute;
+      endtHours.value = periodOfTime.value!.end.toLocal().hour;
+      endMinutes.value = periodOfTime.value!.end.minute;
+    } else {
+      pickedDate.value =
+          DateTime(startDate.year, startDate.month, startDate.day);
+
+      startHours.value = selectedWorkDay.value.from.first;
+      startMinutes.value = selectedWorkDay.value.from[1];
+      endtHours.value = selectedWorkDay.value.to.first;
+      endMinutes.value = 0;
+    }
     // init period selctor without old data
-    mezDbgPrint(pickedDate.value);
   }
 
   void _initTimeValue({PeriodOfTime? p}) {
@@ -236,23 +242,6 @@ class MezDateTimePickerController {
     return _constructDateChoices();
   }
 
-  // List<DateTime> _getSpecDays() {
-  //   final List<DateTime> dates = [];
-
-  //   for (int i = 0; i < numberOfDaysInterval; i++) {
-  //     final DateTime newDate = DateTime(
-  //       periodOfTime.value!.start.year,
-  //       periodOfTime.value!.start.month,
-  //       periodOfTime.value!.start.day + i,
-  //     );
-  //     if (_getServiceDates()
-  //         .contains(DateFormat("EEEE").format(newDate).toLowerCase())) {
-  //       dates.add(newDate);
-  //     }
-  //   }
-  //   return dates;
-  // }
-
   /// Constructing a list of DateTime based on schedule
   List<DateTime> _constructDateChoices() {
     final List<DateTime> dates = (pickFromPeriod) ? [pickedDate.value!] : [];
@@ -280,7 +269,6 @@ class MezDateTimePickerController {
         i++) {
       hours.add(i);
     }
-    mezDbgPrint("HOURS ==============>>>> ${hours.toString()}");
 
     return hours;
   }
@@ -399,8 +387,7 @@ class MezDateTimePickerController {
   }
 
   bool get pickTimeRange {
-    return mode.value == MezTimePickerMode.PickTimeRange &&
-        periodOfTime.value != null;
+    return mode.value == MezTimePickerMode.PickTimeRange;
   }
 
   /// return the selected date on Weekday format
@@ -409,7 +396,7 @@ class MezDateTimePickerController {
         (MapEntry<Weekday, OpenHours> element) =>
             element.key.toFirebaseFormatString() ==
             DateFormat("EEEE")
-                .format(pickedDate.value ?? DateTime.now())
+                .format(pickedDate.value?.toLocal() ?? DateTime.now().toLocal())
                 .toLowerCase());
   }
 

@@ -27,9 +27,12 @@ class _ROpSpecialItemTimeState extends State<ROpSpecialItemTime> {
   Rxn<PeriodOfTime> periodTime = Rxn();
   @override
   void initState() {
+    mezDbgPrint(
+        "Schedule ========${widget.viewController.restaurant.value!.schedule}");
     if (widget.viewController.editMode.isTrue) {
       mezDbgPrint(
           "Edit mode ========>${widget.viewController.periodOfTime.value}");
+
       periodTime.value = widget.viewController.periodOfTime.value;
     }
     super.initState();

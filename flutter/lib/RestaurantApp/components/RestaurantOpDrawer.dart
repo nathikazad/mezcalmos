@@ -96,7 +96,10 @@ class _ROpDrawerState extends State<ROpDrawer> {
                             });
                       },
                       icon: Icons.alternate_email,
-                      titleWidget: Text('${_i18n()["contact"]}'),
+                      titleWidget: Text(
+                        '${_i18n()["contact"]}',
+                        style: Get.textTheme.bodyText1,
+                      ),
                     ),
                     _languageSwitcher(),
                     _navigationLink(
