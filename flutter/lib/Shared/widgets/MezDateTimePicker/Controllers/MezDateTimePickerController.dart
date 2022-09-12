@@ -48,7 +48,7 @@ class MezDateTimePickerController {
 
     if (schedule != null) {
       serviceSchedule = schedule;
-      _initTimeValue(p: initPeriod?.toLocal());
+      //   _initTimeValue(p: initPeriod?.toLocal());
     }
     setAmPm();
   }
@@ -83,10 +83,10 @@ class MezDateTimePickerController {
   }
 
   void _initPickerModePeriodic() {
-    pickedDate.value = startDate;
-    hours.value = startDate.hour;
-    minutes.value = startDate.minute;
-    mezDbgPrint("Start oicker from period =======>>>>> ${hours.value}");
+    mezDbgPrint("LLLLLLLLLLL   ${startDate.toLocal()}");
+    pickedDate.value = DateTime(startDate.year, startDate.month, startDate.day);
+    hours.value = startDate.toLocal().hour;
+    minutes.value = startDate.toLocal().minute;
   }
 
   void _initPickerModeRange() {
@@ -103,113 +103,6 @@ class MezDateTimePickerController {
     mezDbgPrint(pickedDate.value);
   }
 
-  List<int> get getHours {
-    final List<int> hours = [];
-
-    for (int i = minHours.value ?? selectedWorkDay.value.from.first;
-        i <= (maxHours.value ?? selectedWorkDay.value.to.first);
-        i++) {
-      hours.add(i);
-    }
-    mezDbgPrint("HOURS ==============>>>> ${hours.toString()}");
-
-    return hours;
-  }
-
-  List<int> get getStartHours {
-    final List<int> hours = [];
-    for (int i = selectedWorkDay.value.from.first;
-        i <= selectedWorkDay.value.to.first - 1;
-        i++) {
-      hours.add(i);
-    }
-
-    return hours;
-  }
-
-  List<int> get getEndtHours {
-    final List<int> hours = [];
-    for (int i = startHours.value! + 1;
-        i <= selectedWorkDay.value.to.first;
-        i++) {
-      hours.add(i);
-    }
-
-    return hours;
-  }
-
-  List<int> get getMinutes {
-    final List<int> data = [];
-    if (hours.value == selectedWorkDay.value.from.first) {
-      for (int i = selectedWorkDay.value.from[1]; i <= 59; i = i + 5) {
-        data.add(i);
-      }
-    } else if (hours.value == selectedWorkDay.value.to.first) {
-      if (selectedWorkDay.value.to[1] != 0) {
-        for (int i = 0; i <= selectedWorkDay.value.to[1]; i = i + 5) {
-          data.add(i);
-        }
-      } else
-        data.add(0);
-    } else if (minMinutes.value != null && maxMinutes.value != null) {
-      for (int i = minMinutes.value!;
-          i <= ((hours.value == maxHours.value) ? maxMinutes.value! : 59);
-          i = i + 5) {
-        data.add(i);
-      }
-    } else {
-      for (int i = 0; i <= 59; i = i + 5) {
-        data.add(i);
-      }
-    }
-
-    return data.toSet().toList();
-  }
-
-  List<int> get getEndMinutes {
-    final List<int> data = [];
-    if (endtHours.value == selectedWorkDay.value.from.first) {
-      for (int i = selectedWorkDay.value.from[1]; i <= 59; i = i + 5) {
-        data.add(i);
-      }
-    } else if (endtHours.value == selectedWorkDay.value.to.first) {
-      if (selectedWorkDay.value.to[1] != 0) {
-        for (int i = 0; i <= selectedWorkDay.value.to[1]; i = i + 5) {
-          data.add(i);
-        }
-      } else
-        data.add(0);
-    } else {
-      for (int i = 0; i <= 59; i = i + 5) {
-        data.add(i);
-      }
-    }
-
-    return data.toSet().toList();
-  }
-
-  List<int> get getStartMinutes {
-    final List<int> data = [];
-    if (startHours.value == selectedWorkDay.value.from.first) {
-      for (int i = selectedWorkDay.value.from[1]; i <= 59; i = i + 5) {
-        data.add(i);
-      }
-    } else if (startHours.value == selectedWorkDay.value.to.first) {
-      if (selectedWorkDay.value.to[1] != 0) {
-        for (int i = 0; i <= selectedWorkDay.value.to[1]; i = i + 5) {
-          data.add(i);
-        }
-      } else
-        data.add(0);
-    } else {
-      for (int i = 0; i <= 59; i = i + 5) {
-        data.add(i);
-      }
-    }
-
-    return data.toSet().toList();
-  }
-
   void _initTimeValue({PeriodOfTime? p}) {
     // init of single datetime
     if (periodic.isFalse) {
@@ -217,7 +110,6 @@ class MezDateTimePickerController {
       minutes.value = getMinutes.closest(startDate.minute);
       // init with old period of time //
     } else if (p != null) {
-      mezDbgPrint("HELLLLOOOOOOO ---->${p.start.toLocal().toString()}");
       startDate = DateTime(
         p.start.toLocal().year,
         p.start.toLocal().month,
@@ -363,7 +255,7 @@ class MezDateTimePickerController {
 
   /// Constructing a list of DateTime based on schedule
   List<DateTime> _constructDateChoices() {
-    final List<DateTime> dates = [];
+    final List<DateTime> dates = (pickFromPeriod) ? [pickedDate.value!] : [];
 
     for (int i = 0; i < numberOfDaysInterval; i++) {
       final DateTime newDate = DateTime(
@@ -378,6 +270,115 @@ class MezDateTimePickerController {
     }
 
     return dates;
+  }
+
+  List<int> get getHours {
+    final List<int> hours = [];
+
+    for (int i = minHours.value ?? selectedWorkDay.value.from.first;
+        i <= (maxHours.value ?? selectedWorkDay.value.to.first);
+        i++) {
+      hours.add(i);
+    }
+    mezDbgPrint("HOURS ==============>>>> ${hours.toString()}");
+
+    return hours;
+  }
+
+  List<int> get getStartHours {
+    final List<int> hours = [];
+    for (int i = selectedWorkDay.value.from.first;
+        i <= selectedWorkDay.value.to.first - 1;
+        i++) {
+      hours.add(i);
+    }
+
+    return hours;
+  }
+
+  List<int> get getEndtHours {
+    final List<int> hours = [];
+    for (int i = startHours.value! + 1;
+        i <= selectedWorkDay.value.to.first;
+        i++) {
+      hours.add(i);
+    }
+
+    return hours;
+  }
+
+  List<int> get getMinutes {
+    final List<int> data = [];
+    if (minMinutes.value != null &&
+        maxMinutes.value != null &&
+        pickFromPeriod) {
+      for (int i = minMinutes.value!;
+          i <= ((hours.value == maxHours.value) ? maxMinutes.value! : 59);
+          i = i + 5) {
+        data.add(i);
+      }
+    } else if (hours.value == selectedWorkDay.value.from.first) {
+      for (int i = selectedWorkDay.value.from[1]; i <= 59; i = i + 5) {
+        data.add(i);
+      }
+    } else if (hours.value == selectedWorkDay.value.to.first) {
+      if (selectedWorkDay.value.to[1] != 0) {
+        for (int i = 0; i <= selectedWorkDay.value.to[1]; i = i + 5) {
+          data.add(i);
+        }
+      } else
+        data.add(0);
+    } else {
+      for (int i = 0; i <= 59; i = i + 5) {
+        data.add(i);
+      }
+    }
+
+    return data.toSet().toList();
+  }
+
+  List<int> get getEndMinutes {
+    final List<int> data = [];
+    if (endtHours.value == selectedWorkDay.value.from.first) {
+      for (int i = selectedWorkDay.value.from[1]; i <= 59; i = i + 5) {
+        data.add(i);
+      }
+    } else if (endtHours.value == selectedWorkDay.value.to.first) {
+      if (selectedWorkDay.value.to[1] != 0) {
+        for (int i = 0; i <= selectedWorkDay.value.to[1]; i = i + 5) {
+          data.add(i);
+        }
+      } else
+        data.add(0);
+    } else {
+      for (int i = 0; i <= 59; i = i + 5) {
+        data.add(i);
+      }
+    }
+
+    return data.toSet().toList();
+  }
+
+  List<int> get getStartMinutes {
+    final List<int> data = [];
+    if (startHours.value == selectedWorkDay.value.from.first) {
+      for (int i = selectedWorkDay.value.from[1]; i <= 59; i = i + 5) {
+        data.add(i);
+      }
+    } else if (startHours.value == selectedWorkDay.value.to.first) {
+      if (selectedWorkDay.value.to[1] != 0) {
+        for (int i = 0; i <= selectedWorkDay.value.to[1]; i = i + 5) {
+          data.add(i);
+        }
+      } else
+        data.add(0);
+    } else {
+      for (int i = 0; i <= 59; i = i + 5) {
+        data.add(i);
+      }
+    }
+
+    return data.toSet().toList();
   }
 
   /// Filtering and creating an array of weekdays based on service schedule

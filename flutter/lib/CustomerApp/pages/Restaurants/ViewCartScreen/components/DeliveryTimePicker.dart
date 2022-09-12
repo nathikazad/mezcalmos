@@ -135,7 +135,8 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                             ),
                           ),
                         ),
-                      if (controller.cart.value.deliveryTime != null)
+                      if (controller.cart.value.deliveryTime != null &&
+                          controller.cart.value.isSpecial == false)
                         Padding(
                           padding: const EdgeInsets.only(left: 8),
                           child: InkWell(
