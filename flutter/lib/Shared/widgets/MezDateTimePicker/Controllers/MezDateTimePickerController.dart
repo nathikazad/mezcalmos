@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
@@ -73,12 +74,16 @@ class MezDateTimePickerController {
   }
 
   void _initStartDateValue(DateTime? initialDate) {
-    if (initialDate != null) {
-      startDate = initialDate.toLocal();
-      hours.value = initialDate.hour;
-      minutes.value = initialDate.minute;
-    } else {
-      startDate = DateTime.now().toLocal();
+    if (pickTimeRange && periodOfTime.value == null) {
+      mezDbgPrint("Closet day:::::::::::::");
+      startDate = _getTheCLosestOpenDay().toLocal();
+      hours.value = startDate.hour;
+      minutes.value = startDate.minute;
+    } else if (initialDate != null) {
+      startDate = DateTime(initialDate.year, initialDate.month, initialDate.day)
+          .toLocal();
+      hours.value = startDate.hour;
+      minutes.value = startDate.minute;
     }
     pickedDate.value = startDate.toLocal();
     if (periodic.isFalse) {
@@ -95,8 +100,10 @@ class MezDateTimePickerController {
 
   void _initPickerModeRange() {
     if (periodOfTime.value != null) {
-      startDate = periodOfTime.value!.start;
-      pickedDate.value = periodOfTime.value!.start;
+      startDate = DateTime(periodOfTime.value!.start.year,
+              periodOfTime.value!.start.month, periodOfTime.value!.start.day)
+          .toLocal();
+      pickedDate.value = startDate;
 
       startHours.value = periodOfTime.value!.start.toLocal().hour;
       startMinutes.value = periodOfTime.value!.start.minute;
@@ -257,6 +264,7 @@ class MezDateTimePickerController {
         DateTime.now().month,
         DateTime.now().day + i,
       );
+      mezDbgPrint(_getServiceDates().toString());
       if (_getServiceDates()
           .contains(DateFormat("EEEE").format(newDate).toLowerCase())) {
         dates.add(newDate);
@@ -403,6 +411,27 @@ class MezDateTimePickerController {
             DateFormat("EEEE")
                 .format(pickedDate.value?.toLocal() ?? DateTime.now().toLocal())
                 .toLowerCase());
+  }
+
+  DateTime _getTheCLosestOpenDay() {
+    DateTime data = DateTime.now();
+    if (_getServiceDates()
+        .contains(DateFormat("EEEE").format(DateTime.now()).toLowerCase())) {
+      data = DateTime.now();
+    } else {
+      DateTime testDate = DateTime.now();
+      for (int i = 0; i < 7; i++) {
+        mezDbgPrint("Testting ===========>>>>>>>>$testDate");
+        mezDbgPrint("Testting ===========>>>>>>>>$testDate");
+        testDate = DateTime(testDate.year, testDate.month, testDate.day + i);
+        if (_getServiceDates()
+            .contains(DateFormat("EEEE").format(testDate).toLowerCase())) {
+          data = testDate;
+          break;
+        }
+      }
+    }
+    return data;
   }
 
   // Confirm CallBack //
