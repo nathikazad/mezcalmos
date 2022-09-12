@@ -36,8 +36,7 @@ class MezDateTimePickerController {
     bool? period,
     PeriodOfTime? initPeriod,
   }) {
-    serviceSchedule = schedule;
-    _initVariables(mode, initPeriod, period, numberOfdays);
+    _initVariables(mode, initPeriod, period, numberOfdays, schedule);
     _initStartDateValue(initialDate?.toLocal());
     if (pickFromPeriod) {
       _initPickerModePeriodic();
@@ -46,9 +45,9 @@ class MezDateTimePickerController {
       _initPickerModeRange();
     }
 
-    if (schedule != null) {
-      _initTimeValue(p: initPeriod?.toLocal());
-    }
+    // if (schedule != null) {
+    //   _initTimeValue(p: initPeriod?.toLocal());
+    // }
     setAmPm();
   }
 
@@ -57,7 +56,9 @@ class MezDateTimePickerController {
     PeriodOfTime? initPeriod,
     bool? period,
     int numberOfdays,
+    Schedule? schedule,
   ) {
+    serviceSchedule = schedule;
     this.mode.value = mode;
     periodOfTime.value = initPeriod?.toLocal();
     periodic.value = period ?? false;
@@ -80,6 +81,10 @@ class MezDateTimePickerController {
       startDate = DateTime.now().toLocal();
     }
     pickedDate.value = startDate.toLocal();
+    if (periodic.isFalse) {
+      hours.value = startDate.hour;
+      minutes.value = getMinutes.closest(startDate.minute);
+    }
   }
 
   void _initPickerModePeriodic() {
@@ -109,36 +114,36 @@ class MezDateTimePickerController {
     // init period selctor without old data
   }
 
-  void _initTimeValue({PeriodOfTime? p}) {
-    // init of single datetime
-    if (periodic.isFalse) {
-      hours.value = startDate.hour;
-      minutes.value = getMinutes.closest(startDate.minute);
-      // init with old period of time //
-    } else if (p != null) {
-      startDate = DateTime(
-        p.start.toLocal().year,
-        p.start.toLocal().month,
-        p.start.toLocal().day,
-      );
-      pickedDate.value = DateTime(
-        p.start.toLocal().year,
-        p.start.toLocal().month,
-        p.start.toLocal().day,
-      );
-      startHours.value = p.start.toLocal().hour;
-      startMinutes.value = p.start.minute;
-      endtHours.value = p.end.toLocal().hour;
-      endMinutes.value = p.end.minute;
-      // init period selctor without old data
-    } else {
-      startHours.value = selectedWorkDay.value.from.first;
-      startMinutes.value = selectedWorkDay.value.from[1];
-      endtHours.value = selectedWorkDay.value.to.first;
-      endMinutes.value = 0;
-    }
-    setAmPm();
-  }
+  // void _initTimeValue({PeriodOfTime? p}) {
+  //   // init of single datetime
+  //   if (periodic.isFalse) {
+  //     hours.value = startDate.hour;
+  //     minutes.value = getMinutes.closest(startDate.minute);
+  //     // init with old period of time //
+  //   } else if (p != null) {
+  //     startDate = DateTime(
+  //       p.start.toLocal().year,
+  //       p.start.toLocal().month,
+  //       p.start.toLocal().day,
+  //     );
+  //     pickedDate.value = DateTime(
+  //       p.start.toLocal().year,
+  //       p.start.toLocal().month,
+  //       p.start.toLocal().day,
+  //     );
+  //     startHours.value = p.start.toLocal().hour;
+  //     startMinutes.value = p.start.minute;
+  //     endtHours.value = p.end.toLocal().hour;
+  //     endMinutes.value = p.end.minute;
+  //     // init period selctor without old data
+  //   } else {
+  //     startHours.value = selectedWorkDay.value.from.first;
+  //     startMinutes.value = selectedWorkDay.value.from[1];
+  //     endtHours.value = selectedWorkDay.value.to.first;
+  //     endMinutes.value = 0;
+  //   }
+  //   setAmPm();
+  // }
 
   /// Set period of time based on picked date or the object passed in
   void _setPeriodOfTime({PeriodOfTime? period}) {
