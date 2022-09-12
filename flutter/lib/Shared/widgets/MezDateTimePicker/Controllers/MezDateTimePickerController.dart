@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
@@ -38,23 +37,20 @@ class MezDateTimePickerController {
     bool? period,
     PeriodOfTime? initPeriod,
   }) {
-    mezDbgPrint(
-        "INITIAL DATE ====================>>> ${initialDate?.toLocal()}");
     _initVariables(mode, initPeriod, period, numberOfdays);
     _initStartDateValue(initialDate?.toLocal());
     if (pickFromPeriod) {
       _initPickerModePeriodic();
     }
     if (pickTimeRange) {
-      mezDbgPrint(
-          "pick from range init =======>${periodOfTime.value.toString()}");
       _initPickerModeRange();
     }
 
     if (schedule != null) {
       serviceSchedule = schedule;
-      _initTimeValue(p: initPeriod);
+      _initTimeValue(p: initPeriod?.toLocal());
     }
+    setAmPm();
   }
 
   void _initVariables(
@@ -64,17 +60,15 @@ class MezDateTimePickerController {
     int numberOfdays,
   ) {
     this.mode.value = mode;
-    periodOfTime.value = initPeriod;
+    periodOfTime.value = initPeriod?.toLocal();
     periodic.value = period ?? false;
     numberOfDaysInterval = numberOfdays;
-    maxHours.value =
-        periodOfTime.value?.end.toLocal().hour.toAmpPmInt() ?? null;
-    minHours.value =
-        periodOfTime.value?.start.toLocal().hour.toAmpPmInt() ?? null;
-    maxMinutes.value = periodOfTime.value?.end.minute ?? null;
-    minMinutes.value = periodOfTime.value?.start.minute ?? null;
-    mezDbgPrint("min hours =========>>>> ${minHours.value}");
-    mezDbgPrint("max hours =========>>>> ${maxHours.value}");
+    if (pickFromPeriod) {
+      maxHours.value = periodOfTime.value?.end.toLocal().hour ?? null;
+      minHours.value = periodOfTime.value?.start.toLocal().hour ?? null;
+      maxMinutes.value = periodOfTime.value?.end.minute ?? null;
+      minMinutes.value = periodOfTime.value?.start.minute ?? null;
+    }
   }
 
   void _initStartDateValue(DateTime? initialDate) {
@@ -90,23 +84,23 @@ class MezDateTimePickerController {
 
   void _initPickerModePeriodic() {
     pickedDate.value = startDate;
-    hours.value = startDate.hour.toAmpPmInt();
+    hours.value = startDate.hour;
     minutes.value = startDate.minute;
     mezDbgPrint("Start oicker from period =======>>>>> ${hours.value}");
   }
 
   void _initPickerModeRange() {
-    pickedDate.value = periodOfTime.value!.start;
-    pickedDate.value = DateTime(
-      periodOfTime.value!.start.year,
-      periodOfTime.value!.start.month,
-      periodOfTime.value!.start.day,
-    );
-    startHours.value = periodOfTime.value!.start.toLocal().hour.toAmpPmInt();
+    mezDbgPrint(
+        "pick from range init =======>${periodOfTime.value.toString()}");
+    startDate = periodOfTime.value!.start;
+    pickedDate.value = periodOfTime.value!.end;
+
+    startHours.value = periodOfTime.value!.start.toLocal().hour;
     startMinutes.value = periodOfTime.value!.start.minute;
-    endtHours.value = periodOfTime.value!.end.toLocal().hour.toAmpPmInt();
+    endtHours.value = periodOfTime.value!.end.toLocal().hour;
     endMinutes.value = periodOfTime.value!.end.minute;
     // init period selctor without old data
+    mezDbgPrint(pickedDate.value);
   }
 
   List<int> get getHours {
@@ -115,7 +109,7 @@ class MezDateTimePickerController {
     for (int i = minHours.value ?? selectedWorkDay.value.from.first;
         i <= (maxHours.value ?? selectedWorkDay.value.to.first);
         i++) {
-      hours.add(i.toAmpPmInt());
+      hours.add(i);
     }
     mezDbgPrint("HOURS ==============>>>> ${hours.toString()}");
 
@@ -219,18 +213,24 @@ class MezDateTimePickerController {
   void _initTimeValue({PeriodOfTime? p}) {
     // init of single datetime
     if (periodic.isFalse) {
-      hours.value = startDate.hour.toAmpPmInt();
+      hours.value = startDate.hour;
       minutes.value = getMinutes.closest(startDate.minute);
       // init with old period of time //
     } else if (p != null) {
-      pickedDate.value = DateTime(
-        p.start.year,
-        p.start.month,
-        p.start.day,
+      mezDbgPrint("HELLLLOOOOOOO ---->${p.start.toLocal().toString()}");
+      startDate = DateTime(
+        p.start.toLocal().year,
+        p.start.toLocal().month,
+        p.start.toLocal().day,
       );
-      startHours.value = p.start.hour.toAmpPmInt();
+      pickedDate.value = DateTime(
+        p.start.toLocal().year,
+        p.start.toLocal().month,
+        p.start.toLocal().day,
+      );
+      startHours.value = p.start.toLocal().hour;
       startMinutes.value = p.start.minute;
-      endtHours.value = p.end.hour..toAmpPmInt();
+      endtHours.value = p.end.toLocal().hour;
       endMinutes.value = p.end.minute;
       // init period selctor without old data
     } else {
@@ -344,11 +344,28 @@ class MezDateTimePickerController {
     return _constructDateChoices();
   }
 
+  // List<DateTime> _getSpecDays() {
+  //   final List<DateTime> dates = [];
+
+  //   for (int i = 0; i < numberOfDaysInterval; i++) {
+  //     final DateTime newDate = DateTime(
+  //       periodOfTime.value!.start.year,
+  //       periodOfTime.value!.start.month,
+  //       periodOfTime.value!.start.day + i,
+  //     );
+  //     if (_getServiceDates()
+  //         .contains(DateFormat("EEEE").format(newDate).toLowerCase())) {
+  //       dates.add(newDate);
+  //     }
+  //   }
+  //   return dates;
+  // }
+
   /// Constructing a list of DateTime based on schedule
   List<DateTime> _constructDateChoices() {
-    final List<DateTime> dates = [startDate];
+    final List<DateTime> dates = [];
 
-    for (int i = 1; i < numberOfDaysInterval; i++) {
+    for (int i = 0; i < numberOfDaysInterval; i++) {
       final DateTime newDate = DateTime(
         DateTime.now().year,
         DateTime.now().month,

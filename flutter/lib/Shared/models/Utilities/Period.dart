@@ -41,6 +41,13 @@ class PeriodOfTime {
     return null;
   }
 
+  PeriodOfTime toLocal() {
+    final PeriodOfTime data =
+        PeriodOfTime(start: start.toLocal(), end: end.toLocal());
+
+    return this;
+  }
+
   @override
   int get hashCode => start.hashCode ^ end.hashCode;
 
