@@ -182,6 +182,7 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
 
   Widget _searchInput(BuildContext context) {
     LanguageController lang = Get.find<LanguageController>();
+    var viewController = Get.find<ListRestaurantsController>();
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: MezCalmosResizer.getWepPageHorizontalPadding(context),
@@ -193,9 +194,9 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
             style: Get.textTheme.bodyText1!.copyWith(fontSize: 13),
             onChanged: (String value) {
               print("this is a test");
-              // viewController.searchQuery.value = value;
-              // viewController.filterRestaurants();
-              // mezDbgPrint(viewController.searchQuery);
+              viewController.searchQuery.value = value;
+              viewController.filterRestaurants();
+              print(viewController.searchQuery);
             },
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.only(top: 8.0),

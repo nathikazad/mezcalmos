@@ -120,6 +120,7 @@ class Restaurant extends Service {
         if (item.id == id) returnVal = item;
       });
     });
+
     return returnVal;
   }
 

@@ -336,10 +336,16 @@ class _MezExpansionTileState extends State<MezExpansionTile>
   Widget? _buildIcon(BuildContext context) {
     return RotationTransition(
       turns: _iconTurns,
-      child: Icon(
-        _isExpanded ? Icons.remove : Icons.add,
-        color: Color.fromRGBO(103, 121, 254, 1),
-        size: widget.IconSize,
+      child: Container(
+        padding: const EdgeInsets.all(5),
+        decoration: const BoxDecoration(
+            color: Color.fromRGBO(225, 228, 255, 1),
+            borderRadius: BorderRadius.all(Radius.circular(20))),
+        child: Icon(
+          Icons.expand_more,
+          color: Color.fromRGBO(103, 121, 254, 1),
+          size: widget.IconSize,
+        ),
       ),
     );
   }
@@ -366,28 +372,41 @@ class _MezExpansionTileState extends State<MezExpansionTile>
         color: _backgroundColor.value ??
             expansionTileTheme.backgroundColor ??
             Colors.transparent,
-        border: Border(
-          top: BorderSide(color: Colors.black),
-          // bottom: BorderSide(
-          //     color: !_isExpanded ? Colors.black : Colors.transparent),
-        ),
+        // border: Border(
+        //   top: BorderSide(color: Colors.black),
+        //   // bottom: BorderSide(
+        //   //     color: !_isExpanded ? Colors.black : Colors.transparent),
+        // ),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          ListTileTheme.merge(
-            iconColor: _iconColor.value ?? expansionTileTheme.iconColor,
-            textColor: _headerColor.value,
-            child: ListTile(
+          Container(
+            child: InkWell(
               onTap: _handleTap,
-              contentPadding:
-                  widget.tilePadding ?? expansionTileTheme.tilePadding,
-              leading: widget.leading ?? _buildLeadingIcon(context),
-              title: widget.title,
-              subtitle: widget.subtitle,
-              trailing: widget.trailing ?? _buildTrailingIcon(context),
+              child: Row(
+                children: [
+                  //title
+                  widget.title,
+                  Spacer(),
+                  widget.trailing ?? _buildTrailingIcon(context)!
+                ],
+              ),
             ),
           ),
+          // ListTileTheme.merge(
+          //   iconColor: _iconColor.value ?? expansionTileTheme.iconColor,
+          //   textColor: _headerColor.value,
+          //   child: ListTile(
+          //     onTap: _handleTap,
+          //     contentPadding:
+          //         widget.tilePadding ?? expansionTileTheme.tilePadding,
+          //     leading: widget.leading ?? _buildLeadingIcon(context),
+          //     title: widget.title,
+          //     subtitle: widget.subtitle,
+          //     trailing: widget.trailing ?? _buildTrailingIcon(context),
+          //   ),
+          // ),
           ClipRect(
             child: Align(
               alignment: widget.expandedAlignment ??

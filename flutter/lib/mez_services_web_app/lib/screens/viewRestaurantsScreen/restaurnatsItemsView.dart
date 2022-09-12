@@ -99,45 +99,50 @@ class ItemCardComponnent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      child: Card(
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // SizedBox(
-              //   height: 20,
-              // ),
-              Container(
-                child: ClipOval(
-                  child: Container(
-                    height: SizeOfOvalImage(context),
-                    width: SizeOfOvalImage(context),
-                    child: Image.network(
-                      "$imageUrl",
-                      fit: BoxFit.cover,
+      child: InkWell(
+        onTap: () {
+          QR.to("${QR.currentPath}/$id");
+        },
+        child: Card(
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // SizedBox(
+                //   height: 20,
+                // ),
+                Container(
+                  child: ClipOval(
+                    child: Container(
+                      height: SizeOfOvalImage(context),
+                      width: SizeOfOvalImage(context),
+                      child: Image.network(
+                        "$imageUrl",
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Text(
-                "$title",
-                style: GoogleFonts.montserrat(
-                    textStyle:
-                        TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "\$$price",
-                style: GoogleFonts.montserrat(
-                    textStyle:
-                        TextStyle(fontSize: 13, fontWeight: FontWeight.w700)),
-              )
-            ],
+                SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  "$title",
+                  style: GoogleFonts.montserrat(
+                      textStyle:
+                          TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "\$$price",
+                  style: GoogleFonts.montserrat(
+                      textStyle:
+                          TextStyle(fontSize: 13, fontWeight: FontWeight.w700)),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -162,60 +167,66 @@ class ItemCardWithoutImageComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      child: Card(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          color: Colors.white,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // if we have  image
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  // check if image not null
-                  (imageUrl != null && imageUrl!.isNotEmpty)
-                      ? Container(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: ClipOval(
-                            child: Container(
-                              height: SizeOfOvalImageTwo(context),
-                              width: SizeOfOvalImageTwo(context),
-                              child: Image.network(
-                                "$imageUrl",
-                                fit: BoxFit.cover,
+      child: InkWell(
+        onTap: () {
+          print("the item id is $id");
+          QR.to("${QR.currentPath}/$id");
+        },
+        child: Card(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            color: Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // if we have  image
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    // check if image not null
+                    (imageUrl != null && imageUrl!.isNotEmpty)
+                        ? Container(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: ClipOval(
+                              child: Container(
+                                height: SizeOfOvalImageTwo(context),
+                                width: SizeOfOvalImageTwo(context),
+                                child: Image.network(
+                                  "$imageUrl",
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
+                          )
+                        : SizedBox(
+                            height: 0,
+                            width: 0,
                           ),
-                        )
-                      : SizedBox(
-                          height: 0,
-                          width: 0,
-                        ),
-                  // title
-                  Container(
-                    child: Text(
-                      "$title",
-                      style: GoogleFonts.montserrat(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500),
+                    // title
+                    Container(
+                      child: Text(
+                        "$title",
+                        style: GoogleFonts.montserrat(
+                            color: Colors.black,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              // price
-              Container(
-                child: Text(
-                  "\$$price",
-                  style: GoogleFonts.montserrat(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black),
+                  ],
                 ),
-              )
-            ],
+                // price
+                Container(
+                  child: Text(
+                    "\$$price",
+                    style: GoogleFonts.montserrat(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

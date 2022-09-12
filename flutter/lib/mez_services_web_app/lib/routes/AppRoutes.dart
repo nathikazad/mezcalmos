@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:mez_services_web_app/helpers/GeneralPurposeHelper.dart';
 import 'package:mez_services_web_app/helpers/setUpHelper.dart';
+import 'package:mez_services_web_app/screens/restaurantItemView/restaurantItemView.dart';
 import 'package:mez_services_web_app/screens/viewRestaurantsScreen/restaurnatsItemsView.dart';
 import 'package:mez_services_web_app/screens/resturentListView/restaurantsListView.dart';
 import 'package:mez_services_web_app/screens/unFoundPage.dart';
@@ -15,6 +16,7 @@ class AppRoutes {
   static const String restaurantitems = "items";
   static const String restaurants_id = "restaurants_id";
   static const String restaurant_info = "info";
+  static const String item_id = "item_id";
 
   void setup() {
     // enable debug logging for all routes
@@ -72,6 +74,12 @@ class AppRoutes {
                   name: restaurant_info,
                   middleware: [],
                   builder: () => ViewRestaurantsScrennInfo(),
+                ),
+                QRoute(
+                  path: '/:itemId',
+                  name: item_id,
+                  middleware: [],
+                  builder: () => RestaurantItemView(),
                 )
               ]),
         ]),
