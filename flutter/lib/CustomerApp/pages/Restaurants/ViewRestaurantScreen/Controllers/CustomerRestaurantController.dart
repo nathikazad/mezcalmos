@@ -106,14 +106,18 @@ class CustomerRestaurantController {
     final Map<DateTime, List<Item>> data = restaurant.value!.currentSpecials
         .where((Item element) =>
             element.available &&
-            (element.startsAt!.isAfter(DateTime.now()) ||
-                element.startsAt!.isAtSameMomentAs(DateTime.now())))
-        .groupListsBy((Item element) => DateTime(element.startsAt!.year,
-            element.startsAt!.month, element.startsAt!.day));
+            (element.startsAt!.toLocal().isAfter(DateTime.now().toLocal()) ||
+                element.startsAt!
+                    .toLocal()
+                    .isAtSameMomentAs(DateTime.now().toLocal())))
+        .groupListsBy((Item element) => DateTime(
+            element.startsAt!.toLocal().year,
+            element.startsAt!.toLocal().month,
+            element.startsAt!.toLocal().day));
     // sorting the map
     final SplayTreeMap<DateTime, List<Item>> sortedMap =
-        SplayTreeMap<DateTime, List<Item>>.from(
-            data, (DateTime a, DateTime b) => a.compareTo(b));
+        SplayTreeMap<DateTime, List<Item>>.from(data,
+            (DateTime a, DateTime b) => a.toLocal().compareTo(b.toLocal()));
 
     return sortedMap;
   }
