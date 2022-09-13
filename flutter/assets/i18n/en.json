@@ -33,6 +33,18 @@
             }
         },
         "pages": {
+            "cards": {
+
+                "SavedCardsListView": {
+                    "cards": "Cards",
+                    "card": "Card",
+                    "addNew": "Add new credit card",
+                    "removeTitle": "Remove card",
+                    "removeDesc": "Are you sure you want to remove this card",
+                    "removeBtn": "Yes, remove card"
+
+                }
+            },
             "ListOrdersScreen": {
                 "components": {
                     "RestaurantOngoingOrderCard": {

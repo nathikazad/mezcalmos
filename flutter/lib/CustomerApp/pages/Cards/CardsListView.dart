@@ -6,12 +6,18 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:sizer/sizer.dart';
 
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["cards"]["SavedCardsListView"];
+
+//
 class SavedCardsListView extends StatefulWidget {
   const SavedCardsListView({Key? key}) : super(key: key);
 
@@ -38,7 +44,7 @@ class _SavedCardsListViewState extends State<SavedCardsListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          title: "Cards", onClick: Get.back),
+          title: '${_i18n()["cards"]}', onClick: Get.back),
       body: Obx(
         () => SingleChildScrollView(
             padding: const EdgeInsets.all(12),
@@ -56,7 +62,7 @@ class _SavedCardsListViewState extends State<SavedCardsListView> {
                     await addCardSheet();
                   },
                   btnColor: Colors.grey.shade200,
-                  title: "Add new credit card",
+                  title: '${_i18n()["addNew"]}',
                 )
               ],
             )),
@@ -75,7 +81,7 @@ class _SavedCardsListViewState extends State<SavedCardsListView> {
               width: 15,
             ),
             Text(
-              "Card",
+              '${_i18n()["card"]}',
               style: Get.textTheme.bodyText1,
             ),
             SizedBox(
@@ -89,9 +95,9 @@ class _SavedCardsListViewState extends State<SavedCardsListView> {
               customBorder: CircleBorder(),
               onTap: () {
                 showConfirmationDialog(context,
-                    title: "Remove card",
-                    helperText: "Are you sure you want to remove this card",
-                    primaryButtonText: "Yes , remove card ",
+                    title: '${_i18n()["removeTitle"]}',
+                    helperText: '${_i18n()["removeDesc"]}',
+                    primaryButtonText: '${_i18n()["removeBtn"]}',
                     onYesClick: () async {
                   await removeCard(cardId: card.id)
                       .whenComplete(() => Get.back());

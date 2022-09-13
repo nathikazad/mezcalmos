@@ -33,6 +33,17 @@
             }
         },
         "pages": {
+            "cards": {
+                "SavedCardsListView": {
+                    "cards": "Tarjetas",
+                    "card": "Tarjeta",
+                    "addNew": "Agregar nueva tarjeta de crédito",
+                    "removeTitle": "Eliminar la tarjeta",
+                    "removeDesc": "¿Estás seguro de que quieres eliminar esta tarjeta?",
+                    "removeBtn": "Sí, eliminar la tarjeta"
+
+                }
+            },
             "ListOrdersScreen": {
                 "components": {
                     "RestaurantOngoingOrderCard": {
