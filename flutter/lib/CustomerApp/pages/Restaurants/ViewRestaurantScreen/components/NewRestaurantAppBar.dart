@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -30,68 +31,70 @@ class NewRestaurantAppBar extends StatelessWidget {
   final CustomerRestaurantController controller;
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-        backgroundColor: Theme.of(context).primaryColorLight,
-        elevation: 0.4,
-        centerTitle: true,
-        expandedHeight: 270,
-        leadingWidth: 35,
-        automaticallyImplyLeading: false,
-        bottom: bottom,
-        leading: _BackButtonAppBar(),
-        actions: <Widget>[
-          getAppbarIconsButton(),
-        ],
-        pinned: true,
-        flexibleSpace: FlexibleSpaceBar(
-          expandedTitleScale: 1.6,
-          titlePadding: EdgeInsets.only(bottom: _getBottomPadding()),
+    return Obx(
+      () => SliverAppBar(
+          backgroundColor: Theme.of(context).primaryColorLight,
+          elevation: 0.4,
           centerTitle: true,
-          title: Container(
-            alignment: Alignment.bottomCenter,
-            width: 55.w,
-            padding: const EdgeInsets.only(bottom: 5, left: 5, right: 5),
-            child: FittedBox(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Flexible(
-                    child: Container(
-                      alignment: Alignment.bottomCenter,
-                      //  margin: const EdgeInsets.only(bottom: 3),
-                      child: Text(
-                        (controller.showInfo.value)
-                            ? "${_i18n()["info"]}"
-                            : controller.restaurant.value!.info.name,
-                        style: Get.textTheme.headline3
-                            ?.copyWith(color: Colors.white, fontSize: 14.sp),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
+          expandedHeight: 270,
+          leadingWidth: 35,
+          automaticallyImplyLeading: false,
+          bottom: controller.showInfo.isFalse ? bottom : null,
+          leading: _BackButtonAppBar(),
+          actions: <Widget>[
+            getAppbarIconsButton(),
+          ],
+          pinned: true,
+          flexibleSpace: FlexibleSpaceBar(
+            expandedTitleScale: 1.6,
+            titlePadding: EdgeInsets.only(bottom: _getBottomPadding()),
+            centerTitle: true,
+            title: Container(
+              alignment: Alignment.bottomCenter,
+              width: 55.w,
+              padding: const EdgeInsets.only(bottom: 5, left: 5, right: 5),
+              child: FittedBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(
+                      child: Container(
+                        alignment: Alignment.bottomCenter,
+                        //  margin: const EdgeInsets.only(bottom: 3),
+                        child: Text(
+                          (controller.showInfo.value)
+                              ? "${_i18n()["info"]}"
+                              : controller.restaurant.value!.info.name,
+                          style: Get.textTheme.headline3
+                              ?.copyWith(color: Colors.white, fontSize: 14.sp),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
-                  ),
-                  if (!controller.showInfo.value)
-                    Container(
-                      alignment: Alignment.bottomCenter,
-                      margin:
-                          const EdgeInsets.only(left: 5, right: 5, bottom: 0),
-                      child: InkWell(
-                          onTap: controller.onInfoTap,
-                          child: Icon(
-                            Icons.info_outline_rounded,
-                            size: 15.sp,
-                            color: Colors.white,
-                          )),
-                    )
-                ],
+                    if (!controller.showInfo.value)
+                      Container(
+                        alignment: Alignment.bottomCenter,
+                        margin:
+                            const EdgeInsets.only(left: 5, right: 5, bottom: 0),
+                        child: InkWell(
+                            onTap: controller.onInfoTap,
+                            child: Icon(
+                              Icons.info_outline_rounded,
+                              size: 15.sp,
+                              color: Colors.white,
+                            )),
+                      )
+                  ],
+                ),
               ),
             ),
-          ),
-          background: _backgroundImageComponent(),
-        ));
+            background: _backgroundImageComponent(),
+          )),
+    );
   }
 
   Widget _backgroundImageComponent() {
@@ -292,6 +295,7 @@ class NewRestaurantAppBar extends StatelessWidget {
         child: InkWell(
           onTap: () {
             if (controller.showInfo.isTrue) {
+              mezDbgPrint("Clicked");
               controller.onInfoTap();
             } else {
               Get.back();

@@ -96,8 +96,13 @@ class CustomerRestaurantController {
 
   // methods //
   void onInfoTap() {
-    showInfo.value = true;
-    pauseRectGetterIndex.value = !pauseRectGetterIndex.value;
+    if (showInfo.isFalse) {
+      showInfo.value = true;
+      pauseRectGetterIndex.value = !pauseRectGetterIndex.value;
+    } else {
+      showInfo.value = false;
+      pauseRectGetterIndex.value = !pauseRectGetterIndex.value;
+    }
   }
 
   Map<DateTime, List<Item>> getGroupedSpecials() {

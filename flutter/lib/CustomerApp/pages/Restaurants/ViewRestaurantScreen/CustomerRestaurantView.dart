@@ -89,8 +89,9 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
       controller: _viewController.scrollController,
       slivers: [
         NewRestaurantAppBar(controller: _viewController),
-        (_viewController.showInfo.value)
-            ? SliverPadding(
+        Obx(() {
+          if (_viewController.showInfo.value)
+            return SliverPadding(
                 padding: const EdgeInsets.all(12),
                 sliver: SliverList(
                     delegate: SliverChildListDelegate([
@@ -100,8 +101,10 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
                       child: RestaurantInfoTab(
                         restaurant: restaurant,
                       )),
-                ])))
-            : Obx(() => _buildItemsList())
+                ])));
+          else
+            return _buildItemsList();
+        })
       ],
     );
   }
