@@ -69,7 +69,7 @@ class ListRestaurantsController {
   }
 
   bool get showFilters {
-    return searchQuery.value.length > 2;
+    return searchQuery.value.length > 0;
   }
 
   bool get byRestaurants {

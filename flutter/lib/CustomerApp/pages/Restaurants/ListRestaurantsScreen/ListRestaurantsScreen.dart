@@ -69,115 +69,121 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
 
   Widget _searchFilter() {
     return Obx(
-      () => Container(
-        margin: const EdgeInsets.only(top: 15),
-        child: Row(
-          children: [
-            Flexible(
-              child: InkWell(
-                borderRadius: BorderRadius.circular(18),
-                onTap: () {
-                  viewController
-                      .switchSearchType(SearchType.searchByRestaurantName);
-                },
-                child: Ink(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-                  decoration: BoxDecoration(
-                      color: (viewController.byRestaurants)
-                          ? primaryBlueColor
-                          : Colors.grey.shade300,
-                      borderRadius: BorderRadius.circular(18)),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.flatware,
-                        color: !viewController.byRestaurants
-                            ? Colors.grey.shade700
-                            : Colors.white,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Flexible(
-                        fit: FlexFit.tight,
-                        child: Text(
-                          "Restaurants",
-                          style: Get.textTheme.bodyText1?.copyWith(
+      () {
+        if (viewController.showFilters) {
+          return Container(
+            margin: const EdgeInsets.only(top: 15),
+            child: Row(
+              children: [
+                Flexible(
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(18),
+                    onTap: () {
+                      viewController
+                          .switchSearchType(SearchType.searchByRestaurantName);
+                    },
+                    child: Ink(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 10),
+                      decoration: BoxDecoration(
+                          color: (viewController.byRestaurants)
+                              ? primaryBlueColor
+                              : Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(18)),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.flatware,
                             color: !viewController.byRestaurants
                                 ? Colors.grey.shade700
                                 : Colors.white,
                           ),
-                        ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Flexible(
+                            fit: FlexFit.tight,
+                            child: Text(
+                              "Restaurants",
+                              style: Get.textTheme.bodyText1?.copyWith(
+                                color: !viewController.byRestaurants
+                                    ? Colors.grey.shade700
+                                    : Colors.white,
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            viewController.byRestaurants
+                                ? Icons.check_circle
+                                : Icons.circle_outlined,
+                            color: !viewController.byRestaurants
+                                ? Colors.grey.shade700
+                                : Colors.white,
+                          )
+                        ],
                       ),
-                      Icon(
-                        viewController.byRestaurants
-                            ? Icons.check_circle
-                            : Icons.circle_outlined,
-                        color: !viewController.byRestaurants
-                            ? Colors.grey.shade700
-                            : Colors.white,
-                      )
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-            SizedBox(
-              width: 15,
-            ),
-            Flexible(
-              child: InkWell(
-                borderRadius: BorderRadius.circular(18),
-                onTap: () {
-                  viewController.switchSearchType(SearchType.searchByItemName);
-                },
-                child: Ink(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-                  decoration: BoxDecoration(
-                      color: (!viewController.byRestaurants)
-                          ? primaryBlueColor
-                          : Colors.grey.shade300,
-                      borderRadius: BorderRadius.circular(18)),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.fastfood,
-                        color: viewController.byRestaurants
-                            ? Colors.grey.shade700
-                            : Colors.white,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Flexible(
-                        fit: FlexFit.tight,
-                        child: Text(
-                          "Meal",
-                          style: Get.textTheme.bodyText1?.copyWith(
+                SizedBox(
+                  width: 15,
+                ),
+                Flexible(
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(18),
+                    onTap: () {
+                      viewController
+                          .switchSearchType(SearchType.searchByItemName);
+                    },
+                    child: Ink(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 10),
+                      decoration: BoxDecoration(
+                          color: (!viewController.byRestaurants)
+                              ? primaryBlueColor
+                              : Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(18)),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.fastfood,
                             color: viewController.byRestaurants
                                 ? Colors.grey.shade700
                                 : Colors.white,
                           ),
-                        ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Flexible(
+                            fit: FlexFit.tight,
+                            child: Text(
+                              "Meal",
+                              style: Get.textTheme.bodyText1?.copyWith(
+                                color: viewController.byRestaurants
+                                    ? Colors.grey.shade700
+                                    : Colors.white,
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            !viewController.byRestaurants
+                                ? Icons.check_circle
+                                : Icons.circle_outlined,
+                            color: viewController.byRestaurants
+                                ? Colors.grey.shade700
+                                : Colors.white,
+                          )
+                        ],
                       ),
-                      Icon(
-                        !viewController.byRestaurants
-                            ? Icons.check_circle
-                            : Icons.circle_outlined,
-                        color: viewController.byRestaurants
-                            ? Colors.grey.shade700
-                            : Colors.white,
-                      )
-                    ],
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
+          );
+        } else
+          return SizedBox();
+      },
     );
   }
 
