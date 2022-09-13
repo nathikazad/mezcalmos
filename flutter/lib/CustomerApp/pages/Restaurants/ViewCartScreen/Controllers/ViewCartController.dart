@@ -5,7 +5,6 @@ import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/ViewCartScreen.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
@@ -38,15 +37,12 @@ class ViewCartController {
   Future<void> _addingValusToOptions() async {
     options.add({PickerChoice.Cash: null});
     if (await isApplePaySupported()) {
-      mezDbgPrint("Adding apple pay");
       options.add({PickerChoice.ApplePay: null});
     }
     if (await isGooglePaySupported()) {
-      mezDbgPrint("Adding google pay");
       options.add({PickerChoice.GooglePay: null});
     }
     customerCards.forEach((CreditCard element) {
-      mezDbgPrint("Adding cards");
       options.add({PickerChoice.SavedCard: element});
     });
     options.add({PickerChoice.NewCard: null});
@@ -68,15 +64,13 @@ class ViewCartController {
   }
 
   // methods
-  void switchPicker(PaymentOption value) {
+  Future<void> switchPicker(PaymentOption value) async {
     if (value.keys.first != PickerChoice.Cash) {
       controller.switchPaymentMedthod(paymentType: PaymentType.Card);
+      await handlePaymentChoice(value);
     } else {
-      controller.switchPaymentMedthod(
-          paymentType:
-              PaymentType.Cash); //  cart.paymentType = PaymentType.Cash;
+      controller.switchPaymentMedthod(paymentType: PaymentType.Cash);
     }
-    handlePaymentChoice(value);
   }
 
   Future<void> handlePaymentChoice(PaymentOption newValue) async {
@@ -88,17 +82,25 @@ class ViewCartController {
 
       case PickerChoice.NewCard:
         final String? newCardId = await addCardSheet();
+        if (newCardId != null) {
+          customerCards.refresh();
+          final CreditCard? newCard = customerCards
+              .firstWhere((CreditCard element) => element.id == newCardId);
 
-        customerCards.refresh();
-        final CreditCard? newCard = customerCards
-            .firstWhere((CreditCard element) => element.id == newCardId);
+          if (newCard != null) {
+            card.value = newCard;
+            options
+                .insert(options.length - 1, {PickerChoice.SavedCard: newCard});
+            pickerChoice.value = options.firstWhere((PaymentOption element) =>
+                element.entries.first.value?.id == newCard.id);
+          }
+        } else {
+          controller.switchPaymentMedthod(paymentType: PaymentType.Cash);
+          pickerChoice.value = options.first;
 
-        if (newCard != null) {
-          card.value = newCard;
-          options.insert(options.length - 1, {PickerChoice.SavedCard: newCard});
-          pickerChoice.value = options.firstWhere((PaymentOption element) =>
-              element.entries.first.value?.id == newCard.id);
+          pickerChoice.refresh();
         }
+
         break;
 
       default:

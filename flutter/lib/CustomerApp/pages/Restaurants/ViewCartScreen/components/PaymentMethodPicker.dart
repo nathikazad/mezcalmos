@@ -50,6 +50,7 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                     decoration: InputDecoration(
                       filled: true,
                       isDense: false,
+
                       fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(horizontal: 5),
                       enabledBorder: OutlineInputBorder(
@@ -70,13 +71,16 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                     value: widget.viewCartController.pickerChoice.value,
                     onChanged: (PaymentOption? newValue) async {
                       if (newValue != null) {
-                        widget.viewCartController.switchPicker(newValue);
-                        mezDbgPrint(
-                            "Inside cart controller ========>${controller.cart.value.paymentType}");
+                        mezDbgPrint(newValue);
+                        await widget.viewCartController
+                            .switchPicker(newValue)
+                            .whenComplete(() => mezDbgPrint(
+                                "Final value ====> ${widget.viewCartController.pickerChoice.value}"));
                       }
                     },
                     validator: (PaymentOption? value) {
-                      if (value == null) {
+                      if (value == null ||
+                          value == {PickerChoice.NewCard: null}) {
                         return "Please select a payment method";
                       } else {
                         return null;
