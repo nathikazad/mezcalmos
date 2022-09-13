@@ -8,7 +8,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryType.dart';
-import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/Controllers/MezDateTimePickerController.dart';
 import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/MezDateTimePicker.dart';
 import 'package:sizer/sizer.dart';
 
@@ -179,7 +178,6 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
         builder: (BuildContext ctx) {
           return MezDateTimePicker(
             startDate: controller.cart.value.deliveryTime?.toLocal(),
-            pickerMode: MezTimePickerMode.PickDeliveryTime,
             periodOfTime: controller.cart.value.cartPeriod,
             numberOfDaysInterval: controller.cart.value.isSpecial ? 1 : 7,
             serviceSchedule: controller.cart.value.restaurant!.schedule!,

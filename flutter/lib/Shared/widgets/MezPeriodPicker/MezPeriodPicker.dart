@@ -7,15 +7,15 @@ import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/Controllers/MezDateTimePickerController.dart';
+import 'package:mezcalmos/Shared/widgets/MezPeriodPicker/controller/MezPeriodPickerController.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
     ["MezDateTimePicker"];
 
 //
-class MezDateTimePicker extends StatefulWidget {
-  const MezDateTimePicker(
+class MezPeriodPicker extends StatefulWidget {
+  const MezPeriodPicker(
       {Key? key,
       required this.startDate,
       required this.numberOfDaysInterval,
@@ -33,18 +33,15 @@ class MezDateTimePicker extends StatefulWidget {
   final String? confirmBtnText;
 
   @override
-  State<MezDateTimePicker> createState() => _MezDateTimePickerState();
+  State<MezPeriodPicker> createState() => _MezPeriodPickerState();
 }
 
-class _MezDateTimePickerState extends State<MezDateTimePicker> {
-  MezDateTimePickerController _controller = MezDateTimePickerController();
+class _MezPeriodPickerState extends State<MezPeriodPicker> {
+  MezPeriodPickerController _controller = MezPeriodPickerController();
   @override
   void initState() {
     _controller.init(
-        initialDate: widget.startDate,
-        numberOfdays: widget.numberOfDaysInterval,
-        initPeriod: widget.periodOfTime,
-        schedule: widget.serviceSchedule);
+        period: widget.periodOfTime, schedule: widget.serviceSchedule);
     super.initState();
   }
 
@@ -83,10 +80,9 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
             ),
             // date picker
             Text(
-              '${_i18n()["sTime"]}',
+              "Starts at ",
               style: Get.textTheme.bodyText1,
             ),
-
             const SizedBox(
               height: 10,
             ),
@@ -95,7 +91,8 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
                 children: [
                   Flexible(
                       child: _hoursPicker(
-                          value: _controller.hours.value,
+                          value: _controller.startHours.value,
+                          choices: _controller.getStartHours(),
                           callBack: (int? v) {
                             if (v != null) {
                               _controller.changeHours(hour: v, start: true);
@@ -104,7 +101,8 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
                   SizedBox(width: 15),
                   Flexible(
                       child: _minutesPicker(
-                          value: _controller.minutes.value,
+                          value: _controller.startMinutes.value,
+                          choices: _controller.getStartMinutes(),
                           callBack: (int? v) {
                             if (v != null) {
                               _controller.changeMinutes(
@@ -112,7 +110,57 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
                             }
                           })),
                   SizedBox(width: 15),
-                  Flexible(child: _ampPmWidget(value: _controller.amPmValue)),
+                  Flexible(
+                    child: _ampPmWidget(value: _controller.startAmpPm),
+                  ),
+                ],
+              ),
+            ),
+
+            Obx(
+              () => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Ends at ",
+                    style: Get.textTheme.bodyText1,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    child: Row(
+                      children: [
+                        Flexible(
+                            child: _hoursPicker(
+                                value: _controller.endtHours.value,
+                                choices: _controller.getEndtHours(),
+                                callBack: (int? v) {
+                                  if (v != null) {
+                                    _controller.changeHours(
+                                        hour: v, start: false);
+                                  }
+                                })),
+                        SizedBox(width: 15),
+                        Flexible(
+                            child: _minutesPicker(
+                                value: _controller.endMinutes.value,
+                                choices: _controller.getEndMinutes(),
+                                callBack: (int? v) {
+                                  if (v != null) {
+                                    _controller.changeMinutes(
+                                        minuteValue: v, start: false);
+                                  }
+                                })),
+                        SizedBox(width: 15),
+                        Flexible(
+                            child: _ampPmWidget(value: _controller.endAmPm)),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -157,7 +205,7 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
         () => DropdownButtonFormField<DateTime>(
           decoration: _dropDownDecoration(
             label:
-                "${DateFormat.MMMMEEEEd(userLangCode).format(_controller.pickedDate.value!)}",
+                "${DateFormat.MMMMEEEEd(userLangCode).format(_controller.pickedDate.value)}",
             prefixIcon: Icon(
               Icons.calendar_month,
               color: Colors.black,
@@ -181,17 +229,16 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
     );
   }
 
-  Widget _hoursPicker({
-    required int? value,
-    required Function(int?)? callBack,
-  }) {
+  Widget _hoursPicker(
+      {required int? value,
+      required Function(int?)? callBack,
+      required List<int> choices}) {
     return Container(
       child: DropdownButtonFormField<int>(
-        decoration:
-            _dropDownDecoration(label: "${_controller.hours.value ?? "hours"}"),
+        decoration: _dropDownDecoration(label: "hours"),
         value: value,
         onChanged: callBack,
-        items: _controller.getHours().map<DropdownMenuItem<int>>((int value) {
+        items: (choices).map<DropdownMenuItem<int>>((int value) {
           return DropdownMenuItem<int>(
               value: value,
               child:
@@ -201,17 +248,16 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
     );
   }
 
-  Container _minutesPicker({
-    required int? value,
-    required Function(int?)? callBack,
-  }) {
+  Container _minutesPicker(
+      {required int? value,
+      required Function(int?)? callBack,
+      required List<int> choices}) {
     return Container(
       child: DropdownButtonFormField<int>(
-        decoration: _dropDownDecoration(
-            label: "${_controller.minutes.value ?? "minutes"}"),
+        decoration: _dropDownDecoration(label: "minutes"),
         value: value,
         onChanged: callBack,
-        items: _controller.getMinutes().map<DropdownMenuItem<int>>((int value) {
+        items: (choices).map<DropdownMenuItem<int>>((int value) {
           return DropdownMenuItem<int>(
               value: value, child: Text(value.toString().padLeft(2, "0")));
         }).toList(),

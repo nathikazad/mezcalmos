@@ -18,6 +18,21 @@ extension DurationParser on Duration {
   }
 }
 
+enum AmPmEnum { AM, PM }
+
+extension ParseDeliveryTypeToString on AmPmEnum {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+
+  String toNormalString() {
+    final String str = toString().split('.').last;
+
+    return str;
+  }
+}
+
 // This helper will do the calculataion and return the differnce
 // between the current time and the passed date time
 // wit will alse do the needed format on the string
@@ -151,7 +166,7 @@ extension timeHelper on int {
     }
   }
 
-  int toAmpPmInt() {
+  int toAmPmInt() {
     if (this <= 12) {
       return this;
     } else {
