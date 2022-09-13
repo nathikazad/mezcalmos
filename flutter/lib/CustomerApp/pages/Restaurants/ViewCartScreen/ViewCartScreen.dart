@@ -241,8 +241,8 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         }
       } else {
         MezSnackbar(
-          "Oops",
-          "Distance between you and restaurat is more than 10km!",
+          '${_i18n()["ops"]}',
+          '${_i18n()["distanceError"]}',
         );
       }
     } catch (e, s) {

@@ -185,6 +185,8 @@
                         }
                     },
                     "ViewCartScreen": {
+                        "ops": "Oops",
+                        "distanceError": "Distance between you and restaurat is more than 10km !",
                         "myCart": "My Cart",
                         "notAvailable": "This restaurant is closed",
                         "orderNow": "ORDER NOW",
