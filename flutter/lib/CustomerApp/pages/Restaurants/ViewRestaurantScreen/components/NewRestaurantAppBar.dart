@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -243,7 +242,7 @@ class NewRestaurantAppBar extends StatelessWidget {
                             : null),
                     alignment: Alignment.center,
                     child: Text(
-                      "Menu",
+                      '${_i18n()["menu"]}',
                       style: controller.isOnMenuView
                           ? Get.textTheme.bodyText1
                               ?.copyWith(color: primaryBlueColor)
@@ -271,7 +270,7 @@ class NewRestaurantAppBar extends StatelessWidget {
                                     color: primaryBlueColor, width: 2))
                             : null),
                     child: Text(
-                      "Specials",
+                      '${_i18n()["specials"]}',
                       style: controller.isOnSpecialView
                           ? Get.textTheme.bodyText1
                               ?.copyWith(color: primaryBlueColor)
@@ -295,7 +294,6 @@ class NewRestaurantAppBar extends StatelessWidget {
         child: InkWell(
           onTap: () {
             if (controller.showInfo.isTrue) {
-              mezDbgPrint("Clicked");
               controller.onInfoTap();
             } else {
               Get.back();

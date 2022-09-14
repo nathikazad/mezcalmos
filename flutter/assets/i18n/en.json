@@ -293,7 +293,9 @@
                     },
                     "components": {
                         "RestaurantSliverAppBar": {
-                            "info": "Information"
+                            "info": "Information",
+                            "menu": "Menu",
+                            "specials": "Specials"
                         },
                         "restaurantInfoTab": {
                             "description": "Description",
