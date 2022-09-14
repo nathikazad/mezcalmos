@@ -14,7 +14,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -93,14 +93,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 SizedBox(
                   height: 20,
                 ),
-                Text(
-                  "${_i18n()["paymentMethod"]}",
-                  style: Get.textTheme.bodyText1,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(order.value!.paymentType.toNormalString()),
+                OrderPaymentMethod(order: order.value!),
                 SizedBox(
                   height: 20,
                 ),

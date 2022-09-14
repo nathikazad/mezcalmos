@@ -12,7 +12,6 @@ import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderHandl
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderItems.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderNote.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderStatusCard.dart';
-import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderSummaryCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpRefundBtn.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
@@ -25,6 +24,9 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpOrderView'];
@@ -162,9 +164,15 @@ class _ROpOrderViewState extends State<ROpOrderView> {
               _getMapWidget(),
               ROpOrderCustomer(order: order.value!),
               _orderItemsList(),
-
-              ROpOrderSummaryCard(
+              Container(
+                  margin: const EdgeInsets.only(bottom: 20),
+                  child: OrderDeliveryLocation(order: order.value!)),
+              Container(
+                  margin: const EdgeInsets.only(bottom: 20),
+                  child: OrderPaymentMethod(order: order.value!)),
+              OrderSummaryCard(
                 order: order.value!,
+                margin: const EdgeInsets.only(bottom: 20),
               ),
               ROpOrderNote(order: order.value!),
               if (order.value!.stripePaymentInfo != null)
@@ -174,7 +182,8 @@ class _ROpOrderViewState extends State<ROpOrderView> {
               if (order.value!.inProcess())
                 TextButton(
                     style: TextButton.styleFrom(
-                        backgroundColor: offRedColor, primary: Colors.red),
+                        foregroundColor: Colors.red,
+                        backgroundColor: offRedColor),
                     onPressed: () {
                       showConfirmationDialog(context, onYesClick: () async {
                         await controller

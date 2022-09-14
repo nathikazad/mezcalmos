@@ -808,6 +808,13 @@
             }
         },
         "widgets": {
+            "OrderPaymentMethod": {
+                "paymentMethod": "Método de pago",
+                "cash": "Dinero"
+            },
+            "OrderDeliveryLocation": {
+                "title": "Lugar de entrega"
+            },
             "CreditCardInfo": {
                 "creditCardInfo": "Información de la tarjeta de crédito",
                 "cardType": "Tipo de tarjeta",
@@ -1364,6 +1371,10 @@
 
                     },
                     "Components": {
+                        "AnimatedOrderInfoCard": {
+                            "cash": "Dinero",
+                            "card": "Tarjeta"
+                        },
                         "DriverBottomLaundryOrderCard": {
                             "orderStatus": {
                                 "readyForPickup": "Listo para recojer",

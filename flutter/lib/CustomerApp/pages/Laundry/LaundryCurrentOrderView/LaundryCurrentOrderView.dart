@@ -11,7 +11,6 @@ import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Comp
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderNoteComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderStatusCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/OrderLaundryCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/OrderSummaryComponent.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
@@ -25,6 +24,9 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/LaundryOrderPricingCompenent.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -163,8 +165,18 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
 
                             LaundryOrderNoteComponent(order: order.value!),
 
-                            OrderSummaryComponent(
+                            OrderDeliveryLocation(
                               order: order.value!,
+                              margin: const EdgeInsets.only(bottom: 20),
+                            ),
+                            OrderPaymentMethod(
+                              order: order.value!,
+                              margin: const EdgeInsets.only(bottom: 20),
+                            ),
+
+                            OrderSummaryCard(
+                              order: order.value!,
+                              margin: const EdgeInsets.only(bottom: 20),
                             ),
                             Spacer(),
                             Flexible(

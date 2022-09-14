@@ -795,6 +795,13 @@
             }
         },
         "widgets": {
+            "OrderPaymentMethod": {
+                "paymentMethod": "Payment method",
+                "cash": "Cash"
+            },
+            "OrderDeliveryLocation": {
+                "title": "Delivery location"
+            },
             "CreditCardInfo": {
                 "creditCardInfo": "Credit card info",
                 "cardType": "Card type",
@@ -1391,6 +1398,10 @@
 
                     },
                     "Components": {
+                        "AnimatedOrderInfoCard": {
+                            "cash": "Cash",
+                            "card": "Card"
+                        },
                         "DriverBottomLaundryOrderCard": {
                             "oops": "Oops",
                             "set": "Set",
