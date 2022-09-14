@@ -11,6 +11,7 @@ class MezButton extends StatefulWidget {
     this.backgroundColor,
     this.textColor,
     this.borderRadius = 10,
+    this.textStyle,
     this.height = 55,
     required this.label,
     this.onClick,
@@ -24,6 +25,7 @@ class MezButton extends StatefulWidget {
   final Color? textColor;
   final Future<void> Function()? onClick;
   final double? borderRadius;
+  final TextStyle? textStyle;
 
   @override
   State<MezButton> createState() => _MezButtonState();
@@ -81,8 +83,9 @@ class _MezButtonState extends State<MezButton> {
                       )
                     : Text(
                         widget.label,
-                        style: Get.textTheme.bodyText1
-                            ?.copyWith(color: widget.textColor ?? Colors.white),
+                        style: widget.textStyle ??
+                            Get.textTheme.bodyText1?.copyWith(
+                                color: widget.textColor ?? Colors.white),
                       ),
               ),
             )),
