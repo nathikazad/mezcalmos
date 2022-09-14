@@ -255,7 +255,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                 width: 3,
               ),
               Text(
-                "${_i18n()["itemUnav"]}",
+                "${_i18n()["itemUnav"]}".allInCaps,
                 style: Get.textTheme.bodyText2?.copyWith(
                     fontWeight: FontWeight.w600,
                     fontSize: 11.sp,

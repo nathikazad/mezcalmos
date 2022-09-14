@@ -13,127 +13,126 @@ class OrderInfosCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: orderCardSubWidgets.onCardTap,
-      child: Container(
-        margin: EdgeInsets.only(bottom: 15),
-        padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 15.0),
+        child: Material(
+          elevation: 1.5,
           borderRadius: BorderRadius.circular(8),
-          boxShadow: [
-            BoxShadow(
-              color: Color.fromRGBO(0, 0, 0, 0.25),
-              offset: Offset(0, 1),
-              blurRadius: 4,
-              spreadRadius: -1,
-            )
-          ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ...[
-              orderCardSubWidgets.primaryHeaderContent,
-              orderCardSubWidgets.secondaryHeaderContent,
-            ],
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Container(
+            //  margin: EdgeInsets.only(bottom: 15),
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                // left column
+              children: [
+                ...[
+                  orderCardSubWidgets.primaryHeaderContent,
+                  orderCardSubWidgets.secondaryHeaderContent,
+                ],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    // left column
 
-                Flexible(
-                  flex: 7,
-                  fit: FlexFit.tight,
-                  child: Flex(
-                    direction: Axis.vertical,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      // first line - name and price
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                    Flexible(
+                      flex: 7,
+                      fit: FlexFit.tight,
+                      child: Flex(
+                        direction: Axis.vertical,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Flexible(
-                            flex: 2,
-                            child: Text(
-                              orderCardSubWidgets.cardTitle,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w700,
-                                fontSize: 17,
+                          // first line - name and price
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Flexible(
+                                flex: 2,
+                                child: Text(
+                                  orderCardSubWidgets.cardTitle,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 17,
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
                           ),
+                          SizedBox(height: 5),
+                          orderCardSubWidgets.primaryBodyContent,
+                          orderCardSubWidgets.secondaryBodyContent,
+                          // second line - from
+                          SizedBox(height: 5),
                         ],
                       ),
-                      SizedBox(height: 5),
-                      orderCardSubWidgets.primaryBodyContent,
-                      orderCardSubWidgets.secondaryBodyContent,
-                      // second line - from
-                      SizedBox(height: 5),
+                    ),
+
+                    Flexible(
+                      flex: 4,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          orderCardSubWidgets.cardTime,
+                          orderCardSubWidgets.rightImage,
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                Divider(),
+                Container(
+                  // height: 30,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          height: 15,
+                          width: 20,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage(money_asset),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 5),
+                      Center(
+                        child: Text(
+                          "\$${order.cost.toString()}",
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w700,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      Container(
+                        // height: 30,
+                        child: orderCardSubWidgets.cardStatus,
+                      ),
                     ],
                   ),
                 ),
-
-                Flexible(
-                  flex: 4,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      orderCardSubWidgets.cardTime,
-                      orderCardSubWidgets.rightImage,
-                    ],
-                  ),
-                )
               ],
             ),
-            Divider(),
-            Container(
-              // height: 30,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      height: 15,
-                      width: 20,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage(money_asset),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 5),
-                  Center(
-                    child: Text(
-                      "\$${order.cost.toString()}",
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                  Spacer(),
-                  Container(
-                    // height: 30,
-                    child: orderCardSubWidgets.cardStatus,
-                  ),
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
