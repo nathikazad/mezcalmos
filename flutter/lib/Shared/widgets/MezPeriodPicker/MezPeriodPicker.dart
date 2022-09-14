@@ -80,7 +80,7 @@ class _MezPeriodPickerState extends State<MezPeriodPicker> {
             ),
             // date picker
             Text(
-              "Starts at ",
+              '${_i18n()["startsAt"]}',
               style: Get.textTheme.bodyText1,
             ),
             const SizedBox(
@@ -125,7 +125,7 @@ class _MezPeriodPickerState extends State<MezPeriodPicker> {
                     height: 20,
                   ),
                   Text(
-                    "Ends at ",
+                    '${_i18n()["endsAt"]}',
                     style: Get.textTheme.bodyText1,
                   ),
                   const SizedBox(

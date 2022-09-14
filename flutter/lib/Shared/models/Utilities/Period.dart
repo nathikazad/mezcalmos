@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class PeriodOfTime {
   DateTime start;
@@ -35,9 +34,7 @@ class PeriodOfTime {
   }
 
   PeriodOfTime? merge(PeriodOfTime p2) {
-    mezDbgPrint("Trying to merge : \n ${toString()} \n ${p2.toString()} ");
     if (include(p2)) {
-      mezDbgPrint("Merge two period of time success : $p2");
       return p2;
     }
     return null;

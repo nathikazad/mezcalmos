@@ -819,6 +819,8 @@
             },
             "MezDateTimePicker": {
                 "title": "Elige tu tiempo",
+                "startsAt": "Empieza a",
+                "endsAt": "Termina en",
                 "sDate": "Seleccione fecha",
                 "sTime": "Tiempo de selección",
                 "cancel": "Cancelar",
