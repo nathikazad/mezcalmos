@@ -1802,6 +1802,7 @@
                     },
                     "ROpOrderItems": {
                         "note": "Nota",
+                        "markitemUnav": "Marca como no disponible",
                         "itemUnav": "no disponible"
                     },
                     "ROpOrderSummaryCard": {

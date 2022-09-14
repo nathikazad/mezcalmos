@@ -124,148 +124,152 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
 
   Widget _itemHeader(LanguageType userLanguage, TextTheme txt) {
     return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
+      child: Column(
         children: [
-          SizedBox(
-            width: 5,
-          ),
-          Container(
-            //  padding: const EdgeInsets.all(5),
-            height: 55,
-            width: 55,
-            foregroundDecoration: BoxDecoration(
-                color: (widget.item.unavailable)
-                    ? Colors.white.withOpacity(0.4)
-                    : null),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: (imageLoded)
-                      ? CachedNetworkImageProvider(widget.item.image ?? '',
-                          errorListener: () {
-                          setState(() {
-                            imageLoded = false;
-                          });
-                        })
-                      : AssetImage(aNoImage) as ImageProvider<Object>,
-                )),
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          if (widget.item.name[userLanguage] != null)
-            Flexible(
-              fit: FlexFit.tight,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.item.name[userLanguage]! +
-                        " x${widget.item.quantity}",
-                    style: txt.bodyText1?.copyWith(
-                        color: widget.item.unavailable
-                            ? Colors.black.withOpacity(0.5)
-                            : Colors.black,
-                        decoration: (widget.item.unavailable)
-                            ? TextDecoration.lineThrough
-                            : null),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              SizedBox(
+                width: 5,
+              ),
+              Container(
+                //  padding: const EdgeInsets.all(5),
+                height: 55,
+                width: 55,
+                foregroundDecoration: BoxDecoration(
+                    color: (widget.item.unavailable)
+                        ? Colors.white.withOpacity(0.4)
+                        : null),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: (imageLoded)
+                          ? CachedNetworkImageProvider(widget.item.image ?? '',
+                              errorListener: () {
+                              setState(() {
+                                imageLoded = false;
+                              });
+                            })
+                          : AssetImage(aNoImage) as ImageProvider<Object>,
+                    )),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              if (widget.item.name[userLanguage] != null)
+                Flexible(
+                  fit: FlexFit.tight,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Flexible(
-                        child: Text(
-                            '\$' + widget.item.totalCost.toInt().toString(),
-                            style: txt.bodyText1?.copyWith(
-                                color: widget.item.unavailable
-                                    ? Colors.black.withOpacity(0.5)
-                                    : Colors.black,
-                                decoration: (widget.item.unavailable)
-                                    ? TextDecoration.lineThrough
-                                    : null)),
+                      Text(
+                        widget.item.name[userLanguage]! +
+                            " x${widget.item.quantity}",
+                        style: txt.bodyText1?.copyWith(
+                            color: widget.item.unavailable
+                                ? Colors.black.withOpacity(0.5)
+                                : Colors.black,
+                            decoration: (widget.item.unavailable)
+                                ? TextDecoration.lineThrough
+                                : null),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      SizedBox(
-                        width: 5,
+                      const SizedBox(
+                        height: 5,
                       ),
-                      if (widget.order.stripePaymentInfo != null &&
-                          widget.order.inProcess())
-                        _unAvailableBtn(),
-                      SizedBox(
-                        width: 5,
-                      ),
+                      Text('\$' + widget.item.totalCost.toInt().toString(),
+                          style: txt.bodyText1?.copyWith(
+                              color: widget.item.unavailable
+                                  ? Colors.black.withOpacity(0.5)
+                                  : Colors.black,
+                              decoration: (widget.item.unavailable)
+                                  ? TextDecoration.lineThrough
+                                  : null)),
                     ],
                   ),
-                ],
-              ),
+                ),
+            ],
+          ),
+          if (widget.order.stripePaymentInfo != null &&
+              widget.order.inProcess())
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Theme(data: context.theme, child: Divider()),
+                _unAvailableBtn(),
+              ],
             ),
         ],
       ),
     );
   }
 
-  InkWell _unAvailableBtn() {
-    return InkWell(
-      borderRadius: BorderRadius.circular(10),
-      onTap: (!widget.order.inProcess() || widget.item.unavailable)
-          ? null
-          : () async {
-              setState(() {
-                isLoading = true;
-              });
-              await Get.find<ROpOrderController>()
-                  .markItemUnavailable(
-                      widget.order.orderId, widget.item.idInCart)
-                  .then((ServerResponse response) {
-                if (!response.success) {
-                  Get.snackbar("Error", response.errorMessage ?? "Error");
-                }
-              }).whenComplete(() {
+  Widget _unAvailableBtn() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(10),
+        onTap: (!widget.order.inProcess() || widget.item.unavailable)
+            ? null
+            : () async {
                 setState(() {
-                  isLoading = false;
+                  isLoading = true;
                 });
-              });
-            },
-      child: Ink(
-          padding: const EdgeInsets.all(5),
-          decoration: BoxDecoration(
-              color: (widget.item.unavailable) ? offRedColor : primaryBlueColor,
-              borderRadius: BorderRadius.circular(15)),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(top: 2),
-                child: Icon(
-                  widget.item.unavailable
-                      ? Icons.do_disturb_off
-                      : Icons.do_disturb_on,
-                  color: widget.item.unavailable ? Colors.red : Colors.white,
-                  size: 14.sp,
+                await Get.find<ROpOrderController>()
+                    .markItemUnavailable(
+                        widget.order.orderId, widget.item.idInCart)
+                    .then((ServerResponse response) {
+                  if (!response.success) {
+                    Get.snackbar("Error", response.errorMessage ?? "Error");
+                  }
+                }).whenComplete(() {
+                  setState(() {
+                    isLoading = false;
+                  });
+                });
+              },
+        child: Ink(
+            padding: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+                color:
+                    (widget.item.unavailable) ? offRedColor : primaryBlueColor,
+                borderRadius: BorderRadius.circular(15)),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 2),
+                  child: Icon(
+                    widget.item.unavailable
+                        ? Icons.do_disturb_off
+                        : Icons.do_disturb_on,
+                    color: widget.item.unavailable ? Colors.red : Colors.white,
+                    size: 14.sp,
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 3,
-              ),
-              Text(
-                "${_i18n()["itemUnav"]}".allInCaps,
-                style: Get.textTheme.bodyText2?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 11.sp,
-                    color: widget.item.unavailable ? Colors.red : Colors.white),
-              ),
-              SizedBox(
-                width: 3,
-              ),
-            ],
-          )),
+                SizedBox(
+                  width: 3,
+                ),
+                Text(
+                  (widget.item.unavailable)
+                      ? "${_i18n()["itemUnav"]}".capitalizeFirstofEach
+                      : '${_i18n()["markitemUnav"]}',
+                  style: Get.textTheme.bodyText2?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 11.sp,
+                      color:
+                          widget.item.unavailable ? Colors.red : Colors.white),
+                ),
+                SizedBox(
+                  width: 3,
+                ),
+              ],
+            )),
+      ),
     );
   }
 
