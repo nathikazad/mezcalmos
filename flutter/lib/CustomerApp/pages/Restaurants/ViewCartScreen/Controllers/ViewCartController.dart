@@ -116,14 +116,9 @@ class ViewCartController {
 // helpers //
 extension pickerHelper on PickerChoice {
   String toNormalString() {
-    final String str = toString().split('.').last;
-    switch (this) {
-      case PickerChoice.NewCard:
-        return "New Card";
-        break;
-      default:
-        return str;
-    }
+    final String str = toString().split('.').last.toLowerCase();
+
+    return str.toLowerCase();
   }
 
   CardChoice toCardChoice() {

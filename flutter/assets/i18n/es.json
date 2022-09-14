@@ -142,6 +142,13 @@
                 },
                 "ViewCartScreen": {
                     "components": {
+                        "PaymentMethodPicker": {
+                            "paymentMethod": "Método de pago",
+                            "cash": "Dinero",
+                            "newcard": "Nueva tarjeta",
+                            "applepay": "Apple Pay",
+                            "googlepay": "Google Pay"
+                        },
                         "CartIsEmptyScreen": {
                             "title": "Tu carrito esta vacío"
                         },
@@ -156,7 +163,7 @@
                         "BuildItems": {
                             "deleteItem": "Eliminar elemento",
                             "deleteItemConfirm": "¿Estás seguro de que te gustaría eliminar?",
-                            "deleteBtn": "Yes, delete item",
+                            "deleteBtn": "Sí, eliminar el elemento",
                             "itemNotes": "Notas de artículos :"
 
                         },
@@ -808,6 +815,16 @@
             }
         },
         "widgets": {
+            "OrderSummaryCard": {
+                "orderSummary": "Resumen de pedido",
+                "orderCost": "Costo de la orden",
+                "deliveryCost": "Coste de envío",
+                "stripeFees": "Tarifas de tarjeta",
+                "totalCost": "Coste total",
+
+                "refundAmount": "Cantidad devuelta",
+                "toBeCalc": "Para ser calculado"
+            },
             "OrderPaymentMethod": {
                 "paymentMethod": "Método de pago",
                 "cash": "Dinero"

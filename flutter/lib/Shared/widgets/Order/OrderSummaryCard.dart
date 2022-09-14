@@ -8,9 +8,8 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:sizer/sizer.dart';
 
-dynamic _i18n() =>
-    Get.find<LanguageController>().strings["CustomerApp"]["pages"]
-        ["Restaurants"]["ViewOrderScreen"]["components"]["OrderSummaryCard"];
+dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
+    ["OrderSummaryCard"];
 
 class OrderSummaryCard extends StatelessWidget {
   const OrderSummaryCard({Key? key, required this.order, this.margin})
@@ -99,7 +98,7 @@ class OrderSummaryCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          'Refund amount',
+                          '${_i18n()["refundAmount"]}',
                           style: txt.bodyText2,
                         ),
                         Text(
@@ -155,7 +154,7 @@ class OrderSummaryCard extends StatelessWidget {
                 .costsByType
                 ?.weighedCost
                 .toPriceString() ??
-            "to be calculated";
+            '${_i18n()["toBeCalc"]}';
 
       default:
         return "-";

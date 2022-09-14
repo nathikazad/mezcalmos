@@ -141,6 +141,13 @@
                 },
                 "ViewCartScreen": {
                     "components": {
+                        "PaymentMethodPicker": {
+                            "paymentMethod": "Payment method",
+                            "cash": "Cash",
+                            "newcard": "New Card",
+                            "applepay": "Apple Pay",
+                            "googlepay": "Google Pay"
+                        },
                         "BuildCart": {
                             "inCart": "My orders",
                             "yesClear": "Yes",
@@ -795,6 +802,16 @@
             }
         },
         "widgets": {
+            "OrderSummaryCard": {
+                "orderSummary": "Order Summary",
+                "orderCost": "Order Cost",
+                "deliveryCost": "Delivery Cost",
+                "stripeFees": "Card fees",
+                "totalCost": "Total Cost",
+                "deliveryLocation": "Delivery Location",
+                "refundAmount": "Refund amount",
+                "toBeCalc": "To be calculated"
+            },
             "OrderPaymentMethod": {
                 "paymentMethod": "Payment method",
                 "cash": "Cash"

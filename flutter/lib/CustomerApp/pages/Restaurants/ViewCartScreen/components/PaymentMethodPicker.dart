@@ -4,9 +4,16 @@ import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/Controllers/ViewCartController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 
+//
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+        ["Restaurants"]["ViewCartScreen"]["components"]["PaymentMethodPicker"];
+
+//
 class PaymentMethodPicker extends StatefulWidget {
   const PaymentMethodPicker({Key? key, required this.viewCartController})
       : super(key: key);
@@ -39,7 +46,7 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Payment Method",
+                  '${_i18n()["paymentMethod"]}',
                   style: Get.textTheme.bodyText1,
                 ),
                 SizedBox(
@@ -72,18 +79,7 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                     onChanged: (PaymentOption? newValue) async {
                       if (newValue != null) {
                         mezDbgPrint(newValue);
-                        await widget.viewCartController
-                            .switchPicker(newValue)
-                            .whenComplete(() => mezDbgPrint(
-                                "Final value ====> ${widget.viewCartController.pickerChoice.value}"));
-                      }
-                    },
-                    validator: (PaymentOption? value) {
-                      if (value == null ||
-                          value == {PickerChoice.NewCard: null}) {
-                        return "Please select a payment method";
-                      } else {
-                        return null;
+                        await widget.viewCartController.switchPicker(newValue);
                       }
                     },
                     items: widget.viewCartController.options
@@ -108,8 +104,7 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                                   (value.entries.first.key ==
                                           PickerChoice.SavedCard)
                                       ? value.entries.first.value!.brand.name
-                                      : value.entries.first.key
-                                          .toNormalString(),
+                                      : '${_i18n()["${value.entries.first.key.toNormalString().toLowerCase()}"]}',
                                   style: Get.textTheme.bodyText2?.copyWith(
                                     fontWeight: FontWeight.w700,
                                   )),
