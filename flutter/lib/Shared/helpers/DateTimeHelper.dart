@@ -6,8 +6,10 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
     ["DateTimeHelper"];
-String userLangCode =
-    Get.find<LanguageController>().userLanguageKey.toLanguageCode();
+
+String get userLangCode {
+  return Get.find<LanguageController>().userLanguageKey.toLanguageCode();
+}
 
 extension DurationParser on Duration {
   String _padZeros(int n) => n.toString().padLeft(2, "0");
@@ -38,13 +40,15 @@ extension ParseDeliveryTypeToString on AmPmEnum {
 // wit will alse do the needed format on the string
 
 extension parseDateTime on DateTime {
-  String toDayName() {
+  String toDayName({bool withDateNumber = false}) {
     if (isToday) {
-      return "Today";
+      return '${_i18n()["today"]}';
     } else if (isTomorrow) {
-      return "Tomorrow";
+      return '${_i18n()["tomorrow"]}';
     } else if (isYesterday) {
       return "Yesterday";
+    } else if (withDateNumber) {
+      return "${DateFormat.MMMEd(userLangCode).format(this).replaceAll(".", "")}";
     } else {
       return "${DateFormat.EEEE(userLangCode).format(this)}";
     }

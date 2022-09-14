@@ -90,7 +90,7 @@ class ROpEditInfoWidgets {
                                 textAlign: TextAlign.center,
                               ),
                               Text(
-                                " : ${convertToAmPm(editInfoController.newSchedule.value!.openHours[weekday]!.to[0], editInfoController.newSchedule.value!.openHours[weekday]!.to[1])}",
+                                " - ${convertToAmPm(editInfoController.newSchedule.value!.openHours[weekday]!.to[0], editInfoController.newSchedule.value!.openHours[weekday]!.to[1])}",
                                 textAlign: TextAlign.center,
                               ),
                             ])

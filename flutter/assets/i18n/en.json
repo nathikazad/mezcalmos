@@ -129,6 +129,12 @@
                 },
                 "ViewCartScreen": {
                     "components": {
+                        "DeliveryTimePicker": {
+                            "dvTime": "Delivery time",
+                            "restClosed": "Restaurant is closed now",
+                            "pickTime": "Pick your time",
+                            "now": "Now"
+                        },
                         "BuildCart": {
                             "inCart": "My orders",
                             "yesClear": "Yes",
@@ -210,6 +216,7 @@
                     },
                     "ViewItemScreen": {
                         "notes": "Notes",
+                        "special": "Special",
                         "itemNotes": "Item notes :",
                         "itemDescription": "Item Description"
                     }
@@ -281,6 +288,9 @@
                     }
                 },
                 "ViewRestaurantScreen": {
+                    "CustomerRestaurantView": {
+                        "specials": "specials"
+                    },
                     "components": {
                         "RestaurantSliverAppBar": {
                             "info": "Information"
@@ -607,6 +617,7 @@
         }
     },
     "Shared": {
+
         "controllers": {
             "authController": {
                 "failedOTPConfirmRequest": "OTP Code confirmation failed :("
@@ -1917,5 +1928,10 @@
                 }
             }
         }
+    },
+    "General": {
+        "to": "To",
+        "required": "Required",
+        "error": "Error"
     }
 }

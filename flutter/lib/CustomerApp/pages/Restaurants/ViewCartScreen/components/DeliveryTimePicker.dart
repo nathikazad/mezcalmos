@@ -5,12 +5,19 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/Controllers/ViewCartController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryType.dart';
 import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/MezDateTimePicker.dart';
 import 'package:sizer/sizer.dart';
 
+//
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+        ["Restaurants"]["ViewCartScreen"]["components"]["DeliveryTimePicker"];
+
+//
 class DeliveryTimePicker extends StatefulWidget {
   const DeliveryTimePicker({Key? key, required this.viewCartController})
       : super(key: key);
@@ -28,8 +35,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
     if (controller.cart.value.cartPeriod != null) {
       controller.cart.value.deliveryTime =
           controller.cart.value.cartPeriod!.start;
-      mezDbgPrint("Delivery time =================");
-      mezDbgPrint(controller.cart.value.cartPeriod!.start);
+
       controller.saveCart();
     }
     super.initState();
@@ -47,7 +53,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Delivery time",
+            '${_i18n()["dvTime"]}',
             style: Get.textTheme.bodyText1,
           ),
           if (controller.associatedRestaurant?.isOpen() == false)
@@ -105,8 +111,8 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                               child: Text(
                                   (controller.associatedRestaurant?.isOpen() ==
                                           false)
-                                      ? "Pick your time"
-                                      : "Now"))
+                                      ? '${_i18n()["pickTime"]}'
+                                      : '${_i18n()["now"]}'))
                           : Flexible(
                               fit: FlexFit.tight,
                               child: Text(

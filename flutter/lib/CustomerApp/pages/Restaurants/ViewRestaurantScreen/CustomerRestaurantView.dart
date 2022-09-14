@@ -17,6 +17,9 @@ import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:sizer/sizer.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["Restaurants"]["ViewRestaurantScreen"]["CustomerRestaurantView"];
+
 class CustomerRestaurantView extends StatefulWidget {
   @override
   _CustomerRestaurantViewState createState() => _CustomerRestaurantViewState();
@@ -198,7 +201,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           Container(
             margin: const EdgeInsets.only(top: 10, bottom: 5),
             child: Text(
-              specItems.keys.toList()[index]!.toDayName(),
+              "${specItems.keys.toList()[index]!.toDayName(withDateNumber: true)}${(specItems.keys.toList()[index]!.isToday || specItems.keys.toList()[index]!.isTomorrow) ? "'s" : ""} ${_i18n()["specials"]}",
               style: Get.theme.textTheme.headline3
                   ?.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700),
             ),

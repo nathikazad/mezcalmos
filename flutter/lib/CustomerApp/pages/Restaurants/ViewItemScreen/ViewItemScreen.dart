@@ -225,7 +225,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
           const SizedBox(
             width: 5,
           ),
-          Text("Special"),
+          Text('${_i18n()["special"]}'),
           SizedBox(
             width: 8,
           ),

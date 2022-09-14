@@ -131,6 +131,12 @@
                 },
                 "ViewCartScreen": {
                     "components": {
+                        "DeliveryTimePicker": {
+                            "dvTime": "El tiempo de entrega",
+                            "restClosed": "El restaurante está cerrado ahora",
+                            "pickTime": "Elige tu tiempo",
+                            "now": "Ahora"
+                        },
                         "CartIsEmptyScreen": {
                             "title": "Tu carrito esta vacío"
                         },
@@ -215,6 +221,7 @@
                     },
                     "ViewItemScreen": {
                         "notes": "Notas",
+                        "special": "Especial",
                         "itemNotes": "Notas de artículos :",
                         "itemDescription": "Descripción del Artículo"
 
@@ -289,6 +296,9 @@
                     }
                 },
                 "ViewRestaurantScreen": {
+                    "CustomerRestaurantView": {
+                        "specials": "especiales"
+                    },
                     "components": {
                         "RestaurantSliverAppBar": {
                             "info": "Información"
@@ -1917,6 +1927,11 @@
                 }
             }
         }
+    },
+    "General": {
+        "to": "a",
+        "required": "Requerida",
+        "error": "error"
     }
 
 }
