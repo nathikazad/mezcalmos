@@ -43,7 +43,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
       child: (isLoading)
           ? Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(vertical: 12),
+              padding: const EdgeInsets.symmetric(vertical: 16),
               child: CircularProgressIndicator(),
             )
           : Container(
@@ -70,16 +70,15 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
           });
         },
         iconColor: primaryBlueColor,
-        subtitle:
-            (widget.order.stripePaymentInfo != null && widget.order.inProcess())
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Theme(data: context.theme, child: Divider()),
-                      _unAvailableBtn(),
-                    ],
-                  )
-                : null,
+        subtitle: (widget.order.inProcess())
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Theme(data: context.theme, child: Divider()),
+                  _unAvailableBtn(),
+                ],
+              )
+            : null,
         trailing: Container(
           // width: 25,
           // height: 25,

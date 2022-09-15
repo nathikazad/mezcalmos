@@ -175,10 +175,10 @@ class _ROpOrderViewState extends State<ROpOrderView> {
                 margin: const EdgeInsets.only(bottom: 20),
               ),
               ROpOrderNote(order: order.value!),
-              if (order.value!.stripePaymentInfo != null)
-                ROpRefundButton(
-                  order: order.value!,
-                ),
+
+              ROpRefundButton(
+                order: order.value!,
+              ),
               if (order.value!.inProcess())
                 TextButton(
                     style: TextButton.styleFrom(
