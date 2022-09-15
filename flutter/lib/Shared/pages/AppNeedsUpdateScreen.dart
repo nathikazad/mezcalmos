@@ -34,7 +34,7 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         floatingActionButton: _floatingActionBtn(),
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, autoBack: false),
+        appBar: mezcalmosAppBar(AppBarLeftButtonType.Lang, autoBack: false),
         body: Center(
           child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
