@@ -90,7 +90,7 @@ class ROpEditInfoWidgets {
                                 textAlign: TextAlign.center,
                               ),
                               Text(
-                                " : ${convertToAmPm(editInfoController.newSchedule.value!.openHours[weekday]!.to[0], editInfoController.newSchedule.value!.openHours[weekday]!.to[1])}",
+                                " - ${convertToAmPm(editInfoController.newSchedule.value!.openHours[weekday]!.to[0], editInfoController.newSchedule.value!.openHours[weekday]!.to[1])}",
                                 textAlign: TextAlign.center,
                               ),
                             ])
@@ -117,7 +117,7 @@ class ROpEditInfoWidgets {
                         ? "${_i18n()["workingHoursCard"]["open"]}"
                         : "${_i18n()["workingHoursCard"]["closed"]}",
                     style: Get.textTheme.bodyText2?.copyWith(
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                         color: editInfoController
                                 .newSchedule.value!.openHours[weekday]!.isOpen
                             ? Color(0xFF219125)

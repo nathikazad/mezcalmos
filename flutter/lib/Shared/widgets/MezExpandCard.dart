@@ -194,6 +194,10 @@ class _MezExpandCardState extends State<MezExpandCard>
           ListTileTheme.merge(
             iconColor: _iconColor.value ?? expansionTileTheme.iconColor,
             textColor: _headerColor.value,
+            contentPadding: EdgeInsets.all(0),
+            horizontalTitleGap: 1,
+            minLeadingWidth: 1,
+            dense: true,
             child: ListTile(
               // onTap: _handleTap,
               contentPadding:
@@ -201,6 +205,9 @@ class _MezExpandCardState extends State<MezExpandCard>
               leading: widget.leading ?? _buildLeadingIcon(context),
               title: widget.title,
               subtitle: widget.subtitle,
+
+              horizontalTitleGap: 1,
+              minLeadingWidth: 1,
               trailing: InkWell(
                   onTap: _handleTap,
                   child: widget.trailing ?? _buildTrailingIcon(context)),

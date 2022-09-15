@@ -1,5 +1,6 @@
+import 'package:flutter/material.dart' as mat;
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/router.dart';
+import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
@@ -15,7 +16,7 @@ Notification restaurantNotificationHandler(String key, value) {
     case NotificationType.NewOrder:
       return Notification(
           id: key,
-          linkUrl: getLaundryOpOrderRoute(value["orderId"]),
+          linkUrl: getROpOrderRoute(value["orderId"]),
           body: '${_i18n()['newOrderBody']}',
           imgUrl:
               'assets/images/shared/notifications/prepareOrderNotificationIcon.png', // needs to be changed
@@ -53,7 +54,9 @@ Notification _laundryOpOrderChangesNotifier(String key, value) {
 
   return Notification(
       id: key,
-      linkUrl: getLaundryOpOrderRoute(value["orderId"]),
+      linkUrl: getROpOrderRoute(value["orderId"]),
+      icon: mat.Icons.flatware,
+      secondaryIcon: mat.Icons.close,
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -72,7 +75,9 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
 
   return Notification(
       id: key,
-      linkUrl: '',
+      icon: mat.Icons.flatware,
+      secondaryIcon: mat.Icons.close,
+      linkUrl: getROpOrderRoute(value["orderId"]),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],

@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpEditInfoView']['components']['ROpLanguageSelectorComponent'];
 
-typedef bool OnChangeShouldUpdateLang(
+typedef void OnChangeShouldUpdateLang(
   LanguageType languageType,
 );
 
@@ -16,13 +16,13 @@ class ROpLanguageSelectorComponent extends StatefulWidget {
     required this.languageValue,
     this.oppositeLanguageValue,
     required this.onChangeShouldUpdateLang,
-    this.showDeleteIcon = false,
+    this.isSecondary = false,
   }) : super(key: key);
 
   final Rxn<LanguageType> languageValue;
   final Rxn<LanguageType>? oppositeLanguageValue;
   final OnChangeShouldUpdateLang onChangeShouldUpdateLang;
-  final bool showDeleteIcon;
+  final bool isSecondary;
 
   @override
   State<ROpLanguageSelectorComponent> createState() =>
@@ -56,51 +56,41 @@ class _ROpLanguageSelectorComponentState
                 // contentPadding: EdgeInsets.all(5),
                 label: Text("${_i18n()["none"]}"),
                 floatingLabelBehavior: FloatingLabelBehavior.never,
-                suffixIcon: (widget.showDeleteIcon &&
-                        widget.languageValue.value != null)
-                    ? IconButton(
-                        onPressed: () {
-                          widget.languageValue.value = null;
-                        },
-                        icon: Icon(Icons.close))
-                    : null,
+                // suffixIcon: (widget.showDeleteIcon &&
+                //         widget.languageValue.value != null)
+                //     ? IconButton(
+                //         onPressed: () {
+                //           widget.languageValue.value = null;
+                //         },
+                //         icon: Icon(Icons.close))
+                //     : null,
               ),
               isEmpty: widget.languageValue.value == null,
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<LanguageType>(
                   value: widget.languageValue.value,
                   isDense: true,
+                  iconSize: (widget.isSecondary) ? 0 : 24,
                   dropdownColor: Colors.white,
-                  onChanged: (LanguageType? newValue) {
-                    if (newValue != null) {
-                      final bool result =
-                          widget.onChangeShouldUpdateLang(newValue);
-
-                      if (result) {
-                        widget.languageValue.value = newValue;
-                        widget.languageValue.refresh();
-                      }
-                    }
-                  },
+                  onChanged: widget.isSecondary
+                      ? null
+                      : (LanguageType? newValue) {
+                          if (newValue != null) {
+                            widget.onChangeShouldUpdateLang(newValue);
+                          }
+                        },
                   items: [
                     LanguageType.EN,
                     LanguageType.ES,
                   ].map((LanguageType value) {
                     return DropdownMenuItem<LanguageType>(
                       value: value,
-                      enabled: (widget.oppositeLanguageValue != null &&
-                          widget.oppositeLanguageValue!.value != value),
                       child: (value.toLanguageName() != null)
                           ? Text(
                               value.toLanguageName()!,
                               style: Get.textTheme.bodyText2?.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  color: (widget.oppositeLanguageValue !=
-                                              null &&
-                                          widget.oppositeLanguageValue!.value ==
-                                              value)
-                                      ? Colors.grey
-                                      : Colors.black),
+                                fontWeight: FontWeight.w700,
+                              ),
                             )
                           : Container(),
                     );

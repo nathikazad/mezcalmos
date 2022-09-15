@@ -24,20 +24,21 @@ class ROpOrderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Card(
+      margin: const EdgeInsets.only(bottom: 10),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
           Get.toNamed(getROpOrderRoute(order.orderId));
         },
         child: Container(
-          padding: EdgeInsets.all(8),
+          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Row(
                 children: <Widget>[
                   //  _orderImageComponent(),
-                  const SizedBox(width: 10),
+                  // const SizedBox(width: 10),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -53,6 +54,8 @@ class ROpOrderCard extends StatelessWidget {
                         Text(
                           order.to.address,
                           style: textTheme.bodyText2,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
@@ -72,25 +75,22 @@ class ROpOrderCard extends StatelessWidget {
                 ],
               ),
               const Divider(),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.0),
-                child: Row(
-                  //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Image.asset(
-                      aMoney,
-                      width: 20,
-                      height: 20,
-                      fit: BoxFit.contain,
-                    ),
-                    Text(
-                      " \$${order.itemsCost}",
-                      style: Get.textTheme.bodyText1,
-                    ),
-                    Spacer(),
-                    getOrderWidget()
-                  ],
-                ),
+              Row(
+                //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Image.asset(
+                    aMoney,
+                    width: 20,
+                    height: 20,
+                    fit: BoxFit.contain,
+                  ),
+                  Text(
+                    " \$${order.itemsCost}",
+                    style: Get.textTheme.bodyText1,
+                  ),
+                  Spacer(),
+                  getOrderWidget()
+                ],
               )
             ],
           ),
@@ -153,7 +153,7 @@ class ROpOrderCard extends StatelessWidget {
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
               color: Colors.red.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(12)),
+              borderRadius: BorderRadius.circular(18)),
           child: Text(
             '${_i18n()["canceled"]}',
             style: Get.textTheme.bodyText1
@@ -166,7 +166,7 @@ class ROpOrderCard extends StatelessWidget {
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
               color: Colors.green.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(12)),
+              borderRadius: BorderRadius.circular(18)),
           child: Text(
             '${_i18n()["delivered"]}',
             style: Get.textTheme.bodyText1
@@ -178,7 +178,7 @@ class ROpOrderCard extends StatelessWidget {
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
               color: Colors.amber.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(12)),
+              borderRadius: BorderRadius.circular(18)),
           child: Text(
             '${_i18n()["waiting"]}',
             style: Get.textTheme.bodyText1

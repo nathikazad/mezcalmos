@@ -39,6 +39,14 @@ extension ParseLanugaugeTypeToString on LanguageType {
     return str[0].toLowerCase() + str.substring(1).toLowerCase();
   }
 
+  LanguageType toOpLang() {
+    if (this == LanguageType.EN) {
+      return LanguageType.ES;
+    } else {
+      return LanguageType.EN;
+    }
+  }
+
   String? toLanguageName() {
     final String str = toString().split('.').last;
     switch (str) {

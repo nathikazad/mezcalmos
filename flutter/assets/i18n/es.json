@@ -1931,6 +1931,7 @@
                     "nameErrorText": "Proporcione un nombre",
                     "defaultLanguage": "Idioma predeterminado",
                     "secondaryLanguage": "Lenguaje secundario",
+                    "description": "Descripción en",
                     "location": "Ubicación",
                     "saveInfo": "Guardar información",
                     "components": {

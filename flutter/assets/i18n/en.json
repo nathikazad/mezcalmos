@@ -1903,6 +1903,7 @@
                 }
             },
             "ROpEditInfoView": {
+
                 "controllers": {
                     "ROpEditInfoController": {
                         "error": "Error",
@@ -1936,6 +1937,7 @@
                     "nameErrorText": "please provide a name",
                     "defaultLanguage": "Default language",
                     "secondaryLanguage": "Secondary language",
+                    "description": "Description in",
                     "location": "Location",
                     "saveInfo": "Save info",
                     "components": {

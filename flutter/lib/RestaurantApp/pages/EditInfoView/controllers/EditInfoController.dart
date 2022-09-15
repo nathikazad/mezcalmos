@@ -152,12 +152,9 @@ class ROpEditInfoController {
     }
   }
 
-  bool validatePrimaryLanguUpdate(LanguageType value) {
-    if (value != secondaryLang.value) {
-      return true;
-    } else {
-      return false;
-    }
+  void changePrimaryLang(LanguageType value) {
+    primaryLang.value = value;
+    secondaryLang.value = primaryLang.value!.toOpLang();
   }
 
   // stripe and payments methods //

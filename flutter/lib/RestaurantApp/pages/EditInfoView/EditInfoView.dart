@@ -101,7 +101,7 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
                     languageValue: editInfoController.primaryLang,
                     oppositeLanguageValue: editInfoController.secondaryLang,
                     onChangeShouldUpdateLang:
-                        editInfoController.validatePrimaryLanguUpdate),
+                        editInfoController.changePrimaryLang),
                 SizedBox(
                   height: 15,
                 ),
@@ -114,13 +114,13 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
                   oppositeLanguageValue: editInfoController.primaryLang,
                   onChangeShouldUpdateLang:
                       editInfoController.validateSecondaryLanguUpdate,
-                  showDeleteIcon: true,
+                  isSecondary: true,
                 ),
                 SizedBox(
                   height: 15,
                 ),
                 Text(
-                    'Description in ${editInfoController.primaryLang.value!.toLanguageName()}'),
+                    '${_i18n()["description"]} ${editInfoController.primaryLang.value!.toLanguageName()}'),
                 SizedBox(
                   height: 5,
                 ),
@@ -129,7 +129,7 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
                   height: 15,
                 ),
                 Text(
-                    'Description in ${editInfoController.secondaryLang.value!.toLanguageName()}'),
+                    '${_i18n()["description"]} ${editInfoController.secondaryLang.value!.toLanguageName()}'),
                 SizedBox(
                   height: 5,
                 ),

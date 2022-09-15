@@ -61,18 +61,28 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
     return Theme(
       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
       child: MezExpandCard(
-        childrenPadding: const EdgeInsets.all(8),
+        childrenPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
         collapsedIconColor: primaryBlueColor,
-
+        expandedCrossAxisAlignment: CrossAxisAlignment.end,
         onExpansionChanged: (bool v) {
           setState(() {
             isExpanded = v;
           });
         },
         iconColor: primaryBlueColor,
+        subtitle:
+            (widget.order.stripePaymentInfo != null && widget.order.inProcess())
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Theme(data: context.theme, child: Divider()),
+                      _unAvailableBtn(),
+                    ],
+                  )
+                : null,
         trailing: Container(
-          width: 25,
-          height: 25,
+          // width: 25,
+          // height: 25,
           decoration: BoxDecoration(
               color: secondaryLightBlueColor, shape: BoxShape.circle),
           child:
@@ -193,15 +203,6 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                 ),
             ],
           ),
-          if (widget.order.stripePaymentInfo != null &&
-              widget.order.inProcess())
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Theme(data: context.theme, child: Divider()),
-                _unAvailableBtn(),
-              ],
-            ),
         ],
       ),
     );
@@ -209,7 +210,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
 
   Widget _unAvailableBtn() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+      padding: const EdgeInsets.only(left: 5, right: 5, top: 8),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: (!widget.order.inProcess() || widget.item.unavailable)
@@ -313,9 +314,12 @@ Widget _itemChoiche(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        choices[index].name[userLanguage] ?? "Error",
-                        style: Get.theme.textTheme.bodyText2,
+                      Flexible(
+                        child: Text(
+                          choices[index].name[userLanguage] ?? "Error",
+                          style: Get.theme.textTheme.bodyText2,
+                          maxLines: 2,
+                        ),
                       ),
                       if (choices[index].cost > 0)
                         Text(
