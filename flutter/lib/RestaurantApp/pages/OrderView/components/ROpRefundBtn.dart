@@ -53,174 +53,154 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
                   isDismissible: false,
                   enableDrag: false,
                   isScrollControlled: true,
-                  builder: (BuildContext builder) {
-                    return SingleChildScrollView(
-                      keyboardDismissBehavior:
-                          ScrollViewKeyboardDismissBehavior.manual,
-                      child: Container(
-                        //  height: MediaQuery.of(context).size.height - 40,
-                        padding: MediaQuery.of(context).viewInsets,
-                        child: Form(
-                          key: _formKey,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 16, horizontal: 12),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
+                  builder: (BuildContext ctx) {
+                    return Container(
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 12),
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(ctx).viewInsets.bottom),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              alignment: Alignment.center,
+                              child: Text(
+                                '${_i18n()["refundYourCustomer"]}',
+                                style: Get.textTheme.headline3,
+                              ),
+                            ),
+                            Divider(),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              "${_i18n()["amount"]} :",
+                              style: Get.textTheme.bodyText1,
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            TextFormField(
+                                controller: refundAmount,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (String? v) {
+                                  if (v == null || num.tryParse(v) == null) {
+                                    return "${_i18n()["req"]}";
+                                  } else if (num.parse(v) > maximumRefund()) {
+                                    return "${_i18n()["maxError"]}${maximumRefund().toPriceString()}";
+                                  } else if (!(num.parse(v) > 0)) {
+                                    return "${_i18n()["minError"]}";
+                                  }
+                                  return null;
+                                },
+                                style: Get.textTheme.bodyText1,
+                                textAlignVertical: TextAlignVertical.center,
+                                decoration: InputDecoration(
+                                    suffix: Text(
+                                      "| ${_i18n()["refundMax"]} ${maximumRefund().toPriceString()}",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    prefixIcon:
+                                        Icon(Icons.attach_money_rounded)),
+                                keyboardType: TextInputType.numberWithOptions(
+                                    decimal: true),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp('[0-9.,]')),
+                                ]),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            Text(
+                              "${_i18n()["to"]}",
+                              style: Get.textTheme.bodyText1,
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "${widget.order.customer.name}",
+                              style: Get.textTheme.bodyText1,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
                               children: [
-                                Container(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    '${_i18n()["refundYourCustomer"]}',
-                                    style: Get.textTheme.headline3,
-                                  ),
-                                ),
-                                Divider(),
+                                Icon(widget.order.stripePaymentInfo?.brand!
+                                    .toIcon()),
                                 const SizedBox(
-                                  height: 8,
+                                  width: 8,
                                 ),
                                 Text(
-                                  "${_i18n()["amount"]} :",
+                                  "${widget.order.stripePaymentInfo?.brand!.toName()}",
                                   style: Get.textTheme.bodyText1,
                                 ),
                                 const SizedBox(
-                                  height: 8,
+                                  width: 8,
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      bottom: MediaQuery.of(context)
-                                          .viewInsets
-                                          .bottom),
-                                  child: TextFormField(
-                                      controller: refundAmount,
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      validator: (String? v) {
-                                        if (v == null ||
-                                            num.tryParse(v) == null) {
-                                          return "${_i18n()["req"]}";
-                                        } else if (num.parse(v) >
-                                            maximumRefund()) {
-                                          return "${_i18n()["maxError"]}${maximumRefund().toPriceString()}";
-                                        } else if (!(num.parse(v) > 0)) {
-                                          return "${_i18n()["minError"]}";
-                                        }
-                                        return null;
-                                      },
-                                      style: Get.textTheme.bodyText1,
-                                      textAlignVertical:
-                                          TextAlignVertical.center,
-                                      decoration: InputDecoration(
-                                          suffix: Text(
-                                            "| ${_i18n()["refundMax"]} ${maximumRefund().toPriceString()}",
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          prefixIcon:
-                                              Icon(Icons.attach_money_rounded)),
-                                      keyboardType:
-                                          TextInputType.numberWithOptions(
-                                              decimal: true),
-                                      inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                            RegExp('[0-9.,]')),
-                                      ]),
-                                ),
-                                const SizedBox(
-                                  height: 12,
-                                ),
-                                Text(
-                                  "${_i18n()["to"]}",
-                                  style: Get.textTheme.bodyText1,
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "${widget.order.customer.name}",
-                                  style: Get.textTheme.bodyText1,
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(widget.order.stripePaymentInfo?.brand!
-                                        .toIcon()),
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text(
-                                      "${widget.order.stripePaymentInfo?.brand!.toName()}",
-                                      style: Get.textTheme.bodyText1,
-                                    ),
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text("•" * 12 +
-                                        "${widget.order.stripePaymentInfo?.last4}")
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  children: [
-                                    Flexible(
-                                        child: MezButton(
-                                      label: "${_i18n()["cancel"]}",
-                                      height: 50,
-                                      onClick: () async {
-                                        Get.back();
-                                      },
-                                      backgroundColor: offRedColor,
-                                      textColor: Colors.red,
-                                    )),
-                                    SizedBox(
-                                      width: 15,
-                                    ),
-                                    Flexible(
-                                        child: MezButton(
-                                      label: "${_i18n()["confirmRefund"]}",
-                                      height: 50,
-                                      withGradient: true,
-                                      onClick: () async {
-                                        if (_formKey.currentState!.validate()) {
-                                          await Get.find<ROpOrderController>()
-                                              .refundCustomerCustomAmount(
-                                                  widget.order.orderId,
-                                                  num.parse(refundAmount.text))
-                                              .then((ServerResponse value) {
-                                            if (value.success) {
-                                              Get.back();
-
-                                              showStatusInfoDialog(context,
-                                                  primaryIcon:
-                                                      Icons.price_check,
-                                                  showSmallIcon: false,
-                                                  status:
-                                                      "${_i18n()["dialogTitle"]}",
-                                                  description:
-                                                      "${_i18n()["dialogDesc"]}");
-                                            } else {
-                                              Get.snackbar(
-                                                  "Error",
-                                                  value.errorMessage ??
-                                                      "Error");
-                                            }
-                                          });
-                                        }
-                                      },
-                                    )),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
+                                Text("•" * 12 +
+                                    "${widget.order.stripePaymentInfo?.last4}")
                               ],
                             ),
-                          ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Row(
+                              children: [
+                                Flexible(
+                                    child: MezButton(
+                                  label: "${_i18n()["cancel"]}",
+                                  height: 50,
+                                  onClick: () async {
+                                    Get.back();
+                                  },
+                                  backgroundColor: offRedColor,
+                                  textColor: Colors.red,
+                                )),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Flexible(
+                                    child: MezButton(
+                                  label: "${_i18n()["confirmRefund"]}",
+                                  height: 50,
+                                  withGradient: true,
+                                  onClick: () async {
+                                    if (_formKey.currentState!.validate()) {
+                                      await Get.find<ROpOrderController>()
+                                          .refundCustomerCustomAmount(
+                                              widget.order.orderId,
+                                              num.parse(refundAmount.text))
+                                          .then((ServerResponse value) {
+                                        if (value.success) {
+                                          Get.back();
+
+                                          showStatusInfoDialog(context,
+                                              primaryIcon: Icons.price_check,
+                                              showSmallIcon: false,
+                                              status:
+                                                  "${_i18n()["dialogTitle"]}",
+                                              description:
+                                                  "${_i18n()["dialogDesc"]}");
+                                        } else {
+                                          Get.snackbar("Error",
+                                              value.errorMessage ?? "Error");
+                                        }
+                                      });
+                                    }
+                                  },
+                                )),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                          ],
                         ),
                       ),
                     );
