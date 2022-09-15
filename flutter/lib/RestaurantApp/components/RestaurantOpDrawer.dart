@@ -168,6 +168,9 @@ class _ROpDrawerState extends State<ROpDrawer> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(
+          height: 15,
+        ),
         _navigationLink(
             onClick: () {
               _drawerController.closeMenu();
@@ -261,16 +264,19 @@ class _ROpDrawerState extends State<ROpDrawer> {
     return InkWell(
       onTap: onClick,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+        margin: const EdgeInsets.symmetric(vertical: 18, horizontal: 8),
         child: Row(
           children: [
+            SizedBox(
+              width: 10,
+            ),
             Icon(
               icon,
               color: Colors.grey.shade400,
-              size: 35,
+              size: 25,
             ),
             SizedBox(
-              width: 25,
+              width: 20,
             ),
             titleWidget
           ],
