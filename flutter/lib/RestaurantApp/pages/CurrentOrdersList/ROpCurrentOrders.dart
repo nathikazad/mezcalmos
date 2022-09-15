@@ -97,6 +97,7 @@ class _LaundryOpCurrentOrdersListViewState
             key: Get.find<SideMenuDrawerController>().getNewKey(),
             drawer: ROpDrawer(),
             body: Column(
+              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 8, right: 8, left: 8),
@@ -152,6 +153,7 @@ class _LaundryOpCurrentOrdersListViewState
 
   Widget _inProcessOrders() {
     return Container(
+        alignment: Alignment.center,
         child: (inProcessOrders.value.isNotEmpty)
             ? Scrollbar(
                 child: SingleChildScrollView(
@@ -184,7 +186,7 @@ class _LaundryOpCurrentOrdersListViewState
                 ),
               )
             : Container(
-                margin: EdgeInsets.only(top: 15.h),
+                margin: EdgeInsets.only(top: 10.h),
                 alignment: Alignment.center,
                 child: Center(child: NoOrdersComponent())));
   }

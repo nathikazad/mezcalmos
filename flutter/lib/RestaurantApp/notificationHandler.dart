@@ -151,8 +151,8 @@ Notification newMessageNotification(String key, value) {
   return Notification(
       id: key,
       linkUrl: getMessagesRoute(
-        chatId: value['chatId'],
-      ),
+          chatId: value['chatId'],
+          orderLink: getROpOrderRoute(value['orderId'])),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],

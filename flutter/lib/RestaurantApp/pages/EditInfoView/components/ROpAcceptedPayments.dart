@@ -72,20 +72,25 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
               contentPadding: EdgeInsets.zero,
               title: Row(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      // flex: 5,
-                      child: Text(
-                        '${_i18n()["card"]}',
-                        style: Get.textTheme.bodyText1,
-                      ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          // flex: 5,
+                          child: Text(
+                            '${_i18n()["card"]}',
+                            style: Get.textTheme.bodyText1,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        if (widget.viewController.showStatusIcon)
+                          _stripeStatusWidget(context),
+                      ],
                     ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    if (widget.viewController.showStatusIcon)
-                      _stripeStatusWidget(context),
                     SizedBox(
                       width: 8,
                     ),
@@ -147,23 +152,20 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
           padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
               color: Colors.amber, borderRadius: BorderRadius.circular(8)),
-          child: RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(children: [
-              TextSpan(
-                text: '${_i18n()["requirements"]}',
+          child: Container(
+            child: Row(mainAxisSize: MainAxisSize.min, children: [
+              Text(
+                '${_i18n()["requirements"]}',
                 style: Get.textTheme.bodyText1?.copyWith(color: Colors.black),
               ),
-              WidgetSpan(
-                  child: SizedBox(
+              SizedBox(
                 width: 3,
-              )),
-              WidgetSpan(
-                  child: Icon(
+              ),
+              Icon(
                 Icons.help,
                 size: 18,
                 color: Colors.black,
-              ))
+              )
             ]),
           )),
     );
