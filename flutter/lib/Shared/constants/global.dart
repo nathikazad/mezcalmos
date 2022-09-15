@@ -79,6 +79,8 @@ const String aNoImage = "assets/images/shared/noImage.png";
 const String a404 = "assets/images/shared/404.png";
 const String aUpdate = "assets/images/shared/update.png";
 const String aMoney = "assets/images/shared/money.png";
+const String aGpay = "assets/images/customer/gPay.png";
+
 const String noOrdersAsset = "assets/images/shared/noOrderIllustration.png";
 const String aDefaultDbUserImgAsset =
     "assets/images/shared/defaultUserLogo.png";

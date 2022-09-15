@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/Controllers/ViewCartController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
+import 'package:sizer/sizer.dart';
 
 //
 dynamic _i18n() =>
@@ -92,11 +93,9 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                               SizedBox(
                                 width: 3,
                               ),
-                              Icon(
-                                _getIcon(
-                                    paymentType: value.entries.first.key,
-                                    card: value.entries.first.value),
-                              ),
+                              _getIcon(
+                                  paymentType: value.entries.first.key,
+                                  card: value.entries.first.value),
                               SizedBox(
                                 width: 12,
                               ),
@@ -131,24 +130,28 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
     );
   }
 
-  IconData _getIcon({required PickerChoice paymentType, CreditCard? card}) {
+  Widget _getIcon({required PickerChoice paymentType, CreditCard? card}) {
     switch (paymentType) {
       case PickerChoice.SavedCard:
         if (card != null) {
-          return card.brand.toIcon();
+          return Icon(card.brand.toIcon());
         } else {
-          return Icons.credit_card;
+          return Icon(Icons.credit_card);
         }
       case PickerChoice.SavedCard:
-        return Icons.credit_card;
+        return Icon(Icons.credit_card);
       case PickerChoice.NewCard:
-        return Icons.add_card;
+        return Icon(Icons.add_card);
       case PickerChoice.Cash:
-        return Icons.payments;
+        return Icon(Icons.payments);
       case PickerChoice.ApplePay:
-        return Icons.apple;
+        return Icon(Icons.apple);
       case PickerChoice.GooglePay:
-        return Ionicons.logo_google;
+        return Image.asset(
+          aGpay,
+          width: 12.w,
+          height: 3.h,
+        );
     }
   }
 }
