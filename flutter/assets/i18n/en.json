@@ -1760,7 +1760,7 @@
                         "orderReady": "Order is ready"
                     },
                     "ROpOrderEstTime": {
-                        "title": "Estimated food ready time",
+                        "title": "Estimated preparation time",
                         "set": "Set",
                         "confirm": "Confirm",
                         "cancel": "Cancel",

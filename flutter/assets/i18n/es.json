@@ -1787,7 +1787,7 @@
                         "orderReady": "El pedido está listo"
                     },
                     "ROpOrderEstTime": {
-                        "title": "Tiempo estimado de comida",
+                        "title": "Tiempo estimado de preparación",
                         "set": "Establecer",
                         "confirm": "Confirmar",
                         "cancel": "Cancelar",
