@@ -60,7 +60,7 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                       isDense: false,
 
                       fillColor: Colors.white,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 3),
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5),
                           borderSide: BorderSide.none),
@@ -88,16 +88,21 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                             (PaymentOption value) {
                       return DropdownMenuItem<PaymentOption>(
                           value: value,
+                          alignment: Alignment.centerLeft,
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               SizedBox(
-                                width: 3,
+                                width: 43,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: _getIcon(
+                                      paymentType: value.entries.first.key,
+                                      card: value.entries.first.value),
+                                ),
                               ),
-                              _getIcon(
-                                  paymentType: value.entries.first.key,
-                                  card: value.entries.first.value),
                               SizedBox(
-                                width: 12,
+                                width: 10,
                               ),
                               Text(
                                   (value.entries.first.key ==
@@ -149,8 +154,8 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
       case PickerChoice.GooglePay:
         return Image.asset(
           aGpay,
-          width: 12.w,
-          height: 3.h,
+          width: 14.w,
+          height: 4.h,
         );
     }
   }
