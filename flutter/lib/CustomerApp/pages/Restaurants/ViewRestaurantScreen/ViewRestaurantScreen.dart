@@ -38,12 +38,12 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
   void initState() {
     restaurant = Get.arguments as Restaurant;
     mezDbgPrint(restaurant.info.id);
-    itemKeys.assign((restaurant.getCategories.length + 1), "info");
-    itemKeys[(restaurant.getCategories.length + 1)] =
+    itemKeys.assign((restaurant.getAvailableCategories.length + 1), "info");
+    itemKeys[(restaurant.getAvailableCategories.length + 1)] =
         RectGetter.createGlobalKey();
 
-    tabController =
-        TabController(length: restaurant.getCategories.length, vsync: this);
+    tabController = TabController(
+        length: restaurant.getAvailableCategories.length, vsync: this);
     scrollController = AutoScrollController();
     super.initState();
   }
@@ -137,7 +137,8 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
                 sliver: SliverList(
                     delegate: SliverChildListDelegate([
                   RectGetter(
-                      key: itemKeys[restaurant.getCategories.length + 1],
+                      key: itemKeys[
+                          restaurant.getAvailableCategories.length + 1],
                       child: RestaurantInfoTab(
                         restaurant: restaurant,
                       )),
@@ -161,7 +162,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
   }
 
   List<Category> _getList() {
-    final List<Category> data = restaurant.getCategories;
+    final List<Category> data = restaurant.getAvailableCategories;
     if (restaurant.itemsWithoutCategory.isNotEmpty) {
       data.add(restaurant.getNoCategory!);
     }

@@ -125,13 +125,24 @@ class Restaurant extends Service {
     return restaurant;
   }
 
-  List<Category> get getCategories {
+  List<Category> get getAvailableCategories {
     List<Category> categories = _categories
         .where((Category category) => category.id != kNoCategoryNode)
         .toList();
     categories = categories
         .where((Category element) => element.getAvailableItems.isNotEmpty)
         .toList();
+    categories.forEach((Category category) {
+      category.sortItems();
+    });
+    return categories;
+  }
+
+  List<Category> get getCategories {
+    final List<Category> categories = _categories
+        .where((Category category) => category.id != kNoCategoryNode)
+        .toList();
+
     categories.forEach((Category category) {
       category.sortItems();
     });
@@ -192,7 +203,7 @@ class Restaurant extends Service {
     getItemsWithoutCategory?.forEach((Item element) {
       allItemsCost += element.cost;
     });
-    getCategories.forEach((Category element) {
+    getAvailableCategories.forEach((Category element) {
       element.items.forEach((Item element) {
         allItemsCost += element.cost;
       });

@@ -62,7 +62,7 @@ class AddCategoryController {
     editMode.value = true;
     editableCategoryId = categoryId;
 
-    category.value = restaurant.value!.getCategories.firstWhereOrNull(
+    category.value = restaurant.value!.getAvailableCategories.firstWhereOrNull(
         (Category element) => element.id == editableCategoryId);
     if (category.value != null) {
       primaryCategoryNameController.text = category.value!.name![primaryLang]!;

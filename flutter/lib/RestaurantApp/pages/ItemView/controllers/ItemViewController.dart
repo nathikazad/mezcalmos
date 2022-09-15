@@ -107,7 +107,7 @@ class ItemViewController {
     });
     if (categoryId != null && categoryId != ":categoryId") {
       mezDbgPrint("category iiiiiiiiiiiiiiiid  =======>>>>> $categoryId");
-      currentCategory.value = restaurant.value!.getCategories
+      currentCategory.value = restaurant.value!.getAvailableCategories
           .firstWhere((Category element) => element.id == categoryId);
     }
   }
@@ -254,7 +254,7 @@ class ItemViewController {
 
   // add categories //
   void _assignCategories() {
-    restaurant.value!.getCategories.forEach((Category element) {
+    restaurant.value!.getAvailableCategories.forEach((Category element) {
       categories.add(element);
     });
     categories.add(addNewCatgeory);
