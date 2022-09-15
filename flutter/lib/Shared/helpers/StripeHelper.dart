@@ -230,7 +230,7 @@ Future<void> acceptPaymentWithApplePay(
     required num paymentAmount}) async {
   try {
     Stripe.publishableKey = paymentIntentData['publishableKey'];
-    Stripe.merchantIdentifier = merchantName;
+    Stripe.merchantIdentifier = "merchant.mezcalmos";
     final clientSecret = paymentIntentData['paymentIntent'];
     Stripe.stripeAccountId = paymentIntentData['stripeAccountId'];
     await Stripe.instance.applySettings();
@@ -261,13 +261,13 @@ Future<void> acceptPaymentWithGooglePay(
     required num paymentAmount}) async {
   try {
     Stripe.publishableKey = paymentIntentData['publishableKey'];
-    Stripe.merchantIdentifier = merchantName;
+    Stripe.merchantIdentifier = "BCR2DN4T4C3I3XDF";
     final clientSecret = paymentIntentData['paymentIntent'];
     Stripe.stripeAccountId = paymentIntentData['stripeAccountId'];
     await Stripe.instance.applySettings();
 
     await Stripe.instance.initGooglePay(GooglePayInitParams(
-        testEnv: true, merchantName: merchantName, countryCode: 'US'));
+        testEnv: true, merchantName: "Mezcalmos", countryCode: 'US'));
 
     await Stripe.instance.presentGooglePay(
       PresentGooglePayParams(clientSecret: clientSecret),
