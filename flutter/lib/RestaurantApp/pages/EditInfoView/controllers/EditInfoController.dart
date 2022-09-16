@@ -169,13 +169,8 @@ class ROpEditInfoController {
     }
   }
 
-  void handleCardCheckBoxClick() {
-    if (restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
-        true) {
-      restaurantInfoController.setCardPayment(false);
-    } else {
-      restaurantInfoController.setCardPayment(true);
-    }
+  void handleCardCheckBoxClick(bool v) {
+    restaurantInfoController.setCardPayment(v);
   }
 
   void handleStripeUrlChanges(String url) {

@@ -101,7 +101,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
                       .acceptedPayments[PaymentType.Card] ==
                   true,
               onChanged: (bool? v) {
-                widget.viewController.handleCardCheckBoxClick();
+                widget.viewController.handleCardCheckBoxClick(v!);
               }),
 
           //       ),

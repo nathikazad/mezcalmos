@@ -537,7 +537,8 @@ class RestaurantInfoController extends GetxController {
     await _databaseHelper.firebaseDatabase
         .ref()
         .child(acceptedPaymentNode(uid: restaurantId) + "/card/")
-        .set(value);
+        .set(value)
+        .onError((Object? error, StackTrace stackTrace) => mezDbgPrint(error));
   }
 
   @override
