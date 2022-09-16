@@ -36,6 +36,7 @@ class ROpOptionSelector extends StatelessWidget {
           if (_helperText() != null) _helperTextWidget(),
           if (viewController.optionType == OptionType.Custom)
             Container(
+              alignment: Alignment.centerLeft,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -50,9 +51,11 @@ class ROpOptionSelector extends StatelessWidget {
                     height: 10,
                   ),
                   Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: 5,
-                    runSpacing: 8,
+                    alignment: WrapAlignment.start,
+                    runAlignment: WrapAlignment.start,
+                    crossAxisAlignment: WrapCrossAlignment.start,
+                    spacing: 10,
+                    runSpacing: 15,
                     children: [
                       Row(
                         mainAxisSize: MainAxisSize.min,
@@ -109,7 +112,7 @@ class ROpOptionSelector extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(
-                          height: 20,
+                          height: 25,
                         ),
                         Text(
                           '${_i18n()["costAboveLimit"]}',

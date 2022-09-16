@@ -142,28 +142,29 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
               SizedBox(
                 width: 5,
               ),
-              Container(
-                //  padding: const EdgeInsets.all(5),
-                height: 55,
-                width: 55,
-                foregroundDecoration: BoxDecoration(
-                    color: (widget.item.unavailable)
-                        ? Colors.white.withOpacity(0.4)
-                        : null),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: (imageLoded)
-                          ? CachedNetworkImageProvider(widget.item.image ?? '',
-                              errorListener: () {
-                              setState(() {
-                                imageLoded = false;
-                              });
-                            })
-                          : AssetImage(aNoImage) as ImageProvider<Object>,
-                    )),
-              ),
+              if (widget.order.showItemsImages)
+                Container(
+                  //  padding: const EdgeInsets.all(5),
+                  height: 55,
+                  width: 55,
+                  foregroundDecoration: BoxDecoration(
+                      color: (widget.item.unavailable)
+                          ? Colors.white.withOpacity(0.4)
+                          : null),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: (imageLoded)
+                            ? CachedNetworkImageProvider(
+                                widget.item.image ?? '', errorListener: () {
+                                setState(() {
+                                  imageLoded = false;
+                                });
+                              })
+                            : AssetImage(aNoImage) as ImageProvider<Object>,
+                      )),
+                ),
               SizedBox(
                 width: 10,
               ),

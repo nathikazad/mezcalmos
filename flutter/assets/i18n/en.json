@@ -1761,7 +1761,7 @@
                         "minError": "Minimum refund amount should be more than 0 ",
                         "to": "To",
                         "cancel": "Cancel",
-                        "confirmRefund": "Confirm refund",
+                        "confirmRefund": "Confirm",
                         "dialogTitle": "Refund confirmed",
                         "dialogDesc": "Your customer will receive the refund soon."
 

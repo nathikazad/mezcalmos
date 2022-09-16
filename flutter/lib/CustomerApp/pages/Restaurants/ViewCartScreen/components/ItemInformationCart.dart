@@ -18,12 +18,14 @@ class ItemInformationCart extends StatefulWidget {
       this.imageUrl,
       required this.itemName,
       required this.restaurantName,
+      required this.showImage,
       required this.itemsPrice,
       required this.item})
       : super(key: key);
 
   final String itemName;
   final String restaurantName;
+  final bool showImage;
 
   final String itemsPrice;
   final String? imageUrl;
@@ -46,13 +48,13 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (widget.imageUrl != null)
+          if (widget.showImage)
             //===================== item image avatar=============
             Container(
               child: CachedNetworkImage(
                 width: 65,
                 height: 65,
-                imageUrl: widget.imageUrl!,
+                imageUrl: widget.imageUrl ?? "",
                 imageBuilder: (_, ImageProvider imageProvider) {
                   return Container(
                     width: 65,
@@ -68,9 +70,11 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
                   );
                 },
                 errorWidget: (_, __, ___) => Container(
-                  width: 70,
+                  width: 65,
                   height: 65,
                   child: Container(
+                    width: 65,
+                    height: 65,
                     decoration: BoxDecoration(
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.circular(6),

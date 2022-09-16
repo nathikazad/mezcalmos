@@ -1788,7 +1788,7 @@
                         "maxError": "Máximo es:",
                         "minError": "El monto mínimo de reembolso debería ser más que 0 ",
                         "cancel": "Cancelar",
-                        "confirmRefund": "Confirmar el reembolso",
+                        "confirmRefund": "Confirmar",
                         "dialogTitle": "Reembolso confirmado",
                         "dialogDesc": "Su cliente recibirá el reembolso pronto."
 

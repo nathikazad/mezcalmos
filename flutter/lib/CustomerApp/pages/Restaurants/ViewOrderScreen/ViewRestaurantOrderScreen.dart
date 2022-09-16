@@ -189,7 +189,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                           OrderRestaurantCard(order: order.value!),
 
                           OrderItemsCard(
-                            items: order.value!.items,
+                            order: order.value!,
                           ),
                           order.value?.notes == null ||
                                   order.value!.notes!.length <= 0

@@ -145,6 +145,13 @@ class RestaurantController extends GetxController {
     saveCart();
   }
 
+  bool get showItemsImages {
+    return cart.value.cartItems.firstWhereOrNull((CartItem element) =>
+            element.item.image != null &&
+            element.item.image!.isImageFileName) !=
+        null;
+  }
+
   void clearCart() {
     _databaseHelper.firebaseDatabase
         .ref()

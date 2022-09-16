@@ -51,6 +51,7 @@ class _ROpOrderViewState extends State<ROpOrderView> {
     final String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as RestaurantOrder;
+
     // first time init map
     //mGoogleMapController.animateMarkersPolyLinesBounds(true);
     mGoogleMapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded;

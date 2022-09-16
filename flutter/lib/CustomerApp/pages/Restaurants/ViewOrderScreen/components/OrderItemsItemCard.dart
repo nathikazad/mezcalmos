@@ -17,9 +17,11 @@ class OrderItemsItemCard extends StatefulWidget {
   const OrderItemsItemCard({
     Key? key,
     required this.item,
+    required this.order,
   }) : super(key: key);
 
   final RestaurantOrderItem item;
+  final RestaurantOrder order;
 
   @override
   State<OrderItemsItemCard> createState() => _OrderItemsItemCardState();
@@ -121,7 +123,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          if (imageLoded)
+          if (widget.order.showItemsImages)
             Container(
               margin: const EdgeInsets.only(right: 8),
               height: 55,
@@ -130,12 +132,14 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                   borderRadius: BorderRadius.circular(8),
                   image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: CachedNetworkImageProvider(widget.item.image ?? '',
-                          errorListener: () {
-                        setState(() {
-                          imageLoded = false;
-                        });
-                      }))),
+                      image: (imageLoded)
+                          ? CachedNetworkImageProvider(widget.item.image ?? '',
+                              errorListener: () {
+                              setState(() {
+                                imageLoded = false;
+                              });
+                            })
+                          : AssetImage(aNoImage) as ImageProvider)),
             ),
           if (widget.item.name[userLanguage] != null)
             Flexible(

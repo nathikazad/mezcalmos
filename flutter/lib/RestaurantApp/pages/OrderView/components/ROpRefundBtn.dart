@@ -129,24 +129,25 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
                             const SizedBox(
                               height: 10,
                             ),
-                            Row(
-                              children: [
-                                Icon(widget.order.stripePaymentInfo?.brand!
-                                    .toIcon()),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                Text(
-                                  "${widget.order.stripePaymentInfo?.brand!.toName()}",
-                                  style: Get.textTheme.bodyText1,
-                                ),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                Text("•" * 12 +
-                                    "${widget.order.stripePaymentInfo?.last4}")
-                              ],
-                            ),
+                            if (widget.order.stripePaymentInfo != null)
+                              Row(
+                                children: [
+                                  Icon(widget.order.stripePaymentInfo?.brand!
+                                      .toIcon()),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    "${widget.order.stripePaymentInfo?.brand!.toName()}",
+                                    style: Get.textTheme.bodyText1,
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text("•" * 12 +
+                                      "${widget.order.stripePaymentInfo?.last4}")
+                                ],
+                              ),
                             const SizedBox(
                               height: 15,
                             ),
