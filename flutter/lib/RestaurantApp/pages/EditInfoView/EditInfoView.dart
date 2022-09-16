@@ -219,7 +219,16 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
             onPressed: (editInfoController.btnClicked.value)
                 ? null
                 : () {
-                    editInfoController.updateLaundryInfo();
+                    editInfoController.updateLaundryInfo().then((value) =>
+                        Get.snackbar(
+                            '${_i18n()["saved"]}', '${_i18n()["savedText"]}',
+                            backgroundColor: Colors.black,
+                            colorText: Colors.white,
+                            shouldIconPulse: false,
+                            icon: Icon(
+                              Icons.check_circle,
+                              color: Colors.green,
+                            )));
                   },
             child: (editInfoController.btnClicked.value)
                 ? Container(

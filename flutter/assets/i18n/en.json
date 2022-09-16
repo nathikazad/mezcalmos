@@ -1942,6 +1942,8 @@
                     }
                 },
                 "ROpEditInfoView": {
+                    "saved": "Saved",
+                    "savedText": "Your informations has been saved",
                     "openTitle": "Restaurant Availibility",
                     "openSubtitle": "This will close your restaurant indefinitely",
                     "restaurantName": "Restaurant name",

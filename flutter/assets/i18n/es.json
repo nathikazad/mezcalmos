@@ -1868,7 +1868,7 @@
                         "canceled": "Cancelada"
                     }
                 },
-                "incomingOrders": "Incoming orders",
+                "incomingOrders": "Órdenes entrantes",
                 "currentOrders": "Órdenes actuales",
                 "pastOrders": "Órdenes pasadas",
                 "offlineTitle": "Estas desconectado",
@@ -1936,6 +1936,8 @@
                     }
                 },
                 "ROpEditInfoView": {
+                    "saved": "Salvado",
+                    "savedText": "Su información ha sido guardada",
                     "openTitle": "Disponibilidad de restaurantes",
                     "openSubtitle": "Esto cerrará su restaurante indefinidamente",
                     "restaurantName": "Nombre del restaurante",
