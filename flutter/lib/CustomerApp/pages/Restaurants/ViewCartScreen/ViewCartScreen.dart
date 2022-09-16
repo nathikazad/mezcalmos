@@ -111,7 +111,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         bottomSheet: Obx(
           () => (_restaurantController.cart.value.cartItems.length > 0)
               ? MezButton(
-                  label: '${_i18n()["orderNow"]}',
+                  label:
+                      (_restaurantController.associatedRestaurant?.isOpen() ==
+                              false)
+                          ? "${_i18n()["restaurantClosed"]}"
+                          : '${_i18n()["orderNow"]}',
                   enabled: canClick(),
                   withGradient: true,
                   borderRadius: 0,

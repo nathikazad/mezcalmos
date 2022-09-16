@@ -193,6 +193,7 @@
                     },
                     "ViewCartScreen": {
                         "ops": "Oops",
+                        "restaurantClosed": "Restuarnt is closed now",
                         "distanceError": "Distance between you and restaurat is more than 10km !",
                         "myCart": "My Cart",
                         "notAvailable": "This restaurant is closed",
