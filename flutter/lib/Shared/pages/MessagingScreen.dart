@@ -8,6 +8,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 // Extends GetView<MessagingController> after Nathik implements the controller
 import 'package:intl/intl.dart' as intl;
@@ -22,6 +23,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
@@ -418,14 +420,20 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                   topRight: Radius.zero,
                                   bottomRight: Radius.circular(20),
                                   bottomLeft: Radius.circular(30))),
-                      child: Text(
-                        message,
-                        softWrap: true,
-                        style: TextStyle(
-                          fontFamily: "Nunito",
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                          color: isMe ? Colors.white : Colors.black,
+                      child: InkWell(
+                        onLongPress: () {
+                          Clipboard.setData(ClipboardData(text: message))
+                              .then((_) => MezSnackbar("copied", ""));
+                        },
+                        child: Text(
+                          message,
+                          softWrap: true,
+                          style: TextStyle(
+                            fontFamily: "Nunito",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 15,
+                            color: isMe ? Colors.white : Colors.black,
+                          ),
                         ),
                       )),
                   time != null
