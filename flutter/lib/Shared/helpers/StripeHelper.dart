@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
@@ -221,7 +222,8 @@ Future<bool> isApplePaySupported() {
 
 Future<bool> isGooglePaySupported() {
   return Stripe.instance.isGooglePaySupported(IsGooglePaySupportedParams(
-      testEnv: true, existingPaymentMethodRequired: true));
+      testEnv: getAppLaunchMode() == AppLaunchMode.prod ? false : true,
+      existingPaymentMethodRequired: true));
 }
 
 Future<void> acceptPaymentWithApplePay(
@@ -267,7 +269,9 @@ Future<void> acceptPaymentWithGooglePay(
     await Stripe.instance.applySettings();
 
     await Stripe.instance.initGooglePay(GooglePayInitParams(
-        testEnv: true, merchantName: "Mezcalmos", countryCode: 'US'));
+        testEnv: getAppLaunchMode() == AppLaunchMode.prod ? false : true,
+        merchantName: "Mezcalmos",
+        countryCode: 'US'));
 
     await Stripe.instance.presentGooglePay(
       PresentGooglePayParams(clientSecret: clientSecret),
