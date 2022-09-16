@@ -177,7 +177,7 @@ class MGoogleMapController {
           infoWindow: markerTitle == null
               ? InfoWindow.noText
               : InfoWindow(title: markerTitle),
-          markerId: MarkerId(markerId!),
+          markerId: MarkerId(markerId),
           icon: await bitmapDescriptorLoader(
             (await cropRonded(
               (await rootBundle.load(taxi_driver_marker_asset))
