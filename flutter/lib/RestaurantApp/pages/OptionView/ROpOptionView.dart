@@ -261,7 +261,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
                           SizedBox(
                             width: 10,
                           ),
-                          Text('${_i18n()["deleteOption"]}'),
+                          Text('${_i18n()["deleteOp"]}'),
                         ],
                       )))
               : null);
