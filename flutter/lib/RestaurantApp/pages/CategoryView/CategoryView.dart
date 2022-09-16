@@ -106,7 +106,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
       leftBtnType: AppBarLeftButtonType.Back,
       onClick: Get.back,
       title: (_viewController.editMode.value)
-          ? _viewController.category.value!.name![userLanguage]
+          ? _viewController.category.value?.name![userLanguage]
           : "${_i18n()["addCategory"]}",
     );
   }
@@ -184,7 +184,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
   }
 
   TextFormField _categoryNameComponent(
-      {required TextEditingController controller, bool isSecodary = false}) {
+      {required TextEditingController controller}) {
     return TextFormField(
       controller: controller,
       style: Get.textTheme.bodyText1,
