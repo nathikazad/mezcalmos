@@ -3,10 +3,11 @@
       ".read": "false",
       ".write": "false",
       "metadata": {
-        ".read": "true"
+        ".read": "true",
+        ".write": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
       },
       "users": {
-        ".read": "root.child('deliveryAdmins/info' + auth.uid + '/authorized').val() === true",
+        ".read": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
         "$uid": {
           ".read": "$uid === auth.uid",
           ".write": "$uid === auth.uid"
@@ -63,7 +64,7 @@
         }
       },
       "taxis": {
-        ".read": "root.child('deliveryAdmins/info' + auth.uid + '/authorized').val() === true",
+        ".read": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
         "info": {
           "$uid": {
             ".read": "$uid === auth.uid",
@@ -71,7 +72,7 @@
               ".write": "$uid === auth.uid"
             },
             "details": {
-              ".write": "root.child('deliveryAdmins/info' + auth.uid + '/authorized').val() === true"
+              ".write": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
             },
             "state": {
               "isLooking": {
