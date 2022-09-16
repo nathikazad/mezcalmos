@@ -146,9 +146,10 @@ class RestaurantController extends GetxController {
   }
 
   bool get showItemsImages {
-    return cart.value.cartItems.firstWhereOrNull((CartItem element) =>
-            element.item.image != null &&
-            element.item.image!.isImageFileName) !=
+    mezDbgPrint(
+        "TEEEEEST IMAGE ====>${cart.value.cartItems.firstWhereOrNull((CartItem element) => element.item.image != null)}");
+    return cart.value.cartItems.firstWhereOrNull(
+            (CartItem element) => element.item.image != null) !=
         null;
   }
 

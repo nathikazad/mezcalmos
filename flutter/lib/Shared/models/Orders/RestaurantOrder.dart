@@ -184,8 +184,8 @@ class RestaurantOrder extends DeliverableOrder {
   }
 
   bool get showItemsImages {
-    return items.firstWhereOrNull((RestaurantOrderItem element) =>
-            element.image != null && element.image!.isImageFileName) !=
+    return items.firstWhereOrNull(
+            (RestaurantOrderItem element) => element.image != null) !=
         null;
   }
 

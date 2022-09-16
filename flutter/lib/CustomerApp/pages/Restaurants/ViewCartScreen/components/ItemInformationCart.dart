@@ -61,7 +61,7 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
                     height: 65,
                     decoration: BoxDecoration(
                       shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(6),
+                      borderRadius: BorderRadius.circular(10),
                       image: DecorationImage(
                         fit: BoxFit.cover,
                         image: imageProvider,
@@ -76,15 +76,9 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
                     width: 65,
                     height: 65,
                     decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(6),
-                      color: Colors.grey.shade300,
-                    ),
-                    child: Icon(
-                      Icons.image,
-                      color: Colors.grey,
-                      size: 18,
-                    ),
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(image: AssetImage(aNoImage))),
                   ),
                 ),
                 placeholder: (_, __) => Container(
@@ -96,7 +90,7 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
                 ),
               ),
             ),
-          if (widget.imageUrl != null) const SizedBox(width: 10),
+          if (widget.showImage) const SizedBox(width: 10),
           Flexible(
             flex: 5,
             fit: FlexFit.tight,

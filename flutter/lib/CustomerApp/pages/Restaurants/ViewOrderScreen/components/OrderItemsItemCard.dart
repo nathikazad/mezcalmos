@@ -129,7 +129,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
               height: 55,
               width: 55,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(12),
                   image: DecorationImage(
                       fit: BoxFit.cover,
                       image: (imageLoded)
