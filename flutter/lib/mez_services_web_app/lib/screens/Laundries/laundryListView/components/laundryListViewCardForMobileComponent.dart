@@ -1,9 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mez_services_web_app/controllers/languageController.dart';
 import 'package:mez_services_web_app/helpers/NumHelper.dart';
+import 'package:mez_services_web_app/helpers/StringHelper.dart';
 import 'package:mez_services_web_app/models/Services/Laundry.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]["Laundry"]
@@ -23,7 +26,8 @@ class LaundryListViewCardForMobileComponent extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
           onTap: () {
-            //Todo add route
+            var xPath = getCurrentPath();
+            QR.to("${xPath[0]}/${laundry.info.id}${xPath[1]}");
           },
           child: Container(
             child: _laundryInfoHeader(),
@@ -58,7 +62,10 @@ class LaundryListViewCardForMobileComponent extends StatelessWidget {
                 ),
                 Text(
                   laundry.info.name,
-                  style: Get.textTheme.bodyText1,
+                  style: GoogleFonts.montserrat(
+                      fontSize: 14,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700),
                 ),
                 SizedBox(
                   height: 7,
@@ -112,9 +119,19 @@ class LaundryListViewCardForMobileComponent extends StatelessWidget {
                     Flexible(
                       flex: 4,
                       fit: FlexFit.tight,
-                      child: Text(
-                          "${_i18n()["startingFrom"]}: \$${laundry.getCheapestCategory}/kg",
-                          style: Get.textTheme.bodyText2),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.north_east,
+                            size: 15,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(" \$${laundry.getCheapestCategory}/kg",
+                              style: Get.textTheme.bodyText2),
+                        ],
+                      ),
                     ),
                   ],
                 ),

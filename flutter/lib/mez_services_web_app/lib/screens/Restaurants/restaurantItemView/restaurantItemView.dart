@@ -4,8 +4,9 @@ import 'package:mez_services_web_app/controllers/languageController.dart';
 import 'package:mez_services_web_app/controllers/restaurantsInfoController.dart';
 import 'package:mez_services_web_app/helpers/GeneralPurposeHelper.dart';
 import 'package:mez_services_web_app/helpers/setUpHelper.dart';
+import 'package:mez_services_web_app/models/Generic.dart';
 import 'package:mez_services_web_app/models/Services/Restaurant.dart';
-import 'package:mez_services_web_app/screens/Restaurants/components/installAppBarComponent.dart';
+import 'package:mez_services_web_app/screens/components/installAppBarComponent.dart';
 import 'package:mez_services_web_app/screens/Restaurants/restaurantItemView/components/restauarntItemViewForDesktop.dart';
 import 'package:mez_services_web_app/screens/Restaurants/restaurantItemView/components/restaurantItemViewForMobile.dart';
 import 'package:mez_services_web_app/services/values/constants.dart';
@@ -40,6 +41,15 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
           });
         }
       });
+      var xLang = QR.params["lang"].toString().contains("es")
+          ? LanguageType.ES
+          : LanguageType.EN;
+      print("xLang is now ${xLang}");
+      if (mounted) {
+        Future.delayed(Duration(seconds: 1)).then((value) {
+          Get.find<LanguageController>().changeLangForWeb(xLang);
+        });
+      }
     });
   }
 

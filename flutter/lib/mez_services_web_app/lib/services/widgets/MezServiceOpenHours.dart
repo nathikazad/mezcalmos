@@ -52,13 +52,13 @@ class MezServiceOpenHours extends StatelessWidget {
                   getDayName(v.key).capitalizeDays,
                   style: GoogleFonts.montserrat(
                       textStyle:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
                 ),
                 Spacer(),
                 Text(
                     "${v.value.from.join(":").capitalizeFirst} - ${v.value.to.join(":").capitalizeFirst}",
                     style: GoogleFonts.montserrat(
-                        fontSize: 12,
+                        fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: Colors.black))
               ],

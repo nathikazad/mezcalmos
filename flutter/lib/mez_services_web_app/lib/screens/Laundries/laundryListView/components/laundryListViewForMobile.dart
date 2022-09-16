@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mez_services_web_app/controllers/languageController.dart';
 import 'package:mez_services_web_app/models/Services/Laundry.dart';
 import 'package:mez_services_web_app/screens/Laundries/laundryListView/components/laundryListViewCardForMobileComponent.dart';
@@ -26,7 +27,10 @@ class LaundryListViewForMobile extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
             child: Text(
               "${_i18n()["title"]}",
-              style: Get.textTheme.headline2,
+              style: GoogleFonts.montserrat(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black),
               textAlign: TextAlign.start,
             ),
           ),

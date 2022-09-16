@@ -1,5 +1,11 @@
 {
     "CustomerApp": {
+        "web":{
+            "install":{
+                "installBtn":"Install App",
+                "title":"Install the app to make orders online."
+            }
+        },
         "main": {
             "savedLocations": "Saved Locations"
         },
@@ -255,7 +261,7 @@
                 "ViewRestaurantScreen": {
                     "components": {
                         "restaurantInfoTab": {
-                            "description": "Description",
+                            "description": "Item Description",
                             "location": "Location",
                             "workingHours": "Working Hours",
                             "weekDays": {
@@ -480,14 +486,17 @@
                         }
                     },
                     "laundries": "Laundries",
-                    "title": "Find your closest laundries\nor dry cleaners "
+                    "title": "Find your closest laundries or dry cleaners "
                 },
                 "SingleLaundryScreen": {
                     "startingFrom": "Starting from ",
-                    "minimumCost": "Minimum Cost",
+                    "minimumCost": "Minimum",
+                    "retaurnsIn":"Days return",
+                    "categories":"Categories",
                     "description": "Description",
                     "openHours": "openHours",
-                    "sendMyLaundry": "Send my laundry"
+                    "sendMyLaundry": "Send my laundry",
+                    "location":"Location"
                 },
                 "LaundryRequestView": {
                     "LaundryOrderRequestView": {

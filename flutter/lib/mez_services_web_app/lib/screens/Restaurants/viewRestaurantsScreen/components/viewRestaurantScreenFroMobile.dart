@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mez_services_web_app/controllers/languageController.dart';
 import 'package:mez_services_web_app/controllers/restaurantsInfoController.dart';
+import 'package:mez_services_web_app/helpers/StringHelper.dart';
 import 'package:mez_services_web_app/models/Generic.dart';
 import 'package:mez_services_web_app/models/Services/Restaurant.dart';
 import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/components/RestaurantGridItemCard.dart';
 import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/components/RestaurantListItemComponent.dart';
 import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/components/RestaurantSliverAppbar.dart';
 import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreenInfo/components/restaurantInfoTabForMobile.dart';
+import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 //import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 
@@ -160,7 +163,8 @@ class _ViewRestaurantScreenFroMobileState
             onInfoTap: () {
               setState(() {
                 showInfo = !showInfo;
-                QR.to("${QR.currentPath}/info");
+                var xPath = getCurrentPath();
+                QR.to("${xPath[0]}/info${xPath[1]}");
                 pauseRectGetterIndex = !pauseRectGetterIndex;
               });
             },
@@ -175,7 +179,9 @@ class _ViewRestaurantScreenFroMobileState
 
   Widget _buildCategoriesList() {
     return SliverPadding(
-        padding: const EdgeInsets.all(12),
+        padding: EdgeInsets.symmetric(
+            horizontal: MezCalmosResizer.getWepPageHorizontalPadding(context),
+            vertical: 25),
         sliver: SliverList(
           delegate: SliverChildListDelegate(
             List.generate(_getList().length, (int index) {
@@ -217,13 +223,20 @@ class _ViewRestaurantScreenFroMobileState
         children: [
           Text(
             category.name?[userLanguage] ?? "",
-            style: Get.theme.textTheme.bodyText1,
+            style: GoogleFonts.montserrat(
+                fontSize: 15, fontWeight: FontWeight.w700, color: Colors.black),
           ),
           SizedBox(
             height: 5,
           ),
           if (category.dialog?[userLanguage] != null)
-            Text(category.dialog![userLanguage]!),
+            Text(
+              category.dialog![userLanguage]!,
+              style: GoogleFonts.montserrat(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Color.fromRGBO(73, 73, 73, 1)),
+            ),
           SizedBox(
             height: 5,
           ),
@@ -244,6 +257,8 @@ class _ViewRestaurantScreenFroMobileState
           children.add(RestaurantsListOfItemsComponent(
               item: item,
               function: () {
+                var xPath = getCurrentPath();
+                QR.to("${xPath[0]}/${item.id}${xPath[1]}");
                 //TODO: add routing
                 // Get.toNamed(
                 //   getItemRoute(restaurantId, item.id),

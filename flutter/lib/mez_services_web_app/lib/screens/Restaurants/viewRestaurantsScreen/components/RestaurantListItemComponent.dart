@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mez_services_web_app/controllers/languageController.dart';
 import 'package:mez_services_web_app/helpers/StringHelper.dart';
 import 'package:mez_services_web_app/models/Generic.dart';
@@ -61,8 +62,10 @@ class _RestaurantsListOfItemsComponentState
                   alignment: Alignment.centerLeft,
                   child: Text(
                     "${widget.item.name[userLanguage]!.capitalizeFirstofEach}",
-                    style: txt.headline3!.copyWith(
-                      fontSize: 13.sp,
+                    style: GoogleFonts.montserrat(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -72,10 +75,14 @@ class _RestaurantsListOfItemsComponentState
               ),
               Container(
                 alignment: Alignment.centerLeft,
-                child: Text("\$${widget.item.cost}",
-                    style: txt.headline3!.copyWith(
-                      fontSize: 13.sp,
-                    )),
+                child: Text(
+                  "\$${widget.item.cost}",
+                  style: GoogleFonts.montserrat(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
+                ),
               )
             ],
           ),

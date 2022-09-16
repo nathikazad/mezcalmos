@@ -6,6 +6,9 @@ import 'package:mez_services_web_app/models/Services/Restaurant.dart';
 import 'package:mez_services_web_app/screens/Restaurants/restaurantItemView/components/ItemOptionCard.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["Restaurants"]["ViewRestaurantScreen"];
+
 class RestaurantItemViewForDesktop extends StatelessWidget {
   const RestaurantItemViewForDesktop({Key? key, required this.item})
       : super(key: key);
@@ -59,12 +62,14 @@ class RestaurantItemViewForDesktop extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Text(
-              "Item Description",
-              style: GoogleFonts.montserrat(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black),
+            Obx(
+              () => Text(
+                "${_i18n()["components"]["restaurantInfoTab"]["description"]}",
+                style: GoogleFonts.montserrat(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black),
+              ),
             ),
             SizedBox(
               height: 8,

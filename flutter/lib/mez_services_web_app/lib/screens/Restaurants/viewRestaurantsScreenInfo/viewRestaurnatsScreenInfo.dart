@@ -10,7 +10,7 @@ import 'package:mez_services_web_app/helpers/GeneralPurposeHelper.dart';
 import 'package:mez_services_web_app/helpers/setUpHelper.dart';
 import 'package:mez_services_web_app/models/Schedule.dart';
 import 'package:mez_services_web_app/models/Services/Restaurant.dart';
-import 'package:mez_services_web_app/screens/Restaurants/components/installAppBarComponent.dart';
+import 'package:mez_services_web_app/screens/components/installAppBarComponent.dart';
 import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/components/itemSliverAppBar.dart';
 import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreenInfo/components/restaurantInfoTabForDesktop.dart';
 import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreenInfo/components/restaurantInfoTabForMobile.dart';
@@ -49,13 +49,6 @@ class _ViewRestaurantsScrennInfoState extends State<ViewRestaurantsScrennInfo> {
 
       print("this is another test ${restaurant?.toJson()}");
     });
-  }
-
-  void test() {
-    //     .entries
-    //     .map((MapEntry<String, OpenHours> v) {
-    //   print("this is a test ${v.toString()}");
-    // });
   }
 
   @override

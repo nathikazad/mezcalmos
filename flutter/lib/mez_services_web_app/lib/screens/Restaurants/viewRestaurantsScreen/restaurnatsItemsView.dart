@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mez_services_web_app/controllers/languageController.dart';
 import 'package:mez_services_web_app/helpers/GeneralPurposeHelper.dart';
+import 'package:mez_services_web_app/helpers/StringHelper.dart';
 import 'package:mez_services_web_app/helpers/setUpHelper.dart';
-import 'package:mez_services_web_app/screens/Restaurants/components/installAppBarComponent.dart';
+import 'package:mez_services_web_app/models/Generic.dart';
+import 'package:mez_services_web_app/screens/components/installAppBarComponent.dart';
 import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/components/viewRestaurantScreenFroDesktop.dart';
 import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/components/viewRestaurantScreenFroMobile.dart';
 import 'package:mez_services_web_app/services/values/constants.dart';
@@ -20,6 +22,12 @@ class RestaurantsItemsView extends StatefulWidget {
 }
 
 class _RestaurantsItemsViewState extends State<RestaurantsItemsView> {
+  @override
+  void initState() {
+    Get.put<LanguageController>(LanguageController());
+    super.initState();
+  }
+
   final List<bool> _selectedFruits = <bool>[true, false, false];
 
   @override
@@ -32,6 +40,15 @@ class _RestaurantsItemsViewState extends State<RestaurantsItemsView> {
           if (snapShot.hasData && snapShot.data == true) {
             final LanguageController Lcontroller =
                 Get.find<LanguageController>();
+            var xLang = QR.params["lang"].toString().contains("es")
+                ? LanguageType.ES
+                : LanguageType.EN;
+            print("xLang is now ${xLang}");
+            if (mounted) {
+              Future.delayed(Duration(seconds: 1)).then((value) {
+                Lcontroller.changeLangForWeb(xLang);
+              });
+            }
 
             return Scaffold(
               appBar: InstallAppBarComponent(),
@@ -97,10 +114,12 @@ class ItemCardComponnent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: InkWell(
         onTap: () {
-          QR.to("${QR.currentPath}/$id");
+          var xPath = getCurrentPath();
+          var param = getLangParam();
+          QR.to("${xPath[0]}/$id${xPath[1]}");
         },
         child: Card(
           child: Center(
@@ -129,7 +148,7 @@ class ItemCardComponnent extends StatelessWidget {
                   "$title",
                   style: GoogleFonts.montserrat(
                       textStyle:
-                          TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
                 ),
                 SizedBox(
                   height: 10,
@@ -138,7 +157,7 @@ class ItemCardComponnent extends StatelessWidget {
                   "\$$price",
                   style: GoogleFonts.montserrat(
                       textStyle:
-                          TextStyle(fontSize: 13, fontWeight: FontWeight.w700)),
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w700)),
                 )
               ],
             ),
@@ -165,11 +184,12 @@ class ItemCardWithoutImageComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: InkWell(
         onTap: () {
-          print("the item id is $id");
-          QR.to("${QR.currentPath}/$id");
+          var xPath = getCurrentPath();
+          var param = getLangParam();
+          QR.to("${xPath[0]}/$id${xPath[1]}${getLangParam()}");
         },
         child: Card(
           child: Container(
@@ -208,7 +228,7 @@ class ItemCardWithoutImageComponent extends StatelessWidget {
                         "$title",
                         style: GoogleFonts.montserrat(
                             color: Colors.black,
-                            fontSize: 12,
+                            fontSize: 14,
                             fontWeight: FontWeight.w500),
                       ),
                     ),
@@ -219,7 +239,7 @@ class ItemCardWithoutImageComponent extends StatelessWidget {
                   child: Text(
                     "\$$price",
                     style: GoogleFonts.montserrat(
-                        fontSize: 12,
+                        fontSize: 14,
                         fontWeight: FontWeight.w700,
                         color: Colors.black),
                   ),
@@ -236,11 +256,11 @@ class ItemCardWithoutImageComponent extends StatelessWidget {
 double SizeOfOvalImage(BuildContext context) {
   if (MezCalmosResizer.isDesktop(context) ||
       MezCalmosResizer.isSmallDesktop(context)) {
-    return 10.w;
+    return 12.w;
   } else if (MezCalmosResizer.isTablet(context)) {
-    return 7.5.w;
+    return 9.5.w;
   } else {
-    return 7.5.w;
+    return 9.5.w;
   }
 }
 

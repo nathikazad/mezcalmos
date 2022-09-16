@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:get/get.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 extension CapExtension on String {
   String get inCaps =>
@@ -38,4 +39,23 @@ String getRandomString(int length) {
   final Random _rnd = Random();
   return String.fromCharCodes(Iterable.generate(
       length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+}
+
+List<String> getCurrentPath() {
+  var strs = <String>[];
+  var xPath = QR.currentPath.contains("?")
+      ? QR.currentPath.split('?')[0]
+      : QR.currentPath;
+  strs.add(xPath);
+  var params =
+      QR.currentPath.contains("?") ? "?${QR.currentPath.split('?')[1]}" : "";
+  strs.add(params);
+  return strs;
+}
+
+String getLangParam() {
+  var param = QR.params["lang"].toString().isNotEmpty
+      ? "?lang=${QR.params["lang"].toString()}"
+      : "";
+  return param;
 }

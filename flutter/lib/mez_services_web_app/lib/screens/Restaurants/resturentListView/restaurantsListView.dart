@@ -5,8 +5,11 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mez_services_web_app/controllers/languageController.dart';
 import 'package:mez_services_web_app/helpers/GeneralPurposeHelper.dart';
+import 'package:mez_services_web_app/helpers/StringHelper.dart';
 import 'package:mez_services_web_app/helpers/setUpHelper.dart';
+import 'package:mez_services_web_app/models/Generic.dart';
 import 'package:mez_services_web_app/routes/AppRoutes.dart';
+import 'package:mez_services_web_app/screens/Restaurants/resturentListView/components/RestaurantShimmerGrid.dart';
 import 'package:mez_services_web_app/screens/Restaurants/resturentListView/components/RestaurantShimmerList.dart';
 import 'package:mez_services_web_app/screens/Restaurants/resturentListView/components/restaurantCardForDesktopAndTablet.dart';
 import 'package:mez_services_web_app/screens/Restaurants/resturentListView/components/restaurantCardForMobile.dart';
@@ -15,7 +18,7 @@ import 'package:mez_services_web_app/services/values/constants.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-import '../components/installAppBarComponent.dart';
+import '../../components/installAppBarComponent.dart';
 
 class RestaurantsListView extends StatefulWidget {
   RestaurantsListView({Key? key}) : super(key: key);
@@ -25,6 +28,15 @@ class RestaurantsListView extends StatefulWidget {
 }
 
 class _RestaurantsListViewState extends State<RestaurantsListView> {
+  final ScrollController controller = ScrollController();
+  @override
+  void initState() {
+    print("the current lang is ${QR.params["lang"]} ");
+    Get.put<LanguageController>(LanguageController());
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     // return Scaffold(
@@ -41,6 +53,16 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
           if (snapShot.hasData && snapShot.data == true) {
             final LanguageController Lcontroller =
                 Get.find<LanguageController>();
+
+            var xLang = QR.params["lang"].toString().contains("es")
+                ? LanguageType.ES
+                : LanguageType.EN;
+            print("xLang is now ${xLang}");
+            if (mounted) {
+              Future.delayed(Duration(seconds: 1)).then((value) {
+                Lcontroller.changeLangForWeb(xLang);
+              });
+            }
             ListRestaurantsController viewController =
                 ListRestaurantsController();
             return Scaffold(
@@ -49,18 +71,25 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
                   builder: (context, constraints) {
                     return Scaffold(
                       appBar: AppBar(
-                        title: Text(
-                          "Restaurants",
-                          style: GoogleFonts.montserrat(
-                              textStyle: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 17,
-                            color: Colors.black,
-                          )),
+                        leading: null,
+                        automaticallyImplyLeading: false,
+                        title: Obx(
+                          () => Text(
+                            Lcontroller.strings["CustomerApp"]["pages"]
+                                    ["Restaurants"]["ListRestaurantsScreen"]
+                                ["ListRestaurantScreen"]["restaurants"],
+                            style: GoogleFonts.montserrat(
+                                textStyle: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 17,
+                              color: Colors.black,
+                            )),
+                          ),
                         ),
                         centerTitle: true,
                       ),
                       body: SingleChildScrollView(
+                        controller: controller,
                         child: Column(
                           children: [
                             _searchInput(context),
@@ -85,17 +114,46 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
 
   Widget _restaurantList(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
+    var t = int.parse(
+        ((size.width - kToolbarHeight - 24 / Get.height) / size.width * 0.4)
+            .toStringAsFixed(2)
+            .split('.')[1]);
+    var x = double.parse(
+      ("1." + (t).toString()),
+    );
+    print("this is the resualt $x");
     /*24 is for notification bar on Android*/
-    final double itemHeight = (size.width - kToolbarHeight - 24) / 4;
-    final double itemWidth = size.width / 4;
+    final double itemHeight = (size.width - kToolbarHeight - 24) / 6;
+    final double itemWidth = size.width / 3;
     var viewController = Get.find<ListRestaurantsController>();
 
     return Obx(() {
       if (viewController.isLoading.value) {
-        return Column(
-          children: List.generate(10, (int index) => RestaurantShimmerCard()),
-        );
+        if (MezCalmosResizer.isSmallMobile(context) ||
+            MezCalmosResizer.isMobile(context)) {
+          return Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: MezCalmosResizer.getWepPageHorizontalPadding(context),
+            ),
+            child: Column(
+              children:
+                  List.generate(10, (int index) => RestaurantShimmerCard()),
+            ),
+          );
+        } else {
+          return Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal:
+                    MezCalmosResizer.getWepPageHorizontalPadding(context)),
+            child: GridView.count(
+              shrinkWrap: true,
+              crossAxisCount: MezCalmosResizer.isSmallTablet(context) ? 2 : 3,
+              childAspectRatio: x,
+              children:
+                  List.generate(10, (int index) => RestaurantShimmerGrid()),
+            ),
+          );
+        }
       } else {
         if (MezCalmosResizer.isDesktop(context) ||
             MezCalmosResizer.isSmallTablet(context) ||
@@ -108,7 +166,7 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
               shrinkWrap: true,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: MezCalmosResizer.isSmallTablet(context) ? 2 : 3,
-                childAspectRatio: 1.05,
+                childAspectRatio: x,
               ),
               itemCount: viewController.filteredRestaurants.length,
               itemBuilder: (BuildContext context, int index) {
@@ -116,7 +174,7 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
                   shippingPrice: viewController.baseShippingPrice,
                   onClick: () {
                     QR.to(
-                      "/restaurants/${viewController.filteredRestaurants[index].info.id}",
+                      "/restaurants/${viewController.filteredRestaurants[index].info.id}${getLangParam()}",
                     );
                   },
                   restaurant: viewController.filteredRestaurants[index],
@@ -137,7 +195,7 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
                   shippingPrice: viewController.baseShippingPrice,
                   onClick: () {
                     QR.to(
-                      "/restaurants/${viewController.filteredRestaurants[index].info.id}",
+                      "/restaurants/${viewController.filteredRestaurants[index].info.id}${getLangParam()}ß",
                     );
                     ;
                   },
@@ -171,8 +229,10 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
               lang.strings["CustomerApp"]["pages"]["Restaurants"]
                       ["ListRestaurantsScreen"]["ListRestaurantScreen"]
                   ["showOnlyOpen"],
-              style: Get.textTheme.bodyText2
-                  ?.copyWith(fontWeight: FontWeight.w700, fontSize: 14),
+              style: GoogleFonts.montserrat(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black),
             ),
           ),
         ),
@@ -182,6 +242,9 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
 
   Widget _searchInput(BuildContext context) {
     LanguageController lang = Get.find<LanguageController>();
+
+    // lang.changeLangForWeb(LanguageType.ES);
+    // lang.update();
     var viewController = Get.find<ListRestaurantsController>();
     return Container(
       padding: EdgeInsets.symmetric(

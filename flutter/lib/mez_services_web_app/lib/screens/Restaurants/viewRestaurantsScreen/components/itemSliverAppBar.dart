@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mez_services_web_app/models/Services/Restaurant.dart';
 import 'package:mez_services_web_app/services/values/constants.dart';
+import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
@@ -18,8 +19,8 @@ class ItemSliverAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      backgroundColor: Theme.of(context).primaryColorLight,
-      elevation: 0.4,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
       expandedHeight: 300,
       automaticallyImplyLeading: false,
       // titleSpacing: 12,
@@ -33,19 +34,22 @@ class ItemSliverAppBar extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         centerTitle: true,
-        title: Container(
-          width: 70.w,
-          // child: Text(
-          //   " this is a test",
-          //   textAlign: TextAlign.center,
-          //   maxLines: 1,
-          //   overflow: TextOverflow.ellipsis,
-          //   style: Theme.of(context)
-          //       .textTheme
-          //       .headline3!
-          //       .copyWith(fontSize: 13.sp, color: Colors.white),
-          // ),
-        ),
+        title: (MezCalmosResizer.isMobile(context) ||
+                MezCalmosResizer.isSmallMobile(context))
+            ? Container(
+                width: 70.w,
+                child: Text(
+                  "Informations",
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3!
+                      .copyWith(fontSize: 13.sp, color: Colors.white),
+                ),
+              )
+            : null,
         background: CachedNetworkImage(
           imageUrl: "$urlImg",
           fit: BoxFit.cover,

@@ -71,7 +71,7 @@ class _RestaurantsInfoTapForDesktopState
               "${widget.restaurant!.description![lang.userLanguageKey]}",
               style: GoogleFonts.nunito(
                   textStyle: TextStyle(
-                      fontSize: 12,
+                      fontSize: 14,
                       fontWeight: FontWeight.w600,
                       color: Color.fromRGBO(73, 73, 73, 1))),
             ),
@@ -102,7 +102,7 @@ class _RestaurantsInfoTapForDesktopState
             "${widget.restaurant!.info.location.address}",
             style: GoogleFonts.nunito(
                 textStyle: TextStyle(
-                    fontSize: 12,
+                    fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: Color.fromRGBO(73, 73, 73, 1))),
           ),

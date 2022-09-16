@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mez_services_web_app/controllers/languageController.dart';
+import 'package:mez_services_web_app/helpers/StringHelper.dart';
+import 'package:mez_services_web_app/helpers/changeLagWithParams.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -129,6 +132,8 @@ double getText2Size(BuildContext context) {
 
 // desktop Widget
 Widget _buildWidget(BuildContext context) {
+  dynamic _i18n() =>
+      Get.find<LanguageController>().strings["CustomerApp"]["web"]["install"];
   return Container(
     width: Get.width,
     height: kToolbarHeight,
@@ -148,30 +153,35 @@ Widget _buildWidget(BuildContext context) {
             child: Padding(
               padding: buildButtonPadding(context),
               child: Center(
-                child: Text(
-                  "Install App",
-                  style: GoogleFonts.montserrat(
-                      textStyle: TextStyle(
-                          fontSize: getTextSize(context),
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700)),
+                child: Obx(
+                  () => Text(
+                    "${_i18n()["installBtn"]}",
+                    style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
+                            fontSize: getTextSize(context),
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700)),
+                  ),
                 ),
               ),
             ),
           ),
         ),
         SizedBox(
-          width: Get.width * 0.1,
+          width: Get.width * 0.025,
         ),
         Expanded(
             child: Container(
-          child: Text(
-            "Install the app to make orders online.",
-            style: GoogleFonts.montserrat(
-                textStyle: TextStyle(
-                    fontSize: getText2Size(context),
-                    color: primaryColor,
-                    fontWeight: FontWeight.w600)),
+          child: Obx(
+            () => Text(
+              "${_i18n()["title"]}",
+              style: GoogleFonts.montserrat(
+                  textStyle: TextStyle(
+                      wordSpacing: 0.5,
+                      fontSize: getText2Size(context),
+                      color: primaryColor,
+                      fontWeight: FontWeight.w600)),
+            ),
           ),
         ))
       ],

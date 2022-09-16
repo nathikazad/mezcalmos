@@ -38,7 +38,7 @@ class laundryListViewCardForDesktopComponent extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Expanded(
+            Flexible(
               //flex: 2,
               child: Container(
                 width: Get.width,
@@ -58,8 +58,7 @@ class laundryListViewCardForDesktopComponent extends StatelessWidget {
                 ),
               ),
             ),
-            Expanded(
-                child: Column(
+            Column(
               children: [
                 //title
                 Container(
@@ -87,7 +86,7 @@ class laundryListViewCardForDesktopComponent extends StatelessWidget {
                     Icon(
                       Icons.delivery_dining,
                       color: Colors.grey.shade800,
-                      size: 15,
+                      size: 18,
                     ),
                     ShippingCostComponent(
                       shippingCost: shippingPrice,
@@ -98,8 +97,8 @@ class laundryListViewCardForDesktopComponent extends StatelessWidget {
                       child: Row(
                         children: [
                           Icon(
-                            Icons.schedule,
-                            size: 10,
+                            Icons.watch_later,
+                            size: 15,
                           ),
                           SizedBox(
                             width: 5,
@@ -108,7 +107,7 @@ class laundryListViewCardForDesktopComponent extends StatelessWidget {
                             "${laundry.averageNumberOfDays} Days",
                             style: GoogleFonts.nunito(
                                 textStyle: TextStyle(
-                              fontSize: 13,
+                              fontSize: 14,
                               fontWeight: FontWeight.w500,
                             )),
                           ),
@@ -128,14 +127,14 @@ class laundryListViewCardForDesktopComponent extends StatelessWidget {
                       "\$${laundry.laundryCosts.minimumCost}/kg",
                       style: GoogleFonts.nunito(
                           textStyle: TextStyle(
-                        fontSize: 13,
+                        fontSize: 14,
                         fontWeight: FontWeight.w500,
                       )),
                     ),
                   ],
                 )
               ],
-            ))
+            )
           ],
         ),
       ),

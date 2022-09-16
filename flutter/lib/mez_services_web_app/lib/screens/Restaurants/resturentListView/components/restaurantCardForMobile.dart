@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mez_services_web_app/controllers/languageController.dart';
 import 'package:mez_services_web_app/models/Generic.dart';
 import 'package:mez_services_web_app/models/Services/Restaurant.dart';
@@ -71,13 +72,25 @@ class RestaurantCardForMobile extends StatelessWidget {
                             Flexible(
                               flex: 2,
                               fit: FlexFit.tight,
-                              child: Text(_getDollarsSign(),
-                                  style: txt.bodyText1?.copyWith(
-                                    color: Colors.grey.shade800,
-                                  )),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.watch_later,
+                                    size: 15,
+                                  ),
+                                  Text(
+                                    "52min",
+                                    style: GoogleFonts.nunito(
+                                        textStyle: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    )),
+                                  ),
+                                ],
+                              ),
                             ),
                             Flexible(
-                              flex: 7,
+                              flex: 3,
                               fit: FlexFit.tight,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,

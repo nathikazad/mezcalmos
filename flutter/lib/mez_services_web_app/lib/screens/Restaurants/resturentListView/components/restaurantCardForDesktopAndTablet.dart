@@ -36,8 +36,8 @@ class _RestaurantCardForDesktopAndTabletState
       onTap: widget.onClick,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        width: 300,
-        height: 300,
+        // width: 300,
+        // height: 300,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: Colors.white,
@@ -51,7 +51,7 @@ class _RestaurantCardForDesktopAndTabletState
         ),
         child: Column(
           children: [
-            Expanded(
+            Flexible(
               child: Container(
                 width: Get.width,
                 child: Stack(
@@ -62,6 +62,7 @@ class _RestaurantCardForDesktopAndTabletState
                           topRight: Radius.circular(8)),
                       child: Container(
                         width: Get.width,
+                        height: double.infinity,
                         child: Image(
                           image: NetworkImage(
                             '${widget.restaurant.info.image}',
@@ -99,8 +100,7 @@ class _RestaurantCardForDesktopAndTabletState
                 ),
               ),
             ),
-            Expanded(
-                child: Column(
+            Column(
               children: [
                 //title
                 Container(
@@ -145,23 +145,11 @@ class _RestaurantCardForDesktopAndTabletState
                   children: [
                     Container(
                       padding: const EdgeInsets.all(10),
-                      child: Text(
-                        "\$\$",
-                        style: GoogleFonts.montserrat(
-                            textStyle: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromRGBO(73, 73, 73, 1),
-                        )),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(10),
                       child: Row(
                         children: [
                           Icon(
-                            Icons.schedule,
-                            size: 10,
+                            Icons.watch_later,
+                            size: 15,
                           ),
                           SizedBox(
                             width: 5,
@@ -170,7 +158,7 @@ class _RestaurantCardForDesktopAndTabletState
                             "52min",
                             style: GoogleFonts.nunito(
                                 textStyle: TextStyle(
-                              fontSize: 13,
+                              fontSize: 14,
                               fontWeight: FontWeight.w500,
                             )),
                           ),
@@ -180,7 +168,7 @@ class _RestaurantCardForDesktopAndTabletState
                     Icon(
                       Icons.delivery_dining,
                       color: Colors.grey.shade800,
-                      size: 15,
+                      size: 18,
                     ),
                     ShippingCostComponent(
                       shippingCost: widget.shippingPrice,
@@ -198,7 +186,7 @@ class _RestaurantCardForDesktopAndTabletState
                   ],
                 )
               ],
-            ))
+            )
           ],
         ),
       ),

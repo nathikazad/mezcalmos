@@ -50,13 +50,18 @@ class RestaurantInfoTabForMobile extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 10, bottom: 25),
+                  margin: EdgeInsets.only(
+                    top: 10,
+                  ),
                   child: Text(restaurant.description?[userLanguage] ?? ""),
                 ),
               ],
             ),
           if (restaurant.schedule != null)
-            MezServiceOpenHours(schedule: restaurant.schedule!),
+            SizedBox(
+              height: 25,
+            ),
+          MezServiceOpenHours(schedule: restaurant.schedule!),
           SizedBox(
             height: 25,
           ),

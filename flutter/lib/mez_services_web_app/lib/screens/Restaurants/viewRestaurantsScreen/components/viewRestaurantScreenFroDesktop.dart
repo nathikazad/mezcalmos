@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mez_services_web_app/controllers/languageController.dart';
 import 'package:mez_services_web_app/controllers/restaurantsInfoController.dart';
+import 'package:mez_services_web_app/helpers/StringHelper.dart';
 import 'package:mez_services_web_app/models/Generic.dart';
 import 'package:mez_services_web_app/models/Services/Restaurant.dart';
 import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/components/itemSliverAppBar.dart';
@@ -153,13 +154,10 @@ class _ViewRestaurantScreenFroDesktopState
                 category.dialog![lang.userLanguageKey]!,
                 style: GoogleFonts.montserrat(
                     color: const Color.fromRGBO(73, 73, 73, 1),
-                    fontSize: 12,
+                    fontSize: 14,
                     fontWeight: FontWeight.w500),
               ),
             ),
-          SizedBox(
-            height: 5,
-          ),
           _buildResturantItems(category.items, restaurant.value!.info.id),
           SizedBox(
             height: 10,
@@ -310,8 +308,10 @@ class _ViewRestaurantScreenFroDesktopState
                                           onTap: () {
                                             // print(
                                             //     "QR.currentPath ${QR.currentPath}");
+                                            var xPath = getCurrentPath();
 
-                                            QR.to("${QR.currentPath}/info");
+                                            QR.to(
+                                                "${xPath[0]}/info${xPath[1]}");
                                           },
                                           child: Text(
                                             lang.strings["CustomerApp"]["pages"]
@@ -341,16 +341,26 @@ class _ViewRestaurantScreenFroDesktopState
                               Container(
                                 child: Row(
                                   children: [
-                                    Text(
-                                      "${restaurant.value!.description![lang.userLanguageKey]!}",
-                                      style: GoogleFonts.nunito(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
+                                    (restaurant.value!.description![
+                                                lang.userLanguageKey] !=
+                                            "")
+                                        ? Container(
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  "${restaurant.value!.description![lang.userLanguageKey]!}",
+                                                  style: GoogleFonts.nunito(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        : SizedBox(),
                                     Icon(
                                       Icons.schedule,
                                       size: 10,
@@ -361,7 +371,7 @@ class _ViewRestaurantScreenFroDesktopState
                                     Text(
                                       "52min",
                                       style: GoogleFonts.nunito(
-                                        fontSize: 12,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -378,7 +388,7 @@ class _ViewRestaurantScreenFroDesktopState
                                     Text(
                                       "\$50",
                                       style: GoogleFonts.nunito(
-                                        fontSize: 12,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -397,6 +407,8 @@ class _ViewRestaurantScreenFroDesktopState
                               ),
                               Container(
                                 child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Icon(
                                       Icons.location_on,
@@ -405,13 +417,17 @@ class _ViewRestaurantScreenFroDesktopState
                                     SizedBox(
                                       width: 5,
                                     ),
-                                    Text(
-                                        "${restaurant.value!.info.location.address}",
-                                        style: GoogleFonts.nunito(
-                                            textStyle: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.black)))
+                                    Flexible(
+                                      child: Text(
+                                          "${restaurant.value!.info.location.address}",
+                                          overflow: TextOverflow.clip,
+                                          maxLines: 2,
+                                          style: GoogleFonts.nunito(
+                                              textStyle: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.black))),
+                                    )
                                   ],
                                 ),
                               ),

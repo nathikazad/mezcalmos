@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mez_services_web_app/controllers/languageController.dart';
 import 'package:mez_services_web_app/models/Generic.dart';
 import 'package:mez_services_web_app/models/Services/Restaurant.dart';
@@ -8,6 +9,7 @@ import 'package:mez_services_web_app/models/Services/Restaurant.dart';
 import 'package:mez_services_web_app/helpers/StringHelper.dart'
     show TwoLettersGenerator;
 import 'package:mez_services_web_app/services/values/constants.dart';
+import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
 
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:shimmer/shimmer.dart';
@@ -39,11 +41,12 @@ class RestaurantSliverAppBar extends StatelessWidget {
     return SliverAppBar(
       backgroundColor: Theme.of(context).primaryColorLight,
       elevation: 0.4,
-      expandedHeight: 230,
+      expandedHeight: Get.height * 0.3,
       centerTitle: true,
       automaticallyImplyLeading: false,
-      bottom:
-          (restaurant.getCategories.length > 1 && !showInfo) ? bottom : null,
+      bottom: (restaurant.getCategories.length > 1 && !showInfo)
+          ? bottom(context)
+          : null,
       // leading: !isRunningOnWeb! ? _BackButtonAppBar() : null,
       // actions: !isRunningOnWeb!
       //     ? <Widget>[
@@ -66,13 +69,15 @@ class RestaurantSliverAppBar extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  height: 15,
+                  height: 20,
                   alignment: Alignment.center,
                   // padding: const EdgeInsets.only(left: 8, right: 3),
                   child: Text(
                     (showInfo) ? "Informations" : restaurant.info.name,
-                    style: Get.textTheme.headline3
-                        ?.copyWith(color: Colors.white, fontSize: 13),
+                    style: GoogleFonts.montserrat(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
@@ -92,13 +97,13 @@ class RestaurantSliverAppBar extends StatelessWidget {
               ],
             ),
           ),
-          background: _backgroundImageComponent(),
+          background: _backgroundImageComponent(context),
         );
       }),
     );
   }
 
-  Widget _backgroundImageComponent() {
+  Widget _backgroundImageComponent(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: restaurant.info.image,
       fit: BoxFit.cover,
@@ -158,7 +163,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget? get bottom {
+  PreferredSizeWidget? bottom(BuildContext context) {
     final LanguageType userLanguage =
         Get.find<LanguageController>().userLanguageKey;
     return PreferredSize(
@@ -169,18 +174,23 @@ class RestaurantSliverAppBar extends StatelessWidget {
         margin: const EdgeInsets.only(
           top: 8,
         ),
-        padding: const EdgeInsets.all(4),
+        padding: EdgeInsets.symmetric(
+            horizontal: MezCalmosResizer.getWepPageHorizontalPadding(context),
+            vertical: 4),
         child: TabBar(
           isScrollable: true,
           controller: tabController,
           labelColor: primaryBlueColor,
-          labelStyle: Get.textTheme.bodyText1,
-          unselectedLabelStyle: Get.textTheme.bodyText1?.copyWith(
-              fontWeight: FontWeight.w500, color: Colors.grey.shade800),
+          labelStyle:
+              GoogleFonts.montserrat(fontSize: 15, fontWeight: FontWeight.w700),
+          unselectedLabelStyle: GoogleFonts.montserrat(
+              fontWeight: FontWeight.w600,
+              fontSize: 15,
+              color: Colors.grey.shade800),
           unselectedLabelColor: Colors.grey.shade700,
           indicatorPadding: const EdgeInsets.all(5),
           indicatorSize: TabBarIndicatorSize.tab,
-          indicatorColor: Get.theme.primaryColorLight,
+          indicatorColor: Color(0xFF6779FE),
           indicator: BoxDecoration(
               borderRadius: BorderRadius.circular(25),
               shape: BoxShape.rectangle,

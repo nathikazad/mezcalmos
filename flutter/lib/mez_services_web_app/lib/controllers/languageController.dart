@@ -86,6 +86,7 @@ class LanguageController extends GetxController {
   ///this function [changeLangForWeb] used only for web
   void changeLangForWeb(LanguageType? language) {
     _userLanguageKey.value = language ?? LanguageType.EN;
+    print("just changed this lang to ${_userLanguageKey.value}");
   }
 
   void setLanguage(LanguageType language) {

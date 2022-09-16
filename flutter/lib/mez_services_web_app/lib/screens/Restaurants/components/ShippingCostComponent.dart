@@ -29,7 +29,7 @@ class ShippingCostComponent extends StatelessWidget {
                 Text(
                   defaultShippingCost.toPriceString(),
                   style: TextStyle(
-                      fontSize: 11, decoration: TextDecoration.lineThrough),
+                      fontSize: 13, decoration: TextDecoration.lineThrough),
                 ),
                 // Text(defaultShippingCost.toPriceString(),
                 //     style: TextStyle(fontSize: 11)
@@ -39,10 +39,12 @@ class ShippingCostComponent extends StatelessWidget {
                 SizedBox(
                   width: 5,
                 ),
-                Text("${_i18n()["free"]}",
-                    style: TextStyle(fontSize: 11, color: Color(0xFF6779FE))
-                    //       ?.copyWith(color: Color(0xFF6779FE), fontSize: 11),
-                    )
+                Obx(
+                  () => Text("${_i18n()["free"]}",
+                      style: TextStyle(fontSize: 13, color: Color(0xFF6779FE))
+                      //       ?.copyWith(color: Color(0xFF6779FE), fontSize: 11),
+                      ),
+                )
               ],
             )
           : Text(

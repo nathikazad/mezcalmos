@@ -1,9 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mez_services_web_app/controllers/languageController.dart';
+import 'package:mez_services_web_app/helpers/StringHelper.dart';
 import 'package:mez_services_web_app/models/Generic.dart';
 import 'package:mez_services_web_app/models/Services/Restaurant.dart';
+import 'package:qlevar_router/qlevar_router.dart';
+import 'package:sizer/sizer.dart';
 
 class RestaurantgridItemCard extends StatefulWidget {
   const RestaurantgridItemCard(
@@ -26,11 +30,8 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
     return Card(
       child: InkWell(
         onTap: () {
-          //TODO add routing
-          // Get.toNamed(
-          //   getItemRoute(widget.restaurant.info.id, widget.item.id),
-          //   arguments: {"mode": ViewItemScreenMode.AddItemMode},
-          // );
+          var xPath = getCurrentPath();
+          QR.to("${xPath[0]}/${widget.item.id}${xPath[1]}");
         },
         child: Container(
           //  padding: const EdgeInsets.all(5),
@@ -40,7 +41,7 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
             children: [
               if (isImageExist)
                 CircleAvatar(
-                  radius: 45,
+                  radius: 35.sp,
                   backgroundImage:
                       CachedNetworkImageProvider(widget.item.image ?? ""),
                   onBackgroundImageError: (Object e, StackTrace? s) {
@@ -55,13 +56,20 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
               Text(
                 widget.item.name[userLanguage] ?? "",
                 textAlign: TextAlign.center,
+                style: GoogleFonts.montserrat(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black),
               ),
               SizedBox(
                 height: 3,
               ),
               Text(
                 "\$${widget.item.cost}",
-                style: Get.textTheme.bodyText1,
+                style: GoogleFonts.montserrat(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black),
                 textAlign: TextAlign.center,
               ),
               SizedBox(
