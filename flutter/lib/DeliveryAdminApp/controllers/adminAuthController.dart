@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/DeliveryAdminApp/models/Admin.dart';
@@ -25,23 +26,23 @@ class AdminAuthController extends GetxController {
 
   bool _checkedAppVersion = false;
   @override
-  void onInit() async {
+  Future<void> onInit() async {
     super.onInit();
 
-    _adminNodeListener?.cancel();
+    await _adminNodeListener?.cancel();
     mezDbgPrint(userInfoNode(_authController.fireAuthUser!.uid));
     mezDbgPrint((adminNode(_authController.fireAuthUser!.uid)));
     _adminNodeListener = _databaseHelper.firebaseDatabase
         .ref()
         .child(adminNode(_authController.fireAuthUser!.uid))
         .onValue
-        .listen((event) async {
+        .listen((DatabaseEvent event) async {
       _admin.value = Admin.fromSnapshot(event.snapshot.value);
       if (_admin.value?.authorized ?? false) {
         if (_checkedAppVersion == false) {
-          String appVersion = GetStorage().read(getxAppVersion);
+          final String appVersion = GetStorage().read(getxAppVersion);
           print("[+] Customer currently using App v$appVersion");
-          _databaseHelper.firebaseDatabase
+          await _databaseHelper.firebaseDatabase
               .ref()
               .child(adminAppVersionNode(_authController.fireAuthUser!.uid))
               .set(appVersion);
@@ -49,11 +50,11 @@ class AdminAuthController extends GetxController {
           _checkedAppVersion = true;
         }
 
-        String? deviceNotificationToken =
+        final String? deviceNotificationToken =
             await _notificationsController.getToken();
 
         if (deviceNotificationToken != null)
-          _databaseHelper.firebaseDatabase
+          await _databaseHelper.firebaseDatabase
               .ref()
               .child(
                   adminNotificationInfoNode(_authController.fireAuthUser!.uid))
@@ -65,9 +66,9 @@ class AdminAuthController extends GetxController {
   }
 
   @override
-  void onClose() async {
+  Future<void> onClose() async {
     mezDbgPrint("[+] AdminAuthController::onClose ---------> Was invoked !");
-    _adminNodeListener?.cancel();
+    await _adminNodeListener?.cancel();
     _adminNodeListener = null;
     super.onClose();
   }

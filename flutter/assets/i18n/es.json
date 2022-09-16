@@ -1058,7 +1058,8 @@
     },
     "DeliveryAdminApp": {
         "main": {
-            "services": "Servicios"
+            "services": "Servicios",
+            "dashboard": "Tablero"
         },
         "notificationHandler": {
             "restaurantTitle": "Nuevo pedido de restaurante",
@@ -1081,6 +1082,15 @@
             }
         },
         "pages": {
+            "AdminDashboardView": {
+                "dashboard": "Tablero",
+                "shippingPrice": "Precio de envío",
+                "newShippingPrice": "Nuevo precio de envío",
+                "error": "error",
+                "errorText": "Precio de envío no válido",
+                "confirm": "Confirmar",
+                "cancel": "Cancelar"
+            },
             "AddLaundryServiceView": {
                 "newLaundry": "Ropa nueva",
                 "createLaundry": "Crear lavandería",

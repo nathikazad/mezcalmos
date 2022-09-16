@@ -1043,7 +1043,8 @@
     },
     "DeliveryAdminApp": {
         "main": {
-            "services": "Services"
+            "services": "Services",
+            "dashboard": "Dashboard"
         },
         "notificationHandler": {
             "restaurantTitle": "New Restaurant Order",
@@ -1065,6 +1066,15 @@
 
         },
         "pages": {
+            "AdminDashboardView": {
+                "dashboard": "Dashboard",
+                "shippingPrice": "Shipping price",
+                "newShippingPrice": "New shipping price",
+                "error": "Error",
+                "errorText": "Shipping price not valid",
+                "confirm": "Confirm",
+                "cancel": "Cancel"
+            },
             "AddLaundryServiceView": {
                 "newLaundry": "New laundry",
                 "createLaundry": "Create laundry",

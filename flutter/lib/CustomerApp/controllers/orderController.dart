@@ -9,11 +9,11 @@ import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 
 class OrderController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -22,7 +22,7 @@ class OrderController extends GetxController {
       Get.find<ForegroundNotificationsController>();
   RxList<Order> currentOrders = <Order>[].obs;
   RxList<Order> pastOrders = <Order>[].obs;
-  RxInt shippingCost = 50.obs;
+  RxNum shippingCost = RxNum(50);
 
   StreamSubscription<dynamic>? _currentOrdersListener;
   StreamSubscription<dynamic>? _pastOrdersListener;
@@ -33,13 +33,14 @@ class OrderController extends GetxController {
     mezDbgPrint(
         "--------------------> OrderController Initialized ! and the user uid is ${_authController.fireAuthUser?.uid} ");
     if (_authController.fireAuthUser?.uid != null) {
-      getShippingPrice().then((int value) => shippingCost.value = value);
+      getShippingPrice().then((num value) => shippingCost.value = value);
       _pastOrdersListener?.cancel();
       _pastOrdersListener = _databaseHelper.firebaseDatabase
           .ref()
           .child(customerPastOrders(_authController.fireAuthUser!.uid))
           .onValue
           .listen(
+        // ignore: avoid_annotating_with_dynamic
         (dynamic event) async {
           final List<Order> orders = <Order>[];
           if (event.snapshot.value != null) {
@@ -81,6 +82,7 @@ class OrderController extends GetxController {
           .ref()
           .child(customerInProcessOrders(_authController.fireAuthUser!.uid))
           .onValue
+          // ignore: avoid_annotating_with_dynamic
           .listen((dynamic event) async {
         final List<Order> orders = <Order>[];
 
@@ -193,13 +195,13 @@ class OrderController extends GetxController {
     });
   }
 
-  Future<int> getShippingPrice() async {
+  Future<num> getShippingPrice() async {
     final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
             .ref()
             .child(baseShippingPriceNode())
             .once())
         .snapshot;
-    return snapshot.value as int;
+    return snapshot.value as num;
   }
 
   bool orderHaveNewMessageNotifications(String chatId) {

@@ -2,6 +2,7 @@ import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/DeliveryAdminApp/pages/AddServiceViews/AddLaundryServiceView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/AddServiceViews/AddRestaurantView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/AdminWrapper.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Dashboard/AdminDashboardView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/DriversListView/DriverListScreen.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/LaundryOrderScreen.dart.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/ListOrdersScreen.dart';
@@ -28,6 +29,9 @@ const String kRestaurantsRoute = '/restaurants';
 const String kRestaurantRoute = '/restaurants/:restaurantId';
 const String kDriversListRoute = '/drivers';
 const String kServicesRoute = '/services';
+const String kAdminDashboard = '/dashboard';
+
+// laundry //
 const String kAdminView = '/admin/:laundryId';
 
 const String kEditInfoView = '/editInfo/:laundryId';
@@ -121,6 +125,7 @@ class XRouter {
         GetPage(name: kTaxiOrderRoute, page: () => TaxiOrderView()),
         GetPage(name: kDriversListRoute, page: () => DriversListScreen()),
         GetPage(name: kServicesRoute, page: () => ServicesView()),
+        GetPage(name: kAdminDashboard, page: () => AdminDashboardView()),
         // Laundries Services //
         GetPage(
           name: kCategoryView,
