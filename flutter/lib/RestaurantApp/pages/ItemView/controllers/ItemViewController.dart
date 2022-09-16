@@ -254,7 +254,7 @@ class ItemViewController {
 
   // add categories //
   void _assignCategories() {
-    restaurant.value!.getAvailableCategories.forEach((Category element) {
+    restaurant.value!.getCategories.forEach((Category element) {
       categories.add(element);
     });
     categories.add(addNewCatgeory);

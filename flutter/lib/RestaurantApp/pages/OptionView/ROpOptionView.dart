@@ -10,8 +10,8 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/widgets/CallToActionButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 //
@@ -68,12 +68,14 @@ class _ROpOptionViewState extends State<ROpOptionView>
       if (_viewController.restaurant.value != null) {
         return Scaffold(
           appBar: _appBar(),
-          bottomNavigationBar: CallToActionButton(
+          bottomNavigationBar: MezButton(
             height: 65,
-            onTap: () async {
+            borderRadius: 0,
+            withGradient: true,
+            onClick: () async {
               await _handleSaveBtn();
             },
-            text: (_viewController.editMode.isTrue)
+            label: (_viewController.editMode.isTrue)
                 ? '${_i18n()["editOption"]}'
                 : '${_i18n()["addOption"]}',
           ),
@@ -233,7 +235,8 @@ class _ROpOptionViewState extends State<ROpOptionView>
           child: (_viewController.editMode.value)
               ? TextButton(
                   style: TextButton.styleFrom(
-                      backgroundColor: offRedColor, primary: Colors.redAccent),
+                      foregroundColor: Colors.redAccent,
+                      backgroundColor: offRedColor),
                   onPressed: () {
                     if (itemId != null) {
                       showConfirmationDialog(context, onYesClick: () async {
