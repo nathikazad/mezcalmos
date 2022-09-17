@@ -83,35 +83,38 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
                             const SizedBox(
                               height: 8,
                             ),
-                            TextFormField(
-                                controller: refundAmount,
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                validator: (String? v) {
-                                  if (v == null || num.tryParse(v) == null) {
-                                    return "${_i18n()["req"]}";
-                                  } else if (num.parse(v) > maximumRefund()) {
-                                    return "${_i18n()["maxError"]}${maximumRefund().toPriceString()}";
-                                  } else if (!(num.parse(v) > 0)) {
-                                    return "${_i18n()["minError"]}";
-                                  }
-                                  return null;
-                                },
-                                style: Get.textTheme.bodyText1,
-                                textAlignVertical: TextAlignVertical.center,
-                                decoration: InputDecoration(
-                                    suffix: Text(
-                                      "| ${_i18n()["refundMax"]} ${maximumRefund().toPriceString()}",
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    prefixIcon:
-                                        Icon(Icons.attach_money_rounded)),
-                                keyboardType: TextInputType.numberWithOptions(
-                                    decimal: true),
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.allow(
-                                      RegExp('[0-9.,]')),
-                                ]),
+                            Form(
+                              key: _formKey,
+                              child: TextFormField(
+                                  controller: refundAmount,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: (String? v) {
+                                    if (v == null || num.tryParse(v) == null) {
+                                      return "${_i18n()["req"]}";
+                                    } else if (num.parse(v) > maximumRefund()) {
+                                      return "${_i18n()["maxError"]}${maximumRefund().toPriceString()}";
+                                    } else if (!(num.parse(v) > 0)) {
+                                      return "${_i18n()["minError"]}";
+                                    }
+                                    return null;
+                                  },
+                                  style: Get.textTheme.bodyText1,
+                                  textAlignVertical: TextAlignVertical.center,
+                                  decoration: InputDecoration(
+                                      suffix: Text(
+                                        "| ${_i18n()["refundMax"]} ${maximumRefund().toPriceString()}",
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      prefixIcon:
+                                          Icon(Icons.attach_money_rounded)),
+                                  keyboardType: TextInputType.numberWithOptions(
+                                      decimal: true),
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp('[0-9.,]')),
+                                  ]),
+                            ),
                             const SizedBox(
                               height: 12,
                             ),
@@ -172,7 +175,8 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
                                   height: 50,
                                   withGradient: true,
                                   onClick: () async {
-                                    if (_formKey.currentState!.validate()) {
+                                    if (_formKey.currentState?.validate() ==
+                                        true) {
                                       await Get.find<ROpOrderController>()
                                           .refundCustomerCustomAmount(
                                               widget.order.orderId,
