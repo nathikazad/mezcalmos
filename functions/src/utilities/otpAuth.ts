@@ -94,7 +94,7 @@ async function _getAuthUsingOTP(data: verifyOtpInterface) {
   }
 
   // this condition for google to gain instant Access.
-  if (data.phoneNumber != "+21650914839" && user.uid != "tSG0eSFZNGNA7grjBPFEBbpYwjE3") {
+  if (data.phoneNumber != "+21650914839" && user.uid != "tSG0eSFZNGNA7grjBPFEBbpYwjE3" && user.uid != "xlS6U3OW10P30kgSF6htS63ChHD3") {
     let response = await confirmOTP(data, user.uid);
     if (response) {
       return response;
