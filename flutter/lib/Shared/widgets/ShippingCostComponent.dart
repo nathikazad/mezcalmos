@@ -14,12 +14,14 @@ class ShippingCostComponent extends StatelessWidget {
   const ShippingCostComponent(
       {Key? key,
       required this.shippingCost,
+      this.textStyle,
       this.defaultShippingCost = 50,
       this.alignment = MainAxisAlignment.end})
       : super(key: key);
   final num shippingCost;
   final num defaultShippingCost;
   final MainAxisAlignment alignment;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +53,7 @@ class ShippingCostComponent extends StatelessWidget {
             )
           : Text(
               shippingCost.toPriceString(),
+              style: textStyle,
             ),
     );
   }
