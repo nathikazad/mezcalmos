@@ -97,7 +97,9 @@ class Cart {
     return tcost;
   }
 
-  num get stripeFees => getStripeCost(itemsCost() + (shippingCost ?? 0));
+  num get stripeFees => paymentType == PaymentType.Card
+      ? getStripeCost(itemsCost() + (shippingCost ?? 0))
+      : 0;
 
   void addItem(CartItem cartItem) {
     if (cartItem.idInCart == null) {
