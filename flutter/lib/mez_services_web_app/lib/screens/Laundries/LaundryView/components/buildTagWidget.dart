@@ -12,8 +12,8 @@ Widget buildTagWidget({required String text, required BuildContext context}) {
     padding: EdgeInsets.symmetric(
         horizontal: (MezCalmosResizer.isSmallMobile(context) ||
                 MezCalmosResizer.isMobile(context))
-            ? 12
-            : 5,
+            ? 10
+            : 15,
         vertical: 5),
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(40), color: backgroundColorForTags),
@@ -28,36 +28,38 @@ Widget buildTagWidget({required String text, required BuildContext context}) {
   );
 }
 
-List<List<Widget>> getServices(List<LaundryCostLineItem> lineItems) {
+List<Widget> getServices(List<LaundryCostLineItem> lineItems) {
   LanguageController lang = Get.find<LanguageController>();
-  List<Widget> itemsNames = [];
-  List<Widget> itemsCoast = [];
+
+  List<Widget> xWidgets = [];
 
   lineItems.forEach((laundryCostLineItem) {
-    itemsNames.add(
-      Container(
-        padding: const EdgeInsets.only(top: 5, bottom: 5, right: 5),
-        child: Text(
-          "${laundryCostLineItem.name[lang.userLanguageKey]!}",
-          style: GoogleFonts.montserrat(
-              fontWeight: FontWeight.w500, fontSize: 12, color: Colors.black),
-        ),
-      ),
-    );
-    itemsCoast.add(
-      Container(
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-        child: Text(
-          "\$${laundryCostLineItem.cost.round().toString()}/KG",
-          style: GoogleFonts.montserrat(
-            fontWeight: FontWeight.w700,
-            fontSize: 12,
-            color: Color.fromRGBO(103, 121, 254, 1),
+    xWidgets.add(Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.only(top: 5, bottom: 5, right: 5),
+          child: Text(
+            "${laundryCostLineItem.name[lang.userLanguageKey]!}",
+            style: GoogleFonts.montserrat(
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+                color: Color.fromRGBO(73, 73, 73, 1)),
           ),
         ),
-      ),
-    );
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+          child: Text(
+            "\$${laundryCostLineItem.cost.round().toString()}/KG",
+            style: GoogleFonts.montserrat(
+              fontWeight: FontWeight.w700,
+              fontSize: 14,
+              color: Color.fromRGBO(103, 121, 254, 1),
+            ),
+          ),
+        ),
+      ],
+    ));
   });
 
-  return [itemsNames, itemsCoast];
+  return xWidgets;
 }

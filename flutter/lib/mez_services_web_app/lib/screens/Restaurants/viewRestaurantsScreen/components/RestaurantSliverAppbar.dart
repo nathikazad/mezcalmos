@@ -73,10 +73,10 @@ class RestaurantSliverAppBar extends StatelessWidget {
                   alignment: Alignment.center,
                   // padding: const EdgeInsets.only(left: 8, right: 3),
                   child: Text(
-                    (showInfo) ? "Informations" : restaurant.info.name,
+                    (showInfo) ? "Informations" : (restaurant.info.name),
                     style: GoogleFonts.montserrat(
                         fontSize: 15,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: Colors.white),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -91,7 +91,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
                       onTap: onInfoTap,
                       child: Icon(
                         Icons.info_outline_rounded,
-                        size: 13,
+                        size: 20,
                         color: Colors.white,
                       ))
               ],

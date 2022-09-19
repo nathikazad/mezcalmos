@@ -65,7 +65,7 @@ class LaundryListViewCardForMobileComponent extends StatelessWidget {
                   style: GoogleFonts.montserrat(
                       fontSize: 14,
                       color: Colors.black,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w600),
                 ),
                 SizedBox(
                   height: 7,
@@ -82,13 +82,16 @@ class LaundryListViewCardForMobileComponent extends StatelessWidget {
                           Icon(
                             Icons.delivery_dining,
                             size: 20,
-                            color: Colors.grey.shade800,
+                            color: Color.fromRGBO(73, 73, 73, 1),
                           ),
                           SizedBox(
                             width: 3,
                           ),
                           Text(50.toPriceString(),
-                              style: Get.textTheme.bodyText2),
+                              style: GoogleFonts.montserrat(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromRGBO(73, 73, 73, 1))),
                         ],
                       ),
                     ),
@@ -101,7 +104,7 @@ class LaundryListViewCardForMobileComponent extends StatelessWidget {
                           Icon(
                             Icons.watch_later,
                             size: 18,
-                            color: Colors.grey.shade800,
+                            color: Color.fromRGBO(73, 73, 73, 1),
                           ),
                           SizedBox(
                             width: 3,
@@ -109,7 +112,10 @@ class LaundryListViewCardForMobileComponent extends StatelessWidget {
                           Flexible(
                               child: Text(
                                   '${laundry.averageNumberOfDays} ${_i18n()["days"]}',
-                                  style: Get.textTheme.bodyText2)),
+                                  style: GoogleFonts.montserrat(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color.fromRGBO(73, 73, 73, 1)))),
                         ],
                       ),
                     ),
@@ -129,7 +135,10 @@ class LaundryListViewCardForMobileComponent extends StatelessWidget {
                             width: 5,
                           ),
                           Text(" \$${laundry.getCheapestCategory}/kg",
-                              style: Get.textTheme.bodyText2),
+                              style: GoogleFonts.montserrat(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromRGBO(73, 73, 73, 1))),
                         ],
                       ),
                     ),

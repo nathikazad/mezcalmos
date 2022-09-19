@@ -486,7 +486,8 @@
                         }
                     },
                     "laundries": "Laundries",
-                    "title": "Find your closest laundries or dry cleaners "
+                    "title": "Find your closest laundries \nor dry cleaners ",
+                    "title2": "Find your closest laundries or dry cleaners "
                 },
                 "SingleLaundryScreen": {
                     "startingFrom": "Starting from ",

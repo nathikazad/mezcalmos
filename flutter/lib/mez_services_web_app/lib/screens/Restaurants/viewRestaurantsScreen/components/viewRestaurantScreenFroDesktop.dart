@@ -14,6 +14,7 @@ import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:sticky_headers/sticky_headers.dart';
 
 class ViewRestaurantScreenFroDesktop extends StatefulWidget {
   ViewRestaurantScreenFroDesktop({Key? key}) : super(key: key);
@@ -36,6 +37,7 @@ class _ViewRestaurantScreenFroDesktopState
   bool pauseRectGetterIndex = false;
   late AutoScrollController scrollController;
   final ScrollController sController = ScrollController();
+  GlobalKey stickyKey = GlobalKey();
 
   final GlobalKey<RectGetterState> listViewKey = RectGetter.createGlobalKey();
 
@@ -57,6 +59,20 @@ class _ViewRestaurantScreenFroDesktopState
     scrollController.dispose();
     tabController.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (mounted) {
+      // Future.delayed(Duration(seconds: 3)).then((value) {
+      //   var x = (stickyKey.currentContext!.findRenderObject() as RenderBox)
+      //       .size
+      //       .height;
+
+      //   print("this is the length of the x $x");
+      // });
+    }
+    super.didChangeDependencies();
   }
 
   List<Category> _getList() {
@@ -106,10 +122,13 @@ class _ViewRestaurantScreenFroDesktopState
   Widget _buildCategoriesList() {
     return Container(
       child: Column(
-        children: List.generate(_getList().length, (int index) {
-          itemKeys[index] = RectGetter.createGlobalKey();
-          return _scrollableCategoryItems(index);
-        }),
+        children: [
+          SizedBox(height: 25),
+          ...List.generate(_getList().length, (int index) {
+            itemKeys[index] = RectGetter.createGlobalKey();
+            return _scrollableCategoryItems(index);
+          })
+        ],
       ),
     );
   }
@@ -431,7 +450,6 @@ class _ViewRestaurantScreenFroDesktopState
                                   ],
                                 ),
                               ),
-                              SizedBox(height: 25),
 
                               ///menu Container
                               Container(
@@ -443,59 +461,79 @@ class _ViewRestaurantScreenFroDesktopState
                                     Container(
                                       width: 200,
                                       alignment: Alignment.topLeft,
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            alignment: Alignment.centerLeft,
-                                            child: Obx(
-                                              () => Text(
-                                                lang.strings["CustomerApp"]
-                                                                    ["pages"]
-                                                                ["Restaurants"]
-                                                            [
-                                                            "ViewRestaurantScreen"]
-                                                        ["ViewRestaurantScreen"]
-                                                    ["menu"],
-                                                style: GoogleFonts.montserrat(
-                                                    fontWeight: FontWeight.w700,
-                                                    color: Colors.black,
-                                                    fontSize: 13),
+                                      child: StickyHeader(
+                                          content: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Container(
+                                                height: Get.height *
+                                                    (_getList().length + 1),
                                               ),
-                                            ),
+                                              //Spacer(),
+                                              Container()
+                                            ],
                                           ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Theme(
-                                            data: ThemeData(),
-                                            child: ToggleButtons(
-                                              borderColor: Colors.transparent,
-                                              selectedColor: Color.fromRGBO(
-                                                  103, 121, 254, 1),
-                                              fillColor: Colors.transparent,
-                                              selectedBorderColor:
-                                                  Colors.transparent,
-                                              children: listW.toList(),
-                                              direction: Axis.vertical,
-                                              onPressed: (int index) {
-                                                setState(() {
-                                                  // The button that is tapped is set to true, and the others to false.
-                                                  for (int i = 0;
-                                                      i < _selectedMenu.length;
-                                                      i++) {
-                                                    _selectedMenu[i] =
-                                                        i == index;
-                                                  }
-                                                  animateAndScrollTo(index);
-                                                });
-                                              },
-                                              isSelected: _selectedMenu,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                          controller: scrollController,
+                                          header: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              SizedBox(height: 25),
+                                              Container(
+                                                alignment: Alignment.centerLeft,
+                                                child: Obx(
+                                                  () => Text(
+                                                    lang.strings["CustomerApp"]
+                                                                    ["pages"]
+                                                                ["Restaurants"][
+                                                            "ViewRestaurantScreen"]
+                                                        [
+                                                        "ViewRestaurantScreen"]["menu"],
+                                                    style:
+                                                        GoogleFonts.montserrat(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            color: Colors.black,
+                                                            fontSize: 13),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Theme(
+                                                data: ThemeData(),
+                                                child: ToggleButtons(
+                                                  borderColor:
+                                                      Colors.transparent,
+                                                  selectedColor: Color.fromRGBO(
+                                                      103, 121, 254, 1),
+                                                  fillColor: Colors.transparent,
+                                                  selectedBorderColor:
+                                                      Colors.transparent,
+                                                  children: listW.toList(),
+                                                  direction: Axis.vertical,
+                                                  onPressed: (int index) {
+                                                    setState(() {
+                                                      // The button that is tapped is set to true, and the others to false.
+                                                      for (int i = 0;
+                                                          i <
+                                                              _selectedMenu
+                                                                  .length;
+                                                          i++) {
+                                                        _selectedMenu[i] =
+                                                            i == index;
+                                                      }
+                                                      animateAndScrollTo(index);
+                                                    });
+                                                  },
+                                                  isSelected: _selectedMenu,
+                                                ),
+                                              ),
+                                            ],
+                                          )),
                                     ),
                                     Expanded(
+                                      key: stickyKey,
                                       child: _buildCategoriesList(),
                                     )
                                   ],

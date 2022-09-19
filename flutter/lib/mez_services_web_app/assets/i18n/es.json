@@ -501,7 +501,8 @@
                 "LaundriesListView": {
 
                     "laundries": "lavanderías",
-                    "title": "Encuentra tus lavanderías más cercanas o tintorerías ",
+                    "title": "Encuentra tus lavanderías más \nscercanas o tintorerías ",
+                    "title2": "Encuentra tus lavanderías más scercanas o tintorerías ",
                     "components": {
                         "laundrySelectCard": {
                             "available": "Available",

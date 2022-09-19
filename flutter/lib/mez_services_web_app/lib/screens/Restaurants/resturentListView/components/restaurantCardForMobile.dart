@@ -51,7 +51,9 @@ class RestaurantCardForMobile extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         restaurant.info.name,
-                        style: txt.headline3,
+                        style: txt.headline3!.copyWith(
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                       const SizedBox(height: 10),
                       if (restaurant.description != null)
@@ -69,35 +71,38 @@ class RestaurantCardForMobile extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            Flexible(
-                              flex: 2,
-                              fit: FlexFit.tight,
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.watch_later,
-                                    size: 15,
-                                  ),
-                                  Text(
-                                    "52min",
-                                    style: GoogleFonts.nunito(
-                                        textStyle: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    )),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            // Flexible(
+                            //   flex: 2,
+                            //   fit: FlexFit.tight,
+                            //   child: Row(
+                            //     children: [
+                            //       Icon(
+                            //         Icons.watch_later,
+                            //         size: 15,
+                            //       ),
+                            //       Text(
+                            //         "52min",
+                            //         style: GoogleFonts.nunito(
+                            //             textStyle: TextStyle(
+                            //           fontSize: 14,
+                            //           fontWeight: FontWeight.w500,
+                            //         )),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
                             Flexible(
                               flex: 3,
                               fit: FlexFit.tight,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(
-                                    Icons.delivery_dining,
-                                    color: Colors.grey.shade800,
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 5.0),
+                                    child: Icon(
+                                      Icons.delivery_dining,
+                                      color: Colors.grey.shade800,
+                                    ),
                                   ),
                                   Flexible(
                                     flex: 5,

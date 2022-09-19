@@ -143,20 +143,23 @@ class LaundryViewForDesktop extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          Row(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: getServices(laundry.laundryCosts.lineItems)[0],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: getServices(laundry.laundryCosts.lineItems)[1],
-              )
-            ],
+          Column(
+            children: getServices(laundry.laundryCosts.lineItems),
           ),
+          // Row(
+          //   children: [
+          //     Column(
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       mainAxisAlignment: MainAxisAlignment.start,
+          //       children: getServices(laundry.laundryCosts.lineItems)[0],
+          //     ),
+          //     Column(
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       mainAxisAlignment: MainAxisAlignment.start,
+          //       children: getServices(laundry.laundryCosts.lineItems)[1],
+          //     )
+          //   ],
+          // ),
           SizedBox(
             height: 20,
           ),
@@ -183,7 +186,7 @@ class LaundryViewForDesktop extends StatelessWidget {
               "${laundry.info.location.address}",
               style: GoogleFonts.nunito(
                 fontWeight: FontWeight.w600,
-                fontSize: 12,
+                fontSize: 14,
                 color: Color.fromRGBO(120, 120, 120, 1),
               ),
             ),

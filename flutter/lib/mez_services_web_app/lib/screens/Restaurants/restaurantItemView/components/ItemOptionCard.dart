@@ -6,6 +6,8 @@ import 'package:mez_services_web_app/models/Generic.dart';
 import 'package:mez_services_web_app/models/Services/Restaurant.dart';
 import 'package:mez_services_web_app/screens/Restaurants/components/webAppExpensionPanelComponent.dart';
 
+import '../../../components/installAppBarComponent.dart';
+
 class ItemOptionCard extends StatefulWidget {
   const ItemOptionCard(
       {Key? key,
@@ -59,7 +61,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
                       Text(
                         widget.option.name[userLanguage].toString(),
                         style: GoogleFonts.montserrat(
-                            fontSize: 13,
+                            fontSize: 14,
                             fontWeight: FontWeight.w600,
                             color: Colors.black),
                       ),
@@ -72,10 +74,10 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
                                 Text(
                                   "${getIncludedExtarPrices().length} included (extra ${getIncludedExtarPrices()[0].round()}\$)",
                                   style: GoogleFonts.nunito(
-                                      fontSize: 12,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w500,
-                                      fontStyle: FontStyle.italic),
+                                    fontSize: 13,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 )
                               ],
                             )
@@ -96,17 +98,33 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
                   ],
                 )
               : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       widget.option.name[userLanguage].toString(),
                       style: GoogleFonts.montserrat(
-                          fontSize: 13,
+                          fontSize: 15,
                           fontWeight: FontWeight.w600,
                           color: Colors.black),
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
+                    (getIncludedExtarPrices().length > 0)
+                        ? Column(
+                            children: [
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "${getIncludedExtarPrices().length} included (extra ${getIncludedExtarPrices()[0].round()}\$)",
+                                style: GoogleFonts.montserrat(
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 13,
+                                  color: Color.fromRGBO(73, 73, 73, 1),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )
+                            ],
+                          )
+                        : Container(),
                     Column(
                       children: List.generate(
                           widget.option.choices.length,
@@ -150,11 +168,11 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
               Container(
                 child: Text(
                   choice.name[userLanguage].toString(),
-                  style: GoogleFonts.nunito(
-                      color: Colors.black,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      fontStyle: FontStyle.italic),
+                  style: GoogleFonts.montserrat(
+                    color: Color.fromRGBO(73, 73, 73, 1),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                  ),
                   // maxLines: 2,
                 ),
               ),
@@ -164,9 +182,9 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
               Text(
                 (choice.cost > 0) ? " + \$${choice.cost.round()}  " : "",
                 style: Get.theme.textTheme.bodyText2!.copyWith(
-                  color: Get.theme.primaryColorLight,
+                  color: primaryColor,
                   fontWeight: FontWeight.w700,
-                  fontSize: 12,
+                  fontSize: 13,
                 ),
               ),
             ],

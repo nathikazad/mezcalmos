@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mez_services_web_app/controllers/languageController.dart';
 import 'package:mez_services_web_app/models/Location.dart';
 import 'package:mez_services_web_app/models/latLng.dart';
@@ -42,7 +43,10 @@ class _ServiceLocationCardState extends State<ServiceLocationCard> {
           Container(
             child: Text(
               '${_i18n()["location"]}',
-              style: Theme.of(context).textTheme.bodyText1,
+              style: GoogleFonts.montserrat(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black),
             ),
           ),
           SizedBox(
@@ -51,7 +55,11 @@ class _ServiceLocationCardState extends State<ServiceLocationCard> {
           Container(
             child: Text(
               widget.location.address,
-              style: Theme.of(context).textTheme.bodyText2,
+              style: GoogleFonts.montserrat(
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
+                color: Color.fromRGBO(120, 120, 120, 1),
+              ),
             ),
           ),
           SizedBox(

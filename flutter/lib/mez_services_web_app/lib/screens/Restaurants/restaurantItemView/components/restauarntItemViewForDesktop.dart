@@ -45,7 +45,7 @@ class RestaurantItemViewForDesktop extends StatelessWidget {
             Text(
               "${item.name[lang.userLanguageKey]}",
               style: GoogleFonts.montserrat(
-                  fontSize: 15,
+                  fontSize: 18,
                   fontWeight: FontWeight.w700,
                   color: Colors.black),
             ),

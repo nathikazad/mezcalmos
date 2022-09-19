@@ -39,10 +39,10 @@ class ItemSliverAppBar extends StatelessWidget {
             textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context)
-                .textTheme
-                .headline3!
-                .copyWith(fontSize: 13.sp, color: Colors.white),
+            style: Theme.of(context).textTheme.headline3!.copyWith(
+                fontSize: 13.sp,
+                color: Colors.white,
+                fontWeight: FontWeight.w600),
           ),
         ),
         background: (item.image != null)

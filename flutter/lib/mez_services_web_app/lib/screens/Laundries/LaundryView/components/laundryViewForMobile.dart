@@ -55,22 +55,25 @@ class LaundryViewForMobile extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 5,
             ),
-            Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: getServices(laundry.laundryCosts.lineItems)[0],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: getServices(laundry.laundryCosts.lineItems)[1],
-                )
-              ],
+            Column(
+              children: getServices(laundry.laundryCosts.lineItems),
             ),
+            // Row(
+            //   children: [
+            //     Column(
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       mainAxisAlignment: MainAxisAlignment.start,
+            //       children: getServices(laundry.laundryCosts.lineItems)[0],
+            //     ),
+            //     Column(
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       mainAxisAlignment: MainAxisAlignment.start,
+            //       children: getServices(laundry.laundryCosts.lineItems)[1],
+            //     )
+            //   ],
+            // ),
             SizedBox(
               height: 20,
             ),
@@ -89,15 +92,15 @@ class LaundryViewForMobile extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 5,
             ),
             Container(
               alignment: Alignment.centerLeft,
               child: Text(
                 "${laundry.info.location.address}",
-                style: GoogleFonts.nunito(
+                style: GoogleFonts.montserrat(
                   fontWeight: FontWeight.w600,
-                  fontSize: 12,
+                  fontSize: 14,
                   color: Color.fromRGBO(120, 120, 120, 1),
                 ),
               ),
@@ -125,8 +128,9 @@ class LaundryViewForMobile extends StatelessWidget {
                 Text(
                   laundry.info.name,
                   style: GoogleFonts.montserrat(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 SizedBox(
@@ -134,21 +138,19 @@ class LaundryViewForMobile extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Flexible(
-                      child: buildTagWidget(
-                          context: context,
-                          text:
-                              "${laundry.averageNumberOfDays} ${_i18n()["retaurnsIn"]}"),
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Flexible(
-                      child: buildTagWidget(
-                          context: context,
-                          text:
-                              "${_i18n()["minimumCost"]} \$${laundry.getAverageCost.round()}"),
-                    )
+                    // Flexible(
+                    //   child: buildTagWidget(
+                    //       context: context,
+                    //       text:
+                    //           "${laundry.averageNumberOfDays} ${_i18n()["retaurnsIn"]}"),
+                    // ),
+                    // SizedBox(
+                    //   width: 5,
+                    // ),
+                    buildTagWidget(
+                        context: context,
+                        text:
+                            "${_i18n()["minimumCost"]} \$${laundry.getAverageCost.round()}")
                   ],
                 )
               ],

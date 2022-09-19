@@ -48,6 +48,9 @@ class _ViewRestaurantsScrennInfoState extends State<ViewRestaurantsScrennInfo> {
       });
 
       print("this is another test ${restaurant?.toJson()}");
+      if (restaurant == null) {
+        _getRestaurant();
+      }
     });
   }
 

@@ -80,7 +80,10 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
                                 ["ListRestaurantScreen"]["restaurants"],
                             style: GoogleFonts.montserrat(
                                 textStyle: TextStyle(
-                              fontWeight: FontWeight.w600,
+                              fontWeight: (MezCalmosResizer.isMobile(context) ||
+                                      MezCalmosResizer.isSmallMobile(context))
+                                  ? FontWeight.w500
+                                  : FontWeight.w600,
                               fontSize: 17,
                               color: Colors.black,
                             )),
@@ -88,15 +91,17 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
                         ),
                         centerTitle: true,
                       ),
-                      body: SingleChildScrollView(
-                        controller: controller,
-                        child: Column(
-                          children: [
-                            _searchInput(context),
-                            _sortingSwitcher(context),
-                            _restaurantList(context)
-                            //  buildListOFCardsForDesktopAndTablet(context)
-                          ],
+                      body: Scaffold(
+                        body: SingleChildScrollView(
+                          controller: controller,
+                          child: Column(
+                            children: [
+                              _searchInput(context),
+                              _sortingSwitcher(context),
+                              _restaurantList(context)
+                              //  buildListOFCardsForDesktopAndTablet(context)
+                            ],
+                          ),
                         ),
                       ),
                     );
@@ -186,8 +191,9 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
           return Padding(
             padding: EdgeInsets.symmetric(
                 horizontal:
-                    MezCalmosResizer.getWepPageHorizontalPadding(context)),
+                    MezCalmosResizer.getWepPageHorizontalPadding(context) + 5),
             child: ListView.builder(
+              controller: controller,
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return RestaurantCardForMobile(
@@ -214,8 +220,14 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
     var viewController = Get.find<ListRestaurantsController>();
     return Obx(
       () => Container(
-        padding: EdgeInsets.symmetric(
-            horizontal: MezCalmosResizer.getWepPageHorizontalPadding(context)),
+        padding: (MezCalmosResizer.isMobile(context) ||
+                MezCalmosResizer.isSmallMobile(context))
+            ? EdgeInsets.symmetric(
+                horizontal:
+                    MezCalmosResizer.getWepPageHorizontalPadding(context))
+            : EdgeInsets.symmetric(
+                horizontal:
+                    MezCalmosResizer.getWepPageHorizontalPadding(context)),
         child: SwitchListTile(
           value: viewController.showOnlyOpen.value,
           onChanged: (bool v) {
@@ -232,7 +244,7 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
               style: GoogleFonts.montserrat(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
-                  color: Colors.black),
+                  color: Color.fromRGBO(73, 73, 73, 1)),
             ),
           ),
         ),
@@ -248,7 +260,7 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
     var viewController = Get.find<ListRestaurantsController>();
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: MezCalmosResizer.getWepPageHorizontalPadding(context),
+        horizontal: MezCalmosResizer.getWepPageHorizontalPadding(context) + 10,
         vertical: 20,
       ),
       child: Obx(
@@ -262,12 +274,14 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
               print(viewController.searchQuery);
             },
             decoration: InputDecoration(
-              contentPadding: const EdgeInsets.only(top: 8.0),
+              contentPadding: const EdgeInsets.only(top: 10.0),
               prefixIcon: Icon(
                 Icons.search,
                 color: Colors.grey.shade300,
               ),
-              hintStyle: TextStyle(color: Colors.grey.shade300, fontSize: 13),
+              hintStyle: GoogleFonts.montserrat(
+                  textStyle:
+                      TextStyle(color: Colors.grey.shade300, fontSize: 13)),
               hintText: lang.strings["CustomerApp"]["pages"]["Restaurants"]
                   ["ListRestaurantsScreen"]["ListRestaurantScreen"]["search"],
             )),

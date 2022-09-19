@@ -177,7 +177,11 @@ Widget _buildWidget(BuildContext context) {
               "${_i18n()["title"]}",
               style: GoogleFonts.montserrat(
                   textStyle: TextStyle(
-                      wordSpacing: 0.5,
+                      wordSpacing: (MezCalmosResizer.isMobile(context) ||
+                              MezCalmosResizer.isSmallMobile(context))
+                          ? 0
+                          : 0.5,
+                      letterSpacing: 0.25,
                       fontSize: getText2Size(context),
                       color: primaryColor,
                       fontWeight: FontWeight.w600)),

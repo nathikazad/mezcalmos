@@ -27,55 +27,59 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: InkWell(
-        onTap: () {
-          var xPath = getCurrentPath();
-          QR.to("${xPath[0]}/${widget.item.id}${xPath[1]}");
-        },
-        child: Container(
-          //  padding: const EdgeInsets.all(5),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              if (isImageExist)
-                CircleAvatar(
-                  radius: 35.sp,
-                  backgroundImage:
-                      CachedNetworkImageProvider(widget.item.image ?? ""),
-                  onBackgroundImageError: (Object e, StackTrace? s) {
-                    setState(() {
-                      isImageExist = false;
-                    });
-                  },
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+      child: Card(
+        child: InkWell(
+          onTap: () {
+            var xPath = getCurrentPath();
+            QR.to("${xPath[0]}/${widget.item.id}${xPath[1]}");
+          },
+          child: Container(
+            //  padding: const EdgeInsets.all(5),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                if (isImageExist)
+                  CircleAvatar(
+                    radius: 35.sp,
+                    backgroundImage:
+                        CachedNetworkImageProvider(widget.item.image ?? ""),
+                    onBackgroundImageError: (Object e, StackTrace? s) {
+                      setState(() {
+                        isImageExist = false;
+                      });
+                    },
+                  ),
+                SizedBox(
+                  height: 10,
                 ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                widget.item.name[userLanguage] ?? "",
-                textAlign: TextAlign.center,
-                style: GoogleFonts.montserrat(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black),
-              ),
-              SizedBox(
-                height: 3,
-              ),
-              Text(
-                "\$${widget.item.cost}",
-                style: GoogleFonts.montserrat(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 5,
-              ),
-            ],
+                Text(
+                  widget.item.name[userLanguage] ?? "",
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.montserrat(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black),
+                ),
+                SizedBox(
+                  height: 3,
+                ),
+                Text(
+                  "\$${widget.item.cost}",
+                  style: GoogleFonts.montserrat(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+              ],
+            ),
           ),
         ),
       ),

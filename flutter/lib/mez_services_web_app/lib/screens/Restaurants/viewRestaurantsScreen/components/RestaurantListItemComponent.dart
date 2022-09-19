@@ -39,29 +39,36 @@ class _RestaurantsListOfItemsComponentState
           child: Row(
             children: [
               if (isImageExist && widget.item.image != null)
-                CircleAvatar(
-                  radius: 30,
-                  backgroundImage:
-                      CachedNetworkImageProvider(widget.item.image ?? ""),
-                  onBackgroundImageError: (Object e, StackTrace? s) {
-                    print(
-                        "this is a test ot see if ther is images ${e.toString()}  ");
-                    setState(() {
-                      isImageExist = false;
-                    });
-                  },
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 30,
+                      backgroundImage:
+                          CachedNetworkImageProvider(widget.item.image ?? ""),
+                      onBackgroundImageError: (Object e, StackTrace? s) {
+                        print(
+                            "this is a test ot see if ther is images ${e.toString()}  ");
+                        setState(() {
+                          isImageExist = false;
+                        });
+                      },
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                  ],
                 ),
-              if (isImageExist)
-                SizedBox(
-                  width: 15,
-                ),
+              // if (isImageExist)
+
               Flexible(
                 fit: FlexFit.tight,
                 flex: 5,
                 child: Container(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "${widget.item.name[userLanguage]!.capitalizeFirstofEach}",
+                    "${widget.item.name[userLanguage]?.capitalizeFirstofEach ?? ""}",
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                     style: GoogleFonts.montserrat(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,

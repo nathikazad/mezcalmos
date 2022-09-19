@@ -76,7 +76,11 @@ class _LaundryListViewState extends State<LaundryListView> {
                               "${lang.strings["CustomerApp"]["pages"]["Laundry"]["LaundriesListView"]["laundries"]}",
                               style: GoogleFonts.montserrat(
                                   textStyle: TextStyle(
-                                fontWeight: FontWeight.w600,
+                                fontWeight: (MezCalmosResizer.isMobile(
+                                            context) ||
+                                        MezCalmosResizer.isSmallMobile(context))
+                                    ? FontWeight.w500
+                                    : FontWeight.w600,
                                 fontSize: 17,
                                 color: Colors.black,
                               )),

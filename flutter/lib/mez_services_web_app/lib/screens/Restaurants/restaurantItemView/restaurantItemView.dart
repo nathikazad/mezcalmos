@@ -37,6 +37,7 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
         if (value != null) {
           setState(() {
             item = value.findItemById(QR.params['itemId'].toString());
+
             print("this is another test ${item?.toJson()}");
           });
         }

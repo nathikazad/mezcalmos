@@ -35,28 +35,28 @@ class RestaurantInfoTabForMobile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          if (restaurant.description![userLanguage] != null &&
-              restaurant.description![userLanguage]!.isNotEmpty)
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  child: Text(
-                    '${_i18n()["description"]} :',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(
-                    top: 10,
-                  ),
-                  child: Text(restaurant.description?[userLanguage] ?? ""),
-                ),
-              ],
-            ),
+          // if (restaurant.description![userLanguage] != null &&
+          //     restaurant.description![userLanguage]!.isNotEmpty)
+          //   Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: [
+          //       SizedBox(
+          //         height: 10,
+          //       ),
+          //       Container(
+          //         child: Text(
+          //           '${_i18n()["description"]} :',
+          //           style: Theme.of(context).textTheme.bodyText1,
+          //         ),
+          //       ),
+          //       Container(
+          //         margin: EdgeInsets.only(
+          //           top: 10,
+          //         ),
+          //         child: Text(restaurant.description?[userLanguage] ?? ""),
+          //       ),
+          //     ],
+          //   ),
           if (restaurant.schedule != null)
             SizedBox(
               height: 25,

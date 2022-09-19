@@ -29,10 +29,11 @@ class LaundryListViewForDesktop extends StatelessWidget {
               height: 20,
             ),
             Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               alignment: Alignment.centerLeft,
               child: Obx(
                 () => Text(
-                  "${lang.strings["CustomerApp"]["pages"]["Laundry"]["LaundriesListView"]["title"]}",
+                  "${lang.strings["CustomerApp"]["pages"]["Laundry"]["LaundriesListView"]["title2"]}",
                   style: GoogleFonts.montserrat(
                       textStyle: TextStyle(
                     color: Colors.black,

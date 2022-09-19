@@ -28,8 +28,8 @@ class LaundryListViewForMobile extends StatelessWidget {
             child: Text(
               "${_i18n()["title"]}",
               style: GoogleFonts.montserrat(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
                   color: Colors.black),
               textAlign: TextAlign.start,
             ),

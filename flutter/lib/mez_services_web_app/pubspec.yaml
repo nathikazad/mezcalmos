@@ -48,6 +48,7 @@ dependencies:
   rect_getter: ^1.1.0
   scroll_to_index: ^3.0.1
   google_maps_flutter_web: ^0.4.0+2
+  sticky_headers: ^0.3.0+2
   
 
 

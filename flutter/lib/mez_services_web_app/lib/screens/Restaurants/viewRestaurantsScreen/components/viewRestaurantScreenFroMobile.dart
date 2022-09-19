@@ -58,10 +58,13 @@ class _ViewRestaurantScreenFroMobileState
         .then((value) {
       if (value != null) {
         restaurant = value;
+        print("this is the current restau ${value.toJson()}");
         tabController =
             TabController(length: restaurant.getCategories.length, vsync: this);
       }
       return value;
+    }).catchError((_, __) {
+      print("somthing went wrong $_");
     });
   }
 
@@ -224,7 +227,7 @@ class _ViewRestaurantScreenFroMobileState
           Text(
             category.name?[userLanguage] ?? "",
             style: GoogleFonts.montserrat(
-                fontSize: 15, fontWeight: FontWeight.w700, color: Colors.black),
+                fontSize: 15, fontWeight: FontWeight.w600, color: Colors.black),
           ),
           SizedBox(
             height: 5,
@@ -275,7 +278,7 @@ class _ViewRestaurantScreenFroMobileState
       return GridView.count(
         crossAxisCount: 2,
         mainAxisSpacing: 8,
-        crossAxisSpacing: 8,
+        crossAxisSpacing: 0,
         shrinkWrap: true,
         padding: EdgeInsets.zero,
         physics: NeverScrollableScrollPhysics(),
