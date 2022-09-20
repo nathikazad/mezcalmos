@@ -201,7 +201,7 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
                   shippingPrice: viewController.baseShippingPrice,
                   onClick: () {
                     QR.to(
-                      "/restaurants/${viewController.filteredRestaurants[index].info.id}${getLangParam()}ß",
+                      "/restaurants/${viewController.filteredRestaurants[index].info.id}${getLangParam()}",
                     );
                     ;
                   },

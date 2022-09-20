@@ -42,15 +42,16 @@ class _ViewRestaurantsScrennInfoState extends State<ViewRestaurantsScrennInfo> {
       Get.find<RestaurantsInfoController>()
           .getRestaurant(QR.params['id'].toString())
           .then((value) {
-        setState(() {
-          restaurant = value;
-        });
-      });
+        if (value != null) {
+          setState(() {
+            restaurant = value;
 
-      print("this is another test ${restaurant?.toJson()}");
-      if (restaurant == null) {
-        _getRestaurant();
-      }
+            print("this is another test ${restaurant?.toJson()}");
+          });
+        } else {
+          QR.to("/404");
+        }
+      });
     });
   }
 

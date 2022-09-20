@@ -61,10 +61,14 @@ class _ViewRestaurantScreenFroMobileState
         print("this is the current restau ${value.toJson()}");
         tabController =
             TabController(length: restaurant.getCategories.length, vsync: this);
+      } else {
+        QR.to("/404");
       }
       return value;
     }).catchError((_, __) {
+      tabController.dispose();
       print("somthing went wrong $_");
+      QR.back();
     });
   }
 
@@ -164,12 +168,15 @@ class _ViewRestaurantScreenFroMobileState
             tabController: tabController,
             showInfo: showInfo,
             onInfoTap: () {
-              setState(() {
-                showInfo = !showInfo;
-                var xPath = getCurrentPath();
-                QR.to("${xPath[0]}/info${xPath[1]}");
-                pauseRectGetterIndex = !pauseRectGetterIndex;
-              });
+              var xPath = getCurrentPath();
+
+              QR.to("${xPath[0]}/info${xPath[1]}");
+              // setState(() {
+              //   //  showInfo = !showInfo;
+              //   var xPath = getCurrentPath();
+              //   QR.to("${xPath[0]}/info${xPath[1]}");
+              //   pauseRectGetterIndex = !pauseRectGetterIndex;
+              // });
             },
             onTap: (int index) => animateAndScrollTo(index),
             scrollController: scrollController,

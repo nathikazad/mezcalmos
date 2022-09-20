@@ -88,35 +88,39 @@ class _ViewRestaurantScreenFroDesktopState
     String? rstaurantID = QR.params['id'].toString();
     var restaurnatValue =
         await Get.find<RestaurantsInfoController>().getRestaurant(rstaurantID);
-    print(
-        "the id of this item is ${QR.params['id'].toString()} 2 and ${restaurnatValue.toString()}");
-    setState(() {
-      restaurant = restaurnatValue.obs;
-      listW = [];
-      _selectedMenu = [];
-      _selectedMenu =
-          List.generate(restaurant.value!.getCategories.length, (index) {
-        if (index == 0) {
-          return true;
-        } else {
-          return false;
-        }
-      });
-      listW = restaurant.value!.getCategories.map((e) => Container(
-          width: 200,
-          child: Text(
-            '${e.name![lang.userLanguageKey]}',
-            style: GoogleFonts.montserrat(
-              fontWeight: FontWeight.w500,
-              fontSize: 13,
-            ),
-          )));
+    if (restaurnatValue != null) {
       print(
-          "the children length is ${listW.length} and selections is ${_selectedMenu.length}");
-      tabController = TabController(
-          length: restaurant.value!.getCategories.length, vsync: this);
-      print("the lenght of list is${_getList().length} ");
-    });
+          "the id of this item is ${QR.params['id'].toString()} 2 and ${restaurnatValue.toString()}");
+      setState(() {
+        restaurant = restaurnatValue.obs;
+        listW = [];
+        _selectedMenu = [];
+        _selectedMenu =
+            List.generate(restaurant.value!.getCategories.length, (index) {
+          if (index == 0) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+        listW = restaurant.value!.getCategories.map((e) => Container(
+            width: 200,
+            child: Text(
+              '${e.name![lang.userLanguageKey]}',
+              style: GoogleFonts.montserrat(
+                fontWeight: FontWeight.w500,
+                fontSize: 13,
+              ),
+            )));
+        print(
+            "the children length is ${listW.length} and selections is ${_selectedMenu.length}");
+        tabController = TabController(
+            length: restaurant.value!.getCategories.length, vsync: this);
+        print("the lenght of list is${_getList().length} ");
+      });
+    } else {
+      QR.to("/404");
+    }
   }
 
   Widget _buildCategoriesList() {

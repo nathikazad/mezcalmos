@@ -35,6 +35,10 @@ class _LaundryViewState extends State<LaundryView> {
         laundry = value;
         print(laundry!.toJson());
         setState(() {});
+      }).catchError((err, stk) {
+        print(
+            "this is another error in laundry item view screen ${err.toString()}");
+        QR.to("/404");
       });
       return val;
     });

@@ -47,8 +47,8 @@ List<String> getCurrentPath() {
       ? QR.currentPath.split('?')[0]
       : QR.currentPath;
   strs.add(xPath);
-  var params =
-      QR.currentPath.contains("?") ? "?${QR.currentPath.split('?')[1]}" : "";
+  var params = getLangParam();
+  // QR.currentPath.contains("?") ? "?${QR.currentPath.split('?')[1]}" : "";
   strs.add(params);
   return strs;
 }
