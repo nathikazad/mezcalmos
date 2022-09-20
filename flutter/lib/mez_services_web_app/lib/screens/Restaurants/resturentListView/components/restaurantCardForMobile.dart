@@ -91,35 +91,35 @@ class RestaurantCardForMobile extends StatelessWidget {
                             //     ],
                             //   ),
                             // ),
-                            Flexible(
-                              flex: 3,
-                              fit: FlexFit.tight,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 5.0),
-                                    child: Icon(
-                                      Icons.delivery_dining,
-                                      color: Colors.grey.shade800,
+                            Expanded(
+                              flex: 1,
+                              child: Container(
+                                alignment: Alignment.centerLeft,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 5.0),
+                                      child: Icon(
+                                        Icons.delivery_dining,
+                                        color: Colors.grey.shade800,
+                                      ),
                                     ),
-                                  ),
-                                  Flexible(
-                                    flex: 5,
-                                    child: ShippingCostComponent(
-                                      shippingCost: shippingPrice,
-                                      alignment: MainAxisAlignment.start,
+                                    Flexible(
+                                      child: ShippingCostComponent(
+                                        shippingCost: shippingPrice,
+                                        alignment: MainAxisAlignment.start,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                            Flexible(
-                              flex: 1,
-                              child: Icon(
-                                Icons.payments_sharp,
-                                color: Colors.grey.shade800,
-                              ),
+                            Icon(
+                              Icons.payments_sharp,
+                              color: Colors.grey.shade800,
                             ),
                           ],
                         ),

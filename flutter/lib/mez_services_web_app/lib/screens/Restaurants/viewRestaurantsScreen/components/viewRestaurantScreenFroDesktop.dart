@@ -14,6 +14,7 @@ import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:sizer/sizer.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
 class ViewRestaurantScreenFroDesktop extends StatefulWidget {
@@ -198,7 +199,21 @@ class _ViewRestaurantScreenFroDesktopState
         hasAnImage = false;
       }
     });
+
     return hasAnImage;
+  }
+
+  double getHieghtOfMenuHeader() {
+    var listHasImgs = checkCategoriesItemsImage();
+    int xNb = _getList().fold<int>(0, (int sum, Category element) {
+      return sum + element.getItems.length;
+    });
+
+    if (listHasImgs) {
+      return 21.0.h * xNb;
+    } else {
+      return 70.0 * xNb;
+    }
   }
 
   Widget _buildResturantItems(List<Item> items, String restaurantId) {
@@ -470,8 +485,11 @@ class _ViewRestaurantScreenFroDesktopState
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Container(
-                                                height: Get.height *
-                                                    (_getList().length + 1),
+                                                height: double.parse(
+                                                    getHieghtOfMenuHeader()
+                                                        .toString()),
+                                                // height: Get.height *
+                                                //     (_getList().length + 1),
                                               ),
                                               //Spacer(),
                                               Container()

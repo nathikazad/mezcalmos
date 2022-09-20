@@ -274,7 +274,10 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
               print(viewController.searchQuery);
             },
             decoration: InputDecoration(
-              contentPadding: const EdgeInsets.only(top: 10.0),
+              contentPadding: (MezCalmosResizer.isMobile(context) ||
+                      MezCalmosResizer.isSmallMobile(context))
+                  ? EdgeInsets.only(top: 3.0)
+                  : EdgeInsets.only(top: 10.0),
               prefixIcon: Icon(
                 Icons.search,
                 color: Colors.grey.shade300,
