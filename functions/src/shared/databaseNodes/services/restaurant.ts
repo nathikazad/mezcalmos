@@ -13,6 +13,7 @@ export function info(providerId?: string) {
   return serviceProviderInfo(OrderType.Restaurant, providerId);
 }
 
+
 export function restaurantOperators(providerId: string, userId?: string) {
   let ret = serviceProviderState(OrderType.Restaurant, providerId).child("/operators");
   if (userId != null)

@@ -19,7 +19,9 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
@@ -206,6 +208,28 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                           ),
 
                           OrderSummaryCard(order: order.value!),
+                          MezButton(
+                            label: "Add review",
+                            onClick: () async {
+                              final ServerResponse response =
+                                  await restaurantController.addReview(
+                                      orderId: order.value!.orderId,
+                                      restaurantId: order.value!.restaurantId,
+                                      comment: "Test review",
+                                      rate: 4);
+                              if (response.success) {
+                                Get.snackbar("Success", "Review submitted",
+                                    backgroundColor: Colors.black,
+                                    colorText: Colors.white);
+                              } else {
+                                mezDbgPrint(response);
+                                Get.snackbar(
+                                    "Error", response.errorMessage ?? "error",
+                                    backgroundColor: Colors.black,
+                                    colorText: Colors.white);
+                              }
+                            },
+                          ),
 
                           //===============================>button cancel===========================
                           //  Expanded(child: Container()),

@@ -198,6 +198,32 @@ class RestaurantController extends GetxController {
     }
   }
 
+  Future<ServerResponse> addReview({
+    required String orderId,
+    required String restaurantId,
+    required String comment,
+    required num rate,
+  }) async {
+    final HttpsCallable cancelOrder =
+        FirebaseFunctions.instance.httpsCallable('restaurant-addReview');
+    try {
+      final HttpsCallableResult<dynamic> response =
+          await cancelOrder.call(<String, dynamic>{
+        "orderId": orderId,
+        "serviceProviderId": restaurantId,
+        "rating": rate,
+        "comment": comment,
+        "orderType": OrderType.Restaurant.toFirebaseFormatString(),
+      });
+      mezDbgPrint(response.toString());
+      print(response.data);
+      return ServerResponse.fromJson(response.data);
+    } catch (e) {
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
+    }
+  }
+
   @override
   void onClose() {
     print("[+] RestaurantCartController::onClose ---------> Was invoked !");
