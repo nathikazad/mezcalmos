@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
-import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/Controllers/ViewCartController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/CartIsEmptyScreen.dart';
@@ -72,9 +71,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         .value!
         .defaultLocation
         ?.location;
+
+    _restaurantController.updateShippingPrice(orderToLocation);
+
     // check if cart empty
     // if yes redirect to home page
-    _restaurantController.cart.value.cartItems.map((CartItem item) {});
   }
 
   @override
@@ -96,10 +97,19 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
             return SingleChildScrollView(
               child: ViewCartBody(
                 viewCartController: viewCartController,
-                setLocationCallBack: ({Location? location}) {
-                  setState(() {
-                    orderToLocation = location;
-                  });
+                setLocationCallBack: ({Location? location}) async {
+                  final bool result = await _restaurantController
+                      .updateShippingPrice(orderToLocation!);
+                  if (result) {
+                    setState(() {
+                      orderToLocation = location;
+                    });
+                  } else {
+                    MezSnackbar(
+                      '${_i18n()["ops"]}',
+                      '${_i18n()["distanceError"]}',
+                    );
+                  }
                 },
                 notesTextController: _textEditingController,
               ),

@@ -9,9 +9,11 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
@@ -22,7 +24,6 @@ class RestaurantController extends GetxController {
   StreamSubscription<dynamic>? _cartListener;
   Restaurant? associatedRestaurant;
   Rx<Cart> cart = Cart().obs;
-  RxInt shippingPrice = 50.obs;
 
   @override
   void onInit() {
@@ -30,7 +31,7 @@ class RestaurantController extends GetxController {
     mezDbgPrint(
         "--------------------> RestaurantsCartController Initialized !");
     if (_authController.fireAuthUser != null) {
-      getShippingPrice().then((int value) => shippingPrice.value = value);
+      //  getShippingPrice().then((num value) => shippingPrice.value = value);
 
       _cartListener?.cancel();
       _cartListener = _databaseHelper.firebaseDatabase
@@ -65,7 +66,9 @@ class RestaurantController extends GetxController {
             }
 
             cart.value = Cart.fromCartData(
-                cartData, associatedRestaurant!, shippingPrice.value);
+              cartData,
+              associatedRestaurant!,
+            );
           }
         } else {
           cart.value = Cart();
@@ -85,7 +88,7 @@ class RestaurantController extends GetxController {
         restaurantId: restaurantId, restaurantData: snapshot.value);
   }
 
-  Future<int> getShippingPrice() async {
+  Future<num> getShippingPrice() async {
     final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
             .ref()
             .child(baseShippingPriceNode())
@@ -93,7 +96,39 @@ class RestaurantController extends GetxController {
         .snapshot;
     mezDbgPrint(
         "Gettting shipping cost ==================================>>>>>> ${snapshot.value}");
-    return snapshot.value as int;
+    return snapshot.value as num;
+  }
+
+  Future<bool> updateShippingPrice(Location? loc) async {
+    if (loc != null) {
+      final num baseShipping = await getShippingPrice();
+      final MapHelper.Route routeInfo = await MapHelper.getDurationAndDistance(
+        cart.value.restaurant!.info.location,
+        loc,
+      );
+      mezDbgPrint(
+          "distance :::::::===> ${(routeInfo.distance.distanceInMeters / 1000)}");
+      if ((routeInfo.distance.distanceInMeters / 1000) <= 10) {
+        final num shippingCost =
+            baseShipping * (routeInfo.distance.distanceInMeters / 1000);
+
+        cart.value.shippingCost = shippingCost.ceil();
+        mezDbgPrint("SHIPPPPPING COOOOST =========>>>>>>>>>>>$shippingCost");
+        await saveCart();
+        cart.refresh();
+        return true;
+      } else {
+        cart.value.shippingCost = null;
+        await saveCart();
+        cart.refresh();
+        return false;
+      }
+    } else {
+      cart.value.shippingCost = null;
+      await saveCart();
+      cart.refresh();
+      return false;
+    }
   }
 
   Future<void> saveCart() async {

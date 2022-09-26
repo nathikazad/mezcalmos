@@ -5,9 +5,15 @@ import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
+
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["components"]["DropDownLocationList"]; //
 
 typedef OnDropDownNewValue = void Function({Location? location});
 
@@ -15,12 +21,17 @@ class DropDownLocationList extends StatefulWidget {
   DropDownLocationList({
     this.onValueChangeCallback,
     this.passedInLocation,
+    this.checkDistance = false,
+    this.serviceProviderLocation,
     this.bgColor = Colors.transparent,
     Key? key,
   }) : super(key: key);
 
   final OnDropDownNewValue? onValueChangeCallback;
+
   Location? passedInLocation;
+  Location? serviceProviderLocation;
+  bool checkDistance;
   final Color bgColor;
 
   @override
@@ -88,28 +99,65 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       ),
       child: DropdownButtonHideUnderline(
           child: DropdownButton<SavedLocation>(
-              selectedItemBuilder: (BuildContext context) {
-                return dropDownSelectedItemBuilder(textTheme);
-              },
-              iconDisabledColor: Colors.grey.shade800,
-              iconEnabledColor: Colors.grey.shade800,
-              value: dropDownListValue,
-              dropdownColor: widget.bgColor,
-              isDense: true,
-              isExpanded: true,
-              icon: Icon(Icons.expand_more),
-              hint: Text(
-                '${_i18n()["chooseLoc"]}',
-                style: Get.textTheme.bodyText1,
-              ),
-              items: listOfSavedLoacations
-                  .map<DropdownMenuItem<SavedLocation>>(
-                      (SavedLocation e) => buildItems(e, textTheme))
-                  .toList(),
-              onChanged: (SavedLocation? newLocation) async {
-                await locationChangedHandler(newLocation);
-              })),
+        selectedItemBuilder: (BuildContext context) {
+          return dropDownSelectedItemBuilder(textTheme);
+        },
+        iconDisabledColor: Colors.grey.shade800,
+        iconEnabledColor: Colors.grey.shade800,
+        value: dropDownListValue,
+        dropdownColor: widget.bgColor,
+        isDense: true,
+        isExpanded: true,
+        icon: Icon(Icons.expand_more),
+        hint: Text(
+          '${_i18n()["chooseLoc"]}',
+          style: Get.textTheme.bodyText1,
+        ),
+        items: listOfSavedLoacations
+            .map<DropdownMenuItem<SavedLocation>>(
+                (SavedLocation e) => buildItems(e, textTheme))
+            .toList(),
+        onChanged: (SavedLocation? v) async {
+          await handleChange(v!);
+        },
+        // onChanged: (SavedLocation? newLocation) async {
+        //   // await locationChangedHandler(newLocation);
+        // },
+      )),
     );
+  }
+
+  Future<void Function(SavedLocation? p1)?> handleChange(
+      SavedLocation loc) async {
+    if (loc.id == "_pick_") {
+      await locationChangedHandler(loc);
+    } else if (_checkDistance() && await _lessThanDistance(loc.location!)) {
+      mezDbgPrint("Lessssss");
+      await locationChangedHandler(loc);
+    } else if (widget.checkDistance) {
+      mezDbgPrint("Morrrrr");
+      MezSnackbar(
+        '${_i18n()["ops"]}',
+        '${_i18n()["distanceError"]}',
+      );
+    } else {
+      await locationChangedHandler(loc);
+    }
+    return null;
+  }
+
+  bool _checkDistance() {
+    return widget.serviceProviderLocation != null && widget.checkDistance;
+  }
+
+  Future<bool> _lessThanDistance(Location loc) async {
+    final MapHelper.Route routeInfo = await MapHelper.getDurationAndDistance(
+      widget.serviceProviderLocation!,
+      loc,
+    );
+    mezDbgPrint(
+        "distance :=:::::::::=====>${(routeInfo.distance.distanceInMeters / 1000)}");
+    return (routeInfo.distance.distanceInMeters / 1000) <= 10;
   }
 
   Future<void> locationChangedHandler(SavedLocation? newLocation) async {
@@ -132,7 +180,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       if (_savedLocation != null) {
         // in case it's repeated with the same name or same address
         listOfSavedLoacations.removeWhere(
-          (savedLoc) =>
+          (SavedLocation savedLoc) =>
               savedLoc.name == _savedLocation.name ||
               (_savedLocation.location?.address != null &&
                   savedLoc.location?.address ==

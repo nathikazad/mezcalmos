@@ -14,11 +14,14 @@
                     "notifications": "Notificaciones",
                     "orders": "Pedidos"
                 }
+
             },
             "CustomerHomeFooterButtons": {
                 "privacyPolicy": "Privacy policy"
             },
             "DropDownLocationList": {
+                "ops": "Oops",
+                "distanceError": "¡La distancia entre usted y el restaurante es de más de 10 km!",
                 "chooseLoc": "Elegir la ubicación",
                 "pickLocation": "Elegir del mapa"
             },

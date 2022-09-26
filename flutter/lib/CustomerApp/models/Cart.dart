@@ -24,8 +24,12 @@ class Cart {
   Cart({this.restaurant});
 
   set setRouteInformation(RouteInformation? info) => _routeInformation = info;
+  RouteInformation? get getRouteInfo => _routeInformation;
 
-  Cart.fromCartData(dynamic cartData, this.restaurant, num? shippingPrice) {
+  Cart.fromCartData(
+    dynamic cartData,
+    this.restaurant,
+  ) {
     if (restaurant != null) {
       cartData["items"]?.forEach((itemIdInCart, itemData) {
         final Item? item = restaurant!.findItemById(id: itemData["id"]);
@@ -42,7 +46,7 @@ class Cart {
           : null;
       notes = cartData["notes"];
       paymentType = cartData["paymentType"].toString().toPaymentType();
-      shippingCost = shippingPrice ?? 50;
+      shippingCost = null;
       _routeInformation = cartData['routeInformation'] == null
           ? null
           : RouteInformation(

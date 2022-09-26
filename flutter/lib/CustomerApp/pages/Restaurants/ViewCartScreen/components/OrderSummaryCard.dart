@@ -18,15 +18,17 @@ class OrderSummaryCard extends StatelessWidget {
     required this.deliveryCost,
     required this.setLocationCallBack,
     required this.totalCost,
+    this.serviceLoc,
     this.stripeFees,
     required this.showStripeFees,
   }) : super(key: key);
 
   final String orderCost;
-  final num deliveryCost;
+  final num? deliveryCost;
   final num? stripeFees;
   final bool showStripeFees;
   final String totalCost;
+  final Location? serviceLoc;
   final void Function({Location? location})? setLocationCallBack;
 
   @override
@@ -88,11 +90,16 @@ class OrderSummaryCard extends StatelessWidget {
                           style: txt.bodyText2),
                     ),
                   ),
-                  Flexible(
-                      child: ShippingCostComponent(
-                    alignment: MainAxisAlignment.end,
-                    shippingCost: deliveryCost,
-                  ))
+                  (deliveryCost != null)
+                      ? Flexible(
+                          child: ShippingCostComponent(
+                          alignment: MainAxisAlignment.end,
+                          shippingCost: deliveryCost!,
+                        ))
+                      : Text(
+                          "To be calculated",
+                          style: TextStyle(fontStyle: FontStyle.italic),
+                        )
                 ],
               ),
             ),
@@ -157,6 +164,8 @@ class OrderSummaryCard extends StatelessWidget {
             const SizedBox(height: 10),
             DropDownLocationList(
               onValueChangeCallback: setLocationCallBack,
+              checkDistance: true,
+              serviceProviderLocation: serviceLoc,
               bgColor: secondaryLightBlueColor,
             ),
           ],
