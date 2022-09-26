@@ -105,7 +105,7 @@ class laundryListViewCardForDesktopComponent extends StatelessWidget {
                           ),
                           Text(
                             "${laundry.averageNumberOfDays} Days",
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.montserrat(
                                 textStyle: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
@@ -125,7 +125,7 @@ class laundryListViewCardForDesktopComponent extends StatelessWidget {
                     ),
                     Text(
                       "\$${laundry.laundryCosts.minimumCost}/kg",
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.montserrat(
                           textStyle: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,

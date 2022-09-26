@@ -49,6 +49,7 @@ class ShippingCostComponent extends StatelessWidget {
             )
           : Text(
               shippingCost.toPriceString(),
+              style: TextStyle(fontSize: 13, color: Colors.black),
             ),
     );
   }

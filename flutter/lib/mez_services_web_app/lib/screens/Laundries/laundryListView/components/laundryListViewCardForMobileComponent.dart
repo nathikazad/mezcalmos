@@ -6,6 +6,7 @@ import 'package:mez_services_web_app/controllers/languageController.dart';
 import 'package:mez_services_web_app/helpers/NumHelper.dart';
 import 'package:mez_services_web_app/helpers/StringHelper.dart';
 import 'package:mez_services_web_app/models/Services/Laundry.dart';
+import 'package:mez_services_web_app/screens/Restaurants/components/ShippingCostComponent.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 dynamic _i18n() =>
@@ -13,11 +14,11 @@ dynamic _i18n() =>
         ["LaundriesListView"]["components"]["CustomerLaundrySelectCard"];
 
 class LaundryListViewCardForMobileComponent extends StatelessWidget {
-  const LaundryListViewCardForMobileComponent({
-    Key? key,
-    required this.laundry,
-  }) : super(key: key);
+  const LaundryListViewCardForMobileComponent(
+      {Key? key, required this.laundry, required this.shippingPrice})
+      : super(key: key);
   final Laundry laundry;
+  final num shippingPrice;
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +75,7 @@ class LaundryListViewCardForMobileComponent extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Flexible(
-                      flex: 2,
+                      flex: 3,
                       fit: FlexFit.loose,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,11 +88,15 @@ class LaundryListViewCardForMobileComponent extends StatelessWidget {
                           SizedBox(
                             width: 3,
                           ),
-                          Text(50.toPriceString(),
-                              style: GoogleFonts.montserrat(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color.fromRGBO(73, 73, 73, 1))),
+                          ShippingCostComponent(
+                            shippingCost: shippingPrice,
+                            alignment: MainAxisAlignment.start,
+                          ),
+                          // Text(50.toPriceString(),
+                          //     style: GoogleFonts.montserrat(
+                          //         fontSize: 12,
+                          //         fontWeight: FontWeight.w600,
+                          //         color: Color.fromRGBO(73, 73, 73, 1))),
                         ],
                       ),
                     ),
@@ -123,7 +128,7 @@ class LaundryListViewCardForMobileComponent extends StatelessWidget {
                       width: 5,
                     ),
                     Flexible(
-                      flex: 4,
+                      flex: 2,
                       fit: FlexFit.tight,
                       child: Row(
                         children: [

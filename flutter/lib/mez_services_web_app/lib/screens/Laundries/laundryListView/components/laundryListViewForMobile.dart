@@ -9,9 +9,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Laundry"]["LaundriesListView"];
 
 class LaundryListViewForMobile extends StatelessWidget {
-  const LaundryListViewForMobile({Key? key, required this.laundries})
+  const LaundryListViewForMobile(
+      {Key? key, required this.laundries, required this.shipingPrice})
       : super(key: key);
   final List<Laundry> laundries;
+  final num shipingPrice;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,7 @@ class LaundryListViewForMobile extends StatelessWidget {
                 laundries.length,
                 (int index) => LaundryListViewCardForMobileComponent(
                       laundry: laundries[index],
+                      shippingPrice: shipingPrice,
                     )),
           )
         ],

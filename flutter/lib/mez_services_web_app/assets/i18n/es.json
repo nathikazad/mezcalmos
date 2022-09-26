@@ -201,7 +201,7 @@
                     "ViewItemScreen": {
                         "notes": "Notas",
                         "itemNotes": "Notas de artículos :",
-                        "itemDescription": "Descripción del Artículo"
+                        "itemDescription": "Descripción"
 
                     }
                 },
@@ -268,7 +268,7 @@
                 "ViewRestaurantScreen": {
                     "components": {
                         "restaurantInfoTab": {
-                            "description": "Descripción del Artículo",
+                            "description": "Descripción",
                             "location": "Dirección",
                             "workingHours": "Horas Laborales",
                             "weekDays": {

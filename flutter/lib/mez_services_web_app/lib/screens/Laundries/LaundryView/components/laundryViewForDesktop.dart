@@ -53,21 +53,22 @@ class LaundryViewForDesktop extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      children: [
-                        buildTagWidget(
-                            context: context,
-                            text:
-                                "${laundry.averageNumberOfDays} ${_i18n()["retaurnsIn"]}"),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        buildTagWidget(
-                            context: context,
-                            text:
-                                "${_i18n()["minimumCost"]} \$${laundry.getAverageCost.round()}")
-                      ],
-                    )
+                    buildTagWidget(
+                        context: context,
+                        text:
+                            "${_i18n()["minimumCost"]} \$${laundry.getAverageCost.round()}")
+                    // Row(
+                    //   children: [
+                    //     buildTagWidget(
+                    //         context: context,
+                    //         text:
+                    //             "${laundry.averageNumberOfDays} ${_i18n()["retaurnsIn"]}"),
+                    //     SizedBox(
+                    //       width: 5,
+                    //     ),
+
+                    //   ],
+                    // )
                   ],
                 ),
                 Spacer(),

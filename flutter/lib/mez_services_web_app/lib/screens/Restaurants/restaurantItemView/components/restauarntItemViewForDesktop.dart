@@ -62,25 +62,31 @@ class RestaurantItemViewForDesktop extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Obx(
-              () => Text(
-                "${_i18n()["components"]["restaurantInfoTab"]["description"]}",
-                style: GoogleFonts.montserrat(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black),
+            if (item.description?[lang.userLanguageKey] != null)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Obx(
+                    () => Text(
+                      "${_i18n()["components"]["restaurantInfoTab"]["description"]}",
+                      style: GoogleFonts.montserrat(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                    "${item.description?[lang.userLanguageKey]}",
+                    style: GoogleFonts.montserrat(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Color.fromRGBO(73, 73, 73, 1)),
+                  ),
+                ],
               ),
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            Text(
-              "${item.description?[lang.userLanguageKey]}",
-              style: GoogleFonts.montserrat(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: Color.fromRGBO(73, 73, 73, 1)),
-            ),
             if (item.options.isNotEmpty)
               Column(
                 children: List.generate(

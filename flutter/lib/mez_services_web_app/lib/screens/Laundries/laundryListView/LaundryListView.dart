@@ -106,7 +106,10 @@ class _LaundryListViewState extends State<LaundryListView> {
   Widget _buildResponciveWidget(BuildContext context) {
     if (MezCalmosResizer.isMobile(context) ||
         MezCalmosResizer.isSmallMobile(context)) {
-      return LaundryListViewForMobile(laundries: laundries);
+      return LaundryListViewForMobile(
+        laundries: laundries,
+        shipingPrice: shipingPrice!,
+      );
     } else {
       return LaundryListViewForDesktop(
         laundries: laundries,

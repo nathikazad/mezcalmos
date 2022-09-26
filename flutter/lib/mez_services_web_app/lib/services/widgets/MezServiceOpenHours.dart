@@ -66,10 +66,7 @@ class MezServiceOpenHours extends StatelessWidget {
                     "${convertToAmPm(v.value.from[0], v.value.from[1])} - ${convertToAmPm(v.value.to[0], v.value.to[1])}",
                     style: GoogleFonts.montserrat(
                         fontSize: 14,
-                        fontWeight: (MezCalmosResizer.isMobile(context) ||
-                                MezCalmosResizer.isSmallMobile(context))
-                            ? FontWeight.w500
-                            : FontWeight.w600,
+                        fontWeight: FontWeight.w500,
                         color: Color.fromRGBO(73, 73, 73, 1)))
               ],
             ),

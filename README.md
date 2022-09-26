@@ -3,6 +3,6 @@
 to run the web version of the app .
 
 ```sh
-cd flutter
-flutter run -t lib/WebApp/main.dart -d chrome --no-sound-null-safety --web-renderer=html
+cd flutter/lib/mez_services_web_app
+flutter run -d chrome --no-sound-null-safety --web-renderer=html
 ```

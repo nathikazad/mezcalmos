@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mez_services_web_app/controllers/languageController.dart';
 import 'package:mez_services_web_app/models/Generic.dart';
@@ -35,33 +36,46 @@ class RestaurantInfoTabForMobile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          // if (restaurant.description![userLanguage] != null &&
-          //     restaurant.description![userLanguage]!.isNotEmpty)
-          //   Column(
-          //     crossAxisAlignment: CrossAxisAlignment.start,
-          //     children: [
-          //       SizedBox(
-          //         height: 10,
-          //       ),
-          //       Container(
-          //         child: Text(
-          //           '${_i18n()["description"]} :',
-          //           style: Theme.of(context).textTheme.bodyText1,
-          //         ),
-          //       ),
-          //       Container(
-          //         margin: EdgeInsets.only(
-          //           top: 10,
-          //         ),
-          //         child: Text(restaurant.description?[userLanguage] ?? ""),
-          //       ),
-          //     ],
-          //   ),
-          if (restaurant.schedule != null)
-            SizedBox(
-              height: 25,
+          SizedBox(
+            height: 25,
+          ),
+          if (restaurant.description![userLanguage] != null)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Obx(
+                    () => Text(
+                      "${_i18n()["description"]} :",
+                      style: GoogleFonts.montserrat(
+                          textStyle: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black)),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  child: Text(
+                    "${restaurant.description![userLanguage]}",
+                    style: GoogleFonts.nunito(
+                        textStyle: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromRGBO(73, 73, 73, 1))),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+              ],
             ),
-          MezServiceOpenHours(schedule: restaurant.schedule!),
+          if (restaurant.schedule != null)
+            MezServiceOpenHours(schedule: restaurant.schedule!),
           SizedBox(
             height: 25,
           ),

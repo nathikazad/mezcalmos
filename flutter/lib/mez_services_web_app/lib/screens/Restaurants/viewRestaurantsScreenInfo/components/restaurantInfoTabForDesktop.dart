@@ -50,35 +50,42 @@ class _RestaurantsInfoTapForDesktopState
           SizedBox(
             height: 20,
           ),
-          Container(
-            alignment: Alignment.centerLeft,
-            child: Obx(
-              () => Text(
-                "${_i18n()["description"]} :",
-                style: GoogleFonts.montserrat(
-                    textStyle: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black)),
-              ),
+          if (widget.restaurant!.description![lang.userLanguageKey] != null)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Obx(
+                    () => Text(
+                      "${_i18n()["description"]} :",
+                      style: GoogleFonts.montserrat(
+                          textStyle: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black)),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  child: Text(
+                    "${widget.restaurant!.description![lang.userLanguageKey]}",
+                    style: GoogleFonts.nunito(
+                        textStyle: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromRGBO(73, 73, 73, 1))),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+              ],
             ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            child: Text(
-              "${widget.restaurant!.description![lang.userLanguageKey]}",
-              style: GoogleFonts.nunito(
-                  textStyle: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: Color.fromRGBO(73, 73, 73, 1))),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
+
           MezServiceOpenHours(schedule: widget.restaurant!.schedule!),
           SizedBox(
             height: 15,
