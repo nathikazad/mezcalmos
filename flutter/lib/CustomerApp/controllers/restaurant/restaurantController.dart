@@ -24,16 +24,20 @@ class RestaurantController extends GetxController {
   StreamSubscription<dynamic>? _cartListener;
   Restaurant? associatedRestaurant;
   Rx<Cart> cart = Cart().obs;
+  RxnNum minShiipingPrice = RxnNum();
+  RxnNum baseShippingPrice = RxnNum();
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
     mezDbgPrint(
         "--------------------> RestaurantsCartController Initialized !");
+
     if (_authController.fireAuthUser != null) {
       //  getShippingPrice().then((num value) => shippingPrice.value = value);
-
-      _cartListener?.cancel();
+      baseShippingPrice.value = await getShippingPrice();
+      minShiipingPrice.value = await getMinShippingPrice();
+      await _cartListener?.cancel();
       _cartListener = _databaseHelper.firebaseDatabase
           .ref()
           .child(customerCart(_authController.fireAuthUser!.uid))
@@ -94,14 +98,22 @@ class RestaurantController extends GetxController {
             .child(baseShippingPriceNode())
             .once())
         .snapshot;
-    mezDbgPrint(
-        "Gettting shipping cost ==================================>>>>>> ${snapshot.value}");
+
+    return snapshot.value as num;
+  }
+
+  Future<num> getMinShippingPrice() async {
+    final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
+            .ref()
+            .child(minShippingPriceNode())
+            .once())
+        .snapshot;
+
     return snapshot.value as num;
   }
 
   Future<bool> updateShippingPrice(Location? loc) async {
     if (loc != null) {
-      final num baseShipping = await getShippingPrice();
       final MapHelper.Route routeInfo = await MapHelper.getDurationAndDistance(
         cart.value.restaurant!.info.location,
         loc,
@@ -109,10 +121,13 @@ class RestaurantController extends GetxController {
       mezDbgPrint(
           "place :::: ${loc.address} distance from controller :::::::===> ${(routeInfo.distance.distanceInMeters / 1000)}");
       if ((routeInfo.distance.distanceInMeters / 1000) <= 15) {
-        final num shippingCost =
-            baseShipping * (routeInfo.distance.distanceInMeters / 1000);
-
-        cart.value.shippingCost = shippingCost.ceil();
+        final num shippingCost = baseShippingPrice.value! *
+            (routeInfo.distance.distanceInMeters / 1000);
+        if (shippingCost < minShiipingPrice.value!) {
+          cart.value.shippingCost = minShiipingPrice.value!.ceil();
+        } else {
+          cart.value.shippingCost = shippingCost.ceil();
+        }
 
         mezDbgPrint(
             "SHIPPPPPING COOOOST =========>>>>>>>>>>>${cart.value.shippingCost}");
