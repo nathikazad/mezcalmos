@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersOnOff.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dart';
@@ -36,6 +37,7 @@ class LaundryOpCurrentOrdersListView extends StatefulWidget {
 class _LaundryOpCurrentOrdersListViewState
     extends State<LaundryOpCurrentOrdersListView> {
   ROpOrderController orderController = Get.find<ROpOrderController>();
+  RxBool isValidRestaurant = true.obs;
 
   RestaurantOpAuthController _restaurantOpAuthController =
       Get.find<RestaurantOpAuthController>();
@@ -77,10 +79,11 @@ class _LaundryOpCurrentOrdersListViewState
         }
       });
     } catch (e) {
+      isValidRestaurant.value = false;
       mezDbgPrint(e);
-      MezSnackbar("OOPS",
-          "No restaurant with ID ${_restaurantOpAuthController.restaurantId} found",
-          position: SnackPosition.TOP);
+      // MezSnackbar("OOPS",
+      //     "No restaurant with ID ${_restaurantOpAuthController.restaurantId} found",
+      //     position: SnackPosition.TOP);
     }
   }
 
@@ -128,13 +131,15 @@ class _LaundryOpCurrentOrdersListViewState
             ),
           );
         } else {
-          return Container(
-            alignment: Alignment.center,
-            color: Colors.white,
-            child: MezLogoAnimation(
-              centered: true,
-            ),
-          );
+          return isValidRestaurant.value
+              ? Container(
+                  alignment: Alignment.center,
+                  color: Colors.white,
+                  child: MezLogoAnimation(
+                    centered: true,
+                  ),
+                )
+              : SomethingWentWrongScreen();
         }
       },
     );
