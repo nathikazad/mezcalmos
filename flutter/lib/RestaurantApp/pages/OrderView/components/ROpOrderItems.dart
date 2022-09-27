@@ -70,15 +70,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
           });
         },
         iconColor: primaryBlueColor,
-        subtitle: (widget.order.inProcess())
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Theme(data: context.theme, child: Divider()),
-                  _unAvailableBtn(),
-                ],
-              )
-            : null,
+
         trailing: Container(
           // width: 25,
           // height: 25,
@@ -203,6 +195,14 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                 ),
             ],
           ),
+          if (widget.order.inProcess())
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Theme(data: context.theme, child: Divider()),
+                _unAvailableBtn(),
+              ],
+            ),
         ],
       ),
     );
@@ -210,7 +210,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
 
   Widget _unAvailableBtn() {
     return Padding(
-      padding: const EdgeInsets.only(left: 5, right: 5, top: 8),
+      padding: const EdgeInsets.only(left: 5, right: 5, top: 0),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: (!widget.order.inProcess() || widget.item.unavailable)

@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/Components/itemChosenChoices.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
@@ -116,80 +116,191 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
 
   Widget _itemHeader(LanguageType userLanguage, TextTheme txt) {
     return Container(
-      height: 60,
-      alignment: Alignment.center,
-      margin: EdgeInsets.symmetric(horizontal: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Column(
         children: [
-          if (widget.order.showItemsImages)
-            Container(
-              margin: const EdgeInsets.only(right: 8),
-              height: 55,
-              width: 55,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: (imageLoded)
-                          ? CachedNetworkImageProvider(widget.item.image ?? '',
-                              errorListener: () {
-                              setState(() {
-                                imageLoded = false;
-                              });
-                            })
-                          : AssetImage(aNoImage) as ImageProvider)),
-            ),
-          if (widget.item.name[userLanguage] != null)
-            Flexible(
-              flex: 6,
-              fit: FlexFit.tight,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              SizedBox(
+                width: 5,
+              ),
+              if (widget.order.showItemsImages)
+                Container(
+                  //  padding: const EdgeInsets.all(5),
+                  height: 55,
+                  width: 55,
+                  foregroundDecoration: BoxDecoration(
+                      color: (widget.item.unavailable)
+                          ? Colors.white.withOpacity(0.4)
+                          : null),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: (imageLoded)
+                            ? CachedNetworkImageProvider(
+                                widget.item.image ?? '', errorListener: () {
+                                setState(() {
+                                  imageLoded = false;
+                                });
+                              })
+                            : AssetImage(aNoImage) as ImageProvider<Object>,
+                      )),
+                ),
+              SizedBox(
+                width: 10,
+              ),
+              if (widget.item.name[userLanguage] != null)
+                Flexible(
+                  fit: FlexFit.tight,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Flexible(
-                        flex: 3,
-                        child: Text(
-                          widget.item.name[userLanguage]!.inCaps,
-                          style: txt.bodyText1,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                      Text(
+                        widget.item.name[userLanguage]! +
+                            " x${widget.item.quantity}",
+                        style: txt.bodyText1?.copyWith(
+                            color: widget.item.unavailable
+                                ? Colors.black.withOpacity(0.5)
+                                : Colors.black,
+                            decoration: (widget.item.unavailable)
+                                ? TextDecoration.lineThrough
+                                : null),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      SizedBox(
-                        width: 5,
+                      const SizedBox(
+                        height: 5,
                       ),
-                      Flexible(
-                        child: Text(
-                          "x${widget.item.quantity}",
-                          style: txt.bodyText1
-                              ?.copyWith(fontWeight: FontWeight.w700),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('\$' + widget.item.totalCost.toInt().toString(),
+                              style: txt.bodyText1?.copyWith(
+                                  color: widget.item.unavailable
+                                      ? Colors.black.withOpacity(0.5)
+                                      : Colors.black,
+                                  decoration: (widget.item.unavailable)
+                                      ? TextDecoration.lineThrough
+                                      : null)),
+                          if (widget.item.unavailable) _itemunav(),
+                        ],
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 3,
-                  ),
-                  Container(
-                    // margin: EdgeInsets.all(5),
-
-                    child: Text('\$' + widget.item.totalCost.toInt().toString(),
-                        style: txt.bodyText1),
-                  ),
-                ],
-              ),
-            ),
+                ),
+            ],
+          ),
         ],
       ),
     );
   }
+
+  Row _itemunav() {
+    return Row(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(top: 2),
+          child: Icon(
+            Icons.do_disturb_off,
+            color: Colors.red,
+            size: 14.sp,
+          ),
+        ),
+        SizedBox(
+          width: 3,
+        ),
+        Text(
+          "Item unavailable",
+          style: Get.textTheme.bodyText2?.copyWith(
+              fontWeight: FontWeight.w600,
+              fontSize: 11.sp,
+              color: widget.item.unavailable ? Colors.red : Colors.white),
+        ),
+        SizedBox(
+          width: 5,
+        ),
+      ],
+    );
+  }
+
+  // Widget _itemHeader(LanguageType userLanguage, TextTheme txt) {
+  //   return Container(
+  //     height: 60,
+  //     alignment: Alignment.center,
+  //     margin: EdgeInsets.symmetric(horizontal: 8),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.start,
+  //       crossAxisAlignment: CrossAxisAlignment.center,
+  //       children: [
+  //         if (widget.order.showItemsImages)
+  //           Container(
+  //             margin: const EdgeInsets.only(right: 8),
+  //             height: 55,
+  //             width: 55,
+  //             decoration: BoxDecoration(
+  //                 borderRadius: BorderRadius.circular(12),
+  //                 image: DecorationImage(
+  //                     fit: BoxFit.cover,
+  //                     image: (imageLoded)
+  //                         ? CachedNetworkImageProvider(widget.item.image ?? '',
+  //                             errorListener: () {
+  //                             setState(() {
+  //                               imageLoded = false;
+  //                             });
+  //                           })
+  //                         : AssetImage(aNoImage) as ImageProvider)),
+  //           ),
+  //         if (widget.item.name[userLanguage] != null)
+  //           Flexible(
+  //             flex: 6,
+  //             fit: FlexFit.tight,
+  //             child: Column(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               mainAxisAlignment: MainAxisAlignment.center,
+  //               children: [
+  //                 Row(
+  //                   children: [
+  //                     Flexible(
+  //                       flex: 3,
+  //                       child: Text(
+  //                         widget.item.name[userLanguage]!.inCaps,
+  //                         style: txt.bodyText1,
+  //                         maxLines: 2,
+  //                         overflow: TextOverflow.ellipsis,
+  //                       ),
+  //                     ),
+  //                     SizedBox(
+  //                       width: 5,
+  //                     ),
+  //                     Flexible(
+  //                       child: Text(
+  //                         "x${widget.item.quantity}",
+  //                         style: txt.bodyText1
+  //                             ?.copyWith(fontWeight: FontWeight.w700),
+  //                         maxLines: 2,
+  //                         overflow: TextOverflow.ellipsis,
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //                 SizedBox(
+  //                   height: 3,
+  //                 ),
+  //                 Container(
+  //                   // margin: EdgeInsets.all(5),
+
+  //                   child: Text('\$' + widget.item.totalCost.toInt().toString(),
+  //                       style: txt.bodyText1),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   List<Widget> buildChoices(
       Map<String, List<Choice>> choices, Map<String, LanguageMap> optionNames) {
