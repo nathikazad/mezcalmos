@@ -1089,7 +1089,9 @@
         "pages": {
             "AdminDashboardView": {
                 "dashboard": "Tablero",
-                "shippingPrice": "Precio de envío",
+                "shippingPrice": "Precio de envío por km",
+                "minPrice": "Precio mínimo de envío",
+                "newMinPrice": "Nuevo precio mínimo de envío",
                 "newShippingPrice": "Nuevo precio de envío",
                 "error": "error",
                 "errorText": "Precio de envío no válido",

@@ -1074,7 +1074,9 @@
         "pages": {
             "AdminDashboardView": {
                 "dashboard": "Dashboard",
-                "shippingPrice": "Shipping price",
+                "shippingPrice": "Shipping price per KM",
+                "minPrice": "Minimum shipping price",
+                "newMinPrice": "New Minimum shipping price",
                 "newShippingPrice": "New shipping price",
                 "error": "Error",
                 "errorText": "Shipping price not valid",

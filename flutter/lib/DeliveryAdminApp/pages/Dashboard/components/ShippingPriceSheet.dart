@@ -16,10 +16,12 @@ class ShippingPriceSheet extends StatelessWidget {
     Key? key,
     required this.viewController,
     required this.ctx,
+    required this.type,
   }) : super(key: key);
 
   final AdminDashboardController viewController;
   final BuildContext ctx;
+  final ShippingPriceType type;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,9 @@ class ShippingPriceSheet extends StatelessWidget {
             Container(
               alignment: Alignment.center,
               child: Text(
-                '${_i18n()["shippingPrice"]}',
+                (type == ShippingPriceType.Base)
+                    ? '${_i18n()["shippingPrice"]}'
+                    : '${_i18n()["minPrice"]}',
                 style: Get.textTheme.headline3,
               ),
             ),
@@ -44,14 +48,18 @@ class ShippingPriceSheet extends StatelessWidget {
               height: 15,
             ),
             Text(
-              '${_i18n()["newShippingPrice"]}',
+              (type == ShippingPriceType.Base)
+                  ? '${_i18n()["newShippingPrice"]}'
+                  : '${_i18n()["newMinPrice"]}',
               style: Get.textTheme.bodyText1,
             ),
             const SizedBox(
               height: 10,
             ),
             TextFormField(
-                controller: viewController.priceController,
+                controller: (type == ShippingPriceType.Base)
+                    ? viewController.priceController
+                    : viewController.minPriceController,
                 style: Get.textTheme.bodyText1,
                 textAlignVertical: TextAlignVertical.center,
                 decoration: InputDecoration(
@@ -84,21 +92,41 @@ class ShippingPriceSheet extends StatelessWidget {
                   height: 50,
                   withGradient: true,
                   onClick: () async {
-                    if (num.tryParse(viewController.priceController.text) !=
-                        null) {
-                      await viewController
-                          .changePrice(
-                              num.parse(viewController.priceController.text))
-                          .onError((Object? error, StackTrace stackTrace) =>
-                              Get.snackbar(
-                                  '${_i18n()["error"]}', '${_i18n()["error"]}',
-                                  backgroundColor: Colors.black,
-                                  colorText: Colors.white));
+                    if (type == ShippingPriceType.Base) {
+                      if (num.tryParse(viewController.priceController.text) !=
+                          null) {
+                        await viewController
+                            .changePrice(
+                                num.parse(viewController.priceController.text))
+                            .onError((Object? error, StackTrace stackTrace) =>
+                                Get.snackbar('${_i18n()["error"]}',
+                                    '${_i18n()["error"]}',
+                                    backgroundColor: Colors.black,
+                                    colorText: Colors.white));
+                      } else {
+                        Get.snackbar(
+                            '${_i18n()["error"]}', '${_i18n()["errorText"]}',
+                            backgroundColor: Colors.black,
+                            colorText: Colors.white);
+                      }
                     } else {
-                      Get.snackbar(
-                          '${_i18n()["error"]}', '${_i18n()["errorText"]}',
-                          backgroundColor: Colors.black,
-                          colorText: Colors.white);
+                      if (num.tryParse(
+                              viewController.minPriceController.text) !=
+                          null) {
+                        await viewController
+                            .changeMinPrice(num.parse(
+                                viewController.minPriceController.text))
+                            .onError((Object? error, StackTrace stackTrace) =>
+                                Get.snackbar('${_i18n()["error"]}',
+                                    '${_i18n()["error"]}',
+                                    backgroundColor: Colors.black,
+                                    colorText: Colors.white));
+                      } else {
+                        Get.snackbar(
+                            '${_i18n()["error"]}', '${_i18n()["errorText"]}',
+                            backgroundColor: Colors.black,
+                            colorText: Colors.white);
+                      }
                     }
                   },
                 )),

@@ -20,6 +20,14 @@ String baseShippingPriceNode() {
   return 'metadata/baseShippingPrice';
 }
 
+String minShippingPriceNode() {
+  return 'metadata/minShippingPrice';
+}
+
+String metaDataNode() {
+  return 'metadata';
+}
+
 String userDeletedNode(String userId) {
   return '/users/$userId/info/deleted';
 }
