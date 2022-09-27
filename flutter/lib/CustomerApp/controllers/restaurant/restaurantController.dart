@@ -35,8 +35,8 @@ class RestaurantController extends GetxController {
 
     if (_authController.fireAuthUser != null) {
       //  getShippingPrice().then((num value) => shippingPrice.value = value);
-      baseShippingPrice.value = await getShippingPrice();
-      minShiipingPrice.value = await getMinShippingPrice();
+      baseShippingPrice.value = await getShippingPrice() ?? 10;
+      minShiipingPrice.value = await getMinShippingPrice() ?? 50;
       await _cartListener?.cancel();
       _cartListener = _databaseHelper.firebaseDatabase
           .ref()
@@ -92,7 +92,7 @@ class RestaurantController extends GetxController {
         restaurantId: restaurantId, restaurantData: snapshot.value);
   }
 
-  Future<num> getShippingPrice() async {
+  Future<num?> getShippingPrice() async {
     final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
             .ref()
             .child(baseShippingPriceNode())
@@ -102,7 +102,7 @@ class RestaurantController extends GetxController {
     return snapshot.value as num;
   }
 
-  Future<num> getMinShippingPrice() async {
+  Future<num?> getMinShippingPrice() async {
     final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
             .ref()
             .child(minShippingPriceNode())
