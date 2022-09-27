@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -53,7 +54,6 @@ class Restaurant extends Service {
       {required String restaurantId, required restaurantData}) {
     // List<Object?> availableLanguages =
     //     restaurantData["details"]["languages"] as List<Object?>;
-
     final ServiceState restaurantState =
         ServiceState.fromServiceStateData(restaurantData["state"]);
     LanguageMap? description;

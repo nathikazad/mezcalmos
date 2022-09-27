@@ -11,12 +11,14 @@ import 'package:mezcalmos/RestaurantApp/pages/CurrentOrdersList/components/ROpOr
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersOnOff.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 import 'package:sizer/sizer.dart';
 
@@ -64,16 +66,22 @@ class _LaundryOpCurrentOrdersListViewState
     Get.put(RestaurantInfoController(), permanent: true);
     Get.find<RestaurantInfoController>()
         .init(restId: _restaurantOpAuthController.restaurantId!);
-    restaurant.value = await Get.find<RestaurantInfoController>()
-        .getRestaurantAsFuture(_restaurantOpAuthController.restaurantId!);
-
-    _restStream = Get.find<RestaurantInfoController>()
-        .getRestaurant(_restaurantOpAuthController.restaurantId!)
-        .listen((Restaurant? event) {
-      if (event != null) {
-        restaurant.value = event;
-      }
-    });
+    try {
+      restaurant.value = await Get.find<RestaurantInfoController>()
+          .getRestaurantAsFuture(_restaurantOpAuthController.restaurantId!);
+      _restStream = Get.find<RestaurantInfoController>()
+          .getRestaurant(_restaurantOpAuthController.restaurantId!)
+          .listen((Restaurant? event) {
+        if (event != null) {
+          restaurant.value = event;
+        }
+      });
+    } catch (e) {
+      mezDbgPrint(e);
+      MezSnackbar("OOPS",
+          "No restaurant with ID ${_restaurantOpAuthController.restaurantId} found",
+          position: SnackPosition.TOP);
+    }
   }
 
   @override

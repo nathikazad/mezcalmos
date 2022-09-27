@@ -58,7 +58,7 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
   }
 
   void handleState(RestaurantOperator? operator) {
-    mezDbgPrint(operator);
+    mezDbgPrint(operator?.toJson());
     if (operator != null && operator.state.restaurantId != null) {
       // ignore: unawaited_futures, inference_failure_on_function_invocation
       Get.toNamed(kCurrentOrdersListView);

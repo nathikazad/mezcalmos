@@ -44,7 +44,7 @@ class RestaurantOperator {
 
   Map<String, dynamic> toJson() => {
         "operatorId": operatorId,
-        "state": state,
-        "info": info,
+        "state": state.toJson(),
+        "info": info.toFirebaseFormatJson(),
       };
 }
