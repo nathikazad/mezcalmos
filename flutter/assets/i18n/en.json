@@ -181,7 +181,8 @@
                             "deliveryCost": "Delivery Cost",
                             "stripeFees": "Card fees",
                             "totalCost": "Total Cost",
-                            "deliveryLocation": "Delivery Location"
+                            "deliveryLocation": "Delivery Location",
+                            "toBeCalc": "To be calculated"
                         },
                         "SaveLocationDailog": {
                             "addLocationDialogTitle": "Enter location name, if you want to save for future use, else you may skip",

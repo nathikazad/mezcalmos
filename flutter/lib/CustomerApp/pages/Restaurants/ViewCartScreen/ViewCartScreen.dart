@@ -104,11 +104,6 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                     setState(() {
                       orderToLocation = location;
                     });
-                  } else {
-                    MezSnackbar(
-                      '${_i18n()["ops"]}',
-                      '${_i18n()["distanceError"]}',
-                    );
                   }
                 },
                 notesTextController: _textEditingController,

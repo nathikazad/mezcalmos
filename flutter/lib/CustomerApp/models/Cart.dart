@@ -46,7 +46,7 @@ class Cart {
           : null;
       notes = cartData["notes"];
       paymentType = cartData["paymentType"].toString().toPaymentType();
-      shippingCost = null;
+      shippingCost = cartData["shippingCost"];
       _routeInformation = cartData['routeInformation'] == null
           ? null
           : RouteInformation(

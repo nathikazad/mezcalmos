@@ -157,7 +157,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     );
     mezDbgPrint(
         "distance :=:::::::::=====>${(routeInfo.distance.distanceInMeters / 1000)}");
-    return (routeInfo.distance.distanceInMeters / 1000) <= 10;
+    return (routeInfo.distance.distanceInMeters / 1000) <= 15;
   }
 
   Future<void> locationChangedHandler(SavedLocation? newLocation) async {

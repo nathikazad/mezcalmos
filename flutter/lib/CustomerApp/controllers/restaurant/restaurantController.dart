@@ -107,26 +107,28 @@ class RestaurantController extends GetxController {
         loc,
       );
       mezDbgPrint(
-          "distance :::::::===> ${(routeInfo.distance.distanceInMeters / 1000)}");
-      if ((routeInfo.distance.distanceInMeters / 1000) <= 10) {
+          "place :::: ${loc.address} distance from controller :::::::===> ${(routeInfo.distance.distanceInMeters / 1000)}");
+      if ((routeInfo.distance.distanceInMeters / 1000) <= 15) {
         final num shippingCost =
             baseShipping * (routeInfo.distance.distanceInMeters / 1000);
 
         cart.value.shippingCost = shippingCost.ceil();
-        mezDbgPrint("SHIPPPPPING COOOOST =========>>>>>>>>>>>$shippingCost");
+
+        mezDbgPrint(
+            "SHIPPPPPING COOOOST =========>>>>>>>>>>>${cart.value.shippingCost}");
         await saveCart();
-        cart.refresh();
+
         return true;
       } else {
         cart.value.shippingCost = null;
         await saveCart();
-        cart.refresh();
+
         return false;
       }
     } else {
       cart.value.shippingCost = null;
       await saveCart();
-      cart.refresh();
+
       return false;
     }
   }
