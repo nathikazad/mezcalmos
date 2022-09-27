@@ -270,6 +270,7 @@
                             "orderCancelled": "Order Cancelled"
                         },
                         "OrdersItemsCard": {
+                            "itemUnav": "Item unavailable",
                             "orderItems": "Order Items",
                             "canceledByAdmin": "Cancelled",
                             "canceledByCustomer": "Cancelled",

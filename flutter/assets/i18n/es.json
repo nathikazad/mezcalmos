@@ -272,6 +272,7 @@
                             "orderCancelled": "cancelada"
                         },
                         "OrdersItemsCard": {
+                            "itemUnav": "Artículo no disponible",
                             "orderItems": "Artículos",
                             "canceledByAdmin": "Cancelada",
                             "canceledByCustomer": "Cancelada",

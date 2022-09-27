@@ -212,7 +212,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
           width: 3,
         ),
         Text(
-          "Item unavailable",
+          '${_i18n()["itemUnav"]}',
           style: Get.textTheme.bodyText2?.copyWith(
               fontWeight: FontWeight.w600,
               fontSize: 11.sp,
