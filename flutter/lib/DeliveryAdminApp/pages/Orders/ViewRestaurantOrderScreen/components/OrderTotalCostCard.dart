@@ -54,9 +54,9 @@ Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Flexible(
-                      fit: FlexFit.tight,
+                    Expanded(
                       child: Text(
                         "${_i18n()['deliveryCost']}",
                         style: const TextStyle(
@@ -68,9 +68,11 @@ Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
                         textAlign: TextAlign.left,
                       ),
                     ),
-                    ShippingCostComponent(
-                      shippingCost: order.value!.shippingCost,
-                      textStyle: Get.textTheme.bodyText1,
+                    Flexible(
+                      child: ShippingCostComponent(
+                        shippingCost: order.value!.shippingCost,
+                        textStyle: Get.textTheme.bodyText1,
+                      ),
                     )
                   ],
                 ),
