@@ -26,6 +26,7 @@ class RestaurantController extends GetxController {
   Rx<Cart> cart = Cart().obs;
   RxnNum minShiipingPrice = RxnNum();
   RxnNum baseShippingPrice = RxnNum();
+  num _orderDistanceInKm = 0;
 
   @override
   Future<void> onInit() async {
@@ -119,9 +120,10 @@ class RestaurantController extends GetxController {
         cart.value.restaurant!.info.location,
         loc,
       );
+      _orderDistanceInKm = routeInfo.distance.distanceInMeters / 1000;
       mezDbgPrint(
           "place :::: $loc distance from controller :::::::===> ${(routeInfo.distance.distanceInMeters / 1000)}");
-      if ((routeInfo.distance.distanceInMeters / 1000) <= 15) {
+      if ((routeInfo.distance.distanceInMeters / 1000) <= 10) {
         final num shippingCost = baseShippingPrice.value! *
             (routeInfo.distance.distanceInMeters / 1000);
         if (shippingCost < minShiipingPrice.value!) {
@@ -149,6 +151,12 @@ class RestaurantController extends GetxController {
 
       return false;
     }
+  }
+
+  bool get canOrder {
+    return cart.value.toLocation != null &&
+        _orderDistanceInKm <= 10 &&
+        (associatedRestaurant?.isOpen() ?? false);
   }
 
   Future<void> saveCart() async {

@@ -120,31 +120,9 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
         onChanged: (SavedLocation? v) async {
           await locationChangedHandler(v!);
         },
-        // onChanged: (SavedLocation? newLocation) async {
-        //   // await locationChangedHandler(newLocation);
-        // },
       )),
     );
   }
-
-  // Future<void Function(SavedLocation? p1)?> handleChange(
-  //     SavedLocation loc) async {
-  //   if (loc.id == "_pick_") {
-  //     await locationChangedHandler(loc);
-  //   } else if (_checkDistance() && await _lessThanDistance(loc.location!)) {
-  //     mezDbgPrint("Lessssss");
-  //     await locationChangedHandler(loc);
-  //   } else if (widget.checkDistance) {
-  //     mezDbgPrint("Morrrrr");
-  //     MezSnackbar(
-  //       '${_i18n()["ops"]}',
-  //       '${_i18n()["distanceError"]}',
-  //     );
-  //   } else {
-  //     await locationChangedHandler(loc);
-  //   }
-  //   return null;
-  // }
 
   bool _checkDistance() {
     return widget.serviceProviderLocation != null && widget.checkDistance;
@@ -157,7 +135,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     );
     mezDbgPrint(
         "distance :=:::::::::=====>${(routeInfo.distance.distanceInMeters / 1000)}");
-    return (routeInfo.distance.distanceInMeters / 1000) <= 15;
+    return (routeInfo.distance.distanceInMeters / 1000) <= 10;
   }
 
   Future<void> locationChangedHandler(SavedLocation? newLocation) async {
