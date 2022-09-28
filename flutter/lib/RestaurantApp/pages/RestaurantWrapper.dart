@@ -61,7 +61,8 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
     Future.microtask(() async {
       mezDbgPrint("RestaurantWrapper::microtask handleState first time");
 
-      Get.find<RestaurantOpAuthController>().operator.value;
+      restaurantOperator =
+          Get.find<RestaurantOpAuthController>().operator.value;
       mezDbgPrint("RESTAURANT OPERATOR ==> $restaurantOperator");
       if (restaurantOperator == null) _operatorInfoStreamListener();
       mezDbgPrint("RestaurantWrapper::microtask data received");

@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 dynamic lang() => Get.find<LanguageController>().strings["Shared"]["pages"]
     ["SomethingWentWrongScreen"];
@@ -25,9 +27,13 @@ class SomethingWentWrongScreen extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        appBar: mezcalmosAppBar(
-          AppBarLeftButtonType.Lang,
-        ),
+        key: Get.find<SideMenuDrawerController>().getNewKey(),
+        drawer: MezSideMenu(),
+        // appBar: mezcalmosAppBar(
+        //   AppBarLeftButtonType.Lang,
+        // ),
+        appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu,
+            onClick: () => Get.find<SideMenuDrawerController>().openMenu()),
         body: Flex(
           direction: Axis.vertical,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
