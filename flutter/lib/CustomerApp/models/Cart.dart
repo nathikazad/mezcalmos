@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -162,7 +161,7 @@ class CartItem {
       quantity: itemData["quantity"],
       notes: itemData["notes"],
     );
-    mezDbgPrint(itemData);
+
     // for (int i = 0; i < itemData["chosenChoices"].length; i++) {
     //   if (item.findOption(i.toString()) != null) {
     //     cartItem.chosenChoices[i.toString()] = <Choice>[];

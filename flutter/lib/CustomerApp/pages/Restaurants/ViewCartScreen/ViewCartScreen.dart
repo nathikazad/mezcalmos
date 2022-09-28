@@ -71,8 +71,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         .value!
         .defaultLocation
         ?.location;
+    if (orderToLocation != null) {
+      _restaurantController.cart.value.toLocation = orderToLocation;
+    }
 
-    _restaurantController.updateShippingPrice(orderToLocation);
+    _restaurantController.updateShippingPrice();
 
     // check if cart empty
     // if yes redirect to home page
@@ -98,13 +101,13 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
               child: ViewCartBody(
                 viewCartController: viewCartController,
                 setLocationCallBack: ({Location? location}) async {
-                  final bool result = await _restaurantController
-                      .updateShippingPrice(orderToLocation!);
-                  if (result) {
-                    setState(() {
-                      orderToLocation = location;
-                    });
-                  }
+                  mezDbgPrint(
+                      "Called from viewCart------------------------------");
+                  setState(() {
+                    orderToLocation = location;
+                  });
+                  _restaurantController.cart.value.toLocation = location;
+                  await _restaurantController.updateShippingPrice();
                 },
                 notesTextController: _textEditingController,
               ),

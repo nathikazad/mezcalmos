@@ -112,18 +112,21 @@ class RestaurantController extends GetxController {
     return snapshot.value as num;
   }
 
-  Future<bool> updateShippingPrice(Location? loc) async {
+  Future<bool> updateShippingPrice() async {
+    final Location? loc = cart.value.toLocation;
     if (loc != null) {
       final MapHelper.Route routeInfo = await MapHelper.getDurationAndDistance(
         cart.value.restaurant!.info.location,
         loc,
       );
       mezDbgPrint(
-          "place :::: ${loc.address} distance from controller :::::::===> ${(routeInfo.distance.distanceInMeters / 1000)}");
+          "place :::: $loc distance from controller :::::::===> ${(routeInfo.distance.distanceInMeters / 1000)}");
       if ((routeInfo.distance.distanceInMeters / 1000) <= 15) {
         final num shippingCost = baseShippingPrice.value! *
             (routeInfo.distance.distanceInMeters / 1000);
         if (shippingCost < minShiipingPrice.value!) {
+          mezDbgPrint(
+              "LESS THAN MINIMUM COST ===================== $shippingCost << ${minShiipingPrice.value}");
           cart.value.shippingCost = minShiipingPrice.value!.ceil();
         } else {
           cart.value.shippingCost = shippingCost.ceil();

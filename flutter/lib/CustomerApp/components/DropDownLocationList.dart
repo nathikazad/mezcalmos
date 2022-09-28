@@ -118,7 +118,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
                 (SavedLocation e) => buildItems(e, textTheme))
             .toList(),
         onChanged: (SavedLocation? v) async {
-          await handleChange(v!);
+          await locationChangedHandler(v!);
         },
         // onChanged: (SavedLocation? newLocation) async {
         //   // await locationChangedHandler(newLocation);
@@ -127,24 +127,24 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     );
   }
 
-  Future<void Function(SavedLocation? p1)?> handleChange(
-      SavedLocation loc) async {
-    if (loc.id == "_pick_") {
-      await locationChangedHandler(loc);
-    } else if (_checkDistance() && await _lessThanDistance(loc.location!)) {
-      mezDbgPrint("Lessssss");
-      await locationChangedHandler(loc);
-    } else if (widget.checkDistance) {
-      mezDbgPrint("Morrrrr");
-      MezSnackbar(
-        '${_i18n()["ops"]}',
-        '${_i18n()["distanceError"]}',
-      );
-    } else {
-      await locationChangedHandler(loc);
-    }
-    return null;
-  }
+  // Future<void Function(SavedLocation? p1)?> handleChange(
+  //     SavedLocation loc) async {
+  //   if (loc.id == "_pick_") {
+  //     await locationChangedHandler(loc);
+  //   } else if (_checkDistance() && await _lessThanDistance(loc.location!)) {
+  //     mezDbgPrint("Lessssss");
+  //     await locationChangedHandler(loc);
+  //   } else if (widget.checkDistance) {
+  //     mezDbgPrint("Morrrrr");
+  //     MezSnackbar(
+  //       '${_i18n()["ops"]}',
+  //       '${_i18n()["distanceError"]}',
+  //     );
+  //   } else {
+  //     await locationChangedHandler(loc);
+  //   }
+  //   return null;
+  // }
 
   bool _checkDistance() {
     return widget.serviceProviderLocation != null && widget.checkDistance;
@@ -164,19 +164,13 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     mezDbgPrint(
         "Changed value over to ====> ${newLocation?.name} | Old one was : ${dropDownListValue?.name}");
 
-    setState(() {
-      dropDownListValue = newLocation;
-      widget.passedInLocation = dropDownListValue!.location;
-    });
-
-    mezDbgPrint(widget.passedInLocation);
     // we will route the user back to the Map
     if (newLocation?.id == "_pick_") {
       final SavedLocation? _savedLocation = await Get.toNamed(
         kPickLocationRoute,
         arguments: true,
       ) as SavedLocation;
-      mezDbgPrint("View Got result : $_savedLocation");
+
       if (_savedLocation != null) {
         // in case it's repeated with the same name or same address
         listOfSavedLoacations.removeWhere(
@@ -192,13 +186,35 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
           dropDownListValue =
               listOfSavedLoacations[listOfSavedLoacations.length - 1];
         });
-        widget.onValueChangeCallback?.call(location: _savedLocation.location);
+        await _verifyDistanceAndSetLocation(_savedLocation);
       }
     } else {
       if (newLocation != null) {
-        widget.onValueChangeCallback?.call(location: newLocation.location);
+        await _verifyDistanceAndSetLocation(newLocation);
       }
       widget.passedInLocation = dropDownListValue!.location;
+    }
+  }
+
+  Future<void> _verifyDistanceAndSetLocation(SavedLocation newLocation) async {
+    if (_checkDistance() && await _lessThanDistance(newLocation.location!)) {
+      widget.onValueChangeCallback?.call(location: newLocation.location);
+      setState(() {
+        dropDownListValue = newLocation;
+        widget.passedInLocation = dropDownListValue!.location;
+      });
+    } else if (_checkDistance()) {
+      mezDbgPrint("Morrrrre than 15");
+      MezSnackbar(
+        '${_i18n()["ops"]}',
+        '${_i18n()["distanceError"]}',
+      );
+    } else {
+      widget.onValueChangeCallback?.call(location: newLocation.location);
+      setState(() {
+        dropDownListValue = newLocation;
+        widget.passedInLocation = dropDownListValue!.location;
+      });
     }
   }
 
