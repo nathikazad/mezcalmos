@@ -85,7 +85,7 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
       // ignore: unawaited_futures, inference_faQilure_on_function_invocation
       Get.toNamed(kCurrentOrdersListView);
     } else {
-      Get.to(SomethingWentWrongScreen());
+      // Get.to(SomethingWentWrongScreen());
       mezDbgPrint("RestaurantWrappper::handleState state is null, ERROR");
     }
   }
