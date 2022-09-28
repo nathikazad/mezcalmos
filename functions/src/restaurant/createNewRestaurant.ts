@@ -49,6 +49,13 @@ export = functions.https.onCall(async (data, context) => {
     }
   }
 
+  let operatorInfo = (await userInfoNode(user.uid).once('value')).val();
+  if(operatorInfo == null)
+  return {
+    status: ServerResponseStatus.Error,
+    errorMessage: "User info not there",
+  }
+
   let restaurantId: string = (await restaurantNodes.info().push()).key!;
   let newRestaurant = JSON.parse(restaurantTemplateInJson);
   newRestaurant.info.id = restaurantId
@@ -56,7 +63,6 @@ export = functions.https.onCall(async (data, context) => {
   newRestaurant.state.operators[user.uid] = true;
   restaurantNodes.info(restaurantId).set(newRestaurant);
 
-  let operatorInfo = (await userInfoNode(user.uid).once('value')).val();
   let newOperator = { info: operatorInfo, state: { restaurantId: restaurantId } };
   operatorNodes.operatorInfo(OrderType.Restaurant, user.uid).set(newOperator);
   return { status: ServerResponseStatus.Success }

@@ -49,6 +49,13 @@ export = functions.https.onCall(async (data, context) => {
     }
   }
 
+  let operatorInfo = (await userInfoNode(user.uid).once('value')).val();
+  if(operatorInfo == null)
+  return {
+    status: ServerResponseStatus.Error,
+    errorMessage: "User info not there",
+  }
+
   let laundryId: string = (await laundryNodes.info().push()).key!;
   let newLaundry = JSON.parse(laundryTemplateInJson);
   newLaundry.info.id = laundryId
@@ -56,7 +63,6 @@ export = functions.https.onCall(async (data, context) => {
   newLaundry.state.operators[user.uid] = true;
   laundryNodes.info(laundryId).set(newLaundry);
 
-  let operatorInfo = (await userInfoNode(user.uid).once('value')).val();
   let newOperator = { info: operatorInfo, state: { laundryId: laundryId } };
   operatorNodes.operatorInfo(OrderType.Laundry, user.uid).set(newOperator);
   return { status: ServerResponseStatus.Success }
