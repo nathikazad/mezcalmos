@@ -667,6 +667,11 @@
             }
         },
         "pages": {
+            "SomethingWentWrongScreen":
+            {
+                "noRestaurantFoundOnOperator": "No restaurant found on your operator",
+                "pleaseContactAdmin": "Please contact the admin"
+            },
             "AuthScreens": {
                 "SMS": {
                     "OtpConfirmationScreen": {
