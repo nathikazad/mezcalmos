@@ -672,6 +672,11 @@
             }
         },
         "pages": {
+            "SomethingWentWrongScreen":
+            {
+                "noRestaurantFoundOnOperator": "No se encontró ningún restaurante en su operador",
+                "pleaseContactAdmin": "Póngase en contacto con el administrador"
+            },
             "AuthScreens": {
                 "SMS": {
                     "OtpConfirmationScreen": {

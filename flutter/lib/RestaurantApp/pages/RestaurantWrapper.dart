@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
+import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -38,10 +39,17 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
       mezDbgPrint("RestaurantWrapper::microtask handleState first time");
       RestaurantOperator? restaurantOperator =
           Get.find<RestaurantOpAuthController>().operator.value;
+      mezDbgPrint("RESTAURANT OPERATOR ==> ${restaurantOperator}");
       if (restaurantOperator == null)
         restaurantOperator = await Get.find<RestaurantOpAuthController>()
             .operatorInfoStream
-            .first;
+            .first
+            .timeout(
+              Duration(seconds: 10),
+              onTimeout: () async => Get.to(
+                SomethingWentWrongScreen(),
+              ),
+            );
       mezDbgPrint("RestaurantWrapper::microtask data received");
       handleState(restaurantOperator);
     });
@@ -58,11 +66,12 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
   }
 
   void handleState(RestaurantOperator? operator) {
-    mezDbgPrint(operator?.toJson());
+    mezDbgPrint(operator);
     if (operator != null && operator.state.restaurantId != null) {
-      // ignore: unawaited_futures, inference_failure_on_function_invocation
+      // ignore: unawaited_futures, inference_faQilure_on_function_invocation
       Get.toNamed(kCurrentOrdersListView);
     } else {
+      Get.to(SomethingWentWrongScreen());
       mezDbgPrint("RestaurantWrappper::handleState state is null, ERROR");
     }
   }
