@@ -15,13 +15,10 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/componen
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/notesWidget.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
-import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -213,33 +210,33 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                           MezButton(
                             label: "Add review",
                             onClick: () async {
-                              await showReviewDialog(context,
-                                  primaryClick: (Review? value) async {
-                                mezDbgPrint(value);
-                                if (value != null) {
-                                  final ServerResponse response =
-                                      await restaurantController.addReview(
-                                          orderId: value.orderId,
-                                          restaurantId: value.serviceProviderId,
-                                          comment: value.comment,
-                                          rate: value.rating);
-                                  if (response.success) {
-                                    Get.snackbar("Success", "Review submitted",
-                                        backgroundColor: Colors.black,
-                                        colorText: Colors.white);
-                                  } else {
-                                    mezDbgPrint(response);
-                                    Get.snackbar("Error",
-                                        response.errorMessage ?? "error",
-                                        backgroundColor: Colors.black,
-                                        colorText: Colors.white);
-                                  }
-                                }
-                              },
-                                  orderId: order.value!.orderId,
-                                  serviceProviderId: order.value!.restaurantId,
-                                  orderType: OrderType
-                                      .Restaurant); // final ServerResponse response =
+                              // await showReviewDialog(context,
+                              //     primaryClick: (Review? value) async {
+                              //   mezDbgPrint(value);
+                              //   if (value != null) {
+                              //     final ServerResponse response =
+                              //         await restaurantController.addReview(
+                              //             orderId: value.orderId,
+                              //             restaurantId: value.serviceProviderId,
+                              //             comment: value.comment,
+                              //             rate: value.rating);
+                              //     if (response.success) {
+                              //       Get.snackbar("Success", "Review submitted",
+                              //           backgroundColor: Colors.black,
+                              //           colorText: Colors.white);
+                              //     } else {
+                              //       mezDbgPrint(response);
+                              //       Get.snackbar("Error",
+                              //           response.errorMessage ?? "error",
+                              //           backgroundColor: Colors.black,
+                              //           colorText: Colors.white);
+                              //     }
+                              //   }
+                              // },
+                              //     orderId: order.value!.orderId,
+                              //     serviceProviderId: order.value!.restaurantId,
+                              //     orderType: OrderType
+                              //         .Restaurant); // final ServerResponse response =
                               //     await restaurantController.addReview(
                               //         orderId: order.value!.orderId,
                               //         restaurantId: order.value!.restaurantId,

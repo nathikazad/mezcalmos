@@ -4,11 +4,13 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart' show NumberFormat;
+import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
@@ -429,11 +431,13 @@ Future<void> showStatusInfoDialog(
 
 Future<void> showReviewDialog(
   BuildContext context, {
-  required Future<void> Function(Review? review) primaryClick,
   required String orderId,
   required OrderType orderType,
-  required String serviceProviderId,
 }) async {
+  final String? serviceId =
+      Get.find<OrderController>().getOrder(orderId)?.serviceProviderId;
+  final OrderType? orderType =
+      Get.find<OrderController>().getOrder(orderId)?.orderType;
   final TextEditingController controller = TextEditingController();
   num rating = 3;
   return await showDialog(
@@ -521,10 +525,24 @@ Future<void> showReviewDialog(
                       comment: controller.text,
                       rating: rating,
                       orderId: orderId,
-                      orderType: orderType,
-                      serviceProviderId: serviceProviderId);
+                      orderType: orderType!,
+                      serviceProviderId: serviceId!);
                   // mezDbgPrint(review.toString());
-                  await primaryClick.call(review);
+                  final ServerResponse response =
+                      await Get.find<OrderController>().addReview(
+                          orderId: review.orderId,
+                          serviceId: serviceId,
+                          comment: review.comment,
+                          orderType: orderType,
+                          rate: review.rating);
+                  if (response.success) {
+                    Get.snackbar("Success", "Review submitted",
+                        backgroundColor: Colors.black, colorText: Colors.white);
+                  } else {
+                    mezDbgPrint(response);
+                    Get.snackbar("Error", response.errorMessage ?? "error",
+                        backgroundColor: Colors.black, colorText: Colors.white);
+                  }
                 },
               ),
               SizedBox(height: 12),
