@@ -97,7 +97,7 @@ class ItemViewController {
     prItemNameController.text = editableItem.value!.name[prLang]!;
     newImageUrl.value = editableItem.value!.image;
     scItemNameController.text = editableItem.value!.name[scLang]!;
-    prItemDescController.text = editableItem.value?.name[prLang]! ?? "";
+    prItemDescController.text = editableItem.value?.description?[prLang]! ?? "";
     scItemDescController.text = editableItem.value!.description?[scLang]! ?? "";
     itemPriceController.text = editableItem.value!.cost.toString();
     mezDbgPrint(editableItem.value!.options.length);
