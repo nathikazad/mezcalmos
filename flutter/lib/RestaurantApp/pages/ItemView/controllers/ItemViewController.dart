@@ -301,7 +301,11 @@ class ItemViewController {
 
   List<String> getItemsNames(LanguageType languageType) {
     final List<String> data = [];
-    restaurant.value!.getAllItems().forEach((Item element) {
+    final List<Item> items = restaurant.value!.getAllItems();
+    if (editMode.isTrue) {
+      items.removeWhere((Item element) => element.id == editableItem.value!.id);
+    }
+    items.forEach((Item element) {
       if (element.name[languageType] != null) {
         data.add(element.name[languageType]!.replaceAll(" ", "").toLowerCase());
       }
