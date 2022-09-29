@@ -127,6 +127,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               ),
               const SizedBox(height: 10),
               _categoryNameComponent(
+                  languageType: _viewController.primaryLang.value!,
                   controller: _viewController.primaryCategoryNameController),
               SizedBox(
                 height: 25,
@@ -137,6 +138,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               ),
               const SizedBox(height: 10),
               _categoryNameComponent(
+                  languageType: _viewController.secondaryLang.value!,
                   controller: _viewController.secondaryCategoryNameController),
               SizedBox(
                 height: 25,
@@ -184,14 +186,24 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
   }
 
   TextFormField _categoryNameComponent(
-      {required TextEditingController controller}) {
+      {required TextEditingController controller,
+      required LanguageType languageType}) {
     return TextFormField(
       controller: controller,
       style: Get.textTheme.bodyText1,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (String? v) {
-        if (v != null && v.isNotEmpty) {
+        mezDbgPrint(v?.trim().toLowerCase());
+        if (v != null &&
+            v.isNotEmpty &&
+            !_viewController
+                .getCatNames(languageType)
+                .contains(v.toLowerCase())) {
           return null;
+        } else if (_viewController
+            .getCatNames(languageType)
+            .contains(v?.toLowerCase())) {
+          return '${_i18n()["nameExist"]}';
         } else {
           return "${_i18n()["categoryNameError"]}";
         }

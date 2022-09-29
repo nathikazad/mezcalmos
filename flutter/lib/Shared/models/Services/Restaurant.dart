@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -228,6 +227,15 @@ class Restaurant extends Service {
       numberOfItems = numberOfItems + element.items.length;
     });
     return numberOfItems + (getItemsWithoutCategory?.length ?? 0);
+  }
+
+  List<Item> getAllItems() {
+    final List<Item> data = [];
+    _categories.forEach((Category element) {
+      data.addAll(element.items);
+    });
+    data.addAll(itemsWithoutCategory);
+    return data;
   }
 
   bool isOpen() {

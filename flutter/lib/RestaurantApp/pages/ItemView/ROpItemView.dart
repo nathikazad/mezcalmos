@@ -158,10 +158,15 @@ class _ROpItemViewState extends State<ROpItemView>
             ),
             TextFormField(
               style: Get.textTheme.bodyText1,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: viewController.scItemNameController,
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return '${_i18n()["required"]}';
+                } else if (viewController
+                    .getItemsNames(viewController.scLang)
+                    .contains(value.replaceAll(" ", "").toLowerCase())) {
+                  return '${_i18n()["nameExist"]}';
                 }
                 return null;
               },
@@ -215,10 +220,15 @@ class _ROpItemViewState extends State<ROpItemView>
             ),
             TextFormField(
               style: Get.textTheme.bodyText1,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: viewController.prItemNameController,
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return '${_i18n()["required"]}';
+                } else if (viewController
+                    .getItemsNames(viewController.prLang)
+                    .contains(value.replaceAll(" ", "").toLowerCase())) {
+                  return '${_i18n()["nameExist"]}';
                 }
                 return null;
               },

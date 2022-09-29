@@ -299,6 +299,17 @@ class ItemViewController {
       return null;
   }
 
+  List<String> getItemsNames(LanguageType languageType) {
+    final List<String> data = [];
+    restaurant.value!.getAllItems().forEach((Item element) {
+      if (element.name[languageType] != null) {
+        data.add(element.name[languageType]!.replaceAll(" ", "").toLowerCase());
+      }
+    });
+
+    return data;
+  }
+
   void dispose() {
     editableItem.close();
     prItemDescController.clear();

@@ -672,8 +672,7 @@
             }
         },
         "pages": {
-            "SomethingWentWrongScreen":
-            {
+            "SomethingWentWrongScreen": {
                 "noRestaurantFoundOnOperator": "No se encontró ningún restaurante en su operador",
                 "pleaseContactAdmin": "Póngase en contacto con el administrador"
             },
@@ -1571,7 +1570,8 @@
                 "categoryPrice": "Categoría Precios por kilogramo",
                 "categoryPriceHint": "Entrar en la categoría Precios por kilogramo ...",
                 "categoryNameError": "Agregue un nombre de categoría",
-                "categoryPriceError": "Ingrese el precio válido"
+                "categoryPriceError": "Ingrese el precio válido",
+                "nameExist": "Name already exist"
 
             },
             "DashboardView": {
@@ -1755,6 +1755,7 @@
         "pages": {
 
             "ROpItemView": {
+                "nameExist": "El nombre ya existe",
                 "item": "Artículo",
                 "addItem": "Añadir artículo",
                 "saveItem": "Guardar el artículo",

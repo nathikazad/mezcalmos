@@ -667,8 +667,7 @@
             }
         },
         "pages": {
-            "SomethingWentWrongScreen":
-            {
+            "SomethingWentWrongScreen": {
                 "noRestaurantFoundOnOperator": "No restaurant found on your operator",
                 "pleaseContactAdmin": "Please contact the admin"
             },
@@ -1575,6 +1574,7 @@
                 "editCategory": "Edit category",
                 "saveCategory": "Save category",
                 "categoryName": "Category name",
+                "nameExist": "Name already exist",
                 "categoryNameIn": "Category name in ",
                 "categoryNameHint": "Enter a category name",
                 "categoryPrice": "Category pricing per kilogramme",
@@ -1819,6 +1819,7 @@
                 "addItem": "Add item",
                 "required": "Required",
                 "saveItem": "Save item",
+                "nameExist": "Name already exist",
                 "itemName": "Item name",
                 "itemDesc": "Item description",
                 "itemPrice": "Item price",
