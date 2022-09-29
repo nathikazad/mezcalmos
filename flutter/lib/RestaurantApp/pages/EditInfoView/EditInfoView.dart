@@ -98,8 +98,8 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
                 ),
                 Text("${_i18n()["defaultLanguage"]}"),
                 ROpLanguageSelectorComponent(
-                    languageValue: editInfoController.primaryLang,
-                    oppositeLanguageValue: editInfoController.secondaryLang,
+                    languageValue: editInfoController.editablePrLang,
+                    oppositeLanguageValue: editInfoController.editableScLang,
                     onChangeShouldUpdateLang:
                         editInfoController.changePrimaryLang),
                 SizedBox(
@@ -110,8 +110,8 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
                   height: 5,
                 ),
                 ROpLanguageSelectorComponent(
-                  languageValue: editInfoController.secondaryLang,
-                  oppositeLanguageValue: editInfoController.primaryLang,
+                  languageValue: editInfoController.editableScLang,
+                  oppositeLanguageValue: editInfoController.editablePrLang,
                   onChangeShouldUpdateLang:
                       editInfoController.validateSecondaryLanguUpdate,
                   isSecondary: true,
