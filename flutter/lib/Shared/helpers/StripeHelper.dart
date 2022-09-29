@@ -407,8 +407,10 @@ class _CardFormState extends State<CardForm> {
         MezSnackbar(
             "Add Card Error", serverResponse.errorMessage ?? "Unknown Error");
       }
+    } on StripeException catch (e) {
+      MezSnackbar("Error", e.toJson()['localizedMessage'] ?? "error");
     } catch (e) {
-      MezSnackbar("Add Card Error", e.toString());
+      MezSnackbar("Error", "Error");
     } finally {
       setState(() {
         _isButtonEnabled = true;

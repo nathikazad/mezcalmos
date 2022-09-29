@@ -178,7 +178,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                     ],
                   ),
                 ),
-                if (cartItem.value?.item.description != null)
+                if (cartItem.value?.item.description?[userLanguage] != null)
                   _itemDescription(context),
                 if (cartItem.value!.item.options.isNotEmpty)
                   Column(
