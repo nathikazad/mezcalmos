@@ -79,22 +79,39 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
                       children: [
                         Container(
                           // flex: 5,
-                          child: Text(
-                            '${_i18n()["card"]}',
-                            style: Get.textTheme.bodyText1,
+                          child: Row(
+                            children: [
+                              Text(
+                                '${_i18n()["card"]}',
+                                style: Get.textTheme.bodyText1,
+                              ),
+                              const SizedBox(
+                                width: 3,
+                              ),
+                              Image.asset(
+                                "assets/images/shared/stripeColoredLogo.png",
+                                height: 16,
+                                width: 40,
+                              )
+                            ],
                           ),
                         ),
-                        SizedBox(
-                          height: 5,
+                        const SizedBox(
+                          height: 8,
                         ),
-                        if (widget.viewController.showStatusIcon)
-                          _stripeStatusWidget(context),
+                        Row(
+                          children: [
+                            if (widget.viewController.showStatusIcon)
+                              _stripeStatusWidget(context),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            if (widget.viewController.showSetupBtn)
+                              _stripeSetupBtn()
+                          ],
+                        )
                       ],
                     ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    if (!widget.viewController.showSetupBtn) _stripeSetupBtn()
                   ]),
               activeColor: primaryBlueColor,
               value: widget.viewController.restaurant.value!.paymentInfo
@@ -115,22 +132,34 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
   }
 
   Widget _stripeSetupBtn() {
-    return Flexible(
-      flex: 5,
-      child: InkWell(
-        onTap: () {
-          widget.viewController.showPaymentSetup();
-        },
-        child: Ink(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: primaryBlueColor),
-            child: Text(
-              '${_i18n()["setup"]}',
-              style: Get.textTheme.bodyText1?.copyWith(color: Colors.white),
-            )),
-      ),
+    return InkWell(
+      onTap: () {
+        widget.viewController.showPaymentSetup();
+      },
+      child: Ink(
+          height: 35,
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8), color: primaryBlueColor),
+          child: Row(
+            children: [
+              Icon(
+                Icons.store,
+                color: Colors.white,
+                size: 18,
+              ),
+              const SizedBox(
+                width: 3,
+              ),
+              Text(
+                '${_i18n()["setup"]}',
+                style: Get.textTheme.bodyText1?.copyWith(color: Colors.white),
+              ),
+              const SizedBox(
+                width: 3,
+              ),
+            ],
+          )),
     );
   }
 
@@ -149,23 +178,24 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
             });
       },
       child: Ink(
-          padding: const EdgeInsets.all(5),
+          height: 35,
+          padding: const EdgeInsets.symmetric(horizontal: 5),
           decoration: BoxDecoration(
-              color: Colors.amber, borderRadius: BorderRadius.circular(8)),
+              color: offRedColor, borderRadius: BorderRadius.circular(8)),
           child: Container(
             child: Row(mainAxisSize: MainAxisSize.min, children: [
-              Text(
-                '${_i18n()["requirements"]}',
-                style: Get.textTheme.bodyText1?.copyWith(color: Colors.black),
-              ),
-              SizedBox(
-                width: 3,
-              ),
               Icon(
                 Icons.help,
                 size: 18,
-                color: Colors.black,
-              )
+                color: Colors.red,
+              ),
+              const SizedBox(
+                width: 3,
+              ),
+              Text(
+                '${_i18n()["requirements"]}',
+                style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+              ),
             ]),
           )),
     );
