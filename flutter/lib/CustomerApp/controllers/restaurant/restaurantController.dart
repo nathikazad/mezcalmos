@@ -25,7 +25,9 @@ class RestaurantController extends GetxController {
   Restaurant? associatedRestaurant;
   Rx<Cart> cart = Cart().obs;
   RxnNum minShiipingPrice = RxnNum();
+  RxnNum perKmPrice = RxnNum();
   RxnNum baseShippingPrice = RxnNum();
+  RxBool isShippingSet = RxBool(false);
   num _orderDistanceInKm = 0;
 
   @override
@@ -36,8 +38,9 @@ class RestaurantController extends GetxController {
 
     if (_authController.fireAuthUser != null) {
       //  getShippingPrice().then((num value) => shippingPrice.value = value);
-      baseShippingPrice.value = await getShippingPrice() ?? 10;
-      minShiipingPrice.value = await getMinShippingPrice() ?? 50;
+      baseShippingPrice.value = await getShippingPrice();
+      minShiipingPrice.value = await getMinShippingPrice();
+      perKmPrice.value = await getPerKmShippingPrice();
       await _cartListener?.cancel();
       _cartListener = _databaseHelper.firebaseDatabase
           .ref()
@@ -109,12 +112,28 @@ class RestaurantController extends GetxController {
             .child(minShippingPriceNode())
             .once())
         .snapshot;
+    mezDbgPrint("Min price =======>>>>>>${snapshot.value}");
+    return snapshot.value as num;
+  }
+
+  Future<num?> getPerKmShippingPrice() async {
+    final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
+            .ref()
+            .child(perKmShippingPriceNode())
+            .once())
+        .snapshot;
+    mezDbgPrint("Per km price =======>>>>>>${snapshot.value}");
 
     return snapshot.value as num;
   }
 
   Future<bool> updateShippingPrice() async {
     final Location? loc = cart.value.toLocation;
+    minShiipingPrice.value =
+        minShiipingPrice.value ?? await getMinShippingPrice();
+    perKmPrice.value = perKmPrice.value ?? await getPerKmShippingPrice();
+    baseShippingPrice.value =
+        baseShippingPrice.value ?? await getShippingPrice();
     if (loc != null) {
       final MapHelper.Route routeInfo = await MapHelper.getDurationAndDistance(
         cart.value.restaurant!.info.location,
@@ -124,8 +143,8 @@ class RestaurantController extends GetxController {
       mezDbgPrint(
           "place :::: $loc distance from controller :::::::===> ${(routeInfo.distance.distanceInMeters / 1000)}");
       if ((routeInfo.distance.distanceInMeters / 1000) <= 10) {
-        final num shippingCost = baseShippingPrice.value! *
-            (routeInfo.distance.distanceInMeters / 1000);
+        final num shippingCost =
+            perKmPrice.value! * (routeInfo.distance.distanceInMeters / 1000);
         if (shippingCost < minShiipingPrice.value!) {
           mezDbgPrint(
               "LESS THAN MINIMUM COST ===================== $shippingCost << ${minShiipingPrice.value}");
@@ -137,25 +156,29 @@ class RestaurantController extends GetxController {
         mezDbgPrint(
             "SHIPPPPPING COOOOST =========>>>>>>>>>>>${cart.value.shippingCost}");
         await saveCart();
+        isShippingSet.value = true;
 
         return true;
       } else {
         cart.value.shippingCost = null;
         await saveCart();
+        isShippingSet.value = true;
 
-        return false;
+        return true;
       }
     } else {
       cart.value.shippingCost = null;
       await saveCart();
+      isShippingSet.value = true;
 
-      return false;
+      return true;
     }
   }
 
   bool get canOrder {
     return cart.value.toLocation != null &&
         _orderDistanceInKm <= 10 &&
+        isShippingSet.value == true &&
         (associatedRestaurant?.isOpen() ?? false);
   }
 

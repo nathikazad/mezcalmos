@@ -65,6 +65,17 @@ class _AdminDashboardViewState extends State<AdminDashboardView> {
                     _priceSheet(ShippingPriceType.Min);
                   }),
             ),
+            Obx(
+              () => AdminSettingCard(
+                  icon: Icons.edit_rounded,
+                  mainText: '${_i18n()["perKm"]}',
+                  secondaryText: (viewController.perKmPrice.value != null)
+                      ? viewController.perKmPrice.value!.toPriceString()
+                      : null,
+                  onClick: () {
+                    _priceSheet(ShippingPriceType.PerKm);
+                  }),
+            ),
           ],
         ),
       ),

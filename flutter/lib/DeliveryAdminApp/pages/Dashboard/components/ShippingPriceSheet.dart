@@ -37,9 +37,7 @@ class ShippingPriceSheet extends StatelessWidget {
             Container(
               alignment: Alignment.center,
               child: Text(
-                (type == ShippingPriceType.Base)
-                    ? '${_i18n()["shippingPrice"]}'
-                    : '${_i18n()["minPrice"]}',
+                _getTitle(),
                 style: Get.textTheme.headline3,
               ),
             ),
@@ -48,18 +46,14 @@ class ShippingPriceSheet extends StatelessWidget {
               height: 15,
             ),
             Text(
-              (type == ShippingPriceType.Base)
-                  ? '${_i18n()["newShippingPrice"]}'
-                  : '${_i18n()["newMinPrice"]}',
+              _getHelperText(),
               style: Get.textTheme.bodyText1,
             ),
             const SizedBox(
               height: 10,
             ),
             TextFormField(
-                controller: (type == ShippingPriceType.Base)
-                    ? viewController.priceController
-                    : viewController.minPriceController,
+                controller: viewController.getTextController(type),
                 style: Get.textTheme.bodyText1,
                 textAlignVertical: TextAlignVertical.center,
                 decoration: InputDecoration(
@@ -92,41 +86,18 @@ class ShippingPriceSheet extends StatelessWidget {
                   height: 50,
                   withGradient: true,
                   onClick: () async {
-                    if (type == ShippingPriceType.Base) {
-                      if (num.tryParse(viewController.priceController.text) !=
-                          null) {
-                        await viewController
-                            .changePrice(
-                                num.parse(viewController.priceController.text))
-                            .onError((Object? error, StackTrace stackTrace) =>
-                                Get.snackbar('${_i18n()["error"]}',
-                                    '${_i18n()["error"]}',
-                                    backgroundColor: Colors.black,
-                                    colorText: Colors.white));
-                      } else {
-                        Get.snackbar(
-                            '${_i18n()["error"]}', '${_i18n()["errorText"]}',
-                            backgroundColor: Colors.black,
-                            colorText: Colors.white);
-                      }
+                    if (num.tryParse(
+                            viewController.getTextController(type).text) !=
+                        null) {
+                      await viewController.confirmHandler(
+                          value: num.parse(
+                              viewController.getTextController(type).text),
+                          type: type);
                     } else {
-                      if (num.tryParse(
-                              viewController.minPriceController.text) !=
-                          null) {
-                        await viewController
-                            .changeMinPrice(num.parse(
-                                viewController.minPriceController.text))
-                            .onError((Object? error, StackTrace stackTrace) =>
-                                Get.snackbar('${_i18n()["error"]}',
-                                    '${_i18n()["error"]}',
-                                    backgroundColor: Colors.black,
-                                    colorText: Colors.white));
-                      } else {
-                        Get.snackbar(
-                            '${_i18n()["error"]}', '${_i18n()["errorText"]}',
-                            backgroundColor: Colors.black,
-                            colorText: Colors.white);
-                      }
+                      Get.snackbar(
+                          '${_i18n()["error"]}', '${_i18n()["errorText"]}',
+                          backgroundColor: Colors.black,
+                          colorText: Colors.white);
                     }
                   },
                 )),
@@ -139,5 +110,33 @@ class ShippingPriceSheet extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getTitle() {
+    switch (type) {
+      case ShippingPriceType.Base:
+        return '${_i18n()["shippingPrice"]}';
+        break;
+      case ShippingPriceType.Min:
+        return '${_i18n()["minPrice"]}';
+        break;
+      case ShippingPriceType.PerKm:
+        return '${_i18n()["perKm"]}';
+        break;
+    }
+  }
+
+  String _getHelperText() {
+    switch (type) {
+      case ShippingPriceType.Base:
+        return '${_i18n()["newShippingPrice"]}';
+        break;
+      case ShippingPriceType.Min:
+        return '${_i18n()["newMinPrice"]}';
+        break;
+      case ShippingPriceType.PerKm:
+        return '${_i18n()["newPerkm"]}';
+        break;
+    }
   }
 }

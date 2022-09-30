@@ -1082,6 +1082,8 @@
                 "shippingPrice": "Shipping price per KM",
                 "minPrice": "Minimum shipping price",
                 "newMinPrice": "New Minimum shipping price",
+                "perKm": "Per KM shipping price",
+                "newPerkm": "New per KM shipping price",
                 "newShippingPrice": "New shipping price",
                 "error": "Error",
                 "errorText": "Shipping price not valid",

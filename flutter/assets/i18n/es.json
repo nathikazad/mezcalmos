@@ -1097,6 +1097,8 @@
                 "shippingPrice": "Precio de envío por km",
                 "minPrice": "Precio mínimo de envío",
                 "newMinPrice": "Nuevo precio mínimo de envío",
+                "perKm": "Por km precio de envío",
+                "newPerkm": "Nuevo por km precio de envío",
                 "newShippingPrice": "Nuevo precio de envío",
                 "error": "error",
                 "errorText": "Precio de envío no válido",

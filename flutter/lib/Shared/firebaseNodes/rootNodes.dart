@@ -21,7 +21,11 @@ String baseShippingPriceNode() {
 }
 
 String minShippingPriceNode() {
-  return 'metadata/minShippingPrice';
+  return 'metadata/shippingCost/minPrice';
+}
+
+String perKmShippingPriceNode() {
+  return 'metadata/shippingCost/perKm';
 }
 
 String metaDataNode() {
