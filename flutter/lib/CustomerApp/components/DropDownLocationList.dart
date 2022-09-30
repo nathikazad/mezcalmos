@@ -208,6 +208,8 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     } else if (_checkDistance()) {
       mezDbgPrint("Morrrrre than 15");
       showError.value = true;
+
+      widget.onValueChangeCallback?.call(location: newLocation.location);
       setState(() {
         dropDownListValue = newLocation;
         widget.passedInLocation = dropDownListValue!.location;
