@@ -183,7 +183,7 @@
                             "stripeFees": "Tarifas de tarjeta",
                             "totalCost": "Costo Total",
                             "deliveryLocation": "Lugar De Entrega",
-                            "toBeCalc": "Para ser calculado"
+                            "toBeCalc": "Calculando ..."
                         },
                         "SaveLocationDailog": {
                             "addLocationDialogTitle": "ingrese el nombre de la ubicación, si desea guardar para uso futuro, de lo contrario, puede omitir",

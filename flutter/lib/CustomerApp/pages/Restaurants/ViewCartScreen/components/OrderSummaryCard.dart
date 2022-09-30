@@ -85,15 +85,25 @@ class OrderSummaryCard extends StatelessWidget {
                           style: txt.bodyText2),
                     ),
                   ),
-                  (controller.cart.value.shippingCost != null)
+                  (controller.cart.value.shippingCost != null &&
+                          controller.isShippingSet.isTrue)
                       ? Flexible(
                           child: ShippingCostComponent(
                           alignment: MainAxisAlignment.end,
                           shippingCost: controller.cart.value.shippingCost!,
                         ))
-                      : Text(
-                          '${_i18n()["toBeCalc"]}',
-                          style: TextStyle(fontStyle: FontStyle.italic),
+                      : Row(
+                          children: [
+                            Transform.scale(
+                                scale: 0.4,
+                                child: CircularProgressIndicator(
+                                  color: primaryBlueColor,
+                                )),
+                            Text(
+                              '${_i18n()["toBeCalc"]}',
+                              style: TextStyle(fontStyle: FontStyle.italic),
+                            ),
+                          ],
                         )
                 ],
               ),

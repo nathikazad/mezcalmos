@@ -128,6 +128,7 @@ class RestaurantController extends GetxController {
   }
 
   Future<bool> updateShippingPrice() async {
+    isShippingSet.value = false;
     final Location? loc = cart.value.toLocation;
     minShiipingPrice.value =
         minShiipingPrice.value ?? await getMinShippingPrice();
@@ -178,6 +179,7 @@ class RestaurantController extends GetxController {
   bool get canOrder {
     return cart.value.toLocation != null &&
         _orderDistanceInKm <= 10 &&
+        isShippingSet.isTrue &&
         cart.value.shippingCost != null &&
         (associatedRestaurant?.isOpen() ?? false);
   }
