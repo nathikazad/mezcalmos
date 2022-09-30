@@ -1079,12 +1079,12 @@
         "pages": {
             "AdminDashboardView": {
                 "dashboard": "Dashboard",
-                "shippingPrice": "Shipping price per KM",
+                "shippingPrice": "Base shippin price",
                 "minPrice": "Minimum shipping price",
                 "newMinPrice": "New Minimum shipping price",
                 "perKm": "Per KM shipping price",
                 "newPerkm": "New per KM shipping price",
-                "newShippingPrice": "New shipping price",
+                "newShippingPrice": "New base shipping price",
                 "error": "Error",
                 "errorText": "Shipping price not valid",
                 "confirm": "Confirm",
