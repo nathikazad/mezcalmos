@@ -178,7 +178,7 @@ class RestaurantController extends GetxController {
   bool get canOrder {
     return cart.value.toLocation != null &&
         _orderDistanceInKm <= 10 &&
-        isShippingSet.value == true &&
+        cart.value.shippingCost != null &&
         (associatedRestaurant?.isOpen() ?? false);
   }
 
