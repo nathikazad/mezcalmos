@@ -37,6 +37,7 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
     yield* Stream<Future>.periodic(Duration(seconds: 5), (int iter) {
       return Get.find<RestaurantOpAuthController>()
           .operatorInfoStream
+          .asBroadcastStream()
           .first
           .timeout(
             Duration(seconds: 10),
@@ -64,6 +65,11 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
       restaurantOperator =
           Get.find<RestaurantOpAuthController>().operator.value;
       mezDbgPrint("RESTAURANT OPERATOR ==> $restaurantOperator");
+      if (restaurantOperator == null)
+        restaurantOperator = await Get.find<RestaurantOpAuthController>()
+            .operatorInfoStream
+            .first
+            .timeout(Duration(seconds: 10), onTimeout: () => null);
       if (restaurantOperator == null) _operatorInfoStreamListener();
       mezDbgPrint("RestaurantWrapper::microtask data received");
       handleState(restaurantOperator);
