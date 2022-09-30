@@ -75,7 +75,9 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       _restaurantController.cart.value.toLocation = orderToLocation;
     }
 
-    _restaurantController.updateShippingPrice();
+    _restaurantController
+        .updateShippingPrice()
+        .then((bool value) => _restaurantController.cart.refresh());
 
     // check if cart empty
     // if yes redirect to home page
