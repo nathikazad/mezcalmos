@@ -92,19 +92,21 @@ class OrderSummaryCard extends StatelessWidget {
                           alignment: MainAxisAlignment.end,
                           shippingCost: controller.cart.value.shippingCost!,
                         ))
-                      : Row(
-                          children: [
-                            Transform.scale(
-                                scale: 0.4,
-                                child: CircularProgressIndicator(
-                                  color: primaryBlueColor,
-                                )),
-                            Text(
-                              '${_i18n()["toBeCalc"]}',
-                              style: TextStyle(fontStyle: FontStyle.italic),
-                            ),
-                          ],
-                        )
+                      : (controller.getOrderDistance > 10)
+                          ? Text("_")
+                          : Row(
+                              children: [
+                                Transform.scale(
+                                    scale: 0.4,
+                                    child: CircularProgressIndicator(
+                                      color: primaryBlueColor,
+                                    )),
+                                Text(
+                                  '${_i18n()["toBeCalc"]}',
+                                  style: TextStyle(fontStyle: FontStyle.italic),
+                                ),
+                              ],
+                            )
                 ],
               ),
             ),
@@ -170,6 +172,7 @@ class OrderSummaryCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
+
             DropDownLocationList(
               onValueChangeCallback: setLocationCallBack,
               checkDistance: true,

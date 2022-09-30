@@ -8,7 +8,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
 
 //
@@ -71,7 +70,18 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       dropDownListValue = passedInLocation;
       listOfSavedLoacations.add(passedInLocation);
     }
+
+    if (dropDownListValue?.location != null) {
+      validateFirstDistance();
+    }
+
     // dropDownListValue = listOfSavedLoacations[0];
+  }
+
+  Future<void> validateFirstDistance() async {
+    if (await _lessThanDistance(dropDownListValue!.location!) == false) {
+      showError.value = true;
+    }
   }
 
   void getSavedLocation() {
@@ -82,45 +92,58 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     );
   }
 
+  RxBool showError = RxBool(false);
+
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: widget.bgColor,
-        // border: Border.all(
-        //   // width: 1.5,
-        //   // color: (dropDownListValue != pickLocationPlaceholder)
-        //   //     ? Theme.of(context).primaryColorLight
-        //   //     : Colors.red,
-        // ),
-      ),
-      child: DropdownButtonHideUnderline(
-          child: DropdownButton<SavedLocation>(
-        selectedItemBuilder: (BuildContext context) {
-          return dropDownSelectedItemBuilder(textTheme);
-        },
-        iconDisabledColor: Colors.grey.shade800,
-        iconEnabledColor: Colors.grey.shade800,
-        value: dropDownListValue,
-        dropdownColor: widget.bgColor,
-        isDense: true,
-        isExpanded: true,
-        icon: Icon(Icons.expand_more),
-        hint: Text(
-          '${_i18n()["chooseLoc"]}',
-          style: Get.textTheme.bodyText1,
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: widget.bgColor,
+            // border: Border.all(
+            //   // width: 1.5,
+            //   // color: (dropDownListValue != pickLocationPlaceholder)
+            //   //     ? Theme.of(context).primaryColorLight
+            //   //     : Colors.red,
+            // ),
+          ),
+          child: DropdownButtonHideUnderline(
+              child: DropdownButton<SavedLocation>(
+            selectedItemBuilder: (BuildContext context) {
+              return dropDownSelectedItemBuilder(textTheme);
+            },
+            iconDisabledColor: Colors.grey.shade800,
+            iconEnabledColor: Colors.grey.shade800,
+            value: dropDownListValue,
+            dropdownColor: widget.bgColor,
+            isDense: true,
+            isExpanded: true,
+            icon: Icon(Icons.expand_more),
+            hint: Text(
+              '${_i18n()["chooseLoc"]}',
+              style: Get.textTheme.bodyText1,
+            ),
+            items: listOfSavedLoacations
+                .map<DropdownMenuItem<SavedLocation>>(
+                    (SavedLocation e) => buildItems(e, textTheme))
+                .toList(),
+            onChanged: (SavedLocation? v) async {
+              await locationChangedHandler(v!);
+            },
+          )),
         ),
-        items: listOfSavedLoacations
-            .map<DropdownMenuItem<SavedLocation>>(
-                (SavedLocation e) => buildItems(e, textTheme))
-            .toList(),
-        onChanged: (SavedLocation? v) async {
-          await locationChangedHandler(v!);
-        },
-      )),
+        Obx(() {
+          if (showError.isTrue) {
+            return _distanceError();
+          } else {
+            return SizedBox();
+          }
+        }),
+      ],
     );
   }
 
@@ -161,8 +184,8 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
 
         setState(() {
           listOfSavedLoacations.add(_savedLocation);
-          dropDownListValue =
-              listOfSavedLoacations[listOfSavedLoacations.length - 1];
+          // dropDownListValue =
+          //     listOfSavedLoacations[listOfSavedLoacations.length - 1];
         });
         await _verifyDistanceAndSetLocation(_savedLocation);
       }
@@ -181,18 +204,21 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
         dropDownListValue = newLocation;
         widget.passedInLocation = dropDownListValue!.location;
       });
+      showError.value = false;
     } else if (_checkDistance()) {
       mezDbgPrint("Morrrrre than 15");
-      MezSnackbar(
-        '${_i18n()["ops"]}',
-        '${_i18n()["distanceError"]}',
-      );
+      showError.value = true;
+      setState(() {
+        dropDownListValue = newLocation;
+        widget.passedInLocation = dropDownListValue!.location;
+      });
     } else {
       widget.onValueChangeCallback?.call(location: newLocation.location);
       setState(() {
         dropDownListValue = newLocation;
         widget.passedInLocation = dropDownListValue!.location;
       });
+      showError.value = false;
     }
   }
 
@@ -243,5 +269,29 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
           ),
         )
         .toList();
+  }
+
+  Container _distanceError() {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(
+            Icons.info,
+            color: Colors.red,
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+          Flexible(
+            child: Text(
+              '${_i18n()["distanceError"]}',
+              style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

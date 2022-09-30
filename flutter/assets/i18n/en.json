@@ -23,7 +23,7 @@
             "DropDownLocationList": {
                 "chooseLoc": "Choose location",
                 "ops": "Oops",
-                "distanceError": "Distance between you and restaurat is more than 10km !",
+                "distanceError": "Distance between you and restaurant is more than 10km !",
                 "pickLocation": "Pick from map"
             },
             "LocationPicker": {

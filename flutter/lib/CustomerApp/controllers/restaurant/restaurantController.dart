@@ -30,6 +30,8 @@ class RestaurantController extends GetxController {
   RxBool isShippingSet = RxBool(false);
   num _orderDistanceInKm = 0;
 
+  num get getOrderDistance => _orderDistanceInKm;
+
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -141,6 +143,8 @@ class RestaurantController extends GetxController {
         loc,
       );
       _orderDistanceInKm = routeInfo.distance.distanceInMeters / 1000;
+      mezDbgPrint(
+          "ORDER DISTANCE VARIABLEEEE ========>>>>>>>$_orderDistanceInKm");
       mezDbgPrint(
           "place :::: $loc distance from controller :::::::===> ${(routeInfo.distance.distanceInMeters / 1000)}");
       if ((routeInfo.distance.distanceInMeters / 1000) <= 10) {
