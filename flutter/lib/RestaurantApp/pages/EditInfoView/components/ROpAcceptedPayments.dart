@@ -156,9 +156,34 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
               onChanged: (bool? v) {
                 widget.viewController.handleCardCheckBoxClick(v!);
               }),
-
-          //       ),
-
+          if (widget.viewController.showFeesOption)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  '${_i18n()["fees"]}',
+                  style: Get.textTheme.bodyText1,
+                ),
+                Container(
+                    child: ListTileTheme(
+                  child: SwitchListTile(
+                      title: Text(
+                        '${_i18n()["chargeCustomer"]}',
+                        style: Get.textTheme.bodyText2,
+                      ),
+                      contentPadding: EdgeInsets.zero,
+                      activeTrackColor: secondaryLightBlueColor,
+                      activeColor: primaryBlueColor,
+                      value: widget.viewController.getChargeFessOnCustomer(),
+                      onChanged: (bool v) {
+                        widget.viewController.switchChargeFees(v);
+                      }),
+                )),
+              ],
+            ),
           SizedBox(
             height: 15,
           ),

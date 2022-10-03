@@ -1955,6 +1955,8 @@
                         "requirements": "Requirements",
                         "acceptedPayments": "Accepted payments",
                         "setup": "Setup",
+                        "fees": "Fees",
+                        "chargeCustomer": "Charge stripe fees on customer",
 
                         "setupHelper": "Thanks for setup , you can now receive payments but you will not be able to withdraw money to your bank account",
                         "reqs": "Requirements",

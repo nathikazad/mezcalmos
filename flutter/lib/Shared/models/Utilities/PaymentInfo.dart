@@ -51,6 +51,7 @@ extension ParseStringToStripeStatus on String {
 class StripeInfo {
   StripeStatus status;
   String id;
+  bool chargeFeesOnCustomer;
   bool chargesEnabled;
   bool payoutsEnabled;
   bool detailsSubmitted;
@@ -63,6 +64,7 @@ class StripeInfo {
       this.payoutsEnabled = false,
       this.detailsSubmitted = false,
       this.email,
+      this.chargeFeesOnCustomer = true,
       this.requirements = const <String>[]});
 }
 
@@ -101,6 +103,7 @@ class PaymentInfo {
           payoutsEnabled: data["stripe"]["payoutsEnabled"] ?? false,
           detailsSubmitted: data["stripe"]["detailsSubmitted"] ?? false,
           chargesEnabled: data["stripe"]["chargesEnabled"] ?? false,
+          chargeFeesOnCustomer: data["stripe"]["chargeFeesOnCustomer"] ?? true,
           email: data["stripe"]["email"],
           requirements: requis);
     }

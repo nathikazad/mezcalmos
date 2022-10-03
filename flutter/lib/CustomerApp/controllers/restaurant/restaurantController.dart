@@ -247,6 +247,12 @@ class RestaurantController extends GetxController {
         null;
   }
 
+  bool get showFees {
+    return cart.value.paymentType == PaymentType.Card &&
+        (cart.value.restaurant?.paymentInfo.stripe?.chargeFeesOnCustomer ??
+            true);
+  }
+
   void clearCart() {
     _databaseHelper.firebaseDatabase
         .ref()

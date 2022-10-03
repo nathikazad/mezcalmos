@@ -338,6 +338,15 @@ class RestaurantInfoController extends GetxController {
     // }
   }
 
+  // fees //
+  Future<void> switchFeesOption(bool v) async {
+    await _databaseHelper.firebaseDatabase
+        .ref(feesOptionNode(uid: restaurantId))
+        .set(v);
+  }
+
+  // //
+
   Future<void> switchItemAvailable(
       {required String itemId, required bool value, String? caytegoryId}) {
     mezDbgPrint(
