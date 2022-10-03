@@ -196,6 +196,10 @@ class Restaurant extends Service {
     return returnVal;
   }
 
+  bool acceptPayment(PaymentType p) {
+    return paymentInfo.acceptedPayments[p] == true;
+  }
+
   double getAverageCost() {
     double allItemsCost = 0;
 

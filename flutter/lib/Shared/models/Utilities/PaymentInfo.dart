@@ -2,11 +2,14 @@
 // import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 // import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
-enum PaymentType { Cash, Card }
+import 'package:mezcalmos/Shared/models/Utilities/BankInfo.dart';
+
+enum PaymentType { Cash, Card, BankTransfer }
 
 extension ParsePaymentTypeToString on PaymentType {
   String toFirebaseFormatString() {
     final String str = toString().split('.').last;
+
     return str[0].toLowerCase() + str.substring(1);
   }
 
@@ -66,16 +69,19 @@ class StripeInfo {
 class PaymentInfo {
   final Map<PaymentType, bool> acceptedPayments;
   StripeInfo? stripe;
+  BankInfo? bankInfo;
   PaymentInfo(
       {this.acceptedPayments = const <PaymentType, bool>{
         PaymentType.Card: false,
         PaymentType.Cash: true
       },
-      this.stripe});
+      this.stripe,
+      this.bankInfo});
 
   factory PaymentInfo.fromData(data) {
     final Map<PaymentType, bool> acceptedPayments = {
       PaymentType.Card: false,
+      PaymentType.BankTransfer: false,
       PaymentType.Cash: true
     };
     PaymentType.values.forEach((PaymentType paymentType) {
@@ -98,7 +104,13 @@ class PaymentInfo {
           email: data["stripe"]["email"],
           requirements: requis);
     }
-    return PaymentInfo(acceptedPayments: acceptedPayments, stripe: stripe);
+    BankInfo? bankInfo;
+    if (acceptedPayments[PaymentType.BankTransfer] == true &&
+        data["bankInfo"] != null) {
+      bankInfo = BankInfo.fromMap(data["bankInfo"]);
+    }
+    return PaymentInfo(
+        acceptedPayments: acceptedPayments, stripe: stripe, bankInfo: bankInfo);
   }
 
   bool get acceptCard {

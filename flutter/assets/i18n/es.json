@@ -150,7 +150,8 @@
                             "cash": "Dinero",
                             "newcard": "Nueva tarjeta",
                             "applepay": "Apple Pay",
-                            "googlepay": "Google Pay"
+                            "googlepay": "Google Pay",
+                            "banktransfer": "Transferencia bancaria"
                         },
                         "CartIsEmptyScreen": {
                             "title": "Tu carrito esta vacío"
@@ -837,7 +838,11 @@
             },
             "OrderPaymentMethod": {
                 "paymentMethod": "Método de pago",
-                "cash": "Dinero"
+                "cash": "Dinero",
+                "newcard": "Nueva tarjeta",
+                "applepay": "Apple Pay",
+                "googlepay": "Google Pay",
+                "banktransfer": "Transferencia bancaria"
             },
             "OrderDeliveryLocation": {
                 "title": "Lugar de entrega"

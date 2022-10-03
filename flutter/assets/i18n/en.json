@@ -150,7 +150,8 @@
                             "cash": "Cash",
                             "newcard": "New Card",
                             "applepay": "Apple Pay",
-                            "googlepay": "Google Pay"
+                            "googlepay": "Google Pay",
+                            "banktransfer": "Bank Transfer"
                         },
                         "BuildCart": {
                             "inCart": "My orders",
@@ -825,7 +826,12 @@
             },
             "OrderPaymentMethod": {
                 "paymentMethod": "Payment method",
-                "cash": "Cash"
+
+                "cash": "Cash",
+                "newcard": "New Card",
+                "applepay": "Apple Pay",
+                "googlepay": "Google Pay",
+                "banktransfer": "Bank Transfer"
             },
             "OrderDeliveryLocation": {
                 "title": "Delivery location"

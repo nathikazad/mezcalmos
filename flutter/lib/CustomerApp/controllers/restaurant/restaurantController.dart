@@ -232,6 +232,8 @@ class RestaurantController extends GetxController {
 
   void switchPaymentMedthod(
       {required PaymentType paymentType, CreditCard? card}) {
+    mezDbgPrint(
+        "Switching on restControlller =========>>>>>${paymentType.toNormalString()}");
     cart.value.paymentType = paymentType;
 
     saveCart();

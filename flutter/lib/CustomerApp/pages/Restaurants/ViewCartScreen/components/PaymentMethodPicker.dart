@@ -108,7 +108,7 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                                   (value.entries.first.key ==
                                           PickerChoice.SavedCard)
                                       ? value.entries.first.value!.brand.name
-                                      : '${_i18n()["${value.entries.first.key.toNormalString().toLowerCase()}"]}',
+                                      : '${_i18n()[value.entries.first.key.toNormalString().toLowerCase()]}',
                                   style: Get.textTheme.bodyText2?.copyWith(
                                     fontWeight: FontWeight.w700,
                                   )),
@@ -149,6 +149,8 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
         return Icon(Icons.add_card);
       case PickerChoice.Cash:
         return Icon(Icons.payments);
+      case PickerChoice.BankTransfer:
+        return Icon(Icons.account_balance);
       case PickerChoice.ApplePay:
         return Icon(Icons.apple);
       case PickerChoice.GooglePay:

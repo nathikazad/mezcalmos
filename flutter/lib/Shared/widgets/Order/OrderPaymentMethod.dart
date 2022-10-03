@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -34,7 +35,7 @@ class OrderPaymentMethod extends StatelessWidget {
               child: Row(
                 children: [
                   Icon(
-                    order.stripePaymentInfo?.brand?.toIcon() ?? Icons.payments,
+                    _getIcon() ?? Icons.payments,
                     color: Color.fromRGBO(73, 73, 73, 1),
                     size: 18,
                   ),
@@ -71,7 +72,17 @@ class OrderPaymentMethod extends StatelessWidget {
     if (order.stripePaymentInfo != null) {
       return "*" * 12 + "${order.stripePaymentInfo!.last4}";
     } else {
-      return '${_i18n()["cash"]}';
+      return '${_i18n()[order.paymentType.toNormalString().toLowerCase()]}';
+    }
+  }
+
+  IconData? _getIcon() {
+    if (order.stripePaymentInfo != null) {
+      return order.stripePaymentInfo?.brand?.toIcon();
+    } else if (order.paymentType == PaymentType.BankTransfer) {
+      return Icons.account_balance;
+    } else {
+      return Icons.payments;
     }
   }
 }

@@ -269,6 +269,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   /// returns stripePaymentId
   Future<String?> acceptPaymentByCardChoice(CardChoice choice) async {
     String? stripePaymentId;
+
     //viewCartController.getCardChoice
     if (_restaurantController.cart.value.paymentType == PaymentType.Card) {
       switch (choice) {

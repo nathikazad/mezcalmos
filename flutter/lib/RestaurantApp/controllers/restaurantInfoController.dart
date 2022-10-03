@@ -359,6 +359,27 @@ class RestaurantInfoController extends GetxController {
         .set(cost);
   }
 
+  Future<void> pushBankInfo(String bankName, num bankNumber) async {
+    await _databaseHelper.firebaseDatabase
+        .ref()
+        .child(payemntInfoNode(uid: restaurantId) + "/bankInfo")
+        .set({
+      "bankName": bankName,
+      "accountNumber": bankNumber,
+    });
+    await _databaseHelper.firebaseDatabase
+        .ref()
+        .child(acceptedPaymentNode(uid: restaurantId) + "/bankTransfer")
+        .set(true);
+  }
+
+  Future<void> removeBank() async {
+    await _databaseHelper.firebaseDatabase
+        .ref()
+        .child(acceptedPaymentNode(uid: restaurantId) + "/bankTransfer")
+        .set(false);
+  }
+
   Future<void> switchChoiceAvailablity(
       {required String choiceId,
       required String optionId,
