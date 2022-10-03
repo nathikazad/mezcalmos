@@ -9,6 +9,7 @@ extension RestaurantOrderHelper on RestaurantOrder {
   dynamic _i18n() =>
       Get.find<LanguageController>().strings["CustomerApp"]["pages"]
           ["Restaurants"]["ViewOrderScreen"]["components"]["OrdersItemsCard"];
+
   String getOrderStatus() {
     switch (status) {
       case RestaurantOrderStatus.CancelledByAdmin:

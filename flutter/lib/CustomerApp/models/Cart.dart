@@ -75,6 +75,8 @@ class Cart {
       "itemsCost": itemsCost().toInt(),
       "shippingCost": shippingCost,
       "stripeFees": stripeFees,
+      "chargeFeesOnCustomer":
+          restaurant!.paymentInfo.stripe?.chargeFeesOnCustomer ?? false,
       "items": items,
       "notes": notes,
       "to": toLocation?.toFirebaseFormattedJson(),
