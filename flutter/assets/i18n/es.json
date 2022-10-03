@@ -302,6 +302,11 @@
                             "orderCost": "Costo de la orden",
 
                             "deliveryLocation": "Lugar De Entrega"
+                        },
+                        "RestaurantBankInfoCard": {
+                            "title": "Cuenta bancaria de restaurante",
+                            "bankName": "Nombre del banco",
+                            "accountNumber": "Número de cuenta"
                         }
                     },
                     "ViewRestaurantOrderScreen": {

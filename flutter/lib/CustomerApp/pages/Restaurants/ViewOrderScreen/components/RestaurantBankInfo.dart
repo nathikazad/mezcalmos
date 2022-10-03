@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:sizer/sizer.dart';
+
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+        ["pages"]["Restaurants"]["ViewOrderScreen"]["components"]
+    ["RestaurantBankInfoCard"];
+//
 
 class RestaurantBankInfoCard extends StatefulWidget {
   const RestaurantBankInfoCard({super.key, required this.restaurantId});
@@ -35,6 +42,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
         return Card(
           margin: const EdgeInsets.only(top: 20),
           child: Container(
+            margin: const EdgeInsets.all(5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -42,7 +50,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
                   alignment: Alignment.center,
                   child: Text(
-                    'Restaurant bank account',
+                    '${_i18n()["title"]}',
                     style: Get.textTheme.bodyText1,
                   ),
                 ),
@@ -61,7 +69,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Bank name",
+                                Text('${_i18n()["bankName"]}',
                                     style: Get.textTheme.bodyText1?.copyWith(
                                       fontSize: 10.sp,
                                     )),
@@ -95,7 +103,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Account number",
+                                  '${_i18n()["accountNumber"]}',
                                   style: Get.textTheme.bodyText1
                                       ?.copyWith(fontSize: 10.sp),
                                 ),
