@@ -85,7 +85,6 @@ class _RestaurantsInfoTapForDesktopState
                 ),
               ],
             ),
-
           MezServiceOpenHours(schedule: widget.restaurant!.schedule!),
           SizedBox(
             height: 15,
@@ -107,22 +106,15 @@ class _RestaurantsInfoTapForDesktopState
           ),
           Text(
             "${widget.restaurant!.info.location.address}",
-            style: GoogleFonts.nunito(
+            style: GoogleFonts.montserrat(
                 textStyle: TextStyle(
                     fontSize: 14,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w500,
                     color: Color.fromRGBO(73, 73, 73, 1))),
           ),
           SizedBox(
             height: 20,
           ),
-          // Placeholder(
-          //   fallbackWidth: Get.width,
-          //   fallbackHeight: 400,
-          // ),
-          // SizedBox(
-          //   height: 20,
-          // ),
         ],
       ),
     );

@@ -171,12 +171,6 @@ class _ViewRestaurantScreenFroMobileState
               var xPath = getCurrentPath();
 
               QR.to("${xPath[0]}/info${xPath[1]}");
-              // setState(() {
-              //   //  showInfo = !showInfo;
-              //   var xPath = getCurrentPath();
-              //   QR.to("${xPath[0]}/info${xPath[1]}");
-              //   pauseRectGetterIndex = !pauseRectGetterIndex;
-              // });
             },
             onTap: (int index) => animateAndScrollTo(index),
             scrollController: scrollController,

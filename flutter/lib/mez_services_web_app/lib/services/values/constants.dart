@@ -13,7 +13,7 @@ const String placesApikey = "AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY";
 
 ///change this [typeMode] to prod or dev
 /// if you want to build for production
-String typeMode = AppLaunchMode.stage.toShortString();
+String typeMode = AppLaunchMode.prod.toShortString();
 
 const LanguageType sDefaultLanguage = LanguageType.ES;
 const String enLang = "assets/i18n/en.json";

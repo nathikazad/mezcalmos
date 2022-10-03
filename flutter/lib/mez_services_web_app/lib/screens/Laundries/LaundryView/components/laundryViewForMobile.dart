@@ -99,7 +99,7 @@ class LaundryViewForMobile extends StatelessWidget {
               child: Text(
                 "${laundry.info.location.address}",
                 style: GoogleFonts.montserrat(
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w500,
                   fontSize: 14,
                   color: Color.fromRGBO(120, 120, 120, 1),
                 ),

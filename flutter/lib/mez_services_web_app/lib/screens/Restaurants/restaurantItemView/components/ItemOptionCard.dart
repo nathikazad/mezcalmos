@@ -73,9 +73,10 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
                                 ),
                                 Text(
                                   "${getIncludedExtarPrices().length} included (extra ${getIncludedExtarPrices()[0].round()}\$)",
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.montserrat(
+                                    fontStyle: FontStyle.italic,
                                     fontSize: 13,
-                                    color: Colors.black,
+                                    color: Color.fromRGBO(73, 73, 73, 1),
                                     fontWeight: FontWeight.w500,
                                   ),
                                 )

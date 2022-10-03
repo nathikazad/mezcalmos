@@ -45,7 +45,7 @@ class _ServiceLocationCardState extends State<ServiceLocationCard> {
               '${_i18n()["location"]}',
               style: GoogleFonts.montserrat(
                   fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w500,
                   color: Colors.black),
             ),
           ),
@@ -56,7 +56,7 @@ class _ServiceLocationCardState extends State<ServiceLocationCard> {
             child: Text(
               widget.location.address,
               style: GoogleFonts.montserrat(
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w500,
                 fontSize: 14,
                 color: Color.fromRGBO(120, 120, 120, 1),
               ),

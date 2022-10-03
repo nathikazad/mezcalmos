@@ -185,8 +185,8 @@ class LaundryViewForDesktop extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               "${laundry.info.location.address}",
-              style: GoogleFonts.nunito(
-                fontWeight: FontWeight.w600,
+              style: GoogleFonts.montserrat(
+                fontWeight: FontWeight.w500,
                 fontSize: 14,
                 color: Color.fromRGBO(120, 120, 120, 1),
               ),

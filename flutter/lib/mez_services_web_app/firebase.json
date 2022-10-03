@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site" : "mezc-services",
+    "site" : "mezcalmos-31f1c",
     "public": "build/web",
    
     "ignore": [
