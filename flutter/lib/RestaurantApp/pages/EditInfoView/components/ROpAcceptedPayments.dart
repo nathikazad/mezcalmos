@@ -163,14 +163,14 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
                 SizedBox(
                   height: 20,
                 ),
-                Text(
-                  '${_i18n()["fees"]}',
-                  style: Get.textTheme.bodyText1,
-                ),
                 Container(
                     child: ListTileTheme(
                   child: SwitchListTile(
                       title: Text(
+                        '${_i18n()["fees"]}',
+                        style: Get.textTheme.bodyText1,
+                      ),
+                      subtitle: Text(
                         '${_i18n()["chargeCustomer"]}',
                         style: Get.textTheme.bodyText2,
                       ),

@@ -39,65 +39,72 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                  alignment: Alignment.center,
                   child: Text(
                     'Restaurant bank account',
                     style: Get.textTheme.bodyText1,
                   ),
                 ),
-                Divider(
-                  indent: 8,
-                  endIndent: 8,
+                const SizedBox(
+                  height: 15,
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("Bank name",
-                          style: Get.textTheme.bodyText1
-                              ?.copyWith(fontSize: 10.sp)),
-                      const SizedBox(
-                        height: 5,
-                      ),
                       Row(
                         children: [
                           Flexible(
                             fit: FlexFit.tight,
-                            child: Text(restaurant
-                                    .value!.paymentInfo.bankInfo?.bankName ??
-                                "Error"),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Bank name",
+                                    style: Get.textTheme.bodyText1?.copyWith(
+                                      fontSize: 10.sp,
+                                    )),
+                                Text(restaurant.value!.paymentInfo.bankInfo
+                                        ?.bankName ??
+                                    "Error"),
+                              ],
+                            ),
                           ),
                           MezIconButton(
                               onTap: () {
                                 Clipboard.setData(ClipboardData(
                                         text: restaurant.value!.paymentInfo
-                                            .bankInfo?.bankName))
+                                            .bankInfo?.bankName
+                                            .toString()))
                                     .then((_) => _copiedSnackBar());
                               },
-                              backgroundColor: Colors.transparent,
-                              icon: Icons.copy_rounded)
+                              iconSize: 20,
+                              icon: Icons.copy_rounded),
                         ],
                       ),
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      Text(
-                        "Account number",
-                        style:
-                            Get.textTheme.bodyText1?.copyWith(fontSize: 10.sp),
-                      ),
-                      const SizedBox(
-                        height: 5,
+
+                      Divider(
+                        height: 20,
                       ),
                       Row(
                         children: [
                           Flexible(
                             fit: FlexFit.tight,
-                            child: Text(restaurant
-                                    .value!.paymentInfo.bankInfo?.accountNumber
-                                    .toString() ??
-                                "Error"),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Account number",
+                                  style: Get.textTheme.bodyText1
+                                      ?.copyWith(fontSize: 10.sp),
+                                ),
+                                Text(restaurant.value!.paymentInfo.bankInfo
+                                        ?.accountNumber
+                                        .toString() ??
+                                    "Error"),
+                              ],
+                            ),
                           ),
                           MezIconButton(
                               onTap: () {
@@ -107,10 +114,32 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                                             .toString()))
                                     .then((_) => _copiedSnackBar());
                               },
-                              backgroundColor: Colors.transparent,
-                              icon: Icons.copy_rounded)
+                              iconSize: 20,
+                              icon: Icons.copy_rounded),
                         ],
                       ),
+
+                      // Row(
+                      //   children: [
+                      //     Flexible(
+                      //       fit: FlexFit.tight,
+                      //       child: Text(restaurant
+                      //               .value!.paymentInfo.bankInfo?.accountNumber
+                      //               .toString() ??
+                      //           "Error"),
+                      //     ),
+                      //     MezIconButton(
+                      //         onTap: () {
+                      //           Clipboard.setData(ClipboardData(
+                      //                   text: restaurant.value!.paymentInfo
+                      //                       .bankInfo?.accountNumber
+                      //                       .toString()))
+                      //               .then((_) => _copiedSnackBar());
+                      //         },
+                      //         backgroundColor: Colors.transparent,
+                      //         icon: Icons.copy_rounded)
+                      //   ],
+                      // ),
                     ],
                   ),
                 ),
