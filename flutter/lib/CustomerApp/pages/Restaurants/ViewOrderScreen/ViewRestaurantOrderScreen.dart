@@ -211,7 +211,9 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                             margin: const EdgeInsets.only(top: 20),
                           ),
 
-                          OrderSummaryCard(order: order.value!),
+                          OrderSummaryCard(
+                            order: order.value!,
+                          ),
 
                           //===============================>button cancel===========================
                           //  Expanded(child: Container()),
