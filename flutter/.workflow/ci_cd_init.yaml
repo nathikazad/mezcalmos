@@ -1,0 +1,101 @@
+name: '1.0.$(Build.BuildId)'
+
+trigger:
+- master
+
+variables:
+- name: androidKeystoreKeyAlias
+  value: prod
+- name: androidKeystoreKeyPassword
+  value: nathikandhiscat
+- name: androidKeystorePassword
+  value: nathikandhiscat
+
+jobs:
+- job: Building
+  displayName: Build for IOS and Android
+  pool:
+    vmImage: 'ubuntu-22.04'
+  steps:
+  - task: UsePythonVersion@0
+    displayName: Install Python3.x
+    inputs:
+      versionSpec: 3.x
+      
+  - task: DownloadSecureFile@1
+    displayName: Get keystore.jks
+    name: releaseKeyStore
+    inputs:
+      secureFile: 'keystore.jks'
+  - pwsh: |
+      Write-Host "##vso[task.setvariable variable=keyAlias;]$(androidKeystoreKeyAlias)"
+      Write-Host "##vso[task.setvariable variable=keyPassword;]$(androidKeystoreKeyPassword)"
+      Write-Host "##vso[task.setvariable variable=storeFile;]$(releaseKeyStore.secureFilePath)"
+      Write-Host "##vso[task.setvariable variable=storePassword;]$(androidKeystorePassword)"
+    displayName: "set keystore environment variables"
+    
+  - task: DownloadSecureFile@1
+    displayName: Get google-services.json
+    name: googleServicesJson
+    inputs:
+      secureFile: 'google-services.json'
+    
+  - pwsh: Move-Item $(googleServicesJson.secureFilePath) flutter/android/app/ -Force
+    displayName: Override google-services.json
+
+  - task: DownloadSecureFile@1
+    displayName: Get/Set key.properties
+    name: keyProperties
+    inputs:
+      secureFile: 'key.properties'
+      
+  - pwsh: Move-Item $(keyProperties.secureFilePath) flutter/android/ -Force
+    displayName: Override key.properties
+
+  - task: DownloadSecureFile@1
+    displayName: Get/Set keystore.jks
+    name: keystoreJks
+    inputs:
+      secureFile: 'keystore.jks'
+      
+  - pwsh: Move-Item $(keystoreJks.secureFilePath) flutter/android/app/ -Force
+    displayName: Override keystore.jks
+
+  - task: DownloadSecureFile@1
+    displayName: Get dot.env
+    name: dotEnv
+    inputs:
+      secureFile: 'dot.env'
+      
+  - pwsh: Move-Item $(dotEnv.secureFilePath) flutter/launcher/ -Force
+    displayName: Move dot.env to futter/launcher/
+    
+  - pwsh: Rename-Item -Path "flutter/launcher/dot.env" -NewName ".env"
+    displayName: Renaming dot.env to .env
+    
+  - task: FlutterInstall@0
+    displayName: Install Flutter
+    inputs:
+      channel: 'stable'
+      version: 'latest'
+      
+  - task: UsePythonVersion@0
+    displayName: Install Python3.x
+    inputs:
+      versionSpec: 3.x
+    
+  - pwsh: New-Item -Path 'flutter/android/local.properties' -ItemType File
+  
+  - task: JavaToolInstaller@0
+    inputs:
+      versionSpec: '11'
+      jdkArchitectureOption: 'x64'
+      jdkSourceOption: 'PreInstalled'
+
+  - template: buildEnv.yaml
+    parameters:
+      Apps: 
+      - "CustomerApp"
+      - "DeliveryApp"
+      - "RestaurantApp"
+      - "LaundryApp"
