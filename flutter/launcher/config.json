@@ -195,6 +195,13 @@
                     "googe-service-file": "services/prod/android/deliveryadmin.json",
                     "apple-service-file": "services/prod/ios/deliveryadmin.plist"
                 }
+            },
+            
+            "MainActivityKt": {
+                "imports": [
+                    "import io.flutter.embedding.android.FlutterFragmentActivity"
+                ],
+                "super": "FlutterFragmentActivity"
             }
         },
         "LaundryApp": {
