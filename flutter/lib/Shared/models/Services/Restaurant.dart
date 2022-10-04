@@ -158,11 +158,19 @@ class Restaurant extends Service {
     }
   }
 
-  List<Item>? get getItemsWithoutCategory {
+  List<Item>? get getAvItemsWithoutCategories {
     List<Item>? items = _categories
         .firstWhereOrNull((Category category) => category.id == kNoCategoryNode)
         ?.items;
     items = items?.where((Item element) => element.available == true).toList();
+    items?.sort((Item a, Item b) => a.position.compareTo(b.position));
+    return items;
+  }
+
+  List<Item>? get getItemsWithoutCategory {
+    final List<Item>? items = _categories
+        .firstWhereOrNull((Category category) => category.id == kNoCategoryNode)
+        ?.items;
     items?.sort((Item a, Item b) => a.position.compareTo(b.position));
     return items;
   }
@@ -185,7 +193,7 @@ class Restaurant extends Service {
         });
       });
       if (returnVal == null) {
-        getItemsWithoutCategory?.forEach((Item element) {
+        getAvItemsWithoutCategories?.forEach((Item element) {
           if (element.id == id) {
             returnVal = element;
           }
@@ -199,7 +207,7 @@ class Restaurant extends Service {
   double getAverageCost() {
     double allItemsCost = 0;
 
-    getItemsWithoutCategory?.forEach((Item element) {
+    getAvItemsWithoutCategories?.forEach((Item element) {
       allItemsCost += element.cost;
     });
     getAvailableCategories.forEach((Category element) {
@@ -226,7 +234,7 @@ class Restaurant extends Service {
     _categories.forEach((Category element) {
       numberOfItems = numberOfItems + element.items.length;
     });
-    return numberOfItems + (getItemsWithoutCategory?.length ?? 0);
+    return numberOfItems + (getAvItemsWithoutCategories?.length ?? 0);
   }
 
   List<Item> getAllItems() {

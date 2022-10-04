@@ -248,11 +248,11 @@ class _ROpMenuViewState extends State<ROpMenuView>
             Column(
               children: List.generate(
                   viewController
-                      .restaurant.value!.getItemsWithoutCategory!.length,
+                      .restaurant.value!.getAvItemsWithoutCategories!.length,
                   (int index) => ROpItemCard(
                       viewController: viewController,
-                      item: viewController
-                          .restaurant.value!.getItemsWithoutCategory![index])),
+                      item: viewController.restaurant.value!
+                          .getAvItemsWithoutCategories![index])),
             ),
           ],
         ),

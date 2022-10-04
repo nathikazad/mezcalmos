@@ -31,6 +31,10 @@ class ItemViewController {
     LanguageType.EN: "Add new category",
     LanguageType.ES: "Añadir nueva categoria"
   }, id: "addNew");
+  Category noCatgeory = Category(name: {
+    LanguageType.EN: "No category",
+    LanguageType.ES: "Ninguna Categoria"
+  }, id: "noCategory");
   // Variables //
   final Rxn<Restaurant> restaurant = Rxn();
   final RxList<Category> categories = RxList.empty();
@@ -257,6 +261,7 @@ class ItemViewController {
     restaurant.value!.getCategories.forEach((Category element) {
       categories.add(element);
     });
+    categories.add(noCatgeory);
     categories.add(addNewCatgeory);
   }
 
