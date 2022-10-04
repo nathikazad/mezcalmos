@@ -12,7 +12,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -211,22 +210,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     _restaurantController.cart.value.toLocation = orderToLocation;
     _restaurantController.cart.value.notes = _textEditingController.text;
     try {
-      final MapHelper.Route routeInfo = await MapHelper.getDurationAndDistance(
-        _restaurantController.cart.value.restaurant!.info.location,
-        orderToLocation!,
-      );
-
-      mezDbgPrint("Route info succesfully ===================> $routeInfo");
-      _restaurantController.cart.value.setRouteInformation =
-          MapHelper.RouteInformation(
-        polyline: routeInfo.encodedPolyLine,
-        distance: routeInfo.distance,
-        duration: routeInfo.duration,
-      );
-      mezDbgPrint(
-          "😇😇😇😇😇😇😇 DISTANCE 😇😇😇😇😇😇😇 ==> ${routeInfo.distance.distanceInMeters}");
-
-      if (routeInfo.distance.distanceInMeters <= 10000 ||
+      if (_restaurantController.getOrderDistance <= 10 ||
           getAppLaunchMode() == AppLaunchMode.stage ||
           Get.find<AuthController>().user?.id ==
               // BUhQ74BrbBNeYZz60fK4ocrgpqz1 the test user for apple test

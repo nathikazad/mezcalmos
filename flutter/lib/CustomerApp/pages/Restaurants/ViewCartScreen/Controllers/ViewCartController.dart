@@ -82,10 +82,6 @@ class ViewCartController {
     options.refresh();
   }
 
-  Future<void> _getCustomerCards() async {
-    //await Get.find<CustomerAuthController>().getCards();
-  }
-
   // methods
   Future<void> switchPicker(PaymentOption value) async {
     if (value.keys.first != PickerChoice.Cash) {

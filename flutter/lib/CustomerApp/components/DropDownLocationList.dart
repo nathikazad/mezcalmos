@@ -152,13 +152,15 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
   }
 
   Future<bool> _lessThanDistance(Location loc) async {
-    final MapHelper.Route routeInfo = await MapHelper.getDurationAndDistance(
+    final MapHelper.Route? routeInfo = await MapHelper.getDurationAndDistance(
       widget.serviceProviderLocation!,
       loc,
     );
-    mezDbgPrint(
-        "distance :=:::::::::=====>${(routeInfo.distance.distanceInMeters / 1000)}");
-    return (routeInfo.distance.distanceInMeters / 1000) <= 10;
+
+    if (routeInfo != null) {
+      return (routeInfo.distance.distanceInMeters / 1000) <= 10;
+    } else
+      return false;
   }
 
   Future<void> locationChangedHandler(SavedLocation? newLocation) async {

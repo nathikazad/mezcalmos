@@ -92,7 +92,8 @@ class OrderSummaryCard extends StatelessWidget {
                           alignment: MainAxisAlignment.end,
                           shippingCost: controller.cart.value.shippingCost!,
                         ))
-                      : (controller.getOrderDistance > 10)
+                      : (controller.getOrderDistance > 10 ||
+                              controller.cart.value.shippingCost == null)
                           ? Text("_")
                           : Row(
                               children: [

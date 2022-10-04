@@ -138,38 +138,45 @@ class RestaurantController extends GetxController {
     baseShippingPrice.value =
         baseShippingPrice.value ?? await getShippingPrice();
     if (loc != null) {
-      final MapHelper.Route routeInfo = await MapHelper.getDurationAndDistance(
+      final MapHelper.Route? routeInfo = await MapHelper.getDurationAndDistance(
         cart.value.restaurant!.info.location,
         loc,
       );
-      _orderDistanceInKm = routeInfo.distance.distanceInMeters / 1000;
-      mezDbgPrint(
-          "ORDER DISTANCE VARIABLEEEE ========>>>>>>>$_orderDistanceInKm");
-      mezDbgPrint(
-          "place :::: $loc distance from controller :::::::===> ${(routeInfo.distance.distanceInMeters / 1000)}");
-      if ((routeInfo.distance.distanceInMeters / 1000) <= 10) {
-        final num shippingCost =
-            perKmPrice.value! * (routeInfo.distance.distanceInMeters / 1000);
-        if (shippingCost < minShiipingPrice.value!) {
-          mezDbgPrint(
-              "LESS THAN MINIMUM COST ===================== $shippingCost << ${minShiipingPrice.value}");
-          cart.value.shippingCost = minShiipingPrice.value!.ceil();
-        } else {
-          cart.value.shippingCost = shippingCost.ceil();
-        }
-
+      if (routeInfo != null) {
+        _orderDistanceInKm = routeInfo.distance.distanceInMeters / 1000;
         mezDbgPrint(
-            "SHIPPPPPING COOOOST =========>>>>>>>>>>>${cart.value.shippingCost}");
-        await saveCart();
-        isShippingSet.value = true;
+            "ORDER DISTANCE VARIABLEEEE ========>>>>>>>$_orderDistanceInKm");
+        mezDbgPrint(
+            "place :::: $loc distance from controller :::::::===> ${(routeInfo.distance.distanceInMeters / 1000)}");
+        if ((routeInfo.distance.distanceInMeters / 1000) <= 10) {
+          final num shippingCost =
+              perKmPrice.value! * (routeInfo.distance.distanceInMeters / 1000);
+          if (shippingCost < minShiipingPrice.value!) {
+            mezDbgPrint(
+                "LESS THAN MINIMUM COST ===================== $shippingCost << ${minShiipingPrice.value}");
+            cart.value.shippingCost = minShiipingPrice.value!.ceil();
+          } else {
+            cart.value.shippingCost = shippingCost.ceil();
+          }
 
-        return true;
+          mezDbgPrint(
+              "SHIPPPPPING COOOOST =========>>>>>>>>>>>${cart.value.shippingCost}");
+          await saveCart();
+          isShippingSet.value = true;
+
+          return true;
+        } else {
+          cart.value.shippingCost = null;
+          await saveCart();
+          isShippingSet.value = true;
+
+          return true;
+        }
       } else {
         cart.value.shippingCost = null;
         await saveCart();
-        isShippingSet.value = true;
-
-        return true;
+        isShippingSet.value = false;
+        return false;
       }
     } else {
       cart.value.shippingCost = null;
