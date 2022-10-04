@@ -5,7 +5,6 @@ import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/ViewCartScreen.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
@@ -32,6 +31,7 @@ class ViewCartController {
   RxList<PaymentOption> options = RxList<PaymentOption>();
   // dropdown value
   Rxn<PaymentOption> pickerChoice = Rxn<PaymentOption>();
+  PaymentOption cash = {PickerChoice.Cash: null};
   // Payment Card //
   Rxn<CreditCard> card = Rxn();
 
@@ -68,11 +68,33 @@ class ViewCartController {
         .stream
         .listen((Customer? event) {
       if (event != null) {
-        customerCards.value = event.savedCards;
-        customerCards.refresh();
-        options.refresh();
+        customerCards.clear();
+        customerCards.value.addAll(event.savedCards);
+        if (customerCards.isEmpty) {
+          options.removeWhere((PaymentOption element) =>
+              element.entries.first.key == PickerChoice.SavedCard);
+        }
+        if (pickerChoice.value?.entries.first.key == PickerChoice.SavedCard &&
+            customerCards.isEmpty) {
+          pickerChoice.value = options.first;
+        }
       }
     });
+  }
+
+  void _updateListWithNewCard() {
+    options.removeWhere((PaymentOption element) =>
+        element.entries.first.key == PickerChoice.SavedCard);
+
+    customerCards.forEach((CreditCard element) {
+      options.add({PickerChoice.SavedCard: element});
+    });
+
+    options.refresh();
+  }
+
+  Future<void> _getCustomerCards() async {
+    //await Get.find<CustomerAuthController>().getCards();
   }
 
   // methods
@@ -85,8 +107,6 @@ class ViewCartController {
       controller.switchPaymentMedthod(paymentType: PaymentType.Card);
       await handlePaymentChoice(value);
     }
-    mezDbgPrint(
-        "Payment type in cart ==============>>>>>>>> ${controller.cart.value.paymentType}");
   }
 
   Future<void> handlePaymentChoice(PaymentOption newValue) async {
@@ -99,14 +119,16 @@ class ViewCartController {
       case PickerChoice.NewCard:
         final String? newCardId = await addCardSheet();
         if (newCardId != null) {
-          customerCards.refresh();
+          await Future.delayed(Duration(milliseconds: 2), () {});
+          _updateListWithNewCard();
+
           final CreditCard? newCard = customerCards
               .firstWhere((CreditCard element) => element.id == newCardId);
 
           if (newCard != null) {
             card.value = newCard;
-            options
-                .insert(options.length - 1, {PickerChoice.SavedCard: newCard});
+            // options
+            //     .insert(options.length - 1, {PickerChoice.SavedCard: newCard});
             pickerChoice.value = options.firstWhere((PaymentOption element) =>
                 element.entries.first.value?.id == newCard.id);
           }
