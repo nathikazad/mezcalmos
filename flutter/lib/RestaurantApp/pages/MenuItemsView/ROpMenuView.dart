@@ -36,8 +36,9 @@ class _ROpMenuViewState extends State<ROpMenuView>
     restaurantID = Get.parameters["restaurantId"];
     if (restaurantID != null) {
       viewController.init(restaurantId: restaurantID!);
-    } else
+    } else {
       Get.back();
+    }
 
     super.initState();
   }
