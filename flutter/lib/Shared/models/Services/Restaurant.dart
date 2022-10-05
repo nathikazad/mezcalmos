@@ -377,11 +377,11 @@ class Item {
             ? convertToLanguageMap(itemData["description"])
             : null,
         //itemData["description"].toLanguageMap(),
-        image: itemData?["image"],
-        // image: ((itemData?["image"].toString().isNotEmpty ?? false) &&
-        //         (itemData?["image"].toString().isURL ?? false))
-        //     ? itemData["image"]
-        //     : null,
+        // image: itemData?["image"],
+        image: ((itemData?["image"].toString().isNotEmpty ?? false) &&
+                (itemData?["image"].toString().isURL ?? false))
+            ? itemData["image"]
+            : null,
         position: itemData["position"] ?? 0,
         name: convertToLanguageMap(itemData["name"]),
         //itemData["name"].toLanguageMap(),
