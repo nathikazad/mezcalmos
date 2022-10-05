@@ -1,9 +1,6 @@
 {
   "hosting": {
-<<<<<<< HEAD
     "site" : "mezcalmos-31f1c",
-=======
->>>>>>> 19f4f5be869a78cd26ceba0462c9427977b44175
     "public": "build/web",
     "ignore": [
       "firebase.json",
