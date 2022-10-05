@@ -119,18 +119,14 @@ class Cart {
 
   void addItem(CartItem cartItem) {
     if (cartItem.idInCart == null) {
-      mezDbgPrint("first if");
       cartItem.idInCart = getRandomString(5);
     } else {
-      mezDbgPrint("second if");
       final int index = cartItems.indexWhere(
           (CartItem element) => element.idInCart == cartItem.idInCart);
       cartItems.removeAt(index);
     }
-    mezDbgPrint("Cart item =======>>> $cartItem");
 
     cartItems.add(CartItem.clone(cartItem));
-    mezDbgPrint("Cart itemsssss =======>>> $cartItems");
   }
 
   void incrementItem(String id, int quantity) {

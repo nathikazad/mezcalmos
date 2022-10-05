@@ -291,6 +291,12 @@ class RestaurantController extends GetxController {
     }
   }
 
+  bool get showItemsImages {
+    return cart.value.cartItems.firstWhereOrNull(
+            (CartItem element) => element.item.image != null) !=
+        null;
+  }
+
   @override
   void onClose() {
     print("[+] RestaurantCartController::onClose ---------> Was invoked !");
