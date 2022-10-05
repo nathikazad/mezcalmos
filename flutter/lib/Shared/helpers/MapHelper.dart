@@ -13,6 +13,8 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings["General"];
+
 typedef LocationChangesNotifier = void Function(LocModel.Location location);
 
 class RouteInformation {
@@ -192,7 +194,7 @@ Future<Route?> getDurationAndDistance(
         polylineList: polylinePoints,
         encodedPolyLine: encodedPolyLine);
   } else {
-    MezSnackbar("Error", "No route found. Please enter a valid destination");
+    MezSnackbar('${_i18n()["error"]}', '${_i18n()["noRoute"]}');
     return null;
   }
 }
