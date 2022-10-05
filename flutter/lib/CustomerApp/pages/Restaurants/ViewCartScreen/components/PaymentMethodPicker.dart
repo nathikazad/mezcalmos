@@ -41,7 +41,7 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
   Widget build(BuildContext context) {
     return Builder(
       builder: (BuildContext context) {
-        if (controller.associatedRestaurant!.paymentInfo.acceptCard) {
+        if (controller.showPaymentPicker) {
           return Container(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

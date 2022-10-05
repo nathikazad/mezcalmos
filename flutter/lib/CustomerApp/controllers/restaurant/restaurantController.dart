@@ -247,6 +247,15 @@ class RestaurantController extends GetxController {
         null;
   }
 
+  bool get showPaymentPicker {
+    return cart.value.restaurant?.paymentInfo
+                .acceptedPayments[PaymentType.Card] ==
+            true ||
+        cart.value.restaurant?.paymentInfo
+                .acceptedPayments[PaymentType.BankTransfer] ==
+            true;
+  }
+
   bool get showFees {
     return cart.value.paymentType == PaymentType.Card &&
         (cart.value.restaurant?.paymentInfo.stripe?.chargeFeesOnCustomer ??
