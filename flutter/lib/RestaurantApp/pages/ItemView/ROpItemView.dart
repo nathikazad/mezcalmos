@@ -15,8 +15,8 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/widgets/CallToActionButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 //
@@ -108,12 +108,14 @@ class _ROpItemViewState extends State<ROpItemView>
 
   Widget _saveBtn() {
     return Obx(
-      () => CallToActionButton(
+      () => MezButton(
         height: 65,
-        text: (viewController.editMode.isTrue)
+        withGradient: true,
+        borderRadius: 0,
+        label: (viewController.editMode.isTrue)
             ? '${_i18n()["saveItem"]}'
             : '${_i18n()["addItem"]}',
-        onTap: () async {
+        onClick: () async {
           await _handleSaveBtn();
         },
       ),
@@ -157,10 +159,15 @@ class _ROpItemViewState extends State<ROpItemView>
             ),
             TextFormField(
               style: Get.textTheme.bodyText1,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: viewController.scItemNameController,
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return '${_i18n()["required"]}';
+                } else if (viewController
+                    .getItemsNames(viewController.scLang)
+                    .contains(value.replaceAll(" ", "").toLowerCase())) {
+                  return '${_i18n()["nameExist"]}';
                 }
                 return null;
               },
@@ -216,10 +223,15 @@ class _ROpItemViewState extends State<ROpItemView>
             ),
             TextFormField(
               style: Get.textTheme.bodyText1,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: viewController.prItemNameController,
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return '${_i18n()["required"]}';
+                } else if (viewController
+                    .getItemsNames(viewController.prLang)
+                    .contains(value.replaceAll(" ", "").toLowerCase())) {
+                  return '${_i18n()["nameExist"]}';
                 }
                 return null;
               },
@@ -325,7 +337,8 @@ class _ROpItemViewState extends State<ROpItemView>
           child: (viewController.editMode.value)
               ? TextButton(
                   style: TextButton.styleFrom(
-                      backgroundColor: offRedColor, primary: Colors.redAccent),
+                      foregroundColor: Colors.redAccent,
+                      backgroundColor: offRedColor),
                   onPressed: () {
                     showConfirmationDialog(context, onYesClick: () async {
                       await viewController
@@ -365,26 +378,34 @@ class _ROpItemViewState extends State<ROpItemView>
   }
 
   Future<void> _handleSecondTab() async {
-    if (viewController.firstFormValid == true &&
-        _scformKey.currentState?.validate() == true) {
+    if (isSecValid && isPrValid) {
       await viewController.saveItem();
-    } else if (_scformKey.currentState?.validate() == true &&
-        _prformKey.currentState?.validate() != true) {
+    } else if (!isSecValid) {
+      _tabController.animateTo(1);
+    } else if (!isPrValid) {
       viewController.secondFormValid = true;
-      _tabController.index = 0;
+      _tabController.animateTo(0);
     }
   }
 
   Future<void> _handleFirstTab() async {
-    if (_prformKey.currentState?.validate() == true &&
-        (_scformKey.currentState?.validate() == true ||
-            viewController.secondFormValid)) {
+    if (isPrValid && isSecValid) {
       await viewController.saveItem();
-    } else if (_prformKey.currentState?.validate() == true &&
-        _scformKey.currentState?.validate() != true) {
+    } else if (!isPrValid) {
+      _tabController.animateTo(0);
+    } else if (!isSecValid) {
       viewController.firstFormValid = true;
-
-      _tabController.index = 1;
+      _tabController.animateTo(1);
     }
+  }
+
+  bool get isPrValid {
+    return _prformKey.currentState?.validate() == true ||
+        viewController.firstFormValid;
+  }
+
+  bool get isSecValid {
+    return _scformKey.currentState?.validate() == true ||
+        viewController.secondFormValid;
   }
 }

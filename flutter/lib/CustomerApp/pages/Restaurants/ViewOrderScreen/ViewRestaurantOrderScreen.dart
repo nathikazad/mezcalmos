@@ -10,7 +10,6 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/componen
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderFooterCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderRestaurantCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderStatusCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderSummaryCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrdersItemsCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/notesWidget.dart';
@@ -20,9 +19,11 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
-import 'package:mezcalmos/Shared/widgets/CreditCardInfo.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -193,17 +194,23 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                           OrderRestaurantCard(order: order.value!),
 
                           OrderItemsCard(
-                            items: order.value!.items,
+                            order: order.value!,
                           ),
                           order.value?.notes == null ||
                                   order.value!.notes!.length <= 0
                               ? Container()
                               : notesWidget(order),
 
+                          OrderDeliveryLocation(
+                            order: order.value!,
+                            margin: const EdgeInsets.only(top: 20),
+                          ),
+                          OrderPaymentMethod(
+                            order: order.value!,
+                            margin: const EdgeInsets.only(top: 20),
+                          ),
+
                           OrderSummaryCard(order: order.value!),
-                          if (order.value!.stripePaymentInfo != null)
-                            CreditCardInfo(
-                                paymentInfo: order.value!.stripePaymentInfo!),
 
                           //===============================>button cancel===========================
                           //  Expanded(child: Container()),

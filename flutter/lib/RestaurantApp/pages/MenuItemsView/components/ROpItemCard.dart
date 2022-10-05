@@ -41,6 +41,8 @@ class _ROpItemCardState extends State<ROpItemCard> {
 
   RestaurantInfoController _restaurantInfoController =
       Get.find<RestaurantInfoController>();
+
+  RxBool imageError = RxBool(false);
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -64,9 +66,14 @@ class _ROpItemCardState extends State<ROpItemCard> {
                   children: [
                     CircleAvatar(
                       radius: 25,
-                      backgroundImage: (widget.item.image != null)
-                          ? CachedNetworkImageProvider(widget.item.image!)
-                          : AssetImage(aNoImage) as ImageProvider,
+                      onBackgroundImageError:
+                          (Object exception, StackTrace? stackTrace) {
+                        imageError.value = true;
+                      },
+                      backgroundImage:
+                          (widget.item.image != null && imageError.isFalse)
+                              ? CachedNetworkImageProvider(widget.item.image!)
+                              : AssetImage(aNoImage) as ImageProvider,
                     ),
                     SizedBox(
                       width: 15,

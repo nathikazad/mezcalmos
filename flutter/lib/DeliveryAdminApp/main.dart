@@ -30,6 +30,18 @@ List<SideMenuItem> sideMenuItems = [
     title: "DeliveryAdminApp/main/services",
     isI18nPath: true,
   ),
+  SideMenuItem(
+    onClick: () {
+      if (AdminAuthController().initialized ||
+          Get.find<AdminAuthController>().admin?.authorized != true) {
+      } else {
+        Get.toNamed<void>(kAdminDashboard);
+      }
+    },
+    icon: Icons.space_dashboard,
+    title: "DeliveryAdminApp/main/dashboard",
+    isI18nPath: true,
+  ),
 ];
 
 void main() {

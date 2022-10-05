@@ -1,5 +1,5 @@
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -142,9 +142,7 @@ class RestaurantOrder extends DeliverableOrder {
       restaurantOrder.stripePaymentInfo =
           StripeOrderPaymentInfo.fromJson(data["stripePaymentInfo"]);
     }
-    mezDbgPrint("---$id---");
-    mezDbgPrint("- $data -");
-    mezDbgPrint("------");
+
     data["items"]?.forEach((dynamic itemId, dynamic itemData) {
       final RestaurantOrderItem restaurantOrderItem =
           RestaurantOrderItem.fromData(itemId, itemData);
@@ -189,6 +187,12 @@ class RestaurantOrder extends DeliverableOrder {
 
   bool inDeliveryPhase() {
     return status == RestaurantOrderStatus.OnTheWay;
+  }
+
+  bool get showItemsImages {
+    return items.firstWhereOrNull(
+            (RestaurantOrderItem element) => element.image != null) !=
+        null;
   }
 
   String clipBoardText(LanguageType languageType) {

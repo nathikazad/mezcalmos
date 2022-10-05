@@ -10,9 +10,8 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/component
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/OrderSummaryCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/PaymentMethodPicker.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:sizer/sizer.dart';
 
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 
@@ -36,16 +35,19 @@ class ViewCartBody extends StatefulWidget {
 
 class _ViewCartBodyState extends State<ViewCartBody> {
   RestaurantController controller = Get.find<RestaurantController>();
+  FocusNode _noteFocus = new FocusNode();
 
   @override
   void initState() {
     // TODO: implement initState
     widget.viewCartController.init();
+
     super.initState();
   }
 
   @override
   void dispose() {
+    _noteFocus.dispose();
     super.dispose();
   }
 
@@ -66,6 +68,40 @@ class _ViewCartBodyState extends State<ViewCartBody> {
                     ],
                   )
                 : Container(),
+            SizedBox(
+              height: 10,
+            ),
+            DeliveryTimePicker(viewCartController: widget.viewCartController),
+            OrderSummaryCard(
+              controller: controller,
+              setLocationCallBack: widget.setLocationCallBack,
+              serviceLoc: controller.cart.value.restaurant?.info.location,
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 14,
+              ),
+              child: PaymentMethodPicker(
+                viewCartController: widget.viewCartController,
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 14,
+              ),
+              alignment: Alignment.centerLeft,
+              child: Text("${_i18n()['notesTitle']}",
+                  style: Get.textTheme.bodyText1),
+            ),
+            SizedBox(
+              height: 15,
+            ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
@@ -132,22 +168,34 @@ class _ViewCartBodyState extends State<ViewCartBody> {
                   SizedBox(
                     height: 15,
                   ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: TextFormField(
+                        scrollPadding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom +
+                                20.h),
+                        style: Get.textTheme.bodyText2
+                            ?.copyWith(fontWeight: FontWeight.w700),
+                        controller: widget.notesTextController,
+                        maxLines: 7,
+                        minLines: 4,
+                        decoration: InputDecoration(
+                            hintText: "${_i18n()["notes"]}",
+                            fillColor: Colors.white)),
+                  ),
                   Obx(() => OrderSummaryCard(
                         setLocationCallBack: widget.setLocationCallBack,
-                        deliveryCost: controller.cart.value.shippingCost ?? 50,
-                        showStripeFees: controller.cart.value.paymentType ==
-                            PaymentType.Card,
-                        stripeFees: controller.cart.value.stripeFees,
-                        orderCost:
-                            controller.cart.value.itemsCost().toPriceString(),
-                        totalCost:
-                            controller.cart.value.totalCost.toPriceString(),
+                        controller: controller,
                       )),
                   SizedBox(
                     height: 30,
                   ),
                 ],
               ),
+            ),
+            SizedBox(
+              height: 25,
             ),
           ],
         ),

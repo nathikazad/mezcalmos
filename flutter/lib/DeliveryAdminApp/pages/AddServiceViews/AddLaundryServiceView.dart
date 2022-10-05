@@ -21,12 +21,11 @@ class AddLaundryServiceView extends StatefulWidget {
 }
 
 class _AddLaundryServiceViewState extends State<AddLaundryServiceView> {
-  AddLaundryServiceViewController viewController =
-      AddLaundryServiceViewController();
+  AddServiceViewController viewController = AddServiceViewController();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    viewController.init();
+    viewController.init(serviceType: ServiceType.Laundry);
     super.initState();
   }
 
@@ -40,13 +39,13 @@ class _AddLaundryServiceViewState extends State<AddLaundryServiceView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          title: '${_i18n()["newLaundry"]}'),
+          onClick: Get.back, title: '${_i18n()["newLaundry"]}'),
       bottomNavigationBar: MezButton(
         height: 65,
         label: '${_i18n()["createLaundry"]}',
         onClick: () async {
           if (_formKey.currentState!.validate()) {
-            await viewController.createLaundry();
+            await viewController.saveService();
           }
         },
         borderRadius: 0,

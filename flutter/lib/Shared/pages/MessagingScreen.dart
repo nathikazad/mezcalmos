@@ -8,6 +8,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 // Extends GetView<MessagingController> after Nathik implements the controller
 import 'package:intl/intl.dart' as intl;
@@ -22,6 +23,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
@@ -118,6 +120,14 @@ class _MessagingScreenState extends State<MessagingScreen> {
     scrollDown();
   }
 
+  /// Using this for now, to limit the calls only between deliveryDrivers<->Customers
+  bool isReciepientNotAdmin() {
+    final ParticipantType? _pType =
+        controller.recipient(recipientType: recipientType)?.participantType;
+    return [ParticipantType.Customer, ParticipantType.DeliveryDriver]
+        .contains(_pType);
+  }
+
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
@@ -203,28 +213,32 @@ class _MessagingScreenState extends State<MessagingScreen> {
               ),
               onTap: () => Get.toNamed<void>(orderLink!),
             ),
-          if (controller.isUserAuthorizedToCall() && sagora != null)
-            InkWell(
-              onTap: () async => _onCallPress(),
-              child: Container(
-                width: 30,
-                height: 30,
-                padding: EdgeInsets.all(5),
-                margin: EdgeInsets.only(right: 7),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color.fromRGBO(103, 121, 254, 1),
-                ),
-                child: Center(
-                  child: FittedBox(
-                    child: Icon(
-                      Icons.call,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+          Container(
+              child: controller.isUserAuthorizedToCall() &&
+                      isReciepientNotAdmin() &&
+                      sagora != null
+                  ? InkWell(
+                      onTap: () async => _onCallPress(),
+                      child: Container(
+                        width: 30,
+                        height: 30,
+                        padding: EdgeInsets.all(5),
+                        margin: EdgeInsets.only(right: 7),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color.fromRGBO(103, 121, 254, 1),
+                        ),
+                        child: Center(
+                          child: FittedBox(
+                            child: Icon(
+                              Icons.call,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : SizedBox())
         ],
       ),
       body: isChatLoaded
@@ -406,14 +420,20 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                   topRight: Radius.zero,
                                   bottomRight: Radius.circular(20),
                                   bottomLeft: Radius.circular(30))),
-                      child: Text(
-                        message,
-                        softWrap: true,
-                        style: TextStyle(
-                          fontFamily: "Nunito",
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                          color: isMe ? Colors.white : Colors.black,
+                      child: InkWell(
+                        onLongPress: () {
+                          Clipboard.setData(ClipboardData(text: message))
+                              .then((_) => MezSnackbar("copied", ""));
+                        },
+                        child: Text(
+                          message,
+                          softWrap: true,
+                          style: TextStyle(
+                            fontFamily: "Nunito",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 15,
+                            color: isMe ? Colors.white : Colors.black,
+                          ),
                         ),
                       )),
                   time != null

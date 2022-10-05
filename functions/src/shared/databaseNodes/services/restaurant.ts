@@ -9,7 +9,7 @@ export function pastOrders(providerId: string, orderId?: string) {
   return serviceProviderPastOrders(OrderType.Restaurant, providerId, orderId);
 }
 
-export function info(providerId: string) {
+export function info(providerId?: string) {
   return serviceProviderInfo(OrderType.Restaurant, providerId);
 }
 

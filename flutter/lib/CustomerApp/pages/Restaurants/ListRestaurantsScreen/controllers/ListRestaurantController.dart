@@ -84,7 +84,7 @@ class ListRestaurantsController {
         filteredItems.add(_item);
       });
       // filteredItems.addAll(element.itemsWithoutCategory);
-      restaurant.getCategories.forEach((Category cat) {
+      restaurant.getAvailableCategories.forEach((Category cat) {
         cat.items.forEach((Item item) {
           final Item _item = item;
           _item.restaurant = restaurant;
@@ -107,7 +107,8 @@ extension RestaurantFilters on RestaurantList {
   List<Item> searchForFood(String search) {
     return fold<List<Category>>(<Category>[],
         (List<Category> categories, Restaurant restaurant) {
-      final List<Category> restaurantCategories = restaurant.getCategories;
+      final List<Category> restaurantCategories =
+          restaurant.getAvailableCategories;
       restaurantCategories
           .forEach((Category category) => category.restaurant = restaurant);
       categories.addAll(restaurantCategories);

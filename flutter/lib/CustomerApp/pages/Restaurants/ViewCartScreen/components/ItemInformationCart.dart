@@ -18,12 +18,14 @@ class ItemInformationCart extends StatefulWidget {
       this.imageUrl,
       required this.itemName,
       required this.restaurantName,
+      required this.showImage,
       required this.itemsPrice,
       required this.item})
       : super(key: key);
 
   final String itemName;
   final String restaurantName;
+  final bool showImage;
 
   final String itemsPrice;
   final String? imageUrl;
@@ -46,20 +48,20 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (widget.imageUrl != null)
+          if (widget.showImage)
             //===================== item image avatar=============
             Container(
               child: CachedNetworkImage(
                 width: 65,
                 height: 65,
-                imageUrl: widget.imageUrl!,
+                imageUrl: widget.imageUrl ?? "",
                 imageBuilder: (_, ImageProvider imageProvider) {
                   return Container(
                     width: 65,
                     height: 65,
                     decoration: BoxDecoration(
                       shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(6),
+                      borderRadius: BorderRadius.circular(10),
                       image: DecorationImage(
                         fit: BoxFit.cover,
                         image: imageProvider,
@@ -68,19 +70,15 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
                   );
                 },
                 errorWidget: (_, __, ___) => Container(
-                  width: 70,
+                  width: 65,
                   height: 65,
                   child: Container(
+                    width: 65,
+                    height: 65,
                     decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(6),
-                      color: Colors.grey.shade300,
-                    ),
-                    child: Icon(
-                      Icons.image,
-                      color: Colors.grey,
-                      size: 18,
-                    ),
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(image: AssetImage(aNoImage))),
                   ),
                 ),
                 placeholder: (_, __) => Container(
@@ -92,7 +90,7 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
                 ),
               ),
             ),
-          if (widget.imageUrl != null) const SizedBox(width: 10),
+          if (widget.showImage) const SizedBox(width: 10),
           Flexible(
             flex: 5,
             fit: FlexFit.tight,

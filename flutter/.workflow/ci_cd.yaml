@@ -1,0 +1,83 @@
+#buildEnv.yaml
+parameters:
+- name: 'Apps'
+  type: object
+  default: {}
+  
+steps:
+- pwsh: |
+    $customerApp = 'Mezcalmos'
+    $restaurantApp = 'Mezchef'
+    $deliveryApp = 'Mezdelivery'
+    $laundryApp = 'Mezlaundry'
+    Write-Host "##vso[task.setvariable variable=CustomerApp;]$customerApp"
+    Write-Host "##vso[task.setvariable variable=RestaurantApp;]$restaurantApp"
+    Write-Host "##vso[task.setvariable variable=DeliveryApp;]$deliveryApp"
+    Write-Host "##vso[task.setvariable variable=LaundryApp;]$laundryApp"
+      
+- ${{ each app in parameters.Apps }}:
+  - pwsh: |
+      $metaData = Invoke-RestMethod -Headers @{"Metadata"="true"} -URI https://mezcalmos-31f1c-default-rtdb.firebaseio.com/version/${{app}}/android.json -Method GET
+      Write-Host "##vso[task.setvariable variable=mezVersion;]$metaData"
+    displayName: "Setting up ${{app}} Version as variable"
+    
+  - ${{ if or( eq('$(mezVersion)', 'null'), eq('$(mezVersion)', ''), eq('$(mezVersion)', 'Permission denied') )}}:
+    - task: Bash@3
+      displayName: Wrong/Failed fetching Version $(mezVersion)
+      inputs:
+        targetType: 'inline'
+        script: 
+            echo "\n\nFetched [ $(mezVersion) ] which is an incorrect version for ${{app}} .. skipped building the app\n\n"
+  - ${{ else }}:
+    - task: PythonScript@0
+      displayName: Patching Files using launcher.
+      inputs:
+        scriptSource: filePath
+        scriptPath: 'flutter/launcher/launcher.py'
+        #script: # Required when scriptSource == inline
+        arguments: 'app=${{app}} env=prod --build=appbundle version=$(mezVersion) --pipeline --verbose'
+        #pythonInterpreter: # Optional
+        workingDirectory: 'flutter/launcher/'
+        #failOnStderr: false # Optional
+
+    - task: FlutterBuild@0
+      displayName: 'Building ${{app}}.aab'
+      inputs:
+        target: 'aab'
+        #splitPerAbi: true
+        verboseMode: true
+        projectDirectory: 'flutter/'
+        entryPoint: 'lib/${{app}}/main.dart'
+
+    - task: CopyFiles@2
+      displayName: Copying build output to stagingDirectory.
+      inputs:
+        contents: 'flutter/build/app/outputs/bundle/release/app-release.aab'
+        targetFolder: '$(build.artifactStagingDirectory)/'
+        OverWrite: true
+        flattenFolders: true
+
+    #- task: PowerShell@2
+      #displayName: 'moving app-release.aab to ${{app}}.aab'
+      #inputs:
+        #targetType: inline
+        #script: Copy-Item -Path "$(build.artifactStagingDirectory)/app-release.aab" -Destination "$(build.artifactstagingdirectory)/${{app}}.aab"
+    
+    - task: PublishBuildArtifacts@1
+      displayName: Publishing aab artifacts 
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+        
+    - task: AppCenterDistribute@3
+      displayName: 'Deploying ${{app}} to APPCENTER'
+      inputs:
+        serverEndpoint: 'Appcenter-${{app}}-token'
+        appSlug: x544d/$(${{app}})
+        appFile: '$(Build.ArtifactStagingDirectory)/**/*.aab'
+        symbolsOption: Android
+        releaseNotesInput: '-'
+        destinationType: groups
+        isMandatory: true
+        isSilent: false

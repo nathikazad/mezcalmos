@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:sizer/sizer.dart';
 
 // Displays the order costs [delivery + total]
@@ -54,36 +53,27 @@ Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "${_i18n()['deliveryCost']}",
-                      style: const TextStyle(
-                        color: Color(0xff000f1c),
-                        fontFamily: "psr",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 20.0,
+                    Expanded(
+                      child: Text(
+                        "${_i18n()['deliveryCost']}",
+                        style: const TextStyle(
+                          color: Color(0xff000f1c),
+                          fontFamily: "psr",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 20.0,
+                        ),
+                        textAlign: TextAlign.left,
                       ),
-                      textAlign: TextAlign.left,
                     ),
-                    Spacer(),
-                    Row(
-                      children: [
-                        Text(
-                          order.value!.shippingCost.toPriceString(),
-                          style: Get.textTheme.bodyText1?.copyWith(
-                            decoration: TextDecoration.lineThrough,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          "${_i18n()["free"]}",
-                          style: Get.textTheme.bodyText1
-                              ?.copyWith(color: primaryBlueColor),
-                        )
-                      ],
-                    ),
+                    Flexible(
+                      child: ShippingCostComponent(
+                        shippingCost: order.value!.shippingCost,
+                        textStyle: Get.textTheme.bodyText1,
+                      ),
+                    )
                   ],
                 ),
               ),

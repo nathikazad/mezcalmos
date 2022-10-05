@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 typedef LocationChangesNotifier = void Function(LocModel.Location location);
 
@@ -164,7 +165,7 @@ Future<String?> getAdressFromLatLng(LatLng latlng) async {
 }
 
 /// returns a Map {"distance" : { "text" : [in km] , "value": [in Meters]} , "duration": {"text" : [in days:h] , value : [in Seconds]}}
-Future<Route> getDurationAndDistance(
+Future<Route?> getDurationAndDistance(
     LocModel.Location from, LocModel.Location to) async {
   //units=metric => this is so we can get distances in km , cuz default is miles !
   /// Note : distance.text is in [KM] while distance.value is in [M]!
@@ -191,23 +192,24 @@ Future<Route> getDurationAndDistance(
         polylineList: polylinePoints,
         encodedPolyLine: encodedPolyLine);
   } else {
-    throw Exception("Error fetching route");
+    MezSnackbar("Error", "No route found. Please enter a valid destination");
+    return null;
   }
 }
 
 /// Calculate Distance between To [LocationData] , return is in KM!
 double calculateDistance(LocationData from, LocationData to) {
-  int R = 6371;
-  double dLat = (to.latitude! - from.latitude!) * pi / 180;
-  double dLon = (to.longitude! - from.longitude!) * pi / 180;
+  final int R = 6371;
+  final double dLat = (to.latitude! - from.latitude!) * pi / 180;
+  final double dLon = (to.longitude! - from.longitude!) * pi / 180;
 
-  double a = sin(dLat / 2) * sin(dLat / 2) +
+  final double a = sin(dLat / 2) * sin(dLat / 2) +
       cos(from.latitude! * pi / 180) *
           cos(to.latitude! * pi / 180) *
           sin(dLon / 2) *
           sin(dLon / 2);
-  double c = 2 * atan2(sqrt(a), sqrt(1 - a));
-  double res = R * c; // this is in km
+  final double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+  final double res = R * c; // this is in km
 
   return res;
 }

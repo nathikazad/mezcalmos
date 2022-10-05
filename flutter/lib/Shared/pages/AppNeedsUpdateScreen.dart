@@ -5,7 +5,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:new_version/new_version.dart' show VersionStatus;
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ['AppNeedsUpdateScreen'];
@@ -34,7 +33,7 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         floatingActionButton: _floatingActionBtn(),
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, autoBack: true),
+        appBar: mezcalmosAppBar(AppBarLeftButtonType.Lang, autoBack: false),
         body: Center(
           child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),

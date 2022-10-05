@@ -142,7 +142,7 @@ export const removeCard =
 
     const mezCustomerId: string = context.auth!.uid;
     let inProcessOrders = (await customerNodes.inProcessOrders(mezCustomerId).once('value')).val()
-    if (Object.keys(inProcessOrders).length > 0) {
+    if (inProcessOrders && Object.keys(inProcessOrders).length > 0) {
       return {
         status: ServerResponseStatus.Error,
         errorMessage: `Can't remove cards with in process orders, please wait till you finish your order`,

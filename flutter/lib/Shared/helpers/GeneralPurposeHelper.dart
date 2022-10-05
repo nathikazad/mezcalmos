@@ -269,14 +269,17 @@ Future<void> showConfirmationDialog(
                     onNoClick?.call();
                     Get.back<void>(closeOverlays: true);
                   },
-                  child: Text(
-                    secondaryButtonText ?? '${_i18n()["no"]}',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color.fromRGBO(120, 120, 120, 1),
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16.99,
+                  child: Container(
+                    width: double.infinity,
+                    child: Text(
+                      secondaryButtonText ?? '${_i18n()["no"]}',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Color.fromRGBO(120, 120, 120, 1),
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16.99,
+                      ),
                     ),
                   ),
                 ),

@@ -72,31 +72,53 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
               contentPadding: EdgeInsets.zero,
               title: Row(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Flexible(
-                      flex: 3,
-                      child: Text(
-                        '${_i18n()["card"]}',
-                        style: Get.textTheme.bodyText1,
-                      ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          // flex: 5,
+                          child: Row(
+                            children: [
+                              Text(
+                                '${_i18n()["card"]}',
+                                style: Get.textTheme.bodyText1,
+                              ),
+                              const SizedBox(
+                                width: 3,
+                              ),
+                              Image.asset(
+                                "assets/images/shared/stripeColoredLogo.png",
+                                height: 16,
+                                width: 40,
+                              )
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Row(
+                          children: [
+                            if (widget.viewController.showStatusIcon)
+                              _stripeStatusWidget(context),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            if (widget.viewController.showSetupBtn)
+                              _stripeSetupBtn()
+                          ],
+                        )
+                      ],
                     ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    if (widget.viewController.showStatusIcon)
-                      _stripeStatusWidget(context),
-                    Spacer(
-                      flex: 4,
-                    ),
-                    if (widget.viewController.showSetupBtn) _stripeSetupBtn()
                   ]),
               activeColor: primaryBlueColor,
               value: widget.viewController.restaurant.value!.paymentInfo
                       .acceptedPayments[PaymentType.Card] ==
                   true,
               onChanged: (bool? v) {
-                widget.viewController.handleCardCheckBoxClick();
+                widget.viewController.handleCardCheckBoxClick(v!);
               }),
 
           //       ),
@@ -109,33 +131,35 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
     );
   }
 
-  InkWell _stripeSetupBtn() {
+  Widget _stripeSetupBtn() {
     return InkWell(
       onTap: () {
         widget.viewController.showPaymentSetup();
       },
       child: Ink(
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8), color: primaryBlueColor),
-        child: RichText(
-            text: TextSpan(children: [
-          WidgetSpan(
-              child: Icon(
-            Icons.store,
-            size: 18,
-            color: Colors.white,
+          height: 35,
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8), color: primaryBlueColor),
+          child: Row(
+            children: [
+              Icon(
+                Icons.store,
+                color: Colors.white,
+                size: 18,
+              ),
+              const SizedBox(
+                width: 3,
+              ),
+              Text(
+                '${_i18n()["setup"]}',
+                style: Get.textTheme.bodyText1?.copyWith(color: Colors.white),
+              ),
+              const SizedBox(
+                width: 3,
+              ),
+            ],
           )),
-          WidgetSpan(
-              child: SizedBox(
-            width: 5,
-          )),
-          TextSpan(
-            text: '${_i18n()["setup"]}',
-            style: Get.textTheme.bodyText1?.copyWith(color: Colors.white),
-          )
-        ])),
-      ),
     );
   }
 
@@ -154,27 +178,24 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
             });
       },
       child: Ink(
-          padding: const EdgeInsets.all(5),
+          height: 35,
+          padding: const EdgeInsets.symmetric(horizontal: 5),
           decoration: BoxDecoration(
-              color: Colors.red.shade400,
-              borderRadius: BorderRadius.circular(8)),
-          child: RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(children: [
-              TextSpan(
-                text: '${_i18n()["requirements"]}',
-                style: Get.textTheme.bodyText1?.copyWith(color: Colors.black),
-              ),
-              WidgetSpan(
-                  child: SizedBox(
-                width: 3,
-              )),
-              WidgetSpan(
-                  child: Icon(
+              color: offRedColor, borderRadius: BorderRadius.circular(8)),
+          child: Container(
+            child: Row(mainAxisSize: MainAxisSize.min, children: [
+              Icon(
                 Icons.help,
                 size: 18,
-                color: Colors.black,
-              ))
+                color: Colors.red,
+              ),
+              const SizedBox(
+                width: 3,
+              ),
+              Text(
+                '${_i18n()["requirements"]}',
+                style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+              ),
             ]),
           )),
     );

@@ -14,11 +14,14 @@
                     "notifications": "Notificaciones",
                     "orders": "Pedidos"
                 }
+
             },
             "CustomerHomeFooterButtons": {
                 "privacyPolicy": "Privacy policy"
             },
             "DropDownLocationList": {
+                "ops": "Oops",
+                "distanceError": "¡La distancia entre usted y el restaurante es de más de 10 km!",
                 "chooseLoc": "Elegir la ubicación",
                 "pickLocation": "Elegir del mapa"
             },
@@ -33,6 +36,17 @@
             }
         },
         "pages": {
+            "cards": {
+                "SavedCardsListView": {
+                    "cards": "Tarjetas",
+                    "card": "Tarjeta",
+                    "addNew": "Agregar nueva tarjeta de crédito",
+                    "removeTitle": "Eliminar la tarjeta",
+                    "removeDesc": "¿Estás seguro de que quieres eliminar esta tarjeta?",
+                    "removeBtn": "Sí, eliminar la tarjeta"
+
+                }
+            },
             "ListOrdersScreen": {
                 "components": {
                     "RestaurantOngoingOrderCard": {
@@ -137,6 +151,13 @@
                             "pickTime": "Elige tu tiempo",
                             "now": "Ahora"
                         },
+                        "PaymentMethodPicker": {
+                            "paymentMethod": "Método de pago",
+                            "cash": "Dinero",
+                            "newcard": "Nueva tarjeta",
+                            "applepay": "Apple Pay",
+                            "googlepay": "Google Pay"
+                        },
                         "CartIsEmptyScreen": {
                             "title": "Tu carrito esta vacío"
                         },
@@ -151,7 +172,7 @@
                         "BuildItems": {
                             "deleteItem": "Eliminar elemento",
                             "deleteItemConfirm": "¿Estás seguro de que te gustaría eliminar?",
-                            "deleteBtn": "Yes, delete item",
+                            "deleteBtn": "Sí, eliminar el elemento",
                             "itemNotes": "Notas de artículos :"
 
                         },
@@ -167,7 +188,8 @@
                             "deliveryCost": "Costo de envío",
                             "stripeFees": "Tarifas de tarjeta",
                             "totalCost": "Costo Total",
-                            "deliveryLocation": "Lugar De Entrega"
+                            "deliveryLocation": "Lugar De Entrega",
+                            "toBeCalc": "Calculando ..."
                         },
                         "SaveLocationDailog": {
                             "addLocationDialogTitle": "ingrese el nombre de la ubicación, si desea guardar para uso futuro, de lo contrario, puede omitir",
@@ -185,6 +207,9 @@
                         }
                     },
                     "ViewCartScreen": {
+                        "ops": "Oops",
+                        "restaurantClosed": "El restaurante está cerrado ahora",
+                        "distanceError": "La distancia entre usted y el restaurante es de más de 10 km!",
                         "myCart": "Mi Carrito",
                         "notAvailable": "Su restaurante está cerrado",
                         "orderNow": "ORDENAR AHORA",
@@ -261,6 +286,7 @@
                             "orderCancelled": "cancelada"
                         },
                         "OrdersItemsCard": {
+                            "itemUnav": "Artículo no disponible",
                             "orderItems": "Artículos",
                             "canceledByAdmin": "Cancelada",
                             "canceledByCustomer": "Cancelada",
@@ -665,6 +691,10 @@
             }
         },
         "pages": {
+            "SomethingWentWrongScreen": {
+                "noRestaurantFoundOnOperator": "No se encontró ningún restaurante en su operador",
+                "pleaseContactAdmin": "Póngase en contacto con el administrador"
+            },
             "AuthScreens": {
                 "SMS": {
                     "OtpConfirmationScreen": {
@@ -818,14 +848,30 @@
                 "dvTime": "El tiempo de entrega"
             },
             "MezDateTimePicker": {
-                "title": "Elige tu tiempo",
-                "startsAt": "Empieza a",
+                "cancel": "Cancelar",
+                "confirm": "Confirmar",
                 "endsAt": "Termina en",
                 "sDate": "Seleccione fecha",
+                "startsAt": "Empieza a",
                 "sTime": "Tiempo de selección",
-                "cancel": "Cancelar",
-                "confirm": "Confirmar"
+                "title": "Elige tu tiempo"
+            },
+            "OrderSummaryCard": {
+                "orderSummary": "Resumen de pedido",
+                "orderCost": "Costo de la orden",
+                "deliveryCost": "Coste de envío",
+                "stripeFees": "Tarifas de tarjeta",
+                "totalCost": "Coste total",
 
+                "refundAmount": "Cantidad devuelta",
+                "toBeCalc": "Para ser calculado"
+            },
+            "OrderPaymentMethod": {
+                "paymentMethod": "Método de pago",
+                "cash": "Dinero"
+            },
+            "OrderDeliveryLocation": {
+                "title": "Lugar de entrega"
             },
             "CreditCardInfo": {
                 "creditCardInfo": "Información de la tarjeta de crédito",
@@ -1053,7 +1099,8 @@
     },
     "DeliveryAdminApp": {
         "main": {
-            "services": "Servicios"
+            "services": "Servicios",
+            "dashboard": "Tablero"
         },
         "notificationHandler": {
             "restaurantTitle": "Nuevo pedido de restaurante",
@@ -1076,6 +1123,19 @@
             }
         },
         "pages": {
+            "AdminDashboardView": {
+                "dashboard": "Tablero",
+                "shippingPrice": "Precio de envío base",
+                "minPrice": "Precio mínimo de envío",
+                "newMinPrice": "Nuevo precio mínimo de envío",
+                "perKm": "Por km precio de envío",
+                "newPerkm": "Nuevo por km precio de envío",
+                "newShippingPrice": "Nuevo precio base de envíonvío",
+                "error": "error",
+                "errorText": "Precio de envío no válido",
+                "confirm": "Confirmar",
+                "cancel": "Cancelar"
+            },
             "AddLaundryServiceView": {
                 "newLaundry": "Ropa nueva",
                 "createLaundry": "Crear lavandería",
@@ -1086,8 +1146,17 @@
                 "required": "Requerida",
                 "emailNotCorrect": "Correo electrónico no es correcta",
                 "phoneNotCorrect": "El número de teléfono no es correcto"
-
-
+            },
+            "AddRestaurantServiceView": {
+                "newRestaurant": "Nuevo restaurante",
+                "createRestaurant": "Crear restaurante",
+                "restaurantName": "Nombre del restaurante",
+                "email": "Correo electrónico",
+                "phoneNumber": "Número de teléfono",
+                "helperText": "Debe proporcionar la dirección de correo electrónico o el número de teléfono del restaurante.",
+                "required": "Requerida",
+                "emailNotCorrect": "La dirección de correo electrónico no es correcta",
+                "phoneNotCorrect": "El número de teléfono no es correcto"
             },
 
             "ServicesView": {
@@ -1374,6 +1443,10 @@
 
                     },
                     "Components": {
+                        "AnimatedOrderInfoCard": {
+                            "cash": "Dinero",
+                            "card": "Tarjeta"
+                        },
                         "DriverBottomLaundryOrderCard": {
                             "orderStatus": {
                                 "readyForPickup": "Listo para recojer",
@@ -1531,7 +1604,8 @@
                 "categoryPrice": "Categoría Precios por kilogramo",
                 "categoryPriceHint": "Entrar en la categoría Precios por kilogramo ...",
                 "categoryNameError": "Agregue un nombre de categoría",
-                "categoryPriceError": "Ingrese el precio válido"
+                "categoryPriceError": "Ingrese el precio válido",
+                "nameExist": "Name already exist"
 
             },
             "DashboardView": {
@@ -1716,6 +1790,7 @@
         "pages": {
 
             "ROpItemView": {
+                "nameExist": "El nombre ya existe",
                 "item": "Artículo",
                 "addItem": "Añadir artículo",
                 "saveItem": "Guardar el artículo",
@@ -1766,7 +1841,7 @@
                         "maxError": "Máximo es:",
                         "minError": "El monto mínimo de reembolso debería ser más que 0 ",
                         "cancel": "Cancelar",
-                        "confirmRefund": "Confirmar el reembolso",
+                        "confirmRefund": "Confirmar",
                         "dialogTitle": "Reembolso confirmado",
                         "dialogDesc": "Su cliente recibirá el reembolso pronto."
 
@@ -1776,7 +1851,7 @@
                         "orderReady": "El pedido está listo"
                     },
                     "ROpOrderEstTime": {
-                        "title": "Tiempo estimado de comida",
+                        "title": "Tiempo estimado de preparación",
                         "set": "Establecer",
                         "confirm": "Confirmar",
                         "cancel": "Cancelar",
@@ -1791,6 +1866,7 @@
                     },
                     "ROpOrderItems": {
                         "note": "Nota",
+                        "markitemUnav": "Marca como no disponible",
                         "itemUnav": "no disponible"
                     },
                     "ROpOrderSummaryCard": {
@@ -1845,7 +1921,7 @@
                         "canceled": "Cancelada"
                     }
                 },
-                "incomingOrders": "Incoming orders",
+                "incomingOrders": "Órdenes entrantes",
                 "currentOrders": "Órdenes actuales",
                 "pastOrders": "Órdenes pasadas",
                 "offlineTitle": "Estas desconectado",
@@ -1903,7 +1979,7 @@
                         "card": "Tarjeta",
                         "requirements": "Requisitos",
                         "acceptedPayments": "Pagos aceptados",
-                        "setup": "Configuración",
+                        "setup": "configurar",
 
                         "setupHelper": "Gracias por la configuración, ahora puede recibir pagos, pero no podrá retirar dinero a su cuenta bancaria.",
                         "reqs": "Requisitos",
@@ -1913,12 +1989,15 @@
                     }
                 },
                 "ROpEditInfoView": {
+                    "saved": "Salvado",
+                    "savedText": "Su información ha sido guardada",
                     "openTitle": "Disponibilidad de restaurantes",
                     "openSubtitle": "Esto cerrará su restaurante indefinidamente",
                     "restaurantName": "Nombre del restaurante",
                     "nameErrorText": "Proporcione un nombre",
                     "defaultLanguage": "Idioma predeterminado",
                     "secondaryLanguage": "Lenguaje secundario",
+                    "description": "Descripción en",
                     "location": "Ubicación",
                     "saveInfo": "Guardar información",
                     "components": {

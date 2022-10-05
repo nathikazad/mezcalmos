@@ -5,7 +5,6 @@ import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/ViewCartScreen.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
@@ -25,6 +24,7 @@ class ViewCartController {
   RxList<PaymentOption> options = RxList<PaymentOption>();
   // dropdown value
   Rxn<PaymentOption> pickerChoice = Rxn<PaymentOption>();
+  PaymentOption cash = {PickerChoice.Cash: null};
   // Payment Card //
   Rxn<CreditCard> card = Rxn();
 
@@ -38,15 +38,12 @@ class ViewCartController {
   Future<void> _addingValusToOptions() async {
     options.add({PickerChoice.Cash: null});
     if (await isApplePaySupported()) {
-      mezDbgPrint("Adding apple pay");
       options.add({PickerChoice.ApplePay: null});
     }
     if (await isGooglePaySupported()) {
-      mezDbgPrint("Adding google pay");
       options.add({PickerChoice.GooglePay: null});
     }
     customerCards.forEach((CreditCard element) {
-      mezDbgPrint("Adding cards");
       options.add({PickerChoice.SavedCard: element});
     });
     options.add({PickerChoice.NewCard: null});
@@ -60,23 +57,39 @@ class ViewCartController {
         .stream
         .listen((Customer? event) {
       if (event != null) {
-        customerCards.value = event.savedCards;
-        customerCards.refresh();
-        options.refresh();
+        customerCards.clear();
+        customerCards.value.addAll(event.savedCards);
+        if (customerCards.isEmpty) {
+          options.removeWhere((PaymentOption element) =>
+              element.entries.first.key == PickerChoice.SavedCard);
+        }
+        if (pickerChoice.value?.entries.first.key == PickerChoice.SavedCard &&
+            customerCards.isEmpty) {
+          pickerChoice.value = options.first;
+        }
       }
     });
   }
 
+  void _updateListWithNewCard() {
+    options.removeWhere((PaymentOption element) =>
+        element.entries.first.key == PickerChoice.SavedCard);
+
+    customerCards.forEach((CreditCard element) {
+      options.add({PickerChoice.SavedCard: element});
+    });
+
+    options.refresh();
+  }
+
   // methods
-  void switchPicker(PaymentOption value) {
+  Future<void> switchPicker(PaymentOption value) async {
     if (value.keys.first != PickerChoice.Cash) {
       controller.switchPaymentMedthod(paymentType: PaymentType.Card);
+      await handlePaymentChoice(value);
     } else {
-      controller.switchPaymentMedthod(
-          paymentType:
-              PaymentType.Cash); //  cart.paymentType = PaymentType.Cash;
+      controller.switchPaymentMedthod(paymentType: PaymentType.Cash);
     }
-    handlePaymentChoice(value);
   }
 
   Future<void> handlePaymentChoice(PaymentOption newValue) async {
@@ -88,17 +101,27 @@ class ViewCartController {
 
       case PickerChoice.NewCard:
         final String? newCardId = await addCardSheet();
+        if (newCardId != null) {
+          await Future.delayed(Duration(milliseconds: 2), () {});
+          _updateListWithNewCard();
 
-        customerCards.refresh();
-        final CreditCard? newCard = customerCards
-            .firstWhere((CreditCard element) => element.id == newCardId);
+          final CreditCard? newCard = customerCards
+              .firstWhere((CreditCard element) => element.id == newCardId);
 
-        if (newCard != null) {
-          card.value = newCard;
-          options.insert(options.length - 1, {PickerChoice.SavedCard: newCard});
-          pickerChoice.value = options.firstWhere((PaymentOption element) =>
-              element.entries.first.value?.id == newCard.id);
+          if (newCard != null) {
+            card.value = newCard;
+            // options
+            //     .insert(options.length - 1, {PickerChoice.SavedCard: newCard});
+            pickerChoice.value = options.firstWhere((PaymentOption element) =>
+                element.entries.first.value?.id == newCard.id);
+          }
+        } else {
+          controller.switchPaymentMedthod(paymentType: PaymentType.Cash);
+          pickerChoice.value = options.first;
+
+          pickerChoice.refresh();
         }
+
         break;
 
       default:
@@ -114,14 +137,9 @@ class ViewCartController {
 // helpers //
 extension pickerHelper on PickerChoice {
   String toNormalString() {
-    final String str = toString().split('.').last;
-    switch (this) {
-      case PickerChoice.NewCard:
-        return "New Card";
-        break;
-      default:
-        return str;
-    }
+    final String str = toString().split('.').last.toLowerCase();
+
+    return str.toLowerCase();
   }
 
   CardChoice toCardChoice() {

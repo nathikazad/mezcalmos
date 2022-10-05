@@ -46,9 +46,6 @@ class NoOrdersComponent extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                     color: Colors.grey.shade800),
               ),
-              SizedBox(
-                height: 20.h,
-              )
             ],
           ),
         );

@@ -14,12 +14,16 @@
                     "notifications": "Notifications",
                     "orders": "Orders"
                 }
+
             },
+
             "CustomerHomeFooterButtons": {
                 "privacyPolicy": "Privacy policy"
             },
             "DropDownLocationList": {
                 "chooseLoc": "Choose location",
+                "ops": "Oops",
+                "distanceError": "Distance between you and restaurant is more than 10km !",
                 "pickLocation": "Pick from map"
             },
             "LocationPicker": {
@@ -33,6 +37,18 @@
             }
         },
         "pages": {
+            "cards": {
+
+                "SavedCardsListView": {
+                    "cards": "Cards",
+                    "card": "Card",
+                    "addNew": "Add new credit card",
+                    "removeTitle": "Remove card",
+                    "removeDesc": "Are you sure you want to remove this card",
+                    "removeBtn": "Yes, remove card"
+
+                }
+            },
             "ListOrdersScreen": {
                 "components": {
                     "RestaurantOngoingOrderCard": {
@@ -135,6 +151,13 @@
                             "pickTime": "Pick your time",
                             "now": "Now"
                         },
+                        "PaymentMethodPicker": {
+                            "paymentMethod": "Payment method",
+                            "cash": "Cash",
+                            "newcard": "New Card",
+                            "applepay": "Apple Pay",
+                            "googlepay": "Google Pay"
+                        },
                         "BuildCart": {
                             "inCart": "My orders",
                             "yesClear": "Yes",
@@ -164,7 +187,8 @@
                             "deliveryCost": "Delivery Cost",
                             "stripeFees": "Card fees",
                             "totalCost": "Total Cost",
-                            "deliveryLocation": "Delivery Location"
+                            "deliveryLocation": "Delivery Location",
+                            "toBeCalc": "Calculating..."
                         },
                         "SaveLocationDailog": {
                             "addLocationDialogTitle": "Enter location name, if you want to save for future use, else you may skip",
@@ -182,6 +206,9 @@
                         }
                     },
                     "ViewCartScreen": {
+                        "ops": "Oops",
+                        "restaurantClosed": "Restuarnt is closed now",
+                        "distanceError": "Distance between you and restaurat is more than 10km !",
                         "myCart": "My Cart",
                         "notAvailable": "This restaurant is closed",
                         "orderNow": "ORDER NOW",
@@ -255,6 +282,7 @@
                             "orderCancelled": "Order Cancelled"
                         },
                         "OrdersItemsCard": {
+                            "itemUnav": "Item unavailable",
                             "orderItems": "Order Items",
                             "canceledByAdmin": "Cancelled",
                             "canceledByCustomer": "Cancelled",
@@ -657,6 +685,10 @@
             }
         },
         "pages": {
+            "SomethingWentWrongScreen": {
+                "noRestaurantFoundOnOperator": "No restaurant found on your operator",
+                "pleaseContactAdmin": "Please contact the admin"
+            },
             "AuthScreens": {
                 "SMS": {
                     "OtpConfirmationScreen": {
@@ -680,7 +712,7 @@
                 },
                 "SignInScreen": {
                     "title": "Connect using Facebook or using SMS ! ",
-                    "loginWithApple": " LOGIN WITH APPLE",
+                    "loginWithApple": "SIGN IN WITH APPLE",
                     "loginWithSms": "LOGIN WITH SMS",
                     "fbBtn": "LOGIN WITH FACEBOOK"
                 },
@@ -803,14 +835,30 @@
                 "dvTime": "Delivery time"
             },
             "MezDateTimePicker": {
-                "title": "Pick your time",
-                "startsAt": "Starts at",
+                "cancel": "Cancel",
+                "confirm": "Confirm",
                 "endsAt": "Ends at",
                 "sDate": "Select date",
+                "startsAt": "Starts at",
                 "sTime": "Select time",
-                "cancel": "Cancel",
-                "confirm": "Confirm"
-
+                "title": "Pick your time"
+            },
+            "OrderSummaryCard": {
+                "orderSummary": "Order Summary",
+                "orderCost": "Order Cost",
+                "deliveryCost": "Delivery Cost",
+                "stripeFees": "Card fees",
+                "totalCost": "Total Cost",
+                "deliveryLocation": "Delivery Location",
+                "refundAmount": "Refund amount",
+                "toBeCalc": "To be calculated"
+            },
+            "OrderPaymentMethod": {
+                "paymentMethod": "Payment method",
+                "cash": "Cash"
+            },
+            "OrderDeliveryLocation": {
+                "title": "Delivery location"
             },
             "CreditCardInfo": {
                 "creditCardInfo": "Credit card info",
@@ -1036,7 +1084,8 @@
     },
     "DeliveryAdminApp": {
         "main": {
-            "services": "Services"
+            "services": "Services",
+            "dashboard": "Dashboard"
         },
         "notificationHandler": {
             "restaurantTitle": "New Restaurant Order",
@@ -1058,6 +1107,19 @@
 
         },
         "pages": {
+            "AdminDashboardView": {
+                "dashboard": "Dashboard",
+                "shippingPrice": "Base shippin price",
+                "minPrice": "Minimum shipping price",
+                "newMinPrice": "New Minimum shipping price",
+                "perKm": "Per KM shipping price",
+                "newPerkm": "New per KM shipping price",
+                "newShippingPrice": "New base shipping price",
+                "error": "Error",
+                "errorText": "Shipping price not valid",
+                "confirm": "Confirm",
+                "cancel": "Cancel"
+            },
             "AddLaundryServiceView": {
                 "newLaundry": "New laundry",
                 "createLaundry": "Create laundry",
@@ -1065,6 +1127,17 @@
                 "email": "Email",
                 "phoneNumber": "Phone number",
                 "helperText": "You should provide either the email adress or the phone number of the laundry",
+                "required": "Required",
+                "emailNotCorrect": "Email adress is not correct",
+                "phoneNotCorrect": "Phone number is not correct"
+            },
+            "AddRestaurantServiceView": {
+                "newRestaurant": "New Restuarnt",
+                "createRestaurant": "Create Restuarant",
+                "restaurantName": "Restaurant name",
+                "email": "Email",
+                "phoneNumber": "Phone number",
+                "helperText": "You should provide either the email adress or the phone number of the restaurant",
                 "required": "Required",
                 "emailNotCorrect": "Email adress is not correct",
                 "phoneNotCorrect": "Phone number is not correct"
@@ -1397,6 +1470,10 @@
 
                     },
                     "Components": {
+                        "AnimatedOrderInfoCard": {
+                            "cash": "Cash",
+                            "card": "Card"
+                        },
                         "DriverBottomLaundryOrderCard": {
                             "oops": "Oops",
                             "set": "Set",
@@ -1530,6 +1607,7 @@
                 "editCategory": "Edit category",
                 "saveCategory": "Save category",
                 "categoryName": "Category name",
+                "nameExist": "Name already exist",
                 "categoryNameIn": "Category name in ",
                 "categoryNameHint": "Enter a category name",
                 "categoryPrice": "Category pricing per kilogramme",
@@ -1735,7 +1813,7 @@
                         "minError": "Minimum refund amount should be more than 0 ",
                         "to": "To",
                         "cancel": "Cancel",
-                        "confirmRefund": "Confirm refund",
+                        "confirmRefund": "Confirm",
                         "dialogTitle": "Refund confirmed",
                         "dialogDesc": "Your customer will receive the refund soon."
 
@@ -1745,7 +1823,7 @@
                         "orderReady": "Order is ready"
                     },
                     "ROpOrderEstTime": {
-                        "title": "Estimated food ready time",
+                        "title": "Estimated preparation time",
                         "set": "Set",
                         "confirm": "Confirm",
                         "cancel": "Cancel",
@@ -1760,6 +1838,7 @@
                     },
                     "ROpOrderItems": {
                         "note": "Note",
+                        "markitemUnav": "Mark as unavailable",
                         "itemUnav": "unavailable"
                     },
                     "ROpOrderSummaryCard": {
@@ -1779,6 +1858,7 @@
                 "addItem": "Add item",
                 "required": "Required",
                 "saveItem": "Save item",
+                "nameExist": "Name already exist",
                 "itemName": "Item name",
                 "itemDesc": "Item description",
                 "itemPrice": "Item price",
@@ -1887,6 +1967,7 @@
                 }
             },
             "ROpEditInfoView": {
+
                 "controllers": {
                     "ROpEditInfoController": {
                         "error": "Error",
@@ -1914,12 +1995,15 @@
                     }
                 },
                 "ROpEditInfoView": {
+                    "saved": "Saved",
+                    "savedText": "Your informations has been saved",
                     "openTitle": "Restaurant Availibility",
                     "openSubtitle": "This will close your restaurant indefinitely",
                     "restaurantName": "Restaurant name",
                     "nameErrorText": "please provide a name",
                     "defaultLanguage": "Default language",
                     "secondaryLanguage": "Secondary language",
+                    "description": "Description in",
                     "location": "Location",
                     "saveInfo": "Save info",
                     "components": {

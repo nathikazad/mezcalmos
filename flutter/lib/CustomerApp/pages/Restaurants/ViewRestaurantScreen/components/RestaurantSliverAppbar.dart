@@ -50,8 +50,9 @@ class RestaurantSliverAppBar extends StatelessWidget {
         expandedHeight: 220,
         leadingWidth: 35,
         automaticallyImplyLeading: false,
-        bottom:
-            (restaurant.getCategories.length > 1 && !showInfo) ? bottom : null,
+        bottom: (restaurant.getAvailableCategories.length > 1 && !showInfo)
+            ? bottom
+            : null,
         leading: _BackButtonAppBar(),
         actions: <Widget>[
           getAppbarIconsButton(),
@@ -61,7 +62,9 @@ class RestaurantSliverAppBar extends StatelessWidget {
           expandedTitleScale: 1.6,
           titlePadding: EdgeInsets.only(
               bottom:
-                  (restaurant.getCategories.length > 1 && !showInfo) ? 60 : 12),
+                  (restaurant.getAvailableCategories.length > 1 && !showInfo)
+                      ? 60
+                      : 12),
           centerTitle: true,
           title: Container(
             alignment: Alignment.bottomCenter,
@@ -197,9 +200,11 @@ class RestaurantSliverAppBar extends StatelessWidget {
               borderRadius: BorderRadius.circular(25),
               shape: BoxShape.rectangle,
               color: secondaryLightBlueColor),
-          tabs: List.generate(restaurant.getCategories.length, (int index) {
+          tabs: List.generate(restaurant.getAvailableCategories.length,
+              (int index) {
             return Tab(
-              text: restaurant.getCategories[index].name?[userLanguage],
+              text:
+                  restaurant.getAvailableCategories[index].name?[userLanguage],
             );
           }),
           // onTap: onTap,

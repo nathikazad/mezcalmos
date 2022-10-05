@@ -54,6 +54,12 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
     return Obx(() {
       if (editInfoController.showStripe.isTrue) {
         return ROpStripePaymentSetup(viewController: editInfoController);
+      } else if (editInfoController.setupClicked.isTrue) {
+        return Container(
+          alignment: Alignment.center,
+          color: Colors.white,
+          child: CircularProgressIndicator(),
+        );
       } else if (editInfoController.restaurant.value != null) {
         return Scaffold(
           backgroundColor: Colors.white,
@@ -92,10 +98,10 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
                 ),
                 Text("${_i18n()["defaultLanguage"]}"),
                 ROpLanguageSelectorComponent(
-                    languageValue: editInfoController.primaryLang,
-                    oppositeLanguageValue: editInfoController.secondaryLang,
+                    languageValue: editInfoController.editablePrLang,
+                    oppositeLanguageValue: editInfoController.editableScLang,
                     onChangeShouldUpdateLang:
-                        editInfoController.validatePrimaryLanguUpdate),
+                        editInfoController.changePrimaryLang),
                 SizedBox(
                   height: 15,
                 ),
@@ -104,17 +110,17 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
                   height: 5,
                 ),
                 ROpLanguageSelectorComponent(
-                  languageValue: editInfoController.secondaryLang,
-                  oppositeLanguageValue: editInfoController.primaryLang,
+                  languageValue: editInfoController.editableScLang,
+                  oppositeLanguageValue: editInfoController.editablePrLang,
                   onChangeShouldUpdateLang:
                       editInfoController.validateSecondaryLanguUpdate,
-                  showDeleteIcon: true,
+                  isSecondary: true,
                 ),
                 SizedBox(
                   height: 15,
                 ),
                 Text(
-                    'Description in ${editInfoController.primaryLang.value!.toLanguageName()}'),
+                    '${_i18n()["description"]} ${editInfoController.primaryLang.value!.toLanguageName()}'),
                 SizedBox(
                   height: 5,
                 ),
@@ -123,7 +129,7 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
                   height: 15,
                 ),
                 Text(
-                    'Description in ${editInfoController.secondaryLang.value!.toLanguageName()}'),
+                    '${_i18n()["description"]} ${editInfoController.secondaryLang.value!.toLanguageName()}'),
                 SizedBox(
                   height: 5,
                 ),
@@ -213,7 +219,16 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
             onPressed: (editInfoController.btnClicked.value)
                 ? null
                 : () {
-                    editInfoController.updateLaundryInfo();
+                    editInfoController.updateLaundryInfo().then((value) =>
+                        Get.snackbar(
+                            '${_i18n()["saved"]}', '${_i18n()["savedText"]}',
+                            backgroundColor: Colors.black,
+                            colorText: Colors.white,
+                            shouldIconPulse: false,
+                            icon: Icon(
+                              Icons.check_circle,
+                              color: Colors.green,
+                            )));
                   },
             child: (editInfoController.btnClicked.value)
                 ? Container(

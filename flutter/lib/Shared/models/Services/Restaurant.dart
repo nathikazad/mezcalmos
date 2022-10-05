@@ -54,7 +54,6 @@ class Restaurant extends Service {
       {required String restaurantId, required restaurantData}) {
     // List<Object?> availableLanguages =
     //     restaurantData["details"]["languages"] as List<Object?>;
-
     final ServiceState restaurantState =
         ServiceState.fromServiceStateData(restaurantData["state"]);
     LanguageMap? description;
@@ -126,10 +125,24 @@ class Restaurant extends Service {
     return restaurant;
   }
 
+  List<Category> get getAvailableCategories {
+    List<Category> categories = _categories
+        .where((Category category) => category.id != kNoCategoryNode)
+        .toList();
+    categories = categories
+        .where((Category element) => element.getAvailableItems.isNotEmpty)
+        .toList();
+    categories.forEach((Category category) {
+      category.sortItems();
+    });
+    return categories;
+  }
+
   List<Category> get getCategories {
     final List<Category> categories = _categories
         .where((Category category) => category.id != kNoCategoryNode)
         .toList();
+
     categories.forEach((Category category) {
       category.sortItems();
     });
@@ -144,6 +157,15 @@ class Restaurant extends Service {
     } else {
       return null;
     }
+  }
+
+  List<Item>? get getAvItemsWithoutCategories {
+    List<Item>? items = _categories
+        .firstWhereOrNull((Category category) => category.id == kNoCategoryNode)
+        ?.items;
+    items = items?.where((Item element) => element.available == true).toList();
+    items?.sort((Item a, Item b) => a.position.compareTo(b.position));
+    return items;
   }
 
   List<Item>? get getItemsWithoutCategory {
@@ -174,13 +196,13 @@ class Restaurant extends Service {
           if (item.id == id) returnVal = item;
         });
       });
-    }
-    if (returnVal == null) {
-      getItemsWithoutCategory?.forEach((Item element) {
-        if (element.id == id) {
-          returnVal = element;
-        }
-      });
+      if (returnVal == null) {
+        getAvItemsWithoutCategories?.forEach((Item element) {
+          if (element.id == id) {
+            returnVal = element;
+          }
+        });
+      }
     }
 
     return returnVal;
@@ -189,10 +211,10 @@ class Restaurant extends Service {
   double getAverageCost() {
     double allItemsCost = 0;
 
-    getItemsWithoutCategory?.forEach((Item element) {
+    getAvItemsWithoutCategories?.forEach((Item element) {
       allItemsCost += element.cost;
     });
-    getCategories.forEach((Category element) {
+    getAvailableCategories.forEach((Category element) {
       element.items.forEach((Item element) {
         allItemsCost += element.cost;
       });
@@ -216,7 +238,16 @@ class Restaurant extends Service {
     _categories.forEach((Category element) {
       numberOfItems = numberOfItems + element.items.length;
     });
-    return numberOfItems + (getItemsWithoutCategory?.length ?? 0);
+    return numberOfItems + (getAvItemsWithoutCategories?.length ?? 0);
+  }
+
+  List<Item> getAllItems() {
+    final List<Item> data = [];
+    _categories.forEach((Category element) {
+      data.addAll(element.items);
+    });
+    data.addAll(itemsWithoutCategory);
+    return data;
   }
 
   bool isOpen() {
@@ -265,6 +296,13 @@ class Category {
 
   void sortItems() {
     items.sort((Item a, Item b) => a.position.compareTo(b.position));
+  }
+
+  List<Item> get getAvailableItems {
+    final List<Item> data =
+        items.where((Item element) => element.available == true).toList();
+    data.sort((Item a, Item b) => a.position.compareTo(b.position));
+    return data;
   }
 
   Map<String, dynamic> toJson() {
@@ -353,7 +391,12 @@ class Item {
         endsAt: (itemData["endsAt"] != null)
             ? DateTime.tryParse(itemData["endsAt"])
             : null,
-        image: itemData["image"],
+
+        // image: itemData?["image"],
+        image: ((itemData?["image"].toString().isNotEmpty ?? false) &&
+                (itemData?["image"].toString().isURL ?? false))
+            ? itemData["image"]
+            : null,
         position: itemData["position"] ?? 0,
         name: convertToLanguageMap(itemData["name"]),
         //itemData["name"].toLanguageMap(),

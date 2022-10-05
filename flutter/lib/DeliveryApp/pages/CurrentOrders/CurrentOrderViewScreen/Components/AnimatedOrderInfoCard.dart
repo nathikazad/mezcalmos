@@ -4,12 +4,19 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/TwoCirclesAvatars.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
+        ["pages"]["CurrentOrders"]["CurrentOrderViewScreen"]["Components"]
+    ["AnimatedOrderInfoCard"];
 
 extension OrderCardInfoExtension on OrderInfoCardState {
   OrderInfoCardState opposit() => this == OrderInfoCardState.Maximized
@@ -335,10 +342,12 @@ class AnimatedOrderInfoCard extends StatelessWidget {
 
   Row orderCardMainBody() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
       children: [
         Flexible(
+          flex: 1,
           child: TwoCirclesAvatar(
             topImg: serviceProviderImage,
             // bottomImg: customerImage,
@@ -348,7 +357,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
           ),
         ),
         Flexible(
-          flex: 6,
+          flex: 9,
           child: Padding(
             padding: EdgeInsets.only(right: 20),
             child: Column(
@@ -362,21 +371,18 @@ class AnimatedOrderInfoCard extends StatelessWidget {
             ),
           ),
         ),
-        Spacer(),
-        Flexible(
-          child: InkWell(
-            onTap: () {
-              Get.toNamed<void>(
-                getOrderDetailsRoute(order.orderId),
-              );
-            },
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Icon(
-                Icons.article_rounded,
-                color: Color.fromRGBO(103, 121, 254, 1),
-                size: 30,
-              ),
+        InkWell(
+          onTap: () {
+            Get.toNamed<void>(
+              getOrderDetailsRoute(order.orderId),
+            );
+          },
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: Icon(
+              Icons.article_rounded,
+              color: Color.fromRGBO(103, 121, 254, 1),
+              size: 30,
             ),
           ),
         ),
@@ -413,8 +419,8 @@ class AnimatedOrderInfoCard extends StatelessWidget {
   }
 
   Flex routeInformationWidget() {
-    return Flex(
-      direction: Axis.horizontal,
+    return Row(
+      // direction: Axis.horizontal,
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -446,9 +452,27 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         ),
         SizedBox(width: 3),
         Flexible(
-          // flex: 2,
           child: Text(
             order.routeInformation?.distance.distanceStringInKm ?? '- - - -',
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+            style: TextStyle(
+              fontFamily: 'Nunito',
+              fontWeight: FontWeight.w600,
+              fontSize: 15,
+            ),
+          ),
+        ),
+        SizedBox(width: 16.33),
+        Icon(
+          order.stripePaymentInfo?.brand?.toIcon() ?? Icons.payments,
+          color: Color.fromRGBO(73, 73, 73, 1),
+          size: 18,
+        ),
+        SizedBox(width: 3),
+        Flexible(
+          child: Text(
+            " ${_i18n()["${order.paymentType.toNormalString().toLowerCase()}"]}",
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
             style: TextStyle(

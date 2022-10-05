@@ -57,15 +57,20 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
         },
         iconColor: primaryBlueColor,
         trailing: Container(
-          width: 25,
-          height: 25,
+          margin: const EdgeInsets.only(right: 8),
+          padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
               color: secondaryLightBlueColor, shape: BoxShape.circle),
-          child:
-              (isExpanded) ? Icon(Icons.expand_less) : Icon(Icons.expand_more),
+          child: (isExpanded)
+              ? Icon(
+                  Icons.expand_less,
+                  size: 20,
+                )
+              : Icon(
+                  Icons.expand_more,
+                  size: 20,
+                ),
         ),
-
-        //  tilePadding: EdgeInsets.all(5),
         tilePadding: EdgeInsets.zero,
         title: _optionHeader(option: option),
         children: [
@@ -80,7 +85,7 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
 
   Container _optionHeader({required Option option}) {
     return Container(
-      margin: const EdgeInsets.all(12),
+      margin: const EdgeInsets.only(top: 8, bottom: 8, left: 8, right: 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

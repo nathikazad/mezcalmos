@@ -15,7 +15,6 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-import 'package:new_version/new_version.dart' show VersionStatus;
 
 class Wrapper extends StatefulWidget {
   @override

@@ -11,10 +11,10 @@ dynamic _i18n() =>
 class OrderItemsCard extends StatelessWidget {
   const OrderItemsCard({
     Key? key,
-    required this.items,
+    required this.order,
   }) : super(key: key);
 
-  final List<RestaurantOrderItem> items;
+  final RestaurantOrder order;
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +36,12 @@ class OrderItemsCard extends StatelessWidget {
           height: 10,
         ),
         Column(
-          children: List.generate(items.length,
-              (int index) => OrderItemsItemCard(item: items[index])),
+          children: List.generate(
+              order.items.length,
+              (int index) => OrderItemsItemCard(
+                    item: order.items[index],
+                    order: order,
+                  )),
         )
       ],
     );

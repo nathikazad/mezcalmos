@@ -8,7 +8,9 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/widgets/MezExpandCard.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpOrderView"]["components"]["ROpOrderItems"];
@@ -30,6 +32,7 @@ class ROpOrderItems extends StatefulWidget {
 class _ROpOrderItemsState extends State<ROpOrderItems> {
   bool imageLoded = true;
   bool isExpanded = false;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +40,19 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
     final LanguageType userLanguage =
         Get.find<LanguageController>().userLanguageKey;
     return Card(
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 7),
-        child: (widget.item.chosenChoices.isEmpty && widget.item.notes == null)
-            ? _itemHeader(userLanguage, txt)
-            : _itemExpandableComponent(context, userLanguage, txt),
-      ),
+      child: (isLoading)
+          ? Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: CircularProgressIndicator(),
+            )
+          : Container(
+              padding: const EdgeInsets.symmetric(vertical: 7),
+              child: (widget.item.chosenChoices.isEmpty &&
+                      widget.item.notes == null)
+                  ? _itemHeader(userLanguage, txt)
+                  : _itemExpandableComponent(context, userLanguage, txt),
+            ),
     );
   }
 
@@ -50,19 +60,20 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
       BuildContext context, LanguageType userLanguage, TextTheme txt) {
     return Theme(
       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-      child: ExpansionTile(
-        childrenPadding: const EdgeInsets.all(8),
+      child: MezExpandCard(
+        childrenPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
         collapsedIconColor: primaryBlueColor,
-
+        expandedCrossAxisAlignment: CrossAxisAlignment.end,
         onExpansionChanged: (bool v) {
           setState(() {
             isExpanded = v;
           });
         },
         iconColor: primaryBlueColor,
+
         trailing: Container(
-          width: 25,
-          height: 25,
+          // width: 25,
+          // height: 25,
           decoration: BoxDecoration(
               color: secondaryLightBlueColor, shape: BoxShape.circle),
           child:
@@ -83,8 +94,6 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
           ),
           if (widget.item.notes != null)
             Container(
-              // margin: const EdgeInsets.symmetric(horizontal: 8),
-              //   alignment: Alignment.centerLeft,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -116,134 +125,151 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
 
   Widget _itemHeader(LanguageType userLanguage, TextTheme txt) {
     return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+      child: Column(
         children: [
-          SizedBox(
-            width: 5,
-          ),
-          Container(
-            //  padding: const EdgeInsets.all(5),
-            height: 55,
-            width: 55,
-            foregroundDecoration: BoxDecoration(
-                color: (widget.item.unavailable)
-                    ? Colors.white.withOpacity(0.4)
-                    : null),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: (imageLoded)
-                      ? CachedNetworkImageProvider(widget.item.image ?? '',
-                          errorListener: () {
-                          setState(() {
-                            imageLoded = false;
-                          });
-                        })
-                      : AssetImage(aNoImage) as ImageProvider<Object>,
-                )),
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          if (widget.item.name[userLanguage] != null)
-            Flexible(
-              //flex: 4, fit: FlexFit.tight,
-              flex: 5,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              SizedBox(
+                width: 5,
+              ),
+              if (widget.order.showItemsImages)
+                Container(
+                  //  padding: const EdgeInsets.all(5),
+                  height: 55,
+                  width: 55,
+                  foregroundDecoration: BoxDecoration(
+                      color: (widget.item.unavailable)
+                          ? Colors.white.withOpacity(0.4)
+                          : null),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: (imageLoded)
+                            ? CachedNetworkImageProvider(
+                                widget.item.image ?? '', errorListener: () {
+                                setState(() {
+                                  imageLoded = false;
+                                });
+                              })
+                            : AssetImage(aNoImage) as ImageProvider<Object>,
+                      )),
+                ),
+              SizedBox(
+                width: 10,
+              ),
+              if (widget.item.name[userLanguage] != null)
+                Flexible(
+                  fit: FlexFit.tight,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Flexible(
-                        child: Text(
-                          widget.item.name[userLanguage]!,
+                      Text(
+                        widget.item.name[userLanguage]! +
+                            " x${widget.item.quantity}",
+                        style: txt.bodyText1?.copyWith(
+                            color: widget.item.unavailable
+                                ? Colors.black.withOpacity(0.5)
+                                : Colors.black,
+                            decoration: (widget.item.unavailable)
+                                ? TextDecoration.lineThrough
+                                : null),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text('\$' + widget.item.totalCost.toInt().toString(),
                           style: txt.bodyText1?.copyWith(
+                              color: widget.item.unavailable
+                                  ? Colors.black.withOpacity(0.5)
+                                  : Colors.black,
                               decoration: (widget.item.unavailable)
                                   ? TextDecoration.lineThrough
-                                  : null),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Flexible(
-                        child: Text(
-                          "x${widget.item.quantity}",
-                          style: txt.bodyText1?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              decoration: (widget.item.unavailable)
-                                  ? TextDecoration.lineThrough
-                                  : null),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
+                                  : null)),
                     ],
                   ),
-                  SizedBox(
-                    height: 3,
-                  ),
-                  Container(
-                    // margin: EdgeInsets.all(5),
-
-                    child: Text('\$' + widget.item.totalCost.toInt().toString(),
-                        style: txt.bodyText1),
-                  ),
-
-                  // InkWell(
-                  //   onTap: (widget.order.inProcess())
-                  //       ? null
-                  //       : () {
-                  //           if (widget.item.unavailable) {
-                  //             Get.snackbar("Error", "Item already unavailable",
-                  //                 backgroundColor: Colors.black,
-                  //                 colorText: Colors.white);
-                  //           } else {
-                  //             Get.find<ROpOrderController>()
-                  //                 .markItemUnavailable(widget.order.orderId,
-                  //                     widget.item.idInCart)
-                  //                 .then((ServerResponse value) =>
-                  //                     mezDbgPrint("Done"));
-                  //           }
-                  //         },
-                  //   child: Ink(
-                  //       padding: const EdgeInsets.all(5),
-                  //       decoration: BoxDecoration(
-                  //           color: (widget.item.unavailable)
-                  //               ? Colors.grey
-                  //               : primaryBlueColor,
-                  //           borderRadius: BorderRadius.circular(8)),
-                  //       child: Text(
-                  //         "Item unavailable",
-                  //         style: Get.textTheme.bodyText2?.copyWith(
-                  //             fontWeight: FontWeight.w600, color: Colors.white),
-                  //       )),
-                  // )
-                ],
-              ),
-            ),
-          if (widget.order.stripePaymentInfo != null)
-            Flexible(
-              flex: 4,
-              child: MezButton(
-                label: "${_i18n()["itemUnav"]}",
-                height: 35,
-                backgroundColor:
-                    widget.item.unavailable ? offRedColor : primaryBlueColor,
-                textColor: Colors.white,
-                enabled: (widget.order.inProcess() && !widget.item.unavailable),
-                borderRadius: 20,
-                onClick: () async {
-                  await Get.find<ROpOrderController>().markItemUnavailable(
-                      widget.order.orderId, widget.item.idInCart);
-                },
-              ),
+                ),
+            ],
+          ),
+          if (widget.order.inProcess())
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Theme(data: context.theme, child: Divider()),
+                _unAvailableBtn(),
+              ],
             ),
         ],
+      ),
+    );
+  }
+
+  Widget _unAvailableBtn() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 5, right: 5, top: 0),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(10),
+        onTap: (!widget.order.inProcess() || widget.item.unavailable)
+            ? null
+            : () async {
+                setState(() {
+                  isLoading = true;
+                });
+                await Get.find<ROpOrderController>()
+                    .markItemUnavailable(
+                        widget.order.orderId, widget.item.idInCart)
+                    .then((ServerResponse response) {
+                  if (!response.success) {
+                    Get.snackbar("Error", response.errorMessage ?? "Error");
+                  }
+                }).whenComplete(() {
+                  setState(() {
+                    isLoading = false;
+                  });
+                });
+              },
+        child: Ink(
+            padding: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+                color:
+                    (widget.item.unavailable) ? offRedColor : primaryBlueColor,
+                borderRadius: BorderRadius.circular(15)),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 2),
+                  child: Icon(
+                    widget.item.unavailable
+                        ? Icons.do_disturb_off
+                        : Icons.do_disturb_on,
+                    color: widget.item.unavailable ? Colors.red : Colors.white,
+                    size: 14.sp,
+                  ),
+                ),
+                SizedBox(
+                  width: 3,
+                ),
+                Text(
+                  (widget.item.unavailable)
+                      ? "${_i18n()["itemUnav"]}".capitalizeFirstofEach
+                      : '${_i18n()["markitemUnav"]}',
+                  style: Get.textTheme.bodyText2?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 11.sp,
+                      color:
+                          widget.item.unavailable ? Colors.red : Colors.white),
+                ),
+                SizedBox(
+                  width: 3,
+                ),
+              ],
+            )),
       ),
     );
   }
@@ -288,9 +314,12 @@ Widget _itemChoiche(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        choices[index].name[userLanguage] ?? "Error",
-                        style: Get.theme.textTheme.bodyText2,
+                      Flexible(
+                        child: Text(
+                          choices[index].name[userLanguage] ?? "Error",
+                          style: Get.theme.textTheme.bodyText2,
+                          maxLines: 2,
+                        ),
                       ),
                       if (choices[index].cost > 0)
                         Text(

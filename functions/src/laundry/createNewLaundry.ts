@@ -3,10 +3,11 @@ import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import * as firebase from "firebase-admin";
 import { UserRecord } from "firebase-functions/v1/auth";
 import * as laundryNodes from "../shared/databaseNodes/services/laundry";
-import * as laundryOperatorNodes from "../shared/databaseNodes/operators/operator";
+import * as operatorNodes from "../shared/databaseNodes/operators/operator";
 import { OrderType } from "../shared/models/Generic/Order";
 import { userInfoNode } from "../shared/databaseNodes/root";
 import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
+import { UserInfo } from "../shared/models/Generic/User";
 
 
 export = functions.https.onCall(async (data, context) => {
@@ -49,6 +50,13 @@ export = functions.https.onCall(async (data, context) => {
     }
   }
 
+  let operatorInfo: UserInfo = (await userInfoNode(user.uid).once('value')).val();
+  if(operatorInfo == null || operatorInfo.name == null)
+  return {
+    status: ServerResponseStatus.Error,
+    errorMessage: "User info not there",
+  }
+
   let laundryId: string = (await laundryNodes.info().push()).key!;
   let newLaundry = JSON.parse(laundryTemplateInJson);
   newLaundry.info.id = laundryId
@@ -56,9 +64,8 @@ export = functions.https.onCall(async (data, context) => {
   newLaundry.state.operators[user.uid] = true;
   laundryNodes.info(laundryId).set(newLaundry);
 
-  let operatorInfo = (await userInfoNode(user.uid).once('value')).val();
   let newOperator = { info: operatorInfo, state: { laundryId: laundryId } };
-  laundryOperatorNodes.operatorInfo(OrderType.Laundry, user.uid).set(newOperator);
+  operatorNodes.operatorInfo(OrderType.Laundry, user.uid).set(newOperator);
   return { status: ServerResponseStatus.Success }
 })
 
@@ -81,39 +88,39 @@ let laundryTemplateInJson = `{
     },
     "schedule": {
       "friday": {
-        "from": "8:0",
+        "from": "8:00",
         "isOpen": true,
-        "to": "20:0"
+        "to": "20:00"
       },
       "monday": {
-        "from": "8:0",
+        "from": "8:00",
         "isOpen": true,
-        "to": "20:0"
+        "to": "20:00"
       },
       "saturday": {
-        "from": "8:0",
+        "from": "8:00",
         "isOpen": true,
-        "to": "19:0"
+        "to": "19:00"
       },
       "sunday": {
-        "from": "8:0",
+        "from": "8:00",
         "isOpen": true,
-        "to": "16:0"
+        "to": "16:00"
       },
       "thursday": {
-        "from": "8:0",
+        "from": "8:00",
         "isOpen": true,
-        "to": "20:0"
+        "to": "20:00"
       },
       "tuesday": {
-        "from": "8:0",
+        "from": "8:00",
         "isOpen": true,
-        "to": "20:0"
+        "to": "20:00"
       },
       "wednesday": {
-        "from": "8:0",
+        "from": "8:00",
         "isOpen": true,
-        "to": "20:0"
+        "to": "20:00"
       }
     }
   },
@@ -129,7 +136,7 @@ let laundryTemplateInJson = `{
   },
   "state": {
     "authorizationStatus": "authorized",
-    "available": true,
+    "available": false,
     "operators": {}
   }
 }`;

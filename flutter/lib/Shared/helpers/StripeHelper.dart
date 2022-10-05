@@ -4,6 +4,8 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
@@ -220,7 +222,8 @@ Future<bool> isApplePaySupported() {
 
 Future<bool> isGooglePaySupported() {
   return Stripe.instance.isGooglePaySupported(IsGooglePaySupportedParams(
-      testEnv: true, existingPaymentMethodRequired: true));
+      testEnv: getAppLaunchMode() == AppLaunchMode.prod ? false : true,
+      existingPaymentMethodRequired: true));
 }
 
 Future<void> acceptPaymentWithApplePay(
@@ -229,7 +232,7 @@ Future<void> acceptPaymentWithApplePay(
     required num paymentAmount}) async {
   try {
     Stripe.publishableKey = paymentIntentData['publishableKey'];
-    Stripe.merchantIdentifier = merchantName;
+    Stripe.merchantIdentifier = "merchant.mezcalmos";
     final clientSecret = paymentIntentData['paymentIntent'];
     Stripe.stripeAccountId = paymentIntentData['stripeAccountId'];
     await Stripe.instance.applySettings();
@@ -260,13 +263,15 @@ Future<void> acceptPaymentWithGooglePay(
     required num paymentAmount}) async {
   try {
     Stripe.publishableKey = paymentIntentData['publishableKey'];
-    Stripe.merchantIdentifier = merchantName;
+    Stripe.merchantIdentifier = "BCR2DN4T4C3I3XDF";
     final clientSecret = paymentIntentData['paymentIntent'];
     Stripe.stripeAccountId = paymentIntentData['stripeAccountId'];
     await Stripe.instance.applySettings();
 
     await Stripe.instance.initGooglePay(GooglePayInitParams(
-        testEnv: true, merchantName: merchantName, countryCode: 'US'));
+        testEnv: getAppLaunchMode() == AppLaunchMode.prod ? false : true,
+        merchantName: "Mezcalmos",
+        countryCode: 'US'));
 
     await Stripe.instance.presentGooglePay(
       PresentGooglePayParams(clientSecret: clientSecret),
@@ -315,7 +320,7 @@ Future<ServerResponse> serviceProviderFunctions(
 
 Future<dynamic> addCardSheet() {
   return showModalBottomSheet(
-      isScrollControlled: false,
+      isScrollControlled: true,
       context: Get.context!,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -360,7 +365,11 @@ Future<dynamic> addCardSheet() {
                 const SizedBox(
                   height: 20,
                 ),
-                CardForm(),
+                Padding(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(ctx).viewInsets.bottom),
+                  child: CardForm(),
+                ),
               ],
             ));
       });
@@ -398,8 +407,10 @@ class _CardFormState extends State<CardForm> {
         MezSnackbar(
             "Add Card Error", serverResponse.errorMessage ?? "Unknown Error");
       }
+    } on StripeException catch (e) {
+      MezSnackbar("Error", e.toJson()['localizedMessage'] ?? "error");
     } catch (e) {
-      MezSnackbar("Add Card Error", e.toString());
+      MezSnackbar("Error", "Error");
     } finally {
       setState(() {
         _isButtonEnabled = true;
@@ -411,7 +422,7 @@ class _CardFormState extends State<CardForm> {
   Widget build(BuildContext context) {
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           CardFormField(
             enablePostalCode: true,
@@ -424,8 +435,9 @@ class _CardFormState extends State<CardForm> {
             style: CardFormStyle(
               borderColor: Colors.blueGrey,
               textColor: Colors.black,
-              fontSize: 24,
-              placeholderColor: Colors.blue,
+              cursorColor: primaryBlueColor,
+              fontSize: 18,
+              placeholderColor: Colors.grey.shade800,
             ),
           ),
           const SizedBox(
@@ -433,11 +445,12 @@ class _CardFormState extends State<CardForm> {
           ),
           MezButton(
             label: "Save",
-            onClick: () async {
-              if (_isButtonEnabled) {
-                await createCard();
-              }
-            },
+            enabled: _isButtonEnabled,
+            onClick: _isButtonEnabled
+                ? () async {
+                    await createCard();
+                  }
+                : null,
           ), // TextButton(
           //     child: Container(
           //         margin: const EdgeInsets.symmetric(vertical: 5),

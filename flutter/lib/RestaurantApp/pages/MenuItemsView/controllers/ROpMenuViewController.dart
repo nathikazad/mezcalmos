@@ -31,7 +31,7 @@ class ROpMenuViewController {
     restaurantInfoController.init(restId: restaurantId);
     restaurant.value =
         await restaurantInfoController.getRestaurantAsFuture(restaurantId);
-    restaurantInfoController
+    _restaurantListener = restaurantInfoController
         .getRestaurant(restaurantId)
         .listen((Restaurant? event) {
       if (event != null) {

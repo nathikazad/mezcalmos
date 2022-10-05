@@ -178,7 +178,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
             ),
           );
         } else
-          return Container();
+          return SizedBox();
       },
     );
   }

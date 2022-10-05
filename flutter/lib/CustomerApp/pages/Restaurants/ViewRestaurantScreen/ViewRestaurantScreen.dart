@@ -38,12 +38,12 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
   void initState() {
     restaurant = Get.arguments as Restaurant;
     mezDbgPrint(restaurant.info.id);
-    itemKeys.assign((restaurant.getCategories.length + 1), "info");
-    itemKeys[(restaurant.getCategories.length + 1)] =
+    itemKeys.assign((restaurant.getAvailableCategories.length + 1), "info");
+    itemKeys[(restaurant.getAvailableCategories.length + 1)] =
         RectGetter.createGlobalKey();
 
-    tabController =
-        TabController(length: restaurant.getCategories.length, vsync: this);
+    tabController = TabController(
+        length: restaurant.getAvailableCategories.length, vsync: this);
     scrollController = AutoScrollController();
     super.initState();
   }
@@ -164,7 +164,8 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
                 sliver: SliverList(
                     delegate: SliverChildListDelegate([
                   RectGetter(
-                      key: itemKeys[restaurant.getCategories.length + 1],
+                      key: itemKeys[
+                          restaurant.getAvailableCategories.length + 1],
                       child: RestaurantInfoTab(
                         restaurant: restaurant,
                       )),
@@ -188,7 +189,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
   }
 
   List<Category> _getList() {
-    final List<Category> data = restaurant.getCategories;
+    final List<Category> data = restaurant.getAvailableCategories;
     if (restaurant.itemsWithoutCategory.isNotEmpty) {
       data.add(restaurant.getNoCategory!);
     }
@@ -210,40 +211,44 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
   }
 
   Widget _buildCategory(Category category, int index) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (category.name?[userLanguage] != null)
-            Container(
-              margin: const EdgeInsets.only(top: 10, bottom: 5),
-              child: Text(
-                category.name![userLanguage]!,
-                style: Get.theme.textTheme.headline3
-                    ?.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700),
+    if (category.getAvailableItems.isNotEmpty) {
+      return Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (category.name?[userLanguage] != null)
+              Container(
+                margin: const EdgeInsets.only(top: 10, bottom: 5),
+                child: Text(
+                  category.name![userLanguage]!,
+                  style: Get.theme.textTheme.headline3
+                      ?.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700),
+                ),
               ),
-            ),
-          if (category.dialog?[userLanguage] != null)
-            Container(
-              child: Text(
-                category.dialog![userLanguage]!,
-                style: Get.textTheme.bodyText2?.copyWith(
-                    fontFamily: "Montserrat", color: Colors.grey.shade700),
+            if (category.dialog?[userLanguage] != null)
+              Container(
+                margin: const EdgeInsets.only(bottom: 5),
+                child: Text(
+                  category.dialog![userLanguage]!,
+                  style: Get.textTheme.bodyText2?.copyWith(
+                      fontFamily: "Montserrat", color: Colors.grey.shade700),
+                ),
               ),
-            ),
-          _buildResturantItems(category.items, restaurant.info.id),
-          SizedBox(
-            height: 20,
-          )
-        ],
-      ),
-    );
+            _buildResturantItems(
+                category.getAvailableItems, restaurant.info.id),
+            SizedBox(
+              height: 20,
+            )
+          ],
+        ),
+      );
+    } else
+      return Container();
   }
 
   Widget _buildResturantItems(List<Item> items, String restaurantId) {
     if (restaurant.restaurantsView == RestaurantsView.Rows) {
       return Container(
-        margin: const EdgeInsets.only(top: 5),
         child: Column(
           children: items.fold<List<Widget>>(<Widget>[],
               (List<Widget> children, Item item) {

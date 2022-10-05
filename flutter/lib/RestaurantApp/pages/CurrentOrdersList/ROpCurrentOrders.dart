@@ -11,11 +11,15 @@ import 'package:mezcalmos/RestaurantApp/pages/CurrentOrdersList/components/ROpOr
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersOnOff.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 import 'package:sizer/sizer.dart';
 
@@ -33,9 +37,11 @@ class LaundryOpCurrentOrdersListView extends StatefulWidget {
 class _LaundryOpCurrentOrdersListViewState
     extends State<LaundryOpCurrentOrdersListView> {
   ROpOrderController orderController = Get.find<ROpOrderController>();
-  RxBool isOpen = RxBool(false);
+  RxBool isValidRestaurant = true.obs;
+
   RestaurantOpAuthController _restaurantOpAuthController =
       Get.find<RestaurantOpAuthController>();
+  Rxn<Restaurant> restaurant = Rxn();
   RxList<RestaurantOrder> inProcessOrders = RxList.empty();
   RxList<RestaurantOrder> pastOrders = RxList.empty();
   StreamSubscription? _inProcessOrdersListener;
@@ -43,14 +49,7 @@ class _LaundryOpCurrentOrdersListViewState
   StreamSubscription? _pastOrdersListener;
   @override
   void initState() {
-    Get.put(RestaurantInfoController(), permanent: true);
-    _restStream = Get.find<RestaurantInfoController>()
-        .getRestaurant(_restaurantOpAuthController.restaurantId!)
-        .listen((Restaurant? event) {
-      if (event != null) {
-        isOpen.value = event.state.isOpen;
-      }
-    });
+    _getRestaurant();
     inProcessOrders = orderController.currentOrders;
     pastOrders = orderController.pastOrders;
     _inProcessOrdersListener = orderController.currentOrders.stream
@@ -65,6 +64,29 @@ class _LaundryOpCurrentOrdersListViewState
     super.initState();
   }
 
+  Future<void> _getRestaurant() async {
+    Get.put(RestaurantInfoController(), permanent: true);
+    Get.find<RestaurantInfoController>()
+        .init(restId: _restaurantOpAuthController.restaurantId!);
+    try {
+      restaurant.value = await Get.find<RestaurantInfoController>()
+          .getRestaurantAsFuture(_restaurantOpAuthController.restaurantId!);
+      _restStream = Get.find<RestaurantInfoController>()
+          .getRestaurant(_restaurantOpAuthController.restaurantId!)
+          .listen((Restaurant? event) {
+        if (event != null) {
+          restaurant.value = event;
+        }
+      });
+    } catch (e) {
+      isValidRestaurant.value = false;
+      mezDbgPrint(e);
+      // MezSnackbar("OOPS",
+      //     "No restaurant with ID ${_restaurantOpAuthController.restaurantId} found",
+      //     position: SnackPosition.TOP);
+    }
+  }
+
   @override
   void dispose() {
     _pastOrdersListener?.cancel();
@@ -77,33 +99,49 @@ class _LaundryOpCurrentOrdersListViewState
 
   @override
   Widget build(BuildContext context) {
-    final TextTheme textTheme = Theme.of(context).textTheme;
-    return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu,
-          showNotifications: true, ordersRoute: kPastOrdersListView),
-      key: Get.find<SideMenuDrawerController>().getNewKey(),
-      drawer: ROpDrawer(),
-      body: Column(
-        children: [
-          Obx(
-            () => Container(
-              margin: const EdgeInsets.only(top: 8, right: 8, left: 8),
-              child: TitleWithOnOffSwitcher(
-                title: "${_i18n()["incomingOrders"]}",
-                onTurnedOn: () {
-                  _restaurantOpAuthController.turnOpenOn();
-                },
-                onTurnedOff: () {
-                  _restaurantOpAuthController.turnOpenOff();
-                },
-                initialSwitcherValue: isOpen.value,
-              ),
+    return Obx(
+      () {
+        if (restaurant.value != null) {
+          return Scaffold(
+            appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu,
+                showNotifications: true, ordersRoute: kPastOrdersListView),
+            key: Get.find<SideMenuDrawerController>().getNewKey(),
+            drawer: ROpDrawer(),
+            body: Column(
+              // mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 8, right: 8, left: 8),
+                  child: TitleWithOnOffSwitcher(
+                    title: "${_i18n()["incomingOrders"]}",
+                    onTurnedOn: () {
+                      _restaurantOpAuthController.turnOpenOn();
+                    },
+                    onTurnedOff: () {
+                      _restaurantOpAuthController.turnOpenOff();
+                    },
+                    initialSwitcherValue: restaurant.value!.state.isOpen,
+                  ),
+                ),
+                Container(
+                    child: (restaurant.value!.state.isOpen)
+                        ? _inProcessOrders()
+                        : _offlineWidget()),
+              ],
             ),
-          ),
-          Obx(() =>
-              (isOpen.value) ? _inProcessOrders(textTheme) : _offlineWidget()),
-        ],
-      ),
+          );
+        } else {
+          return isValidRestaurant.value
+              ? Container(
+                  alignment: Alignment.center,
+                  color: Colors.white,
+                  child: MezLogoAnimation(
+                    centered: true,
+                  ),
+                )
+              : SomethingWentWrongScreen();
+        }
+      },
     );
   }
 
@@ -126,8 +164,9 @@ class _LaundryOpCurrentOrdersListViewState
     );
   }
 
-  Widget _inProcessOrders(TextTheme textTheme) {
+  Widget _inProcessOrders() {
     return Container(
+        alignment: Alignment.center,
         child: (inProcessOrders.value.isNotEmpty)
             ? Scrollbar(
                 child: SingleChildScrollView(
@@ -140,7 +179,7 @@ class _LaundryOpCurrentOrdersListViewState
                         children: [
                           Text(
                             "${_i18n()["currentOrders"]}",
-                            style: textTheme.bodyText1,
+                            style: Get.textTheme.bodyText1,
                           ),
                           const SizedBox(height: 5),
                           ListView.builder(
@@ -160,7 +199,7 @@ class _LaundryOpCurrentOrdersListViewState
                 ),
               )
             : Container(
-                //margin: const EdgeInsets.all(16),
+                margin: EdgeInsets.only(top: 10.h),
                 alignment: Alignment.center,
                 child: Center(child: NoOrdersComponent())));
   }

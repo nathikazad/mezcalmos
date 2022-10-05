@@ -39,6 +39,8 @@ class ROpEditInfoController {
 
   final Rxn<LanguageType> primaryLang = Rxn();
   final Rxn<LanguageType> secondaryLang = Rxn();
+  final Rxn<LanguageType> editablePrLang = Rxn();
+  final Rxn<LanguageType> editableScLang = Rxn();
   final Rxn<File> newImageFile = Rxn();
 
   final RxBool imageLoading = RxBool(false);
@@ -50,6 +52,7 @@ class ROpEditInfoController {
   final RxBool showStripe = RxBool(false);
   String? stripeUrl;
   final RxBool showSetupStripe = RxBool(false);
+  final RxBool setupClicked = RxBool(false);
   final RxBool showStripeReqs = RxBool(false);
   RxString currentUrl = RxString("");
 
@@ -69,6 +72,10 @@ class ROpEditInfoController {
         restaurant.value = event;
       }
     });
+    _updateResTInfo();
+  }
+
+  void _updateResTInfo() {
     if (restaurant.value != null) {
       _settingSchedules();
       isAvailable.value = restaurant.value!.state.available;
@@ -78,10 +85,14 @@ class ROpEditInfoController {
       newImageUrl.value = restaurant.value?.info.image ?? '';
       primaryLang.value = restaurant.value!.primaryLanguage;
       secondaryLang.value = restaurant.value!.secondaryLanguage;
+      editablePrLang.value = restaurant.value!.primaryLanguage;
+      editableScLang.value = restaurant.value!.secondaryLanguage;
       prRestaurantDescTxt.text =
-          restaurant.value?.description?[primaryLang] ?? '';
+          restaurant.value?.description?[restaurant.value!.primaryLanguage] ??
+              '';
       scRestaurantDescTxt.text =
-          restaurant.value?.description?[secondaryLang] ?? '';
+          restaurant.value?.description?[restaurant.value!.secondaryLanguage] ??
+              '';
     }
   }
 
@@ -120,15 +131,11 @@ class ROpEditInfoController {
         newLocation.value?.address != restaurant.value?.info.location.address) {
       await restaurantInfoController.setLocation(newLocation.value!);
     }
-    if (primaryLang.value != null &&
-        primaryLang.value != restaurant.value?.primaryLanguage) {
-      await restaurantInfoController.setPrimaryLanguage(primaryLang.value!);
+    if (editableScLang.value != null && editableScLang.value != secondaryLang) {
+      await restaurantInfoController.setPrimaryLanguage(editableScLang.value!);
     }
-    if (secondaryLang.value != null &&
-        secondaryLang.value != restaurant.value?.secondaryLanguage) {
-      await restaurantInfoController.setSecondaryLanguage(secondaryLang.value!);
-    } else if (secondaryLang.value == null) {
-      await restaurantInfoController.setSecondaryLanguage(null);
+    if (editablePrLang.value != null && editablePrLang.value != primaryLang) {
+      await restaurantInfoController.setPrimaryLanguage(editablePrLang.value!);
     }
 
     if (newSchedule.value != null && newSchedule.value != oldSchedule.value) {
@@ -151,12 +158,9 @@ class ROpEditInfoController {
     }
   }
 
-  bool validatePrimaryLanguUpdate(LanguageType value) {
-    if (value != secondaryLang.value) {
-      return true;
-    } else {
-      return false;
-    }
+  void changePrimaryLang(LanguageType value) {
+    editablePrLang.value = value;
+    editableScLang.value = editablePrLang.value!.toOpLang();
   }
 
   // stripe and payments methods //
@@ -171,13 +175,8 @@ class ROpEditInfoController {
     }
   }
 
-  void handleCardCheckBoxClick() {
-    if (restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
-        true) {
-      restaurantInfoController.setCardPayment(false);
-    } else {
-      restaurantInfoController.setCardPayment(true);
-    }
+  void handleCardCheckBoxClick(bool v) {
+    restaurantInfoController.setCardPayment(v);
   }
 
   void handleStripeUrlChanges(String url) {
@@ -223,13 +222,16 @@ class ROpEditInfoController {
   }
 
   void showPaymentSetup() {
+    setupClicked.value = true;
     onboardServiceProvider(restaurant.value!.info.id, OrderType.Restaurant)
         .then((ServerResponse value) {
       if (value.success) {
         stripeUrl = value.data["url"];
         showStripe.value = true;
+      } else {
+        Get.snackbar("Error", value.errorMessage ?? "Error");
       }
-    });
+    }).whenComplete(() => setupClicked.value = false);
   }
 
   void closePaymentSetup() {

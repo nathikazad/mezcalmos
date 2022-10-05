@@ -122,7 +122,7 @@ class CreditCard {
   factory CreditCard.fromData({required String id, required data}) {
     return CreditCard(
         id: id,
-        brand: data["brand"]!.toString().toCardBrand() ?? CardBrand.Visa,
+        brand: data["brand"]?.toString().toCardBrand() ?? CardBrand.Visa,
         expYear: data["expYear"],
         expMonth: data["expMonth"],
         last4: data["last4"]);

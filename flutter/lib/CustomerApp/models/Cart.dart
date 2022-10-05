@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -29,8 +28,12 @@ class Cart {
   Cart({this.restaurant});
 
   set setRouteInformation(RouteInformation? info) => _routeInformation = info;
+  RouteInformation? get getRouteInfo => _routeInformation;
 
-  Cart.fromCartData(dynamic cartData, this.restaurant, num? shippingPrice) {
+  Cart.fromCartData(
+    dynamic cartData,
+    this.restaurant,
+  ) {
     if (restaurant != null) {
       cartData["items"]?.forEach((itemIdInCart, itemData) {
         final Item? item = restaurant!.findItemById(id: itemData["id"]);
@@ -53,7 +56,7 @@ class Cart {
           ? cartData["deliveryType"].toString().toDeliveryType()
           : null;
       paymentType = cartData["paymentType"].toString().toPaymentType();
-      shippingCost = shippingPrice ?? 50;
+      shippingCost = cartData["shippingCost"];
       _routeInformation = cartData['routeInformation'] == null
           ? null
           : RouteInformation(
@@ -110,7 +113,9 @@ class Cart {
     return tcost;
   }
 
-  num get stripeFees => getStripeCost(itemsCost() + (shippingCost ?? 0));
+  num get stripeFees => paymentType == PaymentType.Card
+      ? getStripeCost(itemsCost() + (shippingCost ?? 0))
+      : 0;
 
   void addItem(CartItem cartItem) {
     if (cartItem.idInCart == null) {
@@ -215,7 +220,7 @@ class CartItem {
       quantity: itemData["quantity"],
       notes: itemData["notes"],
     );
-    mezDbgPrint(itemData);
+
     // for (int i = 0; i < itemData["chosenChoices"].length; i++) {
     //   if (item.findOption(i.toString()) != null) {
     //     cartItem.chosenChoices[i.toString()] = <Choice>[];
