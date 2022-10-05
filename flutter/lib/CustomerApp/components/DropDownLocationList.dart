@@ -151,10 +151,13 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
   }
 
   Future<bool> _lessThanDistance(Location loc) async {
-    final MapHelper.Route? routeInfo = await MapHelper.getDurationAndDistance(
-      widget.serviceProviderLocation!,
-      loc,
-    );
+    MapHelper.Route? routeInfo;
+    if (widget.serviceProviderLocation != null) {
+      routeInfo = await MapHelper.getDurationAndDistance(
+        widget.serviceProviderLocation!,
+        loc,
+      );
+    }
 
     if (routeInfo != null) {
       return (routeInfo.distance.distanceInMeters / 1000) <= 10;
@@ -194,7 +197,6 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       if (newLocation != null) {
         await _verifyDistanceAndSetLocation(newLocation);
       }
-      widget.passedInLocation = dropDownListValue!.location;
     }
   }
 
@@ -210,11 +212,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       mezDbgPrint("Morrrrre than 15");
       showError.value = true;
 
-      widget.onValueChangeCallback?.call(location: newLocation.location);
-      setState(() {
-        dropDownListValue = newLocation;
-        widget.passedInLocation = dropDownListValue!.location;
-      });
+      //  widget.onValueChangeCallback?.call(location: newLocation.location);
     } else {
       widget.onValueChangeCallback?.call(location: newLocation.location);
       setState(() {

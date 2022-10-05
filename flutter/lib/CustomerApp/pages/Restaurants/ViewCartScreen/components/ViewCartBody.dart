@@ -69,37 +69,6 @@ class _ViewCartBodyState extends State<ViewCartBody> {
                   )
                 : Container(),
             SizedBox(
-              height: 10,
-            ),
-            DeliveryTimePicker(viewCartController: widget.viewCartController),
-            OrderSummaryCard(
-              controller: controller,
-              setLocationCallBack: widget.setLocationCallBack,
-              serviceLoc: controller.cart.value.restaurant?.info.location,
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 14,
-              ),
-              child: PaymentMethodPicker(
-                viewCartController: widget.viewCartController,
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 14,
-              ),
-              alignment: Alignment.centerLeft,
-              child: Text("${_i18n()['notesTitle']}",
-                  style: Get.textTheme.bodyText1),
-            ),
-            SizedBox(
               height: 15,
             ),
             Container(
@@ -107,14 +76,13 @@ class _ViewCartBodyState extends State<ViewCartBody> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 15,
+                  Container(
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 15, horizontal: 0),
+                    child: DeliveryTimePicker(
+                        viewCartController: widget.viewCartController),
                   ),
-                  DeliveryTimePicker(
-                      viewCartController: widget.viewCartController),
-                  SizedBox(
-                    height: 15,
-                  ),
+
                   //=======================Delivery location :===========
                   Container(
                     alignment: Alignment.centerLeft,
@@ -128,6 +96,9 @@ class _ViewCartBodyState extends State<ViewCartBody> {
                   DropDownLocationList(
                     onValueChangeCallback: widget.setLocationCallBack,
                     bgColor: Colors.white,
+                    checkDistance: true,
+                    serviceProviderLocation:
+                        controller.cart.value.restaurant?.info.location,
                   ),
                   SizedBox(
                     height: 15,
@@ -154,20 +125,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
                   SizedBox(
                     height: 15,
                   ),
-                  Container(
-                    child: TextFormField(
-                        style: Get.textTheme.bodyText2
-                            ?.copyWith(fontWeight: FontWeight.w700),
-                        controller: widget.notesTextController,
-                        maxLines: 7,
-                        minLines: 4,
-                        decoration: InputDecoration(
-                            hintText: "${_i18n()["notes"]}",
-                            fillColor: Colors.white)),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
+
                   Padding(
                     padding: EdgeInsets.only(
                         bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -184,18 +142,19 @@ class _ViewCartBodyState extends State<ViewCartBody> {
                             hintText: "${_i18n()["notes"]}",
                             fillColor: Colors.white)),
                   ),
-                  Obx(() => OrderSummaryCard(
-                        setLocationCallBack: widget.setLocationCallBack,
-                        controller: controller,
-                      )),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  OrderSummaryCard(
+                    setLocationCallBack: widget.setLocationCallBack,
+                    controller: controller,
+                  ),
+
                   SizedBox(
                     height: 30,
                   ),
                 ],
               ),
-            ),
-            SizedBox(
-              height: 25,
             ),
           ],
         ),
