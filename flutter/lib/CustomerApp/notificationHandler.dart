@@ -14,7 +14,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['notificationHandler'];
-bool showReviews = true;
+bool showReviews = false;
 Notification customerNotificationHandler(
   String key,
   value,
@@ -99,18 +99,7 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
       value['status'].toString().toRestaurantOrderStatus();
   final Map<String, dynamic> dynamicFields =
       getRestaurantOrderStatusFields(newOrdersStatus)!;
-
-  if (newOrdersStatus == RestaurantOrderStatus.Delivered && showReviews) {
-    showReviews = false;
-    mezDbgPrint("SHOW REVIEWS 🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟");
-    showReviewDialog(Get.context!,
-            orderId: value["orderId"],
-            orderType: value["orderType"].toString().toOrderType())
-        .whenComplete(() {
-      mezDbgPrint("ClOSE REVIEWS 🌟🌟");
-      showReviews = true;
-    });
-  }
+  _handleReview(newOrdersStatus, value);
   return Notification(
     id: key,
     icon: Material.Icons.flatware,
@@ -125,6 +114,24 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
         value["notificationAction"].toString().toNotificationAction(),
     variableParams: value,
   );
+}
+
+void _handleReview(RestaurantOrderStatus newOrdersStatus, value) {
+  if (newOrdersStatus == RestaurantOrderStatus.OnTheWay) {
+    showReviews = true;
+  }
+
+  if (newOrdersStatus == RestaurantOrderStatus.Delivered && showReviews) {
+    showReviews = false;
+    mezDbgPrint("SHOW REVIEWS 🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟");
+    showReviewDialog(Get.context!,
+            orderId: value["orderId"],
+            orderType: value["orderType"].toString().toOrderType())
+        .whenComplete(() {
+      mezDbgPrint("ClOSE REVIEWS 🌟🌟");
+      showReviews = true;
+    });
+  }
 }
 
 // TODO: needs to be formatted for laundry
