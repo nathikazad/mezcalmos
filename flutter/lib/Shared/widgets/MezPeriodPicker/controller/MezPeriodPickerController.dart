@@ -111,6 +111,23 @@ class MezPeriodPickerController {
       }
     }
 
+    if (dates.last.isBefore(DateTime.now().toLocal())) {
+      dates.clear();
+      dates.add(pickedDate.value);
+      for (int i = 0; i < numberOfDaysInterval; i++) {
+        final DateTime newDate = DateTime(
+          DateTime.now().toLocal().year,
+          DateTime.now().toLocal().month,
+          DateTime.now().toLocal().day + i,
+        );
+
+        if (_getServiceDates()
+            .contains(DateFormat("EEEE").format(newDate).toLowerCase())) {
+          dates.add(newDate);
+        }
+      }
+    }
+
     return dates;
   }
 
