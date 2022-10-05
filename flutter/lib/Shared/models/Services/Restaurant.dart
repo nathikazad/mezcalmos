@@ -86,7 +86,7 @@ class Restaurant extends Service {
                 ?["language"]?["secondary"]
             .toString()
             .toLanguageType() ??
-        LanguageType.EN;
+        primaryLanguage.toOpLang();
     final Restaurant restaurant = Restaurant(
         userInfo: ServiceInfo.fromData(restaurantData["info"]),
         description: description ?? null,
