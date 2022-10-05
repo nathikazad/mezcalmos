@@ -10,6 +10,7 @@ import 'package:mez_services_web_app/screens/components/installAppBarComponent.d
 import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/components/viewRestaurantScreenFroDesktop.dart';
 import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/components/viewRestaurantScreenFroMobile.dart';
 import 'package:mez_services_web_app/services/values/constants.dart';
+import 'package:mez_services_web_app/services/widgets/mezBottomBar.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
@@ -52,6 +53,7 @@ class _RestaurantsItemsViewState extends State<RestaurantsItemsView> {
 
             return Scaffold(
               appBar: InstallAppBarComponent(),
+              bottomNavigationBar: MezBottomBar(),
               body: LayoutBuilder(
                 builder: (context, constraints) {
                   if (MezCalmosResizer.isMobile(context) ||

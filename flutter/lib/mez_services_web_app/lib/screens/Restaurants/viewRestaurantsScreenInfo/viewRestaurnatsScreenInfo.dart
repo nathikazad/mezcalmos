@@ -15,6 +15,7 @@ import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/c
 import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreenInfo/components/restaurantInfoTabForDesktop.dart';
 import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreenInfo/components/restaurantInfoTabForMobile.dart';
 import 'package:mez_services_web_app/services/values/constants.dart';
+import 'package:mez_services_web_app/services/widgets/mezBottomBar.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -67,6 +68,7 @@ class _ViewRestaurantsScrennInfoState extends State<ViewRestaurantsScrennInfo> {
 
             return Scaffold(
               appBar: InstallAppBarComponent(),
+              bottomNavigationBar: MezBottomBar(),
               body: LayoutBuilder(builder: ((context, constraints) {
                 return (restaurant != null)
                     ? CustomScrollView(

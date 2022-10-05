@@ -24,6 +24,7 @@ extension ParseStringToRestaurantsView on String {
 
 class Restaurant extends Service {
   static String kNoCategoryNode = "noCategory";
+  static String kkNoCategoryNodeId = "dfrC667GHyhk556jipy3GJO";
   LanguageMap? description;
   List<Category> _categories = <Category>[];
   List<Item> itemsWithoutCategory = <Item>[];
@@ -86,7 +87,8 @@ class Restaurant extends Service {
 
   List<Category> get getCategories {
     final List<Category> categories = _categories
-        .where((Category category) => category.id != kNoCategoryNode)
+        .where((Category category) => (category.id != kNoCategoryNode &&
+            kkNoCategoryNodeId != category.id))
         .toList();
     categories.forEach((Category category) {
       category.sortItems();
@@ -107,7 +109,9 @@ class Restaurant extends Service {
 
   List<Item>? get getItemsWithoutCategory {
     final List<Item>? items = _categories
-        .firstWhereOrNull((Category category) => category.id == kNoCategoryNode)
+        .firstWhereOrNull((Category category) =>
+            (category.id == kNoCategoryNode ||
+                category.id == kkNoCategoryNodeId))
         ?.items;
     items?.sort((Item a, Item b) => a.position.compareTo(b.position));
     return items;
@@ -187,7 +191,7 @@ class Category {
       position: categoryData["position"] ?? 0,
     );
     if (categoryData["name"] != null)
-      category.name = convertToLanguageMap(categoryData["name"]);
+      category.name = convertToLanguageMap(categoryData["name"] ?? "food");
     if (categoryData["dialog"] != null)
       category.dialog = convertToLanguageMap(categoryData["dialog"]);
     categoryData["items"].forEach((itemId, itemData) {

@@ -27,7 +27,7 @@ class ViewRestaurantScreenFroDesktop extends StatefulWidget {
 
 class _ViewRestaurantScreenFroDesktopState
     extends State<ViewRestaurantScreenFroDesktop>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late TabController tabController;
   List<bool> _selectedMenu = <bool>[];
   List<Widget> togglebuttonsWidgets = [];
@@ -65,6 +65,7 @@ class _ViewRestaurantScreenFroDesktopState
   @override
   void didChangeDependencies() {
     if (mounted) {
+      getRestaurantItemsValue();
       // Future.delayed(Duration(seconds: 3)).then((value) {
       //   var x = (stickyKey.currentContext!.findRenderObject() as RenderBox)
       //       .size
@@ -91,34 +92,40 @@ class _ViewRestaurantScreenFroDesktopState
         await Get.find<RestaurantsInfoController>().getRestaurant(rstaurantID);
     if (restaurnatValue != null) {
       print(
-          "the id of this item is ${QR.params['id'].toString()} 2 and ${restaurnatValue.toString()}");
-      setState(() {
-        restaurant = restaurnatValue.obs;
-        listW = [];
-        _selectedMenu = [];
-        _selectedMenu =
-            List.generate(restaurant.value!.getCategories.length, (index) {
-          if (index == 0) {
-            return true;
-          } else {
-            return false;
-          }
-        });
-        listW = restaurant.value!.getCategories.map((e) => Container(
-            width: 200,
-            child: Text(
-              '${e.name![lang.userLanguageKey]}',
-              style: GoogleFonts.montserrat(
-                fontWeight: FontWeight.w500,
-                fontSize: 13,
-              ),
-            )));
-        print(
-            "the children length is ${listW.length} and selections is ${_selectedMenu.length}");
-        tabController = TabController(
-            length: restaurant.value!.getCategories.length, vsync: this);
-        print("the lenght of list is${_getList().length} ");
+          "the id of this item is ${QR.params['id'].toString()} 2 and ${restaurnatValue.getCategories.length}");
+      restaurnatValue.getCategories.forEach((element) {
+        print("the id is ${element.id}");
       });
+      if (mounted) {
+        setState(() {
+          restaurant = restaurnatValue.obs;
+          listW = [];
+          _selectedMenu = [];
+          _selectedMenu =
+              List.generate(restaurant.value!.getCategories.length, (index) {
+            if (index == 0) {
+              return true;
+            } else {
+              return false;
+            }
+          });
+          listW = restaurant.value!.getCategories.map((e) => Container(
+              width: 200,
+              child: Text(
+                '${e.name![lang.userLanguageKey]}',
+                style: GoogleFonts.montserrat(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 13,
+                ),
+              )));
+          print(
+              "the children length is ${listW.length} and selections is ${_selectedMenu.length}");
+
+          tabController = TabController(
+              length: restaurnatValue.getCategories.length, vsync: this);
+          print("the lenght of list is${_getList().length} ");
+        });
+      }
     } else {
       QR.to("/404");
     }
@@ -303,274 +310,273 @@ class _ViewRestaurantScreenFroDesktopState
         key: listViewKey,
         child: NotificationListener<ScrollNotification>(
           onNotification: onScrollNotification,
-          child: Obx(
-            () => restaurant.value != null
-                ? CustomScrollView(
-                    controller: scrollController,
-                    slivers: [
-                      ItemSliverAppBar(
-                        urlImg: restaurant.value!.info.image,
-                      ),
-                      SliverToBoxAdapter(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal:
-                                  MezCalmosResizer.getWepPageHorizontalPadding(
-                                      context)),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Container(
-                                child: Row(
-                                  // crossAxisAlignment:
-                                  //     CrossAxisAlignment.stretch,
-                                  children: [
-                                    Text(
-                                      "${restaurant.value!.info.name}",
-                                      style: GoogleFonts.montserrat(
-                                        textStyle: TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            color: Colors.black,
-                                            fontSize: 20),
-                                      ),
+          child: (restaurant.value != null &&
+                  restaurant.value!.info.id.isNotEmpty)
+              ? CustomScrollView(
+                  controller: scrollController,
+                  slivers: [
+                    ItemSliverAppBar(
+                      urlImg: restaurant.value!.info.image,
+                    ),
+                    SliverToBoxAdapter(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal:
+                                MezCalmosResizer.getWepPageHorizontalPadding(
+                                    context)),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              child: Row(
+                                // crossAxisAlignment:
+                                //     CrossAxisAlignment.stretch,
+                                children: [
+                                  Text(
+                                    "${restaurant.value!.info.name}",
+                                    style: GoogleFonts.montserrat(
+                                      textStyle: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.black,
+                                          fontSize: 20),
                                     ),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.only(top: 2),
-                                      child: Obx(
-                                        () => InkWell(
-                                          onTap: () {
-                                            // print(
-                                            //     "QR.currentPath ${QR.currentPath}");
-                                            var xPath = getCurrentPath();
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.only(top: 2),
+                                    child: Obx(
+                                      () => InkWell(
+                                        onTap: () {
+                                          // print(
+                                          //     "QR.currentPath ${QR.currentPath}");
+                                          var xPath = getCurrentPath();
 
-                                            QR.to(
-                                                "${xPath[0]}/info${xPath[1]}");
-                                          },
-                                          child: Text(
-                                            lang.strings["CustomerApp"]["pages"]
-                                                            ["Restaurants"]
-                                                        ["ViewRestaurantScreen"]
-                                                    ["ViewRestaurantScreen"]
-                                                ["moreInfo"],
-                                            style: GoogleFonts.montserrat(
-                                              textStyle: TextStyle(
-                                                  fontWeight: FontWeight.w700,
-                                                  decoration:
-                                                      TextDecoration.underline,
-                                                  color: Color.fromRGBO(
-                                                      103, 121, 254, 1),
-                                                  fontSize: 11),
-                                            ),
+                                          QR.to("${xPath[0]}/info${xPath[1]}");
+                                        },
+                                        child: Text(
+                                          lang.strings["CustomerApp"]["pages"]
+                                                          ["Restaurants"]
+                                                      ["ViewRestaurantScreen"]
+                                                  ["ViewRestaurantScreen"]
+                                              ["moreInfo"],
+                                          style: GoogleFonts.montserrat(
+                                            textStyle: TextStyle(
+                                                fontWeight: FontWeight.w700,
+                                                decoration:
+                                                    TextDecoration.underline,
+                                                color: Color.fromRGBO(
+                                                    103, 121, 254, 1),
+                                                fontSize: 11),
                                           ),
                                         ),
                                       ),
-                                    )
-                                  ],
-                                ),
+                                    ),
+                                  )
+                                ],
                               ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Container(
-                                child: Row(
-                                  children: [
-                                    (restaurant.value!.description![
-                                                lang.userLanguageKey] !=
-                                            "")
-                                        ? Container(
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  "${restaurant.value!.description![lang.userLanguageKey]!}",
-                                                  style: GoogleFonts.nunito(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        : SizedBox(),
-                                    Icon(
-                                      Icons.schedule,
-                                      size: 10,
-                                    ),
-                                    SizedBox(
-                                      width: 2,
-                                    ),
-                                    Text(
-                                      "52min",
-                                      style: GoogleFonts.nunito(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Icon(
-                                      Icons.delivery_dining,
-                                      size: 18,
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      "\$50",
-                                      style: GoogleFonts.nunito(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Icon(
-                                      Icons.payment,
-                                      size: 15,
-                                    )
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Icon(
-                                      Icons.location_on,
-                                      size: 15,
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Flexible(
-                                      child: Text(
-                                          "${restaurant.value!.info.location.address}",
-                                          overflow: TextOverflow.clip,
-                                          maxLines: 2,
-                                          style: GoogleFonts.nunito(
-                                              textStyle: TextStyle(
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Container(
+                              child: Row(
+                                children: [
+                                  (restaurant.value!.description![
+                                              lang.userLanguageKey] !=
+                                          "")
+                                      ? Container(
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                "${restaurant.value!.description![lang.userLanguageKey]!}",
+                                                style: GoogleFonts.nunito(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w600,
-                                                  color: Colors.black))),
-                                    )
-                                  ],
-                                ),
-                              ),
-
-                              ///menu Container
-                              Container(
-                                width: Get.width,
-                                // color: Colors.red,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      width: 200,
-                                      alignment: Alignment.topLeft,
-                                      child: StickyHeader(
-                                          content: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Container(
-                                                height: double.parse(
-                                                    getHieghtOfMenuHeader()
-                                                        .toString()),
-                                                // height: Get.height *
-                                                //     (_getList().length + 1),
-                                              ),
-                                              //Spacer(),
-                                              Container()
-                                            ],
-                                          ),
-                                          controller: scrollController,
-                                          header: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              SizedBox(height: 25),
-                                              Container(
-                                                alignment: Alignment.centerLeft,
-                                                child: Obx(
-                                                  () => Text(
-                                                    lang.strings["CustomerApp"]
-                                                                    ["pages"]
-                                                                ["Restaurants"][
-                                                            "ViewRestaurantScreen"]
-                                                        [
-                                                        "ViewRestaurantScreen"]["menu"],
-                                                    style:
-                                                        GoogleFonts.montserrat(
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            color: Colors.black,
-                                                            fontSize: 13),
-                                                  ),
                                                 ),
                                               ),
                                               SizedBox(
-                                                height: 10,
-                                              ),
-                                              Theme(
-                                                data: ThemeData(),
-                                                child: ToggleButtons(
-                                                  borderColor:
-                                                      Colors.transparent,
-                                                  selectedColor: Color.fromRGBO(
-                                                      103, 121, 254, 1),
-                                                  fillColor: Colors.transparent,
-                                                  selectedBorderColor:
-                                                      Colors.transparent,
-                                                  children: listW.toList(),
-                                                  direction: Axis.vertical,
-                                                  onPressed: (int index) {
-                                                    setState(() {
-                                                      // The button that is tapped is set to true, and the others to false.
-                                                      for (int i = 0;
-                                                          i <
-                                                              _selectedMenu
-                                                                  .length;
-                                                          i++) {
-                                                        _selectedMenu[i] =
-                                                            i == index;
-                                                      }
-                                                      animateAndScrollTo(index);
-                                                    });
-                                                  },
-                                                  isSelected: _selectedMenu,
-                                                ),
+                                                width: 10,
                                               ),
                                             ],
-                                          )),
+                                          ),
+                                        )
+                                      : SizedBox(),
+                                  Icon(
+                                    Icons.schedule,
+                                    size: 10,
+                                  ),
+                                  SizedBox(
+                                    width: 2,
+                                  ),
+                                  Text(
+                                    "52min",
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
                                     ),
-                                    Expanded(
-                                      key: stickyKey,
-                                      child: _buildCategoriesList(),
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Icon(
+                                    Icons.delivery_dining,
+                                    size: 18,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    "\$50",
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Icon(
+                                    Icons.payment,
+                                    size: 15,
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Container(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    Icons.location_on,
+                                    size: 15,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Flexible(
+                                    child: Text(
+                                        "${restaurant.value!.info.location.address}",
+                                        overflow: TextOverflow.clip,
+                                        maxLines: 2,
+                                        style: GoogleFonts.nunito(
+                                            textStyle: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.black))),
+                                  )
+                                ],
+                              ),
+                            ),
+
+                            ///menu Container
+                            Container(
+                              width: Get.width,
+                              // color: Colors.red,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width: 200,
+                                    alignment: Alignment.topLeft,
+                                    child: StickyHeader(
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Container(
+                                              height: double.parse(
+                                                  getHieghtOfMenuHeader()
+                                                      .toString()),
+                                              // height: Get.height *
+                                              //     (_getList().length + 1),
+                                            ),
+                                            //Spacer(),
+                                            Container()
+                                          ],
+                                        ),
+                                        controller: scrollController,
+                                        header: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            SizedBox(height: 25),
+                                            Container(
+                                              alignment: Alignment.centerLeft,
+                                              child: Obx(
+                                                () => Text(
+                                                  lang.strings["CustomerApp"]
+                                                                      ["pages"]
+                                                                  [
+                                                                  "Restaurants"]
+                                                              [
+                                                              "ViewRestaurantScreen"]
+                                                          [
+                                                          "ViewRestaurantScreen"]
+                                                      ["menu"],
+                                                  style: GoogleFonts.montserrat(
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      color: Colors.black,
+                                                      fontSize: 13),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Theme(
+                                              data: ThemeData(),
+                                              child: ToggleButtons(
+                                                borderColor: Colors.transparent,
+                                                selectedColor: Color.fromRGBO(
+                                                    103, 121, 254, 1),
+                                                fillColor: Colors.transparent,
+                                                selectedBorderColor:
+                                                    Colors.transparent,
+                                                children: listW.toList(),
+                                                direction: Axis.vertical,
+                                                onPressed: (int index) {
+                                                  setState(() {
+                                                    // The button that is tapped is set to true, and the others to false.
+                                                    for (int i = 0;
+                                                        i <
+                                                            _selectedMenu
+                                                                .length;
+                                                        i++) {
+                                                      _selectedMenu[i] =
+                                                          i == index;
+                                                    }
+                                                    animateAndScrollTo(index);
+                                                  });
+                                                },
+                                                isSelected: _selectedMenu,
+                                              ),
+                                            ),
+                                          ],
+                                        )),
+                                  ),
+                                  Expanded(
+                                    key: stickyKey,
+                                    child: _buildCategoriesList(),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
                         ),
-                      )
-                    ],
-                  )
-                : Center(
-                    child: CircularProgressIndicator(),
-                  ),
-          ),
+                      ),
+                    )
+                  ],
+                )
+              : Center(
+                  child: CircularProgressIndicator(),
+                ),
         ),
       ),
     );

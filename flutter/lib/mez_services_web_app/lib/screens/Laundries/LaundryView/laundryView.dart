@@ -10,6 +10,7 @@ import 'package:mez_services_web_app/screens/Laundries/LaundryView/components/la
 import 'package:mez_services_web_app/screens/Laundries/LaundryView/components/laundryViewForMobile.dart';
 import 'package:mez_services_web_app/screens/components/installAppBarComponent.dart';
 import 'package:mez_services_web_app/services/values/constants.dart';
+import 'package:mez_services_web_app/services/widgets/mezBottomBar.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -57,6 +58,7 @@ class _LaundryViewState extends State<LaundryView> {
           if (snapShot.hasData && snapShot.data == true && laundry != null) {
             return Scaffold(
                 appBar: InstallAppBarComponent(),
+                bottomNavigationBar: MezBottomBar(),
                 body: getResponciveWidget(context, laundry!));
           } else {
             return Scaffold(

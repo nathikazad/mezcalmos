@@ -16,6 +16,7 @@ import 'package:mez_services_web_app/screens/Laundries/laundryListView/component
 import 'package:mez_services_web_app/screens/components/installAppBarComponent.dart';
 import 'package:mez_services_web_app/screens/Restaurants/resturentListView/controller/ListRestaurantController.dart';
 import 'package:mez_services_web_app/services/values/constants.dart';
+import 'package:mez_services_web_app/services/widgets/mezBottomBar.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -65,6 +66,7 @@ class _LaundryListViewState extends State<LaundryListView> {
                 LanguageController lang = Get.find<LanguageController>();
                 return Scaffold(
                   appBar: InstallAppBarComponent(),
+                  bottomNavigationBar: MezBottomBar(),
                   body: LayoutBuilder(builder: ((context, constraints) {
                     return Scaffold(
                         appBar: AppBar(
