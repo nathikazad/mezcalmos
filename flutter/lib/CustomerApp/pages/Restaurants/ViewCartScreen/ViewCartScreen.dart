@@ -134,7 +134,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                         false)
                     ? '${_i18n()["scheduleOrder"]}'
                     : '${_i18n()["orderNow"]}',
-                enabled: canClick(),
+                enabled: _restaurantController.canOrder,
                 withGradient: true,
                 borderRadius: 0,
                 onClick: () async {
