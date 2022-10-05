@@ -1,26 +1,33 @@
-import 'dart:convert';
-
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 class Review {
+  String? id;
   String comment;
   num rating;
   String serviceProviderId;
   OrderType orderType;
   String orderId;
+  String? authorId;
+  DateTime? reviewTime;
   Review({
     required this.comment,
     required this.rating,
     required this.serviceProviderId,
     required this.orderType,
     required this.orderId,
+    this.authorId,
+    this.reviewTime,
+    this.id,
   });
 
   Review copyWith({
     String? comment,
     num? rating,
     String? serviceProviderId,
+    String? id,
     OrderType? orderType,
+    String? authorId,
+    DateTime? reviewTime,
     String? orderId,
   }) {
     return Review(
@@ -29,6 +36,9 @@ class Review {
       serviceProviderId: serviceProviderId ?? this.serviceProviderId,
       orderType: orderType ?? this.orderType,
       orderId: orderId ?? this.orderId,
+      authorId: authorId ?? authorId,
+      reviewTime: reviewTime ?? reviewTime,
+      id: id ?? this.id,
     );
   }
 
@@ -36,25 +46,27 @@ class Review {
     return {
       'comment': comment,
       'rating': rating,
+      "authorId": authorId,
       'serviceProviderId': serviceProviderId,
       'orderType': orderType.toFirebaseFormatString(),
       'orderId': orderId,
+      "reviewTime": reviewTime?.toUtc().toIso8601String(),
     };
   }
 
-  factory Review.fromMap(Map<String, dynamic> map) {
+  // ignore: avoid_annotating_with_dynamic
+  factory Review.fromMap(String key, dynamic map) {
     return Review(
+      id: key,
       comment: map['comment'] ?? '',
       rating: map['rating'] ?? 0,
+      authorId: map['authorId'],
       serviceProviderId: map['serviceProviderId'] ?? '',
       orderType: map['orderType'].toString().toOrderType(),
+      reviewTime: DateTime.parse(map["reviewTime"]),
       orderId: map['orderId'] ?? '',
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory Review.fromJson(String source) => Review.fromMap(json.decode(source));
 
   @override
   String toString() {

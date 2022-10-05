@@ -3,23 +3,27 @@ String customerNode(String uid) {
 }
 
 String customerCart(String uid) {
-  return 'customers/info/${uid}/cart';
+  return 'customers/info/$uid/cart';
+}
+
+String customerInfoNode(String uid) {
+  return 'customers/info/$uid/info';
 }
 
 String customerAppVersionNode(String uid) {
-  return 'customers/info/${uid}/versionNumber';
+  return 'customers/info/$uid/versionNumber';
 }
 
 String customerNotificationInfoNode(String uid) {
-  return 'customers/info/${uid}/notificationInfo';
+  return 'customers/info/$uid/notificationInfo';
 }
 
 String customerPastOrders(String uid) {
-  return 'customers/pastOrders/${uid}';
+  return 'customers/pastOrders/$uid';
 }
 
 String customerInProcessOrders(String uid) {
-  return 'customers/inProcessOrders/${uid}';
+  return 'customers/inProcessOrders/$uid';
 }
 
 String savedLocationsNode(String uid) {
@@ -27,7 +31,7 @@ String savedLocationsNode(String uid) {
 }
 
 String savedLocationNode(String uid, String locationId) {
-  return 'customers/info/$uid/savedLocations/${locationId}';
+  return 'customers/info/$uid/savedLocations/$locationId';
 }
 
 String customerNotificationsNode(String uid) {

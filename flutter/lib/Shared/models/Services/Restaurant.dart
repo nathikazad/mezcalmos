@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 enum RestaurantsView { Rows, Grid }
@@ -28,6 +30,8 @@ class Restaurant extends Service {
   LanguageMap? description;
   List<Item> currentSpecials = <Item>[];
   List<Item> pastSpecials = <Item>[];
+  List<Review> reviews = <Review>[];
+  num? rate;
 
   List<Category> _categories = <Category>[];
   List<Item> itemsWithoutCategory = <Item>[];
@@ -40,6 +44,7 @@ class Restaurant extends Service {
       required PaymentInfo paymentInfo,
       required ServiceState restaurantState,
       required LanguageType primaryLanguage,
+      this.rate,
       LanguageType? secondaryLanguage})
       : super(
             info: userInfo,
@@ -88,6 +93,10 @@ class Restaurant extends Service {
             .toString()
             .toLanguageType() ??
         LanguageType.EN;
+
+    final num? rate = (restaurantData?["details"]?["rating"].toString() != null)
+        ? num.tryParse(restaurantData["details"]?["rating"]?.toString() ?? "")
+        : null;
     final Restaurant restaurant = Restaurant(
         userInfo: ServiceInfo.fromData(restaurantData["info"]),
         description: description ?? null,
@@ -96,8 +105,14 @@ class Restaurant extends Service {
         restaurantsView: restaurantsView,
         primaryLanguage: primaryLanguage,
         secondaryLanguage: secondaryLanguage,
+        rate: rate,
         paymentInfo: paymentInfo);
-
+    if (restaurantData["details"]["reviews"] != null) {
+      restaurantData["details"]["reviews"]?.forEach((key, review) {
+        mezDbgPrint("ADDING REVIEw ==============$review");
+        restaurant.reviews.add(Review.fromMap(key, review));
+      });
+    }
     if (restaurantData['menu'] != null) {
       if (restaurantData["menu"]?["specials"] != null ||
           restaurantData["menu"]?["daily"] != null) {
@@ -195,6 +210,10 @@ class Restaurant extends Service {
     }
 
     return returnVal;
+  }
+
+  bool get showReviews {
+    return rate != null && reviews.isNotEmpty;
   }
 
   double getAverageCost() {

@@ -9,7 +9,9 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 class CustomerAuthController extends GetxController {
@@ -119,6 +121,12 @@ class CustomerAuthController extends GetxController {
         (SavedLocation savedLocation) {
       return savedLocation.id == locationId;
     }, orElse: null).location;
+  }
+
+  Future<MainUserInfo> getUserInfoById(String id) async {
+    final DataSnapshot data =
+        await _databaseHelper.firebaseDatabase.ref(userInfoNode(id)).get();
+    return MainUserInfo.fromData(data.value);
   }
 
   @override

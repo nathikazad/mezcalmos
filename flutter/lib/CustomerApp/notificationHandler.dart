@@ -14,7 +14,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['notificationHandler'];
-
+bool showReviews = true;
 Notification customerNotificationHandler(
   String key,
   value,
@@ -100,9 +100,17 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
   final Map<String, dynamic> dynamicFields =
       getRestaurantOrderStatusFields(newOrdersStatus)!;
 
-  showReviewDialog(Get.context!,
-      orderId: value["orderId"],
-      orderType: value["orderType"].toString().toOrderType());
+  if (newOrdersStatus == RestaurantOrderStatus.Delivered && showReviews) {
+    showReviews = false;
+    mezDbgPrint("SHOW REVIEWS 🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟");
+    showReviewDialog(Get.context!,
+            orderId: value["orderId"],
+            orderType: value["orderType"].toString().toOrderType())
+        .whenComplete(() {
+      mezDbgPrint("ClOSE REVIEWS 🌟🌟");
+      showReviews = true;
+    });
+  }
   return Notification(
     id: key,
     icon: Material.Icons.flatware,

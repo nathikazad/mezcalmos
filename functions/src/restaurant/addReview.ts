@@ -27,8 +27,10 @@ export = functions.https.onCall(async (data, context) => {
 
     const newReview:JSON = <JSON><unknown>{
         "rating": data.rating,
-        "comment": data.comment,
-        "authorId" : context.auth?.uid
+      "comment": data.comment,
+        "orderType" : data.orderType,
+      "authorId": context.auth?.uid,
+      "reviewTime": (new Date()).toISOString(),
       }
 
   // adding review to service provider review array 

@@ -538,6 +538,7 @@ Future<void> showReviewDialog(
                   if (response.success) {
                     Get.snackbar("Success", "Review submitted",
                         backgroundColor: Colors.black, colorText: Colors.white);
+                    Get.back(closeOverlays: true);
                   } else {
                     mezDbgPrint(response);
                     Get.snackbar("Error", response.errorMessage ?? "error",
