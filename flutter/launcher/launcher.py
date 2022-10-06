@@ -10,168 +10,7 @@ import sys
 from time import sleep
 # from turtle import goto
 from typing import Type
-
-# SHOULD_ASK_4_INPUT = False
-# CHECK_INPUT  = lambda:input() if SHOULD_ASK_4_INPUT else None
-
-
-# class TaxiDriver:
-#     def __init__(self , driverId:str , image:str, name:str , price:int , sleep_time:int) -> None:
-#         self.driverId = driverId
-#         self.image = image
-#         self.name = name
-#         self.price = price
-#         self.sleep_time = sleep_time
-
-#     def driverInfos(self) -> dict:
-#         return { 
-#             "id" : self.driverId,
-#             "image" : self.image,
-#             "language" : "en",
-#             "name" : self.name
-#         }
-
-
-
-
-# def simulate_counter_offers(orderId:str , customerId:str) -> None:
-#     from requests import get
-#     import polyline
-#     import firebase_admin
-#     from firebase_admin import credentials
-#     from firebase_admin import db
-#     # Fetch the service account key JSON file contents
-#     cred = credentials.Certificate('mezcalmos-staging-6694f0583889.json')
-#     # Initialize the app with a service account, granting admin privileges
-#     firebase_admin.initialize_app(cred, {
-#         'databaseURL': 'https://mezcalmos-staging-default-rtdb.firebaseio.com'
-#     })
-#     ref = db.reference('/')
-#     from datetime import datetime as d, timedelta as t
-#     import math, json
-
-#     drivers = [
-#         TaxiDriver(
-#             "y6bO8Pzp7eRdJULMtMgUCVhjBOm2",
-#             "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
-#             "Anna Dalson",
-#             price=50,
-#             sleep_time=10
-#         ),
-#         TaxiDriver(
-#             "pL7tWGSuEaWEkTv4i2U3yiss3sV2",
-#             "https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?ixlib=rb-1.2.1&w=1080&fit=max&q=80&fm=jpg&crop=entropy&cs=tinysrgb",
-#             "Roberto Sal" ,
-#             price=43,
-#             sleep_time=6
-#         ),
-#         TaxiDriver(
-#             "kdm7xmAgCoTAqU4kj4xdhzBnSrY2",
-#             "https://images.unsplash.com/photo-1617171594279-3aa1f300a0f2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cmVkJTIwbWFufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
-#             "Sam Kito",
-#             price=40,
-#             sleep_time=None
-#         ),
-#     ]
-
-#     for driver in drivers:
-#         validISOdate = d.now() + t(seconds=30, hours=-1)
-#         offerValidTimeEpoch = validISOdate.strftime("%s")
-
-#         payload = {
-#             "driverInfo" : driver.driverInfos(),
-#             "price"  : driver.price,
-#             "status" : "submitted",
-#             "offerValidTime" : validISOdate.strftime('%Y-%m-%dT%H:%M:%SZ'),
-#             "offerValidTimeEpoch" : offerValidTimeEpoch
-#         }
-#         print(f"Setting Payload : \n{json.dumps(payload, indent=4)}\n------------------------------")
-#         path = f"customers/inProcessOrders/{customerId}/{orderId}/counterOffers/{driver.driverId}"
-#         ref.child(path).set(payload)
-#         if driver.sleep_time != None:
-#             sleep(driver.sleep_time)
-  
-    
-
-# # driverId, driverType, From, To, Duration
-# def simulateDriverMovements(customerId, orderId, orderType, driverId, driverType, start, end , duration_sec, providerId=None):
-# 	# google-token : AIzaSyBPDCJv6MUMO-cDhVrcJ2g7JZU-bg_6Kq8
-#     from requests import get
-#     import polyline
-#     import firebase_admin
-#     from firebase_admin import credentials
-#     from firebase_admin import db
-#     # Fetch the service account key JSON file contents
-#     cred = credentials.Certificate('mezcalmos-staging-6694f0583889.json')
-#     # Initialize the app with a service account, granting admin privileges
-#     firebase_admin.initialize_app(cred, {
-#         'databaseURL': 'https://mezcalmos-staging-default-rtdb.firebaseio.com'
-#     })
-#     ref = db.reference('/')
-
-#     paths_resto = [
-
-#         f'deliveryDrivers/inProcessOrders/{driverId}/{orderId}/{driverType}/location/',
-#         f'orders/inProcess/{orderType}/{orderId}/{driverType}/location/',
-#         f'restaurants/inProcessOrders/{providerId}/{orderId}/{driverType}/location/',
-#         f'customers/inProcessOrders/{customerId}/{orderId}/{driverType}/location/',
-
-#     ]
-
-#     paths_laundry = [
-
-#         f'deliveryDrivers/inProcessOrders/{driverId}/{orderId}/{driverType}/location/',
-#         f'orders/inProcess/{orderType}/{orderId}/{driverType}/location/',
-#         f'laundries/inProcessOrders/{providerId}/{orderId}/{driverType}/location/',
-#         f'customers/inProcessOrders/{customerId}/{orderId}/{driverType}/location/',
-
-#     ]
-
-#     paths_taxi = [
-
-#         f'deliveryDrivers/inProcessOrders/{driverId}/{orderId}/{driverType}/location/',
-#         f'orders/inProcess/{orderType}/{orderId}/{driverType}/location/',
-#         f'laundries/inProcessOrders/{providerId}/{orderId}/{driverType}/location/',
-#         f'customers/inProcessOrders/{customerId}/{orderId}/{driverType}/location/',
-
-#     ]
-
-
-#     link = f'https://maps.googleapis.com/maps/api/directions/json?origin={start}&destination={end}&key=AIzaSyBPDCJv6MUMO-cDhVrcJ2g7JZU-bg_6Kq8'
-#     res  = get(link).content
-#     res  = json.loads(res)
-#     poly = res['routes'][0]['overview_polyline']['points']
-#     print(f"Poly generated from maps : {poly} ")
-#     coords = polyline.decode(poly)
-#     sleep_time = duration_sec // len(coords)
-#     print(f"[~] Updating location each {sleep_time}s")
-#     # print(coords)
-#     # exit(0)
-#     # r = False
-#     for coord in coords:
-#         # if coord[0] == 16.77054:
-#         #     r = True
-#         # if r:
-#         to_write  = {
-#             "lastUpdateTime" : "2022-07-29 17:52:12.014026Z",
-#             "position" : {
-#                 "lat" : coord[0], 
-#                 "lng" : coord[1],
-#             }
-#         }
-
-#         for path in paths_laundry:
-#             print(f"[+] Applying {path} => lat:{coord[0]}, lng:{coord[1]}")
-#             CHECK_INPUT()
-#             ref.child(path).set(to_write)
-#         sleep(sleep_time)
-
-#     exit(0)
-# LAST UPDATE INFOS : 
-# UPDATE - Building apks now uses --split-pet-abi
-# ADDED Patching Android - Ios icons.
-# ADDED .ipa support with versioning and removed auto IOS_TARGETED_DEVICES = 1,2 TO 1 only.
-
+ 
 # GLOBAL CONSTANTS !
 VERSION = "1.1.14"
 XOR_VALUE = 100
@@ -285,14 +124,14 @@ class Launcher:
         originalPlayStoreBytes = open(f'{_androidLauncherPath}/playstore.png' , 'rb').read()
         open(f'{_project_icons_path}android.png' , 'wb+').write(originalAndroidIconsBytes)
         open(f'{_project_icons_path}playstore.png' , 'wb+').write(originalPlayStoreBytes)
-        PRINTLN(f"\t- ✅ Android:{_userArgsAppName} => Setting up assets/icons Done.")
+        PRINTLN(f"\t- [-] Android:{_userArgsAppName} => Setting up assets/icons Done.")
         # Then iOS :
         originalIosIconsBytes = open(f'{_iosLauncherPath}/ios.png' , 'rb').read()
         originalAppStoreBytes = open(f'{_iosLauncherPath}/appstore.png' , 'rb').read()
         open(f'{_project_icons_path}ios.png' , 'wb+').write(originalIosIconsBytes)
         open(f'{_project_icons_path}appstore.png' , 'wb+').write(originalAppStoreBytes)
 
-        PRINTLN(f"\t- ✅ iOS:{_userArgsAppName} => Setting up assets/icons Done.")
+        PRINTLN(f"\t- [-] iOS:{_userArgsAppName} => Setting up assets/icons Done.")
 
         #   2. setting mipmaps for Android in android/app/src/main/res --------------------------------------------
         
@@ -303,7 +142,7 @@ class Launcher:
         rm_lambda(_project_mipmaps_dir+"mipmap") # -> this Executes : rm -rf android/app/src/main/res/mipmap*
         os.system(f'cp -r {_androidLauncherPath}/mipmaps/* {_project_mipmaps_dir}') # Copies all the mipmaps to the original android/ folder
 
-        PRINTLN(f"\t- ✅ Android:{_userArgsAppName} => Setting up android/app/src/main/res/mipmap* Done.")
+        PRINTLN(f"\t- [-] Android:{_userArgsAppName} => Setting up android/app/src/main/res/mipmap* Done.")
 
         #   3. setting up appIconSet for iOS in flutter/ios/Runner/Assets.xcassets/AppIcon.appiconset  -----------
 
@@ -314,7 +153,7 @@ class Launcher:
         rm_lambda(_project_app_icon_set_dir+"Contents.json")
         os.system(f'cp -r {_iosLauncherPath}/AppIcon.appiconset {_project_app_icon_set_dir}') # Copies the app's IconSet to the original ios/ folder
 
-        PRINTLN(f"\t- ✅ iOS:{_userArgsAppName} => Setting up flutter/ios/Runner/Assets/xcassets/AppIcon.appiconset Done.")
+        PRINTLN(f"\t- [-] iOS:{_userArgsAppName} => Setting up flutter/ios/Runner/Assets/xcassets/AppIcon.appiconset Done.")
 
     def __patcher__(self):
       
@@ -382,8 +221,13 @@ class Launcher:
             self.conf['gen::permissions'] += Config.validate_manifest_permissions(_app_specific_permissions)
 
         #  main ManifestXml:
-        _project_main_manifest = "../android/app/src/main/AndroidManifest.xml"
-        os.system(f'{"mv" if not self.isWin else "move"} ..|android|app|src|main|AndroidManifest.xml ..|android|app|src|main|AndroidManifest.xml.backup'.replace('|' , self.pathname_separator))
+        _project_main_manifest = "..|android|app|src|main|AndroidManifest.xml".replace('|' , self.pathname_separator)
+        if not os.path.exists(os.path.dirname(_project_main_manifest)):
+            os.system(f'mkdir {os.path.dirname(_project_main_manifest)}')
+        
+        if os.path.exists(_project_main_manifest):
+            os.system(f'{"mv" if not self.isWin else "move"} ..|android|app|src|main|AndroidManifest.xml ..|android|app|src|main|AndroidManifest.xml.backup'.replace('|' , self.pathname_separator))
+
         _cloned = open('patches/android/main/AndroidManifest.xml').read().replace('<mez-package-name>', _appPackageName).replace('<mez-permissions>' , self.conf['gen::permissions'])
         open(_project_main_manifest , 'w+').write(_cloned)
 
@@ -431,9 +275,14 @@ class Launcher:
             self.user_args['version_name'] = '1.0.1'
         if not self.user_args.get('version_code'):
             self.user_args['version_code'] = '1'
-        _continue = input(f"[~] Please Confirm Launching/building with version {self.user_args['version_name']}+{self.user_args['version_code']} ?")
+
+        if not '--pipeline' in argv:
+            self.user_args['pipeline'] = False
+            _continue = input(f"[~] Please Confirm Launching/building with version {self.user_args['version_name']}+{self.user_args['version_code']} ?")
         if not (_continue.__len__() == 0 or _continue.lower() == "y" or _continue.lower() == "yes"):
             exit(DW_EXIT_REASONS.WRONG_VERSION_GIVEN)
+        else:
+            self.user_args['pipeline'] = True
 
         # patching versions in project.pbxproj
         if self.user_args['version_code'] and self.user_args['version_name']:
@@ -545,6 +394,10 @@ class Launcher:
         
         self.__patcher__()
         self.__patch_gs__()
+        if self.user_args['pipeline'] == True:
+            PRINTLN(f"[ PIPELINE ] All the necessary patching is done, quitting now with 0...")
+            quit(code=0)
+
         if 'build' in self.user_args.keys():
             PRINTLN(f"[+] Building the app::{self.user_args['build']} for you ...")
             self.__build_temp()
@@ -553,7 +406,7 @@ class Launcher:
         self.__set_flutter_args__()
 class Config:
     
-    possible_args = ['--upgrade-env', '--fix-pods', '--verbose' , 'help', 'app' , 'env' , 'version', 'filter', 'fmode', '--build', '--lan', '--preview' , '--set-version']
+    possible_args = ['--pipeline','--upgrade-env', '--fix-pods', '--verbose' , 'help', 'app' , 'env' , 'version', 'filter', 'fmode', '--build', '--lan', '--preview' , '--set-version']
     def __help__(self):
         print(f""" 
         + app=<AppName>
@@ -630,10 +483,10 @@ class Config:
         for shPerm in permissionsList:
             _shSplitted = shPerm.split('\'')
             if shPerm and _shSplitted.__len__() >= 3:
-                PRINTLN(f"\t- ✅ {_shSplitted[1]}")
+                PRINTLN(f"\t- [-] {_shSplitted[1]}")
                 _permissionsString += shPerm+'\n'
             else :
-                PRINTLN(f"\t- ❌ {shPerm}")
+                PRINTLN(f"\t- [x] {shPerm}")
                 exit(DW_EXIT_REASONS.INVALID_PERMISSION_LEN_OR_NULL)
         return _permissionsString
 
@@ -825,13 +678,13 @@ class Config:
         _ = self.__get_arg_value__('--upgrade-env')
         if _:
             os.system('flutter --version')
-            if input("[❓] Running this will upgrade flutter env and fix plugins related problems : y/n ?").lower() == 'y':
+            if input("[?] Running this will upgrade flutter env and fix plugins related problems : y/n ?").lower() == 'y':
                 os.system('rm -rf ~/Library/Developer/Xcode/DerivedData/* && flutter upgrade --force && flutter pub upgrade && flutter pub upgrade --major-versions && flutter clean && python3 launcher.py --fix-pods')
             exit(DW_EXIT_REASONS.NORMAL)
 
         _ = self.__get_arg_value__('--fix-pods')
         if _:
-            if input('[❓] This is only for MAC M1 chips ! Continue : y/n ?').lower() == 'y':
+            if input('[?] This is only for MAC M1 chips ! Continue : y/n ?').lower() == 'y':
                 print("[+] Clearing cache and Removing lock files ..")
                 os.system('rm -rf ../ios/Pods & rm ../ios/Podfile.lock & rm -rf ../ios/.symlinks & rm ../ios/Flutter/Flutter.podspec & rm ../pubspec.lock')
                 if not os.path.exists('../ios/Podfile'):
@@ -933,28 +786,28 @@ class Config:
         #     open('.checksum', 'w+').write(currentBuild)
 
 if __name__ == "__main__":
-    if 'offers' in argv:
-        simulate_counter_offers(
-            orderId= "-N8l0HFq5ygDPouwbaDj",
-            customerId= "tSG0eSFZNGNA7grjBPFEBbpYwjE3"
-        )
-        exit(0)
-    if 'drive' in argv:
-        # Taxi called from : 
-        # Customer's destination To :
-        simulateDriverMovements( 
-            customerId="tSG0eSFZNGNA7grjBPFEBbpYwjE3", # Montassar's customer id
-            orderId="-N8_J16QRVKzS9rnI4DH", # taxi order id
-            orderType="taxi",
-            driverId="oAxB9JquC1S7zQyRUuZF2gI1suL2", # driverId
-            driverType="driver",
-            # start="15.866373,-97.068697",
-            end="15.835721354763855,-97.04348623752594",
-            # 19.38003452020731 | -98.96333869546652
-            # destination : 15.835502076340775,-97.04348623752594
-            start="15.83476,-97.04242",
-            # end="15.865125366502896,-97.05751821398735",
-            duration_sec=120
-        )
+    # if 'offers' in argv:
+    #     simulate_counter_offers(
+    #         orderId= "-N8l0HFq5ygDPouwbaDj",
+    #         customerId= "tSG0eSFZNGNA7grjBPFEBbpYwjE3"
+    #     )
+    #     exit(0)
+    # if 'drive' in argv:
+    #     # Taxi called from : 
+    #     # Customer's destination To :
+    #     simulateDriverMovements( 
+    #         customerId="tSG0eSFZNGNA7grjBPFEBbpYwjE3", # Montassar's customer id
+    #         orderId="-N8_J16QRVKzS9rnI4DH", # taxi order id
+    #         orderType="taxi",
+    #         driverId="oAxB9JquC1S7zQyRUuZF2gI1suL2", # driverId
+    #         driverType="driver",
+    #         # start="15.866373,-97.068697",
+    #         end="15.835721354763855,-97.04348623752594",
+    #         # 19.38003452020731 | -98.96333869546652
+    #         # destination : 15.835502076340775,-97.04348623752594
+    #         start="15.83476,-97.04242",
+    #         # end="15.865125366502896,-97.05751821398735",
+    #         duration_sec=120
+    #     )
     Config(argv)
     exit(DW_EXIT_REASONS.NORMAL)
