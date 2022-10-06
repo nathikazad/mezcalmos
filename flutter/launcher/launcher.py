@@ -279,8 +279,8 @@ class Launcher:
         if not '--pipeline' in argv:
             self.user_args['pipeline'] = False
             _continue = input(f"[~] Please Confirm Launching/building with version {self.user_args['version_name']}+{self.user_args['version_code']} ?")
-        if not (_continue.__len__() == 0 or _continue.lower() == "y" or _continue.lower() == "yes"):
-            exit(DW_EXIT_REASONS.WRONG_VERSION_GIVEN)
+            if not (_continue.__len__() == 0 or _continue.lower() == "y" or _continue.lower() == "yes"):
+                exit(DW_EXIT_REASONS.WRONG_VERSION_GIVEN)
         else:
             self.user_args['pipeline'] = True
 
