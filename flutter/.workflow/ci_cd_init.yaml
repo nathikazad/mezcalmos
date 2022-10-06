@@ -95,11 +95,7 @@ jobs:
   - template: ci_cd.yaml
     parameters:
       Apps: 
-<<<<<<< HEAD
       # - "CustomerApp"
-=======
-      - "CustomerApp"
->>>>>>> master
-      - "DeliveryApp"
-      - "RestaurantApp"
-      - "LaundryApp"
+        - "DeliveryApp"
+        - "RestaurantApp"
+        - "LaundryApp"
