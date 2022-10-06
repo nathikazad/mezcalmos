@@ -5,7 +5,7 @@ class Review {
   String comment;
   num rating;
   String serviceProviderId;
-  OrderType orderType;
+  OrderType? orderType;
   String orderId;
   String? authorId;
   DateTime? reviewTime;
@@ -48,7 +48,7 @@ class Review {
       'rating': rating,
       "authorId": authorId,
       'serviceProviderId': serviceProviderId,
-      'orderType': orderType.toFirebaseFormatString(),
+      'orderType': orderType?.toFirebaseFormatString(),
       'orderId': orderId,
       "reviewTime": reviewTime?.toUtc().toIso8601String(),
     };
@@ -62,8 +62,10 @@ class Review {
       rating: map['rating'] ?? 0,
       authorId: map['authorId'],
       serviceProviderId: map['serviceProviderId'] ?? '',
-      orderType: map['orderType'].toString().toOrderType(),
-      reviewTime: DateTime.parse(map["reviewTime"]),
+      orderType: map?['orderType']?.toString().toOrderType(),
+      reviewTime: (map["reviewTime"] != null)
+          ? DateTime.parse(map["reviewTime"])
+          : null,
       orderId: map['orderId'] ?? '',
     );
   }
