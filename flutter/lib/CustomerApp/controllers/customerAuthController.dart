@@ -26,6 +26,7 @@ class CustomerAuthController extends GetxController {
   Rxn<Customer> customer = Rxn();
 
   StreamSubscription<dynamic>? _customerNodeListener;
+  StreamSubscription<MainUserInfo>? _userInfoStreamListener;
 
   @override
   Future<void> onInit() async {
@@ -57,6 +58,17 @@ class CustomerAuthController extends GetxController {
           _checkedAppVersion = true;
         }
       });
+      // update info //
+      await _userInfoStreamListener?.cancel();
+      _authController.userInfoStream.listen((MainUserInfo? userInfo) {
+        if (userInfo != null) {
+          _databaseHelper.firebaseDatabase
+              .ref()
+              .child(customerInfoNode(_authController.fireAuthUser!.uid))
+              .set(userInfo.toFirebaseFormatJson());
+        }
+      });
+      //
 
       final String? deviceNotificationToken =
           await _notificationsController.getToken();
@@ -150,6 +162,8 @@ class CustomerAuthController extends GetxController {
     print("[+] CustomerAuthController::onClose ---------> Was invoked !");
     await _customerNodeListener?.cancel();
     _customerNodeListener = null;
+    await _userInfoStreamListener?.cancel();
+    _userInfoStreamListener = null;
     super.onClose();
   }
 }

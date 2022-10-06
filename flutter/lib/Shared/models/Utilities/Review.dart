@@ -5,6 +5,7 @@ class Review {
   String comment;
   num rating;
   String serviceProviderId;
+  String authorName;
   OrderType? orderType;
   String orderId;
   String? authorId;
@@ -17,34 +18,14 @@ class Review {
     required this.orderId,
     this.authorId,
     this.reviewTime,
+    this.authorName = "",
     this.id,
   });
-
-  Review copyWith({
-    String? comment,
-    num? rating,
-    String? serviceProviderId,
-    String? id,
-    OrderType? orderType,
-    String? authorId,
-    DateTime? reviewTime,
-    String? orderId,
-  }) {
-    return Review(
-      comment: comment ?? this.comment,
-      rating: rating ?? this.rating,
-      serviceProviderId: serviceProviderId ?? this.serviceProviderId,
-      orderType: orderType ?? this.orderType,
-      orderId: orderId ?? this.orderId,
-      authorId: authorId ?? authorId,
-      reviewTime: reviewTime ?? reviewTime,
-      id: id ?? this.id,
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return {
       'comment': comment,
+      'authorName': authorName,
       'rating': rating,
       "authorId": authorId,
       'serviceProviderId': serviceProviderId,
@@ -60,6 +41,7 @@ class Review {
       id: key,
       comment: map['comment'] ?? '',
       rating: map['rating'] ?? 0,
+      authorName: map["authorName"] ?? "",
       authorId: map['authorId'],
       serviceProviderId: map['serviceProviderId'] ?? '',
       orderType: map?['orderType']?.toString().toOrderType(),
