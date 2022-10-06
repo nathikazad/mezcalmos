@@ -225,7 +225,8 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
                       ),
                       textButtonTheme: TextButtonThemeData(
                         style: TextButton.styleFrom(
-                          primary: primaryBlueColor, // button text color
+                          foregroundColor:
+                              primaryBlueColor, // button text color
                         ),
                       ),
                     ),
@@ -233,8 +234,10 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
                   );
                 },
                 initialTime: TimeOfDay(
-                    hour: widget.order.orderTime.toLocal().hour,
-                    minute: widget.order.orderTime.toLocal().minute))
+                    hour: selectedDate.value?.toLocal().hour ??
+                        widget.order.orderTime.toLocal().hour,
+                    minute: selectedDate.value?.toLocal().minute ??
+                        widget.order.orderTime.toLocal().minute))
             .then((TimeOfDay? value) {
           if (value != null) {
             selectedTime.value = value;
@@ -278,12 +281,18 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
 
         await getDatePicker(
           context,
-          initialDate: selectedDate.value ?? DateTime.now(),
+          initialDate:
+              selectedDate.value?.toLocal() ?? DateTime.now().toLocal(),
           firstDate: widget.order.orderTime,
           lastDate: DateTime(DateTime.now().year + 1),
         ).then((DateTime? value) {
           if (value != null) {
-            selectedDate.value = value;
+            selectedDate.value = DateTime(
+                value.toLocal().year,
+                value.toLocal().month,
+                value.toLocal().day,
+                value.toLocal().hour,
+                value.toLocal().minute);
           }
         });
       },

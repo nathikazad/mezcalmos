@@ -1979,5 +1979,11 @@
                 }
             }
         }
+    },
+    "General": {
+        "to": "To",
+        "required": "Required",
+        "error": "Error",
+        "noRoute": "No route found. Please enter a valid destination"
     }
 }
