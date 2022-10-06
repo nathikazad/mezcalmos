@@ -5,7 +5,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
 dynamic _i18n() =>
@@ -111,7 +110,7 @@ class OrderSummaryCard extends StatelessWidget {
               ),
             ),
             //=======================Stripe fees :=============== //
-            if (controller.cart.value.paymentType == PaymentType.Card)
+            if (controller.showFees)
               Container(
                 padding: EdgeInsets.only(
                   bottom: 10,

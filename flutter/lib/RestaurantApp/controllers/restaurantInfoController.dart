@@ -338,6 +338,15 @@ class RestaurantInfoController extends GetxController {
     // }
   }
 
+  // fees //
+  Future<void> switchFeesOption(bool v) async {
+    await _databaseHelper.firebaseDatabase
+        .ref(feesOptionNode(uid: restaurantId))
+        .set(v);
+  }
+
+  // //
+
   Future<void> switchItemAvailable(
       {required String itemId, required bool value, String? caytegoryId}) {
     mezDbgPrint(
@@ -357,6 +366,27 @@ class RestaurantInfoController extends GetxController {
         .ref()
         .child(itemNode(uid: restaurantId, itemId: itemId) + "/cost")
         .set(cost);
+  }
+
+  Future<void> pushBankInfo(String bankName, num bankNumber) async {
+    await _databaseHelper.firebaseDatabase
+        .ref()
+        .child(payemntInfoNode(uid: restaurantId) + "/bankInfo")
+        .set({
+      "bankName": bankName,
+      "accountNumber": bankNumber,
+    });
+    await _databaseHelper.firebaseDatabase
+        .ref()
+        .child(acceptedPaymentNode(uid: restaurantId) + "/bankTransfer")
+        .set(true);
+  }
+
+  Future<void> removeBank() async {
+    await _databaseHelper.firebaseDatabase
+        .ref()
+        .child(acceptedPaymentNode(uid: restaurantId) + "/bankTransfer")
+        .set(false);
   }
 
   Future<void> switchChoiceAvailablity(

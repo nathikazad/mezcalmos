@@ -156,7 +156,8 @@
                             "cash": "Cash",
                             "newcard": "New Card",
                             "applepay": "Apple Pay",
-                            "googlepay": "Google Pay"
+                            "googlepay": "Google Pay",
+                            "banktransfer": "Bank Transfer"
                         },
                         "BuildCart": {
                             "inCart": "My orders",
@@ -309,6 +310,11 @@
                             "free": "Free",
                             "total": "Total",
                             "deliveryLocation": "Delivery Location"
+                        },
+                        "RestaurantBankInfoCard": {
+                            "title": "Restaurant bank account",
+                            "bankName": "Bank name",
+                            "accountNumber": "Account number"
                         }
                     },
                     "ViewRestaurantOrderScreen": {
@@ -855,7 +861,12 @@
             },
             "OrderPaymentMethod": {
                 "paymentMethod": "Payment method",
-                "cash": "Cash"
+
+                "cash": "Cash",
+                "newcard": "New Card",
+                "applepay": "Apple Pay",
+                "googlepay": "Google Pay",
+                "banktransfer": "Bank Transfer"
             },
             "OrderDeliveryLocation": {
                 "title": "Delivery location"
@@ -1986,6 +1997,8 @@
                         "requirements": "Requirements",
                         "acceptedPayments": "Accepted payments",
                         "setup": "Setup",
+                        "fees": "Fees",
+                        "chargeCustomer": "Charge stripe fees on customer",
 
                         "setupHelper": "Thanks for setup , you can now receive payments but you will not be able to withdraw money to your bank account",
                         "reqs": "Requirements",

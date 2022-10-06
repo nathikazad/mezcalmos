@@ -221,6 +221,10 @@ class ROpEditInfoController {
         "payouts ==========>>>>> ${restaurant.value!.paymentInfo.stripe?.payoutsEnabled}");
   }
 
+  Future<void> switchChargeFees(bool v) async {
+    await restaurantInfoController.switchFeesOption(v);
+  }
+
   void showPaymentSetup() {
     setupClicked.value = true;
     onboardServiceProvider(restaurant.value!.info.id, OrderType.Restaurant)
@@ -249,6 +253,16 @@ class ROpEditInfoController {
                 !restaurant.value!.paymentInfo.chargesEnabled));
   }
 
+  bool getChargeFessOnCustomer() {
+    return restaurant.value!.paymentInfo.stripe?.chargeFeesOnCustomer ?? true;
+  }
+
+  bool get showFeesOption {
+    return (restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
+            true &&
+        restaurant.value!.paymentInfo.stripe != null);
+  }
+
   bool get showStatusIcon {
     return (restaurant.value!.paymentInfo.stripe?.requirements.isNotEmpty ==
         true);
@@ -256,6 +270,26 @@ class ROpEditInfoController {
 
   bool get getAvailable {
     return restaurant.value!.state.available;
+  }
+
+  bool get isBankTrue {
+    return restaurant
+            .value!.paymentInfo.acceptedPayments[PaymentType.BankTransfer] ==
+        true;
+  }
+
+  // Bank //
+  Future pushBankInfos(
+      {required String bankName, required num bankNumber}) async {
+    mezDbgPrint("Value =================>$isBankTrue");
+
+    await restaurantInfoController.pushBankInfo(bankName, bankNumber);
+  }
+
+  Future removeBank() async {
+    mezDbgPrint("Value =================>$isBankTrue");
+
+    await restaurantInfoController.removeBank();
   }
 
   bool validateSecondaryLanguUpdate(LanguageType value) {

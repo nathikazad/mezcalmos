@@ -89,6 +89,10 @@ String payemntInfoNode({required String uid}) {
   return detailsNode(uid: uid) + "/paymentInfo/";
 }
 
+String feesOptionNode({required String uid}) {
+  return detailsNode(uid: uid) + "/paymentInfo/stripe/chargeFeesOnCustomer";
+}
+
 String acceptedPaymentNode({required String uid}) {
   return payemntInfoNode(uid: uid) + "/acceptedPayments/";
 }

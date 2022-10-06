@@ -241,13 +241,38 @@ class RestaurantController extends GetxController {
 
   void switchPaymentMedthod(
       {required PaymentType paymentType, CreditCard? card}) {
+    mezDbgPrint(
+        "Switching on restControlller =========>>>>>${paymentType.toNormalString()}");
     cart.value.paymentType = paymentType;
 
     saveCart();
   }
 
-  Future<void> clearCart() async {
-    await _databaseHelper.firebaseDatabase
+  bool get showItemsImages {
+    mezDbgPrint(
+        "TEEEEEST IMAGE ====>${cart.value.cartItems.firstWhereOrNull((CartItem element) => element.item.image != null)}");
+    return cart.value.cartItems.firstWhereOrNull(
+            (CartItem element) => element.item.image != null) !=
+        null;
+  }
+
+  bool get showPaymentPicker {
+    return cart.value.restaurant?.paymentInfo
+                .acceptedPayments[PaymentType.Card] ==
+            true ||
+        cart.value.restaurant?.paymentInfo
+                .acceptedPayments[PaymentType.BankTransfer] ==
+            true;
+  }
+
+  bool get showFees {
+    return cart.value.paymentType == PaymentType.Card &&
+        (cart.value.restaurant?.paymentInfo.stripe?.chargeFeesOnCustomer ??
+            true);
+  }
+
+  void clearCart() {
+    _databaseHelper.firebaseDatabase
         .ref()
         .child(customerCart(_authController.user!.id))
         .remove()
@@ -291,10 +316,30 @@ class RestaurantController extends GetxController {
     }
   }
 
-  bool get showItemsImages {
-    return cart.value.cartItems.firstWhereOrNull(
-            (CartItem element) => element.item.image != null) !=
-        null;
+  Future<ServerResponse> addReview({
+    required String orderId,
+    required String restaurantId,
+    required String comment,
+    required num rate,
+  }) async {
+    final HttpsCallable cancelOrder =
+        FirebaseFunctions.instance.httpsCallable('restaurant-addReview');
+    try {
+      final HttpsCallableResult<dynamic> response =
+          await cancelOrder.call(<String, dynamic>{
+        "orderId": orderId,
+        "serviceProviderId": restaurantId,
+        "rating": rate,
+        "comment": comment,
+        "orderType": OrderType.Restaurant.toFirebaseFormatString(),
+      });
+      mezDbgPrint(response.toString());
+      print(response.data);
+      return ServerResponse.fromJson(response.data);
+    } catch (e) {
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
+    }
   }
 
   @override

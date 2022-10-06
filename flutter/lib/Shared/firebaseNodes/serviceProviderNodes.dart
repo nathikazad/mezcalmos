@@ -30,6 +30,12 @@ String serviceProviderDetails(
       '/details';
 }
 
+String serviceProviderReviews(
+    {required OrderType orderType, required String providerId}) {
+  return serviceProviderDetails(orderType: orderType, providerId: providerId) +
+      '/reviews';
+}
+
 String serviceProviderSchedule(
     {required OrderType orderType, required String providerId}) {
   return serviceProviderDetails(orderType: orderType, providerId: providerId) +

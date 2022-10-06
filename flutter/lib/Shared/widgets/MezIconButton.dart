@@ -8,11 +8,15 @@ class MezIconButton extends StatelessWidget {
       required this.icon,
       this.child,
       this.padding,
+      this.backgroundColor,
+      this.iconColor,
       this.iconSize});
   final Function()? onTap;
   final Widget? child;
   final IconData? icon;
   final double? iconSize;
+  final Color? backgroundColor;
+  final Color? iconColor;
   final EdgeInsetsGeometry? padding;
 
   @override
@@ -23,11 +27,12 @@ class MezIconButton extends StatelessWidget {
       child: Ink(
         padding: padding ?? const EdgeInsets.all(5),
         decoration: BoxDecoration(
-            color: secondaryLightBlueColor, shape: BoxShape.circle),
+            color: backgroundColor ?? secondaryLightBlueColor,
+            shape: BoxShape.circle),
         child: child ??
             Icon(
               icon,
-              color: primaryBlueColor,
+              color: iconColor ?? primaryBlueColor,
               size: iconSize,
             ),
       ),

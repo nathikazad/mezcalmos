@@ -156,7 +156,8 @@
                             "cash": "Dinero",
                             "newcard": "Nueva tarjeta",
                             "applepay": "Apple Pay",
-                            "googlepay": "Google Pay"
+                            "googlepay": "Google Pay",
+                            "banktransfer": "Transferencia bancaria"
                         },
                         "CartIsEmptyScreen": {
                             "title": "Tu carrito esta vacío"
@@ -315,6 +316,11 @@
                             "orderCost": "Costo de la orden",
 
                             "deliveryLocation": "Lugar De Entrega"
+                        },
+                        "RestaurantBankInfoCard": {
+                            "title": "Cuenta bancaria de restaurante",
+                            "bankName": "Nombre del banco",
+                            "accountNumber": "Número de cuenta"
                         }
                     },
                     "ViewRestaurantOrderScreen": {
@@ -868,7 +874,11 @@
             },
             "OrderPaymentMethod": {
                 "paymentMethod": "Método de pago",
-                "cash": "Dinero"
+                "cash": "Dinero",
+                "newcard": "Nueva tarjeta",
+                "applepay": "Apple Pay",
+                "googlepay": "Google Pay",
+                "banktransfer": "Transferencia bancaria"
             },
             "OrderDeliveryLocation": {
                 "title": "Lugar de entrega"
@@ -1976,10 +1986,13 @@
                     },
                     "ROpAcceptedPayments": {
                         "cash": "Dinero",
+
                         "card": "Tarjeta",
                         "requirements": "Requisitos",
                         "acceptedPayments": "Pagos aceptados",
                         "setup": "configurar",
+                        "fees": "Tarifa",
+                        "chargeCustomer": "Cargar tarifas de Stripe en el cliente",
 
                         "setupHelper": "Gracias por la configuración, ahora puede recibir pagos, pero no podrá retirar dinero a su cuenta bancaria.",
                         "reqs": "Requisitos",

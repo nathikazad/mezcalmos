@@ -9,7 +9,14 @@ import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 // types //
-enum PickerChoice { SavedCard, GooglePay, ApplePay, Cash, NewCard }
+enum PickerChoice {
+  SavedCard,
+  GooglePay,
+  ApplePay,
+  Cash,
+  NewCard,
+  BankTransfer
+}
 
 typedef PaymentOption = Map<PickerChoice, CreditCard?>;
 
@@ -37,6 +44,10 @@ class ViewCartController {
 
   Future<void> _addingValusToOptions() async {
     options.add({PickerChoice.Cash: null});
+    if (controller.cart.value.restaurant!
+        .acceptPayment(PaymentType.BankTransfer)) {
+      options.add({PickerChoice.BankTransfer: null});
+    }
     if (await isApplePaySupported()) {
       options.add({PickerChoice.ApplePay: null});
     }
@@ -82,13 +93,19 @@ class ViewCartController {
     options.refresh();
   }
 
+  Future<void> _getCustomerCards() async {
+    //await Get.find<CustomerAuthController>().getCards();
+  }
+
   // methods
   Future<void> switchPicker(PaymentOption value) async {
-    if (value.keys.first != PickerChoice.Cash) {
+    if (value.keys.first == PickerChoice.Cash) {
+      controller.switchPaymentMedthod(paymentType: PaymentType.Cash);
+    } else if (value.keys.first == PickerChoice.BankTransfer) {
+      controller.switchPaymentMedthod(paymentType: PaymentType.BankTransfer);
+    } else {
       controller.switchPaymentMedthod(paymentType: PaymentType.Card);
       await handlePaymentChoice(value);
-    } else {
-      controller.switchPaymentMedthod(paymentType: PaymentType.Cash);
     }
   }
 

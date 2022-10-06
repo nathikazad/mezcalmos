@@ -17,9 +17,9 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -83,22 +83,22 @@ class AuthController extends GetxController {
         _userInfoStreamController.add(null);
 
         mezDbgPrint('AuthController: User is currently signed out!');
-        _userNodeListener?.cancel();
+        await _userNodeListener?.cancel();
         _userNodeListener = null;
         _user.value = null;
       } else {
         mezDbgPrint('AuthController: User is currently signed in!');
         _onSignInCallback();
         _authStateStreamController.add(user);
-        GetStorage().write(getxUserId, user.uid);
-        _userNodeListener?.cancel();
+        await GetStorage().write(getxUserId, user.uid);
+        await _userNodeListener?.cancel();
         // ignore: unawaited_futures
         _databaseHelper.firebaseDatabase
             .ref()
             .child(userInfoNode(user.uid))
             .onValueWitchCatch()
-            .then((value) {
-          _userNodeListener = value.listen((event) {
+            .then((Stream<DatabaseEvent> value) {
+          _userNodeListener = value.listen((DatabaseEvent event) {
             if (event.snapshot.value == null) return;
             if ((event.snapshot.value as dynamic)['language'] == null) {
               (event.snapshot.value as dynamic)['language'] =
@@ -170,9 +170,9 @@ class AuthController extends GetxController {
   Future<String> uploadUserImgToFbStorage(
       {required File imageFile, bool isCompressed = false}) async {
     String _uploadedImgUrl;
-    List<String> splitted = imageFile.path.split('.');
-    String imgPath =
-        "users/${this._fireAuthUser.value!.uid}/avatar/${this._fireAuthUser.value!.uid}.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
+    final List<String> splitted = imageFile.path.split('.');
+    final String imgPath =
+        "users/${_fireAuthUser.value!.uid}/avatar/${_fireAuthUser.value!.uid}.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
     try {
       await firebase_storage.FirebaseStorage.instance
           .ref(imgPath)
@@ -225,7 +225,7 @@ class AuthController extends GetxController {
       mezDbgPrint("AuthController: Sign out function");
 
       mezDbgPrint("AuthController: Sign out callbacks finished");
-      _userNodeListener?.cancel();
+      await _userNodeListener?.cancel();
       _userNodeListener = null;
       _user.value = null;
       await _auth.signOut();
@@ -277,7 +277,7 @@ class AuthController extends GetxController {
   }
 
   Future<ServerResponse> sendOTPForLogin(String phoneNumber) async {
-    HttpsCallable sendOTPForLoginFunction =
+    final HttpsCallable sendOTPForLoginFunction =
         FirebaseFunctions.instance.httpsCallable('otp-sendOTPForLogin');
     HttpsCallableResult? response;
     try {
@@ -310,7 +310,7 @@ class AuthController extends GetxController {
   Future<ServerResponse?> signInUsingOTP(
       String phoneNumber, String otpCode) async {
     mezDbgPrint("$phoneNumber  < phone ------ otp > $otpCode");
-    HttpsCallable getAuthUsingOTPFunction =
+    final HttpsCallable getAuthUsingOTPFunction =
         FirebaseFunctions.instance.httpsCallable('otp-getAuthUsingOTP');
     HttpsCallableResult? response;
     ServerResponse? serverResponse;
@@ -334,7 +334,7 @@ class AuthController extends GetxController {
       mezDbgPrint('---------------------');
 
       if (serverResponse.success) {
-        fireAuth.FirebaseAuth.instance
+        await fireAuth.FirebaseAuth.instance
             .signInWithCustomToken(response.data["token"])
             .catchError((Object error, StackTrace sr) {
           if (error.toString().contains('user-disabled')) {

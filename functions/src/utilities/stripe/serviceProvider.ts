@@ -81,6 +81,7 @@ export const updateServiceProvider =
       status: isWorking ? StripeStatus.IsWorking : StripeStatus.InProcess,
       detailsSubmitted: account.details_submitted,
       payoutsEnabled: account.payouts_enabled,
+      chargeFeesOnCustomer: null ,
       email: account.email,
       chargesEnabled: account.charges_enabled,
       requirements: account.requirements?.currently_due
@@ -142,6 +143,7 @@ export async function getServiceProviderStripeId(serviceProviderId: string, orde
       status: StripeStatus.InProcess,
       detailsSubmitted: false,
       payoutsEnabled: false,
+      chargeFeesOnCustomer : null,
       email: null,
       chargesEnabled: false,
       requirements: []
