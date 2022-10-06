@@ -72,6 +72,7 @@ class ROpEditInfoController {
         .listen((Restaurant? event) {
       if (event != null) {
         restaurant.value = event;
+        _updateResTInfo();
       }
     });
     _updateResTInfo();
@@ -93,12 +94,19 @@ class ROpEditInfoController {
       secondaryLang.value = restaurant.value!.secondaryLanguage;
       editablePrLang.value = restaurant.value!.primaryLanguage;
       editableScLang.value = restaurant.value!.secondaryLanguage;
+      mezDbgPrint(
+          "UPDATing DESCCCCC =========>>>PR lang : ${primaryLang.value}");
+      mezDbgPrint(
+          "UPDATing DESCCCCC =========>>>DESC : ${restaurant.value?.description}");
+      mezDbgPrint(
+          "UPDATing DESCCCCC =========>>>SC lang : ${secondaryLang.value}");
+      mezDbgPrint(
+          "UPDATing DESCCCCC =========>>>DESC : ${restaurant.value?.description}");
+
       prRestaurantDescTxt.text =
-          restaurant.value?.description?[restaurant.value!.primaryLanguage] ??
-              '';
+          restaurant.value?.description?[primaryLang] ?? '';
       scRestaurantDescTxt.text =
-          restaurant.value?.description?[restaurant.value!.secondaryLanguage] ??
-              '';
+          restaurant.value?.description?[secondaryLang] ?? '';
     }
   }
 
@@ -137,11 +145,13 @@ class ROpEditInfoController {
         newLocation.value?.address != restaurant.value?.info.location.address) {
       await restaurantInfoController.setLocation(newLocation.value!);
     }
-    if (editableScLang.value != null && editableScLang.value != secondaryLang) {
-      await restaurantInfoController.setPrimaryLanguage(editableScLang.value!);
-    }
-    if (editablePrLang.value != null && editablePrLang.value != primaryLang) {
+    if (editablePrLang.value != null &&
+        editablePrLang.value != primaryLang.value) {
+      mezDbgPrint("SEEETTING PRIMARY LANG =======>${editablePrLang.value}");
       await restaurantInfoController.setPrimaryLanguage(editablePrLang.value!);
+      mezDbgPrint("SEEETTING SECOND LANG =======>${editableScLang.value}");
+      await restaurantInfoController
+          .setSecondaryLanguage(editablePrLang.value?.toOpLang());
     }
 
     if (newSchedule.value != null && newSchedule.value != oldSchedule.value) {
@@ -166,7 +176,7 @@ class ROpEditInfoController {
 
   void changePrimaryLang(LanguageType value) {
     editablePrLang.value = value;
-    editableScLang.value = editablePrLang.value!.toOpLang();
+    editableScLang.value = value.toOpLang();
   }
 
   // stripe and payments methods //

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/controllers/EditInfoController.dart';
+import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
@@ -35,7 +35,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
         children: [
           Text(
             '${_i18n()["acceptedPayments"]}',
-            style: Get.textTheme.bodyText1,
+            style: Get.textTheme.bodyText2,
           ),
           SizedBox(
             height: 10,
