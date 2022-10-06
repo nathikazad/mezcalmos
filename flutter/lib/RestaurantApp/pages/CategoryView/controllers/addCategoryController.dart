@@ -107,4 +107,15 @@ class AddCategoryController {
     };
     return desc;
   }
+
+  List<String> getCatNames(LanguageType languageType) {
+    final List<String> data = [];
+    restaurant.value!.getCategories.forEach((Category element) {
+      if (element.name?[languageType] != null) {
+        data.add(element.name![languageType]!.toLowerCase());
+      }
+    });
+
+    return data;
+  }
 }

@@ -15,6 +15,8 @@ import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
+import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -28,6 +30,29 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
   StreamSubscription<MezNotification.Notification>?
       _notificationsStreamListener;
   StreamSubscription<bool>? _locationStreamSub;
+  StreamSubscription<RestaurantOperator?>? _operatorInfoStreanSub;
+  RestaurantOperator? restaurantOperator;
+
+  Stream<RestaurantOperator?> operatorInfoStream() async* {
+    yield* Stream<Future>.periodic(Duration(seconds: 5), (int iter) {
+      return Get.find<RestaurantOpAuthController>()
+          .operatorInfoStream
+          .asBroadcastStream()
+          .first
+          .timeout(
+            Duration(seconds: 10),
+            onTimeout: () => null,
+          );
+    }).asyncMap((event) async => restaurantOperator = await event);
+  }
+
+  void _operatorInfoStreamListener() {
+    _operatorInfoStreanSub = operatorInfoStream().listen((event) {
+      if (Get.currentRoute != kUserProfile && event == null) {
+        Get.to(SomethingWentWrongScreen());
+      }
+    });
+  }
 
   @override
   void initState() {
@@ -36,12 +61,16 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
     mezDbgPrint("RestaurantWrapper::init state");
     Future.microtask(() async {
       mezDbgPrint("RestaurantWrapper::microtask handleState first time");
-      RestaurantOperator? restaurantOperator =
+
+      restaurantOperator =
           Get.find<RestaurantOpAuthController>().operator.value;
+      mezDbgPrint("RESTAURANT OPERATOR ==> $restaurantOperator");
       if (restaurantOperator == null)
         restaurantOperator = await Get.find<RestaurantOpAuthController>()
             .operatorInfoStream
-            .first;
+            .first
+            .timeout(Duration(seconds: 10), onTimeout: () => null);
+      if (restaurantOperator == null) _operatorInfoStreamListener();
       mezDbgPrint("RestaurantWrapper::microtask data received");
       handleState(restaurantOperator);
     });
@@ -60,9 +89,10 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
   void handleState(RestaurantOperator? operator) {
     mezDbgPrint(operator);
     if (operator != null && operator.state.restaurantId != null) {
-      // ignore: unawaited_futures, inference_failure_on_function_invocation
+      // ignore: unawaited_futures, inference_faQilure_on_function_invocation
       Get.toNamed(kCurrentOrdersListView);
     } else {
+      // Get.to(SomethingWentWrongScreen());
       mezDbgPrint("RestaurantWrappper::handleState state is null, ERROR");
     }
   }
@@ -83,6 +113,8 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
   void dispose() {
     _notificationsStreamListener?.cancel();
     _notificationsStreamListener = null;
+    _operatorInfoStreanSub?.cancel();
+    _operatorInfoStreanSub = null;
     _locationStreamSub?.cancel();
     _locationStreamSub = null;
     super.dispose();

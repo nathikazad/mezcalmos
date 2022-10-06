@@ -8,9 +8,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/component
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/OrderSummaryCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/PaymentMethodPicker.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:sizer/sizer.dart';
 
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
@@ -71,15 +69,11 @@ class _ViewCartBodyState extends State<ViewCartBody> {
             SizedBox(
               height: 10,
             ),
-            Obx(() => OrderSummaryCard(
-                  setLocationCallBack: widget.setLocationCallBack,
-                  deliveryCost: controller.cart.value.shippingCost ?? 50,
-                  showStripeFees:
-                      controller.cart.value.paymentType == PaymentType.Card,
-                  stripeFees: controller.cart.value.stripeFees,
-                  orderCost: controller.cart.value.itemsCost().toPriceString(),
-                  totalCost: controller.cart.value.totalCost.toPriceString(),
-                )),
+            OrderSummaryCard(
+              controller: controller,
+              setLocationCallBack: widget.setLocationCallBack,
+              serviceLoc: controller.cart.value.restaurant?.info.location,
+            ),
             SizedBox(
               height: 15,
             ),

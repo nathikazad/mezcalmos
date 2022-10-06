@@ -11,6 +11,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/componen
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderRestaurantCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderStatusCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrdersItemsCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/RestaurantBankInfo.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/notesWidget.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
@@ -19,6 +20,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
@@ -179,6 +181,10 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                             order: order.value!,
                             ordersStates: order.value!.status,
                           ),
+                          if (order.value!.paymentType ==
+                              PaymentType.BankTransfer)
+                            RestaurantBankInfoCard(
+                                restaurantId: order.value!.restaurantId),
                           CustomerRestaurantOrderEst(order: order.value!),
 
                           RestaurantOrderDriverCard(
@@ -205,7 +211,9 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                             margin: const EdgeInsets.only(top: 20),
                           ),
 
-                          OrderSummaryCard(order: order.value!),
+                          OrderSummaryCard(
+                            order: order.value!,
+                          ),
 
                           //===============================>button cancel===========================
                           //  Expanded(child: Container()),

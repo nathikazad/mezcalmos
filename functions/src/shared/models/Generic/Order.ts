@@ -48,7 +48,8 @@ export const pluralizeOrderType = function (orderType: OrderType): string {
 
 export enum PaymentType {
   Cash = "cash",
-  Card = "card"
+  Card = "card",
+  BankTransfer = "bankTransfer"
 }
 
 export enum SecondaryChat {

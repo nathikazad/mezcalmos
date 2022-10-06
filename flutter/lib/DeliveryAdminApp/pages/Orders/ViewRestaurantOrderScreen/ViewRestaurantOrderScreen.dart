@@ -178,9 +178,8 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                     if (order.value!.inDeliveryPhase()) ..._mapWidget,
 
                     OrderInfoCard(order: order),
-                    //==========================>total cost=====================================
                     orderTotalCostCard(order),
-                    //=========== location========================
+
                     orderShippingLocation(order),
                     //===============================>notes========================>
                     orderNoteCard(order)

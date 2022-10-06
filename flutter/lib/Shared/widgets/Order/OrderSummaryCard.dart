@@ -12,9 +12,13 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
     ["OrderSummaryCard"];
 
 class OrderSummaryCard extends StatelessWidget {
-  const OrderSummaryCard({Key? key, required this.order, this.margin})
-      : super(key: key);
+  const OrderSummaryCard({
+    Key? key,
+    required this.order,
+    this.margin,
+  }) : super(key: key);
   final Order order;
+
   final EdgeInsets? margin;
 
   @override
@@ -59,7 +63,8 @@ class OrderSummaryCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (order.stripePaymentInfo != null)
+                if (order.stripePaymentInfo != null &&
+                    order.stripePaymentInfo!.chargeFeesOnCustomer == true)
                   Container(
                     margin: const EdgeInsets.only(bottom: 5),
                     child: Row(

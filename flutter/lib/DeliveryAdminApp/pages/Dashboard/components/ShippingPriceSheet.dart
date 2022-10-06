@@ -16,10 +16,12 @@ class ShippingPriceSheet extends StatelessWidget {
     Key? key,
     required this.viewController,
     required this.ctx,
+    required this.type,
   }) : super(key: key);
 
   final AdminDashboardController viewController;
   final BuildContext ctx;
+  final ShippingPriceType type;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class ShippingPriceSheet extends StatelessWidget {
             Container(
               alignment: Alignment.center,
               child: Text(
-                '${_i18n()["shippingPrice"]}',
+                _getTitle(),
                 style: Get.textTheme.headline3,
               ),
             ),
@@ -44,14 +46,14 @@ class ShippingPriceSheet extends StatelessWidget {
               height: 15,
             ),
             Text(
-              '${_i18n()["newShippingPrice"]}',
+              _getHelperText(),
               style: Get.textTheme.bodyText1,
             ),
             const SizedBox(
               height: 10,
             ),
             TextFormField(
-                controller: viewController.priceController,
+                controller: viewController.getTextController(type),
                 style: Get.textTheme.bodyText1,
                 textAlignVertical: TextAlignVertical.center,
                 decoration: InputDecoration(
@@ -84,16 +86,13 @@ class ShippingPriceSheet extends StatelessWidget {
                   height: 50,
                   withGradient: true,
                   onClick: () async {
-                    if (num.tryParse(viewController.priceController.text) !=
+                    if (num.tryParse(
+                            viewController.getTextController(type).text) !=
                         null) {
-                      await viewController
-                          .changePrice(
-                              num.parse(viewController.priceController.text))
-                          .onError((Object? error, StackTrace stackTrace) =>
-                              Get.snackbar(
-                                  '${_i18n()["error"]}', '${_i18n()["error"]}',
-                                  backgroundColor: Colors.black,
-                                  colorText: Colors.white));
+                      await viewController.confirmHandler(
+                          value: num.parse(
+                              viewController.getTextController(type).text),
+                          type: type);
                     } else {
                       Get.snackbar(
                           '${_i18n()["error"]}', '${_i18n()["errorText"]}',
@@ -111,5 +110,33 @@ class ShippingPriceSheet extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getTitle() {
+    switch (type) {
+      case ShippingPriceType.Base:
+        return '${_i18n()["shippingPrice"]}';
+        break;
+      case ShippingPriceType.Min:
+        return '${_i18n()["minPrice"]}';
+        break;
+      case ShippingPriceType.PerKm:
+        return '${_i18n()["perKm"]}';
+        break;
+    }
+  }
+
+  String _getHelperText() {
+    switch (type) {
+      case ShippingPriceType.Base:
+        return '${_i18n()["newShippingPrice"]}';
+        break;
+      case ShippingPriceType.Min:
+        return '${_i18n()["newMinPrice"]}';
+        break;
+      case ShippingPriceType.PerKm:
+        return '${_i18n()["newPerkm"]}';
+        break;
+    }
   }
 }

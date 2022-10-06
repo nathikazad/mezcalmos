@@ -129,6 +129,22 @@ class CustomerAuthController extends GetxController {
     return MainUserInfo.fromData(data.value);
   }
 
+  Future<void> getCards() async {
+    mezDbgPrint(
+        "Cards value ==========>>>>${customerCardsNode(_authController.fireAuthUser!.uid)}");
+    await _databaseHelper.firebaseDatabase
+        .ref()
+        .child(customerCardsNode(_authController.fireAuthUser!.uid))
+        .get()
+        // ignore: avoid_annotating_with_dynamic
+        .then((dynamic value) {
+      value.value.forEach((key, value) {
+        customer.value?.savedCards
+            .add(CreditCard.fromData(id: key, data: value));
+      });
+    });
+  }
+
   @override
   Future<void> onClose() async {
     print("[+] CustomerAuthController::onClose ---------> Was invoked !");

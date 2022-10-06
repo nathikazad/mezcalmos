@@ -1,7 +1,6 @@
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:collection/collection.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:collection/collection.dart';
 
 class Customer {
   // List<Order> currentOrders = [];
@@ -12,7 +11,6 @@ class Customer {
   dynamic data;
   SavedLocation? get defaultLocation => savedLocations.firstWhereOrNull(
       (SavedLocation savedLocation) => savedLocation.defaultLocation);
-
 
   Customer.fromSnapshotData(data) {
     appVersion = data?["versionNumber"] ?? null;
@@ -100,7 +98,7 @@ typedef SavedLocations = List<SavedLocation>;
 
 extension SavedLocationsFunctions on SavedLocations {
   Map<String, Object> toFirebaseFormattedJson() {
-    Map<String, Object> json = <String, Object>{};
+    final Map<String, Object> json = <String, Object>{};
     forEach((SavedLocation savedLocation) =>
         json[savedLocation.id!] = savedLocation.toFirebaseFormattedJson());
     return json;
@@ -121,10 +119,10 @@ class CreditCard {
       required this.expMonth,
       required this.last4});
 
-  factory CreditCard.fromData({required String id, required dynamic data}) {
+  factory CreditCard.fromData({required String id, required data}) {
     return CreditCard(
         id: id,
-        brand: data["brand"]!.toString().toCardBrand() ?? CardBrand.Visa,
+        brand: data["brand"]?.toString().toCardBrand() ?? CardBrand.Visa,
         expYear: data["expYear"],
         expMonth: data["expMonth"],
         last4: data["last4"]);

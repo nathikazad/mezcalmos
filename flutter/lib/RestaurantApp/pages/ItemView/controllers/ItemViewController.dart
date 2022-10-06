@@ -97,7 +97,7 @@ class ItemViewController {
     prItemNameController.text = editableItem.value!.name[prLang]!;
     newImageUrl.value = editableItem.value!.image;
     scItemNameController.text = editableItem.value!.name[scLang]!;
-    prItemDescController.text = editableItem.value?.name[prLang]! ?? "";
+    prItemDescController.text = editableItem.value?.description?[prLang]! ?? "";
     scItemDescController.text = editableItem.value!.description?[scLang]! ?? "";
     itemPriceController.text = editableItem.value!.cost.toString();
     mezDbgPrint(editableItem.value!.options.length);
@@ -297,6 +297,21 @@ class ItemViewController {
       return CachedNetworkImageProvider(newImageUrl.value!);
     } else
       return null;
+  }
+
+  List<String> getItemsNames(LanguageType languageType) {
+    final List<String> data = [];
+    final List<Item> items = restaurant.value!.getAllItems();
+    if (editMode.isTrue) {
+      items.removeWhere((Item element) => element.id == editableItem.value!.id);
+    }
+    items.forEach((Item element) {
+      if (element.name[languageType] != null) {
+        data.add(element.name[languageType]!.replaceAll(" ", "").toLowerCase());
+      }
+    });
+
+    return data;
   }
 
   void dispose() {

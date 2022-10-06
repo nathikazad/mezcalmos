@@ -14,11 +14,14 @@
                     "notifications": "Notificaciones",
                     "orders": "Pedidos"
                 }
+
             },
             "CustomerHomeFooterButtons": {
                 "privacyPolicy": "Privacy policy"
             },
             "DropDownLocationList": {
+                "ops": "Oops",
+                "distanceError": "¡La distancia entre usted y el restaurante es de más de 10 km!",
                 "chooseLoc": "Elegir la ubicación",
                 "pickLocation": "Elegir del mapa"
             },
@@ -147,7 +150,8 @@
                             "cash": "Dinero",
                             "newcard": "Nueva tarjeta",
                             "applepay": "Apple Pay",
-                            "googlepay": "Google Pay"
+                            "googlepay": "Google Pay",
+                            "banktransfer": "Transferencia bancaria"
                         },
                         "CartIsEmptyScreen": {
                             "title": "Tu carrito esta vacío"
@@ -179,7 +183,8 @@
                             "deliveryCost": "Costo de envío",
                             "stripeFees": "Tarifas de tarjeta",
                             "totalCost": "Costo Total",
-                            "deliveryLocation": "Lugar De Entrega"
+                            "deliveryLocation": "Lugar De Entrega",
+                            "toBeCalc": "Calculando ..."
                         },
                         "SaveLocationDailog": {
                             "addLocationDialogTitle": "ingrese el nombre de la ubicación, si desea guardar para uso futuro, de lo contrario, puede omitir",
@@ -268,6 +273,7 @@
                             "orderCancelled": "cancelada"
                         },
                         "OrdersItemsCard": {
+                            "itemUnav": "Artículo no disponible",
                             "orderItems": "Artículos",
                             "canceledByAdmin": "Cancelada",
                             "canceledByCustomer": "Cancelada",
@@ -296,6 +302,11 @@
                             "orderCost": "Costo de la orden",
 
                             "deliveryLocation": "Lugar De Entrega"
+                        },
+                        "RestaurantBankInfoCard": {
+                            "title": "Cuenta bancaria de restaurante",
+                            "bankName": "Nombre del banco",
+                            "accountNumber": "Número de cuenta"
                         }
                     },
                     "ViewRestaurantOrderScreen": {
@@ -667,6 +678,10 @@
             }
         },
         "pages": {
+            "SomethingWentWrongScreen": {
+                "noRestaurantFoundOnOperator": "No se encontró ningún restaurante en su operador",
+                "pleaseContactAdmin": "Póngase en contacto con el administrador"
+            },
             "AuthScreens": {
                 "SMS": {
                     "OtpConfirmationScreen": {
@@ -828,7 +843,11 @@
             },
             "OrderPaymentMethod": {
                 "paymentMethod": "Método de pago",
-                "cash": "Dinero"
+                "cash": "Dinero",
+                "newcard": "Nueva tarjeta",
+                "applepay": "Apple Pay",
+                "googlepay": "Google Pay",
+                "banktransfer": "Transferencia bancaria"
             },
             "OrderDeliveryLocation": {
                 "title": "Lugar de entrega"
@@ -1085,8 +1104,12 @@
         "pages": {
             "AdminDashboardView": {
                 "dashboard": "Tablero",
-                "shippingPrice": "Precio de envío",
-                "newShippingPrice": "Nuevo precio de envío",
+                "shippingPrice": "Precio de envío base",
+                "minPrice": "Precio mínimo de envío",
+                "newMinPrice": "Nuevo precio mínimo de envío",
+                "perKm": "Por km precio de envío",
+                "newPerkm": "Nuevo por km precio de envío",
+                "newShippingPrice": "Nuevo precio base de envíonvío",
                 "error": "error",
                 "errorText": "Precio de envío no válido",
                 "confirm": "Confirmar",
@@ -1559,7 +1582,8 @@
                 "categoryPrice": "Categoría Precios por kilogramo",
                 "categoryPriceHint": "Entrar en la categoría Precios por kilogramo ...",
                 "categoryNameError": "Agregue un nombre de categoría",
-                "categoryPriceError": "Ingrese el precio válido"
+                "categoryPriceError": "Ingrese el precio válido",
+                "nameExist": "Name already exist"
 
             },
             "DashboardView": {
@@ -1743,6 +1767,7 @@
         "pages": {
 
             "ROpItemView": {
+                "nameExist": "El nombre ya existe",
                 "item": "Artículo",
                 "addItem": "Añadir artículo",
                 "saveItem": "Guardar el artículo",
@@ -1923,10 +1948,13 @@
                     },
                     "ROpAcceptedPayments": {
                         "cash": "Dinero",
+
                         "card": "Tarjeta",
                         "requirements": "Requisitos",
                         "acceptedPayments": "Pagos aceptados",
                         "setup": "configurar",
+                        "fees": "Tarifa",
+                        "chargeCustomer": "Cargar tarifas de Stripe en el cliente",
 
                         "setupHelper": "Gracias por la configuración, ahora puede recibir pagos, pero no podrá retirar dinero a su cuenta bancaria.",
                         "reqs": "Requisitos",

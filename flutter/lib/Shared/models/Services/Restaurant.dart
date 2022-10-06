@@ -58,7 +58,6 @@ class Restaurant extends Service {
       {required String restaurantId, required restaurantData}) {
     // List<Object?> availableLanguages =
     //     restaurantData["details"]["languages"] as List<Object?>;
-
     final ServiceState restaurantState =
         ServiceState.fromServiceStateData(restaurantData["state"]);
     LanguageMap? description;
@@ -216,6 +215,10 @@ class Restaurant extends Service {
     return rate != null && reviews.isNotEmpty;
   }
 
+  bool acceptPayment(PaymentType p) {
+    return paymentInfo.acceptedPayments[p] == true;
+  }
+
   double getAverageCost() {
     double allItemsCost = 0;
 
@@ -247,6 +250,15 @@ class Restaurant extends Service {
       numberOfItems = numberOfItems + element.items.length;
     });
     return numberOfItems + (getItemsWithoutCategory?.length ?? 0);
+  }
+
+  List<Item> getAllItems() {
+    final List<Item> data = [];
+    _categories.forEach((Category element) {
+      data.addAll(element.items);
+    });
+    data.addAll(itemsWithoutCategory);
+    return data;
   }
 
   bool isOpen() {

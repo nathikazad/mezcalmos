@@ -178,9 +178,10 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                     ],
                   ),
                 ),
-                if (cartItem.value?.item.description != null)
-                  _itemDescription(context),
-                if (cartItem.value!.item.options.isNotEmpty)
+                if (item.description![userLanguage] != null &&
+                    item.description![userLanguage]!.isNotEmpty)
+                  _itemDescription(context, item),
+                if (item.options.isNotEmpty)
                   Column(
                     children: List.generate(
                         cartItem.value!.item.options.length,
@@ -205,7 +206,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
     );
   }
 
-  Container _itemDescription(BuildContext context) {
+  Container _itemDescription(BuildContext context, Item item) {
     return Container(
       margin: const EdgeInsets.only(top: 20, bottom: 10),
       child: Column(
@@ -215,12 +216,9 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
           SizedBox(
             height: 10,
           ),
-          Text("${cartItem.value!.item.description![userLanguage]!.inCaps}",
+          Text("${item.description![userLanguage]?.inCaps}",
               textAlign: TextAlign.left,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText2!
-                  .copyWith(fontSize: 12.sp)),
+              style: Get.textTheme.bodyText2!.copyWith(fontSize: 12.sp)),
         ],
       ),
     );

@@ -9,9 +9,11 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
@@ -22,17 +24,26 @@ class RestaurantController extends GetxController {
   StreamSubscription<dynamic>? _cartListener;
   Restaurant? associatedRestaurant;
   Rx<Cart> cart = Cart().obs;
-  RxInt shippingPrice = 50.obs;
+  RxnNum minShiipingPrice = RxnNum();
+  RxnNum perKmPrice = RxnNum();
+  RxnNum baseShippingPrice = RxnNum();
+  RxBool isShippingSet = RxBool(false);
+  num _orderDistanceInKm = 0;
+
+  num get getOrderDistance => _orderDistanceInKm;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
     mezDbgPrint(
         "--------------------> RestaurantsCartController Initialized !");
-    if (_authController.fireAuthUser != null) {
-      getShippingPrice().then((int value) => shippingPrice.value = value);
 
-      _cartListener?.cancel();
+    if (_authController.fireAuthUser != null) {
+      //  getShippingPrice().then((num value) => shippingPrice.value = value);
+      baseShippingPrice.value = await getShippingPrice();
+      minShiipingPrice.value = await getMinShippingPrice();
+      perKmPrice.value = await getPerKmShippingPrice();
+      await _cartListener?.cancel();
       _cartListener = _databaseHelper.firebaseDatabase
           .ref()
           .child(customerCart(_authController.fireAuthUser!.uid))
@@ -65,7 +76,9 @@ class RestaurantController extends GetxController {
             }
 
             cart.value = Cart.fromCartData(
-                cartData, associatedRestaurant!, shippingPrice.value);
+              cartData,
+              associatedRestaurant!,
+            );
           }
         } else {
           cart.value = Cart();
@@ -85,15 +98,94 @@ class RestaurantController extends GetxController {
         restaurantId: restaurantId, restaurantData: snapshot.value);
   }
 
-  Future<int> getShippingPrice() async {
+  Future<num?> getShippingPrice() async {
     final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
             .ref()
             .child(baseShippingPriceNode())
             .once())
         .snapshot;
-    mezDbgPrint(
-        "Gettting shipping cost ==================================>>>>>> ${snapshot.value}");
-    return snapshot.value as int;
+
+    return snapshot.value as num;
+  }
+
+  Future<num?> getMinShippingPrice() async {
+    final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
+            .ref()
+            .child(minShippingPriceNode())
+            .once())
+        .snapshot;
+    mezDbgPrint("Min price =======>>>>>>${snapshot.value}");
+    return snapshot.value as num;
+  }
+
+  Future<num?> getPerKmShippingPrice() async {
+    final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
+            .ref()
+            .child(perKmShippingPriceNode())
+            .once())
+        .snapshot;
+    mezDbgPrint("Per km price =======>>>>>>${snapshot.value}");
+
+    return snapshot.value as num;
+  }
+
+  Future<bool> updateShippingPrice() async {
+    isShippingSet.value = false;
+    final Location? loc = cart.value.toLocation;
+    minShiipingPrice.value =
+        minShiipingPrice.value ?? await getMinShippingPrice();
+    perKmPrice.value = perKmPrice.value ?? await getPerKmShippingPrice();
+    baseShippingPrice.value =
+        baseShippingPrice.value ?? await getShippingPrice();
+    if (loc != null) {
+      final MapHelper.Route routeInfo = await MapHelper.getDurationAndDistance(
+        cart.value.restaurant!.info.location,
+        loc,
+      );
+      _orderDistanceInKm = routeInfo.distance.distanceInMeters / 1000;
+      mezDbgPrint(
+          "ORDER DISTANCE VARIABLEEEE ========>>>>>>>$_orderDistanceInKm");
+      mezDbgPrint(
+          "place :::: $loc distance from controller :::::::===> ${(routeInfo.distance.distanceInMeters / 1000)}");
+      if ((routeInfo.distance.distanceInMeters / 1000) <= 10) {
+        final num shippingCost =
+            perKmPrice.value! * (routeInfo.distance.distanceInMeters / 1000);
+        if (shippingCost < minShiipingPrice.value!) {
+          mezDbgPrint(
+              "LESS THAN MINIMUM COST ===================== $shippingCost << ${minShiipingPrice.value}");
+          cart.value.shippingCost = minShiipingPrice.value!.ceil();
+        } else {
+          cart.value.shippingCost = shippingCost.ceil();
+        }
+
+        mezDbgPrint(
+            "SHIPPPPPING COOOOST =========>>>>>>>>>>>${cart.value.shippingCost}");
+        await saveCart();
+        isShippingSet.value = true;
+
+        return true;
+      } else {
+        cart.value.shippingCost = null;
+        await saveCart();
+        isShippingSet.value = true;
+
+        return true;
+      }
+    } else {
+      cart.value.shippingCost = null;
+      await saveCart();
+      isShippingSet.value = true;
+
+      return true;
+    }
+  }
+
+  bool get canOrder {
+    return cart.value.toLocation != null &&
+        _orderDistanceInKm <= 10 &&
+        isShippingSet.isTrue &&
+        cart.value.shippingCost != null &&
+        (associatedRestaurant?.isOpen() ?? false);
   }
 
   Future<void> saveCart() async {
@@ -140,6 +232,8 @@ class RestaurantController extends GetxController {
 
   void switchPaymentMedthod(
       {required PaymentType paymentType, CreditCard? card}) {
+    mezDbgPrint(
+        "Switching on restControlller =========>>>>>${paymentType.toNormalString()}");
     cart.value.paymentType = paymentType;
 
     saveCart();
@@ -151,6 +245,21 @@ class RestaurantController extends GetxController {
     return cart.value.cartItems.firstWhereOrNull(
             (CartItem element) => element.item.image != null) !=
         null;
+  }
+
+  bool get showPaymentPicker {
+    return cart.value.restaurant?.paymentInfo
+                .acceptedPayments[PaymentType.Card] ==
+            true ||
+        cart.value.restaurant?.paymentInfo
+                .acceptedPayments[PaymentType.BankTransfer] ==
+            true;
+  }
+
+  bool get showFees {
+    return cart.value.paymentType == PaymentType.Card &&
+        (cart.value.restaurant?.paymentInfo.stripe?.chargeFeesOnCustomer ??
+            true);
   }
 
   void clearCart() {

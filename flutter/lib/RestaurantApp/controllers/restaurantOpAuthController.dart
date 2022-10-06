@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/firebaseNodes/restaurantNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class RestaurantOpAuthController extends GetxController {
@@ -31,6 +32,7 @@ class RestaurantOpAuthController extends GetxController {
   Stream<RestaurantOperator?> get operatorInfoStream => operator.stream;
 
   StreamSubscription? _restaurantOperatorNodeListener;
+  StreamSubscription<MainUserInfo>? _userInfoStreamListener;
 
   bool _checkedAppVersion = false;
   String? _previousStateValue = "init";
@@ -78,6 +80,16 @@ class RestaurantOpAuthController extends GetxController {
             RestaurantOperator.fromData(user.uid, event.snapshot.value);
 
         saveAppVersionIfNecessary();
+        await _userInfoStreamListener?.cancel();
+        _authController.userInfoStream.listen((MainUserInfo? userInfo) {
+          if (userInfo != null) {
+            _databaseHelper.firebaseDatabase
+                .ref()
+                .child(operatorInfoNode(
+                    operatorType: OperatorType.Restaurant, uid: user.uid))
+                .set(userInfo.toFirebaseFormatJson());
+          }
+        });
         unawaited(saveNotificationToken());
         if (restaurantId != operator.value!.state.restaurantId) {
           // init controllers with new id

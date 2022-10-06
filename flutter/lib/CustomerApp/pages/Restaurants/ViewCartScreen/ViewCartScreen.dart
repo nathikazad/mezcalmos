@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
-import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/Controllers/ViewCartController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/CartIsEmptyScreen.dart';
@@ -72,9 +71,16 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         .value!
         .defaultLocation
         ?.location;
+    if (orderToLocation != null) {
+      _restaurantController.cart.value.toLocation = orderToLocation;
+    }
+
+    _restaurantController
+        .updateShippingPrice()
+        .then((bool value) => _restaurantController.cart.refresh());
+
     // check if cart empty
     // if yes redirect to home page
-    _restaurantController.cart.value.cartItems.map((CartItem item) {});
   }
 
   @override
@@ -96,10 +102,14 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
             return SingleChildScrollView(
               child: ViewCartBody(
                 viewCartController: viewCartController,
-                setLocationCallBack: ({Location? location}) {
+                setLocationCallBack: ({Location? location}) async {
+                  mezDbgPrint(
+                      "Called from viewCart------------------------------");
                   setState(() {
                     orderToLocation = location;
                   });
+                  _restaurantController.cart.value.toLocation = location;
+                  await _restaurantController.updateShippingPrice();
                 },
                 notesTextController: _textEditingController,
               ),
@@ -116,7 +126,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                               false)
                           ? "${_i18n()["restaurantClosed"]}"
                           : '${_i18n()["orderNow"]}',
-                  enabled: canClick(),
+                  enabled: _restaurantController.canOrder,
                   withGradient: true,
                   borderRadius: 0,
                   onClick: () async {
@@ -259,6 +269,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   /// returns stripePaymentId
   Future<String?> acceptPaymentByCardChoice(CardChoice choice) async {
     String? stripePaymentId;
+
     //viewCartController.getCardChoice
     if (_restaurantController.cart.value.paymentType == PaymentType.Card) {
       switch (choice) {

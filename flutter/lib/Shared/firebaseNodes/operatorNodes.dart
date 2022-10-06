@@ -14,6 +14,11 @@ String operatorStateNode(
   return operatorAuthNode(operatorType: operatorType, uid: uid) + '/state';
 }
 
+String operatorInfoNode(
+    {required OperatorType operatorType, required String uid}) {
+  return operatorAuthNode(operatorType: operatorType, uid: uid) + '/info';
+}
+
 String operatorAppVersionNode(
     {required OperatorType operatorType, required String uid}) {
   return operatorAuthNode(operatorType: operatorType, uid: uid) +

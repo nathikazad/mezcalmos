@@ -200,6 +200,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
               ),
             if (category.dialog?[userLanguage] != null)
               Container(
+                margin: const EdgeInsets.only(bottom: 5),
                 child: Text(
                   category.dialog![userLanguage]!,
                   style: Get.textTheme.bodyText2?.copyWith(
@@ -221,7 +222,6 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
   Widget _buildResturantItems(List<Item> items, String restaurantId) {
     if (restaurant.restaurantsView == RestaurantsView.Rows) {
       return Container(
-        margin: const EdgeInsets.only(top: 5),
         child: Column(
           children: items.fold<List<Widget>>(<Widget>[],
               (List<Widget> children, Item item) {

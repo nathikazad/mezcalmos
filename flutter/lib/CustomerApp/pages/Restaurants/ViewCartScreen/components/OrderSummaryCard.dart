@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
@@ -14,27 +15,21 @@ dynamic _i18n() =>
 class OrderSummaryCard extends StatelessWidget {
   const OrderSummaryCard({
     Key? key,
-    required this.orderCost,
-    required this.deliveryCost,
     required this.setLocationCallBack,
-    required this.totalCost,
-    this.stripeFees,
-    required this.showStripeFees,
+    required this.controller,
+    this.serviceLoc,
   }) : super(key: key);
 
-  final String orderCost;
-  final num deliveryCost;
-  final num? stripeFees;
-  final bool showStripeFees;
-  final String totalCost;
+  final Location? serviceLoc;
   final void Function({Location? location})? setLocationCallBack;
+  final RestaurantController controller;
 
   @override
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
-    return Container(
+    return Obx(
       // padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Container(
+      () => Container(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(13),
@@ -67,7 +62,8 @@ class OrderSummaryCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       alignment: Alignment.centerRight,
-                      child: Text(orderCost),
+                      child: Text(
+                          controller.cart.value.itemsCost().toPriceString()),
                     ),
                   )
                 ],
@@ -88,16 +84,33 @@ class OrderSummaryCard extends StatelessWidget {
                           style: txt.bodyText2),
                     ),
                   ),
-                  Flexible(
-                      child: ShippingCostComponent(
-                    alignment: MainAxisAlignment.end,
-                    shippingCost: deliveryCost,
-                  ))
+                  (controller.cart.value.shippingCost != null &&
+                          controller.isShippingSet.isTrue)
+                      ? Flexible(
+                          child: ShippingCostComponent(
+                          alignment: MainAxisAlignment.end,
+                          shippingCost: controller.cart.value.shippingCost!,
+                        ))
+                      : (controller.getOrderDistance > 10)
+                          ? Text("_")
+                          : Row(
+                              children: [
+                                Transform.scale(
+                                    scale: 0.4,
+                                    child: CircularProgressIndicator(
+                                      color: primaryBlueColor,
+                                    )),
+                                Text(
+                                  '${_i18n()["toBeCalc"]}',
+                                  style: TextStyle(fontStyle: FontStyle.italic),
+                                ),
+                              ],
+                            )
                 ],
               ),
             ),
             //=======================Stripe fees :=============== //
-            if (stripeFees != null && showStripeFees)
+            if (controller.showFees)
               Container(
                 padding: EdgeInsets.only(
                   bottom: 10,
@@ -115,7 +128,8 @@ class OrderSummaryCard extends StatelessWidget {
                     Expanded(
                       child: Container(
                         alignment: Alignment.centerRight,
-                        child: Text(stripeFees!.toPriceString()),
+                        child: Text(
+                            controller.cart.value.stripeFees.toPriceString()),
                       ),
                     )
                   ],
@@ -136,7 +150,9 @@ class OrderSummaryCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       alignment: Alignment.centerRight,
-                      child: Text(totalCost, style: txt.bodyText1),
+                      child: Text(
+                          controller.cart.value.totalCost.toPriceString(),
+                          style: txt.bodyText1),
                     ),
                   ),
                 ],
@@ -155,8 +171,11 @@ class OrderSummaryCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
+
             DropDownLocationList(
               onValueChangeCallback: setLocationCallBack,
+              checkDistance: true,
+              serviceProviderLocation: serviceLoc,
               bgColor: secondaryLightBlueColor,
             ),
           ],

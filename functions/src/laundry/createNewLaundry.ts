@@ -7,6 +7,7 @@ import * as operatorNodes from "../shared/databaseNodes/operators/operator";
 import { OrderType } from "../shared/models/Generic/Order";
 import { userInfoNode } from "../shared/databaseNodes/root";
 import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
+import { UserInfo } from "../shared/models/Generic/User";
 
 
 export = functions.https.onCall(async (data, context) => {
@@ -49,6 +50,13 @@ export = functions.https.onCall(async (data, context) => {
     }
   }
 
+  let operatorInfo: UserInfo = (await userInfoNode(user.uid).once('value')).val();
+  if(operatorInfo == null || operatorInfo.name == null)
+  return {
+    status: ServerResponseStatus.Error,
+    errorMessage: "User info not there",
+  }
+
   let laundryId: string = (await laundryNodes.info().push()).key!;
   let newLaundry = JSON.parse(laundryTemplateInJson);
   newLaundry.info.id = laundryId
@@ -56,7 +64,6 @@ export = functions.https.onCall(async (data, context) => {
   newLaundry.state.operators[user.uid] = true;
   laundryNodes.info(laundryId).set(newLaundry);
 
-  let operatorInfo = (await userInfoNode(user.uid).once('value')).val();
   let newOperator = { info: operatorInfo, state: { laundryId: laundryId } };
   operatorNodes.operatorInfo(OrderType.Laundry, user.uid).set(newOperator);
   return { status: ServerResponseStatus.Success }

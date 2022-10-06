@@ -121,6 +121,7 @@ export async function updateOrderIdAndFetchPaymentInfo(orderId: string, order: O
   order.stripePaymentInfo = {
     id: stripePaymentId,
     stripeFees: stripeFees,
+    chargeFeesOnCustomer : serviceProviderPaymentInfo.stripe.chargeFeesOnCustomer,
     amountCharged: pi.amount / 100,
     amountRefunded: 0,
     status: StripePaymentStatus.Authorized,

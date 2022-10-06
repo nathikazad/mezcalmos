@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Dashboard/components/AdminSettingCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Dashboard/components/ShippingPriceSheet.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Dashboard/controllers/AdminDashboardController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
@@ -40,56 +40,49 @@ class _AdminDashboardViewState extends State<AdminDashboardView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _shippingPriceCard(),
+            //  _shippingPriceCard(),
+            Obx(
+              () => AdminSettingCard(
+                  icon: Icons.edit_rounded,
+                  mainText: '${_i18n()["shippingPrice"]}',
+                  secondaryText: (viewController.shippingPrice.value != null)
+                      ? viewController.shippingPrice.value!.toPriceString() +
+                          "/KM"
+                      : null,
+                  onClick: () {
+                    _priceSheet(ShippingPriceType.Base);
+                  }),
+            ),
+
+            Obx(
+              () => AdminSettingCard(
+                  icon: Icons.edit_rounded,
+                  mainText: '${_i18n()["minPrice"]}',
+                  secondaryText: (viewController.minPrice.value != null)
+                      ? viewController.minPrice.value!.toPriceString()
+                      : null,
+                  onClick: () {
+                    _priceSheet(ShippingPriceType.Min);
+                  }),
+            ),
+            Obx(
+              () => AdminSettingCard(
+                  icon: Icons.edit_rounded,
+                  mainText: '${_i18n()["perKm"]}',
+                  secondaryText: (viewController.perKmPrice.value != null)
+                      ? viewController.perKmPrice.value!.toPriceString()
+                      : null,
+                  onClick: () {
+                    _priceSheet(ShippingPriceType.PerKm);
+                  }),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _shippingPriceCard() {
-    return Card(
-      child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-          child: Row(
-            children: [
-              Flexible(
-                fit: FlexFit.tight,
-                child: Text(
-                  '${_i18n()["shippingPrice"]}',
-                  style: Get.textTheme.bodyText1,
-                ),
-              ),
-              Obx(
-                () {
-                  if (viewController.shippingPrice.value != null) {
-                    return Text(
-                      viewController.shippingPrice.value!.toPriceString(),
-                      style: Get.textTheme.bodyText1,
-                    );
-                  } else
-                    return SizedBox();
-                },
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 5),
-                child: MezIconButton(
-                  onTap: () {
-                    _priceSheet();
-                  },
-                  icon: Icons.edit,
-                  iconSize: 20,
-                ),
-              )
-            ],
-          )),
-    );
-  }
-
-  Future<void> _priceSheet() async {
+  Future<void> _priceSheet(ShippingPriceType type) async {
     await showModalBottomSheet(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
@@ -101,6 +94,7 @@ class _AdminDashboardViewState extends State<AdminDashboardView> {
         builder: (BuildContext ctx) {
           return ShippingPriceSheet(
             viewController: viewController,
+            type: type,
             ctx: ctx,
           );
         });

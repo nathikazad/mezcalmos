@@ -14,12 +14,16 @@
                     "notifications": "Notifications",
                     "orders": "Orders"
                 }
+
             },
+
             "CustomerHomeFooterButtons": {
                 "privacyPolicy": "Privacy policy"
             },
             "DropDownLocationList": {
                 "chooseLoc": "Choose location",
+                "ops": "Oops",
+                "distanceError": "Distance between you and restaurant is more than 10km !",
                 "pickLocation": "Pick from map"
             },
             "LocationPicker": {
@@ -146,7 +150,8 @@
                             "cash": "Cash",
                             "newcard": "New Card",
                             "applepay": "Apple Pay",
-                            "googlepay": "Google Pay"
+                            "googlepay": "Google Pay",
+                            "banktransfer": "Bank Transfer"
                         },
                         "BuildCart": {
                             "inCart": "My orders",
@@ -177,7 +182,8 @@
                             "deliveryCost": "Delivery Cost",
                             "stripeFees": "Card fees",
                             "totalCost": "Total Cost",
-                            "deliveryLocation": "Delivery Location"
+                            "deliveryLocation": "Delivery Location",
+                            "toBeCalc": "Calculating..."
                         },
                         "SaveLocationDailog": {
                             "addLocationDialogTitle": "Enter location name, if you want to save for future use, else you may skip",
@@ -265,6 +271,7 @@
                             "orderCancelled": "Order Cancelled"
                         },
                         "OrdersItemsCard": {
+                            "itemUnav": "Item unavailable",
                             "orderItems": "Order Items",
                             "canceledByAdmin": "Cancelled",
                             "canceledByCustomer": "Cancelled",
@@ -291,6 +298,11 @@
                             "free": "Free",
                             "total": "Total",
                             "deliveryLocation": "Delivery Location"
+                        },
+                        "RestaurantBankInfoCard": {
+                            "title": "Restaurant bank account",
+                            "bankName": "Bank name",
+                            "accountNumber": "Account number"
                         }
                     },
                     "ViewRestaurantOrderScreen": {
@@ -661,6 +673,10 @@
             }
         },
         "pages": {
+            "SomethingWentWrongScreen": {
+                "noRestaurantFoundOnOperator": "No restaurant found on your operator",
+                "pleaseContactAdmin": "Please contact the admin"
+            },
             "AuthScreens": {
                 "SMS": {
                     "OtpConfirmationScreen": {
@@ -815,7 +831,12 @@
             },
             "OrderPaymentMethod": {
                 "paymentMethod": "Payment method",
-                "cash": "Cash"
+
+                "cash": "Cash",
+                "newcard": "New Card",
+                "applepay": "Apple Pay",
+                "googlepay": "Google Pay",
+                "banktransfer": "Bank Transfer"
             },
             "OrderDeliveryLocation": {
                 "title": "Delivery location"
@@ -1069,8 +1090,12 @@
         "pages": {
             "AdminDashboardView": {
                 "dashboard": "Dashboard",
-                "shippingPrice": "Shipping price",
-                "newShippingPrice": "New shipping price",
+                "shippingPrice": "Base shippin price",
+                "minPrice": "Minimum shipping price",
+                "newMinPrice": "New Minimum shipping price",
+                "perKm": "Per KM shipping price",
+                "newPerkm": "New per KM shipping price",
+                "newShippingPrice": "New base shipping price",
                 "error": "Error",
                 "errorText": "Shipping price not valid",
                 "confirm": "Confirm",
@@ -1562,6 +1587,7 @@
                 "editCategory": "Edit category",
                 "saveCategory": "Save category",
                 "categoryName": "Category name",
+                "nameExist": "Name already exist",
                 "categoryNameIn": "Category name in ",
                 "categoryNameHint": "Enter a category name",
                 "categoryPrice": "Category pricing per kilogramme",
@@ -1806,6 +1832,7 @@
                 "addItem": "Add item",
                 "required": "Required",
                 "saveItem": "Save item",
+                "nameExist": "Name already exist",
                 "itemName": "Item name",
                 "itemDesc": "Item description",
                 "itemPrice": "Item price",
@@ -1933,6 +1960,8 @@
                         "requirements": "Requirements",
                         "acceptedPayments": "Accepted payments",
                         "setup": "Setup",
+                        "fees": "Fees",
+                        "chargeCustomer": "Charge stripe fees on customer",
 
                         "setupHelper": "Thanks for setup , you can now receive payments but you will not be able to withdraw money to your bank account",
                         "reqs": "Requirements",

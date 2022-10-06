@@ -14,6 +14,14 @@ String customerAppVersionNode(String uid) {
   return 'customers/info/$uid/versionNumber';
 }
 
+String customerStripeNode(String uid) {
+  return 'customers/info/$uid/stripe';
+}
+
+String customerCardsNode(String uid) {
+  return 'customers/info/$uid/stripe/cards/';
+}
+
 String customerNotificationInfoNode(String uid) {
   return 'customers/info/$uid/notificationInfo';
 }

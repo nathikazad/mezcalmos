@@ -39,7 +39,7 @@ class _AddLaundryServiceViewState extends State<AddLaundryServiceView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          title: '${_i18n()["newLaundry"]}'),
+          onClick: Get.back, title: '${_i18n()["newLaundry"]}'),
       bottomNavigationBar: MezButton(
         height: 65,
         label: '${_i18n()["createLaundry"]}',

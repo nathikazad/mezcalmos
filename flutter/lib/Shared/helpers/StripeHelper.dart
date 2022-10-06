@@ -34,6 +34,7 @@ class StripeOrderPaymentInfo {
   String id;
   num stripeFees;
   CardBrand? brand;
+  bool? chargeFeesOnCustomer;
   num? expMonth;
   num? expYear;
   String? last4;
@@ -49,6 +50,7 @@ class StripeOrderPaymentInfo {
       this.amountRefunded = 0,
       this.brand,
       this.expYear,
+      this.chargeFeesOnCustomer,
       this.expMonth,
       this.last4});
 
@@ -56,6 +58,7 @@ class StripeOrderPaymentInfo {
     return StripeOrderPaymentInfo(
         id: data["id"],
         stripeFees: data["stripeFees"],
+        chargeFeesOnCustomer: data["chargeFeesOnCustomer"],
         amountCharged: data["amountCharged"] ?? 0,
         amountRefunded: data["amountRefunded"] ?? 0,
         brand: data["brand"].toString().toCardBrand(),
@@ -407,8 +410,10 @@ class _CardFormState extends State<CardForm> {
         MezSnackbar(
             "Add Card Error", serverResponse.errorMessage ?? "Unknown Error");
       }
+    } on StripeException catch (e) {
+      MezSnackbar("Error", e.toJson()['localizedMessage'] ?? "error");
     } catch (e) {
-      MezSnackbar("Add Card Error", e.toString());
+      MezSnackbar("Error", "Error");
     } finally {
       setState(() {
         _isButtonEnabled = true;
