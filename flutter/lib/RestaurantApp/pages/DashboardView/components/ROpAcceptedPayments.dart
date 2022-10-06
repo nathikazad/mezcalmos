@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/controllers/EditInfoController.dart';
+import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpEditInfoView']['components']['ROpAcceptedPayments'];
@@ -61,7 +60,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
                       shape: CircleBorder(),
                       activeColor: primaryBlueColor,
                       value: widget.viewController.restaurant.value!.paymentInfo
-                              ?.acceptedPayments[PaymentType.Cash] ==
+                              .acceptedPayments[PaymentType.Cash] ==
                           true,
                       onChanged: (bool? v) {}),
                 ),
@@ -82,7 +81,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
                 Flexible(
                   fit: FlexFit.tight,
                   child: Text(
-                    '${_i18n()["bankTransfer"]}',
+                    'Bank Transfer',
                     style: Get.textTheme.bodyText1,
                   ),
                 ),
@@ -167,7 +166,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
                   ]),
               activeColor: primaryBlueColor,
               value: widget.viewController.restaurant.value!.paymentInfo
-                      ?.acceptedPayments[PaymentType.Card] ==
+                      .acceptedPayments[PaymentType.Card] ==
                   true,
               onChanged: (bool? v) {
                 widget.viewController.handleCardCheckBoxClick(v!);
@@ -218,93 +217,94 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
           topRight: Radius.circular(15),
         )),
         builder: (BuildContext ctx) {
-          return Padding(
-            padding:
-                EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
-            child: Container(
-                margin:
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.all(8),
-                      alignment: Alignment.center,
-                      child: Text(
-                        '${_i18n()["bankTitle"]}',
-                        style: Get.textTheme.bodyText1,
-                      ),
+          return Container(
+              margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Bank account informations",
+                      style: Get.textTheme.bodyText1,
                     ),
-                    Divider(
-                      height: 20,
+                  ),
+                  Divider(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "Bank name",
+                    style: Get.textTheme.bodyText1,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(ctx).viewInsets.bottom),
+                    child: TextFormField(
+                      controller: widget.viewController.bankName,
+                      decoration: InputDecoration(hintText: "Bank name"),
                     ),
-                    Text('${_i18n()["bankName"]}'),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(ctx).viewInsets.bottom),
-                      child: TextFormField(
-                        controller: widget.viewController.bankName,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text('${_i18n()["bankNumber"]}'),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(ctx).viewInsets.bottom),
-                      child: TextFormField(
-                        controller: widget.viewController.bankNumber,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp('[0-9,]')),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    Row(
-                      children: [
-                        Flexible(
-                            child: MezButton(
-                          label: '${_i18n()["cancel"]}',
-                          backgroundColor: offRedColor,
-                          textColor: Colors.red,
-                          onClick: () async {
-                            Get.back();
-                          },
-                        )),
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Flexible(
-                            child: MezButton(
-                          label: '${_i18n()["confirm"]}',
-                          onClick: () async {
-                            if (num.tryParse(
-                                    widget.viewController.bankNumber.text) !=
-                                null) {
-                              await widget.viewController.pushBankInfos().then(
-                                  (value) => Get.back(closeOverlays: true));
-                            } else {
-                              MezSnackbar('${_i18n()["error"]}',
-                                  '${_i18n()["bankError"]}');
-                            }
-                          },
-                        )),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    "Account number",
+                    style: Get.textTheme.bodyText1,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(ctx).viewInsets.bottom),
+                    child: TextFormField(
+                      controller: widget.viewController.bankNumber,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp('[0-9,]')),
                       ],
+                      decoration: InputDecoration(hintText: "Account number"),
                     ),
-                  ],
-                )),
-          );
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Row(
+                    children: [
+                      Flexible(
+                          child: MezButton(
+                        label: "Cancel",
+                        backgroundColor: offRedColor,
+                        textColor: Colors.red,
+                        onClick: () async {
+                          Get.back();
+                        },
+                      )),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Flexible(
+                          child: MezButton(
+                        label: "Confirm",
+                        onClick: () async {
+                          await widget.viewController
+                              .pushBankInfos(
+                                  bankName: widget.viewController.bankName.text,
+                                  bankNumber: num.parse(
+                                      widget.viewController.bankNumber.text))
+                              .then((value) => Get.back(closeOverlays: true));
+                        },
+                      )),
+                    ],
+                  ),
+                ],
+              ));
         });
   }
 
@@ -380,17 +380,15 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
 
   Widget _reqWidget() {
     return Obx(() {
-      if (widget.viewController.restaurant.value!.paymentInfo?.getReqs
-              .isNotEmpty ==
-          true)
+      if (widget
+          .viewController.restaurant.value!.paymentInfo.getReqs.isNotEmpty)
         return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               if (widget.viewController.restaurant.value!.paymentInfo
-                      ?.shouldFixPayouts ==
-                  true)
+                  .shouldFixPayouts)
                 Container(
                   margin: const EdgeInsets.only(bottom: 5),
                   child: Text('${_i18n()["setupHelper"]}'),
@@ -425,16 +423,16 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: List.generate(
-                    widget.viewController.restaurant.value!.paymentInfo?.stripe
+                    widget.viewController.restaurant.value!.paymentInfo.stripe
                             ?.requirements.length ??
                         0,
                     (int index) => Container(
                           margin: EdgeInsets.only(top: 5, bottom: 3),
                           child: Text(
-                              "- ${widget.viewController.restaurant.value!.paymentInfo?.stripe?.requirements[index]}"),
+                              "- ${widget.viewController.restaurant.value!.paymentInfo.stripe?.requirements[index]}"),
                         )),
               ),
-              if (widget.viewController.restaurant.value!.paymentInfo?.stripe
+              if (widget.viewController.restaurant.value!.paymentInfo.stripe
                       ?.email !=
                   null)
                 Column(
@@ -442,7 +440,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
                   children: [
                     Divider(),
                     Text(
-                      "${_i18n()["emailId"]} : ${widget.viewController.restaurant.value!.paymentInfo?.stripe?.email}",
+                      "${_i18n()["emailId"]} : ${widget.viewController.restaurant.value!.paymentInfo.stripe?.email}",
                       style: Get.textTheme.bodyText1,
                     ),
                   ],

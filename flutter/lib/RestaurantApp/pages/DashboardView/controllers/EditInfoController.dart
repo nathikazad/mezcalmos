@@ -6,13 +6,11 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
-import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
@@ -59,23 +57,24 @@ class ROpEditInfoController {
   final RxBool setupClicked = RxBool(false);
   final RxBool showStripeReqs = RxBool(false);
   RxString currentUrl = RxString("");
-  late int restaurantId;
 
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
 
   Future<void> init({required String restaurantId}) async {
-    this.restaurantId = int.parse(restaurantId);
-
-    restaurant.value = await get_restaurant_by_id(id: this.restaurantId);
-    mezDbgPrint(
-        "🍔🍔🍔🍔 Restaurant Data ===========> ${restaurant.value?.toJson()}");
-    // restaurantInfoController
-    //     .getRestaurant(restaurantId)
-    //     .listen((Restaurant? event) {
-    //   if (event != null) {
-    //     restaurant.value = event;
-    //   }
-    // });
+    mezDbgPrint("INIT EDIT PROFILE VIEW =======>$restaurantId");
+    Get.put(RestaurantInfoController(), permanent: false);
+    restaurantInfoController = Get.find<RestaurantInfoController>();
+    restaurantInfoController.init(restId: restaurantId);
+    restaurant.value =
+        await restaurantInfoController.getRestaurantAsFuture(restaurantId);
+    restaurantInfoController
+        .getRestaurant(restaurantId)
+        .listen((Restaurant? event) {
+      if (event != null) {
+        restaurant.value = event;
+        _updateResTInfo();
+      }
+    });
     _updateResTInfo();
   }
 
@@ -84,9 +83,9 @@ class ROpEditInfoController {
       _settingSchedules();
       isAvailable.value = restaurant.value!.state.available;
       restaurantNameTxt.text = restaurant.value?.info.name ?? '';
-      bankName.text = restaurant.value!.paymentInfo?.bankInfo?.bankName ?? "";
+      bankName.text = restaurant.value!.paymentInfo.bankInfo?.bankName ?? "";
       bankNumber.text =
-          restaurant.value!.paymentInfo?.bankInfo?.accountNumber.toString() ??
+          restaurant.value!.paymentInfo.bankInfo?.accountNumber.toString() ??
               "";
 
       newLocation.value = restaurant.value!.info.location;
@@ -95,17 +94,19 @@ class ROpEditInfoController {
       secondaryLang.value = restaurant.value!.secondaryLanguage;
       editablePrLang.value = restaurant.value!.primaryLanguage;
       editableScLang.value = restaurant.value!.secondaryLanguage;
+      mezDbgPrint(
+          "UPDATing DESCCCCC =========>>>PR lang : ${primaryLang.value}");
+      mezDbgPrint(
+          "UPDATing DESCCCCC =========>>>DESC : ${restaurant.value?.description}");
+      mezDbgPrint(
+          "UPDATing DESCCCCC =========>>>SC lang : ${secondaryLang.value}");
+      mezDbgPrint(
+          "UPDATing DESCCCCC =========>>>DESC : ${restaurant.value?.description}");
 
       prRestaurantDescTxt.text =
-          restaurant.value?.description?[restaurant.value!.primaryLanguage] ??
-              '';
+          restaurant.value?.description?[primaryLang] ?? '';
       scRestaurantDescTxt.text =
-          restaurant.value?.description?[restaurant.value!.secondaryLanguage] ??
-              '';
-      bankName.text = restaurant.value!.paymentInfo?.bankInfo?.bankName ?? "";
-      bankNumber.text =
-          restaurant.value!.paymentInfo?.bankInfo?.accountNumber.toString() ??
-              "";
+          restaurant.value?.description?[secondaryLang] ?? '';
     }
   }
 
@@ -118,52 +119,47 @@ class ROpEditInfoController {
   }
 
   Future<void> updateLaundryInfo() async {
-    final Restaurant newRestaurant = restaurant.value!;
     btnClicked.value = true;
     if (restaurantNameTxt.text != '' &&
         restaurantNameTxt.text != restaurant.value?.info.name) {
       mezDbgPrint("Updating restuarnt name .....=>${restaurantNameTxt.text}");
-      // await restaurantInfoController.setRestaurantName(restaurantNameTxt.text);
-      // newRestaurant.info.name = restaurantNameTxt.text;
+
+      await restaurantInfoController.setRestaurantName(restaurantNameTxt.text);
       mezDbgPrint("Restuarnt name done ....=>${restaurantNameTxt.text}");
     }
     if (_updatePrDesc() || _updateScDesc()) {
       mezDbgPrint(
           "Updating restuarnt primary description .....=>${restaurantNameTxt.text}");
 
-      _contructDesc().forEach((LanguageType key, String value) async {
-        await update_translation(
-            langType: key,
-            translationId: restaurant.value!.info.descriptionId!,
-            value: value);
-      });
+      await restaurantInfoController.setRestaurantDesc(_contructDesc());
+      mezDbgPrint("Restuarnt name done ....=>${restaurantNameTxt.text}");
     }
     if (newImageFile.value != null) {
       await restaurantInfoController
           .uploadImgToDb(imageFile: newImageFile.value!)
           .then((String value) {
-        //todo update image on db
-        // newRestaurant.info.image = value;
+        restaurantInfoController.setRestaurantImage(value);
       });
     }
     if (newLocation.value != null &&
         newLocation.value?.address != restaurant.value?.info.location.address) {
-      newRestaurant.info.location = newLocation.value!;
+      await restaurantInfoController.setLocation(newLocation.value!);
     }
-    if (editableScLang.value != null && editableScLang.value != secondaryLang) {
-      newRestaurant.secondaryLanguage = editableScLang.value!;
+    if (editablePrLang.value != null &&
+        editablePrLang.value != primaryLang.value) {
+      mezDbgPrint("SEEETTING PRIMARY LANG =======>${editablePrLang.value}");
+      await restaurantInfoController.setPrimaryLanguage(editablePrLang.value!);
+      mezDbgPrint("SEEETTING SECOND LANG =======>${editableScLang.value}");
+      await restaurantInfoController
+          .setSecondaryLanguage(editablePrLang.value?.toOpLang());
     }
-    if (editablePrLang.value != null && editablePrLang.value != primaryLang) {
-      newRestaurant.primaryLanguage = editablePrLang.value!;
-    }
-    restaurant.value = await editRestaurant(id: 4, restaurant: newRestaurant);
 
-    // if (newSchedule.value != null && newSchedule.value != oldSchedule.value) {
-    //   await restaurantInfoController.setSchedule(newSchedule.value!);
-    // }
-    // if (isAvailable.value != restaurant.value!.state.available) {
-    // newRestaurant.state.status =;
-    // }
+    if (newSchedule.value != null && newSchedule.value != oldSchedule.value) {
+      await restaurantInfoController.setSchedule(newSchedule.value!);
+    }
+    if (isAvailable.value != restaurant.value!.state.available) {
+      await restaurantInfoController.setAvailabilty(isAvailable.value);
+    }
 
     btnClicked.value = false;
   }
@@ -180,16 +176,15 @@ class ROpEditInfoController {
 
   void changePrimaryLang(LanguageType value) {
     editablePrLang.value = value;
-    editableScLang.value = editablePrLang.value!.toOpLang();
+    editableScLang.value = value.toOpLang();
   }
 
   // stripe and payments methods //
   void checkStripe() {
-    if (restaurant.value!.paymentInfo?.stripe != null &&
-        restaurant.value!.paymentInfo?.acceptedPayments[PaymentType.Card] ==
+    if (restaurant.value!.paymentInfo.stripe != null &&
+        restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
             true) {
-      updateServiceProvider(
-              restaurant.value!.info.firebaseId, OrderType.Restaurant)
+      updateServiceProvider(restaurant.value!.info.id, OrderType.Restaurant)
           .then((ServerResponse value) {
         _checkStripeDetails();
       });
@@ -209,8 +204,7 @@ class ROpEditInfoController {
   }
 
   void _reauthUrlHandler() {
-    onboardServiceProvider(
-            restaurant.value!.info.firebaseId, OrderType.Restaurant)
+    onboardServiceProvider(restaurant.value!.info.id, OrderType.Restaurant)
         .then((ServerResponse value) {
       if (value.success) {
         stripeUrl = value.data["url"];
@@ -221,27 +215,26 @@ class ROpEditInfoController {
 
   void _returnUrlHandler() {
     showStripe.value = false;
-    updateServiceProvider(
-            restaurant.value!.info.firebaseId, OrderType.Restaurant)
+    updateServiceProvider(restaurant.value!.info.id, OrderType.Restaurant)
         .then((ServerResponse value) {
       _checkStripeDetails();
     });
   }
 
   void _checkStripeDetails() {
-    if (restaurant.value!.paymentInfo?.stripe?.detailsSubmitted == false) {
+    if (restaurant.value!.paymentInfo.stripe?.detailsSubmitted == false) {
       showSetupStripe.value = true;
-    } else if (restaurant.value!.paymentInfo?.stripe?.chargesEnabled == false ||
-        restaurant.value!.paymentInfo?.stripe?.payoutsEnabled == false) {
+    } else if (restaurant.value!.paymentInfo.stripe?.chargesEnabled == false ||
+        restaurant.value!.paymentInfo.stripe?.payoutsEnabled == false) {
       showStripeReqs.value = true;
     }
     mezDbgPrint("Checking boooools ");
     mezDbgPrint(
-        "details ==========>>>>> ${restaurant.value!.paymentInfo?.stripe?.detailsSubmitted}");
+        "details ==========>>>>> ${restaurant.value!.paymentInfo.stripe?.detailsSubmitted}");
     mezDbgPrint(
-        "charges ==========>>>>> ${restaurant.value!.paymentInfo?.stripe?.chargesEnabled}");
+        "charges ==========>>>>> ${restaurant.value!.paymentInfo.stripe?.chargesEnabled}");
     mezDbgPrint(
-        "payouts ==========>>>>> ${restaurant.value!.paymentInfo?.stripe?.payoutsEnabled}");
+        "payouts ==========>>>>> ${restaurant.value!.paymentInfo.stripe?.payoutsEnabled}");
   }
 
   Future<void> switchChargeFees(bool v) async {
@@ -250,8 +243,7 @@ class ROpEditInfoController {
 
   void showPaymentSetup() {
     setupClicked.value = true;
-    onboardServiceProvider(
-            restaurant.value!.info.firebaseId, OrderType.Restaurant)
+    onboardServiceProvider(restaurant.value!.info.id, OrderType.Restaurant)
         .then((ServerResponse value) {
       if (value.success) {
         stripeUrl = value.data["url"];
@@ -268,29 +260,27 @@ class ROpEditInfoController {
   }
 
   bool get showSetupBtn {
-    return (restaurant.value!.paymentInfo?.acceptedPayments[PaymentType.Card] ==
+    return (restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
                 true &&
-            restaurant.value!.paymentInfo?.stripe == null) ||
-        (restaurant.value!.paymentInfo?.acceptedPayments[PaymentType.Card] ==
+            restaurant.value!.paymentInfo.stripe == null) ||
+        (restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
                 true &&
-            (restaurant.value!.paymentInfo?.detailsSubmitted == false ||
-                restaurant.value!.paymentInfo?.chargesEnabled == false ||
-                restaurant.value!.paymentInfo?.stripe!.requirements.isEmpty ==
-                    true));
+            (!restaurant.value!.paymentInfo.detailsSubmitted ||
+                !restaurant.value!.paymentInfo.chargesEnabled));
   }
 
   bool getChargeFessOnCustomer() {
-    return restaurant.value!.paymentInfo?.stripe?.chargeFeesOnCustomer ?? true;
+    return restaurant.value!.paymentInfo.stripe?.chargeFeesOnCustomer ?? true;
   }
 
   bool get showFeesOption {
-    return (restaurant.value!.paymentInfo?.acceptedPayments[PaymentType.Card] ==
+    return (restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
             true &&
-        restaurant.value!.paymentInfo?.stripe != null);
+        restaurant.value!.paymentInfo.stripe != null);
   }
 
   bool get showStatusIcon {
-    return (restaurant.value!.paymentInfo?.stripe?.requirements.isNotEmpty ==
+    return (restaurant.value!.paymentInfo.stripe?.requirements.isNotEmpty ==
         true);
   }
 
@@ -300,16 +290,16 @@ class ROpEditInfoController {
 
   bool get isBankTrue {
     return restaurant
-            .value!.paymentInfo?.acceptedPayments[PaymentType.BankTransfer] ==
+            .value!.paymentInfo.acceptedPayments[PaymentType.BankTransfer] ==
         true;
   }
 
   // Bank //
-  Future pushBankInfos() async {
+  Future pushBankInfos(
+      {required String bankName, required num bankNumber}) async {
     mezDbgPrint("Value =================>$isBankTrue");
 
-    await restaurantInfoController.pushBankInfo(
-        bankName.text, num.parse(bankNumber.text));
+    await restaurantInfoController.pushBankInfo(bankName, bankNumber);
   }
 
   Future removeBank() async {
@@ -318,8 +308,6 @@ class ROpEditInfoController {
     bankNumber.clear();
 
     await restaurantInfoController.removeBank();
-    bankName.clear();
-    bankNumber.clear();
   }
 
   bool validateSecondaryLanguUpdate(LanguageType value) {
@@ -389,8 +377,6 @@ class ROpEditInfoController {
     secondaryLang.close();
     restaurant.close();
     restaurantNameTxt.clear();
-    bankName.dispose();
-    bankNumber.dispose();
     restListner?.cancel();
     restaurantInfoController.dispose();
     Get.delete<RestaurantInfoController>();

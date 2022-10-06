@@ -2,6 +2,7 @@ import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/RestaurantApp/pages/CategoryView/CategoryView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/ROpCreateRestaurantView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CurrentOrdersList/ROpCurrentOrders.dart';
+import 'package:mezcalmos/RestaurantApp/pages/DashboardView/ROpDashboardView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/EditInfoView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/ROpItemView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/ROpMenuView.dart';
@@ -21,6 +22,7 @@ const String kPastOrdersListView = '/pastorders';
 const String kMenuView = '/menu/:restaurantId';
 
 const String kEditInfoView = '/editInfo/:restaurantId';
+const String kDashboardView = '/dashboard/:restaurantId';
 
 const String kCategoryView = '/categoryScreen/:restaurantId';
 const String kEditCategoryScreen = '/categoryScreen/:categoryId/:restaurantId';
@@ -32,7 +34,7 @@ const String kOptionView = "/optionView/:restaurantId/:itemId/:optionId";
 const String kChoiceView = "/Choice/:restaurantId:/:optionId/:choiceId";
 
 String getROpEditInfoRoute({required String restaurantId}) {
-  return kEditInfoView.replaceFirst(":restaurantId", restaurantId);
+  return kDashboardView.replaceFirst(":restaurantId", restaurantId);
 }
 
 String getROpChoiceRoute(
@@ -108,6 +110,7 @@ String getEditOptionRoute({required String itemId}) {
 class XRouter {
   static dynamic mainRoutes = [
         GetPage(name: kEditInfoView, page: () => ROpEditInfoView()),
+        GetPage(name: kDashboardView, page: () => ROpDashboardView()),
         GetPage(name: kMenuView, page: () => ROpMenuView()),
         GetPage(
             name: kCurrentOrdersListView,

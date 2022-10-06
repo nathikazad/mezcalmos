@@ -123,8 +123,11 @@ Widget _BackButtonAppBar({required VoidCallback? click}) {
           gradient: click == null
               ? null
               : LinearGradient(colors: [
-                  Color.fromARGB(255, 97, 127, 255),
-                  Color.fromARGB(255, 198, 90, 252),
+                  primaryBlueColor,
+                  primaryBlueColor,
+
+                  // Color.fromARGB(255, 97, 127, 255),
+                  // Color.fromARGB(255, 198, 90, 252),
                 ], begin: Alignment.topLeft, end: Alignment.bottomRight),
         ),
         child: Icon(
