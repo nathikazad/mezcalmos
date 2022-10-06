@@ -233,7 +233,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
             .checkout(stripePaymentId: stripePaymentId);
 
         if (_serverResponse.success) {
-          await _restaurantController.clearCart();
+          _restaurantController.clearCart();
           popEverythingAndNavigateTo(
               getRestaurantOrderRoute(_serverResponse.data["orderId"]));
         } else {

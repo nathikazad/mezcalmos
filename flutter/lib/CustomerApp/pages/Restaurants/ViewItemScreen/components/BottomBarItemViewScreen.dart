@@ -210,7 +210,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
         await Get.toNamed<void>(kCartRoute);
       },
       primaryCallBack: () async {
-        await restaurantCartController.clearCart();
+        restaurantCartController.clearCart();
         await restaurantCartController.addItem(widget.cartItem.value!);
         await Get.offNamed<void>(kCartRoute);
       },
