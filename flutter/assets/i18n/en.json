@@ -1964,6 +1964,7 @@
                     },
                     "ROpItemCard": {
                         "category": "Category",
+                        "available": "Available",
                         "itemStatus": "Item status"
                     },
                     "ROpCategoryItems": {

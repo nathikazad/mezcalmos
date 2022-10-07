@@ -1957,6 +1957,7 @@
                     },
                     "ROpItemCard": {
                         "category": "Categoría",
+                        "available": "Disponible",
                         "itemStatus": "Estado del artículo"
                     },
                     "ROpCategoryItems": {

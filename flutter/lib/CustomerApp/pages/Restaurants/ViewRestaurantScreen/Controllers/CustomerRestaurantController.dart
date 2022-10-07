@@ -75,6 +75,7 @@ class CustomerRestaurantController {
         visibleItems.length <= 2 && visibleItems.last == lastTabIndex;
     if (reachLastTabIndex) {
       getTabController.animateTo(lastTabIndex);
+      pauseRectGetterIndex.value = true;
     } else {
       final int sumIndex =
           visibleItems.reduce((int value, int element) => value + element);
@@ -111,8 +112,8 @@ class CustomerRestaurantController {
     final Map<DateTime, List<Item>> data = restaurant.value!.currentSpecials
         .where((Item element) =>
             element.available &&
-            (element.startsAt!.toLocal().isAfter(DateTime.now().toLocal()) ||
-                element.startsAt!
+            (element.endsAt!.toLocal().isAfter(DateTime.now().toLocal()) ||
+                element.endsAt!
                     .toLocal()
                     .isAtSameMomentAs(DateTime.now().toLocal())))
         .groupListsBy((Item element) => DateTime(

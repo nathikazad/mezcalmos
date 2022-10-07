@@ -95,16 +95,12 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
         Obx(() {
           if (_viewController.showInfo.value)
             return SliverPadding(
-                padding: const EdgeInsets.all(12),
-                sliver: SliverList(
-                    delegate: SliverChildListDelegate([
-                  RectGetter(
-                      key: _viewController
-                          .itemKeys[restaurant.getCategories.length + 1],
-                      child: RestaurantInfoTab(
-                        restaurant: restaurant,
-                      )),
-                ])));
+              padding: const EdgeInsets.all(12),
+              sliver: SliverToBoxAdapter(
+                  child: RestaurantInfoTab(
+                restaurant: restaurant,
+              )),
+            );
           else
             return _buildItemsList();
         })

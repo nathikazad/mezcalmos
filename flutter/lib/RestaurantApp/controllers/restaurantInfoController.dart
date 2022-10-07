@@ -542,6 +542,23 @@ class RestaurantInfoController extends GetxController {
     await newItemNode.set(item.toJson());
   }
 
+  Future<void> switchSpecialItemAv(
+      {required String itemId,
+      required bool value,
+      required bool isCurrent}) async {
+    if (isCurrent) {
+      await _databaseHelper.firebaseDatabase
+          .ref()
+          .child(currentSpecialsNode(uid: restaurantId) + "/$itemId/available")
+          .set(value);
+    } else {
+      await _databaseHelper.firebaseDatabase
+          .ref()
+          .child(pastSpecialsNode(uid: restaurantId) + "/$itemId/available")
+          .set(value);
+    }
+  }
+
   Future<void> addToSpecials({
     required Item item,
   }) async {

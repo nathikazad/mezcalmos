@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
-import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 
 final DateFormat f = new DateFormat('hh:mma');
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -59,10 +58,10 @@ class RestaurantInfoTab extends StatelessWidget {
         SizedBox(
           height: 25,
         ),
-        if (restaurant.info.location != null)
-          ServiceLocationCard(
-            location: restaurant.info.location,
-          ),
+        // if (restaurant.info.location != null)
+        //   ServiceLocationCard(
+        //     location: restaurant.info.location,
+        //   ),
         if (restaurant.showReviews)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,13 +99,31 @@ class RestaurantInfoTab extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              Column(
-                children: List.generate(restaurant.reviews.length, (int index) {
-                  return ReviewCard(
-                    review: restaurant.reviews[index],
-                  );
-                }),
-              )
+              ListView.builder(
+                  padding: EdgeInsets.zero,
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: restaurant.reviews.length,
+                  itemBuilder: (BuildContext ctx, int index) {
+                    return ReviewCard(
+                      review: restaurant.reviews[index],
+                    );
+                  })
+              // SliverList(
+              //     delegate: SliverChildListDelegate(
+              //   List.generate(restaurant.reviews.length, (int index) {
+              //     return ReviewCard(
+              //       review: restaurant.reviews[index],
+              //     );
+              //   }),
+              // )),
+              // Column(
+              //   children: List.generate(restaurant.reviews.length, (int index) {
+              //     return ReviewCard(
+              //       review: restaurant.reviews[index],
+              //     );
+              //   }),
+              // )
             ],
           )
       ],
