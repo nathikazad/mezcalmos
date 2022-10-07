@@ -97,6 +97,7 @@ class Restaurant extends Service {
     final num? rate = (restaurantData?["details"]?["rating"].toString() != null)
         ? num.tryParse(restaurantData["details"]?["rating"]?.toString() ?? "")
         : null;
+    primaryLanguage.toOpLang();
     final Restaurant restaurant = Restaurant(
         userInfo: ServiceInfo.fromData(restaurantData["info"]),
         description: description ?? null,

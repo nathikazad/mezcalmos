@@ -92,7 +92,7 @@ jobs:
       jdkArchitectureOption: 'x64'
       jdkSourceOption: 'PreInstalled'
 
-  - template: buildEnv.yaml
+  - template: ci_cd.yaml
     parameters:
       Apps: 
       - "CustomerApp"

@@ -163,10 +163,15 @@ String convertToAmPm(int hours, int minutes) {
   } else {
     hoursFormattedString = "$hours";
   }
-  if (hours <= 12) {
-    formattedString = "$hours:$minutesFormattedString AM";
+  if (hours < 12) {
+    formattedString =
+        "${hours.toString().padLeft(2, "0")}:$minutesFormattedString AM";
+  } else if (hours == 12) {
+    formattedString =
+        "${(hours).toString().padLeft(2, "0")}:$minutesFormattedString PM";
   } else {
-    formattedString = "${hours - 12}:$minutesFormattedString PM";
+    formattedString =
+        "${(hours - 12).toString().padLeft(2, "0")}:$minutesFormattedString PM";
   }
   return formattedString;
 }
