@@ -172,12 +172,12 @@ class NewRestaurantAppBar extends StatelessWidget {
   }
 
   Widget _menuFilterChips(LanguageType userLanguage) {
-    return Obx(
-      () => Container(
-        width: double.infinity,
-        color: Colors.white,
-        padding: const EdgeInsets.all(4),
-        child: TabBar(
+    return Container(
+      width: double.infinity,
+      color: Colors.white,
+      padding: const EdgeInsets.all(4),
+      child: Obx(
+        () => TabBar(
           isScrollable: true,
           controller: controller.getTabController,
           labelColor: primaryBlueColor,
