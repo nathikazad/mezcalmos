@@ -200,7 +200,8 @@ class NewRestaurantAppBar extends StatelessWidget {
                         .getGroupedSpecials()
                         .keys
                         .toList()[index]
-                        .toDayName(),
+                        .toDayName()
+                        .inCaps,
                   );
                 })
               : (controller.showMenuTabs)
@@ -209,7 +210,7 @@ class NewRestaurantAppBar extends StatelessWidget {
                       (int index) {
                       return Tab(
                         text: controller.restaurant.value!.getCategories[index]
-                            .name?[userLanguage],
+                            .name?[userLanguage]?.inCaps,
                       );
                     })
                   : [],
