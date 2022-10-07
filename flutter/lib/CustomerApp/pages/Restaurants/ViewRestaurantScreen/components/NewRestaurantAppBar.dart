@@ -164,7 +164,8 @@ class NewRestaurantAppBar extends StatelessWidget {
       child: Column(
         children: [
           if (controller.showSpecials) _mainMenuTabs(),
-          _menuFilterChips(userLanguage),
+          if (controller.showMenuTabs || controller.showSpecialTabs)
+            _menuFilterChips(userLanguage),
         ],
       ),
     );
