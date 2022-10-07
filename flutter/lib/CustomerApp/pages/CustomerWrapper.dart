@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
+import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
@@ -23,7 +23,8 @@ import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Notification.dart' as MezNotification;
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
+    as MezNotification;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
