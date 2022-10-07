@@ -164,8 +164,7 @@ class NewRestaurantAppBar extends StatelessWidget {
       child: Column(
         children: [
           if (controller.showSpecials) _mainMenuTabs(),
-          if (controller.showMenuTabs || controller.showSpecialTabs)
-            _menuFilterChips(userLanguage),
+          _menuFilterChips(userLanguage),
         ],
       ),
     );
@@ -177,45 +176,55 @@ class NewRestaurantAppBar extends StatelessWidget {
       color: Colors.white,
       padding: const EdgeInsets.all(4),
       child: Obx(
-        () => TabBar(
-          isScrollable: true,
-          controller: controller.getTabController,
-          labelColor: primaryBlueColor,
-          labelStyle: Get.textTheme.bodyText1,
-          unselectedLabelStyle: Get.textTheme.bodyText1?.copyWith(
-              fontWeight: FontWeight.w500, color: Colors.grey.shade800),
-          unselectedLabelColor: Colors.grey.shade700,
-          indicatorPadding: const EdgeInsets.all(5),
-          indicatorSize: TabBarIndicatorSize.tab,
-          indicatorColor: Get.theme.primaryColorLight,
-          indicator: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              shape: BoxShape.rectangle,
-              color: secondaryLightBlueColor),
-          tabs: (controller.showSpecialTabs)
-              ? List.generate(controller.getGroupedSpecials().length,
-                  (int index) {
-                  return Tab(
-                    text: controller
-                        .getGroupedSpecials()
-                        .keys
-                        .toList()[index]
-                        .toDayName()
-                        .inCaps,
-                  );
-                })
-              : (controller.showMenuTabs)
-                  ? List.generate(
-                      controller.restaurant.value!.getCategories.length,
+        () {
+          if (controller.showMenuTabs || controller.showSpecialTabs) {
+            return TabBar(
+              isScrollable: true,
+              controller: controller.getTabController,
+              labelColor: primaryBlueColor,
+              labelStyle: Get.textTheme.bodyText1,
+              unselectedLabelStyle: Get.textTheme.bodyText1?.copyWith(
+                  fontWeight: FontWeight.w500, color: Colors.grey.shade800),
+              unselectedLabelColor: Colors.grey.shade700,
+              indicatorPadding: const EdgeInsets.all(5),
+              indicatorSize: TabBarIndicatorSize.tab,
+              indicatorColor: Get.theme.primaryColorLight,
+              indicator: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  shape: BoxShape.rectangle,
+                  color: secondaryLightBlueColor),
+              tabs: (controller.showSpecialTabs)
+                  ? List.generate(controller.getGroupedSpecials().length,
                       (int index) {
                       return Tab(
-                        text: controller.restaurant.value!.getCategories[index]
-                            .name?[userLanguage]?.inCaps,
+                        text: controller
+                            .getGroupedSpecials()
+                            .keys
+                            .toList()[index]
+                            .toDayName()
+                            .inCaps,
                       );
                     })
-                  : [],
-          onTap: controller.animateAndScrollTo,
-        ),
+                  : (controller.showMenuTabs)
+                      ? List.generate(
+                          controller.restaurant.value!.getCategories.length,
+                          (int index) {
+                          return Tab(
+                            text: controller
+                                .restaurant
+                                .value!
+                                .getCategories[index]
+                                .name?[userLanguage]
+                                ?.inCaps,
+                          );
+                        })
+                      : [],
+              onTap: controller.animateAndScrollTo,
+            );
+          } else {
+            return SizedBox();
+          }
+        },
       ),
     );
   }
