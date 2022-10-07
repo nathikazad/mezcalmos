@@ -697,7 +697,19 @@
                 "tomorrow": "tomorrow",
                 "on": "on",
                 "in": "in",
-                "at": "at"
+                "at": "at",
+                "weekAgo": "Week ago",
+                "lastWeek": "Last week",
+                "daysAgo": "Days ago",
+                "dayAgo": "Day ago",
+                "yesterday": "Yesterday",
+                "hoursAgo": "Hours ago",
+                "hourAgo": "Hour ago",
+                "minutesAgo": "Minutes ago",
+                "minuteAgo": "Minute ago",
+                "secondsAgo": "Seconds ago",
+                "now": "Just now"
+
             }
         },
         "pages": {

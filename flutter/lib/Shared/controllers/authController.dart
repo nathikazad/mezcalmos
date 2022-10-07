@@ -229,6 +229,7 @@ class AuthController extends GetxController {
       _userNodeListener = null;
       _user.value = null;
       await _auth.signOut();
+      //   Get.find<ForegroundNotificationsController>().clearAllNotification();
       mezDbgPrint("AuthController: Sign out finished");
     } catch (e) {
       Get.snackbar("Failed to Sign you out!", e.toString(),

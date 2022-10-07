@@ -703,7 +703,18 @@
                 "tomorrow": "mañana",
                 "on": "el",
                 "in": "en",
-                "at": "a"
+                "at": "a",
+                "weekAgo": "Hace una semana",
+                "lastWeek": "La semana pasada",
+                "daysAgo": "Hace días",
+                "dayAgo": "Hace un dia",
+                "yesterday": "El dia de ayer",
+                "hoursAgo": "Horas atras",
+                "hourAgo": "Hace una hora",
+                "minutesAgo": "Hace minutos",
+                "minuteAgo": "Hace un minuto",
+                "secondsAgo": "Hace segundos",
+                "now": "En este momento"
             }
         },
         "pages": {

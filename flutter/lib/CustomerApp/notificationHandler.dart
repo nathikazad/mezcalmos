@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' as Material;
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -128,7 +129,9 @@ void _handleReview(RestaurantOrderStatus newOrdersStatus, value) {
             orderId: value["orderId"],
             orderType: value["orderType"].toString().toOrderType())
         .whenComplete(() {
+      Get.find<OrderController>().clearOrderNotifications(value["orderId"]);
       mezDbgPrint("ClOSE REVIEWS 🌟🌟");
+
       showReviews = true;
     });
   }
