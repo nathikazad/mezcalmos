@@ -683,7 +683,17 @@
                 "cancelConfirmationText": "¿Estás seguro de que te gustaría cancelar?",
                 "subtitle": "Esta acción no se puede deshacer.",
                 "ok": "OK",
-                "viewOrder": "Ver pedido"
+                "viewOrder": "Ver pedido",
+                "review": {
+                    "title": "Califica tu experiencia",
+                    "subtitle": "Nos gustaría escuchar sus comentarios.",
+                    "hintText": "Di algo sobre tu experiencia.",
+                    "send": "Enviar",
+                    "close": "Cerca",
+                    "successTitle": "Gracias",
+                    "successSubtitle": "Su revisión ha sido enviada con éxito"
+
+                }
             },
             "NotificationsHelper": {
                 "view": "Ver"

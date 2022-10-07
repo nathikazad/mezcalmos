@@ -466,7 +466,7 @@ Future<void> showReviewDialog(
               ),
               const SizedBox(height: 18),
               Text(
-                "Rate your experience",
+                "${_i18n()["review"]["title"]}",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'Montserrat',
@@ -476,7 +476,7 @@ Future<void> showReviewDialog(
               ),
               const SizedBox(height: 10),
               Text(
-                "We would like to hear your feedback.",
+                "${_i18n()["review"]["subtitle"]}",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'Nunito',
@@ -512,11 +512,11 @@ Future<void> showReviewDialog(
                   fontSize: 12.sp,
                 ),
                 decoration: InputDecoration(
-                    hintText: "Say something about your experience.."),
+                    hintText: "${_i18n()["review"]["hintText"]}"),
               ),
               const SizedBox(height: 18),
               MezButton(
-                label: "Send",
+                label: "${_i18n()["review"]["send"]}",
                 height: 45,
                 textColor: primaryBlueColor,
                 backgroundColor: secondaryLightBlueColor,
@@ -536,7 +536,8 @@ Future<void> showReviewDialog(
                           orderType: orderType,
                           rate: review.rating);
                   if (response.success) {
-                    Get.snackbar("Success", "Review submitted",
+                    Get.snackbar('${_i18n()["review"]["successTitle"]}',
+                        "${_i18n()["review"]["successSubtitle"]}",
                         backgroundColor: Colors.black, colorText: Colors.white);
                     Get.back(closeOverlays: true);
                   } else {
@@ -555,7 +556,7 @@ Future<void> showReviewDialog(
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   width: double.infinity,
                   child: Text(
-                    "Close",
+                    "${_i18n()["review"]["close"]}",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Color.fromRGBO(120, 120, 120, 1),

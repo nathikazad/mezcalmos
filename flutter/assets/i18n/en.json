@@ -677,7 +677,17 @@
                 "cancelConfirmationText": "Are you sure you would like to cancel ?",
                 "subtitle": "This action cannot be undone.",
                 "ok": "Ok",
-                "viewOrder": "View Order"
+                "viewOrder": "View Order",
+                "review": {
+                    "title": "Rate your experience",
+                    "subtitle": "We would like to hear your feedback.",
+                    "hintText": "Say something about your experience..",
+                    "send": "Send",
+                    "close": "Close",
+                    "successTitle": "Thank you",
+                    "successSubtitle": "Your review have been submitted successfuly"
+
+                }
             },
             "NotificationsHelper": {
                 "view": "View"
