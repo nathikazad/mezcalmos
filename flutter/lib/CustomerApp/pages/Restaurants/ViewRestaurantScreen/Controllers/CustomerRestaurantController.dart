@@ -133,6 +133,14 @@ class CustomerRestaurantController {
     return mainTab.value == RestaurantViewTab.Specials;
   }
 
+  bool get showMenuTabs {
+    return isOnMenuView && showCategoriesChips;
+  }
+
+  bool get showSpecialTabs {
+    return isOnSpecialView && showSpecials;
+  }
+
   bool get isOnMenuView {
     return mainTab.value == RestaurantViewTab.Menu;
   }

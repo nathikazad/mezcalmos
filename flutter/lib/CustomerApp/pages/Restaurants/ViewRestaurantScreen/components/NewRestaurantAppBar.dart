@@ -191,7 +191,7 @@ class NewRestaurantAppBar extends StatelessWidget {
               borderRadius: BorderRadius.circular(25),
               shape: BoxShape.rectangle,
               color: secondaryLightBlueColor),
-          tabs: (controller.isOnSpecialView)
+          tabs: (controller.showSpecialTabs)
               ? List.generate(controller.getGroupedSpecials().length,
                   (int index) {
                   return Tab(
@@ -202,13 +202,16 @@ class NewRestaurantAppBar extends StatelessWidget {
                         .toDayName(),
                   );
                 })
-              : List.generate(controller.restaurant.value!.getCategories.length,
-                  (int index) {
-                  return Tab(
-                    text: controller.restaurant.value!.getCategories[index]
-                        .name?[userLanguage],
-                  );
-                }),
+              : (controller.showMenuTabs)
+                  ? List.generate(
+                      controller.restaurant.value!.getCategories.length,
+                      (int index) {
+                      return Tab(
+                        text: controller.restaurant.value!.getCategories[index]
+                            .name?[userLanguage],
+                      );
+                    })
+                  : [],
           onTap: controller.animateAndScrollTo,
         ),
       ),
