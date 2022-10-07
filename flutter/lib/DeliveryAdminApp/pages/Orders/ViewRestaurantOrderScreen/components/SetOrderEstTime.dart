@@ -4,10 +4,14 @@ import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
+    ['pages']['ROpOrderView']["components"]["DaRestaurantOrderTime"];
 
 class DaRestaurantOrderTime extends StatefulWidget {
   const DaRestaurantOrderTime({Key? key, required this.order})
@@ -25,7 +29,7 @@ class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(top: 10, bottom: 10),
+      margin: const EdgeInsets.only(bottom: 20),
       child: Container(
         margin: const EdgeInsets.all(8),
         child: Row(
@@ -49,7 +53,7 @@ class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Estimated food ready time",
+                    '${_i18n()["title"]}',
                     style: Get.theme.textTheme.bodyText1,
                   ),
                   SizedBox(
@@ -64,7 +68,7 @@ class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
               ),
             ),
             Spacer(),
-            _editSetButton(context)
+            if (_showBtn) _editSetButton(context)
           ],
         ),
       ),
@@ -97,7 +101,7 @@ class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
                         height: 15,
                       ),
                       Text(
-                        "Estimated finish time",
+                        "${_i18n()["title"]}",
                         style: Get.textTheme.bodyText1,
                       ),
                       SizedBox(
@@ -138,7 +142,7 @@ class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
                   size: 18,
                 )
               : Text(
-                  "Set",
+                  '${_i18n()["set"]}',
                   style: Get.textTheme.bodyText1
                       ?.copyWith(color: primaryBlueColor),
                 ),
@@ -172,7 +176,7 @@ class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
                     ),
                   )
                 : Text(
-                    "Confirm",
+                    '${_i18n()["confirm"]}',
                     style:
                         Get.textTheme.bodyText1?.copyWith(color: Colors.white),
                   ),
@@ -198,7 +202,7 @@ class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
           padding: const EdgeInsets.all(5),
           alignment: Alignment.center,
           child: Text(
-            "Cancel",
+            "${_i18n()["cancel"]}",
             style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
           ),
         ),
@@ -223,7 +227,8 @@ class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
                       ),
                       textButtonTheme: TextButtonThemeData(
                         style: TextButton.styleFrom(
-                          primary: primaryBlueColor, // button text color
+                          foregroundColor:
+                              primaryBlueColor, // button text color
                         ),
                       ),
                     ),
@@ -231,8 +236,10 @@ class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
                   );
                 },
                 initialTime: TimeOfDay(
-                    hour: widget.order.orderTime.hour,
-                    minute: widget.order.orderTime.minute))
+                    hour: selectedDate.value?.toLocal().hour ??
+                        widget.order.orderTime.toLocal().hour,
+                    minute: selectedDate.value?.toLocal().minute ??
+                        widget.order.orderTime.toLocal().minute))
             .then((TimeOfDay? value) {
           if (value != null) {
             selectedTime.value = value;
@@ -276,12 +283,18 @@ class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
 
         await getDatePicker(
           context,
-          initialDate: selectedDate.value ?? DateTime.now(),
+          initialDate:
+              selectedDate.value?.toLocal() ?? DateTime.now().toLocal(),
           firstDate: widget.order.orderTime,
           lastDate: DateTime(DateTime.now().year + 1),
         ).then((DateTime? value) {
           if (value != null) {
-            selectedDate.value = value;
+            selectedDate.value = DateTime(
+                value.toLocal().year,
+                value.toLocal().month,
+                value.toLocal().day,
+                value.toLocal().hour,
+                value.toLocal().minute);
           }
         });
       },
@@ -298,7 +311,7 @@ class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
             ),
             Obx(
               () => Text(
-                  "${DateFormat("dd MMMM yyyy").format(selectedDate.value?.toLocal() ?? DateTime.now())}"),
+                  "${DateFormat("dd MMMM yyyy").format(selectedDate.value?.toLocal() ?? DateTime.now().toLocal())}"),
             ),
             Spacer(),
             Icon(Icons.chevron_right_rounded)
@@ -310,7 +323,7 @@ class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
 
   void _setOrderEstTime(DateTime value) {
     isClicked.value = true;
-    if (value.difference(widget.order.orderTime).inMinutes > 30) {
+    if (value.difference(widget.order.orderTime).inMinutes > 5) {
       orderController
           .setEstimatedFoodReadyTime(widget.order.orderId, value)
           .whenComplete(() {
@@ -327,9 +340,14 @@ class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
       isClicked.value = false;
       Get.showSnackbar(GetSnackBar(
         snackPosition: SnackPosition.TOP,
-        title: "Error",
-        message: "",
+        title: '${_i18n()["error"]}',
+        message: '${_i18n()["minTimes"]}',
       ));
     }
+  }
+
+  bool get _showBtn {
+    return widget.order.status == RestaurantOrderStatus.OrderReceieved ||
+        widget.order.status == RestaurantOrderStatus.PreparingOrder;
   }
 }
