@@ -134,11 +134,11 @@ class CustomerRestaurantController {
   }
 
   bool get showMenuTabs {
-    return isOnMenuView && showCategoriesChips;
+    return isOnMenuView && showCategoriesChips && showInfo.isFalse;
   }
 
   bool get showSpecialTabs {
-    return isOnSpecialView && showSpecials;
+    return isOnSpecialView && showSpecials && showInfo.isFalse;
   }
 
   bool get isOnMenuView {
