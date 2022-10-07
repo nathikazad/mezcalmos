@@ -97,17 +97,33 @@ class MezPeriodPickerController {
   // DATE HANDLERS //
   List<DateTime> _constructDateChoices() {
     final List<DateTime> dates = [pickedDate.value];
+    if (pickedDate.value.difference(DateTime.now().toLocal()).inDays > 1 &&
+        pickedDate.value.difference(DateTime.now().toLocal()).inDays < 7) {
+      dates.clear();
+      for (int i = 1; i < numberOfDaysInterval; i++) {
+        final DateTime newDate = DateTime(
+          DateTime.now().toLocal().year,
+          DateTime.now().toLocal().month,
+          DateTime.now().toLocal().day + i,
+        );
 
-    for (int i = 1; i < numberOfDaysInterval; i++) {
-      final DateTime newDate = DateTime(
-        pickedDate.value.year,
-        pickedDate.value.month,
-        pickedDate.value.day + i,
-      );
+        if (_getServiceDates()
+            .contains(DateFormat("EEEE").format(newDate).toLowerCase())) {
+          dates.add(newDate);
+        }
+      }
+    } else {
+      for (int i = 1; i < numberOfDaysInterval; i++) {
+        final DateTime newDate = DateTime(
+          pickedDate.value.year,
+          pickedDate.value.month,
+          pickedDate.value.day + i,
+        );
 
-      if (_getServiceDates()
-          .contains(DateFormat("EEEE").format(newDate).toLowerCase())) {
-        dates.add(newDate);
+        if (_getServiceDates()
+            .contains(DateFormat("EEEE").format(newDate).toLowerCase())) {
+          dates.add(newDate);
+        }
       }
     }
 
