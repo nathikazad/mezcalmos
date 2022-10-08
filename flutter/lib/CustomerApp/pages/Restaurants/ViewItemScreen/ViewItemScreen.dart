@@ -178,7 +178,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                     ],
                   ),
                 ),
-                if (item.description![userLanguage] != null &&
+                if (item.description?[userLanguage] != null &&
                     item.description![userLanguage]!.isNotEmpty)
                   _itemDescription(context, item),
                 if (item.options.isNotEmpty)
