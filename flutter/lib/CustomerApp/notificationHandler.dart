@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart' as Material;
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -15,7 +13,6 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['notificationHandler'];
-bool showReviews = false;
 Notification customerNotificationHandler(
   String key,
   value,
@@ -100,7 +97,6 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
       value['status'].toString().toRestaurantOrderStatus();
   final Map<String, dynamic> dynamicFields =
       getRestaurantOrderStatusFields(newOrdersStatus)!;
-  _handleReview(newOrdersStatus, value);
   return Notification(
     id: key,
     icon: Material.Icons.flatware,
@@ -117,25 +113,25 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
   );
 }
 
-void _handleReview(RestaurantOrderStatus newOrdersStatus, value) {
-  if (newOrdersStatus == RestaurantOrderStatus.OnTheWay) {
-    showReviews = true;
-  }
+// void _handleReview(RestaurantOrderStatus newOrdersStatus, value) {
+//   if (newOrdersStatus == RestaurantOrderStatus.OnTheWay) {
+//     showReviews = true;
+//   }
 
-  if (newOrdersStatus == RestaurantOrderStatus.Delivered && showReviews) {
-    showReviews = false;
-    mezDbgPrint("SHOW REVIEWS 🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟");
-    showReviewDialog(Get.context!,
-            orderId: value["orderId"],
-            orderType: value["orderType"].toString().toOrderType())
-        .whenComplete(() {
-      Get.find<OrderController>().clearOrderNotifications(value["orderId"]);
-      mezDbgPrint("ClOSE REVIEWS 🌟🌟");
+//   if (newOrdersStatus == RestaurantOrderStatus.Delivered && showReviews) {
+//     showReviews = false;
+//     mezDbgPrint("SHOW REVIEWS 🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟");
+//     showReviewDialog(Get.context!,
+//             orderId: value["orderId"],
+//             orderType: value["orderType"].toString().toOrderType())
+//         .whenComplete(() {
+//       Get.find<OrderController>().clearOrderNotifications(value["orderId"]);
+//       mezDbgPrint("ClOSE REVIEWS 🌟🌟");
 
-      showReviews = true;
-    });
-  }
-}
+//       showReviews = true;
+//     });
+//   }
+// }
 
 // TODO: needs to be formatted for laundry
 Map<String, dynamic>? getLaundryOrderStatusFields(

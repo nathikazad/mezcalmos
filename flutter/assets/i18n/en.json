@@ -318,7 +318,8 @@
                         }
                     },
                     "ViewRestaurantOrderScreen": {
-                        "orderStatus": "Order Status"
+                        "orderStatus": "Order Status",
+                        "writeReview": "Write review"
                     }
                 },
                 "ViewRestaurantScreen": {
@@ -1370,8 +1371,8 @@
                         "OrderShippingLocation": {
                             "deliveryLocation": "Delivery Location"
                         }
-                    },
-                    "writeReview": "Write review"
+                    }
+
                 },
                 "TaxiOrder": {
 
