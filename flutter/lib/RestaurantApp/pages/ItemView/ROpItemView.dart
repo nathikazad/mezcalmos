@@ -212,7 +212,7 @@ class _ROpItemViewState extends State<ROpItemView>
             const SizedBox(
               height: 35,
             ),
-            if (viewController.specialMode.isTrue ?? false)
+            if (viewController.specialMode.isTrue)
               ROpSpecialItemTime(viewController: viewController),
             Text(
               '${_i18n()["itemName"]}',

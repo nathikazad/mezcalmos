@@ -221,7 +221,7 @@ class ItemViewController {
         }
       });
     }
-    if ((specialMode.value ?? false) && editMode.value == false) {
+    if (specialMode.value && editMode.value == false) {
       // ignore: unawaited_futures
       _restaurantInfoController
           .addSpecialItem(item: _contructItem())
@@ -243,7 +243,7 @@ class ItemViewController {
           .editItem(
               item: _contructItem(),
               itemId: editableItem.value!.id!,
-              isSpecial: specialMode.value ?? false,
+              isSpecial: specialMode.value,
               currentSpecial: isCurrentSpec,
               categoryId: currentCategory.value?.id)
           .onError((Object? error, StackTrace stackTrace) {
@@ -260,7 +260,7 @@ class ItemViewController {
         .deleteItem(
             itemId: itemId,
             categoryId: catgeoryId,
-            isSpecial: specialMode.value ?? false,
+            isSpecial: specialMode.value,
             currentSpecial: isCurrentSpec)
         .then((value) => Get.back());
   }
