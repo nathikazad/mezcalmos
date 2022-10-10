@@ -77,7 +77,7 @@ steps:
       displayName: 'Deploying ${{app}} to APPCENTER'
       inputs:
         serverEndpoint: 'Appcenter-${{app}}-${{parameters.Env}}-token' # example : Appcenter-CustomerApp-prod-token
-        appSlug: x544d/$(${{app}}_${{parameters.Env}})
+        appSlug: x544d/$(${{app}})_${{parameters.Env}}
         appFile: '$(Build.ArtifactStagingDirectory)/**/*.aab'
         symbolsOption: Android
         releaseNotesInput: '-'
