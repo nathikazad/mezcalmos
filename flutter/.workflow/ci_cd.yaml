@@ -3,6 +3,9 @@ parameters:
 - name: 'Apps'
   type: object
   default: {}
+- name: 'Env'
+  type: string
+  default: 'prod'
   
 steps:
 - pwsh: |
@@ -35,7 +38,7 @@ steps:
         scriptSource: filePath
         scriptPath: 'flutter/launcher/launcher.py'
         #script: # Required when scriptSource == inline
-        arguments: 'app=${{app}} env=prod --build=appbundle version=$(mezVersion) --pipeline --verbose'
+        arguments: 'app=${{app}} env=${{parameters.Env}} --build=appbundle version=$(mezVersion) --pipeline --verbose'
         #pythonInterpreter: # Optional
         workingDirectory: 'flutter/launcher/'
         #failOnStderr: false # Optional
@@ -73,8 +76,8 @@ steps:
     - task: AppCenterDistribute@3
       displayName: 'Deploying ${{app}} to APPCENTER'
       inputs:
-        serverEndpoint: 'Appcenter-${{app}}-token'
-        appSlug: x544d/$(${{app}})
+        serverEndpoint: 'Appcenter-${{app}}-${{parameters.Env}}-token' # example : Appcenter-CustomerApp-prod-token
+        appSlug: x544d/$(${{app}}_${{parameters.Env}})
         appFile: '$(Build.ArtifactStagingDirectory)/**/*.aab'
         symbolsOption: Android
         releaseNotesInput: '-'
