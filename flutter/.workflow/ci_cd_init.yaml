@@ -95,7 +95,7 @@ jobs:
   - template: ci_cd.yaml
     parameters:
       Apps: 
-      - "CustomerApp"
-      - "DeliveryApp"
-      - "RestaurantApp"
-      - "LaundryApp"
+        - "CustomerApp"
+        - "DeliveryApp"
+        - "RestaurantApp"
+        - "LaundryApp"
