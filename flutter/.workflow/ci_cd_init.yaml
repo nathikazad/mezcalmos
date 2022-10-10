@@ -94,6 +94,7 @@ jobs:
 
   - template: ci_cd.yaml
     parameters:
+      Env: $(BMODE)
       Apps: 
         - "CustomerApp"
         - "DeliveryApp"
