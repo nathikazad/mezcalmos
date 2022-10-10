@@ -33,9 +33,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
   @override
   void initState() {
     if (controller.cart.value.cartPeriod != null) {
-      controller.cart.value.deliveryTime =
-          controller.cart.value.cartPeriod!.start;
-
+      controller.cart.value.deliveryTime = controller.cart.value.getStartTime();
       controller.saveCart();
     }
     super.initState();
@@ -73,7 +71,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                   ),
                   Flexible(
                     child: Text(
-                      "Restaurant is closed now",
+                      '${_i18n()["restClosed"]}',
                       style: Get.textTheme.bodyText2,
                     ),
                   ),
@@ -170,6 +168,11 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
               ),
             ),
           ),
+          if (controller.cart.value.deliveryTime != null &&
+              controller.cart.value.deliveryTime!
+                  .toLocal()
+                  .isBefore(DateTime.now().toLocal()))
+            _timeError()
         ],
       ),
     );
@@ -194,5 +197,29 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
         controller.saveCart();
       }
     });
+  }
+
+  Container _timeError() {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(
+            Icons.info,
+            color: Colors.red,
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+          Flexible(
+            child: Text(
+              '${_i18n()["timeError"]}',
+              style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

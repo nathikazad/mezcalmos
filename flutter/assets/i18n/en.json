@@ -149,7 +149,9 @@
                             "dvTime": "Delivery time",
                             "restClosed": "Restaurant is closed now",
                             "pickTime": "Pick your time",
-                            "now": "Now"
+                            "now": "Now",
+                            "timeError": "Picked delivery time is passed, please pick a valid time"
+
                         },
                         "PaymentMethodPicker": {
                             "paymentMethod": "Payment method",

@@ -192,6 +192,8 @@ class RestaurantController extends GetxController {
         _orderDistanceInKm <= 10 &&
         isShippingSet.isTrue &&
         cart.value.shippingCost != null &&
+        cart.value.deliveryTime != null &&
+        cart.value.deliveryTime!.toLocal().isAfter(DateTime.now().toLocal()) &&
         (associatedRestaurant?.isOpen() ?? false);
   }
 

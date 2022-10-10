@@ -167,6 +167,26 @@ class Cart {
     return periodOfTime;
   }
 
+  DateTime? getStartTime() {
+    DateTime? data = cartPeriod?.start.toLocal();
+    if (data != null && _isToday) {
+      if (DateTime.now().toLocal().hour > data.hour) {
+        data = DateTime(
+            data.year, data.month, data.day, DateTime.now().toLocal().hour);
+      }
+      if (DateTime.now().toLocal().minute > data.minute) {
+        data = DateTime(data.year, data.month, data.day, data.hour,
+            DateTime.now().minute + 5);
+      }
+    }
+    return data;
+  }
+
+  bool get _isToday {
+    return cartPeriod?.start.day == DateTime.now().day &&
+        cartPeriod?.start.day == DateTime.now().month;
+  }
+
   PeriodOfTime? get firstItemPeriod {
     final CartItem? citem = cartItems
         .firstWhereOrNull((CartItem element) => element.isSpecial == true);

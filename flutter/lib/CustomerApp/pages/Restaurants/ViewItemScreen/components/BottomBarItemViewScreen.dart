@@ -210,7 +210,11 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
         await Get.toNamed<void>(kCartRoute);
       },
       primaryCallBack: () async {
+        mezDbgPrint("OVERIDDDING CART WITH NEW SPECIAL");
         restaurantCartController.clearCart();
+        await restaurantCartController.saveCart();
+        mezDbgPrint(
+            "Clearing cart =============================>>>>>${restaurantCartController.cart.value.cartItems}");
         await restaurantCartController.addItem(widget.cartItem.value!);
         await Get.offNamed<void>(kCartRoute);
       },

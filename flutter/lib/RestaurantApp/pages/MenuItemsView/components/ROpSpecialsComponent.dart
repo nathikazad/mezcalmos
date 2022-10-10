@@ -37,6 +37,15 @@ class ROpSpecialsComponent extends StatelessWidget {
                 SizedBox(
                   height: 15,
                 ),
+                MezAddButton(
+                  onClick: () {
+                    Get.toNamed(getROpAddItemRoute(restaurantId: restaurantID),
+                        arguments: {"specials": true});
+                  },
+                ),
+                SizedBox(
+                  height: 15,
+                ),
                 Obx(
                   () => Column(
                     children: List.generate(
@@ -47,12 +56,6 @@ class ROpSpecialsComponent extends StatelessWidget {
                             item: viewController
                                 .restaurant.value!.currentSpecials[index])),
                   ),
-                ),
-                MezAddButton(
-                  onClick: () {
-                    Get.toNamed(getROpAddItemRoute(restaurantId: restaurantID),
-                        arguments: {"specials": true});
-                  },
                 ),
                 SizedBox(
                   height: 25,

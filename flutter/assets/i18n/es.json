@@ -149,7 +149,8 @@
                             "dvTime": "El tiempo de entrega",
                             "restClosed": "El restaurante está cerrado ahora",
                             "pickTime": "Elige tu tiempo",
-                            "now": "Ahora"
+                            "now": "Ahora",
+                            "timeError": "Se pasa el tiempo de entrega elegido, elija un tiempo válido"
                         },
                         "PaymentMethodPicker": {
                             "paymentMethod": "Método de pago",

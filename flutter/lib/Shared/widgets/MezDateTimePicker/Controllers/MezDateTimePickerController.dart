@@ -24,6 +24,18 @@ class MezDateTimePickerController {
   RxnInt minHours = RxnInt();
   RxnInt minMinutes = RxnInt();
 
+  bool get _isToday {
+    return pickedDate.value!.day == DateTime.now().day &&
+        pickedDate.value!.day == DateTime.now().month;
+  }
+
+  bool get maxAndMinAreSet {
+    return maxHours.value != null &&
+        minHours.value != null &&
+        maxMinutes.value != null &&
+        minMinutes.value != null;
+  }
+
   // methods //
   void init({
     required DateTime? initialDate,
@@ -51,14 +63,27 @@ class MezDateTimePickerController {
         periodOfTime.value!.start.month,
         periodOfTime.value!.start.day,
       );
-      maxHours.value = periodOfTime.value?.end.toLocal().hour ?? null;
-      minHours.value = periodOfTime.value?.start.toLocal().hour ?? null;
-      maxMinutes.value = periodOfTime.value?.end.minute ?? null;
-      minMinutes.value = periodOfTime.value?.start.minute ?? null;
+      _setMinAndMAx();
       hours.value = minHours.value;
       minutes.value = minMinutes.value;
     }
     setAmPm();
+  }
+
+  void _setMinAndMAx() {
+    maxHours.value = periodOfTime.value?.end.toLocal().hour ?? null;
+    minHours.value = periodOfTime.value?.start.toLocal().hour ?? null;
+    maxMinutes.value = periodOfTime.value?.end.minute ?? null;
+    minMinutes.value = periodOfTime.value?.start.minute ?? null;
+    if (_isToday && maxAndMinAreSet) {
+      minHours.value = (DateTime.now().hour <= maxHours.value!)
+          ? DateTime.now().hour
+          : minHours.value;
+      minMinutes.value = (DateTime.now().minute >= minMinutes.value!)
+          ? getMinutes()
+              .firstWhere((int element) => element > DateTime.now().minute)
+          : minMinutes.value;
+    }
   }
 
   /// Called whenever the date changes

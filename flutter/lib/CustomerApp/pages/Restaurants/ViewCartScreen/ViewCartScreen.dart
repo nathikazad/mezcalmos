@@ -138,7 +138,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                 withGradient: true,
                 borderRadius: 0,
                 onClick: () async {
-                  await checkoutActionButton();
+                  if (_restaurantController.canOrder) {
+                    await checkoutActionButton();
+                  } else {
+                    _restaurantController.cart.refresh();
+                  }
                 },
               ),
             )
