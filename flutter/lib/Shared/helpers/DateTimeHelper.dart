@@ -50,7 +50,7 @@ extension parseDateTime on DateTime {
     } else if (withDateNumber) {
       return "${DateFormat.MMMEd(userLangCode).format(this).replaceAll(".", "")}";
     } else {
-      return "${DateFormat.EEEE(userLangCode).format(this)}";
+      return "${DateFormat(userLangCode).format(this)}";
     }
   }
 
