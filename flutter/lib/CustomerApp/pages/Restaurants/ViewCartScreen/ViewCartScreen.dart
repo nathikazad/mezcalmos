@@ -220,16 +220,12 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   //         "[+] s@@d ==> [ CHECKOUT RESTAURANT ORDER ] NO RACING CONDITION HAPPEND ! ");
   // }
 
-//itemviewscreen
+//itemviewscreen -
   Future<void> checkoutActionButton() async {
     _restaurantController.cart.value.toLocation = orderToLocation;
     _restaurantController.cart.value.notes = _textEditingController.text;
     try {
-      if (_restaurantController.getOrderDistance <= 10 ||
-          getAppLaunchMode() == AppLaunchMode.stage ||
-          Get.find<AuthController>().user?.id ==
-              // BUhQ74BrbBNeYZz60fK4ocrgpqz1 the test user for apple test
-              "BUhQ74BrbBNeYZz60fK4ocrgpqz1") {
+      if (_restaurantController.getOrderDistance <= 10) {
         final String? stripePaymentId =
             await acceptPaymentByCardChoice(viewCartController.getCardChoice);
 
