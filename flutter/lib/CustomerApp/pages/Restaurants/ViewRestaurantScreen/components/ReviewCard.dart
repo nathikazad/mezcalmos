@@ -22,6 +22,8 @@ class _ReviewCardState extends State<ReviewCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 0,
+      margin: const EdgeInsets.only(bottom: 8),
       child: Container(
         padding: const EdgeInsets.all(8),
         child: Row(
@@ -37,7 +39,7 @@ class _ReviewCardState extends State<ReviewCard> {
                       style: Get.textTheme.bodyText1,
                     ),
                     Text(
-                      widget.review.reviewTime!.timeAgo(),
+                      widget.review.reviewTime!.timeAgo().toLowerCase(),
                       style: Get.textTheme.subtitle1,
                     ),
                     const SizedBox(

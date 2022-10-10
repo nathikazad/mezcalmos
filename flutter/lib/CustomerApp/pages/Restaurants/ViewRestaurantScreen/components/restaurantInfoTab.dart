@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
+import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
 final DateFormat f = new DateFormat('hh:mma');
@@ -40,7 +41,6 @@ class RestaurantInfoTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         _topBarInfo(),
-
         if (restaurant.description![userLanguage] != null &&
             restaurant.description![userLanguage]!.isNotEmpty)
           Column(
@@ -66,16 +66,16 @@ class RestaurantInfoTab extends StatelessWidget {
         SizedBox(
           height: 25,
         ),
-        // if (restaurant.info.location != null)
-        //   ServiceLocationCard(
-        //     location: restaurant.info.location,
-        //   ),
+        if (restaurant.info.location != null)
+          ServiceLocationCard(
+            location: restaurant.info.location,
+          ),
         if (restaurant.showReviews)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: 25,
+                height: 15,
               ),
               Row(
                 children: [
@@ -83,9 +83,7 @@ class RestaurantInfoTab extends StatelessWidget {
                     '${_i18n()["reviews"]}',
                     style: Get.textTheme.bodyText1,
                   ),
-                  const SizedBox(
-                    width: 5,
-                  ),
+                  Spacer(),
                   Icon(
                     Icons.star_border_outlined,
                     color: primaryBlueColor,
