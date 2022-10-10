@@ -16,12 +16,14 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/componen
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/notesWidget.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
@@ -162,6 +164,22 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         autoBack: true,
         title: order.value?.restaurant.name,
       ),
+      bottomNavigationBar: Obx(() {
+        if (showReviewBtn()) {
+          return MezButton(
+            label: "${_i18n()["writeReview"]}",
+            withGradient: true,
+            onClick: () async {
+              await showReviewDialog(context,
+                  orderId: order.value!.orderId,
+                  orderType: OrderType.Restaurant);
+            },
+            borderRadius: 0,
+          );
+        } else {
+          return SizedBox();
+        }
+      }),
       body: Obx(
         () {
           if (order.value != null) {
@@ -356,5 +374,11 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         break;
       default:
     }
+  }
+
+  bool showReviewBtn() {
+    return order.value != null &&
+        order.value!.status == RestaurantOrderStatus.Delivered &&
+        order.value!.review == null;
   }
 }

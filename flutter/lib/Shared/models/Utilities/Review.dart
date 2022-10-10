@@ -36,7 +36,7 @@ class Review {
   }
 
   // ignore: avoid_annotating_with_dynamic
-  factory Review.fromMap(String key, dynamic map) {
+  factory Review.fromMap(String? key, dynamic map) {
     return Review(
       id: key,
       comment: map['comment'] ?? '',
