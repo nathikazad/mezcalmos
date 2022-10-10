@@ -21,8 +21,7 @@ class OrderDeliveryLocation extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${_i18n()["title"]}',
-            style: Get.textTheme.bodyText1,
+            '${_i18n()["title"]} : ',
           ),
           const SizedBox(
             height: 10,
@@ -45,6 +44,7 @@ class OrderDeliveryLocation extends StatelessWidget {
                     fit: FlexFit.tight,
                     child: Text(
                       order.to.address,
+                      style: Get.textTheme.bodyText1,
                       maxLines: 1,
                     ),
                   ),

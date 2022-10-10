@@ -247,6 +247,7 @@
                     "ViewItemScreen": {
                         "notes": "Notes",
                         "special": "Special",
+                        "viewRestaurant": "View restaurant",
                         "itemNotes": "Item notes :",
                         "itemDescription": "Item Description"
                     }
@@ -321,7 +322,8 @@
                     },
                     "ViewRestaurantOrderScreen": {
                         "orderStatus": "Order Status",
-                        "writeReview": "Write review"
+                        "writeReview": "Write review",
+                        "deliveryDet": "Delivery details"
                     }
                 },
                 "ViewRestaurantScreen": {
@@ -337,6 +339,7 @@
                         "restaurantInfoTab": {
                             "description": "Description",
                             "location": "Location",
+                            "reviews": "Reviews",
                             "workingHours": "Working Hours",
                             "weekDays": {
                                 "monday": "Monday",

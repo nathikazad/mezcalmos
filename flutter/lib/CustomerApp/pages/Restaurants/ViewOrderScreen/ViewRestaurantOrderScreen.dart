@@ -191,62 +191,72 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                     constraints:
                         BoxConstraints(minHeight: constraint.maxHeight),
                     child: IntrinsicHeight(
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: 10,
-                          ),
-                          OrderStatusCard(
-                            order: order.value!,
-                            ordersStates: order.value!.status,
-                          ),
-                          RestaurantOrderDeliveryTimeCard(
-                            order: order.value!,
-                            margin: EdgeInsets.only(top: 20),
-                          ),
-                          if (order.value!.paymentType ==
-                              PaymentType.BankTransfer)
-                            RestaurantBankInfoCard(
-                                restaurantId: order.value!.restaurantId),
-                          CustomerRestaurantOrderEst(order: order.value!),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            SizedBox(
+                              height: 10,
+                            ),
+                            OrderStatusCard(
+                              order: order.value!,
+                              ordersStates: order.value!.status,
+                            ),
 
-                          RestaurantOrderDriverCard(
-                            order: order.value!,
-                          ),
-                          if (order.value!.inDeliveryPhase()) ..._mapWidget,
+                            if (order.value!.paymentType ==
+                                PaymentType.BankTransfer)
+                              RestaurantBankInfoCard(
+                                  restaurantId: order.value!.restaurantId),
+                            CustomerRestaurantOrderEst(order: order.value!),
 
-                          OrderRestaurantCard(order: order.value!),
+                            RestaurantOrderDriverCard(
+                              order: order.value!,
+                            ),
+                            if (order.value!.inDeliveryPhase()) ..._mapWidget,
 
-                          OrderItemsCard(
-                            order: order.value!,
-                          ),
-                          order.value?.notes == null ||
-                                  order.value!.notes!.length <= 0
-                              ? Container()
-                              : notesWidget(order),
+                            OrderRestaurantCard(order: order.value!),
 
-                          OrderDeliveryLocation(
-                            order: order.value!,
-                            margin: const EdgeInsets.only(top: 20),
-                          ),
-                          OrderPaymentMethod(
-                            order: order.value!,
-                            margin: const EdgeInsets.only(top: 20),
-                          ),
+                            OrderItemsCard(
+                              order: order.value!,
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(top: 20),
+                              child: Text(
+                                '${_i18n()["deliveryDet"]}',
+                                style: Get.textTheme.bodyText1,
+                              ),
+                            ),
+                            RestaurantOrderDeliveryTimeCard(
+                              order: order.value!,
+                              margin: EdgeInsets.zero,
+                            ),
+                            OrderDeliveryLocation(
+                              order: order.value!,
+                              margin: const EdgeInsets.only(top: 20),
+                            ),
+                            OrderPaymentMethod(
+                              order: order.value!,
+                              margin: const EdgeInsets.only(top: 20),
+                            ),
+                            order.value?.notes == null ||
+                                    order.value!.notes!.length <= 0
+                                ? Container()
+                                : notesWidget(order),
+                            OrderSummaryCard(
+                              order: order.value!,
+                            ),
 
-                          OrderSummaryCard(
-                            order: order.value!,
-                          ),
-
-                          //===============================>button cancel===========================
-                          //  Expanded(child: Container()),
-                          Spacer(),
-                          Flexible(
-                            child: Container(
-                                alignment: Alignment.center,
-                                child: OrderFooterCard(order: order.value!)),
-                          ),
-                        ],
+                            //===============================>button cancel===========================
+                            //  Expanded(child: Container()),
+                            Spacer(),
+                            Flexible(
+                              child: Container(
+                                  alignment: Alignment.center,
+                                  child: OrderFooterCard(order: order.value!)),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

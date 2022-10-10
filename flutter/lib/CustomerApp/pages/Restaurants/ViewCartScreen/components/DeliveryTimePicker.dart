@@ -94,12 +94,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                   padding: const EdgeInsets.all(10),
                   child: Row(
                     children: [
-                      Icon(
-                        Icons.watch_later,
-                        color: (controller.cart.value.deliveryTime != null)
-                            ? primaryBlueColor
-                            : Colors.black,
-                      ),
+                      Icon(Icons.watch_later, color: Colors.black),
                       SizedBox(
                         width: 10,
                       ),

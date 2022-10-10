@@ -180,7 +180,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                                 color: secondaryLightBlueColor,
                                 borderRadius: BorderRadius.circular(18)),
                             child: Text(
-                              'View restaurant',
+                              '${_i18n()["viewRestaurant"]}',
                               style: Get.textTheme.bodyText1
                                   ?.copyWith(color: primaryBlueColor),
                             ),
@@ -202,7 +202,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                         SizedBox(
                           width: 5,
                         ),
-                        Text("Special"),
+                        Text('${_i18n()["special"]}'),
                         SizedBox(
                           width: 10,
                         ),
@@ -240,37 +240,6 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
           ),
         )
       ],
-    );
-  }
-
-  Container _specialInfo(Item item) {
-    return Container(
-      margin: const EdgeInsets.only(top: 10),
-      child: Row(
-        children: [
-          Icon(
-            Icons.fastfood,
-            size: 15.sp,
-          ),
-          const SizedBox(
-            width: 5,
-          ),
-          Text('${_i18n()["special"]}'),
-          SizedBox(
-            width: 8,
-          ),
-          Icon(
-            Icons.watch_later,
-            size: 15.sp,
-          ),
-          const SizedBox(
-            width: 5,
-          ),
-          Flexible(
-            child: Text(item.getPeriod.toString()),
-          )
-        ],
-      ),
     );
   }
 

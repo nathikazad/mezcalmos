@@ -80,7 +80,7 @@ class RestaurantInfoTab extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    "Reviews",
+                    '${_i18n()["reviews"]}',
                     style: Get.textTheme.bodyText1,
                   ),
                   const SizedBox(
