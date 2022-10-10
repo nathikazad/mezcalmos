@@ -3,15 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:sizer/sizer.dart';
 
 class RestaurantsListOfItemsComponent extends StatefulWidget {
-  const RestaurantsListOfItemsComponent(
-      {Key? key, required this.item, this.function})
-      : super(key: key);
+  const RestaurantsListOfItemsComponent({
+    Key? key,
+    required this.item,
+    this.function,
+  }) : super(key: key);
   final Item item;
+
   final GestureTapCallback? function;
 
   @override
@@ -30,7 +33,7 @@ class _RestaurantsListOfItemsComponentState
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
       child: Container(
-        height: 70,
+        height: 80,
         padding: const EdgeInsets.symmetric(
           horizontal: 8,
         ),
@@ -55,15 +58,21 @@ class _RestaurantsListOfItemsComponentState
                 ),
               Flexible(
                 fit: FlexFit.tight,
-                flex: 5,
-                child: Container(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "${widget.item.name[userLanguage]!.capitalizeFirstofEach}",
-                    style: txt.headline3!.copyWith(
-                      fontSize: 13.sp,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "${widget.item.name[userLanguage]!.capitalizeFirstofEach}",
+                      style: txt.headline3!.copyWith(
+                        fontSize: 13.sp,
+                      ),
                     ),
-                  ),
+                    if (widget.item.isSpecial)
+                      Container(
+                          margin: const EdgeInsets.symmetric(vertical: 5),
+                          child: Text(widget.item.getPeriod.toString()))
+                  ],
                 ),
               ),
               SizedBox(

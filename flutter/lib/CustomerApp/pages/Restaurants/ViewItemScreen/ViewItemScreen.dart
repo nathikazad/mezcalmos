@@ -150,6 +150,10 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                 Container(
                   margin: const EdgeInsets.only(top: 10),
                   child: Row(
+                    // mainAxisAlignment:
+                    //     (currentRestaurant != null && showViewRestaurant)
+                    //         ? MainAxisAlignment.start
+                    //         : MainAxisAlignment.end,
                     children: [
                       Flexible(
                         fit: FlexFit.tight,
@@ -185,6 +189,32 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                     ],
                   ),
                 ),
+                if (item.isSpecial)
+                  Container(
+                    margin: const EdgeInsets.only(top: 8),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.fastfood,
+                          color: Colors.grey.shade900,
+                          size: 15.sp,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text("Special"),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Flexible(
+                            fit: FlexFit.tight,
+                            child: Text(
+                              item.getPeriod.toString(),
+                              maxLines: 2,
+                            )),
+                      ],
+                    ),
+                  ),
                 if (item.description?[userLanguage] != null &&
                     item.description![userLanguage]!.isNotEmpty)
                   _itemDescription(context, item),

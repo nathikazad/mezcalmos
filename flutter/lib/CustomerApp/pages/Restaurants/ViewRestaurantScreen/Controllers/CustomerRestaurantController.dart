@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -18,6 +19,7 @@ class CustomerRestaurantController {
 
   // obs //
   Rxn<Restaurant> restaurant = Rxn<Restaurant>();
+  RxNum basShippingPrice = RxNum(50);
   RxBool showInfo = RxBool(false);
   Rx<RestaurantViewTab> mainTab = Rx<RestaurantViewTab>(RestaurantViewTab.Menu);
   Map<int, dynamic> itemKeys = {};
@@ -25,8 +27,14 @@ class CustomerRestaurantController {
 
   void init({required Restaurant restaurant, required TickerProvider vsync}) {
     this.restaurant.value = restaurant;
+    _getShippingPrice();
     _initControllers(vsync, restaurant);
     assignKeys();
+  }
+
+  Future<void> _getShippingPrice() async {
+    basShippingPrice.value =
+        await Get.find<RestaurantController>().getShippingPrice() ?? 50;
   }
 
   void assignKeys() {

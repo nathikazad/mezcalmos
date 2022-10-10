@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/Controllers/CustomerRestaurantController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/ReviewCard.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -8,7 +9,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
-import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
+import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
 final DateFormat f = new DateFormat('hh:mma');
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -17,10 +18,12 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 
 class RestaurantInfoTab extends StatelessWidget {
   final Restaurant restaurant;
+  final CustomerRestaurantController controller;
 
   const RestaurantInfoTab({
     Key? key,
     required this.restaurant,
+    required this.controller,
   }) : super(key: key);
 
   /// LanguageType
@@ -36,7 +39,8 @@ class RestaurantInfoTab extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        if (restaurant.showReviews) _reviewsChip(),
+        _topBarInfo(),
+
         if (restaurant.description![userLanguage] != null &&
             restaurant.description![userLanguage]!.isNotEmpty)
           Column(
@@ -62,10 +66,10 @@ class RestaurantInfoTab extends StatelessWidget {
         SizedBox(
           height: 25,
         ),
-        if (restaurant.info.location != null)
-          ServiceLocationCard(
-            location: restaurant.info.location,
-          ),
+        // if (restaurant.info.location != null)
+        //   ServiceLocationCard(
+        //     location: restaurant.info.location,
+        //   ),
         if (restaurant.showReviews)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,58 +117,104 @@ class RestaurantInfoTab extends StatelessWidget {
                       review: restaurant.reviews[index],
                     );
                   })
-              // SliverList(
-              //     delegate: SliverChildListDelegate(
-              //   List.generate(restaurant.reviews.length, (int index) {
-              //     return ReviewCard(
-              //       review: restaurant.reviews[index],
-              //     );
-              //   }),
-              // )),
-              // Column(
-              //   children: List.generate(restaurant.reviews.length, (int index) {
-              //     return ReviewCard(
-              //       review: restaurant.reviews[index],
-              //     );
-              //   }),
-              // )
             ],
           )
       ],
     );
   }
 
-  Align _reviewsChip() {
-    return Align(
-      alignment: Alignment.topRight,
-      child: Container(
-        decoration: BoxDecoration(
-          color: primaryBlueColor,
-          borderRadius: BorderRadius.circular(20),
+  Row _topBarInfo() {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Flexible(
+          fit: FlexFit.tight,
+          child: Row(
+            children: [
+              Text(
+                _getDollarsSign(),
+                style: Get.textTheme.bodyText1,
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              Icon(
+                Icons.delivery_dining,
+                color: Colors.grey.shade800,
+              ),
+              Flexible(
+                child: ShippingCostComponent(
+                  shippingCost: controller.basShippingPrice.value,
+                  alignment: MainAxisAlignment.start,
+                  textStyle: Get.textTheme.bodyText1,
+                ),
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              Icon(
+                Icons.payments_sharp,
+                color: Colors.grey.shade800,
+              ),
+              if (restaurant.paymentInfo.acceptCard)
+                Padding(
+                    padding: const EdgeInsets.only(left: 5),
+                    child: Icon(
+                      Icons.credit_card,
+                      color: Colors.grey.shade800,
+                    )),
+            ],
+          ),
         ),
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.star_rate_rounded,
-              color: Colors.white,
-            ),
-            Text(
-              restaurant.rate!.toStringAsFixed(1),
-              style: Get.textTheme.bodyText1?.copyWith(color: Colors.white),
-            ),
-            const SizedBox(
-              width: 3,
-            ),
-            Text(
-              "(${restaurant.reviews.length.toString()})",
-              style: Get.textTheme.bodyText2?.copyWith(color: Colors.white),
-            )
-          ],
-        ),
+        if (restaurant.showReviews) _reviewsChip(),
+      ],
+    );
+  }
+
+  Widget _reviewsChip() {
+    return Container(
+      decoration: BoxDecoration(
+        color: primaryBlueColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.star_rate_rounded,
+            color: Colors.white,
+          ),
+          Text(
+            restaurant.rate!.toStringAsFixed(1),
+            style: Get.textTheme.bodyText1?.copyWith(color: Colors.white),
+          ),
+          const SizedBox(
+            width: 3,
+          ),
+          Text(
+            "(${restaurant.reviews.length.toString()})",
+            style: Get.textTheme.bodyText2?.copyWith(color: Colors.white),
+          )
+        ],
       ),
     );
+  }
+
+  String _getDollarsSign() {
+    if (restaurant.getAverageCost() <= 80) {
+      return "\$";
+    }
+    if (restaurant.getAverageCost() > 80 &&
+        restaurant.getAverageCost() <= 140) {
+      return "\$\$";
+    }
+    if (restaurant.getAverageCost() > 140) {
+      return "\$\$\$";
+    } else {
+      return "";
+    }
   }
 }

@@ -3,9 +3,8 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/Controllers/CustomerRestaurantController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/NewRestaurantAppBar.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/RestaurantGridItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/RestaurantListItemComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/RestaurantSliverAppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/restaurantInfoTab.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -91,7 +90,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
     return CustomScrollView(
       controller: _viewController.scrollController,
       slivers: [
-        NewRestaurantAppBar(controller: _viewController),
+        RestaurantSliverAppBar(controller: _viewController),
         Obx(() {
           if (_viewController.showInfo.value)
             return SliverPadding(
@@ -99,6 +98,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
               sliver: SliverToBoxAdapter(
                   child: RestaurantInfoTab(
                 restaurant: restaurant,
+                controller: _viewController,
               )),
             );
           else
@@ -219,44 +219,26 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
       {required List<Item> items,
       required String restaurantId,
       bool isSpecial = false}) {
-    if (restaurant.restaurantsView == RestaurantsView.Rows) {
-      return Container(
-        margin: const EdgeInsets.only(top: 5),
-        child: Column(
-          children: items.fold<List<Widget>>(<Widget>[],
-              (List<Widget> children, Item item) {
-            children.add(RestaurantsListOfItemsComponent(
-                item: item,
-                function: () {
-                  Get.toNamed(
-                    getItemRoute(restaurantId, item.id!),
-                    arguments: {
-                      "mode": ViewItemScreenMode.AddItemMode,
-                      "isSpecial": isSpecial
-                    },
-                  );
-                }));
+    return Container(
+      margin: const EdgeInsets.only(top: 5),
+      child: Column(
+        children: items.fold<List<Widget>>(<Widget>[],
+            (List<Widget> children, Item item) {
+          children.add(RestaurantsListOfItemsComponent(
+              item: item,
+              function: () {
+                Get.toNamed(
+                  getItemRoute(restaurantId, item.id!),
+                  arguments: {
+                    "mode": ViewItemScreenMode.AddItemMode,
+                    "isSpecial": isSpecial
+                  },
+                );
+              }));
 
-            return children;
-          }),
-        ),
-      );
-    } else {
-      return GridView.count(
-        crossAxisCount: 2,
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8,
-        shrinkWrap: true,
-        padding: EdgeInsets.only(top: 17),
-        physics: NeverScrollableScrollPhysics(),
-        children: List.generate(items.length, (int index) {
-          return RestaurantgridItemCard(
-            item: items[index],
-            restaurant: restaurant,
-            isSpecial: isSpecial,
-          );
+          return children;
         }),
-      );
-    }
+      ),
+    );
   }
 }
