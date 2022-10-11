@@ -46,9 +46,6 @@ class RestaurantInfoTab extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 10,
-              ),
               Container(
                 child: Text(
                   '${_i18n()["description"]} :',
@@ -56,15 +53,20 @@ class RestaurantInfoTab extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 10, bottom: 25),
+                margin: EdgeInsets.only(
+                  top: 10,
+                ),
                 child: Text(restaurant.description?[userLanguage] ?? ""),
               ),
+              SizedBox(
+                height: 20,
+              )
             ],
           ),
         if (restaurant.schedule != null)
           MezServiceOpenHours(schedule: restaurant.schedule!),
         SizedBox(
-          height: 25,
+          height: 20,
         ),
         if (restaurant.info.location != null)
           ServiceLocationCard(
@@ -75,7 +77,7 @@ class RestaurantInfoTab extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: 15,
+                height: 20,
               ),
               Row(
                 children: [
@@ -121,51 +123,54 @@ class RestaurantInfoTab extends StatelessWidget {
     );
   }
 
-  Row _topBarInfo() {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Flexible(
-          fit: FlexFit.tight,
-          child: Row(
-            children: [
-              Text(
-                _getDollarsSign(),
-                style: Get.textTheme.bodyText1,
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              Icon(
-                Icons.delivery_dining,
-                color: Colors.grey.shade800,
-              ),
-              Flexible(
-                child: ShippingCostComponent(
-                  shippingCost: controller.basShippingPrice.value,
-                  alignment: MainAxisAlignment.start,
-                  textStyle: Get.textTheme.bodyText1,
+  Widget _topBarInfo() {
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Flexible(
+            fit: FlexFit.tight,
+            child: Row(
+              children: [
+                Text(
+                  _getDollarsSign(),
+                  style: Get.textTheme.bodyText1,
                 ),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              Icon(
-                Icons.payments_sharp,
-                color: Colors.grey.shade800,
-              ),
-              if (restaurant.paymentInfo.acceptCard)
-                Padding(
-                    padding: const EdgeInsets.only(left: 5),
-                    child: Icon(
-                      Icons.credit_card,
-                      color: Colors.grey.shade800,
-                    )),
-            ],
+                const SizedBox(
+                  width: 15,
+                ),
+                Icon(
+                  Icons.delivery_dining,
+                  color: Colors.grey.shade800,
+                ),
+                Flexible(
+                  child: ShippingCostComponent(
+                    shippingCost: controller.basShippingPrice.value,
+                    alignment: MainAxisAlignment.start,
+                    textStyle: Get.textTheme.bodyText1,
+                  ),
+                ),
+                const SizedBox(
+                  width: 15,
+                ),
+                Icon(
+                  Icons.payments_sharp,
+                  color: Colors.grey.shade800,
+                ),
+                if (restaurant.paymentInfo.acceptCard)
+                  Padding(
+                      padding: const EdgeInsets.only(left: 5),
+                      child: Icon(
+                        Icons.credit_card,
+                        color: Colors.grey.shade800,
+                      )),
+              ],
+            ),
           ),
-        ),
-        if (restaurant.showReviews) _reviewsChip(),
-      ],
+          if (restaurant.showReviews) _reviewsChip(),
+        ],
+      ),
     );
   }
 
