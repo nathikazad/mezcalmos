@@ -61,11 +61,12 @@ class ROpSpecialsComponent extends StatelessWidget {
                           elements:
                               viewController.restaurant.value!.currentSpecials,
                           groupBy: (Item element) => DateTime(
-                              element.startsAt!.year,
-                              element.startsAt!.month,
-                              element.startsAt!.day),
+                            element.startsAt!.toLocal().year,
+                            element.startsAt!.toLocal().month,
+                            element.startsAt!.toLocal().day,
+                          ),
                           groupComparator: (DateTime value1, DateTime value2) =>
-                              value2.compareTo(value1),
+                              value2.toLocal().compareTo(value1.toLocal()),
                           itemComparator: (Item element1, Item element2) =>
                               element2.startsAt!.compareTo(element1.startsAt!),
                           physics: NeverScrollableScrollPhysics(),
