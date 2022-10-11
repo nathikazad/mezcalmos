@@ -11,7 +11,6 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -127,26 +126,29 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           return CartIsEmptyScreen();
         }
       }),
-      bottomSheet: (_restaurantController.cart.value.cartItems.length > 0)
-          ? Obx(
-              () => MezButton(
-                label: (_restaurantController.associatedRestaurant?.isOpen() ==
-                        false)
-                    ? '${_i18n()["scheduleOrder"]}'
-                    : '${_i18n()["orderNow"]}',
-                enabled: _restaurantController.canOrder,
-                withGradient: true,
-                borderRadius: 0,
-                onClick: () async {
-                  if (_restaurantController.canOrder) {
-                    await checkoutActionButton();
-                  } else {
-                    _restaurantController.cart.refresh();
-                  }
-                },
-              ),
-            )
-          : null,
+      bottomSheet: Obx(
+        () {
+          if (_restaurantController.cart.value.cartItems.length > 0) {
+            return MezButton(
+              label: (_restaurantController.associatedRestaurant?.isOpen() ==
+                      false)
+                  ? '${_i18n()["scheduleOrder"]}'
+                  : '${_i18n()["orderNow"]}',
+              enabled: _restaurantController.canOrder,
+              withGradient: true,
+              borderRadius: 0,
+              onClick: () async {
+                if (_restaurantController.canOrder) {
+                  await checkoutActionButton();
+                } else {
+                  _restaurantController.cart.refresh();
+                }
+              },
+            );
+          } else
+            return SizedBox();
+        },
+      ),
     );
   }
 
