@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
-import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
 final DateFormat f = new DateFormat('hh:mma');
@@ -68,10 +67,10 @@ class RestaurantInfoTab extends StatelessWidget {
         SizedBox(
           height: 20,
         ),
-        if (restaurant.info.location != null)
-          ServiceLocationCard(
-            location: restaurant.info.location,
-          ),
+        // if (restaurant.info.location != null)
+        //   ServiceLocationCard(
+        //     location: restaurant.info.location,
+        //   ),
         if (restaurant.showReviews)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

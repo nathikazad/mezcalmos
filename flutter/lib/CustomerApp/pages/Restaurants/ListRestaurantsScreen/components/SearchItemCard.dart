@@ -32,7 +32,7 @@ class SearchItemCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-          height: 14.h,
+          height: 17.h,
           child: Row(
             children: [
               Flexible(

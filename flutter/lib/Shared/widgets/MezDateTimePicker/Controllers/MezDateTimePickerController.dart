@@ -26,7 +26,7 @@ class MezDateTimePickerController {
 
   bool get _isToday {
     return pickedDate.value!.day == DateTime.now().day &&
-        pickedDate.value!.day == DateTime.now().month;
+        pickedDate.value!.month == DateTime.now().month;
   }
 
   bool get maxAndMinAreSet {

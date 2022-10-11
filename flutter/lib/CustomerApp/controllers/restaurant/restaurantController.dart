@@ -187,13 +187,22 @@ class RestaurantController extends GetxController {
     }
   }
 
+  bool get validTime {
+    if (cart.value.deliveryTime != null) {
+      return cart.value.deliveryTime!
+          .toLocal()
+          .isAfter(DateTime.now().toLocal());
+    } else {
+      return true;
+    }
+  }
+
   bool get canOrder {
     return cart.value.toLocation != null &&
         _orderDistanceInKm <= 10 &&
         isShippingSet.isTrue &&
+        validTime &&
         cart.value.shippingCost != null &&
-        cart.value.deliveryTime != null &&
-        cart.value.deliveryTime!.toLocal().isAfter(DateTime.now().toLocal()) &&
         (associatedRestaurant?.isOpen() ?? false);
   }
 

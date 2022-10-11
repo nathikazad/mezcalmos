@@ -297,7 +297,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(
-            Icons.info,
+            Icons.error_outline,
             color: Colors.red,
           ),
           const SizedBox(
@@ -306,7 +306,8 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
           Flexible(
             child: Text(
               '${_i18n()["distanceError"]}',
-              style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+              style: Get.textTheme.bodyText1
+                  ?.copyWith(color: Colors.red, fontSize: 10.sp),
             ),
           ),
         ],

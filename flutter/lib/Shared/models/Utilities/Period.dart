@@ -51,7 +51,15 @@ class PeriodOfTime {
   int get hashCode => start.hashCode ^ end.hashCode;
 
   @override
-  String toString() =>
-      '${DateFormat.MMMEd(userLangCode).format(start.toLocal())}, ${DateFormat("hh:mm a").format(start.toLocal())} ${Get.find<LanguageController>().strings["General"]["to"]} ${DateFormat("hh:mm a").format(end.toLocal())}'
-          .replaceAll(".", "");
+  String toString() {
+    return '${DateFormat.MMMEd(userLangCode).format(start.toLocal())}, ${DateFormat("hh:mm a").format(start.toLocal())} ${Get.find<LanguageController>().strings["General"]["to"].toString().toLowerCase()} ${DateFormat("hh:mm a").format(end.toLocal())}'
+        .replaceAll(".", "");
+  }
+
+  String toNormalString({bool removeToday = false, DateFormat? format}) {
+    final DateFormat df = format ?? DateFormat.MMMEd(userLangCode);
+    final bool _isToday = start.isToday;
+    return '${(removeToday && _isToday) ? "" : df.format(start.toLocal()) + ","} ${DateFormat("hh:mm a").format(start.toLocal())} ${Get.find<LanguageController>().strings["General"]["to"].toString().toLowerCase()} ${DateFormat("hh:mm a").format(end.toLocal())}'
+        .replaceAll(".", "");
+  }
 }

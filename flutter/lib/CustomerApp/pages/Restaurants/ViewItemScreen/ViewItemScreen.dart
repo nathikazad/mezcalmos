@@ -192,26 +192,43 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                 if (item.isSpecial)
                   Container(
                     margin: const EdgeInsets.only(top: 8),
-                    child: Row(
+                    child: Column(
                       children: [
-                        Icon(
-                          Icons.fastfood,
-                          color: Colors.grey.shade900,
-                          size: 15.sp,
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.fastfood,
+                              color: Colors.grey.shade900,
+                              size: 15.sp,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text('${_i18n()["special"]}'),
+                            SizedBox(
+                              width: 10,
+                            ),
+                          ],
                         ),
                         SizedBox(
-                          width: 5,
+                          height: 7,
                         ),
-                        Text('${_i18n()["special"]}'),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Flexible(
-                            fit: FlexFit.tight,
-                            child: Text(
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.watch_later,
+                              color: Colors.grey.shade900,
+                              size: 15.sp,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
                               item.getPeriod.toString(),
                               maxLines: 2,
-                            )),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

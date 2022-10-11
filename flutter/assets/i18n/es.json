@@ -140,7 +140,11 @@
                         "search": "Búsqueda",
                         "showOnlyOpen": "Mostrar solo restaurantes abiertos",
                         "emptRestaurantList": "Lo siento, no se encontró ningún restaurante",
-                        "noOpenRestaurant": "No hay restaurantes abiertos Funds"
+                        "noOpenRestaurant": "No hay restaurantes abiertos Funds",
+                        "meal": "Comida",
+                        "noItemTitle": "No se han encontrado resultados",
+                        "noItemDesc": "Lo siento, no pudimos encontrar lo que está buscando, por favor, pruebe una nueva palabra clave."
+
                     }
                 },
                 "ViewCartScreen": {
@@ -251,7 +255,8 @@
                         "special": "Especial",
                         "viewRestaurant": "Ver restaurante",
                         "itemNotes": "Notas de artículos :",
-                        "itemDescription": "Descripción del Artículo"
+                        "itemDescription": "Descripción del Artículo",
+                        "availability": "Disponibilidad"
 
                     }
                 },

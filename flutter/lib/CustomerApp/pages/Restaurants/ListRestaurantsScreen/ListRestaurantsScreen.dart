@@ -51,16 +51,55 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
                 if (viewController.byRestaurants)
                   return _restaurantList();
                 else
-                  return Column(
-                    children: List.generate(
-                        viewController.filteredItems.length,
-                        (int index) => SearchItemCard(
-                            item: viewController.filteredItems[index])),
-                  );
+                  return _searchedItemsList();
               })
             ],
           )),
     );
+  }
+
+  Widget _searchedItemsList() {
+    if (viewController.filteredItems.isNotEmpty) {
+      return Column(
+        children: List.generate(
+            viewController.filteredItems.length,
+            (int index) =>
+                SearchItemCard(item: viewController.filteredItems[index])),
+      );
+    } else {
+      return Container(
+        margin: EdgeInsets.symmetric(vertical: 10.h),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              backgroundColor: Colors.grey.shade300,
+              radius: 40,
+              child: Icon(
+                Icons.search_off_rounded,
+                color: Colors.grey.shade600,
+                size: 35,
+              ),
+            ),
+            SizedBox(
+              height: 25,
+            ),
+            Text(
+              '${_i18n()["noItemTitle"]}',
+              style: Get.textTheme.bodyText1,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              '${_i18n()["noItemDesc"]}',
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   Widget _searchFilter() {
@@ -153,7 +192,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
                           Flexible(
                             fit: FlexFit.tight,
                             child: Text(
-                              "Meal",
+                              '${_i18n()["meal"]}',
                               style: Get.textTheme.bodyText1?.copyWith(
                                 color: viewController.byRestaurants
                                     ? Colors.grey.shade700

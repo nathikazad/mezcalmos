@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -110,7 +109,6 @@ class Restaurant extends Service {
         paymentInfo: paymentInfo);
     if (restaurantData["details"]["reviews"] != null) {
       restaurantData["details"]["reviews"]?.forEach((key, review) {
-        mezDbgPrint("ADDING REVIEw ==============$review");
         restaurant.reviews.add(Review.fromMap(key, review));
       });
     }
@@ -138,6 +136,8 @@ class Restaurant extends Service {
 
     restaurant._categories
         .sort((Category a, Category b) => a.position.compareTo(b.position));
+    restaurant.reviews
+        .sort((Review a, Review b) => b.reviewTime!.compareTo(a.reviewTime!));
     return restaurant;
   }
 

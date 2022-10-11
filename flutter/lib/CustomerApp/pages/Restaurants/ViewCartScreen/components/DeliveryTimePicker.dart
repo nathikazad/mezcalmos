@@ -50,9 +50,21 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            '${_i18n()["dvTime"]}',
-            style: Get.textTheme.bodyText1,
+          Row(
+            children: [
+              Text(
+                '${_i18n()["dvTime"]}',
+                style: Get.textTheme.bodyText1,
+              ),
+              if (controller.cart.value.cartPeriod != null)
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 3),
+                    child: Text(
+                        "(${controller.cart.value.cartPeriod!.toNormalString(format: DateFormat.MMMd(userLangCode))})"),
+                  ),
+                )
+            ],
           ),
           if (controller.associatedRestaurant?.isOpen() == false)
             Container(
@@ -201,7 +213,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(
-            Icons.info,
+            Icons.error_outline,
             color: Colors.red,
           ),
           const SizedBox(
@@ -210,7 +222,8 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
           Flexible(
             child: Text(
               '${_i18n()["timeError"]}',
-              style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+              style: Get.textTheme.bodyText1
+                  ?.copyWith(color: Colors.red, fontSize: 10.sp),
             ),
           ),
         ],
