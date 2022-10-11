@@ -2014,8 +2014,15 @@
                         "errorText": "Seleccione el idioma"
                     },
                     "ROpAcceptedPayments": {
+                        "bankName": "Nombre del banco",
+                        "bankNumber": "Número de cuenta",
+                        "bankTitle": "Información de la cuenta bancaria",
+                        "confirm": "Confirmar",
+                        "cancel": "Cancelar",
+                        "error": "Error",
+                        "bankTransfer": "Transferencia bancaria",
+                        "bankError": "El número de cuenta no es válido",
                         "cash": "Dinero",
-
                         "card": "Tarjeta",
                         "requirements": "Requisitos",
                         "acceptedPayments": "Pagos aceptados",

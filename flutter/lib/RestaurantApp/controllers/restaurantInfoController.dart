@@ -387,6 +387,10 @@ class RestaurantInfoController extends GetxController {
         .ref()
         .child(acceptedPaymentNode(uid: restaurantId) + "/bankTransfer")
         .set(false);
+    await _databaseHelper.firebaseDatabase
+        .ref()
+        .child(bankInfoNode(uid: restaurantId))
+        .remove();
   }
 
   Future<void> switchChoiceAvailablity(

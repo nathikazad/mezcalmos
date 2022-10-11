@@ -34,6 +34,8 @@ class ROpEditInfoController {
   TextEditingController restaurantNameTxt = TextEditingController();
   TextEditingController prRestaurantDescTxt = TextEditingController();
   TextEditingController scRestaurantDescTxt = TextEditingController();
+  TextEditingController bankName = TextEditingController();
+  TextEditingController bankNumber = TextEditingController();
   final Rxn<String> newImageUrl = Rxn();
   final Rxn<Location> newLocation = Rxn();
 
@@ -87,12 +89,17 @@ class ROpEditInfoController {
       secondaryLang.value = restaurant.value!.secondaryLanguage;
       editablePrLang.value = restaurant.value!.primaryLanguage;
       editableScLang.value = restaurant.value!.secondaryLanguage;
+
       prRestaurantDescTxt.text =
           restaurant.value?.description?[restaurant.value!.primaryLanguage] ??
               '';
       scRestaurantDescTxt.text =
           restaurant.value?.description?[restaurant.value!.secondaryLanguage] ??
               '';
+      bankName.text = restaurant.value!.paymentInfo.bankInfo?.bankName ?? "";
+      bankNumber.text =
+          restaurant.value!.paymentInfo.bankInfo?.accountNumber.toString() ??
+              "";
     }
   }
 
@@ -279,17 +286,19 @@ class ROpEditInfoController {
   }
 
   // Bank //
-  Future pushBankInfos(
-      {required String bankName, required num bankNumber}) async {
+  Future pushBankInfos() async {
     mezDbgPrint("Value =================>$isBankTrue");
 
-    await restaurantInfoController.pushBankInfo(bankName, bankNumber);
+    await restaurantInfoController.pushBankInfo(
+        bankName.text, num.parse(bankNumber.text));
   }
 
   Future removeBank() async {
     mezDbgPrint("Value =================>$isBankTrue");
 
     await restaurantInfoController.removeBank();
+    bankName.clear();
+    bankNumber.clear();
   }
 
   bool validateSecondaryLanguUpdate(LanguageType value) {
@@ -359,6 +368,8 @@ class ROpEditInfoController {
     secondaryLang.close();
     restaurant.close();
     restaurantNameTxt.clear();
+    bankName.dispose();
+    bankNumber.dispose();
     restListner?.cancel();
     restaurantInfoController.dispose();
     Get.delete<RestaurantInfoController>();

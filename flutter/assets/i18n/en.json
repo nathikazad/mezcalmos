@@ -2022,6 +2022,14 @@
                         "errorText": "Please select language "
                     },
                     "ROpAcceptedPayments": {
+                        "bankName": "Bank name",
+                        "bankNumber": "Account number",
+                        "bankTitle": "Bank account informations",
+                        "confirm": "Confirm",
+                        "cancel": "Cancel",
+                        "error": "Error",
+                        "bankTransfer": "Bank Transfer",
+                        "bankError": "Account number is not valid",
                         "cash": "Cash",
                         "card": "Card",
                         "requirements": "Requirements",
@@ -2064,6 +2072,8 @@
         "to": "To",
         "required": "Required",
         "error": "Error",
-        "noRoute": "No route found. Please enter a valid destination"
+        "noRoute": "No route found. Please enter a valid destination",
+        "confirm": "Confirm",
+        "cancel": "Cancel"
     }
 }

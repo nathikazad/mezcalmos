@@ -85,6 +85,10 @@ String detailsNode({required String uid}) {
   return restuarantAuthNode(uid: uid) + "/details/";
 }
 
+String bankInfoNode({required String uid}) {
+  return payemntInfoNode(uid: uid) + "/bankInfo";
+}
+
 String payemntInfoNode({required String uid}) {
   return detailsNode(uid: uid) + "/paymentInfo/";
 }
