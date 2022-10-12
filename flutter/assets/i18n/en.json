@@ -1850,6 +1850,8 @@
                 "reviews": "Reviews",
                 "base": "Base on",
                 "perfomTitle": "Your review performance is",
+                "excellent": "Excellent",
+                "poor": "Poor",
                 "good": "Good",
                 "average": "Average",
                 "bad": "Bad",

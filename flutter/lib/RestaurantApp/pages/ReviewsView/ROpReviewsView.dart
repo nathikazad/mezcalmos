@@ -45,7 +45,7 @@ class _ROpReviewsViewState extends State<ROpReviewsView> {
           onClick: Get.back, title: '${_i18n()["reviews"]}'),
       body: Obx(() {
         if (viewController.restaurant.value != null) {
-          if (!viewController.hasReviews) {
+          if (viewController.hasReviews) {
             return SingleChildScrollView(
               padding: const EdgeInsets.all(12),
               child: Column(
@@ -133,18 +133,19 @@ class _ROpReviewsViewState extends State<ROpReviewsView> {
       alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
       decoration: BoxDecoration(
-          color: secondaryLightBlueColor,
+          color: viewController.performColor(),
           borderRadius: BorderRadius.circular(8)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "${_i18n()["perfomTitle"]} ",
+            "${_i18n()["perfomTitle"]}",
             style: Get.textTheme.bodyText1,
           ),
           Text(
             " ${_i18n()[viewController.performanceString()]} !",
-            style: Get.textTheme.bodyText1?.copyWith(color: primaryBlueColor),
+            style: Get.textTheme.bodyText1
+                ?.copyWith(color: viewController.performTextColor()),
           ),
         ],
       ),

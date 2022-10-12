@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
@@ -87,11 +89,33 @@ class ROpReviewsViewController {
 
   String performanceString() {
     if (rating >= 4) {
-      return "good";
+      return "excellent";
     } else if (rating >= 3) {
-      return "average";
-    } else {
+      return "good";
+    } else if (rating > 2) {
       return "bad";
+    } else {
+      return "poor";
+    }
+  }
+
+  Color performColor() {
+    if (rating <= 2) {
+      return offRedColor;
+    } else if (rating <= 3) {
+      return Colors.amber.shade100;
+    } else {
+      return secondaryLightBlueColor;
+    }
+  }
+
+  Color performTextColor() {
+    if (rating <= 2) {
+      return Colors.redAccent;
+    } else if (rating <= 3) {
+      return Colors.amber.shade700;
+    } else {
+      return primaryBlueColor;
     }
   }
 }

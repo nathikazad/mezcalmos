@@ -1842,6 +1842,8 @@
                 "reviews": "Reseñas",
                 "base": "Basado en",
                 "perfomTitle": "Su rendimiento de revisión es",
+                "excellent": "Excelente",
+                "poor": "Pobre",
                 "good": "Buena",
                 "average": "Promedio",
                 "bad": "Mala",
