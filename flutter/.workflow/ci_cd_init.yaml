@@ -3,7 +3,7 @@ name: '1.0.$(Build.BuildId)'
 trigger:
   - none
 pr:
-  - branches:
+  branches:
     include:
       - master
 
