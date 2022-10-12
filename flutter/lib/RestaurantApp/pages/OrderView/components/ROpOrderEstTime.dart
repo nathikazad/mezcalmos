@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpOrderView']["components"]["ROpOrderEstTime"];
@@ -352,11 +353,11 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
       });
     } else {
       isClicked.value = false;
-      Get.showSnackbar(GetSnackBar(
-        snackPosition: SnackPosition.TOP,
-        title: '${_i18n()["error"]}',
-        message: '${_i18n()["minTimes"]}',
-      ));
+      MezSnackbar(
+        '${_i18n()["Error"]}',
+        '${_i18n()["minTimes"]}',
+        position: SnackPosition.TOP,
+      );
     }
   }
 
