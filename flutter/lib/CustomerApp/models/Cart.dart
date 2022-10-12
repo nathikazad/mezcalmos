@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryType.dart';
-// ignore_for_file: avoid_annotating_with_dynamic
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
@@ -32,7 +31,7 @@ class Cart {
   RouteInformation? get getRouteInfo => _routeInformation;
 
   Cart.fromCartData(
-    dynamic cartData,
+    cartData,
     this.restaurant,
   ) {
     if (restaurant != null) {
@@ -234,7 +233,7 @@ class CartItem {
   }
 
   factory CartItem.fromData({
-    required dynamic itemData,
+    required itemData,
     required Item item,
     required Restaurant restaurant,
     required String itemIdInCart,
@@ -262,7 +261,7 @@ class CartItem {
     itemData["chosenChoices"]?.forEach((optionId, optionData) {
       if (item.findOption(optionId) != null) {
         cartItem.chosenChoices[optionId] = <Choice>[];
-        optionData["choices"]?.forEach((dynamic choiceData) {
+        optionData["choices"]?.forEach((choiceData) {
           final Choice? choice = item
               .findOption(optionId)!
               .findChoice(convertToLanguageMap(choiceData["name"]));
@@ -346,6 +345,22 @@ class CartItem {
 
   bool get isSpecial {
     return item.isSpecial;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is CartItem && other.idInCart == idInCart;
+  }
+
+  @override
+  int get hashCode {
+    return restaurantId.hashCode ^
+        idInCart.hashCode ^
+        item.hashCode ^
+        quantity.hashCode ^
+        notes.hashCode;
   }
 }
 

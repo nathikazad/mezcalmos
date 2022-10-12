@@ -87,6 +87,8 @@ class RestaurantController extends GetxController {
         }
       });
     }
+    // check for old special items and remove them
+    checkCartPeriod();
   }
 
   Future<Restaurant> getAssociatedRestaurant(String restaurantId) async {
@@ -128,6 +130,22 @@ class RestaurantController extends GetxController {
     mezDbgPrint("Per km price =======>>>>>>${snapshot.value}");
 
     return snapshot.value as num;
+  }
+
+  void checkCartPeriod() {
+    if (cart.value.cartPeriod != null &&
+        cart.value.cartPeriod!.end
+            .toLocal()
+            .isBefore(DateTime.now().toLocal())) {
+      final List<CartItem> specialITems = cart.value.cartItems
+          .where((CartItem element) => element.isSpecial)
+          .toList();
+      specialITems.forEach((CartItem element) {
+        if (element.item.endsAt!.toLocal().isBefore(DateTime.now().toLocal())) {
+          cart.value.cartItems.remove(element);
+        }
+      });
+    }
   }
 
   Future<bool> updateShippingPrice() async {
