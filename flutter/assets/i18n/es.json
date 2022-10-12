@@ -677,6 +677,11 @@
             }
         },
         "helpers": {
+            "StripeHelper": {
+                "addCard": "Agregar tarjeta",
+                "powered": "Energizado por",
+                "save": "Ahorrar"
+            },
             "ImageHelper": {
                 "fromCamera": "Toma una foto",
                 "fromGallery": "Subiendo desde la galería",

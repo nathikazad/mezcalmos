@@ -214,89 +214,93 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
           topRight: Radius.circular(15),
         )),
         builder: (BuildContext ctx) {
-          return Container(
-              margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.all(8),
-                    alignment: Alignment.center,
-                    child: Text(
-                      '${_i18n()["bankTitle"]}',
-                      style: Get.textTheme.bodyText1,
+          return Padding(
+            padding:
+                EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
+            child: Container(
+                margin:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.all(8),
+                      alignment: Alignment.center,
+                      child: Text(
+                        '${_i18n()["bankTitle"]}',
+                        style: Get.textTheme.bodyText1,
+                      ),
                     ),
-                  ),
-                  Divider(
-                    height: 20,
-                  ),
-                  Text('${_i18n()["bankName"]}'),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(ctx).viewInsets.bottom),
-                    child: TextFormField(
-                      controller: widget.viewController.bankName,
+                    Divider(
+                      height: 20,
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text('${_i18n()["bankNumber"]}'),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(ctx).viewInsets.bottom),
-                    child: TextFormField(
-                      controller: widget.viewController.bankNumber,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp('[0-9,]')),
+                    Text('${_i18n()["bankName"]}'),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(ctx).viewInsets.bottom),
+                      child: TextFormField(
+                        controller: widget.viewController.bankName,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text('${_i18n()["bankNumber"]}'),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(ctx).viewInsets.bottom),
+                      child: TextFormField(
+                        controller: widget.viewController.bankNumber,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp('[0-9,]')),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Row(
+                      children: [
+                        Flexible(
+                            child: MezButton(
+                          label: '${_i18n()["cancel"]}',
+                          backgroundColor: offRedColor,
+                          textColor: Colors.red,
+                          onClick: () async {
+                            Get.back();
+                          },
+                        )),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Flexible(
+                            child: MezButton(
+                          label: '${_i18n()["confirm"]}',
+                          onClick: () async {
+                            if (num.tryParse(
+                                    widget.viewController.bankNumber.text) !=
+                                null) {
+                              await widget.viewController.pushBankInfos().then(
+                                  (value) => Get.back(closeOverlays: true));
+                            } else {
+                              MezSnackbar('${_i18n()["error"]}',
+                                  '${_i18n()["bankError"]}');
+                            }
+                          },
+                        )),
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Row(
-                    children: [
-                      Flexible(
-                          child: MezButton(
-                        label: '${_i18n()["cancel"]}',
-                        backgroundColor: offRedColor,
-                        textColor: Colors.red,
-                        onClick: () async {
-                          Get.back();
-                        },
-                      )),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Flexible(
-                          child: MezButton(
-                        label: '${_i18n()["confirm"]}',
-                        onClick: () async {
-                          if (num.tryParse(
-                                  widget.viewController.bankNumber.text) !=
-                              null) {
-                            await widget.viewController
-                                .pushBankInfos()
-                                .then((value) => Get.back(closeOverlays: true));
-                          } else {
-                            MezSnackbar('${_i18n()["error"]}',
-                                '${_i18n()["bankError"]}');
-                          }
-                        },
-                      )),
-                    ],
-                  ),
-                ],
-              ));
+                  ],
+                )),
+          );
         });
   }
 

@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -12,6 +13,11 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
+//
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["Shared"]["helpers"]["StripeHelper"];
+//
 
 enum StripePaymentStatus { Authorized, Captured, Cancelled }
 
@@ -331,50 +337,56 @@ Future<dynamic> addCardSheet() {
         topRight: Radius.circular(15),
       )),
       builder: (BuildContext ctx) {
-        return Container(
-            margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Flexible(
-                      fit: FlexFit.tight,
-                      child: Text(
-                        "Add card",
-                        style:
-                            Get.textTheme.headline3?.copyWith(fontSize: 17.sp),
+        return Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
+          child: Container(
+              margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 10,
                       ),
-                    ),
-                    Text("Powered by"),
-                    SizedBox(
-                      width: 3,
-                    ),
-                    Image.asset(
-                      "assets/images/shared/stripeLogo.png",
-                      width: 50,
-                      height: 20,
-                      fit: BoxFit.contain,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(ctx).viewInsets.bottom),
-                  child: CardForm(),
-                ),
-              ],
-            ));
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Text(
+                          '${_i18n()["addCard"]}',
+                          style: Get.textTheme.headline3
+                              ?.copyWith(fontSize: 17.sp),
+                        ),
+                      ),
+                      Text(
+                        '${_i18n()["powered"]}',
+                      ),
+                      SizedBox(
+                        width: 3,
+                      ),
+                      Image.asset(
+                        "assets/images/shared/stripeLogo.png",
+                        width: 50,
+                        height: 20,
+                        fit: BoxFit.contain,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(ctx).viewInsets.bottom),
+                    child: CardForm(),
+                  ),
+                ],
+              )),
+        );
       });
 }
 
@@ -447,7 +459,7 @@ class _CardFormState extends State<CardForm> {
             height: 8,
           ),
           MezButton(
-            label: "Save",
+            label: '${_i18n()["save"]}',
             enabled: _isButtonEnabled,
             onClick: _isButtonEnabled
                 ? () async {

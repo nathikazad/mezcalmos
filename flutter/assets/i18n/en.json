@@ -672,6 +672,11 @@
             }
         },
         "helpers": {
+            "StripeHelper": {
+                "addCard": "Add card",
+                "powered": "Powered by",
+                "save": "Save"
+            },
             "ImageHelper": {
                 "fromCamera": "Take a picture",
                 "fromGallery": "Upload from gallery",
