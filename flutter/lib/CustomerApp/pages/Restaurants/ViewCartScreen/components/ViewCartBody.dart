@@ -77,8 +77,9 @@ class _ViewCartBodyState extends State<ViewCartBody> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin:
-                        const EdgeInsets.symmetric(vertical: 15, horizontal: 0),
+                    margin: const EdgeInsets.only(
+                      bottom: 15,
+                    ),
                     child: DeliveryTimePicker(
                         viewCartController: widget.viewCartController),
                   ),

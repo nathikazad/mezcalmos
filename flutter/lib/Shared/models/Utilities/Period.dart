@@ -56,10 +56,10 @@ class PeriodOfTime {
         .replaceAll(".", "");
   }
 
-  String toNormalString({bool removeToday = false, DateFormat? format}) {
+  String toNormalString({bool removeDay = false, DateFormat? format}) {
     final DateFormat df = format ?? DateFormat.MMMEd(userLangCode);
-    final bool _isToday = start.isToday;
-    return '${(removeToday && _isToday) ? "" : df.format(start.toLocal()) + ","} ${DateFormat("hh:mm a").format(start.toLocal())} ${Get.find<LanguageController>().strings["General"]["to"].toString().toLowerCase()} ${DateFormat("hh:mm a").format(end.toLocal())}'
+
+    return '${(removeDay) ? "" : df.format(start.toLocal()) + ","} ${DateFormat("hh:mm a").format(start.toLocal())} ${Get.find<LanguageController>().strings["General"]["to"].toString().toLowerCase()} ${DateFormat("hh:mm a").format(end.toLocal())}'
         .replaceAll(".", "");
   }
 }

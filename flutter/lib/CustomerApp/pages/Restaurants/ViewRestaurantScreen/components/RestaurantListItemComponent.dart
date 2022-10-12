@@ -34,6 +34,7 @@ class _RestaurantsListOfItemsComponentState
       margin: const EdgeInsets.only(bottom: 8),
       child: Container(
         height: 75,
+        alignment: Alignment.centerLeft,
         padding: const EdgeInsets.symmetric(
           horizontal: 8,
         ),
@@ -64,16 +65,16 @@ class _RestaurantsListOfItemsComponentState
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "${widget.item.name[userLanguage]!.capitalizeFirstofEach}",
+                      "${widget.item.name[userLanguage]?.capitalizeFirstofEach}",
                       style: txt.headline3!.copyWith(
                         fontSize: 13.sp,
                       ),
                     ),
                     if (widget.item.isSpecial)
                       Container(
-                          margin: const EdgeInsets.symmetric(vertical: 5),
+                          margin: const EdgeInsets.symmetric(vertical: 3),
                           child: Text(widget.item.getPeriod!
-                              .toNormalString(removeToday: true)))
+                              .toNormalString(removeDay: true)))
                   ],
                 ),
               ),
