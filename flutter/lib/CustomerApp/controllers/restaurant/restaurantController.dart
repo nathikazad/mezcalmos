@@ -67,7 +67,8 @@ class RestaurantController extends GetxController {
             }
 
             // if no associated restaurant data is saved, then fetch it from database
-            if (associatedRestaurant == null) {
+            if (associatedRestaurant == null &&
+                cartData["serviceProviderId"] != null) {
               associatedRestaurant =
                   await getAssociatedRestaurant(cartData["serviceProviderId"]);
             }
@@ -77,7 +78,7 @@ class RestaurantController extends GetxController {
 
             cart.value = Cart.fromCartData(
               cartData,
-              associatedRestaurant!,
+              associatedRestaurant,
             );
           }
         } else {

@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/Controllers/CustomerRestaurantController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/RestaurantListItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/RestauSliverAppBar.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/RestaurantListItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/restaurantInfoTab.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -77,7 +77,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           ),
           Flexible(
             child: Text(
-              "Only available for scheduling orders",
+              '${_i18n()["scheduleTitle"]}',
               style: Get.textTheme.bodyText1,
               maxLines: 2,
             ),

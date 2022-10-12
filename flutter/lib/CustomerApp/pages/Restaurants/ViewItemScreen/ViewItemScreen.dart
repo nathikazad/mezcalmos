@@ -224,7 +224,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                               width: 5,
                             ),
                             Text(
-                              item.getPeriod.toString(),
+                              item.getPeriod.toString().inCaps,
                               maxLines: 2,
                             ),
                           ],

@@ -53,7 +53,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     pickLocationPlaceholder =
         SavedLocation(name: _i18n()["pickLocation"], id: "_pick_");
 
-    listOfSavedLoacations.add(pickLocationPlaceholder!);
+    listOfSavedLoacations.insert(0, pickLocationPlaceholder!);
 
     if (widget.passedInLocation == null) {
       dropDownListValue = listOfSavedLoacations.firstWhereOrNull(

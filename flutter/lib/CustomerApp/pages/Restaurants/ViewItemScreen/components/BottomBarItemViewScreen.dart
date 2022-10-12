@@ -132,7 +132,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                               await showStatusInfoDialog(
                                 context,
                                 bottomRightIcon: Icons.shopping_cart,
-                                btnRightIconBgColor: Colors.white,
+                                btnRightIconBgColor: secondaryLightBlueColor,
                                 primaryImageUrl: restaurantCartController
                                     .associatedRestaurant?.info.image,
                                 btnRightIconColor: primaryBlueColor,
@@ -197,7 +197,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
     await showStatusInfoDialog(
       context,
       bottomRightIcon: Icons.shopping_cart,
-      btnRightIconBgColor: Colors.white,
+      btnRightIconBgColor: secondaryLightBlueColor,
       primaryImageUrl:
           restaurantCartController.cart.value.getFirstSpecialItem?.item.image,
       btnRightIconColor: primaryBlueColor,

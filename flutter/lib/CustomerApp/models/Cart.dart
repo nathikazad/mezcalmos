@@ -175,6 +175,15 @@ class Cart {
           DateTime.now().toLocal().isBefore(cartPeriod!.end.toLocal())) {
         mezDbgPrint("IS AFTERRRRRRRRR");
         data = DateTime.now();
+        data = DateTime(
+          DateTime.now().toLocal().year,
+          DateTime.now().toLocal().month,
+          DateTime.now().toLocal().day,
+          DateTime.now().toLocal().hour,
+          DateTime.now().toLocal().minute + 10,
+        );
+      } else {
+        mezDbgPrint('NOTTT AFTER');
       }
     }
     return data;

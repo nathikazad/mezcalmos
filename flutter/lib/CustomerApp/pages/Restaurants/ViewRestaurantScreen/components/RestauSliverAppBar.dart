@@ -161,11 +161,14 @@ class RestaurantSliverAppBar extends StatelessWidget {
         Get.find<LanguageController>().userLanguageKey;
     return PreferredSize(
       preferredSize: const Size.fromHeight(100),
-      child: Column(
-        children: [
-          if (controller.showSpecials) _mainMenuTabs(),
-          _menuFilterChips(userLanguage),
-        ],
+      child: Theme(
+        data: Get.theme.copyWith(dividerColor: Colors.transparent),
+        child: Column(
+          children: [
+            if (controller.showSpecials) _mainMenuTabs(),
+            _menuFilterChips(userLanguage),
+          ],
+        ),
       ),
     );
   }
@@ -173,7 +176,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
   Widget _menuFilterChips(LanguageType userLanguage) {
     return Container(
       width: double.infinity,
-      color: Colors.white,
+      color: Get.theme.scaffoldBackgroundColor,
       padding: const EdgeInsets.all(4),
       child: Obx(
         () {
@@ -188,7 +191,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
               unselectedLabelColor: Colors.grey.shade700,
               indicatorPadding: const EdgeInsets.all(5),
               indicatorSize: TabBarIndicatorSize.tab,
-              indicatorColor: Get.theme.primaryColorLight,
+              indicatorColor: Colors.transparent,
               indicator: BoxDecoration(
                   borderRadius: BorderRadius.circular(25),
                   shape: BoxShape.rectangle,

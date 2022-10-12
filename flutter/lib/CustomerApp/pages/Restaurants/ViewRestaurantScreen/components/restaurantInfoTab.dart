@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
+import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
 final DateFormat f = new DateFormat('hh:mma');
@@ -47,7 +48,7 @@ class RestaurantInfoTab extends StatelessWidget {
             children: [
               Container(
                 child: Text(
-                  '${_i18n()["description"]} :',
+                  '${_i18n()["description"]}',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ),
@@ -67,10 +68,10 @@ class RestaurantInfoTab extends StatelessWidget {
         SizedBox(
           height: 20,
         ),
-        // if (restaurant.info.location != null)
-        //   ServiceLocationCard(
-        //     location: restaurant.info.location,
-        //   ),
+        if (restaurant.info.location != null)
+          ServiceLocationCard(
+            location: restaurant.info.location,
+          ),
         if (restaurant.showReviews)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,9 +98,12 @@ class RestaurantInfoTab extends StatelessWidget {
                   const SizedBox(
                     width: 3,
                   ),
-                  Text(
-                    "(${restaurant.reviews.length.toString()})",
-                    style: Get.textTheme.bodyText2,
+                  Container(
+                    padding: const EdgeInsets.only(bottom: 1),
+                    child: Text(
+                      "(${restaurant.reviews.length.toString()})",
+                      style: Get.textTheme.bodyText2,
+                    ),
                   )
                 ],
               ),
@@ -134,7 +138,9 @@ class RestaurantInfoTab extends StatelessWidget {
               children: [
                 Text(
                   _getDollarsSign(),
-                  style: Get.textTheme.bodyText1,
+                  style: Get.textTheme.bodyText1?.copyWith(
+                    color: Colors.grey.shade800,
+                  ),
                 ),
                 const SizedBox(
                   width: 15,
@@ -147,7 +153,9 @@ class RestaurantInfoTab extends StatelessWidget {
                   child: ShippingCostComponent(
                     shippingCost: controller.basShippingPrice.value,
                     alignment: MainAxisAlignment.start,
-                    textStyle: Get.textTheme.bodyText1,
+                    textStyle: Get.textTheme.bodyText1?.copyWith(
+                      color: Colors.grey.shade800,
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -196,9 +204,12 @@ class RestaurantInfoTab extends StatelessWidget {
           const SizedBox(
             width: 3,
           ),
-          Text(
-            "(${restaurant.reviews.length.toString()})",
-            style: Get.textTheme.bodyText2?.copyWith(color: Colors.white),
+          Container(
+            margin: const EdgeInsets.only(bottom: 2),
+            child: Text(
+              "(${restaurant.reviews.length.toString()})",
+              style: Get.textTheme.bodyText2?.copyWith(color: Colors.white),
+            ),
           )
         ],
       ),

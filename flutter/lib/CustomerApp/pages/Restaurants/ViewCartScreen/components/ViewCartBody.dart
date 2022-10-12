@@ -100,14 +100,9 @@ class _ViewCartBodyState extends State<ViewCartBody> {
                     serviceProviderLocation:
                         controller.cart.value.restaurant?.info.location,
                   ),
+
                   SizedBox(
-                    height: 15,
-                  ),
-                  Divider(
-                    height: 10,
-                  ),
-                  SizedBox(
-                    height: 15,
+                    height: 30,
                   ),
                   Container(
                     child: PaymentMethodPicker(

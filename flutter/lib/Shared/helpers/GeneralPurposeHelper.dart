@@ -318,11 +318,16 @@ Future<void> showStatusInfoDialog(
         return AlertDialog(
           //  color: Colors.transparent,
           scrollable: true,
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              SizedBox(
+                height: 10,
+              ),
               Stack(
                 clipBehavior: Clip.none,
                 children: [
@@ -406,21 +411,28 @@ Future<void> showStatusInfoDialog(
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    SizedBox(height: 12),
-                    GestureDetector(
+                    SizedBox(
+                      height: 10,
+                    ),
+                    InkWell(
                       onTap: secondaryCallBack,
-                      child: Text(
-                        secondaryClickTitle ?? "${_i18n()["viewOrder"]}",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color.fromRGBO(120, 120, 120, 1),
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16.99,
+                      child: Ink(
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 7),
+                          child: Text(
+                            secondaryClickTitle ?? "${_i18n()["viewOrder"]}",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color.fromRGBO(120, 120, 120, 1),
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16.99,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 12),
                   ],
                 ),
             ],

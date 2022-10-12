@@ -338,7 +338,8 @@
                 },
                 "ViewRestaurantScreen": {
                     "CustomerRestaurantView": {
-                        "specials": "especiales"
+                        "specials": "especiales",
+                        "scheduleTitle": "Solo disponible para los pedidos de programación"
                     },
                     "components": {
                         "RestaurantSliverAppBar": {

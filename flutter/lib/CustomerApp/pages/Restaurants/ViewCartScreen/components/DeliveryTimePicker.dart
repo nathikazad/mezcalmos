@@ -50,22 +50,18 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Text(
-                '${_i18n()["dvTime"]}',
-                style: Get.textTheme.bodyText1,
-              ),
-              if (controller.cart.value.cartPeriod != null)
-                Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 3),
-                    child: Text(
-                        "(${controller.cart.value.cartPeriod!.toNormalString(format: DateFormat.MMMd(userLangCode))})"),
-                  ),
-                )
-            ],
+          Text(
+            '${_i18n()["dvTime"]}',
+            style: Get.textTheme.bodyText1,
           ),
+          if (controller.cart.value.cartPeriod != null)
+            Container(
+              margin: const EdgeInsets.only(
+                top: 5,
+              ),
+              child: Text(
+                  "(${controller.cart.value.cartPeriod!.toNormalString(format: DateFormat.MMMd(userLangCode))})"),
+            ),
           if (controller.associatedRestaurant?.isOpen() == false)
             Container(
               margin: const EdgeInsets.only(
