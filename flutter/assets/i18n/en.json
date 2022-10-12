@@ -1628,7 +1628,8 @@
                 "to": "To :",
                 "contact": "Contact us",
                 "privacyPolicies": "Privacy Policies",
-                "logout": "Logout"
+                "logout": "Logout",
+                "reviews": "Reviews"
             }
         },
 
@@ -1840,6 +1841,19 @@
     },
     "RestaurantApp": {
         "pages": {
+            "ROpReviewsView": {
+                "reviews": "Reviews",
+                "base": "Base on",
+                "perfomTitle": "Your review performance is",
+                "good": "Good",
+                "average": "Average",
+                "bad": "Bad",
+                "default": "View all",
+                "highestrate": "Highest rate",
+                "lowestrate": "Lowest rate",
+                "noRevTitle": "No reviews yet",
+                "noRevDesc": "Once you receive feedback it will be displayed here."
+            },
             "ROpOrderView": {
                 "cancelOrder": "Cancel order",
                 "orderItems": "Order Items",

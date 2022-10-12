@@ -114,8 +114,8 @@ class RestaurantAppTheme {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
       textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
+        foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        primary: Colors.white,
         backgroundColor: primaryBlueColor,
         padding: EdgeInsets.all(5),
         textStyle: TextStyle(
@@ -134,24 +134,42 @@ class RestaurantAppTheme {
             borderRadius: BorderRadius.circular(10),
           )),
       chipTheme: ChipThemeData(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        backgroundColor: Colors.grey.shade300,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+        backgroundColor: Colors.white,
+        elevation: 0.5,
         showCheckmark: false,
-        disabledColor: Colors.grey,
-        selectedColor: Colors.white,
+        disabledColor: Colors.white,
+        selectedColor: secondaryLightBlueColor,
         padding: EdgeInsets.all(12),
+        // labelStyle:
+        //     MaterialStateTextStyle.resolveWith((Set<MaterialState> states) {
+        //   if (states.contains(MaterialState.selected)) {
+        //     return TextStyle(
+        //         fontFamily: "Montserrat",
+        //         fontWeight: FontWeight.w600,
+        //         fontSize: 11.sp,
+        //         color: primaryBlueColor);
+        //   } else {
+        //     return TextStyle(
+        //         fontFamily: "Montserrat",
+        //         fontWeight: FontWeight.w500,
+        //         fontSize: 11.sp,
+        //         color: Colors.grey.shade900);
+        //   }
+        // }),
+
         labelStyle: TextStyle(
             fontFamily: "Montserrat",
-            fontWeight: FontWeight.w600,
-            fontSize: 12.sp,
-            color: Colors.black),
+            fontWeight: FontWeight.w500,
+            fontSize: 11.sp,
+            color: MaterialStateColor.resolveWith(
+              (Set<MaterialState> states) =>
+                  states.contains(MaterialState.selected)
+                      ? primaryBlueColor
+                      : Colors.grey.shade900,
+            )),
         brightness: Brightness.light,
         secondarySelectedColor: primaryBlueColor,
-        secondaryLabelStyle: TextStyle(
-            fontFamily: "Montserrat",
-            fontWeight: FontWeight.w600,
-            fontSize: 14.sp,
-            color: Colors.white),
       ),
 
       //---------------------------------------------------- TYPOGRAPHY ------------------------------------------------------------------------//

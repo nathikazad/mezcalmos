@@ -211,6 +211,17 @@ class _ROpDrawerState extends State<ROpDrawer> {
             )),
         _navigationLink(
             onClick: () {
+              _drawerController.closeMenu();
+              Get.toNamed(getROpReviewsoRoute(
+                  restaurantId: restaurantOpAuthController.restaurantId!));
+            },
+            icon: Icons.star_rate_rounded,
+            titleWidget: Text(
+              "${_i18n()["reviews"]}",
+              style: Get.textTheme.bodyText1,
+            )),
+        _navigationLink(
+            onClick: () {
               Get.toNamed(kNotificationsRoute);
             },
             icon: Icons.notifications,

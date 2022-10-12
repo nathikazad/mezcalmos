@@ -1621,7 +1621,8 @@
                 "to": "A :",
                 "contact": "Contáctenos",
                 "privacyPolicies": "Políticas de privacidad",
-                "logout": "Cerrar sesión"
+                "logout": "Cerrar sesión",
+                "reviews": "Reseñas"
             }
         },
         "pages": {
@@ -1832,7 +1833,19 @@
     },
     "RestaurantApp": {
         "pages": {
-
+            "ROpReviewsView": {
+                "reviews": "Reseñas",
+                "base": "Basado en",
+                "perfomTitle": "Su rendimiento de revisión es",
+                "good": "Buena",
+                "average": "Promedio",
+                "bad": "Mala",
+                "default": "Ver todo",
+                "highestrate": "Tasa más alta",
+                "lowestrate": "La tasa más baja",
+                "noRevTitle": "Todavía no hay críticas",
+                "noRevDesc": "Una vez que reciba comentarios, se mostrará aquí."
+            },
             "ROpItemView": {
                 "nameExist": "El nombre ya existe",
                 "item": "Artículo",
