@@ -34,6 +34,8 @@ class ROpEditInfoController {
   TextEditingController restaurantNameTxt = TextEditingController();
   TextEditingController prRestaurantDescTxt = TextEditingController();
   TextEditingController scRestaurantDescTxt = TextEditingController();
+  TextEditingController bankName = TextEditingController();
+  TextEditingController bankNumber = TextEditingController();
   final Rxn<String> newImageUrl = Rxn();
   final Rxn<Location> newLocation = Rxn();
 
@@ -87,12 +89,17 @@ class ROpEditInfoController {
       secondaryLang.value = restaurant.value!.secondaryLanguage;
       editablePrLang.value = restaurant.value!.primaryLanguage;
       editableScLang.value = restaurant.value!.secondaryLanguage;
+
       prRestaurantDescTxt.text =
           restaurant.value?.description?[restaurant.value!.primaryLanguage] ??
               '';
       scRestaurantDescTxt.text =
           restaurant.value?.description?[restaurant.value!.secondaryLanguage] ??
               '';
+      bankName.text = restaurant.value!.paymentInfo.bankInfo?.bankName ?? "";
+      bankNumber.text =
+          restaurant.value!.paymentInfo.bankInfo?.accountNumber.toString() ??
+              "";
     }
   }
 
@@ -221,6 +228,10 @@ class ROpEditInfoController {
         "payouts ==========>>>>> ${restaurant.value!.paymentInfo.stripe?.payoutsEnabled}");
   }
 
+  Future<void> switchChargeFees(bool v) async {
+    await restaurantInfoController.switchFeesOption(v);
+  }
+
   void showPaymentSetup() {
     setupClicked.value = true;
     onboardServiceProvider(restaurant.value!.info.id, OrderType.Restaurant)
@@ -249,6 +260,16 @@ class ROpEditInfoController {
                 !restaurant.value!.paymentInfo.chargesEnabled));
   }
 
+  bool getChargeFessOnCustomer() {
+    return restaurant.value!.paymentInfo.stripe?.chargeFeesOnCustomer ?? true;
+  }
+
+  bool get showFeesOption {
+    return (restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
+            true &&
+        restaurant.value!.paymentInfo.stripe != null);
+  }
+
   bool get showStatusIcon {
     return (restaurant.value!.paymentInfo.stripe?.requirements.isNotEmpty ==
         true);
@@ -256,6 +277,28 @@ class ROpEditInfoController {
 
   bool get getAvailable {
     return restaurant.value!.state.available;
+  }
+
+  bool get isBankTrue {
+    return restaurant
+            .value!.paymentInfo.acceptedPayments[PaymentType.BankTransfer] ==
+        true;
+  }
+
+  // Bank //
+  Future pushBankInfos() async {
+    mezDbgPrint("Value =================>$isBankTrue");
+
+    await restaurantInfoController.pushBankInfo(
+        bankName.text, num.parse(bankNumber.text));
+  }
+
+  Future removeBank() async {
+    mezDbgPrint("Value =================>$isBankTrue");
+
+    await restaurantInfoController.removeBank();
+    bankName.clear();
+    bankNumber.clear();
   }
 
   bool validateSecondaryLanguUpdate(LanguageType value) {
@@ -325,6 +368,8 @@ class ROpEditInfoController {
     secondaryLang.close();
     restaurant.close();
     restaurantNameTxt.clear();
+    bankName.dispose();
+    bankNumber.dispose();
     restListner?.cancel();
     restaurantInfoController.dispose();
     Get.delete<RestaurantInfoController>();

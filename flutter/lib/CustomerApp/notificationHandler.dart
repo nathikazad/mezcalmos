@@ -3,17 +3,16 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['notificationHandler'];
-
 Notification customerNotificationHandler(
   String key,
   value,
@@ -94,7 +93,6 @@ Notification taxiOrderStatusChangeNotificationHandler(String key, value) {
 }
 
 Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
-  mezDbgPrint(value);
   final RestaurantOrderStatus newOrdersStatus =
       value['status'].toString().toRestaurantOrderStatus();
   final Map<String, dynamic> dynamicFields =
@@ -114,6 +112,26 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
     variableParams: value,
   );
 }
+
+// void _handleReview(RestaurantOrderStatus newOrdersStatus, value) {
+//   if (newOrdersStatus == RestaurantOrderStatus.OnTheWay) {
+//     showReviews = true;
+//   }
+
+//   if (newOrdersStatus == RestaurantOrderStatus.Delivered && showReviews) {
+//     showReviews = false;
+//     mezDbgPrint("SHOW REVIEWS 🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟");
+//     showReviewDialog(Get.context!,
+//             orderId: value["orderId"],
+//             orderType: value["orderType"].toString().toOrderType())
+//         .whenComplete(() {
+//       Get.find<OrderController>().clearOrderNotifications(value["orderId"]);
+//       mezDbgPrint("ClOSE REVIEWS 🌟🌟");
+
+//       showReviews = true;
+//     });
+//   }
+// }
 
 // TODO: needs to be formatted for laundry
 Map<String, dynamic>? getLaundryOrderStatusFields(

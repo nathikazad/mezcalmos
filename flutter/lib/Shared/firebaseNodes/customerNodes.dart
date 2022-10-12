@@ -6,6 +6,10 @@ String customerCart(String uid) {
   return 'customers/info/$uid/cart';
 }
 
+String customerInfoNode(String uid) {
+  return 'customers/info/$uid/info';
+}
+
 String customerAppVersionNode(String uid) {
   return 'customers/info/$uid/versionNumber';
 }

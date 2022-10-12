@@ -67,7 +67,8 @@ class RestaurantController extends GetxController {
             }
 
             // if no associated restaurant data is saved, then fetch it from database
-            if (associatedRestaurant == null) {
+            if (associatedRestaurant == null &&
+                cartData["serviceProviderId"] != null) {
               associatedRestaurant =
                   await getAssociatedRestaurant(cartData["serviceProviderId"]);
             }
@@ -77,7 +78,7 @@ class RestaurantController extends GetxController {
 
             cart.value = Cart.fromCartData(
               cartData,
-              associatedRestaurant!,
+              associatedRestaurant,
             );
           }
         } else {
@@ -86,6 +87,8 @@ class RestaurantController extends GetxController {
         }
       });
     }
+    // check for old special items and remove them
+    checkCartPeriod();
   }
 
   Future<Restaurant> getAssociatedRestaurant(String restaurantId) async {
@@ -127,6 +130,22 @@ class RestaurantController extends GetxController {
     mezDbgPrint("Per km price =======>>>>>>${snapshot.value}");
 
     return snapshot.value as num;
+  }
+
+  void checkCartPeriod() {
+    if (cart.value.cartPeriod != null &&
+        cart.value.cartPeriod!.end
+            .toLocal()
+            .isBefore(DateTime.now().toLocal())) {
+      final List<CartItem> specialITems = cart.value.cartItems
+          .where((CartItem element) => element.isSpecial)
+          .toList();
+      specialITems.forEach((CartItem element) {
+        if (element.item.endsAt!.toLocal().isBefore(DateTime.now().toLocal())) {
+          cart.value.cartItems.remove(element);
+        }
+      });
+    }
   }
 
   Future<bool> updateShippingPrice() async {
@@ -187,10 +206,21 @@ class RestaurantController extends GetxController {
     }
   }
 
+  bool get validTime {
+    if (cart.value.deliveryTime != null) {
+      return cart.value.deliveryTime!
+          .toLocal()
+          .isAfter(DateTime.now().toLocal());
+    } else {
+      return true;
+    }
+  }
+
   bool get canOrder {
     return cart.value.toLocation != null &&
         _orderDistanceInKm <= 10 &&
         isShippingSet.isTrue &&
+        validTime &&
         cart.value.shippingCost != null &&
         (associatedRestaurant?.isOpen() ?? false);
   }
@@ -203,6 +233,8 @@ class RestaurantController extends GetxController {
   }
 
   Future<void> addItem(CartItem cartItem) async {
+    mezDbgPrint(
+        "@m66are adding this to cart ==========>${cartItem.toFirebaseFunctionFormattedJson()}");
     final String restaurantId = cartItem.restaurantId;
     if (associatedRestaurant == null) {
       mezDbgPrint(
@@ -239,6 +271,8 @@ class RestaurantController extends GetxController {
 
   void switchPaymentMedthod(
       {required PaymentType paymentType, CreditCard? card}) {
+    mezDbgPrint(
+        "Switching on restControlller =========>>>>>${paymentType.toNormalString()}");
     cart.value.paymentType = paymentType;
 
     saveCart();
@@ -250,6 +284,21 @@ class RestaurantController extends GetxController {
     return cart.value.cartItems.firstWhereOrNull(
             (CartItem element) => element.item.image != null) !=
         null;
+  }
+
+  bool get showPaymentPicker {
+    return cart.value.restaurant?.paymentInfo
+                .acceptedPayments[PaymentType.Card] ==
+            true ||
+        cart.value.restaurant?.paymentInfo
+                .acceptedPayments[PaymentType.BankTransfer] ==
+            true;
+  }
+
+  bool get showFees {
+    return cart.value.paymentType == PaymentType.Card &&
+        (cart.value.restaurant?.paymentInfo.stripe?.chargeFeesOnCustomer ??
+            true);
   }
 
   void clearCart() {
@@ -288,6 +337,32 @@ class RestaurantController extends GetxController {
     try {
       final HttpsCallableResult<dynamic> response =
           await cancelOrder.call(<String, String>{"orderId": orderId});
+      mezDbgPrint(response.toString());
+      print(response.data);
+      return ServerResponse.fromJson(response.data);
+    } catch (e) {
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
+    }
+  }
+
+  Future<ServerResponse> addReview({
+    required String orderId,
+    required String restaurantId,
+    required String comment,
+    required num rate,
+  }) async {
+    final HttpsCallable cancelOrder =
+        FirebaseFunctions.instance.httpsCallable('restaurant-addReview');
+    try {
+      final HttpsCallableResult<dynamic> response =
+          await cancelOrder.call(<String, dynamic>{
+        "orderId": orderId,
+        "serviceProviderId": restaurantId,
+        "rating": rate,
+        "comment": comment,
+        "orderType": OrderType.Restaurant.toFirebaseFormatString(),
+      });
       mezDbgPrint(response.toString());
       print(response.data);
       return ServerResponse.fromJson(response.data);

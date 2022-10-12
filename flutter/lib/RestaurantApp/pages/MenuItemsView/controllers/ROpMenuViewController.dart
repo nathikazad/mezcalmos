@@ -134,7 +134,17 @@ class ROpMenuViewController {
     await restaurantInfoController.removeSpecial(item: item);
   }
 
-  Future<void> addToSpecials({required Item item}) async {
+  Future<void> addToSpecials({
+    required Item item,
+  }) async {
     await restaurantInfoController.addToSpecials(item: item);
+  }
+
+  Future<void> switchSpecialItemAv(
+      {required bool v,
+      required String itemId,
+      required bool isCurrent}) async {
+    await restaurantInfoController.switchSpecialItemAv(
+        itemId: itemId, value: v, isCurrent: isCurrent);
   }
 }

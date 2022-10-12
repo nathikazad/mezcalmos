@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:async/async.dart' show StreamGroup;
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -14,6 +15,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class OrderController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -125,6 +127,18 @@ class OrderController extends GetxController {
     }
   }
 
+  String? getServiceProviderId(
+      {required String orderId, required bool isPast}) {
+    if (isPast) {
+      return pastOrders
+          .firstWhere((Order element) => element.orderId == orderId)
+          .serviceProviderId;
+    } else
+      return currentOrders
+          .firstWhere((Order element) => element.orderId == orderId)
+          .serviceProviderId;
+  }
+
   bool hasNewMessageNotification(String chatId) {
     return _fbNotificationsController
         .notifications()
@@ -202,6 +216,33 @@ class OrderController extends GetxController {
             .once())
         .snapshot;
     return snapshot.value as num;
+  }
+
+  Future<ServerResponse> addReview({
+    required String orderId,
+    required String serviceId,
+    required String comment,
+    required OrderType orderType,
+    required num rate,
+  }) async {
+    final HttpsCallable cancelOrder =
+        FirebaseFunctions.instance.httpsCallable('restaurant-addReview');
+    try {
+      final HttpsCallableResult<dynamic> response =
+          await cancelOrder.call(<String, dynamic>{
+        "orderId": orderId,
+        "serviceProviderId": serviceId,
+        "rating": rate,
+        "comment": comment,
+        "orderType": orderType.toFirebaseFormatString(),
+      });
+      mezDbgPrint(response.toString());
+      print(response.data);
+      return ServerResponse.fromJson(response.data);
+    } catch (e) {
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
+    }
   }
 
   bool orderHaveNewMessageNotifications(String chatId) {

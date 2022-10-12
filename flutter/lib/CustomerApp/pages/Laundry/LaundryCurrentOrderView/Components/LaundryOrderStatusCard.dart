@@ -10,12 +10,12 @@ dynamic _i18n() =>
         ['LaundryCurrentOrderView']['Components']['LaundryOrderStatusCard'];
 
 class LaundryOrderStatusCard extends StatelessWidget {
-  const LaundryOrderStatusCard(
-      {Key? key, required this.order, this.atLaundryIcon})
-      : super(key: key);
+  const LaundryOrderStatusCard({
+    Key? key,
+    required this.order,
+  }) : super(key: key);
 
   final LaundryOrder order;
-  final Widget? atLaundryIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -27,24 +27,7 @@ class LaundryOrderStatusCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            order.isAtLaundry()
-                ? FutureBuilder<Widget?>(
-                    future: order.geAtLaundrytWidget(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<Widget?> snapshot) {
-                      return Container(
-                        child: snapshot.data,
-                      );
-                    })
-                : order.getOrderWidget(),
-            // FutureBuilder<Widget?>(
-            //     future: order.getOrderWidget(),
-            //     builder:
-            //         (BuildContext context, AsyncSnapshot<Widget?> snapshot) {
-            //       return Container(
-            //         child: snapshot.data,
-            //       );
-            //     }),
+            order.getOrderWidget(),
             Spacer(),
             _orderStatusText(context),
             Spacer(

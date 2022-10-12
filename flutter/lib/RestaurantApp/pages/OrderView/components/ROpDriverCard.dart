@@ -61,16 +61,18 @@ class ROpDriverCard extends StatelessWidget {
                   ),
                   Spacer(),
                   if (order.serviceProviderDropOffDriverChatId != null)
-                    MessageButton(
-                      onTap: () {
-                        Get.toNamed(getMessagesRoute(
-                            chatId: order.serviceProviderDropOffDriverChatId!,
-                            recipientType: ParticipantType.DeliveryDriver,
-                            orderId: order.orderId));
-                      },
-                      showRedDot: Get.find<ROpOrderController>()
-                          .hasNewMessageNotification(
-                              order.serviceProviderDropOffDriverChatId!),
+                    Obx(
+                      () => MessageButton(
+                        onTap: () {
+                          Get.toNamed(getMessagesRoute(
+                              chatId: order.serviceProviderDropOffDriverChatId!,
+                              recipientType: ParticipantType.DeliveryDriver,
+                              orderId: order.orderId));
+                        },
+                        showRedDot: Get.find<ROpOrderController>()
+                            .hasNewMessageNotification(
+                                order.serviceProviderDropOffDriverChatId!),
+                      ),
                     )
                 ])
               : Row(

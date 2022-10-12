@@ -27,6 +27,7 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
+import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpOrderView'];
@@ -165,6 +166,7 @@ class _ROpOrderViewState extends State<ROpOrderView> {
               _getMapWidget(),
               ROpOrderCustomer(order: order.value!),
               _orderItemsList(),
+              RestaurantOrderDeliveryTimeCard(order: order.value!),
               Container(
                   margin: const EdgeInsets.only(bottom: 20),
                   child: OrderDeliveryLocation(order: order.value!)),

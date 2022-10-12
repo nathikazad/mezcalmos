@@ -10,10 +10,10 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
@@ -216,7 +216,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                               )
                             : Text(
                                 (widget.editMode)
-                                    ? "Edit items "
+                                    ? "${_i18n()["editItemsWeight"]} "
                                     : "${_i18n()["saveItemsWeight"]}",
                                 style: Get.textTheme.bodyText1
                                     ?.copyWith(color: Colors.white)),

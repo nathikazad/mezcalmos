@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
 dynamic _i18n() =>
@@ -112,7 +110,7 @@ class OrderSummaryCard extends StatelessWidget {
               ),
             ),
             //=======================Stripe fees :=============== //
-            if (controller.cart.value.paymentType == PaymentType.Card)
+            if (controller.showFees)
               Container(
                 padding: EdgeInsets.only(
                   bottom: 10,
@@ -162,23 +160,6 @@ class OrderSummaryCard extends StatelessWidget {
             ),
             SizedBox(
               height: 15,
-            ),
-            //=======================Delivery location :===========
-            Container(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "${_i18n()["deliveryLocation"]} :",
-                style: txt.bodyText1,
-                textAlign: TextAlign.left,
-              ),
-            ),
-            const SizedBox(height: 10),
-
-            DropDownLocationList(
-              onValueChangeCallback: setLocationCallBack,
-              checkDistance: true,
-              serviceProviderLocation: serviceLoc,
-              bgColor: secondaryLightBlueColor,
             ),
           ],
         ),

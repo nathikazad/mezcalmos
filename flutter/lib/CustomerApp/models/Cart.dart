@@ -2,18 +2,23 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-// ignore_for_file: avoid_annotating_with_dynamic
+import 'package:mezcalmos/Shared/models/Utilities/DeliveryType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 
 class Cart {
   List<CartItem> cartItems = <CartItem>[];
   Location? toLocation;
   Restaurant? restaurant;
+  DateTime? deliveryTime;
+  DeliveryType? deliveryType;
+
   String? notes;
   PaymentType paymentType = PaymentType.Cash;
 
@@ -26,7 +31,7 @@ class Cart {
   RouteInformation? get getRouteInfo => _routeInformation;
 
   Cart.fromCartData(
-    dynamic cartData,
+    cartData,
     this.restaurant,
   ) {
     if (restaurant != null) {
@@ -44,6 +49,12 @@ class Cart {
           ? Location.fromFirebaseData(cartData["to"])
           : null;
       notes = cartData["notes"];
+      deliveryTime = (cartData["deliveryTime"] != null)
+          ? DateTime.tryParse(cartData["deliveryTime"])
+          : null;
+      deliveryType = (cartData["deliveryType"] != null)
+          ? cartData["deliveryType"].toString().toDeliveryType()
+          : null;
       paymentType = cartData["paymentType"].toString().toPaymentType();
       shippingCost = cartData["shippingCost"];
       _routeInformation = cartData['routeInformation'] == null
@@ -78,7 +89,9 @@ class Cart {
       "items": items,
       "notes": notes,
       "to": toLocation?.toFirebaseFormattedJson(),
-      "paymentType": paymentType.toFirebaseFormatString()
+      "paymentType": paymentType.toFirebaseFormatString(),
+      "deliveryType": deliveryType?.toFirebaseFormatString() ?? null,
+      "deliveryTime": deliveryTime?.toUtc().toString() ?? null,
     };
   }
 
@@ -96,7 +109,10 @@ class Cart {
 
   num get totalCost {
     num tcost = itemsCost() + (shippingCost ?? 0);
-    if (paymentType == PaymentType.Card) tcost += stripeFees;
+    if (paymentType == PaymentType.Card &&
+        restaurant!.paymentInfo.stripe?.chargeFeesOnCustomer == true) {
+      tcost += stripeFees;
+    }
     return tcost;
   }
 
@@ -112,6 +128,7 @@ class Cart {
           (CartItem element) => element.idInCart == cartItem.idInCart);
       cartItems.removeAt(index);
     }
+
     cartItems.add(CartItem.clone(cartItem));
   }
 
@@ -130,6 +147,72 @@ class Cart {
   }
 
   void setCartNotes(String? notes) => this.notes = notes;
+  bool get isSpecial {
+    return cartItems.firstWhereOrNull(
+            (CartItem element) => element.isSpecial == true) !=
+        null;
+  }
+
+  PeriodOfTime? get cartPeriod {
+    PeriodOfTime? periodOfTime = firstItemPeriod;
+
+    cartItems.forEach((CartItem element) {
+      if (element.item.getPeriod != null) {
+        if (element.item.getPeriod?.merge(periodOfTime!) != null) {
+          periodOfTime = element.item.getPeriod?.merge(periodOfTime!);
+        }
+      }
+    });
+
+    return periodOfTime;
+  }
+
+  DateTime? getStartTime() {
+    DateTime? data = cartPeriod?.start.toLocal();
+    if (data != null && _isToday) {
+      if (DateTime.now().toLocal().isAfter(data) &&
+          DateTime.now().toLocal().isBefore(cartPeriod!.end.toLocal())) {
+        mezDbgPrint("IS AFTERRRRRRRRR");
+        data = DateTime.now();
+        data = DateTime(
+          DateTime.now().toLocal().year,
+          DateTime.now().toLocal().month,
+          DateTime.now().toLocal().day,
+          DateTime.now().toLocal().hour,
+          DateTime.now().toLocal().minute + 10,
+        );
+      } else {
+        mezDbgPrint('NOTTT AFTER');
+      }
+    }
+    return data;
+  }
+
+  bool get _isToday {
+    return cartPeriod?.start.toLocal().day == DateTime.now().toLocal().day &&
+        cartPeriod?.start.toLocal().month == DateTime.now().toLocal().month;
+  }
+
+  PeriodOfTime? get firstItemPeriod {
+    final CartItem? citem = cartItems
+        .firstWhereOrNull((CartItem element) => element.isSpecial == true);
+    if (citem != null) {
+      return PeriodOfTime(start: citem.item.startsAt!, end: citem.item.endsAt!);
+    }
+    return null;
+  }
+
+  CartItem? get getFirstSpecialItem {
+    return cartItems
+        .firstWhereOrNull((CartItem element) => element.isSpecial == true);
+  }
+
+  bool? canAddSpecial({required CartItem item}) {
+    if (item.item.getPeriod != null && cartPeriod != null) {
+      return cartPeriod!.include(item.item.getPeriod!);
+    } else
+      return null;
+  }
 }
 
 class CartItem {
@@ -137,6 +220,7 @@ class CartItem {
   String? idInCart;
   Item item;
   int quantity;
+
   String? notes;
   //optionId and list of choices for that option
   Map<String, List<Choice>> chosenChoices = <String, List<Choice>>{};
@@ -149,7 +233,7 @@ class CartItem {
   }
 
   factory CartItem.fromData({
-    required dynamic itemData,
+    required itemData,
     required Item item,
     required Restaurant restaurant,
     required String itemIdInCart,
@@ -177,7 +261,7 @@ class CartItem {
     itemData["chosenChoices"]?.forEach((optionId, optionData) {
       if (item.findOption(optionId) != null) {
         cartItem.chosenChoices[optionId] = <Choice>[];
-        optionData["choices"]?.forEach((dynamic choiceData) {
+        optionData["choices"]?.forEach((choiceData) {
           final Choice? choice = item
               .findOption(optionId)!
               .findChoice(convertToLanguageMap(choiceData["name"]));
@@ -257,6 +341,26 @@ class CartItem {
     // return 0;
 
     return quantity * costPerOne();
+  }
+
+  bool get isSpecial {
+    return item.isSpecial;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is CartItem && other.idInCart == idInCart;
+  }
+
+  @override
+  int get hashCode {
+    return restaurantId.hashCode ^
+        idInCart.hashCode ^
+        item.hashCode ^
+        quantity.hashCode ^
+        notes.hashCode;
   }
 }
 

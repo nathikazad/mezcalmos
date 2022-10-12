@@ -140,17 +140,29 @@
                         "search": "Búsqueda",
                         "showOnlyOpen": "Mostrar solo restaurantes abiertos",
                         "emptRestaurantList": "Lo siento, no se encontró ningún restaurante",
-                        "noOpenRestaurant": "No hay restaurantes abiertos Funds"
+                        "noOpenRestaurant": "No hay restaurantes abiertos Funds",
+                        "meal": "Comida",
+                        "noItemTitle": "No se han encontrado resultados",
+                        "noItemDesc": "Lo siento, no pudimos encontrar lo que está buscando, por favor, pruebe una nueva palabra clave."
+
                     }
                 },
                 "ViewCartScreen": {
                     "components": {
+                        "DeliveryTimePicker": {
+                            "dvTime": "El tiempo de entrega",
+                            "restClosed": "El restaurante está cerrado ahora",
+                            "pickTime": "Elige tu tiempo",
+                            "now": "Ahora",
+                            "timeError": "Se pasa el tiempo de entrega elegido, elija un tiempo válido"
+                        },
                         "PaymentMethodPicker": {
                             "paymentMethod": "Método de pago",
                             "cash": "Dinero",
                             "newcard": "Nueva tarjeta",
                             "applepay": "Apple Pay",
-                            "googlepay": "Google Pay"
+                            "googlepay": "Google Pay",
+                            "banktransfer": "Transferencia bancaria"
                         },
                         "CartIsEmptyScreen": {
                             "title": "Tu carrito esta vacío"
@@ -194,7 +206,10 @@
                         },
                         "ViewCartBody": {
                             "notesTitle": "Notas",
-                            "notes": "Escribe tus notas aquí"
+                            "notes": "Escribe tus notas aquí",
+                            "deliveryLocation": "Lugar de entrega",
+                            "deliveryType": "Tipo de entrega",
+                            "paymentMethod": "Método de pago"
                         }
                     },
                     "ViewCartScreen": {
@@ -204,6 +219,7 @@
                         "myCart": "Mi Carrito",
                         "notAvailable": "Su restaurante está cerrado",
                         "orderNow": "ORDENAR AHORA",
+                        "scheduleOrder": "programar pedido",
                         "errorText": "Lo siento, todavía no apoyamos tu área"
                     }
                 },
@@ -218,7 +234,10 @@
                             "title": "Advertencia",
                             "leftBtn": "Primero de pago",
                             "rightBtn": "Sobrescribir",
+
                             "subtitle": "Ya tiene algunos artículos en su carrito de otro restaurante, ¿quiere revisarlos primero o sobrescribirlos?",
+                            "specialSubtitle": "Ya tiene algunos artículos especiales en su carrito con un tiempo de disponibilidad diferente, ¿desea verlos primero o sobrescribirlos?",
+
                             "addToCart": "Añadir artículo",
                             "modifyItem": "Modificar"
                         },
@@ -233,8 +252,11 @@
                     },
                     "ViewItemScreen": {
                         "notes": "Notas",
+                        "special": "Especial",
+                        "viewRestaurant": "Ver restaurante",
                         "itemNotes": "Notas de artículos :",
-                        "itemDescription": "Descripción del Artículo"
+                        "itemDescription": "Descripción del Artículo",
+                        "availability": "Disponibilidad"
 
                     }
                 },
@@ -301,20 +323,34 @@
                             "orderCost": "Costo de la orden",
 
                             "deliveryLocation": "Lugar De Entrega"
+                        },
+                        "RestaurantBankInfoCard": {
+                            "title": "Cuenta bancaria de restaurante",
+                            "bankName": "Nombre del banco",
+                            "accountNumber": "Número de cuenta"
                         }
                     },
                     "ViewRestaurantOrderScreen": {
-                        "orderStatus": "Estado de la orden"
+                        "orderStatus": "Estado de la orden",
+                        "writeReview": "Escribir un comentario",
+                        "deliveryDet": "Detalles de la entrega"
                     }
                 },
                 "ViewRestaurantScreen": {
+                    "CustomerRestaurantView": {
+                        "specials": "especiales",
+                        "scheduleTitle": "Solo disponible para los pedidos de programación"
+                    },
                     "components": {
                         "RestaurantSliverAppBar": {
-                            "info": "Información"
+                            "info": "Información",
+                            "menu": "Menú",
+                            "specials": "Especiales"
                         },
                         "restaurantInfoTab": {
                             "description": "Descripción",
                             "location": "Dirección",
+                            "reviews": "Reseñas",
                             "workingHours": "Horas Laborales",
                             "weekDays": {
                                 "monday": "Lunes",
@@ -641,6 +677,11 @@
             }
         },
         "helpers": {
+            "StripeHelper": {
+                "addCard": "Agregar tarjeta",
+                "powered": "Energizado por",
+                "save": "Ahorrar"
+            },
             "ImageHelper": {
                 "fromCamera": "Toma una foto",
                 "fromGallery": "Subiendo desde la galería",
@@ -658,7 +699,17 @@
                 "cancelConfirmationText": "¿Estás seguro de que te gustaría cancelar?",
                 "subtitle": "Esta acción no se puede deshacer.",
                 "ok": "OK",
-                "viewOrder": "Ver pedido"
+                "viewOrder": "Ver pedido",
+                "review": {
+                    "title": "Califica tu experiencia",
+                    "subtitle": "Nos gustaría escuchar sus comentarios.",
+                    "hintText": "Di algo sobre tu experiencia.",
+                    "send": "Enviar",
+                    "close": "Cerca",
+                    "successTitle": "Gracias",
+                    "successSubtitle": "Su revisión ha sido enviada con éxito"
+
+                }
             },
             "NotificationsHelper": {
                 "view": "Ver"
@@ -668,7 +719,18 @@
                 "tomorrow": "mañana",
                 "on": "el",
                 "in": "en",
-                "at": "a"
+                "at": "a",
+                "weekAgo": "Hace una semana",
+                "lastWeek": "La semana pasada",
+                "daysAgo": "Hace días",
+                "dayAgo": "Hace un dia",
+                "yesterday": "El dia de ayer",
+                "hoursAgo": "Horas atras",
+                "hourAgo": "Hace una hora",
+                "minutesAgo": "Hace minutos",
+                "minuteAgo": "Hace un minuto",
+                "secondsAgo": "Hace segundos",
+                "now": "En este momento"
             }
         },
         "pages": {
@@ -825,6 +887,18 @@
             }
         },
         "widgets": {
+            "RestaurantOrderDeliveryTimeCard": {
+                "dvTime": "El tiempo de entrega"
+            },
+            "MezDateTimePicker": {
+                "cancel": "Cancelar",
+                "confirm": "Confirmar",
+                "endsAt": "Termina en",
+                "sDate": "Seleccione fecha",
+                "startsAt": "Empieza a",
+                "sTime": "Tiempo de selección",
+                "title": "Elige tu tiempo"
+            },
             "OrderSummaryCard": {
                 "orderSummary": "Resumen de pedido",
                 "orderCost": "Costo de la orden",
@@ -837,7 +911,11 @@
             },
             "OrderPaymentMethod": {
                 "paymentMethod": "Método de pago",
-                "cash": "Dinero"
+                "cash": "Dinero",
+                "newcard": "Nueva tarjeta",
+                "applepay": "Apple Pay",
+                "googlepay": "Google Pay",
+                "banktransfer": "Transferencia bancaria"
             },
             "OrderDeliveryLocation": {
                 "title": "Lugar de entrega"
@@ -1306,6 +1384,8 @@
                             "deliveryLocation": "Lugar De Entrega"
                         }
                     }
+
+
                 },
                 "TaxiOrder": {
                     "components": {
@@ -1544,8 +1624,10 @@
                 "pastOrders": "Órdenes pasadas",
                 "language": "Idioma",
                 "to": "A :",
+                "contact": "Contáctenos",
                 "privacyPolicies": "Políticas de privacidad",
-                "logout": "Cerrar sesión"
+                "logout": "Cerrar sesión",
+                "reviews": "Reseñas"
             }
         },
         "pages": {
@@ -1705,6 +1787,7 @@
                         "itemsWeight": "Artículos de peso",
                         "itemsWeightErrorText": "Por favor ingrese un peso válido",
                         "saveItemsWeight": "Guardar artículos de peso",
+                        "editItemsWeight": "Editar elementos de peso",
                         "cancel": "Cancelar",
                         "setNewItemsWeight": "Set nuevos artículos de peso",
                         "error": "Error",
@@ -1755,7 +1838,21 @@
     },
     "RestaurantApp": {
         "pages": {
-
+            "ROpReviewsView": {
+                "reviews": "Reseñas",
+                "base": "Basado en",
+                "perfomTitle": "Su rendimiento de revisión es",
+                "excellent": "Excelente",
+                "poor": "Pobre",
+                "good": "Buena",
+                "average": "Promedio",
+                "bad": "Mala",
+                "default": "Ver todo",
+                "highestrate": "Tasa más alta",
+                "lowestrate": "La tasa más baja",
+                "noRevTitle": "Todavía no hay críticas",
+                "noRevDesc": "Una vez que reciba comentarios, se mostrará aquí."
+            },
             "ROpItemView": {
                 "nameExist": "El nombre ya existe",
                 "item": "Artículo",
@@ -1793,6 +1890,11 @@
                 "cancelOrder": "Cancelar orden",
                 "orderItems": "Encargar artículos",
                 "components": {
+                    "ROpSpecialItemTime": {
+                        "selectTime": "Seleccione su tiempo",
+                        "itemAv": "Disponibilidad de artículos",
+                        "required": "Requerida"
+                    },
                     "ROpRefundButton": {
                         "refundCustomer": "Reembolso del cliente",
                         "refundYourCustomer": "Reembolsar a su cliente",
@@ -1909,6 +2011,7 @@
                     },
                     "ROpItemCard": {
                         "category": "Categoría",
+                        "available": "Disponible",
                         "itemStatus": "Estado del artículo"
                     },
                     "ROpCategoryItems": {
@@ -1937,11 +2040,21 @@
                         "errorText": "Seleccione el idioma"
                     },
                     "ROpAcceptedPayments": {
+                        "bankName": "Nombre del banco",
+                        "bankNumber": "Número de cuenta",
+                        "bankTitle": "Información de la cuenta bancaria",
+                        "confirm": "Confirmar",
+                        "cancel": "Cancelar",
+                        "error": "Error",
+                        "bankTransfer": "Transferencia bancaria",
+                        "bankError": "El número de cuenta no es válido",
                         "cash": "Dinero",
                         "card": "Tarjeta",
                         "requirements": "Requisitos",
                         "acceptedPayments": "Pagos aceptados",
                         "setup": "configurar",
+                        "fees": "Tarifa",
+                        "chargeCustomer": "Cargar tarifas de Stripe en el cliente",
 
                         "setupHelper": "Gracias por la configuración, ahora puede recibir pagos, pero no podrá retirar dinero a su cuenta bancaria.",
                         "reqs": "Requisitos",

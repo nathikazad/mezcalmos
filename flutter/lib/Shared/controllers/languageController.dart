@@ -32,6 +32,7 @@ class LanguageController extends GetxController {
     LanguageType.EN: {"fullName": "English", "langImage": usaFlagAsset},
     LanguageType.ES: {"fullName": "Español", "langImage": mexicoFlagAsset}
   };
+
   LanguageType get userLanguageKey => _userLanguageKey.value;
   String get langFullName =>
       languageDetails[_userLanguageKey.value]['fullName'];
@@ -44,11 +45,11 @@ class LanguageController extends GetxController {
     try {
       dynamic map =
           _jsonStrings[_userLanguageKey.value.toFirebaseFormatString()];
-      fileLocation.split('/').forEach((element) {
+      fileLocation.split('/').forEach((String element) {
         map = map[element];
       });
       return map;
-    } on Exception catch (e) {
+    } on Exception {
       // TODO
     }
   }
@@ -91,8 +92,8 @@ class LanguageController extends GetxController {
   void onInit() {
     super.onInit();
     Future<dynamic>.microtask(() async {
-      String enJson = await rootBundle.loadString(enLang);
-      String esJson = await rootBundle.loadString(esLang);
+      final String enJson = await rootBundle.loadString(enLang);
+      final String esJson = await rootBundle.loadString(esLang);
       _jsonStrings = <String, dynamic>{
         "en": jsonDecode(enJson) as Map<String, dynamic>,
         "es": jsonDecode(esJson) as Map<String, dynamic>

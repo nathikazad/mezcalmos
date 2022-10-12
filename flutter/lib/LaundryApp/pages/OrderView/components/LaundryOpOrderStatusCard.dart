@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LaundryOrderHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:sizer/sizer.dart';
@@ -21,41 +20,22 @@ class LaundryOpOrderStatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
     return Card(
-      margin: const EdgeInsets.only(bottom: 20, top: 12),
+      margin: const EdgeInsets.only(bottom: 20, top: 20),
       child: Container(
         width: double.infinity,
-        margin: const EdgeInsets.all(12),
-        child: Column(
+        padding: const EdgeInsets.all(12),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                order.getOrderWidget(),
-                Spacer(),
-                _orderStatusText(context),
-                Spacer(
-                  flex: 2,
-                ),
-              ],
+            order.getOrderWidget(),
+            Spacer(),
+            _orderStatusText(context),
+            Spacer(
+              flex: 2,
             ),
-            if (_getEstimatedText() != null) _orderEtaTimeWidget()
           ],
         ),
       ),
-    );
-  }
-
-  Widget _orderEtaTimeWidget() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-            child: Text(
-          _getEstimatedText()!,
-          textAlign: TextAlign.center,
-        )),
-      ],
     );
   }
 
@@ -75,39 +55,5 @@ class LaundryOpOrderStatusCard extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String? _getEstimatedText() {
-    switch (order.status) {
-      case LaundryOrderStatus.OrderReceieved:
-      case LaundryOrderStatus.OtwPickupFromCustomer:
-      case LaundryOrderStatus.PickedUpFromCustomer:
-        if (order.estimatedDropoffAtServiceProviderTime != null) {
-          return "${_i18n()["estTimes"]["laundryArriving"]} ${order.estimatedDropoffAtServiceProviderTime!.getEstimatedTime()}";
-        }
-        break;
-      case LaundryOrderStatus.AtLaundry:
-        if (order.estimatedLaundryReadyTime != null) {
-          return "${_i18n()["estTimes"]["laundryFinish"]} ${order.estimatedLaundryReadyTime!.getEstimatedTime()}";
-        }
-        break;
-
-      case LaundryOrderStatus.ReadyForDelivery:
-      case LaundryOrderStatus.OtwPickupFromLaundry:
-        if (order.estimatedPickupFromServiceProviderTime != null) {
-          return "${_i18n()["estTimes"]["driverArriving"]} ${order.estimatedPickupFromServiceProviderTime!.getEstimatedTime()}";
-        }
-
-        break;
-      case LaundryOrderStatus.PickedUpFromLaundry:
-        if (order.estimatedDropoffAtCustomerTime != null) {
-          return "${_i18n()["estTimes"]["willBeDropped"]} ${order.estimatedDropoffAtCustomerTime!.getEstimatedTime()}";
-        }
-
-        break;
-      default:
-        return null;
-    }
-    return null;
   }
 }

@@ -8,6 +8,8 @@ analyzer:
 
 linter:
   rules:
+    - file_names
+    - library_names
     - cancel_subscriptions
     - always_use_package_imports
     - avoid_web_libraries_in_flutter

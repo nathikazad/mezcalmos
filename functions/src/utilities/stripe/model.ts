@@ -28,6 +28,7 @@ export interface OrderStripeInfo {
   stripeFees: number,
   amountCharged: number,
   amountRefunded: number,
+  chargeFeesOnCustomer : boolean |null;
   brand?: string,
   expMonth?: number,
   expYear?: number,
@@ -46,6 +47,7 @@ export enum StripeStatus {
 export interface ServiceProviderStripeInfo {
   id?: string;
   status: string;
+  chargeFeesOnCustomer : boolean |null;
   chargesEnabled: boolean;
   payoutsEnabled: boolean;
   detailsSubmitted: boolean;

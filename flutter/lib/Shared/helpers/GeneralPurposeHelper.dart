@@ -1,11 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart' show NumberFormat;
+import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
@@ -312,11 +318,16 @@ Future<void> showStatusInfoDialog(
         return AlertDialog(
           //  color: Colors.transparent,
           scrollable: true,
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              SizedBox(
+                height: 10,
+              ),
               Stack(
                 clipBehavior: Clip.none,
                 children: [
@@ -400,23 +411,174 @@ Future<void> showStatusInfoDialog(
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    SizedBox(height: 12),
-                    GestureDetector(
+                    SizedBox(
+                      height: 10,
+                    ),
+                    InkWell(
                       onTap: secondaryCallBack,
-                      child: Text(
-                        secondaryClickTitle ?? "${_i18n()["viewOrder"]}",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color.fromRGBO(120, 120, 120, 1),
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16.99,
+                      child: Ink(
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 7),
+                          child: Text(
+                            secondaryClickTitle ?? "${_i18n()["viewOrder"]}",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color.fromRGBO(120, 120, 120, 1),
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16.99,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 12),
                   ],
                 ),
+            ],
+          ),
+        );
+      });
+}
+
+Future<void> showReviewDialog(
+  BuildContext context, {
+  required String orderId,
+  required OrderType orderType,
+}) async {
+  final String? serviceId =
+      Get.find<OrderController>().getOrder(orderId)?.serviceProviderId;
+  final OrderType? orderType =
+      Get.find<OrderController>().getOrder(orderId)?.orderType;
+  final TextEditingController controller = TextEditingController();
+  num rating = 3;
+  return await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          //  color: Colors.transparent,
+          scrollable: true,
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    color: primaryBlueColor, shape: BoxShape.circle),
+                padding: const EdgeInsets.all(10),
+                child: Center(
+                    child: Icon(
+                  Icons.favorite,
+                  color: Colors.white,
+                )),
+              ),
+              const SizedBox(height: 18),
+              Text(
+                "${_i18n()["review"]["title"]}",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16.sp,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                "${_i18n()["review"]["subtitle"]}",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12.sp,
+                ),
+              ),
+              RatingBar.builder(
+                initialRating: 3,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                glow: false,
+                itemPadding:
+                    EdgeInsets.symmetric(horizontal: 4.0, vertical: 12),
+                itemBuilder: (BuildContext context, _) => Icon(
+                  Icons.star,
+                  color: primaryBlueColor,
+                ),
+                onRatingUpdate: (double newRate) {
+                  rating = newRate;
+                },
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                maxLines: 8,
+                minLines: 5,
+                controller: controller,
+                style: TextStyle(
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 12.sp,
+                ),
+                decoration: InputDecoration(
+                    hintText: "${_i18n()["review"]["hintText"]}"),
+              ),
+              const SizedBox(height: 18),
+              MezButton(
+                label: "${_i18n()["review"]["send"]}",
+                height: 45,
+                textColor: primaryBlueColor,
+                backgroundColor: secondaryLightBlueColor,
+                onClick: () async {
+                  final Review review = Review(
+                      comment: controller.text,
+                      rating: rating,
+                      orderId: orderId,
+                      orderType: orderType!,
+                      serviceProviderId: serviceId!);
+                  // mezDbgPrint(review.toString());
+                  final ServerResponse response =
+                      await Get.find<OrderController>().addReview(
+                          orderId: review.orderId,
+                          serviceId: serviceId,
+                          comment: review.comment,
+                          orderType: orderType,
+                          rate: review.rating);
+                  if (response.success) {
+                    Get.snackbar('${_i18n()["review"]["successTitle"]}',
+                        "${_i18n()["review"]["successSubtitle"]}",
+                        backgroundColor: Colors.black, colorText: Colors.white);
+                    Get.back(closeOverlays: true);
+                  } else {
+                    mezDbgPrint(response);
+                    Get.snackbar("Error", response.errorMessage ?? "error",
+                        backgroundColor: Colors.black, colorText: Colors.white);
+                  }
+                },
+              ),
+              SizedBox(height: 12),
+              InkWell(
+                onTap: () {
+                  Get.back(closeOverlays: true);
+                },
+                child: Ink(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  width: double.infinity,
+                  child: Text(
+                    "${_i18n()["review"]["close"]}",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Color.fromRGBO(120, 120, 120, 1),
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16.99,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         );

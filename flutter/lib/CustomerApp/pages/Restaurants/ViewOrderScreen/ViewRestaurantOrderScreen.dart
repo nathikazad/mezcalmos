@@ -11,19 +11,24 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/componen
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderRestaurantCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderStatusCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrdersItemsCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/RestaurantBankInfo.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/notesWidget.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
+import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewOrderScreen"]["ViewRestaurantOrderScreen"];
@@ -159,6 +164,22 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         autoBack: true,
         title: order.value?.restaurant.name,
       ),
+      bottomNavigationBar: Obx(() {
+        if (showReviewBtn()) {
+          return MezButton(
+            label: "${_i18n()["writeReview"]}",
+            withGradient: true,
+            onClick: () async {
+              await showReviewDialog(context,
+                  orderId: order.value!.orderId,
+                  orderType: OrderType.Restaurant);
+            },
+            borderRadius: 0,
+          );
+        } else {
+          return SizedBox();
+        }
+      }),
       body: Obx(
         () {
           if (order.value != null) {
@@ -170,52 +191,72 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                     constraints:
                         BoxConstraints(minHeight: constraint.maxHeight),
                     child: IntrinsicHeight(
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: 10,
-                          ),
-                          OrderStatusCard(
-                            order: order.value!,
-                            ordersStates: order.value!.status,
-                          ),
-                          CustomerRestaurantOrderEst(order: order.value!),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            SizedBox(
+                              height: 10,
+                            ),
+                            OrderStatusCard(
+                              order: order.value!,
+                              ordersStates: order.value!.status,
+                            ),
 
-                          RestaurantOrderDriverCard(
-                            order: order.value!,
-                          ),
-                          if (order.value!.inDeliveryPhase()) ..._mapWidget,
+                            if (order.value!.paymentType ==
+                                PaymentType.BankTransfer)
+                              RestaurantBankInfoCard(
+                                  restaurantId: order.value!.restaurantId),
+                            CustomerRestaurantOrderEst(order: order.value!),
 
-                          OrderRestaurantCard(order: order.value!),
+                            RestaurantOrderDriverCard(
+                              order: order.value!,
+                            ),
+                            if (order.value!.inDeliveryPhase()) ..._mapWidget,
 
-                          OrderItemsCard(
-                            order: order.value!,
-                          ),
-                          order.value?.notes == null ||
-                                  order.value!.notes!.length <= 0
-                              ? Container()
-                              : notesWidget(order),
+                            OrderRestaurantCard(order: order.value!),
 
-                          OrderDeliveryLocation(
-                            order: order.value!,
-                            margin: const EdgeInsets.only(top: 20),
-                          ),
-                          OrderPaymentMethod(
-                            order: order.value!,
-                            margin: const EdgeInsets.only(top: 20),
-                          ),
+                            OrderItemsCard(
+                              order: order.value!,
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(top: 20),
+                              child: Text(
+                                '${_i18n()["deliveryDet"]}',
+                                style: Get.textTheme.bodyText1,
+                              ),
+                            ),
+                            RestaurantOrderDeliveryTimeCard(
+                              order: order.value!,
+                              margin: EdgeInsets.zero,
+                            ),
+                            OrderDeliveryLocation(
+                              order: order.value!,
+                              margin: const EdgeInsets.only(top: 20),
+                            ),
+                            OrderPaymentMethod(
+                              order: order.value!,
+                              margin: const EdgeInsets.only(top: 20),
+                            ),
+                            order.value?.notes == null ||
+                                    order.value!.notes!.length <= 0
+                                ? Container()
+                                : notesWidget(order),
+                            OrderSummaryCard(
+                              order: order.value!,
+                            ),
 
-                          OrderSummaryCard(order: order.value!),
-
-                          //===============================>button cancel===========================
-                          //  Expanded(child: Container()),
-                          Spacer(),
-                          Flexible(
-                            child: Container(
-                                alignment: Alignment.center,
-                                child: OrderFooterCard(order: order.value!)),
-                          ),
-                        ],
+                            //===============================>button cancel===========================
+                            //  Expanded(child: Container()),
+                            Spacer(),
+                            Flexible(
+                              child: Container(
+                                  alignment: Alignment.center,
+                                  child: OrderFooterCard(order: order.value!)),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -343,5 +384,11 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         break;
       default:
     }
+  }
+
+  bool showReviewBtn() {
+    return order.value != null &&
+        order.value!.status == RestaurantOrderStatus.Delivered &&
+        order.value!.review == null;
   }
 }

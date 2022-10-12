@@ -9,7 +9,9 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 class CustomerAuthController extends GetxController {
@@ -24,6 +26,7 @@ class CustomerAuthController extends GetxController {
   Rxn<Customer> customer = Rxn();
 
   StreamSubscription<dynamic>? _customerNodeListener;
+  StreamSubscription<MainUserInfo>? _userInfoStreamListener;
 
   @override
   Future<void> onInit() async {
@@ -55,6 +58,17 @@ class CustomerAuthController extends GetxController {
           _checkedAppVersion = true;
         }
       });
+      // update info //
+      await _userInfoStreamListener?.cancel();
+      _authController.userInfoStream.listen((MainUserInfo? userInfo) {
+        if (userInfo != null) {
+          _databaseHelper.firebaseDatabase
+              .ref()
+              .child(customerInfoNode(_authController.fireAuthUser!.uid))
+              .set(userInfo.toFirebaseFormatJson());
+        }
+      });
+      //
 
       final String? deviceNotificationToken =
           await _notificationsController.getToken();
@@ -121,6 +135,12 @@ class CustomerAuthController extends GetxController {
     }, orElse: null).location;
   }
 
+  Future<MainUserInfo> getUserInfoById(String id) async {
+    final DataSnapshot data =
+        await _databaseHelper.firebaseDatabase.ref(userInfoNode(id)).get();
+    return MainUserInfo.fromData(data.value);
+  }
+
   Future<void> getCards() async {
     mezDbgPrint(
         "Cards value ==========>>>>${customerCardsNode(_authController.fireAuthUser!.uid)}");
@@ -142,6 +162,8 @@ class CustomerAuthController extends GetxController {
     print("[+] CustomerAuthController::onClose ---------> Was invoked !");
     await _customerNodeListener?.cancel();
     _customerNodeListener = null;
+    await _userInfoStreamListener?.cancel();
+    _userInfoStreamListener = null;
     super.onClose();
   }
 }

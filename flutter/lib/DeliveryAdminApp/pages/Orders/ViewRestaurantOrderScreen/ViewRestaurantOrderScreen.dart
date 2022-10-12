@@ -28,6 +28,7 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
 
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 
@@ -153,7 +154,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                         : PastOrderInfo(order: order.value!),
 
                     //============================= Customer info====================
-
+                    RestaurantOrderDeliveryTimeCard(order: order.value!),
                     if (order.value?.inProcess() ?? false)
                       DaRestaurantOrderTime(
                         order: order.value!,

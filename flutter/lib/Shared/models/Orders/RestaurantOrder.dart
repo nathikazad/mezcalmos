@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 
 //ignore_for_file:constant_identifier_names
 enum RestaurantOrderStatus {
@@ -43,6 +44,9 @@ class RestaurantOrder extends DeliverableOrder {
   RestaurantOrderStatus status;
   ServiceInfo get restaurant => serviceProvider! as ServiceInfo;
   DateTime? estimatedFoodReadyTime;
+  DateTime? deliveryTime;
+  Review? review;
+
   RestaurantOrder(
       {required super.orderId,
       super.orderType = OrderType.Restaurant,
@@ -57,6 +61,7 @@ class RestaurantOrder extends DeliverableOrder {
       required super.to,
       this.estimatedFoodReadyTime,
       super.dropoffDriver,
+      this.deliveryTime,
       String? dropOffDriverChatId,
       required this.itemsCost,
       required this.shippingCost,
@@ -103,6 +108,9 @@ class RestaurantOrder extends DeliverableOrder {
                 : null,
         cost: data["cost"],
         notes: data["notes"],
+        deliveryTime: (data["deliveryTime"] != null)
+            ? DateTime.tryParse(data["deliveryTime"])
+            : null,
         to: Location.fromFirebaseData(data['to']),
         restaurant: ServiceInfo.fromData(data["restaurant"]),
         customer: UserInfo.fromData(data["customer"]),
@@ -121,7 +129,13 @@ class RestaurantOrder extends DeliverableOrder {
         costToCustomer: data['costToCustomer'],
         notifiedAdmin: data['notified']?['admin'] ?? false,
         notifiedOperator: data['notified']?['operator'] ?? false);
-
+    if (data["review"] != null) {
+      restaurantOrder.review = Review.fromMap(null, data["review"]);
+      // data["reviews"]?.forEach((key, review) {
+      //   mezDbgPrint("ADD REVIEW ON ORDER===============");
+      //   restaurantOrder.reviews.add(Review.fromMap(key, review));
+      // });
+    }
     if (data["routeInformation"] != null) {
       restaurantOrder.routeInformation = RouteInformation(
         polyline: data["routeInformation"]["polyline"],
@@ -188,6 +202,8 @@ class RestaurantOrder extends DeliverableOrder {
             (RestaurantOrderItem element) => element.image != null) !=
         null;
   }
+
+
 
   String clipBoardText(LanguageType languageType) {
     String text = "";

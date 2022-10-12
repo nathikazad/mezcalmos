@@ -5,6 +5,8 @@ import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 enum RestaurantsView { Rows, Grid }
@@ -28,6 +30,8 @@ class Restaurant extends Service {
   LanguageMap? description;
   List<Item> currentSpecials = <Item>[];
   List<Item> pastSpecials = <Item>[];
+  List<Review> reviews = <Review>[];
+  num? rate;
 
   List<Category> _categories = <Category>[];
   List<Item> itemsWithoutCategory = <Item>[];
@@ -40,6 +44,7 @@ class Restaurant extends Service {
       required PaymentInfo paymentInfo,
       required ServiceState restaurantState,
       required LanguageType primaryLanguage,
+      this.rate,
       LanguageType? secondaryLanguage})
       : super(
             info: userInfo,
@@ -86,7 +91,12 @@ class Restaurant extends Service {
                 ?["language"]?["secondary"]
             .toString()
             .toLanguageType() ??
-        primaryLanguage.toOpLang();
+        LanguageType.EN;
+
+    final num? rate = (restaurantData?["details"]?["rating"].toString() != null)
+        ? num.tryParse(restaurantData["details"]?["rating"]?.toString() ?? "")
+        : null;
+    primaryLanguage.toOpLang();
     final Restaurant restaurant = Restaurant(
         userInfo: ServiceInfo.fromData(restaurantData["info"]),
         description: description ?? null,
@@ -95,8 +105,13 @@ class Restaurant extends Service {
         restaurantsView: restaurantsView,
         primaryLanguage: primaryLanguage,
         secondaryLanguage: secondaryLanguage,
+        rate: rate,
         paymentInfo: paymentInfo);
-
+    if (restaurantData["details"]["reviews"] != null) {
+      restaurantData["details"]["reviews"]?.forEach((key, review) {
+        restaurant.reviews.add(Review.fromMap(key, review));
+      });
+    }
     if (restaurantData['menu'] != null) {
       if (restaurantData["menu"]?["specials"] != null ||
           restaurantData["menu"]?["daily"] != null) {
@@ -121,6 +136,8 @@ class Restaurant extends Service {
 
     restaurant._categories
         .sort((Category a, Category b) => a.position.compareTo(b.position));
+    restaurant.reviews
+        .sort((Review a, Review b) => b.reviewTime!.compareTo(a.reviewTime!));
     return restaurant;
   }
 
@@ -175,18 +192,21 @@ class Restaurant extends Service {
     return items;
   }
 
-  Item? findItemById({required String id, bool isSpecial = false}) {
+  Item? findItemById({
+    required String id,
+  }) {
     Item? returnVal;
-    if (isSpecial) {
-      currentSpecials.forEach((Item item) {
+
+    currentSpecials.forEach((Item item) {
+      if (item.id == id) returnVal = item;
+    });
+    if (returnVal == null) {
+      pastSpecials.forEach((Item item) {
         if (item.id == id) returnVal = item;
       });
-      if (returnVal == null) {
-        pastSpecials.forEach((Item item) {
-          if (item.id == id) returnVal = item;
-        });
-      }
-    } else {
+    }
+
+    if (returnVal == null) {
       _categories.forEach((Category category) {
         category.items.forEach((Item item) {
           if (item.id == id) returnVal = item;
@@ -202,6 +222,14 @@ class Restaurant extends Service {
     }
 
     return returnVal;
+  }
+
+  bool get showReviews {
+    return rate != null && reviews.isNotEmpty;
+  }
+
+  bool acceptPayment(PaymentType p) {
+    return paymentInfo.acceptedPayments[p] == true;
   }
 
   double getAverageCost() {
@@ -348,6 +376,8 @@ class Item {
   Category? category;
   Restaurant? restaurant;
   String? linkUrl;
+  DateTime? startsAt;
+  DateTime? endsAt;
 
   List<Option> get getOptions {
     sortOptions();
@@ -360,6 +390,8 @@ class Item {
       this.available = false,
       this.description,
       this.image,
+      this.startsAt,
+      this.endsAt,
       List<Option>? newOptions,
       required this.name,
       required this.cost,
@@ -377,6 +409,13 @@ class Item {
             ? convertToLanguageMap(itemData["description"])
             : null,
         //itemData["description"].toLanguageMap(),
+        startsAt: (itemData["startsAt"] != null)
+            ? DateTime.tryParse(itemData["startsAt"])
+            : null,
+        endsAt: (itemData["endsAt"] != null)
+            ? DateTime.tryParse(itemData["endsAt"])
+            : null,
+
         // image: itemData?["image"],
         image: ((itemData?["image"].toString().isNotEmpty ?? false) &&
                 (itemData?["image"].toString().isURL ?? false))
@@ -425,6 +464,8 @@ class Item {
       "description": description?.toFirebaseFormat(),
       "image": image,
       "cost": cost,
+      "startsAt": startsAt?.toUtc().toString() ?? null,
+      "endsAt": endsAt?.toUtc().toString() ?? null,
       "name": name.toFirebaseFormat(),
       "options": _parseOptionsListToFirebaseFormattedStriing(
           options), //options.map<List<Option>>((Option x) => <String, dynamic>{x.id: x.toJson()}),
@@ -454,6 +495,25 @@ class Item {
     // other.restaurant == restaurant &&
     // other.linkUrl == linkUrl &&
     // other.position == position;
+  }
+
+  // bool get isCurrentSpecial {
+  //   return restaurant!.currentSpecials.contains(this);
+  // }
+
+  // bool get isPastSpecial {
+  //   return restaurant!.pastSpecials.contains(this);
+  // }
+
+  bool get isSpecial {
+    return startsAt != null && endsAt != null;
+  }
+
+  PeriodOfTime? get getPeriod {
+    if (isSpecial) {
+      return PeriodOfTime(start: startsAt!, end: endsAt!);
+    }
+    return null;
   }
 
   @override

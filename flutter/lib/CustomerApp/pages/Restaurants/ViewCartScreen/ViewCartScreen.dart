@@ -11,7 +11,6 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -62,6 +61,8 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   @override
   void initState() {
     super.initState();
+    mezDbgPrint(
+        "Cart items =====================>>>${_restaurantController.cart.value.cartItems}");
     if (Get.find<CustomerAuthController>().customer.value?.savedCards == null)
       savedCardChoice =
           Get.find<CustomerAuthController>().customer.value!.savedCards.first;
@@ -80,6 +81,13 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
     // check if cart empty
     // if yes redirect to home page
+
+    if (_restaurantController.cart.value.cartPeriod != null) {
+      _restaurantController.cart.value.deliveryTime =
+          _restaurantController.cart.value.cartPeriod?.start;
+    }
+    mezDbgPrint(
+        "item is special ===== ${_restaurantController.cart.value.cartItems.first.isSpecial}");
   }
 
   @override
@@ -91,55 +99,64 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: CustomerAppBar(
-          autoBack: true,
-          title: "${_i18n()["myCart"]}",
-        ),
-        body: Obx(() {
-          if (_restaurantController.cart.value.cartItems.length > 0) {
-            return SingleChildScrollView(
-              child: ViewCartBody(
-                viewCartController: viewCartController,
-                setLocationCallBack: ({Location? location}) async {
-                  mezDbgPrint(
-                      "Called from viewCart------------------------------");
-                  setState(() {
-                    orderToLocation = location;
-                  });
+      resizeToAvoidBottomInset: true,
+      appBar: CustomerAppBar(
+        autoBack: true,
+        title: "${_i18n()["myCart"]}",
+      ),
+      body: Obx(() {
+        if (_restaurantController.cart.value.cartItems.length > 0) {
+          return SingleChildScrollView(
+            child: ViewCartBody(
+              viewCartController: viewCartController,
+              setLocationCallBack: ({Location? location}) {
+                if (location != null) {
                   _restaurantController.cart.value.toLocation = location;
-                  await _restaurantController.updateShippingPrice();
-                },
-                notesTextController: _textEditingController,
-              ),
+                  _restaurantController.updateShippingPrice().then(
+                      (bool value) => _restaurantController.cart.refresh());
+                }
+                // setState(() {
+                //   orderToLocation = location;
+                // });
+              },
+              notesTextController: _textEditingController,
+            ),
+          );
+        } else {
+          return CartIsEmptyScreen();
+        }
+      }),
+      bottomSheet: Obx(
+        () {
+          if (_restaurantController.cart.value.cartItems.length > 0) {
+            return MezButton(
+              label: (_restaurantController.associatedRestaurant?.isOpen() ==
+                      false)
+                  ? '${_i18n()["scheduleOrder"]}'
+                  : '${_i18n()["orderNow"]}',
+              enabled: _restaurantController.canOrder,
+              withGradient: true,
+              borderRadius: 0,
+              onClick: () async {
+                if (_restaurantController.canOrder) {
+                  await checkoutActionButton();
+                } else {
+                  _restaurantController.cart.refresh();
+                }
+              },
             );
-          } else {
-            return CartIsEmptyScreen();
-          }
-        }),
-        bottomSheet: Obx(
-          () => (_restaurantController.cart.value.cartItems.length > 0)
-              ? MezButton(
-                  label:
-                      (_restaurantController.associatedRestaurant?.isOpen() ==
-                              false)
-                          ? "${_i18n()["restaurantClosed"]}"
-                          : '${_i18n()["orderNow"]}',
-                  enabled: _restaurantController.canOrder,
-                  withGradient: true,
-                  borderRadius: 0,
-                  onClick: () async {
-                    await checkoutActionButton();
-                  },
-                )
-              : SizedBox(),
-        ));
+          } else
+            return SizedBox();
+        },
+      ),
+    );
   }
 
   bool canClick() {
     // it returns the pruple or the grey color for the order now button
     if (orderToLocation == null ||
-        !(_restaurantController.associatedRestaurant?.isOpen() ?? true)) {
+        (_restaurantController.associatedRestaurant?.isOpen() == false &&
+            _restaurantController.cart.value.deliveryTime == null)) {
       return false;
     } else {
       return true;
@@ -205,16 +222,12 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   //         "[+] s@@d ==> [ CHECKOUT RESTAURANT ORDER ] NO RACING CONDITION HAPPEND ! ");
   // }
 
-//itemviewscreen
+//itemviewscreen -
   Future<void> checkoutActionButton() async {
     _restaurantController.cart.value.toLocation = orderToLocation;
     _restaurantController.cart.value.notes = _textEditingController.text;
     try {
-      if (_restaurantController.getOrderDistance <= 10 ||
-          getAppLaunchMode() == AppLaunchMode.stage ||
-          Get.find<AuthController>().user?.id ==
-              // BUhQ74BrbBNeYZz60fK4ocrgpqz1 the test user for apple test
-              "BUhQ74BrbBNeYZz60fK4ocrgpqz1") {
+      if (_restaurantController.getOrderDistance <= 10) {
         final String? stripePaymentId =
             await acceptPaymentByCardChoice(viewCartController.getCardChoice);
 
@@ -253,6 +266,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   /// returns stripePaymentId
   Future<String?> acceptPaymentByCardChoice(CardChoice choice) async {
     String? stripePaymentId;
+
     //viewCartController.getCardChoice
     if (_restaurantController.cart.value.paymentType == PaymentType.Card) {
       switch (choice) {

@@ -5,6 +5,14 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 extension CapExtension on String {
+  String removeLast() {
+    String str = this;
+    if (length > 0) {
+      str = str.substring(0, str.length - 1);
+    }
+    return str;
+  }
+
   String get inCaps =>
       (length > 0) ? '${this[0].toUpperCase()}${substring(1)}' : '';
   String get allInCaps => toUpperCase();

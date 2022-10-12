@@ -9,6 +9,7 @@ import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpCustome
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpDriverCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderNote.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderStatusCard.dart';
+import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderTimes.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpSetCategoryComponent.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/OrderEstimatedTimeComponent.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
@@ -16,8 +17,8 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -197,7 +198,9 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
             children: [
               // order status
               LaundryOpOrderStatusCard(order: order.value!),
-
+              LaundryOpOrderTimes(
+                order: order.value!,
+              ),
               if (_setReadyForDeliveryButton() != null)
                 _setReadyForDeliveryButton()!,
 

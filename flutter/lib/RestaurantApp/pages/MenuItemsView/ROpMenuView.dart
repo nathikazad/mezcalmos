@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpCategoryItems.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpItemCard.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpSpecialsComponent.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/controllers/ROpMenuViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -27,12 +28,12 @@ class ROpMenuView extends StatefulWidget {
 
 class _ROpMenuViewState extends State<ROpMenuView>
     with SingleTickerProviderStateMixin {
-//  late TabController _tabController;
+  late TabController _tabController;
   ROpMenuViewController viewController = ROpMenuViewController();
   String? restaurantID;
   @override
   void initState() {
-    //  _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
     restaurantID = Get.parameters["restaurantId"];
     if (restaurantID != null) {
       viewController.init(restaurantId: restaurantID!);
@@ -57,8 +58,8 @@ class _ROpMenuViewState extends State<ROpMenuView>
         onClick: handleBack,
         title: '${_i18n()["menu"]}',
         showNotifications: true,
+        tabBar: _tabBar(),
       ),
-      // tabBar: _tabBar()),
       bottomNavigationBar: Obx(() {
         if (viewController.reOrderMode.isTrue) {
           return CallToActionButton(
@@ -78,67 +79,66 @@ class _ROpMenuViewState extends State<ROpMenuView>
       body: Obx(
         () {
           if (viewController.restaurant.value != null) {
-            // return TabBarView(
-            //   controller: _tabController,
-
-            //   children: [
-            // Items view //
-            return SingleChildScrollView(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 5,
-                  ),
-                  MezAddButton(
-                    onClick: () {
-                      Get.toNamed(
-                          getROpCategoryRoute(restaurantId: restaurantID!));
-                    },
-                    title: '${_i18n()["addCategory"]}',
-                    btnColor: primaryBlueColor,
-                    primaryColor: Colors.white,
-                  ),
-                  MezAddButton(
-                    onClick: () {
-                      Get.toNamed(
-                          getROpAddItemRoute(restaurantId: restaurantID!));
-                    },
-                    title: '${_i18n()["addItem"]}',
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            return TabBarView(
+              controller: _tabController,
+              children: [
+                // Items view //
+                SingleChildScrollView(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '${_i18n()["categories"]}',
-                        style: Get.textTheme.bodyText1,
+                      SizedBox(
+                        height: 5,
                       ),
-                      (viewController.reOrderMode.isTrue)
-                          ? SizedBox()
-                          : _reorderBtn()
+                      MezAddButton(
+                        onClick: () {
+                          Get.toNamed(
+                              getROpCategoryRoute(restaurantId: restaurantID!));
+                        },
+                        title: '${_i18n()["addCategory"]}',
+                        btnColor: primaryBlueColor,
+                        primaryColor: Colors.white,
+                      ),
+                      MezAddButton(
+                        onClick: () {
+                          Get.toNamed(
+                              getROpAddItemRoute(restaurantId: restaurantID!));
+                        },
+                        title: '${_i18n()["addItem"]}',
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '${_i18n()["categories"]}',
+                            style: Get.textTheme.bodyText1,
+                          ),
+                          (viewController.reOrderMode.isTrue)
+                              ? SizedBox()
+                              : _reorderBtn()
+                        ],
+                      ),
+                      Divider(),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      _categoriesItemsList(),
+                      _noCategoryItemsList()
                     ],
                   ),
-                  Divider(),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  _categoriesItemsList(),
-                  _noCategoryItemsList()
-                ],
-              ),
-            );
+                ),
 
-            // // specials view //
-            // ROpSpecialsComponent(
-            //   viewController: viewController,
-            //   restaurantID: restaurantID!,
-            // ),
-            //   ],
-            // );
+                // specials view //
+                ROpSpecialsComponent(
+                  viewController: viewController,
+                  restaurantID: restaurantID!,
+                ),
+              ],
+            );
           } else {
             return MezLogoAnimation(
               centered: true,
@@ -149,22 +149,22 @@ class _ROpMenuViewState extends State<ROpMenuView>
     );
   }
 
-  // TabBar _tabBar() {
-  //   return TabBar(
-  //       controller: _tabController,
-  //       labelColor: primaryBlueColor,
-  //       unselectedLabelColor: Colors.grey.shade800,
-  //       labelStyle: Get.textTheme.bodyText1,
-  //       unselectedLabelStyle: Get.textTheme.bodyText2,
-  //       tabs: [
-  //         Tab(
-  //           text: '${_i18n()["myItems"]}',
-  //         ),
-  //         Tab(
-  //           text: '${_i18n()["specials"]}',
-  //         ),
-  //       ]);
-  // }
+  TabBar _tabBar() {
+    return TabBar(
+        controller: _tabController,
+        labelColor: primaryBlueColor,
+        unselectedLabelColor: Colors.grey.shade800,
+        labelStyle: Get.textTheme.bodyText1,
+        unselectedLabelStyle: Get.textTheme.bodyText2,
+        tabs: [
+          Tab(
+            text: '${_i18n()["myItems"]}',
+          ),
+          Tab(
+            text: '${_i18n()["specials"]}',
+          ),
+        ]);
+  }
 
   InkWell _reorderBtn() {
     return InkWell(

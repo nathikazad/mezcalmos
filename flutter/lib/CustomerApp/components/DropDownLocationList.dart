@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -54,7 +53,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     pickLocationPlaceholder =
         SavedLocation(name: _i18n()["pickLocation"], id: "_pick_");
 
-    listOfSavedLoacations.add(pickLocationPlaceholder!);
+    listOfSavedLoacations.insert(0, pickLocationPlaceholder!);
 
     if (widget.passedInLocation == null) {
       dropDownListValue = listOfSavedLoacations.firstWhereOrNull(
@@ -152,10 +151,13 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
   }
 
   Future<bool> _lessThanDistance(Location loc) async {
-    final MapHelper.Route? routeInfo = await MapHelper.getDurationAndDistance(
-      widget.serviceProviderLocation!,
-      loc,
-    );
+    MapHelper.Route? routeInfo;
+    if (widget.serviceProviderLocation != null) {
+      routeInfo = await MapHelper.getDurationAndDistance(
+        widget.serviceProviderLocation!,
+        loc,
+      );
+    }
 
     if (routeInfo != null) {
       return (routeInfo.distance.distanceInMeters / 1000) <= 10;
@@ -195,7 +197,6 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       if (newLocation != null) {
         await _verifyDistanceAndSetLocation(newLocation);
       }
-      widget.passedInLocation = dropDownListValue!.location;
     }
   }
 
@@ -210,12 +211,11 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     } else if (_checkDistance()) {
       mezDbgPrint("Morrrrre than 15");
       showError.value = true;
-
-      widget.onValueChangeCallback?.call(location: newLocation.location);
       setState(() {
         dropDownListValue = newLocation;
         widget.passedInLocation = dropDownListValue!.location;
       });
+      widget.onValueChangeCallback?.call(location: newLocation.location);
     } else {
       widget.onValueChangeCallback?.call(location: newLocation.location);
       setState(() {
@@ -237,9 +237,9 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
           child: Row(
         children: <Widget>[
           Icon(
-            Icons.place,
-            size: 18,
-            color: primaryBlueColor,
+            Icons.fmd_good,
+            //  size: 18,
+            color: Colors.black,
           ),
           const SizedBox(width: 15),
           Flexible(
@@ -264,10 +264,25 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
             alignment: Alignment.center,
             child: Container(
               alignment: Alignment.centerLeft,
-              child: Text(
-                item.name,
-                style: Get.textTheme.bodyText2
-                    ?.copyWith(fontSize: 12.sp, fontWeight: FontWeight.w600),
+              child: Row(
+                children: [
+                  Container(
+                    // margin: const EdgeInsets.only(top: 3),
+                    child: Icon(
+                      Icons.fmd_good,
+                      //    size: 18,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    item.name,
+                    style: Get.textTheme.bodyText2?.copyWith(
+                        fontSize: 12.sp, fontWeight: FontWeight.w600),
+                  ),
+                ],
               ),
             ),
           ),
@@ -282,7 +297,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(
-            Icons.info,
+            Icons.error_outline,
             color: Colors.red,
           ),
           const SizedBox(
@@ -291,7 +306,8 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
           Flexible(
             child: Text(
               '${_i18n()["distanceError"]}',
-              style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+              style: Get.textTheme.bodyText1
+                  ?.copyWith(color: Colors.red, fontSize: 10.sp),
             ),
           ),
         ],

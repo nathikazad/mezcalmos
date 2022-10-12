@@ -41,6 +41,7 @@ class ItemChosenChoiceComponent extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Flexible(
+                          flex: 3,
                           child: Text(
                             choices[index].name[userLanguage] ?? "choiceName",
                             style: Get.theme.textTheme.bodyText2,

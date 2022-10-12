@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -57,19 +59,60 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
     return Container(
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 23,
-            child: Icon(Icons.delivery_dining, color: Colors.white),
+          Stack(
+            alignment: Alignment.center,
+            clipBehavior: Clip.none,
+            children: [
+              CircleAvatar(
+                radius: 23,
+                backgroundColor: secondaryLightBlueColor,
+                child: Icon(
+                  Icons.watch_later,
+                  size: 30,
+                  color: primaryBlueColor,
+                ),
+              ),
+              Positioned(
+                right: -35,
+                child: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 23,
+                  child: CircleAvatar(
+                    radius: 21,
+                    backgroundColor: primaryBlueColor,
+                    child: Icon(
+                      Icons.route,
+                      size: 23,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
+          // CircleAvatar(
+          //   radius: 23,
+          //   child: Icon(Icons.delivery_dining, color: Colors.white),
+          // ),
           SizedBox(
-            width: 8,
+            width: 45,
           ),
           Flexible(
               fit: FlexFit.tight,
-              child: Text(
-                _getDeliveryTime()!,
-                style: Get.textTheme.bodyText1,
-                maxLines: 2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${_i18n()["delivery"]}",
+                    style: Get.textTheme.bodyText1,
+                    maxLines: 2,
+                  ),
+                  Text(
+                    _getDeliveryTime()!,
+                    style: Get.textTheme.bodyText2,
+                    maxLines: 2,
+                  ),
+                ],
               ))
         ],
       ),
@@ -86,19 +129,60 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
     return Container(
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 23,
-            child: Icon(Icons.flatware, color: Colors.white),
+          Stack(
+            alignment: Alignment.center,
+            clipBehavior: Clip.none,
+            children: [
+              CircleAvatar(
+                radius: 23,
+                backgroundColor: secondaryLightBlueColor,
+                child: Icon(
+                  Icons.watch_later,
+                  size: 30,
+                  color: primaryBlueColor,
+                ),
+              ),
+              Positioned(
+                right: -35,
+                child: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 23,
+                  child: CircleAvatar(
+                    radius: 21,
+                    backgroundColor: primaryBlueColor,
+                    child: Icon(
+                      Icons.flatware,
+                      size: 23,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
+          // CircleAvatar(
+          //   radius: 23,
+          //   child: Icon(Icons.flatware, color: Colors.white),
+          // ),
           SizedBox(
-            width: 8,
+            width: 45,
           ),
           Flexible(
               fit: FlexFit.tight,
-              child: Text(
-                _getFoodReadyTime()!,
-                style: Get.textTheme.bodyText1,
-                maxLines: 2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${_i18n()["foodReady"]}",
+                    style: Get.textTheme.bodyText1,
+                    maxLines: 1,
+                  ),
+                  Text(
+                    _getFoodReadyTime()!.inCaps,
+                    style: Get.textTheme.bodyText2,
+                    maxLines: 2,
+                  ),
+                ],
               ))
         ],
       ),
@@ -107,14 +191,14 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
 
   String? _getFoodReadyTime() {
     if (order.estimatedFoodReadyTime != null) {
-      return "${_i18n()["foodReady"]} ${order.estimatedFoodReadyTime!.getEstimatedTime()}";
+      return "${order.estimatedFoodReadyTime!.getEstimatedTime()}";
     } else
       return null;
   }
 
   String? _getDeliveryTime() {
     if (order.estimatedDropoffAtCustomerTime != null) {
-      return "${_i18n()["delivery"]} ${order.estimatedDropoffAtCustomerTime!.getEstimatedTime()}";
+      return "${order.estimatedDropoffAtCustomerTime!.getEstimatedTime()}";
     } else
       return null;
   }

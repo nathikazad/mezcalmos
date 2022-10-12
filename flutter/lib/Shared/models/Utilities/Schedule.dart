@@ -159,4 +159,33 @@ class Schedule {
 
     return newSchedule;
   }
+  List<String> _getServiceDates() {
+    final List<String> data = [];
+    openHours.keys.forEach((Weekday element) {
+      if (openHours[element]!.isOpen) {
+        data.add(element.toFirebaseFormatString());
+      }
+    });
+
+    return data;
+  }
+
+  DateTime getTheCLosestOpenDay() {
+    DateTime data = DateTime.now();
+    if (_getServiceDates()
+        .contains(DateFormat("EEEE").format(DateTime.now()).toLowerCase())) {
+      data = DateTime.now();
+    } else {
+      DateTime testDate = DateTime.now();
+      for (int i = 0; i < 7; i++) {
+        testDate = DateTime(testDate.year, testDate.month, testDate.day + i);
+        if (_getServiceDates()
+            .contains(DateFormat("EEEE").format(testDate).toLowerCase())) {
+          data = testDate;
+          break;
+        }
+      }
+    }
+    return data;
+  }
 }

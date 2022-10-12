@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 
 class ItemViewController {
   /// Class to control the item view on edit and add mode for restaurant app ///
@@ -46,13 +47,16 @@ class ItemViewController {
   final RxBool imageLoading = RxBool(false);
   final RxList<Option> itemOptions = RxList([]);
   RxBool editMode = RxBool(false);
-  RxnBool specialMode = RxnBool();
+  RxBool specialMode = RxBool(false);
   final Rxn<Item> editableItem = Rxn();
   RxBool newCategoryAdded = RxBool(false);
   Rxn<Category> addedCatgeory = Rxn();
   RxBool isLoading = RxBool(false);
   bool firstFormValid = false;
   bool secondFormValid = false;
+  Rxn<DateTime> startDay = Rxn();
+  Rxn<DateTime> endDate = Rxn();
+  Rxn<PeriodOfTime> periodOfTime = Rxn();
 
   // initalisation //
   // the itemId arguments for edit mode //
@@ -95,14 +99,17 @@ class ItemViewController {
   // edit item init //
   void initEditMode({required String itemId, String? categoryId}) {
     editMode.value = true;
-    editableItem.value = restaurant.value!
-        .findItemById(id: itemId, isSpecial: specialMode.value ?? false);
+    editableItem.value = restaurant.value!.findItemById(
+      id: itemId,
+    );
     mezDbgPrint(editableItem.value!.toJson());
     prItemNameController.text = editableItem.value!.name[prLang]!;
     newImageUrl.value = editableItem.value!.image;
     scItemNameController.text = editableItem.value!.name[scLang]!;
     prItemDescController.text = editableItem.value?.description?[prLang]! ?? "";
     scItemDescController.text = editableItem.value!.description?[scLang]! ?? "";
+    periodOfTime.value = editableItem.value!.getPeriod;
+
     itemPriceController.text = editableItem.value!.cost.toString();
     mezDbgPrint(editableItem.value!.options.length);
     editableItem.value!.options.forEach((Option element) {
@@ -121,6 +128,8 @@ class ItemViewController {
     final Item newItem = Item(
         image: newImageUrl.value,
         id: generateRandomString(5),
+        startsAt: specialMode.value ? periodOfTime.value?.start : null,
+        endsAt: specialMode.value ? periodOfTime.value?.end : null,
         available: editableItem.value?.available ?? false,
         name: {
           restaurant.value!.primaryLanguage: prItemNameController.text,
@@ -212,7 +221,7 @@ class ItemViewController {
         }
       });
     }
-    if ((specialMode.value ?? false) && editMode.value == false) {
+    if (specialMode.value && editMode.value == false) {
       // ignore: unawaited_futures
       _restaurantInfoController
           .addSpecialItem(item: _contructItem())
@@ -234,7 +243,7 @@ class ItemViewController {
           .editItem(
               item: _contructItem(),
               itemId: editableItem.value!.id!,
-              isSpecial: specialMode.value ?? false,
+              isSpecial: specialMode.value,
               currentSpecial: isCurrentSpec,
               categoryId: currentCategory.value?.id)
           .onError((Object? error, StackTrace stackTrace) {
@@ -251,7 +260,7 @@ class ItemViewController {
         .deleteItem(
             itemId: itemId,
             categoryId: catgeoryId,
-            isSpecial: specialMode.value ?? false,
+            isSpecial: specialMode.value,
             currentSpecial: isCurrentSpec)
         .then((value) => Get.back());
   }

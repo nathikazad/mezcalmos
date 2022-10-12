@@ -57,6 +57,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   TextEditingController _noteTextEdittingController = TextEditingController();
   RxBool showImage = RxBool(true);
   bool showViewRestaurant = false;
+  bool isSpecial = false;
 
   @override
   void dispose() {
@@ -70,6 +71,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
     mezDbgPrint("params : ${Get.parameters.toString()}");
     mezDbgPrint("widget.viewItemScreenMode => ${widget.viewItemScreenMode}");
     showViewRestaurant = Get.arguments?["showViewRestaurant"] ?? false;
+    isSpecial = Get.arguments?["isSpecial"] ?? false;
     if (widget.viewItemScreenMode == ViewItemScreenMode.AddItemMode) {
       final String? restaurantId = Get.parameters['restaurantId'];
       controller.getRestaurant("$restaurantId").then((Restaurant? value) {
@@ -78,17 +80,21 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
         });
       });
       final String? itemId = Get.parameters['itemId'];
-
+      mezDbgPrint("IS SPECIAL ITEM==========>>>>$isSpecial");
       controller.getRestaurant(restaurantId!).then((Restaurant? restaurant) {
         if (restaurant?.findItemById(id: itemId!) != null) {
-          cartItem.value =
-              CartItem(restaurant!.findItemById(id: itemId!)!, restaurantId);
+          cartItem.value = CartItem(
+              restaurant!.findItemById(
+                id: itemId!,
+              )!,
+              restaurantId);
         } else {
           Future.delayed(Duration.zero, () {
             Get.back();
           });
         }
       });
+      mezDbgPrint(cartItem.value);
     } else {
       cartItem.value = CartItem.clone(restaurantCartController
           .cart.value.cartItems
@@ -104,6 +110,8 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       });
     }
     cartItem.refresh();
+    // mezDbgPrint(
+    //     "cart item ===============>${cartItem.value!.toFirebaseFunctionFormattedJson()}");
     super.initState();
   }
 
@@ -115,7 +123,6 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
         bottomSheet: (cartItem.value != null && currentRestaurant != null)
             ? BottomBarItemViewScreen(
                 currentRestaurantId: currentRestaurant?.info.id,
-                isAvailable: (currentRestaurant!.isOpen()),
                 cartItem: cartItem,
                 mode: widget.viewItemScreenMode,
               )
@@ -143,6 +150,10 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                 Container(
                   margin: const EdgeInsets.only(top: 10),
                   child: Row(
+                    // mainAxisAlignment:
+                    //     (currentRestaurant != null && showViewRestaurant)
+                    //         ? MainAxisAlignment.start
+                    //         : MainAxisAlignment.end,
                     children: [
                       Flexible(
                         fit: FlexFit.tight,
@@ -169,7 +180,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                                 color: secondaryLightBlueColor,
                                 borderRadius: BorderRadius.circular(18)),
                             child: Text(
-                              'View restaurant',
+                              '${_i18n()["viewRestaurant"]}',
                               style: Get.textTheme.bodyText1
                                   ?.copyWith(color: primaryBlueColor),
                             ),
@@ -178,6 +189,49 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                     ],
                   ),
                 ),
+                if (item.isSpecial)
+                  Container(
+                    margin: const EdgeInsets.only(top: 8),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.fastfood,
+                              color: Colors.grey.shade900,
+                              size: 15.sp,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text('${_i18n()["special"]}'),
+                            SizedBox(
+                              width: 10,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 7,
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.watch_later,
+                              color: Colors.grey.shade900,
+                              size: 15.sp,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              item.getPeriod.toString().inCaps,
+                              maxLines: 2,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 if (item.description?[userLanguage] != null &&
                     item.description![userLanguage]!.isNotEmpty)
                   _itemDescription(context, item),

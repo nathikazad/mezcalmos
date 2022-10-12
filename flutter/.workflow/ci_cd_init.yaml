@@ -1,7 +1,11 @@
 name: '1.0.$(Build.BuildId)'
 
 trigger:
-- master
+  - none
+pr:
+  branches:
+    include:
+      - master
 
 variables:
 - name: androidKeystoreKeyAlias
@@ -94,8 +98,9 @@ jobs:
 
   - template: ci_cd.yaml
     parameters:
+      Env: $(BMODE)
       Apps: 
-      - "CustomerApp"
-      - "DeliveryApp"
-      - "RestaurantApp"
-      - "LaundryApp"
+        - "CustomerApp"
+        - "DeliveryApp"
+        - "RestaurantApp"
+        - "LaundryApp"

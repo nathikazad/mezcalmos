@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]
@@ -73,7 +74,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 40,
+                      height: 50,
                     ),
                     // Laundry IMAGE AND NAME
 
@@ -85,6 +86,21 @@ class _ROpDrawerState extends State<ROpDrawer> {
                                 .operator.value?.state.restaurantId !=
                             null)
                       _operatorNavLinks(),
+                    _navigationLink(
+                      onClick: () {
+                        _drawerController.closeMenu();
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return ContactUsPopUp();
+                            });
+                      },
+                      icon: Icons.alternate_email,
+                      titleWidget: Text(
+                        '${_i18n()["contact"]}',
+                        style: Get.textTheme.bodyText1,
+                      ),
+                    ),
                     _languageSwitcher(),
                     _navigationLink(
                         onClick: () {
@@ -195,6 +211,17 @@ class _ROpDrawerState extends State<ROpDrawer> {
             )),
         _navigationLink(
             onClick: () {
+              _drawerController.closeMenu();
+              Get.toNamed(getROpReviewsoRoute(
+                  restaurantId: restaurantOpAuthController.restaurantId!));
+            },
+            icon: Icons.star_rate_rounded,
+            titleWidget: Text(
+              "${_i18n()["reviews"]}",
+              style: Get.textTheme.bodyText1,
+            )),
+        _navigationLink(
+            onClick: () {
               Get.toNamed(kNotificationsRoute);
             },
             icon: Icons.notifications,
@@ -243,7 +270,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
                       style: Get.textTheme.headline3,
                     ),
                     SizedBox(
-                      height: 15,
+                      height: 30,
                     ),
                   ],
                 ),
