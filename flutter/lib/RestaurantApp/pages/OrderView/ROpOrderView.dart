@@ -161,12 +161,12 @@ class _ROpOrderViewState extends State<ROpOrderView> {
               ROpOrderStatusCard(order: order.value!),
 
               ROpOrderHandleButton(order: order.value!),
-              RestaurantOrderDeliveryTimeCard(order: order.value!),
               ROpOrderEstTime(order: order.value!),
               ROpDriverCard(order: order.value!),
               _getMapWidget(),
               ROpOrderCustomer(order: order.value!),
               _orderItemsList(),
+              RestaurantOrderDeliveryTimeCard(order: order.value!),
               Container(
                   margin: const EdgeInsets.only(bottom: 20),
                   child: OrderDeliveryLocation(order: order.value!)),

@@ -24,6 +24,9 @@ class ROpOrderEstTime extends StatefulWidget {
 class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
   ROpOrderController orderController = Get.find<ROpOrderController>();
   RxBool isClicked = RxBool(false);
+  Rxn<TimeOfDay> selectedTime = Rxn();
+  Rxn<DateTime> selectedDate = Rxn();
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -76,17 +79,19 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
   Widget _editSetButton(BuildContext context) {
     return InkWell(
         onTap: () async {
-          final Rxn<DateTime> selectedDate =
-              Rxn(widget.order.estimatedFoodReadyTime);
-          final Rxn<TimeOfDay> selectedTime = Rxn(TimeOfDay.fromDateTime(
-              widget.order.estimatedFoodReadyTime ?? DateTime.now()));
+          selectedDate.value =
+              widget.order.estimatedFoodReadyTime ?? DateTime.now();
+          selectedTime.value = TimeOfDay.fromDateTime(
+              widget.order.estimatedFoodReadyTime ?? DateTime.now());
 
           await showModalBottomSheet(
               isScrollControlled: true,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      topRight: Radius.circular(8))),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(8),
+                  topRight: Radius.circular(8),
+                ),
+              ),
               context: context,
               builder: (BuildContext context) {
                 return Container(
@@ -105,15 +110,15 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
                       SizedBox(
                         height: 25,
                       ),
-                      _dateSelector(context, selectedDate),
+                      _dateSelector(context),
                       SizedBox(
                         height: 20,
                       ),
-                      _timeSelector(context, selectedTime, selectedDate),
+                      _timeSelector(context),
                       SizedBox(
                         height: 20,
                       ),
-                      _confirmButton(selectedDate),
+                      _confirmButton(),
                       SizedBox(
                         height: 15,
                       ),
@@ -147,10 +152,11 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
         ));
   }
 
-  Widget _confirmButton(Rxn<DateTime> selectedDate) {
+  Widget _confirmButton() {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () {
+        mezDbgPrint("ontap ${selectedDate.value}");
         if (selectedDate.value != null) {
           _setOrderEstTime(selectedDate.value!);
         }
@@ -208,45 +214,55 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
     );
   }
 
-  Widget _timeSelector(BuildContext context, Rxn<TimeOfDay> selectedTime,
-      Rxn<DateTime> selectedDate) {
+  Widget _timeSelector(
+    BuildContext context,
+  ) {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () {
         showTimePicker(
-                context: context,
-                builder: (BuildContext context, Widget? child) {
-                  return Theme(
-                    data: Theme.of(context).copyWith(
-                      colorScheme: ColorScheme.light(
-                        primary: primaryBlueColor,
-                        onPrimary: Colors.white, // header text color
-                        onSurface: Colors.black, // body text color
-                      ),
-                      textButtonTheme: TextButtonThemeData(
-                        style: TextButton.styleFrom(
-                          foregroundColor:
-                              primaryBlueColor, // button text color
-                        ),
-                      ),
-                    ),
-                    child: child!,
-                  );
-                },
-                initialTime: TimeOfDay(
-                    hour: selectedDate.value?.toLocal().hour ??
-                        widget.order.orderTime.toLocal().hour,
-                    minute: selectedDate.value?.toLocal().minute ??
-                        widget.order.orderTime.toLocal().minute))
-            .then((TimeOfDay? value) {
+          context: context,
+          builder: (BuildContext context, Widget? child) {
+            return Theme(
+              data: Theme.of(context).copyWith(
+                colorScheme: ColorScheme.light(
+                  primary: primaryBlueColor,
+                  onPrimary: Colors.white, // header text color
+                  onSurface: Colors.black, // body text color
+                ),
+                textButtonTheme: TextButtonThemeData(
+                  style: TextButton.styleFrom(
+                    foregroundColor: primaryBlueColor, // button text color
+                  ),
+                ),
+              ),
+              child: child!,
+            );
+          },
+          initialTime: TimeOfDay(
+              hour: selectedDate.value?.toLocal().hour ??
+                  widget.order.orderTime.toLocal().hour,
+              minute: selectedDate.value?.toLocal().minute ??
+                  widget.order.orderTime.toLocal().minute),
+        ).then((TimeOfDay? value) {
           if (value != null) {
+            mezDbgPrint("Valluue ==> $value");
             selectedTime.value = value;
-            selectedDate.value = new DateTime(
-                selectedDate.value!.year,
-                selectedDate.value!.month,
-                selectedDate.value!.day,
-                selectedTime.value!.hour,
-                selectedTime.value!.minute);
+            mezDbgPrint("selectedTime.value ==> ${selectedTime.value}");
+            mezDbgPrint(
+                "selectedDate.value!.year ==> ${selectedDate.value?.year}");
+            mezDbgPrint(
+                "selectedDate.value!.year ==> ${selectedDate.value?.month}");
+            mezDbgPrint(
+                "selectedDate.value!.year ==> ${selectedDate.value?.day}");
+            selectedDate.value = DateTime(
+              selectedDate.value!.year,
+              selectedDate.value!.month,
+              selectedDate.value!.day,
+              selectedTime.value!.hour,
+              selectedTime.value!.minute,
+            );
+            mezDbgPrint("selectedDate.value ==> ${selectedDate.value}");
           }
         });
       },
@@ -273,7 +289,7 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
     );
   }
 
-  Widget _dateSelector(BuildContext context, Rxn<DateTime> selectedDate) {
+  Widget _dateSelector(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () async {
