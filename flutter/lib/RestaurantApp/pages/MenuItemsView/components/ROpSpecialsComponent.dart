@@ -57,7 +57,7 @@ class ROpSpecialsComponent extends StatelessWidget {
                       children: <Widget>[
                         GroupedListView<Item, DateTime>(
                           shrinkWrap: true,
-                          order: GroupedListOrder.DESC,
+                          order: GroupedListOrder.ASC,
                           elements:
                               viewController.restaurant.value!.currentSpecials,
                           groupBy: (Item element) => DateTime(
@@ -65,16 +65,22 @@ class ROpSpecialsComponent extends StatelessWidget {
                             element.startsAt!.toLocal().month,
                             element.startsAt!.toLocal().day,
                           ),
-                          groupComparator: (DateTime value1, DateTime value2) =>
-                              value2.toLocal().compareTo(value1.toLocal()),
+                          // groupComparator: (DateTime value1, DateTime value2) =>
+                          //     value2
+                          //         .toLocal()
+                          //         .day
+                          //         .compareTo(value1.toLocal().day),
                           itemComparator: (Item element1, Item element2) =>
-                              element2.startsAt!.compareTo(element1.startsAt!),
+                              element2.startsAt!
+                                  .toLocal()
+                                  .compareTo(element1.startsAt!.toLocal()),
                           physics: NeverScrollableScrollPhysics(),
                           groupHeaderBuilder: (Item element) {
                             return Container(
                               margin: const EdgeInsets.symmetric(vertical: 8),
                               child: Text(
                                 element.startsAt!
+                                    .toLocal()
                                     .toDayName(withDateNumber: true),
                                 style: Get.textTheme.headline3
                                     ?.copyWith(fontSize: 13.sp),
