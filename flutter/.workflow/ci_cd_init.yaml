@@ -1,7 +1,11 @@
 name: '1.0.$(Build.BuildId)'
 
 trigger:
-- master
+  - none
+pr:
+  - branches:
+    include:
+      - master
 
 variables:
 - name: androidKeystoreKeyAlias
