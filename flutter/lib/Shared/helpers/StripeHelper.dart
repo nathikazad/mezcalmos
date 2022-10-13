@@ -200,7 +200,7 @@ Future<String> acceptPaymentWithSavedCard(
       throw Exception(serverResponse.errorMessage ?? "Unknown Error");
     }
   } catch (e) {
-    MezSnackbar("Add Card Error", e.toString());
+    MezSnackbar("Add Card Error", "Server side error");
     throw e;
   }
 }
@@ -379,11 +379,7 @@ Future<dynamic> addCardSheet() {
                   const SizedBox(
                     height: 20,
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(ctx).viewInsets.bottom),
-                    child: CardForm(),
-                  ),
+                  CardForm(),
                 ],
               )),
         );
@@ -423,7 +419,8 @@ class _CardFormState extends State<CardForm> {
             "Add Card Error", serverResponse.errorMessage ?? "Unknown Error");
       }
     } on StripeException catch (e) {
-      MezSnackbar("Error", e.toJson()['localizedMessage'] ?? "error");
+      mezDbgPrint("Error add stripe ======>>>>$e");
+      MezSnackbar("Error", e.toString() ?? "error");
     } catch (e) {
       MezSnackbar("Error", "Error");
     } finally {
@@ -472,9 +469,6 @@ class _CardFormState extends State<CardForm> {
           //         alignment: Alignment.center,
           //         child: Text("Save")),
           //     onPressed: _isButtonEnabled ? createCard : null),
-          const SizedBox(
-            height: 8,
-          ),
         ]);
   }
 }

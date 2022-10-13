@@ -257,7 +257,8 @@ class ROpEditInfoController {
         (restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
                 true &&
             (!restaurant.value!.paymentInfo.detailsSubmitted ||
-                !restaurant.value!.paymentInfo.chargesEnabled));
+                !restaurant.value!.paymentInfo.chargesEnabled ||
+                !restaurant.value!.paymentInfo.stripe!.requirements.isEmpty));
   }
 
   bool getChargeFessOnCustomer() {

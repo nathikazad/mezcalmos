@@ -8,11 +8,11 @@ import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
 
 //
@@ -103,8 +103,13 @@ class _SavedCardsListViewState extends State<SavedCardsListView> {
                     onYesClick: () async {
                   await removeCard(cardId: card.id)
                       .then((ServerResponse response) {
-                    mezDbgPrint("erorororoororo =========>$response");
-                  }).whenComplete(() => Get.back());
+                    if (!response.success) {
+                      MezSnackbar("Error", response.errorMessage ?? "error");
+                    }
+                    if (response.success) {
+                      Get.back(closeOverlays: true);
+                    }
+                  });
                 });
               },
               child: Ink(
