@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:mez_services_web_app/controllers/languageController.dart';
 import 'package:mez_services_web_app/models/Generic.dart';
 import 'package:mez_services_web_app/models/Services/Restaurant.dart';
+import 'package:mez_services_web_app/services/values/constants.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
@@ -23,7 +25,7 @@ class ItemSliverAppBar extends StatelessWidget {
       automaticallyImplyLeading: false,
       // titleSpacing: 12,
 
-      // leading: _BackButtonAppBar(),
+      leading: _BackButtonAppBar(),
       actions: <Widget>[
         //getAppbarIconsButton(),
       ],
@@ -86,6 +88,34 @@ class ItemSliverAppBar extends StatelessWidget {
                 },
               )
             : null,
+      ),
+    );
+  }
+
+  Widget _BackButtonAppBar() {
+    return Transform.scale(
+      scale: 0.6,
+      child: InkWell(
+        onTap: () {
+          QR.back();
+        },
+        child: Ink(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.9),
+                  spreadRadius: 0,
+                  blurRadius: 7,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+              color: Colors.white),
+          child: Icon(
+            Icons.arrow_back_ios_new,
+            color: primaryBlueColor,
+          ),
+        ),
       ),
     );
   }

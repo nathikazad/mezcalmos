@@ -17,6 +17,7 @@ import 'package:mez_services_web_app/screens/Restaurants/resturentListView/contr
 import 'package:mez_services_web_app/services/values/constants.dart';
 import 'package:mez_services_web_app/services/widgets/mezBottomBar.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
+import 'package:mez_services_web_app/services/widgets/mezLoaderWidget.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 import '../../components/installAppBarComponent.dart';
@@ -67,7 +68,9 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
             ListRestaurantsController viewController =
                 ListRestaurantsController();
             return Scaffold(
-                appBar: InstallAppBarComponent(),
+                appBar: InstallAppBarComponent(
+                  automaticallyGetBack: false,
+                ),
                 bottomNavigationBar: MezBottomBar(),
                 body: LayoutBuilder(
                   builder: (context, constraints) {
@@ -111,9 +114,7 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
                 ));
           } else {
             return Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
+              body: Center(child: MezLoaderWidget()),
             );
           }
         });

@@ -11,6 +11,7 @@ import 'package:mez_services_web_app/models/Services/Restaurant.dart';
 import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/components/itemSliverAppBar.dart';
 import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/restaurnatsItemsView.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
+import 'package:mez_services_web_app/services/widgets/mezLoaderWidget.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -384,6 +385,8 @@ class _ViewRestaurantScreenFroDesktopState
                             ),
                             Container(
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   (restaurant.value!.description![
                                               lang.userLanguageKey] !=
@@ -392,7 +395,7 @@ class _ViewRestaurantScreenFroDesktopState
                                           child: Row(
                                             children: [
                                               Text(
-                                                "${restaurant.value!.description![lang.userLanguageKey]!}",
+                                                "${restaurant.value!.description![lang.userLanguageKey]!.trim()}",
                                                 style: GoogleFonts.nunito(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w600,
@@ -575,7 +578,7 @@ class _ViewRestaurantScreenFroDesktopState
                   ],
                 )
               : Center(
-                  child: CircularProgressIndicator(),
+                  child: MezLoaderWidget(),
                 ),
         ),
       ),

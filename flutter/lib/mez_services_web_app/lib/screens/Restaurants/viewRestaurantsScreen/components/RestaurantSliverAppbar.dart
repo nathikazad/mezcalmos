@@ -10,6 +10,7 @@ import 'package:mez_services_web_app/helpers/StringHelper.dart'
     show TwoLettersGenerator;
 import 'package:mez_services_web_app/services/values/constants.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:shimmer/shimmer.dart';
@@ -47,7 +48,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
       bottom: (restaurant.getCategories.length > 1 && !showInfo)
           ? bottom(context)
           : null,
-      // leading: !isRunningOnWeb! ? _BackButtonAppBar() : null,
+      leading: _BackButtonAppBar(),
       // actions: !isRunningOnWeb!
       //     ? <Widget>[
       //        // getAppbarIconsButton(),
@@ -211,11 +212,14 @@ class RestaurantSliverAppBar extends StatelessWidget {
       scale: 0.6,
       child: InkWell(
         onTap: () {
-          if (showInfo) {
-            onInfoTap();
-          } else {
-            Get.back();
-          }
+          QR.back();
+          // if (showInfo) {
+          //   print("this is a test");
+          //   onInfoTap();
+          // } else {
+          //   print("this is a test 3");
+          //   Get.back();
+          // }
         },
         child: Ink(
           decoration: BoxDecoration(

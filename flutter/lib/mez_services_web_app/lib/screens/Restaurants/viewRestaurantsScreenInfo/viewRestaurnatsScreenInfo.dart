@@ -17,6 +17,7 @@ import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreenIn
 import 'package:mez_services_web_app/services/values/constants.dart';
 import 'package:mez_services_web_app/services/widgets/mezBottomBar.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
+import 'package:mez_services_web_app/services/widgets/mezLoaderWidget.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 final df = new DateFormat('hh:mm a');
@@ -67,7 +68,12 @@ class _ViewRestaurantsScrennInfoState extends State<ViewRestaurantsScrennInfo> {
                 Get.find<LanguageController>();
 
             return Scaffold(
-              appBar: InstallAppBarComponent(),
+              appBar: InstallAppBarComponent(
+                automaticallyGetBack: (MezCalmosResizer.isMobile(context) ||
+                        MezCalmosResizer.isSmallMobile(context))
+                    ? false
+                    : true,
+              ),
               bottomNavigationBar: MezBottomBar(),
               body: LayoutBuilder(builder: ((context, constraints) {
                 return (restaurant != null)
@@ -89,7 +95,7 @@ class _ViewRestaurantsScrennInfoState extends State<ViewRestaurantsScrennInfo> {
                       )
                     : const Scaffold(
                         body: Center(
-                          child: CircularProgressIndicator(),
+                          child: MezLoaderWidget(),
                         ),
                       );
               })),
@@ -97,7 +103,7 @@ class _ViewRestaurantsScrennInfoState extends State<ViewRestaurantsScrennInfo> {
           } else {
             return const Scaffold(
               body: Center(
-                child: CircularProgressIndicator(),
+                child: MezLoaderWidget(),
               ),
             );
           }

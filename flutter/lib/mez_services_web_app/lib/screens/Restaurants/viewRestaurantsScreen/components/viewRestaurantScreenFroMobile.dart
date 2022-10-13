@@ -11,6 +11,7 @@ import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/c
 import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/components/RestaurantSliverAppbar.dart';
 import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreenInfo/components/restaurantInfoTabForMobile.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
+import 'package:mez_services_web_app/services/widgets/mezLoaderWidget.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 //import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 
@@ -143,13 +144,13 @@ class _ViewRestaurantScreenFroMobileState
           } else if (snapshot.hasError) {
             return Scaffold(
               body: Center(
-                child: CircularProgressIndicator(),
+                child: MezLoaderWidget(),
               ),
             );
           } else {
             return Scaffold(
               body: Center(
-                child: CircularProgressIndicator(),
+                child: MezLoaderWidget(),
               ),
             );
           }

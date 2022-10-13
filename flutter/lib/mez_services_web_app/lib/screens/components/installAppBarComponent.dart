@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:mez_services_web_app/controllers/languageController.dart';
 import 'package:mez_services_web_app/helpers/StringHelper.dart';
 import 'package:mez_services_web_app/helpers/changeLagWithParams.dart';
+import 'package:mez_services_web_app/services/values/constants.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/foundation.dart' show TargetPlatform;
@@ -14,7 +16,10 @@ const Color primaryColor = Color.fromRGBO(103, 121, 254, 1);
 
 class InstallAppBarComponent extends StatefulWidget
     implements PreferredSizeWidget {
-  InstallAppBarComponent({Key? key}) : super(key: key);
+  InstallAppBarComponent({Key? key, this.automaticallyGetBack = true})
+      : super(key: key);
+
+  final bool? automaticallyGetBack;
 
   @override
   State<InstallAppBarComponent> createState() => _InstallAppBarComponentState();
@@ -28,57 +33,9 @@ class _InstallAppBarComponentState extends State<InstallAppBarComponent> {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       return Container(
-        child: _buildWidget(context),
+        child: _buildWidget(context, widget.automaticallyGetBack!),
       );
     });
-    // return Container(
-    //   width: Get.width,
-    //   height: kToolbarHeight,
-    //   color: Color.fromRGBO(225, 228, 255, 1),
-    //   padding: const EdgeInsets.symmetric(horizontal: 15),
-    //   child: Row(
-    //     children: [
-    //       InkWell(
-    //         onTap: () {
-    //           _launchURL(context);
-    //         },
-    //         child: Container(
-    //           height: 35,
-    //           decoration: BoxDecoration(
-    //               borderRadius: BorderRadius.circular(39),
-    //               color: Color.fromRGBO(103, 121, 254, 1)),
-    //           child: Padding(
-    //             padding: const EdgeInsets.symmetric(horizontal: 15),
-    //             child: Center(
-    //               child: Text(
-    //                 "Install App",
-    //                 style: TextStyle(
-    //                     fontSize: 13,
-    //                     color: Colors.white,
-    //                     fontFamily: "Montserrat",
-    //                     fontWeight: FontWeight.w700),
-    //               ),
-    //             ),
-    //           ),
-    //         ),
-    //       ),
-    //       SizedBox(
-    //         width: Get.width * 0.1,
-    //       ),
-    //       Expanded(
-    //           child: Container(
-    //         child: Text(
-    //           "Install the app \nto make orders online.",
-    //           style: TextStyle(
-    //               fontSize: 13,
-    //               fontFamily: "Montserrat",
-    //               color: Color.fromRGBO(103, 121, 254, 1),
-    //               fontWeight: FontWeight.w600),
-    //         ),
-    //       ))
-    //     ],
-    //   ),
-    // );
   }
 }
 
@@ -131,7 +88,7 @@ double getText2Size(BuildContext context) {
 }
 
 // desktop Widget
-Widget _buildWidget(BuildContext context) {
+Widget _buildWidget(BuildContext context, bool automaticallyGetBack) {
   dynamic _i18n() =>
       Get.find<LanguageController>().strings["CustomerApp"]["web"]["install"];
   return Container(
@@ -142,6 +99,15 @@ Widget _buildWidget(BuildContext context) {
         horizontal: MezCalmosResizer.getWepPageHorizontalPadding(context)),
     child: Row(
       children: [
+        if (automaticallyGetBack)
+          Row(
+            children: [
+              _BackButtonAppBar(),
+              SizedBox(
+                width: Get.width * 0.05,
+              ),
+            ],
+          ),
         InkWell(
           onTap: () {
             _launchURL(context);
@@ -207,4 +173,32 @@ _launchURL(BuildContext context) async {
     await launchUrl(Uri.parse(
         "https://play.google.com/store/apps/details?id=com.mezcalmos.customer"));
   }
+}
+
+Widget _BackButtonAppBar() {
+  return Transform.scale(
+    scale: 1,
+    child: InkWell(
+      onTap: () {
+        QR.back();
+      },
+      child: Ink(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.9),
+                spreadRadius: 0,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ],
+            color: Colors.white),
+        child: Icon(
+          Icons.arrow_back_ios_new,
+          color: primaryBlueColor,
+        ),
+      ),
+    ),
+  );
 }

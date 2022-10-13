@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mez_services_web_app/models/Services/Restaurant.dart';
 import 'package:mez_services_web_app/services/values/constants.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
@@ -25,7 +26,10 @@ class ItemSliverAppBar extends StatelessWidget {
       automaticallyImplyLeading: false,
       // titleSpacing: 12,
 
-      //leading: _BackButtonAppBar(),
+      leading: (MezCalmosResizer.isMobile(context) ||
+              MezCalmosResizer.isSmallMobile(context))
+          ? _BackButtonAppBar()
+          : null,
       // actions: <Widget>[
       //   getAppbarIconsButton(),
       // ],
@@ -97,7 +101,7 @@ class ItemSliverAppBar extends StatelessWidget {
       scale: 0.6,
       child: InkWell(
         onTap: () {
-          Get.back();
+          QR.back();
         },
         child: Ink(
           decoration: BoxDecoration(

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mez_services_web_app/helpers/GeneralPurposeHelper.dart';
 import 'package:mez_services_web_app/helpers/setUpHelper.dart';
@@ -9,6 +10,7 @@ import 'package:mez_services_web_app/screens/Restaurants/resturentListView/resta
 import 'package:mez_services_web_app/screens/unFoundPage.dart';
 import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreenInfo/viewRestaurnatsScreenInfo.dart';
 import 'package:mez_services_web_app/services/values/constants.dart';
+import 'package:mez_services_web_app/services/widgets/mezLoaderWidget.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AppRoutes {
@@ -28,6 +30,7 @@ class AppRoutes {
       path: '/404',
       builder: () => UnfoundPageScreen(),
     );
+    QR.settings.initPage = const Material(child: MezLoaderWidget());
 
     // add observers to the app
     // this observer will be called when the user navigates to new route

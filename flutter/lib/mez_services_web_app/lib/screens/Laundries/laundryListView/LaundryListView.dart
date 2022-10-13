@@ -18,6 +18,7 @@ import 'package:mez_services_web_app/screens/Restaurants/resturentListView/contr
 import 'package:mez_services_web_app/services/values/constants.dart';
 import 'package:mez_services_web_app/services/widgets/mezBottomBar.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
+import 'package:mez_services_web_app/services/widgets/mezLoaderWidget.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class LaundryListView extends StatefulWidget {
@@ -65,7 +66,9 @@ class _LaundryListViewState extends State<LaundryListView> {
               if (snapShot.hasData && snapShot.data == true) {
                 LanguageController lang = Get.find<LanguageController>();
                 return Scaffold(
-                  appBar: InstallAppBarComponent(),
+                  appBar: InstallAppBarComponent(
+                    automaticallyGetBack: false,
+                  ),
                   bottomNavigationBar: MezBottomBar(),
                   body: LayoutBuilder(builder: ((context, constraints) {
                     return Scaffold(
@@ -91,15 +94,15 @@ class _LaundryListViewState extends State<LaundryListView> {
                         ),
                         body: (laundries.length > 0)
                             ? _buildResponciveWidget(context)
-                            : Center(
-                                child: CircularProgressIndicator(),
+                            : const Center(
+                                child: MezLoaderWidget(),
                               ));
                   })),
                 );
               } else {
-                return Scaffold(
+                return const Scaffold(
                     body: Center(
-                  child: CircularProgressIndicator(),
+                  child: MezLoaderWidget(),
                 ));
               }
             }));

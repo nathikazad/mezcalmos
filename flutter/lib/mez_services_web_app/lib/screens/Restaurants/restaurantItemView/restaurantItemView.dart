@@ -12,6 +12,7 @@ import 'package:mez_services_web_app/screens/Restaurants/restaurantItemView/comp
 import 'package:mez_services_web_app/services/values/constants.dart';
 import 'package:mez_services_web_app/services/widgets/mezBottomBar.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
+import 'package:mez_services_web_app/services/widgets/mezLoaderWidget.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RestaurantItemView extends StatefulWidget {
@@ -71,7 +72,13 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
                 Get.find<LanguageController>();
             return (item != null)
                 ? Scaffold(
-                    appBar: InstallAppBarComponent(),
+                    appBar: InstallAppBarComponent(
+                      automaticallyGetBack:
+                          (MezCalmosResizer.isMobile(context) ||
+                                  MezCalmosResizer.isSmallMobile(context))
+                              ? false
+                              : true,
+                    ),
                     bottomNavigationBar: MezBottomBar(),
                     body: LayoutBuilder(builder: (context, constraints) {
                       if (MezCalmosResizer.isMobile(context) ||
@@ -88,7 +95,7 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
                   )
                 : Scaffold(
                     body: Center(
-                      child: CircularProgressIndicator(),
+                      child: MezLoaderWidget(),
                     ),
                   );
           } else {

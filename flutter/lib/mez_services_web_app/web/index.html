@@ -98,12 +98,11 @@ const app = initializeApp(firebaseConfig);
   <script>
     window.addEventListener('load', function(ev) {
       var loading = document.querySelector('#loading');
-      loading.innerHTML = `<div class="everythingOnOneLine"><span style="display: inline-block;">Mezcalmos Loading</span><div class="waviy">
-   <span style="--i:1">.</span>
-   <span style="--i:2">.</span>
-   <span style="--i:3">.</span>
-   
-  </div> </div>`;
+      loading.innerHTML=`<div  style="width:200px; ">`;
+      loading.innerHTML += `<div style="margin-left: 24%;margin-bottom: 15px;" class="loader"/>`;
+      loading.innerHTML+=`<div class="everythingOnOneLine"><span style="display: inline-block;">Loading, please wait ..</span> </div>`
+  loading.innerHTML+=`</div>`
+  
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
         serviceWorker: {

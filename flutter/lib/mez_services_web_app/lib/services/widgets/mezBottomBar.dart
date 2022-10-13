@@ -5,11 +5,17 @@ import 'package:mez_services_web_app/controllers/languageController.dart';
 import 'package:mez_services_web_app/models/Generic.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class MezBottomBar extends StatelessWidget {
+class MezBottomBar extends StatefulWidget {
   const MezBottomBar({Key? key}) : super(key: key);
 
+  @override
+  State<MezBottomBar> createState() => _MezBottomBarState();
+}
+
+class _MezBottomBarState extends State<MezBottomBar> {
   @override
   Widget build(BuildContext context) {
     final lang = Get.find<LanguageController>();
@@ -29,6 +35,11 @@ class MezBottomBar extends StatelessWidget {
                 lang.changeLangForWeb(lang.userLanguageKey == LanguageType.EN
                     ? LanguageType.ES
                     : LanguageType.EN);
+                var xPath = QR.currentPath;
+                var str = xPath.split('?');
+                QR.navigator.replaceAll(
+                    "${str[0]}?lang=${(lang.userLanguageKey == LanguageType.EN) ? "en" : "es"}");
+                print("this is a test the current path is xPath $xPath");
               },
               child: Obx(
                 () => RichText(

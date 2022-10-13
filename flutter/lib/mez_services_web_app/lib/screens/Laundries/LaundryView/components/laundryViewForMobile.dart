@@ -6,9 +6,11 @@ import 'package:mez_services_web_app/controllers/LaundryController.dart';
 import 'package:mez_services_web_app/controllers/languageController.dart';
 import 'package:mez_services_web_app/models/Services/Laundry.dart';
 import 'package:mez_services_web_app/screens/Laundries/LaundryView/components/buildTagWidget.dart';
+import 'package:mez_services_web_app/screens/Laundries/LaundryView/components/getBackButton.dart';
 import 'package:mez_services_web_app/services/values/constants.dart';
 import 'package:mez_services_web_app/services/widgets/MezServiceOpenHours.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 import 'package:sizer/sizer.dart';
 
@@ -23,6 +25,13 @@ class LaundryViewForMobile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: BackButtonAppBar(),
+        title: Text(
+          laundry.info.name,
+        ),
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
             horizontal: MezCalmosResizer.getWepPageHorizontalPadding(context)),

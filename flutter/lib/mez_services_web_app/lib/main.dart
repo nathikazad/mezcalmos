@@ -30,7 +30,7 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {  
+class _MyAppState extends State<MyApp> {
   late final AppLaunchMode _launchMode;
   @override
   void initState() {

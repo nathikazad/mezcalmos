@@ -12,6 +12,7 @@ import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/c
 import 'package:mez_services_web_app/services/values/constants.dart';
 import 'package:mez_services_web_app/services/widgets/mezBottomBar.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
+import 'package:mez_services_web_app/services/widgets/mezLoaderWidget.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 
@@ -52,7 +53,12 @@ class _RestaurantsItemsViewState extends State<RestaurantsItemsView> {
             }
 
             return Scaffold(
-              appBar: InstallAppBarComponent(),
+              appBar: InstallAppBarComponent(
+                automaticallyGetBack: (MezCalmosResizer.isMobile(context) ||
+                        MezCalmosResizer.isSmallMobile(context))
+                    ? false
+                    : true,
+              ),
               bottomNavigationBar: MezBottomBar(),
               body: LayoutBuilder(
                 builder: (context, constraints) {
@@ -68,7 +74,7 @@ class _RestaurantsItemsViewState extends State<RestaurantsItemsView> {
           } else {
             return Scaffold(
               body: Center(
-                child: CircularProgressIndicator(),
+                child: MezLoaderWidget(),
               ),
             );
           }
