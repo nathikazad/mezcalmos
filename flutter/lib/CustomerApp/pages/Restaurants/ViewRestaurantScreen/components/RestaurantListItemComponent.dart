@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -43,21 +42,21 @@ class _RestaurantsListOfItemsComponentState
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              if (isImageExist)
-                CircleAvatar(
-                  radius: 30,
-                  backgroundImage:
-                      CachedNetworkImageProvider(widget.item.image ?? ""),
-                  onBackgroundImageError: (Object e, StackTrace? s) {
-                    setState(() {
-                      isImageExist = false;
-                    });
-                  },
-                ),
-              if (isImageExist)
-                SizedBox(
-                  width: 15,
-                ),
+              // if (isImageExist)
+              //   CircleAvatar(
+              //     radius: 30,
+              //     backgroundImage:
+              //         CachedNetworkImageProvider(widget.item.image ?? ""),
+              //     onBackgroundImageError: (Object e, StackTrace? s) {
+              //       setState(() {
+              //         isImageExist = false;
+              //       });
+              //     },
+              //   ),
+              // if (isImageExist)
+              SizedBox(
+                width: 15,
+              ),
               Flexible(
                 fit: FlexFit.tight,
                 child: Column(

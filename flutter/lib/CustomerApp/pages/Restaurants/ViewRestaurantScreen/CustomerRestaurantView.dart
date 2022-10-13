@@ -4,6 +4,7 @@ import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/Controllers/CustomerRestaurantController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/RestauSliverAppBar.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/RestaurantGridItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/RestaurantListItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/restaurantInfoTab.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
@@ -221,26 +222,41 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
       {required List<Item> items,
       required String restaurantId,
       bool isSpecial = false}) {
-    return Container(
-      margin: const EdgeInsets.only(top: 5),
-      child: Column(
-        children: items.fold<List<Widget>>(<Widget>[],
-            (List<Widget> children, Item item) {
-          children.add(RestaurantsListOfItemsComponent(
-              item: item,
-              function: () {
-                Get.toNamed(
-                  getItemRoute(restaurantId, item.id!),
-                  arguments: {
-                    "mode": ViewItemScreenMode.AddItemMode,
-                    "isSpecial": isSpecial
-                  },
-                );
-              }));
+    if (restaurant.restaurantsView == RestaurantsView.Rows || isSpecial) {
+      return Container(
+        margin: const EdgeInsets.only(top: 5),
+        child: Column(
+          children: items.fold<List<Widget>>(<Widget>[],
+              (List<Widget> children, Item item) {
+            children.add(RestaurantsListOfItemsComponent(
+                item: item,
+                function: () {
+                  Get.toNamed(
+                    getItemRoute(restaurantId, item.id!),
+                    arguments: {
+                      "mode": ViewItemScreenMode.AddItemMode,
+                      "isSpecial": isSpecial
+                    },
+                  );
+                }));
 
-          return children;
+            return children;
+          }),
+        ),
+      );
+    } else {
+      return GridView.count(
+        crossAxisCount: 2,
+        mainAxisSpacing: 8,
+        crossAxisSpacing: 8,
+        shrinkWrap: true,
+        padding: EdgeInsets.only(top: 17),
+        physics: NeverScrollableScrollPhysics(),
+        children: List.generate(items.length, (int index) {
+          return RestaurantgridItemCard(
+              item: items[index], restaurant: restaurant);
         }),
-      ),
-    );
+      );
+    }
   }
 }
