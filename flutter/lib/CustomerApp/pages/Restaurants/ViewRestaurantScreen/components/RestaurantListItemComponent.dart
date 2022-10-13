@@ -1,9 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:sizer/sizer.dart';
 
 class RestaurantsListOfItemsComponent extends StatefulWidget {
@@ -23,12 +22,17 @@ class RestaurantsListOfItemsComponent extends StatefulWidget {
 
 class _RestaurantsListOfItemsComponentState
     extends State<RestaurantsListOfItemsComponent> {
-  bool isImageExist = true;
+  // bool isImageExist = true;
+  RxBool isImageExist = RxBool(false);
+  @override
+  void initState() {
+    isImageExist.value =
+        widget.item.image != null && widget.item.image?.isURL == true;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final TextTheme txt = Theme.of(context).textTheme;
-    final LanguageType userLanguage =
-        Get.find<LanguageController>().userLanguageKey;
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
       child: Container(
@@ -42,21 +46,23 @@ class _RestaurantsListOfItemsComponentState
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // if (isImageExist)
-              //   CircleAvatar(
-              //     radius: 30,
-              //     backgroundImage:
-              //         CachedNetworkImageProvider(widget.item.image ?? ""),
-              //     onBackgroundImageError: (Object e, StackTrace? s) {
-              //       setState(() {
-              //         isImageExist = false;
-              //       });
-              //     },
-              //   ),
-              // if (isImageExist)
-              SizedBox(
-                width: 15,
-              ),
+              Obx(() {
+                if (isImageExist.isTrue) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 15),
+                    child: CircleAvatar(
+                      radius: 30,
+                      backgroundImage:
+                          CachedNetworkImageProvider(widget.item.image!),
+                      onBackgroundImageError: (Object e, StackTrace? s) {
+                        isImageExist.value = false;
+                      },
+                    ),
+                  );
+                } else {
+                  return SizedBox();
+                }
+              }),
               Flexible(
                 fit: FlexFit.tight,
                 child: Column(
@@ -65,7 +71,7 @@ class _RestaurantsListOfItemsComponentState
                   children: [
                     Text(
                       "${widget.item.name[userLanguage]?.capitalizeFirstofEach}",
-                      style: txt.headline3!.copyWith(
+                      style: Get.textTheme.headline3?.copyWith(
                         fontSize: 13.sp,
                       ),
                     ),
@@ -82,7 +88,8 @@ class _RestaurantsListOfItemsComponentState
               ),
               Container(
                 alignment: Alignment.centerLeft,
-                child: Text("\$${widget.item.cost}", style: txt.headline3),
+                child: Text("\$${widget.item.cost}",
+                    style: Get.textTheme.headline3),
               ),
               SizedBox(
                 width: 3,

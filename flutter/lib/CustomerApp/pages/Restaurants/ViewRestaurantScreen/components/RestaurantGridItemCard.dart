@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class RestaurantgridItemCard extends StatefulWidget {
   const RestaurantgridItemCard(
@@ -24,9 +22,13 @@ class RestaurantgridItemCard extends StatefulWidget {
 }
 
 class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
-  final LanguageType userLanguage =
-      Get.find<LanguageController>().userLanguageKey;
-  bool isImageExist = true;
+  RxBool isImageExist = RxBool(false);
+  @override
+  void initState() {
+    isImageExist.value =
+        widget.item.image != null && widget.item.image?.isURL == true;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,18 +47,23 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if (isImageExist && widget.item.image != null)
-              CircleAvatar(
-                radius: 45,
-                backgroundImage: CachedNetworkImageProvider(widget.item.image!),
-                onBackgroundImageError: (Object e, StackTrace? s) {
-                  mezDbgPrint(
-                      "Item ${widget.item.name} ==========> Image url corrupted please check ");
-                  setState(() {
-                    isImageExist = false;
-                  });
-                },
-              ),
+            Obx(() {
+              if (isImageExist.isTrue) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 15),
+                  child: CircleAvatar(
+                    radius: 30,
+                    backgroundImage:
+                        CachedNetworkImageProvider(widget.item.image!),
+                    onBackgroundImageError: (Object e, StackTrace? s) {
+                      isImageExist.value = false;
+                    },
+                  ),
+                );
+              } else {
+                return SizedBox();
+              }
+            }),
             SizedBox(
               height: 5,
             ),
