@@ -24,7 +24,7 @@ class ROpEditInfoWidgets {
         alignment: Alignment.centerLeft,
         child: Text(
           "${_i18n()["workingHours"]}",
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyText2,
         ),
       ),
       SizedBox(

@@ -37,7 +37,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
         children: [
           Text(
             '${_i18n()["acceptedPayments"]}',
-            style: Get.textTheme.bodyText1,
+            style: Get.textTheme.bodyText2,
           ),
           SizedBox(
             height: 10,
