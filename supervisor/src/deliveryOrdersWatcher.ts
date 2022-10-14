@@ -6,6 +6,7 @@ import { RestaurantOrder, RestaurantOrderStatus } from "../../functions/src/shar
 import { LaundryOrder, LaundryOrderStatus } from "../../functions/src/shared/models/Services/Laundry/LaundryOrder"
 import * as deliveryAdminNodes from "../../functions/src/shared/databaseNodes/deliveryAdmin";
 import * as laundryNodes from "../../functions/src/shared/databaseNodes/services/laundry";
+import * as restaurantNodes from "../../functions/src/shared/databaseNodes/services/restaurant";
 import { DeliveryAdmin } from "../../functions/src/shared/models/DeliveryAdmin";
 import { fcmPayload, NotificationPriority, push } from "../../functions/src/utilities/senders/fcm";
 import { NotificationInfo } from "../../functions/src/shared/models/Generic/Generic";
@@ -61,6 +62,7 @@ async function checkdeliverableOrders() {
           if ((deliverableOrder as RestaurantOrder).status != RestaurantOrderStatus.OrderReceieved)
             continue
           console.log("status received")
+          operators = (await restaurantNodes.restaurantOperators(deliverableOrder.serviceProviderId!).once('value')).val()
           break;
         default:
           continue;
