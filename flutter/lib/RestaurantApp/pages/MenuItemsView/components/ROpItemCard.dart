@@ -104,15 +104,16 @@ class _ROpItemCardState extends State<ROpItemCard> {
                   children: [
                     Text('${_i18n()["category"]}: '),
                     Flexible(
-                      flex: 6,
                       fit: FlexFit.tight,
                       child: Text(
                         widget.category?.name![userLanguage] ?? "Error",
-                        style: Get.textTheme.bodyText1,
+                        style: Get.textTheme.bodyText2,
                       ),
                     ),
-                    Spacer(),
-                    Text('${_i18n()["itemStatus"]}'),
+                    Text(
+                      '${_i18n()["available"]}',
+                      maxLines: 2,
+                    ),
                     Switch(
                       value: widget.item.available,
                       onChanged: (widget.viewController.reOrderMode.isTrue)

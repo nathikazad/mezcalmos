@@ -145,7 +145,7 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
                   editInfoController: editInfoController,
                 ),
                 SizedBox(
-                  height: 15,
+                  height: 25,
                 ),
                 ROpAcceptedPayments(viewController: editInfoController),
                 Container(
