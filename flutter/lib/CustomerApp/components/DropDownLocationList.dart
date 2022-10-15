@@ -178,7 +178,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       final SavedLocation? _savedLocation = await Get.toNamed(
         kPickLocationRoute,
         arguments: true,
-      ) as SavedLocation;
+      ) as SavedLocation?;
 
       if (_savedLocation != null) {
         // in case it's repeated with the same name or same address
