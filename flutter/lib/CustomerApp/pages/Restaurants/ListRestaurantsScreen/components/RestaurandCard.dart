@@ -52,7 +52,7 @@ class RestaurantCard extends StatelessWidget {
                         style: txt.headline3,
                       ),
                       const SizedBox(height: 10),
-                      if (restaurant.description != null)
+                      if (restaurant.description?[userLanguage] != null)
                         Text(
                           restaurant.description![userLanguage]!,
                           style: txt.subtitle1,
