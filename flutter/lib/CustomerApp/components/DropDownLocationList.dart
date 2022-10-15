@@ -281,10 +281,13 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
                   SizedBox(
                     width: 8,
                   ),
-                  Text(
-                    item.name,
-                    style: Get.textTheme.bodyText2?.copyWith(
-                        fontSize: 12.sp, fontWeight: FontWeight.w600),
+                  Flexible(
+                    child: Text(
+                      item.name,
+                      overflow: TextOverflow.ellipsis,
+                      style: Get.textTheme.bodyText2?.copyWith(
+                          fontSize: 12.sp, fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ],
               ),
