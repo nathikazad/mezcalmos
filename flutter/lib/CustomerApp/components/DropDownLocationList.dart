@@ -174,7 +174,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       final SavedLocation? _savedLocation = await Get.toNamed(
         kPickLocationRoute,
         arguments: true,
-      ) as SavedLocation;
+      ) as SavedLocation?;
 
       if (_savedLocation != null) {
         // in case it's repeated with the same name or same address
@@ -277,10 +277,13 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
                   SizedBox(
                     width: 8,
                   ),
-                  Text(
-                    item.name,
-                    style: Get.textTheme.bodyText2?.copyWith(
-                        fontSize: 12.sp, fontWeight: FontWeight.w600),
+                  Flexible(
+                    child: Text(
+                      item.name,
+                      overflow: TextOverflow.ellipsis,
+                      style: Get.textTheme.bodyText2?.copyWith(
+                          fontSize: 12.sp, fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ],
               ),
