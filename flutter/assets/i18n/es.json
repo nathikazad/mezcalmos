@@ -1439,6 +1439,8 @@
             "OrderDetailsScreen": {
                 "cancelled": "Cancelada",
                 "approved": "Aprobada",
+                "scheduled": "Programada",
+                "dvTime": "El tiempo de entrega",
                 "paymentMethod": "Método de pago",
                 "cash": "Dinero",
                 "from": "De",
@@ -1476,7 +1478,8 @@
                             "ready": "Listo",
                             "inTransit": "En Tránsito",
                             "delivered": "Entregada",
-                            "cancelled": "Cancelada"
+                            "cancelled": "Cancelada",
+                            "scheduled": "Programada"
                         }
                     },
                     "CurrentOrdersListScreen": {
@@ -1539,6 +1542,7 @@
                             "restaurantDelivery": "Entrega de restaurantes",
                             "oops": "Ups",
                             "foodReady": "preparación de la comida",
+                            "dvTime": "El tiempo de entrega",
                             "set": "Establecer",
                             "time": "Tiempo",
                             "dropoff": "Entregar",
@@ -1550,6 +1554,7 @@
                                 "preparing": "Orden se está preparando",
                                 "readyForPickup": "Listo para recojer",
                                 "deliveryOtw": "Entrega en el camino",
+                                "scheduled": "Pedido programado",
                                 "delivered": "Orden Entregado",
                                 "canceled": "Orden Cancelada"
                             },
@@ -1919,7 +1924,7 @@
                         "set": "Establecer",
                         "confirm": "Confirmar",
                         "cancel": "Cancelar",
-                        "Error": "Error",
+                        "error": "Error",
                         "minTimes": "Mínimo 5 Miutes Prepare el tiempo"
                     },
                     "ROpDriverCard": {

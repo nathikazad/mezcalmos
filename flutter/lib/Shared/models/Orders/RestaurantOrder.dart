@@ -172,6 +172,11 @@ class RestaurantOrder extends DeliverableOrder {
         status == RestaurantOrderStatus.CancelledByAdmin;
   }
 
+  bool isScheduled() {
+    return deliveryTime != null &&
+        deliveryTime!.toLocal().isAfter(DateTime.now().toLocal());
+  }
+
   //   String getRightChatId() {
   //   if (getCurrentPhase() == LaundryOrderPhase.Pickup &&
   //       customerPickupDriverChatId != null) {
@@ -202,8 +207,6 @@ class RestaurantOrder extends DeliverableOrder {
             (RestaurantOrderItem element) => element.image != null) !=
         null;
   }
-
-
 
   String clipBoardText(LanguageType languageType) {
     String text = "";

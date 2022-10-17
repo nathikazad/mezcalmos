@@ -47,6 +47,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
 
   final String formattedOrderStatus;
   final String? subtitle;
+  final String? secondSubtitle;
   final Order order;
   final bool enableExpand;
 
@@ -55,6 +56,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
     this.showMsgIconInOneLine = false,
     this.isCustomerRowFirst = true,
     this.subtitle,
+    this.secondSubtitle,
     this.initialCardState = OrderInfoCardState.Minimized,
     this.onCardStateChange,
     this.enableExpand = true,
@@ -162,6 +164,10 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                   ),
                 ),
                 if (subtitle != null) Text(subtitle!),
+                if (secondSubtitle != null)
+                  Container(
+                      margin: const EdgeInsets.only(top: 5),
+                      child: Text(secondSubtitle!)),
               ],
             ),
           ),

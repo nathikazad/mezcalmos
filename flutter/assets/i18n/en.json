@@ -1448,6 +1448,8 @@
             "OrderDetailsScreen": {
                 "cancelled": "Cancelled",
                 "approved": "Approved",
+                "scheduled": "Scheduled",
+                "dvTime": "Delivery time",
                 "paymentMethod": "Payment method",
                 "cash": "Cash",
                 "from": "From",
@@ -1508,7 +1510,8 @@
                             "ready": "Ready",
                             "inTransit": "In transit",
                             "delivered": "Delivered",
-                            "cancelled": "Cancelled"
+                            "cancelled": "Cancelled",
+                            "scheduled": "Scheduled"
                         }
                     }
 
@@ -1568,12 +1571,14 @@
                             "oops": "Oops",
                             "set": "Set",
                             "time": "Time",
+                            "dvTime": "Delivery time",
                             "dropoff": "Delivery",
                             "pickup": "Pickup",
                             "pickupTimeError": "The Pickup time should be before the delivery time.",
                             "wrongTime": "You picked a wrong time",
                             "orderStatus": {
                                 "waiting": "Waiting for restaurant",
+                                "scheduled": "Scheduled order",
                                 "preparing": "Order is being prepared",
                                 "readyForPickup": "Ready for pickup",
                                 "deliveryOtw": "Delivery on the way",
@@ -1894,7 +1899,7 @@
                         "set": "Set",
                         "confirm": "Confirm",
                         "cancel": "Cancel",
-                        "Error": "Error",
+                        "error": "Error",
                         "minTimes": "Minimum 5 miutes prepare time"
                     },
                     "ROpDriverCard": {
