@@ -57,6 +57,11 @@ class Location {
     return other is Location && other.address == address;
   }
 
+  bool isValidLocation() =>
+      address.replaceAll(' ', '') != "0.0,0.0" &&
+      position.latitude != 0 &&
+      position.longitude != 0;
+
   @override
   int get hashCode => address.hashCode;
 }
