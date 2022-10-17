@@ -5,6 +5,15 @@
         "contact": {
             ".write": "true"
         },
+        "crashes": {
+            ".read": "false",
+            ".write" : "false",
+            "$uid": {
+                "$timestamp" : {
+                    ".write" : "$uid === auth.uid"
+                }
+            }
+        },
         "metadata": {
             ".read": "true",
             ".write": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
