@@ -85,13 +85,13 @@ class Restaurant extends Service {
                 ?["primary"]
             .toString()
             .toLanguageType() ??
-        LanguageType.ES;
+        LanguageType.EN;
 
     final LanguageType? secondaryLanguage = restaurantData["details"]
                 ?["language"]?["secondary"]
             .toString()
             .toLanguageType() ??
-        LanguageType.EN;
+        primaryLanguage.toOpLang();
 
     final num? rate = (restaurantData?["details"]?["rating"].toString() != null)
         ? num.tryParse(restaurantData["details"]?["rating"]?.toString() ?? "")
