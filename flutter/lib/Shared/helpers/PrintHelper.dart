@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
@@ -31,10 +32,8 @@ void mezcalmosLogger(String text, {bool isError = false}) =>
     mezDbgPrint("[MZL][ GETX ] $text");
 
 void logCrashes({required String crashInfos}) {
-  MainUserInfo? user = Get.find<AuthController>().user;
-  if (user != null) {
-    mezDbgPrint(
-        "+ Setting ==> /crashes/${user.id}/${DateTime.now().millisecondsSinceEpoch}");
+  final MainUserInfo? user = Get.find<AuthController>().user;
+  if (user != null && getAppLaunchMode() == AppLaunchMode.prod) {
     Get.find<FirebaseDb>()
         .firebaseDatabase
         .ref()
