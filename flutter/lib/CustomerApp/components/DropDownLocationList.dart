@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
 
 //
@@ -180,7 +181,8 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
         arguments: true,
       ) as SavedLocation?;
 
-      if (_savedLocation != null) {
+      if (_savedLocation != null &&
+          (_savedLocation.location?.isValidLocation() ?? false)) {
         // in case it's repeated with the same name or same address
         listOfSavedLoacations.removeWhere(
           (SavedLocation savedLoc) =>
@@ -196,6 +198,12 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
           //     listOfSavedLoacations[listOfSavedLoacations.length - 1];
         });
         await _verifyDistanceAndSetLocation(_savedLocation);
+      } else {
+        MezSnackbar(
+          _i18n()['ops'],
+          _i18n()['wrongAddress'],
+          position: SnackPosition.TOP,
+        );
       }
     } else {
       if (newLocation != null) {
