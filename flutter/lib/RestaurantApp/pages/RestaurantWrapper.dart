@@ -9,8 +9,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
-import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -34,27 +32,30 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
           .asBroadcastStream()
           .first
           .timeout(
-            Duration(seconds: 10),
+            Duration(seconds: 20),
             onTimeout: () => null,
           );
     }).asyncMap((Future event) async => restaurantOperator = await event);
   }
 
-  void _operatorInfoStreamListener() {
-    _operatorInfoStreanSub =
-        operatorInfoStream().listen((RestaurantOperator? event) {
-      if (Get.currentRoute != kUserProfile && event == null) {
-        Get.to(SomethingWentWrongScreen());
-      }
-    });
-  }
+  // void _operatorInfoStreamListener() {
+  //   _operatorInfoStreanSub =
+  //       operatorInfoStream().listen((RestaurantOperator? event) {
+  //     if (Get.currentRoute != kUserProfile && event == null) {
+  //       Get.toNamed<void>(kSomethingWentWrongScreen);
+  //     } else if (event != null &&
+  //         Get.currentRoute == kSomethingWentWrongScreen) {
+  //       Get.back<void>();
+  //     }
+  //   });
+  // }
 
   @override
   void initState() {
     // Get.put(RestaurantInfoController(), permanent: true);
 
     mezDbgPrint("RestaurantWrapper::init state");
-    Future.microtask(() async {
+    Future<void>.microtask(() async {
       mezDbgPrint("RestaurantWrapper::microtask handleState first time");
 
       restaurantOperator =
