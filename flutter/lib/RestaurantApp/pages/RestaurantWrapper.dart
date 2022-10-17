@@ -40,7 +40,7 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
           .asBroadcastStream()
           .first
           .timeout(
-            Duration(seconds: 10),
+            Duration(seconds: 20),
             onTimeout: () => null,
           );
     }).asyncMap((event) async => restaurantOperator = await event);
@@ -49,7 +49,10 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
   void _operatorInfoStreamListener() {
     _operatorInfoStreanSub = operatorInfoStream().listen((event) {
       if (Get.currentRoute != kUserProfile && event == null) {
-        Get.to(SomethingWentWrongScreen());
+        Get.toNamed<void>(kSomethingWentWrongScreen);
+      } else if (event != null &&
+          Get.currentRoute == kSomethingWentWrongScreen) {
+        Get.back<void>();
       }
     });
   }
@@ -59,7 +62,7 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
     // Get.put(RestaurantInfoController(), permanent: true);
 
     mezDbgPrint("RestaurantWrapper::init state");
-    Future.microtask(() async {
+    Future<void>.microtask(() async {
       mezDbgPrint("RestaurantWrapper::microtask handleState first time");
 
       restaurantOperator =
@@ -69,7 +72,7 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
         restaurantOperator = await Get.find<RestaurantOpAuthController>()
             .operatorInfoStream
             .first
-            .timeout(Duration(seconds: 10), onTimeout: () => null);
+            .timeout(Duration(seconds: 20), onTimeout: () => null);
       if (restaurantOperator == null) _operatorInfoStreamListener();
       mezDbgPrint("RestaurantWrapper::microtask data received");
       handleState(restaurantOperator);
@@ -90,7 +93,7 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
     mezDbgPrint(operator);
     if (operator != null && operator.state.restaurantId != null) {
       // ignore: unawaited_futures, inference_faQilure_on_function_invocation
-      Get.toNamed(kCurrentOrdersListView);
+      Get.toNamed<void>(kCurrentOrdersListView);
     } else {
       // Get.to(SomethingWentWrongScreen());
       mezDbgPrint("RestaurantWrappper::handleState state is null, ERROR");
