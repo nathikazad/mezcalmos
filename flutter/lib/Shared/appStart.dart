@@ -30,8 +30,10 @@ import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -287,9 +289,12 @@ class _StartingPointState extends State<StartingPoint> {
 
   void hookOnFlutterErrorsStdout() {
     FlutterError.onError = (FlutterErrorDetails details) {
+      final List<String> _crashString = [];
       for (String item in details.toString().split('\n')) {
+        _crashString.add(item);
         mezDbgPrint(item);
       }
+      logCrashes(crashInfos: _crashString.join('\n'));
     };
   }
 
