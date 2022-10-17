@@ -90,67 +90,81 @@ class DriverOrderCard extends StatelessWidget {
 
   Widget _getOrderWidget() {
     if (order.orderType == OrderType.Restaurant) {
-      if (!(order as RestaurantOrder).isScheduled()) {
-        switch ((order as RestaurantOrder).status) {
-          case RestaurantOrderStatus.CancelledByAdmin:
-          case RestaurantOrderStatus.CancelledByCustomer:
+      switch ((order as RestaurantOrder).status) {
+        case RestaurantOrderStatus.CancelledByAdmin:
+        case RestaurantOrderStatus.CancelledByCustomer:
+          return Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.red.shade100,
+              borderRadius: BorderRadius.circular(25),
+            ),
+            child: Center(
+              child: Text(
+                "${_i18n()["cancelled"]}",
+                style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+              ),
+            ),
+          );
+        case RestaurantOrderStatus.Delivered:
+          return Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.green.shade100,
+              borderRadius: BorderRadius.circular(25),
+            ),
+            child: Center(
+              child: Text(
+                "${_i18n()["delivered"]}",
+                style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
+              ),
+            ),
+          );
+        case RestaurantOrderStatus.OnTheWay:
+          return Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.amber.shade100,
+              borderRadius: BorderRadius.circular(25),
+            ),
+            child: Center(
+              child: Text(
+                "${_i18n()["inTransit"]}",
+                style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
+              ),
+            ),
+          );
+        case RestaurantOrderStatus.ReadyForPickup:
+          return Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.green.shade100,
+              borderRadius: BorderRadius.circular(25),
+            ),
+            child: Center(
+              child: Text(
+                "${_i18n()["ready"]}",
+                style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
+              ),
+            ),
+          );
+        case RestaurantOrderStatus.OrderReceieved:
+          if ((order as RestaurantOrder).isScheduled()) {
             return Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Colors.red.shade100,
+                color: secondaryLightBlueColor,
                 borderRadius: BorderRadius.circular(25),
               ),
               child: Center(
                 child: Text(
-                  "${_i18n()["cancelled"]}",
-                  style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+                  "${_i18n()["scheduled"]}",
+                  style: Get.textTheme.bodyText1
+                      ?.copyWith(color: primaryBlueColor),
                 ),
               ),
             );
-          case RestaurantOrderStatus.Delivered:
-            return Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.green.shade100,
-                borderRadius: BorderRadius.circular(25),
-              ),
-              child: Center(
-                child: Text(
-                  "${_i18n()["delivered"]}",
-                  style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
-                ),
-              ),
-            );
-          case RestaurantOrderStatus.OnTheWay:
-            return Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.amber.shade100,
-                borderRadius: BorderRadius.circular(25),
-              ),
-              child: Center(
-                child: Text(
-                  "${_i18n()["inTransit"]}",
-                  style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
-                ),
-              ),
-            );
-          case RestaurantOrderStatus.ReadyForPickup:
-            return Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.green.shade100,
-                borderRadius: BorderRadius.circular(25),
-              ),
-              child: Center(
-                child: Text(
-                  "${_i18n()["ready"]}",
-                  style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
-                ),
-              ),
-            );
-
-          default:
+          } else {
             return Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
@@ -164,21 +178,21 @@ class DriverOrderCard extends StatelessWidget {
                 ),
               ),
             );
-        }
-      } else {
-        return Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: secondaryLightBlueColor,
-            borderRadius: BorderRadius.circular(25),
-          ),
-          child: Center(
-            child: Text(
-              "${_i18n()["scheduled"]}",
-              style: Get.textTheme.bodyText1?.copyWith(color: primaryBlueColor),
+          }
+        default:
+          return Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.amber.shade100,
+              borderRadius: BorderRadius.circular(25),
             ),
-          ),
-        );
+            child: Center(
+              child: Text(
+                "${_i18n()["waiting"]}",
+                style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
+              ),
+            ),
+          );
       }
     } else {
       switch ((order as LaundryOrder).status) {
