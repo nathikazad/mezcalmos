@@ -23,6 +23,7 @@
             "DropDownLocationList": {
                 "chooseLoc": "Choose location",
                 "ops": "Oops",
+                "wrongAddress" : "Wrong/Invalid address picked!",
                 "distanceError": "Distance between you and restaurant is more than 10km !",
                 "pickLocation": "Pick from map"
             },
