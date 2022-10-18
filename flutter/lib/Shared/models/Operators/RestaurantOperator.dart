@@ -47,4 +47,14 @@ class RestaurantOperator {
         "state": state.toJson(),
         "info": info.toFirebaseFormatJson(),
       };
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is RestaurantOperator && other.operatorId == operatorId;
+  }
+
+  @override
+  int get hashCode => state.hashCode ^ info.hashCode ^ operatorId.hashCode;
 }

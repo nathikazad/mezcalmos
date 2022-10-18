@@ -82,25 +82,25 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
         )
       ],
       // titleSpacing: 20,
-      title: FittedBox(
-        fit: BoxFit.fitWidth,
-        child: (title != null)
-            ? Text(
-                title,
-                style: TextStyle(
-                  fontFamily: "Poppins",
-                  fontWeight: FontWeight.w600,
-                  fontSize: 15.sp,
-                  color: Colors.black,
-                ),
-                textAlign: TextAlign.center,
-              )
-            : (titleWidget != null)
-                ? titleWidget
-                : MezcalmosSharedWidgets.fillTitle(
-                    actionLength: 2,
-                    showLogo: (Get.width > 320) ? true : false),
-      ));
+      title: (title != null)
+          ? Text(
+              title,
+              style: TextStyle(
+                fontFamily: "Poppins",
+                fontWeight: FontWeight.w600,
+                fontSize: 15.sp,
+                color: Colors.black,
+              ),
+              textAlign: TextAlign.center,
+            )
+          : (titleWidget != null)
+              ? titleWidget
+              : FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: MezcalmosSharedWidgets.fillTitle(
+                      actionLength: 2,
+                      showLogo: (Get.width > 320) ? true : false),
+                ));
 }
 
 Widget _BackButtonAppBar({required VoidCallback? click}) {

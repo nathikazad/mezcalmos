@@ -1,7 +1,7 @@
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
 
 abstract class Service {
   ServiceInfo info;
@@ -23,14 +23,23 @@ class ServiceState {
   AuthorizationStatus authorizationStatus = AuthorizationStatus.Unauthorized;
   bool available = false;
   bool open = true;
-  ServiceState(this.authorizationStatus, this.available, this.open);
+  List<String> operators = [];
+  ServiceState(
+      this.authorizationStatus, this.available, this.open, this.operators);
 
   factory ServiceState.fromServiceStateData(stateData) {
+    final List<String> ops = [];
+    stateData?["operators"]?.forEach((key, val) {
+      if (val == true) {
+        ops.add(key);
+      }
+    });
     return ServiceState(
         stateData?["authorizationStatus"]?.toString().toAuthorizationStatus() ??
             AuthorizationStatus.Unauthorized,
         stateData?["available"] ?? false,
-        stateData?["open"] ?? true);
+        stateData?["open"] ?? true,
+        ops);
   }
 
   Map<String, dynamic> toJson() => {
