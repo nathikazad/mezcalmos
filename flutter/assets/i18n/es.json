@@ -21,7 +21,7 @@
             },
             "DropDownLocationList": {
                 "ops": "Oops",
-                "wrongAddress" : "Dirección incorrecta/inválida elegida!",
+                "wrongAddress": "Dirección incorrecta/inválida elegida!",
                 "distanceError": "¡La distancia entre usted y el restaurante es de más de 10 km!",
                 "chooseLoc": "Elegir la ubicación",
                 "pickLocation": "Elegir del mapa"
@@ -1210,8 +1210,9 @@
             "ServicesView": {
                 "services": "Servicios",
                 "noLaundries": "No hay lavas disponibles",
-                "editProfile": "Editar perfil",
-                "editAdmin": "Editar administrador"
+                "editProfile": "Perfil",
+                "editAdmin": "Administrador",
+                "operators": "Operadoras"
             },
             "Orders": {
                 "components": {

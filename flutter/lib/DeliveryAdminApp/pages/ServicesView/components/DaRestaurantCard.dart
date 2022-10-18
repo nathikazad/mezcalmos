@@ -90,6 +90,22 @@ class DaRestaurantCard extends StatelessWidget {
                           icon: Icon(Icons.settings),
                           label: Text('${_i18n()["editAdmin"]}'),
                         ),
+                      ),
+                      Flexible(
+                        child: TextButton.icon(
+                          onPressed: () {
+                            Get.toNamed(getRestaurantOperatorsRoute(
+                                restaurant.info.id));
+                          },
+                          style: TextButton.styleFrom(
+                              foregroundColor: primaryBlueColor,
+                              backgroundColor: Colors.transparent,
+                              textStyle: Get.textTheme.bodyText1,
+                              padding: const EdgeInsets.all(3)),
+                          icon: Icon(Icons.support_agent),
+                          label: Text(
+                              '${_i18n()["operators"]} (${restaurant.state.operators.length})'),
+                        ),
                       )
                     ],
                   )
