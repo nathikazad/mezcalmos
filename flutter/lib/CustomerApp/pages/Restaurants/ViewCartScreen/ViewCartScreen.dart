@@ -200,35 +200,35 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     _restaurantController.cart.value.toLocation = orderToLocation;
     _restaurantController.cart.value.notes = _textEditingController.text;
     try {
-      // if (_restaurantController.getOrderDistance <= 10) {
-      final String? stripePaymentId =
-          await acceptPaymentByCardChoice(viewCartController.getCardChoice);
+      if (_restaurantController.getOrderDistance <= 10) {
+        final String? stripePaymentId =
+            await acceptPaymentByCardChoice(viewCartController.getCardChoice);
 
-      final ServerResponse _serverResponse = await _restaurantController
-          .checkout(stripePaymentId: stripePaymentId);
+        final ServerResponse _serverResponse = await _restaurantController
+            .checkout(stripePaymentId: stripePaymentId);
 
-      if (_serverResponse.success) {
-        _restaurantController.clearCart();
-        popEverythingAndNavigateTo(
-            getRestaurantOrderRoute(_serverResponse.data["orderId"]));
-      } else {
-        print(_serverResponse);
-        if (_serverResponse.errorCode == "serverError") {
-          // do something
-        } else if (_serverResponse.errorCode == "inMoreThanThreeOrders") {
-          // do something
-        } else if (_serverResponse.errorCode == "restaurantClosed") {
-          // do something
+        if (_serverResponse.success) {
+          _restaurantController.clearCart();
+          popEverythingAndNavigateTo(
+              getRestaurantOrderRoute(_serverResponse.data["orderId"]));
         } else {
-          // do something
+          print(_serverResponse);
+          if (_serverResponse.errorCode == "serverError") {
+            // do something
+          } else if (_serverResponse.errorCode == "inMoreThanThreeOrders") {
+            // do something
+          } else if (_serverResponse.errorCode == "restaurantClosed") {
+            // do something
+          } else {
+            // do something
+          }
         }
+      } else {
+        MezSnackbar(
+          '${_i18n()["ops"]}',
+          '${_i18n()["distanceError"]}',
+        );
       }
-      // } else {
-      //   MezSnackbar(
-      //     '${_i18n()["ops"]}',
-      //     '${_i18n()["distanceError"]}',
-      //   );
-      // }
     } catch (e, s) {
       mezDbgPrint(
         "Error happened during generating order's routeInfos / Stripe payment ===> #$e\n\nStackTrace ==> #$s",
