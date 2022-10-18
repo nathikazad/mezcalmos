@@ -139,7 +139,8 @@ class ROpEditInfoController {
       await restaurantInfoController.setLocation(newLocation.value!);
     }
     if (editableScLang.value != null && editableScLang.value != secondaryLang) {
-      await restaurantInfoController.setPrimaryLanguage(editableScLang.value!);
+      await restaurantInfoController
+          .setSecondaryLanguage(editableScLang.value!);
     }
     if (editablePrLang.value != null && editablePrLang.value != primaryLang) {
       await restaurantInfoController.setPrimaryLanguage(editablePrLang.value!);
