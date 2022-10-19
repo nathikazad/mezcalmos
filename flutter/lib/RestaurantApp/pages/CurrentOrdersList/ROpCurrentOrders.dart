@@ -19,23 +19,21 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersOnOff.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpPastOrdersList'];
 
-class LaundryOpCurrentOrdersListView extends StatefulWidget {
-  const LaundryOpCurrentOrdersListView({Key? key}) : super(key: key);
+class ROpCurrentOrdersListView extends StatefulWidget {
+  const ROpCurrentOrdersListView({Key? key}) : super(key: key);
 
   @override
-  State<LaundryOpCurrentOrdersListView> createState() =>
-      _LaundryOpCurrentOrdersListViewState();
+  State<ROpCurrentOrdersListView> createState() =>
+      _ROpCurrentOrdersListViewState();
 }
 
-class _LaundryOpCurrentOrdersListViewState
-    extends State<LaundryOpCurrentOrdersListView> {
+class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
   ROpOrderController orderController = Get.find<ROpOrderController>();
   RxBool isValidRestaurant = true.obs;
 

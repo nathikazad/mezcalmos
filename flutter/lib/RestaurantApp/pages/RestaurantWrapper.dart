@@ -11,11 +11,10 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/operatorNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
+import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
-import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
-import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
-import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -43,11 +42,12 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
             Duration(seconds: 20),
             onTimeout: () => null,
           );
-    }).asyncMap((event) async => restaurantOperator = await event);
+    }).asyncMap((Future event) async => restaurantOperator = await event);
   }
 
   void _operatorInfoStreamListener() {
-    _operatorInfoStreanSub = operatorInfoStream().listen((event) {
+    _operatorInfoStreanSub =
+        operatorInfoStream().listen((RestaurantOperator? event) {
       if (Get.currentRoute != kUserProfile && event == null) {
         Get.toNamed<void>(kSomethingWentWrongScreen);
       } else if (event != null &&
@@ -93,7 +93,7 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
     mezDbgPrint(operator);
     if (operator != null && operator.state.restaurantId != null) {
       // ignore: unawaited_futures, inference_faQilure_on_function_invocation
-      Get.toNamed<void>(kCurrentOrdersListView);
+      Get.toNamed<void>(kTabsView);
     } else {
       mezDbgPrint("RestaurantWrappper::handleState state is null, ERROR");
     }

@@ -10,7 +10,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/widgets/CallToActionButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
@@ -20,8 +19,8 @@ dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
 //
 
 class ROpMenuView extends StatefulWidget {
-  const ROpMenuView({Key? key}) : super(key: key);
-
+  const ROpMenuView({Key? key, this.restID}) : super(key: key);
+  final String? restID;
   @override
   _ROpMenuViewState createState() => _ROpMenuViewState();
 }
@@ -33,10 +32,13 @@ class _ROpMenuViewState extends State<ROpMenuView>
   String? restaurantID;
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
-    restaurantID = Get.parameters["restaurantId"];
+    restaurantID = widget.restID ?? Get.arguments["restaurantId"];
+
     if (restaurantID != null) {
-      viewController.init(restaurantId: restaurantID!);
+      _tabController = TabController(length: 2, vsync: this);
+      Future.microtask(() async {
+        await viewController.init(restaurantId: restaurantID!);
+      });
     } else {
       Get.back();
     }
@@ -60,25 +62,10 @@ class _ROpMenuViewState extends State<ROpMenuView>
         showNotifications: true,
         tabBar: _tabBar(),
       ),
-      bottomNavigationBar: Obx(() {
-        if (viewController.reOrderMode.isTrue) {
-          return CallToActionButton(
-            onTap: () async {
-              await viewController
-                  .saveReorder()
-                  .then((value) => viewController.reOrderMode.value = false);
-            },
-            text: '${_i18n()["saveOrder"]}',
-            height: 65,
-          );
-        } else
-          return Container(
-            height: 0,
-          );
-      }),
       body: Obx(
         () {
-          if (viewController.restaurant.value != null) {
+          if (viewController.restaurant.value != null ||
+              viewController.restaurantInfoController?.initialized == true) {
             return TabBarView(
               controller: _tabController,
               children: [
