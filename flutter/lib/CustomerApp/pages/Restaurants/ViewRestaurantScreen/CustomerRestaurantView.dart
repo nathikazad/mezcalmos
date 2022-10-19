@@ -169,7 +169,8 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
                   ?.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700),
             ),
           ),
-          if (category.dialog?[userLanguage] != null)
+          if (category.dialog?[userLanguage] != null &&
+              category.dialog![userLanguage]!.isNotEmpty)
             Container(
               child: Text(
                 category.dialog![userLanguage]!,
