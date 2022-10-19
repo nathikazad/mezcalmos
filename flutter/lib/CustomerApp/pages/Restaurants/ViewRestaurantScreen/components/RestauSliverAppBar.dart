@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -210,15 +211,16 @@ class RestaurantSliverAppBar extends StatelessWidget {
                     })
                   : (controller.showMenuTabs)
                       ? List.generate(
-                          controller.restaurant.value!.getCategories.length,
-                          (int index) {
+                          controller.restaurant.value!.getAvailableCategories
+                              .length, (int index) {
                           return Tab(
                             text: controller
-                                .restaurant
-                                .value!
-                                .getCategories[index]
-                                .name?[userLanguage]
-                                ?.inCaps,
+                                    .restaurant
+                                    .value!
+                                    .getAvailableCategories[index]
+                                    .name?[userLanguage]
+                                    ?.inCaps ??
+                                "",
                           );
                         })
                       : [],
@@ -446,6 +448,8 @@ class RestaurantSliverAppBar extends StatelessWidget {
   }
 
   double _getBottomPadding() {
+    mezDbgPrint(controller.showCategoriesChips);
+    mezDbgPrint(controller.showSpecials);
     if (controller.showCategoriesChips && controller.showSpecials) {
       return 110;
     } else if (controller.showCategoriesChips) {
