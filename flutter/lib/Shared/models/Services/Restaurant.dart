@@ -154,6 +154,20 @@ class Restaurant extends Service {
     return categories;
   }
 
+  List<Category> get getOnlyAvailableCategories {
+    List<Category> categories = _categories
+        .where((Category category) => category.id != kNoCategoryNode)
+        .toList();
+    categories = categories
+        .where((Category element) =>
+            element.getAvailableItems.length == element.items.length)
+        .toList();
+    categories.forEach((Category category) {
+      category.sortItems();
+    });
+    return categories;
+  }
+
   List<Category> get getCategories {
     final List<Category> categories = _categories
         .where((Category category) => category.id != kNoCategoryNode)
