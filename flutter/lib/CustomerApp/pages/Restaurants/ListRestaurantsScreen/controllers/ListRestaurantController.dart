@@ -83,7 +83,9 @@ class ListRestaurantsController {
       restaurant.itemsWithoutCategory.forEach((Item item) {
         final Item _item = item;
         _item.restaurant = restaurant;
-        filteredItems.add(_item);
+        if (item.available) {
+          filteredItems.add(_item);
+        }
       });
       // filteredItems.addAll(element.itemsWithoutCategory);
       restaurant.getAvailableCategories.forEach((Category cat) {
