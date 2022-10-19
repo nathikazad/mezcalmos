@@ -91,7 +91,7 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
       // ignore: unawaited_futures, inference_faQilure_on_function_invocation
       Get.toNamed(kCreateRestaurant);
     } else {
-      Get.toNamed(kCurrentOrdersListView);
+      Get.toNamed(kTabsView);
       // Get.to(SomethingWentWrongScreen());
 
     }

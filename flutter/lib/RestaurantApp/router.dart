@@ -10,6 +10,7 @@ import 'package:mezcalmos/RestaurantApp/pages/OptionView/ROpOptionView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/ROpOrderView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/PastOrdresList/ROpPastOrdersList.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpChoiceView/ROpChoiceView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/ROpTabsViewView/ROpTabsViewView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/RestaurantWrapper.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ReviewsView/ROpReviewsView.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -17,6 +18,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 // const String kCurrentOrdersListRoute = '/currentOrders';
 const String kCreateRestaurant = '/createRestuarant';
 const String kCurrentOrdersListView = '/orders';
+const String kTabsView = '/tabsView';
 const String kReviewsView = '/reviews/:restaurantId';
 const String kPastOrdersListView = '/pastorders';
 const String kMenuView = '/menu/:restaurantId';
@@ -138,6 +140,7 @@ class XRouter {
         GetPage(name: kReviewsView, page: () => ROpReviewsView()),
         GetPage(name: kChoiceView, page: () => ROpChoiceView()),
         GetPage(name: kCreateRestaurant, page: () => ROpCreateRestuarantView()),
+        GetPage(name: kTabsView, page: () => ROpTabsViewView()),
       ] +
       SharedRouter.sharedRoutes;
 }

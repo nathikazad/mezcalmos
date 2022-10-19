@@ -23,8 +23,8 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpEditInfoView']['ROpEditInfoView'];
 
 class ROpDashboardView extends StatefulWidget {
-  const ROpDashboardView({Key? key}) : super(key: key);
-
+  const ROpDashboardView({Key? key, this.restID}) : super(key: key);
+  final String? restID;
   @override
   State<ROpDashboardView> createState() => _ROpDashboardViewState();
 }
@@ -41,7 +41,8 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
 
   @override
   void initState() {
-    restaurantID = Get.parameters["restaurantId"];
+    restaurantID =
+        restaurantID = widget.restID ?? Get.arguments["restaurantId"];
     if (restaurantID != null) {
       editInfoController.init(restaurantId: restaurantID!);
 

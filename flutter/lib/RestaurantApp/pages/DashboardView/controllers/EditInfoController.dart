@@ -26,7 +26,7 @@ class ROpEditInfoController {
   // RestaurantInfoController restaurantInfoController =
   //     Get.find<RestaurantInfoController>();
 
-  late RestaurantInfoController restaurantInfoController;
+  RestaurantInfoController? restaurantInfoController;
 
   StreamSubscription? restListner;
 
@@ -62,20 +62,24 @@ class ROpEditInfoController {
 
   Future<void> init({required String restaurantId}) async {
     mezDbgPrint("INIT EDIT PROFILE VIEW =======>$restaurantId");
-    Get.put(RestaurantInfoController(), permanent: false);
+    if (!RestaurantInfoController().initialized) {
+      Get.put(RestaurantInfoController(), permanent: false);
+    }
     restaurantInfoController = Get.find<RestaurantInfoController>();
-    restaurantInfoController.init(restId: restaurantId);
-    restaurant.value =
-        await restaurantInfoController.getRestaurantAsFuture(restaurantId);
-    restaurantInfoController
-        .getRestaurant(restaurantId)
-        .listen((Restaurant? event) {
-      if (event != null) {
-        restaurant.value = event;
-        _updateResTInfo();
-      }
-    });
-    _updateResTInfo();
+    if (restaurantInfoController != null) {
+      restaurantInfoController!.init(restId: restaurantId);
+      restaurant.value =
+          await restaurantInfoController!.getRestaurantAsFuture(restaurantId);
+      restaurantInfoController!
+          .getRestaurant(restaurantId)
+          .listen((Restaurant? event) {
+        if (event != null) {
+          restaurant.value = event;
+          _updateResTInfo();
+        }
+      });
+      _updateResTInfo();
+    }
   }
 
   void _updateResTInfo() {
@@ -124,41 +128,41 @@ class ROpEditInfoController {
         restaurantNameTxt.text != restaurant.value?.info.name) {
       mezDbgPrint("Updating restuarnt name .....=>${restaurantNameTxt.text}");
 
-      await restaurantInfoController.setRestaurantName(restaurantNameTxt.text);
+      await restaurantInfoController!.setRestaurantName(restaurantNameTxt.text);
       mezDbgPrint("Restuarnt name done ....=>${restaurantNameTxt.text}");
     }
     if (_updatePrDesc() || _updateScDesc()) {
       mezDbgPrint(
           "Updating restuarnt primary description .....=>${restaurantNameTxt.text}");
 
-      await restaurantInfoController.setRestaurantDesc(_contructDesc());
+      await restaurantInfoController!.setRestaurantDesc(_contructDesc());
       mezDbgPrint("Restuarnt name done ....=>${restaurantNameTxt.text}");
     }
     if (newImageFile.value != null) {
-      await restaurantInfoController
+      await restaurantInfoController!
           .uploadImgToDb(imageFile: newImageFile.value!)
           .then((String value) {
-        restaurantInfoController.setRestaurantImage(value);
+        restaurantInfoController!.setRestaurantImage(value);
       });
     }
     if (newLocation.value != null &&
         newLocation.value?.address != restaurant.value?.info.location.address) {
-      await restaurantInfoController.setLocation(newLocation.value!);
+      await restaurantInfoController!.setLocation(newLocation.value!);
     }
     if (editablePrLang.value != null &&
         editablePrLang.value != primaryLang.value) {
       mezDbgPrint("SEEETTING PRIMARY LANG =======>${editablePrLang.value}");
-      await restaurantInfoController.setPrimaryLanguage(editablePrLang.value!);
+      await restaurantInfoController!.setPrimaryLanguage(editablePrLang.value!);
       mezDbgPrint("SEEETTING SECOND LANG =======>${editableScLang.value}");
-      await restaurantInfoController
+      await restaurantInfoController!
           .setSecondaryLanguage(editablePrLang.value?.toOpLang());
     }
 
     if (newSchedule.value != null && newSchedule.value != oldSchedule.value) {
-      await restaurantInfoController.setSchedule(newSchedule.value!);
+      await restaurantInfoController!.setSchedule(newSchedule.value!);
     }
     if (isAvailable.value != restaurant.value!.state.available) {
-      await restaurantInfoController.setAvailabilty(isAvailable.value);
+      await restaurantInfoController!.setAvailabilty(isAvailable.value);
     }
 
     btnClicked.value = false;
@@ -192,7 +196,7 @@ class ROpEditInfoController {
   }
 
   void handleCardCheckBoxClick(bool v) {
-    restaurantInfoController.setCardPayment(v);
+    restaurantInfoController!.setCardPayment(v);
   }
 
   void handleStripeUrlChanges(String url) {
@@ -238,7 +242,7 @@ class ROpEditInfoController {
   }
 
   Future<void> switchChargeFees(bool v) async {
-    await restaurantInfoController.switchFeesOption(v);
+    await restaurantInfoController!.switchFeesOption(v);
   }
 
   void showPaymentSetup() {
@@ -299,7 +303,7 @@ class ROpEditInfoController {
       {required String bankName, required num bankNumber}) async {
     mezDbgPrint("Value =================>$isBankTrue");
 
-    await restaurantInfoController.pushBankInfo(bankName, bankNumber);
+    await restaurantInfoController!.pushBankInfo(bankName, bankNumber);
   }
 
   Future removeBank() async {
@@ -307,7 +311,7 @@ class ROpEditInfoController {
     bankName.clear();
     bankNumber.clear();
 
-    await restaurantInfoController.removeBank();
+    await restaurantInfoController!.removeBank();
   }
 
   bool validateSecondaryLanguUpdate(LanguageType value) {
@@ -378,7 +382,7 @@ class ROpEditInfoController {
     restaurant.close();
     restaurantNameTxt.clear();
     restListner?.cancel();
-    restaurantInfoController.dispose();
+    restaurantInfoController!.dispose();
     Get.delete<RestaurantInfoController>();
   }
 }
