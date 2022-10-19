@@ -154,7 +154,7 @@ class CustomerRestaurantController {
   }
 
   List<Category> get catsList {
-    final List<Category> data = restaurant.value!.getCategories;
+    final List<Category> data = restaurant.value!.getAvailableCategories;
     if (restaurant.value!.itemsWithoutCategory.isNotEmpty) {
       data.add(restaurant.value!.getNoCategory!);
     }
