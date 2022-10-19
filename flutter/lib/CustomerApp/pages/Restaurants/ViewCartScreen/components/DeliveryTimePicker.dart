@@ -150,6 +150,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                               controller.cart.value.deliveryTime = null;
 
                               controller.saveCart();
+                              controller.cart.refresh();
                             },
                             child: Ink(
                               padding: const EdgeInsets.all(3),
@@ -196,6 +197,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
       if (value != null) {
         controller.cart.value.deliveryTime = value;
         controller.saveCart();
+        controller.cart.refresh();
       }
     });
   }
