@@ -88,7 +88,9 @@ class ListRestaurantsController {
         cat.items.forEach((Item item) {
           final Item _item = item;
           _item.restaurant = restaurant;
-          filteredItems.add(_item);
+          if (item.available) {
+            filteredItems.add(_item);
+          }
         });
       });
     });
