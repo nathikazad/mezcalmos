@@ -34,8 +34,8 @@ class ROpEditInfoController {
   TextEditingController restaurantNameTxt = TextEditingController();
   TextEditingController prRestaurantDescTxt = TextEditingController();
   TextEditingController scRestaurantDescTxt = TextEditingController();
-  TextEditingController bankName = TextEditingController();
-  TextEditingController bankNumber = TextEditingController();
+  final TextEditingController bankName = TextEditingController();
+  final TextEditingController bankNumber = TextEditingController();
   final Rxn<String> newImageUrl = Rxn();
   final Rxn<Location> newLocation = Rxn();
 
@@ -72,6 +72,7 @@ class ROpEditInfoController {
         .listen((Restaurant? event) {
       if (event != null) {
         restaurant.value = event;
+        _updateResTInfo();
       }
     });
     _updateResTInfo();
@@ -93,17 +94,19 @@ class ROpEditInfoController {
       secondaryLang.value = restaurant.value!.secondaryLanguage;
       editablePrLang.value = restaurant.value!.primaryLanguage;
       editableScLang.value = restaurant.value!.secondaryLanguage;
+      mezDbgPrint(
+          "UPDATing DESCCCCC =========>>>PR lang : ${primaryLang.value}");
+      mezDbgPrint(
+          "UPDATing DESCCCCC =========>>>DESC : ${restaurant.value?.description}");
+      mezDbgPrint(
+          "UPDATing DESCCCCC =========>>>SC lang : ${secondaryLang.value}");
+      mezDbgPrint(
+          "UPDATing DESCCCCC =========>>>DESC : ${restaurant.value?.description}");
 
       prRestaurantDescTxt.text =
-          restaurant.value?.description?[restaurant.value!.primaryLanguage] ??
-              '';
+          restaurant.value?.description?[primaryLang] ?? '';
       scRestaurantDescTxt.text =
-          restaurant.value?.description?[restaurant.value!.secondaryLanguage] ??
-              '';
-      bankName.text = restaurant.value!.paymentInfo.bankInfo?.bankName ?? "";
-      bankNumber.text =
-          restaurant.value!.paymentInfo.bankInfo?.accountNumber.toString() ??
-              "";
+          restaurant.value?.description?[secondaryLang] ?? '';
     }
   }
 
@@ -142,12 +145,13 @@ class ROpEditInfoController {
         newLocation.value?.address != restaurant.value?.info.location.address) {
       await restaurantInfoController.setLocation(newLocation.value!);
     }
-    if (editableScLang.value != null && editableScLang.value != secondaryLang) {
-      await restaurantInfoController
-          .setSecondaryLanguage(editableScLang.value!);
-    }
-    if (editablePrLang.value != null && editablePrLang.value != primaryLang) {
+    if (editablePrLang.value != null &&
+        editablePrLang.value != primaryLang.value) {
+      mezDbgPrint("SEEETTING PRIMARY LANG =======>${editablePrLang.value}");
       await restaurantInfoController.setPrimaryLanguage(editablePrLang.value!);
+      mezDbgPrint("SEEETTING SECOND LANG =======>${editableScLang.value}");
+      await restaurantInfoController
+          .setSecondaryLanguage(editablePrLang.value?.toOpLang());
     }
 
     if (newSchedule.value != null && newSchedule.value != oldSchedule.value) {
@@ -172,7 +176,7 @@ class ROpEditInfoController {
 
   void changePrimaryLang(LanguageType value) {
     editablePrLang.value = value;
-    editableScLang.value = editablePrLang.value!.toOpLang();
+    editableScLang.value = value.toOpLang();
   }
 
   // stripe and payments methods //
@@ -262,8 +266,7 @@ class ROpEditInfoController {
         (restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
                 true &&
             (!restaurant.value!.paymentInfo.detailsSubmitted ||
-                !restaurant.value!.paymentInfo.chargesEnabled ||
-                !restaurant.value!.paymentInfo.stripe!.requirements.isEmpty));
+                !restaurant.value!.paymentInfo.chargesEnabled));
   }
 
   bool getChargeFessOnCustomer() {
@@ -292,11 +295,11 @@ class ROpEditInfoController {
   }
 
   // Bank //
-  Future pushBankInfos() async {
+  Future pushBankInfos(
+      {required String bankName, required num bankNumber}) async {
     mezDbgPrint("Value =================>$isBankTrue");
 
-    await restaurantInfoController.pushBankInfo(
-        bankName.text, num.parse(bankNumber.text));
+    await restaurantInfoController.pushBankInfo(bankName, bankNumber);
   }
 
   Future removeBank() async {
@@ -305,8 +308,6 @@ class ROpEditInfoController {
     bankNumber.clear();
 
     await restaurantInfoController.removeBank();
-    bankName.clear();
-    bankNumber.clear();
   }
 
   bool validateSecondaryLanguUpdate(LanguageType value) {
@@ -376,8 +377,6 @@ class ROpEditInfoController {
     secondaryLang.close();
     restaurant.close();
     restaurantNameTxt.clear();
-    bankName.dispose();
-    bankNumber.dispose();
     restListner?.cancel();
     restaurantInfoController.dispose();
     Get.delete<RestaurantInfoController>();
