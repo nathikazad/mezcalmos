@@ -93,6 +93,11 @@ class ViewCartController {
     options.refresh();
   }
 
+  bool get shoudSchedule {
+    return (controller.cart.value.restaurant?.isOpen() == false ||
+        controller.cart.value.isSpecial);
+  }
+
   Future<void> _getCustomerCards() async {
     //await Get.find<CustomerAuthController>().getCards();
   }
