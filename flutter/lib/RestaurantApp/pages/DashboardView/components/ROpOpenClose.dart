@@ -30,8 +30,19 @@ class ROpOpenClose extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          Center(
+            child: Icon(
+              Icons.lock_clock,
+              color: Color(0xFFC4C4C4),
+              size: 22,
+            ),
+          ),
+          SizedBox(
+            width: 12,
+          ),
           (subtitle != null)
               ? Flexible(
+                  flex: 8,
                   fit: FlexFit.tight,
                   child: Container(
                     child: Column(
@@ -39,15 +50,15 @@ class ROpOpenClose extends StatelessWidget {
                       children: [
                         Text(
                           title,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 13.sp,
-                          ),
+                          style: Get.textTheme.bodyText1?.copyWith(
+                              fontSize: 11.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey.shade900),
                         ),
                         Text(
                           subtitle!,
-                          style: Get.textTheme.bodyText2,
+                          style: Get.textTheme.subtitle1
+                              ?.copyWith(color: Colors.grey.shade600),
                         ),
                       ],
                     ),
@@ -55,16 +66,12 @@ class ROpOpenClose extends StatelessWidget {
                 )
               : Text(
                   title,
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 13.sp,
-                  ),
+                  style: Get.textTheme.bodyText1?.copyWith(
+                      fontSize: 11.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey.shade900),
                 ),
-          SizedBox(
-            width: 10,
-          ),
-          Transform.scale(scale: 0.9, child: _onOffSwitcher())
+          Transform.scale(scale: 0.8, child: _onOffSwitcher())
         ],
       ),
     );

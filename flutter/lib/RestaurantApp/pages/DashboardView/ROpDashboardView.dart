@@ -59,7 +59,7 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
     return Obx(() {
       if (editInfoController.restaurant.value != null) {
         return Scaffold(
-          backgroundColor: Colors.white,
+          //  backgroundColor: Colors.white,
           appBar: (editInfoController.showStripe.isTrue)
               ? null
               : LaundryAppAppBar(
@@ -73,7 +73,7 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
                       Get.back();
                     }
                   },
-                  title: "Dashboard",
+                  title: "Profile Info",
                   showOrders: true,
                 ),
           body: PageView(
