@@ -11,7 +11,8 @@ import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocationModel;
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart'
+    as LocationModel;
 import 'package:mezcalmos/Shared/widgets/MezSmartPointer.dart';
 import 'package:sizer/sizer.dart';
 
@@ -112,7 +113,6 @@ class MGoogleMapState extends State<MGoogleMap> {
 
   Future<LocationData?> _currentLocation() async {
     LocationData? currentLocation;
-    final Location location = Location();
     try {
       currentLocation = await Location().getLocation();
       widget.notifyParentOfNewLocation?.call(

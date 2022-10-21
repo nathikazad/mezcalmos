@@ -13,7 +13,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['widgets']
 
 // Location Search component
 class LocationSearchComponent extends StatefulWidget {
-  final bool useBorders;
+  final BoxBorder? border;
   final bool readOnly;
 
   // raduis
@@ -43,7 +43,7 @@ class LocationSearchComponent extends StatefulWidget {
     this.showSearchIcon = false,
     this.readOnly = false,
     this.hintPadding = const EdgeInsets.only(left: 2, top: 2),
-    this.useBorders = true,
+    this.border,
     this.leftTopRadius = 6,
     this.leftBotRaduis = 6,
     this.rightTopRaduis = 6,
@@ -112,9 +112,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
           child: Container(
             alignment: Alignment.centerLeft,
             decoration: BoxDecoration(
-              border: widget.useBorders
-                  ? Border.all(color: const Color(0xffececec), width: 0.5)
-                  : null,
+              border: widget.border,
               color: widget.bgColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(widget.leftTopRadius),

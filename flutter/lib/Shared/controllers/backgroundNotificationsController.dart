@@ -153,11 +153,12 @@ class BackgroundNotificationsController extends GetxController {
 
     onMessageListener =
         FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      final Sagora agora = Get.find<Sagora>();
       mezDbgPrint(
           "FirebaseMessage ======> ${message.data} | ${message.contentAvailable}");
       if (message.data["notificationType"] ==
           NotificationType.Call.toFirebaseFormatString()) {
+        final Sagora agora = Get.find<Sagora>();
+
         if (message.data['callNotificationType']
                 .toString()
                 .toCallNotificationtType() ==

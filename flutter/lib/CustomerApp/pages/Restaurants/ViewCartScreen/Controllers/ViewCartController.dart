@@ -35,6 +35,8 @@ class ViewCartController {
   // Payment Card //
   Rxn<CreditCard> card = Rxn();
 
+  final RxBool clickedCheckout = false.obs;
+
   // init //
   Future<void> init() async {
     _addAndListenToCustomerCards();

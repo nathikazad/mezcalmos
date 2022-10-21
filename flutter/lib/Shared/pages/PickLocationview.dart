@@ -193,7 +193,6 @@ class _PickLocationViewState extends State<PickLocationView> {
             child: LocationSearchComponent(
                 hintPadding: EdgeInsets.only(left: 10),
                 suffixPadding: EdgeInsets.only(right: 10),
-                useBorders: false,
                 showSearchIcon: true,
                 text: locationPickerController.location.value?.address,
                 onClear: () {},

@@ -37,10 +37,6 @@ class CurrentPositionedBottomBar extends StatelessWidget {
   CurrentPositionedBottomBar(this.order);
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint(order);
-    mezDbgPrint('-----------------------------------------');
-    mezDbgPrint(order.status.toString());
-    responsiveSize(context);
     return Positioned(
       bottom: GetStorage().read(getxGmapBottomPaddingKey),
       child: Container(

@@ -104,7 +104,6 @@ class LocationPickerState extends State<LocationPicker> {
 
   @override
   Widget build(BuildContext context) {
-    responsiveSize(context);
     return Obx(() => widget.locationPickerMapController.location.value != null
         ? Stack(
             alignment: Alignment.center,

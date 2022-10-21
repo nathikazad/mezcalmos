@@ -68,6 +68,13 @@ export = functions.https.onCall(async (data, context) => {
     }
   }
 
+  if (!cart.to) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: "Shipping address can't be null!"
+    }
+  }
+
   try {
     let customerInfo: UserInfo = await getUserInfo(customerId);
     let order: RestaurantOrder = constructRestaurantOrder({

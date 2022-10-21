@@ -42,8 +42,7 @@ class _PickLocationViewState extends State<PickLocationView> {
   SavedLocation? savedLocation;
   bool showScreenLoading = false;
   LatLng? currentLatLng;
-
-  LanguageController _lang = Get.find<LanguageController>();
+  // bool _locationAccessFailed = false;
 
   // CustomerAuthController customerAuthController =
   //     Get.find<CustomerAuthController>();
@@ -58,13 +57,21 @@ class _PickLocationViewState extends State<PickLocationView> {
   @override
   void initState() {
     if (widget.pickLocationMode == PickLocationMode.AddNewLocation) {
-      GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {
+      GeoLoc.Location()
+          .getLocation()
+          .timeout(Duration(seconds: 10))
+          .then((GeoLoc.LocationData locData) {
         // first we set Location without GeoCoding the address
         setNewLocationOnController(
             latlng: LatLng(locData.latitude!, locData.longitude!));
         // then we try to get the address
         geoCodeAndSetControllerLocation(
             LatLng(locData.latitude!, locData.longitude!));
+      }).catchError((Object error) {
+        if (error.runtimeType == TimeoutException) {
+          currentLatLng = LatLng(15.872141, -97.076737);
+          geoCodeAndSetLocation(currentLatLng!);
+        }
       });
     } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
       final String? x = Get.parameters["id"];
@@ -72,22 +79,49 @@ class _PickLocationViewState extends State<PickLocationView> {
           .customer()!
           .savedLocations
           .firstWhere((SavedLocation saved) => saved.id == x);
-      GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {
+      GeoLoc.Location()
+          .getLocation()
+          .timeout(Duration(seconds: 10))
+          .then((GeoLoc.LocationData locData) {
         setState(() {
           locationPickerController.location.value = Location.fromFirebaseData({
-            "address": savedLocation!.location?.address,
+            "address": "",
             "lat": savedLocation?.location?.latitude,
             "lng": savedLocation?.location?.longitude,
           });
         });
+      }).catchError((Object error) {
+        if (error.runtimeType == TimeoutException) {
+          // locationPickerController.location.value = Location.fromFirebaseData({
+          //   "address": "15.872141, -97.076737",
+          //   "lat": 15.872141,
+          //   "lng": -97.076737,
+          // });
+          currentLatLng = LatLng(15.872141, -97.076737);
+          geoCodeAndSetLocation(currentLatLng!);
+          // setState(() {
+          //   _locationAccessFailed = true;
+          // });
+        }
       });
     } else {
-      mezDbgPrint("Iniiit");
-
-      GeoLoc.Location().getLocation().then((GeoLoc.LocationData value) {
+      GeoLoc.Location()
+          .getLocation()
+          .timeout(Duration(seconds: 10))
+          .then((GeoLoc.LocationData value) {
         currentLatLng = LatLng(value.latitude!, value.longitude!);
-
         geoCodeAndSetLocation(currentLatLng!);
+      }).catchError((Object error) {
+        if (error.runtimeType == TimeoutException) {
+          // setState(() {
+          //   _locationAccessFailed = true;
+          // });
+          locationPickerController.location.value = Location.fromFirebaseData({
+            "address": savedLocation!.location?.address,
+            "lat": 15.872141,
+            "lng": -97.076737,
+          });
+        }
       });
     }
     mezDbgPrint('LOOOOOOOOC ' + locationPickerController.location.toString());
@@ -116,11 +150,12 @@ class _PickLocationViewState extends State<PickLocationView> {
 
   @override
   Widget build(BuildContext context) {
-    responsiveSize(context);
     return Scaffold(
       bottomNavigationBar: ButtonComponent(
-        canClick: !showScreenLoading,
-        function: (showScreenLoading)
+        canClick: !showScreenLoading &&
+            locationPickerController.location.value != null,
+        function: (showScreenLoading ||
+                locationPickerController.location.value == null)
             ? null
             : () async {
                 await onPickButtonClick(context);
@@ -287,12 +322,16 @@ class _PickLocationViewState extends State<PickLocationView> {
             child: LocationSearchComponent(
                 hintPadding: EdgeInsets.all(12),
                 suffixPadding: EdgeInsets.only(right: 10),
-                useBorders: false,
+                // border: _locationAccessFailed
+                //     ? Border.all(
+                //         color: Color.fromARGB(255, 128, 62, 234), width: 1)
+                //     : null,
                 showSearchIcon: true,
                 text: locationPickerController.location.value?.address,
                 onClear: () {},
                 notifyParent: (Location? location) {
                   setState(() {
+                    // _locationAccessFailed = false;
                     locationPickerController.setLocation(location!);
                     locationPickerController.moveToNewLatLng(
                         location.latitude, location.longitude);
@@ -307,23 +346,50 @@ class _PickLocationViewState extends State<PickLocationView> {
                 borderRadius: BorderRadius.circular(5),
                 color: Colors.grey.shade200,
               ),
-              child: locationPickerController.location.value != null
-                  ? LocationPicker(
-                      showBottomButton: false,
-                      locationPickerMapController: locationPickerController,
-                      notifyParentOfConfirm: (_) {},
-                      notifyParentOfLocationFinalized: (Location location) {
-                        setState(() {
-                          locationPickerController.setLocation(location);
-                        });
-                      },
-                    )
-                  : Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.black,
-                        strokeWidth: 1,
-                      ),
-                    ),
+              child:
+                  locationPickerController.location.value?.isValidLocation() ==
+                          true
+                      ? LocationPicker(
+                          showBottomButton: false,
+                          locationPickerMapController: locationPickerController,
+                          notifyParentOfConfirm: (_) {},
+                          notifyParentOfLocationFinalized: (Location location) {
+                            setState(() {
+                              locationPickerController.setLocation(location);
+                            });
+                          },
+                        )
+                      : Center(
+                          child:
+                              // _locationAccessFailed
+                              //     ? Row(
+                              //         mainAxisAlignment: MainAxisAlignment.center,
+                              //         crossAxisAlignment: CrossAxisAlignment.center,
+                              //         children: [
+                              //           Icon(
+                              //             Icons.location_disabled_rounded,
+                              //             color: Colors.blue.shade900,
+                              //           ),
+                              //           SizedBox(
+                              //             width: 5,
+                              //           ),
+                              //           Text(
+                              //             "Could not get your location :(",
+                              //             style: TextStyle(
+                              //               color: Colors.purple.shade800,
+                              //               fontFamily: 'Montserrat',
+                              //               fontSize: 16,
+                              //               fontWeight: FontWeight.w600,
+                              //             ),
+                              //           ),
+                              //         ],
+                              //       )
+                              //     :
+                              CircularProgressIndicator(
+                            color: Colors.black,
+                            strokeWidth: 1,
+                          ),
+                        ),
             ),
           ),
         ],

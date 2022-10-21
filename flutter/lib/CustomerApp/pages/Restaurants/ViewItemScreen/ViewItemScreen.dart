@@ -74,6 +74,9 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
     isSpecial = Get.arguments?["isSpecial"] ?? false;
     if (widget.viewItemScreenMode == ViewItemScreenMode.AddItemMode) {
       final String? restaurantId = Get.parameters['restaurantId'];
+      if (restaurantId == null) {
+        Get.back<void>();
+      }
       controller.getRestaurant("$restaurantId").then((Restaurant? value) {
         setState(() {
           currentRestaurant = value;

@@ -111,7 +111,15 @@ class RestaurantOrder extends DeliverableOrder {
         deliveryTime: (data["deliveryTime"] != null)
             ? DateTime.tryParse(data["deliveryTime"])
             : null,
-        to: Location.fromFirebaseData(data['to']),
+        to: data['to'] == null
+            ? Location.fromFirebaseData(
+                {
+                  "address": "---------",
+                  "lat": 15.871937999999997,
+                  "lng": -97.091954
+                },
+              )
+            : Location.fromFirebaseData(data['to']),
         restaurant: ServiceInfo.fromData(data["restaurant"]),
         customer: UserInfo.fromData(data["customer"]),
         itemsCost: data['itemsCost'],

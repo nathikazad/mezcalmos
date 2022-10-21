@@ -19,7 +19,6 @@ class TopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    responsiveSize(context);
     return Positioned(
       top: 5,
       child: Container(

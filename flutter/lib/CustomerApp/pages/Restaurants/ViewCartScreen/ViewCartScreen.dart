@@ -122,16 +122,25 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                       false)
                   ? '${_i18n()["scheduleOrder"]}'
                   : '${_i18n()["orderNow"]}',
-              enabled: _restaurantController.canOrder,
+              enabled: _restaurantController.canOrder &&
+                  !viewCartController.clickedCheckout.value,
               withGradient: true,
               borderRadius: 0,
-              onClick: () async {
-                if (_restaurantController.canOrder) {
-                  await checkoutActionButton();
-                } else {
-                  _restaurantController.cart.refresh();
-                }
-              },
+              onClick: viewCartController.clickedCheckout.value
+                  ? null
+                  : () async {
+                      if (_restaurantController.canOrder &&
+                          !viewCartController.clickedCheckout.value) {
+                        viewCartController.clickedCheckout.value = true;
+                        final bool _isCheckoutFailed =
+                            !(await checkoutActionButton());
+                        if (_isCheckoutFailed) {
+                          viewCartController.clickedCheckout.value = false;
+                        }
+                      } else {
+                        _restaurantController.cart.refresh();
+                      }
+                    },
             );
           } else
             return SizedBox();
@@ -196,7 +205,8 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     }
   }
 
-  Future<void> checkoutActionButton() async {
+  /// returns a bool that say weither checkout was a success or not.
+  Future<bool> checkoutActionButton() async {
     _restaurantController.cart.value.toLocation = orderToLocation;
     _restaurantController.cart.value.notes = _textEditingController.text;
     try {
@@ -211,6 +221,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           _restaurantController.clearCart();
           popEverythingAndNavigateTo(
               getRestaurantOrderRoute(_serverResponse.data["orderId"]));
+          return true;
         } else {
           print(_serverResponse);
           if (_serverResponse.errorCode == "serverError") {
@@ -229,10 +240,12 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           '${_i18n()["distanceError"]}',
         );
       }
+      return false;
     } catch (e, s) {
       mezDbgPrint(
         "Error happened during generating order's routeInfos / Stripe payment ===> #$e\n\nStackTrace ==> #$s",
       );
+      return false;
     }
   }
 
