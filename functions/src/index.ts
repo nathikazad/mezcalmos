@@ -40,6 +40,8 @@ import * as restaurantStatusChange from './restaurant/adminStatusChanges'
 export const restaurant = {
   createRestaurant: require("./restaurant/createNewRestaurant"),
   addOperator: require("./restaurant/addOperator"),
+  addDriver: require("./restaurant/addDriver"),
+  removeDriver: require("./restaurant/removeDriver"),
   removeOperator: require("./restaurant/removeOperator"),
   checkoutCart: require("./restaurant/checkoutCart"),
   addReview: require("./restaurant/addReview"),

@@ -1,20 +1,24 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/restaurantNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class RestaurantInfoController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -53,7 +57,7 @@ class RestaurantInfoController extends GetxController {
         .once()
         .then<Restaurant>((DatabaseEvent event) {
       return Restaurant.fromRestaurantData(
-          restaurantId: restaurantId, restaurantData: event.snapshot.value);
+          restaurantId: restId, restaurantData: event.snapshot.value);
     });
   }
 
@@ -293,49 +297,94 @@ class RestaurantInfoController extends GetxController {
         });
       }
     }
+  }
 
-    // ignore: unawaited_futures
-    // if (categoryId != null) {
-    //   await _databaseHelper.firebaseDatabase
-    //       .ref()
-    //       .child(itemNode(
-    //           uid: restaurantId, categoryId: categoryId, itemId: itemId))
-    //       .remove()
-    //       .catchError((e, stk) {
-    //     mezDbgPrint(e);
-    //     mezDbgPrint(stk);
-    //   });
-    // } else {
-    //   if (!isSpecial) {
-    //     await _databaseHelper.firebaseDatabase
-    //         .ref()
-    //         .child(itemNode(uid: restaurantId, itemId: itemId))
-    //         .remove()
-    //         .catchError((e, stk) {
-    //       mezDbgPrint(e);
-    //       mezDbgPrint(stk);
-    //     });
-    //   } else {
-    //     mezDbgPrint("Deleting special item");
-    //     if (currentSpecial) {
-    //       await _databaseHelper.firebaseDatabase
-    //           .ref()
-    //           .child(currentSpecialsNode(
-    //                 uid: restaurantId,
-    //               ) +
-    //               "/$itemId")
-    //           .remove();
-    //     } else {
-    //       await _databaseHelper.firebaseDatabase
-    //           .ref()
-    //           .child(pastSpecialsNode(
-    //                 uid: restaurantId,
-    //               ) +
-    //               "/$itemId")
-    //           .remove();
-    //     }
-    //   }
-    // }
+  // add Driver //
+  Future<ServerResponse> addDriver(String emailOrPhone, String restaurantId,
+      {Map<String, dynamic>? optionalParams}) async {
+    mezDbgPrint("calling cloud func");
+    final HttpsCallable cloudFunction =
+        FirebaseFunctions.instance.httpsCallable('restaurant-addDriver');
+    try {
+      final HttpsCallableResult response = await cloudFunction.call({
+        "restaurantId": restaurantId,
+        "orderType": OrderType.Restaurant.toFirebaseFormatString(),
+        "emailIdOrPhoneNumber": emailOrPhone,
+        ...optionalParams ?? {}
+      });
+      mezDbgPrint("Response : ${response.data}");
+      return ServerResponse.fromJson(response.data);
+    } catch (e) {
+      mezDbgPrint("Errrooooooooor =======> $e");
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
+    }
+  }
+// assign driver
+
+  Future<ServerResponse> assignDeliveryDriver({
+    required String deliveryDriverId,
+    required String orderId,
+    required OrderType orderType,
+    DeliveryDriverType deliveryDriverType = DeliveryDriverType.DropOff,
+    bool changeDriver = false,
+  }) async {
+    final HttpsCallable dropOrderFunction =
+        FirebaseFunctions.instance.httpsCallable('delivery-assignDriver');
+    try {
+      final HttpsCallableResult<dynamic> response =
+          await dropOrderFunction.call(
+        <String, dynamic>{
+          "orderId": orderId,
+          "deliveryDriverType": deliveryDriverType.toFirebaseFormatString(),
+          "deliveryDriverId": deliveryDriverId,
+          "orderType": orderType.toFirebaseFormatString(),
+          "changeDriver": changeDriver,
+        },
+      );
+      mezDbgPrint('HttpsCallableResult response: ${response.data}');
+      return ServerResponse.fromJson(response.data);
+    } catch (e) {
+      return ServerResponse(
+        ResponseStatus.Error,
+        errorMessage: "Server Error",
+        errorCode: "serverError",
+      );
+    }
+  }
+
+// remover driver //
+  Future<ServerResponse> removeDriver(String driverId, String restaurantId,
+      {Map<String, dynamic>? optionalParams}) async {
+    mezDbgPrint("calling cloud func");
+    final HttpsCallable cloudFunction =
+        FirebaseFunctions.instance.httpsCallable('restaurant-removeDriver');
+    try {
+      final HttpsCallableResult response = await cloudFunction.call({
+        "restaurantId": restaurantId,
+        "driverId": driverId,
+        ...optionalParams ?? {}
+      });
+      mezDbgPrint("Response : ${response.data}");
+      return ServerResponse.fromJson(response.data);
+    } catch (e) {
+      mezDbgPrint("Errrooooooooor =======> $e");
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
+    }
+  }
+
+  Future<DeliveryDriver?> getDriverById(String id) async {
+    final DataSnapshot data = await _databaseHelper.firebaseDatabase
+        .ref()
+        .child(deliveryDriverAuthNode(id))
+        .get();
+
+    if (data.exists) {
+      final DeliveryDriver op = DeliveryDriver.fromData(id, data.value);
+      return op;
+    }
+    return null;
   }
 
   // fees //
@@ -366,6 +415,13 @@ class RestaurantInfoController extends GetxController {
         .ref()
         .child(itemNode(uid: restaurantId, itemId: itemId) + "/cost")
         .set(cost);
+  }
+
+  Future<void> switchSelfDelivery(bool v) async {
+    await _databaseHelper.firebaseDatabase
+        .ref()
+        .child(selfDeliveryNode(uid: restaurantId))
+        .set(v);
   }
 
   Future<void> pushBankInfo(String bankName, num bankNumber) async {

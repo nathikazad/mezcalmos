@@ -26,7 +26,9 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpPastOrdersList'];
 
 class ROpCurrentOrdersListView extends StatefulWidget {
-  const ROpCurrentOrdersListView({Key? key}) : super(key: key);
+  const ROpCurrentOrdersListView({Key? key, this.canGoBack = true})
+      : super(key: key);
+  final bool canGoBack;
 
   @override
   State<ROpCurrentOrdersListView> createState() =>
@@ -97,49 +99,54 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () {
-        if (restaurant.value != null) {
-          return Scaffold(
-            appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu,
-                showNotifications: true, ordersRoute: kPastOrdersListView),
-            key: Get.find<SideMenuDrawerController>().getNewKey(),
-            drawer: ROpDrawer(),
-            body: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 8, right: 8, left: 8),
-                  child: TitleWithOnOffSwitcher(
-                    title: "${_i18n()["incomingOrders"]}",
-                    onTurnedOn: () {
-                      _restaurantOpAuthController.turnOpenOn();
-                    },
-                    onTurnedOff: () {
-                      _restaurantOpAuthController.turnOpenOff();
-                    },
-                    initialSwitcherValue: restaurant.value!.state.isOpen,
-                  ),
-                ),
-                Container(
-                    child: (restaurant.value!.state.isOpen)
-                        ? _inProcessOrders()
-                        : _offlineWidget()),
-              ],
-            ),
-          );
-        } else {
-          return isValidRestaurant.value
-              ? Container(
-                  alignment: Alignment.center,
-                  color: Colors.white,
-                  child: MezLogoAnimation(
-                    centered: true,
-                  ),
-                )
-              : SomethingWentWrongScreen();
-        }
+    return WillPopScope(
+      onWillPop: () async {
+        return widget.canGoBack;
       },
+      child: Obx(
+        () {
+          if (restaurant.value != null) {
+            return Scaffold(
+              appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu,
+                  showNotifications: true, ordersRoute: kPastOrdersListView),
+              key: Get.find<SideMenuDrawerController>().getNewKey(),
+              drawer: ROpDrawer(),
+              body: Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 8, right: 8, left: 8),
+                    child: TitleWithOnOffSwitcher(
+                      title: "${_i18n()["incomingOrders"]}",
+                      onTurnedOn: () {
+                        _restaurantOpAuthController.turnOpenOn();
+                      },
+                      onTurnedOff: () {
+                        _restaurantOpAuthController.turnOpenOff();
+                      },
+                      initialSwitcherValue: restaurant.value!.state.isOpen,
+                    ),
+                  ),
+                  Container(
+                      child: (restaurant.value!.state.isOpen)
+                          ? _inProcessOrders()
+                          : _offlineWidget()),
+                ],
+              ),
+            );
+          } else {
+            return isValidRestaurant.value
+                ? Container(
+                    alignment: Alignment.center,
+                    color: Colors.white,
+                    child: MezLogoAnimation(
+                      centered: true,
+                    ),
+                  )
+                : SomethingWentWrongScreen();
+          }
+        },
+      ),
     );
   }
 

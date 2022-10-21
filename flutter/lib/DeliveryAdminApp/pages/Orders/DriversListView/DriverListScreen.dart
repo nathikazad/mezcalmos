@@ -44,7 +44,6 @@ class _DriversListScreenState extends State<DriversListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final TextTheme txt = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
         title: Text('${_i18n()["title"]}'),

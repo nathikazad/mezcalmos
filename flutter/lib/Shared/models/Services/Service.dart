@@ -23,15 +23,23 @@ class ServiceState {
   AuthorizationStatus authorizationStatus = AuthorizationStatus.Unauthorized;
   bool available = false;
   bool open = true;
+  List<String> drivers = [];
   List<String> operators = [];
-  ServiceState(
-      this.authorizationStatus, this.available, this.open, this.operators);
+  ServiceState(this.authorizationStatus, this.available, this.open,
+      this.operators, this.drivers);
 
   factory ServiceState.fromServiceStateData(stateData) {
     final List<String> ops = [];
+    final List<String> dvs = [];
+
     stateData?["operators"]?.forEach((key, val) {
       if (val == true) {
         ops.add(key);
+      }
+    });
+    stateData?["drivers"]?.forEach((key, val) {
+      if (val == true) {
+        dvs.add(key);
       }
     });
     return ServiceState(
@@ -39,7 +47,8 @@ class ServiceState {
             AuthorizationStatus.Unauthorized,
         stateData?["available"] ?? false,
         stateData?["open"] ?? true,
-        ops);
+        ops,
+        dvs);
   }
 
   Map<String, dynamic> toJson() => {

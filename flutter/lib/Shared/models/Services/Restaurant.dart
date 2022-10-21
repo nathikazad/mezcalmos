@@ -31,7 +31,9 @@ class Restaurant extends Service {
   List<Item> currentSpecials = <Item>[];
   List<Item> pastSpecials = <Item>[];
   List<Review> reviews = <Review>[];
+
   num? rate;
+  bool selfDelivery;
 
   List<Category> _categories = <Category>[];
   List<Item> itemsWithoutCategory = <Item>[];
@@ -45,6 +47,7 @@ class Restaurant extends Service {
       required ServiceState restaurantState,
       required LanguageType primaryLanguage,
       this.rate,
+      this.selfDelivery = false,
       LanguageType? secondaryLanguage})
       : super(
             info: userInfo,
@@ -106,12 +109,14 @@ class Restaurant extends Service {
         primaryLanguage: primaryLanguage,
         secondaryLanguage: secondaryLanguage,
         rate: rate,
+        selfDelivery: restaurantData?["details"]?["selfDelivery"] ?? false,
         paymentInfo: paymentInfo);
     if (restaurantData["details"]["reviews"] != null) {
       restaurantData["details"]["reviews"]?.forEach((key, review) {
         restaurant.reviews.add(Review.fromMap(key, review));
       });
     }
+
     if (restaurantData['menu'] != null) {
       if (restaurantData["menu"]?["specials"] != null ||
           restaurantData["menu"]?["daily"] != null) {

@@ -183,6 +183,10 @@ class ROpEditInfoController {
     editableScLang.value = value.toOpLang();
   }
 
+  Future<void> switchSelfDelivery(bool v) async {
+    await restaurantInfoController!.switchSelfDelivery(v);
+  }
+
   // stripe and payments methods //
   void checkStripe() {
     if (restaurant.value!.paymentInfo.stripe != null &&

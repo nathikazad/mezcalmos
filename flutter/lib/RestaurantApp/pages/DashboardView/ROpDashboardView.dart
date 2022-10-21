@@ -23,8 +23,10 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpEditInfoView']['ROpEditInfoView'];
 
 class ROpDashboardView extends StatefulWidget {
-  const ROpDashboardView({Key? key, this.restID}) : super(key: key);
+  const ROpDashboardView({Key? key, this.restID, this.canGoBack = true})
+      : super(key: key);
   final String? restID;
+  final bool canGoBack;
   @override
   State<ROpDashboardView> createState() => _ROpDashboardViewState();
 }
@@ -56,56 +58,62 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      if (editInfoController.restaurant.value != null) {
-        return Scaffold(
-          //  backgroundColor: Colors.white,
-          appBar: (editInfoController.showStripe.isTrue)
-              ? null
-              : LaundryAppAppBar(
-                  leftBtnType: AppBarLeftButtonType.Back,
-                  onClick: () {
-                    if (_pageController.page != 0) {
-                      _pageController.animateToPage(0,
-                          duration: Duration(milliseconds: 1),
-                          curve: Curves.easeIn);
-                    } else {
-                      Get.back();
-                    }
-                  },
-                  title: "Profile Info",
-                  showOrders: true,
+    return WillPopScope(
+      onWillPop: () async {
+        return widget.canGoBack;
+      },
+      child: Obx(() {
+        if (editInfoController.restaurant.value != null) {
+          return Scaffold(
+            //  backgroundColor: Colors.white,
+            appBar: (editInfoController.showStripe.isTrue)
+                ? null
+                : LaundryAppAppBar(
+                    leftBtnType: AppBarLeftButtonType.Back,
+                    canGoBack: widget.canGoBack,
+                    onClick: () {
+                      if (_pageController.page != 0) {
+                        _pageController.animateToPage(0,
+                            duration: Duration(milliseconds: 1),
+                            curve: Curves.easeIn);
+                      } else {
+                        Get.back();
+                      }
+                    },
+                    title: "Profile Info",
+                    showOrders: true,
+                  ),
+            body: PageView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: _pageController,
+              children: [
+                ROpDashboardPage(
+                  viewController: editInfoController,
+                  pageController: _pageController,
                 ),
-          body: PageView(
-            physics: NeverScrollableScrollPhysics(),
-            controller: _pageController,
-            children: [
-              ROpDashboardPage(
-                viewController: editInfoController,
-                pageController: _pageController,
-              ),
-              ROpInfoPage(editInfoController: editInfoController),
-              ROpSchedulePage(
+                ROpInfoPage(editInfoController: editInfoController),
+                ROpSchedulePage(
+                    editInfoController: editInfoController,
+                    viewWidgets: viewWidgets),
+                ROpPaymentPage(
                   editInfoController: editInfoController,
-                  viewWidgets: viewWidgets),
-              ROpPaymentPage(
-                editInfoController: editInfoController,
-              )
-              // ROpAcceptedPayments(viewController: editInfoController)
-            ],
-          ),
-          // bottomNavigationBar: _editInfoSaveButton(),
-        );
-      } else {
-        return Container(
-          color: Colors.white,
-          alignment: Alignment.center,
-          child: MezLogoAnimation(
-            centered: true,
-          ),
-        );
-      }
-    });
+                )
+                // ROpAcceptedPayments(viewController: editInfoController)
+              ],
+            ),
+            // bottomNavigationBar: _editInfoSaveButton(),
+          );
+        } else {
+          return Container(
+            color: Colors.white,
+            alignment: Alignment.center,
+            child: MezLogoAnimation(
+              centered: true,
+            ),
+          );
+        }
+      }),
+    );
   }
 
   SingleChildScrollView _oldBody() {

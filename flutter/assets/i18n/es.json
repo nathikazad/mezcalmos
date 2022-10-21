@@ -1930,7 +1930,8 @@
                         "minTimes": "Mínimo 5 Miutes Prepare el tiempo"
                     },
                     "ROpDriverCard": {
-                        "noDriver": "No hay controlador asignado todavía"
+                        "noDriver": "No hay controlador asignado todavía",
+                        "set": "Colocar"
                     },
                     "ROpOrderCustomer": {
                         "customer": "Cliente"

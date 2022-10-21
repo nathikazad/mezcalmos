@@ -1905,7 +1905,8 @@
                         "minTimes": "Minimum 5 miutes prepare time"
                     },
                     "ROpDriverCard": {
-                        "noDriver": "No driver assigned yet"
+                        "noDriver": "No driver assigned yet",
+                        "set": "Set"
                     },
                     "ROpOrderCustomer": {
                         "customer": "Customer"
