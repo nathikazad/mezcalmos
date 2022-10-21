@@ -7,12 +7,14 @@ class LaundryAppAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool? autoBack;
   final AppBarLeftButtonType leftBtnType;
   bool showOrders;
+  bool canGoBack;
   Function? onClick;
   LaundryAppAppBar(
       {Key? key,
       this.title,
       this.showOrders = true,
       this.autoBack = false,
+      this.canGoBack = true,
       this.onClick,
       this.leftBtnType = AppBarLeftButtonType.Back})
       : preferredSize = Size.fromHeight(kToolbarHeight),
@@ -23,6 +25,7 @@ class LaundryAppAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return mezcalmosAppBar(leftBtnType,
         title: title,
+        showLeftBtn: canGoBack,
         onClick: () => onClick?.call(),
         showNotifications: true,
         ordersRoute: kPastOrdersListView);

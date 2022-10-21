@@ -190,10 +190,14 @@ class ROpDashboardPage extends StatelessWidget {
                         curve: Curves.easeIn);
                   },
                   icon: Icons.delivery_dining,
-                  trailingWidget: Switch(
-                    value: true,
-                    onChanged: (bool v) {},
-                    activeColor: primaryBlueColor,
+                  trailingWidget: Obx(
+                    () => Switch(
+                      value: viewController.restaurant.value!.selfDelivery,
+                      onChanged: (bool v) {
+                        viewController.switchSelfDelivery(v);
+                      },
+                      activeColor: primaryBlueColor,
+                    ),
                   ),
                   titleWidget: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,7 +210,7 @@ class ROpDashboardPage extends StatelessWidget {
                             color: Colors.grey.shade900),
                       ),
                       Text(
-                        "Turn on self delivery to control your own deliveries.",
+                        "Control your own deliveries.",
                         style: Get.textTheme.subtitle1
                             ?.copyWith(color: Colors.grey.shade500),
                       ),
@@ -226,9 +230,10 @@ class ROpDashboardPage extends StatelessWidget {
               _divider(),
               _navigationLink(
                   onClick: () {
-                    pageController.animateToPage(3,
-                        duration: Duration(milliseconds: 1),
-                        curve: Curves.easeIn);
+                    // todo privacy policy
+                    // pageController.animateToPage(3,
+                    //     duration: Duration(milliseconds: 1),
+                    //     curve: Curves.easeIn);
                   },
                   icon: Icons.privacy_tip,
                   titleWidget: Text(
@@ -241,9 +246,7 @@ class ROpDashboardPage extends StatelessWidget {
               _divider(),
               _navigationLink(
                   onClick: () {
-                    pageController.animateToPage(4,
-                        duration: Duration(milliseconds: 1),
-                        curve: Curves.easeIn);
+                    // todo logout
                   },
                   icon: Icons.logout,
                   iconColor: Colors.red,

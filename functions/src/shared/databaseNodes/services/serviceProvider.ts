@@ -52,6 +52,12 @@ export function serviceProviderReviews(
 ) {
   return serviceProviderDetails(orderType, providerId).child("reviews");
 }
+export function serviceProviderOperators(
+  orderType: OrderType,
+  providerId: string
+) {
+  return serviceProviderState(orderType, providerId).child("operators");
+}
 
 export function serviceProviderPaymentInfo(
   orderType: OrderType,

@@ -46,6 +46,7 @@ class RestaurantOrder extends DeliverableOrder {
   DateTime? estimatedFoodReadyTime;
   DateTime? deliveryTime;
   Review? review;
+  bool selfDelivery;
 
   RestaurantOrder(
       {required super.orderId,
@@ -61,6 +62,7 @@ class RestaurantOrder extends DeliverableOrder {
       required super.to,
       this.estimatedFoodReadyTime,
       super.dropoffDriver,
+      this.selfDelivery = false,
       this.deliveryTime,
       String? dropOffDriverChatId,
       required this.itemsCost,
@@ -118,6 +120,7 @@ class RestaurantOrder extends DeliverableOrder {
             hasuraId: 1, firebaseId: "firebaseId", name: null, image: null),
         // customer: UserInfo.fromData(data["customer"]),
         itemsCost: data['itemsCost'],
+        selfDelivery: data['selfDelivery'] ?? false,
         shippingCost: data["shippingCost"] ?? 0,
         dropoffDriver: (data["dropoffDriver"] != null)
             ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])

@@ -19,4 +19,9 @@ export function restaurantOperators(providerId: string, userId?: string) {
   if (userId != null)
     ret = ret.child(userId);
   return ret;
+}export function restaurantDrivers(providerId: string, userId?: string) {
+  let ret = serviceProviderState(OrderType.Restaurant, providerId).child("/drivers");
+  if (userId != null)
+    ret = ret.child(userId);
+  return ret;
 }

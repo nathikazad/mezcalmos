@@ -7,4 +7,4 @@ export async function getRestaurantReviews(restaurantId: string): Promise<any[]>
          array.push(data.val());
      });
     return array;
-  }
+}

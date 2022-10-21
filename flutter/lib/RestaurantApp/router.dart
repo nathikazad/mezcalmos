@@ -10,6 +10,7 @@ import 'package:mezcalmos/RestaurantApp/pages/OptionView/ROpOptionView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/ROpOrderView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/PastOrdresList/ROpPastOrdersList.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpChoiceView/ROpChoiceView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/ROpPickDriverView/ROpPickDriverView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpTabsViewView/ROpTabsViewView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/RestaurantWrapper.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ReviewsView/ROpReviewsView.dart';
@@ -34,6 +35,7 @@ const String kEditItemView = '/itemView/:restaurantId/:itemId/:categoryId';
 const String kOrderView = '/orderView/:orderId';
 const String kOptionView = "/optionView/:restaurantId/:itemId/:optionId";
 const String kChoiceView = "/Choice/:restaurantId:/:optionId/:choiceId";
+const String kPickDriver = '/pickDriver/:orderId';
 
 String getROpEditInfoRoute({required String restaurantId}) {
   return kDashboardView.replaceFirst(":restaurantId", restaurantId);
@@ -141,6 +143,7 @@ class XRouter {
         GetPage(name: kChoiceView, page: () => ROpChoiceView()),
         GetPage(name: kCreateRestaurant, page: () => ROpCreateRestuarantView()),
         GetPage(name: kTabsView, page: () => ROpTabsViewView()),
+        GetPage(name: kPickDriver, page: () => ROpPickDriverView()),
       ] +
       SharedRouter.sharedRoutes;
 }

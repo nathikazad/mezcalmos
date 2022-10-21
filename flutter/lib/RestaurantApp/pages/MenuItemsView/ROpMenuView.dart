@@ -18,8 +18,10 @@ dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
 //
 
 class ROpMenuView extends StatefulWidget {
-  const ROpMenuView({Key? key, this.restID}) : super(key: key);
+  const ROpMenuView({Key? key, this.restID, this.canGoBack = true})
+      : super(key: key);
   final String? restID;
+  final bool canGoBack;
   @override
   _ROpMenuViewState createState() => _ROpMenuViewState();
 }
@@ -126,11 +128,10 @@ class _ROpMenuViewState extends State<ROpMenuView>
                     ],
                   ),
                 ),
-
                 // specials view //
                 ROpSpecialsComponent(
-                  viewController: viewController,
                   restaurantID: restaurantID!,
+                  viewController: viewController,
                 ),
               ],
             );
@@ -268,7 +269,9 @@ class _ROpMenuViewState extends State<ROpMenuView>
         Get.back();
       });
     } else {
-      Get.back();
+      if (widget.canGoBack) {
+        Get.back();
+      }
     }
   }
 }

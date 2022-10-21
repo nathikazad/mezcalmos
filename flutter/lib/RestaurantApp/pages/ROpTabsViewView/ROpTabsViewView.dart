@@ -4,6 +4,7 @@ import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.d
 import 'package:mezcalmos/RestaurantApp/pages/CurrentOrdersList/ROpCurrentOrders.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/ROpDashboardView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/ROpMenuView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/ROpDriversView/ROpDriversView.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 class ROpTabsViewView extends StatefulWidget {
@@ -46,17 +47,26 @@ class _ROpTabsViewViewState extends State<ROpTabsViewView> {
   Widget _getBody() {
     switch (_index.value) {
       case 0:
-        return ROpCurrentOrdersListView();
+        return ROpCurrentOrdersListView(
+          canGoBack: false,
+        );
 
       case 1:
-        return Scaffold();
+        return ROpDriversView(
+          restID: opAuthController.restaurantId!,
+          canGoBack: false,
+        );
 
       case 2:
         return ROpMenuView(
           restID: opAuthController.restaurantId!,
+          canGoBack: false,
         );
       case 3:
-        return ROpDashboardView(restID: opAuthController.restaurantId!);
+        return ROpDashboardView(
+          restID: opAuthController.restaurantId!,
+          canGoBack: false,
+        );
 
       default:
         return Scaffold(
