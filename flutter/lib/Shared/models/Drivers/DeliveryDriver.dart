@@ -28,7 +28,7 @@ class DeliveryDriverState {
 class DeliveryDriver {
   DeliveryDriverState deliveryDriverState;
   DeliveryDriverUserInfo driverInfo;
-  LatLng driverLocation;
+  LatLng? driverLocation;
   DateTime? lastLocationUpdateTime;
   String deliveryDriverId;
 
@@ -74,7 +74,7 @@ class DeliveryDriver {
   Map<String, dynamic> toJson() => <String, dynamic>{
         "authorizationStatus": deliveryDriverState.isAuthorized,
         "isOnline": deliveryDriverState.isOnline,
-        "driverLocation": driverLocation.toJson(),
+        "driverLocation": driverLocation?.toJson(),
         "lastLocationUpdateTime":
             lastLocationUpdateTime?.toUtc().toIso8601String(),
       };

@@ -101,7 +101,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
             child: ViewCartBody(
               viewCartController: viewCartController,
               setLocationCallBack: ({Location? location}) {
+                // --
                 if (location != null && location.isValidLocation()) {
+                  setState(() {
+                    orderToLocation = location;
+                  });
                   _restaurantController.cart.value.toLocation = location;
                   _restaurantController.updateShippingPrice().then(
                       (bool value) => _restaurantController.cart.refresh());
