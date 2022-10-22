@@ -22,9 +22,10 @@ extension DbRefExceptionCatcher on DatabaseReference {
   Future<void> setWithCatch({required Object value}) async {
     try {
       await once();
+      await set(value);
     } catch (_) {
-      // mezDbgPrint(
-      //     "[ 👺👺👺👺 ] Nasty Database permissions happend!\nTrying to set $value at database::$path");
+      mezDbgPrint(
+          "[ 👺👺👺👺 ] Nasty Database permissions happend!\nTrying to set $value at database::$path");
       return null;
     }
   }
