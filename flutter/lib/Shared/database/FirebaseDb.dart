@@ -20,14 +20,15 @@ extension DbRefExceptionCatcher on DatabaseReference {
   }
 
   Future<void> setWithCatch({required Object value}) async {
-    try {
-      await once();
-      await set(value);
-    } catch (_) {
+    // ignore: always_specify_types, unawaited_futures
+    onValue.first.then((_v) {
+      mezDbgPrint("got value => $_v");
+      set(value);
+    }).catchError((_) {
       mezDbgPrint(
           "[ 👺👺👺👺 ] Nasty Database permissions happend!\nTrying to set $value at database::$path");
       return null;
-    }
+    });
   }
 }
 
