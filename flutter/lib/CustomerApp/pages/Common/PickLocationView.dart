@@ -42,17 +42,6 @@ class _PickLocationViewState extends State<PickLocationView> {
   SavedLocation? savedLocation;
   bool showScreenLoading = false;
   LatLng? currentLatLng;
-  // bool _locationAccessFailed = false;
-
-  // CustomerAuthController customerAuthController =
-  //     Get.find<CustomerAuthController>();
-
-  // Future<void> geoCodeAndSetNewAddress(LatLng pickedLocation) async {
-  //   String? address = await getAdressFromLatLng(
-  //       LatLng(pickedLocation.latitude, pickedLocation.longitude));
-  //   locationPickerController.location.value!.address = address ??
-  //       "${_lang.strings['shared']['pickLocation']['address']} : ${pickedLocation.latitude}, ${pickedLocation.longitude}";
-  // }
 
   @override
   void initState() {
@@ -153,15 +142,17 @@ class _PickLocationViewState extends State<PickLocationView> {
     return Scaffold(
       bottomNavigationBar: ButtonComponent(
         canClick: !showScreenLoading &&
-            locationPickerController.location.value != null,
+            locationPickerController.location.value != null &&
+            locationPickerController.isMapReady,
         function: (showScreenLoading ||
-                locationPickerController.location.value == null)
+                locationPickerController.location.value == null ||
+                !locationPickerController.isMapReady)
             ? null
             : () async {
                 await onPickButtonClick(context);
               },
         widget: Center(
-          child: (showScreenLoading)
+          child: (showScreenLoading || !locationPickerController.isMapReady)
               ? CircularProgressIndicator(
                   color: Colors.white,
                 )
@@ -220,88 +211,90 @@ class _PickLocationViewState extends State<PickLocationView> {
 
   Future<void> onPickButtonClick(BuildContext context) async {
     String? _result;
-    final LatLng _pickedLoc = await locationPickerController.getMapCenter();
+    final LatLng? _pickedLoc = await locationPickerController.getMapCenter();
+    if (_pickedLoc != null) {
+      await locationPickerController.moveToNewLatLng(
+          _pickedLoc.latitude, _pickedLoc.longitude);
 
-    await locationPickerController.moveToNewLatLng(
-        _pickedLoc.latitude, _pickedLoc.longitude);
-
-    setState(() {
-      showScreenLoading = true;
-    });
-    if (widget.pickLocationMode == PickLocationMode.AddNewLocation) {
-      _result = await savedLocationDailog(
-        context: context,
-        comingFromCart: Get.arguments,
-      );
-      if (_result != null && _result != "") {
-        await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
-        savedLocation = SavedLocation(
-            name: _result, location: locationPickerController.location.value!);
-        Get.find<CustomerAuthController>()
-            .customer
-            .value
-            ?.savedLocations
-            .forEach((SavedLocation location) {
-          if (location.name.toLowerCase() ==
-                  savedLocation?.name.toLowerCase() ||
-              location.location?.address.toLowerCase() ==
-                  savedLocation?.location?.address.toLowerCase()) {
-            // delete from db
-            Get.find<CustomerAuthController>().deleteLocation(location);
-          }
-        });
-        Get.find<CustomerAuthController>().saveNewLocation(savedLocation!);
-      } else {
-        await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
-        savedLocation = SavedLocation(
-            name: locationPickerController.location.value!.address,
-            location: locationPickerController.location.value!);
-      }
       setState(() {
-        locationPickerController
-            .setLocation(locationPickerController.location.value!);
+        showScreenLoading = true;
       });
-
-      Get.back<SavedLocation?>(result: savedLocation);
-    } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
-      _result = await savedLocationDailog(
-          comingFromCart: Get.arguments,
+      if (widget.pickLocationMode == PickLocationMode.AddNewLocation) {
+        _result = await savedLocationDailog(
           context: context,
-          nameVal: savedLocation!.name,
-          mode: PickLocationMode.EditLocation);
-      SavedLocation? _isDuplicatedSavedLocation;
-      if (_result != null && _result != "") {
-        await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
-        savedLocation = SavedLocation(
-            id: savedLocation!.id,
-            name: _result,
-            location: locationPickerController.location.value!);
-
-        _isDuplicatedSavedLocation = Get.find<CustomerAuthController>()
-            .customer
-            .value
-            ?.savedLocations
-            .firstWhereOrNull((SavedLocation location) =>
-                location.name.toLowerCase() ==
+          comingFromCart: Get.arguments,
+        );
+        if (_result != null && _result != "") {
+          await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
+          savedLocation = SavedLocation(
+              name: _result,
+              location: locationPickerController.location.value!);
+          Get.find<CustomerAuthController>()
+              .customer
+              .value
+              ?.savedLocations
+              .forEach((SavedLocation location) {
+            if (location.name.toLowerCase() ==
                     savedLocation?.name.toLowerCase() ||
                 location.location?.address.toLowerCase() ==
-                    savedLocation?.location?.address.toLowerCase());
-      }
-      if (_isDuplicatedSavedLocation != null) {
-        MezSnackbar("Oops",
-            "You already have a saved location with the same name / address !");
-      } else {
-        Get.find<CustomerAuthController>().editLocation(savedLocation!);
-
+                    savedLocation?.location?.address.toLowerCase()) {
+              // delete from db
+              Get.find<CustomerAuthController>().deleteLocation(location);
+            }
+          });
+          Get.find<CustomerAuthController>().saveNewLocation(savedLocation!);
+        } else {
+          await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
+          savedLocation = SavedLocation(
+              name: locationPickerController.location.value!.address,
+              location: locationPickerController.location.value!);
+        }
         setState(() {
           locationPickerController
               .setLocation(locationPickerController.location.value!);
         });
 
         Get.back<SavedLocation?>(result: savedLocation);
+      } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
+        _result = await savedLocationDailog(
+            comingFromCart: Get.arguments,
+            context: context,
+            nameVal: savedLocation!.name,
+            mode: PickLocationMode.EditLocation);
+        SavedLocation? _isDuplicatedSavedLocation;
+        if (_result != null && _result != "") {
+          await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
+          savedLocation = SavedLocation(
+              id: savedLocation!.id,
+              name: _result,
+              location: locationPickerController.location.value!);
+
+          _isDuplicatedSavedLocation = Get.find<CustomerAuthController>()
+              .customer
+              .value
+              ?.savedLocations
+              .firstWhereOrNull((SavedLocation location) =>
+                  location.name.toLowerCase() ==
+                      savedLocation?.name.toLowerCase() ||
+                  location.location?.address.toLowerCase() ==
+                      savedLocation?.location?.address.toLowerCase());
+        }
+        if (_isDuplicatedSavedLocation != null) {
+          MezSnackbar("Oops",
+              "You already have a saved location with the same name / address !");
+        } else {
+          Get.find<CustomerAuthController>().editLocation(savedLocation!);
+
+          setState(() {
+            locationPickerController
+                .setLocation(locationPickerController.location.value!);
+          });
+
+          Get.back<SavedLocation?>(result: savedLocation);
+        }
+      } else if (widget.pickLocationMode == PickLocationMode.NonLoggedInPick) {
+        Get.back<Location>(result: locationPickerController.location.value);
       }
-    } else if (widget.pickLocationMode == PickLocationMode.NonLoggedInPick) {
-      Get.back<Location>(result: locationPickerController.location.value);
     }
   }
 

@@ -26,19 +26,19 @@ class MGoogleMap extends StatefulWidget {
   final double recenterBtnBottomPadding;
   final EdgeInsets padding;
 
-  const MGoogleMap(
-      {Key? key,
-      this.padding = const EdgeInsets.only(top: 80, bottom: 50),
-      this.notifyParentOfNewLocation,
-      this.recenterBtnBottomPadding = 100,
-      this.debugString,
+  const MGoogleMap({
+    Key? key,
+    this.padding = const EdgeInsets.only(top: 80, bottom: 50),
+    this.notifyParentOfNewLocation,
+    this.recenterBtnBottomPadding = 100,
+    this.debugString,
 
-      // this.mGoogleMapController,
+    // this.mGoogleMapController,
 
-      // this.periodicRerenderingis.debugString,
-      this.rerenderDuration = const Duration(seconds: 2),
-      required this.mGoogleMapController})
-      : super(key: key);
+    // this.periodicRerenderingis.debugString,
+    this.rerenderDuration = const Duration(seconds: 2),
+    required this.mGoogleMapController,
+  }) : super(key: key);
 
   @override
   State<MGoogleMap> createState() => MGoogleMapState();
@@ -67,7 +67,7 @@ class MGoogleMapState extends State<MGoogleMap> {
     // attach Callback onResume to avoid Map going black in some devices after going back from background to foreGround.
     Get.find<AppLifeCycleController>().attachCallback(AppLifecycleState.resumed,
         () {
-      widget.mGoogleMapController.controller?.setMapStyle(mezMapStyle);
+      widget.mGoogleMapController.controller.value?.setMapStyle(mezMapStyle);
     });
 
     _shouldRerenderOrNot(widget.mGoogleMapController.periodicRerendering.value);
@@ -86,8 +86,8 @@ class MGoogleMapState extends State<MGoogleMap> {
     _reRenderingTimer?.cancel();
     _reRenderingTimer = null;
     // gmapControlelr disposing.
-    widget.mGoogleMapController.controller?.dispose();
-    widget.mGoogleMapController.controller = null;
+    widget.mGoogleMapController.controller.value?.dispose();
+    widget.mGoogleMapController.controller.value = null;
     mezDbgPrint(
         "MGoogleMap - Disposed { controller:${widget.mGoogleMapController.controller} | _reRenderingTimer:$_reRenderingTimer } !!!");
 
@@ -183,12 +183,11 @@ class MGoogleMapState extends State<MGoogleMap> {
                 onMapCreated: (GoogleMapController _gController) async {
                   mezDbgPrint(
                       "\n\n\n\n\n o n   m a p   c r e a t e d !\n\n\n\n\n\n");
-                  widget.mGoogleMapController.controller = _gController;
+                  widget.mGoogleMapController.controller.value = _gController;
                   await _gController.setMapStyle(mezMapStyle);
                   await widget.mGoogleMapController.animateAndUpdateBounds();
                   _completer.complete(_gController);
                   // Executing Callback that is depending on [widget.mGoogleMapController.controller].
-                  widget.mGoogleMapController.onMapInitilized?.call();
                 },
               ),
             ).detector,
@@ -209,7 +208,7 @@ class MGoogleMapState extends State<MGoogleMap> {
         onTap: () async {
           final LocationData? _tmpCurrentLoc = await _currentLocation();
           if (_tmpCurrentLoc != null) {
-            await widget.mGoogleMapController.controller?.animateCamera(
+            await widget.mGoogleMapController.controller.value?.animateCamera(
               CameraUpdate.newCameraPosition(
                 CameraPosition(
                   target: LatLng(
@@ -286,7 +285,7 @@ class MGoogleMapGestures extends MezSmartPointer {
   void onDoubleTap() {
     if (mGoogleController.enableMezSmartPointer) {
       mGoogleController.unlockAutoZoomAnimation();
-      mGoogleController.controller?.animateCamera(CameraUpdate.zoomIn());
+      mGoogleController.controller.value?.animateCamera(CameraUpdate.zoomIn());
     }
   }
 

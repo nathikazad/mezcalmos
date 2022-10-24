@@ -21,11 +21,12 @@ class MGoogleMapController {
   RxList<MezMarker> markers = <MezMarker>[].obs;
   Rxn<Location> location = Rxn<Location>();
   RxBool animateMarkersPolyLinesBounds = false.obs;
-  GoogleMapController? controller;
+  Rxn<GoogleMapController> controller = Rxn();
   late bool enableMezSmartPointer;
   LatLngBounds? bounds;
   Function? onMapTap;
-  Function? onMapInitilized;
+  bool get isMapReady => controller.value != null;
+
   // this is used when we don't want to re-render the map periodically.
   RxBool periodicRerendering = false.obs;
   RxBool recenterButtonEnabled = false.obs;
@@ -34,7 +35,6 @@ class MGoogleMapController {
   MGoogleMapController({
     bool myLocationButtonEnabled = false,
     bool enableMezSmartPointer = true,
-    this.onMapInitilized,
   }) {
     this.myLocationButtonEnabled = RxBool(myLocationButtonEnabled);
     this.enableMezSmartPointer = enableMezSmartPointer;
@@ -66,7 +66,7 @@ class MGoogleMapController {
     // 1 - init the map without showing
     // 2 - call take snapshot
     // 3 - dispose map a
-    final Uint8List? _tmp = await controller?.takeSnapshot();
+    final Uint8List? _tmp = await controller.value?.takeSnapshot();
     if (_tmp != null) {
       return Image.memory(_tmp);
     }
@@ -272,21 +272,23 @@ class MGoogleMapController {
 
   Future<void> moveToNewLatLng(double lat, double lng) async {
     mezDbgPrint("controller ====> $controller");
-    await controller?.animateCamera(CameraUpdate.newLatLng(LatLng(lat, lng)));
+    await controller.value
+        ?.animateCamera(CameraUpdate.newLatLng(LatLng(lat, lng)));
   }
 
-  Future<LatLng> getMapCenter() async {
-    final LatLngBounds? visibleRegion = await controller?.getVisibleRegion();
-    final LatLng centerLatLng = visibleRegion == null
-        ? LatLng(0, 0)
-        : LatLng(
-            (visibleRegion.northeast.latitude +
-                    visibleRegion.southwest.latitude) /
-                2,
-            (visibleRegion.northeast.longitude +
-                    visibleRegion.southwest.longitude) /
-                2,
-          );
+  Future<LatLng?> getMapCenter() async {
+    final LatLngBounds? visibleRegion =
+        await controller.value?.getVisibleRegion();
+    LatLng? centerLatLng;
+    if (visibleRegion != null) {
+      centerLatLng = LatLng(
+        (visibleRegion.northeast.latitude + visibleRegion.southwest.latitude) /
+            2,
+        (visibleRegion.northeast.longitude +
+                visibleRegion.southwest.longitude) /
+            2,
+      );
+    }
 
     return centerLatLng;
   }
@@ -301,19 +303,19 @@ class MGoogleMapController {
 
   // Animate the camera using widget.bounds
   Future<void> animateCameraWithNewBounds() async {
-    if (controller != null && bounds != null) {
+    if (controller.value != null && bounds != null) {
       final CameraUpdate _camUpdate =
           CameraUpdate.newLatLngBounds(bounds!, 100);
-      await controller!.animateCamera(_camUpdate);
+      await controller.value!.animateCamera(_camUpdate);
       await _boundsReChecker(_camUpdate);
     }
   }
 
   // Cheker -> Animate first and Double check if the bounds fit well the MapScreen
   Future<void> _boundsReChecker(CameraUpdate u) async {
-    await controller?.animateCamera(u);
-    final LatLngBounds? l1 = await controller?.getVisibleRegion();
-    final LatLngBounds? l2 = await controller?.getVisibleRegion();
+    await controller.value?.animateCamera(u);
+    final LatLngBounds? l1 = await controller.value?.getVisibleRegion();
+    final LatLngBounds? l2 = await controller.value?.getVisibleRegion();
     if (l1 != null && l2 != null) {
       if (l1.southwest.latitude == -90 || l2.southwest.latitude == -90)
         await _boundsReChecker(u);
@@ -405,6 +407,6 @@ class MGoogleMapController {
   void setZoomLvl({required double zoomLvl}) {
     assert(periodicRerendering == false);
     assert(minMaxZoomPrefs == MinMaxZoomPreference.unbounded);
-    controller?.animateCamera(CameraUpdate.zoomTo(zoomLvl));
+    controller.value?.animateCamera(CameraUpdate.zoomTo(zoomLvl));
   }
 }
