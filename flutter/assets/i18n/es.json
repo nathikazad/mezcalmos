@@ -1923,11 +1923,13 @@
                     },
                     "ROpOrderEstTime": {
                         "title": "Tiempo estimado de preparación",
+                        "deliveryTitle": "Estimated delivery time",
                         "set": "Establecer",
                         "confirm": "Confirmar",
                         "cancel": "Cancelar",
                         "error": "Error",
-                        "minTimes": "Mínimo 5 Miutes Prepare el tiempo"
+                        "minTimes": "Mínimo 5 Miutes Prepare el tiempo",
+                        "deliveryMinTimes": "Tiempo de entrega bajo 5 minutos"
                     },
                     "ROpDriverCard": {
                         "noDriver": "No hay controlador asignado todavía",

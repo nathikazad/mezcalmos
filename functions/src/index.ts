@@ -37,12 +37,14 @@ export const stripe = {
 }
 
 import * as restaurantStatusChange from './restaurant/adminStatusChanges'
+import * as restaurantSelfDelivery from "./restaurant/assignSelfDelivery"
 export const restaurant = {
   createRestaurant: require("./restaurant/createNewRestaurant"),
   addOperator: require("./restaurant/addOperator"),
   addDriver: require("./restaurant/addDriver"),
   removeDriver: require("./restaurant/removeDriver"),
-  assignSelfDelivery: require("./restaurant/assignSelfDelivery"),
+  assignSelfDelivery: restaurantSelfDelivery.assignSelfDelivery,
+  assignSelfDeliveryTime: restaurantSelfDelivery.assignSelfDeliveryTime,
   removeOperator: require("./restaurant/removeOperator"),
   checkoutCart: require("./restaurant/checkoutCart"),
   addReview: require("./restaurant/addReview"),

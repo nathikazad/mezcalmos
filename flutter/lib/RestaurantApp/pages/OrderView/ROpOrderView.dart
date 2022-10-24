@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpDriverCard.dart';
+import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpEstDeliveryTime.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderCustomer.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderEstTime.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderHandleButton.dart';
@@ -79,11 +80,15 @@ class _ROpOrderViewState extends State<ROpOrderView> {
           .getOrderStream(orderId!)
           .listen((RestaurantOrder? newOrderEvent) {
         if (newOrderEvent != null) {
+          mezDbgPrint("NEW ORDER EVENT =====");
           order.value = newOrderEvent;
           order.refresh();
           if (order.value != null && order.value!.inSelfDelivery()) {
+            mezDbgPrint("SHOULD ROUTE TO MAP VIEW =====");
             _orderListener?.cancel();
-            Get.offAndToNamed(getROpSelfDelivery(orderId: orderId));
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              Get.offAndToNamed(getROpSelfDelivery(orderId: orderId));
+            });
           } else {
             _updateMapByPhaseAndStatus();
           }
@@ -178,6 +183,8 @@ class _ROpOrderViewState extends State<ROpOrderView> {
 
               ROpOrderHandleButton(order: order.value!),
               ROpOrderEstTime(order: order.value!),
+              if (order.value?.selfDelivery ?? false)
+                ROpEstDeliveryTime(order: order.value!),
               ROpDriverCard(order: order.value!),
               _getMapWidget(),
               ROpOrderCustomer(order: order.value!),

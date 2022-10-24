@@ -162,11 +162,6 @@ class ROpAnimatedOrderCard extends StatelessWidget {
                     fontSize: 13.sp,
                   ),
                 ),
-                if (subtitle != null) Text(subtitle!),
-                if (secondSubtitle != null)
-                  Container(
-                      margin: const EdgeInsets.only(top: 5),
-                      child: Text(secondSubtitle!)),
               ],
             ),
           ),

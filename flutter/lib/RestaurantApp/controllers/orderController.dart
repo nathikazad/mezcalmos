@@ -298,46 +298,16 @@ class ROpOrderController extends GetxController {
         });
   }
 
-  Future<void> setEstimatedSelfDeliveryTime(
+  Future<ServerResponse> setEstimatedSelfDeliveryTime(
       RestaurantOrder order, DateTime utc) async {
-    await _databaseHelper.firebaseDatabase
-        .ref()
-        .child(restaurantOpInProcessOrdersNode(
-          orderId: order.orderId,
-          uid: restaurantID!,
-        ))
-        .child("selfDeliveryDetails")
-        .child("estDeliveryTime")
-        .set((utc.toUtc().toString()))
-        .catchError((Object? error, StackTrace stackTrace) {
-      mezDbgPrint(error);
-    });
-
-    // updating driver location in root orders/inProcess/<OrderType>
-    await _databaseHelper.firebaseDatabase
-        .ref()
-        .child(rootInProcessOrdersNode(
-          orderId: order.orderId,
-          orderType: order.orderType,
-        ))
-        .child("selfDeliveryDetails")
-        .child("estDeliveryTime")
-        .set((utc.toUtc().toString()))
-        .catchError((Object? error, StackTrace stackTrace) {
-      mezDbgPrint(error);
-    });
-    await _databaseHelper.firebaseDatabase
-        .ref()
-        .child(customerInProcessOrder(
-          orderId: order.orderId,
-          customerId: order.customer.id,
-        ))
-        .child("selfDeliveryDetails")
-        .child("estDeliveryTime")
-        .set((utc.toUtc().toString()))
-        .catchError((Object? error, StackTrace stackTrace) {
-      mezDbgPrint(error);
-    });
+    mezDbgPrint("inside clod set delivery time $utc");
+    return _callRestaurantCloudFunction("assignSelfDeliveryTime", order.orderId,
+        optionalParams: {
+          "time": utc.toUtc().toString(),
+          "restaurantId": order.restaurantId,
+          "customerId": order.customer.id,
+          "orderType": OrderType.Restaurant.toFirebaseFormatString(),
+        });
   }
 
   Future<ServerResponse> refundCustomerCustomAmount(

@@ -30,7 +30,7 @@ export async function finishOrder(
   }
 }
 
-async function checkRestaurantOperator(restaurantId: string, operatorId: string): Promise<ServerResponse | undefined> {
+export async function checkRestaurantOperator(restaurantId: string, operatorId: string): Promise<ServerResponse | undefined> {
   let operator = (await restaurantNodes.restaurantOperators(restaurantId, operatorId).once('value')).val();
   let isOperator = operator != null && operator == true
   if (!isOperator) {

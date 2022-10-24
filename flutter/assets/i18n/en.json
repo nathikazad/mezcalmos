@@ -1898,11 +1898,14 @@
                     },
                     "ROpOrderEstTime": {
                         "title": "Estimated preparation time",
+                        "deliveryTitle": "Estimated delivery time",
+
                         "set": "Set",
                         "confirm": "Confirm",
                         "cancel": "Cancel",
                         "error": "Error",
-                        "minTimes": "Minimum 5 miutes prepare time"
+                        "minTimes": "Minimum 5 miutes prepare time",
+                        "deliveryMinTimes": "Minimum 5 miutes delivery time"
                     },
                     "ROpDriverCard": {
                         "noDriver": "No driver assigned yet",
