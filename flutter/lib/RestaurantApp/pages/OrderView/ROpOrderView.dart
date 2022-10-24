@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -13,6 +14,7 @@ import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderItems
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderNote.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderStatusCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpRefundBtn.dart';
+import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -49,45 +51,59 @@ class _ROpOrderViewState extends State<ROpOrderView> {
   RestaurantOrderStatus? _statusSnapshot;
   @override
   void initState() {
-    final String orderId = Get.parameters['orderId']!;
-    controller.clearOrderNotifications(orderId);
-    order.value = controller.getOrder(orderId) as RestaurantOrder;
+    final String? orderId = Get.parameters['orderId'];
+    mezDbgPrint("ORDER ID ==================================>>>>$orderId");
+    if (orderId != null) {
+      controller.clearOrderNotifications(orderId);
+      order.value = controller.getOrder(orderId) as RestaurantOrder;
+    }
+    if (order.value != null && order.value!.inSelfDelivery()) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        Get.offAndToNamed(getROpSelfDelivery(orderId: orderId!));
+      });
+    } else {
+      // first time init map
+      //mGoogleMapController.animateMarkersPolyLinesBounds(true);
+      mGoogleMapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded;
+      mGoogleMapController.recenterButtonEnabled.value = false;
+      mGoogleMapController.periodicRerendering.value = true;
 
-    // first time init map
-    //mGoogleMapController.animateMarkersPolyLinesBounds(true);
-    mGoogleMapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded;
-    mGoogleMapController.recenterButtonEnabled.value = false;
-    mGoogleMapController.periodicRerendering.value = true;
+      // mGoogleMapController.periodicRerendering.value = true;
+      if (order.value?.routeInformation?.polyline != null)
+        mGoogleMapController.decodeAndAddPolyline(
+          encodedPolylineString: order.value!.routeInformation!.polyline,
+        );
 
-    // mGoogleMapController.periodicRerendering.value = true;
-    if (order.value?.routeInformation?.polyline != null)
-      mGoogleMapController.decodeAndAddPolyline(
-        encodedPolylineString: order.value!.routeInformation!.polyline,
-      );
+      _updateMapByPhaseAndStatus();
+      _orderListener = controller
+          .getOrderStream(orderId!)
+          .listen((RestaurantOrder? newOrderEvent) {
+        if (newOrderEvent != null) {
+          order.value = newOrderEvent;
+          order.refresh();
+          if (order.value != null && order.value!.inSelfDelivery()) {
+            _orderListener?.cancel();
+            Get.offAndToNamed(getROpSelfDelivery(orderId: orderId));
+          } else {
+            _updateMapByPhaseAndStatus();
+          }
 
-    _updateMapByPhaseAndStatus();
-    _orderListener = controller
-        .getOrderStream(orderId)
-        .listen((RestaurantOrder? newOrderEvent) {
-      if (newOrderEvent != null) {
-        order.value = newOrderEvent;
-        order.refresh();
-        mezDbgPrint("getOrderStream.listen");
-        _updateMapByPhaseAndStatus();
-      }
-    });
+          mezDbgPrint("getOrderStream.listen");
+        }
+      });
 
-    waitForOrderIfNotLoaded().then((void value) {
-      if (order.value == null) {
-        // ignore: inference_failure_on_function_invocation
-        Future<Null>.delayed(Duration.zero, () {
-          Get.back<Null>();
-          MezSnackbar("Error", "Order does not exist");
-        });
-      } else {
-        // controller.setNotifiedAsTrue(order.value!);
-      }
-    });
+      waitForOrderIfNotLoaded().then((void value) {
+        if (order.value == null) {
+          // ignore: inference_failure_on_function_invocation
+          Future<Null>.delayed(Duration.zero, () {
+            Get.back<Null>();
+            MezSnackbar("Error", "Order does not exist");
+          });
+        } else {
+          // controller.setNotifiedAsTrue(order.value!);
+        }
+      });
+    }
   }
 
   void _updateMapByPhaseAndStatus() {

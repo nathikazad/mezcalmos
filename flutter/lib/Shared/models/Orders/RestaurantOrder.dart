@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -9,6 +10,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
+import 'package:mezcalmos/Shared/models/Utilities/SelfDeliveryDetails.dart';
 
 //ignore_for_file:constant_identifier_names
 enum RestaurantOrderStatus {
@@ -47,12 +49,14 @@ class RestaurantOrder extends DeliverableOrder {
   DateTime? deliveryTime;
   Review? review;
   bool selfDelivery;
+  SelfDeliveryDetails? selfDeliveryDetails;
 
   RestaurantOrder(
       {required super.orderId,
       super.orderType = OrderType.Restaurant,
       required this.status,
       required this.quantity,
+      this.selfDeliveryDetails,
       required super.serviceProviderId,
       required super.paymentType,
       required super.orderTime,
@@ -88,6 +92,9 @@ class RestaurantOrder extends DeliverableOrder {
     dynamic id,
     dynamic data,
   ) {
+    if (data["to"]["lat"] == null) {
+      mezDbgPrint("to nul =================>>>>>>>>>>>>>>$id");
+    }
     final RestaurantOrder restaurantOrder = RestaurantOrder(
         orderId: id,
         status: data["status"].toString().toRestaurantOrderStatus(),
@@ -119,13 +126,15 @@ class RestaurantOrder extends DeliverableOrder {
         itemsCost: data['itemsCost'],
         selfDelivery: data['selfDelivery'] ?? false,
         shippingCost: data["shippingCost"] ?? 0,
+        selfDeliveryDetails: (data["selfDeliveryDetails"] != null)
+            ? SelfDeliveryDetails.fromMap(data["selfDeliveryDetails"])
+            : null,
         dropoffDriver: (data["dropoffDriver"] != null)
             ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
             : null,
         dropOffDriverChatId: data['secondaryChats']
             ?['serviceProviderDropOffDriver'],
-        customerDropOffDriverChatId: data['secondaryChats']
-            ?['customerDropOffDriver'],
+        customerDropOffDriverChatId: data['secondaryChats']?['customerDropOffDriver'],
         totalCostBeforeShipping: data['totalCostBeforeShipping'],
         totalCost: data['totalCost'],
         refundAmount: data['refundAmount'],
@@ -203,6 +212,12 @@ class RestaurantOrder extends DeliverableOrder {
 
   bool inDeliveryPhase() {
     return status == RestaurantOrderStatus.OnTheWay;
+  }
+
+  bool inSelfDelivery() {
+    return (status == RestaurantOrderStatus.ReadyForPickup ||
+            status == RestaurantOrderStatus.OnTheWay) &&
+        selfDelivery;
   }
 
   bool get showItemsImages {

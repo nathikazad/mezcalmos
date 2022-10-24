@@ -1,4 +1,3 @@
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 String rootTaxiOpenOrdersNode() => "orders/open/taxi";
@@ -29,6 +28,12 @@ String rootInProcessOrderDriverLocationNode(
       '/$driverAddress/location';
 }
 
+String rootSelfDeliveryPosition(
+    {required OrderType orderType, required String orderId}) {
+  return rootInProcessOrdersNode(orderId: orderId, orderType: orderType) +
+      "/selfDeliveryPosition";
+}
+
 String rootInProcessOrdersNode({OrderType? orderType, String? orderId}) {
   String node = 'orders/inProcess';
   if (orderType != null) {
@@ -40,15 +45,13 @@ String rootInProcessOrdersNode({OrderType? orderType, String? orderId}) {
 
 String rootNotifiedAdminRoute(
     {required OrderType orderType, required String orderId}) {
-  return rootInProcessOrdersNode(
-          orderId: orderId, orderType: orderType) +
+  return rootInProcessOrdersNode(orderId: orderId, orderType: orderType) +
       "/notified/admin";
 }
 
 String rootNotifiedOperatorRoute(
     {required OrderType orderType, required String orderId}) {
-  return rootInProcessOrdersNode(
-          orderId: orderId, orderType: orderType) +
+  return rootInProcessOrdersNode(orderId: orderId, orderType: orderType) +
       "/notified/operator";
 }
 

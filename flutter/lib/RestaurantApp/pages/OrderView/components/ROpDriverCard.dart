@@ -26,6 +26,7 @@ class ROpDriverCard extends StatefulWidget {
 
 class _ROpDriverCardState extends State<ROpDriverCard> {
   RxBool showSet = RxBool(false);
+  Rxn<Restaurant> restaurant = Rxn();
   @override
   void initState() {
     _checkSelfDelivery();
@@ -82,7 +83,8 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                       style: Get.textTheme.bodyText1,
                     ),
                   ),
-                  if (widget.order.dropoffDriver != null)
+                  if (widget.order.dropoffDriver != null ||
+                      widget.order.selfDelivery)
                     MezIconButton(
                       onTap: () {
                         Get.toNamed(getROpPickDriverRoute(
@@ -106,7 +108,9 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                       ),
                     )
                 ])
-              : _noDriverYet()),
+              : (widget.order.selfDelivery)
+                  ? _selfDeliveryWidget()
+                  : _noDriverYet()),
     );
   }
 
@@ -115,11 +119,74 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
       Get.put(RestaurantInfoController(), permanent: false);
     }
 
-    await Get.find<RestaurantInfoController>()
-        .getRestaurantAsFuture(widget.order.restaurantId)
-        .then((Restaurant value) {
-      showSet.value = value.selfDelivery;
-    });
+    restaurant.value = await Get.find<RestaurantInfoController>()
+        .getRestaurantAsFuture(widget.order.restaurantId);
+    showSet.value = restaurant.value!.selfDelivery;
+  }
+
+  Widget _selfDeliveryWidget() {
+    return Obx(
+      () {
+        if (restaurant.value != null) {
+          return Row(children: [
+            Stack(
+              clipBehavior: Clip.none,
+              alignment: Alignment.center,
+              children: [
+                CircleAvatar(
+                    radius: 25,
+                    backgroundImage: CachedNetworkImageProvider(
+                        restaurant.value!.info.image)),
+                Positioned(
+                  right: -30,
+                  bottom: 0,
+                  child: Container(
+                    alignment: Alignment.centerRight,
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                        color: primaryBlueColor, shape: BoxShape.circle),
+                    child: Icon(
+                      Icons.delivery_dining,
+                      size: 32,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              width: 40,
+            ),
+            Flexible(
+              fit: FlexFit.tight,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    restaurant.value!.info.name,
+                    style: Get.textTheme.bodyText1,
+                  ),
+                  Text(
+                    'Self delivery',
+                    style: Get.textTheme.bodyText2,
+                  ),
+                ],
+              ),
+            ),
+            if (widget.order.dropoffDriver != null || widget.order.selfDelivery)
+              MezIconButton(
+                onTap: () {
+                  Get.toNamed(
+                      getROpPickDriverRoute(orderId: widget.order.orderId));
+                },
+                icon: Icons.edit,
+              ),
+          ]);
+        } else {
+          return SizedBox();
+        }
+      },
+    );
   }
 
   Widget _noDriverYet() {

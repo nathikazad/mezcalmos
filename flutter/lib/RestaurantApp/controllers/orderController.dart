@@ -4,8 +4,12 @@ import 'package:async/async.dart' show StreamGroup;
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
+import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/restaurantNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -22,8 +26,19 @@ class ROpOrderController extends GetxController {
   RxList<RestaurantOrder> pastOrders = <RestaurantOrder>[].obs;
   StreamSubscription? _currentOrdersListener;
   StreamSubscription? _pastOrdersListener;
+  String? restaurantID;
+
+  Rxn<LocationData> _currentLocation = Rxn<LocationData>(
+      // LocationData.fromMap({"latitude": 15.8337, "longitude": -97.04205})
+      );
+
+  LocationData? get currentLocation => _currentLocation.value;
+  Rxn<LocationData> get currentLocationRxn => _currentLocation;
+
+  StreamSubscription<LocationData>? _locationListener;
 
   Future<void> init(String restaurantId) async {
+    restaurantID = restaurantId;
     mezDbgPrint(
         "--------------------> Start listening on past orders  ${serviceProviderPastOrders(orderType: OrderType.Restaurant, providerId: restaurantId)}");
     await _pastOrdersListener?.cancel();
@@ -146,6 +161,123 @@ class ROpOrderController extends GetxController {
       _foregroundNotificationsController.removeNotification(notification.id);
     });
   }
+  // assign selfDelivery//
+
+  Future<void> assignSelfDelivery(RestaurantOrder order) async {
+    await _callRestaurantCloudFunction("assignSelfDelivery", order.orderId,
+        optionalParams: {
+          "enable": true,
+          "customerId": order.customer.id,
+          "restaurantId": restaurantID!,
+          "orderType": OrderType.Restaurant.toFirebaseFormatString(),
+        });
+
+    await startLocationListener(order);
+  }
+
+  Future<void> startLocationListener(RestaurantOrder order) async {
+    if (order.inSelfDelivery()) {
+      _locationListener = await _listenForLocation(order);
+    }
+  }
+
+  Future<void> stopLocationListener() async {
+    await _locationListener?.cancel();
+  }
+
+  Future<void> endSelfDelivery(RestaurantOrder order) async {
+    await _callRestaurantCloudFunction("assignSelfDelivery", order.orderId,
+        optionalParams: {
+          "enable": false,
+          "customerId": order.customer.id,
+          "restaurantId": restaurantID!,
+          "orderType": OrderType.Restaurant.toFirebaseFormatString(),
+        });
+    await _locationListener?.cancel();
+  }
+
+  // self delivery //
+
+  Future<StreamSubscription<LocationData>> _listenForLocation(
+      RestaurantOrder order) async {
+    mezDbgPrint("Listening for location !");
+    final Location location = Location();
+    await location.changeSettings(interval: 1000);
+
+    await location.enableBackgroundMode(enable: true);
+    return location.onLocationChanged
+        .listen((LocationData currentLocation) async {
+      mezDbgPrint("\t\t [ROP ORDER CONTROLLER] LOCATION GOT UPDAAAATED !!");
+      final DateTime currentTime = DateTime.now();
+      if (currentLocation.latitude != null &&
+          currentLocation.longitude != null) {
+        _currentLocation.value = currentLocation;
+
+        final Map<String, dynamic> positionUpdate = <String, dynamic>{
+          "lastUpdateTime": currentTime.toUtc().toString(),
+          "position": <String, dynamic>{
+            "lat": currentLocation.latitude,
+            "lng": currentLocation.longitude
+          }
+        };
+
+        // await _databaseHelper.firebaseDatabase
+        //     .ref()
+        //     .child(deliveryDriverAuthNode(_authController.fireAuthUser!.uid))
+        //     .child('location')
+        //     .setWithCatch(value: positionUpdate);
+
+        //   updating driver location in deliveryDrivers/inProcessOrders
+        await _databaseHelper.firebaseDatabase
+            .ref()
+            .child(restaurantOpInProcessOrdersNode(
+              orderId: order.orderId,
+              uid: restaurantID!,
+            ))
+            .child("selfDeliveryDetails")
+            .child("location")
+            .set(positionUpdate)
+            .catchError((Object? error, StackTrace stackTrace) {
+          mezDbgPrint(error);
+        });
+
+        // updating driver location in root orders/inProcess/<OrderType>
+        await _databaseHelper.firebaseDatabase
+            .ref()
+            .child(rootInProcessOrdersNode(
+              orderId: order.orderId,
+              orderType: order.orderType,
+            ))
+            .child("selfDeliveryDetails")
+            .child("location")
+            .set(positionUpdate)
+            .catchError((Object? error, StackTrace stackTrace) {
+          mezDbgPrint(error);
+        });
+        await _databaseHelper.firebaseDatabase
+            .ref()
+            .child(customerInProcessOrder(
+              orderId: order.orderId,
+              customerId: order.customer.id,
+            ))
+            .child("selfDeliveryDetails")
+            .child("location")
+            .set(positionUpdate)
+            .catchError((Object? error, StackTrace stackTrace) {
+          mezDbgPrint(error);
+        });
+      }
+    });
+  }
+
+  // end self delivery //
+  Future<ServerResponse> startRestaurantDelivery(String orderId) async {
+    return _callRestaurantCloudFunction("startDelivery", orderId);
+  }
+
+  Future<ServerResponse> finishRestaurantDelivery(String orderId) async {
+    return _callRestaurantCloudFunction("finishDelivery", orderId);
+  }
 
   Future<ServerResponse> setAsReadyForOrderPickup(String orderId) async {
     mezDbgPrint("Seeting order ready for delivery");
@@ -164,6 +296,48 @@ class ROpOrderController extends GetxController {
         optionalParams: {
           "estimatedFoodReadyTime": estimatedTime.toUtc().toString()
         });
+  }
+
+  Future<void> setEstimatedSelfDeliveryTime(
+      RestaurantOrder order, DateTime utc) async {
+    await _databaseHelper.firebaseDatabase
+        .ref()
+        .child(restaurantOpInProcessOrdersNode(
+          orderId: order.orderId,
+          uid: restaurantID!,
+        ))
+        .child("selfDeliveryDetails")
+        .child("estDeliveryTime")
+        .set((utc.toUtc().toString()))
+        .catchError((Object? error, StackTrace stackTrace) {
+      mezDbgPrint(error);
+    });
+
+    // updating driver location in root orders/inProcess/<OrderType>
+    await _databaseHelper.firebaseDatabase
+        .ref()
+        .child(rootInProcessOrdersNode(
+          orderId: order.orderId,
+          orderType: order.orderType,
+        ))
+        .child("selfDeliveryDetails")
+        .child("estDeliveryTime")
+        .set((utc.toUtc().toString()))
+        .catchError((Object? error, StackTrace stackTrace) {
+      mezDbgPrint(error);
+    });
+    await _databaseHelper.firebaseDatabase
+        .ref()
+        .child(customerInProcessOrder(
+          orderId: order.orderId,
+          customerId: order.customer.id,
+        ))
+        .child("selfDeliveryDetails")
+        .child("estDeliveryTime")
+        .set((utc.toUtc().toString()))
+        .catchError((Object? error, StackTrace stackTrace) {
+      mezDbgPrint(error);
+    });
   }
 
   Future<ServerResponse> refundCustomerCustomAmount(

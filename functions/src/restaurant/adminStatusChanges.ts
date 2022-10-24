@@ -39,6 +39,15 @@ export const readyForPickupOrder = functions.https.onCall(async (data, context) 
   let response: ServerResponse = await changeStatus(data, RestaurantOrderStatus.ReadyForPickup, context.auth)
   return response
 });
+export const startDelivery = functions.https.onCall(async (data, context) => {
+  let response: ServerResponse = await changeStatus(data, RestaurantOrderStatus.OnTheWay, context.auth)
+  return response
+});
+
+export const finishDelivery = functions.https.onCall(async (data, context) => {
+  let response: ServerResponse = await changeStatus(data, RestaurantOrderStatus.Delivered, context.auth)
+  return response
+});
 
 function expectedPreviousStatus(status: RestaurantOrderStatus): RestaurantOrderStatus {
   return statusArrayInSeq[statusArrayInSeq.findIndex((element) => element == status) - 1];
@@ -87,12 +96,15 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
     order.refundAmount = order.totalCost;
     order.costToCustomer = order.totalCost - order.refundAmount;
     await finishOrder(order, orderId);
-  } else {
+  } else if (newStatus == RestaurantOrderStatus.Delivered) {
+    await finishOrder(order, orderId);
+  }
+  
+  else {
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
     restaurantNodes.inProcessOrders(order.serviceProviderId!, orderId).update(order);
     await rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).update(order);
-    if (order.dropoffDriver)
-      deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
+    
   }
 
   let notification: Notification = {

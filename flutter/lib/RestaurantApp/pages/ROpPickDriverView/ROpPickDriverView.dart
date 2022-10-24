@@ -55,7 +55,13 @@ class _ROpPickDriverViewState extends State<ROpPickDriverView> {
                     const SizedBox(
                       height: 25,
                     ),
-                    ROpSelfDeliveryCard(restaurant: order.value!.restaurant),
+                    ROpSelfDeliveryCard(
+                      restaurant: order.value!.restaurant,
+                      assignCallBack: () async {
+                        await viewController.assignSelfDelivery(
+                            order: order.value!);
+                      },
+                    ),
                     const SizedBox(
                       height: 5,
                     ),
@@ -68,6 +74,7 @@ class _ROpPickDriverViewState extends State<ROpPickDriverView> {
                                 assingCallback: () async {
                                   final bool result =
                                       await viewController.assignDriver(
+                                          order: order.value!,
                                           driverId: viewController
                                               .drivers[index].deliveryDriverId,
                                           orderId: order.value!.orderId,

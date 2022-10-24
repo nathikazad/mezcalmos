@@ -12,6 +12,7 @@ export interface RestaurantOrder extends DeliverableOrder {
   items: Record<string, Item>;
   restaurant: UserInfo;
   itemsCost: number;
+ 
   shippingCost: number;
   estimatedFoodReadyTime: string;
 }

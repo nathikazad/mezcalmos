@@ -63,6 +63,13 @@ String customerInProcessOrderDriverLocationNode(
   return 'customers/inProcessOrders/$customerId/$orderId/$driverAddress/location';
 }
 
+String customerInProcessOrder({
+  required String orderId,
+  required String customerId,
+}) {
+  return 'customers/inProcessOrders/$customerId/$orderId/';
+}
+
 String customersCounterOfferNode(
     String orderId, String customerId, String driverId) {
   return 'customers/inProcessOrders/$customerId/$orderId/counterOffers/$driverId';
