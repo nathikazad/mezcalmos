@@ -140,29 +140,31 @@ class _PickLocationViewState extends State<PickLocationView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: ButtonComponent(
-        canClick: !showScreenLoading &&
-            locationPickerController.location.value != null &&
-            locationPickerController.isMapReady,
-        function: (showScreenLoading ||
-                locationPickerController.location.value == null ||
-                !locationPickerController.isMapReady)
-            ? null
-            : () async {
-                await onPickButtonClick(context);
-              },
-        widget: Center(
-          child: (showScreenLoading || !locationPickerController.isMapReady)
-              ? CircularProgressIndicator(
-                  color: Colors.white,
-                )
-              : Text(
-                  _i18n()["pickLocation"],
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline2!
-                      .copyWith(color: Colors.white, fontSize: 12.sp),
-                ),
+      bottomNavigationBar: Obx(
+        () => ButtonComponent(
+          canClick: !showScreenLoading &&
+              locationPickerController.location.value != null &&
+              locationPickerController.isMapReady,
+          function: (showScreenLoading ||
+                  locationPickerController.location.value == null ||
+                  !locationPickerController.isMapReady)
+              ? null
+              : () async {
+                  await onPickButtonClick(context);
+                },
+          widget: Center(
+            child: (showScreenLoading || !locationPickerController.isMapReady)
+                ? CircularProgressIndicator(
+                    color: Colors.white,
+                  )
+                : Text(
+                    _i18n()["pickLocation"],
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline2!
+                        .copyWith(color: Colors.white, fontSize: 12.sp),
+                  ),
+          ),
         ),
       ),
       resizeToAvoidBottomInset: false,
