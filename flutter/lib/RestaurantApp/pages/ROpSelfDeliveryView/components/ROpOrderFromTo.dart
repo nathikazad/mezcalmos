@@ -57,10 +57,7 @@ class _ROpOrderFromToState extends State<ROpOrderFromTo> {
         () => ROpAnimatedOrderCard(
           // customer
           customerImage: widget.order.customer.image,
-          subtitle: (_showFoodReadyTime())
-              ? "${_i18n()["foodReady"]} ${widget.order.estimatedFoodReadyTime!.getEstimatedTime()}"
-              : null,
-          secondSubtitle: _getDeliveryTime(),
+
           customerName: widget.order.customer.name,
           enableExpand: (widget.order.inProcess()) ? _isTimesSetted() : true,
           customerTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff, context),

@@ -84,9 +84,12 @@ class _ROpItemCardState extends State<ROpItemCard> {
                     SizedBox(
                       width: 15,
                     ),
-                    Text(
-                      widget.item.name[userLanguage] ?? "",
-                      style: Get.textTheme.bodyText1,
+                    Flexible(
+                      child: Text(
+                        widget.item.name[userLanguage] ?? "",
+                        style: Get.textTheme.bodyText1,
+                        maxLines: 2,
+                      ),
                     ),
                     Spacer(),
                     (widget.viewController.reOrderMode.isTrue)
