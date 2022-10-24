@@ -5,16 +5,16 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
 class ROpSelfDeliveryCard extends StatelessWidget {
-  const ROpSelfDeliveryCard({super.key, required this.restaurant});
+  const ROpSelfDeliveryCard(
+      {super.key, required this.restaurant, required this.assignCallBack});
   final ServiceInfo restaurant;
+  final Function()? assignCallBack;
 
   @override
   Widget build(BuildContext context) {
     return Card(
         child: InkWell(
-      onTap: () {
-        // TODO call func to set self delivery on order and get back
-      },
+      onTap: assignCallBack,
       borderRadius: BorderRadius.circular(10),
       child: Container(
         width: double.infinity,

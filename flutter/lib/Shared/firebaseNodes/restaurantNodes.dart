@@ -4,6 +4,19 @@ String restuarantAuthNode({
   return 'restaurants/info/$uid';
 }
 
+String restaurantOpInProcessOrdersNode({required String uid, String? orderId}) {
+  if (orderId == null) {
+    return 'restaurants/inProcessOrders/$uid';
+  } else {
+    return 'restaurants/inProcessOrders/$uid/$orderId';
+  }
+}
+
+String restaurantOpSelfDeliveryPosition(
+    {required String uid, required String orderId}) {
+  return 'restaurants/inProcessOrders/$uid/$orderId/selfDeliveryPosition';
+}
+
 String restaurantAvailabeNode({required String uid}) {
   return restuarantAuthNode(uid: uid) + "/state/available";
 }
