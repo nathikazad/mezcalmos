@@ -33,12 +33,14 @@ class ROpOrderController extends GetxController {
       );
 
   LocationData? get currentLocation => _currentLocation.value;
+
   Rxn<LocationData> get currentLocationRxn => _currentLocation;
 
   StreamSubscription<LocationData>? _locationListener;
 
   Future<void> init(String restaurantId) async {
     restaurantID = restaurantId;
+
     mezDbgPrint(
         "--------------------> Start listening on past orders  ${serviceProviderPastOrders(orderType: OrderType.Restaurant, providerId: restaurantId)}");
     await _pastOrdersListener?.cancel();
@@ -176,13 +178,16 @@ class ROpOrderController extends GetxController {
   }
 
   Future<void> startLocationListener(RestaurantOrder order) async {
-    if (order.inSelfDelivery()) {
+    if (order.selfDelivery &&
+        order.status == RestaurantOrderStatus.OnTheWay &&
+        _locationListener == null) {
       _locationListener = await _listenForLocation(order);
     }
   }
 
   Future<void> stopLocationListener() async {
     await _locationListener?.cancel();
+    _locationListener = null;
   }
 
   Future<void> endSelfDelivery(RestaurantOrder order) async {
@@ -194,6 +199,12 @@ class ROpOrderController extends GetxController {
           "orderType": OrderType.Restaurant.toFirebaseFormatString(),
         });
     await _locationListener?.cancel();
+  }
+
+  // assign first current location //
+  Future<void> initCurrentLocation() async {
+    final Location location = Location();
+    _currentLocation.value = await location.getLocation();
   }
 
   // self delivery //
@@ -356,6 +367,8 @@ class ROpOrderController extends GetxController {
     _currentOrdersListener = null;
     _pastOrdersListener?.cancel();
     _pastOrdersListener = null;
+    _locationListener?.cancel();
+    _locationListener = null;
     super.onClose();
   }
 }

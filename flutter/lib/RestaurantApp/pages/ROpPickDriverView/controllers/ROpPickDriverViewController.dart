@@ -23,6 +23,7 @@ class ROpPickDriverController {
   // state variables
   Rxn<Restaurant> restaurant = Rxn<Restaurant>();
   RxList<DeliveryDriver> drivers = RxList.empty();
+  RxBool screenLoading = RxBool(false);
 
   // init //
   Future<void> init({required String restaurantId}) async {
@@ -54,6 +55,7 @@ class ROpPickDriverController {
       required String orderId,
       required RestaurantOrder order,
       required bool isChanging}) async {
+    screenLoading.value = true;
     final ServerResponse response =
         await restaurantInfoController!.assignDeliveryDriver(
       deliveryDriverId: driverId,
@@ -67,13 +69,16 @@ class ROpPickDriverController {
     } else {
       await orderController.endSelfDelivery(order);
     }
+    screenLoading.value = false;
     return response.success;
   }
 
   Future<void> assignSelfDelivery({
     required RestaurantOrder order,
   }) async {
+    screenLoading.value = true;
     await orderController.assignSelfDelivery(order);
+    screenLoading.value = false;
     Get.back();
   }
 

@@ -5,9 +5,9 @@ import 'package:mezcalmos/RestaurantApp/pages/ROpPickDriverView/components/ROpDr
 import 'package:mezcalmos/RestaurantApp/pages/ROpPickDriverView/components/ROpDriversMapComponent.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpPickDriverView/components/ROpSelfDriverCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpPickDriverView/controllers/ROpPickDriverViewController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 class ROpPickDriverView extends StatefulWidget {
   const ROpPickDriverView({super.key});
@@ -44,7 +44,7 @@ class _ROpPickDriverViewState extends State<ROpPickDriverView> {
         appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
             onClick: Get.back, title: "Pick driver"),
         body: Obx(() {
-          if (order.value != null) {
+          if (order.value != null && viewController.screenLoading.isFalse) {
             return SingleChildScrollView(
                 padding: const EdgeInsets.all(12),
                 child: Column(
@@ -88,9 +88,23 @@ class _ROpPickDriverViewState extends State<ROpPickDriverView> {
                   ],
                 ));
           } else {
-            return MezLogoAnimation(
-              centered: true,
-            );
+            return Container(
+                alignment: Alignment.center,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      "Assgining driver ...",
+                      style: Get.textTheme.bodyText2
+                          ?.copyWith(color: primaryBlueColor),
+                    )
+                  ],
+                ));
           }
         }));
   }

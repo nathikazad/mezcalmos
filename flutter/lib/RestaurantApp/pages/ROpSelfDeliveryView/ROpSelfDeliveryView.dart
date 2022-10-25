@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
@@ -10,7 +11,7 @@ import 'package:mezcalmos/RestaurantApp/pages/ROpSelfDeliveryView/components/ROp
 import 'package:mezcalmos/RestaurantApp/pages/ROpSelfDeliveryView/controllers/ROpMapInitHelper.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/LocationDataHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -47,6 +48,7 @@ class _ROpSelfDeliveryViewState extends State<ROpSelfDeliveryView> {
 
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as RestaurantOrder;
+
     if (order.value != null && order.value!.inSelfDelivery()) {
       controller.startLocationListener(order.value!);
     }
@@ -57,32 +59,38 @@ class _ROpSelfDeliveryViewState extends State<ROpSelfDeliveryView> {
     }
 
     _orderListener =
-        controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
+        controller.getOrderStream(orderId).listen((Order? newOrderEvent) async {
       if (newOrderEvent != null) {
         order.value = newOrderEvent as RestaurantOrder;
-
+        await controller.startLocationListener(order.value!);
+        if (!order.value!.inProcess()) {
+          await controller.stopLocationListener();
+          await _orderListener?.cancel();
+          await Future.delayed(Duration(seconds: 1), () {
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              Get.offAndToNamed(getROpOrderRoute(orderId));
+            });
+          });
+        }
         handleRestaurantOrder(newOrderEvent);
         order.refresh();
         mezDbgPrint(
             "Inside self delivery listnere ======>>>>> ${order.value!.status}");
-
-        if (!order.value!.inProcess()) {
-          controller.stopLocationListener();
-          _orderListener?.cancel();
-          Get.offAndToNamed(getROpOrderRoute(orderId));
-        }
       }
     });
 
     // init the map
     Future<void>.microtask(
-      () => controller.currentLocation != null
-          ? mapController.setLocation(
-              Location.fromLocationData(
-                controller.currentLocation!,
-              ),
-            )
-          : null,
+      () async {
+        await controller.initCurrentLocation();
+        controller.currentLocation != null
+            ? mapController.setLocation(
+                Location.fromLocationData(
+                  controller.currentLocation!,
+                ),
+              )
+            : null;
+      },
     );
     mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
     mapController.animateMarkersPolyLinesBounds.value = true;
@@ -96,7 +104,7 @@ class _ROpSelfDeliveryViewState extends State<ROpSelfDeliveryView> {
     );
     // USER MARKER
     mapController.addOrUpdateUserMarker(
-      latLng: controller.currentLocation?.toLatLng(),
+      latLng: controller.currentLocation?.getLatLng(),
     );
     // Restaurant Marker
     mapController.addOrUpdateUserMarker(
@@ -158,7 +166,7 @@ class _ROpSelfDeliveryViewState extends State<ROpSelfDeliveryView> {
         ),
       ),
       body: Obx(
-        () => order.value != null
+        () => order.value != null && controller.currentLocation != null
             ? Stack(
                 children: [
                   MGoogleMap(
@@ -247,33 +255,34 @@ class _ROpSelfDeliveryViewState extends State<ROpSelfDeliveryView> {
         if (orderStatusSnapshot != order.status) {
           // ignoring customer's marker (destination)
           mapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.to.toLatLng(),
-            fitWithinBounds: false,
-          );
+              latLng: order.to.toLatLng(),
+              fitWithinBounds: true,
+              markerId: order.customer.id);
         }
         // update position of our delivery Guy
-        mapController.addOrUpdateUserMarker(
-          latLng: order.selfDeliveryDetails?.location,
-        );
-        mapController.animateAndUpdateBounds();
-        orderStatusSnapshot = order.status;
+        // mapController.addOrUpdateUserMarker(
+        //     latLng: controller.currentLocation?.getLatLng(),
+        //     fitWithinBounds: true,
+        //     markerId: order.restaurantId);
+        // mapController.animateAndUpdateBounds();
+        // orderStatusSnapshot = order.status;
         break;
 
       case RestaurantOrderStatus.OnTheWay:
         // only update once.
         if (orderStatusSnapshot != order.status) {
           // ignoring Restaurant's marker
-          mapController.addOrUpdateUserMarker(
-            latLng: order.restaurant.location.toLatLng(),
-            markerId: order.restaurantId,
-            customImgHttpUrl: order.restaurant.image,
-            fitWithinBounds: false,
-          );
+          // mapController.addOrUpdateUserMarker(
+          //   latLng: order.selfDeliveryDetails?.location,
+          //   markerId: order.restaurantId,
+          //   customImgHttpUrl: order.restaurant.image,
+          //   fitWithinBounds: false,
+          // );
 
           mapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.to.toLatLng(),
-            fitWithinBounds: true,
-          );
+              latLng: order.to.toLatLng(),
+              fitWithinBounds: true,
+              markerId: order.customer.id);
         }
         // updating our delivery guy location
         mezDbgPrint(

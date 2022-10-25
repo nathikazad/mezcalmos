@@ -256,21 +256,22 @@ class _ROpControllButtonsState extends State<ROpControllButtons> {
   Widget _confirmDeliveryButton() {
     return InkWell(
         onTap: () async {
-          await restaurantOrderController.stopLocationListener();
           setState(() {
             clicked = true;
           });
-
-          await restaurantOrderController
-              .finishRestaurantDelivery(widget.order.orderId)
-              .then((ServerResponse value) {
-            if (value.success) {
-              setState(() {
-                clicked = false;
-              });
-            } else {
-              restaurantOrderController.startLocationListener(widget.order);
-            }
+          await restaurantOrderController.stopLocationListener();
+          await Future.delayed(Duration(seconds: 2), () {
+            restaurantOrderController
+                .finishRestaurantDelivery(widget.order.orderId)
+                .then((ServerResponse value) {
+              if (value.success) {
+                setState(() {
+                  clicked = false;
+                });
+              } else {
+                restaurantOrderController.startLocationListener(widget.order);
+              }
+            });
           });
           // Get.back(closeOverlays: true);
         },

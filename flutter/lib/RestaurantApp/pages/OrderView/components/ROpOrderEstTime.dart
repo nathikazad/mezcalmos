@@ -336,8 +336,8 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
 
   void _setOrderEstTime(DateTime value) {
     isClicked.value = true;
-    if (value.difference(widget.order.orderTime).inMinutes > 5 &&
-        value.difference(DateTime.now().toLocal()).inMinutes > 5) {
+    if (value.difference(widget.order.orderTime).inMinutes.abs() > 5 &&
+        value.difference(DateTime.now().toLocal()).inMinutes.abs() > 5) {
       orderController
           .setEstimatedFoodReadyTime(widget.order.orderId, value)
           .whenComplete(() {
