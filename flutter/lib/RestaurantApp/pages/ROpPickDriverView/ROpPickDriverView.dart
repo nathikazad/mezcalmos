@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpPickDriverView/components/ROpDriverSelectCard.dart';
-import 'package:mezcalmos/RestaurantApp/pages/ROpPickDriverView/components/ROpDriversMapComponent.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpPickDriverView/components/ROpSelfDriverCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpPickDriverView/controllers/ROpPickDriverViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 class ROpPickDriverView extends StatefulWidget {
   const ROpPickDriverView({super.key});
@@ -49,9 +49,16 @@ class _ROpPickDriverViewState extends State<ROpPickDriverView> {
                 padding: const EdgeInsets.all(12),
                 child: Column(
                   children: [
+                    // forward to mezcalmos //
+                    MezButton(
+                      label: "Forward to MezCalmos (50\$)",
+                      onClick: () async {
+                        await viewController.forwardToMezcalmos(order.value!);
+                      },
+                    ),
                     // drivers map //
-                    ROpDriversMapComponent(
-                        drivers: viewController.drivers, order: order.value!),
+                    // ROpDriversMapComponent(
+                    //     drivers: viewController.drivers, order: order.value!),
                     const SizedBox(
                       height: 25,
                     ),
@@ -81,7 +88,10 @@ class _ROpPickDriverViewState extends State<ROpPickDriverView> {
                                           isChanging:
                                               order.value!.dropoffDriver !=
                                                   null);
-                                  if (result) Get.back();
+                                  if (result) {
+                                    Get.back();
+                                    viewController.screenLoading.value = false;
+                                  }
                                 },
                               )),
                     )

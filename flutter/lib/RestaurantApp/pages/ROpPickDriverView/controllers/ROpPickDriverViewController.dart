@@ -69,7 +69,7 @@ class ROpPickDriverController {
     } else {
       await orderController.endSelfDelivery(order);
     }
-    screenLoading.value = false;
+
     return response.success;
   }
 
@@ -78,13 +78,15 @@ class ROpPickDriverController {
   }) async {
     screenLoading.value = true;
     await orderController.assignSelfDelivery(order);
-    screenLoading.value = false;
+
     Get.back();
+    screenLoading.value = false;
   }
 
   // dispose //
   void dispose() {
     _restaurantListener?.cancel();
+    screenLoading.value = false;
   }
 
   Future<void> _getDrivers() async {
@@ -96,5 +98,12 @@ class ROpPickDriverController {
         drivers.add(dv);
       }
     });
+  }
+
+  Future<void> forwardToMezcalmos(RestaurantOrder order) async {
+    screenLoading.value = true;
+    await orderController.endSelfDelivery(order);
+    Get.back(result: false);
+    screenLoading.value = false;
   }
 }
