@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -13,7 +12,6 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]
     ["components"]["LaundryAppDrawer"];
@@ -102,26 +100,6 @@ class _ROpDrawerState extends State<ROpDrawer> {
                       ),
                     ),
                     _languageSwitcher(),
-                    _navigationLink(
-                        onClick: () {
-                          _drawerController.closeMenu();
-                          launch(GetStorage().read(getxPrivacyPolicyLink));
-                        },
-                        icon: Icons.privacy_tip,
-                        titleWidget: Text(
-                          "${_i18n()["privacyPolicies"]}",
-                          style: Get.textTheme.bodyText1,
-                        )),
-                    _navigationLink(
-                        onClick: () async {
-                          _drawerController.closeMenu();
-                          await authController.signOut();
-                        },
-                        icon: Icons.logout,
-                        titleWidget: Text(
-                          "${_i18n()["logout"]}",
-                          style: Get.textTheme.bodyText1,
-                        )),
                   ],
                 ),
               ),
@@ -189,54 +167,11 @@ class _ROpDrawerState extends State<ROpDrawer> {
         ),
         _navigationLink(
             onClick: () {
-              _drawerController.closeMenu();
-              Get.toNamed(getROpEditInfoRoute(
-                  restaurantId: restaurantOpAuthController.restaurantId!));
-            },
-            icon: Icons.person,
-            titleWidget: Text(
-              "${_i18n()["profile"]}",
-              style: Get.textTheme.bodyText1,
-            )),
-        _navigationLink(
-            icon: Icons.flatware_rounded,
-            onClick: () {
-              _drawerController.closeMenu();
-              Get.toNamed(getROpMenuRoute(
-                  restaurantId: restaurantOpAuthController.restaurantId!));
-            },
-            titleWidget: Text(
-              "${_i18n()["menu"] ?? "Menu"}",
-              style: Get.textTheme.bodyText1,
-            )),
-        _navigationLink(
-            onClick: () {
-              _drawerController.closeMenu();
-              Get.toNamed(getROpReviewsoRoute(
-                  restaurantId: restaurantOpAuthController.restaurantId!));
-            },
-            icon: Icons.star_rate_rounded,
-            titleWidget: Text(
-              "${_i18n()["reviews"]}",
-              style: Get.textTheme.bodyText1,
-            )),
-        _navigationLink(
-            onClick: () {
               Get.toNamed(kNotificationsRoute);
             },
             icon: Icons.notifications,
             titleWidget: Text(
               "${_i18n()["notifications"]}",
-              style: Get.textTheme.bodyText1,
-            )),
-        _navigationLink(
-            onClick: () {
-              _drawerController.closeMenu();
-              Get.toNamed(kPastOrdersListView);
-            },
-            icon: Icons.history,
-            titleWidget: Text(
-              "${_i18n()["pastOrders"]}",
               style: Get.textTheme.bodyText1,
             )),
       ],

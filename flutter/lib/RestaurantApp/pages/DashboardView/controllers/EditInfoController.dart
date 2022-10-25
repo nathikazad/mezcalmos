@@ -385,6 +385,28 @@ class ROpEditInfoController {
     };
   }
 
+  String getPageTitle() {
+    switch (cuurentPage.value.toInt()) {
+      case 0:
+        return "Dashboard";
+        break;
+      case 1:
+        return "Informations";
+        break;
+      case 2:
+        return "Schedule";
+        break;
+      case 3:
+        return "Payments";
+        break;
+      case 4:
+        return "Reviews";
+        break;
+      default:
+        return "";
+    }
+  }
+
   void dispose() {
     newLocation.close();
     newImageUrl.close();
