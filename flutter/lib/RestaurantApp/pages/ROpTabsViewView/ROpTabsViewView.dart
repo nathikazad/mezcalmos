@@ -5,6 +5,7 @@ import 'package:mezcalmos/RestaurantApp/pages/CurrentOrdersList/ROpCurrentOrders
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/ROpDashboardView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/ROpMenuView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpDriversView/ROpDriversView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/ROpTabsViewView/controllers/ROpTabsViewViewController.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 class ROpTabsViewView extends StatefulWidget {
@@ -17,6 +18,8 @@ class ROpTabsViewView extends StatefulWidget {
 class _ROpTabsViewViewState extends State<ROpTabsViewView> {
   RestaurantOpAuthController opAuthController =
       Get.find<RestaurantOpAuthController>();
+  ROpTabsViewViewController tabsViewViewController =
+      ROpTabsViewViewController();
   @override
   void initState() {
     // Future.microtask(() {
@@ -65,6 +68,7 @@ class _ROpTabsViewViewState extends State<ROpTabsViewView> {
       case 3:
         return ROpDashboardView(
           restID: opAuthController.restaurantId!,
+          tabsViewViewController: tabsViewViewController,
           canGoBack: false,
         );
 
@@ -80,32 +84,34 @@ class _ROpTabsViewViewState extends State<ROpTabsViewView> {
 
   Widget _navBar() {
     return Obx(
-      () => BottomNavigationBar(
-          selectedLabelStyle: Get.textTheme.bodyText1,
-          unselectedLabelStyle: Get.textTheme.bodyText2,
-          currentIndex: _index.value,
-          onTap: (int v) {
-            _index.value = v;
-          },
-          type: BottomNavigationBarType.fixed,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.history),
-              label: "Orders",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.delivery_dining),
-              label: "Drivers",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.flatware),
-              label: "Menu",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: "Profile",
-            ),
-          ]),
+      () => tabsViewViewController.showTabs.value
+          ? BottomNavigationBar(
+              selectedLabelStyle: Get.textTheme.bodyText1,
+              unselectedLabelStyle: Get.textTheme.bodyText2,
+              currentIndex: _index.value,
+              onTap: (int v) {
+                _index.value = v;
+              },
+              type: BottomNavigationBarType.fixed,
+              items: [
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.history),
+                    label: "Orders",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.delivery_dining),
+                    label: "Drivers",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.flatware),
+                    label: "Menu",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.person),
+                    label: "Profile",
+                  ),
+                ])
+          : SizedBox(),
     );
   }
 }

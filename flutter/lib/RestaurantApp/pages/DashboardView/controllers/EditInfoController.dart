@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
+import 'package:mezcalmos/RestaurantApp/pages/ROpTabsViewView/controllers/ROpTabsViewViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -57,11 +58,17 @@ class ROpEditInfoController {
   final RxBool setupClicked = RxBool(false);
   final RxBool showStripeReqs = RxBool(false);
   RxString currentUrl = RxString("");
+  RxDouble cuurentPage = RxDouble(0);
 
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
+  ROpTabsViewViewController? tabsViewViewController;
 
-  Future<void> init({required String restaurantId}) async {
+  Future<void> init({
+    required String restaurantId,
+    ROpTabsViewViewController? tabsViewViewController,
+  }) async {
     mezDbgPrint("INIT EDIT PROFILE VIEW =======>$restaurantId");
+    this.tabsViewViewController = tabsViewViewController;
     if (!RestaurantInfoController().initialized) {
       Get.put(RestaurantInfoController(), permanent: false);
     }

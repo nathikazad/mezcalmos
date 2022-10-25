@@ -78,12 +78,23 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                   ),
                   Flexible(
                     fit: FlexFit.tight,
-                    child: Text(
-                      widget.order.dropoffDriver!.name,
-                      style: Get.textTheme.bodyText1,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.order.dropoffDriver!.name,
+                          style: Get.textTheme.bodyText1,
+                        ),
+                        Text(
+                          (widget.order.selfDelivery)
+                              ? "Self delivery"
+                              : "Forwareded to Mezcalmos",
+                          style: Get.textTheme.bodyText2,
+                        ),
+                      ],
                     ),
                   ),
-                  if (widget.order.dropoffDriver != null ||
+                  if (widget.order.dropoffDriver != null &&
                       widget.order.selfDelivery)
                     MezIconButton(
                       onTap: () {
@@ -175,9 +186,14 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
             ),
             if (widget.order.dropoffDriver != null || widget.order.selfDelivery)
               MezIconButton(
-                onTap: () {
-                  Get.toNamed(
-                      getROpPickDriverRoute(orderId: widget.order.orderId));
+                onTap: () async {
+                  final bool? forwardToMezCalmos = await Get.toNamed(
+                          getROpPickDriverRoute(orderId: widget.order.orderId))
+                      as bool?;
+                  if (forwardToMezCalmos != null &&
+                      forwardToMezCalmos == false) {
+                    showSet.value = false;
+                  }
                 },
                 icon: Icons.edit,
               ),
@@ -229,9 +245,14 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
         Obx(() {
           if (showSet.isTrue) {
             return InkWell(
-                onTap: () {
-                  Get.toNamed(
-                      getROpPickDriverRoute(orderId: widget.order.orderId));
+                onTap: () async {
+                  final bool? forwardToMezCalmos = await Get.toNamed(
+                          getROpPickDriverRoute(orderId: widget.order.orderId))
+                      as bool?;
+                  if (forwardToMezCalmos != null &&
+                      forwardToMezCalmos == false) {
+                    showSet.value = false;
+                  }
                 },
                 child: Ink(
                   padding: const EdgeInsets.all(5),

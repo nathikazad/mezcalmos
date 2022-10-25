@@ -75,10 +75,10 @@ class ROpDashboardPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _navigationLink(
-                  onClick: () {
+                  onClick: () async {
                     // pageController.animateTo(MediaQuery.of(context).size.width,
                     //     duration: new Duration(seconds: 1), curve: Curves.easeIn);
-                    pageController.animateToPage(1,
+                    await pageController.animateToPage(1,
                         duration: Duration(milliseconds: 1),
                         curve: Curves.easeIn);
                   },
@@ -92,8 +92,8 @@ class ROpDashboardPage extends StatelessWidget {
                   )),
               _divider(),
               _navigationLink(
-                  onClick: () {
-                    pageController.animateToPage(2,
+                  onClick: () async {
+                    await pageController.animateToPage(2,
                         duration: Duration(milliseconds: 1),
                         curve: Curves.easeIn);
                   },
@@ -107,8 +107,8 @@ class ROpDashboardPage extends StatelessWidget {
                   )),
               _divider(),
               _navigationLink(
-                  onClick: () {
-                    pageController.animateToPage(3,
+                  onClick: () async {
+                    await pageController.animateToPage(3,
                         duration: Duration(milliseconds: 1),
                         curve: Curves.easeIn);
                   },
@@ -122,8 +122,8 @@ class ROpDashboardPage extends StatelessWidget {
                   )),
               _divider(),
               _navigationLink(
-                  onClick: () {
-                    pageController.animateToPage(4,
+                  onClick: () async {
+                    await pageController.animateToPage(4,
                         duration: Duration(milliseconds: 1),
                         curve: Curves.easeIn);
                   },
@@ -167,10 +167,10 @@ class ROpDashboardPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _navigationLink(
-                  onClick: () {
+                  onClick: () async {
                     // pageController.animateTo(MediaQuery.of(context).size.width,
                     //     duration: new Duration(seconds: 1), curve: Curves.easeIn);
-                    pageController.animateToPage(1,
+                    await pageController.animateToPage(1,
                         duration: Duration(milliseconds: 1),
                         curve: Curves.easeIn);
                   },
@@ -184,8 +184,8 @@ class ROpDashboardPage extends StatelessWidget {
                   )),
               _divider(),
               _navigationLink(
-                  onClick: () {
-                    pageController.animateToPage(2,
+                  onClick: () async {
+                    await pageController.animateToPage(2,
                         duration: Duration(milliseconds: 1),
                         curve: Curves.easeIn);
                   },
@@ -229,7 +229,7 @@ class ROpDashboardPage extends StatelessWidget {
                   initialSwitcherValue: viewController.isAvailable.value),
               _divider(),
               _navigationLink(
-                  onClick: () {
+                  onClick: () async {
                     // todo privacy policy
                     // pageController.animateToPage(3,
                     //     duration: Duration(milliseconds: 1),
@@ -245,7 +245,7 @@ class ROpDashboardPage extends StatelessWidget {
                   )),
               _divider(),
               _navigationLink(
-                  onClick: () {
+                  onClick: () async {
                     // todo logout
                   },
                   icon: Icons.logout,
@@ -278,9 +278,17 @@ class ROpDashboardPage extends StatelessWidget {
       required Widget titleWidget,
       Widget? trailingWidget,
       Color? iconColor,
-      void Function()? onClick}) {
+      Future<void> Function()? onClick}) {
     return InkWell(
-      onTap: onClick,
+      onTap: () async {
+        await onClick?.call();
+        viewController.cuurentPage.value = pageController.page!;
+        if (viewController.cuurentPage != 0) {
+          viewController.tabsViewViewController?.showTabs.value = false;
+        } else {
+          viewController.tabsViewViewController?.showTabs.value = true;
+        }
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 0),
         child: Row(

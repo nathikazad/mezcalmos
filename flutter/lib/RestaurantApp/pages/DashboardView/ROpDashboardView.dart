@@ -12,6 +12,7 @@ import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpDashboardPa
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpInfoPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpPaymentsPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpSchedulePage.dart';
+import 'package:mezcalmos/RestaurantApp/pages/ROpTabsViewView/controllers/ROpTabsViewViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -23,10 +24,15 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpEditInfoView']['ROpEditInfoView'];
 
 class ROpDashboardView extends StatefulWidget {
-  const ROpDashboardView({Key? key, this.restID, this.canGoBack = true})
+  const ROpDashboardView(
+      {Key? key,
+      this.restID,
+      this.canGoBack = true,
+      this.tabsViewViewController})
       : super(key: key);
   final String? restID;
   final bool canGoBack;
+  final ROpTabsViewViewController? tabsViewViewController;
   @override
   State<ROpDashboardView> createState() => _ROpDashboardViewState();
 }
@@ -46,7 +52,9 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
     restaurantID =
         restaurantID = widget.restID ?? Get.arguments["restaurantId"];
     if (restaurantID != null) {
-      editInfoController.init(restaurantId: restaurantID!);
+      editInfoController.init(
+          restaurantId: restaurantID!,
+          tabsViewViewController: widget.tabsViewViewController);
 
       viewWidgets = ROpEditInfoWidgets(
           editInfoController: editInfoController, context: context);
@@ -60,28 +68,38 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        return widget.canGoBack;
+        return widget.canGoBack || _pageController.page == 0;
       },
       child: Obx(() {
         if (editInfoController.restaurant.value != null) {
           return Scaffold(
             //  backgroundColor: Colors.white,
+
             appBar: (editInfoController.showStripe.isTrue)
                 ? null
-                : LaundryAppAppBar(
-                    leftBtnType: AppBarLeftButtonType.Back,
-                    canGoBack: widget.canGoBack,
-                    onClick: () {
-                      if (_pageController.page != 0) {
-                        _pageController.animateToPage(0,
-                            duration: Duration(milliseconds: 1),
-                            curve: Curves.easeIn);
-                      } else {
-                        Get.back();
-                      }
-                    },
-                    title: "Profile Info",
-                    showOrders: true,
+                : PreferredSize(
+                    preferredSize: Size.fromHeight(kToolbarHeight),
+                    child: Obx(
+                      () => LaundryAppAppBar(
+                        leftBtnType: AppBarLeftButtonType.Back,
+                        canGoBack: widget.canGoBack ||
+                            editInfoController.cuurentPage.value != 0,
+                        onClick: () {
+                          if (_pageController.page != 0) {
+                            _pageController.animateToPage(0,
+                                duration: Duration(milliseconds: 1),
+                                curve: Curves.easeIn);
+                            editInfoController.cuurentPage.value = 0;
+                            editInfoController
+                                .tabsViewViewController?.showTabs.value = true;
+                          } else {
+                            Get.back();
+                          }
+                        },
+                        title: "Profile Info",
+                        showOrders: true,
+                      ),
+                    ),
                   ),
             body: PageView(
               physics: NeverScrollableScrollPhysics(),
