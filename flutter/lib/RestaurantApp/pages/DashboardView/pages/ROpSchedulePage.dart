@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/components/ROpEditInfoWidgets.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/components/ROpOpenClose.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -36,17 +35,6 @@ class ROpSchedulePage extends StatelessWidget {
                   SizedBox(
                     height: 25,
                   ),
-                  ROpOpenClose(
-                      title: '${_i18n()["openTitle"]}',
-                      subtitle: '${_i18n()["openSubtitle"]}',
-                      onTurnedOn: () {
-                        editInfoController.switchAv(true);
-                      },
-                      onTurnedOff: () {
-                        editInfoController.switchAv(false);
-                      },
-                      initialSwitcherValue:
-                          editInfoController.isAvailable.value),
                 ],
               ),
             ),

@@ -1,11 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/components/ROpOpenClose.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpEditInfoView']['ROpEditInfoView'];
@@ -168,11 +171,7 @@ class ROpDashboardPage extends StatelessWidget {
             children: [
               _navigationLink(
                   onClick: () async {
-                    // pageController.animateTo(MediaQuery.of(context).size.width,
-                    //     duration: new Duration(seconds: 1), curve: Curves.easeIn);
-                    await pageController.animateToPage(1,
-                        duration: Duration(milliseconds: 1),
-                        curve: Curves.easeIn);
+                    // todo implement share restuarant
                   },
                   icon: Icons.share,
                   titleWidget: Text(
@@ -230,10 +229,7 @@ class ROpDashboardPage extends StatelessWidget {
               _divider(),
               _navigationLink(
                   onClick: () async {
-                    // todo privacy policy
-                    // pageController.animateToPage(3,
-                    //     duration: Duration(milliseconds: 1),
-                    //     curve: Curves.easeIn);
+                    await launch(GetStorage().read(getxPrivacyPolicyLink));
                   },
                   icon: Icons.privacy_tip,
                   titleWidget: Text(
@@ -246,7 +242,7 @@ class ROpDashboardPage extends StatelessWidget {
               _divider(),
               _navigationLink(
                   onClick: () async {
-                    // todo logout
+                    await Get.find<AuthController>().signOut();
                   },
                   icon: Icons.logout,
                   iconColor: Colors.red,

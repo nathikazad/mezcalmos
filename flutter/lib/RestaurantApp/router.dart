@@ -14,14 +14,13 @@ import 'package:mezcalmos/RestaurantApp/pages/ROpPickDriverView/ROpPickDriverVie
 import 'package:mezcalmos/RestaurantApp/pages/ROpSelfDeliveryView/ROpSelfDeliveryView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpTabsViewView/ROpTabsViewView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/RestaurantWrapper.dart';
-import 'package:mezcalmos/RestaurantApp/pages/ReviewsView/ROpReviewsView.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 // const String kCurrentOrdersListRoute = '/currentOrders';
 const String kCreateRestaurant = '/createRestuarant';
 const String kCurrentOrdersListView = '/orders';
 const String kTabsView = '/tabsView';
-const String kReviewsView = '/reviews/:restaurantId';
+// const String kReviewsView = '/reviews/:restaurantId';
 const String kPastOrdersListView = '/pastorders';
 const String kMenuView = '/menu/:restaurantId';
 
@@ -60,9 +59,9 @@ String getROpSelfDelivery({required String orderId}) {
   return kSelfDeliveryView.replaceFirst(":orderId", orderId);
 }
 
-String getROpReviewsoRoute({required String restaurantId}) {
-  return kReviewsView.replaceFirst(":restaurantId", restaurantId);
-}
+// String getROpReviewsoRoute({required String restaurantId}) {
+//   return kReviewsView.replaceFirst(":restaurantId", restaurantId);
+// }
 
 String getROpOptionRoute(
     {required String restaurantId,
@@ -145,7 +144,6 @@ class XRouter {
         ),
         GetPage(name: kOrderView, page: () => ROpOrderView()),
         GetPage(name: kOptionView, page: () => ROpOptionView()),
-        GetPage(name: kReviewsView, page: () => ROpReviewsView()),
         GetPage(name: kChoiceView, page: () => ROpChoiceView()),
         GetPage(name: kCreateRestaurant, page: () => ROpCreateRestuarantView()),
         GetPage(name: kTabsView, page: () => ROpTabsViewView()),

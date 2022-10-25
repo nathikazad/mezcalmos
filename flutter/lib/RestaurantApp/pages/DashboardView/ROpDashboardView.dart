@@ -13,6 +13,7 @@ import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpInfoPage.da
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpPaymentsPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpSchedulePage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpTabsViewView/controllers/ROpTabsViewViewController.dart';
+import 'package:mezcalmos/RestaurantApp/pages/ReviewsView/ROpReviewsView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -96,7 +97,7 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
                             Get.back();
                           }
                         },
-                        title: "Profile Info",
+                        title: editInfoController.getPageTitle(),
                         showOrders: true,
                       ),
                     ),
@@ -115,7 +116,8 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
                     viewWidgets: viewWidgets),
                 ROpPaymentPage(
                   editInfoController: editInfoController,
-                )
+                ),
+                ROpReviewsView(restId: widget.restID!),
                 // ROpAcceptedPayments(viewController: editInfoController)
               ],
             ),
