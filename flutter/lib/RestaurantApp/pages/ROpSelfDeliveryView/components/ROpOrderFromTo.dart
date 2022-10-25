@@ -62,31 +62,19 @@ class _ROpOrderFromToState extends State<ROpOrderFromTo> {
           enableExpand: (widget.order.inProcess()) ? _isTimesSetted() : true,
           customerTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff, context),
           onCustomerMsgClick: () {
-            if (widget.order.customerDropOffDriverChatId != null) {
-              Get.toNamed(
-                getMessagesRoute(
-                    orderType: OrderType.Restaurant,
-                    chatId: widget.order.customerDropOffDriverChatId!,
-                    orderId: widget.order.orderId,
-                    recipientType: ParticipantType.Customer),
-              );
-            }
+            Get.toNamed(
+              getMessagesRoute(
+                  orderType: OrderType.Restaurant,
+                  chatId: widget.order.orderId,
+                  orderId: widget.order.orderId,
+                  recipientType: ParticipantType.Customer),
+            );
           },
           // landry
           serviceProviderImage: widget.order.restaurant.image,
           serviceProviderName: widget.order.restaurant.name,
 
-          onServiceMsgClick: () {
-            if (widget.order.serviceProviderDropOffDriverChatId != null) {
-              Get.toNamed(
-                getMessagesRoute(
-                    orderType: OrderType.Restaurant,
-                    chatId: widget.order.serviceProviderDropOffDriverChatId!,
-                    orderId: widget.order.orderId,
-                    recipientType: ParticipantType.DeliveryAdmin),
-              );
-            }
-          },
+          onServiceMsgClick: () {},
           // order
           formattedOrderStatus: _getOrderStatus(),
 
@@ -131,7 +119,7 @@ class _ROpOrderFromToState extends State<ROpOrderFromTo> {
         return '${_i18n()["orderStatus"]["waiting"]}';
 
       case RestaurantOrderStatus.ReadyForPickup:
-        return '${_i18n()["orderStatus"]["readyForPickup"]}';
+        return 'Ready for delivery';
       case RestaurantOrderStatus.OnTheWay:
         return '${_i18n()["orderStatus"]["deliveryOtw"]}';
       case RestaurantOrderStatus.Delivered:

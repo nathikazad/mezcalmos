@@ -337,8 +337,22 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
 
   void _setOrderEstTime(DateTime value) {
     isClicked.value = true;
-    if (value.difference(widget.order.orderTime).inMinutes > 5 &&
-        value.difference(DateTime.now().toLocal()).inMinutes > 5) {
+    if (value
+            .difference(
+                widget.order.estimatedFoodReadyTime ?? widget.order.orderTime)
+            .inDays
+            .abs() >
+        0) {
+      isClicked.value = false;
+      MezSnackbar('${_i18n()["error"]}', '${_i18n()["deliveryMinTimes"]}',
+          position: SnackPosition.TOP);
+    } else if (value
+                .difference(widget.order.estimatedFoodReadyTime ??
+                    widget.order.orderTime)
+                .inMinutes
+                .abs() >
+            5 &&
+        value.difference(DateTime.now().toLocal()).inMinutes.abs() > 5) {
       orderController
           .setEstimatedSelfDeliveryTime(widget.order, value)
           .whenComplete(() {
