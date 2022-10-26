@@ -232,13 +232,6 @@ class ROpOrderController extends GetxController {
           }
         };
 
-        // await _databaseHelper.firebaseDatabase
-        //     .ref()
-        //     .child(deliveryDriverAuthNode(_authController.fireAuthUser!.uid))
-        //     .child('location')
-        //     .setWithCatch(value: positionUpdate);
-
-        //   updating driver location in deliveryDrivers/inProcessOrders
         await _databaseHelper.firebaseDatabase
             .ref()
             .child(restaurantOpInProcessOrdersNode(
@@ -247,10 +240,10 @@ class ROpOrderController extends GetxController {
             ))
             .child("selfDeliveryDetails")
             .child("location")
-            .set(positionUpdate)
-            .catchError((Object? error, StackTrace stackTrace) {
-          mezDbgPrint(error);
-        });
+            .setWithCatch(value: positionUpdate);
+        //     .catchError((Object? error, StackTrace stackTrace) {
+        //   mezDbgPrint(error);
+        // });
 
         // updating driver location in root orders/inProcess/<OrderType>
         await _databaseHelper.firebaseDatabase
@@ -261,10 +254,7 @@ class ROpOrderController extends GetxController {
             ))
             .child("selfDeliveryDetails")
             .child("location")
-            .set(positionUpdate)
-            .catchError((Object? error, StackTrace stackTrace) {
-          mezDbgPrint(error);
-        });
+            .setWithCatch(value: positionUpdate);
         await _databaseHelper.firebaseDatabase
             .ref()
             .child(customerInProcessOrder(
@@ -273,10 +263,7 @@ class ROpOrderController extends GetxController {
             ))
             .child("selfDeliveryDetails")
             .child("location")
-            .set(positionUpdate)
-            .catchError((Object? error, StackTrace stackTrace) {
-          mezDbgPrint(error);
-        });
+            .setWithCatch(value: positionUpdate);
       }
     });
   }

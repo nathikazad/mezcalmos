@@ -12,11 +12,6 @@ String restaurantOpInProcessOrdersNode({required String uid, String? orderId}) {
   }
 }
 
-String restaurantOpSelfDeliveryPosition(
-    {required String uid, required String orderId}) {
-  return 'restaurants/inProcessOrders/$uid/$orderId/selfDeliveryPosition';
-}
-
 String restaurantAvailabeNode({required String uid}) {
   return restuarantAuthNode(uid: uid) + "/state/available";
 }
@@ -26,7 +21,7 @@ String restaurantOpenNode({required String uid}) {
 }
 
 String dailyMenuNode({required String uid}) {
-  return restuarantAuthNode(uid: uid) + "/menu/daily/";
+  return restuarantAuthNode(uid: uid) + "/menu/daily";
 }
 
 String categoryNode({required String uid, required String categoryId}) {

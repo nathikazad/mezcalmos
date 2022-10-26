@@ -67,7 +67,7 @@ String customerInProcessOrder({
   required String orderId,
   required String customerId,
 }) {
-  return 'customers/inProcessOrders/$customerId/$orderId/';
+  return 'customers/inProcessOrders/$customerId/$orderId';
 }
 
 String customersCounterOfferNode(
