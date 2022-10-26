@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
@@ -120,44 +121,66 @@ class MGoogleMapController {
       bool fitWithinBounds = true,
       required LatLng? latLng,
       String? customImgHttpUrl}) async {
-    if (latLng != null) {
-      BitmapDescriptor icon;
+    // Inside function to get ImgBytes
+    Future<Uint8List?> _fetchImgBytes(String uImg) async {
+      Uint8List? _imgBytes;
 
-      final String? uImg = Get.find<AuthController>().user?.image ??
-          Get.find<AuthController>().user?.bigImage;
+      await http
+          .get(Uri.parse(customImgHttpUrl ?? uImg))
+          .timeout(Duration(seconds: 7))
+          .then((http.Response response) {
+        _imgBytes = response.bodyBytes;
+      }).catchError((_) async {
+        _imgBytes =
+            (await rootBundle.load(aDefaultAvatar)).buffer.asUint8List();
+      });
+    }
 
+    // Inside function to get Bitmapdescriptor
+    Future<BitmapDescriptor?> _buildBitmap(String? uImg) async {
+      BitmapDescriptor? bitMap;
       if (uImg == null) {
-        icon = await bitmapDescriptorLoader(
+        bitMap = await bitmapDescriptorLoader(
             (await cropRonded(
                 (await rootBundle.load(aDefaultAvatar)).buffer.asUint8List())),
             _calculateMarkersSize(),
             _calculateMarkersSize(),
             isBytes: true);
       } else {
-        icon = await bitmapDescriptorLoader(
-            (await cropRonded(
-                (await http.get(Uri.parse(customImgHttpUrl ?? uImg)))
-                    .bodyBytes) as Uint8List),
-            _calculateMarkersSize(),
-            _calculateMarkersSize(),
-            isBytes: true);
+        await _fetchImgBytes(uImg).then((Uint8List? _imgBytes) async {
+          if (_imgBytes != null) {
+            bitMap = await bitmapDescriptorLoader(
+              (await cropRonded(_imgBytes)),
+              _calculateMarkersSize(),
+              _calculateMarkersSize(),
+              isBytes: true,
+            );
+          }
+        });
       }
+      return bitMap;
+    }
 
+    if (latLng != null) {
+      final String? uImg = Get.find<AuthController>().user?.image ??
+          Get.find<AuthController>().user?.bigImage;
       final String mId =
           (markerId ?? Get.find<AuthController>().user?.id ?? 'ANONYMOUS');
 
-      // default userId is authenticated's
-      _addOrUpdateMarker(
-        MezMarker(
-          fitWithinBounds: fitWithinBounds,
-          markerId: MarkerId(mId),
-          icon: icon,
-          position: latLng,
-        ),
-      );
-    } else
-      mezDbgPrint(
-          "addOrUpdatePurpleDestinationMarker skipppping ==> $markerId");
+      await _buildBitmap(uImg).then((BitmapDescriptor? icon) {
+        if (icon != null) {
+          // default userId is authenticated's
+          _addOrUpdateMarker(
+            MezMarker(
+              fitWithinBounds: fitWithinBounds,
+              markerId: MarkerId(mId),
+              icon: icon,
+              position: latLng,
+            ),
+          );
+        }
+      });
+    }
   }
 
   Future<void> addOrUpdateTaxiDriverMarker(String? markerId, LatLng? latLng,
