@@ -7,6 +7,7 @@ enum NotificationType {
   OrderStatusChange,
   NewOrder,
   NewCounterOffer,
+  AssignDriver,
   Call
 }
 

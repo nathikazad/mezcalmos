@@ -43,7 +43,7 @@ export const restaurant = {
   addOperator: require("./restaurant/addOperator"),
   addDriver: require("./restaurant/addDriver"),
   removeDriver: require("./restaurant/removeDriver"),
-  assignSelfDelivery: restaurantSelfDelivery.assignSelfDelivery,
+  changeDeliveryMode: restaurantSelfDelivery.changeDeliveryMode,
   assignSelfDeliveryTime: restaurantSelfDelivery.assignSelfDeliveryTime,
   removeOperator: require("./restaurant/removeOperator"),
   checkoutCart: require("./restaurant/checkoutCart"),

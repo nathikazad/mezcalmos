@@ -340,6 +340,7 @@ class RestaurantInfoController extends GetxController {
           "deliveryDriverId": deliveryDriverId,
           "orderType": orderType.toFirebaseFormatString(),
           "changeDriver": changeDriver,
+          "fromRestaurantOperator": true,
         },
       );
       mezDbgPrint('HttpsCallableResult response: ${response.data}');

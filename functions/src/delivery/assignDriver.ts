@@ -26,6 +26,7 @@ import { orderUrl } from "../utilities/senders/appRoutes";
 import { LaundryOrder, LaundryOrderStatus } from "../shared/models/Services/Laundry/LaundryOrder";
 import { RestaurantOrder, RestaurantOrderStatus } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import { addServiceProviderAndOperatorsToChat, updateServiceProviderOrder } from "../shared/controllers/orderController";
+import { checkRestaurantOperator } from "../restaurant/helper";
 
 export = functions.https.onCall(async (data, context) => {
   if (!data.orderId || !data.orderType || !data.deliveryDriverId || !data.deliveryDriverType) {
@@ -39,10 +40,11 @@ export = functions.https.onCall(async (data, context) => {
   if (response != undefined)
     return response;
 
-  response = await checkDeliveryAdmin(context.auth!.uid)
-  if (response != undefined) {
-    return response;
-  }
+  // response = await checkDeliveryAdmin(context.auth!.uid)
+  // if (response != undefined) {
+  //   return response;
+  // }
+
 
   let deliveryDriverId: string = data.deliveryDriverId;
   let orderId: string = data.orderId;
@@ -50,7 +52,23 @@ export = functions.https.onCall(async (data, context) => {
   let deliveryDriverType: DeliveryDriverType = data.deliveryDriverType;
   let driverInfo: UserInfo = await getUserInfo(deliveryDriverId);
   let order: TwoWayDeliverableOrder = await getInProcessOrder(data.orderType, orderId);
-
+  if (data.fromRestaurantOperator && order.serviceProviderId) {
+    response = await checkRestaurantOperator(order.serviceProviderId!, context.auth!.uid)
+    if (response != undefined) {
+      return {
+        ok: false,
+        error: response
+      };
+    }
+  } else {
+    response = await checkDeliveryAdmin(context.auth!.uid)
+    if (response != undefined) {
+      return {
+        ok: false,
+        error: response
+      };
+    }
+  }
 
   if (!deliveryDriver || !deliveryDriver.state ||
     deliveryDriver.state.authorizationStatus != AuthorizationStatus.Authorized) {

@@ -8,6 +8,7 @@ export interface RestaurantOrder extends DeliverableOrder {
   quantity: number;
   notes?: number;
   status: RestaurantOrderStatus;
+  deliveryMode: DeliveryMode; 
   orderTime: string;
   items: Record<string, Item>;
   restaurant: UserInfo;
@@ -26,6 +27,12 @@ export enum RestaurantOrderStatus {
   CancelledByAdmin = "cancelledByAdmin",
   CancelledByCustomer = "cancelledByCustomer"
 }
+export enum DeliveryMode {
+  ForwardedToMezCalmos = "forwardedToMezCalmos",
+  SelfDeliveryByRestaurant = "selfDeliveryByRestaurant",
+  SelfDeliveryByDriver = "SelfDeliveryByDriver",
+  None = "none",
+}
 
 interface ConstructRestaurantOrderParameters {
   cart: Cart,
@@ -41,6 +48,7 @@ export function constructRestaurantOrder(
     restaurant: params.restaurant,
     orderType: OrderType.Restaurant,
     status: RestaurantOrderStatus.OrderReceieved,
+    deliveryMode : DeliveryMode.None,
     orderTime: (new Date()).toISOString(),
     dropOffShippingCost: params.cart.shippingCost,
     totalCostBeforeShipping: params.cart.cost - params.cart.shippingCost - params.stripeFees,
