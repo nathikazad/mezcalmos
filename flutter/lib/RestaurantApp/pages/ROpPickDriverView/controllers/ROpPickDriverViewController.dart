@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/DeliveryMode.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
@@ -66,10 +67,13 @@ class ROpPickDriverController {
     );
     if (!response.success) {
       MezSnackbar("Error", response.errorMessage ?? "error");
-    } else {
-      await orderController.endSelfDelivery(order);
     }
-
+    if (response.success) {
+      mezDbgPrint("Changing delivery mode to delivery drive");
+      await orderController.changeDeliveryMode(
+          order: order, mode: DeliveryMode.SelfDeliveryByDriver);
+    }
+    screenLoading.value = false;
     return response.success;
   }
 
@@ -77,7 +81,8 @@ class ROpPickDriverController {
     required RestaurantOrder order,
   }) async {
     screenLoading.value = true;
-    await orderController.assignSelfDelivery(order);
+    await orderController.changeDeliveryMode(
+        order: order, mode: DeliveryMode.SelfDeliveryByRestaurant);
 
     Get.back();
     screenLoading.value = false;
@@ -102,6 +107,8 @@ class ROpPickDriverController {
 
   Future<void> forwardToMezcalmos(RestaurantOrder order) async {
     screenLoading.value = true;
+    await orderController.changeDeliveryMode(
+        order: order, mode: DeliveryMode.ForwardedToMezCalmos);
     await orderController.endSelfDelivery(order);
     Get.back(result: false);
     screenLoading.value = false;

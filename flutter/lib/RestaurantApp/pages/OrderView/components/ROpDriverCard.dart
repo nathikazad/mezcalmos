@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/models/Utilities/DeliveryMode.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
@@ -47,7 +48,8 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
           width: double.infinity,
           padding: const EdgeInsets.all(8),
           child: (widget.order.dropoffDriver != null &&
-                  !widget.order.selfDelivery)
+                  widget.order.deliveryMode !=
+                      DeliveryMode.SelfDeliveryByRestaurant)
               ? Row(children: [
                   Stack(
                     clipBehavior: Clip.none,
@@ -94,7 +96,8 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                       ],
                     ),
                   ),
-                  if (widget.order.dropoffDriver != null &&
+                  if (widget.order.inProcess() &&
+                      widget.order.dropoffDriver != null &&
                       widget.order.selfDelivery)
                     MezIconButton(
                       onTap: () {
@@ -184,7 +187,9 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                 ],
               ),
             ),
-            if (widget.order.dropoffDriver != null || widget.order.selfDelivery)
+            if (widget.order.inProcess() &&
+                (widget.order.dropoffDriver != null ||
+                    widget.order.selfDelivery))
               MezIconButton(
                 onTap: () async {
                   final bool? forwardToMezCalmos = await Get.toNamed(
@@ -243,7 +248,8 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
           ),
         ),
         Obx(() {
-          if (showSet.isTrue) {
+          if (showSet.isTrue &&
+              widget.order.deliveryMode != DeliveryMode.ForwardedToMezCalmos) {
             return InkWell(
                 onTap: () async {
                   final bool? forwardToMezCalmos = await Get.toNamed(

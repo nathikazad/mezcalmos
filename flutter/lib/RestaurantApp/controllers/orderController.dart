@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/DeliveryMode.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
@@ -165,15 +166,19 @@ class ROpOrderController extends GetxController {
   }
   // assign selfDelivery//
 
-  Future<void> assignSelfDelivery(RestaurantOrder order) async {
-    await _callRestaurantCloudFunction("assignSelfDelivery", order.orderId,
+  Future<void> changeDeliveryMode(
+      {required RestaurantOrder order, required DeliveryMode mode}) async {
+    final ServerResponse response = await _callRestaurantCloudFunction(
+        "changeDeliveryMode", order.orderId,
         optionalParams: {
-          "enable": true,
+          "deliveryMode": mode.toFirebaseFormatString(),
           "customerId": order.customer.id,
           "restaurantId": restaurantID!,
           "orderType": OrderType.Restaurant.toFirebaseFormatString(),
         });
-
+    mezDbgPrint(
+        " CHANGING DRIVER MODEE TO =====>>>> $mode ====>>${response.status}");
+    mezDbgPrint("${response.status}");
     await startLocationListener(order);
   }
 
@@ -213,7 +218,7 @@ class ROpOrderController extends GetxController {
       RestaurantOrder order) async {
     mezDbgPrint("Listening for location !");
     final Location location = Location();
-    await location.changeSettings(interval: 1000);
+    await location.changeSettings(interval: 1500);
 
     await location.enableBackgroundMode(enable: true);
     return location.onLocationChanged
