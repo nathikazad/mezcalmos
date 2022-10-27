@@ -1,26 +1,40 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class DeliveryDriverState {
   bool isAuthorized;
   bool isOnline;
+  String? serviceProviderId;
+  OrderType? serviceProviderType;
 
   DeliveryDriverState({
     required this.isAuthorized,
     required this.isOnline,
+    this.serviceProviderId,
+    this.serviceProviderType,
   });
 
   factory DeliveryDriverState.fromSnapshot(data) {
     final bool isAuthorized =
         data == null ? false : data['authorizationStatus'] == "authorized";
     final bool isOnline = data == null ? false : data['isOnline'] == true;
-    return DeliveryDriverState(isAuthorized: isAuthorized, isOnline: isOnline);
+
+    return DeliveryDriverState(
+      isAuthorized: isAuthorized,
+      isOnline: isOnline,
+      serviceProviderId: data?["serviceProviderId"],
+      serviceProviderType:
+          data?["serviceProviderType"]?.toString().toOrderType(),
+    );
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         "authorizationStatus": isAuthorized,
         "isOnline": isOnline,
+        "serviceProviderId": serviceProviderId,
+        "serviceProviderType": serviceProviderType?.toFirebaseFormatString(),
       };
 }
 
