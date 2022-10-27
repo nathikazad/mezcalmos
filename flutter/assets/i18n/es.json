@@ -275,7 +275,8 @@
                             "willBeDelivered": "Tiempo de entrega estimado"
                         },
                         "RestaurantOrderDriverCard": {
-                            "dropOffTime": "Hora de entrega"
+                            "dropOffTime": "Hora de entrega",
+                            "selfDeliveryTitle": "Entrega manejada por restaurante"
 
                         },
                         "notesWidget": {

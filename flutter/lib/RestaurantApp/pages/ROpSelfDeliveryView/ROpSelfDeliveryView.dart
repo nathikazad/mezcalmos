@@ -66,7 +66,7 @@ class _ROpSelfDeliveryViewState extends State<ROpSelfDeliveryView> {
         if (!order.value!.inProcess()) {
           await controller.stopLocationListener();
           await _orderListener?.cancel();
-          await Future.delayed(Duration(milliseconds: 3), () {
+          await Future.microtask(() {
             SchedulerBinding.instance.addPostFrameCallback((_) {
               Get.offAndToNamed(getROpOrderRoute(orderId));
             });
