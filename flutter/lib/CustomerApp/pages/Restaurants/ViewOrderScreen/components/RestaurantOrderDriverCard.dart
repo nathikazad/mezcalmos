@@ -28,6 +28,17 @@ class RestaurantOrderDriverCard extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.only(left: 3),
+            child: Text(
+              '${_i18n()["driver"]}',
+              style: Get.textTheme.bodyText1,
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
           Card(
               child: Container(
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
@@ -90,6 +101,17 @@ class RestaurantOrderDriverCard extends StatelessWidget {
         children: [
           SizedBox(
             height: 20,
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.only(left: 3),
+            child: Text(
+              '${_i18n()["driver"]}',
+              style: Get.textTheme.bodyText1,
+            ),
+          ),
+          SizedBox(
+            height: 10,
           ),
           Card(
               child: Container(
