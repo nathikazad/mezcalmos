@@ -239,6 +239,13 @@ class RestaurantOrder extends DeliverableOrder {
         null;
   }
 
+  DateTime? get estDropOffTime {
+    if (deliveryMode == DeliveryMode.SelfDeliveryByRestaurant) {
+      return selfDeliveryDetails?.estDeliveryTime;
+    }
+    return estimatedDropoffAtCustomerTime;
+  }
+
   String clipBoardText(LanguageType languageType) {
     String text = "";
     text += "${restaurant.name}\n";

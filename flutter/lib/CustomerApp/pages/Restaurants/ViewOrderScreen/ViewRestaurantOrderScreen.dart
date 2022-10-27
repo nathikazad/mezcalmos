@@ -14,6 +14,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/componen
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/RestaurantBankInfo.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/notesWidget.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -208,7 +209,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                                 PaymentType.BankTransfer)
                               RestaurantBankInfoCard(
                                   restaurantId: order.value!.restaurantId),
-                            CustomerRestaurantOrderEst(order: order.value!),
+                            if (order.value!.inProcess())
+                              CustomerRestaurantOrderEst(order: order.value!),
 
                             RestaurantOrderDriverCard(
                               order: order.value!,
@@ -345,12 +347,21 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
             fitWithinBounds: true,
           );
         }
-        mapController.addOrUpdateUserMarker(
-          latLng: order.value?.dropoffDriver?.location,
-          markerId: order.value?.dropoffDriver?.firebaseId,
-          customImgHttpUrl: order.value?.dropoffDriver?.image,
-          fitWithinBounds: true,
-        );
+        if (order.value?.selfDeliveryDetails != null) {
+          mapController.addOrUpdateUserMarker(
+            latLng: order.value?.selfDeliveryDetails?.location,
+            markerId: order.value?.orderId,
+            customImgHttpUrl: defaultDriverImgUrl,
+            fitWithinBounds: true,
+          );
+        } else {
+          mapController.addOrUpdateUserMarker(
+            latLng: order.value?.dropoffDriver?.location,
+            markerId: order.value?.dropoffDriver?.hasuraId.toString(),
+            customImgHttpUrl: order.value?.dropoffDriver?.image,
+            fitWithinBounds: true,
+          );
+        }
 
         mapController.animateAndUpdateBounds();
         break;
@@ -373,12 +384,21 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         }
 
         // we keep updating the delivery's
-        mapController.addOrUpdateUserMarker(
-          latLng: order.value?.dropoffDriver?.location,
-          markerId: order.value?.dropoffDriver?.firebaseId,
-          customImgHttpUrl: order.value?.dropoffDriver?.image,
-          fitWithinBounds: true,
-        );
+        if (order.value?.selfDeliveryDetails != null) {
+          mapController.addOrUpdateUserMarker(
+            latLng: order.value?.selfDeliveryDetails?.location,
+            markerId: order.value?.orderId,
+            customImgHttpUrl: defaultDriverImgUrl,
+            fitWithinBounds: true,
+          );
+        } else {
+          mapController.addOrUpdateUserMarker(
+            latLng: order.value?.dropoffDriver?.location,
+            markerId: order.value?.dropoffDriver?.hasuraId.toString(),
+            customImgHttpUrl: order.value?.dropoffDriver?.image,
+            fitWithinBounds: true,
+          );
+        }
         mapController.animateAndUpdateBounds();
 
         break;

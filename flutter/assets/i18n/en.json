@@ -272,7 +272,8 @@
                             "willBeDelivered": "Estimated delivery time"
                         },
                         "RestaurantOrderDriverCard": {
-                            "dropOffTime": "Delivery time"
+                            "dropOffTime": "Delivery time",
+                            "selfDeliveryTitle": "Delivery handeled by restaurant"
 
                         },
                         "notesWidget": {

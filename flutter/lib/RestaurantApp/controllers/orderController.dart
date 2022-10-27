@@ -218,7 +218,7 @@ class ROpOrderController extends GetxController {
       RestaurantOrder order) async {
     mezDbgPrint("Listening for location !");
     final Location location = Location();
-    await location.changeSettings(interval: 1500);
+    await location.changeSettings(interval: 1000);
 
     await location.enableBackgroundMode(enable: true);
     return location.onLocationChanged
