@@ -25,6 +25,11 @@ export const otp = {
   getAuthUsingOTP: otpAuth.getAuthUsingOTP
 }
 
+import * as dlink from './utilities/setLink'
+export const link = {
+  generateDeepLink : dlink.generateDeepLink
+}
+
 import * as restaurantStatusChange from './restaurant/adminStatusChanges'
 export const restaurant = {
   checkoutCart: require("./restaurant/checkoutCart"),

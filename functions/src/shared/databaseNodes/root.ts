@@ -1,6 +1,7 @@
 import * as firebase from "firebase-admin";
 import { OrderType } from "../models/Generic/Order";
 import { ParticipantType } from "../models/Generic/Chat";
+import { ServiceProviderType } from "../../utilities/setLink";
 
 export function notificationsNode(particpantType: ParticipantType, userId: string) {
   return firebase.database().ref(`/notifications/${particpantType}/${userId}`)
@@ -43,6 +44,34 @@ export function notificationsQueueNode(notificationId?: string) {
   }
   return firebase.database().ref(dbNode);
 }
+
+export function providerLinkNode(providerType: ServiceProviderType, providerId: string) {
+  let dbNode = "";
+  switch (providerType) {
+    case ServiceProviderType.Restaurant:
+      dbNode += "restaurants/"
+      break;
+    case ServiceProviderType.Laundry:
+      dbNode += "laundries/"
+      break;
+    case ServiceProviderType.Taxi:
+      dbNode += "taxis/";
+      break;
+    default:
+      return undefined;
+  }
+  dbNode += `info/${providerId}/link`;
+  return firebase.database().ref(dbNode);
+}
+
+// export function deepLinksNode(providerType: ServiceProviderType, linkId: string) {
+//   let dbNode = `deeplinks/${providerType}/${linkId}`;
+//   return firebase.database().ref(dbNode);
+// }
+
+
+
+
 
 enum OrderStatus {
   InProcess = "inProcess",
