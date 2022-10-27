@@ -56,7 +56,11 @@ class ROpOrderController extends GetxController {
         (event.snapshot.value as dynamic).keys.forEach((orderId) {
           final dynamic orderData = (event.snapshot.value as dynamic)[orderId];
 
-          orders.add(RestaurantOrder.fromData(orderId, orderData));
+          try {
+            orders.add(RestaurantOrder.fromData(orderId, orderData));
+          } catch (e) {
+            mezDbgPrint('PAST ORDER EROOOOOOR +++++++++++++++++ $orderId');
+          }
         });
       }
       pastOrders.value = orders;
@@ -81,7 +85,13 @@ class ROpOrderController extends GetxController {
         (event.snapshot.value as dynamic).keys?.forEach((orderId) {
           // mezDbgPrint("Hndling Order : $orderId");
           final dynamic orderData = (event.snapshot.value as dynamic)[orderId];
-          orders.add(RestaurantOrder.fromData(orderId, orderData));
+          try {
+            orders.add(RestaurantOrder.fromData(orderId, orderData));
+          } catch (e, stk) {
+            mezDbgPrint('PAST ORDER EROOOOOOR +++++++++++++++++ $orderId');
+            mezDbgPrint('PAST ORDER EROOOOOOR +++++++++++++++++ $e');
+            mezDbgPrint('PAST ORDER EROOOOOOR +++++++++++++++++ $stk');
+          }
         });
       }
       currentOrders.value = orders;

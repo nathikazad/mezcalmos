@@ -39,7 +39,9 @@ class _DriversListScreenState extends State<DriversListScreen> {
   void initState() {
     super.initState();
     order = Get.arguments as Order?;
-    deliveryDrivers.value = deliveryDriverController.deliveryDrivers;
+    deliveryDrivers.value = deliveryDriverController.deliveryDrivers
+        .where((DeliveryDriver p0) => p0.isAssociated == false)
+        .toList();
   }
 
   @override
