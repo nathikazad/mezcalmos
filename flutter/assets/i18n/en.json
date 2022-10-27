@@ -273,8 +273,12 @@
                         },
                         "RestaurantOrderDriverCard": {
                             "dropOffTime": "Delivery time",
-                            "selfDeliveryTitle": "Delivery handeled by restaurant"
+                            "selfDeliveryTitle": "Delivery handeled by restaurant",
+                            "driver": "Delivery driver"
 
+                        },
+                        "OrderRestaurantCard": {
+                            "restaurant": "Restaurant"
                         },
                         "notesWidget": {
                             "notes": "Order note :"

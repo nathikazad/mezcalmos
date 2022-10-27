@@ -276,8 +276,12 @@
                         },
                         "RestaurantOrderDriverCard": {
                             "dropOffTime": "Hora de entrega",
-                            "selfDeliveryTitle": "Entrega manejada por restaurante"
+                            "selfDeliveryTitle": "Entrega manejada por restaurante",
+                            "driver": "Conductor de entrega"
 
+                        },
+                        "OrderRestaurantCard": {
+                            "restaurant": "Restaurante"
                         },
                         "notesWidget": {
                             "notes": "Nota de pedido:"
