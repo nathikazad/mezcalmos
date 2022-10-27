@@ -19,3 +19,7 @@ test/data/newDummyData
 service_account.json
 test/scripts/data
 service-account.json
+mason.yaml
+mason-lock.json
+bricks.json
+.mason
