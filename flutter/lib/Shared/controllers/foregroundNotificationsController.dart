@@ -52,7 +52,7 @@ class ForegroundNotificationsController extends GetxController {
         try {
           final Notification _notification =
               notificationHandler(event.snapshot.key!, event.snapshot.value);
-          mezDbgPrint("${_notification.toJson()}");
+
           final bool alreadyOnLinkPage = isCurrentRoute(_notification.linkUrl);
 
           switch (_notification.notificationAction) {

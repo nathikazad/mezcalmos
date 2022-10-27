@@ -93,7 +93,8 @@ class RestaurantOrder extends DeliverableOrder {
     dynamic id,
     dynamic data,
   ) {
-    if (data["to"]["lat"] == null) {
+    if (data?["to"]?["lat"] == null) {
+      mezDbgPrint("to nul =================>>>>>>>>>>>>>>$data");
       mezDbgPrint("to nul =================>>>>>>>>>>>>>>$id");
     }
     final RestaurantOrder restaurantOrder = RestaurantOrder(

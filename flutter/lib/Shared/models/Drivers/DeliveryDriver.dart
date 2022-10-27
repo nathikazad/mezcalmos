@@ -92,6 +92,9 @@ class DeliveryDriver {
         "lastLocationUpdateTime":
             lastLocationUpdateTime?.toUtc().toIso8601String(),
       };
+  bool get isAssociated {
+    return deliveryDriverState.serviceProviderId != null;
+  }
 
   @override
   String toString() {
