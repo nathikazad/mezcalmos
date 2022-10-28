@@ -4,7 +4,7 @@ import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.d
 import 'package:mezcalmos/RestaurantApp/pages/CurrentOrdersList/ROpCurrentOrders.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/ROpDashboardView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/ROpMenuView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/ROpDriversView/ROpDriversView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/ROpStatsView/ROpStatsView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpTabsViewView/controllers/ROpTabsViewViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -59,9 +59,8 @@ class _ROpTabsViewViewState extends State<ROpTabsViewView> {
         );
 
       case 1:
-        return ROpDriversView(
-          restID: opAuthController.restaurantId!,
-          canGoBack: false,
+        return ROpStatsView(
+          restId: opAuthController.restaurantId!,
         );
 
       case 2:
