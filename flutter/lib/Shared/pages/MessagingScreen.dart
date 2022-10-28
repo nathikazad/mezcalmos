@@ -41,7 +41,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
   late final OrderType? orderType;
   late final String? orderId;
   late final String chatId;
-  Sagora? sagora;
+  Rxn<Sagora> sagora = Rxn();
   ParticipantType recipientType = ParticipantType.Customer;
   // ParticipantType? senderType;
   String? recipientId;
@@ -52,7 +52,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
   void initState() {
     // Instanciating the Agaora controller in case the user is able to call:
     if (controller.isUserAuthorizedToCall()) {
-      sagora = Get.find<Sagora>();
+      sagora.value = Get.find<Sagora>();
     }
 
     if (Get.parameters['chatId'] == null) {
@@ -121,7 +121,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
   }
 
   /// Using this for now, to limit the calls only between deliveryDrivers<->Customers
-  bool isReciepientNotAdmin() {
+  bool isReciepientAuthorizedToCall() {
     final ParticipantType? _pType =
         controller.recipient(recipientType: recipientType)?.participantType;
     return [ParticipantType.Customer, ParticipantType.DeliveryDriver]
@@ -213,10 +213,11 @@ class _MessagingScreenState extends State<MessagingScreen> {
               ),
               onTap: () => Get.toNamed<void>(orderLink!),
             ),
-          Container(
+          Obx(
+            () => Container(
               child: controller.isUserAuthorizedToCall() &&
-                      isReciepientNotAdmin() &&
-                      sagora != null
+                      isReciepientAuthorizedToCall() &&
+                      sagora.value != null
                   ? InkWell(
                       onTap: () async => _onCallPress(),
                       child: Container(
@@ -238,7 +239,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
                         ),
                       ),
                     )
-                  : SizedBox())
+                  : SizedBox(),
+            ),
+          )
         ],
       ),
       body: isChatLoaded
@@ -285,7 +288,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
   Future<void> _onCallPress() async {
     // all the none-null forcing used down below, are garanteed to work 100%
     // and will never throw a null check error/exception.
-    if (await sagora!.checkAgoraPermissions()) {
+    if (await sagora.value!.checkAgoraPermissions()) {
       mezDbgPrint("#############----1-----######");
       ParticipantType _calleeType = ParticipantType.DeliveryDriver;
       switch (controller.appType) {
@@ -313,7 +316,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
         // Request Agora auth
 
-        final dynamic _agoraAuth = (await sagora!.getAgoraToken(
+        final dynamic _agoraAuth = (await sagora.value!.getAgoraToken(
           chatId,
           controller.sender()!.id,
           controller.sender()!.participantType,
@@ -329,10 +332,10 @@ class _MessagingScreenState extends State<MessagingScreen> {
           // await FlutterCallkitIncoming.startCall(chatId);
           // then join channel
           // ignore: unawaited_futures
-          await sagora!.handleIfInChannelAlready();
+          await sagora.value!.handleIfInChannelAlready();
 
           // ignore: unawaited_futures
-          sagora!
+          sagora.value!
               .joinChannel(
             token: _agoraAuth['token'],
             channelId: chatId,
@@ -342,17 +345,17 @@ class _MessagingScreenState extends State<MessagingScreen> {
             mezDbgPrint(
                 "[][][] MessageScreen :: sagora.joinChannel :: done ! ==> pushing to AgoraCall Screen !!!!");
 
-            sagora!.callStatus.value = CallStatus.calling;
+            sagora.value!.callStatus.value = CallStatus.calling;
             Get.toNamed<void>(kAgoraCallScreen, arguments: {
               "chatId": chatId,
               "talkingTo": _recipient,
             });
           }).onError((Object? error, StackTrace stackTrace) {
             mezDbgPrint("Error ===> $error | $stackTrace");
-            sagora!.callStatus.value = CallStatus.none;
+            sagora.value!.callStatus.value = CallStatus.none;
           });
         } else {
-          sagora!.callStatus.value = CallStatus.none;
+          sagora.value!.callStatus.value = CallStatus.none;
         }
       }
     } else {
