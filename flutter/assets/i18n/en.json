@@ -1588,6 +1588,7 @@
                                 "scheduled": "Scheduled order",
                                 "preparing": "Order is being prepared",
                                 "readyForPickup": "Ready for pickup",
+                                "justReady": "Ready for delivery",
                                 "deliveryOtw": "Delivery on the way",
                                 "delivered": "Order Delivered",
                                 "canceled": "Order Cancelled"
@@ -1598,7 +1599,8 @@
                                 "timeErrorTitle": "Time not set !",
                                 "timeErrorBody": "Please set the estimated times first.",
                                 "notReadyTitle": "Waiting for order",
-                                "notReadyBody": "Order is not ready for delivery yet"
+                                "notReadyBody": "Order is not ready for delivery yet",
+                                "startDelivery": "Start Delivery"
 
 
 
@@ -1914,7 +1916,9 @@
                     },
                     "ROpDriverCard": {
                         "noDriver": "No driver assigned yet",
-                        "set": "Set"
+                        "set": "Set",
+                        "selfDelivery": "Self delivery",
+                        "forwarded": "Forwarded to Mezcalmos"
                     },
                     "ROpOrderCustomer": {
                         "customer": "Customer"
@@ -2050,12 +2054,75 @@
 
                 }
             },
+            "ROpPickDriverView": {
+                "components": {
+                    "ROpSelfDeliveryCard": {
+                        "selfDelivery": "Self delivery"
+                    },
+                    "ROpDriverSelectCard": {
+                        "available": "Available",
+                        "unavailable": "Unavailable",
+                        "assign": "Assign"
+                    }
+                },
+                "pick": "Pick driver",
+                "fwdMezcalmos": "Forward to MezCalmos",
+                "assigning": "Assgining driver ..."
+
+            },
+            "ROpDriversView": {
+                "components": {
+                    "ROpListDriverCard": {
+                        "available": "Available",
+                        "unavailable": "Unavailable",
+                        "rmBtn": "Yes, remove driver",
+                        "rmTitle": "Remove driver",
+                        "rmText": "Are you sure you want to remove this driver"
+                    }
+                },
+                "drivers": "Drivers",
+                "falseTitle": "Enable self delivery to control your deliveries by adding yourown drivers.",
+                "falseDesc": "Go to profile > In shortcuts turn on Self delivery",
+                "trueTitle": "Control your delivery by adding your own drivers",
+                "trueDesc": "Authorize drivers by adding them using email or phone number (they must have created an account with our Delivery app) ",
+                "assDrivers": "Associated Drivers",
+                "addDriver": "Add driver",
+                "newDv": "New driver",
+                "phoneOrEmail": "Phone number or email",
+                "cancel": "Cancel"
+            },
+            "ROpTabsViewView": {
+                "orders": "Orders",
+                "menu": "Menu",
+                "drivers": "Drivers",
+                "profile": "Profile"
+            },
+            "ROpDashboardPage": {
+                "openTitle": "Restaurant Availibility",
+                "openSubtitle": "This will close your restaurant indefinitely",
+                "settings": "Settings",
+                "restInfo": "Restaurant informations",
+                "schedule": "Schedule",
+                "payments": "Payments",
+                "reviews": "Reviews",
+                "shortcuts": "Shortcuts",
+                "shareRest": "Share restaurant",
+                "selfDvTitle": "Self delivery",
+                "selfDvDesc": "Control your own deliveries.",
+                "privacyPolicies": "Privacy Policies",
+                "logout": "Logout"
+            },
             "ROpEditInfoView": {
 
                 "controllers": {
                     "ROpEditInfoController": {
                         "error": "Error",
-                        "selectPrimaryFirst": "Select Primary language first"
+                        "selectPrimaryFirst": "Select Primary language first",
+                        "dashboard": "Dashboard",
+                        "informations": "Informations",
+                        "reviews": "Reviews",
+                        "schedule": "Schedule",
+                        "payments": "Payments"
 
                     }
                 },

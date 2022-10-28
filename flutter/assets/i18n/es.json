@@ -1561,6 +1561,7 @@
                                 "preparing": "Orden se está preparando",
                                 "readyForPickup": "Listo para recojer",
                                 "deliveryOtw": "Entrega en el camino",
+                                "justReady": "Listo para la entrega",
                                 "scheduled": "Pedido programado",
                                 "delivered": "Orden Entregado",
                                 "canceled": "Orden Cancelada"
@@ -1571,7 +1572,9 @@
                                 "timeErrorTitle": "La hora no esta",
                                 "timeErrorBody": "Establezca primero los tiempos estimados",
                                 "notReadyTitle": "Esperando el pedido",
-                                "notReadyBody": "El pedido aún no está listo para la entrega"
+                                "notReadyBody": "El pedido aún no está listo para la entrega",
+                                "startDelivery": "Iniciar entrega"
+
 
 
                             }
@@ -1928,7 +1931,7 @@
                     },
                     "ROpOrderEstTime": {
                         "title": "Tiempo estimado de preparación",
-                        "deliveryTitle": "Estimated delivery time",
+                        "deliveryTitle": "Tiempo de entrega estimado",
                         "set": "Establecer",
                         "confirm": "Confirmar",
                         "cancel": "Cancelar",
@@ -1938,7 +1941,9 @@
                     },
                     "ROpDriverCard": {
                         "noDriver": "No hay controlador asignado todavía",
-                        "set": "Colocar"
+                        "set": "Colocar",
+                        "selfDelivery": "Autoentrega",
+                        "forwarded": "Reenviado a Mezcalmos"
                     },
                     "ROpOrderCustomer": {
                         "customer": "Cliente"
@@ -2041,11 +2046,75 @@
 
                 }
             },
+            "ROpPickDriverView": {
+                "components": {
+                    "ROpSelfDeliveryCard": {
+                        "selfDelivery": "Autoentrega",
+                        "assign": "Asignar"
+                    },
+                    "ROpDriverSelectCard": {
+                        "available": "Disponible",
+                        "unavailable": "Indisponible",
+                        "assign": "Asignar"
+                    }
+                },
+                "pick": "Seleccionar conductor",
+                "fwdMezcalmos": "Avanzar a MezCalmos",
+                "assigning": "Asignación del controlador ..."
+
+            },
+            "ROpDriversView": {
+                "components": {
+                    "ROpListDriverCard": {
+                        "available": "Disponible",
+                        "unavailable": "Indisponible",
+                        "rmBtn": "Sí, retire el controlador",
+                        "rmTitle": "Eliminar el controlador",
+                        "rmText": "¿Estás seguro de que quieres eliminar este controlador?"
+                    }
+                },
+                "drivers": "Conductoras",
+                "falseTitle": "Habilite la entrega personal para controlar sus entregas agregando los controladores de su dura.",
+                "falseDesc": "Vaya a Perfil> En atajos, active la entrega de sí mismo",
+                "trueTitle": "Controle su entrega agregando sus propios controladores",
+                "trueDesc": "Autorice los controladores agregándolos usando correo electrónico o número de teléfono (deben haber creado una cuenta con nuestra aplicación de entrega)",
+                "assDrivers": "Conductores asociados",
+                "addDriver": "Agregar controlador",
+                "newDv": "Nuevo conductor",
+                "phoneOrEmail": "Número de teléfono o correo electrónico",
+                "cancel": "Cancelar"
+            },
+            "ROpTabsViewView": {
+                "orders": "Pedidos",
+                "menu": "Menú",
+                "drivers": "Conductoras",
+                "profile": "Perfil"
+            },
+            "ROpDashboardPage": {
+                "openTitle": "Disponibilidad de restaurantes",
+                "openSubtitle": "Esto cerrará su restaurante indefinidamente",
+                "settings": "Ajustes",
+                "restInfo": "Información de restaurantes",
+                "schedule": "Calendario",
+                "payments": "Pagos",
+                "reviews": "Reseñas",
+                "shortcuts": "Atajos",
+                "shareRest": "Compartir restaurante",
+                "selfDvTitle": "Entrega",
+                "selfDvDesc": "Controle sus propias entregas.",
+                "privacyPolicies": "Políticas de privacidad",
+                "logout": "Cerrar sesión"
+            },
             "ROpEditInfoView": {
                 "controllers": {
                     "ROpEditInfoController": {
                         "error": "error",
-                        "selectPrimaryFirst": "Seleccione primero el idioma primario"
+                        "selectPrimaryFirst": "Seleccione primero el idioma primario",
+                        "dashboard": "Tablero",
+                        "informations": "Información",
+                        "reviews": "Reseñas",
+                        "schedule": "Calendario",
+                        "payments": "Pagos"
 
                     }
                 },

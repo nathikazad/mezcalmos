@@ -2,8 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 
+//
+dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
+    ['pages']['ROpPickDriverView']["components"]["ROpDriverSelectCard"];
+
+//
 class ROpDriverSelectCard extends StatelessWidget {
   const ROpDriverSelectCard(
       {super.key, required this.driver, required this.assingCallback});
@@ -66,7 +72,7 @@ class ROpDriverSelectCard extends StatelessWidget {
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              'available',
+                              '${_i18n()["available"]}',
                               style: Get.textTheme.bodyText2,
                             )
                           ],
@@ -80,7 +86,7 @@ class ROpDriverSelectCard extends StatelessWidget {
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              'Unavailable',
+                              '${_i18n()["unavailable"]}',
                               style: Get.textTheme.bodyText2,
                             )
                           ],
@@ -89,7 +95,7 @@ class ROpDriverSelectCard extends StatelessWidget {
               ),
             ),
             Text(
-              "Assign",
+              '${_i18n()["assign"]}',
               style: Get.textTheme.bodyText1?.copyWith(color: primaryBlueColor),
             ),
             const SizedBox(

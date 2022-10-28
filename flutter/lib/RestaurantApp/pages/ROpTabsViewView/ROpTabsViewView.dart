@@ -6,7 +6,11 @@ import 'package:mezcalmos/RestaurantApp/pages/DashboardView/ROpDashboardView.dar
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/ROpMenuView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpDriversView/ROpDriversView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpTabsViewView/controllers/ROpTabsViewViewController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
+    ['pages']['ROpTabsViewView'];
 
 class ROpTabsViewView extends StatefulWidget {
   const ROpTabsViewView({super.key});
@@ -96,19 +100,19 @@ class _ROpTabsViewViewState extends State<ROpTabsViewView> {
               items: [
                   BottomNavigationBarItem(
                     icon: Icon(Icons.history),
-                    label: "Orders",
+                    label: '${_i18n()["orders"]}',
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.delivery_dining),
-                    label: "Drivers",
+                    label: '${_i18n()["drivers"]}',
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.flatware),
-                    label: "Menu",
+                    label: '${_i18n()["menu"]}',
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.person),
-                    label: "Profile",
+                    label: '${_i18n()["profile"]}',
                   ),
                 ])
           : SizedBox(),

@@ -19,8 +19,8 @@ import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 //
-dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
-    ["ROpEditInfoView"]["controllers"]["ROpEditInfoController"];
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpEditInfoView"]["controllers"]["ROpEditInfoController"];
 
 //
 class ROpEditInfoController {
@@ -388,19 +388,19 @@ class ROpEditInfoController {
   String getPageTitle() {
     switch (cuurentPage.value.toInt()) {
       case 0:
-        return "Dashboard";
+        return '${_i18n()["dashboard"]}';
         break;
       case 1:
-        return "Informations";
+        return '${_i18n()["informations"]}';
         break;
       case 2:
-        return "Schedule";
+        return '${_i18n()["schedule"]}';
         break;
       case 3:
-        return "Payments";
+        return '${_i18n()["payments"]}';
         break;
       case 4:
-        return "Reviews";
+        return '${_i18n()["reviews"]}';
         break;
       default:
         return "";

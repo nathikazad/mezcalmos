@@ -2,8 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
+//
+dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
+    ['pages']['ROpPickDriverView']["components"]["ROpSelfDeliveryCard"];
+
+//
 class ROpSelfDeliveryCard extends StatelessWidget {
   const ROpSelfDeliveryCard(
       {super.key, required this.restaurant, required this.assignCallBack});
@@ -48,12 +54,12 @@ class ROpSelfDeliveryCard extends StatelessWidget {
             Flexible(
               fit: FlexFit.tight,
               child: Text(
-                "Self delivery",
+                '${_i18n()["selfDelivery"]}',
                 style: Get.textTheme.bodyText1,
               ),
             ),
             Text(
-              "Assign",
+              '${_i18n()["assign"]}',
               style: Get.textTheme.bodyText1?.copyWith(color: primaryBlueColor),
             ),
             const SizedBox(
