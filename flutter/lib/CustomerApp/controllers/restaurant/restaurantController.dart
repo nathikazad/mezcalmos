@@ -177,6 +177,11 @@ class RestaurantController extends GetxController {
           } else {
             cart.value.shippingCost = shippingCost.ceil();
           }
+          cart.value.setRouteInformation = MapHelper.RouteInformation(
+            polyline: routeInfo.encodedPolyLine,
+            distance: routeInfo.distance,
+            duration: routeInfo.duration,
+          );
 
           mezDbgPrint(
               "SHIPPPPPING COOOOST =========>>>>>>>>>>>${cart.value.shippingCost}");
@@ -317,6 +322,7 @@ class RestaurantController extends GetxController {
     final HttpsCallable checkoutRestaurantCart =
         FirebaseFunctions.instance.httpsCallable("restaurant-checkoutCart");
     try {
+      mezDbgPrint("\n\n\n${cart.value.toFirebaseFormattedJson()} \n\n\n");
       final HttpsCallableResult<dynamic> response = await checkoutRestaurantCart
           .call({
         ...cart.value.toFirebaseFormattedJson(),

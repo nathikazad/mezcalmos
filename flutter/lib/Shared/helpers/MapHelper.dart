@@ -199,6 +199,8 @@ Future<Route?> getDurationAndDistance(
   /// Note : distance.text is in [KM] while distance.value is in [M]!
   final String url =
       "https://maps.googleapis.com/maps/api/directions/json?units=metric&region=mx&destination=${to.latitude}%2C${to.longitude}&origin=${from.latitude}%2C${from.longitude}&key=$placesApikey";
+
+  mezDbgPrint("URL [LOCATION] ===> $url");
   final http.Response resp = await http.get(Uri.parse(url));
   final Map<String, dynamic> respJson = json.decode(resp.body);
 
@@ -215,10 +217,11 @@ Future<Route?> getDurationAndDistance(
     final List<PointLatLng> polylinePoints =
         PolylinePoints().decodePolyline(encodedPolyLine);
     return Route(
-        duration: duration,
-        distance: distance,
-        polylineList: polylinePoints,
-        encodedPolyLine: encodedPolyLine);
+      duration: duration,
+      distance: distance,
+      polylineList: polylinePoints,
+      encodedPolyLine: encodedPolyLine,
+    );
   } else {
     MezSnackbar('${_i18n()["error"]}', '${_i18n()["noRoute"]}');
     return null;
