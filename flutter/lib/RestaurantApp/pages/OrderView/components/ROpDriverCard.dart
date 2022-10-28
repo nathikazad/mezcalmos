@@ -89,8 +89,8 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                         ),
                         Text(
                           (widget.order.selfDelivery)
-                              ? "Self delivery"
-                              : "Forwareded to Mezcalmos",
+                              ? '${_i18n()["selfDelivery"]}'
+                              : '${_i18n()["forwarded"]}',
                           style: Get.textTheme.bodyText2,
                         ),
                       ],
@@ -181,7 +181,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                     style: Get.textTheme.bodyText1,
                   ),
                   Text(
-                    'Self delivery',
+                    '${_i18n()["selfDelivery"]}',
                     style: Get.textTheme.bodyText2,
                   ),
                 ],

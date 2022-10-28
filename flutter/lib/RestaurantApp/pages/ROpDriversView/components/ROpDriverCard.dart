@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpDriversView/controllers/ROpDriversViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
+    ['pages']['ROpDriversView']["components"]["ROpListDriverCard"];
 
 class ROpListDriverCard extends StatefulWidget {
   const ROpListDriverCard(
@@ -57,8 +61,8 @@ class _ROpListDriverCardState extends State<ROpListDriverCard> {
                         Flexible(
                             child: Text(
                                 widget.driver.deliveryDriverState.isOnline
-                                    ? "Available"
-                                    : "Unavailable"))
+                                    ? '${_i18n()["available"]}'
+                                    : '${_i18n()["unavailable"]}'))
                       ],
                     )
                   ],
@@ -68,9 +72,9 @@ class _ROpListDriverCardState extends State<ROpListDriverCard> {
               MezIconButton(
                 onTap: () async {
                   await showConfirmationDialog(context,
-                      title: "Remove driver",
-                      helperText: "Are you sure you want to remove this driver",
-                      primaryButtonText: "Yes, remove driver",
+                      title: '${_i18n()["rmTitle"]}',
+                      helperText: '${_i18n()["rmText"]}',
+                      primaryButtonText: '${_i18n()["rmBtn"]}',
                       onYesClick: () async {
                     final bool result = await widget.viewController
                         .removeDriver(widget.driver.deliveryDriverId);

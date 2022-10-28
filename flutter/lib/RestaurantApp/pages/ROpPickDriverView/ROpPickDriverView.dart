@@ -5,9 +5,16 @@ import 'package:mezcalmos/RestaurantApp/pages/ROpPickDriverView/components/ROpDr
 import 'package:mezcalmos/RestaurantApp/pages/ROpPickDriverView/components/ROpSelfDriverCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpPickDriverView/controllers/ROpPickDriverViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+
+//
+dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
+    ['pages']['ROpPickDriverView'];
+
+//
 
 class ROpPickDriverView extends StatefulWidget {
   const ROpPickDriverView({super.key});
@@ -42,7 +49,7 @@ class _ROpPickDriverViewState extends State<ROpPickDriverView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-            onClick: Get.back, title: "Pick driver"),
+            onClick: Get.back, title: '${_i18n()["pick"]}'),
         body: Obx(() {
           if (order.value != null && viewController.screenLoading.isFalse) {
             return SingleChildScrollView(
@@ -51,7 +58,7 @@ class _ROpPickDriverViewState extends State<ROpPickDriverView> {
                   children: [
                     // forward to mezcalmos //
                     MezButton(
-                      label: "Forward to MezCalmos (50\$)",
+                      label: "${_i18n()["fwdMezcalmos"]} (50\$)",
                       onClick: () async {
                         await viewController.forwardToMezcalmos(order.value!);
                       },
@@ -109,7 +116,7 @@ class _ROpPickDriverViewState extends State<ROpPickDriverView> {
                       height: 15,
                     ),
                     Text(
-                      "Assgining driver ...",
+                      '${_i18n()["assigning"]}',
                       style: Get.textTheme.bodyText2
                           ?.copyWith(color: primaryBlueColor),
                     )

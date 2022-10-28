@@ -11,7 +11,7 @@ import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
-    ['pages']['ROpEditInfoView']['ROpEditInfoView'];
+    ['pages']['ROpDashboardPage'];
 
 class ROpDashboardPage extends StatelessWidget {
   const ROpDashboardPage(
@@ -61,7 +61,7 @@ class ROpDashboardPage extends StatelessWidget {
           alignment: Alignment.centerLeft,
           margin: const EdgeInsets.symmetric(horizontal: 15),
           child: Text(
-            "Settings ",
+            '${_i18n()["settings"]}',
             style: Get.textTheme.bodyText1,
           ),
         ),
@@ -87,7 +87,7 @@ class ROpDashboardPage extends StatelessWidget {
                   },
                   icon: Icons.person,
                   titleWidget: Text(
-                    "Restaurant informations",
+                    '${_i18n()["restInfo"]}',
                     style: Get.textTheme.bodyText1?.copyWith(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w600,
@@ -102,7 +102,7 @@ class ROpDashboardPage extends StatelessWidget {
                   },
                   icon: Icons.business_outlined,
                   titleWidget: Text(
-                    "Schedule",
+                    '${_i18n()["schedule"]}',
                     style: Get.textTheme.bodyText1?.copyWith(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w600,
@@ -117,7 +117,7 @@ class ROpDashboardPage extends StatelessWidget {
                   },
                   icon: Icons.account_balance,
                   titleWidget: Text(
-                    "Payments",
+                    '${_i18n()["payments"]}',
                     style: Get.textTheme.bodyText1?.copyWith(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w600,
@@ -132,7 +132,7 @@ class ROpDashboardPage extends StatelessWidget {
                   },
                   icon: Icons.star_rate_rounded,
                   titleWidget: Text(
-                    "Reviews",
+                    '${_i18n()["reviews"]}',
                     style: Get.textTheme.bodyText1?.copyWith(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w600,
@@ -153,7 +153,7 @@ class ROpDashboardPage extends StatelessWidget {
           alignment: Alignment.centerLeft,
           margin: const EdgeInsets.symmetric(horizontal: 15),
           child: Text(
-            "Shortcuts ",
+            '${_i18n()["shortcuts"]}',
             style: Get.textTheme.bodyText1,
           ),
         ),
@@ -175,7 +175,7 @@ class ROpDashboardPage extends StatelessWidget {
                   },
                   icon: Icons.share,
                   titleWidget: Text(
-                    "Share restaurant",
+                    '${_i18n()["shareRest"]}',
                     style: Get.textTheme.bodyText1?.copyWith(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w600,
@@ -202,14 +202,14 @@ class ROpDashboardPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Self delivery",
+                        '${_i18n()["selfDvTitle"]}',
                         style: Get.textTheme.bodyText1?.copyWith(
                             fontSize: 11.sp,
                             fontWeight: FontWeight.w600,
                             color: Colors.grey.shade900),
                       ),
                       Text(
-                        "Control your own deliveries.",
+                        '${_i18n()["selfDvDesc"]}',
                         style: Get.textTheme.subtitle1
                             ?.copyWith(color: Colors.grey.shade500),
                       ),
@@ -233,7 +233,7 @@ class ROpDashboardPage extends StatelessWidget {
                   },
                   icon: Icons.privacy_tip,
                   titleWidget: Text(
-                    "Privacy Policy",
+                    '${_i18n()["privacyPolicies"]}',
                     style: Get.textTheme.bodyText1?.copyWith(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w600,
@@ -247,7 +247,7 @@ class ROpDashboardPage extends StatelessWidget {
                   icon: Icons.logout,
                   iconColor: Colors.red,
                   titleWidget: Text(
-                    "Log Out",
+                    '${_i18n()["logout"]}',
                     style: Get.textTheme.bodyText1?.copyWith(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w600,

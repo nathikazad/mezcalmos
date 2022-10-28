@@ -119,7 +119,7 @@ class _ROpOrderFromToState extends State<ROpOrderFromTo> {
         return '${_i18n()["orderStatus"]["waiting"]}';
 
       case RestaurantOrderStatus.ReadyForPickup:
-        return 'Ready for delivery';
+        return '${_i18n()["orderStatus"]["justReady"]}';
       case RestaurantOrderStatus.OnTheWay:
         return '${_i18n()["orderStatus"]["deliveryOtw"]}';
       case RestaurantOrderStatus.Delivered:

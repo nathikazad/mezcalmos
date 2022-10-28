@@ -4,10 +4,14 @@ import 'package:mezcalmos/RestaurantApp/pages/ROpDriversView/components/ROpDrive
 import 'package:mezcalmos/RestaurantApp/pages/ROpDriversView/controllers/ROpDriversViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
+    ['pages']['ROpDriversView'];
 
 class ROpDriversView extends StatefulWidget {
   const ROpDriversView(
@@ -37,7 +41,7 @@ class _ROpDriversViewState extends State<ROpDriversView> {
         appBar: mezcalmosAppBar(
           AppBarLeftButtonType.Back,
           showLeftBtn: false,
-          title: 'Drivers',
+          title: '${_i18n()["drivers"]}',
           ordersRoute: kPastOrdersListView,
           showNotifications: true,
         ),
@@ -69,14 +73,14 @@ class _ROpDriversViewState extends State<ROpDriversView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Enable self delivery to control your deliveries by adding yourown drivers.",
+            '${_i18n()["falseTitle"]}',
             style: Get.textTheme.headline3,
           ),
           const SizedBox(
             height: 20,
           ),
           Text(
-            "Go to profile > In shortcuts turn on Self delivery",
+            '${_i18n()["falseDesc"]}',
             style: Get.textTheme.bodyText2,
           ),
         ],
@@ -90,21 +94,21 @@ class _ROpDriversViewState extends State<ROpDriversView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Control your delivery by adding your own drivers",
+            '${_i18n()["trueTitle"]}',
             style: Get.textTheme.headline3,
           ),
           const SizedBox(
             height: 20,
           ),
           Text(
-            "A QR code and a link will be shared with your delivery driver to download Mezdelivery app.",
+            '${_i18n()["trueDesc"]}',
             style: Get.textTheme.bodyText2,
           ),
           const SizedBox(
             height: 20,
           ),
           MezButton(
-            label: "Add driver",
+            label: '${_i18n()["addDriver"]}',
             backgroundColor: secondaryLightBlueColor,
             textColor: primaryBlueColor,
             onClick: () async {
@@ -115,7 +119,7 @@ class _ROpDriversViewState extends State<ROpDriversView> {
             height: 25,
           ),
           Text(
-            "Associated Drivers ",
+            '${_i18n()["assDrivers"]}',
             style: Get.textTheme.bodyText1,
           ),
           SizedBox(
@@ -161,7 +165,7 @@ class _ROpDriversViewState extends State<ROpDriversView> {
                       margin: const EdgeInsets.only(top: 5, bottom: 8),
                       alignment: Alignment.center,
                       child: Text(
-                        'New Driver',
+                        '${_i18n()["newDv"]}',
                         style:
                             Get.textTheme.headline3?.copyWith(fontSize: 17.sp),
                       ),
@@ -171,7 +175,7 @@ class _ROpDriversViewState extends State<ROpDriversView> {
                       height: 10,
                     ),
                     Text(
-                      "Phone or email",
+                      '${_i18n()["emailOrPhone"]}',
                       style: Get.textTheme.bodyText1,
                     ),
                     const SizedBox(
@@ -187,7 +191,7 @@ class _ROpDriversViewState extends State<ROpDriversView> {
                       children: [
                         Flexible(
                             child: MezButton(
-                          label: "Cancel",
+                          label: '${_i18n()["cancel"]}',
                           backgroundColor: offRedColor,
                           textColor: Colors.red,
                           onClick: () async {
@@ -199,7 +203,7 @@ class _ROpDriversViewState extends State<ROpDriversView> {
                         ),
                         Flexible(
                             child: MezButton(
-                          label: "Add Driver",
+                          label: '${_i18n()["addDriver"]}',
                           withGradient: true,
                           onClick: () async {
                             final bool result =
