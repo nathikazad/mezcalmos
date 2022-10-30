@@ -27,14 +27,14 @@ class ROpStatsViewController {
     // assigning restaurant data and start the stream subscription //
     mezDbgPrint("INIT STATS VIEW =======>$restaurantId");
     currentOrders.value = orderController.currentOrders;
-    pastOrders.value = orderController.pastOrders;
+    pastOrders.value = orderController.pastOrders.sublist(0, 50);
     _currentOrdersListener =
         orderController.currentOrders.listen((List<RestaurantOrder> p0) {
       currentOrders.value = p0;
     });
     _pastOrdersListener =
         orderController.pastOrders.listen((List<RestaurantOrder> p0) {
-      pastOrders.value = p0;
+      pastOrders.value = p0.sublist(0, 50);
     });
     mezDbgPrint("Past orders =======>>>> ${pastOrders.length}");
     mezDbgPrint("Current orders =======>>>> ${currentOrders.length}");
@@ -58,13 +58,15 @@ class ROpStatsViewController {
     // }
   }
 
-  Map<DateTime, List<RestaurantOrder>> getGroupedPastOrders() {
+  Map<DateTime, List<RestaurantOrder>> getGroupedPastOrders(
+      {bool? Function(RestaurantOrder v)? filter}) {
     // Creating the map
 
     final Map<DateTime, List<RestaurantOrder>> data = pastOrders
         .where((RestaurantOrder p0) {
-      return p0.orderTime.month == DateTime.now().month &&
-          DateTime.now().year == p0.orderTime.year;
+      return filter?.call(p0) ??
+          p0.orderTime.month == DateTime.now().month &&
+              DateTime.now().year == p0.orderTime.year;
     }).groupListsBy((RestaurantOrder element) => DateTime(
             element.orderTime.toLocal().year,
             element.orderTime.toLocal().month,
@@ -75,6 +77,24 @@ class ROpStatsViewController {
             (DateTime a, DateTime b) => b.toLocal().compareTo(a.toLocal()));
 
     return sortedMap;
+  }
+
+  num getListOfOrdersEarning(List<RestaurantOrder> data) {
+    num earning = 0;
+    data.forEach((RestaurantOrder element) {
+      earning = earning + element.itemsCost;
+    });
+    return earning;
+  }
+
+  Map<DateTime, List<RestaurantOrder>> getLastWeekSales() {
+    return getGroupedPastOrders(
+      filter: (RestaurantOrder v) {
+        return v.orderTime.isBefore(DateTime.now().toLocal()) &&
+            v.orderTime
+                .isAfter(DateTime.now().subtract(Duration(days: 7)).toLocal());
+      },
+    );
   }
 
   num? getDayCost(DateTime date) {

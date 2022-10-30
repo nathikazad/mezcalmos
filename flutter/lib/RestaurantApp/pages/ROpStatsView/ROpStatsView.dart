@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/pages/ROpStatsView/components/ROpStatsOverViewCard.dart';
+import 'package:mezcalmos/RestaurantApp/pages/ROpStatsView/components/ROpOverviewChart.dart';
+import 'package:mezcalmos/RestaurantApp/pages/ROpStatsView/components/ROpStatsDayCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpStatsView/controllers/ROpStatsViewController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -36,37 +37,47 @@ class _ROpStatsViewState extends State<ROpStatsView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              ROpOverViewChart(
+                viewController: viewController,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               Container(
-                margin: const EdgeInsets.all(8),
                 child: Text(
-                  "Overview",
+                  "Last week",
                   style: Get.textTheme.bodyText1,
                 ),
               ),
-              Column(
-                children: List.generate(
-                    viewController.getGroupedPastOrders().length, (int index) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                          "${viewController.getGroupedPastOrders().keys.toList()[index].toDayName(withDateNumber: true).inCaps}"),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      ROpStatsOverViewCard(
-                        viewController: viewController,
-                        date: viewController
-                            .getGroupedPastOrders()
-                            .keys
-                            .toList()[index],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  );
-                }),
+              SizedBox(
+                height: 15,
+              ),
+              Obx(
+                () => Column(
+                  children: List.generate(
+                      viewController.getLastWeekSales().length, (int index) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                            "${viewController.getLastWeekSales().keys.toList()[index].toDayName(withDateNumber: true).inCaps}"),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        ROpStatsDayCard(
+                          viewController: viewController,
+                          date: viewController
+                              .getLastWeekSales()
+                              .keys
+                              .toList()[index],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    );
+                  }),
+                ),
               ),
             ],
           )),
