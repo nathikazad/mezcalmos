@@ -24,7 +24,7 @@
                 "chooseLoc": "Choose location",
                 "ops": "Oops",
                 "wrongAddress" : "Wrong/Invalid address picked!",
-                "distanceError": "Distance between you and restaurant is more than 10km !",
+                "distanceError": "Distance between you and restaurant is more than 15km!",
                 "pickLocation": "Pick from map"
             },
             "LocationPicker": {
@@ -216,7 +216,7 @@
                     "ViewCartScreen": {
                         "ops": "Oops",
                         "restaurantClosed": "Restuarnt is closed now",
-                        "distanceError": "Distance between you and restaurat is more than 10km !",
+                        "distanceError": "Distance between you and restaurat is more than 15km!",
                         "myCart": "My Cart",
                         "notAvailable": "This restaurant is closed",
                         "orderNow": "ORDER NOW",

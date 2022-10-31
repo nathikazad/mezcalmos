@@ -151,11 +151,10 @@ class RestaurantController extends GetxController {
   Future<bool> updateShippingPrice() async {
     isShippingSet.value = false;
     final Location? loc = cart.value.toLocation;
-    minShiipingPrice.value =
-        minShiipingPrice.value ?? await getMinShippingPrice();
-    perKmPrice.value = perKmPrice.value ?? await getPerKmShippingPrice();
-    baseShippingPrice.value =
-        baseShippingPrice.value ?? await getShippingPrice();
+    minShiipingPrice.value = await getMinShippingPrice();
+    perKmPrice.value = await getPerKmShippingPrice();
+    // baseShippingPrice.value =
+    //     baseShippingPrice.value ?? await getShippingPrice();
     if (loc != null) {
       final MapHelper.Route? routeInfo = await MapHelper.getDurationAndDistance(
         cart.value.restaurant!.info.location,
@@ -164,12 +163,13 @@ class RestaurantController extends GetxController {
       if (routeInfo != null) {
         _orderDistanceInKm = routeInfo.distance.distanceInMeters / 1000;
         mezDbgPrint(
-            "ORDER DISTANCE VARIABLEEEE ========>>>>>>>$_orderDistanceInKm");
-        mezDbgPrint(
-            "place :::: $loc distance from controller :::::::===> ${(routeInfo.distance.distanceInMeters / 1000)}");
-        if ((routeInfo.distance.distanceInMeters / 1000) <= 10) {
-          final num shippingCost =
-              perKmPrice.value! * (routeInfo.distance.distanceInMeters / 1000);
+            "[[+]] Shipping Distance in km ========>>>>>>>$_orderDistanceInKm");
+        mezDbgPrint("[[+]] MinShippingPrice ===> ${minShiipingPrice.value}");
+        mezDbgPrint("[[+]] perKmPrice ===> ${perKmPrice.value}");
+        if (_orderDistanceInKm <= 15) {
+          final num shippingCost = perKmPrice.value! * (_orderDistanceInKm);
+          mezDbgPrint(
+              "[[+]] Calculated final ShippingCost  ========>>>>>>>$shippingCost");
           if (shippingCost < minShiipingPrice.value!) {
             mezDbgPrint(
                 "LESS THAN MINIMUM COST ===================== $shippingCost << ${minShiipingPrice.value}");
