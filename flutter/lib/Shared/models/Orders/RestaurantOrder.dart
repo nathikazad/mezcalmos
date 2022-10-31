@@ -222,8 +222,7 @@ class RestaurantOrder extends DeliverableOrder {
   bool inSelfDelivery() {
     return (status == RestaurantOrderStatus.ReadyForPickup ||
             status == RestaurantOrderStatus.OnTheWay) &&
-        (deliveryMode == DeliveryMode.SelfDeliveryByDriver ||
-            deliveryMode == DeliveryMode.SelfDeliveryByRestaurant);
+        deliveryMode == DeliveryMode.SelfDeliveryByRestaurant;
   }
 
   bool get selfDelivery {
