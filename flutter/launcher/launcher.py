@@ -21,6 +21,59 @@ PRINTLN = lambda x,end='\n' : print(x , end=end) if ACTIVE_DEBUG else None
 VALID_CONFIG_KEYS_LEN = 2
 rm_lambda = lambda path : f'rm -rf {path}*'
 
+PUBSPECT_TAB = lambda num=1: (" "*2)*num
+
+class FlutterDependencies:
+    '''
+    We just give it the dependencies set in config.json
+    '''
+    def __init__(self , dependencies:dict) -> None:
+        self.dependencies_str = ""
+        for dep in dependencies.keys():
+            self.dependencies_str += self._format(name=dep , version=dependencies[dep])
+
+    def _format(self, name:str, version:str) -> str:
+        return f"{PUBSPECT_TAB()}{name}: {version}\n"
+
+    def toString(self) -> str:
+        return self.dependencies_str
+
+class FlutterAssets:
+    '''
+    We just give it the assets set in config.json
+    '''   
+    def __init__(self , assets:list) -> None:
+        self.assets_str = ""
+        for asset in assets:
+            self.assets_str += self._format(asset=str(asset).replace('-' , '').replace(' ', ''))
+
+    def _format(self, asset) -> str:
+        return f"{PUBSPECT_TAB(2)}- {asset}\n"
+
+    def toString(self) -> str:
+        return self.assets_str
+
+class FlutterFont:
+    '''
+    We just give it the fonts set in config.json
+    '''
+    def __init__(self , fonts:dict) -> None:
+        self.fonts = ""
+        PRINTLN(fonts)
+        
+        for font_family in fonts.keys():
+            self.fonts += self._format(font_family=font_family, font_conf=fonts[font_family]['font_conf'])
+
+    def _format(self , font_family:str, font_conf:list) -> str:
+        _str = f"{PUBSPECT_TAB(2)}- family: {font_family}\n{PUBSPECT_TAB(3)}fonts:\n"
+        for conf in font_conf:
+            _str += f"{PUBSPECT_TAB(4)}- asset: {conf['asset']}\n"
+            if 'weight' in conf.keys() and conf['weight'] is not None:
+                _str += f"{PUBSPECT_TAB(5)}weight: {conf['weight']}\n"
+        return _str
+    def toString(self) -> str:
+        return self.fonts          
+
 
 class OUTPUT_FILTERS(Enum):
     SHOW = 0
@@ -389,11 +442,60 @@ class Launcher:
                 PRINTLN(f"[⚒️] Building : app-armeabi-v7a-release.apk ...")
             os.system(cmd_build)
 
-    def __launch__(self):
-        # self.__f_checker__()
+
+    def __patch_dependencies__(self , patchable_pub_file:str) -> tuple:
+        '''
+        This patches :
         
+        - The dependencies set in config.json for each app.
+        - The assets set in config.json for each app.
+        - The Fonts set in config.json for each app.
+
+        and returns the new pubspect.yaml patched content.
+        '''
+        # global deps
+        # global assets
+        # global fonts
+        deps    = ''
+        assets  = ''
+        fonts   = ''
+
+        assert(patchable_pub_file is not None)
+        _app_conf_ =  self.conf['apps'][self.user_args["app"]]
+        # get the shared config stuff
+        _shared_pubspec = None if 'shared_pubspec' not in self.conf['settings'].keys() else self.conf['settings']['shared_pubspec']
+        if _shared_pubspec is not None:
+            if 'dependencies' in _shared_pubspec.keys():
+                deps += FlutterDependencies(_shared_pubspec['dependencies']).toString()
+            
+            if 'assets' in _shared_pubspec.keys():
+                assets += FlutterAssets(_shared_pubspec['assets']).toString()
+            
+            if 'fonts' in _shared_pubspec.keys():
+                fonts += FlutterFont(_shared_pubspec['fonts']).toString()
+
+        # Then goes for the app-specific-pubspect
+        if "pubspec" not in _app_conf_.keys() or _app_conf_.keys().__len__() <= 0:
+            PRINTLN(f"[+] Could not found pubspec setup in config.json for this app : {self.user_args['app']} .. skipping")
+        else:
+            _app_conf_ = _app_conf_['pubspec']
+            if 'dependencies' in _app_conf_.keys():
+               deps += FlutterDependencies(_app_conf_['dependencies']).toString()
+            
+            if 'assets' in _app_conf_.keys():
+                assets += FlutterAssets(_app_conf_['assets']).toString()
+            
+            if 'fonts' in _app_conf_.keys():
+                fonts += FlutterFont(_app_conf_['fonts']).toString()
+
+        return patchable_pub_file.replace('<mez-dependencies>' , deps).replace('<mez-assets>', assets).replace('<mez-fonts>', fonts)
+
+
+    def __launch__(self):        
+        open(self.conf['settings']['pubspec.yaml'], 'w+').write(self.__patch_dependencies__(patchable_pub_file=open('patches/pubspec.yaml').read()))
         self.__patcher__()
         self.__patch_gs__()
+
         if self.user_args['pipeline'] == True:
             PRINTLN(f"[ PIPELINE ] All the necessary patching is done, quitting now with 0...")
             quit(code=0)
@@ -523,16 +625,17 @@ class Config:
         if re.match(r'^([1-9]+)\.[0-9]+\.[0-9]+\+[1-9]+$' , v) == None and __v.__len__() != 2:
             PRINTLN(f"[!] Error -> Incorrect Version {v} , type launcher.py help!")
             exit(DW_EXIT_REASONS.WRONG_VERSION_GIVEN)
-        pubspec = self.conf['settings']['pubspec.yaml']
+        original_pubspec = self.conf['settings']['pubspec.yaml']
+        patchable_pubspec = 'patches/pubspec.yaml'
         localProperties = self.conf['settings']['local.properties']
-        if not os.path.exists(pubspec):
-            PRINTLN(f'[!] config.json::{pubspec} not found !')
+        if not os.path.exists(patchable_pubspec):
+            PRINTLN(f'[!] config.json::{patchable_pubspec} not found !')
             exit(DW_EXIT_REASONS.PUBSPECT_YAML_NOT_FOUND)
         if not os.path.exists(localProperties):
             PRINTLN(f'[!] config.json::{localProperties} not found !')
             exit(DW_EXIT_REASONS.LOCAL_PROPERTIES_NOT_FOUND)
         
-        _pubspec = open(pubspec , errors='ignore' , encoding='utf-8').readlines()
+        _pubspec = open(patchable_pubspec , errors='ignore' , encoding='utf-8').readlines()
         _localProperties = open(localProperties , errors='ignore' , encoding='utf-8').readlines()
 
         _strippedLocalProps = ''.join(_localProperties).replace('\n','')
@@ -548,14 +651,19 @@ class Config:
 
         _res = [i for i,line in enumerate(_pubspec) if re.match(r'version {0,}: {0,}[0-9]+\.[0-9]+\.[0-9]+\+[0-9]+' , line ) != None]
         if _res.__len__() > 1:
-            PRINTLN(f"[?] Found multi version ddffinition in {pubspec} at lines : {[x for x in _res]} ")
+            PRINTLN(f"[?] Found multi version ddffinition in {patchable_pubspec} at lines : {[x for x in _res]} ")
             exit(DW_EXIT_REASONS.FOUND_MULTI_VERSIONS_IN_PUBSPEC_YAML)
 
         
         _res  = _res[0]
         print(f"[+] pubspec.yaml :\n\t|_ old_version = {_pubspec[_res].strip()}\n\t|_ new_applied_version = {v}")
         _pubspec[_res] = f"version: {v}\n"
-        open(pubspec , 'w+').write(''.join(_pubspec))
+        # Call patch dependencies / assets / fonts
+        #saad
+        # _pubspec = self.__patch_dependencies__(_pubspec)
+        # PRINTLN(_pubspec)
+        # then write back the patches to the project's pubspec.
+        open(original_pubspec , 'w+').write(''.join(_pubspec))
         PRINTLN("[+] Checked and Patched pubspec.yaml successfully !")
 
         # local.properties regex check:
