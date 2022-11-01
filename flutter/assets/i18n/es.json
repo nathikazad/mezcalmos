@@ -2026,8 +2026,8 @@
                 "cancelHelperText": "¿Estás seguro de que quieres cancelar el proceso de reorden?",
                 "components": {
                     "ROpSpecialsComponent": {
-                        "currentSp": "Artículos especiales actuales",
-                        "recentSp": "Artículos especiales recientes"
+                        "currentSp": "Especiales actuales",
+                        "recentSp": "Especiales viejos"
                     },
                     "ROpItemCard": {
                         "category": "Categoría",
@@ -2094,8 +2094,8 @@
                 "openTitle": "Disponibilidad de restaurantes",
                 "openSubtitle": "Esto cerrará su restaurante indefinidamente",
                 "settings": "Ajustes",
-                "restInfo": "Información de restaurantes",
-                "schedule": "Calendario",
+                "restInfo": "Informacións",
+                "schedule": "Horas Laborales",
                 "payments": "Pagos",
                 "reviews": "Reseñas",
                 "shortcuts": "Atajos",
@@ -2138,7 +2138,7 @@
                         "acceptedPayments": "Pagos aceptados",
                         "setup": "configurar",
                         "fees": "Tarifa",
-                        "chargeCustomer": "Cargar tarifas de Stripe en el cliente",
+                        "chargeCustomer": "cobrar tarifas de procesamiento del cliente",
 
                         "setupHelper": "Gracias por la configuración, ahora puede recibir pagos, pero no podrá retirar dinero a su cuenta bancaria.",
                         "reqs": "Requisitos",

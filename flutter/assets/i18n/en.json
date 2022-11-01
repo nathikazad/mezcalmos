@@ -2035,8 +2035,8 @@
                 "cancelHelperText": "Are you sure you want to cancel the reorder process",
                 "components": {
                     "ROpSpecialsComponent": {
-                        "currentSp": "Current special items",
-                        "recentSp": "Recent special items"
+                        "currentSp": "Current specials",
+                        "recentSp": "Old specials"
                     },
                     "ROpItemCard": {
                         "category": "Category",
@@ -2101,8 +2101,8 @@
                 "openTitle": "Restaurant Availibility",
                 "openSubtitle": "This will close your restaurant indefinitely",
                 "settings": "Settings",
-                "restInfo": "Restaurant informations",
-                "schedule": "Schedule",
+                "restInfo": "Informations",
+                "schedule": "Working hours",
                 "payments": "Payments",
                 "reviews": "Reviews",
                 "shortcuts": "Shortcuts",
@@ -2146,7 +2146,7 @@
                         "acceptedPayments": "Accepted payments",
                         "setup": "Setup",
                         "fees": "Fees",
-                        "chargeCustomer": "Charge stripe fees on customer",
+                        "chargeCustomer": "charge customer processing fees",
 
                         "setupHelper": "Thanks for setup , you can now receive payments but you will not be able to withdraw money to your bank account",
                         "reqs": "Requirements",

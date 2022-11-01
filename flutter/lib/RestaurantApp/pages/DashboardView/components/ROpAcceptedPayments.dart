@@ -118,90 +118,123 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
             height: 7,
             thickness: 0.3,
           ),
-          CheckboxListTile(
-              checkboxShape: CircleBorder(),
-              contentPadding: EdgeInsets.zero,
-              title: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          // flex: 5,
-                          child: Row(
-                            children: [
-                              Text(
-                                '${_i18n()["card"]}',
-                                style: Get.textTheme.bodyText1,
-                              ),
-                              const SizedBox(
-                                width: 3,
-                              ),
-                              Image.asset(
-                                "assets/images/shared/stripeColoredLogo.png",
-                                height: 16,
-                                width: 40,
-                              )
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Row(
-                          children: [
-                            if (widget.viewController.showStatusIcon)
-                              _stripeStatusWidget(context),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            if (widget.viewController.showSetupBtn)
-                              _stripeSetupBtn()
-                          ],
-                        )
-                      ],
-                    ),
-                  ]),
-              activeColor: primaryBlueColor,
-              value: widget.viewController.restaurant.value!.paymentInfo
-                      .acceptedPayments[PaymentType.Card] ==
-                  true,
-              onChanged: (bool? v) {
-                widget.viewController.handleCardCheckBoxClick(v!);
-              }),
-          if (widget.viewController.showFeesOption)
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          Container(
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(
-                  height: 20,
+                Flexible(
+                  fit: FlexFit.tight,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            '${_i18n()["card"]}',
+                            style: Get.textTheme.bodyText1,
+                          ),
+                          const SizedBox(
+                            width: 3,
+                          ),
+                          Image.asset(
+                            "assets/images/shared/stripeColoredLogo.png",
+                            height: 16,
+                            width: 40,
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          if (widget.viewController.showStatusIcon)
+                            _stripeStatusWidget(context),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          if (widget.viewController.showSetupBtn)
+                            _stripeSetupBtn()
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-                Container(
-                    child: ListTileTheme(
-                  child: SwitchListTile(
-                      title: Text(
-                        '${_i18n()["fees"]}',
-                        style: Get.textTheme.bodyText1,
-                      ),
-                      subtitle: Text(
-                        '${_i18n()["chargeCustomer"]}',
-                        style: Get.textTheme.bodyText2,
-                      ),
-                      contentPadding: EdgeInsets.zero,
-                      activeTrackColor: secondaryLightBlueColor,
+                Checkbox(
+                    shape: CircleBorder(),
+                    activeColor: primaryBlueColor,
+                    value: widget.viewController.restaurant.value!.paymentInfo
+                            .acceptedPayments[PaymentType.Card] ==
+                        true,
+                    onChanged: (bool? v) {
+                      widget.viewController.handleCardCheckBoxClick(v!);
+                    }),
+              ],
+            ),
+          ),
+          // CheckboxListTile(
+          //     checkboxShape: CircleBorder(),
+          //     contentPadding: EdgeInsets.zero,
+          //     title: Column(
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       children: [
+          //         Row(
+          //           children: [
+          //             Text(
+          //               '${_i18n()["card"]}',
+          //               style: Get.textTheme.bodyText1,
+          //             ),
+          //             const SizedBox(
+          //               width: 3,
+          //             ),
+          //             Image.asset(
+          //               "assets/images/shared/stripeColoredLogo.png",
+          //               height: 16,
+          //               width: 40,
+          //             )
+          //           ],
+          //         ),
+          //         const SizedBox(
+          //           height: 8,
+          //         ),
+          //         Row(
+          //           children: [
+          //             if (widget.viewController.showStatusIcon)
+          //               _stripeStatusWidget(context),
+          //             const SizedBox(
+          //               width: 5,
+          //             ),
+          //             if (widget.viewController.showSetupBtn) _stripeSetupBtn()
+          //           ],
+          //         ),
+          //       ],
+          //     ),
+          //     activeColor: primaryBlueColor,
+          //     value: widget.viewController.restaurant.value!.paymentInfo
+          //             .acceptedPayments[PaymentType.Card] ==
+          //         true,
+          //     onChanged: (bool? v) {
+          //       widget.viewController.handleCardCheckBoxClick(v!);
+          //     }),
+          if (widget.viewController.showFeesOption)
+            Container(
+              //     margin: const EdgeInsets.all(5),
+              child: Row(
+                children: [
+                  Flexible(
+                      fit: FlexFit.tight,
+                      child: Text("${_i18n()["chargeCustomer"]}")),
+                  Obx(
+                    () => Switch(
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       activeColor: primaryBlueColor,
                       value: widget.viewController.getChargeFessOnCustomer(),
                       onChanged: (bool v) {
                         widget.viewController.switchChargeFees(v);
-                      }),
-                )),
-              ],
-            ),
-          SizedBox(
-            height: 15,
-          ),
+                      },
+                    ),
+                  )
+                ],
+              ),
+            )
         ],
       ),
     );
