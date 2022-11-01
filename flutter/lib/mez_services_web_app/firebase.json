@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "site" : "mezcalmos-31f1c",
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

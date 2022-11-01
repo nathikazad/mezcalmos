@@ -10,7 +10,9 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Laundry"]["LaundriesListView"];
 
 class LaundriesListView extends StatefulWidget {
-  const LaundriesListView({Key? key}) : super(key: key);
+  const LaundriesListView({Key? key, this.isRuningOnWeb = false})
+      : super(key: key);
+  final bool? isRuningOnWeb;
 
   @override
   State<LaundriesListView> createState() => _LaundriesListViewState();
@@ -23,6 +25,7 @@ class _LaundriesListViewState extends State<LaundriesListView> {
     return Scaffold(
       appBar: CustomerAppBar(
         autoBack: true,
+        isRunningOnWeb: widget.isRuningOnWeb,
         title: '${_i18n()["laundries"]}',
       ),
       body: SingleChildScrollView(
@@ -60,6 +63,7 @@ class _LaundriesListViewState extends State<LaundriesListView> {
                           children: List.generate(
                               snapshot.data!.length,
                               (int index) => CustomerLaundrySelectCard(
+                                    isRunningOnWeb: widget.isRuningOnWeb,
                                     laundry: snapshot.data![index],
                                     shippingPrice:
                                         laundryController.shippingPrice.value,

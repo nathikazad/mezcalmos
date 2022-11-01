@@ -106,6 +106,11 @@ dependencies:
 
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0
+  # webApp plugins
+  webfeed: ^0.7.0
+  flutter_html: ^2.2.1
+
+  
   flutter_test:
     sdk: flutter
 
@@ -137,6 +142,8 @@ flutter:
     - assets/animation/
     - assets/sounds/
     - assets/icons/appstore.png
+    - assets/images/webApp/
+    
 
   fonts:
     - family: psr  # Product Sans Regular

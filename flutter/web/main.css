@@ -1,0 +1,14 @@
+body{
+    height: 100vh;
+    background-color: #fff;
+    display: grid;
+    justify-content: center;
+    transition: background-color 1s;
+}
+#loading{
+    margin: auto;
+  width: 60%;
+ 
+  padding: 10px;
+    text-align: center;
+}

@@ -71,6 +71,8 @@ class RestaurantsInfoController extends GetxController {
             restaurantId: restaurantId, restaurantData: event.snapshot.value);
       }
       return null;
+    }).catchError((e) {
+      throw Exception("something weird hppenend $e");
     });
   }
 }

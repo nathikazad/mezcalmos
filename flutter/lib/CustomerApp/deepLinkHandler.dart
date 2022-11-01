@@ -71,7 +71,7 @@ class DeepLinkHandler {
             Duration.zero,
             () => Get.toNamed<void>(
               getRestaurantRoute(providerId),
-              arguments: _rest,
+              arguments: [_rest, ""],
             ),
           );
         }
@@ -84,7 +84,7 @@ class DeepLinkHandler {
             getLaundryOrderRoute(providerId),
           ),
         );
-        
+
         break;
       default:
         mezDbgPrint("@deepLink@ ===> handling unknown default type");

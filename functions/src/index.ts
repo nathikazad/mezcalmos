@@ -36,6 +36,11 @@ export const stripe = {
   updateServiceProvider: stripeServiceProvderFunctions.updateServiceProvider
 }
 
+import * as dlink from './utilities/setLink'
+export const link = {
+  generateDeepLink : dlink.generateDeepLink
+}
+
 import * as restaurantStatusChange from './restaurant/adminStatusChanges'
 export const restaurant = {
   createRestaurant: require("./restaurant/createNewRestaurant"),

@@ -15,10 +15,12 @@ class RestaurantCard extends StatelessWidget {
   final Restaurant restaurant;
   final num shippingPrice;
   final GestureTapCallback? onClick;
+  final bool? isRunningOnWeb;
 
   const RestaurantCard({
     Key? key,
     @required this.onClick,
+    this.isRunningOnWeb = false,
     required this.restaurant,
     required this.shippingPrice,
   }) : super(key: key);
@@ -49,7 +51,8 @@ class RestaurantCard extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         restaurant.info.name,
-                        style: txt.headline3,
+                        style: txt.headline3!
+                            .copyWith(fontSize: isRunningOnWeb! ? 15 : null),
                       ),
                       const SizedBox(height: 10),
                       if (restaurant.description?[userLanguage] != null)

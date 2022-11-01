@@ -18,7 +18,9 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Laundry"]["SingleLaundryScreen"];
 
 class SingleLaundryScreen extends StatefulWidget {
-  const SingleLaundryScreen({Key? key}) : super(key: key);
+  const SingleLaundryScreen({Key? key, this.isRunningOnWeb = false})
+      : super(key: key);
+  final bool? isRunningOnWeb;
 
   @override
   State<SingleLaundryScreen> createState() => _SingleLaundryScreenState();
@@ -34,6 +36,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
   void initState() {
     // TODO: implement initState
     laundryId = Get.parameters["laundryId"];
+
     if (laundryId != null) {
       laundryController
           .getLaundry(laundryId!)
@@ -53,6 +56,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           return Scaffold(
             appBar: CustomerAppBar(
               title: laundry.value?.info.name,
+              isRunningOnWeb: widget.isRunningOnWeb,
             ),
             body: SingleChildScrollView(
               padding: const EdgeInsets.all(12),
@@ -88,11 +92,15 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                   SizedBox(
                     height: 20,
                   ),
-                  ServiceLocationCard(location: laundry.value!.info.location),
+                  widget.isRunningOnWeb!
+                      ? Container()
+                      : ServiceLocationCard(
+                          location: laundry.value!.info.location),
                 ],
               ),
             ),
-            bottomNavigationBar: _sendMyLaundryButton(),
+            bottomNavigationBar:
+                widget.isRunningOnWeb! ? null : _sendMyLaundryButton(),
           );
         } else
           return Container();

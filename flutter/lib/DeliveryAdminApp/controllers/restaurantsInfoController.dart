@@ -79,6 +79,7 @@ class RestaurantsInfoController extends GetxController {
   }
 
   Future<Restaurant> getRestaurant(String restaurantId) async {
+    print("--------| the id is ${restaurantId} |------------");
     return _databaseHelper.firebaseDatabase
         .ref()
         .child('restaurants/info/$restaurantId')

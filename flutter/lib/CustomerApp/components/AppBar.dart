@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final bool? autoBack;
+
   final AppBarLeftButtonType leftBtnType;
   bool showPastOrders;
 
