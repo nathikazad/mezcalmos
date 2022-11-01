@@ -5,8 +5,6 @@ import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platf
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
-import 'package:sizer/sizer.dart';
-
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
         ["pages"]["Restaurants"]["ViewRestaurantScreen"]["components"]
     ["restaurantInfoTab"];

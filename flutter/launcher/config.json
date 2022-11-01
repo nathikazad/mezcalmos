@@ -44,9 +44,31 @@
                 "pin_code_fields": "^7.2.0",
                 "sizer": "^2.0.15",
                 "intl": "^0.17.0",
-                "google_maps_flutter_platform_interface":"^2.2.4",
-                "flutter_facebook_auth": "^4.3.4+2", 
-                "sign_in_with_apple": "^4.0.0"
+                "google_maps_flutter_platform_interface": "^2.2.4",
+                "flutter_facebook_auth": "^4.3.4+2",
+                "sign_in_with_apple": "^4.0.0",
+                "google_maps_flutter": "^2.0.9",
+                "flutter_polyline_points": "^1.0.0",
+                "badges": "^2.0.2",
+                "font_awesome_flutter": "^10.1.0",
+                "flutter_stripe": "^4.0.0",
+                "package_info_plus": "^1.4.0",
+                "device_info_plus": "^4.0.2",
+                "agora_rtc_engine": "5.3.0",
+                "flutter_callkit_incoming": "^1.0.2+1",
+                "soundpool": "^2.2.0",
+                "permission_handler": "^10.0.0",
+                "image_picker": "^0.8.4",
+                "progress_indicators": "^1.0.0",
+                "flutter_image_compress": "^1.1.0",
+                "rive": "^0.9.1",
+                "flutter_rating_bar": "^4.0.1",
+                "ionicons": "^0.2.1",
+                "store_redirect": "^2.0.1"
+
+
+
+
             }
         }
     },
@@ -82,7 +104,7 @@
                     "sticky_headers": "^0.3.0+2",
                     "flutter_svg": "^1.1.5"
                 },
-                "assets" : [
+                "assets": [
                     "assets/i18n/en.json",
                     "assets/i18n/es.json",
                     "assets/images/web/"
@@ -118,43 +140,32 @@
             "pubspec": {
                 "fonts": {
                     "psr": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psr.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psr.ttf"
+                        }]
                     },
                     "psb": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psb.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psb.ttf"
+                        }]
                     },
                     "psi": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psi.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psi.ttf"
+                        }]
                     },
                     "psbi": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psbi.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psbi.ttf"
+                        }]
                     },
                     "MezcalmosIcons": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/MezcalmosIcons.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/MezcalmosIcons.ttf"
+                        }]
                     },
                     "Montserrat": {
-                        "font_conf": [
-                            {
+                        "font_conf": [{
                                 "asset": "assets/fonts/Montserrat-Black.ttf",
                                 "weight": 900
                             },
@@ -185,8 +196,7 @@
                         ]
                     },
                     "Nunito": {
-                        "font_conf": [
-                            {
+                        "font_conf": [{
                                 "asset": "assets/fonts/Nunito-Black.ttf",
                                 "weight": 900
                             },
@@ -217,8 +227,7 @@
                         ]
                     },
                     "Poppins": {
-                        "font_conf": [
-                            {
+                        "font_conf": [{
                                 "asset": "assets/fonts/Poppins-Black.ttf",
                                 "weight": 900
                             },
@@ -311,43 +320,32 @@
             "pubspec": {
                 "fonts": {
                     "psr": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psr.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psr.ttf"
+                        }]
                     },
                     "psb": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psb.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psb.ttf"
+                        }]
                     },
                     "psi": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psi.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psi.ttf"
+                        }]
                     },
                     "psbi": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psbi.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psbi.ttf"
+                        }]
                     },
                     "MezcalmosIcons": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/MezcalmosIcons.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/MezcalmosIcons.ttf"
+                        }]
                     },
                     "Montserrat": {
-                        "font_conf": [
-                            {
+                        "font_conf": [{
                                 "asset": "assets/fonts/Montserrat-Black.ttf",
                                 "weight": 900
                             },
@@ -378,8 +376,7 @@
                         ]
                     },
                     "Nunito": {
-                        "font_conf": [
-                            {
+                        "font_conf": [{
                                 "asset": "assets/fonts/Nunito-Black.ttf",
                                 "weight": 900
                             },
@@ -410,8 +407,7 @@
                         ]
                     },
                     "Poppins": {
-                        "font_conf": [
-                            {
+                        "font_conf": [{
                                 "asset": "assets/fonts/Poppins-Black.ttf",
                                 "weight": 900
                             },
@@ -493,43 +489,32 @@
             "pubspec": {
                 "fonts": {
                     "psr": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psr.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psr.ttf"
+                        }]
                     },
                     "psb": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psb.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psb.ttf"
+                        }]
                     },
                     "psi": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psi.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psi.ttf"
+                        }]
                     },
                     "psbi": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psbi.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psbi.ttf"
+                        }]
                     },
                     "MezcalmosIcons": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/MezcalmosIcons.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/MezcalmosIcons.ttf"
+                        }]
                     },
                     "Montserrat": {
-                        "font_conf": [
-                            {
+                        "font_conf": [{
                                 "asset": "assets/fonts/Montserrat-Black.ttf",
                                 "weight": 900
                             },
@@ -560,8 +545,7 @@
                         ]
                     },
                     "Nunito": {
-                        "font_conf": [
-                            {
+                        "font_conf": [{
                                 "asset": "assets/fonts/Nunito-Black.ttf",
                                 "weight": 900
                             },
@@ -592,8 +576,7 @@
                         ]
                     },
                     "Poppins": {
-                        "font_conf": [
-                            {
+                        "font_conf": [{
                                 "asset": "assets/fonts/Poppins-Black.ttf",
                                 "weight": 900
                             },
@@ -668,43 +651,32 @@
             "pubspec": {
                 "fonts": {
                     "psr": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psr.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psr.ttf"
+                        }]
                     },
                     "psb": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psb.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psb.ttf"
+                        }]
                     },
                     "psi": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psi.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psi.ttf"
+                        }]
                     },
                     "psbi": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psbi.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psbi.ttf"
+                        }]
                     },
                     "MezcalmosIcons": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/MezcalmosIcons.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/MezcalmosIcons.ttf"
+                        }]
                     },
                     "Montserrat": {
-                        "font_conf": [
-                            {
+                        "font_conf": [{
                                 "asset": "assets/fonts/Montserrat-Black.ttf",
                                 "weight": 900
                             },
@@ -735,8 +707,7 @@
                         ]
                     },
                     "Nunito": {
-                        "font_conf": [
-                            {
+                        "font_conf": [{
                                 "asset": "assets/fonts/Nunito-Black.ttf",
                                 "weight": 900
                             },
@@ -767,8 +738,7 @@
                         ]
                     },
                     "Poppins": {
-                        "font_conf": [
-                            {
+                        "font_conf": [{
                                 "asset": "assets/fonts/Poppins-Black.ttf",
                                 "weight": 900
                             },
@@ -849,43 +819,32 @@
             "pubspec": {
                 "fonts": {
                     "psr": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psr.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psr.ttf"
+                        }]
                     },
                     "psb": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psb.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psb.ttf"
+                        }]
                     },
                     "psi": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psi.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psi.ttf"
+                        }]
                     },
                     "psbi": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psbi.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psbi.ttf"
+                        }]
                     },
                     "MezcalmosIcons": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/MezcalmosIcons.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/MezcalmosIcons.ttf"
+                        }]
                     },
                     "Montserrat": {
-                        "font_conf": [
-                            {
+                        "font_conf": [{
                                 "asset": "assets/fonts/Montserrat-Black.ttf",
                                 "weight": 900
                             },
@@ -916,8 +875,7 @@
                         ]
                     },
                     "Nunito": {
-                        "font_conf": [
-                            {
+                        "font_conf": [{
                                 "asset": "assets/fonts/Nunito-Black.ttf",
                                 "weight": 900
                             },
@@ -948,8 +906,7 @@
                         ]
                     },
                     "Poppins": {
-                        "font_conf": [
-                            {
+                        "font_conf": [{
                                 "asset": "assets/fonts/Poppins-Black.ttf",
                                 "weight": 900
                             },
@@ -1018,43 +975,32 @@
             "pubspec": {
                 "fonts": {
                     "psr": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psr.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psr.ttf"
+                        }]
                     },
                     "psb": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psb.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psb.ttf"
+                        }]
                     },
                     "psi": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psi.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psi.ttf"
+                        }]
                     },
                     "psbi": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psbi.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psbi.ttf"
+                        }]
                     },
                     "MezcalmosIcons": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/MezcalmosIcons.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/MezcalmosIcons.ttf"
+                        }]
                     },
                     "Montserrat": {
-                        "font_conf": [
-                            {
+                        "font_conf": [{
                                 "asset": "assets/fonts/Montserrat-Black.ttf",
                                 "weight": 900
                             },
@@ -1085,8 +1031,7 @@
                         ]
                     },
                     "Nunito": {
-                        "font_conf": [
-                            {
+                        "font_conf": [{
                                 "asset": "assets/fonts/Nunito-Black.ttf",
                                 "weight": 900
                             },
@@ -1117,8 +1062,7 @@
                         ]
                     },
                     "Poppins": {
-                        "font_conf": [
-                            {
+                        "font_conf": [{
                                 "asset": "assets/fonts/Poppins-Black.ttf",
                                 "weight": 900
                             },
@@ -1199,43 +1143,32 @@
             "pubspec": {
                 "fonts": {
                     "psr": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psr.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psr.ttf"
+                        }]
                     },
                     "psb": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psb.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psb.ttf"
+                        }]
                     },
                     "psi": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psi.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psi.ttf"
+                        }]
                     },
                     "psbi": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/psbi.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/psbi.ttf"
+                        }]
                     },
                     "MezcalmosIcons": {
-                        "font_conf": [
-                            {
-                                "asset": "assets/fonts/MezcalmosIcons.ttf"
-                            }
-                        ]
+                        "font_conf": [{
+                            "asset": "assets/fonts/MezcalmosIcons.ttf"
+                        }]
                     },
                     "Montserrat": {
-                        "font_conf": [
-                            {
+                        "font_conf": [{
                                 "asset": "assets/fonts/Montserrat-Black.ttf",
                                 "weight": 900
                             },
@@ -1266,8 +1199,7 @@
                         ]
                     },
                     "Nunito": {
-                        "font_conf": [
-                            {
+                        "font_conf": [{
                                 "asset": "assets/fonts/Nunito-Black.ttf",
                                 "weight": 900
                             },
@@ -1298,8 +1230,7 @@
                         ]
                     },
                     "Poppins": {
-                        "font_conf": [
-                            {
+                        "font_conf": [{
                                 "asset": "assets/fonts/Poppins-Black.ttf",
                                 "weight": 900
                             },
