@@ -70,6 +70,10 @@ class ROpDriversViewController {
     return response.success;
   }
 
+  Future<void> switchSelfDelivery(bool v) async {
+    await restaurantInfoController!.switchSelfDelivery(v);
+  }
+
   Future<void> _getDrivers() async {
     drivers.clear();
     mezDbgPrint(restaurant.value!.state.drivers.length);

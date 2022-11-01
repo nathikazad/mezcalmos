@@ -135,6 +135,7 @@ flutter:
     - assets/images/customer/
     - assets/images/shared/
     - assets/images/laundryApp/
+    - assets/images/restaurantApp/
     - assets/images/shared/notifications/
     - assets/images/shared/notifications/laundry/
     - assets/images/deliveryAdmin/

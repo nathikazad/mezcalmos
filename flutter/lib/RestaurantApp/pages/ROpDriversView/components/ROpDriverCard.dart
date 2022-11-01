@@ -29,12 +29,30 @@ class _ROpListDriverCardState extends State<ROpListDriverCard> {
         child: Container(
             padding: const EdgeInsets.all(10),
             child: Row(children: [
-              CircleAvatar(
-                radius: 25,
-                backgroundImage:
-                    CachedNetworkImageProvider(widget.driver.driverInfo.image),
+              Stack(
+                alignment: Alignment.center,
+                clipBehavior: Clip.none,
+                children: [
+                  CircleAvatar(
+                      radius: 23,
+                      backgroundImage: CachedNetworkImageProvider(
+                          widget.driver.driverInfo.image)),
+                  Positioned(
+                    right: -35,
+                    child: CircleAvatar(
+                      radius: 23,
+                      child: Icon(
+                        Icons.delivery_dining,
+                        size: 30,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )
+                ],
               ),
-              const SizedBox(width: 10),
+              const SizedBox(
+                width: 45,
+              ),
               Flexible(
                 flex: 3,
                 fit: FlexFit.tight,
@@ -52,8 +70,8 @@ class _ROpListDriverCardState extends State<ROpListDriverCard> {
                           Icons.circle,
                           size: 11.sp,
                           color: widget.driver.deliveryDriverState.isOnline
-                              ? Colors.green
-                              : Colors.red,
+                              ? primaryBlueColor
+                              : Colors.grey,
                         ),
                         SizedBox(
                           width: 5,
@@ -81,8 +99,9 @@ class _ROpListDriverCardState extends State<ROpListDriverCard> {
                     if (result) Get.back();
                   });
                 },
-                icon: Icons.remove,
+                icon: Icons.delete_outline,
                 iconColor: Colors.red,
+                iconSize: 18,
                 backgroundColor: offRedColor,
               )
             ])));

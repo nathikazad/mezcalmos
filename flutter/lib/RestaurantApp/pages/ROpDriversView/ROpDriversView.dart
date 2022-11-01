@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpDriversView/components/ROpDriverCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpDriversView/controllers/ROpDriversViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
@@ -47,16 +48,9 @@ class _ROpDriversViewState extends State<ROpDriversView> {
         ),
         body: Obx(() {
           if (viewController.restaurant.value != null) {
-            return SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    (viewController.restaurant.value!.selfDelivery)
-                        ? _buildDrivers()
-                        : _buildSelfDeliveryFalse(),
-                  ],
-                ));
+            return (viewController.restaurant.value!.selfDelivery)
+                ? _buildDrivers()
+                : _buildSelfDeliveryFalse();
           } else {
             return MezLogoAnimation(
               centered: true,
@@ -69,71 +63,73 @@ class _ROpDriversViewState extends State<ROpDriversView> {
 
   Container _buildSelfDeliveryFalse() {
     return Container(
+      alignment: Alignment.center,
+      margin: const EdgeInsets.all(20),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             '${_i18n()["falseTitle"]}',
-            style: Get.textTheme.headline3,
+            style: Get.textTheme.bodyText1?.copyWith(fontSize: 15.sp),
+            textAlign: TextAlign.center,
           ),
           const SizedBox(
             height: 20,
           ),
-          Text(
-            '${_i18n()["falseDesc"]}',
-            style: Get.textTheme.bodyText2,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Container _buildDrivers() {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '${_i18n()["trueTitle"]}',
-            style: Get.textTheme.headline3,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Text(
-            '${_i18n()["trueDesc"]}',
-            style: Get.textTheme.bodyText2,
+          Image.asset(
+            "assets/images/restaurantApp/driversList.png",
+            height: 35.h,
+            width: 80.w,
           ),
           const SizedBox(
             height: 20,
           ),
           MezButton(
-            label: '${_i18n()["addDriver"]}',
-            backgroundColor: secondaryLightBlueColor,
-            textColor: primaryBlueColor,
+            label: "Turn on self delivery",
+            withGradient: true,
+            borderRadius: 50,
             onClick: () async {
-              await _addDriverSheet();
+              await viewController.switchSelfDelivery(true);
             },
-          ),
-          SizedBox(
-            height: 25,
-          ),
-          Text(
-            '${_i18n()["assDrivers"]}',
-            style: Get.textTheme.bodyText1,
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Column(
-            children: List.generate(
-                viewController.drivers.length,
-                (int index) => ROpListDriverCard(
-                      driver: viewController.drivers[index],
-                      viewController: viewController,
-                    )),
           )
+          // Text(
+          //   '${_i18n()["falseDesc"]}',
+          //   style: Get.textTheme.bodyText2,
+          // ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildDrivers() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(12),
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            MezButton(
+              label: '${_i18n()["addDriver"]}',
+              backgroundColor: secondaryLightBlueColor,
+              textColor: primaryBlueColor,
+              onClick: () async {
+                await _addDriverSheet();
+              },
+            ),
+            SizedBox(
+              height: 25,
+            ),
+            Column(
+              children: List.generate(
+                  viewController.drivers.length,
+                  (int index) => ROpListDriverCard(
+                        driver: viewController.drivers[index],
+                        viewController: viewController,
+                      )),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -148,78 +144,60 @@ class _ROpDriversViewState extends State<ROpDriversView> {
           topRight: Radius.circular(15),
         )),
         builder: (BuildContext ctx) {
-          return Padding(
-            padding:
-                EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
-            child: Container(
-                margin: const EdgeInsets.only(
-                  top: 16,
-                  left: 12,
-                  right: 12,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 5, bottom: 8),
-                      alignment: Alignment.center,
-                      child: Text(
-                        '${_i18n()["newDv"]}',
-                        style:
-                            Get.textTheme.headline3?.copyWith(fontSize: 17.sp),
-                      ),
+          return Container(
+              margin: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 5, bottom: 8),
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Ask your driver to scan this QR code on their phone',
+                      style: Get.textTheme.headline3?.copyWith(fontSize: 17.sp),
+                      textAlign: TextAlign.center,
                     ),
-                    Divider(),
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Container(
+                    height: 15.h,
+                    width: 15.h,
+                    color: Colors.black,
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  MezButton(
+                    label: 'Copy link',
+                    icon: Icons.copy,
+                    backgroundColor: secondaryLightBlueColor,
+                    textColor: primaryBlueColor,
+                    onClick: () async {
+                      Get.back();
+                    },
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  MezButton(
+                    icon: Ionicons.logo_whatsapp,
+                    label: 'Share on whatsapp',
+                    textColor: Color(0xFF219125),
+                    backgroundColor: Color(0xFFE3FFE4),
+                    onClick: () async {
+                      // final bool result = await viewController.addDriver();
+                      // if (result) Get.back();
+                    },
+                  ),
+                  if (MediaQuery.of(ctx).viewInsets.bottom == 0)
                     const SizedBox(
-                      height: 10,
+                      height: 25,
                     ),
-                    Text(
-                      '${_i18n()["emailOrPhone"]}',
-                      style: Get.textTheme.bodyText1,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    TextFormField(
-                      controller: viewController.emailOrPhone,
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: [
-                        Flexible(
-                            child: MezButton(
-                          label: '${_i18n()["cancel"]}',
-                          backgroundColor: offRedColor,
-                          textColor: Colors.red,
-                          onClick: () async {
-                            Get.back();
-                          },
-                        )),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        Flexible(
-                            child: MezButton(
-                          label: '${_i18n()["addDriver"]}',
-                          withGradient: true,
-                          onClick: () async {
-                            final bool result =
-                                await viewController.addDriver();
-                            if (result) Get.back();
-                          },
-                        )),
-                      ],
-                    ),
-                    if (MediaQuery.of(ctx).viewInsets.bottom == 0)
-                      const SizedBox(
-                        height: 25,
-                      ),
-                  ],
-                )),
-          );
+                ],
+              ));
         });
   }
 }

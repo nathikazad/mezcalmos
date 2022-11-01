@@ -2074,7 +2074,7 @@
                     }
                 },
                 "drivers": "Conductoras",
-                "falseTitle": "Habilite la entrega personal para controlar sus entregas agregando los controladores de su dura.",
+                "falseTitle": "Active la entrega de autocontrol para entregar con sus propios controladores",
                 "falseDesc": "Vaya a Perfil> En atajos, active la entrega de sí mismo",
                 "trueTitle": "Controle su entrega agregando sus propios controladores",
                 "trueDesc": "Autorice los controladores agregándolos usando correo electrónico o número de teléfono (deben haber creado una cuenta con nuestra aplicación de entrega)",

@@ -2081,7 +2081,7 @@
                     }
                 },
                 "drivers": "Drivers",
-                "falseTitle": "Enable self delivery to control your deliveries by adding yourown drivers.",
+                "falseTitle": "Turn on self delivery to deliver using your own drivers",
                 "falseDesc": "Go to profile > In shortcuts turn on Self delivery",
                 "trueTitle": "Control your delivery by adding your own drivers",
                 "trueDesc": "Authorize drivers by adding them using email or phone number (they must have created an account with our Delivery app) ",
