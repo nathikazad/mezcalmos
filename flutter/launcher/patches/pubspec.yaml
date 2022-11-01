@@ -31,8 +31,8 @@ flutter:
 
   uses-material-design: true
 
-  assets:
+# Assets
 <mez-assets>
 
-  fonts:
+# Fonts
 <mez-fonts>            

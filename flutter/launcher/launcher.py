@@ -145,8 +145,17 @@ class Launcher:
                 if 'fmode' in self.user_args.keys():
                     if self.user_args['fmode'] == "hide":
                         fmd = OUTPUT_FILTERS.HIDE
+            global run_cmd
+            if user_args['app'] == "WebApp":
+                run_cmd = ["run", "-d" ,"chrome" ,"--no-sound-null-safety" ,"--web-renderer=html"]
+            else:
+                run_cmd = ["run"]
 
-            binary = ['flutter.bat' if self.isWin else 'flutter' , 'run', '-t', 'lib/'+user_args['app']+'/main.dart']
+            binary = ['flutter.bat' if self.isWin else 'flutter']
+            for x in run_cmd:
+                binary.append(x)
+            for x in ['-t', 'lib/'+user_args['app']+'/main.dart']:
+                binary.append(x)
             binary.extend(f_args)
 
             Config.launch_flutter_app(binary=binary , filter_file=ff , filter_mode=fmd)
@@ -155,7 +164,6 @@ class Launcher:
     
    
     def __set_up_icons(self):
-
         _userArgsAppName = self.user_args["app"].lower().replace("app" , "")
         _userArgsEnvName = self.user_args["lmode"].lower()
         if _userArgsEnvName != "prod":
@@ -435,6 +443,9 @@ class Launcher:
             else:
                 PRINTLN("[+] Generating .ipa from xcarchive file for you ..")
             os.system(f'flutter build ipa --target lib/{self.user_args["app"]}/main.dart{ios_export_options_plist_arg}{isVerbose}')
+        elif self.user_args['build'] == 'web':
+            # flutter build web --release --web-renderer html
+            os.system(f'flutter build web --release --web-renderer html --target lib/{self.user_args["app"]}/main.dart{isVerbose}')
         else:
             is_apk = self.user_args["build"] == 'apk'
             cmd_build = f'flutter build {self.user_args["build"]} -t lib/{self.user_args["app"]}/main.dart {isVerbose}{"--split-per-abi"if is_apk else""}'
@@ -488,15 +499,22 @@ class Launcher:
             if 'fonts' in _app_conf_.keys():
                 fonts += FlutterFont(_app_conf_['fonts']).toString()
 
+        if fonts.replace(' ', '').strip().__len__() > 1:
+            fonts = f'{PUBSPECT_TAB(1)}fonts:\n'+fonts
+        if assets.replace(' ', '').strip().__len__() > 1:
+            assets = f'{PUBSPECT_TAB(1)}assets:\n'+assets
+
         return patchable_pub_file.replace('<mez-dependencies>' , deps).replace('<mez-assets>', assets).replace('<mez-fonts>', fonts)
 
 
     def __launch__(self):        
         open(self.conf['settings']['pubspec.yaml'], 'w+').write(self.__patch_dependencies__(patchable_pub_file=open('patches/pubspec.yaml').read()))
-        self.__patcher__()
-        self.__patch_gs__()
+        PRINTLN(f"App =--> {self.user_args['app']}")
+        if self.user_args['app'] != "WebApp":
+            self.__patcher__()
+            self.__patch_gs__()
 
-        if self.user_args['pipeline'] == True:
+        if 'pipeline' in self.user_args.keys() and self.user_args['pipeline'] == True:
             PRINTLN(f"[ PIPELINE ] All the necessary patching is done, quitting now with 0...")
             quit(code=0)
 
