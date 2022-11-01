@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:mez_services_web_app/controllers/languageController.dart';
-import 'package:mez_services_web_app/controllers/restaurantsInfoController.dart';
-import 'package:mez_services_web_app/helpers/StringHelper.dart';
-import 'package:mez_services_web_app/models/Generic.dart';
-import 'package:mez_services_web_app/models/Services/Restaurant.dart';
-import 'package:mez_services_web_app/screens/Restaurants/restaurantItemView/components/ITemSliverAppBar.dart';
-import 'package:mez_services_web_app/screens/Restaurants/restaurantItemView/components/ItemOptionCard.dart';
-import 'package:mez_services_web_app/screens/components/installAppBarComponent.dart';
-
-import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/WebApp/screens/Restaurants/restaurantItemView/components/ITemSliverAppBar.dart';
+import 'package:mezcalmos/WebApp/screens/Restaurants/restaurantItemView/components/ItemOptionCard.dart';
+import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
 
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 

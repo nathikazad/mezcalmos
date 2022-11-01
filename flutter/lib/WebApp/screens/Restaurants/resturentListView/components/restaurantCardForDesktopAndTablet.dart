@@ -3,11 +3,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mez_services_web_app/controllers/languageController.dart';
-import 'package:mez_services_web_app/models/Generic.dart';
-import 'package:mez_services_web_app/models/Services/Restaurant.dart';
-import 'package:mez_services_web_app/screens/Restaurants/components/ShippingCostComponent.dart';
-import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/WebApp/screens/Restaurants/components/ShippingCostComponent.dart';
+import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
+
 import 'package:sizer/sizer.dart';
 
 class RestaurantCardForDesktopAndTablet extends StatefulWidget {

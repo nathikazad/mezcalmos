@@ -1,396 +1,396 @@
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
-import 'dart:math';
+// import 'dart:async';
+// import 'dart:convert';
+// import 'dart:io';
+// import 'dart:math';
 
-import 'package:cloud_functions/cloud_functions.dart';
-import 'package:crypto/crypto.dart';
-import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
-import 'package:firebase_core/firebase_core.dart' as firebase_core;
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:mez_services_web_app/controllers/languageController.dart';
-import 'package:mez_services_web_app/database/FirebaseDb.dart';
-import 'package:mez_services_web_app/models/Generic.dart';
-import 'package:mez_services_web_app/models/ServerResponse.dart';
-import 'package:mez_services_web_app/models/User.dart';
-import 'package:mez_services_web_app/services/values/constants.dart';
-import 'package:mez_services_web_app/services/widgets/MezSnackbar.dart';
+// import 'package:cloud_functions/cloud_functions.dart';
+// import 'package:crypto/crypto.dart';
+// import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
+// import 'package:firebase_core/firebase_core.dart' as firebase_core;
+// import 'package:firebase_database/firebase_database.dart';
+// import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+// import 'package:get/get.dart';
+// import 'package:get_storage/get_storage.dart';
+// import 'package:mez_services_web_app/controllers/languageController.dart';
+// import 'package:mez_services_web_app/database/FirebaseDb.dart';
+// import 'package:mez_services_web_app/models/Generic.dart';
+// import 'package:mez_services_web_app/models/ServerResponse.dart';
+// import 'package:mez_services_web_app/models/User.dart';
+// import 'package:mez_services_web_app/services/values/constants.dart';
+// import 'package:mez_services_web_app/services/widgets/MezSnackbar.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings['Shared']
-    ['controllers']['authController'];
+// dynamic _i18n() => Get.find<LanguageController>().strings['Shared']
+//     ['controllers']['authController'];
 
-class AuthController extends GetxController {
-  fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
-  Function _onSignOutCallback;
-  Function _onSignInCallback;
+// class AuthController extends GetxController {
+//   fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
+//   Function _onSignOutCallback;
+//   Function _onSignInCallback;
 
-  Rxn<MainUserInfo> _user = Rxn<MainUserInfo>();
-  MainUserInfo? get user => _user.value;
+//   Rxn<MainUserInfo> _user = Rxn<MainUserInfo>();
+//   MainUserInfo? get user => _user.value;
 
-  Rxn<fireAuth.User> _fireAuthUser = Rxn<fireAuth.User>();
-  fireAuth.User? get fireAuthUser => _fireAuthUser.value;
+//   Rxn<fireAuth.User> _fireAuthUser = Rxn<fireAuth.User>();
+//   fireAuth.User? get fireAuthUser => _fireAuthUser.value;
 
-  StreamSubscription? _userNodeListener;
+//   StreamSubscription? _userNodeListener;
 
-  // Rxn<fireAuth.User> _userRx = Rxn();
-  StreamController<fireAuth.User?> _authStateStreamController =
-      StreamController.broadcast();
+//   // Rxn<fireAuth.User> _userRx = Rxn();
+//   StreamController<fireAuth.User?> _authStateStreamController =
+//       StreamController.broadcast();
 
-  StreamController<MainUserInfo?> _userInfoStreamController =
-      StreamController.broadcast();
+//   StreamController<MainUserInfo?> _userInfoStreamController =
+//       StreamController.broadcast();
 
-  Stream<fireAuth.User?> get authStateStream =>
-      _authStateStreamController.stream;
-  Stream<MainUserInfo?> get userInfoStream => _userInfoStreamController.stream;
+//   Stream<fireAuth.User?> get authStateStream =>
+//       _authStateStreamController.stream;
+//   Stream<MainUserInfo?> get userInfoStream => _userInfoStreamController.stream;
 
-  bool get isUserSignedIn => _fireAuthUser.value != null;
-  FirebaseDb _databaseHelper =
-      Get.find<FirebaseDb>(); // Already Injected in main function
+//   bool get isUserSignedIn => _fireAuthUser.value != null;
+//   FirebaseDb _databaseHelper =
+//       Get.find<FirebaseDb>(); // Already Injected in main function
 
-  AuthController(this._onSignInCallback, this._onSignOutCallback);
-  String? _previousUserValue = "init";
+//   AuthController(this._onSignInCallback, this._onSignOutCallback);
+//   String? _previousUserValue = "init";
 
-  bool preserveNavigationStackAfterSignIn = false;
+//   bool preserveNavigationStackAfterSignIn = false;
 
-  @override
-  void onInit() {
-    super.onInit();
-    // _authStateStream.addStream(_auth.authStateChanges());
+//   @override
+//   void onInit() {
+//     super.onInit();
+//     // _authStateStream.addStream(_auth.authStateChanges());
 
-    print('Auth controller init!');
-    _auth.authStateChanges().listen((fireAuth.User? user) async {
-      if (user?.toString() == _previousUserValue) {
-        print('Authcontroller:: same sign in event fired again, skipping it');
-        return;
-      }
-      _previousUserValue = user?.toString();
-      print('Authcontroller:: Auth state change!');
-      print(user?.hashCode);
-      print(user ?? "empty");
-      _fireAuthUser.value = user;
+//     print('Auth controller init!');
+//     _auth.authStateChanges().listen((fireAuth.User? user) async {
+//       if (user?.toString() == _previousUserValue) {
+//         print('Authcontroller:: same sign in event fired again, skipping it');
+//         return;
+//       }
+//       _previousUserValue = user?.toString();
+//       print('Authcontroller:: Auth state change!');
+//       print(user?.hashCode);
+//       print(user ?? "empty");
+//       _fireAuthUser.value = user;
 
-      if (user == null) {
-        await _onSignOutCallback();
-        _authStateStreamController.add(null);
-        _userInfoStreamController.add(null);
+//       if (user == null) {
+//         await _onSignOutCallback();
+//         _authStateStreamController.add(null);
+//         _userInfoStreamController.add(null);
 
-        print('AuthController: User is currently signed out!');
-        _userNodeListener?.cancel();
-        _userNodeListener = null;
-        _user.value = null;
-      } else {
-        print('AuthController: User is currently signed in!');
-        _onSignInCallback();
-        _authStateStreamController.add(user);
-        GetStorage().write(getxUserId, user.uid);
-        _userNodeListener?.cancel();
-        _userNodeListener = _databaseHelper.firebaseDatabase
-            .ref()
-            .child(userInfoNode(user.uid))
-            .onValue
-            .listen((event) {
-          if (event.snapshot.value == null) return;
-          if ((event.snapshot.value as dynamic)['language'] == null) {
-            (event.snapshot.value as dynamic)['language'] =
-                Get.find<LanguageController>()
-                    .userLanguageKey
-                    .toFirebaseFormatString();
-            _databaseHelper.firebaseDatabase
-                .ref()
-                .child(userLanguageNode(user.uid))
-                .set(Get.find<LanguageController>()
-                    .userLanguageKey
-                    .toFirebaseFormatString());
-          }
-          _user.value = MainUserInfo.fromData(event.snapshot.value);
-          _userInfoStreamController.add(_user.value);
-          if (_user.value!.language != null)
-            Get.find<LanguageController>().setLanguage(_user.value!.language!);
-        });
-      }
-    });
-    ever(_user, (user) {
-      if (_user.value != null) {
-        print("this is just a test ${user.toString()}");
-      }
-    });
-    super.onInit();
-  }
+//         print('AuthController: User is currently signed out!');
+//         _userNodeListener?.cancel();
+//         _userNodeListener = null;
+//         _user.value = null;
+//       } else {
+//         print('AuthController: User is currently signed in!');
+//         _onSignInCallback();
+//         _authStateStreamController.add(user);
+//         GetStorage().write(getxUserId, user.uid);
+//         _userNodeListener?.cancel();
+//         _userNodeListener = _databaseHelper.firebaseDatabase
+//             .ref()
+//             .child(userInfoNode(user.uid))
+//             .onValue
+//             .listen((event) {
+//           if (event.snapshot.value == null) return;
+//           if ((event.snapshot.value as dynamic)['language'] == null) {
+//             (event.snapshot.value as dynamic)['language'] =
+//                 Get.find<LanguageController>()
+//                     .userLanguageKey
+//                     .toFirebaseFormatString();
+//             _databaseHelper.firebaseDatabase
+//                 .ref()
+//                 .child(userLanguageNode(user.uid))
+//                 .set(Get.find<LanguageController>()
+//                     .userLanguageKey
+//                     .toFirebaseFormatString());
+//           }
+//           _user.value = MainUserInfo.fromData(event.snapshot.value);
+//           _userInfoStreamController.add(_user.value);
+//           if (_user.value!.language != null)
+//             Get.find<LanguageController>().setLanguage(_user.value!.language!);
+//         });
+//       }
+//     });
+//     ever(_user, (user) {
+//       if (_user.value != null) {
+//         print("this is just a test ${user.toString()}");
+//       }
+//     });
+//     super.onInit();
+//   }
 
-  bool isDisplayNameSet() {
-    return _user.value?.name != null && _user.value?.name != "";
-  }
+//   bool isDisplayNameSet() {
+//     return _user.value?.name != null && _user.value?.name != "";
+//   }
 
-  bool isUserImgSet() {
-    return _user.value?.image != null &&
-        _user.value?.image != "" &&
-        _user.value?.image != defaultUserImgUrl;
-  }
+//   bool isUserImgSet() {
+//     return _user.value?.image != null &&
+//         _user.value?.image != "" &&
+//         _user.value?.image != defaultUserImgUrl;
+//   }
 
-  /// This Functions takes a File (Image) and an optional [isCompressed]
-  ///
-  /// And Upload it to firebaseStorage with at users/[uid]/avatar/[uid].[isCompressed ? 'cmpressed' : 'original'].[extension]
-  Future<String> uploadUserImgToFbStorage(
-      {required File imageFile, bool isCompressed = false}) async {
-    String _uploadedImgUrl;
-    List<String> splitted = imageFile.path.split('.');
-    String imgPath =
-        "users/${this._fireAuthUser.value!.uid}/avatar/${this._fireAuthUser.value!.uid}.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
-    try {
-      await firebase_storage.FirebaseStorage.instance
-          .ref(imgPath)
-          .putFile(imageFile);
-    } on firebase_core.FirebaseException catch (e) {
-      print(e.message.toString());
-    } finally {
-      _uploadedImgUrl = await firebase_storage.FirebaseStorage.instance
-          .ref(imgPath)
-          .getDownloadURL();
-    }
+//   /// This Functions takes a File (Image) and an optional [isCompressed]
+//   ///
+//   /// And Upload it to firebaseStorage with at users/[uid]/avatar/[uid].[isCompressed ? 'cmpressed' : 'original'].[extension]
+//   Future<String> uploadUserImgToFbStorage(
+//       {required File imageFile, bool isCompressed = false}) async {
+//     String _uploadedImgUrl;
+//     List<String> splitted = imageFile.path.split('.');
+//     String imgPath =
+//         "users/${this._fireAuthUser.value!.uid}/avatar/${this._fireAuthUser.value!.uid}.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
+//     try {
+//       await firebase_storage.FirebaseStorage.instance
+//           .ref(imgPath)
+//           .putFile(imageFile);
+//     } on firebase_core.FirebaseException catch (e) {
+//       print(e.message.toString());
+//     } finally {
+//       _uploadedImgUrl = await firebase_storage.FirebaseStorage.instance
+//           .ref(imgPath)
+//           .getDownloadURL();
+//     }
 
-    return _uploadedImgUrl;
-  }
+//     return _uploadedImgUrl;
+//   }
 
-  /// this is for setting the Original size of the image that was picked by the user,
-  ///
-  /// Made as a seprated function and not along with [editUserProfile]'s parameteres,
-  ///
-  /// because that was we won't need to wait for them both to get uploaded.
-  Future<void> setOriginalUserImage(String? originalImageUrl) async {
-    if (originalImageUrl != null) {
-      await _databaseHelper.firebaseDatabase
-          .ref()
-          .child(userInfoNode(fireAuthUser!.uid))
-          .child('bigImage')
-          .set(originalImageUrl);
-    }
-  }
+//   /// this is for setting the Original size of the image that was picked by the user,
+//   ///
+//   /// Made as a seprated function and not along with [editUserProfile]'s parameteres,
+//   ///
+//   /// because that was we won't need to wait for them both to get uploaded.
+//   Future<void> setOriginalUserImage(String? originalImageUrl) async {
+//     if (originalImageUrl != null) {
+//       await _databaseHelper.firebaseDatabase
+//           .ref()
+//           .child(userInfoNode(fireAuthUser!.uid))
+//           .child('bigImage')
+//           .set(originalImageUrl);
+//     }
+//   }
 
-  Future<void> editUserProfile(String? name, String? compressedImageUrl) async {
-    if (name != null) {
-      await _databaseHelper.firebaseDatabase
-          .ref()
-          .child(userInfoNode(fireAuthUser!.uid))
-          .child('name')
-          .set(name);
-    }
-    if (compressedImageUrl != null && compressedImageUrl.isURL) {
-      await _databaseHelper.firebaseDatabase
-          .ref()
-          .child(userInfoNode(fireAuthUser!.uid))
-          .child('image')
-          .set(compressedImageUrl);
-    }
-  }
+//   Future<void> editUserProfile(String? name, String? compressedImageUrl) async {
+//     if (name != null) {
+//       await _databaseHelper.firebaseDatabase
+//           .ref()
+//           .child(userInfoNode(fireAuthUser!.uid))
+//           .child('name')
+//           .set(name);
+//     }
+//     if (compressedImageUrl != null && compressedImageUrl.isURL) {
+//       await _databaseHelper.firebaseDatabase
+//           .ref()
+//           .child(userInfoNode(fireAuthUser!.uid))
+//           .child('image')
+//           .set(compressedImageUrl);
+//     }
+//   }
 
-  Future<void> signOut() async {
-    try {
-      print("AuthController: Sign out function");
+//   Future<void> signOut() async {
+//     try {
+//       print("AuthController: Sign out function");
 
-      print("AuthController: Sign out callbacks finished");
-      _userNodeListener?.cancel();
-      _userNodeListener = null;
-      _user.value = null;
-      await _auth.signOut();
-      print("AuthController: Sign out finished");
-    } catch (e) {
-      Get.snackbar("Failed to Sign you out!", e.toString(),
-          snackPosition: SnackPosition.BOTTOM);
-      print(e);
-    }
-  }
+//       print("AuthController: Sign out callbacks finished");
+//       _userNodeListener?.cancel();
+//       _userNodeListener = null;
+//       _user.value = null;
+//       await _auth.signOut();
+//       print("AuthController: Sign out finished");
+//     } catch (e) {
+//       Get.snackbar("Failed to Sign you out!", e.toString(),
+//           snackPosition: SnackPosition.BOTTOM);
+//       print(e);
+//     }
+//   }
 
-  void changeLanguage(LanguageType newLanguage) {
-    if (_user.value != null) {
-      _databaseHelper.firebaseDatabase
-          .ref()
-          .child(userLanguageNode(_user.value!.id))
-          .set(newLanguage.toFirebaseFormatString());
-    }
-  }
+//   void changeLanguage(LanguageType newLanguage) {
+//     if (_user.value != null) {
+//       _databaseHelper.firebaseDatabase
+//           .ref()
+//           .child(userLanguageNode(_user.value!.id))
+//           .set(newLanguage.toFirebaseFormatString());
+//     }
+//   }
 
-  Future<void> signUp(String email, String password) async {
-    try {
-      await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      Get.back();
-    } catch (e) {
-      Get.snackbar("Error creating your account!", e.toString(),
-          snackPosition: SnackPosition.BOTTOM);
-    }
-  }
+//   Future<void> signUp(String email, String password) async {
+//     try {
+//       await _auth.createUserWithEmailAndPassword(
+//           email: email, password: password);
+//       Get.back();
+//     } catch (e) {
+//       Get.snackbar("Error creating your account!", e.toString(),
+//           snackPosition: SnackPosition.BOTTOM);
+//     }
+//   }
 
-  Future<void> signIn(String email, String password) async {
-    await _auth
-        .signInWithEmailAndPassword(email: email, password: password)
-        .timeout(Duration(seconds: 10),
-            onTimeout: () =>
-                Future.error(Exception("Timed out , Check your Internet.")))
-        .then((fireAuth.UserCredential value) {},
-            onError: ((Object e, StackTrace stackTrace) {
-      Get.snackbar("Failed to Sign you in!", e.toString(),
-          snackPosition: SnackPosition.BOTTOM);
-    }));
-  }
+//   Future<void> signIn(String email, String password) async {
+//     await _auth
+//         .signInWithEmailAndPassword(email: email, password: password)
+//         .timeout(Duration(seconds: 10),
+//             onTimeout: () =>
+//                 Future.error(Exception("Timed out , Check your Internet.")))
+//         .then((fireAuth.UserCredential value) {},
+//             onError: ((Object e, StackTrace stackTrace) {
+//       Get.snackbar("Failed to Sign you in!", e.toString(),
+//           snackPosition: SnackPosition.BOTTOM);
+//     }));
+//   }
 
-  Future<ServerResponse> sendOTPForLogin(String phoneNumber) async {
-    HttpsCallable sendOTPForLoginFunction =
-        FirebaseFunctions.instance.httpsCallable('otp-sendOTPForLogin');
-    HttpsCallableResult? response;
-    try {
-      // _waitingResponse.value = true;
-      response = await sendOTPForLoginFunction.call(<String, dynamic>{
-        'phoneNumber': phoneNumber,
-        'messageType': 'SMS',
-        'language': sDefaultLanguage.toFirebaseFormatString(),
-        // 'language': _settings.appLanguage.userLanguageKey,
-      });
-      // var c = json.decode(response.data);
-      // print("-----------------");
-      // print(c);
-      // print(response);
-      // print("-----------------");
+//   Future<ServerResponse> sendOTPForLogin(String phoneNumber) async {
+//     HttpsCallable sendOTPForLoginFunction =
+//         FirebaseFunctions.instance.httpsCallable('otp-sendOTPForLogin');
+//     HttpsCallableResult? response;
+//     try {
+//       // _waitingResponse.value = true;
+//       response = await sendOTPForLoginFunction.call(<String, dynamic>{
+//         'phoneNumber': phoneNumber,
+//         'messageType': 'SMS',
+//         'language': sDefaultLanguage.toFirebaseFormatString(),
+//         // 'language': _settings.appLanguage.userLanguageKey,
+//       });
+//       // var c = json.decode(response.data);
+//       // print("-----------------");
+//       // print(c);
+//       // print(response);
+//       // print("-----------------");
 
-      // mezcalmosSnackBar(
-      //     "Notice ~",
-      //     responseStatusChecker(response.data,
-      //         onSuccessMessage: "OTP message has been sent !"));
-    } catch (e) {
-      // mezcalmosSnackBar("Notice ~", "Failed to send OTP message :( ");
-      // _waitingResponse.value = false;
-      print("Exception happend in sendOTPForLogin : $e"); // i
-      print(e);
-    }
-    return ServerResponse.fromJson(response?.data ?? {"status": "Error"});
-  }
+//       // mezcalmosSnackBar(
+//       //     "Notice ~",
+//       //     responseStatusChecker(response.data,
+//       //         onSuccessMessage: "OTP message has been sent !"));
+//     } catch (e) {
+//       // mezcalmosSnackBar("Notice ~", "Failed to send OTP message :( ");
+//       // _waitingResponse.value = false;
+//       print("Exception happend in sendOTPForLogin : $e"); // i
+//       print(e);
+//     }
+//     return ServerResponse.fromJson(response?.data ?? {"status": "Error"});
+//   }
 
-  Future<ServerResponse?> signInUsingOTP(
-      String phoneNumber, String otpCode) async {
-    print("$phoneNumber  < phone ------ otp > $otpCode");
-    HttpsCallable getAuthUsingOTPFunction =
-        FirebaseFunctions.instance.httpsCallable('otp-getAuthUsingOTP');
-    HttpsCallableResult? response;
-    ServerResponse? serverResponse;
+//   Future<ServerResponse?> signInUsingOTP(
+//       String phoneNumber, String otpCode) async {
+//     print("$phoneNumber  < phone ------ otp > $otpCode");
+//     HttpsCallable getAuthUsingOTPFunction =
+//         FirebaseFunctions.instance.httpsCallable('otp-getAuthUsingOTP');
+//     HttpsCallableResult? response;
+//     ServerResponse? serverResponse;
 
-    try {
-      // _waitingResponse.value = true;
-      response = await getAuthUsingOTPFunction.call(<String, dynamic>{
-        'phoneNumber': phoneNumber,
-        'OTPCode': otpCode,
-        'language': sDefaultLanguage.toFirebaseFormatString(),
-        // 'language': _settings.appLanguage.userLanguageKey,
-      });
+//     try {
+//       // _waitingResponse.value = true;
+//       response = await getAuthUsingOTPFunction.call(<String, dynamic>{
+//         'phoneNumber': phoneNumber,
+//         'OTPCode': otpCode,
+//         'language': sDefaultLanguage.toFirebaseFormatString(),
+//         // 'language': _settings.appLanguage.userLanguageKey,
+//       });
 
-      serverResponse = ServerResponse.fromJson(response.data ?? {});
+//       serverResponse = ServerResponse.fromJson(response.data ?? {});
 
-      print('---------------------');
-      print(serverResponse.status);
-      print(serverResponse.data);
-      print(serverResponse.errorMessage);
-      print(serverResponse.errorCode);
-      print('---------------------');
+//       print('---------------------');
+//       print(serverResponse.status);
+//       print(serverResponse.data);
+//       print(serverResponse.errorMessage);
+//       print(serverResponse.errorCode);
+//       print('---------------------');
 
-      if (serverResponse.success) {
-        fireAuth.FirebaseAuth.instance
-            .signInWithCustomToken(response.data["token"]);
-      }
-    } catch (e) {
-      MezSnackbar("Oops ..", _i18n()['failedOTPConfirmRequest']);
-      print("Exception happend in GetAuthUsingOTP : $e");
-    }
+//       if (serverResponse.success) {
+//         fireAuth.FirebaseAuth.instance
+//             .signInWithCustomToken(response.data["token"]);
+//       }
+//     } catch (e) {
+//       MezSnackbar("Oops ..", _i18n()['failedOTPConfirmRequest']);
+//       print("Exception happend in GetAuthUsingOTP : $e");
+//     }
 
-    return serverResponse;
-  }
+//     return serverResponse;
+//   }
 
-  // flutter_facebook_auth Package causes a conflict with GetStorage !
+//   // flutter_facebook_auth Package causes a conflict with GetStorage !
 
-  // Future signInWithFacebook() async {
-  //   // Trigger the sign-in flow
-  //   final LoginResult result = await FacebookAuth.instance.login();
-  //   print(" FB AUTH STATUS +++++++++++++++++++++ ${result.status.toString()}");
+//   // Future signInWithFacebook() async {
+//   //   // Trigger the sign-in flow
+//   //   final LoginResult result = await FacebookAuth.instance.login();
+//   //   print(" FB AUTH STATUS +++++++++++++++++++++ ${result.status.toString()}");
 
-  //   if (result.status == LoginStatus.success) {
-  //     // Create a credential from the access token
-  //     final fireAuth.OAuthCredential facebookAuthCredential =
-  //         fireAuth.FacebookAuthProvider.credential(result.accessToken!.token);
-  //     // Once signed in, return the UserCredential
-  //     fireAuth.FirebaseAuth.instance
-  //         .signInWithCredential(facebookAuthCredential);
-  //   } else {
-  //     MezSnackbar("Notice ~", "Failed SignIn with Facebook !");
-  //     throw Exception("Failed SignIn with Facebook !");
-  //   }
-  // }
+//   //   if (result.status == LoginStatus.success) {
+//   //     // Create a credential from the access token
+//   //     final fireAuth.OAuthCredential facebookAuthCredential =
+//   //         fireAuth.FacebookAuthProvider.credential(result.accessToken!.token);
+//   //     // Once signed in, return the UserCredential
+//   //     fireAuth.FirebaseAuth.instance
+//   //         .signInWithCredential(facebookAuthCredential);
+//   //   } else {
+//   //     MezSnackbar("Notice ~", "Failed SignIn with Facebook !");
+//   //     throw Exception("Failed SignIn with Facebook !");
+//   //   }
+//   // }
 
-  // Future signInWithApple() async {
-  //   // To prevent replay attacks with the credential returned from Apple, we
-  //   // include a nonce in the credential request. When signing in in with
-  //   // Firebase, the nonce in the id token returned by Apple, is expected to
-  //   // match the sha256 hash of `rawNonce`.
-  //   final String rawNonce = generateNonce();
-  //   final String nonce = sha256ofString(rawNonce);
+//   // Future signInWithApple() async {
+//   //   // To prevent replay attacks with the credential returned from Apple, we
+//   //   // include a nonce in the credential request. When signing in in with
+//   //   // Firebase, the nonce in the id token returned by Apple, is expected to
+//   //   // match the sha256 hash of `rawNonce`.
+//   //   final String rawNonce = generateNonce();
+//   //   final String nonce = sha256ofString(rawNonce);
 
-  //   try {
-  //     // Request credential for the currently signed in Apple account.
-  //     final AuthorizationCredentialAppleID appleCredential =
-  //         await SignInWithApple.getAppleIDCredential(
-  //       scopes: [
-  //         AppleIDAuthorizationScopes.email,
-  //         AppleIDAuthorizationScopes.fullName,
-  //       ],
-  //       nonce: nonce,
-  //     );
+//   //   try {
+//   //     // Request credential for the currently signed in Apple account.
+//   //     final AuthorizationCredentialAppleID appleCredential =
+//   //         await SignInWithApple.getAppleIDCredential(
+//   //       scopes: [
+//   //         AppleIDAuthorizationScopes.email,
+//   //         AppleIDAuthorizationScopes.fullName,
+//   //       ],
+//   //       nonce: nonce,
+//   //     );
 
-  //     print(appleCredential.authorizationCode);
+//   //     print(appleCredential.authorizationCode);
 
-  //     // Create an `OAuthCredential` from the credential returned by Apple.
-  //     final fireAuth.OAuthCredential oauthCredential =
-  //         fireAuth.OAuthProvider("apple.com").credential(
-  //       idToken: appleCredential.identityToken,
-  //       rawNonce: rawNonce,
-  //     );
+//   //     // Create an `OAuthCredential` from the credential returned by Apple.
+//   //     final fireAuth.OAuthCredential oauthCredential =
+//   //         fireAuth.OAuthProvider("apple.com").credential(
+//   //       idToken: appleCredential.identityToken,
+//   //       rawNonce: rawNonce,
+//   //     );
 
-  //     // Sign in the user with Firebase. If the nonce we generated earlier does
-  //     // not match the nonce in `appleCredential.identityToken`, sign in will fail.
-  //     fireAuth.FirebaseAuth.instance.signInWithCredential(oauthCredential);
-  //   } catch (exception) {
-  //     print(exception);
-  //     MezSnackbar("Notice ~", "Failed SignIn with Apple !");
-  //     throw exception;
-  //   }
-  // }
+//   //     // Sign in the user with Firebase. If the nonce we generated earlier does
+//   //     // not match the nonce in `appleCredential.identityToken`, sign in will fail.
+//   //     fireAuth.FirebaseAuth.instance.signInWithCredential(oauthCredential);
+//   //   } catch (exception) {
+//   //     print(exception);
+//   //     MezSnackbar("Notice ~", "Failed SignIn with Apple !");
+//   //     throw exception;
+//   //   }
+//   // }
 
-  @override
-  void dispose() {
-    _userNodeListener?.cancel();
-    _userNodeListener = null;
-    super.dispose();
-    print("--------------------> AuthController Auto Disposed !");
-  }
-}
+//   @override
+//   void dispose() {
+//     _userNodeListener?.cancel();
+//     _userNodeListener = null;
+//     super.dispose();
+//     print("--------------------> AuthController Auto Disposed !");
+//   }
+// }
 
-String generateNonce([int length = 32]) {
-  final String charset =
-      '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
-  final Random random = Random.secure();
-  return List.generate(length, (_) => charset[random.nextInt(charset.length)])
-      .join();
-}
+// String generateNonce([int length = 32]) {
+//   final String charset =
+//       '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
+//   final Random random = Random.secure();
+//   return List.generate(length, (_) => charset[random.nextInt(charset.length)])
+//       .join();
+// }
 
-/// Returns the sha256 hash of [input] in hex notation.
-String sha256ofString(String input) {
-  final List<int> bytes = utf8.encode(input);
-  final Digest digest = sha256.convert(bytes);
-  return digest.toString();
-}
+// /// Returns the sha256 hash of [input] in hex notation.
+// String sha256ofString(String input) {
+//   final List<int> bytes = utf8.encode(input);
+//   final Digest digest = sha256.convert(bytes);
+//   return digest.toString();
+// }
 
-String userInfoNode(String? userId) {
-  return 'users/$userId/info';
-}
+// String userInfoNode(String? userId) {
+//   return 'users/$userId/info';
+// }
 
-String userLanguageNode(String? userId) {
-  return 'users/$userId/info/language';
-}
+// String userLanguageNode(String? userId) {
+//   return 'users/$userId/info/language';
+// }

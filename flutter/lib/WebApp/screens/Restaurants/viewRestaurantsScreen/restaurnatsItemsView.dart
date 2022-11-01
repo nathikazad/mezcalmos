@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mez_services_web_app/controllers/languageController.dart';
-import 'package:mez_services_web_app/helpers/GeneralPurposeHelper.dart';
-import 'package:mez_services_web_app/helpers/StringHelper.dart';
-import 'package:mez_services_web_app/helpers/setUpHelper.dart';
-import 'package:mez_services_web_app/models/Generic.dart';
-import 'package:mez_services_web_app/screens/components/installAppBarComponent.dart';
-import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/components/viewRestaurantScreenFroDesktop.dart';
-import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/components/viewRestaurantScreenFroMobile.dart';
-import 'package:mez_services_web_app/services/values/constants.dart';
-import 'package:mez_services_web_app/services/widgets/mezBottomBar.dart';
-import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
-import 'package:mez_services_web_app/services/widgets/mezLoaderWidget.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/components/viewRestaurantScreenFroDesktop.dart';
+import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/components/viewRestaurantScreenFroMobile.dart';
+import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
+import 'package:mezcalmos/WebApp/services/values/constants.dart';
+import 'package:mezcalmos/WebApp/services/widgets/mezBottomBar.dart';
+import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/WebApp/services/widgets/mezLoaderWidget.dart';
+import 'package:mezcalmos/WebApp/webHelpers/StringHelper.dart';
+import 'package:mezcalmos/WebApp/webHelpers/setUpHelper.dart';
+
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 

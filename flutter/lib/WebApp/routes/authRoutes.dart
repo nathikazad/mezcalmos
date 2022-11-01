@@ -1,8 +1,8 @@
-import 'package:mez_services_web_app/routes/deferred_loader.dart';
-import 'package:mez_services_web_app/screens/AuthScreen/SignInScreen/SignInScreen.dart'
+import 'package:mezcalmos/WebApp/screens/AuthScreen/SignInScreen/SignInScreen.dart'
     deferred as signIn;
-import 'package:mez_services_web_app/screens/AuthScreen/VerificationScreen/verificationScreen.dart'
+import 'package:mezcalmos/WebApp/screens/AuthScreen/VerificationScreen/verificationScreen.dart'
     deferred as verification;
+import 'package:mezcalmos/WebApp/routes/deferred_loader.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AuthRoutes {

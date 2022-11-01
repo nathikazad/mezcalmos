@@ -3,22 +3,20 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mez_services_web_app/controllers/LaundryController.dart';
-import 'package:mez_services_web_app/controllers/languageController.dart';
-import 'package:mez_services_web_app/helpers/GeneralPurposeHelper.dart';
-import 'package:mez_services_web_app/helpers/changeLagWithParams.dart';
-import 'package:mez_services_web_app/helpers/setUpHelper.dart';
-import 'package:mez_services_web_app/models/Generic.dart';
-import 'package:mez_services_web_app/models/Services/Laundry.dart';
-import 'package:mez_services_web_app/screens/Laundries/laundryListView/components/laundryListViewCardForDesktopComponent.dart';
-import 'package:mez_services_web_app/screens/Laundries/laundryListView/components/laundryListViewForDesktop.dart';
-import 'package:mez_services_web_app/screens/Laundries/laundryListView/components/laundryListViewForMobile.dart';
-import 'package:mez_services_web_app/screens/components/installAppBarComponent.dart';
-import 'package:mez_services_web_app/screens/Restaurants/resturentListView/controller/ListRestaurantController.dart';
-import 'package:mez_services_web_app/services/values/constants.dart';
-import 'package:mez_services_web_app/services/widgets/mezBottomBar.dart';
-import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
-import 'package:mez_services_web_app/services/widgets/mezLoaderWidget.dart';
+import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/WebApp/screens/Laundries/laundryListView/components/laundryListViewForDesktop.dart';
+import 'package:mezcalmos/WebApp/screens/Laundries/laundryListView/components/laundryListViewForMobile.dart';
+import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
+import 'package:mezcalmos/WebApp/services/values/constants.dart';
+import 'package:mezcalmos/WebApp/services/widgets/mezBottomBar.dart';
+import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/WebApp/services/widgets/mezLoaderWidget.dart';
+import 'package:mezcalmos/WebApp/webHelpers/changeLagWithParams.dart';
+import 'package:mezcalmos/WebApp/webHelpers/setUpHelper.dart';
+
 import 'package:qlevar_router/qlevar_router.dart';
 
 class LaundryListView extends StatefulWidget {
@@ -64,7 +62,7 @@ class _LaundryListViewState extends State<LaundryListView> {
                 }),
             builder: (context, snapShot) {
               if (snapShot.hasData && snapShot.data == true) {
-                LanguageController lang = Get.find<LanguageController>();
+                final LanguageController lang = Get.find<LanguageController>();
                 return Scaffold(
                   appBar: InstallAppBarComponent(
                     automaticallyGetBack: false,

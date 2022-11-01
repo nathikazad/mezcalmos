@@ -1,15 +1,17 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:mez_services_web_app/authHooks.dart';
-import 'package:mez_services_web_app/controllers/LaundryController.dart';
-import 'package:mez_services_web_app/controllers/authController.dart';
-import 'package:mez_services_web_app/controllers/languageController.dart';
+
 import 'package:get/get.dart';
-import 'package:mez_services_web_app/controllers/restaurantsInfoController.dart';
-import 'package:mez_services_web_app/database/FirebaseDb.dart';
-import 'package:mez_services_web_app/helpers/GeneralPurposeHelper.dart';
-import 'package:mez_services_web_app/services/values/constants.dart';
+import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/WebApp/authHooks.dart';
 
 Function signInCallback = AuthHooks.onSignInHook;
 Function signOutCallback = AuthHooks.onSignOutHook;

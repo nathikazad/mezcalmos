@@ -2,14 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mez_services_web_app/controllers/LaundryController.dart';
-import 'package:mez_services_web_app/controllers/languageController.dart';
-import 'package:mez_services_web_app/models/Services/Laundry.dart';
-import 'package:mez_services_web_app/screens/Laundries/LaundryView/components/buildTagWidget.dart';
-import 'package:mez_services_web_app/screens/Laundries/LaundryView/components/getBackButton.dart';
-import 'package:mez_services_web_app/services/values/constants.dart';
-import 'package:mez_services_web_app/services/widgets/MezServiceOpenHours.dart';
-import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/WebApp/screens/Laundries/LaundryView/components/buildTagWidget.dart';
+import 'package:mezcalmos/WebApp/screens/Laundries/LaundryView/components/getBackButton.dart';
+import 'package:mezcalmos/WebApp/services/widgets/MezServiceOpenHours.dart';
+import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
+
 import 'package:qlevar_router/qlevar_router.dart';
 
 import 'package:sizer/sizer.dart';

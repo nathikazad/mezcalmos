@@ -3,15 +3,15 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mez_services_web_app/controllers/languageController.dart';
-import 'package:mez_services_web_app/controllers/restaurantsInfoController.dart';
-import 'package:mez_services_web_app/helpers/StringHelper.dart';
-import 'package:mez_services_web_app/models/Generic.dart';
-import 'package:mez_services_web_app/models/Services/Restaurant.dart';
-import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/components/itemSliverAppBar.dart';
-import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/restaurnatsItemsView.dart';
-import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
-import 'package:mez_services_web_app/services/widgets/mezLoaderWidget.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/components/itemSliverAppBar.dart';
+import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/restaurnatsItemsView.dart';
+import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/WebApp/services/widgets/mezLoaderWidget.dart';
+import 'package:mezcalmos/WebApp/webHelpers/StringHelper.dart';
+
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -239,13 +239,13 @@ class _ViewRestaurantScreenFroDesktopState
             ? ItemCardComponnent(
                 title: items[index].name[lang.userLanguageKey]!,
                 imageUrl: items[index].image,
-                id: items[index].id,
+                id: items[index].id!,
                 price: items[index].cost.toString(),
               )
             : ItemCardWithoutImageComponent(
                 title: items[index].name[lang.userLanguageKey]!,
                 imageUrl: items[index].image,
-                id: items[index].id,
+                id: items[index].id!,
                 price: items[index].cost.toString(),
               );
       },

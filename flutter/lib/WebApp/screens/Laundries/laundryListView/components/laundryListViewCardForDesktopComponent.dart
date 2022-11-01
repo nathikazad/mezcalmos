@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mez_services_web_app/models/Services/Laundry.dart';
-import 'package:mez_services_web_app/screens/Restaurants/components/ShippingCostComponent.dart';
-import 'package:mez_services_web_app/screens/Restaurants/resturentListView/components/restaurantCardForDesktopAndTablet.dart';
+import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/WebApp/screens/Restaurants/components/ShippingCostComponent.dart';
+import 'package:mezcalmos/WebApp/screens/Restaurants/resturentListView/components/restaurantCardForDesktopAndTablet.dart';
 
 class laundryListViewCardForDesktopComponent extends StatelessWidget {
   laundryListViewCardForDesktopComponent(

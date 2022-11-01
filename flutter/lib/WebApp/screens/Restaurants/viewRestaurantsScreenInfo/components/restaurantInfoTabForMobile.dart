@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:mez_services_web_app/controllers/languageController.dart';
-import 'package:mez_services_web_app/models/Generic.dart';
-import 'package:mez_services_web_app/models/Services/Restaurant.dart';
-import 'package:mez_services_web_app/services/widgets/MezServiceOpenHours.dart';
-import 'package:mez_services_web_app/services/widgets/ServiceLocationCard.dart';
-import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/WebApp/services/widgets/MezServiceOpenHours.dart';
+import 'package:mezcalmos/WebApp/services/widgets/ServiceLocationCard.dart';
+import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
 
 final DateFormat f = new DateFormat('hh:mma');
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]

@@ -1,15 +1,13 @@
-import 'package:mez_services_web_app/helpers/GeneralPurposeHelper.dart';
-import 'package:mez_services_web_app/helpers/setUpHelper.dart';
-import 'package:mez_services_web_app/routes/deferred_loader.dart';
-import 'package:mez_services_web_app/screens/Restaurants/restaurantItemView/restaurantItemView.dart'
+import 'package:mezcalmos/WebApp/routes/deferred_loader.dart';
+import 'package:mezcalmos/WebApp/screens/Restaurants/restaurantItemView/restaurantItemView.dart'
     deferred as restoItemView;
-import 'package:mez_services_web_app/screens/Restaurants/resturentListView/restaurantsListView.dart'
+import 'package:mezcalmos/WebApp/screens/Restaurants/resturentListView/restaurantsListView.dart'
     deferred as restoList;
-import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/restaurnatsItemsView.dart'
+import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/restaurnatsItemsView.dart'
     deferred as restoItemsView;
-import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreenInfo/viewRestaurnatsScreenInfo.dart'
+import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreenInfo/viewRestaurnatsScreenInfo.dart'
     deferred as restoScreenInfo;
-import 'package:mez_services_web_app/services/values/constants.dart';
+import 'package:mezcalmos/WebApp/services/values/constants.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RestaurantRouters {

@@ -1,7 +1,7 @@
-import 'package:mez_services_web_app/routes/deferred_loader.dart';
-import 'package:mez_services_web_app/screens/Laundries/LaundryView/laundryView.dart'
+import 'package:mezcalmos/WebApp/routes/deferred_loader.dart';
+import 'package:mezcalmos/WebApp/screens/Laundries/LaundryView/laundryView.dart'
     deferred as laundryView;
-import 'package:mez_services_web_app/screens/Laundries/laundryListView/LaundryListView.dart'
+import 'package:mezcalmos/WebApp/screens/Laundries/laundryListView/LaundryListView.dart'
     deferred as laundryList;
 import 'package:qlevar_router/qlevar_router.dart';
 

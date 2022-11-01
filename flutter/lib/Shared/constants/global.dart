@@ -7,7 +7,6 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:rive/rive.dart' as rive;
 
 // this is my user that i create in prod for the prod deployement testing.
 const String testUserIdInProd = "BUhQ74BrbBNeYZz60fK4ocrgpqz1";
@@ -107,14 +106,6 @@ const String aCancelledIcon = "assets/images/shared/notifications/cancel.png";
 const String aAtLaundry = "assets/images/shared/notifications/atLaundry.png";
 const String aReadyDeliveryLaundry =
     "assets/images/shared/notifications/readyForDelivery.png";
-const rive.RiveAnimation aDriverAnimation = rive.RiveAnimation.asset(
-  "assets/animation/scooterWashingMachine.riv",
-  fit: BoxFit.cover,
-);
-const rive.RiveAnimation aWashingAnimation = rive.RiveAnimation.asset(
-  "assets/animation/washingMachine.riv",
-  fit: BoxFit.cover,
-);
 
 enum AppType {
   CustomerApp,

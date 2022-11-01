@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mez_services_web_app/controllers/languageController.dart';
-import 'package:mez_services_web_app/models/Services/Laundry.dart';
-import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
+
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
 
 const Color backgroundColorForTags = Color.fromRGBO(225, 228, 255, 1);
 

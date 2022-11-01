@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mez_services_web_app/helpers/GeneralPurposeHelper.dart';
-import 'package:mez_services_web_app/models/Generic.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 const String db = "mezcalmos-31f1c-default-rtdb";
 const String stagingDb =

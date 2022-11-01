@@ -1,19 +1,23 @@
+// ignore_for_file: unawaited_futures
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mez_services_web_app/controllers/languageController.dart';
-import 'package:mez_services_web_app/controllers/restaurantsInfoController.dart';
-import 'package:mez_services_web_app/helpers/GeneralPurposeHelper.dart';
-import 'package:mez_services_web_app/helpers/setUpHelper.dart';
-import 'package:mez_services_web_app/models/Generic.dart';
-import 'package:mez_services_web_app/models/Services/Restaurant.dart';
-import 'package:mez_services_web_app/screens/components/installAppBarComponent.dart';
-import 'package:mez_services_web_app/screens/Restaurants/restaurantItemView/components/restauarntItemViewForDesktop.dart';
-import 'package:mez_services_web_app/screens/Restaurants/restaurantItemView/components/restaurantItemViewForMobile.dart';
-import 'package:mez_services_web_app/services/values/constants.dart';
-import 'package:mez_services_web_app/services/widgets/mezBottomBar.dart';
-import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
-import 'package:mez_services_web_app/services/widgets/mezLoaderWidget.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/WebApp/screens/Restaurants/restaurantItemView/components/restauarntItemViewForDesktop.dart';
+import 'package:mezcalmos/WebApp/screens/Restaurants/restaurantItemView/components/restaurantItemViewForMobile.dart';
+import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
+import 'package:mezcalmos/WebApp/services/values/constants.dart';
+import 'package:mezcalmos/WebApp/services/widgets/mezBottomBar.dart';
+import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/WebApp/services/widgets/mezLoaderWidget.dart';
+import 'package:mezcalmos/WebApp/webHelpers/setUpHelper.dart';
+
 import 'package:qlevar_router/qlevar_router.dart';
+
+import '../../../../Shared/controllers/restaurantsInfoController.dart';
 
 class RestaurantItemView extends StatefulWidget {
   const RestaurantItemView({Key? key}) : super(key: key);
@@ -38,7 +42,7 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
           .then((value) {
         if (value != null) {
           setState(() {
-            item = value.findItemById(QR.params['itemId'].toString());
+            item = value.findItemById(id: QR.params['itemId'].toString());
             if (item != null) {
               print("this is another test ${item?.toJson()}");
             } else {

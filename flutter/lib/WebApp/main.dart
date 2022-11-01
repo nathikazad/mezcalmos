@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mez_services_web_app/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/WebApp/routes/AppRoutes.dart';
+import 'package:mezcalmos/WebApp/services/theme/webAppTheme.dart';
+import 'package:mezcalmos/WebApp/services/values/constants.dart';
 import 'dart:js' as js;
 import 'dart:html' as html;
-import 'package:mez_services_web_app/routes/AppRoutes.dart';
-import 'package:mez_services_web_app/screens/unFoundPage.dart';
-import 'package:mez_services_web_app/services/theme/webAppTheme.dart';
-import 'package:mez_services_web_app/services/values/constants.dart';
+
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 

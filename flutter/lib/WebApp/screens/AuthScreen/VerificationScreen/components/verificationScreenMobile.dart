@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mez_services_web_app/controllers/authController.dart';
-import 'package:mez_services_web_app/controllers/languageController.dart';
-import 'package:mez_services_web_app/models/ServerResponse.dart';
-import 'package:mez_services_web_app/services/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/WebApp/services/widgets/MezSnackbar.dart';
 
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:qlevar_router/qlevar_router.dart';

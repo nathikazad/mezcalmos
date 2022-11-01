@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mez_services_web_app/controllers/languageController.dart';
-import 'package:mez_services_web_app/models/Generic.dart';
-import 'package:mez_services_web_app/models/Services/Restaurant.dart';
-import 'package:mez_services_web_app/screens/Restaurants/components/webAppExpensionPanelComponent.dart';
-
-import '../../../components/installAppBarComponent.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/WebApp/screens/Restaurants/components/webAppExpensionPanelComponent.dart';
+import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
 
 class ItemOptionCard extends StatefulWidget {
   const ItemOptionCard(

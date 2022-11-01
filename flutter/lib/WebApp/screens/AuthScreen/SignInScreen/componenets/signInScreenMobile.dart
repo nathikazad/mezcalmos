@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mez_services_web_app/controllers/authController.dart';
-import 'package:mez_services_web_app/controllers/languageController.dart';
-import 'package:mez_services_web_app/models/ServerResponse.dart';
-import 'package:mez_services_web_app/routes/authRoutes.dart';
-import 'package:mez_services_web_app/services/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/WebApp/routes/authRoutes.dart';
+import 'package:mezcalmos/WebApp/services/widgets/MezSnackbar.dart';
+
 import 'package:qlevar_router/qlevar_router.dart';
 // import 'package:mezcalmos/Shared/controllers/authController.dart';
 

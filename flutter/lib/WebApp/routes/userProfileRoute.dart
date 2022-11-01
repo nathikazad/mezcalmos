@@ -1,4 +1,4 @@
-import 'package:mez_services_web_app/screens/UserProfile/userProfile.dart';
+import 'package:mezcalmos/WebApp/screens/UserProfile/userProfile.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class UserProfileRoute {

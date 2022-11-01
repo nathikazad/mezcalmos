@@ -28,6 +28,9 @@ dependencies:
   pin_code_fields: ^7.2.0
   sizer: ^2.0.15
   intl: ^0.17.0
+  google_maps_flutter_platform_interface: ^2.2.4
+  flutter_facebook_auth: ^4.3.4+2
+  sign_in_with_apple: ^4.0.0
   qlevar_router: ^1.6.3
   rect_getter: ^1.1.0
   scroll_to_index: ^3.0.1

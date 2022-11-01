@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mez_services_web_app/controllers/languageController.dart';
-import 'package:mez_services_web_app/controllers/restaurantsInfoController.dart';
-import 'package:mez_services_web_app/helpers/StringHelper.dart';
-import 'package:mez_services_web_app/models/Generic.dart';
-import 'package:mez_services_web_app/models/Services/Restaurant.dart';
-import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/components/RestaurantGridItemCard.dart';
-import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/components/RestaurantListItemComponent.dart';
-import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/components/RestaurantSliverAppbar.dart';
-import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreenInfo/components/restaurantInfoTabForMobile.dart';
-import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
-import 'package:mez_services_web_app/services/widgets/mezLoaderWidget.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/components/RestaurantGridItemCard.dart';
+import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/components/RestaurantListItemComponent.dart';
+import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/components/RestaurantSliverAppbar.dart';
+import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/WebApp/services/widgets/mezLoaderWidget.dart';
+import 'package:mezcalmos/WebApp/webHelpers/StringHelper.dart';
+
 import 'package:qlevar_router/qlevar_router.dart';
 //import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 

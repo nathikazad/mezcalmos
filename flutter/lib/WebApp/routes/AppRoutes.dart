@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mez_services_web_app/helpers/GeneralPurposeHelper.dart';
-import 'package:mez_services_web_app/helpers/setUpHelper.dart';
-import 'package:mez_services_web_app/routes/authRoutes.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/WebApp/routes/authRoutes.dart';
+import 'package:mezcalmos/WebApp/routes/laundryRoutes.dart';
+import 'package:mezcalmos/WebApp/routes/restaurantRouts.dart';
+import 'package:mezcalmos/WebApp/screens/unFoundPage.dart';
+import 'package:mezcalmos/WebApp/services/values/constants.dart';
+import 'package:mezcalmos/WebApp/services/widgets/mezLoaderWidget.dart';
+import 'package:mezcalmos/WebApp/webHelpers/setUpHelper.dart';
 
-import 'package:mez_services_web_app/routes/laundryRoutes.dart';
-import 'package:mez_services_web_app/routes/restaurantRouts.dart';
-import 'package:mez_services_web_app/screens/Restaurants/restaurantItemView/restaurantItemView.dart';
-import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreen/restaurnatsItemsView.dart';
-import 'package:mez_services_web_app/screens/Restaurants/resturentListView/restaurantsListView.dart';
-import 'package:mez_services_web_app/screens/unFoundPage.dart';
-import 'package:mez_services_web_app/screens/Restaurants/viewRestaurantsScreenInfo/viewRestaurnatsScreenInfo.dart';
-import 'package:mez_services_web_app/services/values/constants.dart';
-import 'package:mez_services_web_app/services/widgets/mezLoaderWidget.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AppRoutes {

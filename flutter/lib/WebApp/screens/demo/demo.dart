@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
 
 class DemoScreen extends StatelessWidget {
   const DemoScreen({Key? key}) : super(key: key);
