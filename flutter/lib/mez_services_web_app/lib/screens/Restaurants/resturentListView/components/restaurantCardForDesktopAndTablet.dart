@@ -126,7 +126,8 @@ class _RestaurantCardForDesktopAndTabletState
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        if (widget.restaurant.description != null)
+                        if (widget.restaurant.description != null ||
+                            widget.restaurant.description!.isNotEmpty)
                           Text(
                             widget
                                 .restaurant.description![lang.userLanguageKey]!,

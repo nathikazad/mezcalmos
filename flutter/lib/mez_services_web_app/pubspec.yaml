@@ -50,6 +50,13 @@ dependencies:
   google_maps_flutter_web: ^0.4.0+2
   sticky_headers: ^0.3.0+2
   flutter_svg: ^1.1.5
+  firebase_auth: ^3.3.19
+  cloud_functions: ^3.2.16
+  firebase_storage: ^10.2.9
+  get_storage: ^2.0.3
+  pin_code_fields: ^7.4.0
+
+
   
 
 

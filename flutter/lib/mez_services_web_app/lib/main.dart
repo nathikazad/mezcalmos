@@ -12,6 +12,7 @@ import 'package:sizer/sizer.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  //prod stage
   js.context["my_dart_var"] = typeMode;
   html.document.dispatchEvent(html.CustomEvent("dart_loaded"));
   runApp(Sizer(builder: (
