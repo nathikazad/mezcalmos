@@ -1,10 +1,13 @@
-import 'package:mez_services_web_app/screens/Laundries/LaundryView/laundryView.dart';
-import 'package:mez_services_web_app/screens/Laundries/laundryListView/LaundryListView.dart';
+import 'package:mez_services_web_app/routes/deferred_loader.dart';
+import 'package:mez_services_web_app/screens/Laundries/LaundryView/laundryView.dart'
+    deferred as laundryView;
+import 'package:mez_services_web_app/screens/Laundries/laundryListView/LaundryListView.dart'
+    deferred as laundryList;
 import 'package:qlevar_router/qlevar_router.dart';
 
 class LaundryRoutes {
   static const String laundries = "laundries";
-  static const String item_id = "item_id";
+  static const String item_id = "id";
 
   final routes = QRoute(
       // this will define how to find this route with [QR.to]
@@ -12,13 +15,17 @@ class LaundryRoutes {
       // this will define how to find this route with [QR.toName]
       name: laundries,
       // The page to show when this route is called
-      builder: () => LaundryListView(),
+      builder: () => laundryList.LaundryListView(),
+      middleware: [
+        DefferedLoader(laundryList.loadLibrary)
+      ],
       children: [
         QRoute(
-          path: '/:itemId',
+          // Todo ID
+          path: '/:id',
           name: item_id,
-          middleware: [],
-          builder: () => LaundryView(),
+          middleware: [DefferedLoader(laundryView.loadLibrary)],
+          builder: () => laundryView.LaundryView(),
         )
       ]);
 }

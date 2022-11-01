@@ -14,6 +14,7 @@ import 'package:mez_services_web_app/screens/Restaurants/resturentListView/compo
 import 'package:mez_services_web_app/screens/Restaurants/resturentListView/components/restaurantCardForDesktopAndTablet.dart';
 import 'package:mez_services_web_app/screens/Restaurants/resturentListView/components/restaurantCardForMobile.dart';
 import 'package:mez_services_web_app/screens/Restaurants/resturentListView/controller/ListRestaurantController.dart';
+import 'package:mez_services_web_app/screens/components/webAppBarComponent.dart';
 import 'package:mez_services_web_app/services/values/constants.dart';
 import 'package:mez_services_web_app/services/widgets/mezBottomBar.dart';
 import 'package:mez_services_web_app/services/widgets/mezCalmosResizer.dart';
@@ -75,28 +76,34 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
                 body: LayoutBuilder(
                   builder: (context, constraints) {
                     return Scaffold(
-                      appBar: AppBar(
-                        leading: null,
-                        automaticallyImplyLeading: false,
-                        title: Obx(
-                          () => Text(
-                            Lcontroller.strings["CustomerApp"]["pages"]
-                                    ["Restaurants"]["ListRestaurantsScreen"]
-                                ["ListRestaurantScreen"]["restaurants"],
-                            style: GoogleFonts.montserrat(
-                                textStyle: TextStyle(
-                              fontWeight: (MezCalmosResizer.isMobile(context) ||
-                                      MezCalmosResizer.isSmallMobile(context))
-                                  ? FontWeight.w500
-                                  : FontWeight.w600,
-                              fontSize: 17,
-                              color: Colors.black,
-                            )),
-                          ),
-                        ),
-                        centerTitle: true,
-                      ),
+                      appBar: (MezCalmosResizer.isMobile(context) ||
+                              MezCalmosResizer.isSmallMobile(context))
+                          ? null
+                          : WebAppBarComponent(),
                       body: Scaffold(
+                        //appBar: ,
+                        appBar: AppBar(
+                          leading: null,
+                          automaticallyImplyLeading: false,
+                          title: Obx(
+                            () => Text(
+                              Lcontroller.strings["CustomerApp"]["pages"]
+                                      ["Restaurants"]["ListRestaurantsScreen"]
+                                  ["ListRestaurantScreen"]["restaurants"],
+                              style: GoogleFonts.montserrat(
+                                  textStyle: TextStyle(
+                                fontWeight: (MezCalmosResizer.isMobile(
+                                            context) ||
+                                        MezCalmosResizer.isSmallMobile(context))
+                                    ? FontWeight.w500
+                                    : FontWeight.w600,
+                                fontSize: 17,
+                                color: Colors.black,
+                              )),
+                            ),
+                          ),
+                          centerTitle: true,
+                        ),
                         body: SingleChildScrollView(
                           controller: controller,
                           child: Column(

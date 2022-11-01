@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mez_services_web_app/helpers/GeneralPurposeHelper.dart';
 import 'package:mez_services_web_app/helpers/setUpHelper.dart';
+import 'package:mez_services_web_app/routes/authRoutes.dart';
+
 import 'package:mez_services_web_app/routes/laundryRoutes.dart';
 import 'package:mez_services_web_app/routes/restaurantRouts.dart';
 import 'package:mez_services_web_app/screens/Restaurants/restaurantItemView/restaurantItemView.dart';
@@ -55,7 +57,10 @@ class AppRoutes {
     //routes for restaurants screens
     RestaurantRouters().routes,
     //routes for laundries screen
-    LaundryRoutes().routes
+    LaundryRoutes().routes,
+
+    // routes for auths
+    AuthRoutes().routes,
   ];
 }
 
