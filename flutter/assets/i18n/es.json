@@ -2098,64 +2098,9 @@
         "error": "error",
         "noRoute": "No se encontró ruta.Ingrese un destino válido"
     },
+    
     "WebApp": {
-        "appBarActions": {
-            "Services": "Servicios",
-            "FAQ": "PMF",
-            "Blog": "Blog",
-            "ContactUs": "Contacta con nosotros"
-        },
-        "title": "Creado para todas sus necesidades de transporte",
-        "subtitle": "Su lugar único para encontrar todos los servicios locales que necesita y donde puede disfrutar de servicios rápidos y de alta calidad.",
-        "getAppBtn": "Obtener la aplicación",
-        "food": "Alimento",
-        "foodDescription": "Descubre los platos más deliciosos de los restaurantes más cercanos..",
-        "viewAllRestaurants":"Ver restaurantes actuales",
-        "laundry": "Ropa sucia",
-        "laundryDescription": "Haz que tu ropa sea lavada por tu servicio de lavandería más cercano.",
-        "viewAllLaundries":"Ver lavanderías actuales",
-        "taxi": "Taxi",
-        "taxiDescription": "Próximamente, en breve, pronto",
-        "FAQ(FAQ)": "Preguntas frecuentes (FAQ)",
-        "blogTitle": "Nuestro último blog",
-        "showAll": "Ver todos los blogs",
-        "questionText": "¿Preguntas sobre nuestro producto?",
-        "questionTitle": "Nuestro equipo de expertos está listo para responder a sus preguntas, brindarle más información y ayudarlo.",
-        "questionSubtitle": "Rellene el siguiente formulario y recibirá una respuesta en un plazo de 2 días laborables.",
-        "fullName":"Nombre completo",
-        "email":"Correo electrónico",
-        "messageOrQuestion":"mensaje o pregunta",
-        "submitBtn":"Enviar mensaje",
-        "getAppNow":"Obtenga su aplicación ahora.",
-        "fotterBar":{
-            "desktopAndTablet":{
-                "services":"Nuestros servicios",
-                "vision":"Nuestra visión",
-                "business":"Para negocios",
-                "blog":"Blog",
-                "fAQ":"PMF",
-                "contactUs":"Contacta con nosotros"
-            },
-            "mobile":{
-                "services":"Services",
-                "blog":"Blog",
-                "fAQ":"PMF",
-                "contactUs":"Contacta con nosotros"
-            },
-            "allRightReserved":"Todos los derechos reservados",
-            "policy":"Política de privacidad"
-        },
-        "formForQuestionsValidator":{
-            "fullName":"Por favor ingresa tu nombre completo",
-            "email":{
-                "empty":"Por favor introduzca su correo electrónico",
-                "notValid":"Este correo electrónico no es correcto"
-            },
-            "message":"Por favor ingrese un mensaje"
-        },
-        "blogsView":{
-            "title":"Nuestras noticias y consejos, vamos detrás de escena en Mezcalmos"
-        }
+       
     }
 
 }

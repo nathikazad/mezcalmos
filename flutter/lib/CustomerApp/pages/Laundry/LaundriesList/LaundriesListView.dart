@@ -25,7 +25,6 @@ class _LaundriesListViewState extends State<LaundriesListView> {
     return Scaffold(
       appBar: CustomerAppBar(
         autoBack: true,
-        isRunningOnWeb: widget.isRuningOnWeb,
         title: '${_i18n()["laundries"]}',
       ),
       body: SingleChildScrollView(
@@ -63,7 +62,6 @@ class _LaundriesListViewState extends State<LaundriesListView> {
                           children: List.generate(
                               snapshot.data!.length,
                               (int index) => CustomerLaundrySelectCard(
-                                    isRunningOnWeb: widget.isRuningOnWeb,
                                     laundry: snapshot.data![index],
                                     shippingPrice:
                                         laundryController.shippingPrice.value,

@@ -2045,6 +2045,7 @@
             }
         }
     },
+    
     "General": {
         "to": "To",
         "required": "Required",
@@ -2053,63 +2054,8 @@
         "confirm": "Confirm",
         "cancel": "Cancel"
     },
+
     "WebApp": {
-        "appBarActions": {
-            "Services": "Services",
-            "FAQ": "FAQ",
-            "Blog": "Blog",
-            "ContactUs": "Contact us"
-        },
-        "title": "Built for all your transportation needs",
-        "subtitle": "Your one stop place to find all your needed local services and where you can enjoy fast and high quality services.",
-        "getAppBtn": "Get the app",
-        "food": "Food",
-        "foodDescription": "Discover most delicious dishes from the nearest restaurents.",
-        "viewAllRestaurants":"View current restaurants",
-        "laundry": "Laundry",
-        "laundryDescription": "Get your clothes cleaned by your nearest laundry service.",
-        "viewAllLaundries":"View current laundries",
-        "taxi": "Taxi",
-        "taxiDescription": "Coming soon",
-        "FAQ(FAQ)": "Frequently asked questions(FAQ)",
-        "blogTitle": "Our latest blog",
-        "showAll": "View all blogs",
-        "questionText": "Questions about our product?",
-        "questionTitle": "Our team of experts is ready to answer your questions, give you more info and help you.",
-        "questionSubtitle": "Fill in the form below and you will receive an answer within 2 working days.",
-        "fullName":"Full name",
-        "email":"Email",
-        "messageOrQuestion":"Message or question",
-        "submitBtn":"Send message",
-        "getAppNow":"Get your app now.",
-        "fotterBar":{
-            "desktopAndTablet":{
-                "services":"Our services",
-                "vision":"Our vision",
-                "business":"For business",
-                "blog":"Blog",
-                "fAQ":"FAQ",
-                "contactUs":"Contact us"
-            },
-            "mobile":{
-                "services":"Services",
-                "blog":"Blog",
-                "fAQ":"FAQ",
-                "contactUs":"Contact us"
-            },
-            "allRightReserved":"All right reserved",
-            "policy":"Privacy policy"
-        },
-        "formForQuestionsValidator":{
-            "fullName":"Please enter your full name",
-            "email":{
-                "empty":"Please enter your email",
-                "notValid":"This email not correct"
-            },
-            "message":"Please enter a message"
-        },
-        "blogsView":{
-            "title":"Our news & tips, let's go behind the scenes at Mezcalmos"
-        }
+       
     }
 }

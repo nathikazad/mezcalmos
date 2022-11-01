@@ -8,6 +8,7 @@ analyzer:
 
 linter:
   rules:
+    - lowercase_with_underscores: false
     - file_names
     - library_names
     - cancel_subscriptions

@@ -56,7 +56,6 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           return Scaffold(
             appBar: CustomerAppBar(
               title: laundry.value?.info.name,
-              isRunningOnWeb: widget.isRunningOnWeb,
             ),
             body: SingleChildScrollView(
               padding: const EdgeInsets.all(12),
