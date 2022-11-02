@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:url_launcher/url_launcher.dart';

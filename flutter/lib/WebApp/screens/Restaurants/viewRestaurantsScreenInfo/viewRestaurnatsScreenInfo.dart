@@ -12,10 +12,10 @@ import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/compo
 import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreenInfo/components/restaurantInfoTabForDesktop.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreenInfo/components/restaurantInfoTabForMobile.dart';
 import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
-import 'package:mezcalmos/WebApp/services/values/constants.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezBottomBar.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezLoaderWidget.dart';
+import 'package:mezcalmos/WebApp/widgets/mezBottomBar.dart';
+import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/WebApp/widgets/mezLoaderWidget.dart';
+import 'package:mezcalmos/WebApp/values/constants.dart';
 import 'package:mezcalmos/WebApp/webHelpers/setUpHelper.dart';
 
 import 'package:qlevar_router/qlevar_router.dart';

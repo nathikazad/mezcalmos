@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/resturentListView/components/RestaurantShimmerGrid.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/resturentListView/components/RestaurantShimmerList.dart';
@@ -13,10 +14,10 @@ import 'package:mezcalmos/WebApp/screens/Restaurants/resturentListView/component
 import 'package:mezcalmos/WebApp/screens/Restaurants/resturentListView/controller/ListRestaurantController.dart';
 import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
 import 'package:mezcalmos/WebApp/screens/components/webAppBarComponent.dart';
-import 'package:mezcalmos/WebApp/services/values/constants.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezBottomBar.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezLoaderWidget.dart';
+import 'package:mezcalmos/WebApp/widgets/mezBottomBar.dart';
+import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/WebApp/widgets/mezLoaderWidget.dart';
+import 'package:mezcalmos/WebApp/values/constants.dart';
 import 'package:mezcalmos/WebApp/webHelpers/StringHelper.dart';
 import 'package:mezcalmos/WebApp/webHelpers/setUpHelper.dart';
 
@@ -55,6 +56,7 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
           if (snapShot.hasData && snapShot.data == true) {
             final LanguageController Lcontroller =
                 Get.find<LanguageController>();
+            //  MezPrint();
 
             var xLang = QR.params["lang"].toString().contains("es")
                 ? LanguageType.ES

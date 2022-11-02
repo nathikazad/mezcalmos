@@ -10,10 +10,10 @@ import 'package:mezcalmos/WebApp/screens/AuthScreen/SignInScreen/componenets/sig
 import 'package:mezcalmos/WebApp/screens/AuthScreen/SignInScreen/componenets/signInScreenMobile.dart';
 import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
 import 'package:mezcalmos/WebApp/screens/components/webAppBarComponent.dart';
-import 'package:mezcalmos/WebApp/services/values/constants.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezBottomBar.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezLoaderWidget.dart';
+import 'package:mezcalmos/WebApp/widgets/mezBottomBar.dart';
+import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/WebApp/widgets/mezLoaderWidget.dart';
+import 'package:mezcalmos/WebApp/values/constants.dart';
 import 'package:mezcalmos/WebApp/webHelpers/setUpHelper.dart';
 
 import 'package:qlevar_router/qlevar_router.dart';

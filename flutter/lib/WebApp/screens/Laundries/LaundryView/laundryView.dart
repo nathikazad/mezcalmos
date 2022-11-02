@@ -6,9 +6,9 @@ import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/WebApp/screens/Laundries/LaundryView/components/laundryViewForDesktop.dart';
 import 'package:mezcalmos/WebApp/screens/Laundries/LaundryView/components/laundryViewForMobile.dart';
 import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
-import 'package:mezcalmos/WebApp/services/values/constants.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezBottomBar.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/WebApp/widgets/mezBottomBar.dart';
+import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/WebApp/values/constants.dart';
 import 'package:mezcalmos/WebApp/webHelpers/changeLagWithParams.dart';
 import 'package:mezcalmos/WebApp/webHelpers/setUpHelper.dart';
 

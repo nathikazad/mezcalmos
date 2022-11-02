@@ -8,8 +8,8 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/components/RestaurantGridItemCard.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/components/RestaurantListItemComponent.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/components/RestaurantSliverAppbar.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezLoaderWidget.dart';
+import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/WebApp/widgets/mezLoaderWidget.dart';
 import 'package:mezcalmos/WebApp/webHelpers/StringHelper.dart';
 
 import 'package:qlevar_router/qlevar_router.dart';

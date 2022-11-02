@@ -5,9 +5,9 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/WebApp/services/widgets/MezServiceOpenHours.dart';
-import 'package:mezcalmos/WebApp/services/widgets/ServiceLocationCard.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/WebApp/widgets/MezServiceOpenHours.dart';
+import 'package:mezcalmos/WebApp/widgets/ServiceLocationCard.dart';
+import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 
 final DateFormat f = new DateFormat('hh:mma');
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]

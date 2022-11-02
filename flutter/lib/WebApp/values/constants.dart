@@ -12,7 +12,7 @@ const String dbRoot = ":9000/?ns=$db";
 const int functionPort = 5001;
 const String placesApikey = "AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY";
 
-const String logo = "assets/images/logo.png";
+const String logo = "assets/images/web/logo.png";
 const String getxUserId = "userid";
 const String defaultUserImgUrl =
     "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d";

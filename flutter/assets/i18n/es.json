@@ -2100,7 +2100,16 @@
     },
     
     "WebApp": {
-       
-    }
+        "screens":{
+         "components":{
+             "InstallAppBarComponent":{
+                 "install":{
+                     "installBtn":"Install App",
+                     "title":"Install the app to make orders online."
+                 }
+             }
+         }
+        }
+     }
 
 }

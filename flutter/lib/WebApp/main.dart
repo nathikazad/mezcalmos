@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/WebApp/routes/AppRoutes.dart';
-import 'package:mezcalmos/WebApp/services/theme/webAppTheme.dart';
-import 'package:mezcalmos/WebApp/services/values/constants.dart';
+import 'package:mezcalmos/WebApp/values/constants.dart';
+import 'package:mezcalmos/WebApp/webAppTheme.dart';
+import 'package:mezcalmos/WebApp/webHelpers/setUpHelper.dart';
 import 'dart:js' as js;
 import 'dart:html' as html;
 
@@ -15,13 +17,13 @@ void main() {
   //prod stage
   js.context["my_dart_var"] = typeMode;
   html.document.dispatchEvent(html.CustomEvent("dart_loaded"));
-  runApp(Sizer(builder: (
-    BuildContext context,
-    Orientation orientation,
-    DeviceType deviceType,
-  ) {
-    return MyApp();
-  }));
+  runMainGuarded(() => runApp(Sizer(builder: (
+        BuildContext context,
+        Orientation orientation,
+        DeviceType deviceType,
+      ) {
+        return MyApp();
+      })));
 }
 
 class MyApp extends StatefulWidget {
@@ -37,6 +39,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     String _tmpLmode = typeMode;
     _launchMode = _tmpLmode.toLaunchMode();
+
     super.initState();
   }
 

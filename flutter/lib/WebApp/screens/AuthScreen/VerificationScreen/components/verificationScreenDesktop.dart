@@ -7,8 +7,8 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/WebApp/screens/AuthScreen/components/MezButtonWidget.dart';
-import 'package:mezcalmos/WebApp/services/widgets/MezSnackbar.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/WebApp/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sizer/sizer.dart';

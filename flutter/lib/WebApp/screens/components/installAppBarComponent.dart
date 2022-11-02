@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/WebApp/services/values/constants.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/WebApp/webHelpers/setUpHelper.dart';
+import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/WebApp/values/constants.dart';
 
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -28,6 +30,12 @@ class InstallAppBarComponent extends StatefulWidget
 }
 
 class _InstallAppBarComponentState extends State<InstallAppBarComponent> {
+  @override
+  void initState() {
+    putControllers();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
@@ -88,8 +96,9 @@ double getText2Size(BuildContext context) {
 
 // desktop Widget
 Widget _buildWidget(BuildContext context, bool automaticallyGetBack) {
-  dynamic _i18n() =>
-      Get.find<LanguageController>().strings["CustomerApp"]["web"]["install"];
+  dynamic _i18n() => Get.find<LanguageController>().strings["WebApp"]["screens"]
+      ["components"]["InstallAppBarComponent"]["install"];
+  //mezDbgPrint("this is a test ${_i18n()["title"].toString()} hhh");
   return Container(
     width: Get.width,
     height: kToolbarHeight,

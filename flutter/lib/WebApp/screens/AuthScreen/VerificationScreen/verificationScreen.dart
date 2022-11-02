@@ -5,15 +5,16 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/WebApp/screens/AuthScreen/VerificationScreen/components/verificationScreenDesktop.dart';
-import 'package:mezcalmos/WebApp/screens/AuthScreen/VerificationScreen/components/verificationScreenMobile.dart';
+import 'package:mezcalmos/WebApp/screens/authScreen/verificationScreen/components/VerificationScreenDesktop.dart';
+import 'package:mezcalmos/WebApp/screens/authScreen/verificationScreen/components/VerificationScreenMobile.dart';
 import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
 import 'package:mezcalmos/WebApp/screens/components/webAppBarComponent.dart';
-import 'package:mezcalmos/WebApp/services/values/constants.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezBottomBar.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezLoaderWidget.dart';
+import 'package:mezcalmos/WebApp/values/constants.dart';
+
 import 'package:mezcalmos/WebApp/webHelpers/setUpHelper.dart';
+import 'package:mezcalmos/WebApp/widgets/mezBottomBar.dart';
+import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/WebApp/widgets/mezLoaderWidget.dart';
 
 import 'package:qlevar_router/qlevar_router.dart';
 

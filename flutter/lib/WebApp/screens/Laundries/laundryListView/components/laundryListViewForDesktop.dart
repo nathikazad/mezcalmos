@@ -5,7 +5,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/WebApp/screens/Laundries/laundryListView/components/laundryListViewCardForDesktopComponent.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/resturentListView/components/restaurantCardForDesktopAndTablet.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 import 'package:mezcalmos/WebApp/webHelpers/StringHelper.dart';
 
 import 'package:qlevar_router/qlevar_router.dart';

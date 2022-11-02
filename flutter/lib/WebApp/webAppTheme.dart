@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/WebApp/services/values/constants.dart';
+import 'package:mezcalmos/WebApp/values/constants.dart';
 
 import 'package:sizer/sizer.dart';
 import 'package:google_fonts/google_fonts.dart';

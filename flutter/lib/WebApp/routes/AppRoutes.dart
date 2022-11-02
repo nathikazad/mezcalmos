@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/WebApp/routes/authRoutes.dart';
-import 'package:mezcalmos/WebApp/routes/laundryRoutes.dart';
-import 'package:mezcalmos/WebApp/routes/restaurantRouts.dart';
+import 'package:mezcalmos/WebApp/routes/AuthRoutes.dart';
+import 'package:mezcalmos/WebApp/routes/LaundryRoutes.dart';
+import 'package:mezcalmos/WebApp/routes/RestaurantRouts.dart';
 import 'package:mezcalmos/WebApp/screens/unFoundPage.dart';
-import 'package:mezcalmos/WebApp/services/values/constants.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezLoaderWidget.dart';
+import 'package:mezcalmos/WebApp/values/constants.dart';
 import 'package:mezcalmos/WebApp/webHelpers/setUpHelper.dart';
+import 'package:mezcalmos/WebApp/widgets/mezLoaderWidget.dart';
 
 import 'package:qlevar_router/qlevar_router.dart';
 

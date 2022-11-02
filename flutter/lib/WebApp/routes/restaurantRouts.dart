@@ -7,7 +7,6 @@ import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/resta
     deferred as restoItemsView;
 import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreenInfo/viewRestaurnatsScreenInfo.dart'
     deferred as restoScreenInfo;
-import 'package:mezcalmos/WebApp/services/values/constants.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RestaurantRouters {

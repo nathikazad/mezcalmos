@@ -7,8 +7,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/WebApp/screens/Laundries/LaundryView/components/buildTagWidget.dart';
 import 'package:mezcalmos/WebApp/screens/Laundries/LaundryView/components/getBackButton.dart';
-import 'package:mezcalmos/WebApp/services/widgets/MezServiceOpenHours.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/WebApp/widgets/MezServiceOpenHours.dart';
+import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 
 import 'package:qlevar_router/qlevar_router.dart';
 

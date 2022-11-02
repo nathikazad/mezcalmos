@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -75,7 +75,7 @@ class _MezBottomBarState extends State<MezBottomBar> {
               icon: Container(
                 height: 20,
                 width: 20,
-                child: SvgPicture.asset("assets/images/linkedin.svg",
+                child: SvgPicture.asset("assets/images/web/linkedin.svg",
                     color: Colors.white, semanticsLabel: 'A red up arrow'),
               ),
             ),
@@ -87,7 +87,7 @@ class _MezBottomBarState extends State<MezBottomBar> {
               icon: Container(
                 height: 20,
                 width: 20,
-                child: SvgPicture.asset("assets/images/facebook-f.svg",
+                child: SvgPicture.asset("assets/images/web/facebook-f.svg",
                     color: Colors.white, semanticsLabel: 'A red up arrow'),
               ),
             ),
@@ -99,7 +99,7 @@ class _MezBottomBarState extends State<MezBottomBar> {
               icon: Container(
                 height: 20,
                 width: 20,
-                child: SvgPicture.asset("assets/images/instagram.svg",
+                child: SvgPicture.asset("assets/images/web/instagram.svg",
                     color: Colors.white, semanticsLabel: 'A red up arrow'),
               ),
             )
