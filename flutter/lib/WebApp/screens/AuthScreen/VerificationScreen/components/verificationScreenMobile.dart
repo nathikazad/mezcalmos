@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/WebApp/controllers/authWebController.dart';
 import 'package:mezcalmos/WebApp/widgets/MezSnackbar.dart';
 
 import 'package:pin_code_fields/pin_code_fields.dart';

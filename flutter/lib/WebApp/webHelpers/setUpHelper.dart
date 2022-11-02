@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
 
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/WebApp/authHooks.dart';
+import 'package:mezcalmos/WebApp/controllers/authWebController.dart';
 
 Function signInCallback = AuthHooks.onSignInHook;
 Function signOutCallback = AuthHooks.onSignOutHook;
