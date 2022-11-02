@@ -370,7 +370,8 @@
                     },
                     "ViewRestaurantScreen": {
                         "menu": "Menú",
-                        "info": "Información"
+                        "info": "Información",
+                        "moreInfo":"Más información"
                     }
                 }
             },
@@ -587,6 +588,7 @@
 
                     "laundries": "Lavanderías",
                     "title": "Encuentra tus lavanderías \nmás cercanas o tintorerías ",
+                    "title2": "Encuentra tus lavanderías más cercanas o tintorerías ",
                     "components": {
                         "laundrySelectCard": {
                             "available": "Available",
@@ -2104,8 +2106,8 @@
          "components":{
              "InstallAppBarComponent":{
                  "install":{
-                     "installBtn":"Install App",
-                     "title":"Install the app to make orders online."
+                    "installBtn":"Instalar App",
+                    "title":"Instale la aplicación para hacer pedidos en línea."
                  }
              }
          }

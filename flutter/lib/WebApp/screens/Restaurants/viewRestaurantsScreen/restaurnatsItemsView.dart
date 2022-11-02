@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/components/viewRestaurantScreenFroDesktop.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/components/viewRestaurantScreenFroMobile.dart';
@@ -46,7 +47,7 @@ class _RestaurantsItemsViewState extends State<RestaurantsItemsView> {
             var xLang = QR.params["lang"].toString().contains("es")
                 ? LanguageType.ES
                 : LanguageType.EN;
-            print("xLang is now ${xLang}");
+            mezDbgPrint("xLang is now ${xLang}");
             if (mounted) {
               Future.delayed(Duration(seconds: 1)).then((value) {
                 Lcontroller.changeLangForWeb(xLang);
