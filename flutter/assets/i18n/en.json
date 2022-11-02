@@ -585,7 +585,8 @@
                     "description": "Description",
                     "openHours": "openHours",
                     "sendMyLaundry": "Send my laundry",
-                    "categories": "Categories"
+                    "categories": "Categories",
+                    "location":"Location"
                 },
                 "LaundryRequestView": {
                     "LaundryOrderRequestView": {
@@ -1216,7 +1217,8 @@
                     "description": "Description",
                     "openHours": "openHours",
                     "sendMyLaundry": "Send my laundry",
-                    "categories": "Categories"
+                    "categories": "Categories",
+                    "location":"Location"
                 },
                 "laundryListView": {
                     "laundriesListView": {

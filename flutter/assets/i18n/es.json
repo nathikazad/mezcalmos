@@ -581,7 +581,8 @@
                     "description": "Descripción",
                     "openHours": "Horas Laborales",
                     "sendMyLaundry": "Envía mi ropa",
-                    "categories": "Categorías"
+                    "categories": "Categorías",
+                    "location":"Ubicacion"
 
                 },
                 "LaundriesListView": {

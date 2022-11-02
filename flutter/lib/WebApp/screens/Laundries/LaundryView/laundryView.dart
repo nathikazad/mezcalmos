@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/WebApp/screens/Laundries/LaundryView/components/laundryViewForDesktop.dart';
 import 'package:mezcalmos/WebApp/screens/Laundries/LaundryView/components/laundryViewForMobile.dart';
@@ -27,17 +28,17 @@ class _LaundryViewState extends State<LaundryView> {
 
   @override
   void initState() {
-    print("this is the id of laundry ${QR.params['itemId'].toString()}");
+    mezDbgPrint("this is the id of laundry ${QR.params['id'].toString()}");
     ever(isLoadded, (val) {
       changeLangWithParams();
       Get.find<LaundryController>()
-          .getLaundry(QR.params['itemId'].toString())
+          .getLaundry(QR.params['id'].toString())
           .then((value) {
         laundry = value;
-        print(laundry!.toJson());
+        mezDbgPrint(laundry!.toJson());
         setState(() {});
       }).catchError((err, stk) {
-        print(
+        mezDbgPrint(
             "this is another error in laundry item view screen ${err.toString()}");
         QR.to("/404");
       });
