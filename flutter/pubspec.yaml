@@ -104,8 +104,6 @@ dependencies:
   flutter_callkit_incoming: ^1.0.2+1
   html: ^0.15.0
 
-  flutter_hooks: ^0.18.5+1
-
 dependency_overrides:
   firebase_core_platform_interface: 4.5.1
 
