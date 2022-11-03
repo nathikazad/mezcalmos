@@ -324,6 +324,24 @@ class RestaurantInfoController extends GetxController {
           errorMessage: "Server Error", errorCode: "serverError");
     }
   }
+
+  Future<ServerResponse> generateLink({required String restaurantId}) async {
+    final HttpsCallable cloudFunction =
+        FirebaseFunctions.instance.httpsCallable('links-generateLink');
+    try {
+      final HttpsCallableResult response = await cloudFunction.call({
+        "providerId": restaurantId,
+        "providerType": 'Restaurant',
+      });
+      mezDbgPrint("Response Generating Link : ${response.data}");
+      return ServerResponse.fromJson(response.data);
+    } catch (e) {
+      mezDbgPrint("Errrooooooooor =======> $e");
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
+    }
+  }
+
 // assign driver
 
   Future<ServerResponse> assignDeliveryDriver({

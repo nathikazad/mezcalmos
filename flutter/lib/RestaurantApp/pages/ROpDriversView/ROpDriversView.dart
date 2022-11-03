@@ -1,11 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpDriversView/components/ROpDriverCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpDriversView/controllers/ROpDriversViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -114,7 +118,25 @@ class _ROpDriversViewState extends State<ROpDriversView> {
               backgroundColor: secondaryLightBlueColor,
               textColor: primaryBlueColor,
               onClick: () async {
-                await _addDriverSheet();
+                if (viewController.restaurant.value?.qr != null &&
+                    viewController.restaurant.value?.link != null) {
+                  await _addDriverSheet();
+                } else {
+                  mezDbgPrint(
+                      "OperatorId ===> ${Get.find<RestaurantOpAuthController>().operator.value?.info.id}");
+
+                  mezDbgPrint(
+                      "viewController.restaurantId ===> ${viewController.restaurant.value?.info.id}");
+                  ServerResponse? resp = await viewController
+                      .restaurantInfoController
+                      ?.generateLink(
+                    restaurantId: viewController.restaurant.value!.info.id,
+                  );
+
+                  if (resp?.success == true) {
+                    await _addDriverSheet();
+                  }
+                }
               },
             ),
             SizedBox(
@@ -162,10 +184,16 @@ class _ROpDriversViewState extends State<ROpDriversView> {
                   const SizedBox(
                     height: 25,
                   ),
+                  // QR
                   Container(
                     height: 15.h,
                     width: 15.h,
                     color: Colors.black,
+                    child: viewController.restaurant.value?.qr != null
+                        ? CachedNetworkImage(
+                            imageUrl: viewController.restaurant.value!.qr!,
+                          )
+                        : null,
                   ),
                   const SizedBox(
                     height: 25,

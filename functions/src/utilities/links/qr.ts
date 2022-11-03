@@ -50,8 +50,10 @@ export async function generateQr(qrData:string): Promise<string|null>  {
                 },
             },
         );
-
-        return data['imageUrl'];
+        let imgUrl : string | null | undefined = data['imageUrl']
+        if (!imgUrl)
+            return null
+        return (data['imageUrl'] as string).replace('//', 'https://');
     } catch (error) {
         console.log(`Error Happend when generating the QR code:\n${error}`);
         return null;
