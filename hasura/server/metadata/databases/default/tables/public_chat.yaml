@@ -1,0 +1,11 @@
+table:
+  name: chat
+  schema: public
+array_relationships:
+  - name: chat_participants
+    using:
+      foreign_key_constraint_on:
+        column: chat_id
+        table:
+          name: chat_participant
+          schema: public

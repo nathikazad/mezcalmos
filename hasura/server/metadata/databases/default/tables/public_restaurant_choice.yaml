@@ -1,0 +1,15 @@
+table:
+  name: restaurant_choice
+  schema: public
+object_relationships:
+  - name: name
+    using:
+      foreign_key_constraint_on: name_id
+array_relationships:
+  - name: options
+    using:
+      foreign_key_constraint_on:
+        column: choice_id
+        table:
+          name: restaurant_option_choice_map
+          schema: public

@@ -1,0 +1,3 @@
+table:
+  name: restaurant_item_option_map
+  schema: public

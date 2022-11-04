@@ -1,0 +1,25 @@
+table:
+  name: delivery
+  schema: public
+object_relationships:
+  - name: chat_with_customer
+    using:
+      foreign_key_constraint_on: chat_with_customer_id
+  - name: chat_with_service_provider
+    using:
+      foreign_key_constraint_on: chat_with_service_provider_id
+  - name: customer_review_by_driver
+    using:
+      foreign_key_constraint_on: customer_review_by_driver_id
+  - name: deliverer
+    using:
+      foreign_key_constraint_on: deliverer_id
+  - name: driver_review_by_customer
+    using:
+      foreign_key_constraint_on: driver_review_by_customer_id
+  - name: driver_review_by_service_provider
+    using:
+      foreign_key_constraint_on: driver_review_by_service_provider_id
+  - name: service_provider_review_by_driver
+    using:
+      foreign_key_constraint_on: service_provider_review_by_driver_id

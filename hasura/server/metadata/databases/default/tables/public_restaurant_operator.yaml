@@ -1,0 +1,3 @@
+table:
+  name: restaurant_operator
+  schema: public

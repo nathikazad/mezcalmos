@@ -1,0 +1,21 @@
+table:
+  name: restaurant_order
+  schema: public
+object_relationships:
+  - name: chat
+    using:
+      foreign_key_constraint_on: chat_id
+  - name: delivery
+    using:
+      foreign_key_constraint_on: delivery_id
+  - name: restaurant
+    using:
+      foreign_key_constraint_on: restaurant_id
+array_relationships:
+  - name: items
+    using:
+      foreign_key_constraint_on:
+        column: restaurant_order_id
+        table:
+          name: restaurant_order_item
+          schema: public

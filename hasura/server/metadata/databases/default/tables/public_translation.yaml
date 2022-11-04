@@ -1,0 +1,11 @@
+table:
+  name: translation
+  schema: public
+array_relationships:
+  - name: translations
+    using:
+      foreign_key_constraint_on:
+        column: translation_id
+        table:
+          name: translation_value
+          schema: public

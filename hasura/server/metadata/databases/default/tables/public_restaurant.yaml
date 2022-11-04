@@ -1,0 +1,25 @@
+table:
+  name: restaurant
+  schema: public
+object_relationships:
+  - name: description
+    using:
+      foreign_key_constraint_on: description_id
+  - name: payment_info
+    using:
+      foreign_key_constraint_on: payment_info_id
+array_relationships:
+  - name: categories
+    using:
+      foreign_key_constraint_on:
+        column: restaurant_id
+        table:
+          name: restaurant_category
+          schema: public
+  - name: orders
+    using:
+      foreign_key_constraint_on:
+        column: restaurant_id
+        table:
+          name: restaurant_order
+          schema: public
