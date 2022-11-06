@@ -1,0 +1,10 @@
+table:
+  name: restaurant_cart_item
+  schema: public
+object_relationships:
+  - name: restaurant_cart
+    using:
+      foreign_key_constraint_on: customer_id
+  - name: restaurant_item
+    using:
+      foreign_key_constraint_on: restaurant_item_id

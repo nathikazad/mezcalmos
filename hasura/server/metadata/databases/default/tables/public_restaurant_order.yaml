@@ -5,12 +5,18 @@ object_relationships:
   - name: chat
     using:
       foreign_key_constraint_on: chat_id
+  - name: customer
+    using:
+      foreign_key_constraint_on: customer_id
   - name: delivery
     using:
       foreign_key_constraint_on: delivery_id
   - name: restaurant
     using:
       foreign_key_constraint_on: restaurant_id
+  - name: review
+    using:
+      foreign_key_constraint_on: review_id
 array_relationships:
   - name: items
     using:
