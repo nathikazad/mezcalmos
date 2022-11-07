@@ -21,8 +21,8 @@
             },
             "DropDownLocationList": {
                 "ops": "Oops",
-                "wrongAddress" : "Dirección incorrecta/inválida elegida!",
-                "distanceError": "¡La distancia entre usted y el restaurante es de más de 10 km!",
+                "wrongAddress": "Dirección incorrecta/inválida elegida!",
+                "distanceError": "La distancia entre usted y la ubicación del servicio supera los 10 km. 10 km.",
                 "chooseLoc": "Elegir la ubicación",
                 "pickLocation": "Elegir del mapa"
             },

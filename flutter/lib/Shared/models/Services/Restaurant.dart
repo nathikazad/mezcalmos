@@ -662,6 +662,11 @@ class Option {
     return selected;
   }
 
+  Choice? get getDefaultChoice {
+    return choices
+        .firstWhereOrNull((Choice element) => element.isDefault == true);
+  }
+
   Map<String, dynamic> toJson() {
     Map<String, dynamic> _parseChoices(List<Choice> choices) {
       final Map<String, dynamic> _mappedChoices = <String, dynamic>{};
@@ -691,11 +696,13 @@ class Choice {
   Map<LanguageType, String> name;
   int position = 0;
   bool available = true;
+  bool isDefault = false;
   Choice(
       {required this.id,
       required this.name,
       required this.cost,
       this.available = true,
+      this.isDefault = false,
       this.position = 0});
 
   factory Choice.fromData(key, data) {
@@ -704,6 +711,7 @@ class Choice {
         name: convertToLanguageMap(data["name"]),
         cost: data["cost"] ?? 0,
         available: data["available"] ?? true,
+        isDefault: data?["default"] ?? false,
         position: data["position"] ?? 0);
   }
   Map<String, dynamic> toJson() => {

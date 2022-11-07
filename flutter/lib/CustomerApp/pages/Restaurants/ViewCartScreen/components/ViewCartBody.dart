@@ -88,7 +88,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
                   Container(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "${_i18n()["deliveryLocation"]} :",
+                      "${_i18n()["deliveryLocation"]}",
                       style: Get.textTheme.bodyText1,
                       textAlign: TextAlign.left,
                     ),
@@ -103,7 +103,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
                   ),
 
                   SizedBox(
-                    height: 30,
+                    height: 15,
                   ),
                   Container(
                     child: PaymentMethodPicker(

@@ -158,6 +158,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                             OrderDeliveryLocation(
                               order: order.value!,
                               margin: const EdgeInsets.only(bottom: 20),
+                              titleTextStyle: Get.textTheme.bodyText1,
                             ),
                             OrderPaymentMethod(
                               order: order.value!,

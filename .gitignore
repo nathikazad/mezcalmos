@@ -20,3 +20,6 @@ service_account.json
 test/scripts/data
 service-account.json
 hasura
+.mason
+mason.yaml
+mason-lock.json

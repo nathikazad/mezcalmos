@@ -153,10 +153,6 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                 Container(
                   margin: const EdgeInsets.only(top: 10),
                   child: Row(
-                    // mainAxisAlignment:
-                    //     (currentRestaurant != null && showViewRestaurant)
-                    //         ? MainAxisAlignment.start
-                    //         : MainAxisAlignment.end,
                     children: [
                       Flexible(
                         fit: FlexFit.tight,
@@ -236,7 +232,10 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                     ),
                   ),
                 if (item.description?[userLanguage] != null &&
-                    item.description![userLanguage]!.isNotEmpty)
+                    item.description![userLanguage]!
+                        .toString()
+                        .removeAllWhitespace
+                        .isNotEmpty)
                   _itemDescription(context, item),
                 if (item.options.isNotEmpty)
                   Column(

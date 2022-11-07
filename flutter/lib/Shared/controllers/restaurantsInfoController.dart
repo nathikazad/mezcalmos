@@ -8,7 +8,6 @@ import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class RestaurantsInfoController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -31,14 +30,13 @@ class RestaurantsInfoController extends GetxController {
     final List<Restaurant> restaurants = <Restaurant>[];
     if (snapshot.value == null) return restaurants;
     // ignore: avoid_annotating_with_dynamic
-    (snapshot.value as dynamic)
-        ?.forEach((dynamic restaurantId, dynamic restaurantData) {
+    (snapshot.value as dynamic)?.forEach((restaurantId, restaurantData) {
       if (restaurantData["state"]["available"] == true) {
         try {
           restaurants.add(Restaurant.fromRestaurantData(
               restaurantId: restaurantId, restaurantData: restaurantData));
         } catch (e, stc) {
-          mezDbgPrint("Restaurant add error");
+          mezDbgPrint("Restaurant add error , $e");
           mezDbgPrint("Restaurant add error $stc");
         }
       }
