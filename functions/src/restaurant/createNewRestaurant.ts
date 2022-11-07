@@ -118,8 +118,8 @@ let restaurantTemplateInJson = `{
       }
     },
     "description":{
-      "en": "description",
-      "es": "descripcion"
+      "en": "",
+      "es": ""
     }
   },
   "info": {
