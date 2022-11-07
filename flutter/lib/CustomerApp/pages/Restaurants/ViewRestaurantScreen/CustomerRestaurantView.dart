@@ -66,21 +66,20 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
 
   Container _schedulingOrdersBottomWidget() {
     return Container(
+      alignment: Alignment.center,
       height: 60,
       decoration: BoxDecoration(color: Colors.grey.shade400),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(Icons.info),
-          SizedBox(
-            width: 5,
-          ),
           Flexible(
             child: Text(
               '${_i18n()["scheduleTitle"]}',
               style: Get.textTheme.bodyText1,
               maxLines: 2,
+              textAlign: TextAlign.center,
             ),
           ),
         ],
