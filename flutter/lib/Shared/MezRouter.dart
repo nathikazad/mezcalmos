@@ -1,14 +1,12 @@
 import 'package:get/get.dart';
 
-/// This works for both Named and None-named routing
-class MRoute<T> {
-  T route;
+/// This only support named Routes
+class MRoute<String> {
+  String route;
   dynamic args;
   Map<String, String>? params;
-
   MRoute({required this.route, this.args, this.params});
-
-  bool isNamedRoute() => T is String;
+  String name() => route;
 }
 
 /// This does not support NestedNavigation yet.
@@ -31,8 +29,8 @@ class MezRouter {
       preventDuplicates && _navigationStack.last.route == page,
       MRoute(route: page, args: arguments, params: parameters),
     );
-
     _isBusy = true;
+
     final dynamic globalResult = Get.toNamed<Q>(
       page,
       arguments: arguments,
@@ -67,6 +65,7 @@ class MezRouter {
     return _navigationStack.reversed.toList()[level];
   }
 
+  /// to
   /// This checks if a route is in NavigationStack.
   static bool isRouteInStack<T>(T route) => _navigationStack
       .where((MRoute routeInstance) => routeInstance.route == route)
