@@ -37,13 +37,16 @@ class LaundryOrderController extends GetxController {
     listenToOrders();
     _appLifeCyclePauseCallbackId =
         _appLifeCycleController.attachCallback(AppLifecycleState.paused, () {
-      _pastOrdersListener?.cancel();
-      _inProcessOrdersListener?.cancel();
+      _pastOrdersListener?.pause();
+      _inProcessOrdersListener?.pause();
     });
 
     _appLifeCycleResumeCallbackId =
         _appLifeCycleController.attachCallback(AppLifecycleState.resumed, () {
-      listenToOrders();
+      _pastOrdersListener?.resume();
+      _inProcessOrdersListener?.resume();
+
+      // listenToOrders();
     });
     super.onInit();
   }

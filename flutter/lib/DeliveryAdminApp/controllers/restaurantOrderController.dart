@@ -37,13 +37,17 @@ class RestaurantOrderController extends GetxController {
     listenToOrders();
     _appLifeCyclePauseCallbackId =
         _appLifeCycleController.attachCallback(AppLifecycleState.paused, () {
-      _pastOrdersListener?.cancel();
-      _currentOrdersListener?.cancel();
+      mezDbgPrint("[_] _appLifeCyclePauseCallbackId ==> triggering!");
+      _pastOrdersListener?.pause();
+      _currentOrdersListener?.pause();
     });
 
     _appLifeCycleResumeCallbackId =
         _appLifeCycleController.attachCallback(AppLifecycleState.resumed, () {
-      listenToOrders();
+      mezDbgPrint("[_] appLifeCycleResumeCallbackId ==> triggering!");
+      _pastOrdersListener?.resume();
+      _currentOrdersListener?.resume();
+      // listenToOrders();
     });
     super.onInit();
   }
@@ -58,6 +62,10 @@ class RestaurantOrderController extends GetxController {
       if (event.snapshot.value != null) {
         for (var orderId in (event.snapshot.value as dynamic).keys) {
           final dynamic orderData = (event.snapshot.value as dynamic)[orderId];
+          // or make a check here in case order/orderiD already exists in orders then don't add it,
+          // but that will not be supper efficient especially if there is a lot of orders.
+
+          // or clear and re-process all orders.
           orders.add(RestaurantOrder.fromData(orderId, orderData));
         }
       } else {}
