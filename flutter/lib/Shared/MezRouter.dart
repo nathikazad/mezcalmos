@@ -1,12 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 /// This only support named Routes
-class MRoute<String> {
-  String route;
+class MRoute {
+  String name;
   dynamic args;
   Map<String, String>? params;
-  MRoute({required this.route, this.args, this.params});
-  String name() => route;
+  MRoute({required this.name, this.args, this.params});
 }
 
 /// This does not support NestedNavigation yet.
@@ -26,8 +26,8 @@ class MezRouter {
     // TODO : Make sure that _isBusy is false!
     // if not we mark this current fcall as a delegate and await for it.
     _navigationStack.addIf(
-      preventDuplicates && _navigationStack.last.route == page,
-      MRoute(route: page, args: arguments, params: parameters),
+      preventDuplicates && _navigationStack.last.name == page,
+      MRoute(name: page, args: arguments, params: parameters),
     );
     _isBusy = true;
 
@@ -41,6 +41,69 @@ class MezRouter {
     });
     _isBusy = false;
 
+    return globalResult;
+  }
+
+  static Future<Q?>? offAndToNamed<Q>(
+    String page, {
+    dynamic arguments,
+    dynamic result,
+    Map<String, String>? parameters,
+  }) {
+    // TODO : Make sure that _isBusy is false!
+    // if not we mark this current fcall as a delegate and await for it.
+    _isBusy = true;
+    final dynamic globalResult = Get.offAndToNamed<Q>(page,
+            arguments: arguments, parameters: parameters, result: result)
+        ?.then((value) {
+      return value;
+    });
+
+    _isBusy = false;
+    return globalResult;
+  }
+
+  static Future<Q?>? offNamed<Q>(
+    String page, {
+    dynamic arguments,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+  }) {
+    // TODO : Make sure that _isBusy is false!
+    // if not we mark this current fcall as a delegate and await for it.
+    _isBusy = true;
+    final dynamic globalResult = Get.offNamed<Q>(
+      page,
+      arguments: arguments,
+      parameters: parameters,
+      preventDuplicates: preventDuplicates,
+    )?.then((value) {
+      return value;
+    });
+    _isBusy = false;
+    return globalResult;
+  }
+
+  static Future<Q?>? offAllNamed<Q>(
+    String newRouteName, {
+    RoutePredicate? predicate,
+    dynamic arguments,
+    int? id,
+    Map<String, String>? parameters,
+  }) {
+    // TODO : Make sure that _isBusy is false!
+    // if not we mark this current fcall as a delegate and await for it.
+    _isBusy = true;
+    final dynamic globalResult = Get.offAllNamed<Q>(
+      newRouteName,
+      arguments: arguments,
+      parameters: parameters,
+      predicate: predicate,
+    )?.then((value) {
+      return value;
+    });
+
+    _isBusy = false;
     return globalResult;
   }
 
@@ -67,7 +130,7 @@ class MezRouter {
 
   /// to
   /// This checks if a route is in NavigationStack.
-  static bool isRouteInStack<T>(T route) => _navigationStack
-      .where((MRoute routeInstance) => routeInstance.route == route)
+  static bool isRouteInStack<String>(String routeName) => _navigationStack
+      .where((MRoute routeInstance) => routeInstance.name == routeName)
       .isNotEmpty;
 }
