@@ -5,6 +5,7 @@ import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantsInfoController
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 enum ServiceContact { Phone, Email }
 
@@ -103,7 +104,7 @@ class AddServiceViewController {
             laundryName: name.text, laundryPhoneOrEmail: _getServiceContact)
         .then((ServerResponse value) {
       if (value.success) {
-        Get.back();
+        MezRouter.back();
       } else {
         Get.snackbar(
           "Error",
@@ -121,7 +122,7 @@ class AddServiceViewController {
             restaurantName: name.text, laundryPhoneOrEmail: _getServiceContact)
         .then((ServerResponse value) {
       if (value.success) {
-        Get.back();
+        MezRouter.back();
       } else {
         Get.snackbar(
           "Error",

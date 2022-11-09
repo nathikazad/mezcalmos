@@ -27,6 +27,7 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Laundry']['LaundryCurrentOrderView']['LaundryCurrentOrderView'];
@@ -56,7 +57,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
       orderId = Get.parameters['orderId']!;
     } else {
       mezDbgPrint("Order id null from the parameters ######");
-      Get.back<void>();
+      MezRouter.back<void>();
     }
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as LaundryOrder?;
@@ -77,7 +78,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
       if (order.value == null) {
         // ignore: inference_failure_on_function_invocation
         Future<Null>.delayed(Duration.zero, () {
-          Get.back<Null>();
+          MezRouter.back<Null>();
           MezSnackbar("Error", "Order does not exist");
         });
       } else {

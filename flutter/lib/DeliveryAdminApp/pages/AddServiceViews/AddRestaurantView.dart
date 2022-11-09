@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/TextInputHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
@@ -40,7 +41,7 @@ class _AddLaundryServiceViewState extends State<AddRestaurantServiceView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: Get.back, title: '${_i18n()["newRestaurant"]}'),
+          onClick: MezRouter.back, title: '${_i18n()["newRestaurant"]}'),
       bottomNavigationBar: MezButton(
         height: 65,
         label: '${_i18n()["createRestaurant"]}',

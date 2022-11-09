@@ -26,6 +26,7 @@ import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/IPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
     ["Orders"]["CurrentOrderScreen"]["CurrentOrderScreen"];
@@ -60,7 +61,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
     mezDbgPrint("_orderSnapshot :: $_orderSnapshot");
 
     if (_orderSnapshot == null) {
-      Get.back<void>();
+      MezRouter.back<void>();
       mezcalmosDialogOrderNoMoreAvailable(context);
     } else {
       // firstTimeExecution
@@ -297,7 +298,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
                       }
                       setState(() {});
                       _clickedBottomButton.value = false;
-                      Get.back<void>();
+                      MezRouter.back<void>();
                     },
                   );
                 },
@@ -357,7 +358,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
         }
       },
       secondaryClickTitle: "No",
-      secondaryCallBack: () => Get.back<void>(),
+      secondaryCallBack: () => MezRouter.back<void>(),
     );
 
     // showConfirmationDialog(
@@ -372,7 +373,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
     //     }
     //     _clickedBottomButton.value = false;
     //     setState(() {});
-    //     Get.back<void>();
+    //     MezRouter.back<void>();
     //   },
     // );
   }
@@ -390,7 +391,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
               if (!resp.success) {
                 MezSnackbar("Error", "Server Error");
               }
-              Get.back<void>();
+              MezRouter.back<void>();
             }).whenComplete(() => _clickedBottomButton.value = false);
           },
         ),
@@ -487,9 +488,9 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
   PreferredSizeWidget getRightAppBar(TaxiOrdersStatus status) {
     if (order!.isPastOrder() || order!.status == TaxiOrdersStatus.Scheduled) {
       return mezcalmosAppBar(AppBarLeftButtonType.Back,
-          //   onClick: Get.back,
+          //   onClick: MezRouter.back,
           // );
-          onClick: () => Get.offNamedUntil<void>(
+          onClick: () => MezRouter.offNamedUntil<void>(
               kIncomingOrdersListRoute, ModalRoute.withName(kHomeRoute)));
     } else {
       return mezcalmosAppBar(AppBarLeftButtonType.Menu, onClick: () async {

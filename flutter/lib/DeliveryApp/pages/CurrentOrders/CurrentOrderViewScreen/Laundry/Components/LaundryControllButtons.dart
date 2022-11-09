@@ -4,6 +4,7 @@ import 'package:mezcalmos/DeliveryApp/controllers/laundryController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/widgets/GradientCircularLoading.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
         ["pages"]["CurrentOrders"]["CurrentOrderViewScreen"]["Components"]
@@ -85,7 +86,7 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                           clicked = false;
                         });
                       });
-                      Get.back(closeOverlays: true);
+                      MezRouter.back(closeOverlays: true);
 
                       break;
                     case LaundryOrderStatus.ReadyForDelivery:
@@ -112,7 +113,7 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                           clicked = false;
                         });
                       });
-                      // Get.back(closeOverlays: true);
+                      // MezRouter.back(closeOverlays: true);
                       break;
                     case LaundryOrderStatus.PickedUpFromLaundry:
                       setState(() {

@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewRestaurantScreen"]["CustomerRestaurantView"];
@@ -230,7 +231,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             children.add(RestaurantsListOfItemsComponent(
                 item: item,
                 function: () {
-                  Get.toNamed(
+                  MezRouter.toNamed(
                     getItemRoute(restaurantId, item.id!),
                     arguments: {
                       "mode": ViewItemScreenMode.AddItemMode,

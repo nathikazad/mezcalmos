@@ -6,6 +6,7 @@ import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
@@ -67,7 +68,7 @@ class DaRestaurantCard extends StatelessWidget {
                               padding: const EdgeInsets.all(3),
                               primary: primaryBlueColor),
                           onPressed: () {
-                            Get.toNamed(getROpEditInfoRoute(
+                            MezRouter.toNamed(getROpEditInfoRoute(
                                 restaurantId: restaurant.info.id));
                           },
                           icon: Icon(Icons.person),
@@ -77,7 +78,7 @@ class DaRestaurantCard extends StatelessWidget {
                       Flexible(
                         child: TextButton.icon(
                           onPressed: () {
-                            Get.toNamed(getROpMenuRoute(
+                            MezRouter.toNamed(getROpMenuRoute(
                                 restaurantId: restaurant.info.id));
                           },
                           style: TextButton.styleFrom(

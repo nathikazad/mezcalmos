@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class ItemViewController {
   /// Class to control the item view on edit and add mode for restaurant app ///
@@ -226,7 +227,7 @@ class ItemViewController {
       _restaurantInfoController
           .addSpecialItem(item: _contructItem())
           .onError((Object? error, StackTrace stackTrace) => mezDbgPrint(error))
-          .then((value) => Get.back());
+          .then((value) => MezRouter.back());
     } else if (editMode.value == false) {
       //  ignore: unawaited_futures
       _restaurantInfoController
@@ -235,7 +236,7 @@ class ItemViewController {
           .onError((Object? error, StackTrace stackTrace) {
         mezDbgPrint(error);
         mezDbgPrint(stackTrace);
-      }).then((value) => Get.back());
+      }).then((value) => MezRouter.back());
     } else {
       mezDbgPrint("From controlllllllleeeeer =====>$isCurrentSpec");
       // ignore: unawaited_futures
@@ -249,7 +250,7 @@ class ItemViewController {
           .onError((Object? error, StackTrace stackTrace) {
         mezDbgPrint(error);
         mezDbgPrint(stackTrace);
-      }).then((value) => Get.back());
+      }).then((value) => MezRouter.back());
     }
     isLoading.value = false;
   }
@@ -262,7 +263,7 @@ class ItemViewController {
             categoryId: catgeoryId,
             isSpecial: specialMode.value,
             currentSpecial: isCurrentSpec)
-        .then((value) => Get.back());
+        .then((value) => MezRouter.back());
   }
 
   // add categories //

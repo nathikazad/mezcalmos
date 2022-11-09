@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 enum AppBarLeftButtonType { Back, Menu, Lang }
 
@@ -27,7 +28,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     switch (leftBtnType) {
       case AppBarLeftButtonType.Back:
         return _BackButtonAppBar(
-          click: autoBack ? (onClick ?? () => Get.back<void>()) : onClick,
+          click: autoBack ? (onClick ?? () => MezRouter.back<void>()) : onClick,
         );
       case AppBarLeftButtonType.Menu:
         return _MenuButtonAppBar();
@@ -44,7 +45,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
         customBorder: CircleBorder(),
         onTap: () {
           if (ordersRoute != null) {
-            Get.toNamed(ordersRoute);
+            MezRouter.toNamed(ordersRoute);
           }
         },
         child: Ink(
@@ -164,7 +165,7 @@ Widget _MenuButtonAppBar() {
     scale: 0.6,
     child: InkWell(
       onTap: () {
-        //  Get.back();
+        //  MezRouter.back();
         Get.find<SideMenuDrawerController>().openMenu();
       },
       child: Ink(
@@ -201,7 +202,7 @@ Widget _notificationAppBarIcon() {
         child: InkWell(
           customBorder: CircleBorder(),
           onTap: () {
-            Get.toNamed(kNotificationsRoute);
+            MezRouter.toNamed(kNotificationsRoute);
           },
           child: Badge(
             badgeColor: Colors.red,

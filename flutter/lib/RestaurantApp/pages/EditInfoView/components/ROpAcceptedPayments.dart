@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpEditInfoView']['components']['ROpAcceptedPayments'];
@@ -275,7 +276,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
                           backgroundColor: offRedColor,
                           textColor: Colors.red,
                           onClick: () async {
-                            Get.back();
+                            MezRouter.back();
                           },
                         )),
                         SizedBox(
@@ -289,7 +290,8 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
                                     widget.viewController.bankNumber.text) !=
                                 null) {
                               await widget.viewController.pushBankInfos().then(
-                                  (value) => Get.back(closeOverlays: true));
+                                  (value) =>
+                                      MezRouter.back(closeOverlays: true));
                             } else {
                               MezSnackbar('${_i18n()["error"]}',
                                   '${_i18n()["bankError"]}');

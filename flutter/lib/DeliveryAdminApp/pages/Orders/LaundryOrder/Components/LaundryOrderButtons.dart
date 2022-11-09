@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ['pages']['Orders']["LaundryOrder"]["Components"]["LaundryOrderButtons"];
@@ -26,10 +27,10 @@ class OrderButtons {
             _i18n()["title"],
             _i18n()["subTitle"],
             () {
-              Get.back(result: true);
+              MezRouter.back(result: true);
             },
             () {
-              Get.back(result: false);
+              MezRouter.back(result: false);
             },
             Container(height: 40, width: 40, child: Image.asset(cancelIcon)),
             LinearGradient(
@@ -39,9 +40,8 @@ class OrderButtons {
             ),
           );
           if (res) {
-            await controller
-                .cancelOrder(orderId)
-                .then((ServerResponse value) => Get.back(closeOverlays: true));
+            await controller.cancelOrder(orderId).then(
+                (ServerResponse value) => MezRouter.back(closeOverlays: true));
           }
         },
         widget: Text(_i18n()["cancel"].toUpperCase(),
@@ -86,10 +86,10 @@ class OrderButtons {
             _i18n()['readyForDeliveryTitle'],
             _i18n()['readyForDeliveryText'],
             () {
-              Get.back(result: true);
+              MezRouter.back(result: true);
             },
             () {
-              Get.back(result: false);
+              MezRouter.back(result: false);
             },
             Icon(
               Icons.dry_cleaning_rounded,

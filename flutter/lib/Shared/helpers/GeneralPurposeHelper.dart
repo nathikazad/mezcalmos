@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
     ["GeneralPurposeHelper"];
@@ -273,7 +274,7 @@ Future<void> showConfirmationDialog(
                 GestureDetector(
                   onTap: () {
                     onNoClick?.call();
-                    Get.back<void>(closeOverlays: true);
+                    MezRouter.back<void>(closeOverlays: true);
                   },
                   child: Container(
                     width: double.infinity,
@@ -385,7 +386,7 @@ Future<void> showStatusInfoDialog(
               SizedBox(height: 18),
               GestureDetector(
                 onTap: (primaryCallBack == null)
-                    ? () => Get.back<void>(closeOverlays: true)
+                    ? () => MezRouter.back<void>(closeOverlays: true)
                     : primaryCallBack,
                 child: Container(
                   height: 44,
@@ -551,7 +552,7 @@ Future<void> showReviewDialog(
                     Get.snackbar('${_i18n()["review"]["successTitle"]}',
                         "${_i18n()["review"]["successSubtitle"]}",
                         backgroundColor: Colors.black, colorText: Colors.white);
-                    Get.back(closeOverlays: true);
+                    MezRouter.back(closeOverlays: true);
                   } else {
                     mezDbgPrint(response);
                     Get.snackbar("Error", response.errorMessage ?? "error",
@@ -562,7 +563,7 @@ Future<void> showReviewDialog(
               SizedBox(height: 12),
               InkWell(
                 onTap: () {
-                  Get.back(closeOverlays: true);
+                  MezRouter.back(closeOverlays: true);
                 },
                 child: Ink(
                   padding: const EdgeInsets.symmetric(vertical: 5),

@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpOrderView"]["components"]["ROpDriverCard"];
@@ -64,7 +65,7 @@ class ROpDriverCard extends StatelessWidget {
                     Obx(
                       () => MessageButton(
                         onTap: () {
-                          Get.toNamed(getMessagesRoute(
+                          MezRouter.toNamed(getMessagesRoute(
                               chatId: order.serviceProviderDropOffDriverChatId!,
                               recipientType: ParticipantType.DeliveryDriver,
                               orderId: order.orderId));

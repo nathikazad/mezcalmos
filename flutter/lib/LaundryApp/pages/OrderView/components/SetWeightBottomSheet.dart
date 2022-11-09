@@ -6,6 +6,7 @@ import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOrderWeightSelector.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -119,7 +120,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
 
                           await deleteItem(widget.oldItem!)
                               .then((Object? value) {
-                            Get.until((Route route) =>
+                            MezRouter.untill((Route route) =>
                                 route.settings.name ==
                                 getLaundryOpOrderRoute(widget.order.orderId));
                           });
@@ -228,7 +229,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
               ),
               InkWell(
                   onTap: () {
-                    Get.back();
+                    MezRouter.back();
                   },
                   child: Ink(
                     height: 50,
@@ -353,7 +354,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
         .then((ServerResponse value) {
       mezDbgPrint("Done");
 
-      Get.back();
+      MezRouter.back();
       // disposeBottomSheet();
     }).whenComplete(() => isClicked.value = false);
   }

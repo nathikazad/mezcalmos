@@ -19,6 +19,7 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/OrderFromToBar.dart';
 import 'package:mezcalmos/Shared/widgets/OrderTimeBar.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]['Taxi']['ViewTaxiOrder']['ViewTaxiOrderScreen'];
@@ -48,11 +49,11 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
     // Order handling
     if (Get.parameters['orderId'] == null) {
       mezDbgPrint("Order id null from the parameters ######");
-      Get.back<void>();
+      MezRouter.back<void>();
     }
     viewController.init(Get.parameters['orderId']!).then((bool initSuccess) {
       if (!initSuccess) {
-        Get.back<void>();
+        MezRouter.back<void>();
         MezSnackbar("Error", "Order does not exist");
       }
     });

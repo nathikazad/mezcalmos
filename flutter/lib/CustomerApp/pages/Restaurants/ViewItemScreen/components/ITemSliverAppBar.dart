@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class ItemSliverAppBar extends StatelessWidget {
   const ItemSliverAppBar({Key? key, required this.item}) : super(key: key);
@@ -104,7 +105,7 @@ class ItemSliverAppBar extends StatelessWidget {
         fit: BoxFit.fitWidth,
         child: InkWell(
           onTap: () {
-            Get.back();
+            MezRouter.back();
           },
           child: Ink(
             width: 25,
@@ -131,7 +132,7 @@ class ItemSliverAppBar extends StatelessWidget {
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
-          Get.toNamed(kOrdersRoute);
+          MezRouter.toNamed(kOrdersRoute);
         },
         child: Ink(
           padding: const EdgeInsets.all(5),
@@ -155,7 +156,7 @@ class ItemSliverAppBar extends StatelessWidget {
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
-          Get.toNamed(kSignInRouteOptional);
+          MezRouter.toNamed(kSignInRouteOptional);
         },
         child: Ink(
           padding: const EdgeInsets.all(7),
@@ -182,7 +183,7 @@ class ItemSliverAppBar extends StatelessWidget {
           child: InkWell(
             customBorder: CircleBorder(),
             onTap: () {
-              Get.toNamed(kNotificationsRoute);
+              MezRouter.toNamed(kNotificationsRoute);
             },
             child: Badge(
               badgeColor: Colors.red,

@@ -20,6 +20,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class RestaurantWrapper extends StatefulWidget {
   @override
@@ -49,10 +50,10 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
   void _operatorInfoStreamListener() {
     _operatorInfoStreanSub = operatorInfoStream().listen((event) {
       if (Get.currentRoute != kUserProfile && event == null) {
-        Get.toNamed<void>(kSomethingWentWrongScreen);
+        MezRouter.toNamed<void>(kSomethingWentWrongScreen);
       } else if (event != null &&
           Get.currentRoute == kSomethingWentWrongScreen) {
-        Get.back<void>();
+        MezRouter.back<void>();
       }
     });
   }
@@ -93,7 +94,7 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
     mezDbgPrint(operator);
     if (operator != null && operator.state.restaurantId != null) {
       // ignore: unawaited_futures, inference_faQilure_on_function_invocation
-      Get.toNamed<void>(kCurrentOrdersListView);
+      MezRouter.toNamed<void>(kCurrentOrdersListView);
     } else {
       mezDbgPrint("RestaurantWrappper::handleState state is null, ERROR");
     }

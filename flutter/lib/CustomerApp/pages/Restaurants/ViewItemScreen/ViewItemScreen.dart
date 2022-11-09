@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 
@@ -75,7 +76,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
     if (widget.viewItemScreenMode == ViewItemScreenMode.AddItemMode) {
       final String? restaurantId = Get.parameters['restaurantId'];
       if (restaurantId == null) {
-        Get.back<void>();
+        MezRouter.back<void>();
       }
       controller.getRestaurant("$restaurantId").then((Restaurant? value) {
         setState(() {
@@ -93,7 +94,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
               restaurantId);
         } else {
           Future.delayed(Duration.zero, () {
-            Get.back();
+            MezRouter.back();
           });
         }
       });
@@ -166,7 +167,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                         InkWell(
                           borderRadius: BorderRadius.circular(18),
                           onTap: () {
-                            Get.toNamed(
+                            MezRouter.toNamed(
                                 getRestaurantRoute(
                                   currentRestaurant!.info.id,
                                 ),

@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -240,8 +241,8 @@ class _ROpOptionViewState extends State<ROpOptionView>
                   onPressed: () {
                     if (itemId != null) {
                       showConfirmationDialog(context, onYesClick: () async {
-                        Get.back(closeOverlays: true);
-                        Get.back();
+                        MezRouter.back(closeOverlays: true);
+                        MezRouter.back();
                       },
                           primaryButtonText: '${_i18n()["deleteOption"]}',
                           title: '${_i18n()["deleteOpBtn"]}',
@@ -270,7 +271,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
 
   AppBar _appBar() {
     return mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
-      Get.back(result: _viewController.editableOption.value);
+      MezRouter.back(result: _viewController.editableOption.value);
     },
         title: (_viewController.editMode.isTrue)
             ? _viewController.editableOption.value!.name[userLanguage]
@@ -299,7 +300,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
     if (_viewController.firstTabValid == true &&
         _scFormKey.currentState?.validate() == true) {
       _viewController.addOption();
-      Get.back(result: _viewController.addOption());
+      MezRouter.back(result: _viewController.addOption());
     } else if (_scFormKey.currentState?.validate() == true &&
         _prFormKey.currentState?.validate() != true) {
       _viewController.secondTabValid = true;
@@ -312,7 +313,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
         (_scFormKey.currentState?.validate() == true ||
             _viewController.secondTabValid)) {
       _viewController.addOption();
-      Get.back(result: _viewController.addOption());
+      MezRouter.back(result: _viewController.addOption());
     } else if (_prFormKey.currentState?.validate() == true &&
         _scFormKey.currentState?.validate() != true) {
       _viewController.firstTabValid = true;

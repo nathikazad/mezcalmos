@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpOrderView"]["components"]["ROpRefundButton"];
@@ -168,7 +169,7 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
                                         label: "${_i18n()["cancel"]}",
                                         height: 50,
                                         onClick: () async {
-                                          Get.back();
+                                          MezRouter.back();
                                         },
                                         backgroundColor: offRedColor,
                                         textColor: Colors.red,
@@ -192,7 +193,7 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
                                                         refundAmount.text))
                                                 .then((ServerResponse value) {
                                               if (value.success) {
-                                                Get.back();
+                                                MezRouter.back();
 
                                                 showStatusInfoDialog(context,
                                                     primaryIcon:

@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -46,7 +47,7 @@ class _SavedCardsListViewState extends State<SavedCardsListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          title: '${_i18n()["cards"]}', onClick: Get.back),
+          title: '${_i18n()["cards"]}', onClick: MezRouter.back),
       body: Obx(
         () => SingleChildScrollView(
             padding: const EdgeInsets.all(12),
@@ -107,7 +108,7 @@ class _SavedCardsListViewState extends State<SavedCardsListView> {
                       MezSnackbar("Error", response.errorMessage ?? "error");
                     }
                     if (response.success) {
-                      Get.back(closeOverlays: true);
+                      MezRouter.back(closeOverlays: true);
                     }
                   });
                 });

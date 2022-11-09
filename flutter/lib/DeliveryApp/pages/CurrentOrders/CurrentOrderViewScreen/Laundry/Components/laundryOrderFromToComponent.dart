@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
         ["pages"]["CurrentOrders"]["CurrentOrderViewScreen"]["Components"]
@@ -76,7 +77,7 @@ class _LaundryOrderFromToComponentState
           ),
           onCustomerMsgClick: () {
             if (widget.order.getCustomerDriverChatId() != null) {
-              Get.toNamed<void>(
+              MezRouter.toNamed<void>(
                 getMessagesRoute(
                     orderType: OrderType.Laundry,
                     chatId: widget.order.getCustomerDriverChatId()!,
@@ -96,7 +97,7 @@ class _LaundryOrderFromToComponentState
           ),
           onServiceMsgClick: () {
             if (widget.order.getServiceDriverChatId() != null) {
-              Get.toNamed<void>(getMessagesRoute(
+              MezRouter.toNamed<void>(getMessagesRoute(
                   orderType: OrderType.Laundry,
                   chatId: widget.order.getServiceDriverChatId()!,
                   orderId: widget.order.orderId,

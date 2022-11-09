@@ -4,6 +4,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["Notifications"]["components"]["ClearNotificationButton"];
@@ -48,7 +49,7 @@ class ClearNotificationButton extends StatelessWidget {
 
                     if (yesNoRes == YesNoDialogButton.Yes) {
                       controller.clearAllNotification();
-                      Get.back();
+                      MezRouter.back();
                     }
                   },
                   icon: Icon(

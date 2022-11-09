@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
@@ -142,9 +143,9 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
                 });
                 // we will route the user back to the Map
                 if (newValue?.id == "_pick_") {
-                  final SavedLocation? _savedLocation = await Get.toNamed<void>(
-                      kPickLocationRoute,
-                      arguments: true) as SavedLocation?;
+                  final SavedLocation? _savedLocation =
+                      await MezRouter.toNamed<void>(kPickLocationRoute,
+                          arguments: true) as SavedLocation?;
                   mezDbgPrint("View Got result : $_savedLocation");
                   if (_savedLocation != null) {
                     // in case it's repeated with the same name or same address

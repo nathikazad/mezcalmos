@@ -29,6 +29,7 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewOrderScreen"]["ViewRestaurantOrderScreen"];
@@ -94,7 +95,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
     final String orderId = Get.parameters['orderId']!;
 
-    if (Get.parameters['orderId'] == null) Get.back();
+    if (Get.parameters['orderId'] == null) MezRouter.back();
     // orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as RestaurantOrder?;
@@ -117,7 +118,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
       if (order.value == null) {
         // ignore: inference_failure_on_function_invocation
         Future<void>.delayed(Duration.zero, () {
-          Get.back<void>();
+          MezRouter.back<void>();
           MezSnackbar("Error", "Order does not exist");
         });
       } else {

@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/OrderInfoCard/OrderInfoCard.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
         ["pages"]["CurrentOrders"]["CurrentOrdersListScreen"]["Components"]
@@ -34,11 +35,11 @@ class DriverOrderCard extends StatelessWidget {
     return OrderInfosCard(
       orderCardSubWidgets: OrderCardSubWidgets(
           onCardTap: () {
-            // Get.toNamed(getOrderDetailsRoute(order.orderId));
+            // MezRouter.toNamed(getOrderDetailsRoute(order.orderId));
             if (order.orderType == OrderType.Restaurant) {
-              Get.toNamed(getRestaurantOrderRoute(order.orderId));
+              MezRouter.toNamed(getRestaurantOrderRoute(order.orderId));
             } else if (order.orderType == OrderType.Laundry) {
-              Get.toNamed(getLaundryOrderRoute(order.orderId));
+              MezRouter.toNamed(getLaundryOrderRoute(order.orderId));
             }
           },
           cardTitle: _getOrderTitle(),

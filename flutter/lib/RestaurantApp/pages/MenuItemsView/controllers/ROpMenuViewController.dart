@@ -1,9 +1,9 @@
 import 'dart:async';
-
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class ROpMenuViewController {
   /// Handles ui logic of the menu view inside the restaurant app
@@ -50,7 +50,7 @@ class ROpMenuViewController {
   Future<void> deleteCategory({required String categoryId}) async {
     await restaurantInfoController
         .deleteCategory(categoryId: categoryId)
-        .then((value) => Get.back());
+        .then((value) => MezRouter.back());
   }
 
   // Reorder methods //

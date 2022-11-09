@@ -11,6 +11,7 @@ import 'package:mezcalmos/TaxiApp/components/taxiDialogs.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/IPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/iOrderViewWidgets.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/controller/iOrderViewController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class IncomingOrderViewScreen extends StatefulWidget {
   @override
@@ -30,7 +31,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
     iOrderViewController.initController(
         orderId: orderId,
         onOrderNoMoreAvailable: () {
-          Get.back<void>();
+          MezRouter.back<void>();
           mezcalmosDialogOrderNoMoreAvailable(context);
         });
     super.initState();
@@ -65,7 +66,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                     iOrderViewController.order.value?.scheduledTime != null
                 ? () {
                     iOrderViewController.cancelStreamsSubscriptions();
-                    Get.back<void>();
+                    MezRouter.back<void>();
                   }
                 : null,
           ),

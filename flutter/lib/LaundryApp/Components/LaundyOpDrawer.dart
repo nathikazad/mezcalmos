@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]
     ["components"]["LaundryAppDrawer"];
@@ -196,7 +197,7 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
         _navigationLink(
             onClick: () {
               _drawerController.closeMenu();
-              Get.toNamed(getEditInfoRoute(
+              MezRouter.toNamed(getEditInfoRoute(
                   laundryId: laundryOpAuthController.laundryId!));
             },
             icon: Icons.person,
@@ -208,7 +209,7 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
             icon: Icons.settings,
             onClick: () {
               _drawerController.closeMenu();
-              Get.toNamed(
+              MezRouter.toNamed(
                   getAdminRoute(laundryId: laundryOpAuthController.laundryId!));
             },
             titleWidget: Text(
@@ -217,7 +218,7 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
             )),
         _navigationLink(
             onClick: () {
-              Get.toNamed(kNotificationsRoute);
+              MezRouter.toNamed(kNotificationsRoute);
             },
             icon: Icons.notifications,
             titleWidget: Text(
@@ -227,7 +228,7 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
         _navigationLink(
             onClick: () {
               _drawerController.closeMenu();
-              Get.toNamed(kPastOrdersListView);
+              MezRouter.toNamed(kPastOrdersListView);
             },
             icon: Icons.history,
             titleWidget: Text(

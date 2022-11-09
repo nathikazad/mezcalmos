@@ -18,6 +18,7 @@ import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart' as sharedRoute;
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class LaundryOrderRequestView extends StatefulWidget {
   const LaundryOrderRequestView({Key? key}) : super(key: key);
@@ -179,7 +180,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
         onTap: () async {
           // ignore: prefer_final_locals
           Location? currentLoc =
-              await Get.toNamed(kPickLocationNotAuth) as Location?;
+              await MezRouter.toNamed(kPickLocationNotAuth) as Location?;
           if (currentLoc != null) {
             setState(() {
               customerLoc = currentLoc;
@@ -232,7 +233,8 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                 onPressed: () async {
                   Get.find<AuthController>()
                       .preserveNavigationStackAfterSignIn = true;
-                  await Get.toNamed<void>(sharedRoute.kSignInRouteOptional);
+                  await MezRouter.toNamed<void>(
+                      sharedRoute.kSignInRouteOptional);
                 },
                 style: TextButton.styleFrom(
                   shape: RoundedRectangleBorder(

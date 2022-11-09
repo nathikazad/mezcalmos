@@ -15,7 +15,7 @@ class MezRouter {
   // This will act as a lock, basically if there's any push/pop happening, we lock other functionalities to avoid race conditions
   static bool _isBusy = false;
 
-  /// Shortcut to [Get.toNamed]
+  /// Shortcut to [MezRouter.toNamed]
   static Future<Q?>? toNamed<Q>(
     String page, {
     dynamic arguments,
@@ -31,7 +31,7 @@ class MezRouter {
     );
     _isBusy = true;
 
-    final dynamic globalResult = Get.toNamed<Q>(
+    final dynamic globalResult = MezRouter.toNamed<Q>(
       page,
       arguments: arguments,
       parameters: parameters,
@@ -42,6 +42,24 @@ class MezRouter {
     _isBusy = false;
 
     return globalResult;
+  }
+
+  static void back<T>({
+    T? result,
+    bool closeOverlays = false,
+    bool canPop = true,
+    int? id,
+  }) {
+    Get.back<T>(
+      result: result,
+      closeOverlays: closeOverlays,
+      canPop: canPop,
+      id: id,
+    );
+  }
+
+  static void untill(bool Function(Route<dynamic>) predicate, {int? id}) {
+    Get.until(predicate, id: id);
   }
 
   static Future<Q?>? offAndToNamed<Q>(
@@ -103,6 +121,29 @@ class MezRouter {
       return value;
     });
 
+    _isBusy = false;
+    return globalResult;
+  }
+
+  static Future<Q?>? offNamedUntil<Q>(
+    String page,
+    bool Function(Route<dynamic>) predicate, {
+    int? id,
+    dynamic arguments,
+    Map<String, String>? parameters,
+  }) {
+    // TODO : Make sure that _isBusy is false!
+    // if not we mark this current fcall as a delegate and await for it.
+    _isBusy = true;
+    final dynamic globalResult = Get.offNamedUntil<Q>(
+      page,
+      predicate,
+      arguments: arguments,
+      parameters: parameters,
+      id: id,
+    )?.then((value) {
+      return value;
+    });
     _isBusy = false;
     return globalResult;
   }

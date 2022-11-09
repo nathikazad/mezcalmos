@@ -20,6 +20,7 @@ import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -98,7 +99,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
       if (order.value == null) {
         // ignore: inference_failure_on_function_invocation
         Future<Null>.delayed(Duration.zero, () {
-          Get.back<Null>();
+          MezRouter.back<Null>();
           MezSnackbar("Error", "Order does not exist");
         });
       } else {

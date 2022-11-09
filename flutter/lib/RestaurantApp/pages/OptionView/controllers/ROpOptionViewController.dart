@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 enum FormValid { Valid, PrimaryNotValid, SecondaryNotValid }
 
@@ -170,6 +171,6 @@ class ROpOptionViewController {
     await restaurantInfoController
         .deleteOption(
             itemId: itemId, optionId: optionId, categoryId: categoryId)
-        .then((value) => Get.back());
+        .then((value) => MezRouter.back());
   }
 }

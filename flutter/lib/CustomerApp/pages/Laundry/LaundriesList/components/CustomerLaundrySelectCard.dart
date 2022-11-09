@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]["Laundry"]
@@ -25,7 +26,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
           onTap: () {
-            Get.toNamed(getSingleLaundryRoute(laundry.info.id));
+            MezRouter.toNamed(getSingleLaundryRoute(laundry.info.id));
           },
           child: Container(
             child: _laundryInfoHeader(),

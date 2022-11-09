@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/Controllers/MezDateTimePickerController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -128,7 +129,7 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
                   backgroundColor: offRedColor,
                   textColor: Colors.red,
                   onClick: () async {
-                    Get.back();
+                    MezRouter.back();
                   },
                 )),
                 const SizedBox(

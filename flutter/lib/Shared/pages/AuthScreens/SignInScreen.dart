@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 enum SignInMode {
   OptionalSignIn,
@@ -55,7 +56,7 @@ class SignIn extends GetWidget<AuthController> {
                                 color: Colors.black,
                               ),
                               onPressed: () {
-                                Get.back();
+                                MezRouter.back();
                               },
                             ),
                           )
@@ -152,7 +153,7 @@ class SignIn extends GetWidget<AuthController> {
     return Container(
       width: double.infinity,
       child: TextButton(
-          onPressed: () => Get.toNamed(kOtpRoute),
+          onPressed: () => MezRouter.toNamed(kOtpRoute),
           style: TextButton.styleFrom(
               backgroundColor: Colors.blue,
               fixedSize: Size(double.infinity, 50)),
@@ -192,21 +193,21 @@ class SignIn extends GetWidget<AuthController> {
                       children: [
                         TextButton(
                             onPressed: () {
-                              // Get.back();
+                              // MezRouter.back();
                               controller.signIn(
                                   tTestCustomerValue, tEmailTestPassword);
                             },
                             child: Text(tTestCustomerValue)),
                         TextButton(
                             onPressed: () {
-                              // Get.back();
+                              // MezRouter.back();
                               controller.signIn(
                                   tTestTaxiValue, tEmailTestPassword);
                             },
                             child: Text(tTestTaxiValue)),
                         TextButton(
                             onPressed: () {
-                              // Get.back();
+                              // MezRouter.back();
                               controller.signIn(
                                   tTestAdminValue, tEmailTestPassword);
                             },

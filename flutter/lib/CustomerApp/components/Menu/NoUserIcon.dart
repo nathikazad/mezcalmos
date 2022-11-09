@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
@@ -21,7 +22,7 @@ class NoUserIcon extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: () {
-              Get.toNamed<void>(kSignInRouteOptional);
+              MezRouter.toNamed<void>(kSignInRouteOptional);
             },
           ),
         ),

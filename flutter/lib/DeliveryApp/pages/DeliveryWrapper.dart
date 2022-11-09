@@ -13,11 +13,13 @@ import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Notification.dart' as MezNotification;
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
+    as MezNotification;
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class DeliveryWrapper extends StatefulWidget {
   @override
@@ -71,7 +73,7 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
   //       .listen((locationPermission) {
   //     if (locationPermission == false &&
   //         Get.currentRoute != kLocationPermissionPage) {
-  //       Get.toNamed(kLocationPermissionPage,
+  //       MezRouter.toNamed(kLocationPermissionPage,
   //           arguments: {"withBackground": true});
   //     }
   //   });
@@ -87,13 +89,13 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
       mezDbgPrint("DeliveryWrapper::handleState ${state.toJson().toString()}");
       if (!state.isAuthorized) {
         mezDbgPrint("DeliveryWrapper::handleState going to unauthorized");
-        Get.toNamed(kUnauthorizedRoute);
+        MezRouter.toNamed(kUnauthorizedRoute);
         // } else if (state.currentOrder != null) {
         //   mezDbgPrint("DeliveryWrapper::handleState going to current order");
-        //   Get.toNamed(kCurrentOrderRoute);
+        //   MezRouter.toNamed(kCurrentOrderRoute);
       } else {
         mezDbgPrint("DeliveryWrapper::handleState going to incoming orders");
-        Get.toNamed(kCurrentOrdersListRoute);
+        MezRouter.toNamed(kCurrentOrdersListRoute);
       }
     } else {
       mezDbgPrint("DeliveryWrapper::handleState state is null, ERROR");

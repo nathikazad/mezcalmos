@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 enum ShippingPriceType { Base, Min, PerKm }
 
@@ -73,7 +74,7 @@ class AdminDashboardController {
         .set(value)
         .onError((Object? error, StackTrace stackTrace) {
       MezSnackbar("Error", "Error");
-    }).then((value) => Get.back());
+    }).then((value) => MezRouter.back());
   }
 
   Future<void> changeMinPrice(num value) async {
@@ -86,7 +87,7 @@ class AdminDashboardController {
       mezDbgPrint(error);
       mezDbgPrint(stackTrace);
       MezSnackbar("Error", "Error");
-    }).then((value) => Get.back());
+    }).then((value) => MezRouter.back());
   }
 
   Future<void> changePerKmPrice(num value) async {
@@ -99,7 +100,7 @@ class AdminDashboardController {
       mezDbgPrint(error);
       mezDbgPrint(stackTrace);
       MezSnackbar("Error", "Error");
-    }).then((value) => Get.back());
+    }).then((value) => MezRouter.back());
   }
 
   TextEditingController getTextController(ShippingPriceType shippingPriceType) {

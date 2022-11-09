@@ -24,6 +24,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
@@ -57,7 +58,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
     if (Get.parameters['chatId'] == null) {
       Get.snackbar("Error", "Does not have a valid chatId!");
-      Get.back<void>();
+      MezRouter.back<void>();
     }
 
     chatId = Get.parameters['chatId']!;
@@ -140,7 +141,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
         centerTitle: true,
         leading: Center(
           child: GestureDetector(
-            onTap: () => Get.back<void>(closeOverlays: true),
+            onTap: () => MezRouter.back<void>(closeOverlays: true),
             child: Container(
               height: 30,
               width: 30,
@@ -211,7 +212,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                   ),
                 ),
               ),
-              onTap: () => Get.toNamed<void>(orderLink!),
+              onTap: () => MezRouter.toNamed<void>(orderLink!),
             ),
           Obx(
             () => Container(
@@ -346,7 +347,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                 "[][][] MessageScreen :: sagora.joinChannel :: done ! ==> pushing to AgoraCall Screen !!!!");
 
             sagora.value!.callStatus.value = CallStatus.calling;
-            Get.toNamed<void>(kAgoraCallScreen, arguments: {
+            MezRouter.toNamed<void>(kAgoraCallScreen, arguments: {
               "chatId": chatId,
               "talkingTo": _recipient,
             });

@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/CallToActionButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -38,7 +39,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
     if (restaurantID != null) {
       viewController.init(restaurantId: restaurantID!);
     } else {
-      Get.back();
+      MezRouter.back();
     }
 
     super.initState();
@@ -93,7 +94,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
                       ),
                       MezAddButton(
                         onClick: () {
-                          Get.toNamed(
+                          MezRouter.toNamed(
                               getROpCategoryRoute(restaurantId: restaurantID!));
                         },
                         title: '${_i18n()["addCategory"]}',
@@ -102,7 +103,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
                       ),
                       MezAddButton(
                         onClick: () {
-                          Get.toNamed(
+                          MezRouter.toNamed(
                               getROpAddItemRoute(restaurantId: restaurantID!));
                         },
                         title: '${_i18n()["addItem"]}',
@@ -271,10 +272,10 @@ class _ROpMenuViewState extends State<ROpMenuView>
           primaryButtonText: '${_i18n()["prCancelBtn"]}',
           helperText: '${_i18n()["cancelHelperText"]}', onYesClick: () async {
         viewController.cancelReoderMode();
-        Get.back();
+        MezRouter.back();
       });
     } else {
-      Get.back();
+      MezRouter.back();
     }
   }
 }

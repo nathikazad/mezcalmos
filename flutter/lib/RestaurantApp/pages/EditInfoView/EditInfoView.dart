@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpEditInfoView']['ROpEditInfoView'];
@@ -44,7 +45,7 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
       viewWidgets = ROpEditInfoWidgets(
           editInfoController: editInfoController, context: context);
     } else
-      Get.back();
+      MezRouter.back();
 
     super.initState();
   }
@@ -65,7 +66,7 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
           backgroundColor: Colors.white,
           appBar: LaundryAppAppBar(
             leftBtnType: AppBarLeftButtonType.Back,
-            onClick: Get.back,
+            onClick: MezRouter.back,
           ),
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(12.0),

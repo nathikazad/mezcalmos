@@ -22,6 +22,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']
     ['controllers']['authController'];
@@ -251,7 +252,7 @@ class AuthController extends GetxController {
     try {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      Get.back();
+      MezRouter.back();
     } catch (e) {
       Get.snackbar("Error creating your account!", e.toString(),
           snackPosition: SnackPosition.BOTTOM);

@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class OrderRestaurantCard extends StatelessWidget {
   const OrderRestaurantCard({Key? key, required this.order}) : super(key: key);
@@ -74,7 +75,7 @@ class OrderRestaurantCard extends StatelessWidget {
                       showRedDot: Get.find<OrderController>()
                           .orderHaveNewMessageNotifications(order.orderId),
                       onTap: () {
-                        Get.toNamed<void>(
+                        MezRouter.toNamed<void>(
                           getMessagesRoute(
                             chatId: order.orderId,
                             orderId: order.orderId,

@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -32,7 +33,7 @@ class _ROpReviewsViewState extends State<ROpReviewsView> {
     if (restaurantID != null) {
       viewController.init(restaurantId: restaurantID!);
     } else {
-      Get.back();
+      MezRouter.back();
     }
 
     super.initState();
@@ -42,7 +43,7 @@ class _ROpReviewsViewState extends State<ROpReviewsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: Get.back, title: '${_i18n()["reviews"]}'),
+          onClick: MezRouter.back, title: '${_i18n()["reviews"]}'),
       body: Obx(() {
         if (viewController.restaurant.value != null) {
           if (viewController.hasReviews) {

@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -52,7 +53,7 @@ class _ROpItemCardState extends State<ROpItemCard> {
           onTap: (widget.viewController.reOrderMode.isTrue)
               ? null
               : () {
-                  Get.toNamed(getEditItemRoute(
+                  MezRouter.toNamed(getEditItemRoute(
                       itemId: widget.item.id!,
                       categoryId: widget.category?.id ?? null,
                       restaurntID:

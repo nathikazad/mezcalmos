@@ -28,6 +28,7 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpOrderView'];
@@ -81,7 +82,7 @@ class _ROpOrderViewState extends State<ROpOrderView> {
       if (order.value == null) {
         // ignore: inference_failure_on_function_invocation
         Future<Null>.delayed(Duration.zero, () {
-          Get.back<Null>();
+          MezRouter.back<Null>();
           MezSnackbar("Error", "Order does not exist");
         });
       } else {
@@ -150,7 +151,7 @@ class _ROpOrderViewState extends State<ROpOrderView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: Get.back,
+          onClick: MezRouter.back,
           titleWidget: Obx(() => Text("${order.value!.customer.name}"))),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
@@ -191,7 +192,7 @@ class _ROpOrderViewState extends State<ROpOrderView> {
                       showConfirmationDialog(context, onYesClick: () async {
                         await controller
                             .cancelOrder(order.value!.orderId)
-                            .then((ServerResponse value) => Get.back());
+                            .then((ServerResponse value) => MezRouter.back());
                       });
                     },
                     child: Container(

@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpPastOrdersList']["components"]["ROpOrderCard"];
@@ -28,7 +29,7 @@ class ROpOrderCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          Get.toNamed(getROpOrderRoute(order.orderId));
+          MezRouter.toNamed(getROpOrderRoute(order.orderId));
         },
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),

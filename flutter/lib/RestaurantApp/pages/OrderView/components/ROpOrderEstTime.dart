@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpOrderView']["components"]["ROpOrderEstTime"];
@@ -200,7 +201,7 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () {
-        Get.back(closeOverlays: true);
+        MezRouter.back(closeOverlays: true);
       },
       child: Ink(
         height: 50,
@@ -344,7 +345,7 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
         isClicked.value = false;
       }).then((ServerResponse value) {
         if (value.success) {
-          Get.back(closeOverlays: true);
+          MezRouter.back(closeOverlays: true);
         }
       }).onError((Object? error, StackTrace stackTrace) {
         mezDbgPrint("Error seeting time =====>$error");

@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["components"]["LocationPicker"];
@@ -157,7 +158,7 @@ class LocationPickerState extends State<LocationPicker> {
               notifier: (_) async {
             Get.find<AuthController>().preserveNavigationStackAfterSignIn =
                 true;
-            await Get.toNamed<void>(kSignInRouteOptional);
+            await MezRouter.toNamed<void>(kSignInRouteOptional);
 
             // call back in case User was signedOut and he signedIn before confirming his Order Successfully!
             widget.onSuccessSignIn?.call();

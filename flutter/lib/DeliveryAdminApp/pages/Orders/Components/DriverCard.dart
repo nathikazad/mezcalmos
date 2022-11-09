@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["Orders"]["components"]["driverOrderCard"];
@@ -98,7 +99,7 @@ class _DriverCardState extends State<DriverCard> {
   }
 
   Future<void> _getNewDriverWhenDriverIsNull() async {
-    final DeliveryDriver? newDriver = await Get.toNamed<dynamic>(
+    final DeliveryDriver? newDriver = await MezRouter.toNamed<dynamic>(
       kDriversListRoute,
       arguments: widget.order,
     );
@@ -116,7 +117,7 @@ class _DriverCardState extends State<DriverCard> {
 
   Future<void> _getNewDriverWhenDriverIsNotNull() async {
     /// Navigate to kDriversListRoute and get DeliveryDriver.
-    final DeliveryDriver? newDriver = await Get.toNamed<dynamic>(
+    final DeliveryDriver? newDriver = await MezRouter.toNamed<dynamic>(
       kDriversListRoute,
       arguments: widget.order,
     ) as DeliveryDriver?;
@@ -336,7 +337,7 @@ class _DriverCardState extends State<DriverCard> {
 
 // restaurant order driver message route function
   void restaurantDriverMessageRoute() {
-    Get.toNamed<dynamic>(getMessagesRoute(
+    MezRouter.toNamed<dynamic>(getMessagesRoute(
         orderId: widget.order.orderId,
         orderType: OrderType.Restaurant,
         chatId: (widget.order as DeliverableOrder)
@@ -346,7 +347,7 @@ class _DriverCardState extends State<DriverCard> {
 
 // laundry order  dropoff driver message route function
   void _laundryDropOffDriverMessageRoute() {
-    Get.toNamed<dynamic>(getMessagesRoute(
+    MezRouter.toNamed<dynamic>(getMessagesRoute(
         orderId: widget.order.orderId,
         orderType: OrderType.Laundry,
         chatId: (widget.order as DeliverableOrder)
@@ -356,7 +357,7 @@ class _DriverCardState extends State<DriverCard> {
 
 // laundry order pickup driver message route function
   void _laundryPickupDriverMessageRoute() {
-    Get.toNamed<dynamic>(getMessagesRoute(
+    MezRouter.toNamed<dynamic>(getMessagesRoute(
         orderId: widget.order.orderId,
         orderType: OrderType.Laundry,
         chatId: (widget.order as TwoWayDeliverableOrder)

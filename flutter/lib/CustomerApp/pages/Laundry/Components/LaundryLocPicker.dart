@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 typedef OnDropDownNewValue = void Function({String? newValue});
 
@@ -138,8 +139,8 @@ class _LaundryLocPickerState extends State<LaundryLocPicker> {
               // we will route the user back to the Map
               if (newValue?.id == "_pick_") {
                 final SavedLocation? _savedLocation =
-                    await Get.toNamed<void>(kPickLocationRoute, arguments: true)
-                        as SavedLocation?;
+                    await MezRouter.toNamed<void>(kPickLocationRoute,
+                        arguments: true) as SavedLocation?;
                 mezDbgPrint("View Got result : $_savedLocation");
                 if (_savedLocation != null) {
                   // in case it's repeated with the same name or same address

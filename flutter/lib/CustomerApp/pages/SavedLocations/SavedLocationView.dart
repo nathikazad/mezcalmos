@@ -12,6 +12,7 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["SavedLocations"]["SavedLocationView"];
@@ -95,7 +96,7 @@ class _SavedLocationViewState extends State<SavedLocationView> {
           ),
         ),
         function: () {
-          Get.toNamed<void>(kPickLocationRoute, arguments: false);
+          MezRouter.toNamed<void>(kPickLocationRoute, arguments: false);
         },
       ),
       body: savedLocations.length > 0
