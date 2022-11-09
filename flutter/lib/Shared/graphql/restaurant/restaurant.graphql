@@ -1,12 +1,6 @@
-mutation MyMutation {
-  insert_restaurant_one(object:
-    {
-      description: 
-      {data: 
-        {translations: 
-          {data: [{language_id: "en", value: "restaurant"}, 
-            {language_id: "es", value: "restaurante"}
-          ]}}}}) {
-    id
+query GetRestaurants {
+  restaurant_by_pk(id: 1) {
+    image
+    language_id
   }
 }

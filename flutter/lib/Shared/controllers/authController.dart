@@ -12,9 +12,11 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -76,8 +78,11 @@ class AuthController extends GetxController {
       mezDbgPrint(user?.hashCode);
       mezDbgPrint(user ?? "empty");
       _fireAuthUser.value = user;
+      final HasuraDb hasuraDb = Get.find<HasuraDb>();
 
       if (user == null) {
+        await hasuraDb.initializeHasura();
+
         await _onSignOutCallback();
         _authStateStreamController.add(null);
         _userInfoStreamController.add(null);
@@ -88,7 +93,8 @@ class AuthController extends GetxController {
         _user.value = null;
       } else {
         mezDbgPrint('AuthController: User is currently signed in!');
-        _onSignInCallback();
+        await hasuraDb.initializeHasura(withAuthenticatedUser: true);
+        await _onSignInCallback();
         _authStateStreamController.add(user);
         await GetStorage().write(getxUserId, user.uid);
         await _userNodeListener?.cancel();

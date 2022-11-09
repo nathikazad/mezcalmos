@@ -5932,7 +5932,7 @@ type restaurant {
   firebase_id: String
   id: Int!
   image: String!
-  language_id: Int!
+  language_id: String!
   location_gps: geography!
   location_text: String!
   name: String!
@@ -6047,7 +6047,6 @@ type restaurant_aggregate_fields {
 type restaurant_avg_fields {
   description_id: Float
   id: Float
-  language_id: Float
   payment_info_id: Float
   schedule_id: Float
 }
@@ -6065,7 +6064,7 @@ input restaurant_bool_exp {
   firebase_id: String_comparison_exp
   id: Int_comparison_exp
   image: String_comparison_exp
-  language_id: Int_comparison_exp
+  language_id: String_comparison_exp
   location_gps: geography_comparison_exp
   location_text: String_comparison_exp
   name: String_comparison_exp
@@ -7643,7 +7642,6 @@ input type for incrementing numeric columns in table "restaurant"
 input restaurant_inc_input {
   description_id: Int
   id: Int
-  language_id: Int
   payment_info_id: Int
   schedule_id: Int
 }
@@ -7658,7 +7656,7 @@ input restaurant_insert_input {
   firebase_id: String
   id: Int
   image: String
-  language_id: Int
+  language_id: String
   location_gps: geography
   location_text: String
   name: String
@@ -8633,7 +8631,7 @@ type restaurant_max_fields {
   firebase_id: String
   id: Int
   image: String
-  language_id: Int
+  language_id: String
   location_text: String
   name: String
   payment_info_id: Int
@@ -8649,7 +8647,7 @@ type restaurant_min_fields {
   firebase_id: String
   id: Int
   image: String
-  language_id: Int
+  language_id: String
   location_text: String
   name: String
   payment_info_id: Int
@@ -11330,7 +11328,7 @@ input restaurant_set_input {
   firebase_id: String
   id: Int
   image: String
-  language_id: Int
+  language_id: String
   location_gps: geography
   location_text: String
   name: String
@@ -11345,7 +11343,6 @@ input restaurant_set_input {
 type restaurant_stddev_fields {
   description_id: Float
   id: Float
-  language_id: Float
   payment_info_id: Float
   schedule_id: Float
 }
@@ -11354,7 +11351,6 @@ type restaurant_stddev_fields {
 type restaurant_stddev_pop_fields {
   description_id: Float
   id: Float
-  language_id: Float
   payment_info_id: Float
   schedule_id: Float
 }
@@ -11363,7 +11359,6 @@ type restaurant_stddev_pop_fields {
 type restaurant_stddev_samp_fields {
   description_id: Float
   id: Float
-  language_id: Float
   payment_info_id: Float
   schedule_id: Float
 }
@@ -11385,7 +11380,7 @@ input restaurant_stream_cursor_value_input {
   firebase_id: String
   id: Int
   image: String
-  language_id: Int
+  language_id: String
   location_gps: geography
   location_text: String
   name: String
@@ -11400,7 +11395,6 @@ input restaurant_stream_cursor_value_input {
 type restaurant_sum_fields {
   description_id: Int
   id: Int
-  language_id: Int
   payment_info_id: Int
   schedule_id: Int
 }
@@ -11456,7 +11450,6 @@ input restaurant_updates {
 type restaurant_var_pop_fields {
   description_id: Float
   id: Float
-  language_id: Float
   payment_info_id: Float
   schedule_id: Float
 }
@@ -11465,7 +11458,6 @@ type restaurant_var_pop_fields {
 type restaurant_var_samp_fields {
   description_id: Float
   id: Float
-  language_id: Float
   payment_info_id: Float
   schedule_id: Float
 }
@@ -11474,7 +11466,6 @@ type restaurant_var_samp_fields {
 type restaurant_variance_fields {
   description_id: Float
   id: Float
-  language_id: Float
   payment_info_id: Float
   schedule_id: Float
 }
@@ -14465,11 +14456,11 @@ columns and relationships of "translation_value"
 """
 type translation_value {
   """An object relationship"""
-  group: translation!
-
-  """An object relationship"""
   language: topology_language!
   language_id: String!
+
+  """An object relationship"""
+  translation_group: translation!
   translation_id: Int!
   value: String!
 }
@@ -14545,9 +14536,9 @@ input translation_value_bool_exp {
   _and: [translation_value_bool_exp!]
   _not: translation_value_bool_exp
   _or: [translation_value_bool_exp!]
-  group: translation_bool_exp
   language: topology_language_bool_exp
   language_id: String_comparison_exp
+  translation_group: translation_bool_exp
   translation_id: Int_comparison_exp
   value: String_comparison_exp
 }
@@ -14573,9 +14564,9 @@ input translation_value_inc_input {
 input type for inserting data into table "translation_value"
 """
 input translation_value_insert_input {
-  group: translation_obj_rel_insert_input
   language: topology_language_obj_rel_insert_input
   language_id: String
+  translation_group: translation_obj_rel_insert_input
   translation_id: Int
   value: String
 }
@@ -14634,9 +14625,9 @@ input translation_value_on_conflict {
 
 """Ordering options when selecting data from "translation_value"."""
 input translation_value_order_by {
-  group: translation_order_by
   language: topology_language_order_by
   language_id: order_by
+  translation_group: translation_order_by
   translation_id: order_by
   value: order_by
 }

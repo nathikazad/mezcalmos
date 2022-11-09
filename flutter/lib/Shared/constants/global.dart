@@ -24,7 +24,9 @@ const String stripePubTestKey =
 const String stripePubProdKey =
     "pk_live_51KxdsRDV5wKm9SNKwQNz1HPWMktW0DlhlsewJKUPQDwrJUv8LtB9oNFPHUKQ448oj1u5Jq8oIa1ihA5MJPYw8Wa300ikC6xyTA";
 const String agoraAppId = "6def50fdd2804ffaaa70d807ee445d28";
-
+const String hasuraProdLink = "https://mez-production.hasura.app/v1/graphql";
+const String hasuraStageLink = "https://mez-staging.hasura.app/v1/graphql";
+const String hasuraDevLink = "http://127.0.0.1:8080/v1/graphql";
 // can be dev / prod
 
 // ----------------- TEST STRINGS ----------------- //

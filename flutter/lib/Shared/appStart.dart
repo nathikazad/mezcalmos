@@ -27,6 +27,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
@@ -207,7 +208,8 @@ class _StartingPointState extends State<StartingPoint> {
           .useFunctionsEmulator(_host.replaceAll('http://', ''), functionPort);
     } else if (_launchMode == AppLaunchMode.stage) {
       mezDbgPrint("[+] Entered Staging check ----.");
-      firebaseDb = FirebaseDatabase(app: _app, databaseURL: stagingDb);
+      firebaseDb =
+          FirebaseDatabase.instanceFor(app: _app, databaseURL: stagingDb);
     } else {
       throw Exception("Invalid Launch Mode");
     }
@@ -219,6 +221,7 @@ class _StartingPointState extends State<StartingPoint> {
         firebaseApp: _app,
       ),
     );
+    Get.put(HasuraDb(_launchMode), permanent: true);
   }
 
   Future<void> setGlobalVariables() async {

@@ -3,13 +3,16 @@ import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
+import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/restaurantNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/restaurant.graphql.dart';
 
 class RestaurantsInfoController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -38,6 +41,15 @@ class RestaurantsInfoController extends GetxController {
   }
 
   Future<List<Restaurant>> getRestaurants() {
+    final HasuraDb hasuraDb = Get.find<HasuraDb>();
+    // final QueryResult<Object?> result =
+    // hasuraDb.graphQLClient
+    //     .query$GetRestaurants(Options$Query$GetRestaurants())
+    //     .then((value) {
+    //       value.data.
+    //     });
+    // mezDbgPrint("Hasura result");
+    // mezDbgPrint(result.data);
     return _databaseHelper.firebaseDatabase
         .ref()
         .child('restaurants/info')
