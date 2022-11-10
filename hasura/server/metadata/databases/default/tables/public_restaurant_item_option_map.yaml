@@ -1,3 +1,13 @@
 table:
   name: restaurant_item_option_map
   schema: public
+array_relationships:
+  - name: item_options
+    using:
+      manual_configuration:
+        column_mapping:
+          option_id: id
+        insertion_order: null
+        remote_table:
+          name: restaurant_option
+          schema: public

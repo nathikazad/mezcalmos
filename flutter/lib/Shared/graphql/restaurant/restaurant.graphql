@@ -1,6 +1,30 @@
-query GetRestaurants {
-  restaurant_by_pk(id: 1) {
-    image
-    language_id
+mutation addCategory($category: restaurant_category_insert_input!) {
+  insert_restaurant_category_one(object: $category) {
+    id
+  }
+}
+
+query getCategory($id: Int!) {
+  restaurant_category_by_pk(id: $id) {
+    description{
+      translations{
+        language_id
+        value
+      }
+    }
+    name{
+      translations{
+        language_id
+        value
+      }
+    }
+    position
+  }
+}
+
+
+query getCategories {
+  restaurant_category(order_by: {position: asc}) {
+    id
   }
 }

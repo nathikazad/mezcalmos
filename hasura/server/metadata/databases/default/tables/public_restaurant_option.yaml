@@ -1,6 +1,10 @@
 table:
   name: restaurant_option
   schema: public
+object_relationships:
+  - name: name
+    using:
+      foreign_key_constraint_on: name_id
 array_relationships:
   - name: choices
     using:

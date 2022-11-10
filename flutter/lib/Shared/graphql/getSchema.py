@@ -245,7 +245,7 @@ class _CopyWithStubImpl$Input$jsonb_cast_exp<TRes>
 }"""
 
 
-fin = open("schema.graphql.dart", "rt")
+fin = open("__generated/schema.graphql.dart", "rt")
 #read file contents to string
 data = fin.read()
 #replace all occurrences of the required string
@@ -253,7 +253,7 @@ data = data.replace(toBeReplaced, replaceWith)
 #close the input file
 fin.close()
 #open the input file in write mode
-fin = open("schema.graphql.dart", "wt")
+fin = open("__generated/schema.graphql.dart", "wt")
 #overrite the input file with the resulting data
 fin.write(data)
 #close the file
