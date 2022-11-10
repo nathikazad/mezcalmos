@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 /// This only support named Routes
 class MRoute {
@@ -13,7 +14,17 @@ class MRoute {
 class MezRouter {
   static final List<MRoute> _navigationStack = <MRoute>[];
   // This will act as a lock, basically if there's any push/pop happening, we lock other functionalities to avoid race conditions
-  static bool _isBusy = false;
+  // static bool _isBusy = false;
+  static final List<Function> _delegates = [];
+
+  static void printRoutes() {
+    if (_navigationStack.isEmpty) {
+      mezDbgPrint("[[MEZROUTER]] => is Empty");
+    }
+    _navigationStack.forEach((MRoute mr) {
+      mezDbgPrint("[[MEZROUTER]] => ${mr.name}");
+    });
+  }
 
   /// Shortcut to [MezRouter.toNamed]
   static Future<Q?>? toNamed<Q>(
@@ -23,25 +34,41 @@ class MezRouter {
     bool preventDuplicates = true,
     Map<String, String>? parameters,
   }) {
-    // TODO : Make sure that _isBusy is false!
-    // if not we mark this current fcall as a delegate and await for it.
-    _navigationStack.addIf(
-      preventDuplicates && _navigationStack.last.name == page,
-      MRoute(name: page, args: arguments, params: parameters),
-    );
-    _isBusy = true;
+    try {
+      bool _shouldRoute = false;
 
-    final dynamic globalResult = MezRouter.toNamed<Q>(
-      page,
-      arguments: arguments,
-      parameters: parameters,
-      preventDuplicates: preventDuplicates,
-    )?.then((value) {
-      return value;
-    });
-    _isBusy = false;
+      mezDbgPrint("[_] $page");
+      if (!preventDuplicates) {
+        _shouldRoute = true;
+        _navigationStack
+            .add(MRoute(name: page, args: arguments, params: parameters));
+      } else {
+        if (_navigationStack.isNotEmpty) {
+          if (_navigationStack.last.name != page) {
+            _shouldRoute = true;
+            _navigationStack
+                .add(MRoute(name: page, args: arguments, params: parameters));
+          }
+        } else {
+          _shouldRoute = true;
+          _navigationStack
+              .add(MRoute(name: page, args: arguments, params: parameters));
+        }
+      }
 
-    return globalResult;
+      printRoutes();
+      if (_shouldRoute)
+        return Get.toNamed<Q>(
+          page,
+          arguments: arguments,
+          parameters: parameters,
+          preventDuplicates: preventDuplicates,
+        );
+      return null;
+    } catch (e, s) {
+      mezDbgPrint("Error => $e");
+      mezDbgPrint("Stack => $s");
+    }
   }
 
   static void back<T>({
@@ -50,46 +77,84 @@ class MezRouter {
     bool canPop = true,
     int? id,
   }) {
+    _navigationStack.removeLast();
     Get.back<T>(
       result: result,
       closeOverlays: closeOverlays,
       canPop: canPop,
       id: id,
     );
+    printRoutes();
   }
 
+  /// Get.until Wrapper -> Navigation.popUntil() shortcut.
+  ///
+  /// Calls pop several times in the stack until [predicate] returns true
+  ///
+  /// [id] is for when you are using nested navigation, as explained in documentation
+  ///
+  /// [predicate] can be used like this: Get.until((route) => Get.currentRoute == '/home')so when you get to home page,
   static void untill(bool Function(Route<dynamic>) predicate, {int? id}) {
-    Get.until(predicate, id: id);
+    Get.until((Route<dynamic> route) {
+      final bool res = predicate(route);
+      if (res) {
+        return true;
+      } else {
+        _navigationStack.removeLast();
+        return false;
+      }
+    }, id: id);
+    printRoutes();
   }
 
+  /// Get.offAndToNamed wrapper -> Navigation.popAndPushNamed() shortcut.
+  ///
+  /// Pop the current named page and pushes a new page to the stack in its place
+  ///
+  /// You can send any type of value to the other route in the [arguments]. It is very similar to offNamed() but use a different approach
+  ///
+  /// The offNamed() pop a page, and goes to the next. The offAndToNamed() goes to the next page, and removes the previous one. The route transition animation is different.
   static Future<Q?>? offAndToNamed<Q>(
     String page, {
     dynamic arguments,
     dynamic result,
     Map<String, String>? parameters,
   }) {
-    // TODO : Make sure that _isBusy is false!
-    // if not we mark this current fcall as a delegate and await for it.
-    _isBusy = true;
+    _navigationStack.removeLast();
     final dynamic globalResult = Get.offAndToNamed<Q>(page,
             arguments: arguments, parameters: parameters, result: result)
         ?.then((value) {
       return value;
+    }).whenComplete(() {
+      _navigationStack.add(
+        MRoute(name: page, args: arguments, params: parameters),
+      );
     });
+    printRoutes();
 
-    _isBusy = false;
     return globalResult;
   }
 
+  /// Get.offNamed Wrapper -> Navigation.pushReplacementNamed() shortcut.
+  ///
+  /// Pop the current named page in the stack and push a new one in its place
+  ///
+  /// It has the advantage of not needing context, so you can call from your business logic.
+  ///
+  /// You can send any type of value to the other route in the [arguments].
+  ///
+  /// [id] is for when you are using nested navigation, as explained in documentation
+  ///
+  /// By default, GetX will prevent you from push a route that you already in, if you want to push anyway, set [preventDuplicates] to false
+  ///
+  /// Note: Always put a slash on the route ('/page1'), to avoid unnexpected errors
   static Future<Q?>? offNamed<Q>(
     String page, {
     dynamic arguments,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
   }) {
-    // TODO : Make sure that _isBusy is false!
-    // if not we mark this current fcall as a delegate and await for it.
-    _isBusy = true;
+    _navigationStack.removeLast();
     final dynamic globalResult = Get.offNamed<Q>(
       page,
       arguments: arguments,
@@ -97,11 +162,36 @@ class MezRouter {
       preventDuplicates: preventDuplicates,
     )?.then((value) {
       return value;
+    }).whenComplete(() {
+      _navigationStack.add(
+        MRoute(name: page, args: arguments, params: parameters),
+      );
     });
-    _isBusy = false;
+    printRoutes();
+
     return globalResult;
   }
 
+  ///  **Get.offAllNamed Wrapper -> Navigation.pushNamedAndRemoveUntil()** shortcut.<br>
+  ///
+  /// Push a named `page` and pop several pages in the stack
+  /// until [predicate] returns true. [predicate] is optional
+  ///
+  /// It has the advantage of not needing context, so you can
+  /// call from your business logic.
+  ///
+  /// You can send any type of value to the other route in the [arguments].
+  ///
+  /// [predicate] can be used like this:
+  /// `Get.until((route) => Get.currentRoute == '/home')`so when you get to home page,
+  /// or also like
+  /// `Get.until((route) => !Get.isDialogOpen())`, to make sure the dialog
+  /// is closed
+  ///
+  /// [id] is for when you are using nested navigation,
+  /// as explained in documentation
+  ///
+  /// Note: Always put a slash on the route ('/page1'), to avoid unexpected errors
   static Future<Q?>? offAllNamed<Q>(
     String newRouteName, {
     RoutePredicate? predicate,
@@ -109,21 +199,47 @@ class MezRouter {
     int? id,
     Map<String, String>? parameters,
   }) {
-    // TODO : Make sure that _isBusy is false!
-    // if not we mark this current fcall as a delegate and await for it.
-    _isBusy = true;
     final dynamic globalResult = Get.offAllNamed<Q>(
       newRouteName,
       arguments: arguments,
       parameters: parameters,
-      predicate: predicate,
+      predicate: predicate != null
+          ? (Route<dynamic> route) {
+              final bool res = predicate.call(route);
+              if (res) {
+                return true;
+              } else {
+                _navigationStack.removeLast();
+                return false;
+              }
+            }
+          : null,
     )?.then((value) {
       return value;
     });
+    printRoutes();
 
-    _isBusy = false;
     return globalResult;
   }
+
+  /// **Get.offNamedUntil wrapper -> Navigation.pushNamedAndRemoveUntil()** shortcut.<br><br>
+  ///
+  /// Push the given named `page`, and then pop several pages in the stack
+  /// until [predicate] returns true
+  ///
+  /// You can send any type of value to the other route in the [arguments].
+  ///
+  /// [id] is for when you are using nested navigation,
+  /// as explained in documentation
+  ///
+  /// [predicate] can be used like this:
+  /// `Get.offNamedUntil(page, ModalRoute.withName('/home'))`
+  /// to pop routes in stack until home,
+  /// or like this:
+  /// `Get.offNamedUntil((route) => !Get.isDialogOpen())`,
+  /// to make sure the dialog is closed
+  ///
+  /// Note: Always put a slash on the route name ('/page1'), to avoid unexpected errors
 
   static Future<Q?>? offNamedUntil<Q>(
     String page,
@@ -132,19 +248,24 @@ class MezRouter {
     dynamic arguments,
     Map<String, String>? parameters,
   }) {
-    // TODO : Make sure that _isBusy is false!
-    // if not we mark this current fcall as a delegate and await for it.
-    _isBusy = true;
     final dynamic globalResult = Get.offNamedUntil<Q>(
       page,
-      predicate,
+      (Route<dynamic> route) {
+        final bool res = predicate.call(route);
+        if (res) {
+          return true;
+        } else {
+          _navigationStack.removeLast();
+          return false;
+        }
+      },
       arguments: arguments,
       parameters: parameters,
       id: id,
     )?.then((value) {
       return value;
     });
-    _isBusy = false;
+    printRoutes();
     return globalResult;
   }
 
