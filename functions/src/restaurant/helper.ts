@@ -42,14 +42,8 @@ async function checkRestaurantOperator(restaurantId: string, operatorId: string)
   return undefined;
 }
 
-export async function passChecksForRestaurant(data: any, auth?: AuthData, checkInPastOrderAlso: boolean = false): Promise<ValidationPass> {
-  let response = await isSignedIn(auth)
-  if (response != undefined) {
-    return {
-      ok: false,
-      error: response
-    }
-  }
+export async function passChecksForRestaurant(data: any, userId: string, checkInPastOrderAlso: boolean = false): Promise<ValidationPass> {
+
   if (data.orderId == null) {
     return {
       ok: false,
@@ -89,7 +83,7 @@ export async function passChecksForRestaurant(data: any, auth?: AuthData, checkI
   }
 
   if (data.fromRestaurantOperator) {
-    response = await checkRestaurantOperator(order.restaurant.id, auth!.uid)
+    let response = await checkRestaurantOperator(order.restaurant.id, userId)
     if (response != undefined) {
       return {
         ok: false,
@@ -97,7 +91,7 @@ export async function passChecksForRestaurant(data: any, auth?: AuthData, checkI
       };
     }
   } else {
-    response = await checkDeliveryAdmin(auth!.uid)
+    let response = await checkDeliveryAdmin(userId);
     if (response != undefined) {
       return {
         ok: false,

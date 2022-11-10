@@ -1,4 +1,4 @@
-// import * as functions from "firebase-functions";
+import * as functions from "firebase-functions";
 
 import * as firebase from "firebase-admin";
 
@@ -16,12 +16,11 @@ export const user = {
   changeName: userChanges.onNameUpdate,
   changePhoto: userChanges.onPhotoUpdate,
   deleteUserAccount : userChanges.deleteAccount
- }
+}
 
-import * as otpAuth from './utilities/otpAuth'
 export const otp = {
-  sendOTPForLogin: otpAuth.sendOTPForLogin,
-  getAuthUsingOTP: otpAuth.getAuthUsingOTP
+  sendOTPForLogin: functions.https.onCall((data) => sendOTPForLogin(data)),
+  getAuthUsingOTP: functions.https.onCall((data) => getAuthUsingOTP(data)),
 }
 
 import * as stripePaymentFunctions from './utilities/stripe/payment'
@@ -39,15 +38,16 @@ export const stripe = {
 import * as restaurantStatusChange from './restaurant/adminStatusChanges'
 export const restaurant = {
   createRestaurant: require("./restaurant/createNewRestaurant"),
-  checkoutCart: require("./restaurant/checkoutCart"),
+  // checkoutCart: require("./restaurant/checkoutCart"),
+  checkoutCart: authenticatedCall((userId, data) => checkout(userId, data)),
   addReview: require("./restaurant/addReview"),
-  prepareOrder: restaurantStatusChange.prepareOrder,
-  readyForOrderPickup: restaurantStatusChange.readyForPickupOrder,
-  cancelOrderFromAdmin: restaurantStatusChange.cancelOrder,
+  prepareOrder: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),
+  readyForOrderPickup: authenticatedCall((userId, data) => restaurantStatusChange.readyForPickupOrder(userId, data)),
+  cancelOrderFromAdmin: authenticatedCall((userId, data) => restaurantStatusChange.cancelOrder(userId, data)),
   cancelOrderFromCustomer: require("./restaurant/cancelOrderFromCustomer"),
-  setEstimatedFoodReadyTime: restaurantStatusChange.setEstimatedFoodReadyTime,
-  markOrderItemUnavailable: restaurantStatusChange.markOrderItemUnavailable,
-  refundCustomerCustomAmount: restaurantStatusChange.refundCustomerCustomAmount
+  setEstimatedFoodReadyTime: authenticatedCall((userId, data) => restaurantStatusChange.setEstimatedFoodReadyTime(userId, data)),
+  markOrderItemUnavailable: authenticatedCall((userId, data) => restaurantStatusChange.markOrderItemUnavailable(userId, data)),
+  refundCustomerCustomAmount: authenticatedCall((userId, data) => restaurantStatusChange.refundCustomerCustomAmount(userId, data)),
 }
 
 // Taxi
@@ -76,6 +76,9 @@ export const laundry = {
 
 import * as laundryDelivery from './delivery/laundryStatusChange'
 import * as restaurantDelivery from './delivery/restaurantStatusChange'
+import { checkout } from "./restaurant/checkoutCart";
+import { HttpsError } from "firebase-functions/v1/auth";
+import { getAuthUsingOTP, sendOTPForLogin } from "./utilities/otpAuth";
 
 export const delivery = {
   assignDriver: require("./delivery/assignDriver"),
@@ -88,4 +91,36 @@ export const delivery = {
   laundryPickedUpFromLaundry: laundryDelivery.pickedUpFromLaundry,
   laundryFinishDropoff: laundryDelivery.finishDropoff,
   setEstimatedTime: require("./delivery/setEstimatedTime")
+}
+
+// function adminOnlyCall(func:AuthenticatedFunction) {
+//   return functions.https.onCall(async (data, context) => {
+//     if (!context.auth?.uid) {
+//       throw new HttpsError(
+//         "unauthenticated",
+//         "Request was not authenticated.",
+//       );
+//     }
+//     let hasPermission = await isUserAdmin(context.auth?.uid);
+//     if (!hasPermission) {
+//       throw new HttpsError(
+//         "permission-denied",
+//         "Only admin users can call this function",
+//       );
+//     }
+//     return func(context.auth!.uid, data);
+//   });
+// }
+
+type AuthenticatedFunction = (userId:string, data:any) => any;
+function authenticatedCall(func:AuthenticatedFunction) {
+  return functions.https.onCall((data, context) => {
+    if (!context.auth?.uid) {
+      throw new HttpsError(
+        "unauthenticated",
+        "Request was not authenticated.",
+      );
+    }
+    return func(context.auth!.uid, data);
+  });
 }

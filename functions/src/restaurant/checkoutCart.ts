@@ -16,7 +16,7 @@ import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootNodes from "../shared/databaseNodes/root";
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
-import { isSignedIn } from "../shared/helper/authorizer";
+// import { isSignedIn } from "../shared/helper/authorizer";
 import { getRestaurant } from "./restaurantController";
 import { getUserInfo } from "../shared/controllers/rootController";
 import * as chatController from "../shared/controllers/chatController";
@@ -25,14 +25,11 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
 
-export = functions.https.onCall(async (data, context) => {
+export interface CheckoutRequest {
+  addressId: number;
+}
+export async function checkout(customerId: string, cart: Cart) {
 
-  let response = isSignedIn(context.auth)
-  if (response != undefined)
-    return response;
-
-  let customerId: string = context.auth!.uid;
-  let cart: Cart = <Cart>data;
   // TODO limit number of active orders
   // let customerCurrentOrder = (await firebase.database().ref(`/customers/${uid}/state/currentOrders`).once('value')).val();
   // if (customerCurrentOrder && Object.keys(customerCurrentOrder).length >= 3) {
@@ -53,7 +50,7 @@ export = functions.https.onCall(async (data, context) => {
     }
   }
 
-  let transactionResponse = await customerNodes.lock(customerId).transaction(function (lock) {
+  let transactionResponse = await customerNodes.lock(customerId).transaction(function (lock: boolean) {
     if (lock == true) {
       return
     } else {
@@ -74,13 +71,13 @@ export = functions.https.onCall(async (data, context) => {
       cart: cart,
       customer: customerInfo,
       restaurant: restaurant.info,
-      stripeFees: data.stripeFees ?? 0
+      stripeFees: cart.stripeFees ?? 0
     })
 
     let orderId: string = (await customerNodes.inProcessOrders(customerId).push(null)).key!;
 
-    if (data.stripePaymentId) {
-      order = (await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId, data.stripeFees)) as RestaurantOrder
+    if (cart.stripePaymentId) {
+      order = (await updateOrderIdAndFetchPaymentInfo(orderId, order, cart.stripePaymentId, cart.stripeFees ?? 0)) as RestaurantOrder
     }
     delete (order as any).stripePaymentId;
     delete (order as any).stripeFees;
@@ -105,13 +102,13 @@ export = functions.https.onCall(async (data, context) => {
 
     await chatController.setChat(orderId, chat.chatData);
 
-    deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
+    deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot: any) => {
       let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
       chatController.addParticipantsToChat(Object.keys(deliveryAdmins), chat, orderId, ParticipantType.DeliveryAdmin)
       notifyParticipants(Object.keys(deliveryAdmins), orderId, ParticipantType.DeliveryAdmin, restaurant.info)
     })
 
-    restaurantNodes.restaurantOperators(cart.serviceProviderId).once('value').then((snapshot) => {
+    restaurantNodes.restaurantOperators(cart.serviceProviderId).once('value').then((snapshot: any) => {
       if (snapshot.val() != null) {
         let restaurantOperators: Record<string, boolean> = snapshot.val();
         chatController.addParticipantsToChat(Object.keys(restaurantOperators), chat, orderId, ParticipantType.RestaurantOperator)
@@ -134,7 +131,7 @@ export = functions.https.onCall(async (data, context) => {
   } finally {
     await customerNodes.lock(customerId).remove();
   }
-})
+}
 
 
 async function notifyParticipants(participants: Array<string>,

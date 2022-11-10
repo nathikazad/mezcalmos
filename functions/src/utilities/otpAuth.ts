@@ -13,17 +13,7 @@ interface verifyOtpInterface {
   OTPCode: string
 }
 
-export const sendOTPForLogin = functions.https.onCall(async (data) => {
-  let response = await _sendOTPForLogin(<sendOtpInterface>data);
-  return response;
-});
-
-export const getAuthUsingOTP = functions.https.onCall(async (data) => {
-  let response = await _getAuthUsingOTP(<verifyOtpInterface>data);
-  return response;
-});
-
-async function _sendOTPForLogin(data: sendOtpInterface): Promise<ServerResponse> {
+export async function sendOTPForLogin(data: sendOtpInterface): Promise<ServerResponse> {
   if (!data.phoneNumber) {
     return {
       status: ServerResponseStatus.Error,
@@ -68,7 +58,7 @@ async function _sendOTPForLogin(data: sendOtpInterface): Promise<ServerResponse>
   }
 }
 
-async function _getAuthUsingOTP(data: verifyOtpInterface) {
+export async function getAuthUsingOTP(data: verifyOtpInterface) {
   if (!data.phoneNumber || !data.OTPCode) {
     return {
       status: "Error",
