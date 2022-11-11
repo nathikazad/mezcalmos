@@ -7393,11 +7393,47 @@ type restaurant_choice_aggregate_fields {
   variance: restaurant_choice_variance_fields
 }
 
+"""
+order by aggregate values of table "restaurant_choice"
+"""
+input restaurant_choice_aggregate_order_by {
+  avg: restaurant_choice_avg_order_by
+  count: order_by
+  max: restaurant_choice_max_order_by
+  min: restaurant_choice_min_order_by
+  stddev: restaurant_choice_stddev_order_by
+  stddev_pop: restaurant_choice_stddev_pop_order_by
+  stddev_samp: restaurant_choice_stddev_samp_order_by
+  sum: restaurant_choice_sum_order_by
+  var_pop: restaurant_choice_var_pop_order_by
+  var_samp: restaurant_choice_var_samp_order_by
+  variance: restaurant_choice_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "restaurant_choice"
+"""
+input restaurant_choice_arr_rel_insert_input {
+  data: [restaurant_choice_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: restaurant_choice_on_conflict
+}
+
 """aggregate avg on columns"""
 type restaurant_choice_avg_fields {
   cost: Float
   id: Float
   name_id: Float
+}
+
+"""
+order by avg() on columns of table "restaurant_choice"
+"""
+input restaurant_choice_avg_order_by {
+  cost: order_by
+  id: order_by
+  name_id: order_by
 }
 
 """
@@ -7453,11 +7489,29 @@ type restaurant_choice_max_fields {
   name_id: Int
 }
 
+"""
+order by max() on columns of table "restaurant_choice"
+"""
+input restaurant_choice_max_order_by {
+  cost: order_by
+  id: order_by
+  name_id: order_by
+}
+
 """aggregate min on columns"""
 type restaurant_choice_min_fields {
   cost: money
   id: Int
   name_id: Int
+}
+
+"""
+order by min() on columns of table "restaurant_choice"
+"""
+input restaurant_choice_min_order_by {
+  cost: order_by
+  id: order_by
+  name_id: order_by
 }
 
 """
@@ -7529,6 +7583,15 @@ type restaurant_choice_stddev_fields {
   name_id: Float
 }
 
+"""
+order by stddev() on columns of table "restaurant_choice"
+"""
+input restaurant_choice_stddev_order_by {
+  cost: order_by
+  id: order_by
+  name_id: order_by
+}
+
 """aggregate stddev_pop on columns"""
 type restaurant_choice_stddev_pop_fields {
   cost: Float
@@ -7536,11 +7599,29 @@ type restaurant_choice_stddev_pop_fields {
   name_id: Float
 }
 
+"""
+order by stddev_pop() on columns of table "restaurant_choice"
+"""
+input restaurant_choice_stddev_pop_order_by {
+  cost: order_by
+  id: order_by
+  name_id: order_by
+}
+
 """aggregate stddev_samp on columns"""
 type restaurant_choice_stddev_samp_fields {
   cost: Float
   id: Float
   name_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "restaurant_choice"
+"""
+input restaurant_choice_stddev_samp_order_by {
+  cost: order_by
+  id: order_by
+  name_id: order_by
 }
 
 """
@@ -7567,6 +7648,15 @@ type restaurant_choice_sum_fields {
   cost: money
   id: Int
   name_id: Int
+}
+
+"""
+order by sum() on columns of table "restaurant_choice"
+"""
+input restaurant_choice_sum_order_by {
+  cost: order_by
+  id: order_by
+  name_id: order_by
 }
 
 """
@@ -7602,6 +7692,15 @@ type restaurant_choice_var_pop_fields {
   name_id: Float
 }
 
+"""
+order by var_pop() on columns of table "restaurant_choice"
+"""
+input restaurant_choice_var_pop_order_by {
+  cost: order_by
+  id: order_by
+  name_id: order_by
+}
+
 """aggregate var_samp on columns"""
 type restaurant_choice_var_samp_fields {
   cost: Float
@@ -7609,11 +7708,29 @@ type restaurant_choice_var_samp_fields {
   name_id: Float
 }
 
+"""
+order by var_samp() on columns of table "restaurant_choice"
+"""
+input restaurant_choice_var_samp_order_by {
+  cost: order_by
+  id: order_by
+  name_id: order_by
+}
+
 """aggregate variance on columns"""
 type restaurant_choice_variance_fields {
   cost: Float
   id: Float
   name_id: Float
+}
+
+"""
+order by variance() on columns of table "restaurant_choice"
+"""
+input restaurant_choice_variance_order_by {
+  cost: order_by
+  id: order_by
+  name_id: order_by
 }
 
 """
@@ -7686,6 +7803,8 @@ type restaurant_item {
   description: translation
   description_id: Int
   id: Int!
+
+  """daily, special"""
   item_type: String!
 
   """An object relationship"""
@@ -7869,6 +7988,8 @@ input restaurant_item_insert_input {
   description: translation_obj_rel_insert_input
   description_id: Int
   id: Int
+
+  """daily, special"""
   item_type: String
   name: translation_obj_rel_insert_input
   name_id: Int
@@ -7885,6 +8006,8 @@ type restaurant_item_max_fields {
   cost: money
   description_id: Int
   id: Int
+
+  """daily, special"""
   item_type: String
   name_id: Int
   position: Int
@@ -7901,6 +8024,8 @@ input restaurant_item_max_order_by {
   cost: order_by
   description_id: order_by
   id: order_by
+
+  """daily, special"""
   item_type: order_by
   name_id: order_by
   position: order_by
@@ -7915,6 +8040,8 @@ type restaurant_item_min_fields {
   cost: money
   description_id: Int
   id: Int
+
+  """daily, special"""
   item_type: String
   name_id: Int
   position: Int
@@ -7931,6 +8058,8 @@ input restaurant_item_min_order_by {
   cost: order_by
   description_id: order_by
   id: order_by
+
+  """daily, special"""
   item_type: order_by
   name_id: order_by
   position: order_by
@@ -7974,6 +8103,42 @@ columns and relationships of "restaurant_item_option_map"
 """
 type restaurant_item_option_map {
   item_id: Int!
+
+  """An array relationship"""
+  item_options(
+    """distinct select on columns"""
+    distinct_on: [restaurant_option_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [restaurant_option_order_by!]
+
+    """filter the rows returned"""
+    where: restaurant_option_bool_exp
+  ): [restaurant_option!]!
+
+  """An aggregate relationship"""
+  item_options_aggregate(
+    """distinct select on columns"""
+    distinct_on: [restaurant_option_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [restaurant_option_order_by!]
+
+    """filter the rows returned"""
+    where: restaurant_option_bool_exp
+  ): restaurant_option_aggregate!
   option_id: Int!
 }
 
@@ -8051,6 +8216,7 @@ input restaurant_item_option_map_bool_exp {
   _not: restaurant_item_option_map_bool_exp
   _or: [restaurant_item_option_map_bool_exp!]
   item_id: Int_comparison_exp
+  item_options: restaurant_option_bool_exp
   option_id: Int_comparison_exp
 }
 
@@ -8077,6 +8243,7 @@ input type for inserting data into table "restaurant_item_option_map"
 """
 input restaurant_item_option_map_insert_input {
   item_id: Int
+  item_options: restaurant_option_arr_rel_insert_input
   option_id: Int
 }
 
@@ -8133,6 +8300,7 @@ Ordering options when selecting data from "restaurant_item_option_map".
 """
 input restaurant_item_option_map_order_by {
   item_id: order_by
+  item_options_aggregate: restaurant_option_aggregate_order_by
   option_id: order_by
 }
 
@@ -8372,6 +8540,8 @@ input restaurant_item_set_input {
   cost: money
   description_id: Int
   id: Int
+
+  """daily, special"""
   item_type: String
   name_id: Int
   position: Int
@@ -8471,6 +8641,8 @@ input restaurant_item_stream_cursor_value_input {
   cost: money
   description_id: Int
   id: Int
+
+  """daily, special"""
   item_type: String
   name_id: Int
   position: Int
@@ -9229,6 +9401,9 @@ type restaurant_option {
   ): restaurant_item_option_map_aggregate!
   maximum_choice: Int!
   minimum_choice: Int!
+
+  """An object relationship"""
+  name: translation!
   name_id: Int!
   option_type: String!
   position: Int!
@@ -9259,6 +9434,33 @@ type restaurant_option_aggregate_fields {
   variance: restaurant_option_variance_fields
 }
 
+"""
+order by aggregate values of table "restaurant_option"
+"""
+input restaurant_option_aggregate_order_by {
+  avg: restaurant_option_avg_order_by
+  count: order_by
+  max: restaurant_option_max_order_by
+  min: restaurant_option_min_order_by
+  stddev: restaurant_option_stddev_order_by
+  stddev_pop: restaurant_option_stddev_pop_order_by
+  stddev_samp: restaurant_option_stddev_samp_order_by
+  sum: restaurant_option_sum_order_by
+  var_pop: restaurant_option_var_pop_order_by
+  var_samp: restaurant_option_var_samp_order_by
+  variance: restaurant_option_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "restaurant_option"
+"""
+input restaurant_option_arr_rel_insert_input {
+  data: [restaurant_option_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: restaurant_option_on_conflict
+}
+
 """aggregate avg on columns"""
 type restaurant_option_avg_fields {
   cost_per_extra: Float
@@ -9268,6 +9470,19 @@ type restaurant_option_avg_fields {
   minimum_choice: Float
   name_id: Float
   position: Float
+}
+
+"""
+order by avg() on columns of table "restaurant_option"
+"""
+input restaurant_option_avg_order_by {
+  cost_per_extra: order_by
+  free_choice: order_by
+  id: order_by
+  maximum_choice: order_by
+  minimum_choice: order_by
+  name_id: order_by
+  position: order_by
 }
 
 """
@@ -9284,6 +9499,7 @@ input restaurant_option_bool_exp {
   items: restaurant_item_option_map_bool_exp
   maximum_choice: Int_comparison_exp
   minimum_choice: Int_comparison_exp
+  name: translation_bool_exp
   name_id: Int_comparison_exp
   option_type: String_comparison_exp
   position: Int_comparison_exp
@@ -9294,6 +9510,42 @@ columns and relationships of "restaurant_option_choice_map"
 """
 type restaurant_option_choice_map {
   choice_id: Int!
+
+  """An array relationship"""
+  option_choices(
+    """distinct select on columns"""
+    distinct_on: [restaurant_choice_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [restaurant_choice_order_by!]
+
+    """filter the rows returned"""
+    where: restaurant_choice_bool_exp
+  ): [restaurant_choice!]!
+
+  """An aggregate relationship"""
+  option_choices_aggregate(
+    """distinct select on columns"""
+    distinct_on: [restaurant_choice_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [restaurant_choice_order_by!]
+
+    """filter the rows returned"""
+    where: restaurant_choice_bool_exp
+  ): restaurant_choice_aggregate!
   option_id: Int!
 }
 
@@ -9371,6 +9623,7 @@ input restaurant_option_choice_map_bool_exp {
   _not: restaurant_option_choice_map_bool_exp
   _or: [restaurant_option_choice_map_bool_exp!]
   choice_id: Int_comparison_exp
+  option_choices: restaurant_choice_bool_exp
   option_id: Int_comparison_exp
 }
 
@@ -9397,6 +9650,7 @@ input type for inserting data into table "restaurant_option_choice_map"
 """
 input restaurant_option_choice_map_insert_input {
   choice_id: Int
+  option_choices: restaurant_choice_arr_rel_insert_input
   option_id: Int
 }
 
@@ -9453,6 +9707,7 @@ Ordering options when selecting data from "restaurant_option_choice_map".
 """
 input restaurant_option_choice_map_order_by {
   choice_id: order_by
+  option_choices_aggregate: restaurant_choice_aggregate_order_by
   option_id: order_by
 }
 
@@ -9650,6 +9905,7 @@ input restaurant_option_insert_input {
   items: restaurant_item_option_map_arr_rel_insert_input
   maximum_choice: Int
   minimum_choice: Int
+  name: translation_obj_rel_insert_input
   name_id: Int
   option_type: String
   position: Int
@@ -9667,6 +9923,20 @@ type restaurant_option_max_fields {
   position: Int
 }
 
+"""
+order by max() on columns of table "restaurant_option"
+"""
+input restaurant_option_max_order_by {
+  cost_per_extra: order_by
+  free_choice: order_by
+  id: order_by
+  maximum_choice: order_by
+  minimum_choice: order_by
+  name_id: order_by
+  option_type: order_by
+  position: order_by
+}
+
 """aggregate min on columns"""
 type restaurant_option_min_fields {
   cost_per_extra: money
@@ -9677,6 +9947,20 @@ type restaurant_option_min_fields {
   name_id: Int
   option_type: String
   position: Int
+}
+
+"""
+order by min() on columns of table "restaurant_option"
+"""
+input restaurant_option_min_order_by {
+  cost_per_extra: order_by
+  free_choice: order_by
+  id: order_by
+  maximum_choice: order_by
+  minimum_choice: order_by
+  name_id: order_by
+  option_type: order_by
+  position: order_by
 }
 
 """
@@ -9708,6 +9992,7 @@ input restaurant_option_order_by {
   items_aggregate: restaurant_item_option_map_aggregate_order_by
   maximum_choice: order_by
   minimum_choice: order_by
+  name: translation_order_by
   name_id: order_by
   option_type: order_by
   position: order_by
@@ -9772,6 +10057,19 @@ type restaurant_option_stddev_fields {
   position: Float
 }
 
+"""
+order by stddev() on columns of table "restaurant_option"
+"""
+input restaurant_option_stddev_order_by {
+  cost_per_extra: order_by
+  free_choice: order_by
+  id: order_by
+  maximum_choice: order_by
+  minimum_choice: order_by
+  name_id: order_by
+  position: order_by
+}
+
 """aggregate stddev_pop on columns"""
 type restaurant_option_stddev_pop_fields {
   cost_per_extra: Float
@@ -9783,6 +10081,19 @@ type restaurant_option_stddev_pop_fields {
   position: Float
 }
 
+"""
+order by stddev_pop() on columns of table "restaurant_option"
+"""
+input restaurant_option_stddev_pop_order_by {
+  cost_per_extra: order_by
+  free_choice: order_by
+  id: order_by
+  maximum_choice: order_by
+  minimum_choice: order_by
+  name_id: order_by
+  position: order_by
+}
+
 """aggregate stddev_samp on columns"""
 type restaurant_option_stddev_samp_fields {
   cost_per_extra: Float
@@ -9792,6 +10103,19 @@ type restaurant_option_stddev_samp_fields {
   minimum_choice: Float
   name_id: Float
   position: Float
+}
+
+"""
+order by stddev_samp() on columns of table "restaurant_option"
+"""
+input restaurant_option_stddev_samp_order_by {
+  cost_per_extra: order_by
+  free_choice: order_by
+  id: order_by
+  maximum_choice: order_by
+  minimum_choice: order_by
+  name_id: order_by
+  position: order_by
 }
 
 """
@@ -9826,6 +10150,19 @@ type restaurant_option_sum_fields {
   minimum_choice: Int
   name_id: Int
   position: Int
+}
+
+"""
+order by sum() on columns of table "restaurant_option"
+"""
+input restaurant_option_sum_order_by {
+  cost_per_extra: order_by
+  free_choice: order_by
+  id: order_by
+  maximum_choice: order_by
+  minimum_choice: order_by
+  name_id: order_by
+  position: order_by
 }
 
 """
@@ -9877,6 +10214,19 @@ type restaurant_option_var_pop_fields {
   position: Float
 }
 
+"""
+order by var_pop() on columns of table "restaurant_option"
+"""
+input restaurant_option_var_pop_order_by {
+  cost_per_extra: order_by
+  free_choice: order_by
+  id: order_by
+  maximum_choice: order_by
+  minimum_choice: order_by
+  name_id: order_by
+  position: order_by
+}
+
 """aggregate var_samp on columns"""
 type restaurant_option_var_samp_fields {
   cost_per_extra: Float
@@ -9888,6 +10238,19 @@ type restaurant_option_var_samp_fields {
   position: Float
 }
 
+"""
+order by var_samp() on columns of table "restaurant_option"
+"""
+input restaurant_option_var_samp_order_by {
+  cost_per_extra: order_by
+  free_choice: order_by
+  id: order_by
+  maximum_choice: order_by
+  minimum_choice: order_by
+  name_id: order_by
+  position: order_by
+}
+
 """aggregate variance on columns"""
 type restaurant_option_variance_fields {
   cost_per_extra: Float
@@ -9897,6 +10260,19 @@ type restaurant_option_variance_fields {
   minimum_choice: Float
   name_id: Float
   position: Float
+}
+
+"""
+order by variance() on columns of table "restaurant_option"
+"""
+input restaurant_option_variance_order_by {
+  cost_per_extra: order_by
+  free_choice: order_by
+  id: order_by
+  maximum_choice: order_by
+  minimum_choice: order_by
+  name_id: order_by
+  position: order_by
 }
 
 """

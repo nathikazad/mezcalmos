@@ -5,5 +5,22 @@ targets:
     builders:
       graphql_codegen:
         options:
+          outputDirectory: __generated
+          assetsPath: lib/Shared/graphql/**
           clients:
             - graphql
+          scalars:
+            json:
+              type: Map<String, dynamic>
+            jsonb:
+              type: Map<String, dynamic>
+            geography:
+              type: Geography
+              fromJsonFunctionName: GeographyFromJson
+              toJsonFunctionName: GeographyToJson
+              import: package:mezcalmos/Shared/graphql/hasuraTypes.dart
+            money:
+              type: double
+              fromJsonFunctionName: MoneyFromJson
+              toJsonFunctionName: MoneyToJson
+              import: package:mezcalmos/Shared/graphql/hasuraTypes.dart

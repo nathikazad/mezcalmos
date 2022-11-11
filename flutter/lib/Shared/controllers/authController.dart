@@ -82,7 +82,6 @@ class AuthController extends GetxController {
 
       if (user == null) {
         await hasuraDb.initializeHasura();
-
         await _onSignOutCallback();
         _authStateStreamController.add(null);
         _userInfoStreamController.add(null);
@@ -130,6 +129,27 @@ class AuthController extends GetxController {
     super.onInit();
   }
 
+// DocumentNode documentNodeSubscriptionGetRestaurants =
+//     graphql.gql(r'''subscription GetRestaurants {
+//   restaurant {
+//     id
+//     name
+//     location_text
+//     status
+//     image
+//     description {
+//       translations {
+//         language_id
+//         value
+//       }
+//     }
+//     payment_info {
+//       bank_transfer
+//       card
+//       cash
+//     }
+//   }
+// }''');
   bool isDisplayNameSet() {
     return _user.value?.name != null && _user.value?.name != "";
   }

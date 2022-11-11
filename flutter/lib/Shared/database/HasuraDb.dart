@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:cloud_functions/cloud_functions.dart';
@@ -8,8 +9,13 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/mezRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart' show mezDbgPrint;
+import 'package:mezcalmos/Shared/graphql/restaurant/__generated/restaurant.graphql.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class HasuraDb {
   late GraphQLClient graphQLClient;
@@ -40,32 +46,34 @@ class HasuraDb {
       'headers': {'x-hasura-admin-secret': 'myadminsecretkey'},
     };
     ;
-    if (withAuthenticatedUser) {
-      final AuthController _authController = Get.find<AuthController>();
-      if (_authController.fireAuthUser == null) {
-        mezDbgPrint("Cannot initialize Hasura with user authentication");
-      } else {
-        final String hasuraAuthToken =
-            await _getAuthorizationToken(_authController.fireAuthUser!);
-        final AuthLink _authLink =
-            AuthLink(getToken: () async => 'Bearer $hasuraAuthToken');
-        _httpLink = HttpLink(hasuraDbLink, defaultHeaders: {
-          'Authorization': 'Bearer $hasuraAuthToken',
-        });
-        _link = _authLink.concat(_httpLink);
-        initialPayload = <dynamic, dynamic>{
-          'headers': {'Authorization': 'Bearer $hasuraAuthToken'},
-        };
-      }
-    }
-    _wsLink = WebSocketLink(
-      hasuraDbLink.replaceAll("https", "wss"),
-      config: SocketClientConfig(
-        autoReconnect: true,
-        inactivityTimeout: Duration(seconds: 30),
-        initialPayload: initialPayload,
-      ),
-    );
+    // if (withAuthenticatedUser) {
+    //   final AuthController _authController = Get.find<AuthController>();
+    //   if (_authController.fireAuthUser == null) {
+    //     mezDbgPrint("Cannot initialize Hasura with user authentication");
+    //   } else {
+    //     final String hasuraAuthToken =
+    //         await _getAuthorizationToken(_authController.fireAuthUser!);
+    //     final AuthLink _authLink =
+    //         AuthLink(getToken: () async => 'Bearer $hasuraAuthToken');
+    //     _httpLink = HttpLink(hasuraDbLink, defaultHeaders: {
+    //       'Authorization': 'Bearer $hasuraAuthToken',
+    //     });
+    //     _link = _authLink.concat(_httpLink);
+    //     initialPayload = <dynamic, dynamic>{
+    //       'headers': {'Authorization': 'Bearer $hasuraAuthToken'},
+    //     };
+    //   }
+    // }
+    _wsLink = WebSocketLink("ws://127.0.0.1:8080/v1/graphql",
+        config: SocketClientConfig(
+          autoReconnect: true,
+          inactivityTimeout: Duration(seconds: 30),
+          initialPayload: () async {
+            return {
+              'headers': {'x-hasura-admin-secret': 'myadminsecretkey'},
+            };
+          },
+        ));
 
     _link = Link.split(
         (Request request) => request.isSubscription, _wsLink!, _link);
@@ -74,7 +82,104 @@ class HasuraDb {
       cache: GraphQLCache(),
       link: _link,
     );
+
+    // mezDbgPrint("writing to hasura");
+    // writeRestaurantToHasura(Category(name: <LanguageType, String>{
+    //   LanguageType.EN: "Item name in english",
+    //   LanguageType.ES: "Item name in spanish",
+    // }));
+    // mezDbgPrint("Hasura subscription");
+    // unawaited(graphQLClient.query$RestaurantItem().then((result) {
+    //   mezDbgPrint("HASURAAAAA result1");
+    //   mezDbgPrint(result.parsedData?.restaurant_item[0].cost);
+    //   // mezDbgPrint(result.parsedData?.restaurant_item[0].cost);
+    //   // mezDbgPrint(result.parsedData?.restaurant_item[0].location_gps.longitude);
+    //   // mezDbgPrint(result.parsedData?.restaurant[0].name);
+    //   // result.parsedData?.restaurant
+    //   //     .forEach(((element) => mezDbgPrint(element.name)));
+    // }));
+
+    // graphQLClient
+    //     .subscribe(
+    //         SubscriptionOptions(document: documentNodeQueryGetRestaurants))
+    //     .listen((result) {
+    //   mezDbgPrint("HASURAAAAA result2");
+    //   mezDbgPrint(result.data);
+    //   // mezDbgPrint(result.parsedData?.restaurant[0].name);
+    //   // result.parsedData?.restaurant
+    //   //     .forEach(((element) => mezDbgPrint(element.name)));
+    // });
+
+    // graphQLClient
+    //     .subscribe(
+    //         SubscriptionOptions(document: gql(r'''subscription GetRestaurants {
+    //             restaurant {
+    //               id
+    //               name
+    //               location_text
+    //               status
+    //               image
+    //               description {
+    //                 translations {
+    //                   language_id
+    //                   value
+    //                 }
+    //               }
+    //               payment_info {
+    //                 bank_transfer
+    //                 card
+    //                 cash
+    //               }
+    //             }
+    //           }''')))
+    //     .listen((result) {
+    //   mezDbgPrint("HASURAAAAA result3");
+    //   mezDbgPrint(result.data);
+    //   // mezDbgPrint(result.parsedData?.restaurant[0].name);
+    //   // result.parsedData?.restaurant
+    //   //     .forEach(((element) => mezDbgPrint(element.name)));
+    // });
   }
+
+  // DocumentNode documentNodeQueryGetRestaurants = DocumentNode(definitions: [
+  //   OperationDefinitionNode(
+  //     type: OperationType.subscription,
+  //     name: NameNode(value: 'GetRestaurants'),
+  //     variableDefinitions: [],
+  //     directives: [],
+  //     selectionSet: SelectionSetNode(selections: [
+  //       FieldNode(
+  //         name: NameNode(value: 'restaurant'),
+  //         alias: null,
+  //         arguments: [],
+  //         directives: [],
+  //         selectionSet: SelectionSetNode(selections: [
+  //           FieldNode(
+  //             name: NameNode(value: 'image'),
+  //             alias: null,
+  //             arguments: [],
+  //             directives: [],
+  //             selectionSet: null,
+  //           ),
+  //           FieldNode(
+  //             name: NameNode(value: '__typename'),
+  //             alias: null,
+  //             arguments: [],
+  //             directives: [],
+  //             selectionSet: null,
+  //           ),
+  //         ]),
+  //       ),
+  //       FieldNode(
+  //         name: NameNode(value: '__typename'),
+  //         alias: null,
+  //         arguments: [],
+  //         directives: [],
+  //         selectionSet: null,
+  //       ),
+  //     ]),
+  //   ),
+  // ]);
 
   Future<String> _getAuthorizationToken(User user) async {
     IdTokenResult? tokenResult = await user.getIdTokenResult();

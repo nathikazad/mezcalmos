@@ -30,3 +30,19 @@ array_relationships:
         table:
           name: restaurant_operator
           schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - location_gps
+        - description_id
+        - id
+        - payment_info_id
+        - schedule_id
+        - firebase_id
+        - image
+        - language_id
+        - location_text
+        - name
+        - status
+      filter: {}
