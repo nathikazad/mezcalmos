@@ -1,12 +1,10 @@
 import Stripe from 'stripe';
-import * as functions from "firebase-functions";
 import { isSignedIn } from "../../shared/helper/authorizer";
 import { ServerResponseStatus, ValidationPass } from '../../shared/models/Generic/Generic';
 import { getKeys } from '../../shared/keys';
 import { Keys } from '../../shared/models/Generic/Keys';
 import * as serviceProviderNodes from '../../shared/databaseNodes/services/serviceProvider';
 import { OrderType, PaymentType } from '../../shared/models/Generic/Order';
-import { AuthData } from 'firebase-functions/lib/common/providers/https';
 import { ServiceProviderStripeInfo, StripeStatus } from './model';
 import * as customerNodes from '../../shared/databaseNodes/customer';
 import { userInfoNode } from '../../shared/databaseNodes/root';
@@ -14,85 +12,78 @@ import { UserInfo } from '../../shared/models/Generic/User';
 import { getUserInfo } from '../../shared/controllers/rootController';
 let keys: Keys = getKeys();
 
+export async function setupServiceProvider(userId: string, data: any) {
+  
+  let validation: ValidationPass = await passChecksForOperator(userId, data);
+  if (!validation.ok)
+    return validation.error;
 
-export const setupServiceProvider =
-  functions.https.onCall(async (data, context) => {
-
-    let validation: ValidationPass = await passChecksForOperator(data, context.auth);
-    if (!validation.ok)
-      return validation.error;
-
-    if (data.serviceProviderId == null || data.orderType == null) {
-      return {
-        status: ServerResponseStatus.Error,
-        errorMessage: `Expected serviceProviderId and orderType`,
-        errorCode: "incorrectParams"
-      }
-    }
-
-    const stripeOptions = { apiVersion: <any>'2020-08-27' };
-    const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
-
-    const accountId = await getServiceProviderStripeId(data.serviceProviderId, data.orderType, context.auth!.uid, stripe, stripeOptions);
-
-    const accountLink = await stripe.accountLinks.create({
-      account: accountId,
-      refresh_url: 'https://example.com/reauth',
-      return_url: 'https://example.com/return',
-      type: 'account_onboarding',
-    }, stripeOptions);
-
+  if (data.serviceProviderId == null || data.orderType == null) {
     return {
-      status: ServerResponseStatus.Success,
-      ...accountLink
+      status: ServerResponseStatus.Error,
+      errorMessage: `Expected serviceProviderId and orderType`,
+      errorCode: "incorrectParams"
     }
-  })
+  }
+  const stripeOptions = { apiVersion: <any>'2020-08-27' };
+  const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
 
-export const updateServiceProvider =
-  functions.https.onCall(async (data, context) => {
+  const accountId = await getServiceProviderStripeId(data.serviceProviderId, data.orderType, userId, stripe, stripeOptions);
 
-    let validation: ValidationPass = await passChecksForOperator(data, context.auth);
-    if (!validation.ok)
-      return validation.error;
+  const accountLink = await stripe.accountLinks.create({
+    account: accountId,
+    refresh_url: 'https://example.com/reauth',
+    return_url: 'https://example.com/return',
+    type: 'account_onboarding',
+  }, stripeOptions);
 
-    if (data.serviceProviderId == null || data.orderType == null) {
-      return {
-        status: ServerResponseStatus.Error,
-        errorMessage: `Expected serviceProviderId and orderType`,
-        errorCode: "incorrectParams"
-      }
-    }
+  return {
+    status: ServerResponseStatus.Success,
+    ...accountLink
+  }
+};
 
-    const stripeOptions = { apiVersion: <any>'2020-08-27' };
-    const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
+export async function updateServiceProvider(userId: string, data: any) {
 
+  let validation: ValidationPass = await passChecksForOperator(userId, data);
+  if (!validation.ok)
+    return validation.error;
 
-    let stripeAccount: string = (await serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).child('stripe/id').once('value')).val()
-    const account: Stripe.Account = await stripe.accounts.retrieve(stripeAccount, stripeOptions);
-    if (!stripeAccount)
-      return {
-        status: ServerResponseStatus.Error,
-        errorMessage: `Account has not setup stripe yet`,
-        errorCode: "uncreated"
-      }
-
-    let isWorking: boolean = account.details_submitted && account.charges_enabled
-    await serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).child('stripe').update(<ServiceProviderStripeInfo>{
-      status: isWorking ? StripeStatus.IsWorking : StripeStatus.InProcess,
-      detailsSubmitted: account.details_submitted,
-      payoutsEnabled: account.payouts_enabled,
-      chargeFeesOnCustomer: null ,
-      email: account.email,
-      chargesEnabled: account.charges_enabled,
-      requirements: account.requirements?.currently_due
-    });
-
-
-
+  if (data.serviceProviderId == null || data.orderType == null) {
     return {
-      status: ServerResponseStatus.Success
+      status: ServerResponseStatus.Error,
+      errorMessage: `Expected serviceProviderId and orderType`,
+      errorCode: "incorrectParams"
     }
-  })
+  }
+
+  const stripeOptions = { apiVersion: <any>'2020-08-27' };
+  const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
+
+  let stripeAccount: string = (await serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).child('stripe/id').once('value')).val()
+  const account: Stripe.Account = await stripe.accounts.retrieve(stripeAccount, stripeOptions);
+  if (!stripeAccount)
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: `Account has not setup stripe yet`,
+      errorCode: "uncreated"
+    }
+
+  let isWorking: boolean = account.details_submitted && account.charges_enabled
+  await serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).child('stripe').update(<ServiceProviderStripeInfo>{
+    status: isWorking ? StripeStatus.IsWorking : StripeStatus.InProcess,
+    detailsSubmitted: account.details_submitted,
+    payoutsEnabled: account.payouts_enabled,
+    chargeFeesOnCustomer: null ,
+    email: account.email,
+    chargesEnabled: account.charges_enabled,
+    requirements: account.requirements?.currently_due
+  });
+
+  return {
+    status: ServerResponseStatus.Success
+  }
+};
 
 
 export async function getCustomerIdFromServiceAccount(customerId: string, serviceProviderId: string, orderType: OrderType, stripe: Stripe, stripeOptions: any) {
@@ -157,8 +148,8 @@ export async function getServiceProviderStripeId(serviceProviderId: string, orde
   return serviceProviderStripeId;
 }
 
-async function passChecksForOperator(data: any, auth?: AuthData): Promise<ValidationPass> {
-  let response = await isSignedIn(auth)
+async function passChecksForOperator(userId: string, data: any): Promise<ValidationPass> {
+  let response = isSignedIn(userId);
   if (response != undefined) {
     return {
       ok: false,
@@ -176,7 +167,7 @@ async function passChecksForOperator(data: any, auth?: AuthData): Promise<Valida
       }
     }
 
-  let authorized = (await serviceProviderNodes.serviceProviderState(data.orderType, data.serviceProviderId).child("/operators").child(auth!.uid).once('value')).val();
+  let authorized = (await serviceProviderNodes.serviceProviderState(data.orderType, data.serviceProviderId).child("/operators").child(userId).once('value')).val();
   if (!authorized)
     return {
       ok: false,

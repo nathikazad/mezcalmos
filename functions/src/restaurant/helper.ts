@@ -4,9 +4,8 @@ import * as customerNodes from "../shared/databaseNodes/customer";
 import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
 import { OrderType } from "../shared/models/Generic/Order";
-import { AuthData } from "firebase-functions/lib/common/providers/https";
 import { ServerResponse, ServerResponseStatus, ValidationPass } from "../shared/models/Generic/Generic";
-import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
+import { checkDeliveryAdmin } from "../shared/helper/authorizer";
 
 export async function finishOrder(
   order: RestaurantOrder,

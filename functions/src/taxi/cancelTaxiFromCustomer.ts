@@ -14,8 +14,9 @@ import { orderUrl } from "../utilities/senders/appRoutes";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 
-export = functions.https.onCall(async (data, context) => {
-  let response = await isSignedIn(context.auth)
+export async function cancelTaxiFromCustomer(userId: string, data: any) {
+
+  let response = isSignedIn(userId);
   if (response != undefined) {
     return response;
   }
@@ -76,7 +77,7 @@ export = functions.https.onCall(async (data, context) => {
       }
     }
 
-    if (order.customer.id != context.auth!.uid) {
+    if (order.customer.id != userId) {
       return {
         status: ServerResponseStatus.Error,
         errorMessage: `Order does not belong to customer`,
@@ -144,7 +145,7 @@ export = functions.https.onCall(async (data, context) => {
     rootNodes.inProcessOrders(OrderType.Taxi, orderId).child("lock").remove();
     rootNodes.openOrders(OrderType.Taxi, orderId).child("lock").remove();
   }
-});
+};
 
 async function notifyDeliveryAdminsNewOrder(deliveryAdmins: Record<string, DeliveryAdmin>,
   orderId: string) {

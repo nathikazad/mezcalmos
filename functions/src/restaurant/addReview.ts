@@ -1,7 +1,6 @@
 import * as serviceProviderNodes from "../shared/databaseNodes/services/serviceProvider";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import * as rootNodes from "../shared/databaseNodes/root";
-import * as functions from "firebase-functions";
 import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 
 import { isSignedIn } from "../shared/helper/authorizer";
@@ -9,8 +8,9 @@ import { getRestaurantReviews } from "../shared/controllers/restaurantController
 import { UserInfo } from "../shared/models/Generic/User";
 import { getUserInfo } from "../shared/controllers/rootController";
 
-export = functions.https.onCall(async (data, context) => {
-  let response = await isSignedIn(context.auth);
+export async function addReview(userId: string, data: any) {
+
+  let response = isSignedIn(userId);
   if (response != undefined) {
     return {
       ok: false,
@@ -25,14 +25,14 @@ export = functions.https.onCall(async (data, context) => {
         "required parameters rating, comment, orderType ,orderId and restaurantId",
     };
   }
-  let customerInfo: UserInfo = await getUserInfo(context.auth!.uid);
+  let customerInfo: UserInfo = await getUserInfo(userId);
 
     const newReview:JSON = <JSON><unknown>{
       "rating": data.rating,
       "authorName" : customerInfo.name,
       "comment": data.comment,
         "orderType" : data.orderType,
-      "authorId": context.auth?.uid,
+      "authorId": userId,
       "reviewTime": (new Date()).toISOString(),
       }
 
@@ -53,7 +53,7 @@ export = functions.https.onCall(async (data, context) => {
       .set(newReview);
   // adding review to customer past orders node  
   customerNodes
-    .pastOrders(context.auth!.uid, data.orderId)
+    .pastOrders(userId, data.orderId)
     .child("review")
       .set(newReview);
  // adding review to root past orders node   
@@ -75,4 +75,4 @@ export = functions.https.onCall(async (data, context) => {
     
 
   return { status: ServerResponseStatus.Success };
-});
+};

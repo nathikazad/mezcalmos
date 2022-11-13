@@ -6,7 +6,6 @@ import { OrderType } from "../shared/models/Generic/Order";
 import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
 import { ServerResponse, ServerResponseStatus, ValidationPass } from "../shared/models/Generic/Generic";
 import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
-import { AuthData } from "firebase-functions/lib/common/providers/https";
 
 export async function finishOrder(
   order: LaundryOrder,
@@ -63,8 +62,8 @@ async function checkLaundryOperator(laundryId: string, operatorId: string): Prom
   return undefined;
 }
 
-export async function passChecksForLaundry(data: any, auth?: AuthData): Promise<ValidationPass> {
-  let response = await isSignedIn(auth)
+export async function passChecksForLaundry(data: any, userId: string): Promise<ValidationPass> {
+  let response = await isSignedIn(userId)
   if (response != undefined) {
     return {
       ok: false,
@@ -96,7 +95,7 @@ export async function passChecksForLaundry(data: any, auth?: AuthData): Promise<
   }
 
   if (data.fromLaundryOperator) {
-    response = await checkLaundryOperator(order.laundry.id, auth!.uid)
+    response = await checkLaundryOperator(order.laundry.id, userId)
     if (response != undefined) {
       return {
         ok: false,
@@ -104,7 +103,7 @@ export async function passChecksForLaundry(data: any, auth?: AuthData): Promise<
       };
     }
   } else {
-    response = await checkDeliveryAdmin(auth!.uid)
+    response = await checkDeliveryAdmin(userId)
     if (response != undefined) {
       return {
         ok: false,

@@ -1,5 +1,3 @@
-import * as functions from "firebase-functions";
-import { AuthData } from "firebase-functions/lib/common/providers/https";
 import { ServerResponseStatus, ValidationPass } from "../shared/models/Generic/Generic";
 import { DeliveryAction, TwoWayDeliverableOrder } from "../shared/models/Generic/Order";
 import * as customerNodes from "../shared/databaseNodes/customer";
@@ -9,8 +7,7 @@ import { isSignedIn } from "../shared/helper/authorizer";
 import { DeliveryDriverType } from "../shared/models/Drivers/DeliveryDriver";
 import { updateServiceProviderOrder } from "../shared/controllers/orderController";
 
-export = functions.https.onCall(async (data, context) => {
-
+export async function setEstimatedTime(userId: string, data: any) {
   if (data.orderId == null || data.estimatedTime == null || data.deliveryDriverType == null
     || data.deliveryAction == null || data.orderType == null) {
     return {
@@ -24,7 +21,7 @@ export = functions.https.onCall(async (data, context) => {
   let orderId = data.orderId;
   let deliveryAction: DeliveryAction = data.deliveryAction;
 
-  let validationPass = await passChecksForDriver(data, context.auth);
+  let validationPass = await passChecksForDriver(data, userId);
   if (!validationPass.ok) {
     return validationPass.error;
   }
@@ -67,10 +64,10 @@ export = functions.https.onCall(async (data, context) => {
 
 
   return { status: ServerResponseStatus.Success }
-});
+};
 
-async function passChecksForDriver(data: any, auth?: AuthData): Promise<ValidationPass> {
-  let response = await isSignedIn(auth)
+async function passChecksForDriver(data: any, userId: string): Promise<ValidationPass> {
+  let response = isSignedIn(userId)
   if (response != undefined) {
     return {
       ok: false,
@@ -92,7 +89,7 @@ async function passChecksForDriver(data: any, auth?: AuthData): Promise<Validati
   }
    switch (data.deliveryDriverType) {
     case DeliveryDriverType.Pickup:
-      if (order.pickupDriver != null && order.pickupDriver.id != auth!.uid)
+      if (order.pickupDriver != null && order.pickupDriver.id != userId)
         return {
           ok: false,
           error: {
@@ -102,7 +99,7 @@ async function passChecksForDriver(data: any, auth?: AuthData): Promise<Validati
           }
         }
     case DeliveryDriverType.DropOff:
-      if (order.dropoffDriver != null && order.dropoffDriver.id != auth!.uid)
+      if (order.dropoffDriver != null && order.dropoffDriver.id != userId)
         return {
           ok: false,
           error: {

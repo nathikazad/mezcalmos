@@ -1,4 +1,3 @@
-import * as functions from "firebase-functions";
 import {
   ServerResponse,
   ServerResponseStatus,
@@ -12,8 +11,9 @@ import { userInfoNode } from "../shared/databaseNodes/root";
 import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
 import { UserInfo } from "../shared/models/Generic/User";
 
-export = functions.https.onCall(async (data, context) => {
-  let response: ServerResponse | undefined = await isSignedIn(context.auth);
+export async function createRestaurant(userId: string, data: any) {
+
+  let response: ServerResponse | undefined = isSignedIn(userId);
   if (response != undefined) {
     return {
       ok: false,
@@ -21,7 +21,7 @@ export = functions.https.onCall(async (data, context) => {
     };
   }
 
-  response = await checkDeliveryAdmin(context.auth!.uid);
+  response = await checkDeliveryAdmin(userId);
   if (response != undefined) {
     return {
       ok: false,
@@ -76,7 +76,7 @@ export = functions.https.onCall(async (data, context) => {
   };
   operatorNodes.operatorInfo(OrderType.Restaurant, user.uid).set(newOperator);
   return { status: ServerResponseStatus.Success };
-});
+};
 
 let restaurantTemplateInJson = `{
   "details": {
