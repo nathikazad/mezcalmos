@@ -1,0 +1,5 @@
+mutation addChoice($choice: restaurant_choice_insert_input!) {
+  insert_restaurant_choice_one(object: $choice) {
+    id
+  }
+}

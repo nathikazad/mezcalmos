@@ -574,17 +574,17 @@ class Option {
     return choices;
   }
 
-  Option(
-      {required this.id,
-      required this.optionType,
-      required this.name,
-      this.costPerExtra = 0,
-      this.freeChoice = 0,
-      this.maximumChoice = 0,
-      this.minimumChoice = 0,
-      List<Choice>? newChoices,
-      this.position = 0})
-      : choices = newChoices ?? <Choice>[];
+  Option({
+    required this.id,
+    required this.optionType,
+    required this.name,
+    this.costPerExtra = 0,
+    this.freeChoice = 0,
+    this.maximumChoice = 0,
+    this.minimumChoice = 0,
+    List<Choice>? newChoices,
+    this.position = 0,
+  }) : choices = newChoices ?? <Choice>[];
   factory Option.fromData(String id, data) {
     final Option option = Option(
         id: id,

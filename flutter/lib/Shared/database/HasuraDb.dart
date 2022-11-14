@@ -1,19 +1,15 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:graphql/client.dart';
-import 'package:gql/ast.dart';
 import 'package:get/get.dart';
+import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/mezRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart' show mezDbgPrint;
-import 'package:mezcalmos/Shared/graphql/restaurant/__generated/restaurant.graphql.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
@@ -39,13 +35,12 @@ class HasuraDb {
         hasuraDbLink = hasuraDevLink;
         break;
     }
-    HttpLink _httpLink = HttpLink(hasuraDbLink,
+    final HttpLink _httpLink = HttpLink(hasuraDbLink,
         defaultHeaders: {'x-hasura-admin-secret': 'myadminsecretkey'});
     Link _link = _httpLink;
-    dynamic initialPayload = <dynamic, dynamic>{
+    final dynamic initialPayload = <dynamic, dynamic>{
       'headers': {'x-hasura-admin-secret': 'myadminsecretkey'},
     };
-    ;
     // if (withAuthenticatedUser) {
     //   final AuthController _authController = Get.find<AuthController>();
     //   if (_authController.fireAuthUser == null) {
@@ -83,11 +78,83 @@ class HasuraDb {
       link: _link,
     );
 
-    // mezDbgPrint("writing to hasura");
-    // writeRestaurantToHasura(Category(name: <LanguageType, String>{
-    //   LanguageType.EN: "Item name in english",
-    //   LanguageType.ES: "Item name in spanish",
-    // }));
+    mezDbgPrint("writing to hasura");
+    Category getTestCatgeory() {
+      final List<Choice> choices = [
+        Choice(
+            id: "kk",
+            available: true,
+            name: <LanguageType, String>{
+              LanguageType.EN: "First Choice name in english",
+              LanguageType.ES: "First Choice name in spanish",
+            },
+            cost: 5),
+        Choice(
+            id: "kk",
+            available: true,
+            name: <LanguageType, String>{
+              LanguageType.EN: "Second Choice name in english",
+              LanguageType.ES: "Second Choice name in spanish",
+            },
+            cost: 5),
+      ];
+      final List<Option> options = [
+        Option(
+          id: "kk",
+          optionType: OptionType.ChooseOne,
+          name: <LanguageType, String>{
+            LanguageType.EN: "Option name in english",
+            LanguageType.ES: "Option name in spanish",
+          },
+        )
+      ];
+      options.first.choices.addAll(choices);
+      final List<Item> items = [
+        Item(
+          name: <LanguageType, String>{
+            LanguageType.EN: "Item name in english",
+            LanguageType.ES: "Item name in spanish",
+          },
+          description: <LanguageType, String>{
+            LanguageType.EN: "Item Description in english",
+            LanguageType.ES: "Item Description in spanish",
+          },
+          cost: 20,
+        )
+      ];
+      items.first.options.addAll(options);
+
+      final Category category = Category(
+        name: <LanguageType, String>{
+          LanguageType.EN: "Category name in english",
+          LanguageType.ES: "Category name in spanish",
+        },
+        dialog: <LanguageType, String>{
+          LanguageType.EN: "Category Description in english",
+          LanguageType.ES: "Category Description in spanish",
+        },
+        position: 10,
+      );
+      category.items.addAll(items);
+      return category;
+    }
+
+    await writeCategoryToHasura(getTestCatgeory());
+
+    // await writeCategoryToHasura(
+    //   Category(
+    //     name: <LanguageType, String>{
+    //       LanguageType.EN: "Category name in english",
+    //       LanguageType.ES: "Category name in spanish",
+    //     },
+    //     dialog: <LanguageType, String>{
+    //       LanguageType.EN: "Category Description in english",
+    //       LanguageType.ES: "Category Description in spanish",
+    //     },
+    //     position: 10,
+    //   ),
+    // );
+
     // mezDbgPrint("Hasura subscription");
     // unawaited(graphQLClient.query$RestaurantItem().then((result) {
     //   mezDbgPrint("HASURAAAAA result1");
@@ -182,11 +249,11 @@ class HasuraDb {
   // ]);
 
   Future<String> _getAuthorizationToken(User user) async {
-    IdTokenResult? tokenResult = await user.getIdTokenResult();
-    if (tokenResult.claims?['https://hasura.io/jwt/claims'] == null) {
+    final IdTokenResult? tokenResult = await user.getIdTokenResult();
+    if (tokenResult?.claims?['https://hasura.io/jwt/claims'] == null) {
       mezDbgPrint("No token, calling addHasuraClaims");
       await FirebaseFunctions.instance.httpsCallable('hasura-addClaims').call();
-    } else if (await _checkIfAdminNeededButNotGiven(tokenResult)) {
+    } else if (await _checkIfAdminNeededButNotGiven(tokenResult!)) {
       mezDbgPrint("Need admin priveleges, calling addHasuraClaims");
       await FirebaseFunctions.instance.httpsCallable('hasura-addClaims').call();
     }

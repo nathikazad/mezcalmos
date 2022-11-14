@@ -1,13 +1,11 @@
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-
 class Geography {
   final double latitude;
   final double longitude;
   Geography(this.latitude, this.longitude);
 }
 
-Geography GeographyFromJson(dynamic data) {
-  List<dynamic> coordinates = data["coordinates"];
+Geography GeographyFromJson(data) {
+  final List<dynamic> coordinates = data["coordinates"];
   return Geography(coordinates[0], coordinates[1]);
 }
 
@@ -24,4 +22,4 @@ double MoneyFromJson(String data) {
   return double.parse(data.split("\$")[1]);
 }
 
-String MoneyToJson(double money) => "\$money";
+String MoneyToJson(double money) => "$money";
