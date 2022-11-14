@@ -144,12 +144,12 @@ end). throws an error if top level container is not an array */
 };
 	/** columns and relationships of "chat_participant" */
 ["chat_participant"]: AliasType<{
+	app_type_id?:true,
 	/** An object relationship */
 	chat?:ValueTypes["chat"],
 	chat_id?:true,
 	/** An object relationship */
 	notification_info?:ValueTypes["notification_info"],
-	notification_info_id?:true,
 	participant_id?:true,
 	/** An object relationship */
 	user?:ValueTypes["user"],
@@ -199,14 +199,12 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 	/** aggregate avg on columns */
 ["chat_participant_avg_fields"]: AliasType<{
 	chat_id?:true,
-	notification_info_id?:true,
 	participant_id?:true,
 		__typename?: true
 }>;
 	/** order by avg() on columns of table "chat_participant" */
 ["chat_participant_avg_order_by"]: {
 	chat_id?:ValueTypes["order_by"],
-	notification_info_id?:ValueTypes["order_by"],
 	participant_id?:ValueTypes["order_by"]
 };
 	/** Boolean expression to filter rows from the table "chat_participant". All fields are combined with a logical 'AND'. */
@@ -214,10 +212,10 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 	_and?:ValueTypes["chat_participant_bool_exp"][],
 	_not?:ValueTypes["chat_participant_bool_exp"],
 	_or?:ValueTypes["chat_participant_bool_exp"][],
+	app_type_id?:ValueTypes["String_comparison_exp"],
 	chat?:ValueTypes["chat_bool_exp"],
 	chat_id?:ValueTypes["Int_comparison_exp"],
 	notification_info?:ValueTypes["notification_info_bool_exp"],
-	notification_info_id?:ValueTypes["Int_comparison_exp"],
 	participant_id?:ValueTypes["Int_comparison_exp"],
 	user?:ValueTypes["user_bool_exp"]
 };
@@ -226,42 +224,41 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 	/** input type for incrementing numeric columns in table "chat_participant" */
 ["chat_participant_inc_input"]: {
 	chat_id?:number,
-	notification_info_id?:number,
 	participant_id?:number
 };
 	/** input type for inserting data into table "chat_participant" */
 ["chat_participant_insert_input"]: {
+	app_type_id?:string,
 	chat?:ValueTypes["chat_obj_rel_insert_input"],
 	chat_id?:number,
 	notification_info?:ValueTypes["notification_info_obj_rel_insert_input"],
-	notification_info_id?:number,
 	participant_id?:number,
 	user?:ValueTypes["user_obj_rel_insert_input"]
 };
 	/** aggregate max on columns */
 ["chat_participant_max_fields"]: AliasType<{
+	app_type_id?:true,
 	chat_id?:true,
-	notification_info_id?:true,
 	participant_id?:true,
 		__typename?: true
 }>;
 	/** order by max() on columns of table "chat_participant" */
 ["chat_participant_max_order_by"]: {
+	app_type_id?:ValueTypes["order_by"],
 	chat_id?:ValueTypes["order_by"],
-	notification_info_id?:ValueTypes["order_by"],
 	participant_id?:ValueTypes["order_by"]
 };
 	/** aggregate min on columns */
 ["chat_participant_min_fields"]: AliasType<{
+	app_type_id?:true,
 	chat_id?:true,
-	notification_info_id?:true,
 	participant_id?:true,
 		__typename?: true
 }>;
 	/** order by min() on columns of table "chat_participant" */
 ["chat_participant_min_order_by"]: {
+	app_type_id?:ValueTypes["order_by"],
 	chat_id?:ValueTypes["order_by"],
-	notification_info_id?:ValueTypes["order_by"],
 	participant_id?:ValueTypes["order_by"]
 };
 	/** response of any mutation on the table "chat_participant" */
@@ -280,10 +277,10 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 };
 	/** Ordering options when selecting data from "chat_participant". */
 ["chat_participant_order_by"]: {
+	app_type_id?:ValueTypes["order_by"],
 	chat?:ValueTypes["chat_order_by"],
 	chat_id?:ValueTypes["order_by"],
 	notification_info?:ValueTypes["notification_info_order_by"],
-	notification_info_id?:ValueTypes["order_by"],
 	participant_id?:ValueTypes["order_by"],
 	user?:ValueTypes["user_order_by"]
 };
@@ -296,47 +293,41 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 ["chat_participant_select_column"]:chat_participant_select_column;
 	/** input type for updating data in table "chat_participant" */
 ["chat_participant_set_input"]: {
+	app_type_id?:string,
 	chat_id?:number,
-	notification_info_id?:number,
 	participant_id?:number
 };
 	/** aggregate stddev on columns */
 ["chat_participant_stddev_fields"]: AliasType<{
 	chat_id?:true,
-	notification_info_id?:true,
 	participant_id?:true,
 		__typename?: true
 }>;
 	/** order by stddev() on columns of table "chat_participant" */
 ["chat_participant_stddev_order_by"]: {
 	chat_id?:ValueTypes["order_by"],
-	notification_info_id?:ValueTypes["order_by"],
 	participant_id?:ValueTypes["order_by"]
 };
 	/** aggregate stddev_pop on columns */
 ["chat_participant_stddev_pop_fields"]: AliasType<{
 	chat_id?:true,
-	notification_info_id?:true,
 	participant_id?:true,
 		__typename?: true
 }>;
 	/** order by stddev_pop() on columns of table "chat_participant" */
 ["chat_participant_stddev_pop_order_by"]: {
 	chat_id?:ValueTypes["order_by"],
-	notification_info_id?:ValueTypes["order_by"],
 	participant_id?:ValueTypes["order_by"]
 };
 	/** aggregate stddev_samp on columns */
 ["chat_participant_stddev_samp_fields"]: AliasType<{
 	chat_id?:true,
-	notification_info_id?:true,
 	participant_id?:true,
 		__typename?: true
 }>;
 	/** order by stddev_samp() on columns of table "chat_participant" */
 ["chat_participant_stddev_samp_order_by"]: {
 	chat_id?:ValueTypes["order_by"],
-	notification_info_id?:ValueTypes["order_by"],
 	participant_id?:ValueTypes["order_by"]
 };
 	/** Streaming cursor of the table "chat_participant" */
@@ -348,21 +339,19 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 };
 	/** Initial value of the column from where the streaming should start */
 ["chat_participant_stream_cursor_value_input"]: {
+	app_type_id?:string,
 	chat_id?:number,
-	notification_info_id?:number,
 	participant_id?:number
 };
 	/** aggregate sum on columns */
 ["chat_participant_sum_fields"]: AliasType<{
 	chat_id?:true,
-	notification_info_id?:true,
 	participant_id?:true,
 		__typename?: true
 }>;
 	/** order by sum() on columns of table "chat_participant" */
 ["chat_participant_sum_order_by"]: {
 	chat_id?:ValueTypes["order_by"],
-	notification_info_id?:ValueTypes["order_by"],
 	participant_id?:ValueTypes["order_by"]
 };
 	/** update columns of table "chat_participant" */
@@ -377,40 +366,34 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 	/** aggregate var_pop on columns */
 ["chat_participant_var_pop_fields"]: AliasType<{
 	chat_id?:true,
-	notification_info_id?:true,
 	participant_id?:true,
 		__typename?: true
 }>;
 	/** order by var_pop() on columns of table "chat_participant" */
 ["chat_participant_var_pop_order_by"]: {
 	chat_id?:ValueTypes["order_by"],
-	notification_info_id?:ValueTypes["order_by"],
 	participant_id?:ValueTypes["order_by"]
 };
 	/** aggregate var_samp on columns */
 ["chat_participant_var_samp_fields"]: AliasType<{
 	chat_id?:true,
-	notification_info_id?:true,
 	participant_id?:true,
 		__typename?: true
 }>;
 	/** order by var_samp() on columns of table "chat_participant" */
 ["chat_participant_var_samp_order_by"]: {
 	chat_id?:ValueTypes["order_by"],
-	notification_info_id?:ValueTypes["order_by"],
 	participant_id?:ValueTypes["order_by"]
 };
 	/** aggregate variance on columns */
 ["chat_participant_variance_fields"]: AliasType<{
 	chat_id?:true,
-	notification_info_id?:true,
 	participant_id?:true,
 		__typename?: true
 }>;
 	/** order by variance() on columns of table "chat_participant" */
 ["chat_participant_variance_order_by"]: {
 	chat_id?:ValueTypes["order_by"],
-	notification_info_id?:ValueTypes["order_by"],
 	participant_id?:ValueTypes["order_by"]
 };
 	/** primary key columns input for table: chat */
@@ -706,6 +689,8 @@ count?: [{	columns?:ValueTypes["customer_select_column"][],	distinct?:boolean},t
 	id?:true,
 	/** awaiting_approval, authorized, banned */
 	status?:true,
+	/** An object relationship */
+	user?:ValueTypes["user"],
 	user_id?:true,
 		__typename?: true
 }>;
@@ -748,6 +733,7 @@ count?: [{	columns?:ValueTypes["deliverer_select_column"][],	distinct?:boolean},
 	delivery_company_type?:ValueTypes["String_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	status?:ValueTypes["String_comparison_exp"],
+	user?:ValueTypes["user_bool_exp"],
 	user_id?:ValueTypes["Int_comparison_exp"]
 };
 	/** unique or primary key constraints on table "deliverer" */
@@ -767,6 +753,7 @@ count?: [{	columns?:ValueTypes["deliverer_select_column"][],	distinct?:boolean},
 	id?:number,
 	/** awaiting_approval, authorized, banned */
 	status?:string,
+	user?:ValueTypes["user_obj_rel_insert_input"],
 	user_id?:number
 };
 	/** aggregate max on columns */
@@ -819,6 +806,7 @@ count?: [{	columns?:ValueTypes["deliverer_select_column"][],	distinct?:boolean},
 	delivery_company_type?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	status?:ValueTypes["order_by"],
+	user?:ValueTypes["user_order_by"],
 	user_id?:ValueTypes["order_by"]
 };
 	/** primary key columns input for table: deliverer */
@@ -957,6 +945,7 @@ count?: [{	columns?:ValueTypes["deliverer_select_column"][],	distinct?:boolean},
 	service_provider_review_by_driver?:ValueTypes["review"],
 	service_provider_review_by_driver_id?:true,
 	service_provider_type?:true,
+	/** orderReceived */
 	status?:true,
 	stripe_payment_id?:true,
 	trip_distance?:true,
@@ -1137,6 +1126,7 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_review_by_driver?:ValueTypes["review_obj_rel_insert_input"],
 	service_provider_review_by_driver_id?:number,
 	service_provider_type?:string,
+	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
 	trip_distance?:string,
@@ -1169,6 +1159,7 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
 	service_provider_type?:true,
+	/** orderReceived */
 	status?:true,
 	stripe_payment_id?:true,
 	trip_distance?:true,
@@ -1202,6 +1193,7 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
 	service_provider_type?:ValueTypes["order_by"],
+	/** orderReceived */
 	status?:ValueTypes["order_by"],
 	stripe_payment_id?:ValueTypes["order_by"],
 	trip_distance?:ValueTypes["order_by"],
@@ -1234,6 +1226,7 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
 	service_provider_type?:true,
+	/** orderReceived */
 	status?:true,
 	stripe_payment_id?:true,
 	trip_distance?:true,
@@ -1267,6 +1260,7 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
 	service_provider_type?:ValueTypes["order_by"],
+	/** orderReceived */
 	status?:ValueTypes["order_by"],
 	stripe_payment_id?:ValueTypes["order_by"],
 	trip_distance?:ValueTypes["order_by"],
@@ -1370,6 +1364,7 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
 	service_provider_type?:string,
+	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
 	trip_distance?:string,
@@ -1511,6 +1506,7 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
 	service_provider_type?:string,
+	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
 	trip_distance?:string,
@@ -1781,6 +1777,177 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	_neq?:ValueTypes["jsonb"],
 	_nin?:ValueTypes["jsonb"][]
 };
+	/** columns and relationships of "mez_admin" */
+["mez_admin"]: AliasType<{
+	/** An object relationship */
+	notification_info?:ValueTypes["notification_info"],
+	notification_info_id?:true,
+	user_id?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "mez_admin" */
+["mez_admin_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["mez_admin_aggregate_fields"],
+	nodes?:ValueTypes["mez_admin"],
+		__typename?: true
+}>;
+	/** aggregate fields of "mez_admin" */
+["mez_admin_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["mez_admin_avg_fields"],
+count?: [{	columns?:ValueTypes["mez_admin_select_column"][],	distinct?:boolean},true],
+	max?:ValueTypes["mez_admin_max_fields"],
+	min?:ValueTypes["mez_admin_min_fields"],
+	stddev?:ValueTypes["mez_admin_stddev_fields"],
+	stddev_pop?:ValueTypes["mez_admin_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["mez_admin_stddev_samp_fields"],
+	sum?:ValueTypes["mez_admin_sum_fields"],
+	var_pop?:ValueTypes["mez_admin_var_pop_fields"],
+	var_samp?:ValueTypes["mez_admin_var_samp_fields"],
+	variance?:ValueTypes["mez_admin_variance_fields"],
+		__typename?: true
+}>;
+	/** aggregate avg on columns */
+["mez_admin_avg_fields"]: AliasType<{
+	notification_info_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table "mez_admin". All fields are combined with a logical 'AND'. */
+["mez_admin_bool_exp"]: {
+	_and?:ValueTypes["mez_admin_bool_exp"][],
+	_not?:ValueTypes["mez_admin_bool_exp"],
+	_or?:ValueTypes["mez_admin_bool_exp"][],
+	notification_info?:ValueTypes["notification_info_bool_exp"],
+	notification_info_id?:ValueTypes["Int_comparison_exp"],
+	user_id?:ValueTypes["Int_comparison_exp"],
+	version?:ValueTypes["String_comparison_exp"]
+};
+	/** unique or primary key constraints on table "mez_admin" */
+["mez_admin_constraint"]:mez_admin_constraint;
+	/** input type for incrementing numeric columns in table "mez_admin" */
+["mez_admin_inc_input"]: {
+	notification_info_id?:number,
+	user_id?:number
+};
+	/** input type for inserting data into table "mez_admin" */
+["mez_admin_insert_input"]: {
+	notification_info?:ValueTypes["notification_info_obj_rel_insert_input"],
+	notification_info_id?:number,
+	user_id?:number,
+	version?:string
+};
+	/** aggregate max on columns */
+["mez_admin_max_fields"]: AliasType<{
+	notification_info_id?:true,
+	user_id?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["mez_admin_min_fields"]: AliasType<{
+	notification_info_id?:true,
+	user_id?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** response of any mutation on the table "mez_admin" */
+["mez_admin_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["mez_admin"],
+		__typename?: true
+}>;
+	/** on_conflict condition type for table "mez_admin" */
+["mez_admin_on_conflict"]: {
+	constraint:ValueTypes["mez_admin_constraint"],
+	update_columns:ValueTypes["mez_admin_update_column"][],
+	where?:ValueTypes["mez_admin_bool_exp"]
+};
+	/** Ordering options when selecting data from "mez_admin". */
+["mez_admin_order_by"]: {
+	notification_info?:ValueTypes["notification_info_order_by"],
+	notification_info_id?:ValueTypes["order_by"],
+	user_id?:ValueTypes["order_by"],
+	version?:ValueTypes["order_by"]
+};
+	/** primary key columns input for table: mez_admin */
+["mez_admin_pk_columns_input"]: {
+	user_id:number
+};
+	/** select columns of table "mez_admin" */
+["mez_admin_select_column"]:mez_admin_select_column;
+	/** input type for updating data in table "mez_admin" */
+["mez_admin_set_input"]: {
+	notification_info_id?:number,
+	user_id?:number,
+	version?:string
+};
+	/** aggregate stddev on columns */
+["mez_admin_stddev_fields"]: AliasType<{
+	notification_info_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_pop on columns */
+["mez_admin_stddev_pop_fields"]: AliasType<{
+	notification_info_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_samp on columns */
+["mez_admin_stddev_samp_fields"]: AliasType<{
+	notification_info_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** Streaming cursor of the table "mez_admin" */
+["mez_admin_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:ValueTypes["mez_admin_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:ValueTypes["cursor_ordering"]
+};
+	/** Initial value of the column from where the streaming should start */
+["mez_admin_stream_cursor_value_input"]: {
+	notification_info_id?:number,
+	user_id?:number,
+	version?:string
+};
+	/** aggregate sum on columns */
+["mez_admin_sum_fields"]: AliasType<{
+	notification_info_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** update columns of table "mez_admin" */
+["mez_admin_update_column"]:mez_admin_update_column;
+	["mez_admin_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["mez_admin_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["mez_admin_set_input"],
+	where:ValueTypes["mez_admin_bool_exp"]
+};
+	/** aggregate var_pop on columns */
+["mez_admin_var_pop_fields"]: AliasType<{
+	notification_info_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregate var_samp on columns */
+["mez_admin_var_samp_fields"]: AliasType<{
+	notification_info_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregate variance on columns */
+["mez_admin_variance_fields"]: AliasType<{
+	notification_info_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
 	["money"]:unknown;
 	/** Boolean expression to compare columns of type "money". All fields are combined with logical 'AND'. */
 ["money_comparison_exp"]: {
@@ -1811,6 +1978,9 @@ delete_deliverer_by_pk?: [{	id:number},ValueTypes["deliverer"]],
 delete_delivery?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["delivery_bool_exp"]},ValueTypes["delivery_mutation_response"]],
 delete_delivery_by_pk?: [{	id:number},ValueTypes["delivery"]],
+delete_mez_admin?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["mez_admin_bool_exp"]},ValueTypes["mez_admin_mutation_response"]],
+delete_mez_admin_by_pk?: [{	user_id:number},ValueTypes["mez_admin"]],
 delete_notification_info?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["notification_info_bool_exp"]},ValueTypes["notification_info_mutation_response"]],
 delete_notification_info_by_pk?: [{	id:number},ValueTypes["notification_info"]],
@@ -1904,6 +2074,12 @@ insert_delivery?: [{	/** the rows to be inserted */
 insert_delivery_one?: [{	/** the row to be inserted */
 	object:ValueTypes["delivery_insert_input"],	/** upsert condition */
 	on_conflict?:ValueTypes["delivery_on_conflict"]},ValueTypes["delivery"]],
+insert_mez_admin?: [{	/** the rows to be inserted */
+	objects:ValueTypes["mez_admin_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["mez_admin_on_conflict"]},ValueTypes["mez_admin_mutation_response"]],
+insert_mez_admin_one?: [{	/** the row to be inserted */
+	object:ValueTypes["mez_admin_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["mez_admin_on_conflict"]},ValueTypes["mez_admin"]],
 insert_notification_info?: [{	/** the rows to be inserted */
 	objects:ValueTypes["notification_info_insert_input"][],	/** upsert condition */
 	on_conflict?:ValueTypes["notification_info_on_conflict"]},ValueTypes["notification_info_mutation_response"]],
@@ -2087,6 +2263,15 @@ update_delivery_by_pk?: [{	/** increments the numeric columns with given value o
 	_set?:ValueTypes["delivery_set_input"],	pk_columns:ValueTypes["delivery_pk_columns_input"]},ValueTypes["delivery"]],
 update_delivery_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["delivery_updates"][]},ValueTypes["delivery_mutation_response"]],
+update_mez_admin?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["mez_admin_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["mez_admin_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["mez_admin_bool_exp"]},ValueTypes["mez_admin_mutation_response"]],
+update_mez_admin_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["mez_admin_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["mez_admin_set_input"],	pk_columns:ValueTypes["mez_admin_pk_columns_input"]},ValueTypes["mez_admin"]],
+update_mez_admin_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["mez_admin_updates"][]},ValueTypes["mez_admin_mutation_response"]],
 update_notification_info?: [{	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["notification_info_inc_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["notification_info_set_input"],	/** filter the rows which have to be updated */
@@ -2522,6 +2707,19 @@ delivery_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["delivery_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["delivery_bool_exp"]},ValueTypes["delivery_aggregate"]],
 delivery_by_pk?: [{	id:number},ValueTypes["delivery"]],
+mez_admin?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_admin_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_admin_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_admin_bool_exp"]},ValueTypes["mez_admin"]],
+mez_admin_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_admin_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_admin_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_admin_bool_exp"]},ValueTypes["mez_admin_aggregate"]],
+mez_admin_by_pk?: [{	user_id:number},ValueTypes["mez_admin"]],
 notification_info?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["notification_info_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -2986,6 +3184,7 @@ count?: [{	columns?:ValueTypes["restaurant_cart_select_column"][],	distinct?:boo
 	cost_per_one?:true,
 	customer_id?:true,
 	id?:true,
+	note?:true,
 	quantity?:true,
 	/** An object relationship */
 	restaurant_cart?:ValueTypes["restaurant_cart"],
@@ -3062,6 +3261,7 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 	cost_per_one?:ValueTypes["money_comparison_exp"],
 	customer_id?:ValueTypes["Int_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
+	note?:ValueTypes["String_comparison_exp"],
 	quantity?:ValueTypes["Int_comparison_exp"],
 	restaurant_cart?:ValueTypes["restaurant_cart_bool_exp"],
 	restaurant_item?:ValueTypes["restaurant_item_bool_exp"],
@@ -3083,6 +3283,7 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 	cost_per_one?:ValueTypes["money"],
 	customer_id?:number,
 	id?:number,
+	note?:string,
 	quantity?:number,
 	restaurant_cart?:ValueTypes["restaurant_cart_obj_rel_insert_input"],
 	restaurant_item?:ValueTypes["restaurant_item_obj_rel_insert_input"],
@@ -3094,6 +3295,7 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 	cost_per_one?:true,
 	customer_id?:true,
 	id?:true,
+	note?:true,
 	quantity?:true,
 	restaurant_item_id?:true,
 		__typename?: true
@@ -3103,6 +3305,7 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 	cost_per_one?:ValueTypes["order_by"],
 	customer_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
+	note?:ValueTypes["order_by"],
 	quantity?:ValueTypes["order_by"],
 	restaurant_item_id?:ValueTypes["order_by"]
 };
@@ -3111,6 +3314,7 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 	cost_per_one?:true,
 	customer_id?:true,
 	id?:true,
+	note?:true,
 	quantity?:true,
 	restaurant_item_id?:true,
 		__typename?: true
@@ -3120,6 +3324,7 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 	cost_per_one?:ValueTypes["order_by"],
 	customer_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
+	note?:ValueTypes["order_by"],
 	quantity?:ValueTypes["order_by"],
 	restaurant_item_id?:ValueTypes["order_by"]
 };
@@ -3142,6 +3347,7 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 	cost_per_one?:ValueTypes["order_by"],
 	customer_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
+	note?:ValueTypes["order_by"],
 	quantity?:ValueTypes["order_by"],
 	restaurant_cart?:ValueTypes["restaurant_cart_order_by"],
 	restaurant_item?:ValueTypes["restaurant_item_order_by"],
@@ -3159,6 +3365,7 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 	cost_per_one?:ValueTypes["money"],
 	customer_id?:number,
 	id?:number,
+	note?:string,
 	quantity?:number,
 	restaurant_item_id?:number,
 	selected_options?:ValueTypes["json"]
@@ -3226,6 +3433,7 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 	cost_per_one?:ValueTypes["money"],
 	customer_id?:number,
 	id?:number,
+	note?:string,
 	quantity?:number,
 	restaurant_item_id?:number,
 	selected_options?:ValueTypes["json"]
@@ -4852,6 +5060,8 @@ count?: [{	columns?:ValueTypes["restaurant_item_option_map_select_column"][],	di
 	app_version?:true,
 	current_gps?:true,
 	id?:true,
+	/** An object relationship */
+	notification_info?:ValueTypes["notification_info"],
 	notification_info_id?:true,
 	owner?:true,
 	restaurant_id?:true,
@@ -4924,6 +5134,7 @@ count?: [{	columns?:ValueTypes["restaurant_operator_select_column"][],	distinct?
 	app_version?:ValueTypes["String_comparison_exp"],
 	current_gps?:ValueTypes["geography_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
+	notification_info?:ValueTypes["notification_info_bool_exp"],
 	notification_info_id?:ValueTypes["Int_comparison_exp"],
 	owner?:ValueTypes["Boolean_comparison_exp"],
 	restaurant_id?:ValueTypes["Int_comparison_exp"],
@@ -4944,6 +5155,7 @@ count?: [{	columns?:ValueTypes["restaurant_operator_select_column"][],	distinct?
 	app_version?:string,
 	current_gps?:ValueTypes["geography"],
 	id?:number,
+	notification_info?:ValueTypes["notification_info_obj_rel_insert_input"],
 	notification_info_id?:number,
 	owner?:boolean,
 	restaurant_id?:number,
@@ -5012,6 +5224,7 @@ count?: [{	columns?:ValueTypes["restaurant_operator_select_column"][],	distinct?
 	app_version?:ValueTypes["order_by"],
 	current_gps?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
+	notification_info?:ValueTypes["notification_info_order_by"],
 	notification_info_id?:ValueTypes["order_by"],
 	owner?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
@@ -7674,6 +7887,23 @@ delivery_stream?: [{	/** maximum number of rows returned in a single batch */
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["delivery_stream_cursor_input"][],	/** filter the rows returned */
 	where?:ValueTypes["delivery_bool_exp"]},ValueTypes["delivery"]],
+mez_admin?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_admin_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_admin_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_admin_bool_exp"]},ValueTypes["mez_admin"]],
+mez_admin_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_admin_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_admin_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_admin_bool_exp"]},ValueTypes["mez_admin_aggregate"]],
+mez_admin_by_pk?: [{	user_id:number},ValueTypes["mez_admin"]],
+mez_admin_stream?: [{	/** maximum number of rows returned in a single batch */
+	batch_size:number,	/** cursor to stream the results returned by the query */
+	cursor?:ValueTypes["mez_admin_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_admin_bool_exp"]},ValueTypes["mez_admin"]],
 notification_info?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["notification_info_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -8947,12 +9177,12 @@ end). throws an error if top level container is not an array */
 	/** columns and relationships of "chat_participant" */
 ["chat_participant"]: {
 		__typename?: "chat_participant";
+			app_type_id?:string,
 			/** An object relationship */
 	chat?:PartialObjects["chat"],
 			chat_id?:number,
 			/** An object relationship */
 	notification_info?:PartialObjects["notification_info"],
-			notification_info_id?:number,
 			participant_id?:number,
 			/** An object relationship */
 	user?:PartialObjects["user"]
@@ -9002,13 +9232,11 @@ end). throws an error if top level container is not an array */
 ["chat_participant_avg_fields"]: {
 		__typename?: "chat_participant_avg_fields";
 			chat_id?:number,
-			notification_info_id?:number,
 			participant_id?:number
 	},
 	/** order by avg() on columns of table "chat_participant" */
 ["chat_participant_avg_order_by"]: {
 	chat_id?:PartialObjects["order_by"],
-	notification_info_id?:PartialObjects["order_by"],
 	participant_id?:PartialObjects["order_by"]
 },
 	/** Boolean expression to filter rows from the table "chat_participant". All fields are combined with a logical 'AND'. */
@@ -9016,10 +9244,10 @@ end). throws an error if top level container is not an array */
 	_and?:PartialObjects["chat_participant_bool_exp"][],
 	_not?:PartialObjects["chat_participant_bool_exp"],
 	_or?:PartialObjects["chat_participant_bool_exp"][],
+	app_type_id?:PartialObjects["String_comparison_exp"],
 	chat?:PartialObjects["chat_bool_exp"],
 	chat_id?:PartialObjects["Int_comparison_exp"],
 	notification_info?:PartialObjects["notification_info_bool_exp"],
-	notification_info_id?:PartialObjects["Int_comparison_exp"],
 	participant_id?:PartialObjects["Int_comparison_exp"],
 	user?:PartialObjects["user_bool_exp"]
 },
@@ -9028,42 +9256,41 @@ end). throws an error if top level container is not an array */
 	/** input type for incrementing numeric columns in table "chat_participant" */
 ["chat_participant_inc_input"]: {
 	chat_id?:number,
-	notification_info_id?:number,
 	participant_id?:number
 },
 	/** input type for inserting data into table "chat_participant" */
 ["chat_participant_insert_input"]: {
+	app_type_id?:string,
 	chat?:PartialObjects["chat_obj_rel_insert_input"],
 	chat_id?:number,
 	notification_info?:PartialObjects["notification_info_obj_rel_insert_input"],
-	notification_info_id?:number,
 	participant_id?:number,
 	user?:PartialObjects["user_obj_rel_insert_input"]
 },
 	/** aggregate max on columns */
 ["chat_participant_max_fields"]: {
 		__typename?: "chat_participant_max_fields";
+			app_type_id?:string,
 			chat_id?:number,
-			notification_info_id?:number,
 			participant_id?:number
 	},
 	/** order by max() on columns of table "chat_participant" */
 ["chat_participant_max_order_by"]: {
+	app_type_id?:PartialObjects["order_by"],
 	chat_id?:PartialObjects["order_by"],
-	notification_info_id?:PartialObjects["order_by"],
 	participant_id?:PartialObjects["order_by"]
 },
 	/** aggregate min on columns */
 ["chat_participant_min_fields"]: {
 		__typename?: "chat_participant_min_fields";
+			app_type_id?:string,
 			chat_id?:number,
-			notification_info_id?:number,
 			participant_id?:number
 	},
 	/** order by min() on columns of table "chat_participant" */
 ["chat_participant_min_order_by"]: {
+	app_type_id?:PartialObjects["order_by"],
 	chat_id?:PartialObjects["order_by"],
-	notification_info_id?:PartialObjects["order_by"],
 	participant_id?:PartialObjects["order_by"]
 },
 	/** response of any mutation on the table "chat_participant" */
@@ -9082,10 +9309,10 @@ end). throws an error if top level container is not an array */
 },
 	/** Ordering options when selecting data from "chat_participant". */
 ["chat_participant_order_by"]: {
+	app_type_id?:PartialObjects["order_by"],
 	chat?:PartialObjects["chat_order_by"],
 	chat_id?:PartialObjects["order_by"],
 	notification_info?:PartialObjects["notification_info_order_by"],
-	notification_info_id?:PartialObjects["order_by"],
 	participant_id?:PartialObjects["order_by"],
 	user?:PartialObjects["user_order_by"]
 },
@@ -9098,47 +9325,41 @@ end). throws an error if top level container is not an array */
 ["chat_participant_select_column"]:chat_participant_select_column,
 	/** input type for updating data in table "chat_participant" */
 ["chat_participant_set_input"]: {
+	app_type_id?:string,
 	chat_id?:number,
-	notification_info_id?:number,
 	participant_id?:number
 },
 	/** aggregate stddev on columns */
 ["chat_participant_stddev_fields"]: {
 		__typename?: "chat_participant_stddev_fields";
 			chat_id?:number,
-			notification_info_id?:number,
 			participant_id?:number
 	},
 	/** order by stddev() on columns of table "chat_participant" */
 ["chat_participant_stddev_order_by"]: {
 	chat_id?:PartialObjects["order_by"],
-	notification_info_id?:PartialObjects["order_by"],
 	participant_id?:PartialObjects["order_by"]
 },
 	/** aggregate stddev_pop on columns */
 ["chat_participant_stddev_pop_fields"]: {
 		__typename?: "chat_participant_stddev_pop_fields";
 			chat_id?:number,
-			notification_info_id?:number,
 			participant_id?:number
 	},
 	/** order by stddev_pop() on columns of table "chat_participant" */
 ["chat_participant_stddev_pop_order_by"]: {
 	chat_id?:PartialObjects["order_by"],
-	notification_info_id?:PartialObjects["order_by"],
 	participant_id?:PartialObjects["order_by"]
 },
 	/** aggregate stddev_samp on columns */
 ["chat_participant_stddev_samp_fields"]: {
 		__typename?: "chat_participant_stddev_samp_fields";
 			chat_id?:number,
-			notification_info_id?:number,
 			participant_id?:number
 	},
 	/** order by stddev_samp() on columns of table "chat_participant" */
 ["chat_participant_stddev_samp_order_by"]: {
 	chat_id?:PartialObjects["order_by"],
-	notification_info_id?:PartialObjects["order_by"],
 	participant_id?:PartialObjects["order_by"]
 },
 	/** Streaming cursor of the table "chat_participant" */
@@ -9150,21 +9371,19 @@ end). throws an error if top level container is not an array */
 },
 	/** Initial value of the column from where the streaming should start */
 ["chat_participant_stream_cursor_value_input"]: {
+	app_type_id?:string,
 	chat_id?:number,
-	notification_info_id?:number,
 	participant_id?:number
 },
 	/** aggregate sum on columns */
 ["chat_participant_sum_fields"]: {
 		__typename?: "chat_participant_sum_fields";
 			chat_id?:number,
-			notification_info_id?:number,
 			participant_id?:number
 	},
 	/** order by sum() on columns of table "chat_participant" */
 ["chat_participant_sum_order_by"]: {
 	chat_id?:PartialObjects["order_by"],
-	notification_info_id?:PartialObjects["order_by"],
 	participant_id?:PartialObjects["order_by"]
 },
 	/** update columns of table "chat_participant" */
@@ -9180,39 +9399,33 @@ end). throws an error if top level container is not an array */
 ["chat_participant_var_pop_fields"]: {
 		__typename?: "chat_participant_var_pop_fields";
 			chat_id?:number,
-			notification_info_id?:number,
 			participant_id?:number
 	},
 	/** order by var_pop() on columns of table "chat_participant" */
 ["chat_participant_var_pop_order_by"]: {
 	chat_id?:PartialObjects["order_by"],
-	notification_info_id?:PartialObjects["order_by"],
 	participant_id?:PartialObjects["order_by"]
 },
 	/** aggregate var_samp on columns */
 ["chat_participant_var_samp_fields"]: {
 		__typename?: "chat_participant_var_samp_fields";
 			chat_id?:number,
-			notification_info_id?:number,
 			participant_id?:number
 	},
 	/** order by var_samp() on columns of table "chat_participant" */
 ["chat_participant_var_samp_order_by"]: {
 	chat_id?:PartialObjects["order_by"],
-	notification_info_id?:PartialObjects["order_by"],
 	participant_id?:PartialObjects["order_by"]
 },
 	/** aggregate variance on columns */
 ["chat_participant_variance_fields"]: {
 		__typename?: "chat_participant_variance_fields";
 			chat_id?:number,
-			notification_info_id?:number,
 			participant_id?:number
 	},
 	/** order by variance() on columns of table "chat_participant" */
 ["chat_participant_variance_order_by"]: {
 	chat_id?:PartialObjects["order_by"],
-	notification_info_id?:PartialObjects["order_by"],
 	participant_id?:PartialObjects["order_by"]
 },
 	/** primary key columns input for table: chat */
@@ -9501,6 +9714,8 @@ the end). throws an error if top level container is not an array */
 			id?:number,
 			/** awaiting_approval, authorized, banned */
 	status?:string,
+			/** An object relationship */
+	user?:PartialObjects["user"],
 			user_id?:number
 	},
 	/** aggregated selection of "deliverer" */
@@ -9542,6 +9757,7 @@ the end). throws an error if top level container is not an array */
 	delivery_company_type?:PartialObjects["String_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	status?:PartialObjects["String_comparison_exp"],
+	user?:PartialObjects["user_bool_exp"],
 	user_id?:PartialObjects["Int_comparison_exp"]
 },
 	/** unique or primary key constraints on table "deliverer" */
@@ -9561,6 +9777,7 @@ the end). throws an error if top level container is not an array */
 	id?:number,
 	/** awaiting_approval, authorized, banned */
 	status?:string,
+	user?:PartialObjects["user_obj_rel_insert_input"],
 	user_id?:number
 },
 	/** aggregate max on columns */
@@ -9613,6 +9830,7 @@ the end). throws an error if top level container is not an array */
 	delivery_company_type?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	status?:PartialObjects["order_by"],
+	user?:PartialObjects["user_order_by"],
 	user_id?:PartialObjects["order_by"]
 },
 	/** primary key columns input for table: deliverer */
@@ -9752,7 +9970,8 @@ the end). throws an error if top level container is not an array */
 	service_provider_review_by_driver?:PartialObjects["review"],
 			service_provider_review_by_driver_id?:number,
 			service_provider_type?:string,
-			status?:string,
+			/** orderReceived */
+	status?:string,
 			stripe_payment_id?:number,
 			trip_distance?:string,
 			trip_duration?:string,
@@ -9931,6 +10150,7 @@ the end). throws an error if top level container is not an array */
 	service_provider_review_by_driver?:PartialObjects["review_obj_rel_insert_input"],
 	service_provider_review_by_driver_id?:number,
 	service_provider_type?:string,
+	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
 	trip_distance?:string,
@@ -9964,7 +10184,8 @@ the end). throws an error if top level container is not an array */
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
 			service_provider_type?:string,
-			status?:string,
+			/** orderReceived */
+	status?:string,
 			stripe_payment_id?:number,
 			trip_distance?:string,
 			trip_duration?:string,
@@ -9996,6 +10217,7 @@ the end). throws an error if top level container is not an array */
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
 	service_provider_type?:PartialObjects["order_by"],
+	/** orderReceived */
 	status?:PartialObjects["order_by"],
 	stripe_payment_id?:PartialObjects["order_by"],
 	trip_distance?:PartialObjects["order_by"],
@@ -10029,7 +10251,8 @@ the end). throws an error if top level container is not an array */
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
 			service_provider_type?:string,
-			status?:string,
+			/** orderReceived */
+	status?:string,
 			stripe_payment_id?:number,
 			trip_distance?:string,
 			trip_duration?:string,
@@ -10061,6 +10284,7 @@ the end). throws an error if top level container is not an array */
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
 	service_provider_type?:PartialObjects["order_by"],
+	/** orderReceived */
 	status?:PartialObjects["order_by"],
 	stripe_payment_id?:PartialObjects["order_by"],
 	trip_distance?:PartialObjects["order_by"],
@@ -10164,6 +10388,7 @@ the end). throws an error if top level container is not an array */
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
 	service_provider_type?:string,
+	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
 	trip_distance?:string,
@@ -10305,6 +10530,7 @@ the end). throws an error if top level container is not an array */
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
 	service_provider_type?:string,
+	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
 	trip_distance?:string,
@@ -10575,6 +10801,177 @@ the end). throws an error if top level container is not an array */
 	_neq?:PartialObjects["jsonb"],
 	_nin?:PartialObjects["jsonb"][]
 },
+	/** columns and relationships of "mez_admin" */
+["mez_admin"]: {
+		__typename?: "mez_admin";
+			/** An object relationship */
+	notification_info?:PartialObjects["notification_info"],
+			notification_info_id?:number,
+			user_id?:number,
+			version?:string
+	},
+	/** aggregated selection of "mez_admin" */
+["mez_admin_aggregate"]: {
+		__typename?: "mez_admin_aggregate";
+			aggregate?:PartialObjects["mez_admin_aggregate_fields"],
+			nodes?:PartialObjects["mez_admin"][]
+	},
+	/** aggregate fields of "mez_admin" */
+["mez_admin_aggregate_fields"]: {
+		__typename?: "mez_admin_aggregate_fields";
+			avg?:PartialObjects["mez_admin_avg_fields"],
+			count?:number,
+			max?:PartialObjects["mez_admin_max_fields"],
+			min?:PartialObjects["mez_admin_min_fields"],
+			stddev?:PartialObjects["mez_admin_stddev_fields"],
+			stddev_pop?:PartialObjects["mez_admin_stddev_pop_fields"],
+			stddev_samp?:PartialObjects["mez_admin_stddev_samp_fields"],
+			sum?:PartialObjects["mez_admin_sum_fields"],
+			var_pop?:PartialObjects["mez_admin_var_pop_fields"],
+			var_samp?:PartialObjects["mez_admin_var_samp_fields"],
+			variance?:PartialObjects["mez_admin_variance_fields"]
+	},
+	/** aggregate avg on columns */
+["mez_admin_avg_fields"]: {
+		__typename?: "mez_admin_avg_fields";
+			notification_info_id?:number,
+			user_id?:number
+	},
+	/** Boolean expression to filter rows from the table "mez_admin". All fields are combined with a logical 'AND'. */
+["mez_admin_bool_exp"]: {
+	_and?:PartialObjects["mez_admin_bool_exp"][],
+	_not?:PartialObjects["mez_admin_bool_exp"],
+	_or?:PartialObjects["mez_admin_bool_exp"][],
+	notification_info?:PartialObjects["notification_info_bool_exp"],
+	notification_info_id?:PartialObjects["Int_comparison_exp"],
+	user_id?:PartialObjects["Int_comparison_exp"],
+	version?:PartialObjects["String_comparison_exp"]
+},
+	/** unique or primary key constraints on table "mez_admin" */
+["mez_admin_constraint"]:mez_admin_constraint,
+	/** input type for incrementing numeric columns in table "mez_admin" */
+["mez_admin_inc_input"]: {
+	notification_info_id?:number,
+	user_id?:number
+},
+	/** input type for inserting data into table "mez_admin" */
+["mez_admin_insert_input"]: {
+	notification_info?:PartialObjects["notification_info_obj_rel_insert_input"],
+	notification_info_id?:number,
+	user_id?:number,
+	version?:string
+},
+	/** aggregate max on columns */
+["mez_admin_max_fields"]: {
+		__typename?: "mez_admin_max_fields";
+			notification_info_id?:number,
+			user_id?:number,
+			version?:string
+	},
+	/** aggregate min on columns */
+["mez_admin_min_fields"]: {
+		__typename?: "mez_admin_min_fields";
+			notification_info_id?:number,
+			user_id?:number,
+			version?:string
+	},
+	/** response of any mutation on the table "mez_admin" */
+["mez_admin_mutation_response"]: {
+		__typename?: "mez_admin_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["mez_admin"][]
+	},
+	/** on_conflict condition type for table "mez_admin" */
+["mez_admin_on_conflict"]: {
+	constraint:PartialObjects["mez_admin_constraint"],
+	update_columns:PartialObjects["mez_admin_update_column"][],
+	where?:PartialObjects["mez_admin_bool_exp"]
+},
+	/** Ordering options when selecting data from "mez_admin". */
+["mez_admin_order_by"]: {
+	notification_info?:PartialObjects["notification_info_order_by"],
+	notification_info_id?:PartialObjects["order_by"],
+	user_id?:PartialObjects["order_by"],
+	version?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: mez_admin */
+["mez_admin_pk_columns_input"]: {
+	user_id:number
+},
+	/** select columns of table "mez_admin" */
+["mez_admin_select_column"]:mez_admin_select_column,
+	/** input type for updating data in table "mez_admin" */
+["mez_admin_set_input"]: {
+	notification_info_id?:number,
+	user_id?:number,
+	version?:string
+},
+	/** aggregate stddev on columns */
+["mez_admin_stddev_fields"]: {
+		__typename?: "mez_admin_stddev_fields";
+			notification_info_id?:number,
+			user_id?:number
+	},
+	/** aggregate stddev_pop on columns */
+["mez_admin_stddev_pop_fields"]: {
+		__typename?: "mez_admin_stddev_pop_fields";
+			notification_info_id?:number,
+			user_id?:number
+	},
+	/** aggregate stddev_samp on columns */
+["mez_admin_stddev_samp_fields"]: {
+		__typename?: "mez_admin_stddev_samp_fields";
+			notification_info_id?:number,
+			user_id?:number
+	},
+	/** Streaming cursor of the table "mez_admin" */
+["mez_admin_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:PartialObjects["mez_admin_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:PartialObjects["cursor_ordering"]
+},
+	/** Initial value of the column from where the streaming should start */
+["mez_admin_stream_cursor_value_input"]: {
+	notification_info_id?:number,
+	user_id?:number,
+	version?:string
+},
+	/** aggregate sum on columns */
+["mez_admin_sum_fields"]: {
+		__typename?: "mez_admin_sum_fields";
+			notification_info_id?:number,
+			user_id?:number
+	},
+	/** update columns of table "mez_admin" */
+["mez_admin_update_column"]:mez_admin_update_column,
+	["mez_admin_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:PartialObjects["mez_admin_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:PartialObjects["mez_admin_set_input"],
+	where:PartialObjects["mez_admin_bool_exp"]
+},
+	/** aggregate var_pop on columns */
+["mez_admin_var_pop_fields"]: {
+		__typename?: "mez_admin_var_pop_fields";
+			notification_info_id?:number,
+			user_id?:number
+	},
+	/** aggregate var_samp on columns */
+["mez_admin_var_samp_fields"]: {
+		__typename?: "mez_admin_var_samp_fields";
+			notification_info_id?:number,
+			user_id?:number
+	},
+	/** aggregate variance on columns */
+["mez_admin_variance_fields"]: {
+		__typename?: "mez_admin_variance_fields";
+			notification_info_id?:number,
+			user_id?:number
+	},
 	["money"]:any,
 	/** Boolean expression to compare columns of type "money". All fields are combined with logical 'AND'. */
 ["money_comparison_exp"]: {
@@ -10611,6 +11008,10 @@ the end). throws an error if top level container is not an array */
 	delete_delivery?:PartialObjects["delivery_mutation_response"],
 			/** delete single row from the table: "delivery" */
 	delete_delivery_by_pk?:PartialObjects["delivery"],
+			/** delete data from the table: "mez_admin" */
+	delete_mez_admin?:PartialObjects["mez_admin_mutation_response"],
+			/** delete single row from the table: "mez_admin" */
+	delete_mez_admin_by_pk?:PartialObjects["mez_admin"],
 			/** delete data from the table: "notification_info" */
 	delete_notification_info?:PartialObjects["notification_info_mutation_response"],
 			/** delete single row from the table: "notification_info" */
@@ -10715,6 +11116,10 @@ the end). throws an error if top level container is not an array */
 	insert_delivery?:PartialObjects["delivery_mutation_response"],
 			/** insert a single row into the table: "delivery" */
 	insert_delivery_one?:PartialObjects["delivery"],
+			/** insert data into the table: "mez_admin" */
+	insert_mez_admin?:PartialObjects["mez_admin_mutation_response"],
+			/** insert a single row into the table: "mez_admin" */
+	insert_mez_admin_one?:PartialObjects["mez_admin"],
 			/** insert data into the table: "notification_info" */
 	insert_notification_info?:PartialObjects["notification_info_mutation_response"],
 			/** insert a single row into the table: "notification_info" */
@@ -10829,6 +11234,12 @@ the end). throws an error if top level container is not an array */
 	update_delivery_by_pk?:PartialObjects["delivery"],
 			/** update multiples rows of table: "delivery" */
 	update_delivery_many?:(PartialObjects["delivery_mutation_response"] | undefined)[],
+			/** update data of the table: "mez_admin" */
+	update_mez_admin?:PartialObjects["mez_admin_mutation_response"],
+			/** update single row of the table: "mez_admin" */
+	update_mez_admin_by_pk?:PartialObjects["mez_admin"],
+			/** update multiples rows of table: "mez_admin" */
+	update_mez_admin_many?:(PartialObjects["mez_admin_mutation_response"] | undefined)[],
 			/** update data of the table: "notification_info" */
 	update_notification_info?:PartialObjects["notification_info_mutation_response"],
 			/** update single row of the table: "notification_info" */
@@ -11170,6 +11581,12 @@ the end). throws an error if top level container is not an array */
 	delivery_aggregate?:PartialObjects["delivery_aggregate"],
 			/** fetch data from the table: "delivery" using primary key columns */
 	delivery_by_pk?:PartialObjects["delivery"],
+			/** fetch data from the table: "mez_admin" */
+	mez_admin?:PartialObjects["mez_admin"][],
+			/** fetch aggregated fields from the table: "mez_admin" */
+	mez_admin_aggregate?:PartialObjects["mez_admin_aggregate"],
+			/** fetch data from the table: "mez_admin" using primary key columns */
+	mez_admin_by_pk?:PartialObjects["mez_admin"],
 			/** fetch data from the table: "notification_info" */
 	notification_info?:PartialObjects["notification_info"][],
 			/** fetch aggregated fields from the table: "notification_info" */
@@ -11455,6 +11872,7 @@ the end). throws an error if top level container is not an array */
 			cost_per_one?:PartialObjects["money"],
 			customer_id?:number,
 			id?:number,
+			note?:string,
 			quantity?:number,
 			/** An object relationship */
 	restaurant_cart?:PartialObjects["restaurant_cart"],
@@ -11529,6 +11947,7 @@ the end). throws an error if top level container is not an array */
 	cost_per_one?:PartialObjects["money_comparison_exp"],
 	customer_id?:PartialObjects["Int_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
+	note?:PartialObjects["String_comparison_exp"],
 	quantity?:PartialObjects["Int_comparison_exp"],
 	restaurant_cart?:PartialObjects["restaurant_cart_bool_exp"],
 	restaurant_item?:PartialObjects["restaurant_item_bool_exp"],
@@ -11550,6 +11969,7 @@ the end). throws an error if top level container is not an array */
 	cost_per_one?:PartialObjects["money"],
 	customer_id?:number,
 	id?:number,
+	note?:string,
 	quantity?:number,
 	restaurant_cart?:PartialObjects["restaurant_cart_obj_rel_insert_input"],
 	restaurant_item?:PartialObjects["restaurant_item_obj_rel_insert_input"],
@@ -11562,6 +11982,7 @@ the end). throws an error if top level container is not an array */
 			cost_per_one?:PartialObjects["money"],
 			customer_id?:number,
 			id?:number,
+			note?:string,
 			quantity?:number,
 			restaurant_item_id?:number
 	},
@@ -11570,6 +11991,7 @@ the end). throws an error if top level container is not an array */
 	cost_per_one?:PartialObjects["order_by"],
 	customer_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
+	note?:PartialObjects["order_by"],
 	quantity?:PartialObjects["order_by"],
 	restaurant_item_id?:PartialObjects["order_by"]
 },
@@ -11579,6 +12001,7 @@ the end). throws an error if top level container is not an array */
 			cost_per_one?:PartialObjects["money"],
 			customer_id?:number,
 			id?:number,
+			note?:string,
 			quantity?:number,
 			restaurant_item_id?:number
 	},
@@ -11587,6 +12010,7 @@ the end). throws an error if top level container is not an array */
 	cost_per_one?:PartialObjects["order_by"],
 	customer_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
+	note?:PartialObjects["order_by"],
 	quantity?:PartialObjects["order_by"],
 	restaurant_item_id?:PartialObjects["order_by"]
 },
@@ -11609,6 +12033,7 @@ the end). throws an error if top level container is not an array */
 	cost_per_one?:PartialObjects["order_by"],
 	customer_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
+	note?:PartialObjects["order_by"],
 	quantity?:PartialObjects["order_by"],
 	restaurant_cart?:PartialObjects["restaurant_cart_order_by"],
 	restaurant_item?:PartialObjects["restaurant_item_order_by"],
@@ -11626,6 +12051,7 @@ the end). throws an error if top level container is not an array */
 	cost_per_one?:PartialObjects["money"],
 	customer_id?:number,
 	id?:number,
+	note?:string,
 	quantity?:number,
 	restaurant_item_id?:number,
 	selected_options?:PartialObjects["json"]
@@ -11693,6 +12119,7 @@ the end). throws an error if top level container is not an array */
 	cost_per_one?:PartialObjects["money"],
 	customer_id?:number,
 	id?:number,
+	note?:string,
 	quantity?:number,
 	restaurant_item_id?:number,
 	selected_options?:PartialObjects["json"]
@@ -13288,6 +13715,8 @@ the end). throws an error if top level container is not an array */
 			app_version?:string,
 			current_gps?:PartialObjects["geography"],
 			id?:number,
+			/** An object relationship */
+	notification_info?:PartialObjects["notification_info"],
 			notification_info_id?:number,
 			owner?:boolean,
 			restaurant_id?:number,
@@ -13359,6 +13788,7 @@ the end). throws an error if top level container is not an array */
 	app_version?:PartialObjects["String_comparison_exp"],
 	current_gps?:PartialObjects["geography_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
+	notification_info?:PartialObjects["notification_info_bool_exp"],
 	notification_info_id?:PartialObjects["Int_comparison_exp"],
 	owner?:PartialObjects["Boolean_comparison_exp"],
 	restaurant_id?:PartialObjects["Int_comparison_exp"],
@@ -13379,6 +13809,7 @@ the end). throws an error if top level container is not an array */
 	app_version?:string,
 	current_gps?:PartialObjects["geography"],
 	id?:number,
+	notification_info?:PartialObjects["notification_info_obj_rel_insert_input"],
 	notification_info_id?:number,
 	owner?:boolean,
 	restaurant_id?:number,
@@ -13447,6 +13878,7 @@ the end). throws an error if top level container is not an array */
 	app_version?:PartialObjects["order_by"],
 	current_gps?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
+	notification_info?:PartialObjects["notification_info_order_by"],
 	notification_info_id?:PartialObjects["order_by"],
 	owner?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
@@ -16031,6 +16463,14 @@ All fields are combined with a logical 'AND'. */
 	delivery_by_pk?:PartialObjects["delivery"],
 			/** fetch data from the table in a streaming manner : "delivery" */
 	delivery_stream?:PartialObjects["delivery"][],
+			/** fetch data from the table: "mez_admin" */
+	mez_admin?:PartialObjects["mez_admin"][],
+			/** fetch aggregated fields from the table: "mez_admin" */
+	mez_admin_aggregate?:PartialObjects["mez_admin_aggregate"],
+			/** fetch data from the table: "mez_admin" using primary key columns */
+	mez_admin_by_pk?:PartialObjects["mez_admin"],
+			/** fetch data from the table in a streaming manner : "mez_admin" */
+	mez_admin_stream?:PartialObjects["mez_admin"][],
 			/** fetch data from the table: "notification_info" */
 	notification_info?:PartialObjects["notification_info"][],
 			/** fetch aggregated fields from the table: "notification_info" */
@@ -17128,12 +17568,12 @@ export type chat_order_by = {
 /** columns and relationships of "chat_participant" */
 export type chat_participant = {
 	__typename?: "chat_participant",
+	app_type_id:string,
 	/** An object relationship */
 	chat:chat,
 	chat_id:number,
 	/** An object relationship */
-	notification_info:notification_info,
-	notification_info_id:number,
+	notification_info?:notification_info,
 	participant_id:number,
 	/** An object relationship */
 	user:user
@@ -17188,14 +17628,12 @@ export type chat_participant_arr_rel_insert_input = {
 export type chat_participant_avg_fields = {
 	__typename?: "chat_participant_avg_fields",
 	chat_id?:number,
-	notification_info_id?:number,
 	participant_id?:number
 }
 
 /** order by avg() on columns of table "chat_participant" */
 export type chat_participant_avg_order_by = {
 		chat_id?:order_by,
-	notification_info_id?:order_by,
 	participant_id?:order_by
 }
 
@@ -17204,10 +17642,10 @@ export type chat_participant_bool_exp = {
 		_and?:chat_participant_bool_exp[],
 	_not?:chat_participant_bool_exp,
 	_or?:chat_participant_bool_exp[],
+	app_type_id?:String_comparison_exp,
 	chat?:chat_bool_exp,
 	chat_id?:Int_comparison_exp,
 	notification_info?:notification_info_bool_exp,
-	notification_info_id?:Int_comparison_exp,
 	participant_id?:Int_comparison_exp,
 	user?:user_bool_exp
 }
@@ -17220,16 +17658,15 @@ export enum chat_participant_constraint {
 /** input type for incrementing numeric columns in table "chat_participant" */
 export type chat_participant_inc_input = {
 		chat_id?:number,
-	notification_info_id?:number,
 	participant_id?:number
 }
 
 /** input type for inserting data into table "chat_participant" */
 export type chat_participant_insert_input = {
-		chat?:chat_obj_rel_insert_input,
+		app_type_id?:string,
+	chat?:chat_obj_rel_insert_input,
 	chat_id?:number,
 	notification_info?:notification_info_obj_rel_insert_input,
-	notification_info_id?:number,
 	participant_id?:number,
 	user?:user_obj_rel_insert_input
 }
@@ -17237,30 +17674,30 @@ export type chat_participant_insert_input = {
 /** aggregate max on columns */
 export type chat_participant_max_fields = {
 	__typename?: "chat_participant_max_fields",
+	app_type_id?:string,
 	chat_id?:number,
-	notification_info_id?:number,
 	participant_id?:number
 }
 
 /** order by max() on columns of table "chat_participant" */
 export type chat_participant_max_order_by = {
-		chat_id?:order_by,
-	notification_info_id?:order_by,
+		app_type_id?:order_by,
+	chat_id?:order_by,
 	participant_id?:order_by
 }
 
 /** aggregate min on columns */
 export type chat_participant_min_fields = {
 	__typename?: "chat_participant_min_fields",
+	app_type_id?:string,
 	chat_id?:number,
-	notification_info_id?:number,
 	participant_id?:number
 }
 
 /** order by min() on columns of table "chat_participant" */
 export type chat_participant_min_order_by = {
-		chat_id?:order_by,
-	notification_info_id?:order_by,
+		app_type_id?:order_by,
+	chat_id?:order_by,
 	participant_id?:order_by
 }
 
@@ -17282,10 +17719,10 @@ export type chat_participant_on_conflict = {
 
 /** Ordering options when selecting data from "chat_participant". */
 export type chat_participant_order_by = {
-		chat?:chat_order_by,
+		app_type_id?:order_by,
+	chat?:chat_order_by,
 	chat_id?:order_by,
 	notification_info?:notification_info_order_by,
-	notification_info_id?:order_by,
 	participant_id?:order_by,
 	user?:user_order_by
 }
@@ -17298,15 +17735,15 @@ export type chat_participant_pk_columns_input = {
 
 /** select columns of table "chat_participant" */
 export enum chat_participant_select_column {
+	app_type_id = "app_type_id",
 	chat_id = "chat_id",
-	notification_info_id = "notification_info_id",
 	participant_id = "participant_id"
 }
 
 /** input type for updating data in table "chat_participant" */
 export type chat_participant_set_input = {
-		chat_id?:number,
-	notification_info_id?:number,
+		app_type_id?:string,
+	chat_id?:number,
 	participant_id?:number
 }
 
@@ -17314,14 +17751,12 @@ export type chat_participant_set_input = {
 export type chat_participant_stddev_fields = {
 	__typename?: "chat_participant_stddev_fields",
 	chat_id?:number,
-	notification_info_id?:number,
 	participant_id?:number
 }
 
 /** order by stddev() on columns of table "chat_participant" */
 export type chat_participant_stddev_order_by = {
 		chat_id?:order_by,
-	notification_info_id?:order_by,
 	participant_id?:order_by
 }
 
@@ -17329,14 +17764,12 @@ export type chat_participant_stddev_order_by = {
 export type chat_participant_stddev_pop_fields = {
 	__typename?: "chat_participant_stddev_pop_fields",
 	chat_id?:number,
-	notification_info_id?:number,
 	participant_id?:number
 }
 
 /** order by stddev_pop() on columns of table "chat_participant" */
 export type chat_participant_stddev_pop_order_by = {
 		chat_id?:order_by,
-	notification_info_id?:order_by,
 	participant_id?:order_by
 }
 
@@ -17344,14 +17777,12 @@ export type chat_participant_stddev_pop_order_by = {
 export type chat_participant_stddev_samp_fields = {
 	__typename?: "chat_participant_stddev_samp_fields",
 	chat_id?:number,
-	notification_info_id?:number,
 	participant_id?:number
 }
 
 /** order by stddev_samp() on columns of table "chat_participant" */
 export type chat_participant_stddev_samp_order_by = {
 		chat_id?:order_by,
-	notification_info_id?:order_by,
 	participant_id?:order_by
 }
 
@@ -17365,8 +17796,8 @@ export type chat_participant_stream_cursor_input = {
 
 /** Initial value of the column from where the streaming should start */
 export type chat_participant_stream_cursor_value_input = {
-		chat_id?:number,
-	notification_info_id?:number,
+		app_type_id?:string,
+	chat_id?:number,
 	participant_id?:number
 }
 
@@ -17374,21 +17805,19 @@ export type chat_participant_stream_cursor_value_input = {
 export type chat_participant_sum_fields = {
 	__typename?: "chat_participant_sum_fields",
 	chat_id?:number,
-	notification_info_id?:number,
 	participant_id?:number
 }
 
 /** order by sum() on columns of table "chat_participant" */
 export type chat_participant_sum_order_by = {
 		chat_id?:order_by,
-	notification_info_id?:order_by,
 	participant_id?:order_by
 }
 
 /** update columns of table "chat_participant" */
 export enum chat_participant_update_column {
+	app_type_id = "app_type_id",
 	chat_id = "chat_id",
-	notification_info_id = "notification_info_id",
 	participant_id = "participant_id"
 }
 
@@ -17404,14 +17833,12 @@ export type chat_participant_updates = {
 export type chat_participant_var_pop_fields = {
 	__typename?: "chat_participant_var_pop_fields",
 	chat_id?:number,
-	notification_info_id?:number,
 	participant_id?:number
 }
 
 /** order by var_pop() on columns of table "chat_participant" */
 export type chat_participant_var_pop_order_by = {
 		chat_id?:order_by,
-	notification_info_id?:order_by,
 	participant_id?:order_by
 }
 
@@ -17419,14 +17846,12 @@ export type chat_participant_var_pop_order_by = {
 export type chat_participant_var_samp_fields = {
 	__typename?: "chat_participant_var_samp_fields",
 	chat_id?:number,
-	notification_info_id?:number,
 	participant_id?:number
 }
 
 /** order by var_samp() on columns of table "chat_participant" */
 export type chat_participant_var_samp_order_by = {
 		chat_id?:order_by,
-	notification_info_id?:order_by,
 	participant_id?:order_by
 }
 
@@ -17434,14 +17859,12 @@ export type chat_participant_var_samp_order_by = {
 export type chat_participant_variance_fields = {
 	__typename?: "chat_participant_variance_fields",
 	chat_id?:number,
-	notification_info_id?:number,
 	participant_id?:number
 }
 
 /** order by variance() on columns of table "chat_participant" */
 export type chat_participant_variance_order_by = {
 		chat_id?:order_by,
-	notification_info_id?:order_by,
 	participant_id?:order_by
 }
 
@@ -17797,6 +18220,8 @@ export type deliverer = {
 	id:number,
 	/** awaiting_approval, authorized, banned */
 	status:string,
+	/** An object relationship */
+	user:user,
 	user_id:number
 }
 
@@ -17842,6 +18267,7 @@ export type deliverer_bool_exp = {
 	delivery_company_type?:String_comparison_exp,
 	id?:Int_comparison_exp,
 	status?:String_comparison_exp,
+	user?:user_bool_exp,
 	user_id?:Int_comparison_exp
 }
 
@@ -17867,6 +18293,7 @@ export type deliverer_insert_input = {
 	id?:number,
 	/** awaiting_approval, authorized, banned */
 	status?:string,
+	user?:user_obj_rel_insert_input,
 	user_id?:number
 }
 
@@ -17925,6 +18352,7 @@ export type deliverer_order_by = {
 	delivery_company_type?:order_by,
 	id?:order_by,
 	status?:order_by,
+	user?:user_order_by,
 	user_id?:order_by
 }
 
@@ -18095,6 +18523,7 @@ export type delivery = {
 	service_provider_review_by_driver?:review,
 	service_provider_review_by_driver_id?:number,
 	service_provider_type?:string,
+	/** orderReceived */
 	status:string,
 	stripe_payment_id?:number,
 	trip_distance?:string,
@@ -18286,6 +18715,7 @@ export type delivery_insert_input = {
 	service_provider_review_by_driver?:review_obj_rel_insert_input,
 	service_provider_review_by_driver_id?:number,
 	service_provider_type?:string,
+	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
 	trip_distance?:string,
@@ -18320,6 +18750,7 @@ export type delivery_max_fields = {
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
 	service_provider_type?:string,
+	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
 	trip_distance?:string,
@@ -18353,6 +18784,7 @@ export type delivery_max_order_by = {
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
 	service_provider_type?:order_by,
+	/** orderReceived */
 	status?:order_by,
 	stripe_payment_id?:order_by,
 	trip_distance?:order_by,
@@ -18387,6 +18819,7 @@ export type delivery_min_fields = {
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
 	service_provider_type?:string,
+	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
 	trip_distance?:string,
@@ -18420,6 +18853,7 @@ export type delivery_min_order_by = {
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
 	service_provider_type?:order_by,
+	/** orderReceived */
 	status?:order_by,
 	stripe_payment_id?:order_by,
 	trip_distance?:order_by,
@@ -18563,6 +18997,7 @@ export type delivery_set_input = {
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
 	service_provider_type?:string,
+	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
 	trip_distance?:string,
@@ -18712,6 +19147,7 @@ export type delivery_stream_cursor_value_input = {
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
 	service_provider_type?:string,
+	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
 	trip_distance?:string,
@@ -19040,6 +19476,214 @@ export type jsonb_comparison_exp = {
 	_nin?:jsonb[]
 }
 
+/** columns and relationships of "mez_admin" */
+export type mez_admin = {
+	__typename?: "mez_admin",
+	/** An object relationship */
+	notification_info?:notification_info,
+	notification_info_id?:number,
+	user_id:number,
+	version?:string
+}
+
+/** aggregated selection of "mez_admin" */
+export type mez_admin_aggregate = {
+	__typename?: "mez_admin_aggregate",
+	aggregate?:mez_admin_aggregate_fields,
+	nodes:mez_admin[]
+}
+
+/** aggregate fields of "mez_admin" */
+export type mez_admin_aggregate_fields = {
+	__typename?: "mez_admin_aggregate_fields",
+	avg?:mez_admin_avg_fields,
+	count:number,
+	max?:mez_admin_max_fields,
+	min?:mez_admin_min_fields,
+	stddev?:mez_admin_stddev_fields,
+	stddev_pop?:mez_admin_stddev_pop_fields,
+	stddev_samp?:mez_admin_stddev_samp_fields,
+	sum?:mez_admin_sum_fields,
+	var_pop?:mez_admin_var_pop_fields,
+	var_samp?:mez_admin_var_samp_fields,
+	variance?:mez_admin_variance_fields
+}
+
+/** aggregate avg on columns */
+export type mez_admin_avg_fields = {
+	__typename?: "mez_admin_avg_fields",
+	notification_info_id?:number,
+	user_id?:number
+}
+
+/** Boolean expression to filter rows from the table "mez_admin". All fields are combined with a logical 'AND'. */
+export type mez_admin_bool_exp = {
+		_and?:mez_admin_bool_exp[],
+	_not?:mez_admin_bool_exp,
+	_or?:mez_admin_bool_exp[],
+	notification_info?:notification_info_bool_exp,
+	notification_info_id?:Int_comparison_exp,
+	user_id?:Int_comparison_exp,
+	version?:String_comparison_exp
+}
+
+/** unique or primary key constraints on table "mez_admin" */
+export enum mez_admin_constraint {
+	mez_admin_pkey = "mez_admin_pkey"
+}
+
+/** input type for incrementing numeric columns in table "mez_admin" */
+export type mez_admin_inc_input = {
+		notification_info_id?:number,
+	user_id?:number
+}
+
+/** input type for inserting data into table "mez_admin" */
+export type mez_admin_insert_input = {
+		notification_info?:notification_info_obj_rel_insert_input,
+	notification_info_id?:number,
+	user_id?:number,
+	version?:string
+}
+
+/** aggregate max on columns */
+export type mez_admin_max_fields = {
+	__typename?: "mez_admin_max_fields",
+	notification_info_id?:number,
+	user_id?:number,
+	version?:string
+}
+
+/** aggregate min on columns */
+export type mez_admin_min_fields = {
+	__typename?: "mez_admin_min_fields",
+	notification_info_id?:number,
+	user_id?:number,
+	version?:string
+}
+
+/** response of any mutation on the table "mez_admin" */
+export type mez_admin_mutation_response = {
+	__typename?: "mez_admin_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:mez_admin[]
+}
+
+/** on_conflict condition type for table "mez_admin" */
+export type mez_admin_on_conflict = {
+		constraint:mez_admin_constraint,
+	update_columns:mez_admin_update_column[],
+	where?:mez_admin_bool_exp
+}
+
+/** Ordering options when selecting data from "mez_admin". */
+export type mez_admin_order_by = {
+		notification_info?:notification_info_order_by,
+	notification_info_id?:order_by,
+	user_id?:order_by,
+	version?:order_by
+}
+
+/** primary key columns input for table: mez_admin */
+export type mez_admin_pk_columns_input = {
+		user_id:number
+}
+
+/** select columns of table "mez_admin" */
+export enum mez_admin_select_column {
+	notification_info_id = "notification_info_id",
+	user_id = "user_id",
+	version = "version"
+}
+
+/** input type for updating data in table "mez_admin" */
+export type mez_admin_set_input = {
+		notification_info_id?:number,
+	user_id?:number,
+	version?:string
+}
+
+/** aggregate stddev on columns */
+export type mez_admin_stddev_fields = {
+	__typename?: "mez_admin_stddev_fields",
+	notification_info_id?:number,
+	user_id?:number
+}
+
+/** aggregate stddev_pop on columns */
+export type mez_admin_stddev_pop_fields = {
+	__typename?: "mez_admin_stddev_pop_fields",
+	notification_info_id?:number,
+	user_id?:number
+}
+
+/** aggregate stddev_samp on columns */
+export type mez_admin_stddev_samp_fields = {
+	__typename?: "mez_admin_stddev_samp_fields",
+	notification_info_id?:number,
+	user_id?:number
+}
+
+/** Streaming cursor of the table "mez_admin" */
+export type mez_admin_stream_cursor_input = {
+		/** Stream column input with initial value */
+	initial_value:mez_admin_stream_cursor_value_input,
+	/** cursor ordering */
+	ordering?:cursor_ordering
+}
+
+/** Initial value of the column from where the streaming should start */
+export type mez_admin_stream_cursor_value_input = {
+		notification_info_id?:number,
+	user_id?:number,
+	version?:string
+}
+
+/** aggregate sum on columns */
+export type mez_admin_sum_fields = {
+	__typename?: "mez_admin_sum_fields",
+	notification_info_id?:number,
+	user_id?:number
+}
+
+/** update columns of table "mez_admin" */
+export enum mez_admin_update_column {
+	notification_info_id = "notification_info_id",
+	user_id = "user_id",
+	version = "version"
+}
+
+export type mez_admin_updates = {
+		/** increments the numeric columns with given value of the filtered values */
+	_inc?:mez_admin_inc_input,
+	/** sets the columns of the filtered rows to the given values */
+	_set?:mez_admin_set_input,
+	where:mez_admin_bool_exp
+}
+
+/** aggregate var_pop on columns */
+export type mez_admin_var_pop_fields = {
+	__typename?: "mez_admin_var_pop_fields",
+	notification_info_id?:number,
+	user_id?:number
+}
+
+/** aggregate var_samp on columns */
+export type mez_admin_var_samp_fields = {
+	__typename?: "mez_admin_var_samp_fields",
+	notification_info_id?:number,
+	user_id?:number
+}
+
+/** aggregate variance on columns */
+export type mez_admin_variance_fields = {
+	__typename?: "mez_admin_variance_fields",
+	notification_info_id?:number,
+	user_id?:number
+}
+
 export type money = any
 
 /** Boolean expression to compare columns of type "money". All fields are combined with logical 'AND'. */
@@ -19078,6 +19722,10 @@ export type mutation_root = {
 	delete_delivery?:delivery_mutation_response,
 	/** delete single row from the table: "delivery" */
 	delete_delivery_by_pk?:delivery,
+	/** delete data from the table: "mez_admin" */
+	delete_mez_admin?:mez_admin_mutation_response,
+	/** delete single row from the table: "mez_admin" */
+	delete_mez_admin_by_pk?:mez_admin,
 	/** delete data from the table: "notification_info" */
 	delete_notification_info?:notification_info_mutation_response,
 	/** delete single row from the table: "notification_info" */
@@ -19182,6 +19830,10 @@ export type mutation_root = {
 	insert_delivery?:delivery_mutation_response,
 	/** insert a single row into the table: "delivery" */
 	insert_delivery_one?:delivery,
+	/** insert data into the table: "mez_admin" */
+	insert_mez_admin?:mez_admin_mutation_response,
+	/** insert a single row into the table: "mez_admin" */
+	insert_mez_admin_one?:mez_admin,
 	/** insert data into the table: "notification_info" */
 	insert_notification_info?:notification_info_mutation_response,
 	/** insert a single row into the table: "notification_info" */
@@ -19296,6 +19948,12 @@ export type mutation_root = {
 	update_delivery_by_pk?:delivery,
 	/** update multiples rows of table: "delivery" */
 	update_delivery_many?:(delivery_mutation_response | undefined)[],
+	/** update data of the table: "mez_admin" */
+	update_mez_admin?:mez_admin_mutation_response,
+	/** update single row of the table: "mez_admin" */
+	update_mez_admin_by_pk?:mez_admin,
+	/** update multiples rows of table: "mez_admin" */
+	update_mez_admin_many?:(mez_admin_mutation_response | undefined)[],
 	/** update data of the table: "notification_info" */
 	update_notification_info?:notification_info_mutation_response,
 	/** update single row of the table: "notification_info" */
@@ -19686,6 +20344,12 @@ export type query_root = {
 	delivery_aggregate:delivery_aggregate,
 	/** fetch data from the table: "delivery" using primary key columns */
 	delivery_by_pk?:delivery,
+	/** fetch data from the table: "mez_admin" */
+	mez_admin:mez_admin[],
+	/** fetch aggregated fields from the table: "mez_admin" */
+	mez_admin_aggregate:mez_admin_aggregate,
+	/** fetch data from the table: "mez_admin" using primary key columns */
+	mez_admin_by_pk?:mez_admin,
 	/** fetch data from the table: "notification_info" */
 	notification_info:notification_info[],
 	/** fetch aggregated fields from the table: "notification_info" */
@@ -19915,8 +20579,8 @@ export type restaurant_cart = {
 	/** An aggregate relationship */
 	items_aggregate:restaurant_cart_item_aggregate,
 	/** An object relationship */
-	restaurant:restaurant,
-	restaurant_id:number
+	restaurant?:restaurant,
+	restaurant_id?:number
 }
 
 /** aggregated selection of "restaurant_cart" */
@@ -19987,6 +20651,7 @@ export type restaurant_cart_item = {
 	cost_per_one:money,
 	customer_id:number,
 	id:number,
+	note?:string,
 	quantity:number,
 	/** An object relationship */
 	restaurant_cart:restaurant_cart,
@@ -20068,6 +20733,7 @@ export type restaurant_cart_item_bool_exp = {
 	cost_per_one?:money_comparison_exp,
 	customer_id?:Int_comparison_exp,
 	id?:Int_comparison_exp,
+	note?:String_comparison_exp,
 	quantity?:Int_comparison_exp,
 	restaurant_cart?:restaurant_cart_bool_exp,
 	restaurant_item?:restaurant_item_bool_exp,
@@ -20094,6 +20760,7 @@ export type restaurant_cart_item_insert_input = {
 		cost_per_one?:money,
 	customer_id?:number,
 	id?:number,
+	note?:string,
 	quantity?:number,
 	restaurant_cart?:restaurant_cart_obj_rel_insert_input,
 	restaurant_item?:restaurant_item_obj_rel_insert_input,
@@ -20107,6 +20774,7 @@ export type restaurant_cart_item_max_fields = {
 	cost_per_one?:money,
 	customer_id?:number,
 	id?:number,
+	note?:string,
 	quantity?:number,
 	restaurant_item_id?:number
 }
@@ -20116,6 +20784,7 @@ export type restaurant_cart_item_max_order_by = {
 		cost_per_one?:order_by,
 	customer_id?:order_by,
 	id?:order_by,
+	note?:order_by,
 	quantity?:order_by,
 	restaurant_item_id?:order_by
 }
@@ -20126,6 +20795,7 @@ export type restaurant_cart_item_min_fields = {
 	cost_per_one?:money,
 	customer_id?:number,
 	id?:number,
+	note?:string,
 	quantity?:number,
 	restaurant_item_id?:number
 }
@@ -20135,6 +20805,7 @@ export type restaurant_cart_item_min_order_by = {
 		cost_per_one?:order_by,
 	customer_id?:order_by,
 	id?:order_by,
+	note?:order_by,
 	quantity?:order_by,
 	restaurant_item_id?:order_by
 }
@@ -20160,6 +20831,7 @@ export type restaurant_cart_item_order_by = {
 		cost_per_one?:order_by,
 	customer_id?:order_by,
 	id?:order_by,
+	note?:order_by,
 	quantity?:order_by,
 	restaurant_cart?:restaurant_cart_order_by,
 	restaurant_item?:restaurant_item_order_by,
@@ -20177,6 +20849,7 @@ export enum restaurant_cart_item_select_column {
 	cost_per_one = "cost_per_one",
 	customer_id = "customer_id",
 	id = "id",
+	note = "note",
 	quantity = "quantity",
 	restaurant_item_id = "restaurant_item_id",
 	selected_options = "selected_options"
@@ -20187,6 +20860,7 @@ export type restaurant_cart_item_set_input = {
 		cost_per_one?:money,
 	customer_id?:number,
 	id?:number,
+	note?:string,
 	quantity?:number,
 	restaurant_item_id?:number,
 	selected_options?:json
@@ -20262,6 +20936,7 @@ export type restaurant_cart_item_stream_cursor_value_input = {
 		cost_per_one?:money,
 	customer_id?:number,
 	id?:number,
+	note?:string,
 	quantity?:number,
 	restaurant_item_id?:number,
 	selected_options?:json
@@ -20291,6 +20966,7 @@ export enum restaurant_cart_item_update_column {
 	cost_per_one = "cost_per_one",
 	customer_id = "customer_id",
 	id = "id",
+	note = "note",
 	quantity = "quantity",
 	restaurant_item_id = "restaurant_item_id",
 	selected_options = "selected_options"
@@ -22135,6 +22811,8 @@ export type restaurant_operator = {
 	app_version?:string,
 	current_gps?:geography,
 	id:number,
+	/** An object relationship */
+	notification_info:notification_info,
 	notification_info_id:number,
 	owner:boolean,
 	restaurant_id:number,
@@ -22213,6 +22891,7 @@ export type restaurant_operator_bool_exp = {
 	app_version?:String_comparison_exp,
 	current_gps?:geography_comparison_exp,
 	id?:Int_comparison_exp,
+	notification_info?:notification_info_bool_exp,
 	notification_info_id?:Int_comparison_exp,
 	owner?:Boolean_comparison_exp,
 	restaurant_id?:Int_comparison_exp,
@@ -22238,6 +22917,7 @@ export type restaurant_operator_insert_input = {
 		app_version?:string,
 	current_gps?:geography,
 	id?:number,
+	notification_info?:notification_info_obj_rel_insert_input,
 	notification_info_id?:number,
 	owner?:boolean,
 	restaurant_id?:number,
@@ -22313,6 +22993,7 @@ export type restaurant_operator_order_by = {
 		app_version?:order_by,
 	current_gps?:order_by,
 	id?:order_by,
+	notification_info?:notification_info_order_by,
 	notification_info_id?:order_by,
 	owner?:order_by,
 	restaurant_id?:order_by,
@@ -25376,6 +26057,14 @@ export type subscription_root = {
 	delivery_by_pk?:delivery,
 	/** fetch data from the table in a streaming manner : "delivery" */
 	delivery_stream:delivery[],
+	/** fetch data from the table: "mez_admin" */
+	mez_admin:mez_admin[],
+	/** fetch aggregated fields from the table: "mez_admin" */
+	mez_admin_aggregate:mez_admin_aggregate,
+	/** fetch data from the table: "mez_admin" using primary key columns */
+	mez_admin_by_pk?:mez_admin,
+	/** fetch data from the table in a streaming manner : "mez_admin" */
+	mez_admin_stream:mez_admin[],
 	/** fetch data from the table: "notification_info" */
 	notification_info:notification_info[],
 	/** fetch aggregated fields from the table: "notification_info" */
@@ -26969,12 +27658,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		notification_info_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		participant_id:{
 			type:"order_by",
 			array:false,
@@ -27001,6 +27684,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:true
 		},
+		app_type_id:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		chat:{
 			type:"chat_bool_exp",
 			array:false,
@@ -27015,12 +27704,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		notification_info:{
 			type:"notification_info_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		notification_info_id:{
-			type:"Int_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -27046,12 +27729,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		notification_info_id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		participant_id:{
 			type:"Int",
 			array:false,
@@ -27060,6 +27737,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	chat_participant_insert_input:{
+		app_type_id:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		chat:{
 			type:"chat_obj_rel_insert_input",
 			array:false,
@@ -27078,12 +27761,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		notification_info_id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		participant_id:{
 			type:"Int",
 			array:false,
@@ -27098,13 +27775,13 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	chat_participant_max_order_by:{
-		chat_id:{
+		app_type_id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
-		notification_info_id:{
+		chat_id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -27118,13 +27795,13 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	chat_participant_min_order_by:{
-		chat_id:{
+		app_type_id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
-		notification_info_id:{
+		chat_id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -27158,6 +27835,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	chat_participant_order_by:{
+		app_type_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		chat:{
 			type:"chat_order_by",
 			array:false,
@@ -27172,12 +27855,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		notification_info:{
 			type:"notification_info_order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		notification_info_id:{
-			type:"order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -27211,13 +27888,13 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	chat_participant_select_column: "enum",
 	chat_participant_set_input:{
-		chat_id:{
-			type:"Int",
+		app_type_id:{
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
-		notification_info_id:{
+		chat_id:{
 			type:"Int",
 			array:false,
 			arrayRequired:false,
@@ -27237,12 +27914,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		notification_info_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		participant_id:{
 			type:"order_by",
 			array:false,
@@ -27257,12 +27928,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		notification_info_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		participant_id:{
 			type:"order_by",
 			array:false,
@@ -27272,12 +27937,6 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	chat_participant_stddev_samp_order_by:{
 		chat_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		notification_info_id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -27305,13 +27964,13 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	chat_participant_stream_cursor_value_input:{
-		chat_id:{
-			type:"Int",
+		app_type_id:{
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
-		notification_info_id:{
+		chat_id:{
 			type:"Int",
 			array:false,
 			arrayRequired:false,
@@ -27326,12 +27985,6 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	chat_participant_sum_order_by:{
 		chat_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		notification_info_id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -27372,12 +28025,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		notification_info_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		participant_id:{
 			type:"order_by",
 			array:false,
@@ -27392,12 +28039,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		notification_info_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		participant_id:{
 			type:"order_by",
 			array:false,
@@ -27407,12 +28048,6 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	chat_participant_variance_order_by:{
 		chat_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		notification_info_id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -27972,6 +28607,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		user:{
+			type:"user_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		user_id:{
 			type:"Int_comparison_exp",
 			array:false,
@@ -28033,6 +28674,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		status:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user:{
+			type:"user_obj_rel_insert_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -28111,6 +28758,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		status:{
 			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user:{
+			type:"user_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -31102,6 +31755,237 @@ export const AllTypesProps: Record<string,any> = {
 			required:true
 		}
 	},
+	mez_admin_aggregate_fields:{
+		count:{
+			columns:{
+				type:"mez_admin_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	mez_admin_bool_exp:{
+		_and:{
+			type:"mez_admin_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"mez_admin_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"mez_admin_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		notification_info:{
+			type:"notification_info_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		notification_info_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		version:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_constraint: "enum",
+	mez_admin_inc_input:{
+		notification_info_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_insert_input:{
+		notification_info:{
+			type:"notification_info_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		notification_info_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		version:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_on_conflict:{
+		constraint:{
+			type:"mez_admin_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"mez_admin_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"mez_admin_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_order_by:{
+		notification_info:{
+			type:"notification_info_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		notification_info_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		version:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_pk_columns_input:{
+		user_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	mez_admin_select_column: "enum",
+	mez_admin_set_input:{
+		notification_info_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		version:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_stream_cursor_input:{
+		initial_value:{
+			type:"mez_admin_stream_cursor_value_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		ordering:{
+			type:"cursor_ordering",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_stream_cursor_value_input:{
+		notification_info_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		version:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_update_column: "enum",
+	mez_admin_updates:{
+		_inc:{
+			type:"mez_admin_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_set:{
+			type:"mez_admin_set_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		where:{
+			type:"mez_admin_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	money: "String",
 	money_comparison_exp:{
 		_eq:{
@@ -31240,6 +32124,22 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		delete_delivery_by_pk:{
 			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_mez_admin:{
+			where:{
+				type:"mez_admin_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_mez_admin_by_pk:{
+			user_id:{
 				type:"Int",
 				array:false,
 				arrayRequired:false,
@@ -31735,6 +32635,34 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			on_conflict:{
 				type:"delivery_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_mez_admin:{
+			objects:{
+				type:"mez_admin_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"mez_admin_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_mez_admin_one:{
+			object:{
+				type:"mez_admin_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"mez_admin_on_conflict",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -32623,6 +33551,54 @@ export const AllTypesProps: Record<string,any> = {
 		update_delivery_many:{
 			updates:{
 				type:"delivery_updates",
+				array:true,
+				arrayRequired:true,
+				required:true
+			}
+		},
+		update_mez_admin:{
+			_inc:{
+				type:"mez_admin_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"mez_admin_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"mez_admin_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_mez_admin_by_pk:{
+			_inc:{
+				type:"mez_admin_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"mez_admin_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"mez_admin_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_mez_admin_many:{
+			updates:{
+				type:"mez_admin_updates",
 				array:true,
 				arrayRequired:true,
 				required:true
@@ -34232,6 +35208,78 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		delivery_by_pk:{
 			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		mez_admin:{
+			distinct_on:{
+				type:"mez_admin_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_admin_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_admin_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		mez_admin_aggregate:{
+			distinct_on:{
+				type:"mez_admin_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_admin_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_admin_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		mez_admin_by_pk:{
+			user_id:{
 				type:"Int",
 				array:false,
 				arrayRequired:false,
@@ -36457,6 +37505,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		note:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		quantity:{
 			type:"Int_comparison_exp",
 			array:false,
@@ -36540,6 +37594,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		note:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		quantity:{
 			type:"Int",
 			array:false,
@@ -36590,6 +37650,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		note:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		quantity:{
 			type:"order_by",
 			array:false,
@@ -36617,6 +37683,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		note:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -36669,6 +37741,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		note:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -36729,6 +37807,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		id:{
 			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		note:{
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -36877,6 +37961,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		id:{
 			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		note:{
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -40805,6 +41895,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		notification_info:{
+			type:"notification_info_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		notification_info_id:{
 			type:"Int_comparison_exp",
 			array:false,
@@ -40878,6 +41974,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		id:{
 			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		notification_info:{
+			type:"notification_info_obj_rel_insert_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -41024,6 +42126,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		id:{
 			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		notification_info:{
+			type:"notification_info_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -47763,6 +48871,98 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
+		mez_admin:{
+			distinct_on:{
+				type:"mez_admin_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_admin_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_admin_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		mez_admin_aggregate:{
+			distinct_on:{
+				type:"mez_admin_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_admin_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_admin_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		mez_admin_by_pk:{
+			user_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		mez_admin_stream:{
+			batch_size:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			cursor:{
+				type:"mez_admin_stream_cursor_input",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_admin_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
 		notification_info:{
 			distinct_on:{
 				type:"notification_info_select_column",
@@ -51113,10 +52313,10 @@ export const ReturnTypes: Record<string,any> = {
 		returning:"chat"
 	},
 	chat_participant:{
+		app_type_id:"String",
 		chat:"chat",
 		chat_id:"Int",
 		notification_info:"notification_info",
-		notification_info_id:"Int",
 		participant_id:"Int",
 		user:"user"
 	},
@@ -51139,17 +52339,16 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	chat_participant_avg_fields:{
 		chat_id:"Float",
-		notification_info_id:"Float",
 		participant_id:"Float"
 	},
 	chat_participant_max_fields:{
+		app_type_id:"String",
 		chat_id:"Int",
-		notification_info_id:"Int",
 		participant_id:"Int"
 	},
 	chat_participant_min_fields:{
+		app_type_id:"String",
 		chat_id:"Int",
-		notification_info_id:"Int",
 		participant_id:"Int"
 	},
 	chat_participant_mutation_response:{
@@ -51158,37 +52357,30 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	chat_participant_stddev_fields:{
 		chat_id:"Float",
-		notification_info_id:"Float",
 		participant_id:"Float"
 	},
 	chat_participant_stddev_pop_fields:{
 		chat_id:"Float",
-		notification_info_id:"Float",
 		participant_id:"Float"
 	},
 	chat_participant_stddev_samp_fields:{
 		chat_id:"Float",
-		notification_info_id:"Float",
 		participant_id:"Float"
 	},
 	chat_participant_sum_fields:{
 		chat_id:"Int",
-		notification_info_id:"Int",
 		participant_id:"Int"
 	},
 	chat_participant_var_pop_fields:{
 		chat_id:"Float",
-		notification_info_id:"Float",
 		participant_id:"Float"
 	},
 	chat_participant_var_samp_fields:{
 		chat_id:"Float",
-		notification_info_id:"Float",
 		participant_id:"Float"
 	},
 	chat_participant_variance_fields:{
 		chat_id:"Float",
-		notification_info_id:"Float",
 		participant_id:"Float"
 	},
 	chat_stddev_fields:{
@@ -51291,6 +52483,7 @@ export const ReturnTypes: Record<string,any> = {
 		delivery_company_type:"String",
 		id:"Int",
 		status:"String",
+		user:"user",
 		user_id:"Int"
 	},
 	deliverer_aggregate:{
@@ -51614,6 +52807,75 @@ export const ReturnTypes: Record<string,any> = {
 		service_provider_review_by_driver_id:"Float",
 		stripe_payment_id:"Float"
 	},
+	mez_admin:{
+		notification_info:"notification_info",
+		notification_info_id:"Int",
+		user_id:"Int",
+		version:"String"
+	},
+	mez_admin_aggregate:{
+		aggregate:"mez_admin_aggregate_fields",
+		nodes:"mez_admin"
+	},
+	mez_admin_aggregate_fields:{
+		avg:"mez_admin_avg_fields",
+		count:"Int",
+		max:"mez_admin_max_fields",
+		min:"mez_admin_min_fields",
+		stddev:"mez_admin_stddev_fields",
+		stddev_pop:"mez_admin_stddev_pop_fields",
+		stddev_samp:"mez_admin_stddev_samp_fields",
+		sum:"mez_admin_sum_fields",
+		var_pop:"mez_admin_var_pop_fields",
+		var_samp:"mez_admin_var_samp_fields",
+		variance:"mez_admin_variance_fields"
+	},
+	mez_admin_avg_fields:{
+		notification_info_id:"Float",
+		user_id:"Float"
+	},
+	mez_admin_max_fields:{
+		notification_info_id:"Int",
+		user_id:"Int",
+		version:"String"
+	},
+	mez_admin_min_fields:{
+		notification_info_id:"Int",
+		user_id:"Int",
+		version:"String"
+	},
+	mez_admin_mutation_response:{
+		affected_rows:"Int",
+		returning:"mez_admin"
+	},
+	mez_admin_stddev_fields:{
+		notification_info_id:"Float",
+		user_id:"Float"
+	},
+	mez_admin_stddev_pop_fields:{
+		notification_info_id:"Float",
+		user_id:"Float"
+	},
+	mez_admin_stddev_samp_fields:{
+		notification_info_id:"Float",
+		user_id:"Float"
+	},
+	mez_admin_sum_fields:{
+		notification_info_id:"Int",
+		user_id:"Int"
+	},
+	mez_admin_var_pop_fields:{
+		notification_info_id:"Float",
+		user_id:"Float"
+	},
+	mez_admin_var_samp_fields:{
+		notification_info_id:"Float",
+		user_id:"Float"
+	},
+	mez_admin_variance_fields:{
+		notification_info_id:"Float",
+		user_id:"Float"
+	},
 	mutation_root:{
 		delete_chat:"chat_mutation_response",
 		delete_chat_by_pk:"chat",
@@ -51625,6 +52887,8 @@ export const ReturnTypes: Record<string,any> = {
 		delete_deliverer_by_pk:"deliverer",
 		delete_delivery:"delivery_mutation_response",
 		delete_delivery_by_pk:"delivery",
+		delete_mez_admin:"mez_admin_mutation_response",
+		delete_mez_admin_by_pk:"mez_admin",
 		delete_notification_info:"notification_info_mutation_response",
 		delete_notification_info_by_pk:"notification_info",
 		delete_restaurant:"restaurant_mutation_response",
@@ -51677,6 +52941,8 @@ export const ReturnTypes: Record<string,any> = {
 		insert_deliverer_one:"deliverer",
 		insert_delivery:"delivery_mutation_response",
 		insert_delivery_one:"delivery",
+		insert_mez_admin:"mez_admin_mutation_response",
+		insert_mez_admin_one:"mez_admin",
 		insert_notification_info:"notification_info_mutation_response",
 		insert_notification_info_one:"notification_info",
 		insert_restaurant:"restaurant_mutation_response",
@@ -51734,6 +53000,9 @@ export const ReturnTypes: Record<string,any> = {
 		update_delivery:"delivery_mutation_response",
 		update_delivery_by_pk:"delivery",
 		update_delivery_many:"delivery_mutation_response",
+		update_mez_admin:"mez_admin_mutation_response",
+		update_mez_admin_by_pk:"mez_admin",
+		update_mez_admin_many:"mez_admin_mutation_response",
 		update_notification_info:"notification_info_mutation_response",
 		update_notification_info_by_pk:"notification_info",
 		update_notification_info_many:"notification_info_mutation_response",
@@ -51885,6 +53154,9 @@ export const ReturnTypes: Record<string,any> = {
 		delivery:"delivery",
 		delivery_aggregate:"delivery_aggregate",
 		delivery_by_pk:"delivery",
+		mez_admin:"mez_admin",
+		mez_admin_aggregate:"mez_admin_aggregate",
+		mez_admin_by_pk:"mez_admin",
 		notification_info:"notification_info",
 		notification_info_aggregate:"notification_info_aggregate",
 		notification_info_by_pk:"notification_info",
@@ -52027,6 +53299,7 @@ export const ReturnTypes: Record<string,any> = {
 		cost_per_one:"money",
 		customer_id:"Int",
 		id:"Int",
+		note:"String",
 		quantity:"Int",
 		restaurant_cart:"restaurant_cart",
 		restaurant_item:"restaurant_item",
@@ -52061,6 +53334,7 @@ export const ReturnTypes: Record<string,any> = {
 		cost_per_one:"money",
 		customer_id:"Int",
 		id:"Int",
+		note:"String",
 		quantity:"Int",
 		restaurant_item_id:"Int"
 	},
@@ -52068,6 +53342,7 @@ export const ReturnTypes: Record<string,any> = {
 		cost_per_one:"money",
 		customer_id:"Int",
 		id:"Int",
+		note:"String",
 		quantity:"Int",
 		restaurant_item_id:"Int"
 	},
@@ -52593,6 +53868,7 @@ export const ReturnTypes: Record<string,any> = {
 		app_version:"String",
 		current_gps:"geography",
 		id:"Int",
+		notification_info:"notification_info",
 		notification_info_id:"Int",
 		owner:"Boolean",
 		restaurant_id:"Int",
@@ -53484,6 +54760,10 @@ export const ReturnTypes: Record<string,any> = {
 		delivery_aggregate:"delivery_aggregate",
 		delivery_by_pk:"delivery",
 		delivery_stream:"delivery",
+		mez_admin:"mez_admin",
+		mez_admin_aggregate:"mez_admin_aggregate",
+		mez_admin_by_pk:"mez_admin",
+		mez_admin_stream:"mez_admin",
 		notification_info:"notification_info",
 		notification_info_aggregate:"notification_info_aggregate",
 		notification_info_by_pk:"notification_info",
