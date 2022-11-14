@@ -1,21 +1,14 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:graphql/client.dart';
-import 'package:gql/ast.dart';
 import 'package:get/get.dart';
+import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
-import 'package:mezcalmos/Shared/graphql/restaurant/mezRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart' show mezDbgPrint;
-import 'package:mezcalmos/Shared/graphql/restaurant/__generated/restaurant.graphql.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class HasuraDb {
   late GraphQLClient graphQLClient;
@@ -39,13 +32,12 @@ class HasuraDb {
         hasuraDbLink = hasuraDevLink;
         break;
     }
-    HttpLink _httpLink = HttpLink(hasuraDbLink,
+    final HttpLink _httpLink = HttpLink(hasuraDbLink,
         defaultHeaders: {'x-hasura-admin-secret': 'myadminsecretkey'});
     Link _link = _httpLink;
-    dynamic initialPayload = <dynamic, dynamic>{
+    final dynamic initialPayload = <dynamic, dynamic>{
       'headers': {'x-hasura-admin-secret': 'myadminsecretkey'},
     };
-    ;
     // if (withAuthenticatedUser) {
     //   final AuthController _authController = Get.find<AuthController>();
     //   if (_authController.fireAuthUser == null) {
@@ -85,11 +77,11 @@ class HasuraDb {
   }
 
   Future<String> _getAuthorizationToken(User user) async {
-    IdTokenResult? tokenResult = await user.getIdTokenResult();
-    if (tokenResult.claims?['https://hasura.io/jwt/claims'] == null) {
+    final IdTokenResult? tokenResult = await user.getIdTokenResult();
+    if (tokenResult?.claims?['https://hasura.io/jwt/claims'] == null) {
       mezDbgPrint("No token, calling addHasuraClaims");
       await FirebaseFunctions.instance.httpsCallable('hasura-addClaims').call();
-    } else if (await _checkIfAdminNeededButNotGiven(tokenResult)) {
+    } else if (await _checkIfAdminNeededButNotGiven(tokenResult!)) {
       mezDbgPrint("Need admin priveleges, calling addHasuraClaims");
       await FirebaseFunctions.instance.httpsCallable('hasura-addClaims').call();
     }
