@@ -72,6 +72,8 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
 		);
   }
 
+  hasuraResponse.customer_by_pk?.cart
+
   makeOrder()
   // try {
     let order: RestaurantOrder = constructRestaurantOrder({
@@ -203,6 +205,31 @@ function getCheckoutHasuraInfo(restaurantId:number, customerId:number) {
 function makeOrder(checkoutRequest:CheckoutRequest, customerId:number) {
   let chain = getHasura();
 
+  let cartItems = (await chain.query({
+    restaurant_by_pk: [
+      {id: checkoutRequest.restaurantId},
+      {
+        open_status:true,
+        approved: true
+      }
+    ],
+    customer_by_pk: [
+      {
+        user_id: customerId
+      }, {
+        cart: {
+          items: [{},{
+            cost_per_one: true,
+            quantity: true,
+            selected_options:[{}, true],
+            restaurant_item_id: true
+          }]
+        }
+      }
+    ],
+  })).customer_by_pk?.cart;
+
+
   let response = chain.mutation({
     insert_restaurant_order_one: [{
       object: {
@@ -223,7 +250,9 @@ function makeOrder(checkoutRequest:CheckoutRequest, customerId:number) {
         notes: checkoutRequest.notes,
         status: RestaurantOrderStatus.OrderReceieved,
         items: {
-          data: {}
+          data: [{
+            
+          }]
         },
         order_type: ,
 
