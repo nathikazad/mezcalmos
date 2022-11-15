@@ -3,7 +3,6 @@
 
 // const hasura = new hasuraModule.Hasura(keys.hasura)
 
-import * as functions from "firebase-functions";
 import { OrderType, TwoWayDeliverableOrder } from "../shared/models/Generic/Order";
 import { UserInfo } from "../shared/models/Generic/User";
 import { AuthorizationStatus, ServerResponseStatus } from "../shared/models/Generic/Generic";
@@ -27,7 +26,8 @@ import { LaundryOrder, LaundryOrderStatus } from "../shared/models/Services/Laun
 import { RestaurantOrder, RestaurantOrderStatus } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import { addServiceProviderAndOperatorsToChat, updateServiceProviderOrder } from "../shared/controllers/orderController";
 
-export = functions.https.onCall(async (data, context) => {
+export async function assignDriver(userId: string, data: any) {
+
   if (!data.orderId || !data.orderType || !data.deliveryDriverId || !data.deliveryDriverType) {
     return {
       status: ServerResponseStatus.Error,
@@ -35,11 +35,11 @@ export = functions.https.onCall(async (data, context) => {
     }
   }
 
-  let response = isSignedIn(context.auth)
+  let response = isSignedIn(userId)
   if (response != undefined)
     return response;
 
-  response = await checkDeliveryAdmin(context.auth!.uid)
+  response = await checkDeliveryAdmin(userId)
   if (response != undefined) {
     return response;
   }
@@ -134,7 +134,7 @@ export = functions.https.onCall(async (data, context) => {
   return {
     status: ServerResponseStatus.Success,
   }
-})
+};
 
 async function createServiceProviderChat(serviceProviderDriverChatId: string, data: any, orderId: string, driverInfo: UserInfo) {
   let serviceProviderchat: ChatObject = buildChatForOrder(serviceProviderDriverChatId, data.orderType, orderId);

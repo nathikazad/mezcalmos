@@ -1,5 +1,3 @@
-import * as functions from "firebase-functions";
-import { AuthData } from "firebase-functions/lib/common/providers/https";
 import { ServerResponse, ServerResponseStatus, ValidationPass } from "../shared/models/Generic/Generic";
 import { OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { orderInProcess, RestaurantOrderStatusChangeNotification, RestaurantOrder, RestaurantOrderStatus } from "../shared/models/Services/Restaurant/RestaurantOrder";
@@ -23,30 +21,28 @@ let statusArrayInSeq: Array<RestaurantOrderStatus> =
   RestaurantOrderStatus.Delivered
   ]
 
-export const prepareOrder =
-  functions.https.onCall(async (data, context) => {
-    let response: ServerResponse = await changeStatus(data, RestaurantOrderStatus.PreparingOrder, context.auth)
-    return response;
-  });
+export async function prepareOrder(userId: string, data: any) {
+  let response: ServerResponse = await changeStatus(data, RestaurantOrderStatus.PreparingOrder, userId)
+  return response;
+}
 
-export const cancelOrder =
-  functions.https.onCall(async (data, context) => {
-    let response: ServerResponse = await changeStatus(data, RestaurantOrderStatus.CancelledByAdmin, context.auth)
-    return response;
-  });
+export async function cancelOrder(userId: string, data: any) {
+  let response: ServerResponse = await changeStatus(data, RestaurantOrderStatus.CancelledByAdmin, userId)
+  return response;
+}
 
-export const readyForPickupOrder = functions.https.onCall(async (data, context) => {
-  let response: ServerResponse = await changeStatus(data, RestaurantOrderStatus.ReadyForPickup, context.auth)
+export async function readyForPickupOrder(userId: string, data: any) {
+  let response: ServerResponse = await changeStatus(data, RestaurantOrderStatus.ReadyForPickup, userId)
   return response
-});
+}
 
 function expectedPreviousStatus(status: RestaurantOrderStatus): RestaurantOrderStatus {
   return statusArrayInSeq[statusArrayInSeq.findIndex((element) => element == status) - 1];
 }
 
-async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: AuthData): Promise<ServerResponse> {
+async function changeStatus(data: any, newStatus: RestaurantOrderStatus, userId: string): Promise<ServerResponse> {
 
-  let validationPass: ValidationPass = await passChecksForRestaurant(data, auth);
+  let validationPass: ValidationPass = await passChecksForRestaurant(data, userId);
   if (!validationPass.ok) {
     return validationPass.error!;
   }
@@ -118,8 +114,8 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
 
   return { status: ServerResponseStatus.Success }
 }
+export async function setEstimatedFoodReadyTime(userId: string, data: any) {
 
-export const setEstimatedFoodReadyTime = functions.https.onCall(async (data, context) => {
   if (data.estimatedFoodReadyTime == null) {
     return {
       status: ServerResponseStatus.Error,
@@ -128,7 +124,7 @@ export const setEstimatedFoodReadyTime = functions.https.onCall(async (data, con
     }
   }
 
-  let validationPass: ValidationPass = await passChecksForRestaurant(data, context.auth);
+  let validationPass: ValidationPass = await passChecksForRestaurant(data, userId);
   if (!validationPass.ok) {
     return validationPass.error;
   }
@@ -146,10 +142,10 @@ export const setEstimatedFoodReadyTime = functions.https.onCall(async (data, con
     deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
 
   return { status: ServerResponseStatus.Success }
-});
+};
 
-export const refundCustomerCustomAmount =
-  functions.https.onCall(async (data, context) => {
+export async function refundCustomerCustomAmount(userId: string, data: any) {
+
     if (data.refundAmount == null || data.orderId == null) {
       return {
         status: ServerResponseStatus.Error,
@@ -157,39 +153,39 @@ export const refundCustomerCustomAmount =
         errorCode: "invalidParam"
       }
     }
-    let validationPass: ValidationPass = await passChecksForRestaurant(data, context.auth, true);
+    let validationPass: ValidationPass = await passChecksForRestaurant(data, userId, true);
     if (!validationPass.ok) {
       return validationPass.error!;
     }
     return refund(data.orderId, validationPass.order, data.refundAmount);
-  });
+  };
 
-export const markOrderItemUnavailable =
-  functions.https.onCall(async (data, context) => {
-    if (data.itemId == null || data.orderId == null) {
-      return {
-        status: ServerResponseStatus.Error,
-        errorMessage: `Expected itemId and orderId`,
-        errorCode: "invalidParam"
-      }
-    }
-    let validationPass: ValidationPass = await passChecksForRestaurant(data, context.auth, true);
-    if (!validationPass.ok) {
-      return validationPass.error!;
-    }
-    let order: RestaurantOrder = validationPass.order;
+export async function markOrderItemUnavailable(userId: string, data: any) {
 
-    if (order.items[data.itemId] == null) {
-      return {
-        status: ServerResponseStatus.Error,
-        errorMessage: `invalid item id`,
-        errorCode: "invalidParam"
-      }
+  if (data.itemId == null || data.orderId == null) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: `Expected itemId and orderId`,
+      errorCode: "invalidParam"
     }
-    order.items[data.itemId].unavailable = true;
-    return refund(data.orderId, validationPass.order, order.items[data.itemId].totalCost);
+  }
+  let validationPass: ValidationPass = await passChecksForRestaurant(data, userId, true);
+  if (!validationPass.ok) {
+    return validationPass.error!;
+  }
+  let order: RestaurantOrder = validationPass.order;
 
-  });
+  if (order.items[data.itemId] == null) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: `invalid item id`,
+      errorCode: "invalidParam"
+    }
+  }
+  order.items[data.itemId].unavailable = true;
+  return refund(data.orderId, validationPass.order, order.items[data.itemId].totalCost);
+
+};
 
 async function refund(orderId: string, order: RestaurantOrder, newRefundAmount: number): Promise<ServerResponse> {
   if (order.costToCustomer <= 0) return {

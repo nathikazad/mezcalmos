@@ -15,12 +15,12 @@ import { buildChatForOrder, ChatObject, ParticipantType } from "../shared/models
 import { pushNotification } from "../utilities/senders/notifyUser";
 import * as chatController from "../shared/controllers/chatController";
 
-export = functions.https.onCall(async (data, context) => {
-  let response = isSignedIn(context.auth)
+export async function requestRide(userId: string, data: any) {
+  let response = isSignedIn(userId)
   if (response != undefined)
     return response;
 
-  let customerId: string = context.auth!.uid;
+  let customerId: string = userId;
   let orderRequest: TaxiOrderRequest = <TaxiOrderRequest>data;
   console.log(orderRequest);
 
@@ -91,7 +91,7 @@ export = functions.https.onCall(async (data, context) => {
   } finally {
     await customerNodes.lock(customerId).remove();
   }
-});
+};
 
 async function notifyDeliveryAdminsNewOrder(deliveryAdmins: Record<string, DeliveryAdmin>,
   orderId: string) {

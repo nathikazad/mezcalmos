@@ -26,6 +26,11 @@ export enum RestaurantOrderStatus {
   CancelledByCustomer = "cancelledByCustomer"
 }
 
+export enum RestaurantOrderType {
+  Pickup = "pickup",
+  Delivery = "delivery",
+}
+
 interface ConstructRestaurantOrderParameters {
   cart: Cart,
   customer: UserInfo,

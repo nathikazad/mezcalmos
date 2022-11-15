@@ -44,5 +44,5 @@ select_permissions:
         - language_id
         - location_text
         - name
-        - status
+        - open_status
       filter: {}

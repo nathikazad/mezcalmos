@@ -16,15 +16,15 @@ export const processSignUp = functions.auth.user().onCreate(async user => {
   // await hasuraModule.setClaim(user.uid);
 });
  
-
-export const deleteAccount = functions.https.onCall(async (data , context) => {
-  let response = await isSignedIn(context.auth);
+export async function deleteAccount(userId: string, data: any) {
+  
+  let response = isSignedIn(userId);
   if (response != undefined) {
     return response;
   }
-  await firebase.auth().updateUser(context.auth!.uid!, { disabled: true });
+  await firebase.auth().updateUser(userId, { disabled: true });
   return {status: ServerResponseStatus.Success}
-});
+};
  
 
 export const onNameUpdate = functions.database.ref(

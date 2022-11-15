@@ -23,12 +23,14 @@ import { orderUrl } from "../utilities/senders/appRoutes";
 import { Laundry } from "../shared/models/Services/Laundry/Laundry";
 import { getLaundry } from "./laundryController";
 import { updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
-export = functions.https.onCall(async (data, context) => {
-  let response = isSignedIn(context.auth)
+
+export async function requestLaundry(userId: string, data: any) {
+
+  let response = isSignedIn(userId)
   if (response != undefined)
     return response;
 
-  let customerId: string = context.auth!.uid;
+  let customerId: string = userId;
   if (!data.laundryId)
     return {
       status: "Error",
@@ -120,7 +122,7 @@ export = functions.https.onCall(async (data, context) => {
   } finally {
     await customerNodes.lock(customerId).remove();
   }
-})
+};
 
 
 async function notifyParticipants(participants: Array<string>,
