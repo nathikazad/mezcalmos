@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 class UserInfo {
   String id;
+  String? firebaseId;
   String name;
   String image;
   LanguageType? language;
@@ -12,11 +13,13 @@ class UserInfo {
       {required this.id,
       required this.name,
       required this.image,
-      this.language});
+      this.language,
+      this.firebaseId});
 
   factory UserInfo.fromData(data) {
     return UserInfo(
         id: data["id"],
+        firebaseId: data["firebaseId"],
         name: data["name"],
         image: data["image"],
         language: data["language"] != null
@@ -85,18 +88,25 @@ class MainUserInfo {
 class ServiceInfo extends UserInfo {
   Location location;
 
-  ServiceInfo({
-    required this.location,
-    required String id,
-    required String image,
-    required String name,
-    LanguageType? lang,
-  }) : super(id: id, image: image, name: name, language: lang);
+  ServiceInfo(
+      {required this.location,
+      required String id,
+      required String image,
+      required String name,
+      LanguageType? lang,
+      String? firebaseId})
+      : super(
+            id: id,
+            firebaseId: firebaseId,
+            image: image,
+            name: name,
+            language: lang);
 
   factory ServiceInfo.fromData(data) {
     return ServiceInfo(
         location: Location.fromFirebaseData(data['location']),
-        id: data['id'],
+        id: data['id'].toString(),
+        firebaseId: data['firebaseId'],
         image: data['image'],
         name: data['name']);
   }

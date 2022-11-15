@@ -7,7 +7,6 @@ import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/Shared/graphql/restaurant/mezRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart' show mezDbgPrint;
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -85,14 +84,6 @@ class HasuraDb {
             id: "kk",
             available: true,
             name: <LanguageType, String>{
-              LanguageType.EN: "First Choice name in english",
-              LanguageType.ES: "First Choice name in spanish",
-            },
-            cost: 5),
-        Choice(
-            id: "kk",
-            available: true,
-            name: <LanguageType, String>{
               LanguageType.EN: "Second Choice name in english",
               LanguageType.ES: "Second Choice name in spanish",
             },
@@ -139,7 +130,7 @@ class HasuraDb {
       return category;
     }
 
-    await writeCategoryToHasura(getTestCatgeory());
+    // await writeCategoryToHasura(getTestCatgeory());
 
     // await writeCategoryToHasura(
     //   Category(

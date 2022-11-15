@@ -27,7 +27,6 @@ class RestaurantInfoController extends GetxController {
     restaurantId = restId;
   }
 
-  StreamSubscription? _restaurantInfoListener;
   Stream<Restaurant?> getRestaurant(String restaurantId) {
     return _databaseHelper.firebaseDatabase
         .ref()
@@ -597,8 +596,6 @@ class RestaurantInfoController extends GetxController {
     mezDbgPrint(
         "[+] RestaurantAuthController::dispose ---------> Was invoked ! $hashCode");
 
-    _restaurantInfoListener?.cancel();
-    _restaurantInfoListener = null;
     super.onClose();
   }
 }

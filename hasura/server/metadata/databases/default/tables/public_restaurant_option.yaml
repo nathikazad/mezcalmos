@@ -15,8 +15,10 @@ array_relationships:
           schema: public
   - name: items
     using:
-      foreign_key_constraint_on:
-        column: option_id
-        table:
+      manual_configuration:
+        column_mapping:
+          id: option_id
+        insertion_order: null
+        remote_table:
           name: restaurant_item_option_map
           schema: public

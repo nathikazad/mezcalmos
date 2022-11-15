@@ -1,5 +1,7 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class Location {
   String address;
@@ -12,8 +14,11 @@ class Location {
     return Location(location["address"], position);
   }
 
-  factory Location.fromLocationData(LocationData locationData) {
-    return Location("", locationData);
+  factory Location.fromLocationData(Geography locationData, address) {
+    mezDbgPrint("Location data =====>$locationData");
+    final LocationData position =
+        buildLocationData(locationData.latitude, locationData.longitude);
+    return Location(address, position);
   }
 
   static LocationData buildLocationData(double lat, double lng) {
