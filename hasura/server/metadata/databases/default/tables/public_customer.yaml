@@ -20,3 +20,10 @@ array_relationships:
         table:
           name: delivery
           schema: public
+  - name: saved_locations
+    using:
+      foreign_key_constraint_on:
+        column: customer_id
+        table:
+          name: saved_location
+          schema: public
