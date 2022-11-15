@@ -25,3 +25,14 @@ array_relationships:
         table:
           name: restaurant_order_item
           schema: public
+computed_fields:
+  - name: itemsCost
+    definition:
+      function:
+        name: itemscost
+        schema: public
+  - name: totalCost
+    definition:
+      function:
+        name: totalcost
+        schema: public

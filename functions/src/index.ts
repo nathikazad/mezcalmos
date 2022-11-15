@@ -42,7 +42,7 @@ import { addReview } from "./restaurant/addReview";
 import { cancelOrderFromCustomer } from "./restaurant/cancelOrderFromCustomer";
 export const restaurant = {
   createRestaurant: authenticatedCall((userId, data) => createRestaurant(userId, data)),
-  checkoutCart: authenticatedCall((userId, data) => checkout(userId, data)),
+  checkoutCart: authenticatedCall((userId, data) => checkout(parseInt(userId), data)),
   addReview: authenticatedCall((userId, data) => addReview(userId, data)),
   prepareOrder: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),
   readyForOrderPickup: authenticatedCall((userId, data) => restaurantStatusChange.readyForPickupOrder(userId, data)),

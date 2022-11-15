@@ -1,17 +1,11 @@
 import * as functions from "firebase-functions";
-import { NewRestaurantOrderNotification, RestaurantOrderStatus, RestaurantOrderType } from '../shared/models/Services/Restaurant/RestaurantOrder';
-import { ParticipantType } from "../shared/models/Generic/Chat";
-import { OrderType, PaymentType } from "../shared/models/Generic/Order";
-import { Language, Location, AppType, ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { pushNotification } from "../utilities/senders/notifyUser";
-import { orderUrl } from "../utilities/senders/appRoutes";
-import { updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
+import { RestaurantOrderStatus, RestaurantOrderType } from '../shared/models/Services/Restaurant/RestaurantOrder';
+import { PaymentType } from "../shared/models/Generic/Order";
+import { Location, AppType, ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../utilities/hasura";
 
 export interface CheckoutRequest {
-  addressId: number;
   customerAppType: AppType,
   customerLocation: Location,
   deliveryCost: number,
@@ -29,7 +23,6 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
   let chain = getHasura();
   let response = await getCheckoutDetails()
   errorChecks(response, checkoutRequest);
-
   try {
     // if (data.stripePaymentId) {
     //   order = (await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId, data.stripeFees)) as RestaurantOrder
@@ -40,9 +33,9 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
         participant_id: v.id,
         app_type_id: "RestaurantApp"};
     })
-  
+    
     let orderResponse = await makeOrder(restaurantOperators)
-
+    
     let orderId: number | undefined = orderResponse.insert_restaurant_order_one?.id;
 
     if(orderId == undefined) {
@@ -166,15 +159,15 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
           delivery: {
             data: {
               customer_id: customerId,
-              dropoff_gps: {
+              dropoff_gps: JSON.stringify({
                 "type": "Point",
                 "coordinates": [
                   checkoutRequest.customerLocation.lng,
                   checkoutRequest.customerLocation.lat,
                 ]
-              },
+              }),
               dropoff_address: checkoutRequest.customerLocation.address,
-              pickup_gps: response.restaurant_by_pk!.location_gps,
+              pickup_gps: JSON.stringify(response.restaurant_by_pk!.location_gps),
               pickup_address: response.restaurant_by_pk!.location_text,
               chat_with_customer: {
                 data: {
@@ -207,14 +200,13 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
             }
           },
           payment_type: checkoutRequest.paymentType,
-          order_time: new Date(),
-          to_location_gps: {
+          to_location_gps: JSON.stringify({
             "type": "Point",
             "coordinates": [
               checkoutRequest.customerLocation.lng,
               checkoutRequest.customerLocation.lat,
             ]
-          },
+          }),
           to_location_address: checkoutRequest.customerLocation.address,
           notes: checkoutRequest.notes,
           status: RestaurantOrderStatus.OrderReceieved,
@@ -224,7 +216,14 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
                 cost_per_one: i.cost_per_one,
                 notes: i.note,
                 quantity: i.quantity,
-                restaurant_item_id: i.restaurant_item_id
+                restaurant_item_id: i.restaurant_item_id,
+                in_json: JSON.stringify({
+                  name: i.restaurant_item.name?.translations.reduce((prev:Record<any, any>, current) => {
+                    prev[current.language_id] = current.value;
+                    return prev;
+                  }, {}),
+                  selected_options: i.selected_options
+                }),
               };
             })
           },
@@ -245,18 +244,21 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
               _eq: customerId
             }
           }
-        }, {}
+        }, {
+          affected_rows: true
+        }
       ],
-      update_restaurant_cart_by_pk: [
+      delete_restaurant_cart_by_pk: [
         {
-          pk_columns: { customer_id: customerId },
-          _set: { restaurant_id: undefined },
-        }, {}
+          customer_id: customerId ,
+        }, {
+          customer_id: true
+        }
       ]
     });
   }
 
-  function setCustomerRestaurantChatInfo(orderResponse: { insert_restaurant_order_one: { id: number; chat_id: number; delivery: { chat_with_customer_id: number; chat_with_service_provider_id: number | undefined; } | undefined; } | undefined; delete_restaurant_cart_item: {} | undefined; update_restaurant_cart_by_pk: {} | undefined; }, orderId: number) {
+  function setCustomerRestaurantChatInfo(orderResponse: { insert_restaurant_order_one: { id: number; chat_id: number; delivery: { chat_with_customer_id: number; chat_with_service_provider_id: number | undefined; } | undefined; } | undefined; delete_restaurant_cart_item: {} | undefined; delete_restaurant_cart_by_pk: {} | undefined; }, orderId: number) {
     chain.mutation({
       update_chat_by_pk: [{
         pk_columns: {
@@ -269,7 +271,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
               chatImage: response.restaurant_by_pk!.image,
               parentLink: `/RestaurantOrders/${orderId}`
             },
-            RestauarntApp: {
+            RestaurantApp: {
               chatTitle: response.customer_by_pk?.user.name ?? "Customer",
               chatImage: response.customer_by_pk?.user.image,
               parentLink: `/RestaurantOrders/${orderId}`
@@ -281,11 +283,13 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
             },
           }),
         }
-      }, {},]
+      }, {
+        id: true
+      },]
     });
   }
 
-  function setCustomerDeliveryDriverChatInfo(orderResponse: { insert_restaurant_order_one: { id: number; chat_id: number; delivery: { chat_with_customer_id: number; chat_with_service_provider_id: number | undefined; } | undefined; } | undefined; delete_restaurant_cart_item: {} | undefined; update_restaurant_cart_by_pk: {} | undefined; }, orderId: number) {
+  function setCustomerDeliveryDriverChatInfo(orderResponse: { insert_restaurant_order_one: { id: number; chat_id: number; delivery: { chat_with_customer_id: number; chat_with_service_provider_id: number | undefined; } | undefined; } | undefined; delete_restaurant_cart_item: {} | undefined; delete_restaurant_cart_by_pk: {} | undefined; }, orderId: number) {
     chain.mutation({
       update_chat_by_pk: [{
         pk_columns: {
@@ -293,7 +297,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
         },
         _set: {
           chat_info: JSON.stringify({
-            RestauarntApp: {
+            RestaurantApp: {
               chatTitle: response.customer_by_pk?.user.name ?? "Customer",
               chatImage: response.customer_by_pk?.user.image,
               parentLink: `/RestaurantOrders/${orderId}`
@@ -305,11 +309,13 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
             }
           }),
         }
-      }, {},]
+      }, {
+        id: true
+      },]
     });
   }
 
-  function setRestaurantDeliveryDriverChatInfo(orderResponse: { insert_restaurant_order_one: { id: number; chat_id: number; delivery: { chat_with_customer_id: number; chat_with_service_provider_id: number | undefined; } | undefined; } | undefined; delete_restaurant_cart_item: {} | undefined; update_restaurant_cart_by_pk: {} | undefined; }, orderId: number) {
+  function setRestaurantDeliveryDriverChatInfo(orderResponse: { insert_restaurant_order_one: { id: number; chat_id: number; delivery: { chat_with_customer_id: number; chat_with_service_provider_id: number | undefined; } | undefined; } | undefined; delete_restaurant_cart_item: {} | undefined; delete_restaurant_cart_by_pk: {} | undefined; }, orderId: number) {
     chain.mutation({
       update_chat_by_pk: [{
         pk_columns: {
@@ -324,7 +330,9 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
             }
           }),
         }
-      }, {},]
+      }, {
+        id: true
+      },]
     });
   }
 
@@ -350,22 +358,14 @@ function errorChecks(response: { restaurant_by_pk: { open_status: string; approv
       "Restaurant is closed"
     );
   }
-
-  if (response.customer_by_pk?.cart?.items.length ?? 0 == 0) {
+  if ((response.customer_by_pk?.cart?.items.length ?? 0) == 0) {
     throw new HttpsError(
       "internal",
       "Empty cart"
     );
   }
 
-  if (response.customer_by_pk?.cart?.items.length ?? 0 == 0) {
-    throw new HttpsError(
-      "internal",
-      "Empty cart"
-    );
-  }
-
-  if (response.customer_by_pk?.cart?.restaurant_id == checkoutRequest.restaurantId) {
+  if (response.customer_by_pk?.cart?.restaurant_id !== checkoutRequest.restaurantId) {
     throw new HttpsError(
       "internal",
       "Restaurant id mismatch"
