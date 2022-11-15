@@ -1,5 +1,3 @@
-import * as functions from "firebase-functions";
-import { AuthData } from "firebase-functions/lib/common/providers/https";
 import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { RestaurantOrderStatusChangeNotification, RestaurantOrder, RestaurantOrderStatus } from "../shared/models/Services/Restaurant/RestaurantOrder";
@@ -22,24 +20,22 @@ let statusArrayInSeq: Array<RestaurantOrderStatus> =
     RestaurantOrderStatus.OnTheWay,
     RestaurantOrderStatus.Delivered
   ]
-
-export const startDelivery = functions.https.onCall(async (data, context) => {
-  let response: ServerResponse = await changeStatus(data, RestaurantOrderStatus.OnTheWay, context.auth)
+export async function startDelivery(userId: string, data: any) {
+  let response: ServerResponse = await changeStatus(data, RestaurantOrderStatus.OnTheWay, userId)
   return response
-});
-
-export const finishDelivery = functions.https.onCall(async (data, context) => {
-  let response: ServerResponse = await changeStatus(data, RestaurantOrderStatus.Delivered, context.auth)
+};
+export async function finishDelivery(userId: string, data: any) {
+  let response: ServerResponse = await changeStatus(data, RestaurantOrderStatus.Delivered, userId)
   return response
-});
+};
 
 function expectedPreviousStatus(status: RestaurantOrderStatus): RestaurantOrderStatus {
   return statusArrayInSeq[statusArrayInSeq.findIndex((element) => element == status) - 1];
 }
 
-async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: AuthData): Promise<ServerResponse> {
+async function changeStatus(data: any, newStatus: RestaurantOrderStatus, userId: string): Promise<ServerResponse> {
 
-  let response = await isSignedIn(auth)
+  let response = await isSignedIn(userId)
   if (response != undefined) {
     return response;
   }
@@ -53,7 +49,7 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
   }
 
   let orderId: string = data.orderId;
-  let deliveryDriverId: string = auth!.uid;
+  let deliveryDriverId: string = userId;
   let order: RestaurantOrder = (await rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).once('value')).val();
   if (order == null) {
     return {

@@ -11,6 +11,11 @@ export enum Language {
   ES = "es",
 }
 
+export enum AppType {
+  CustomerWeb = "customerWeb",
+  CustomerMobile = "customerMobile",
+}
+
 export type NotificationInfo = Record<TokenType, string>;
 
 export enum TokenType {

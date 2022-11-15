@@ -13,8 +13,8 @@ export async function checkDeliveryAdmin(adminId: string): Promise<ServerRespons
   }
   return undefined;
 }
-export function isSignedIn(auth: any): ServerResponse | undefined {
-  if (!auth && !auth.uid)
+export function isSignedIn(userId: string): ServerResponse | undefined {
+  if (!userId)
     return {
       status: ServerResponseStatus.Error,
       errorMessage: "User needs to be signed in"

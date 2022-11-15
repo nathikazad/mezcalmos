@@ -1,5 +1,3 @@
-import * as functions from "firebase-functions";
-import { AuthData } from "firebase-functions/lib/common/providers/https";
 import { ServerResponse, ServerResponseStatus, ValidationPass } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
 import { orderInProcess, LaundryOrderStatus, LaundryOrder, LaundryOrderStatusChangeNotification } from "../shared/models/Services/Laundry/LaundryOrder";
@@ -14,22 +12,20 @@ import { LaundryOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { orderUrl } from "../utilities/senders/appRoutes";
 
+export async function cancelOrder(userId: string, data: any) {
+  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.CancelledByAdmin, userId)
+  return response;
+};
 
-export const cancelOrder =
-  functions.https.onCall(async (data, context) => {
-    let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.CancelledByAdmin, context.auth)
-    return response;
-  });
-
-export const readyForDeliveryOrder = functions.https.onCall(async (data, context) => {
-  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.ReadyForDelivery, context.auth)
+export async function readyForDeliveryOrder(userId: string, data: any) {
+  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.ReadyForDelivery, userId)
   return response
-});
+};
 
 
-async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: AuthData): Promise<ServerResponse> {
+async function changeStatus(data: any, newStatus: LaundryOrderStatus, userId: string): Promise<ServerResponse> {
 
-  let validationPass: ValidationPass = await passChecksForLaundry(data, auth);
+  let validationPass: ValidationPass = await passChecksForLaundry(data, userId);
   if (!validationPass.ok) {
     return validationPass.error!;
   }
@@ -89,7 +85,7 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
   return { status: ServerResponseStatus.Success }
 }
 
-export const setWeight = functions.https.onCall(async (data, context) => {
+export async function setWeight(userId: string, data: any) {
 
   if (data.costsByType == null) {
     return {
@@ -99,7 +95,7 @@ export const setWeight = functions.https.onCall(async (data, context) => {
     }
   }
 
-  let validationPass = await passChecksForLaundry(data, context.auth);
+  let validationPass = await passChecksForLaundry(data, userId);
   if (!validationPass.ok) {
     return validationPass.error;
   }
@@ -128,9 +124,9 @@ export const setWeight = functions.https.onCall(async (data, context) => {
     deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
 
   return { status: ServerResponseStatus.Success }
-});
+};
 
-export const setEstimatedLaundryReadyTime = functions.https.onCall(async (data, context) => {
+export async function setEstimatedLaundryReadyTime(userId: string, data: any) {
 
   if (data.estimatedLaundryReadyTime == null) {
     return {
@@ -140,7 +136,7 @@ export const setEstimatedLaundryReadyTime = functions.https.onCall(async (data, 
     }
   }
 
-  let validationPass = await passChecksForLaundry(data, context.auth);
+  let validationPass = await passChecksForLaundry(data, userId);
   if (!validationPass.ok) {
     return validationPass.error;
   }
@@ -157,5 +153,5 @@ export const setEstimatedLaundryReadyTime = functions.https.onCall(async (data, 
     deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
 
   return { status: ServerResponseStatus.Success }
-});
+};
 

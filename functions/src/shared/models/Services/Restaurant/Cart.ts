@@ -37,5 +37,7 @@ export interface Cart {
   orderType: OrderType.Restaurant;
   items: Record<string, Item>;
   routeInformation?:RouteInformation;
+  stripePaymentId?: string | null;
+  stripeFees?: number | null;
 }
 
