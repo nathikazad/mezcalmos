@@ -1,0 +1,6 @@
+query getCustomerById($id: Int!) {
+  customer_by_pk(user_id:$id)
+  {
+    app_version
+  }
+}

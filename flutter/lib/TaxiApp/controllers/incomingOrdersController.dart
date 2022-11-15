@@ -61,7 +61,7 @@ class IncomingOrdersController extends GetxController {
               );
             ordersFromSnapshot.add(order);
             try {
-              await markOrderAsReceived(key, order.customer.id);
+              await markOrderAsReceived(key, order.customer.firebaseId);
             } on PlatformException catch (_) {
               // do nothing
             }

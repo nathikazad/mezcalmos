@@ -55,8 +55,8 @@ class _ROpItemCardState extends State<ROpItemCard> {
                   Get.toNamed(getEditItemRoute(
                       itemId: widget.item.id!,
                       categoryId: widget.category?.id ?? null,
-                      restaurntID:
-                          widget.viewController.restaurant.value!.info.id));
+                      restaurntID: widget
+                          .viewController.restaurant.value!.info.firebaseId));
                 },
           child: Container(
             padding: const EdgeInsets.all(5),

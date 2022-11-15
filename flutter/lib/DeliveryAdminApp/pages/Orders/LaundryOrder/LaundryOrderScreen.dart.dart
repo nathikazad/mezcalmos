@@ -179,9 +179,9 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                           /// Check That The driver has been changed!
                           if (deliveryDriverUserInfo.deliveryDriverUserInfo !=
                                   null &&
-                              (deliveryDriver.driverInfo.id !=
+                              (deliveryDriver.driverInfo.firebaseId !=
                                   deliveryDriverUserInfo
-                                      .deliveryDriverUserInfo!.id)) {
+                                      .deliveryDriverUserInfo!.firebaseId)) {
                             /// Uploading
                             deliveryDriverUserInfo
                                     .driverUserInfoAndUpdateStatus =
@@ -382,7 +382,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
     // restaurant ad customer's location are fixed (fit in bound at start)
     mapController.addOrUpdateUserMarker(
       latLng: order.value?.laundry?.location.toLatLng(),
-      markerId: order.value?.laundry?.id,
+      markerId: order.value?.laundry?.firebaseId,
       customImgHttpUrl: order.value?.laundry?.image,
       fitWithinBounds: true,
     );
@@ -407,7 +407,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
           // we ignore the marker within bounds
           mapController.addOrUpdateUserMarker(
             latLng: order.value?.laundry?.location.toLatLng(),
-            markerId: order.value?.laundry?.id,
+            markerId: order.value?.laundry?.firebaseId,
             customImgHttpUrl: order.value?.laundry?.image,
             fitWithinBounds: true,
           );
@@ -420,7 +420,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
         if (order.value?.pickupDriver?.location != null) {
           mapController.addOrUpdateUserMarker(
             latLng: order.value?.pickupDriver?.location,
-            markerId: order.value?.pickupDriver?.id,
+            markerId: order.value?.pickupDriver?.firebaseId,
             customImgHttpUrl: order.value?.pickupDriver?.image,
             fitWithinBounds: true,
           );
@@ -435,7 +435,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
           // we ignore the restaurant's marker within bounds
           mapController.addOrUpdateUserMarker(
             latLng: order.value?.laundry?.location.toLatLng(),
-            markerId: order.value?.laundry?.id,
+            markerId: order.value?.laundry?.firebaseId,
             customImgHttpUrl: order.value?.laundry?.image,
             fitWithinBounds: false,
           );
@@ -450,7 +450,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
         if (order.value?.dropoffDriver?.location != null) {
           mapController.addOrUpdateUserMarker(
             latLng: order.value?.dropoffDriver?.location,
-            markerId: order.value?.dropoffDriver?.id,
+            markerId: order.value?.dropoffDriver?.firebaseId,
             customImgHttpUrl: order.value?.dropoffDriver?.image,
             fitWithinBounds: true,
           );

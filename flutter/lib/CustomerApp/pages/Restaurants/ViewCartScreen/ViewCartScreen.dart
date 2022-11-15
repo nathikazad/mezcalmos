@@ -274,7 +274,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           final ServerResponse paymentIntentResponse = await getPaymentIntent(
               customerId: Get.find<AuthController>().user!.id,
               serviceProviderId:
-                  _restaurantController.cart.value.restaurant!.info.id,
+                  _restaurantController.cart.value.restaurant!.info.firebaseId,
               orderType: OrderType.Restaurant,
               paymentAmount: _restaurantController.cart.value.totalCost);
           stripePaymentId = extractPaymentIdFromIntent(
@@ -289,7 +289,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           final ServerResponse paymentIntentResponse = await getPaymentIntent(
               customerId: Get.find<AuthController>().user!.id,
               serviceProviderId:
-                  _restaurantController.cart.value.restaurant!.info.id,
+                  _restaurantController.cart.value.restaurant!.info.firebaseId,
               orderType: OrderType.Restaurant,
               paymentAmount: _restaurantController.cart.value.totalCost);
           stripePaymentId = extractPaymentIdFromIntent(
@@ -303,7 +303,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         case CardChoice.SavedCard:
           stripePaymentId = await acceptPaymentWithSavedCard(
               serviceProviderId:
-                  _restaurantController.cart.value.restaurant!.info.id,
+                  _restaurantController.cart.value.restaurant!.info.firebaseId,
               paymentAmount: _restaurantController.cart.value.totalCost,
               card: viewCartController.card.value!);
           break;

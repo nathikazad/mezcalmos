@@ -1,0 +1,43 @@
+# Get the user using firebase_id
+
+query getUserByFirebaseId($firebase_id: String!) {
+  user( where: {firebase_id: {_eq: $firebase_id }}, limit:1)
+  {
+    id,
+    firebase_id,
+    deleted,
+    image,
+    language_id,
+    name
+  }
+}
+
+# Get the Database user using pk.
+
+query getUserById($id: Int!) {
+  user_by_pk(id: $id)
+  {
+    deleted,
+    image,
+    language_id,
+    name
+  }
+}
+
+# Update the user image using pk.
+
+mutation changeUserImg($id: user_pk_columns_input!, $img: String!) {
+  update_user_by_pk(pk_columns:$id , _set : {image : $img})
+  {
+  	image
+  }
+}
+
+# Update user name using pk.
+
+mutation changeUserName($id: user_pk_columns_input!, $name: String!) {
+  update_user_by_pk(pk_columns:$id , _set : {name : $name})
+  {
+  	name
+  }
+}

@@ -192,7 +192,7 @@ class DeliveryAuthController extends GetxController {
               .ref()
               .child(customerInProcessOrderDriverLocationNode(
                   orderId: order.orderId,
-                  customerId: order.customer.id,
+                  customerId: order.customer.firebaseId,
                   driverAddress: order.driverDatabaseAddress()))
               .setWithCatch(value: positionUpdate);
         });

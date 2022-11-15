@@ -122,7 +122,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
         resizeToAvoidBottomInset: true,
         bottomSheet: (cartItem.value != null && currentRestaurant != null)
             ? BottomBarItemViewScreen(
-                currentRestaurantId: currentRestaurant?.info.id,
+                currentRestaurantId: currentRestaurant?.info.firebaseId,
                 cartItem: cartItem,
                 mode: widget.viewItemScreenMode,
               )
@@ -169,7 +169,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                           onTap: () {
                             Get.toNamed(
                                 getRestaurantRoute(
-                                  currentRestaurant!.info.id,
+                                  currentRestaurant!.info.firebaseId,
                                 ),
                                 arguments: currentRestaurant);
                           },

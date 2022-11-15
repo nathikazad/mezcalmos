@@ -237,8 +237,8 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
               shippingPrice: viewController.baseShippingPrice,
               onClick: () {
                 Get.toNamed<void>(
-                  getRestaurantRoute(
-                      viewController.filteredRestaurants[index].info.id),
+                  getRestaurantRoute(viewController
+                      .filteredRestaurants[index].info.firebaseId),
                   arguments: viewController.filteredRestaurants[index],
                 );
               },

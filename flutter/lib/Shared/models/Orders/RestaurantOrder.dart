@@ -112,7 +112,7 @@ class RestaurantOrder extends DeliverableOrder {
             ? DateTime.tryParse(data["deliveryTime"])
             : null,
         to: Location.fromFirebaseData(data['to']),
-        restaurant: ServiceInfo.fromData(data["restaurant"]),
+        restaurant: ServiceInfo.fromHasura(data["restaurant"]),
         customer: UserInfo.fromData(data["customer"]),
         itemsCost: data['itemsCost'],
         shippingCost: data["shippingCost"] ?? 0,
@@ -202,8 +202,6 @@ class RestaurantOrder extends DeliverableOrder {
             (RestaurantOrderItem element) => element.image != null) !=
         null;
   }
-
-
 
   String clipBoardText(LanguageType languageType) {
     String text = "";

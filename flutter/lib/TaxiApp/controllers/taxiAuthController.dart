@@ -164,7 +164,7 @@ class TaxiAuthController extends GetxController {
             final String? currentOrderCustomerId = Get.find<OrderController>()
                 .getOrder(_state.value!.currentOrder!)
                 ?.customer
-                .id;
+                .firebaseId;
             if (currentOrderCustomerId != null)
               _databaseHelper.firebaseDatabase
                   .ref()

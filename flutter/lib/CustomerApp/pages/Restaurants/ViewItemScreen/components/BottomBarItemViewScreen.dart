@@ -115,19 +115,19 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                       if (auth.fireAuthUser != null) {
                         if (ViewItemScreenMode.AddItemMode == widget.mode) {
                           if (restaurantCartController
-                                  .associatedRestaurant?.info.id !=
+                                  .associatedRestaurant?.info.firebaseId !=
                               null) {
                             if (restaurantCartController
-                                    .associatedRestaurant?.info.id ==
+                                    .associatedRestaurant?.info.firebaseId ==
                                 widget.currentRestaurantId) {
                               mezDbgPrint(
-                                  "the first id is ${restaurantCartController.associatedRestaurant?.info.id} and the scond is ${widget.currentRestaurantId}");
+                                  "the first id is ${restaurantCartController.associatedRestaurant?.info.firebaseId} and the scond is ${widget.currentRestaurantId}");
                               await restaurantCartController
                                   .addItem(widget.cartItem.value!);
                               await Get.offNamed<void>(kCartRoute);
                             } else {
                               mezDbgPrint(
-                                  "not true ${restaurantCartController.associatedRestaurant?.info.id} and the other is ${widget.currentRestaurantId}");
+                                  "not true ${restaurantCartController.associatedRestaurant?.info.firebaseId} and the other is ${widget.currentRestaurantId}");
 
                               await showStatusInfoDialog(
                                 context,

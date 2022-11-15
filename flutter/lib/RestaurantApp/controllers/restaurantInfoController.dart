@@ -498,7 +498,7 @@ class RestaurantInfoController extends GetxController {
     String _uploadedImgUrl;
     final List<String> splitted = imageFile.path.split('.');
     final String imgPath =
-        "restaurants/${restaurant.value?.info.id}/items/${getRandomString(8)}.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
+        "restaurants/${restaurant.value?.info.firebaseId}/items/${getRandomString(8)}.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
     try {
       await firebase_storage.FirebaseStorage.instance
           .ref(imgPath)

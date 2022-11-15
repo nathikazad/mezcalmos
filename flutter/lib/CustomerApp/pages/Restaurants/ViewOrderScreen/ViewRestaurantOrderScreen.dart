@@ -304,7 +304,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     // restaurant ad customer's location are fixed (fit in bound at start)
     mapController.addOrUpdateUserMarker(
       latLng: order.value?.restaurant.location.toLatLng(),
-      markerId: order.value?.restaurant.id,
+      markerId: order.value?.restaurant.firebaseId,
       customImgHttpUrl: order.value?.restaurant.image,
       fitWithinBounds: true,
     );
@@ -336,7 +336,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
           _statusSnapshot = status;
           mapController.addOrUpdateUserMarker(
             latLng: order.value?.restaurant.location.toLatLng(),
-            markerId: order.value?.restaurant.id,
+            markerId: order.value?.restaurant.firebaseId,
             customImgHttpUrl: order.value?.restaurant.image,
             fitWithinBounds: true,
           );
@@ -347,7 +347,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         }
         mapController.addOrUpdateUserMarker(
           latLng: order.value?.dropoffDriver?.location,
-          markerId: order.value?.dropoffDriver?.id,
+          markerId: order.value?.dropoffDriver?.firebaseId,
           customImgHttpUrl: order.value?.dropoffDriver?.image,
           fitWithinBounds: true,
         );
@@ -361,7 +361,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
           // we ignore the restaurant's marker within bounds
           mapController.addOrUpdateUserMarker(
             latLng: order.value?.restaurant.location.toLatLng(),
-            markerId: order.value?.restaurant.id,
+            markerId: order.value?.restaurant.firebaseId,
             customImgHttpUrl: order.value?.restaurant.image,
             fitWithinBounds: true,
           );
@@ -375,7 +375,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         // we keep updating the delivery's
         mapController.addOrUpdateUserMarker(
           latLng: order.value?.dropoffDriver?.location,
-          markerId: order.value?.dropoffDriver?.id,
+          markerId: order.value?.dropoffDriver?.firebaseId,
           customImgHttpUrl: order.value?.dropoffDriver?.image,
           fitWithinBounds: true,
         );
