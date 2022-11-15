@@ -1408,8 +1408,12 @@ type delivery {
   """orderReceived"""
   status: String!
   stripe_payment_id: Int
-  trip_distance: String
-  trip_duration: String
+
+  """in meters"""
+  trip_distance: Int
+
+  """in seconds"""
+  trip_duration: Int
   trip_polyline: String
 }
 
@@ -1480,6 +1484,12 @@ type delivery_avg_fields {
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
   stripe_payment_id: Float
+
+  """in meters"""
+  trip_distance: Float
+
+  """in seconds"""
+  trip_duration: Float
 }
 
 """
@@ -1499,6 +1509,12 @@ input delivery_avg_order_by {
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
   stripe_payment_id: order_by
+
+  """in meters"""
+  trip_distance: order_by
+
+  """in seconds"""
+  trip_duration: order_by
 }
 
 """
@@ -1544,8 +1560,8 @@ input delivery_bool_exp {
   service_provider_type: String_comparison_exp
   status: String_comparison_exp
   stripe_payment_id: Int_comparison_exp
-  trip_distance: String_comparison_exp
-  trip_duration: String_comparison_exp
+  trip_distance: Int_comparison_exp
+  trip_duration: Int_comparison_exp
   trip_polyline: String_comparison_exp
 }
 
@@ -1576,6 +1592,12 @@ input delivery_inc_input {
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
   stripe_payment_id: Int
+
+  """in meters"""
+  trip_distance: Int
+
+  """in seconds"""
+  trip_duration: Int
 }
 
 """
@@ -1620,8 +1642,12 @@ input delivery_insert_input {
   """orderReceived"""
   status: String
   stripe_payment_id: Int
-  trip_distance: String
-  trip_duration: String
+
+  """in meters"""
+  trip_distance: Int
+
+  """in seconds"""
+  trip_duration: Int
   trip_polyline: String
 }
 
@@ -1655,8 +1681,12 @@ type delivery_max_fields {
   """orderReceived"""
   status: String
   stripe_payment_id: Int
-  trip_distance: String
-  trip_duration: String
+
+  """in meters"""
+  trip_distance: Int
+
+  """in seconds"""
+  trip_duration: Int
   trip_polyline: String
 }
 
@@ -1692,7 +1722,11 @@ input delivery_max_order_by {
   """orderReceived"""
   status: order_by
   stripe_payment_id: order_by
+
+  """in meters"""
   trip_distance: order_by
+
+  """in seconds"""
   trip_duration: order_by
   trip_polyline: order_by
 }
@@ -1727,8 +1761,12 @@ type delivery_min_fields {
   """orderReceived"""
   status: String
   stripe_payment_id: Int
-  trip_distance: String
-  trip_duration: String
+
+  """in meters"""
+  trip_distance: Int
+
+  """in seconds"""
+  trip_duration: Int
   trip_polyline: String
 }
 
@@ -1764,7 +1802,11 @@ input delivery_min_order_by {
   """orderReceived"""
   status: order_by
   stripe_payment_id: order_by
+
+  """in meters"""
   trip_distance: order_by
+
+  """in seconds"""
   trip_duration: order_by
   trip_polyline: order_by
 }
@@ -1983,8 +2025,12 @@ input delivery_set_input {
   """orderReceived"""
   status: String
   stripe_payment_id: Int
-  trip_distance: String
-  trip_duration: String
+
+  """in meters"""
+  trip_distance: Int
+
+  """in seconds"""
+  trip_duration: Int
   trip_polyline: String
 }
 
@@ -2003,6 +2049,12 @@ type delivery_stddev_fields {
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
   stripe_payment_id: Float
+
+  """in meters"""
+  trip_distance: Float
+
+  """in seconds"""
+  trip_duration: Float
 }
 
 """
@@ -2022,6 +2074,12 @@ input delivery_stddev_order_by {
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
   stripe_payment_id: order_by
+
+  """in meters"""
+  trip_distance: order_by
+
+  """in seconds"""
+  trip_duration: order_by
 }
 
 """aggregate stddev_pop on columns"""
@@ -2039,6 +2097,12 @@ type delivery_stddev_pop_fields {
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
   stripe_payment_id: Float
+
+  """in meters"""
+  trip_distance: Float
+
+  """in seconds"""
+  trip_duration: Float
 }
 
 """
@@ -2058,6 +2122,12 @@ input delivery_stddev_pop_order_by {
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
   stripe_payment_id: order_by
+
+  """in meters"""
+  trip_distance: order_by
+
+  """in seconds"""
+  trip_duration: order_by
 }
 
 """aggregate stddev_samp on columns"""
@@ -2075,6 +2145,12 @@ type delivery_stddev_samp_fields {
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
   stripe_payment_id: Float
+
+  """in meters"""
+  trip_distance: Float
+
+  """in seconds"""
+  trip_duration: Float
 }
 
 """
@@ -2094,6 +2170,12 @@ input delivery_stddev_samp_order_by {
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
   stripe_payment_id: order_by
+
+  """in meters"""
+  trip_distance: order_by
+
+  """in seconds"""
+  trip_duration: order_by
 }
 
 """
@@ -2140,8 +2222,12 @@ input delivery_stream_cursor_value_input {
   """orderReceived"""
   status: String
   stripe_payment_id: Int
-  trip_distance: String
-  trip_duration: String
+
+  """in meters"""
+  trip_distance: Int
+
+  """in seconds"""
+  trip_duration: Int
   trip_polyline: String
 }
 
@@ -2160,6 +2246,12 @@ type delivery_sum_fields {
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
   stripe_payment_id: Int
+
+  """in meters"""
+  trip_distance: Int
+
+  """in seconds"""
+  trip_duration: Int
 }
 
 """
@@ -2179,6 +2271,12 @@ input delivery_sum_order_by {
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
   stripe_payment_id: order_by
+
+  """in meters"""
+  trip_distance: order_by
+
+  """in seconds"""
+  trip_duration: order_by
 }
 
 """
@@ -2306,6 +2404,12 @@ type delivery_var_pop_fields {
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
   stripe_payment_id: Float
+
+  """in meters"""
+  trip_distance: Float
+
+  """in seconds"""
+  trip_duration: Float
 }
 
 """
@@ -2325,6 +2429,12 @@ input delivery_var_pop_order_by {
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
   stripe_payment_id: order_by
+
+  """in meters"""
+  trip_distance: order_by
+
+  """in seconds"""
+  trip_duration: order_by
 }
 
 """aggregate var_samp on columns"""
@@ -2342,6 +2452,12 @@ type delivery_var_samp_fields {
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
   stripe_payment_id: Float
+
+  """in meters"""
+  trip_distance: Float
+
+  """in seconds"""
+  trip_duration: Float
 }
 
 """
@@ -2361,6 +2477,12 @@ input delivery_var_samp_order_by {
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
   stripe_payment_id: order_by
+
+  """in meters"""
+  trip_distance: order_by
+
+  """in seconds"""
+  trip_duration: order_by
 }
 
 """aggregate variance on columns"""
@@ -2378,6 +2500,12 @@ type delivery_variance_fields {
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
   stripe_payment_id: Float
+
+  """in meters"""
+  trip_distance: Float
+
+  """in seconds"""
+  trip_duration: Float
 }
 
 """
@@ -2397,6 +2525,12 @@ input delivery_variance_order_by {
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
   stripe_payment_id: order_by
+
+  """in meters"""
+  trip_distance: order_by
+
+  """in seconds"""
+  trip_duration: order_by
 }
 
 scalar float8

@@ -948,7 +948,9 @@ count?: [{	columns?:ValueTypes["deliverer_select_column"][],	distinct?:boolean},
 	/** orderReceived */
 	status?:true,
 	stripe_payment_id?:true,
+	/** in meters */
 	trip_distance?:true,
+	/** in seconds */
 	trip_duration?:true,
 	trip_polyline?:true,
 		__typename?: true
@@ -1009,6 +1011,10 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
 	stripe_payment_id?:true,
+	/** in meters */
+	trip_distance?:true,
+	/** in seconds */
+	trip_duration?:true,
 		__typename?: true
 }>;
 	/** order by avg() on columns of table "delivery" */
@@ -1025,7 +1031,11 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"]
+	stripe_payment_id?:ValueTypes["order_by"],
+	/** in meters */
+	trip_distance?:ValueTypes["order_by"],
+	/** in seconds */
+	trip_duration?:ValueTypes["order_by"]
 };
 	/** Boolean expression to filter rows from the table "delivery". All fields are combined with a logical 'AND'. */
 ["delivery_bool_exp"]: {
@@ -1068,8 +1078,8 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_type?:ValueTypes["String_comparison_exp"],
 	status?:ValueTypes["String_comparison_exp"],
 	stripe_payment_id?:ValueTypes["Int_comparison_exp"],
-	trip_distance?:ValueTypes["String_comparison_exp"],
-	trip_duration?:ValueTypes["String_comparison_exp"],
+	trip_distance?:ValueTypes["Int_comparison_exp"],
+	trip_duration?:ValueTypes["Int_comparison_exp"],
 	trip_polyline?:ValueTypes["String_comparison_exp"]
 };
 	/** unique or primary key constraints on table "delivery" */
@@ -1088,7 +1098,11 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	package_cost?:ValueTypes["money"],
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number
+	stripe_payment_id?:number,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number
 };
 	/** input type for inserting data into table "delivery" */
 ["delivery_insert_input"]: {
@@ -1129,8 +1143,10 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
-	trip_distance?:string,
-	trip_duration?:string,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number,
 	trip_polyline?:string
 };
 	/** aggregate max on columns */
@@ -1162,7 +1178,9 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	/** orderReceived */
 	status?:true,
 	stripe_payment_id?:true,
+	/** in meters */
 	trip_distance?:true,
+	/** in seconds */
 	trip_duration?:true,
 	trip_polyline?:true,
 		__typename?: true
@@ -1196,7 +1214,9 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	/** orderReceived */
 	status?:ValueTypes["order_by"],
 	stripe_payment_id?:ValueTypes["order_by"],
+	/** in meters */
 	trip_distance?:ValueTypes["order_by"],
+	/** in seconds */
 	trip_duration?:ValueTypes["order_by"],
 	trip_polyline?:ValueTypes["order_by"]
 };
@@ -1229,7 +1249,9 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	/** orderReceived */
 	status?:true,
 	stripe_payment_id?:true,
+	/** in meters */
 	trip_distance?:true,
+	/** in seconds */
 	trip_duration?:true,
 	trip_polyline?:true,
 		__typename?: true
@@ -1263,7 +1285,9 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	/** orderReceived */
 	status?:ValueTypes["order_by"],
 	stripe_payment_id?:ValueTypes["order_by"],
+	/** in meters */
 	trip_distance?:ValueTypes["order_by"],
+	/** in seconds */
 	trip_duration?:ValueTypes["order_by"],
 	trip_polyline?:ValueTypes["order_by"]
 };
@@ -1367,8 +1391,10 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
-	trip_distance?:string,
-	trip_duration?:string,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number,
 	trip_polyline?:string
 };
 	/** aggregate stddev on columns */
@@ -1386,6 +1412,10 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
 	stripe_payment_id?:true,
+	/** in meters */
+	trip_distance?:true,
+	/** in seconds */
+	trip_duration?:true,
 		__typename?: true
 }>;
 	/** order by stddev() on columns of table "delivery" */
@@ -1402,7 +1432,11 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"]
+	stripe_payment_id?:ValueTypes["order_by"],
+	/** in meters */
+	trip_distance?:ValueTypes["order_by"],
+	/** in seconds */
+	trip_duration?:ValueTypes["order_by"]
 };
 	/** aggregate stddev_pop on columns */
 ["delivery_stddev_pop_fields"]: AliasType<{
@@ -1419,6 +1453,10 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
 	stripe_payment_id?:true,
+	/** in meters */
+	trip_distance?:true,
+	/** in seconds */
+	trip_duration?:true,
 		__typename?: true
 }>;
 	/** order by stddev_pop() on columns of table "delivery" */
@@ -1435,7 +1473,11 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"]
+	stripe_payment_id?:ValueTypes["order_by"],
+	/** in meters */
+	trip_distance?:ValueTypes["order_by"],
+	/** in seconds */
+	trip_duration?:ValueTypes["order_by"]
 };
 	/** aggregate stddev_samp on columns */
 ["delivery_stddev_samp_fields"]: AliasType<{
@@ -1452,6 +1494,10 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
 	stripe_payment_id?:true,
+	/** in meters */
+	trip_distance?:true,
+	/** in seconds */
+	trip_duration?:true,
 		__typename?: true
 }>;
 	/** order by stddev_samp() on columns of table "delivery" */
@@ -1468,7 +1514,11 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"]
+	stripe_payment_id?:ValueTypes["order_by"],
+	/** in meters */
+	trip_distance?:ValueTypes["order_by"],
+	/** in seconds */
+	trip_duration?:ValueTypes["order_by"]
 };
 	/** Streaming cursor of the table "delivery" */
 ["delivery_stream_cursor_input"]: {
@@ -1509,8 +1559,10 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
-	trip_distance?:string,
-	trip_duration?:string,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number,
 	trip_polyline?:string
 };
 	/** aggregate sum on columns */
@@ -1528,6 +1580,10 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
 	stripe_payment_id?:true,
+	/** in meters */
+	trip_distance?:true,
+	/** in seconds */
+	trip_duration?:true,
 		__typename?: true
 }>;
 	/** order by sum() on columns of table "delivery" */
@@ -1544,7 +1600,11 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"]
+	stripe_payment_id?:ValueTypes["order_by"],
+	/** in meters */
+	trip_distance?:ValueTypes["order_by"],
+	/** in seconds */
+	trip_duration?:ValueTypes["order_by"]
 };
 	/** update columns of table "delivery" */
 ["delivery_update_column"]:delivery_update_column;
@@ -1570,6 +1630,10 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
 	stripe_payment_id?:true,
+	/** in meters */
+	trip_distance?:true,
+	/** in seconds */
+	trip_duration?:true,
 		__typename?: true
 }>;
 	/** order by var_pop() on columns of table "delivery" */
@@ -1586,7 +1650,11 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"]
+	stripe_payment_id?:ValueTypes["order_by"],
+	/** in meters */
+	trip_distance?:ValueTypes["order_by"],
+	/** in seconds */
+	trip_duration?:ValueTypes["order_by"]
 };
 	/** aggregate var_samp on columns */
 ["delivery_var_samp_fields"]: AliasType<{
@@ -1603,6 +1671,10 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
 	stripe_payment_id?:true,
+	/** in meters */
+	trip_distance?:true,
+	/** in seconds */
+	trip_duration?:true,
 		__typename?: true
 }>;
 	/** order by var_samp() on columns of table "delivery" */
@@ -1619,7 +1691,11 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"]
+	stripe_payment_id?:ValueTypes["order_by"],
+	/** in meters */
+	trip_distance?:ValueTypes["order_by"],
+	/** in seconds */
+	trip_duration?:ValueTypes["order_by"]
 };
 	/** aggregate variance on columns */
 ["delivery_variance_fields"]: AliasType<{
@@ -1636,6 +1712,10 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
 	stripe_payment_id?:true,
+	/** in meters */
+	trip_distance?:true,
+	/** in seconds */
+	trip_duration?:true,
 		__typename?: true
 }>;
 	/** order by variance() on columns of table "delivery" */
@@ -1652,7 +1732,11 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"]
+	stripe_payment_id?:ValueTypes["order_by"],
+	/** in meters */
+	trip_distance?:ValueTypes["order_by"],
+	/** in seconds */
+	trip_duration?:ValueTypes["order_by"]
 };
 	["float8"]:unknown;
 	/** Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'. */
@@ -9973,8 +10057,10 @@ the end). throws an error if top level container is not an array */
 			/** orderReceived */
 	status?:string,
 			stripe_payment_id?:number,
-			trip_distance?:string,
-			trip_duration?:string,
+			/** in meters */
+	trip_distance?:number,
+			/** in seconds */
+	trip_duration?:number,
 			trip_polyline?:string
 	},
 	/** aggregated selection of "delivery" */
@@ -10033,7 +10119,11 @@ the end). throws an error if top level container is not an array */
 			package_cost?:number,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number
+			stripe_payment_id?:number,
+			/** in meters */
+	trip_distance?:number,
+			/** in seconds */
+	trip_duration?:number
 	},
 	/** order by avg() on columns of table "delivery" */
 ["delivery_avg_order_by"]: {
@@ -10049,7 +10139,11 @@ the end). throws an error if top level container is not an array */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"]
+	stripe_payment_id?:PartialObjects["order_by"],
+	/** in meters */
+	trip_distance?:PartialObjects["order_by"],
+	/** in seconds */
+	trip_duration?:PartialObjects["order_by"]
 },
 	/** Boolean expression to filter rows from the table "delivery". All fields are combined with a logical 'AND'. */
 ["delivery_bool_exp"]: {
@@ -10092,8 +10186,8 @@ the end). throws an error if top level container is not an array */
 	service_provider_type?:PartialObjects["String_comparison_exp"],
 	status?:PartialObjects["String_comparison_exp"],
 	stripe_payment_id?:PartialObjects["Int_comparison_exp"],
-	trip_distance?:PartialObjects["String_comparison_exp"],
-	trip_duration?:PartialObjects["String_comparison_exp"],
+	trip_distance?:PartialObjects["Int_comparison_exp"],
+	trip_duration?:PartialObjects["Int_comparison_exp"],
 	trip_polyline?:PartialObjects["String_comparison_exp"]
 },
 	/** unique or primary key constraints on table "delivery" */
@@ -10112,7 +10206,11 @@ the end). throws an error if top level container is not an array */
 	package_cost?:PartialObjects["money"],
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number
+	stripe_payment_id?:number,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number
 },
 	/** input type for inserting data into table "delivery" */
 ["delivery_insert_input"]: {
@@ -10153,8 +10251,10 @@ the end). throws an error if top level container is not an array */
 	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
-	trip_distance?:string,
-	trip_duration?:string,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number,
 	trip_polyline?:string
 },
 	/** aggregate max on columns */
@@ -10187,8 +10287,10 @@ the end). throws an error if top level container is not an array */
 			/** orderReceived */
 	status?:string,
 			stripe_payment_id?:number,
-			trip_distance?:string,
-			trip_duration?:string,
+			/** in meters */
+	trip_distance?:number,
+			/** in seconds */
+	trip_duration?:number,
 			trip_polyline?:string
 	},
 	/** order by max() on columns of table "delivery" */
@@ -10220,7 +10322,9 @@ the end). throws an error if top level container is not an array */
 	/** orderReceived */
 	status?:PartialObjects["order_by"],
 	stripe_payment_id?:PartialObjects["order_by"],
+	/** in meters */
 	trip_distance?:PartialObjects["order_by"],
+	/** in seconds */
 	trip_duration?:PartialObjects["order_by"],
 	trip_polyline?:PartialObjects["order_by"]
 },
@@ -10254,8 +10358,10 @@ the end). throws an error if top level container is not an array */
 			/** orderReceived */
 	status?:string,
 			stripe_payment_id?:number,
-			trip_distance?:string,
-			trip_duration?:string,
+			/** in meters */
+	trip_distance?:number,
+			/** in seconds */
+	trip_duration?:number,
 			trip_polyline?:string
 	},
 	/** order by min() on columns of table "delivery" */
@@ -10287,7 +10393,9 @@ the end). throws an error if top level container is not an array */
 	/** orderReceived */
 	status?:PartialObjects["order_by"],
 	stripe_payment_id?:PartialObjects["order_by"],
+	/** in meters */
 	trip_distance?:PartialObjects["order_by"],
+	/** in seconds */
 	trip_duration?:PartialObjects["order_by"],
 	trip_polyline?:PartialObjects["order_by"]
 },
@@ -10391,8 +10499,10 @@ the end). throws an error if top level container is not an array */
 	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
-	trip_distance?:string,
-	trip_duration?:string,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number,
 	trip_polyline?:string
 },
 	/** aggregate stddev on columns */
@@ -10410,7 +10520,11 @@ the end). throws an error if top level container is not an array */
 			package_cost?:number,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number
+			stripe_payment_id?:number,
+			/** in meters */
+	trip_distance?:number,
+			/** in seconds */
+	trip_duration?:number
 	},
 	/** order by stddev() on columns of table "delivery" */
 ["delivery_stddev_order_by"]: {
@@ -10426,7 +10540,11 @@ the end). throws an error if top level container is not an array */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"]
+	stripe_payment_id?:PartialObjects["order_by"],
+	/** in meters */
+	trip_distance?:PartialObjects["order_by"],
+	/** in seconds */
+	trip_duration?:PartialObjects["order_by"]
 },
 	/** aggregate stddev_pop on columns */
 ["delivery_stddev_pop_fields"]: {
@@ -10443,7 +10561,11 @@ the end). throws an error if top level container is not an array */
 			package_cost?:number,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number
+			stripe_payment_id?:number,
+			/** in meters */
+	trip_distance?:number,
+			/** in seconds */
+	trip_duration?:number
 	},
 	/** order by stddev_pop() on columns of table "delivery" */
 ["delivery_stddev_pop_order_by"]: {
@@ -10459,7 +10581,11 @@ the end). throws an error if top level container is not an array */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"]
+	stripe_payment_id?:PartialObjects["order_by"],
+	/** in meters */
+	trip_distance?:PartialObjects["order_by"],
+	/** in seconds */
+	trip_duration?:PartialObjects["order_by"]
 },
 	/** aggregate stddev_samp on columns */
 ["delivery_stddev_samp_fields"]: {
@@ -10476,7 +10602,11 @@ the end). throws an error if top level container is not an array */
 			package_cost?:number,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number
+			stripe_payment_id?:number,
+			/** in meters */
+	trip_distance?:number,
+			/** in seconds */
+	trip_duration?:number
 	},
 	/** order by stddev_samp() on columns of table "delivery" */
 ["delivery_stddev_samp_order_by"]: {
@@ -10492,7 +10622,11 @@ the end). throws an error if top level container is not an array */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"]
+	stripe_payment_id?:PartialObjects["order_by"],
+	/** in meters */
+	trip_distance?:PartialObjects["order_by"],
+	/** in seconds */
+	trip_duration?:PartialObjects["order_by"]
 },
 	/** Streaming cursor of the table "delivery" */
 ["delivery_stream_cursor_input"]: {
@@ -10533,8 +10667,10 @@ the end). throws an error if top level container is not an array */
 	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
-	trip_distance?:string,
-	trip_duration?:string,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number,
 	trip_polyline?:string
 },
 	/** aggregate sum on columns */
@@ -10552,7 +10688,11 @@ the end). throws an error if top level container is not an array */
 			package_cost?:PartialObjects["money"],
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number
+			stripe_payment_id?:number,
+			/** in meters */
+	trip_distance?:number,
+			/** in seconds */
+	trip_duration?:number
 	},
 	/** order by sum() on columns of table "delivery" */
 ["delivery_sum_order_by"]: {
@@ -10568,7 +10708,11 @@ the end). throws an error if top level container is not an array */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"]
+	stripe_payment_id?:PartialObjects["order_by"],
+	/** in meters */
+	trip_distance?:PartialObjects["order_by"],
+	/** in seconds */
+	trip_duration?:PartialObjects["order_by"]
 },
 	/** update columns of table "delivery" */
 ["delivery_update_column"]:delivery_update_column,
@@ -10594,7 +10738,11 @@ the end). throws an error if top level container is not an array */
 			package_cost?:number,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number
+			stripe_payment_id?:number,
+			/** in meters */
+	trip_distance?:number,
+			/** in seconds */
+	trip_duration?:number
 	},
 	/** order by var_pop() on columns of table "delivery" */
 ["delivery_var_pop_order_by"]: {
@@ -10610,7 +10758,11 @@ the end). throws an error if top level container is not an array */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"]
+	stripe_payment_id?:PartialObjects["order_by"],
+	/** in meters */
+	trip_distance?:PartialObjects["order_by"],
+	/** in seconds */
+	trip_duration?:PartialObjects["order_by"]
 },
 	/** aggregate var_samp on columns */
 ["delivery_var_samp_fields"]: {
@@ -10627,7 +10779,11 @@ the end). throws an error if top level container is not an array */
 			package_cost?:number,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number
+			stripe_payment_id?:number,
+			/** in meters */
+	trip_distance?:number,
+			/** in seconds */
+	trip_duration?:number
 	},
 	/** order by var_samp() on columns of table "delivery" */
 ["delivery_var_samp_order_by"]: {
@@ -10643,7 +10799,11 @@ the end). throws an error if top level container is not an array */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"]
+	stripe_payment_id?:PartialObjects["order_by"],
+	/** in meters */
+	trip_distance?:PartialObjects["order_by"],
+	/** in seconds */
+	trip_duration?:PartialObjects["order_by"]
 },
 	/** aggregate variance on columns */
 ["delivery_variance_fields"]: {
@@ -10660,7 +10820,11 @@ the end). throws an error if top level container is not an array */
 			package_cost?:number,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number
+			stripe_payment_id?:number,
+			/** in meters */
+	trip_distance?:number,
+			/** in seconds */
+	trip_duration?:number
 	},
 	/** order by variance() on columns of table "delivery" */
 ["delivery_variance_order_by"]: {
@@ -10676,7 +10840,11 @@ the end). throws an error if top level container is not an array */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"]
+	stripe_payment_id?:PartialObjects["order_by"],
+	/** in meters */
+	trip_distance?:PartialObjects["order_by"],
+	/** in seconds */
+	trip_duration?:PartialObjects["order_by"]
 },
 	["float8"]:any,
 	/** Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'. */
@@ -18526,8 +18694,10 @@ export type delivery = {
 	/** orderReceived */
 	status:string,
 	stripe_payment_id?:number,
-	trip_distance?:string,
-	trip_duration?:string,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number,
 	trip_polyline?:string
 }
 
@@ -18591,7 +18761,11 @@ export type delivery_avg_fields = {
 	package_cost?:number,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number
+	stripe_payment_id?:number,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number
 }
 
 /** order by avg() on columns of table "delivery" */
@@ -18608,7 +18782,11 @@ export type delivery_avg_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by
+	stripe_payment_id?:order_by,
+	/** in meters */
+	trip_distance?:order_by,
+	/** in seconds */
+	trip_duration?:order_by
 }
 
 /** Boolean expression to filter rows from the table "delivery". All fields are combined with a logical 'AND'. */
@@ -18652,8 +18830,8 @@ export type delivery_bool_exp = {
 	service_provider_type?:String_comparison_exp,
 	status?:String_comparison_exp,
 	stripe_payment_id?:Int_comparison_exp,
-	trip_distance?:String_comparison_exp,
-	trip_duration?:String_comparison_exp,
+	trip_distance?:Int_comparison_exp,
+	trip_duration?:Int_comparison_exp,
 	trip_polyline?:String_comparison_exp
 }
 
@@ -18676,7 +18854,11 @@ export type delivery_inc_input = {
 	package_cost?:money,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number
+	stripe_payment_id?:number,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number
 }
 
 /** input type for inserting data into table "delivery" */
@@ -18718,8 +18900,10 @@ export type delivery_insert_input = {
 	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
-	trip_distance?:string,
-	trip_duration?:string,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number,
 	trip_polyline?:string
 }
 
@@ -18753,8 +18937,10 @@ export type delivery_max_fields = {
 	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
-	trip_distance?:string,
-	trip_duration?:string,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number,
 	trip_polyline?:string
 }
 
@@ -18787,7 +18973,9 @@ export type delivery_max_order_by = {
 	/** orderReceived */
 	status?:order_by,
 	stripe_payment_id?:order_by,
+	/** in meters */
 	trip_distance?:order_by,
+	/** in seconds */
 	trip_duration?:order_by,
 	trip_polyline?:order_by
 }
@@ -18822,8 +19010,10 @@ export type delivery_min_fields = {
 	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
-	trip_distance?:string,
-	trip_duration?:string,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number,
 	trip_polyline?:string
 }
 
@@ -18856,7 +19046,9 @@ export type delivery_min_order_by = {
 	/** orderReceived */
 	status?:order_by,
 	stripe_payment_id?:order_by,
+	/** in meters */
 	trip_distance?:order_by,
+	/** in seconds */
 	trip_duration?:order_by,
 	trip_polyline?:order_by
 }
@@ -19000,8 +19192,10 @@ export type delivery_set_input = {
 	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
-	trip_distance?:string,
-	trip_duration?:string,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number,
 	trip_polyline?:string
 }
 
@@ -19020,7 +19214,11 @@ export type delivery_stddev_fields = {
 	package_cost?:number,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number
+	stripe_payment_id?:number,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number
 }
 
 /** order by stddev() on columns of table "delivery" */
@@ -19037,7 +19235,11 @@ export type delivery_stddev_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by
+	stripe_payment_id?:order_by,
+	/** in meters */
+	trip_distance?:order_by,
+	/** in seconds */
+	trip_duration?:order_by
 }
 
 /** aggregate stddev_pop on columns */
@@ -19055,7 +19257,11 @@ export type delivery_stddev_pop_fields = {
 	package_cost?:number,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number
+	stripe_payment_id?:number,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number
 }
 
 /** order by stddev_pop() on columns of table "delivery" */
@@ -19072,7 +19278,11 @@ export type delivery_stddev_pop_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by
+	stripe_payment_id?:order_by,
+	/** in meters */
+	trip_distance?:order_by,
+	/** in seconds */
+	trip_duration?:order_by
 }
 
 /** aggregate stddev_samp on columns */
@@ -19090,7 +19300,11 @@ export type delivery_stddev_samp_fields = {
 	package_cost?:number,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number
+	stripe_payment_id?:number,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number
 }
 
 /** order by stddev_samp() on columns of table "delivery" */
@@ -19107,7 +19321,11 @@ export type delivery_stddev_samp_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by
+	stripe_payment_id?:order_by,
+	/** in meters */
+	trip_distance?:order_by,
+	/** in seconds */
+	trip_duration?:order_by
 }
 
 /** Streaming cursor of the table "delivery" */
@@ -19150,8 +19368,10 @@ export type delivery_stream_cursor_value_input = {
 	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
-	trip_distance?:string,
-	trip_duration?:string,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number,
 	trip_polyline?:string
 }
 
@@ -19170,7 +19390,11 @@ export type delivery_sum_fields = {
 	package_cost?:money,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number
+	stripe_payment_id?:number,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number
 }
 
 /** order by sum() on columns of table "delivery" */
@@ -19187,7 +19411,11 @@ export type delivery_sum_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by
+	stripe_payment_id?:order_by,
+	/** in meters */
+	trip_distance?:order_by,
+	/** in seconds */
+	trip_duration?:order_by
 }
 
 /** update columns of table "delivery" */
@@ -19249,7 +19477,11 @@ export type delivery_var_pop_fields = {
 	package_cost?:number,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number
+	stripe_payment_id?:number,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number
 }
 
 /** order by var_pop() on columns of table "delivery" */
@@ -19266,7 +19498,11 @@ export type delivery_var_pop_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by
+	stripe_payment_id?:order_by,
+	/** in meters */
+	trip_distance?:order_by,
+	/** in seconds */
+	trip_duration?:order_by
 }
 
 /** aggregate var_samp on columns */
@@ -19284,7 +19520,11 @@ export type delivery_var_samp_fields = {
 	package_cost?:number,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number
+	stripe_payment_id?:number,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number
 }
 
 /** order by var_samp() on columns of table "delivery" */
@@ -19301,7 +19541,11 @@ export type delivery_var_samp_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by
+	stripe_payment_id?:order_by,
+	/** in meters */
+	trip_distance?:order_by,
+	/** in seconds */
+	trip_duration?:order_by
 }
 
 /** aggregate variance on columns */
@@ -19319,7 +19563,11 @@ export type delivery_variance_fields = {
 	package_cost?:number,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number
+	stripe_payment_id?:number,
+	/** in meters */
+	trip_distance?:number,
+	/** in seconds */
+	trip_duration?:number
 }
 
 /** order by variance() on columns of table "delivery" */
@@ -19336,7 +19584,11 @@ export type delivery_variance_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by
+	stripe_payment_id?:order_by,
+	/** in meters */
+	trip_distance?:order_by,
+	/** in seconds */
+	trip_duration?:order_by
 }
 
 export type float8 = any
@@ -29083,6 +29335,18 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
+		},
+		trip_distance:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		trip_duration:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	delivery_bool_exp:{
@@ -29321,13 +29585,13 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		trip_distance:{
-			type:"String_comparison_exp",
+			type:"Int_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
 		trip_duration:{
-			type:"String_comparison_exp",
+			type:"Int_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -29414,6 +29678,18 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		stripe_payment_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		trip_distance:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		trip_duration:{
 			type:"Int",
 			array:false,
 			arrayRequired:false,
@@ -29638,13 +29914,13 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		trip_distance:{
-			type:"String",
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
 		trip_duration:{
-			type:"String",
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -30463,13 +30739,13 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		trip_distance:{
-			type:"String",
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
 		trip_duration:{
-			type:"String",
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -30559,6 +30835,18 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
+		},
+		trip_distance:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		trip_duration:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	delivery_stddev_pop_order_by:{
@@ -30639,6 +30927,18 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
+		},
+		trip_distance:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		trip_duration:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	delivery_stddev_samp_order_by:{
@@ -30715,6 +31015,18 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		stripe_payment_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		trip_distance:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		trip_duration:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -30911,13 +31223,13 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		trip_distance:{
-			type:"String",
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
 		trip_duration:{
-			type:"String",
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -31003,6 +31315,18 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		stripe_payment_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		trip_distance:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		trip_duration:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -31108,6 +31432,18 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
+		},
+		trip_distance:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		trip_duration:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	delivery_var_samp_order_by:{
@@ -31188,6 +31524,18 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
+		},
+		trip_distance:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		trip_duration:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	delivery_variance_order_by:{
@@ -31264,6 +31612,18 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		stripe_payment_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		trip_distance:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		trip_duration:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -52600,8 +52960,8 @@ export const ReturnTypes: Record<string,any> = {
 		service_provider_type:"String",
 		status:"String",
 		stripe_payment_id:"Int",
-		trip_distance:"String",
-		trip_duration:"String",
+		trip_distance:"Int",
+		trip_duration:"Int",
 		trip_polyline:"String"
 	},
 	delivery_aggregate:{
@@ -52634,7 +52994,9 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"Float",
 		service_provider_id:"Float",
 		service_provider_review_by_driver_id:"Float",
-		stripe_payment_id:"Float"
+		stripe_payment_id:"Float",
+		trip_distance:"Float",
+		trip_duration:"Float"
 	},
 	delivery_max_fields:{
 		actual_arrival_at_dropoff_time:"timestamptz",
@@ -52663,8 +53025,8 @@ export const ReturnTypes: Record<string,any> = {
 		service_provider_type:"String",
 		status:"String",
 		stripe_payment_id:"Int",
-		trip_distance:"String",
-		trip_duration:"String",
+		trip_distance:"Int",
+		trip_duration:"Int",
 		trip_polyline:"String"
 	},
 	delivery_min_fields:{
@@ -52694,8 +53056,8 @@ export const ReturnTypes: Record<string,any> = {
 		service_provider_type:"String",
 		status:"String",
 		stripe_payment_id:"Int",
-		trip_distance:"String",
-		trip_duration:"String",
+		trip_distance:"Int",
+		trip_duration:"Int",
 		trip_polyline:"String"
 	},
 	delivery_mutation_response:{
@@ -52715,7 +53077,9 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"Float",
 		service_provider_id:"Float",
 		service_provider_review_by_driver_id:"Float",
-		stripe_payment_id:"Float"
+		stripe_payment_id:"Float",
+		trip_distance:"Float",
+		trip_duration:"Float"
 	},
 	delivery_stddev_pop_fields:{
 		chat_with_customer_id:"Float",
@@ -52730,7 +53094,9 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"Float",
 		service_provider_id:"Float",
 		service_provider_review_by_driver_id:"Float",
-		stripe_payment_id:"Float"
+		stripe_payment_id:"Float",
+		trip_distance:"Float",
+		trip_duration:"Float"
 	},
 	delivery_stddev_samp_fields:{
 		chat_with_customer_id:"Float",
@@ -52745,7 +53111,9 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"Float",
 		service_provider_id:"Float",
 		service_provider_review_by_driver_id:"Float",
-		stripe_payment_id:"Float"
+		stripe_payment_id:"Float",
+		trip_distance:"Float",
+		trip_duration:"Float"
 	},
 	delivery_sum_fields:{
 		chat_with_customer_id:"Int",
@@ -52760,7 +53128,9 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"money",
 		service_provider_id:"Int",
 		service_provider_review_by_driver_id:"Int",
-		stripe_payment_id:"Int"
+		stripe_payment_id:"Int",
+		trip_distance:"Int",
+		trip_duration:"Int"
 	},
 	delivery_var_pop_fields:{
 		chat_with_customer_id:"Float",
@@ -52775,7 +53145,9 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"Float",
 		service_provider_id:"Float",
 		service_provider_review_by_driver_id:"Float",
-		stripe_payment_id:"Float"
+		stripe_payment_id:"Float",
+		trip_distance:"Float",
+		trip_duration:"Float"
 	},
 	delivery_var_samp_fields:{
 		chat_with_customer_id:"Float",
@@ -52790,7 +53162,9 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"Float",
 		service_provider_id:"Float",
 		service_provider_review_by_driver_id:"Float",
-		stripe_payment_id:"Float"
+		stripe_payment_id:"Float",
+		trip_distance:"Float",
+		trip_duration:"Float"
 	},
 	delivery_variance_fields:{
 		chat_with_customer_id:"Float",
@@ -52805,7 +53179,9 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"Float",
 		service_provider_id:"Float",
 		service_provider_review_by_driver_id:"Float",
-		stripe_payment_id:"Float"
+		stripe_payment_id:"Float",
+		trip_distance:"Float",
+		trip_duration:"Float"
 	},
 	mez_admin:{
 		notification_info:"notification_info",

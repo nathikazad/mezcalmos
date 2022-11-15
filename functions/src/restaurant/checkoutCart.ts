@@ -19,8 +19,8 @@ export interface CheckoutRequest {
   notes: string,
   restaurantId: number,
   restaurantOrderType: RestaurantOrderType,
-  tripDistance: string,
-  tripDuration: string,
+  tripDistance: number,
+  tripDuration: number,
   tripPolyline: string
 }
 
