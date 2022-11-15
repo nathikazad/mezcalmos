@@ -5,10 +5,12 @@ query getUserByFirebaseId($firebase_id: String!) {
   {
     id,
     firebase_id,
-    deleted,
-    image,
-    language_id,
     name
+    image,
+    email,
+    phone,
+    language_id,
+    deleted
   }
 }
 
@@ -18,11 +20,13 @@ query getUserById($id: Int!) {
   user_by_pk(id: $id)
   {
     deleted,
+    name,
     image,
-    language_id,
-    name
+    email,
+    phone,
+    language_id
   }
-}
+} 
 
 # Update the user image using pk.
 
