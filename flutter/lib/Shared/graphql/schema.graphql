@@ -299,13 +299,14 @@ input chat_order_by {
 columns and relationships of "chat_participant"
 """
 type chat_participant {
+  app_type_id: String!
+
   """An object relationship"""
   chat: chat!
   chat_id: Int!
 
   """An object relationship"""
-  notification_info: notification_info!
-  notification_info_id: Int!
+  notification_info: notification_info
   participant_id: Int!
 
   """An object relationship"""
@@ -367,7 +368,6 @@ input chat_participant_arr_rel_insert_input {
 """aggregate avg on columns"""
 type chat_participant_avg_fields {
   chat_id: Float
-  notification_info_id: Float
   participant_id: Float
 }
 
@@ -376,7 +376,6 @@ order by avg() on columns of table "chat_participant"
 """
 input chat_participant_avg_order_by {
   chat_id: order_by
-  notification_info_id: order_by
   participant_id: order_by
 }
 
@@ -387,10 +386,10 @@ input chat_participant_bool_exp {
   _and: [chat_participant_bool_exp!]
   _not: chat_participant_bool_exp
   _or: [chat_participant_bool_exp!]
+  app_type_id: String_comparison_exp
   chat: chat_bool_exp
   chat_id: Int_comparison_exp
   notification_info: notification_info_bool_exp
-  notification_info_id: Int_comparison_exp
   participant_id: Int_comparison_exp
   user: user_bool_exp
 }
@@ -410,7 +409,6 @@ input type for incrementing numeric columns in table "chat_participant"
 """
 input chat_participant_inc_input {
   chat_id: Int
-  notification_info_id: Int
   participant_id: Int
 }
 
@@ -418,18 +416,18 @@ input chat_participant_inc_input {
 input type for inserting data into table "chat_participant"
 """
 input chat_participant_insert_input {
+  app_type_id: String
   chat: chat_obj_rel_insert_input
   chat_id: Int
   notification_info: notification_info_obj_rel_insert_input
-  notification_info_id: Int
   participant_id: Int
   user: user_obj_rel_insert_input
 }
 
 """aggregate max on columns"""
 type chat_participant_max_fields {
+  app_type_id: String
   chat_id: Int
-  notification_info_id: Int
   participant_id: Int
 }
 
@@ -437,15 +435,15 @@ type chat_participant_max_fields {
 order by max() on columns of table "chat_participant"
 """
 input chat_participant_max_order_by {
+  app_type_id: order_by
   chat_id: order_by
-  notification_info_id: order_by
   participant_id: order_by
 }
 
 """aggregate min on columns"""
 type chat_participant_min_fields {
+  app_type_id: String
   chat_id: Int
-  notification_info_id: Int
   participant_id: Int
 }
 
@@ -453,8 +451,8 @@ type chat_participant_min_fields {
 order by min() on columns of table "chat_participant"
 """
 input chat_participant_min_order_by {
+  app_type_id: order_by
   chat_id: order_by
-  notification_info_id: order_by
   participant_id: order_by
 }
 
@@ -480,10 +478,10 @@ input chat_participant_on_conflict {
 
 """Ordering options when selecting data from "chat_participant"."""
 input chat_participant_order_by {
+  app_type_id: order_by
   chat: chat_order_by
   chat_id: order_by
   notification_info: notification_info_order_by
-  notification_info_id: order_by
   participant_id: order_by
   user: user_order_by
 }
@@ -499,10 +497,10 @@ select columns of table "chat_participant"
 """
 enum chat_participant_select_column {
   """column name"""
-  chat_id
+  app_type_id
 
   """column name"""
-  notification_info_id
+  chat_id
 
   """column name"""
   participant_id
@@ -512,15 +510,14 @@ enum chat_participant_select_column {
 input type for updating data in table "chat_participant"
 """
 input chat_participant_set_input {
+  app_type_id: String
   chat_id: Int
-  notification_info_id: Int
   participant_id: Int
 }
 
 """aggregate stddev on columns"""
 type chat_participant_stddev_fields {
   chat_id: Float
-  notification_info_id: Float
   participant_id: Float
 }
 
@@ -529,14 +526,12 @@ order by stddev() on columns of table "chat_participant"
 """
 input chat_participant_stddev_order_by {
   chat_id: order_by
-  notification_info_id: order_by
   participant_id: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type chat_participant_stddev_pop_fields {
   chat_id: Float
-  notification_info_id: Float
   participant_id: Float
 }
 
@@ -545,14 +540,12 @@ order by stddev_pop() on columns of table "chat_participant"
 """
 input chat_participant_stddev_pop_order_by {
   chat_id: order_by
-  notification_info_id: order_by
   participant_id: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type chat_participant_stddev_samp_fields {
   chat_id: Float
-  notification_info_id: Float
   participant_id: Float
 }
 
@@ -561,7 +554,6 @@ order by stddev_samp() on columns of table "chat_participant"
 """
 input chat_participant_stddev_samp_order_by {
   chat_id: order_by
-  notification_info_id: order_by
   participant_id: order_by
 }
 
@@ -578,15 +570,14 @@ input chat_participant_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input chat_participant_stream_cursor_value_input {
+  app_type_id: String
   chat_id: Int
-  notification_info_id: Int
   participant_id: Int
 }
 
 """aggregate sum on columns"""
 type chat_participant_sum_fields {
   chat_id: Int
-  notification_info_id: Int
   participant_id: Int
 }
 
@@ -595,7 +586,6 @@ order by sum() on columns of table "chat_participant"
 """
 input chat_participant_sum_order_by {
   chat_id: order_by
-  notification_info_id: order_by
   participant_id: order_by
 }
 
@@ -604,10 +594,10 @@ update columns of table "chat_participant"
 """
 enum chat_participant_update_column {
   """column name"""
-  chat_id
+  app_type_id
 
   """column name"""
-  notification_info_id
+  chat_id
 
   """column name"""
   participant_id
@@ -625,7 +615,6 @@ input chat_participant_updates {
 """aggregate var_pop on columns"""
 type chat_participant_var_pop_fields {
   chat_id: Float
-  notification_info_id: Float
   participant_id: Float
 }
 
@@ -634,14 +623,12 @@ order by var_pop() on columns of table "chat_participant"
 """
 input chat_participant_var_pop_order_by {
   chat_id: order_by
-  notification_info_id: order_by
   participant_id: order_by
 }
 
 """aggregate var_samp on columns"""
 type chat_participant_var_samp_fields {
   chat_id: Float
-  notification_info_id: Float
   participant_id: Float
 }
 
@@ -650,14 +637,12 @@ order by var_samp() on columns of table "chat_participant"
 """
 input chat_participant_var_samp_order_by {
   chat_id: order_by
-  notification_info_id: order_by
   participant_id: order_by
 }
 
 """aggregate variance on columns"""
 type chat_participant_variance_fields {
   chat_id: Float
-  notification_info_id: Float
   participant_id: Float
 }
 
@@ -666,7 +651,6 @@ order by variance() on columns of table "chat_participant"
 """
 input chat_participant_variance_order_by {
   chat_id: order_by
-  notification_info_id: order_by
   participant_id: order_by
 }
 
@@ -816,6 +800,9 @@ columns and relationships of "customer"
 type customer {
   app_version: String!
 
+  """An object relationship"""
+  cart: restaurant_cart
+
   """An array relationship"""
   deliveries(
     """distinct select on columns"""
@@ -852,9 +839,6 @@ type customer {
     where: delivery_bool_exp
   ): delivery_aggregate!
   notification_info_id: Int
-
-  """An object relationship"""
-  restaurant_cart: restaurant_cart
 
   """An object relationship"""
   user: user!
@@ -900,9 +884,9 @@ input customer_bool_exp {
   _not: customer_bool_exp
   _or: [customer_bool_exp!]
   app_version: String_comparison_exp
+  cart: restaurant_cart_bool_exp
   deliveries: delivery_bool_exp
   notification_info_id: Int_comparison_exp
-  restaurant_cart: restaurant_cart_bool_exp
   user: user_bool_exp
   user_id: Int_comparison_exp
 }
@@ -935,9 +919,9 @@ input type for inserting data into table "customer"
 """
 input customer_insert_input {
   app_version: String
+  cart: restaurant_cart_obj_rel_insert_input
   deliveries: delivery_arr_rel_insert_input
   notification_info_id: Int
-  restaurant_cart: restaurant_cart_obj_rel_insert_input
   user: user_obj_rel_insert_input
   user_id: Int
 }
@@ -989,9 +973,9 @@ input customer_on_conflict {
 """Ordering options when selecting data from "customer"."""
 input customer_order_by {
   app_version: order_by
+  cart: restaurant_cart_order_by
   deliveries_aggregate: delivery_aggregate_order_by
   notification_info_id: order_by
-  restaurant_cart: restaurant_cart_order_by
   user: user_order_by
   user_id: order_by
 }
@@ -1119,6 +1103,9 @@ type deliverer {
 
   """awaiting_approval, authorized, banned"""
   status: String!
+
+  """An object relationship"""
+  user: user!
   user_id: Int!
 }
 
@@ -1167,6 +1154,7 @@ input deliverer_bool_exp {
   delivery_company_type: String_comparison_exp
   id: Int_comparison_exp
   status: String_comparison_exp
+  user: user_bool_exp
   user_id: Int_comparison_exp
 }
 
@@ -1206,6 +1194,7 @@ input deliverer_insert_input {
 
   """awaiting_approval, authorized, banned"""
   status: String
+  user: user_obj_rel_insert_input
   user_id: Int
 }
 
@@ -1271,6 +1260,7 @@ input deliverer_order_by {
   delivery_company_type: order_by
   id: order_by
   status: order_by
+  user: user_order_by
   user_id: order_by
 }
 
@@ -1480,6 +1470,8 @@ type delivery {
   service_provider_review_by_driver: review
   service_provider_review_by_driver_id: Int
   service_provider_type: String
+
+  """orderReceived"""
   status: String!
   stripe_payment_id: Int
   trip_distance: String
@@ -1690,6 +1682,8 @@ input delivery_insert_input {
   service_provider_review_by_driver: review_obj_rel_insert_input
   service_provider_review_by_driver_id: Int
   service_provider_type: String
+
+  """orderReceived"""
   status: String
   stripe_payment_id: Int
   trip_distance: String
@@ -1723,6 +1717,8 @@ type delivery_max_fields {
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
   service_provider_type: String
+
+  """orderReceived"""
   status: String
   stripe_payment_id: Int
   trip_distance: String
@@ -1758,6 +1754,8 @@ input delivery_max_order_by {
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
   service_provider_type: order_by
+
+  """orderReceived"""
   status: order_by
   stripe_payment_id: order_by
   trip_distance: order_by
@@ -1791,6 +1789,8 @@ type delivery_min_fields {
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
   service_provider_type: String
+
+  """orderReceived"""
   status: String
   stripe_payment_id: Int
   trip_distance: String
@@ -1826,6 +1826,8 @@ input delivery_min_order_by {
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
   service_provider_type: order_by
+
+  """orderReceived"""
   status: order_by
   stripe_payment_id: order_by
   trip_distance: order_by
@@ -2043,6 +2045,8 @@ input delivery_set_input {
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
   service_provider_type: String
+
+  """orderReceived"""
   status: String
   stripe_payment_id: Int
   trip_distance: String
@@ -2198,6 +2202,8 @@ input delivery_stream_cursor_value_input {
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
   service_provider_type: String
+
+  """orderReceived"""
   status: String
   stripe_payment_id: Int
   trip_distance: String
@@ -2616,6 +2622,242 @@ input jsonb_comparison_exp {
   _nin: [jsonb!]
 }
 
+"""
+columns and relationships of "mez_admin"
+"""
+type mez_admin {
+  """An object relationship"""
+  notification_info: notification_info
+  notification_info_id: Int
+  user_id: Int!
+  version: String
+}
+
+"""
+aggregated selection of "mez_admin"
+"""
+type mez_admin_aggregate {
+  aggregate: mez_admin_aggregate_fields
+  nodes: [mez_admin!]!
+}
+
+"""
+aggregate fields of "mez_admin"
+"""
+type mez_admin_aggregate_fields {
+  avg: mez_admin_avg_fields
+  count(columns: [mez_admin_select_column!], distinct: Boolean): Int!
+  max: mez_admin_max_fields
+  min: mez_admin_min_fields
+  stddev: mez_admin_stddev_fields
+  stddev_pop: mez_admin_stddev_pop_fields
+  stddev_samp: mez_admin_stddev_samp_fields
+  sum: mez_admin_sum_fields
+  var_pop: mez_admin_var_pop_fields
+  var_samp: mez_admin_var_samp_fields
+  variance: mez_admin_variance_fields
+}
+
+"""aggregate avg on columns"""
+type mez_admin_avg_fields {
+  notification_info_id: Float
+  user_id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "mez_admin". All fields are combined with a logical 'AND'.
+"""
+input mez_admin_bool_exp {
+  _and: [mez_admin_bool_exp!]
+  _not: mez_admin_bool_exp
+  _or: [mez_admin_bool_exp!]
+  notification_info: notification_info_bool_exp
+  notification_info_id: Int_comparison_exp
+  user_id: Int_comparison_exp
+  version: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "mez_admin"
+"""
+enum mez_admin_constraint {
+  """
+  unique or primary key constraint on columns "user_id"
+  """
+  mez_admin_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "mez_admin"
+"""
+input mez_admin_inc_input {
+  notification_info_id: Int
+  user_id: Int
+}
+
+"""
+input type for inserting data into table "mez_admin"
+"""
+input mez_admin_insert_input {
+  notification_info: notification_info_obj_rel_insert_input
+  notification_info_id: Int
+  user_id: Int
+  version: String
+}
+
+"""aggregate max on columns"""
+type mez_admin_max_fields {
+  notification_info_id: Int
+  user_id: Int
+  version: String
+}
+
+"""aggregate min on columns"""
+type mez_admin_min_fields {
+  notification_info_id: Int
+  user_id: Int
+  version: String
+}
+
+"""
+response of any mutation on the table "mez_admin"
+"""
+type mez_admin_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [mez_admin!]!
+}
+
+"""
+on_conflict condition type for table "mez_admin"
+"""
+input mez_admin_on_conflict {
+  constraint: mez_admin_constraint!
+  update_columns: [mez_admin_update_column!]! = []
+  where: mez_admin_bool_exp
+}
+
+"""Ordering options when selecting data from "mez_admin"."""
+input mez_admin_order_by {
+  notification_info: notification_info_order_by
+  notification_info_id: order_by
+  user_id: order_by
+  version: order_by
+}
+
+"""primary key columns input for table: mez_admin"""
+input mez_admin_pk_columns_input {
+  user_id: Int!
+}
+
+"""
+select columns of table "mez_admin"
+"""
+enum mez_admin_select_column {
+  """column name"""
+  notification_info_id
+
+  """column name"""
+  user_id
+
+  """column name"""
+  version
+}
+
+"""
+input type for updating data in table "mez_admin"
+"""
+input mez_admin_set_input {
+  notification_info_id: Int
+  user_id: Int
+  version: String
+}
+
+"""aggregate stddev on columns"""
+type mez_admin_stddev_fields {
+  notification_info_id: Float
+  user_id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type mez_admin_stddev_pop_fields {
+  notification_info_id: Float
+  user_id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type mez_admin_stddev_samp_fields {
+  notification_info_id: Float
+  user_id: Float
+}
+
+"""
+Streaming cursor of the table "mez_admin"
+"""
+input mez_admin_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: mez_admin_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input mez_admin_stream_cursor_value_input {
+  notification_info_id: Int
+  user_id: Int
+  version: String
+}
+
+"""aggregate sum on columns"""
+type mez_admin_sum_fields {
+  notification_info_id: Int
+  user_id: Int
+}
+
+"""
+update columns of table "mez_admin"
+"""
+enum mez_admin_update_column {
+  """column name"""
+  notification_info_id
+
+  """column name"""
+  user_id
+
+  """column name"""
+  version
+}
+
+input mez_admin_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: mez_admin_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: mez_admin_set_input
+  where: mez_admin_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type mez_admin_var_pop_fields {
+  notification_info_id: Float
+  user_id: Float
+}
+
+"""aggregate var_samp on columns"""
+type mez_admin_var_samp_fields {
+  notification_info_id: Float
+  user_id: Float
+}
+
+"""aggregate variance on columns"""
+type mez_admin_variance_fields {
+  notification_info_id: Float
+  user_id: Float
+}
+
 scalar money
 
 """
@@ -2699,6 +2941,19 @@ type mutation_root {
   delete single row from the table: "delivery"
   """
   delete_delivery_by_pk(id: Int!): delivery
+
+  """
+  delete data from the table: "mez_admin"
+  """
+  delete_mez_admin(
+    """filter the rows which have to be deleted"""
+    where: mez_admin_bool_exp!
+  ): mez_admin_mutation_response
+
+  """
+  delete single row from the table: "mez_admin"
+  """
+  delete_mez_admin_by_pk(user_id: Int!): mez_admin
 
   """
   delete data from the table: "notification_info"
@@ -3082,6 +3337,28 @@ type mutation_root {
     """upsert condition"""
     on_conflict: delivery_on_conflict
   ): delivery
+
+  """
+  insert data into the table: "mez_admin"
+  """
+  insert_mez_admin(
+    """the rows to be inserted"""
+    objects: [mez_admin_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: mez_admin_on_conflict
+  ): mez_admin_mutation_response
+
+  """
+  insert a single row into the table: "mez_admin"
+  """
+  insert_mez_admin_one(
+    """the row to be inserted"""
+    object: mez_admin_insert_input!
+
+    """upsert condition"""
+    on_conflict: mez_admin_on_conflict
+  ): mez_admin
 
   """
   insert data into the table: "notification_info"
@@ -3756,6 +4033,40 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [delivery_updates!]!
   ): [delivery_mutation_response]
+
+  """
+  update data of the table: "mez_admin"
+  """
+  update_mez_admin(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: mez_admin_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: mez_admin_set_input
+
+    """filter the rows which have to be updated"""
+    where: mez_admin_bool_exp!
+  ): mez_admin_mutation_response
+
+  """
+  update single row of the table: "mez_admin"
+  """
+  update_mez_admin_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: mez_admin_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: mez_admin_set_input
+    pk_columns: mez_admin_pk_columns_input!
+  ): mez_admin
+
+  """
+  update multiples rows of table: "mez_admin"
+  """
+  update_mez_admin_many(
+    """updates to execute, in order"""
+    updates: [mez_admin_updates!]!
+  ): [mez_admin_mutation_response]
 
   """
   update data of the table: "notification_info"
@@ -4955,6 +5266,49 @@ type query_root {
   delivery_by_pk(id: Int!): delivery
 
   """
+  fetch data from the table: "mez_admin"
+  """
+  mez_admin(
+    """distinct select on columns"""
+    distinct_on: [mez_admin_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_admin_order_by!]
+
+    """filter the rows returned"""
+    where: mez_admin_bool_exp
+  ): [mez_admin!]!
+
+  """
+  fetch aggregated fields from the table: "mez_admin"
+  """
+  mez_admin_aggregate(
+    """distinct select on columns"""
+    distinct_on: [mez_admin_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_admin_order_by!]
+
+    """filter the rows returned"""
+    where: mez_admin_bool_exp
+  ): mez_admin_aggregate!
+
+  """fetch data from the table: "mez_admin" using primary key columns"""
+  mez_admin_by_pk(user_id: Int!): mez_admin
+
+  """
   fetch data from the table: "notification_info"
   """
   notification_info(
@@ -5890,6 +6244,8 @@ type query_root {
 columns and relationships of "restaurant"
 """
 type restaurant {
+  approved: Boolean!
+
   """An array relationship"""
   categories(
     """distinct select on columns"""
@@ -5936,6 +6292,9 @@ type restaurant {
   location_gps: geography!
   location_text: String!
   name: String!
+
+  """open, closed_temporarily, closed_indefinitely"""
+  open_status: String!
 
   """An array relationship"""
   orders(
@@ -6013,9 +6372,6 @@ type restaurant {
     where: restaurant_operator_bool_exp
   ): restaurant_operator_aggregate!
   schedule_id: Int!
-
-  """awaiting_verification, open, closed_temporarily, closed_indefinitely"""
-  status: String!
 }
 
 """
@@ -6058,6 +6414,7 @@ input restaurant_bool_exp {
   _and: [restaurant_bool_exp!]
   _not: restaurant_bool_exp
   _or: [restaurant_bool_exp!]
+  approved: Boolean_comparison_exp
   categories: restaurant_category_bool_exp
   description: translation_bool_exp
   description_id: Int_comparison_exp
@@ -6068,12 +6425,12 @@ input restaurant_bool_exp {
   location_gps: geography_comparison_exp
   location_text: String_comparison_exp
   name: String_comparison_exp
+  open_status: String_comparison_exp
   orders: restaurant_order_bool_exp
   payment_info: service_provider_payment_info_bool_exp
   payment_info_id: Int_comparison_exp
   restaurant_operators: restaurant_operator_bool_exp
   schedule_id: Int_comparison_exp
-  status: String_comparison_exp
 }
 
 """
@@ -6119,7 +6476,10 @@ type restaurant_cart {
     """filter the rows returned"""
     where: restaurant_cart_item_bool_exp
   ): restaurant_cart_item_aggregate!
-  restaurant_id: Int!
+
+  """An object relationship"""
+  restaurant: restaurant
+  restaurant_id: Int
 }
 
 """
@@ -6163,6 +6523,7 @@ input restaurant_cart_bool_exp {
   customer: customer_bool_exp
   customer_id: Int_comparison_exp
   items: restaurant_cart_item_bool_exp
+  restaurant: restaurant_bool_exp
   restaurant_id: Int_comparison_exp
 }
 
@@ -6191,6 +6552,7 @@ input restaurant_cart_insert_input {
   customer: customer_obj_rel_insert_input
   customer_id: Int
   items: restaurant_cart_item_arr_rel_insert_input
+  restaurant: restaurant_obj_rel_insert_input
   restaurant_id: Int
 }
 
@@ -6201,6 +6563,7 @@ type restaurant_cart_item {
   cost_per_one: money!
   customer_id: Int!
   id: Int!
+  note: String
   quantity: Int!
 
   """An object relationship"""
@@ -6297,6 +6660,7 @@ input restaurant_cart_item_bool_exp {
   cost_per_one: money_comparison_exp
   customer_id: Int_comparison_exp
   id: Int_comparison_exp
+  note: String_comparison_exp
   quantity: Int_comparison_exp
   restaurant_cart: restaurant_cart_bool_exp
   restaurant_item: restaurant_item_bool_exp
@@ -6332,6 +6696,7 @@ input restaurant_cart_item_insert_input {
   cost_per_one: money
   customer_id: Int
   id: Int
+  note: String
   quantity: Int
   restaurant_cart: restaurant_cart_obj_rel_insert_input
   restaurant_item: restaurant_item_obj_rel_insert_input
@@ -6344,6 +6709,7 @@ type restaurant_cart_item_max_fields {
   cost_per_one: money
   customer_id: Int
   id: Int
+  note: String
   quantity: Int
   restaurant_item_id: Int
 }
@@ -6355,6 +6721,7 @@ input restaurant_cart_item_max_order_by {
   cost_per_one: order_by
   customer_id: order_by
   id: order_by
+  note: order_by
   quantity: order_by
   restaurant_item_id: order_by
 }
@@ -6364,6 +6731,7 @@ type restaurant_cart_item_min_fields {
   cost_per_one: money
   customer_id: Int
   id: Int
+  note: String
   quantity: Int
   restaurant_item_id: Int
 }
@@ -6375,6 +6743,7 @@ input restaurant_cart_item_min_order_by {
   cost_per_one: order_by
   customer_id: order_by
   id: order_by
+  note: order_by
   quantity: order_by
   restaurant_item_id: order_by
 }
@@ -6404,6 +6773,7 @@ input restaurant_cart_item_order_by {
   cost_per_one: order_by
   customer_id: order_by
   id: order_by
+  note: order_by
   quantity: order_by
   restaurant_cart: restaurant_cart_order_by
   restaurant_item: restaurant_item_order_by
@@ -6430,6 +6800,9 @@ enum restaurant_cart_item_select_column {
   id
 
   """column name"""
+  note
+
+  """column name"""
   quantity
 
   """column name"""
@@ -6446,6 +6819,7 @@ input restaurant_cart_item_set_input {
   cost_per_one: money
   customer_id: Int
   id: Int
+  note: String
   quantity: Int
   restaurant_item_id: Int
   selected_options: json
@@ -6527,6 +6901,7 @@ input restaurant_cart_item_stream_cursor_value_input {
   cost_per_one: money
   customer_id: Int
   id: Int
+  note: String
   quantity: Int
   restaurant_item_id: Int
   selected_options: json
@@ -6564,6 +6939,9 @@ enum restaurant_cart_item_update_column {
 
   """column name"""
   id
+
+  """column name"""
+  note
 
   """column name"""
   quantity
@@ -6691,6 +7069,7 @@ input restaurant_cart_order_by {
   customer: customer_order_by
   customer_id: order_by
   items_aggregate: restaurant_cart_item_aggregate_order_by
+  restaurant: restaurant_order_by
   restaurant_id: order_by
 }
 
@@ -7767,6 +8146,7 @@ input restaurant_inc_input {
 input type for inserting data into table "restaurant"
 """
 input restaurant_insert_input {
+  approved: Boolean
   categories: restaurant_category_arr_rel_insert_input
   description: translation_obj_rel_insert_input
   description_id: Int
@@ -7777,14 +8157,14 @@ input restaurant_insert_input {
   location_gps: geography
   location_text: String
   name: String
+
+  """open, closed_temporarily, closed_indefinitely"""
+  open_status: String
   orders: restaurant_order_arr_rel_insert_input
   payment_info: service_provider_payment_info_obj_rel_insert_input
   payment_info_id: Int
   restaurant_operators: restaurant_operator_arr_rel_insert_input
   schedule_id: Int
-
-  """awaiting_verification, open, closed_temporarily, closed_indefinitely"""
-  status: String
 }
 
 """
@@ -8806,11 +9186,11 @@ type restaurant_max_fields {
   language_id: String
   location_text: String
   name: String
+
+  """open, closed_temporarily, closed_indefinitely"""
+  open_status: String
   payment_info_id: Int
   schedule_id: Int
-
-  """awaiting_verification, open, closed_temporarily, closed_indefinitely"""
-  status: String
 }
 
 """aggregate min on columns"""
@@ -8822,11 +9202,11 @@ type restaurant_min_fields {
   language_id: String
   location_text: String
   name: String
+
+  """open, closed_temporarily, closed_indefinitely"""
+  open_status: String
   payment_info_id: Int
   schedule_id: Int
-
-  """awaiting_verification, open, closed_temporarily, closed_indefinitely"""
-  status: String
 }
 
 """
@@ -8866,6 +9246,9 @@ type restaurant_operator {
   app_version: String
   current_gps: geography
   id: Int!
+
+  """An object relationship"""
+  notification_info: notification_info!
   notification_info_id: Int!
   owner: Boolean!
   restaurant_id: Int!
@@ -8955,6 +9338,7 @@ input restaurant_operator_bool_exp {
   app_version: String_comparison_exp
   current_gps: geography_comparison_exp
   id: Int_comparison_exp
+  notification_info: notification_info_bool_exp
   notification_info_id: Int_comparison_exp
   owner: Boolean_comparison_exp
   restaurant_id: Int_comparison_exp
@@ -8989,6 +9373,7 @@ input restaurant_operator_insert_input {
   app_version: String
   current_gps: geography
   id: Int
+  notification_info: notification_info_obj_rel_insert_input
   notification_info_id: Int
   owner: Boolean
   restaurant_id: Int
@@ -9075,6 +9460,7 @@ input restaurant_operator_order_by {
   app_version: order_by
   current_gps: order_by
   id: order_by
+  notification_info: notification_info_order_by
   notification_info_id: order_by
   owner: order_by
   restaurant_id: order_by
@@ -10346,6 +10732,10 @@ type restaurant_order {
   """An object relationship"""
   review: review
   review_id: Int
+
+  """
+  orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
+  """
   status: String!
   stripe_payment_id: Int
   tax: float8!
@@ -10473,6 +10863,7 @@ input restaurant_order_bool_exp {
 
 """Ordering options when selecting data from "restaurant"."""
 input restaurant_order_by {
+  approved: order_by
   categories_aggregate: restaurant_category_aggregate_order_by
   description: translation_order_by
   description_id: order_by
@@ -10483,12 +10874,12 @@ input restaurant_order_by {
   location_gps: order_by
   location_text: order_by
   name: order_by
+  open_status: order_by
   orders_aggregate: restaurant_order_aggregate_order_by
   payment_info: service_provider_payment_info_order_by
   payment_info_id: order_by
   restaurant_operators_aggregate: restaurant_operator_aggregate_order_by
   schedule_id: order_by
-  status: order_by
 }
 
 """
@@ -10553,6 +10944,10 @@ input restaurant_order_insert_input {
   restaurant_id: Int
   review: review_obj_rel_insert_input
   review_id: Int
+
+  """
+  orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
+  """
   status: String
   stripe_payment_id: Int
   tax: float8
@@ -11087,6 +11482,10 @@ type restaurant_order_max_fields {
   refund_amount: Int
   restaurant_id: Int
   review_id: Int
+
+  """
+  orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
+  """
   status: String
   stripe_payment_id: Int
   tax: float8
@@ -11113,6 +11512,10 @@ input restaurant_order_max_order_by {
   refund_amount: order_by
   restaurant_id: order_by
   review_id: order_by
+
+  """
+  orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
+  """
   status: order_by
   stripe_payment_id: order_by
   tax: order_by
@@ -11137,6 +11540,10 @@ type restaurant_order_min_fields {
   refund_amount: Int
   restaurant_id: Int
   review_id: Int
+
+  """
+  orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
+  """
   status: String
   stripe_payment_id: Int
   tax: float8
@@ -11163,6 +11570,10 @@ input restaurant_order_min_order_by {
   refund_amount: order_by
   restaurant_id: order_by
   review_id: order_by
+
+  """
+  orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
+  """
   status: order_by
   stripe_payment_id: order_by
   tax: order_by
@@ -11323,6 +11734,10 @@ input restaurant_order_set_input {
   refund_amount: Int
   restaurant_id: Int
   review_id: Int
+
+  """
+  orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
+  """
   status: String
   stripe_payment_id: Int
   tax: float8
@@ -11449,6 +11864,10 @@ input restaurant_order_stream_cursor_value_input {
   refund_amount: Int
   restaurant_id: Int
   review_id: Int
+
+  """
+  orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
+  """
   status: String
   stripe_payment_id: Int
   tax: float8
@@ -11663,6 +12082,9 @@ select columns of table "restaurant"
 """
 enum restaurant_select_column {
   """column name"""
+  approved
+
+  """column name"""
   description_id
 
   """column name"""
@@ -11687,19 +12109,20 @@ enum restaurant_select_column {
   name
 
   """column name"""
+  open_status
+
+  """column name"""
   payment_info_id
 
   """column name"""
   schedule_id
-
-  """column name"""
-  status
 }
 
 """
 input type for updating data in table "restaurant"
 """
 input restaurant_set_input {
+  approved: Boolean
   description_id: Int
   firebase_id: String
   id: Int
@@ -11708,11 +12131,11 @@ input restaurant_set_input {
   location_gps: geography
   location_text: String
   name: String
+
+  """open, closed_temporarily, closed_indefinitely"""
+  open_status: String
   payment_info_id: Int
   schedule_id: Int
-
-  """awaiting_verification, open, closed_temporarily, closed_indefinitely"""
-  status: String
 }
 
 """aggregate stddev on columns"""
@@ -11752,6 +12175,7 @@ input restaurant_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input restaurant_stream_cursor_value_input {
+  approved: Boolean
   description_id: Int
   firebase_id: String
   id: Int
@@ -11760,11 +12184,11 @@ input restaurant_stream_cursor_value_input {
   location_gps: geography
   location_text: String
   name: String
+
+  """open, closed_temporarily, closed_indefinitely"""
+  open_status: String
   payment_info_id: Int
   schedule_id: Int
-
-  """awaiting_verification, open, closed_temporarily, closed_indefinitely"""
-  status: String
 }
 
 """aggregate sum on columns"""
@@ -11779,6 +12203,9 @@ type restaurant_sum_fields {
 update columns of table "restaurant"
 """
 enum restaurant_update_column {
+  """column name"""
+  approved
+
   """column name"""
   description_id
 
@@ -11804,13 +12231,13 @@ enum restaurant_update_column {
   name
 
   """column name"""
+  open_status
+
+  """column name"""
   payment_info_id
 
   """column name"""
   schedule_id
-
-  """column name"""
-  status
 }
 
 input restaurant_updates {
@@ -13061,6 +13488,63 @@ type subscription_root {
     """filter the rows returned"""
     where: delivery_bool_exp
   ): [delivery!]!
+
+  """
+  fetch data from the table: "mez_admin"
+  """
+  mez_admin(
+    """distinct select on columns"""
+    distinct_on: [mez_admin_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_admin_order_by!]
+
+    """filter the rows returned"""
+    where: mez_admin_bool_exp
+  ): [mez_admin!]!
+
+  """
+  fetch aggregated fields from the table: "mez_admin"
+  """
+  mez_admin_aggregate(
+    """distinct select on columns"""
+    distinct_on: [mez_admin_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_admin_order_by!]
+
+    """filter the rows returned"""
+    where: mez_admin_bool_exp
+  ): mez_admin_aggregate!
+
+  """fetch data from the table: "mez_admin" using primary key columns"""
+  mez_admin_by_pk(user_id: Int!): mez_admin
+
+  """
+  fetch data from the table in a streaming manner : "mez_admin"
+  """
+  mez_admin_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [mez_admin_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: mez_admin_bool_exp
+  ): [mez_admin!]!
 
   """
   fetch data from the table: "notification_info"

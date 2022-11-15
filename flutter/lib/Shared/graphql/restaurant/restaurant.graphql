@@ -28,3 +28,25 @@ query getCategories {
     id
   }
 }
+
+subscription GetRestaurants {
+  restaurant {
+    id
+    name
+    location_text
+    open_status
+    approved
+    image
+    description {
+      translations {
+        language_id
+        value
+      }
+    }
+    payment_info {
+      bank_transfer
+      card
+      cash
+    }
+  }
+}

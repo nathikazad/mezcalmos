@@ -117,7 +117,7 @@ class Mutation$addCategory {
           ? null
           : Mutation$addCategory$insert_restaurant_category_one.fromJson(
               (l$insert_restaurant_category_one as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -298,13 +298,7 @@ const documentNodeMutationaddCategory = DocumentNode(definitions: [
           ),
         ]),
       ),
-      FieldNode(
-        name: NameNode(value: '__typename'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
+      
     ]),
   ),
 ]);
@@ -413,7 +407,7 @@ class Mutation$addCategory$insert_restaurant_category_one {
     final l$$__typename = json['__typename'];
     return Mutation$addCategory$insert_restaurant_category_one(
       id: (l$id as int),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -642,7 +636,7 @@ class Query$getCategory {
           ? null
           : Query$getCategory$restaurant_category_by_pk.fromJson(
               (l$restaurant_category_by_pk as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -903,13 +897,7 @@ const documentNodeQuerygetCategory = DocumentNode(definitions: [
           ),
         ]),
       ),
-      FieldNode(
-        name: NameNode(value: '__typename'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
+      
     ]),
   ),
 ]);
@@ -1040,7 +1028,7 @@ class Query$getCategory$restaurant_category_by_pk {
       name: Query$getCategory$restaurant_category_by_pk$name.fromJson(
           (l$name as Map<String, dynamic>)),
       position: (l$position as int),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1230,7 +1218,7 @@ class Query$getCategory$restaurant_category_by_pk$description {
               Query$getCategory$restaurant_category_by_pk$description$translations
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1401,7 +1389,7 @@ class Query$getCategory$restaurant_category_by_pk$description$translations {
     return Query$getCategory$restaurant_category_by_pk$description$translations(
       language_id: (l$language_id as String),
       value: (l$value as String),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1567,7 +1555,7 @@ class Query$getCategory$restaurant_category_by_pk$name {
               Query$getCategory$restaurant_category_by_pk$name$translations
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1729,7 +1717,7 @@ class Query$getCategory$restaurant_category_by_pk$name$translations {
     return Query$getCategory$restaurant_category_by_pk$name$translations(
       language_id: (l$language_id as String),
       value: (l$value as String),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1888,7 +1876,7 @@ class Query$getCategories {
           .map((e) => Query$getCategories$restaurant_category.fromJson(
               (e as Map<String, dynamic>)))
           .toList(),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -2068,13 +2056,7 @@ const documentNodeQuerygetCategories = DocumentNode(definitions: [
           ),
         ]),
       ),
-      FieldNode(
-        name: NameNode(value: '__typename'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
+      
     ]),
   ),
 ]);
@@ -2183,7 +2165,7 @@ class Query$getCategories$restaurant_category {
     final l$$__typename = json['__typename'];
     return Query$getCategories$restaurant_category(
       id: (l$id as int),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -2291,6 +2273,1192 @@ class _CopyWithStubImpl$Query$getCategories$restaurant_category<TRes>
 
   call({
     int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Subscription$GetRestaurants {
+  Subscription$GetRestaurants({
+    required this.restaurant,
+    required this.$__typename,
+  });
+
+  factory Subscription$GetRestaurants.fromJson(Map<String, dynamic> json) {
+    final l$restaurant = json['restaurant'];
+    final l$$__typename = json['__typename'];
+    return Subscription$GetRestaurants(
+      restaurant: (l$restaurant as List<dynamic>)
+          .map((e) => Subscription$GetRestaurants$restaurant.fromJson(
+              (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Subscription$GetRestaurants$restaurant> restaurant;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$restaurant = restaurant;
+    _resultData['restaurant'] = l$restaurant.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$restaurant = restaurant;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$restaurant.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Subscription$GetRestaurants) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$restaurant = restaurant;
+    final lOther$restaurant = other.restaurant;
+    if (l$restaurant.length != lOther$restaurant.length) {
+      return false;
+    }
+    for (int i = 0; i < l$restaurant.length; i++) {
+      final l$restaurant$entry = l$restaurant[i];
+      final lOther$restaurant$entry = lOther$restaurant[i];
+      if (l$restaurant$entry != lOther$restaurant$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$GetRestaurants
+    on Subscription$GetRestaurants {
+  CopyWith$Subscription$GetRestaurants<Subscription$GetRestaurants>
+      get copyWith => CopyWith$Subscription$GetRestaurants(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$GetRestaurants<TRes> {
+  factory CopyWith$Subscription$GetRestaurants(
+    Subscription$GetRestaurants instance,
+    TRes Function(Subscription$GetRestaurants) then,
+  ) = _CopyWithImpl$Subscription$GetRestaurants;
+
+  factory CopyWith$Subscription$GetRestaurants.stub(TRes res) =
+      _CopyWithStubImpl$Subscription$GetRestaurants;
+
+  TRes call({
+    List<Subscription$GetRestaurants$restaurant>? restaurant,
+    String? $__typename,
+  });
+  TRes restaurant(
+      Iterable<Subscription$GetRestaurants$restaurant> Function(
+              Iterable<
+                  CopyWith$Subscription$GetRestaurants$restaurant<
+                      Subscription$GetRestaurants$restaurant>>)
+          _fn);
+}
+
+class _CopyWithImpl$Subscription$GetRestaurants<TRes>
+    implements CopyWith$Subscription$GetRestaurants<TRes> {
+  _CopyWithImpl$Subscription$GetRestaurants(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$GetRestaurants _instance;
+
+  final TRes Function(Subscription$GetRestaurants) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? restaurant = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$GetRestaurants(
+        restaurant: restaurant == _undefined || restaurant == null
+            ? _instance.restaurant
+            : (restaurant as List<Subscription$GetRestaurants$restaurant>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes restaurant(
+          Iterable<Subscription$GetRestaurants$restaurant> Function(
+                  Iterable<
+                      CopyWith$Subscription$GetRestaurants$restaurant<
+                          Subscription$GetRestaurants$restaurant>>)
+              _fn) =>
+      call(
+          restaurant: _fn(_instance.restaurant
+              .map((e) => CopyWith$Subscription$GetRestaurants$restaurant(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Subscription$GetRestaurants<TRes>
+    implements CopyWith$Subscription$GetRestaurants<TRes> {
+  _CopyWithStubImpl$Subscription$GetRestaurants(this._res);
+
+  TRes _res;
+
+  call({
+    List<Subscription$GetRestaurants$restaurant>? restaurant,
+    String? $__typename,
+  }) =>
+      _res;
+  restaurant(_fn) => _res;
+}
+
+const documentNodeSubscriptionGetRestaurants = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.subscription,
+    name: NameNode(value: 'GetRestaurants'),
+    variableDefinitions: [],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'restaurant'),
+        alias: null,
+        arguments: [],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'location_text'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'open_status'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'approved'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'image'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'description'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'translations'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'language_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'value'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'payment_info'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'bank_transfer'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'card'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'cash'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Subscription$GetRestaurants _parserFn$Subscription$GetRestaurants(
+        Map<String, dynamic> data) =>
+    Subscription$GetRestaurants.fromJson(data);
+
+class Options$Subscription$GetRestaurants
+    extends graphql.SubscriptionOptions<Subscription$GetRestaurants> {
+  Options$Subscription$GetRestaurants({
+    String? operationName,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+  }) : super(
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeSubscriptionGetRestaurants,
+          parserFn: _parserFn$Subscription$GetRestaurants,
+        );
+}
+
+class WatchOptions$Subscription$GetRestaurants
+    extends graphql.WatchQueryOptions<Subscription$GetRestaurants> {
+  WatchOptions$Subscription$GetRestaurants({
+    String? operationName,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeSubscriptionGetRestaurants,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Subscription$GetRestaurants,
+        );
+}
+
+class FetchMoreOptions$Subscription$GetRestaurants
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Subscription$GetRestaurants(
+      {required graphql.UpdateQuery updateQuery})
+      : super(
+          updateQuery: updateQuery,
+          document: documentNodeSubscriptionGetRestaurants,
+        );
+}
+
+extension ClientExtension$Subscription$GetRestaurants on graphql.GraphQLClient {
+  Stream<graphql.QueryResult<Subscription$GetRestaurants>>
+      subscribe$GetRestaurants(
+              [Options$Subscription$GetRestaurants? options]) =>
+          this.subscribe(options ?? Options$Subscription$GetRestaurants());
+  graphql.ObservableQuery<
+      Subscription$GetRestaurants> watchSubscription$GetRestaurants(
+          [WatchOptions$Subscription$GetRestaurants? options]) =>
+      this.watchQuery(options ?? WatchOptions$Subscription$GetRestaurants());
+}
+
+class Subscription$GetRestaurants$restaurant {
+  Subscription$GetRestaurants$restaurant({
+    required this.id,
+    required this.name,
+    required this.location_text,
+    required this.open_status,
+    required this.approved,
+    required this.image,
+    this.description,
+    this.payment_info,
+    required this.$__typename,
+  });
+
+  factory Subscription$GetRestaurants$restaurant.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$location_text = json['location_text'];
+    final l$open_status = json['open_status'];
+    final l$approved = json['approved'];
+    final l$image = json['image'];
+    final l$description = json['description'];
+    final l$payment_info = json['payment_info'];
+    final l$$__typename = json['__typename'];
+    return Subscription$GetRestaurants$restaurant(
+      id: (l$id as int),
+      name: (l$name as String),
+      location_text: (l$location_text as String),
+      open_status: (l$open_status as String),
+      approved: (l$approved as bool),
+      image: (l$image as String),
+      description: l$description == null
+          ? null
+          : Subscription$GetRestaurants$restaurant$description.fromJson(
+              (l$description as Map<String, dynamic>)),
+      payment_info: l$payment_info == null
+          ? null
+          : Subscription$GetRestaurants$restaurant$payment_info.fromJson(
+              (l$payment_info as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String name;
+
+  final String location_text;
+
+  final String open_status;
+
+  final bool approved;
+
+  final String image;
+
+  final Subscription$GetRestaurants$restaurant$description? description;
+
+  final Subscription$GetRestaurants$restaurant$payment_info? payment_info;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$location_text = location_text;
+    _resultData['location_text'] = l$location_text;
+    final l$open_status = open_status;
+    _resultData['open_status'] = l$open_status;
+    final l$approved = approved;
+    _resultData['approved'] = l$approved;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$description = description;
+    _resultData['description'] = l$description?.toJson();
+    final l$payment_info = payment_info;
+    _resultData['payment_info'] = l$payment_info?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$name = name;
+    final l$location_text = location_text;
+    final l$open_status = open_status;
+    final l$approved = approved;
+    final l$image = image;
+    final l$description = description;
+    final l$payment_info = payment_info;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$name,
+      l$location_text,
+      l$open_status,
+      l$approved,
+      l$image,
+      l$description,
+      l$payment_info,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Subscription$GetRestaurants$restaurant) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$location_text = location_text;
+    final lOther$location_text = other.location_text;
+    if (l$location_text != lOther$location_text) {
+      return false;
+    }
+    final l$open_status = open_status;
+    final lOther$open_status = other.open_status;
+    if (l$open_status != lOther$open_status) {
+      return false;
+    }
+    final l$approved = approved;
+    final lOther$approved = other.approved;
+    if (l$approved != lOther$approved) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$description = description;
+    final lOther$description = other.description;
+    if (l$description != lOther$description) {
+      return false;
+    }
+    final l$payment_info = payment_info;
+    final lOther$payment_info = other.payment_info;
+    if (l$payment_info != lOther$payment_info) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$GetRestaurants$restaurant
+    on Subscription$GetRestaurants$restaurant {
+  CopyWith$Subscription$GetRestaurants$restaurant<
+          Subscription$GetRestaurants$restaurant>
+      get copyWith => CopyWith$Subscription$GetRestaurants$restaurant(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$GetRestaurants$restaurant<TRes> {
+  factory CopyWith$Subscription$GetRestaurants$restaurant(
+    Subscription$GetRestaurants$restaurant instance,
+    TRes Function(Subscription$GetRestaurants$restaurant) then,
+  ) = _CopyWithImpl$Subscription$GetRestaurants$restaurant;
+
+  factory CopyWith$Subscription$GetRestaurants$restaurant.stub(TRes res) =
+      _CopyWithStubImpl$Subscription$GetRestaurants$restaurant;
+
+  TRes call({
+    int? id,
+    String? name,
+    String? location_text,
+    String? open_status,
+    bool? approved,
+    String? image,
+    Subscription$GetRestaurants$restaurant$description? description,
+    Subscription$GetRestaurants$restaurant$payment_info? payment_info,
+    String? $__typename,
+  });
+  CopyWith$Subscription$GetRestaurants$restaurant$description<TRes>
+      get description;
+  CopyWith$Subscription$GetRestaurants$restaurant$payment_info<TRes>
+      get payment_info;
+}
+
+class _CopyWithImpl$Subscription$GetRestaurants$restaurant<TRes>
+    implements CopyWith$Subscription$GetRestaurants$restaurant<TRes> {
+  _CopyWithImpl$Subscription$GetRestaurants$restaurant(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$GetRestaurants$restaurant _instance;
+
+  final TRes Function(Subscription$GetRestaurants$restaurant) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? location_text = _undefined,
+    Object? open_status = _undefined,
+    Object? approved = _undefined,
+    Object? image = _undefined,
+    Object? description = _undefined,
+    Object? payment_info = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$GetRestaurants$restaurant(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        location_text: location_text == _undefined || location_text == null
+            ? _instance.location_text
+            : (location_text as String),
+        open_status: open_status == _undefined || open_status == null
+            ? _instance.open_status
+            : (open_status as String),
+        approved: approved == _undefined || approved == null
+            ? _instance.approved
+            : (approved as bool),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        description: description == _undefined
+            ? _instance.description
+            : (description
+                as Subscription$GetRestaurants$restaurant$description?),
+        payment_info: payment_info == _undefined
+            ? _instance.payment_info
+            : (payment_info
+                as Subscription$GetRestaurants$restaurant$payment_info?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$GetRestaurants$restaurant$description<TRes>
+      get description {
+    final local$description = _instance.description;
+    return local$description == null
+        ? CopyWith$Subscription$GetRestaurants$restaurant$description.stub(
+            _then(_instance))
+        : CopyWith$Subscription$GetRestaurants$restaurant$description(
+            local$description, (e) => call(description: e));
+  }
+
+  CopyWith$Subscription$GetRestaurants$restaurant$payment_info<TRes>
+      get payment_info {
+    final local$payment_info = _instance.payment_info;
+    return local$payment_info == null
+        ? CopyWith$Subscription$GetRestaurants$restaurant$payment_info.stub(
+            _then(_instance))
+        : CopyWith$Subscription$GetRestaurants$restaurant$payment_info(
+            local$payment_info, (e) => call(payment_info: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$GetRestaurants$restaurant<TRes>
+    implements CopyWith$Subscription$GetRestaurants$restaurant<TRes> {
+  _CopyWithStubImpl$Subscription$GetRestaurants$restaurant(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? name,
+    String? location_text,
+    String? open_status,
+    bool? approved,
+    String? image,
+    Subscription$GetRestaurants$restaurant$description? description,
+    Subscription$GetRestaurants$restaurant$payment_info? payment_info,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$GetRestaurants$restaurant$description<TRes>
+      get description =>
+          CopyWith$Subscription$GetRestaurants$restaurant$description.stub(
+              _res);
+  CopyWith$Subscription$GetRestaurants$restaurant$payment_info<TRes>
+      get payment_info =>
+          CopyWith$Subscription$GetRestaurants$restaurant$payment_info.stub(
+              _res);
+}
+
+class Subscription$GetRestaurants$restaurant$description {
+  Subscription$GetRestaurants$restaurant$description({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Subscription$GetRestaurants$restaurant$description.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Subscription$GetRestaurants$restaurant$description(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Subscription$GetRestaurants$restaurant$description$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Subscription$GetRestaurants$restaurant$description$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Subscription$GetRestaurants$restaurant$description) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$GetRestaurants$restaurant$description
+    on Subscription$GetRestaurants$restaurant$description {
+  CopyWith$Subscription$GetRestaurants$restaurant$description<
+          Subscription$GetRestaurants$restaurant$description>
+      get copyWith =>
+          CopyWith$Subscription$GetRestaurants$restaurant$description(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$GetRestaurants$restaurant$description<
+    TRes> {
+  factory CopyWith$Subscription$GetRestaurants$restaurant$description(
+    Subscription$GetRestaurants$restaurant$description instance,
+    TRes Function(Subscription$GetRestaurants$restaurant$description) then,
+  ) = _CopyWithImpl$Subscription$GetRestaurants$restaurant$description;
+
+  factory CopyWith$Subscription$GetRestaurants$restaurant$description.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$GetRestaurants$restaurant$description;
+
+  TRes call({
+    List<Subscription$GetRestaurants$restaurant$description$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Subscription$GetRestaurants$restaurant$description$translations> Function(
+              Iterable<
+                  CopyWith$Subscription$GetRestaurants$restaurant$description$translations<
+                      Subscription$GetRestaurants$restaurant$description$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Subscription$GetRestaurants$restaurant$description<TRes>
+    implements
+        CopyWith$Subscription$GetRestaurants$restaurant$description<TRes> {
+  _CopyWithImpl$Subscription$GetRestaurants$restaurant$description(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$GetRestaurants$restaurant$description _instance;
+
+  final TRes Function(Subscription$GetRestaurants$restaurant$description) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$GetRestaurants$restaurant$description(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Subscription$GetRestaurants$restaurant$description$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Subscription$GetRestaurants$restaurant$description$translations> Function(
+                  Iterable<
+                      CopyWith$Subscription$GetRestaurants$restaurant$description$translations<
+                          Subscription$GetRestaurants$restaurant$description$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Subscription$GetRestaurants$restaurant$description$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Subscription$GetRestaurants$restaurant$description<TRes>
+    implements
+        CopyWith$Subscription$GetRestaurants$restaurant$description<TRes> {
+  _CopyWithStubImpl$Subscription$GetRestaurants$restaurant$description(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Subscription$GetRestaurants$restaurant$description$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Subscription$GetRestaurants$restaurant$description$translations {
+  Subscription$GetRestaurants$restaurant$description$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Subscription$GetRestaurants$restaurant$description$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Subscription$GetRestaurants$restaurant$description$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$GetRestaurants$restaurant$description$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$GetRestaurants$restaurant$description$translations
+    on Subscription$GetRestaurants$restaurant$description$translations {
+  CopyWith$Subscription$GetRestaurants$restaurant$description$translations<
+          Subscription$GetRestaurants$restaurant$description$translations>
+      get copyWith =>
+          CopyWith$Subscription$GetRestaurants$restaurant$description$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$GetRestaurants$restaurant$description$translations<
+    TRes> {
+  factory CopyWith$Subscription$GetRestaurants$restaurant$description$translations(
+    Subscription$GetRestaurants$restaurant$description$translations instance,
+    TRes Function(
+            Subscription$GetRestaurants$restaurant$description$translations)
+        then,
+  ) = _CopyWithImpl$Subscription$GetRestaurants$restaurant$description$translations;
+
+  factory CopyWith$Subscription$GetRestaurants$restaurant$description$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$GetRestaurants$restaurant$description$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$GetRestaurants$restaurant$description$translations<
+        TRes>
+    implements
+        CopyWith$Subscription$GetRestaurants$restaurant$description$translations<
+            TRes> {
+  _CopyWithImpl$Subscription$GetRestaurants$restaurant$description$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$GetRestaurants$restaurant$description$translations
+      _instance;
+
+  final TRes Function(
+      Subscription$GetRestaurants$restaurant$description$translations) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$GetRestaurants$restaurant$description$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$GetRestaurants$restaurant$description$translations<
+        TRes>
+    implements
+        CopyWith$Subscription$GetRestaurants$restaurant$description$translations<
+            TRes> {
+  _CopyWithStubImpl$Subscription$GetRestaurants$restaurant$description$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Subscription$GetRestaurants$restaurant$payment_info {
+  Subscription$GetRestaurants$restaurant$payment_info({
+    required this.bank_transfer,
+    required this.card,
+    required this.cash,
+    required this.$__typename,
+  });
+
+  factory Subscription$GetRestaurants$restaurant$payment_info.fromJson(
+      Map<String, dynamic> json) {
+    final l$bank_transfer = json['bank_transfer'];
+    final l$card = json['card'];
+    final l$cash = json['cash'];
+    final l$$__typename = json['__typename'];
+    return Subscription$GetRestaurants$restaurant$payment_info(
+      bank_transfer: (l$bank_transfer as bool),
+      card: (l$card as bool),
+      cash: (l$cash as bool),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final bool bank_transfer;
+
+  final bool card;
+
+  final bool cash;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$bank_transfer = bank_transfer;
+    _resultData['bank_transfer'] = l$bank_transfer;
+    final l$card = card;
+    _resultData['card'] = l$card;
+    final l$cash = cash;
+    _resultData['cash'] = l$cash;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$bank_transfer = bank_transfer;
+    final l$card = card;
+    final l$cash = cash;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$bank_transfer,
+      l$card,
+      l$cash,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Subscription$GetRestaurants$restaurant$payment_info) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$bank_transfer = bank_transfer;
+    final lOther$bank_transfer = other.bank_transfer;
+    if (l$bank_transfer != lOther$bank_transfer) {
+      return false;
+    }
+    final l$card = card;
+    final lOther$card = other.card;
+    if (l$card != lOther$card) {
+      return false;
+    }
+    final l$cash = cash;
+    final lOther$cash = other.cash;
+    if (l$cash != lOther$cash) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$GetRestaurants$restaurant$payment_info
+    on Subscription$GetRestaurants$restaurant$payment_info {
+  CopyWith$Subscription$GetRestaurants$restaurant$payment_info<
+          Subscription$GetRestaurants$restaurant$payment_info>
+      get copyWith =>
+          CopyWith$Subscription$GetRestaurants$restaurant$payment_info(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$GetRestaurants$restaurant$payment_info<
+    TRes> {
+  factory CopyWith$Subscription$GetRestaurants$restaurant$payment_info(
+    Subscription$GetRestaurants$restaurant$payment_info instance,
+    TRes Function(Subscription$GetRestaurants$restaurant$payment_info) then,
+  ) = _CopyWithImpl$Subscription$GetRestaurants$restaurant$payment_info;
+
+  factory CopyWith$Subscription$GetRestaurants$restaurant$payment_info.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$GetRestaurants$restaurant$payment_info;
+
+  TRes call({
+    bool? bank_transfer,
+    bool? card,
+    bool? cash,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$GetRestaurants$restaurant$payment_info<TRes>
+    implements
+        CopyWith$Subscription$GetRestaurants$restaurant$payment_info<TRes> {
+  _CopyWithImpl$Subscription$GetRestaurants$restaurant$payment_info(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$GetRestaurants$restaurant$payment_info _instance;
+
+  final TRes Function(Subscription$GetRestaurants$restaurant$payment_info)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? bank_transfer = _undefined,
+    Object? card = _undefined,
+    Object? cash = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$GetRestaurants$restaurant$payment_info(
+        bank_transfer: bank_transfer == _undefined || bank_transfer == null
+            ? _instance.bank_transfer
+            : (bank_transfer as bool),
+        card: card == _undefined || card == null
+            ? _instance.card
+            : (card as bool),
+        cash: cash == _undefined || cash == null
+            ? _instance.cash
+            : (cash as bool),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$GetRestaurants$restaurant$payment_info<
+        TRes>
+    implements
+        CopyWith$Subscription$GetRestaurants$restaurant$payment_info<TRes> {
+  _CopyWithStubImpl$Subscription$GetRestaurants$restaurant$payment_info(
+      this._res);
+
+  TRes _res;
+
+  call({
+    bool? bank_transfer,
+    bool? card,
+    bool? cash,
     String? $__typename,
   }) =>
       _res;
