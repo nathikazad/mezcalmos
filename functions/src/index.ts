@@ -137,6 +137,6 @@ function authenticatedCall(func:AuthenticatedFunction) {
         "Request was not authenticated.",
       );
     } 
-    return func(firebaseUser.customClaims!["x-hasura-user-id"], data);
+    return func(parseInt(firebaseUser.customClaims!["x-hasura-user-id"]), data);
   });
 }
