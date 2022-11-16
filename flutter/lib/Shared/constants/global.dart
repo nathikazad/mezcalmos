@@ -31,9 +31,10 @@ const String hasuraDevLink = "http://127.0.0.1:8080/v1/graphql";
 
 // ----------------- TEST STRINGS ----------------- //
 
-const String tTestTaxiValue = "taxi.one@mezcalmos.com";
-const String tTestCustomerValue = "customer.one@mezcalmos.com";
-const String tTestAdminValue = "admin@mezcalmos.com";
+const String tTestRestaurantOpValue = "restaurantop@mezcalmos.com";
+const String tTestCustomerValue = "customer@mezcalmos.com";
+const String tTestDeliveryDriverValue = "deliverydriver@mezcalmos.com";
+const String tTestAdminValue = "mezAdmin@mezcalmos.com";
 const String tEmailTestPassword = "password";
 
 // ----------------- Costants Numbers ----------------- //
