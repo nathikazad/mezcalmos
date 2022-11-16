@@ -1,0 +1,7 @@
+table:
+  name: mez_admin
+  schema: public
+object_relationships:
+  - name: notification_info
+    using:
+      foreign_key_constraint_on: notification_info_id

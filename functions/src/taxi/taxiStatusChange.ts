@@ -10,7 +10,6 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { orderInProcess, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/Services/Taxi/TaxiOrder";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
-import { AuthData } from "firebase-functions/lib/common/providers/https";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { orderUrl } from "../utilities/senders/appRoutes";
 
@@ -22,39 +21,36 @@ let statusArrayInSeq: Array<TaxiOrderStatus> =
     TaxiOrderStatus.DroppedOff
   ]
 
-export const startScheduledRide =
-  functions.https.onCall(async (data, context) => {
-    let response: ServerResponse = await changeStatus(data, TaxiOrderStatus.OnTheWay, context.auth)
-    return response;
-  });
+export async function startScheduledRide(userId: string, data: any) {
+  let response: ServerResponse = await changeStatus(data, TaxiOrderStatus.OnTheWay, userId)
+  return response;
+};
 
-export const startRide =
-  functions.https.onCall(async (data, context) => {
-    let response: ServerResponse = await changeStatus(data, TaxiOrderStatus.InTransit, context.auth)
-    return response;
-  });
+export async function startRide(userId: string, data: any) {
+  let response: ServerResponse = await changeStatus(data, TaxiOrderStatus.InTransit, userId)
+  return response;
+};
 
-export const finishRide =
-  functions.https.onCall(async (data, context) => {
-    let response: ServerResponse = await changeStatus(data, TaxiOrderStatus.DroppedOff, context.auth)
-    return response;
-  });
+export async function finishRide(userId: string, data: any) {
+  let response: ServerResponse = await changeStatus(data, TaxiOrderStatus.DroppedOff, userId)
+  return response;
+};
 
-export const cancelTaxiFromDriver = functions.https.onCall(async (data, context) => {
-  let response: ServerResponse = await changeStatus(data, TaxiOrderStatus.CancelledByTaxi, context.auth)
+export async function cancelTaxiFromDriver(userId: string, data: any) {
+  let response: ServerResponse = await changeStatus(data, TaxiOrderStatus.CancelledByTaxi, userId)
   return response
-});
+};
 
 function expectedPreviousStatus(status: TaxiOrderStatus): TaxiOrderStatus {
   return statusArrayInSeq[statusArrayInSeq.findIndex((element) => element == status) - 1];
 }
 
-async function changeStatus(data: any, newStatus: TaxiOrderStatus, auth?: AuthData): Promise<ServerResponse> {
-  let response = isSignedIn(auth)
+async function changeStatus(data: any, newStatus: TaxiOrderStatus, userId: string): Promise<ServerResponse> {
+  let response = isSignedIn(userId)
   if (response != undefined)
     return response;
   // user signed in
-  let taxiId: string = auth!.uid;
+  let taxiId: string = userId;
   let orderId = (await currentOrderIdNode(taxiId).once('value')).val();
   // orderId => OrderId
   if (orderId == null) {

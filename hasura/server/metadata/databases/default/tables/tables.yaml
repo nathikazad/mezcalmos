@@ -3,6 +3,7 @@
 - "!include public_customer.yaml"
 - "!include public_deliverer.yaml"
 - "!include public_delivery.yaml"
+- "!include public_mez_admin.yaml"
 - "!include public_notification_info.yaml"
 - "!include public_restaurant.yaml"
 - "!include public_restaurant_cart.yaml"

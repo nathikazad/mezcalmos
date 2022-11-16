@@ -1,4 +1,3 @@
-import * as functions from "firebase-functions";
 import { isSignedIn } from "../shared/helper/authorizer";
 import { orderInProcess, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
@@ -15,8 +14,9 @@ import { ParticipantType } from "../shared/models/Generic/Chat";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { capturePayment } from "../utilities/stripe/payment";
 // Customer Canceling
-export = functions.https.onCall(async (data, context) => {
-  let response: ServerResponse | undefined = await isSignedIn(context.auth)
+export async function cancelOrderFromCustomer(userId: string, data: any) {
+
+  let response: ServerResponse | undefined = isSignedIn(userId);
   if (response != undefined) {
     return response;
   }
@@ -40,7 +40,7 @@ export = functions.https.onCall(async (data, context) => {
     }
   }
 
-  if (order.customer.id != context.auth!.uid) {
+  if (order.customer.id != userId) {
     return {
       status: ServerResponseStatus.Error,
       errorMessage: `Order does not belong to customer`,
@@ -103,7 +103,7 @@ export = functions.https.onCall(async (data, context) => {
 
 
   return { status: ServerResponseStatus.Success, orderId: data.orderId }
-});
+};
 
 
 async function notifyOthersCancelledOrder(

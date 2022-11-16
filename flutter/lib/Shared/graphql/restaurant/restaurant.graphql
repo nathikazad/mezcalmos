@@ -1,24 +1,40 @@
-mutation addCategory($category: restaurant_category_insert_input!) {
-  insert_restaurant_category_one(object: $category) {
+query getRestaurants {
+  restaurant {
     id
+    image
+    language_id
+    location_text
+    name
+    location_gps
+    firebase_id
+    description {
+      translations {
+        language_id
+        value
+      }
+    }
+    status
+    payment_info_id
+    schedule_id
   }
 }
-
-query getCategory($id: Int!) {
-  restaurant_category_by_pk(id: $id) {
-    description{
-      translations{
+query getOneRestaurant($id: Int!) {
+  restaurant_by_pk(id: $id) {
+    id
+    firebase_id
+    description {
+      translations {
         language_id
         value
       }
     }
-    name{
-      translations{
-        language_id
-        value
-      }
-    }
-    position
+    image
+    language_id
+    location_gps
+    location_text
+    name
+    schedule_id
+    status
   }
 }
 

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
@@ -62,18 +63,20 @@ class ROpEditInfoController {
 
   Future<void> init({required String restaurantId}) async {
     mezDbgPrint("INIT EDIT PROFILE VIEW =======>$restaurantId");
+    await getRestaurantById(4);
     Get.put(RestaurantInfoController(), permanent: false);
     restaurantInfoController = Get.find<RestaurantInfoController>();
     restaurantInfoController.init(restId: restaurantId);
-    restaurant.value =
-        await restaurantInfoController.getRestaurantAsFuture(restaurantId);
-    restaurantInfoController
-        .getRestaurant(restaurantId)
-        .listen((Restaurant? event) {
-      if (event != null) {
-        restaurant.value = event;
-      }
-    });
+    restaurant.value = await getRestaurantById(4);
+    mezDbgPrint(
+        "🍔🍔🍔🍔 Restaurant Data ===========> ${restaurant.value?.toJson()}");
+    // restaurantInfoController
+    //     .getRestaurant(restaurantId)
+    //     .listen((Restaurant? event) {
+    //   if (event != null) {
+    //     restaurant.value = event;
+    //   }
+    // });
     _updateResTInfo();
   }
 

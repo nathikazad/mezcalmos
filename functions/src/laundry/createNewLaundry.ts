@@ -1,4 +1,3 @@
-import * as functions from "firebase-functions";
 import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import * as firebase from "firebase-admin";
 import { UserRecord } from "firebase-functions/v1/auth";
@@ -9,9 +8,9 @@ import { userInfoNode } from "../shared/databaseNodes/root";
 import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
 import { UserInfo } from "../shared/models/Generic/User";
 
+export async function createLaundry(userId: string, data: any) {
 
-export = functions.https.onCall(async (data, context) => {
-  let response = await isSignedIn(context.auth)
+  let response = isSignedIn(userId)
   if (response != undefined) {
     return {
       ok: false,
@@ -19,7 +18,7 @@ export = functions.https.onCall(async (data, context) => {
     }
   }
 
-  response = await checkDeliveryAdmin(context.auth!.uid)
+  response = await checkDeliveryAdmin(userId)
   if (response != undefined) {
     return {
       ok: false,
@@ -67,7 +66,7 @@ export = functions.https.onCall(async (data, context) => {
   let newOperator = { info: operatorInfo, state: { laundryId: laundryId } };
   operatorNodes.operatorInfo(OrderType.Laundry, user.uid).set(newOperator);
   return { status: ServerResponseStatus.Success }
-})
+};
 
 
 let laundryTemplateInJson = `{

@@ -19,8 +19,8 @@ import { getUserInfo } from "../shared/controllers/rootController";
 import { getTaxi } from "../shared/controllers/taxiController";
 import { orderUrl } from "../utilities/senders/appRoutes";
 
-export = functions.https.onCall(async (data, context) => {
-  let response = isSignedIn(context.auth)
+export async function acceptRide(userId: string, data: any) {
+  let response = isSignedIn(userId)
   if (response != undefined)
     return response;
 
@@ -30,7 +30,7 @@ export = functions.https.onCall(async (data, context) => {
       errorMessage: "Required orderId"
     }
   }
-  let taxiId: string = data.counterOfferDriverId ?? context.auth!.uid;
+  let taxiId: string = data.counterOfferDriverId ?? userId;
   let orderId: string = data.orderId;
   let taxi: Taxi = (await getTaxi(taxiId));
   console.log(`Got taxi ${taxi}`);
@@ -172,4 +172,4 @@ export = functions.https.onCall(async (data, context) => {
     rootNodes.openOrders(OrderType.Taxi, orderId).child("lock").remove();
   }
 
-});
+};
