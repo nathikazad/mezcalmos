@@ -13,21 +13,6 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 final HasuraDb hasuraDb = Get.find<HasuraDb>();
 
-extension ParseGeography on Geography {
-  LocationData toLocationData() {
-    return LocationData.fromMap({"latitude": latitude, "longitude": longitude});
-  }
-}
-
-extension ParseLocationData on LocationData {
-  Geography? toGeography() {
-    if (latitude != null && longitude != null) {
-      return Geography(latitude!, longitude!);
-    }
-    return null;
-  }
-}
-
 /// Fetch all Customer's SavedLocations.
 ///
 /// [customer_id] is the user's hasuraId
