@@ -40,7 +40,7 @@ Future<Restaurant?> getRestaurantById(int id) async {
         },
         schedule: Schedule(openHours: {}),
         paymentInfo: PaymentInfo(),
-        restaurantState: data.status.toServiceStatus().toServiceState(),
+        restaurantState: data.open_status.toServiceStatus().toServiceState(),
         primaryLanguage: data.language_id.toString().toLanguageType(),
         secondaryLanguage:
             data.language_id.toString().toLanguageType().toOpLang());

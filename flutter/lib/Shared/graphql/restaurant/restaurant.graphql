@@ -13,7 +13,7 @@ query getRestaurants {
         value
       }
     }
-    status
+    open_status
     payment_info_id
     schedule_id
   }
@@ -34,7 +34,7 @@ query getOneRestaurant($id: Int!) {
     location_text
     name
     schedule_id
-    status
+    open_status
   }
 }
 

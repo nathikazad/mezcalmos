@@ -116,7 +116,7 @@ class Mutation$addChoice {
           ? null
           : Mutation$addChoice$insert_restaurant_choice_one.fromJson(
               (l$insert_restaurant_choice_one as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -294,13 +294,7 @@ const documentNodeMutationaddChoice = DocumentNode(definitions: [
           ),
         ]),
       ),
-      FieldNode(
-        name: NameNode(value: '__typename'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
+      
     ]),
   ),
 ]);
@@ -408,7 +402,7 @@ class Mutation$addChoice$insert_restaurant_choice_one {
     final l$$__typename = json['__typename'];
     return Mutation$addChoice$insert_restaurant_choice_one(
       id: (l$id as int),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 

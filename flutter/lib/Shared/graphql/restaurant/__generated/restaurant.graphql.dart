@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -10,13 +11,13 @@ class Query$getRestaurants {
 
   factory Query$getRestaurants.fromJson(Map<String, dynamic> json) {
     final l$restaurant = json['restaurant'];
-    final l$$Typename = json['__typename'];
+    final l$$__typename = json['__typename'];
     return Query$getRestaurants(
       restaurant: (l$restaurant as List<dynamic>)
           .map((e) => Query$getRestaurants$restaurant.fromJson(
               (e as Map<String, dynamic>)))
           .toList(),
-      $__typename: (l$$Typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -25,24 +26,21 @@ class Query$getRestaurants {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _resultData = <String, dynamic>{};
-    final List<Query$getRestaurants$restaurant> l$restaurant = restaurant;
-    _resultData['restaurant'] = l$restaurant
-        .map((Query$getRestaurants$restaurant e) => e.toJson())
-        .toList();
-    final String l$$Typename = $__typename;
-    _resultData['__typename'] = l$$Typename;
+    final _resultData = <String, dynamic>{};
+    final l$restaurant = restaurant;
+    _resultData['restaurant'] = l$restaurant.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
     return _resultData;
   }
 
   @override
   int get hashCode {
-    final List<Query$getRestaurants$restaurant> l$restaurant = restaurant;
-    final String l$$Typename = $__typename;
+    final l$restaurant = restaurant;
+    final l$$__typename = $__typename;
     return Object.hashAll([
-      Object.hashAll(
-          l$restaurant.map((Query$getRestaurants$restaurant v) => v)),
-      l$$Typename,
+      Object.hashAll(l$restaurant.map((v) => v)),
+      l$$__typename,
     ]);
   }
 
@@ -54,24 +52,21 @@ class Query$getRestaurants {
     if (!(other is Query$getRestaurants) || runtimeType != other.runtimeType) {
       return false;
     }
-    final List<Query$getRestaurants$restaurant> l$restaurant = restaurant;
-    final List<Query$getRestaurants$restaurant> lOther$restaurant =
-        other.restaurant;
+    final l$restaurant = restaurant;
+    final lOther$restaurant = other.restaurant;
     if (l$restaurant.length != lOther$restaurant.length) {
       return false;
     }
     for (int i = 0; i < l$restaurant.length; i++) {
-      final Query$getRestaurants$restaurant l$restaurant$entry =
-          l$restaurant[i];
-      final Query$getRestaurants$restaurant lOther$restaurant$entry =
-          lOther$restaurant[i];
+      final l$restaurant$entry = l$restaurant[i];
+      final lOther$restaurant$entry = lOther$restaurant[i];
       if (l$restaurant$entry != lOther$restaurant$entry) {
         return false;
       }
     }
-    final String l$$Typename = $__typename;
-    final String lOther$$Typename = other.$__typename;
-    if (l$$Typename != lOther$$Typename) {
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
       return false;
     }
     return true;
@@ -82,7 +77,7 @@ extension UtilityExtension$Query$getRestaurants on Query$getRestaurants {
   CopyWith$Query$getRestaurants<Query$getRestaurants> get copyWith =>
       CopyWith$Query$getRestaurants(
         this,
-        (Query$getRestaurants i) => i,
+        (i) => i,
       );
 }
 
@@ -118,7 +113,7 @@ class _CopyWithImpl$Query$getRestaurants<TRes>
 
   final TRes Function(Query$getRestaurants) _then;
 
-  static const Map _undefined = {};
+  static const _undefined = {};
 
   TRes call({
     Object? restaurant = _undefined,
@@ -139,11 +134,10 @@ class _CopyWithImpl$Query$getRestaurants<TRes>
                           Query$getRestaurants$restaurant>>)
               _fn) =>
       call(
-          restaurant: _fn(_instance.restaurant.map(
-              (Query$getRestaurants$restaurant e) =>
-                  CopyWith$Query$getRestaurants$restaurant(
+          restaurant: _fn(_instance.restaurant
+              .map((e) => CopyWith$Query$getRestaurants$restaurant(
                     e,
-                    (Query$getRestaurants$restaurant i) => i,
+                    (i) => i,
                   ))).toList());
 }
 
@@ -161,7 +155,7 @@ class _CopyWithStubImpl$Query$getRestaurants<TRes>
   restaurant(_fn) => _res;
 }
 
-const DocumentNode documentNodeQuerygetRestaurants = DocumentNode(definitions: [
+const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.query,
     name: NameNode(value: 'getRestaurants'),
@@ -268,7 +262,7 @@ const DocumentNode documentNodeQuerygetRestaurants = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
-            name: NameNode(value: 'status'),
+            name: NameNode(value: 'open_status'),
             alias: null,
             arguments: [],
             directives: [],
@@ -297,13 +291,7 @@ const DocumentNode documentNodeQuerygetRestaurants = DocumentNode(definitions: [
           ),
         ]),
       ),
-      FieldNode(
-        name: NameNode(value: '__typename'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
+      
     ]),
   ),
 ]);
@@ -375,15 +363,15 @@ class FetchMoreOptions$Query$getRestaurants extends graphql.FetchMoreOptions {
 extension ClientExtension$Query$getRestaurants on graphql.GraphQLClient {
   Future<graphql.QueryResult<Query$getRestaurants>> query$getRestaurants(
           [Options$Query$getRestaurants? options]) async =>
-      await query(options ?? Options$Query$getRestaurants());
+      await this.query(options ?? Options$Query$getRestaurants());
   graphql.ObservableQuery<Query$getRestaurants> watchQuery$getRestaurants(
           [WatchOptions$Query$getRestaurants? options]) =>
-      watchQuery(options ?? WatchOptions$Query$getRestaurants());
+      this.watchQuery(options ?? WatchOptions$Query$getRestaurants());
   void writeQuery$getRestaurants({
     required Query$getRestaurants data,
     bool broadcast = true,
   }) =>
-      writeQuery(
+      this.writeQuery(
         graphql.Request(
             operation:
                 graphql.Operation(document: documentNodeQuerygetRestaurants)),
@@ -391,7 +379,7 @@ extension ClientExtension$Query$getRestaurants on graphql.GraphQLClient {
         broadcast: broadcast,
       );
   Query$getRestaurants? readQuery$getRestaurants({bool optimistic = true}) {
-    final Map<String, dynamic>? result = readQuery(
+    final result = this.readQuery(
       graphql.Request(
           operation:
               graphql.Operation(document: documentNodeQuerygetRestaurants)),
@@ -411,7 +399,7 @@ class Query$getRestaurants$restaurant {
     required this.location_gps,
     this.firebase_id,
     this.description,
-    required this.status,
+    required this.open_status,
     this.payment_info_id,
     required this.schedule_id,
     required this.$__typename,
@@ -420,32 +408,32 @@ class Query$getRestaurants$restaurant {
   factory Query$getRestaurants$restaurant.fromJson(Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$image = json['image'];
-    final l$languageId = json['language_id'];
-    final l$locationText = json['location_text'];
+    final l$language_id = json['language_id'];
+    final l$location_text = json['location_text'];
     final l$name = json['name'];
-    final l$locationGps = json['location_gps'];
-    final l$firebaseId = json['firebase_id'];
+    final l$location_gps = json['location_gps'];
+    final l$firebase_id = json['firebase_id'];
     final l$description = json['description'];
-    final l$status = json['status'];
-    final l$paymentInfoId = json['payment_info_id'];
-    final l$scheduleId = json['schedule_id'];
-    final l$$Typename = json['__typename'];
+    final l$open_status = json['open_status'];
+    final l$payment_info_id = json['payment_info_id'];
+    final l$schedule_id = json['schedule_id'];
+    final l$$__typename = json['__typename'];
     return Query$getRestaurants$restaurant(
       id: (l$id as int),
       image: (l$image as String),
-      language_id: (l$languageId as String),
-      location_text: (l$locationText as String),
+      language_id: (l$language_id as String),
+      location_text: (l$location_text as String),
       name: (l$name as String),
-      location_gps: GeographyFromJson(l$locationGps),
-      firebase_id: (l$firebaseId as String?),
+      location_gps: GeographyFromJson(l$location_gps),
+      firebase_id: (l$firebase_id as String?),
       description: l$description == null
           ? null
           : Query$getRestaurants$restaurant$description.fromJson(
               (l$description as Map<String, dynamic>)),
-      status: (l$status as String),
-      payment_info_id: (l$paymentInfoId as int?),
-      schedule_id: (l$scheduleId as int),
-      $__typename: (l$$Typename as String),
+      open_status: (l$open_status as String),
+      payment_info_id: (l$payment_info_id as int?),
+      schedule_id: (l$schedule_id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -465,7 +453,7 @@ class Query$getRestaurants$restaurant {
 
   final Query$getRestaurants$restaurant$description? description;
 
-  final String status;
+  final String open_status;
 
   final int? payment_info_id;
 
@@ -474,63 +462,61 @@ class Query$getRestaurants$restaurant {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _resultData = <String, dynamic>{};
-    final int l$id = id;
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
     _resultData['id'] = l$id;
-    final String l$image = image;
+    final l$image = image;
     _resultData['image'] = l$image;
-    final String l$languageId = language_id;
-    _resultData['language_id'] = l$languageId;
-    final String l$locationText = location_text;
-    _resultData['location_text'] = l$locationText;
-    final String l$name = name;
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$location_text = location_text;
+    _resultData['location_text'] = l$location_text;
+    final l$name = name;
     _resultData['name'] = l$name;
-    final Geography l$locationGps = location_gps;
-    _resultData['location_gps'] = GeographyToJson(l$locationGps);
-    final String? l$firebaseId = firebase_id;
-    _resultData['firebase_id'] = l$firebaseId;
-    final Query$getRestaurants$restaurant$description? l$description =
-        description;
+    final l$location_gps = location_gps;
+    _resultData['location_gps'] = GeographyToJson(l$location_gps);
+    final l$firebase_id = firebase_id;
+    _resultData['firebase_id'] = l$firebase_id;
+    final l$description = description;
     _resultData['description'] = l$description?.toJson();
-    final String l$status = status;
-    _resultData['status'] = l$status;
-    final int? l$paymentInfoId = payment_info_id;
-    _resultData['payment_info_id'] = l$paymentInfoId;
-    final int l$scheduleId = schedule_id;
-    _resultData['schedule_id'] = l$scheduleId;
-    final String l$$Typename = $__typename;
-    _resultData['__typename'] = l$$Typename;
+    final l$open_status = open_status;
+    _resultData['open_status'] = l$open_status;
+    final l$payment_info_id = payment_info_id;
+    _resultData['payment_info_id'] = l$payment_info_id;
+    final l$schedule_id = schedule_id;
+    _resultData['schedule_id'] = l$schedule_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
     return _resultData;
   }
 
   @override
   int get hashCode {
-    final int l$id = id;
-    final String l$image = image;
-    final String l$languageId = language_id;
-    final String l$locationText = location_text;
-    final String l$name = name;
-    final Geography l$locationGps = location_gps;
-    final String? l$firebaseId = firebase_id;
-    final Query$getRestaurants$restaurant$description? l$description =
-        description;
-    final String l$status = status;
-    final int? l$paymentInfoId = payment_info_id;
-    final int l$scheduleId = schedule_id;
-    final String l$$Typename = $__typename;
+    final l$id = id;
+    final l$image = image;
+    final l$language_id = language_id;
+    final l$location_text = location_text;
+    final l$name = name;
+    final l$location_gps = location_gps;
+    final l$firebase_id = firebase_id;
+    final l$description = description;
+    final l$open_status = open_status;
+    final l$payment_info_id = payment_info_id;
+    final l$schedule_id = schedule_id;
+    final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$image,
-      l$languageId,
-      l$locationText,
+      l$language_id,
+      l$location_text,
       l$name,
-      l$locationGps,
-      l$firebaseId,
+      l$location_gps,
+      l$firebase_id,
       l$description,
-      l$status,
-      l$paymentInfoId,
-      l$scheduleId,
-      l$$Typename,
+      l$open_status,
+      l$payment_info_id,
+      l$schedule_id,
+      l$$__typename,
     ]);
   }
 
@@ -543,66 +529,64 @@ class Query$getRestaurants$restaurant {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final int l$id = id;
-    final int lOther$id = other.id;
+    final l$id = id;
+    final lOther$id = other.id;
     if (l$id != lOther$id) {
       return false;
     }
-    final String l$image = image;
-    final String lOther$image = other.image;
+    final l$image = image;
+    final lOther$image = other.image;
     if (l$image != lOther$image) {
       return false;
     }
-    final String l$languageId = language_id;
-    final String lOther$languageId = other.language_id;
-    if (l$languageId != lOther$languageId) {
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
       return false;
     }
-    final String l$locationText = location_text;
-    final String lOther$locationText = other.location_text;
-    if (l$locationText != lOther$locationText) {
+    final l$location_text = location_text;
+    final lOther$location_text = other.location_text;
+    if (l$location_text != lOther$location_text) {
       return false;
     }
-    final String l$name = name;
-    final String lOther$name = other.name;
+    final l$name = name;
+    final lOther$name = other.name;
     if (l$name != lOther$name) {
       return false;
     }
-    final Geography l$locationGps = location_gps;
-    final Geography lOther$locationGps = other.location_gps;
-    if (l$locationGps != lOther$locationGps) {
+    final l$location_gps = location_gps;
+    final lOther$location_gps = other.location_gps;
+    if (l$location_gps != lOther$location_gps) {
       return false;
     }
-    final String? l$firebaseId = firebase_id;
-    final String? lOther$firebaseId = other.firebase_id;
-    if (l$firebaseId != lOther$firebaseId) {
+    final l$firebase_id = firebase_id;
+    final lOther$firebase_id = other.firebase_id;
+    if (l$firebase_id != lOther$firebase_id) {
       return false;
     }
-    final Query$getRestaurants$restaurant$description? l$description =
-        description;
-    final Query$getRestaurants$restaurant$description? lOther$description =
-        other.description;
+    final l$description = description;
+    final lOther$description = other.description;
     if (l$description != lOther$description) {
       return false;
     }
-    final String l$status = status;
-    final String lOther$status = other.status;
-    if (l$status != lOther$status) {
+    final l$open_status = open_status;
+    final lOther$open_status = other.open_status;
+    if (l$open_status != lOther$open_status) {
       return false;
     }
-    final int? l$paymentInfoId = payment_info_id;
-    final int? lOther$paymentInfoId = other.payment_info_id;
-    if (l$paymentInfoId != lOther$paymentInfoId) {
+    final l$payment_info_id = payment_info_id;
+    final lOther$payment_info_id = other.payment_info_id;
+    if (l$payment_info_id != lOther$payment_info_id) {
       return false;
     }
-    final int l$scheduleId = schedule_id;
-    final int lOther$scheduleId = other.schedule_id;
-    if (l$scheduleId != lOther$scheduleId) {
+    final l$schedule_id = schedule_id;
+    final lOther$schedule_id = other.schedule_id;
+    if (l$schedule_id != lOther$schedule_id) {
       return false;
     }
-    final String l$$Typename = $__typename;
-    final String lOther$$Typename = other.$__typename;
-    if (l$$Typename != lOther$$Typename) {
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
       return false;
     }
     return true;
@@ -614,7 +598,7 @@ extension UtilityExtension$Query$getRestaurants$restaurant
   CopyWith$Query$getRestaurants$restaurant<Query$getRestaurants$restaurant>
       get copyWith => CopyWith$Query$getRestaurants$restaurant(
             this,
-            (Query$getRestaurants$restaurant i) => i,
+            (i) => i,
           );
 }
 
@@ -636,7 +620,7 @@ abstract class CopyWith$Query$getRestaurants$restaurant<TRes> {
     Geography? location_gps,
     String? firebase_id,
     Query$getRestaurants$restaurant$description? description,
-    String? status,
+    String? open_status,
     int? payment_info_id,
     int? schedule_id,
     String? $__typename,
@@ -655,7 +639,7 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
 
   final TRes Function(Query$getRestaurants$restaurant) _then;
 
-  static const Map _undefined = {};
+  static const _undefined = {};
 
   TRes call({
     Object? id = _undefined,
@@ -666,7 +650,7 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
     Object? location_gps = _undefined,
     Object? firebase_id = _undefined,
     Object? description = _undefined,
-    Object? status = _undefined,
+    Object? open_status = _undefined,
     Object? payment_info_id = _undefined,
     Object? schedule_id = _undefined,
     Object? $__typename = _undefined,
@@ -694,9 +678,9 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
         description: description == _undefined
             ? _instance.description
             : (description as Query$getRestaurants$restaurant$description?),
-        status: status == _undefined || status == null
-            ? _instance.status
-            : (status as String),
+        open_status: open_status == _undefined || open_status == null
+            ? _instance.open_status
+            : (open_status as String),
         payment_info_id: payment_info_id == _undefined
             ? _instance.payment_info_id
             : (payment_info_id as int?),
@@ -708,15 +692,12 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
             : ($__typename as String),
       ));
   CopyWith$Query$getRestaurants$restaurant$description<TRes> get description {
-    final Query$getRestaurants$restaurant$description? local$description =
-        _instance.description;
+    final local$description = _instance.description;
     return local$description == null
         ? CopyWith$Query$getRestaurants$restaurant$description.stub(
             _then(_instance))
         : CopyWith$Query$getRestaurants$restaurant$description(
-            local$description,
-            (Query$getRestaurants$restaurant$description e) =>
-                call(description: e));
+            local$description, (e) => call(description: e));
   }
 }
 
@@ -735,7 +716,7 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant<TRes>
     Geography? location_gps,
     String? firebase_id,
     Query$getRestaurants$restaurant$description? description,
-    String? status,
+    String? open_status,
     int? payment_info_id,
     int? schedule_id,
     String? $__typename,
@@ -754,14 +735,14 @@ class Query$getRestaurants$restaurant$description {
   factory Query$getRestaurants$restaurant$description.fromJson(
       Map<String, dynamic> json) {
     final l$translations = json['translations'];
-    final l$$Typename = json['__typename'];
+    final l$$__typename = json['__typename'];
     return Query$getRestaurants$restaurant$description(
       translations: (l$translations as List<dynamic>)
           .map((e) =>
               Query$getRestaurants$restaurant$description$translations.fromJson(
                   (e as Map<String, dynamic>)))
           .toList(),
-      $__typename: (l$$Typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -771,27 +752,22 @@ class Query$getRestaurants$restaurant$description {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _resultData = <String, dynamic>{};
-    final List<Query$getRestaurants$restaurant$description$translations>
-        l$translations = translations;
-    _resultData['translations'] = l$translations
-        .map((Query$getRestaurants$restaurant$description$translations e) =>
-            e.toJson())
-        .toList();
-    final String l$$Typename = $__typename;
-    _resultData['__typename'] = l$$Typename;
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
     return _resultData;
   }
 
   @override
   int get hashCode {
-    final List<Query$getRestaurants$restaurant$description$translations>
-        l$translations = translations;
-    final String l$$Typename = $__typename;
+    final l$translations = translations;
+    final l$$__typename = $__typename;
     return Object.hashAll([
-      Object.hashAll(l$translations.map(
-          (Query$getRestaurants$restaurant$description$translations v) => v)),
-      l$$Typename,
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
     ]);
   }
 
@@ -804,25 +780,21 @@ class Query$getRestaurants$restaurant$description {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final List<Query$getRestaurants$restaurant$description$translations>
-        l$translations = translations;
-    final List<Query$getRestaurants$restaurant$description$translations>
-        lOther$translations = other.translations;
+    final l$translations = translations;
+    final lOther$translations = other.translations;
     if (l$translations.length != lOther$translations.length) {
       return false;
     }
     for (int i = 0; i < l$translations.length; i++) {
-      final Query$getRestaurants$restaurant$description$translations
-          l$translations$entry = l$translations[i];
-      final Query$getRestaurants$restaurant$description$translations
-          lOther$translations$entry = lOther$translations[i];
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
       if (l$translations$entry != lOther$translations$entry) {
         return false;
       }
     }
-    final String l$$Typename = $__typename;
-    final String lOther$$Typename = other.$__typename;
-    if (l$$Typename != lOther$$Typename) {
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
       return false;
     }
     return true;
@@ -835,7 +807,7 @@ extension UtilityExtension$Query$getRestaurants$restaurant$description
           Query$getRestaurants$restaurant$description>
       get copyWith => CopyWith$Query$getRestaurants$restaurant$description(
             this,
-            (Query$getRestaurants$restaurant$description i) => i,
+            (i) => i,
           );
 }
 
@@ -872,7 +844,7 @@ class _CopyWithImpl$Query$getRestaurants$restaurant$description<TRes>
 
   final TRes Function(Query$getRestaurants$restaurant$description) _then;
 
-  static const Map _undefined = {};
+  static const _undefined = {};
 
   TRes call({
     Object? translations = _undefined,
@@ -894,14 +866,11 @@ class _CopyWithImpl$Query$getRestaurants$restaurant$description<TRes>
                           Query$getRestaurants$restaurant$description$translations>>)
               _fn) =>
       call(
-          translations: _fn(_instance.translations.map(
-              (Query$getRestaurants$restaurant$description$translations e) =>
-                  CopyWith$Query$getRestaurants$restaurant$description$translations(
-                    e,
-                    (Query$getRestaurants$restaurant$description$translations
-                            i) =>
-                        i,
-                  ))).toList());
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$getRestaurants$restaurant$description$translations(
+                e,
+                (i) => i,
+              ))).toList());
 }
 
 class _CopyWithStubImpl$Query$getRestaurants$restaurant$description<TRes>
@@ -928,13 +897,13 @@ class Query$getRestaurants$restaurant$description$translations {
 
   factory Query$getRestaurants$restaurant$description$translations.fromJson(
       Map<String, dynamic> json) {
-    final l$languageId = json['language_id'];
+    final l$language_id = json['language_id'];
     final l$value = json['value'];
-    final l$$Typename = json['__typename'];
+    final l$$__typename = json['__typename'];
     return Query$getRestaurants$restaurant$description$translations(
-      language_id: (l$languageId as String),
+      language_id: (l$language_id as String),
       value: (l$value as String),
-      $__typename: (l$$Typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -945,25 +914,25 @@ class Query$getRestaurants$restaurant$description$translations {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _resultData = <String, dynamic>{};
-    final String l$languageId = language_id;
-    _resultData['language_id'] = l$languageId;
-    final String l$value = value;
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
     _resultData['value'] = l$value;
-    final String l$$Typename = $__typename;
-    _resultData['__typename'] = l$$Typename;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
     return _resultData;
   }
 
   @override
   int get hashCode {
-    final String l$languageId = language_id;
-    final String l$value = value;
-    final String l$$Typename = $__typename;
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
     return Object.hashAll([
-      l$languageId,
+      l$language_id,
       l$value,
-      l$$Typename,
+      l$$__typename,
     ]);
   }
 
@@ -976,19 +945,19 @@ class Query$getRestaurants$restaurant$description$translations {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final String l$languageId = language_id;
-    final String lOther$languageId = other.language_id;
-    if (l$languageId != lOther$languageId) {
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
       return false;
     }
-    final String l$value = value;
-    final String lOther$value = other.value;
+    final l$value = value;
+    final lOther$value = other.value;
     if (l$value != lOther$value) {
       return false;
     }
-    final String l$$Typename = $__typename;
-    final String lOther$$Typename = other.$__typename;
-    if (l$$Typename != lOther$$Typename) {
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
       return false;
     }
     return true;
@@ -1002,7 +971,7 @@ extension UtilityExtension$Query$getRestaurants$restaurant$description$translati
       get copyWith =>
           CopyWith$Query$getRestaurants$restaurant$description$translations(
             this,
-            (Query$getRestaurants$restaurant$description$translations i) => i,
+            (i) => i,
           );
 }
 
@@ -1040,7 +1009,7 @@ class _CopyWithImpl$Query$getRestaurants$restaurant$description$translations<
   final TRes Function(Query$getRestaurants$restaurant$description$translations)
       _then;
 
-  static const Map _undefined = {};
+  static const _undefined = {};
 
   TRes call({
     Object? language_id = _undefined,
@@ -1087,7 +1056,7 @@ class Variables$Query$getOneRestaurant {
   Variables$Query$getOneRestaurant._(this._$data);
 
   factory Variables$Query$getOneRestaurant.fromJson(Map<String, dynamic> data) {
-    final Map<String, dynamic> result$data = <String, dynamic>{};
+    final result$data = <String, dynamic>{};
     final l$id = data['id'];
     result$data['id'] = (l$id as int);
     return Variables$Query$getOneRestaurant._(result$data);
@@ -1097,8 +1066,8 @@ class Variables$Query$getOneRestaurant {
 
   int get id => (_$data['id'] as int);
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> result$data = <String, dynamic>{};
-    final int l$id = id;
+    final result$data = <String, dynamic>{};
+    final l$id = id;
     result$data['id'] = l$id;
     return result$data;
   }
@@ -1106,7 +1075,7 @@ class Variables$Query$getOneRestaurant {
   CopyWith$Variables$Query$getOneRestaurant<Variables$Query$getOneRestaurant>
       get copyWith => CopyWith$Variables$Query$getOneRestaurant(
             this,
-            (Variables$Query$getOneRestaurant i) => i,
+            (i) => i,
           );
   @override
   bool operator ==(Object other) {
@@ -1117,8 +1086,8 @@ class Variables$Query$getOneRestaurant {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final int l$id = id;
-    final int lOther$id = other.id;
+    final l$id = id;
+    final lOther$id = other.id;
     if (l$id != lOther$id) {
       return false;
     }
@@ -1127,7 +1096,7 @@ class Variables$Query$getOneRestaurant {
 
   @override
   int get hashCode {
-    final int l$id = id;
+    final l$id = id;
     return Object.hashAll([l$id]);
   }
 }
@@ -1155,7 +1124,7 @@ class _CopyWithImpl$Variables$Query$getOneRestaurant<TRes>
 
   final TRes Function(Variables$Query$getOneRestaurant) _then;
 
-  static const Map _undefined = {};
+  static const _undefined = {};
 
   TRes call({Object? id = _undefined}) =>
       _then(Variables$Query$getOneRestaurant._({
@@ -1180,14 +1149,14 @@ class Query$getOneRestaurant {
   });
 
   factory Query$getOneRestaurant.fromJson(Map<String, dynamic> json) {
-    final l$restaurantByPk = json['restaurant_by_pk'];
-    final l$$Typename = json['__typename'];
+    final l$restaurant_by_pk = json['restaurant_by_pk'];
+    final l$$__typename = json['__typename'];
     return Query$getOneRestaurant(
-      restaurant_by_pk: l$restaurantByPk == null
+      restaurant_by_pk: l$restaurant_by_pk == null
           ? null
           : Query$getOneRestaurant$restaurant_by_pk.fromJson(
-              (l$restaurantByPk as Map<String, dynamic>)),
-      $__typename: (l$$Typename as String),
+              (l$restaurant_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1196,23 +1165,21 @@ class Query$getOneRestaurant {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _resultData = <String, dynamic>{};
-    final Query$getOneRestaurant$restaurant_by_pk? l$restaurantByPk =
-        restaurant_by_pk;
-    _resultData['restaurant_by_pk'] = l$restaurantByPk?.toJson();
-    final String l$$Typename = $__typename;
-    _resultData['__typename'] = l$$Typename;
+    final _resultData = <String, dynamic>{};
+    final l$restaurant_by_pk = restaurant_by_pk;
+    _resultData['restaurant_by_pk'] = l$restaurant_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
     return _resultData;
   }
 
   @override
   int get hashCode {
-    final Query$getOneRestaurant$restaurant_by_pk? l$restaurantByPk =
-        restaurant_by_pk;
-    final String l$$Typename = $__typename;
+    final l$restaurant_by_pk = restaurant_by_pk;
+    final l$$__typename = $__typename;
     return Object.hashAll([
-      l$restaurantByPk,
-      l$$Typename,
+      l$restaurant_by_pk,
+      l$$__typename,
     ]);
   }
 
@@ -1225,16 +1192,14 @@ class Query$getOneRestaurant {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final Query$getOneRestaurant$restaurant_by_pk? l$restaurantByPk =
-        restaurant_by_pk;
-    final Query$getOneRestaurant$restaurant_by_pk? lOther$restaurantByPk =
-        other.restaurant_by_pk;
-    if (l$restaurantByPk != lOther$restaurantByPk) {
+    final l$restaurant_by_pk = restaurant_by_pk;
+    final lOther$restaurant_by_pk = other.restaurant_by_pk;
+    if (l$restaurant_by_pk != lOther$restaurant_by_pk) {
       return false;
     }
-    final String l$$Typename = $__typename;
-    final String lOther$$Typename = other.$__typename;
-    if (l$$Typename != lOther$$Typename) {
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
       return false;
     }
     return true;
@@ -1245,7 +1210,7 @@ extension UtilityExtension$Query$getOneRestaurant on Query$getOneRestaurant {
   CopyWith$Query$getOneRestaurant<Query$getOneRestaurant> get copyWith =>
       CopyWith$Query$getOneRestaurant(
         this,
-        (Query$getOneRestaurant i) => i,
+        (i) => i,
       );
 }
 
@@ -1276,7 +1241,7 @@ class _CopyWithImpl$Query$getOneRestaurant<TRes>
 
   final TRes Function(Query$getOneRestaurant) _then;
 
-  static const Map _undefined = {};
+  static const _undefined = {};
 
   TRes call({
     Object? restaurant_by_pk = _undefined,
@@ -1291,15 +1256,12 @@ class _CopyWithImpl$Query$getOneRestaurant<TRes>
             : ($__typename as String),
       ));
   CopyWith$Query$getOneRestaurant$restaurant_by_pk<TRes> get restaurant_by_pk {
-    final Query$getOneRestaurant$restaurant_by_pk? local$restaurantByPk =
-        _instance.restaurant_by_pk;
-    return local$restaurantByPk == null
+    final local$restaurant_by_pk = _instance.restaurant_by_pk;
+    return local$restaurant_by_pk == null
         ? CopyWith$Query$getOneRestaurant$restaurant_by_pk.stub(
             _then(_instance))
         : CopyWith$Query$getOneRestaurant$restaurant_by_pk(
-            local$restaurantByPk,
-            (Query$getOneRestaurant$restaurant_by_pk e) =>
-                call(restaurant_by_pk: e));
+            local$restaurant_by_pk, (e) => call(restaurant_by_pk: e));
   }
 }
 
@@ -1318,8 +1280,7 @@ class _CopyWithStubImpl$Query$getOneRestaurant<TRes>
       CopyWith$Query$getOneRestaurant$restaurant_by_pk.stub(_res);
 }
 
-const DocumentNode documentNodeQuerygetOneRestaurant =
-    DocumentNode(definitions: [
+const documentNodeQuerygetOneRestaurant = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.query,
     name: NameNode(value: 'getOneRestaurant'),
@@ -1448,7 +1409,7 @@ const DocumentNode documentNodeQuerygetOneRestaurant =
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'status'),
+            name: NameNode(value: 'open_status'),
             alias: null,
             arguments: [],
             directives: [],
@@ -1463,6 +1424,7 @@ const DocumentNode documentNodeQuerygetOneRestaurant =
           ),
         ]),
       ),
+      
     ]),
   ),
 ]);
@@ -1540,16 +1502,16 @@ class FetchMoreOptions$Query$getOneRestaurant extends graphql.FetchMoreOptions {
 extension ClientExtension$Query$getOneRestaurant on graphql.GraphQLClient {
   Future<graphql.QueryResult<Query$getOneRestaurant>> query$getOneRestaurant(
           Options$Query$getOneRestaurant options) async =>
-      await query(options);
+      await this.query(options);
   graphql.ObservableQuery<Query$getOneRestaurant> watchQuery$getOneRestaurant(
           WatchOptions$Query$getOneRestaurant options) =>
-      watchQuery(options);
+      this.watchQuery(options);
   void writeQuery$getOneRestaurant({
     required Query$getOneRestaurant data,
     required Variables$Query$getOneRestaurant variables,
     bool broadcast = true,
   }) =>
-      writeQuery(
+      this.writeQuery(
         graphql.Request(
           operation:
               graphql.Operation(document: documentNodeQuerygetOneRestaurant),
@@ -1562,7 +1524,7 @@ extension ClientExtension$Query$getOneRestaurant on graphql.GraphQLClient {
     required Variables$Query$getOneRestaurant variables,
     bool optimistic = true,
   }) {
-    final Map<String, dynamic>? result = readQuery(
+    final result = this.readQuery(
       graphql.Request(
         operation:
             graphql.Operation(document: documentNodeQuerygetOneRestaurant),
@@ -1585,38 +1547,38 @@ class Query$getOneRestaurant$restaurant_by_pk {
     required this.location_text,
     required this.name,
     required this.schedule_id,
-    required this.status,
+    required this.open_status,
     required this.$__typename,
   });
 
   factory Query$getOneRestaurant$restaurant_by_pk.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
-    final l$firebaseId = json['firebase_id'];
+    final l$firebase_id = json['firebase_id'];
     final l$description = json['description'];
     final l$image = json['image'];
-    final l$languageId = json['language_id'];
-    final l$locationGps = json['location_gps'];
-    final l$locationText = json['location_text'];
+    final l$language_id = json['language_id'];
+    final l$location_gps = json['location_gps'];
+    final l$location_text = json['location_text'];
     final l$name = json['name'];
-    final l$scheduleId = json['schedule_id'];
-    final l$status = json['status'];
-    final l$$Typename = json['__typename'];
+    final l$schedule_id = json['schedule_id'];
+    final l$open_status = json['open_status'];
+    final l$$__typename = json['__typename'];
     return Query$getOneRestaurant$restaurant_by_pk(
       id: (l$id as int),
-      firebase_id: (l$firebaseId as String?),
+      firebase_id: (l$firebase_id as String?),
       description: l$description == null
           ? null
           : Query$getOneRestaurant$restaurant_by_pk$description.fromJson(
               (l$description as Map<String, dynamic>)),
       image: (l$image as String),
-      language_id: (l$languageId as String),
-      location_gps: GeographyFromJson(l$locationGps),
-      location_text: (l$locationText as String),
+      language_id: (l$language_id as String),
+      location_gps: GeographyFromJson(l$location_gps),
+      location_text: (l$location_text as String),
       name: (l$name as String),
-      schedule_id: (l$scheduleId as int),
-      status: (l$status as String),
-      $__typename: (l$$Typename as String),
+      schedule_id: (l$schedule_id as int),
+      open_status: (l$open_status as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1638,64 +1600,62 @@ class Query$getOneRestaurant$restaurant_by_pk {
 
   final int schedule_id;
 
-  final String status;
+  final String open_status;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _resultData = <String, dynamic>{};
-    final int l$id = id;
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
     _resultData['id'] = l$id;
-    final String? l$firebaseId = firebase_id;
-    _resultData['firebase_id'] = l$firebaseId;
-    final Query$getOneRestaurant$restaurant_by_pk$description? l$description =
-        description;
+    final l$firebase_id = firebase_id;
+    _resultData['firebase_id'] = l$firebase_id;
+    final l$description = description;
     _resultData['description'] = l$description?.toJson();
-    final String l$image = image;
+    final l$image = image;
     _resultData['image'] = l$image;
-    final String l$languageId = language_id;
-    _resultData['language_id'] = l$languageId;
-    final Geography l$locationGps = location_gps;
-    _resultData['location_gps'] = GeographyToJson(l$locationGps);
-    final String l$locationText = location_text;
-    _resultData['location_text'] = l$locationText;
-    final String l$name = name;
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$location_gps = location_gps;
+    _resultData['location_gps'] = GeographyToJson(l$location_gps);
+    final l$location_text = location_text;
+    _resultData['location_text'] = l$location_text;
+    final l$name = name;
     _resultData['name'] = l$name;
-    final int l$scheduleId = schedule_id;
-    _resultData['schedule_id'] = l$scheduleId;
-    final String l$status = status;
-    _resultData['status'] = l$status;
-    final String l$$Typename = $__typename;
-    _resultData['__typename'] = l$$Typename;
+    final l$schedule_id = schedule_id;
+    _resultData['schedule_id'] = l$schedule_id;
+    final l$open_status = open_status;
+    _resultData['open_status'] = l$open_status;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
     return _resultData;
   }
 
   @override
   int get hashCode {
-    final int l$id = id;
-    final String? l$firebaseId = firebase_id;
-    final Query$getOneRestaurant$restaurant_by_pk$description? l$description =
-        description;
-    final String l$image = image;
-    final String l$languageId = language_id;
-    final Geography l$locationGps = location_gps;
-    final String l$locationText = location_text;
-    final String l$name = name;
-    final int l$scheduleId = schedule_id;
-    final String l$status = status;
-    final String l$$Typename = $__typename;
+    final l$id = id;
+    final l$firebase_id = firebase_id;
+    final l$description = description;
+    final l$image = image;
+    final l$language_id = language_id;
+    final l$location_gps = location_gps;
+    final l$location_text = location_text;
+    final l$name = name;
+    final l$schedule_id = schedule_id;
+    final l$open_status = open_status;
+    final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
-      l$firebaseId,
+      l$firebase_id,
       l$description,
       l$image,
-      l$languageId,
-      l$locationGps,
-      l$locationText,
+      l$language_id,
+      l$location_gps,
+      l$location_text,
       l$name,
-      l$scheduleId,
-      l$status,
-      l$$Typename,
+      l$schedule_id,
+      l$open_status,
+      l$$__typename,
     ]);
   }
 
@@ -1708,61 +1668,59 @@ class Query$getOneRestaurant$restaurant_by_pk {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final int l$id = id;
-    final int lOther$id = other.id;
+    final l$id = id;
+    final lOther$id = other.id;
     if (l$id != lOther$id) {
       return false;
     }
-    final String? l$firebaseId = firebase_id;
-    final String? lOther$firebaseId = other.firebase_id;
-    if (l$firebaseId != lOther$firebaseId) {
+    final l$firebase_id = firebase_id;
+    final lOther$firebase_id = other.firebase_id;
+    if (l$firebase_id != lOther$firebase_id) {
       return false;
     }
-    final Query$getOneRestaurant$restaurant_by_pk$description? l$description =
-        description;
-    final Query$getOneRestaurant$restaurant_by_pk$description?
-        lOther$description = other.description;
+    final l$description = description;
+    final lOther$description = other.description;
     if (l$description != lOther$description) {
       return false;
     }
-    final String l$image = image;
-    final String lOther$image = other.image;
+    final l$image = image;
+    final lOther$image = other.image;
     if (l$image != lOther$image) {
       return false;
     }
-    final String l$languageId = language_id;
-    final String lOther$languageId = other.language_id;
-    if (l$languageId != lOther$languageId) {
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
       return false;
     }
-    final Geography l$locationGps = location_gps;
-    final Geography lOther$locationGps = other.location_gps;
-    if (l$locationGps != lOther$locationGps) {
+    final l$location_gps = location_gps;
+    final lOther$location_gps = other.location_gps;
+    if (l$location_gps != lOther$location_gps) {
       return false;
     }
-    final String l$locationText = location_text;
-    final String lOther$locationText = other.location_text;
-    if (l$locationText != lOther$locationText) {
+    final l$location_text = location_text;
+    final lOther$location_text = other.location_text;
+    if (l$location_text != lOther$location_text) {
       return false;
     }
-    final String l$name = name;
-    final String lOther$name = other.name;
+    final l$name = name;
+    final lOther$name = other.name;
     if (l$name != lOther$name) {
       return false;
     }
-    final int l$scheduleId = schedule_id;
-    final int lOther$scheduleId = other.schedule_id;
-    if (l$scheduleId != lOther$scheduleId) {
+    final l$schedule_id = schedule_id;
+    final lOther$schedule_id = other.schedule_id;
+    if (l$schedule_id != lOther$schedule_id) {
       return false;
     }
-    final String l$status = status;
-    final String lOther$status = other.status;
-    if (l$status != lOther$status) {
+    final l$open_status = open_status;
+    final lOther$open_status = other.open_status;
+    if (l$open_status != lOther$open_status) {
       return false;
     }
-    final String l$$Typename = $__typename;
-    final String lOther$$Typename = other.$__typename;
-    if (l$$Typename != lOther$$Typename) {
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
       return false;
     }
     return true;
@@ -1775,7 +1733,7 @@ extension UtilityExtension$Query$getOneRestaurant$restaurant_by_pk
           Query$getOneRestaurant$restaurant_by_pk>
       get copyWith => CopyWith$Query$getOneRestaurant$restaurant_by_pk(
             this,
-            (Query$getOneRestaurant$restaurant_by_pk i) => i,
+            (i) => i,
           );
 }
 
@@ -1798,7 +1756,7 @@ abstract class CopyWith$Query$getOneRestaurant$restaurant_by_pk<TRes> {
     String? location_text,
     String? name,
     int? schedule_id,
-    String? status,
+    String? open_status,
     String? $__typename,
   });
   CopyWith$Query$getOneRestaurant$restaurant_by_pk$description<TRes>
@@ -1816,7 +1774,7 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_by_pk<TRes>
 
   final TRes Function(Query$getOneRestaurant$restaurant_by_pk) _then;
 
-  static const Map _undefined = {};
+  static const _undefined = {};
 
   TRes call({
     Object? id = _undefined,
@@ -1828,7 +1786,7 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_by_pk<TRes>
     Object? location_text = _undefined,
     Object? name = _undefined,
     Object? schedule_id = _undefined,
-    Object? status = _undefined,
+    Object? open_status = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getOneRestaurant$restaurant_by_pk(
@@ -1858,24 +1816,21 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_by_pk<TRes>
         schedule_id: schedule_id == _undefined || schedule_id == null
             ? _instance.schedule_id
             : (schedule_id as int),
-        status: status == _undefined || status == null
-            ? _instance.status
-            : (status as String),
+        open_status: open_status == _undefined || open_status == null
+            ? _instance.open_status
+            : (open_status as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   CopyWith$Query$getOneRestaurant$restaurant_by_pk$description<TRes>
       get description {
-    final Query$getOneRestaurant$restaurant_by_pk$description?
-        local$description = _instance.description;
+    final local$description = _instance.description;
     return local$description == null
         ? CopyWith$Query$getOneRestaurant$restaurant_by_pk$description.stub(
             _then(_instance))
         : CopyWith$Query$getOneRestaurant$restaurant_by_pk$description(
-            local$description,
-            (Query$getOneRestaurant$restaurant_by_pk$description e) =>
-                call(description: e));
+            local$description, (e) => call(description: e));
   }
 }
 
@@ -1895,7 +1850,7 @@ class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_by_pk<TRes>
     String? location_text,
     String? name,
     int? schedule_id,
-    String? status,
+    String? open_status,
     String? $__typename,
   }) =>
       _res;
@@ -1914,14 +1869,14 @@ class Query$getOneRestaurant$restaurant_by_pk$description {
   factory Query$getOneRestaurant$restaurant_by_pk$description.fromJson(
       Map<String, dynamic> json) {
     final l$translations = json['translations'];
-    final l$$Typename = json['__typename'];
+    final l$$__typename = json['__typename'];
     return Query$getOneRestaurant$restaurant_by_pk$description(
       translations: (l$translations as List<dynamic>)
           .map((e) =>
               Query$getOneRestaurant$restaurant_by_pk$description$translations
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
-      $__typename: (l$$Typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1931,30 +1886,22 @@ class Query$getOneRestaurant$restaurant_by_pk$description {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _resultData = <String, dynamic>{};
-    final List<Query$getOneRestaurant$restaurant_by_pk$description$translations>
-        l$translations = translations;
-    _resultData['translations'] = l$translations
-        .map((Query$getOneRestaurant$restaurant_by_pk$description$translations
-                e) =>
-            e.toJson())
-        .toList();
-    final String l$$Typename = $__typename;
-    _resultData['__typename'] = l$$Typename;
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
     return _resultData;
   }
 
   @override
   int get hashCode {
-    final List<Query$getOneRestaurant$restaurant_by_pk$description$translations>
-        l$translations = translations;
-    final String l$$Typename = $__typename;
+    final l$translations = translations;
+    final l$$__typename = $__typename;
     return Object.hashAll([
-      Object.hashAll(l$translations.map(
-          (Query$getOneRestaurant$restaurant_by_pk$description$translations
-                  v) =>
-              v)),
-      l$$Typename,
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
     ]);
   }
 
@@ -1967,25 +1914,21 @@ class Query$getOneRestaurant$restaurant_by_pk$description {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final List<Query$getOneRestaurant$restaurant_by_pk$description$translations>
-        l$translations = translations;
-    final List<Query$getOneRestaurant$restaurant_by_pk$description$translations>
-        lOther$translations = other.translations;
+    final l$translations = translations;
+    final lOther$translations = other.translations;
     if (l$translations.length != lOther$translations.length) {
       return false;
     }
     for (int i = 0; i < l$translations.length; i++) {
-      final Query$getOneRestaurant$restaurant_by_pk$description$translations
-          l$translations$entry = l$translations[i];
-      final Query$getOneRestaurant$restaurant_by_pk$description$translations
-          lOther$translations$entry = lOther$translations[i];
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
       if (l$translations$entry != lOther$translations$entry) {
         return false;
       }
     }
-    final String l$$Typename = $__typename;
-    final String lOther$$Typename = other.$__typename;
-    if (l$$Typename != lOther$$Typename) {
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
       return false;
     }
     return true;
@@ -1999,7 +1942,7 @@ extension UtilityExtension$Query$getOneRestaurant$restaurant_by_pk$description
       get copyWith =>
           CopyWith$Query$getOneRestaurant$restaurant_by_pk$description(
             this,
-            (Query$getOneRestaurant$restaurant_by_pk$description i) => i,
+            (i) => i,
           );
 }
 
@@ -2040,7 +1983,7 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_by_pk$description<TRes>
   final TRes Function(Query$getOneRestaurant$restaurant_by_pk$description)
       _then;
 
-  static const Map _undefined = {};
+  static const _undefined = {};
 
   TRes call({
     Object? translations = _undefined,
@@ -2062,15 +2005,11 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_by_pk$description<TRes>
                           Query$getOneRestaurant$restaurant_by_pk$description$translations>>)
               _fn) =>
       call(
-          translations: _fn(_instance.translations.map(
-              (Query$getOneRestaurant$restaurant_by_pk$description$translations
-                      e) =>
-                  CopyWith$Query$getOneRestaurant$restaurant_by_pk$description$translations(
-                    e,
-                    (Query$getOneRestaurant$restaurant_by_pk$description$translations
-                            i) =>
-                        i,
-                  ))).toList());
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$getOneRestaurant$restaurant_by_pk$description$translations(
+                e,
+                (i) => i,
+              ))).toList());
 }
 
 class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_by_pk$description<
@@ -2100,13 +2039,13 @@ class Query$getOneRestaurant$restaurant_by_pk$description$translations {
 
   factory Query$getOneRestaurant$restaurant_by_pk$description$translations.fromJson(
       Map<String, dynamic> json) {
-    final l$languageId = json['language_id'];
+    final l$language_id = json['language_id'];
     final l$value = json['value'];
-    final l$$Typename = json['__typename'];
+    final l$$__typename = json['__typename'];
     return Query$getOneRestaurant$restaurant_by_pk$description$translations(
-      language_id: (l$languageId as String),
+      language_id: (l$language_id as String),
       value: (l$value as String),
-      $__typename: (l$$Typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -2117,25 +2056,25 @@ class Query$getOneRestaurant$restaurant_by_pk$description$translations {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _resultData = <String, dynamic>{};
-    final String l$languageId = language_id;
-    _resultData['language_id'] = l$languageId;
-    final String l$value = value;
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
     _resultData['value'] = l$value;
-    final String l$$Typename = $__typename;
-    _resultData['__typename'] = l$$Typename;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
     return _resultData;
   }
 
   @override
   int get hashCode {
-    final String l$languageId = language_id;
-    final String l$value = value;
-    final String l$$Typename = $__typename;
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
     return Object.hashAll([
-      l$languageId,
+      l$language_id,
       l$value,
-      l$$Typename,
+      l$$__typename,
     ]);
   }
 
@@ -2149,19 +2088,19 @@ class Query$getOneRestaurant$restaurant_by_pk$description$translations {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final String l$languageId = language_id;
-    final String lOther$languageId = other.language_id;
-    if (l$languageId != lOther$languageId) {
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
       return false;
     }
-    final String l$value = value;
-    final String lOther$value = other.value;
+    final l$value = value;
+    final lOther$value = other.value;
     if (l$value != lOther$value) {
       return false;
     }
-    final String l$$Typename = $__typename;
-    final String lOther$$Typename = other.$__typename;
-    if (l$$Typename != lOther$$Typename) {
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
       return false;
     }
     return true;
@@ -2175,9 +2114,7 @@ extension UtilityExtension$Query$getOneRestaurant$restaurant_by_pk$description$t
       get copyWith =>
           CopyWith$Query$getOneRestaurant$restaurant_by_pk$description$translations(
             this,
-            (Query$getOneRestaurant$restaurant_by_pk$description$translations
-                    i) =>
-                i,
+            (i) => i,
           );
 }
 
@@ -2217,7 +2154,7 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_by_pk$description$translat
   final TRes Function(
       Query$getOneRestaurant$restaurant_by_pk$description$translations) _then;
 
-  static const Map _undefined = {};
+  static const _undefined = {};
 
   TRes call({
     Object? language_id = _undefined,
@@ -2255,6 +2192,422 @@ class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_by_pk$description$tran
       _res;
 }
 
+class Query$getCategories {
+  Query$getCategories({
+    required this.restaurant_category,
+    required this.$__typename,
+  });
+
+  factory Query$getCategories.fromJson(Map<String, dynamic> json) {
+    final l$restaurant_category = json['restaurant_category'];
+    final l$$__typename = json['__typename'];
+    return Query$getCategories(
+      restaurant_category: (l$restaurant_category as List<dynamic>)
+          .map((e) => Query$getCategories$restaurant_category.fromJson(
+              (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$getCategories$restaurant_category> restaurant_category;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$restaurant_category = restaurant_category;
+    _resultData['restaurant_category'] =
+        l$restaurant_category.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$restaurant_category = restaurant_category;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$restaurant_category.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getCategories) || runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$restaurant_category = restaurant_category;
+    final lOther$restaurant_category = other.restaurant_category;
+    if (l$restaurant_category.length != lOther$restaurant_category.length) {
+      return false;
+    }
+    for (int i = 0; i < l$restaurant_category.length; i++) {
+      final l$restaurant_category$entry = l$restaurant_category[i];
+      final lOther$restaurant_category$entry = lOther$restaurant_category[i];
+      if (l$restaurant_category$entry != lOther$restaurant_category$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCategories on Query$getCategories {
+  CopyWith$Query$getCategories<Query$getCategories> get copyWith =>
+      CopyWith$Query$getCategories(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$getCategories<TRes> {
+  factory CopyWith$Query$getCategories(
+    Query$getCategories instance,
+    TRes Function(Query$getCategories) then,
+  ) = _CopyWithImpl$Query$getCategories;
+
+  factory CopyWith$Query$getCategories.stub(TRes res) =
+      _CopyWithStubImpl$Query$getCategories;
+
+  TRes call({
+    List<Query$getCategories$restaurant_category>? restaurant_category,
+    String? $__typename,
+  });
+  TRes restaurant_category(
+      Iterable<Query$getCategories$restaurant_category> Function(
+              Iterable<
+                  CopyWith$Query$getCategories$restaurant_category<
+                      Query$getCategories$restaurant_category>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getCategories<TRes>
+    implements CopyWith$Query$getCategories<TRes> {
+  _CopyWithImpl$Query$getCategories(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCategories _instance;
+
+  final TRes Function(Query$getCategories) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? restaurant_category = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getCategories(
+        restaurant_category:
+            restaurant_category == _undefined || restaurant_category == null
+                ? _instance.restaurant_category
+                : (restaurant_category
+                    as List<Query$getCategories$restaurant_category>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes restaurant_category(
+          Iterable<Query$getCategories$restaurant_category> Function(
+                  Iterable<
+                      CopyWith$Query$getCategories$restaurant_category<
+                          Query$getCategories$restaurant_category>>)
+              _fn) =>
+      call(
+          restaurant_category: _fn(_instance.restaurant_category
+              .map((e) => CopyWith$Query$getCategories$restaurant_category(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getCategories<TRes>
+    implements CopyWith$Query$getCategories<TRes> {
+  _CopyWithStubImpl$Query$getCategories(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getCategories$restaurant_category>? restaurant_category,
+    String? $__typename,
+  }) =>
+      _res;
+  restaurant_category(_fn) => _res;
+}
+
+const documentNodeQuerygetCategories = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getCategories'),
+    variableDefinitions: [],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'restaurant_category'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'position'),
+                value: EnumValueNode(name: NameNode(value: 'asc')),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getCategories _parserFn$Query$getCategories(Map<String, dynamic> data) =>
+    Query$getCategories.fromJson(data);
+
+class Options$Query$getCategories
+    extends graphql.QueryOptions<Query$getCategories> {
+  Options$Query$getCategories({
+    String? operationName,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetCategories,
+          parserFn: _parserFn$Query$getCategories,
+        );
+}
+
+class WatchOptions$Query$getCategories
+    extends graphql.WatchQueryOptions<Query$getCategories> {
+  WatchOptions$Query$getCategories({
+    String? operationName,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetCategories,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getCategories,
+        );
+}
+
+class FetchMoreOptions$Query$getCategories extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getCategories(
+      {required graphql.UpdateQuery updateQuery})
+      : super(
+          updateQuery: updateQuery,
+          document: documentNodeQuerygetCategories,
+        );
+}
+
+extension ClientExtension$Query$getCategories on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getCategories>> query$getCategories(
+          [Options$Query$getCategories? options]) async =>
+      await this.query(options ?? Options$Query$getCategories());
+  graphql.ObservableQuery<Query$getCategories> watchQuery$getCategories(
+          [WatchOptions$Query$getCategories? options]) =>
+      this.watchQuery(options ?? WatchOptions$Query$getCategories());
+  void writeQuery$getCategories({
+    required Query$getCategories data,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+            operation:
+                graphql.Operation(document: documentNodeQuerygetCategories)),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getCategories? readQuery$getCategories({bool optimistic = true}) {
+    final result = this.readQuery(
+      graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQuerygetCategories)),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$getCategories.fromJson(result);
+  }
+}
+
+class Query$getCategories$restaurant_category {
+  Query$getCategories$restaurant_category({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Query$getCategories$restaurant_category.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Query$getCategories$restaurant_category(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getCategories$restaurant_category) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCategories$restaurant_category
+    on Query$getCategories$restaurant_category {
+  CopyWith$Query$getCategories$restaurant_category<
+          Query$getCategories$restaurant_category>
+      get copyWith => CopyWith$Query$getCategories$restaurant_category(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCategories$restaurant_category<TRes> {
+  factory CopyWith$Query$getCategories$restaurant_category(
+    Query$getCategories$restaurant_category instance,
+    TRes Function(Query$getCategories$restaurant_category) then,
+  ) = _CopyWithImpl$Query$getCategories$restaurant_category;
+
+  factory CopyWith$Query$getCategories$restaurant_category.stub(TRes res) =
+      _CopyWithStubImpl$Query$getCategories$restaurant_category;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getCategories$restaurant_category<TRes>
+    implements CopyWith$Query$getCategories$restaurant_category<TRes> {
+  _CopyWithImpl$Query$getCategories$restaurant_category(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCategories$restaurant_category _instance;
+
+  final TRes Function(Query$getCategories$restaurant_category) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getCategories$restaurant_category(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getCategories$restaurant_category<TRes>
+    implements CopyWith$Query$getCategories$restaurant_category<TRes> {
+  _CopyWithStubImpl$Query$getCategories$restaurant_category(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Subscription$GetRestaurants {
   Subscription$GetRestaurants({
     required this.restaurant,
@@ -2263,13 +2616,13 @@ class Subscription$GetRestaurants {
 
   factory Subscription$GetRestaurants.fromJson(Map<String, dynamic> json) {
     final l$restaurant = json['restaurant'];
-    final l$$Typename = json['__typename'];
+    final l$$__typename = json['__typename'];
     return Subscription$GetRestaurants(
       restaurant: (l$restaurant as List<dynamic>)
           .map((e) => Subscription$GetRestaurants$restaurant.fromJson(
               (e as Map<String, dynamic>)))
           .toList(),
-      $__typename: ((l$$Typename ?? "none") as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -2278,26 +2631,21 @@ class Subscription$GetRestaurants {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _resultData = <String, dynamic>{};
-    final List<Subscription$GetRestaurants$restaurant> l$restaurant =
-        restaurant;
-    _resultData['restaurant'] = l$restaurant
-        .map((Subscription$GetRestaurants$restaurant e) => e.toJson())
-        .toList();
-    final String l$$Typename = $__typename;
-    _resultData['__typename'] = l$$Typename;
+    final _resultData = <String, dynamic>{};
+    final l$restaurant = restaurant;
+    _resultData['restaurant'] = l$restaurant.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
     return _resultData;
   }
 
   @override
   int get hashCode {
-    final List<Subscription$GetRestaurants$restaurant> l$restaurant =
-        restaurant;
-    final String l$$Typename = $__typename;
+    final l$restaurant = restaurant;
+    final l$$__typename = $__typename;
     return Object.hashAll([
-      Object.hashAll(
-          l$restaurant.map((Subscription$GetRestaurants$restaurant v) => v)),
-      l$$Typename,
+      Object.hashAll(l$restaurant.map((v) => v)),
+      l$$__typename,
     ]);
   }
 
@@ -2310,25 +2658,21 @@ class Subscription$GetRestaurants {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final List<Subscription$GetRestaurants$restaurant> l$restaurant =
-        restaurant;
-    final List<Subscription$GetRestaurants$restaurant> lOther$restaurant =
-        other.restaurant;
+    final l$restaurant = restaurant;
+    final lOther$restaurant = other.restaurant;
     if (l$restaurant.length != lOther$restaurant.length) {
       return false;
     }
     for (int i = 0; i < l$restaurant.length; i++) {
-      final Subscription$GetRestaurants$restaurant l$restaurant$entry =
-          l$restaurant[i];
-      final Subscription$GetRestaurants$restaurant lOther$restaurant$entry =
-          lOther$restaurant[i];
+      final l$restaurant$entry = l$restaurant[i];
+      final lOther$restaurant$entry = lOther$restaurant[i];
       if (l$restaurant$entry != lOther$restaurant$entry) {
         return false;
       }
     }
-    final String l$$Typename = $__typename;
-    final String lOther$$Typename = other.$__typename;
-    if (l$$Typename != lOther$$Typename) {
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
       return false;
     }
     return true;
@@ -2340,7 +2684,7 @@ extension UtilityExtension$Subscription$GetRestaurants
   CopyWith$Subscription$GetRestaurants<Subscription$GetRestaurants>
       get copyWith => CopyWith$Subscription$GetRestaurants(
             this,
-            (Subscription$GetRestaurants i) => i,
+            (i) => i,
           );
 }
 
@@ -2376,7 +2720,7 @@ class _CopyWithImpl$Subscription$GetRestaurants<TRes>
 
   final TRes Function(Subscription$GetRestaurants) _then;
 
-  static const Map _undefined = {};
+  static const _undefined = {};
 
   TRes call({
     Object? restaurant = _undefined,
@@ -2397,11 +2741,10 @@ class _CopyWithImpl$Subscription$GetRestaurants<TRes>
                           Subscription$GetRestaurants$restaurant>>)
               _fn) =>
       call(
-          restaurant: _fn(_instance.restaurant.map(
-              (Subscription$GetRestaurants$restaurant e) =>
-                  CopyWith$Subscription$GetRestaurants$restaurant(
+          restaurant: _fn(_instance.restaurant
+              .map((e) => CopyWith$Subscription$GetRestaurants$restaurant(
                     e,
-                    (Subscription$GetRestaurants$restaurant i) => i,
+                    (i) => i,
                   ))).toList());
 }
 
@@ -2419,8 +2762,7 @@ class _CopyWithStubImpl$Subscription$GetRestaurants<TRes>
   restaurant(_fn) => _res;
 }
 
-const DocumentNode documentNodeSubscriptionGetRestaurants =
-    DocumentNode(definitions: [
+const documentNodeSubscriptionGetRestaurants = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.subscription,
     name: NameNode(value: 'GetRestaurants'),
@@ -2564,6 +2906,7 @@ const DocumentNode documentNodeSubscriptionGetRestaurants =
           ),
         ]),
       ),
+      
     ]),
   ),
 ]);
@@ -2635,11 +2978,11 @@ extension ClientExtension$Subscription$GetRestaurants on graphql.GraphQLClient {
   Stream<graphql.QueryResult<Subscription$GetRestaurants>>
       subscribe$GetRestaurants(
               [Options$Subscription$GetRestaurants? options]) =>
-          subscribe(options ?? Options$Subscription$GetRestaurants());
-  graphql.ObservableQuery<Subscription$GetRestaurants>
-      watchSubscription$GetRestaurants(
-              [WatchOptions$Subscription$GetRestaurants? options]) =>
-          watchQuery(options ?? WatchOptions$Subscription$GetRestaurants());
+          this.subscribe(options ?? Options$Subscription$GetRestaurants());
+  graphql.ObservableQuery<
+      Subscription$GetRestaurants> watchSubscription$GetRestaurants(
+          [WatchOptions$Subscription$GetRestaurants? options]) =>
+      this.watchQuery(options ?? WatchOptions$Subscription$GetRestaurants());
 }
 
 class Subscription$GetRestaurants$restaurant {
@@ -2659,29 +3002,29 @@ class Subscription$GetRestaurants$restaurant {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
-    final l$locationText = json['location_text'];
-    final l$openStatus = json['open_status'];
+    final l$location_text = json['location_text'];
+    final l$open_status = json['open_status'];
     final l$approved = json['approved'];
     final l$image = json['image'];
     final l$description = json['description'];
-    final l$paymentInfo = json['payment_info'];
-    final l$$Typename = json['__typename'];
+    final l$payment_info = json['payment_info'];
+    final l$$__typename = json['__typename'];
     return Subscription$GetRestaurants$restaurant(
       id: (l$id as int),
       name: (l$name as String),
-      location_text: (l$locationText as String),
-      open_status: (l$openStatus as String),
+      location_text: (l$location_text as String),
+      open_status: (l$open_status as String),
       approved: (l$approved as bool),
       image: (l$image as String),
       description: l$description == null
           ? null
           : Subscription$GetRestaurants$restaurant$description.fromJson(
               (l$description as Map<String, dynamic>)),
-      payment_info: l$paymentInfo == null
+      payment_info: l$payment_info == null
           ? null
           : Subscription$GetRestaurants$restaurant$payment_info.fromJson(
-              (l$paymentInfo as Map<String, dynamic>)),
-      $__typename: ((l$$Typename ?? "none") as String),
+              (l$payment_info as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -2704,53 +3047,49 @@ class Subscription$GetRestaurants$restaurant {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _resultData = <String, dynamic>{};
-    final int l$id = id;
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
     _resultData['id'] = l$id;
-    final String l$name = name;
+    final l$name = name;
     _resultData['name'] = l$name;
-    final String l$locationText = location_text;
-    _resultData['location_text'] = l$locationText;
-    final String l$openStatus = open_status;
-    _resultData['open_status'] = l$openStatus;
-    final bool l$approved = approved;
+    final l$location_text = location_text;
+    _resultData['location_text'] = l$location_text;
+    final l$open_status = open_status;
+    _resultData['open_status'] = l$open_status;
+    final l$approved = approved;
     _resultData['approved'] = l$approved;
-    final String l$image = image;
+    final l$image = image;
     _resultData['image'] = l$image;
-    final Subscription$GetRestaurants$restaurant$description? l$description =
-        description;
+    final l$description = description;
     _resultData['description'] = l$description?.toJson();
-    final Subscription$GetRestaurants$restaurant$payment_info? l$paymentInfo =
-        payment_info;
-    _resultData['payment_info'] = l$paymentInfo?.toJson();
-    final String l$$Typename = $__typename;
-    _resultData['__typename'] = l$$Typename;
+    final l$payment_info = payment_info;
+    _resultData['payment_info'] = l$payment_info?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
     return _resultData;
   }
 
   @override
   int get hashCode {
-    final int l$id = id;
-    final String l$name = name;
-    final String l$locationText = location_text;
-    final String l$openStatus = open_status;
-    final bool l$approved = approved;
-    final String l$image = image;
-    final Subscription$GetRestaurants$restaurant$description? l$description =
-        description;
-    final Subscription$GetRestaurants$restaurant$payment_info? l$paymentInfo =
-        payment_info;
-    final String l$$Typename = $__typename;
+    final l$id = id;
+    final l$name = name;
+    final l$location_text = location_text;
+    final l$open_status = open_status;
+    final l$approved = approved;
+    final l$image = image;
+    final l$description = description;
+    final l$payment_info = payment_info;
+    final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$name,
-      l$locationText,
-      l$openStatus,
+      l$location_text,
+      l$open_status,
       l$approved,
       l$image,
       l$description,
-      l$paymentInfo,
-      l$$Typename,
+      l$payment_info,
+      l$$__typename,
     ]);
   }
 
@@ -2763,53 +3102,49 @@ class Subscription$GetRestaurants$restaurant {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final int l$id = id;
-    final int lOther$id = other.id;
+    final l$id = id;
+    final lOther$id = other.id;
     if (l$id != lOther$id) {
       return false;
     }
-    final String l$name = name;
-    final String lOther$name = other.name;
+    final l$name = name;
+    final lOther$name = other.name;
     if (l$name != lOther$name) {
       return false;
     }
-    final String l$locationText = location_text;
-    final String lOther$locationText = other.location_text;
-    if (l$locationText != lOther$locationText) {
+    final l$location_text = location_text;
+    final lOther$location_text = other.location_text;
+    if (l$location_text != lOther$location_text) {
       return false;
     }
-    final String l$openStatus = open_status;
-    final String lOther$openStatus = other.open_status;
-    if (l$openStatus != lOther$openStatus) {
+    final l$open_status = open_status;
+    final lOther$open_status = other.open_status;
+    if (l$open_status != lOther$open_status) {
       return false;
     }
-    final bool l$approved = approved;
-    final bool lOther$approved = other.approved;
+    final l$approved = approved;
+    final lOther$approved = other.approved;
     if (l$approved != lOther$approved) {
       return false;
     }
-    final String l$image = image;
-    final String lOther$image = other.image;
+    final l$image = image;
+    final lOther$image = other.image;
     if (l$image != lOther$image) {
       return false;
     }
-    final Subscription$GetRestaurants$restaurant$description? l$description =
-        description;
-    final Subscription$GetRestaurants$restaurant$description?
-        lOther$description = other.description;
+    final l$description = description;
+    final lOther$description = other.description;
     if (l$description != lOther$description) {
       return false;
     }
-    final Subscription$GetRestaurants$restaurant$payment_info? l$paymentInfo =
-        payment_info;
-    final Subscription$GetRestaurants$restaurant$payment_info?
-        lOther$paymentInfo = other.payment_info;
-    if (l$paymentInfo != lOther$paymentInfo) {
+    final l$payment_info = payment_info;
+    final lOther$payment_info = other.payment_info;
+    if (l$payment_info != lOther$payment_info) {
       return false;
     }
-    final String l$$Typename = $__typename;
-    final String lOther$$Typename = other.$__typename;
-    if (l$$Typename != lOther$$Typename) {
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
       return false;
     }
     return true;
@@ -2822,7 +3157,7 @@ extension UtilityExtension$Subscription$GetRestaurants$restaurant
           Subscription$GetRestaurants$restaurant>
       get copyWith => CopyWith$Subscription$GetRestaurants$restaurant(
             this,
-            (Subscription$GetRestaurants$restaurant i) => i,
+            (i) => i,
           );
 }
 
@@ -2863,7 +3198,7 @@ class _CopyWithImpl$Subscription$GetRestaurants$restaurant<TRes>
 
   final TRes Function(Subscription$GetRestaurants$restaurant) _then;
 
-  static const Map _undefined = {};
+  static const _undefined = {};
 
   TRes call({
     Object? id = _undefined,
@@ -2907,28 +3242,22 @@ class _CopyWithImpl$Subscription$GetRestaurants$restaurant<TRes>
       ));
   CopyWith$Subscription$GetRestaurants$restaurant$description<TRes>
       get description {
-    final Subscription$GetRestaurants$restaurant$description?
-        local$description = _instance.description;
+    final local$description = _instance.description;
     return local$description == null
         ? CopyWith$Subscription$GetRestaurants$restaurant$description.stub(
             _then(_instance))
         : CopyWith$Subscription$GetRestaurants$restaurant$description(
-            local$description,
-            (Subscription$GetRestaurants$restaurant$description e) =>
-                call(description: e));
+            local$description, (e) => call(description: e));
   }
 
   CopyWith$Subscription$GetRestaurants$restaurant$payment_info<TRes>
       get payment_info {
-    final Subscription$GetRestaurants$restaurant$payment_info?
-        local$paymentInfo = _instance.payment_info;
-    return local$paymentInfo == null
+    final local$payment_info = _instance.payment_info;
+    return local$payment_info == null
         ? CopyWith$Subscription$GetRestaurants$restaurant$payment_info.stub(
             _then(_instance))
         : CopyWith$Subscription$GetRestaurants$restaurant$payment_info(
-            local$paymentInfo,
-            (Subscription$GetRestaurants$restaurant$payment_info e) =>
-                call(payment_info: e));
+            local$payment_info, (e) => call(payment_info: e));
   }
 }
 
@@ -2969,14 +3298,14 @@ class Subscription$GetRestaurants$restaurant$description {
   factory Subscription$GetRestaurants$restaurant$description.fromJson(
       Map<String, dynamic> json) {
     final l$translations = json['translations'];
-    final l$$Typename = json['__typename'];
+    final l$$__typename = json['__typename'];
     return Subscription$GetRestaurants$restaurant$description(
       translations: (l$translations as List<dynamic>)
           .map((e) =>
               Subscription$GetRestaurants$restaurant$description$translations
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
-      $__typename: ((l$$Typename ?? "none") as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -2986,29 +3315,22 @@ class Subscription$GetRestaurants$restaurant$description {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _resultData = <String, dynamic>{};
-    final List<Subscription$GetRestaurants$restaurant$description$translations>
-        l$translations = translations;
-    _resultData['translations'] = l$translations
-        .map((Subscription$GetRestaurants$restaurant$description$translations
-                e) =>
-            e.toJson())
-        .toList();
-    final String l$$Typename = $__typename;
-    _resultData['__typename'] = l$$Typename;
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
     return _resultData;
   }
 
   @override
   int get hashCode {
-    final List<Subscription$GetRestaurants$restaurant$description$translations>
-        l$translations = translations;
-    final String l$$Typename = $__typename;
+    final l$translations = translations;
+    final l$$__typename = $__typename;
     return Object.hashAll([
-      Object.hashAll(l$translations.map(
-          (Subscription$GetRestaurants$restaurant$description$translations v) =>
-              v)),
-      l$$Typename,
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
     ]);
   }
 
@@ -3021,25 +3343,21 @@ class Subscription$GetRestaurants$restaurant$description {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final List<Subscription$GetRestaurants$restaurant$description$translations>
-        l$translations = translations;
-    final List<Subscription$GetRestaurants$restaurant$description$translations>
-        lOther$translations = other.translations;
+    final l$translations = translations;
+    final lOther$translations = other.translations;
     if (l$translations.length != lOther$translations.length) {
       return false;
     }
     for (int i = 0; i < l$translations.length; i++) {
-      final Subscription$GetRestaurants$restaurant$description$translations
-          l$translations$entry = l$translations[i];
-      final Subscription$GetRestaurants$restaurant$description$translations
-          lOther$translations$entry = lOther$translations[i];
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
       if (l$translations$entry != lOther$translations$entry) {
         return false;
       }
     }
-    final String l$$Typename = $__typename;
-    final String lOther$$Typename = other.$__typename;
-    if (l$$Typename != lOther$$Typename) {
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
       return false;
     }
     return true;
@@ -3053,7 +3371,7 @@ extension UtilityExtension$Subscription$GetRestaurants$restaurant$description
       get copyWith =>
           CopyWith$Subscription$GetRestaurants$restaurant$description(
             this,
-            (Subscription$GetRestaurants$restaurant$description i) => i,
+            (i) => i,
           );
 }
 
@@ -3093,7 +3411,7 @@ class _CopyWithImpl$Subscription$GetRestaurants$restaurant$description<TRes>
 
   final TRes Function(Subscription$GetRestaurants$restaurant$description) _then;
 
-  static const Map _undefined = {};
+  static const _undefined = {};
 
   TRes call({
     Object? translations = _undefined,
@@ -3115,15 +3433,11 @@ class _CopyWithImpl$Subscription$GetRestaurants$restaurant$description<TRes>
                           Subscription$GetRestaurants$restaurant$description$translations>>)
               _fn) =>
       call(
-          translations: _fn(_instance.translations.map(
-              (Subscription$GetRestaurants$restaurant$description$translations
-                      e) =>
-                  CopyWith$Subscription$GetRestaurants$restaurant$description$translations(
-                    e,
-                    (Subscription$GetRestaurants$restaurant$description$translations
-                            i) =>
-                        i,
-                  ))).toList());
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Subscription$GetRestaurants$restaurant$description$translations(
+                e,
+                (i) => i,
+              ))).toList());
 }
 
 class _CopyWithStubImpl$Subscription$GetRestaurants$restaurant$description<TRes>
@@ -3152,13 +3466,13 @@ class Subscription$GetRestaurants$restaurant$description$translations {
 
   factory Subscription$GetRestaurants$restaurant$description$translations.fromJson(
       Map<String, dynamic> json) {
-    final l$languageId = json['language_id'];
+    final l$language_id = json['language_id'];
     final l$value = json['value'];
-    final l$$Typename = json['__typename'];
+    final l$$__typename = json['__typename'];
     return Subscription$GetRestaurants$restaurant$description$translations(
-      language_id: (l$languageId as String),
+      language_id: (l$language_id as String),
       value: (l$value as String),
-      $__typename: ((l$$Typename ?? "none") as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -3169,25 +3483,25 @@ class Subscription$GetRestaurants$restaurant$description$translations {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _resultData = <String, dynamic>{};
-    final String l$languageId = language_id;
-    _resultData['language_id'] = l$languageId;
-    final String l$value = value;
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
     _resultData['value'] = l$value;
-    final String l$$Typename = $__typename;
-    _resultData['__typename'] = l$$Typename;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
     return _resultData;
   }
 
   @override
   int get hashCode {
-    final String l$languageId = language_id;
-    final String l$value = value;
-    final String l$$Typename = $__typename;
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
     return Object.hashAll([
-      l$languageId,
+      l$language_id,
       l$value,
-      l$$Typename,
+      l$$__typename,
     ]);
   }
 
@@ -3201,19 +3515,19 @@ class Subscription$GetRestaurants$restaurant$description$translations {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final String l$languageId = language_id;
-    final String lOther$languageId = other.language_id;
-    if (l$languageId != lOther$languageId) {
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
       return false;
     }
-    final String l$value = value;
-    final String lOther$value = other.value;
+    final l$value = value;
+    final lOther$value = other.value;
     if (l$value != lOther$value) {
       return false;
     }
-    final String l$$Typename = $__typename;
-    final String lOther$$Typename = other.$__typename;
-    if (l$$Typename != lOther$$Typename) {
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
       return false;
     }
     return true;
@@ -3227,9 +3541,7 @@ extension UtilityExtension$Subscription$GetRestaurants$restaurant$description$tr
       get copyWith =>
           CopyWith$Subscription$GetRestaurants$restaurant$description$translations(
             this,
-            (Subscription$GetRestaurants$restaurant$description$translations
-                    i) =>
-                i,
+            (i) => i,
           );
 }
 
@@ -3269,7 +3581,7 @@ class _CopyWithImpl$Subscription$GetRestaurants$restaurant$description$translati
   final TRes Function(
       Subscription$GetRestaurants$restaurant$description$translations) _then;
 
-  static const Map _undefined = {};
+  static const _undefined = {};
 
   TRes call({
     Object? language_id = _undefined,
@@ -3317,15 +3629,15 @@ class Subscription$GetRestaurants$restaurant$payment_info {
 
   factory Subscription$GetRestaurants$restaurant$payment_info.fromJson(
       Map<String, dynamic> json) {
-    final l$bankTransfer = json['bank_transfer'];
+    final l$bank_transfer = json['bank_transfer'];
     final l$card = json['card'];
     final l$cash = json['cash'];
-    final l$$Typename = json['__typename'];
+    final l$$__typename = json['__typename'];
     return Subscription$GetRestaurants$restaurant$payment_info(
-      bank_transfer: (l$bankTransfer as bool),
+      bank_transfer: (l$bank_transfer as bool),
       card: (l$card as bool),
       cash: (l$cash as bool),
-      $__typename: ((l$$Typename ?? "none") as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -3338,29 +3650,29 @@ class Subscription$GetRestaurants$restaurant$payment_info {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _resultData = <String, dynamic>{};
-    final bool l$bankTransfer = bank_transfer;
-    _resultData['bank_transfer'] = l$bankTransfer;
-    final bool l$card = card;
+    final _resultData = <String, dynamic>{};
+    final l$bank_transfer = bank_transfer;
+    _resultData['bank_transfer'] = l$bank_transfer;
+    final l$card = card;
     _resultData['card'] = l$card;
-    final bool l$cash = cash;
+    final l$cash = cash;
     _resultData['cash'] = l$cash;
-    final String l$$Typename = $__typename;
-    _resultData['__typename'] = l$$Typename;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
     return _resultData;
   }
 
   @override
   int get hashCode {
-    final bool l$bankTransfer = bank_transfer;
-    final bool l$card = card;
-    final bool l$cash = cash;
-    final String l$$Typename = $__typename;
+    final l$bank_transfer = bank_transfer;
+    final l$card = card;
+    final l$cash = cash;
+    final l$$__typename = $__typename;
     return Object.hashAll([
-      l$bankTransfer,
+      l$bank_transfer,
       l$card,
       l$cash,
-      l$$Typename,
+      l$$__typename,
     ]);
   }
 
@@ -3373,24 +3685,24 @@ class Subscription$GetRestaurants$restaurant$payment_info {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final bool l$bankTransfer = bank_transfer;
-    final bool lOther$bankTransfer = other.bank_transfer;
-    if (l$bankTransfer != lOther$bankTransfer) {
+    final l$bank_transfer = bank_transfer;
+    final lOther$bank_transfer = other.bank_transfer;
+    if (l$bank_transfer != lOther$bank_transfer) {
       return false;
     }
-    final bool l$card = card;
-    final bool lOther$card = other.card;
+    final l$card = card;
+    final lOther$card = other.card;
     if (l$card != lOther$card) {
       return false;
     }
-    final bool l$cash = cash;
-    final bool lOther$cash = other.cash;
+    final l$cash = cash;
+    final lOther$cash = other.cash;
     if (l$cash != lOther$cash) {
       return false;
     }
-    final String l$$Typename = $__typename;
-    final String lOther$$Typename = other.$__typename;
-    if (l$$Typename != lOther$$Typename) {
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
       return false;
     }
     return true;
@@ -3404,7 +3716,7 @@ extension UtilityExtension$Subscription$GetRestaurants$restaurant$payment_info
       get copyWith =>
           CopyWith$Subscription$GetRestaurants$restaurant$payment_info(
             this,
-            (Subscription$GetRestaurants$restaurant$payment_info i) => i,
+            (i) => i,
           );
 }
 
@@ -3440,7 +3752,7 @@ class _CopyWithImpl$Subscription$GetRestaurants$restaurant$payment_info<TRes>
   final TRes Function(Subscription$GetRestaurants$restaurant$payment_info)
       _then;
 
-  static const Map _undefined = {};
+  static const _undefined = {};
 
   TRes call({
     Object? bank_transfer = _undefined,

@@ -1,4 +1,5 @@
 import '../../__generated/schema.graphql.dart';
+import '../../restaurant/__generated/restaurant.graphql.dart';
 import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
@@ -117,7 +118,7 @@ class Mutation$addCategory {
           ? null
           : Mutation$addCategory$insert_restaurant_category_one.fromJson(
               (l$insert_restaurant_category_one as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -298,13 +299,7 @@ const documentNodeMutationaddCategory = DocumentNode(definitions: [
           ),
         ]),
       ),
-      FieldNode(
-        name: NameNode(value: '__typename'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
+      
     ]),
   ),
 ]);
@@ -413,7 +408,7 @@ class Mutation$addCategory$insert_restaurant_category_one {
     final l$$__typename = json['__typename'];
     return Mutation$addCategory$insert_restaurant_category_one(
       id: (l$id as int),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -642,7 +637,7 @@ class Query$getCategory {
           ? null
           : Query$getCategory$restaurant_category_by_pk.fromJson(
               (l$restaurant_category_by_pk as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -903,13 +898,7 @@ const documentNodeQuerygetCategory = DocumentNode(definitions: [
           ),
         ]),
       ),
-      FieldNode(
-        name: NameNode(value: '__typename'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
+      
     ]),
   ),
 ]);
@@ -1040,7 +1029,7 @@ class Query$getCategory$restaurant_category_by_pk {
       name: Query$getCategory$restaurant_category_by_pk$name.fromJson(
           (l$name as Map<String, dynamic>)),
       position: (l$position as int),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1230,7 +1219,7 @@ class Query$getCategory$restaurant_category_by_pk$description {
               Query$getCategory$restaurant_category_by_pk$description$translations
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1401,7 +1390,7 @@ class Query$getCategory$restaurant_category_by_pk$description$translations {
     return Query$getCategory$restaurant_category_by_pk$description$translations(
       language_id: (l$language_id as String),
       value: (l$value as String),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1567,7 +1556,7 @@ class Query$getCategory$restaurant_category_by_pk$name {
               Query$getCategory$restaurant_category_by_pk$name$translations
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1729,7 +1718,7 @@ class Query$getCategory$restaurant_category_by_pk$name$translations {
     return Query$getCategory$restaurant_category_by_pk$name$translations(
       language_id: (l$language_id as String),
       value: (l$value as String),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1888,7 +1877,7 @@ class Query$getCategories {
           .map((e) => Query$getCategories$restaurant_category.fromJson(
               (e as Map<String, dynamic>)))
           .toList(),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -2068,13 +2057,7 @@ const documentNodeQuerygetCategories = DocumentNode(definitions: [
           ),
         ]),
       ),
-      FieldNode(
-        name: NameNode(value: '__typename'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
+      
     ]),
   ),
 ]);
@@ -2183,7 +2166,7 @@ class Query$getCategories$restaurant_category {
     final l$$__typename = json['__typename'];
     return Query$getCategories$restaurant_category(
       id: (l$id as int),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
