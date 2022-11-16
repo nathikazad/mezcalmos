@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:sizer/sizer.dart';
@@ -121,9 +122,7 @@ class SignIn extends GetWidget<AuthController> {
       child: TextButton(
           onPressed: () {
             clickedLogin.value = true;
-            controller
-                .signInWithApple()
-                .whenComplete(() => clickedLogin.value = false);
+            signInWithApple().whenComplete(() => clickedLogin.value = false);
           },
           style: TextButton.styleFrom(
               backgroundColor: Colors.black,
@@ -183,8 +182,7 @@ class SignIn extends GetWidget<AuthController> {
           onPressed: () async {
             clickedLogin.value = true;
             lmode != AppLaunchMode.dev
-                ? controller
-                    .signInWithFacebook()
+                ? signInWithFacebook()
                     .whenComplete(() => clickedLogin.value = false)
                 : await Get.defaultDialog<dynamic>(
                     title: "Choose Test User",
@@ -193,22 +191,19 @@ class SignIn extends GetWidget<AuthController> {
                         TextButton(
                             onPressed: () {
                               // Get.back();
-                              controller.signIn(
-                                  tTestCustomerValue, tEmailTestPassword);
+                              signIn(tTestCustomerValue, tEmailTestPassword);
                             },
                             child: Text(tTestCustomerValue)),
                         TextButton(
                             onPressed: () {
                               // Get.back();
-                              controller.signIn(
-                                  tTestTaxiValue, tEmailTestPassword);
+                              signIn(tTestTaxiValue, tEmailTestPassword);
                             },
                             child: Text(tTestTaxiValue)),
                         TextButton(
                             onPressed: () {
                               // Get.back();
-                              controller.signIn(
-                                  tTestAdminValue, tEmailTestPassword);
+                              signIn(tTestAdminValue, tEmailTestPassword);
                             },
                             child: Text(tTestAdminValue))
                       ],

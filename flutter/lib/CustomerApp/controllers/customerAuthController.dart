@@ -60,15 +60,6 @@ class CustomerAuthController extends GetxController {
       });
       // update info //
       await _userInfoStreamListener?.cancel();
-      _authController.userInfoStream.listen((MainUserInfo? userInfo) {
-        if (userInfo != null) {
-          _databaseHelper.firebaseDatabase
-              .ref()
-              .child(customerInfoNode(_authController.fireAuthUser!.uid))
-              .set(userInfo.toFirebaseFormatJson());
-        }
-      });
-      //
 
       final String? deviceNotificationToken =
           await _notificationsController.getToken();

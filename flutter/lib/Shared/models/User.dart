@@ -4,8 +4,8 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 class UserInfo {
   String id;
-  String name;
-  String image;
+  String? name;
+  String? image;
   LanguageType? language;
 
   UserInfo(

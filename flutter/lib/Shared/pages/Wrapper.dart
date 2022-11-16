@@ -123,16 +123,7 @@ class _WrapperState extends State<Wrapper> {
   }
 
   Future<void> waitTillUserInfoLoaded() {
-    if (Get.find<AuthController>().user != null) {
-      return Future<void>.value(null);
-    } else {
-      final Completer<void> completer = Completer<void>();
-      Get.find<AuthController>()
-          .userInfoStream
-          .first
-          .then((MainUserInfo? value) => completer.complete());
-      return completer.future;
-    }
+    return Get.find<AuthController>().fetchUserInfoFromHasura();
   }
 
   void redirectIfUserInfosNotSet() {

@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:get/get.dart';
@@ -69,19 +70,19 @@ class MessageController extends GetxController {
         .child(messagesNode(chatId))
         .push();
 
-    // ignore: unawaited_futures
-    messageNode.set(<String, dynamic>{
-      "message": message,
-      "userId": _authController.user!.id,
-      "participantType": _settingsController.appType
-          .toParticipantTypefromAppType()
-          .toFirebaseFormattedString(),
-      "timestamp": DateTime.now().toUtc().toString(),
-      "chatId": chatId,
-      "orderId": orderId
-    }).onError((Object? error, StackTrace stackTrace) {
-      mezDbgPrint(stackTrace);
-    });
+    //TODO: write to hasura messages
+    // messageNode.set(<String, dynamic>{
+    //   "message": message,
+    //   "userId": _authController.user!.id,
+    //   "participantType": _settingsController.appType
+    //       .toParticipantTypefromAppType()
+    //       .toFirebaseFormattedString(),
+    //   "timestamp": DateTime.now().toUtc().toString(),
+    //   "chatId": chatId,
+    //   "orderId": orderId
+    // }).onError((Object? error, StackTrace stackTrace) {
+    //   mezDbgPrint(stackTrace);
+    // });
 
     // ignore: unawaited_futures
     _databaseHelper.firebaseDatabase
@@ -89,7 +90,7 @@ class MessageController extends GetxController {
         .child(notificationQueueNode(messageNode.key))
         .set(MessageNotificationForQueue(
                 message: message,
-                userId: _authController.user!.id,
+                userId: FirebaseAuth.instance.currentUser!.uid,
                 chatId: chatId,
                 messageId: messageNode.key!,
                 participantType:
@@ -134,7 +135,7 @@ class MessageController extends GetxController {
         .child(notificationQueueNode(notificationNode.key))
         .set(CallNotificationForQueue(
                 chatId: chatId,
-                callerId: _authController.user!.id,
+                callerId: FirebaseAuth.instance.currentUser!.uid,
                 callerParticipantType:
                     _settingsController.appType.toParticipantTypefromAppType(),
                 calleeId: callee.id,
@@ -147,7 +148,7 @@ class MessageController extends GetxController {
   Participant? sender() {
     return chat.value?.getParticipant(
         _settingsController.appType.toParticipantTypefromAppType(),
-        _authController.user!.id);
+        FirebaseAuth.instance.currentUser!.uid);
   }
 
   Participant? recipient(

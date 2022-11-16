@@ -64,24 +64,25 @@ class LanguageController extends GetxController {
       : usaFlagAsset;
 
   void changeUserLanguage([LanguageType? language]) {
-    if (language == null) {
-      if (Get.find<AuthController>().user?.language == LanguageType.ES) {
-        language = LanguageType.EN;
-      } else {
-        language = LanguageType.ES;
-      }
-      if (Get.find<AuthController>().user != null) {
-        // we need that because in case user clicked change lang from SideMenu , we really don't
-        // need to execute that one because there is no user SIgnedIn yet!
-        // we have to make some kind of queue that will handle stuff once the user SignedIn.
-        Get.find<AuthController>().changeLanguage(language);
-      } else {
-        // welse so we can still update the user language locally but not in db!
-        _userLanguageKey.value = oppositLangKey;
-      }
-    } else if (Get.find<AuthController>().user == null) {
-      _userLanguageKey.value = language;
-    }
+    // TODO: fix this
+    // if (language == null) {
+    //   if (Get.find<AuthController>().user?.language == LanguageType.ES) {
+    //     language = LanguageType.EN;
+    //   } else {
+    //     language = LanguageType.ES;
+    //   }
+    //   if (Get.find<AuthController>().user != null) {
+    //     // we need that because in case user clicked change lang from SideMenu , we really don't
+    //     // need to execute that one because there is no user SIgnedIn yet!
+    //     // we have to make some kind of queue that will handle stuff once the user SignedIn.
+    //     Get.find<AuthController>().changeLanguage(language);
+    //   } else {
+    //     // welse so we can still update the user language locally but not in db!
+    //     _userLanguageKey.value = oppositLangKey;
+    //   }
+    // } else if (Get.find<AuthController>().user == null) {
+    //   _userLanguageKey.value = language;
+    // }
   }
 
   void setLanguage(LanguageType language) {

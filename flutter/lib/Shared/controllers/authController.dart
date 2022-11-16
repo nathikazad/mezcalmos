@@ -1,14 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-<<<<<<< HEAD
 import 'dart:math';
-<<<<<<< HEAD
-
-=======
-import 'package:firebase_auth/firebase_auth.dart';
-=======
->>>>>>> 3ad5b590 (auth working)
->>>>>>> e6534e15 (auth working)
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
@@ -30,16 +22,8 @@ class AuthController extends GetxController {
   Function _onSignOutCallback;
   Function _onSignInCallback;
 
-<<<<<<< HEAD
-  Rxn<MainUserInfo> _user = Rxn<MainUserInfo>();
-  MainUserInfo? get user => _user.value;
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 3ad5b590 (auth working)
   RxnInt _hasuraUserId = RxnInt();
   int? get hasuraUserId => _hasuraUserId.value;
->>>>>>> e6534e15 (auth working)
 
   UserInfo? _userInfo;
   UserInfo? get user => _userInfo;
@@ -75,27 +59,16 @@ class AuthController extends GetxController {
       mezDbgPrint('Authcontroller:: Auth state change!');
       mezDbgPrint(user?.hashCode);
       mezDbgPrint(user ?? "empty");
-<<<<<<< HEAD
-      _fireAuthUser.value = user;
-      final HasuraDb hasuraDb = Get.find<HasuraDb>();
-
-=======
       _authStateStreamController.add(user);
->>>>>>> 3ad5b590 (auth working)
       if (user == null) {
         await hasuraDb.initializeHasura();
         await _onSignOutCallback();
         mezDbgPrint('AuthController: User is currently signed out!');
       } else {
         mezDbgPrint('AuthController: User is currently signed in!');
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-        final IdTokenResult? tokenResult = await user.getIdTokenResult();
-=======
+
         final fireAuth.IdTokenResult? tokenResult =
             await user.getIdTokenResult();
->>>>>>> 3ad5b590 (auth working)
         mezDbgPrint(tokenResult);
 
         if (tokenResult?.claims?['https://hasura.io/jwt/claims'] == null) {
@@ -109,7 +82,6 @@ class AuthController extends GetxController {
 
         mezDbgPrint(_hasuraUserId.value);
 
->>>>>>> e6534e15 (auth working)
         await hasuraDb.initializeHasura(withAuthenticatedUser: true);
         await _onSignInCallback();
       }

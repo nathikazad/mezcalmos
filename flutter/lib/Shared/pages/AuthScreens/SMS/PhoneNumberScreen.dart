@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -231,8 +232,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                     if (!phone.startsWith('+')) phone = "+" + phone;
                     mezDbgPrint(phone);
                     if (phone.isPhoneNumber) {
-                      ServerResponse response =
-                          await controller.sendOTPForLogin(phone);
+                      ServerResponse response = await sendOTPForLogin(phone);
                       mezDbgPrint("++++++++++++ response >>> $response");
 
                       if (response.success) {

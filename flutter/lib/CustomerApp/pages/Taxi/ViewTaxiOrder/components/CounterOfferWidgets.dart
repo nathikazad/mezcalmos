@@ -141,7 +141,7 @@ class CounterOfferWidgets {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Text>[
                   Text(
-                    offer.driverInfo.name,
+                    offer.driverInfo.name ?? "Unknown driver",
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,

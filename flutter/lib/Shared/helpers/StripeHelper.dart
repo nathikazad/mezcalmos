@@ -420,7 +420,7 @@ class _CardFormState extends State<CardForm> {
       }
     } on StripeException catch (e) {
       mezDbgPrint("Error add stripe ======>>>>$e");
-      MezSnackbar("Error", e.toString() ?? "error");
+      MezSnackbar("Error", e.toString());
     } catch (e) {
       MezSnackbar("Error", "Error");
     } finally {

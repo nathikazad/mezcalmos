@@ -65,7 +65,6 @@ const String getxLmodeKey = "lmod";
 const String getxGmapBottomPaddingKey = "gmap_bottom_padding";
 const String getxTaxiDescriptor = "taxi_descriptor";
 const String getxDestinationDescriptor = "destination_descriptor";
-const String getxUserId = "userid";
 const String getxAppVersion = "version";
 const String getxAppName = "appName";
 const String getxPackageName = "packageName";
