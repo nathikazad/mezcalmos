@@ -46,7 +46,8 @@ class DaRestaurantCard extends StatelessWidget {
                         ),
                       ),
                       Switch(
-                        value: restaurant.state.open,
+                        // TODO: Switch open @m66are
+                        value: restaurant.state.approved,
                         onChanged: (bool v) {
                           Get.find<RestaurantsInfoController>().setOpen(
                               isAv: v, restaurantId: restaurant.info.id);
@@ -62,10 +63,10 @@ class DaRestaurantCard extends StatelessWidget {
                       Flexible(
                         child: TextButton.icon(
                           style: TextButton.styleFrom(
+                              foregroundColor: primaryBlueColor,
                               backgroundColor: Colors.transparent,
                               textStyle: Get.textTheme.bodyText1,
-                              padding: const EdgeInsets.all(3),
-                              primary: primaryBlueColor),
+                              padding: const EdgeInsets.all(3)),
                           onPressed: () {
                             Get.toNamed(getROpEditInfoRoute(
                                 restaurantId: restaurant.info.id));
@@ -81,10 +82,10 @@ class DaRestaurantCard extends StatelessWidget {
                                 restaurantId: restaurant.info.id));
                           },
                           style: TextButton.styleFrom(
+                              foregroundColor: primaryBlueColor,
                               backgroundColor: Colors.transparent,
                               textStyle: Get.textTheme.bodyText1,
-                              padding: const EdgeInsets.all(3),
-                              primary: primaryBlueColor),
+                              padding: const EdgeInsets.all(3)),
                           icon: Icon(Icons.settings),
                           label: Text('${_i18n()["editAdmin"]}'),
                         ),

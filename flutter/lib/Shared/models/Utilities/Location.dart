@@ -14,7 +14,11 @@ class Location {
     return Location(location["address"], position);
   }
 
-  factory Location.fromLocationData(Geography locationData, address) {
+  factory Location.fromLocationData(LocationData locationData) {
+    return Location("", locationData);
+  }
+
+  factory Location.fromHasura(Geography locationData, address) {
     mezDbgPrint("Location data =====>$locationData");
     final LocationData position =
         buildLocationData(locationData.latitude, locationData.longitude);

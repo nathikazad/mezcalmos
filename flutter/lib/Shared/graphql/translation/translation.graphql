@@ -1,0 +1,7 @@
+mutation updateTranslationValue($arguments: translation_value_pk_columns_input!, $data: translation_value_set_input!) {
+  update_translation_value_by_pk(pk_columns: $arguments, _set: $data) {
+    value
+    language_id
+    translation_id
+  }
+}

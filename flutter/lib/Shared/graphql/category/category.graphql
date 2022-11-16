@@ -6,14 +6,14 @@ mutation addCategory($category: restaurant_category_insert_input!) {
 
 query getCategory($id: Int!) {
   restaurant_category_by_pk(id: $id) {
-    description{
-      translations{
+    description {
+      translations {
         language_id
         value
       }
     }
-    name{
-      translations{
+    name {
+      translations {
         language_id
         value
       }
@@ -23,8 +23,54 @@ query getCategory($id: Int!) {
 }
 
 
-query getCategories {
-  restaurant_category(order_by: {position: asc}) {
+
+query getRestaurantCategories($id: Int) {
+  restaurant_category( where: { restaurant_id: { _eq: $id } }) {
     id
+    name {
+      id
+      translations {
+        language_id
+        value
+      }
+    }
+    description {
+      id
+      translations {
+        language_id
+        value
+      }
+    }
+    position
+    description_id
+    items {
+      id
+      name {
+        id
+        translations {
+          language_id
+          value
+        }
+      }
+      description {
+        id
+        translations {
+          language_id
+          value
+        }
+      }
+      item_type
+     
+
+      cost
+      available
+      position
+      restaurant_id
+      special_period_end
+      special_period_start
+      category_id
+      description_id
+      archived
+    }
   }
 }

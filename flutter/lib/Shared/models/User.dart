@@ -87,12 +87,14 @@ class MainUserInfo {
 
 class ServiceInfo extends UserInfo {
   Location location;
+  int? descriptionId;
 
   ServiceInfo(
       {required this.location,
       required String id,
       required String image,
       required String name,
+      this.descriptionId,
       LanguageType? lang,
       String? firebaseId})
       : super(
@@ -107,6 +109,7 @@ class ServiceInfo extends UserInfo {
         location: Location.fromFirebaseData(data['location']),
         id: data['id'].toString(),
         firebaseId: data['firebaseId'],
+        descriptionId: data['description_id'],
         image: data['image'],
         name: data['name']);
   }
