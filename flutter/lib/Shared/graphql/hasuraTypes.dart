@@ -1,3 +1,5 @@
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+
 class Geography {
   final double latitude;
   final double longitude;
@@ -23,3 +25,14 @@ double MoneyFromJson(String data) {
 }
 
 String MoneyToJson(double money) => "$money";
+
+Map<LanguageType, String> toLanguageMap({required data}) {
+  if (data != null) {
+    final Map<LanguageType, String> map = {};
+    data?.forEach((element) {
+      map[element.language_id.toString().toLanguageType()] = element.value;
+    });
+    return map;
+  }
+  return {};
+}

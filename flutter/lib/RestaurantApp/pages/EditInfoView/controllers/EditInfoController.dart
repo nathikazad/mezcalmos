@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
+import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
@@ -63,11 +64,11 @@ class ROpEditInfoController {
 
   Future<void> init({required String restaurantId}) async {
     mezDbgPrint("INIT EDIT PROFILE VIEW =======>$restaurantId");
-    await getRestaurantById(4);
+
     Get.put(RestaurantInfoController(), permanent: false);
     restaurantInfoController = Get.find<RestaurantInfoController>();
     restaurantInfoController.init(restId: restaurantId);
-    restaurant.value = await getRestaurantById(4);
+    restaurant.value = await get_restaurant_by_id(id: 4);
     mezDbgPrint(
         "🍔🍔🍔🍔 Restaurant Data ===========> ${restaurant.value?.toJson()}");
     // restaurantInfoController
@@ -115,45 +116,51 @@ class ROpEditInfoController {
   }
 
   Future<void> updateLaundryInfo() async {
+    final Restaurant newRestaurant = restaurant.value!;
     btnClicked.value = true;
     if (restaurantNameTxt.text != '' &&
         restaurantNameTxt.text != restaurant.value?.info.name) {
       mezDbgPrint("Updating restuarnt name .....=>${restaurantNameTxt.text}");
-
-      await restaurantInfoController.setRestaurantName(restaurantNameTxt.text);
+      // await restaurantInfoController.setRestaurantName(restaurantNameTxt.text);
+      newRestaurant.info.name = restaurantNameTxt.text;
       mezDbgPrint("Restuarnt name done ....=>${restaurantNameTxt.text}");
     }
     if (_updatePrDesc() || _updateScDesc()) {
       mezDbgPrint(
           "Updating restuarnt primary description .....=>${restaurantNameTxt.text}");
 
-      await restaurantInfoController.setRestaurantDesc(_contructDesc());
-      mezDbgPrint("Restuarnt name done ....=>${restaurantNameTxt.text}");
+      _contructDesc().forEach((LanguageType key, String value) async {
+        await editTranslation(
+            langType: key,
+            translationId: restaurant.value!.info.descriptionId!,
+            value: value);
+      });
     }
     if (newImageFile.value != null) {
       await restaurantInfoController
           .uploadImgToDb(imageFile: newImageFile.value!)
           .then((String value) {
-        restaurantInfoController.setRestaurantImage(value);
+        newRestaurant.info.image = value;
       });
     }
     if (newLocation.value != null &&
         newLocation.value?.address != restaurant.value?.info.location.address) {
-      await restaurantInfoController.setLocation(newLocation.value!);
+      newRestaurant.info.location = newLocation.value!;
     }
     if (editableScLang.value != null && editableScLang.value != secondaryLang) {
-      await restaurantInfoController.setPrimaryLanguage(editableScLang.value!);
+      newRestaurant.secondaryLanguage = editableScLang.value!;
     }
     if (editablePrLang.value != null && editablePrLang.value != primaryLang) {
-      await restaurantInfoController.setPrimaryLanguage(editablePrLang.value!);
+      newRestaurant.primaryLanguage = editablePrLang.value!;
     }
+    restaurant.value = await editRestaurant(id: 4, restaurant: newRestaurant);
 
-    if (newSchedule.value != null && newSchedule.value != oldSchedule.value) {
-      await restaurantInfoController.setSchedule(newSchedule.value!);
-    }
-    if (isAvailable.value != restaurant.value!.state.available) {
-      await restaurantInfoController.setAvailabilty(isAvailable.value);
-    }
+    // if (newSchedule.value != null && newSchedule.value != oldSchedule.value) {
+    //   await restaurantInfoController.setSchedule(newSchedule.value!);
+    // }
+    // if (isAvailable.value != restaurant.value!.state.available) {
+    // newRestaurant.state.status =;
+    // }
 
     btnClicked.value = false;
   }

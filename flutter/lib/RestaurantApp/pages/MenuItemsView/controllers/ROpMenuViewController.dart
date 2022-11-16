@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
+import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
@@ -18,7 +19,9 @@ class ROpMenuViewController {
   // state variables
   Rxn<Restaurant> restaurant = Rxn<Restaurant>();
   RxBool reOrderMode = RxBool(false);
-  // rO stands for Reordable categories //
+  //main categories //
+  RxList<Category> mainCategories = RxList<Category>([]);
+// rO stands for Reordable categories //
   RxList<Category> rOcategories = RxList<Category>([]);
 
 // IMPORTANT //
@@ -26,6 +29,11 @@ class ROpMenuViewController {
   Future<void> init({required String restaurantId}) async {
     // assigning restaurant data and start the stream subscription //
     mezDbgPrint("INIT MENU VIEW =======>$restaurantId");
+    final List<Category>? _categories = await getRestaurantCategories(4);
+    if (_categories != null) {
+      mainCategories.value.addAll(_categories);
+    }
+    mezDbgPrint("Main Categories length ====>${mainCategories.length}");
     Get.put(RestaurantInfoController(), permanent: false);
     restaurantInfoController = Get.find<RestaurantInfoController>();
     restaurantInfoController.init(restId: restaurantId);

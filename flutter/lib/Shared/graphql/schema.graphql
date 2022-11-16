@@ -1103,6 +1103,9 @@ type deliverer {
 
   """awaiting_approval, authorized, banned"""
   status: String!
+
+  """An object relationship"""
+  user: user!
   user_id: Int!
 }
 
@@ -1151,6 +1154,7 @@ input deliverer_bool_exp {
   delivery_company_type: String_comparison_exp
   id: Int_comparison_exp
   status: String_comparison_exp
+  user: user_bool_exp
   user_id: Int_comparison_exp
 }
 
@@ -1190,6 +1194,7 @@ input deliverer_insert_input {
 
   """awaiting_approval, authorized, banned"""
   status: String
+  user: user_obj_rel_insert_input
   user_id: Int
 }
 
@@ -1255,6 +1260,7 @@ input deliverer_order_by {
   delivery_company_type: order_by
   id: order_by
   status: order_by
+  user: user_order_by
   user_id: order_by
 }
 
@@ -2616,6 +2622,242 @@ input jsonb_comparison_exp {
   _nin: [jsonb!]
 }
 
+"""
+columns and relationships of "mez_admin"
+"""
+type mez_admin {
+  """An object relationship"""
+  notification_info: notification_info
+  notification_info_id: Int
+  user_id: Int!
+  version: String
+}
+
+"""
+aggregated selection of "mez_admin"
+"""
+type mez_admin_aggregate {
+  aggregate: mez_admin_aggregate_fields
+  nodes: [mez_admin!]!
+}
+
+"""
+aggregate fields of "mez_admin"
+"""
+type mez_admin_aggregate_fields {
+  avg: mez_admin_avg_fields
+  count(columns: [mez_admin_select_column!], distinct: Boolean): Int!
+  max: mez_admin_max_fields
+  min: mez_admin_min_fields
+  stddev: mez_admin_stddev_fields
+  stddev_pop: mez_admin_stddev_pop_fields
+  stddev_samp: mez_admin_stddev_samp_fields
+  sum: mez_admin_sum_fields
+  var_pop: mez_admin_var_pop_fields
+  var_samp: mez_admin_var_samp_fields
+  variance: mez_admin_variance_fields
+}
+
+"""aggregate avg on columns"""
+type mez_admin_avg_fields {
+  notification_info_id: Float
+  user_id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "mez_admin". All fields are combined with a logical 'AND'.
+"""
+input mez_admin_bool_exp {
+  _and: [mez_admin_bool_exp!]
+  _not: mez_admin_bool_exp
+  _or: [mez_admin_bool_exp!]
+  notification_info: notification_info_bool_exp
+  notification_info_id: Int_comparison_exp
+  user_id: Int_comparison_exp
+  version: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "mez_admin"
+"""
+enum mez_admin_constraint {
+  """
+  unique or primary key constraint on columns "user_id"
+  """
+  mez_admin_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "mez_admin"
+"""
+input mez_admin_inc_input {
+  notification_info_id: Int
+  user_id: Int
+}
+
+"""
+input type for inserting data into table "mez_admin"
+"""
+input mez_admin_insert_input {
+  notification_info: notification_info_obj_rel_insert_input
+  notification_info_id: Int
+  user_id: Int
+  version: String
+}
+
+"""aggregate max on columns"""
+type mez_admin_max_fields {
+  notification_info_id: Int
+  user_id: Int
+  version: String
+}
+
+"""aggregate min on columns"""
+type mez_admin_min_fields {
+  notification_info_id: Int
+  user_id: Int
+  version: String
+}
+
+"""
+response of any mutation on the table "mez_admin"
+"""
+type mez_admin_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [mez_admin!]!
+}
+
+"""
+on_conflict condition type for table "mez_admin"
+"""
+input mez_admin_on_conflict {
+  constraint: mez_admin_constraint!
+  update_columns: [mez_admin_update_column!]! = []
+  where: mez_admin_bool_exp
+}
+
+"""Ordering options when selecting data from "mez_admin"."""
+input mez_admin_order_by {
+  notification_info: notification_info_order_by
+  notification_info_id: order_by
+  user_id: order_by
+  version: order_by
+}
+
+"""primary key columns input for table: mez_admin"""
+input mez_admin_pk_columns_input {
+  user_id: Int!
+}
+
+"""
+select columns of table "mez_admin"
+"""
+enum mez_admin_select_column {
+  """column name"""
+  notification_info_id
+
+  """column name"""
+  user_id
+
+  """column name"""
+  version
+}
+
+"""
+input type for updating data in table "mez_admin"
+"""
+input mez_admin_set_input {
+  notification_info_id: Int
+  user_id: Int
+  version: String
+}
+
+"""aggregate stddev on columns"""
+type mez_admin_stddev_fields {
+  notification_info_id: Float
+  user_id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type mez_admin_stddev_pop_fields {
+  notification_info_id: Float
+  user_id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type mez_admin_stddev_samp_fields {
+  notification_info_id: Float
+  user_id: Float
+}
+
+"""
+Streaming cursor of the table "mez_admin"
+"""
+input mez_admin_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: mez_admin_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input mez_admin_stream_cursor_value_input {
+  notification_info_id: Int
+  user_id: Int
+  version: String
+}
+
+"""aggregate sum on columns"""
+type mez_admin_sum_fields {
+  notification_info_id: Int
+  user_id: Int
+}
+
+"""
+update columns of table "mez_admin"
+"""
+enum mez_admin_update_column {
+  """column name"""
+  notification_info_id
+
+  """column name"""
+  user_id
+
+  """column name"""
+  version
+}
+
+input mez_admin_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: mez_admin_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: mez_admin_set_input
+  where: mez_admin_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type mez_admin_var_pop_fields {
+  notification_info_id: Float
+  user_id: Float
+}
+
+"""aggregate var_samp on columns"""
+type mez_admin_var_samp_fields {
+  notification_info_id: Float
+  user_id: Float
+}
+
+"""aggregate variance on columns"""
+type mez_admin_variance_fields {
+  notification_info_id: Float
+  user_id: Float
+}
+
 scalar money
 
 """
@@ -2699,6 +2941,19 @@ type mutation_root {
   delete single row from the table: "delivery"
   """
   delete_delivery_by_pk(id: Int!): delivery
+
+  """
+  delete data from the table: "mez_admin"
+  """
+  delete_mez_admin(
+    """filter the rows which have to be deleted"""
+    where: mez_admin_bool_exp!
+  ): mez_admin_mutation_response
+
+  """
+  delete single row from the table: "mez_admin"
+  """
+  delete_mez_admin_by_pk(user_id: Int!): mez_admin
 
   """
   delete data from the table: "notification_info"
@@ -3082,6 +3337,28 @@ type mutation_root {
     """upsert condition"""
     on_conflict: delivery_on_conflict
   ): delivery
+
+  """
+  insert data into the table: "mez_admin"
+  """
+  insert_mez_admin(
+    """the rows to be inserted"""
+    objects: [mez_admin_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: mez_admin_on_conflict
+  ): mez_admin_mutation_response
+
+  """
+  insert a single row into the table: "mez_admin"
+  """
+  insert_mez_admin_one(
+    """the row to be inserted"""
+    object: mez_admin_insert_input!
+
+    """upsert condition"""
+    on_conflict: mez_admin_on_conflict
+  ): mez_admin
 
   """
   insert data into the table: "notification_info"
@@ -3756,6 +4033,40 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [delivery_updates!]!
   ): [delivery_mutation_response]
+
+  """
+  update data of the table: "mez_admin"
+  """
+  update_mez_admin(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: mez_admin_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: mez_admin_set_input
+
+    """filter the rows which have to be updated"""
+    where: mez_admin_bool_exp!
+  ): mez_admin_mutation_response
+
+  """
+  update single row of the table: "mez_admin"
+  """
+  update_mez_admin_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: mez_admin_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: mez_admin_set_input
+    pk_columns: mez_admin_pk_columns_input!
+  ): mez_admin
+
+  """
+  update multiples rows of table: "mez_admin"
+  """
+  update_mez_admin_many(
+    """updates to execute, in order"""
+    updates: [mez_admin_updates!]!
+  ): [mez_admin_mutation_response]
 
   """
   update data of the table: "notification_info"
@@ -4955,6 +5266,49 @@ type query_root {
   delivery_by_pk(id: Int!): delivery
 
   """
+  fetch data from the table: "mez_admin"
+  """
+  mez_admin(
+    """distinct select on columns"""
+    distinct_on: [mez_admin_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_admin_order_by!]
+
+    """filter the rows returned"""
+    where: mez_admin_bool_exp
+  ): [mez_admin!]!
+
+  """
+  fetch aggregated fields from the table: "mez_admin"
+  """
+  mez_admin_aggregate(
+    """distinct select on columns"""
+    distinct_on: [mez_admin_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_admin_order_by!]
+
+    """filter the rows returned"""
+    where: mez_admin_bool_exp
+  ): mez_admin_aggregate!
+
+  """fetch data from the table: "mez_admin" using primary key columns"""
+  mez_admin_by_pk(user_id: Int!): mez_admin
+
+  """
   fetch data from the table: "notification_info"
   """
   notification_info(
@@ -6124,8 +6478,8 @@ type restaurant_cart {
   ): restaurant_cart_item_aggregate!
 
   """An object relationship"""
-  restaurant: restaurant!
-  restaurant_id: Int!
+  restaurant: restaurant
+  restaurant_id: Int
 }
 
 """
@@ -8929,6 +9283,9 @@ type restaurant_operator {
   app_version: String
   current_gps: geography
   id: Int!
+
+  """An object relationship"""
+  notification_info: notification_info!
   notification_info_id: Int!
   owner: Boolean!
   restaurant_id: Int!
@@ -9018,6 +9375,7 @@ input restaurant_operator_bool_exp {
   app_version: String_comparison_exp
   current_gps: geography_comparison_exp
   id: Int_comparison_exp
+  notification_info: notification_info_bool_exp
   notification_info_id: Int_comparison_exp
   owner: Boolean_comparison_exp
   restaurant_id: Int_comparison_exp
@@ -9052,6 +9410,7 @@ input restaurant_operator_insert_input {
   app_version: String
   current_gps: geography
   id: Int
+  notification_info: notification_info_obj_rel_insert_input
   notification_info_id: Int
   owner: Boolean
   restaurant_id: Int
@@ -9138,6 +9497,7 @@ input restaurant_operator_order_by {
   app_version: order_by
   current_gps: order_by
   id: order_by
+  notification_info: notification_info_order_by
   notification_info_id: order_by
   owner: order_by
   restaurant_id: order_by
@@ -13202,6 +13562,63 @@ type subscription_root {
     """filter the rows returned"""
     where: delivery_bool_exp
   ): [delivery!]!
+
+  """
+  fetch data from the table: "mez_admin"
+  """
+  mez_admin(
+    """distinct select on columns"""
+    distinct_on: [mez_admin_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_admin_order_by!]
+
+    """filter the rows returned"""
+    where: mez_admin_bool_exp
+  ): [mez_admin!]!
+
+  """
+  fetch aggregated fields from the table: "mez_admin"
+  """
+  mez_admin_aggregate(
+    """distinct select on columns"""
+    distinct_on: [mez_admin_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_admin_order_by!]
+
+    """filter the rows returned"""
+    where: mez_admin_bool_exp
+  ): mez_admin_aggregate!
+
+  """fetch data from the table: "mez_admin" using primary key columns"""
+  mez_admin_by_pk(user_id: Int!): mez_admin
+
+  """
+  fetch data from the table in a streaming manner : "mez_admin"
+  """
+  mez_admin_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [mez_admin_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: mez_admin_bool_exp
+  ): [mez_admin!]!
 
   """
   fetch data from the table: "notification_info"

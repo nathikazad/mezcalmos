@@ -78,7 +78,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
       }),
       body: Obx(
         () {
-          if (viewController.restaurant.value != null) {
+          if (viewController.mainCategories.isNotEmpty) {
             return TabBarView(
               controller: _tabController,
               children: [
@@ -225,12 +225,11 @@ class _ROpMenuViewState extends State<ROpMenuView>
                 })
             : Column(
                 children: List.generate(
-                    viewController.restaurant.value!.getCategories.length,
+                    viewController.mainCategories.length,
                     (int index) => ROpCategoryItems(
                         viewController: viewController,
                         restaurantId: restaurantID!,
-                        category: viewController
-                            .restaurant.value!.getCategories[index])),
+                        category: viewController.mainCategories[index])),
               ),
       ),
     );

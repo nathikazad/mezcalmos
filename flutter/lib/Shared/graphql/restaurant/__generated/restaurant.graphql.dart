@@ -1,3 +1,5 @@
+import '../../__generated/schema.graphql.dart';
+import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -261,7 +263,14 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
-            name: NameNode(value: 'status'),
+            name: NameNode(value: 'approved'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'open_status'),
             alias: null,
             arguments: [],
             directives: [],
@@ -404,7 +413,8 @@ class Query$getRestaurants$restaurant {
     required this.location_gps,
     this.firebase_id,
     this.description,
-    required this.status,
+    required this.approved,
+    required this.open_status,
     this.payment_info_id,
     required this.schedule_id,
     required this.$__typename,
@@ -419,7 +429,8 @@ class Query$getRestaurants$restaurant {
     final l$location_gps = json['location_gps'];
     final l$firebase_id = json['firebase_id'];
     final l$description = json['description'];
-    final l$status = json['status'];
+    final l$approved = json['approved'];
+    final l$open_status = json['open_status'];
     final l$payment_info_id = json['payment_info_id'];
     final l$schedule_id = json['schedule_id'];
     final l$$__typename = json['__typename'];
@@ -435,7 +446,8 @@ class Query$getRestaurants$restaurant {
           ? null
           : Query$getRestaurants$restaurant$description.fromJson(
               (l$description as Map<String, dynamic>)),
-      status: (l$status as String),
+      approved: (l$approved as bool),
+      open_status: (l$open_status as String),
       payment_info_id: (l$payment_info_id as int?),
       schedule_id: (l$schedule_id as int),
       $__typename: (l$$__typename as String),
@@ -458,7 +470,9 @@ class Query$getRestaurants$restaurant {
 
   final Query$getRestaurants$restaurant$description? description;
 
-  final String status;
+  final bool approved;
+
+  final String open_status;
 
   final int? payment_info_id;
 
@@ -484,8 +498,10 @@ class Query$getRestaurants$restaurant {
     _resultData['firebase_id'] = l$firebase_id;
     final l$description = description;
     _resultData['description'] = l$description?.toJson();
-    final l$status = status;
-    _resultData['status'] = l$status;
+    final l$approved = approved;
+    _resultData['approved'] = l$approved;
+    final l$open_status = open_status;
+    _resultData['open_status'] = l$open_status;
     final l$payment_info_id = payment_info_id;
     _resultData['payment_info_id'] = l$payment_info_id;
     final l$schedule_id = schedule_id;
@@ -505,7 +521,8 @@ class Query$getRestaurants$restaurant {
     final l$location_gps = location_gps;
     final l$firebase_id = firebase_id;
     final l$description = description;
-    final l$status = status;
+    final l$approved = approved;
+    final l$open_status = open_status;
     final l$payment_info_id = payment_info_id;
     final l$schedule_id = schedule_id;
     final l$$__typename = $__typename;
@@ -518,7 +535,8 @@ class Query$getRestaurants$restaurant {
       l$location_gps,
       l$firebase_id,
       l$description,
-      l$status,
+      l$approved,
+      l$open_status,
       l$payment_info_id,
       l$schedule_id,
       l$$__typename,
@@ -574,9 +592,14 @@ class Query$getRestaurants$restaurant {
     if (l$description != lOther$description) {
       return false;
     }
-    final l$status = status;
-    final lOther$status = other.status;
-    if (l$status != lOther$status) {
+    final l$approved = approved;
+    final lOther$approved = other.approved;
+    if (l$approved != lOther$approved) {
+      return false;
+    }
+    final l$open_status = open_status;
+    final lOther$open_status = other.open_status;
+    if (l$open_status != lOther$open_status) {
       return false;
     }
     final l$payment_info_id = payment_info_id;
@@ -625,7 +648,8 @@ abstract class CopyWith$Query$getRestaurants$restaurant<TRes> {
     Geography? location_gps,
     String? firebase_id,
     Query$getRestaurants$restaurant$description? description,
-    String? status,
+    bool? approved,
+    String? open_status,
     int? payment_info_id,
     int? schedule_id,
     String? $__typename,
@@ -655,7 +679,8 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
     Object? location_gps = _undefined,
     Object? firebase_id = _undefined,
     Object? description = _undefined,
-    Object? status = _undefined,
+    Object? approved = _undefined,
+    Object? open_status = _undefined,
     Object? payment_info_id = _undefined,
     Object? schedule_id = _undefined,
     Object? $__typename = _undefined,
@@ -683,9 +708,12 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
         description: description == _undefined
             ? _instance.description
             : (description as Query$getRestaurants$restaurant$description?),
-        status: status == _undefined || status == null
-            ? _instance.status
-            : (status as String),
+        approved: approved == _undefined || approved == null
+            ? _instance.approved
+            : (approved as bool),
+        open_status: open_status == _undefined || open_status == null
+            ? _instance.open_status
+            : (open_status as String),
         payment_info_id: payment_info_id == _undefined
             ? _instance.payment_info_id
             : (payment_info_id as int?),
@@ -721,7 +749,8 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant<TRes>
     Geography? location_gps,
     String? firebase_id,
     Query$getRestaurants$restaurant$description? description,
-    String? status,
+    bool? approved,
+    String? open_status,
     int? payment_info_id,
     int? schedule_id,
     String? $__typename,
@@ -1328,6 +1357,55 @@ const documentNodeQuerygetOneRestaurant = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'image'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'language_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'description_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'location_gps'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'location_text'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'schedule_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'description'),
             alias: null,
             arguments: [],
@@ -1372,49 +1450,14 @@ const documentNodeQuerygetOneRestaurant = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
-            name: NameNode(value: 'image'),
+            name: NameNode(value: 'approved'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'language_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'location_gps'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'location_text'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'name'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'schedule_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'status'),
+            name: NameNode(value: 'open_status'),
             alias: null,
             arguments: [],
             directives: [],
@@ -1551,14 +1594,16 @@ class Query$getOneRestaurant$restaurant_by_pk {
   Query$getOneRestaurant$restaurant_by_pk({
     required this.id,
     this.firebase_id,
-    this.description,
     required this.image,
     required this.language_id,
+    this.description_id,
     required this.location_gps,
     required this.location_text,
     required this.name,
     required this.schedule_id,
-    required this.status,
+    this.description,
+    required this.approved,
+    required this.open_status,
     required this.$__typename,
   });
 
@@ -1566,29 +1611,33 @@ class Query$getOneRestaurant$restaurant_by_pk {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$firebase_id = json['firebase_id'];
-    final l$description = json['description'];
     final l$image = json['image'];
     final l$language_id = json['language_id'];
+    final l$description_id = json['description_id'];
     final l$location_gps = json['location_gps'];
     final l$location_text = json['location_text'];
     final l$name = json['name'];
     final l$schedule_id = json['schedule_id'];
-    final l$status = json['status'];
+    final l$description = json['description'];
+    final l$approved = json['approved'];
+    final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
     return Query$getOneRestaurant$restaurant_by_pk(
       id: (l$id as int),
       firebase_id: (l$firebase_id as String?),
-      description: l$description == null
-          ? null
-          : Query$getOneRestaurant$restaurant_by_pk$description.fromJson(
-              (l$description as Map<String, dynamic>)),
       image: (l$image as String),
       language_id: (l$language_id as String),
+      description_id: (l$description_id as int?),
       location_gps: GeographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
       name: (l$name as String),
       schedule_id: (l$schedule_id as int),
-      status: (l$status as String),
+      description: l$description == null
+          ? null
+          : Query$getOneRestaurant$restaurant_by_pk$description.fromJson(
+              (l$description as Map<String, dynamic>)),
+      approved: (l$approved as bool),
+      open_status: (l$open_status as String),
       $__typename: (l$$__typename as String),
     );
   }
@@ -1597,11 +1646,11 @@ class Query$getOneRestaurant$restaurant_by_pk {
 
   final String? firebase_id;
 
-  final Query$getOneRestaurant$restaurant_by_pk$description? description;
-
   final String image;
 
   final String language_id;
+
+  final int? description_id;
 
   final Geography location_gps;
 
@@ -1611,7 +1660,11 @@ class Query$getOneRestaurant$restaurant_by_pk {
 
   final int schedule_id;
 
-  final String status;
+  final Query$getOneRestaurant$restaurant_by_pk$description? description;
+
+  final bool approved;
+
+  final String open_status;
 
   final String $__typename;
 
@@ -1621,12 +1674,12 @@ class Query$getOneRestaurant$restaurant_by_pk {
     _resultData['id'] = l$id;
     final l$firebase_id = firebase_id;
     _resultData['firebase_id'] = l$firebase_id;
-    final l$description = description;
-    _resultData['description'] = l$description?.toJson();
     final l$image = image;
     _resultData['image'] = l$image;
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
+    final l$description_id = description_id;
+    _resultData['description_id'] = l$description_id;
     final l$location_gps = location_gps;
     _resultData['location_gps'] = GeographyToJson(l$location_gps);
     final l$location_text = location_text;
@@ -1635,8 +1688,12 @@ class Query$getOneRestaurant$restaurant_by_pk {
     _resultData['name'] = l$name;
     final l$schedule_id = schedule_id;
     _resultData['schedule_id'] = l$schedule_id;
-    final l$status = status;
-    _resultData['status'] = l$status;
+    final l$description = description;
+    _resultData['description'] = l$description?.toJson();
+    final l$approved = approved;
+    _resultData['approved'] = l$approved;
+    final l$open_status = open_status;
+    _resultData['open_status'] = l$open_status;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1646,26 +1703,30 @@ class Query$getOneRestaurant$restaurant_by_pk {
   int get hashCode {
     final l$id = id;
     final l$firebase_id = firebase_id;
-    final l$description = description;
     final l$image = image;
     final l$language_id = language_id;
+    final l$description_id = description_id;
     final l$location_gps = location_gps;
     final l$location_text = location_text;
     final l$name = name;
     final l$schedule_id = schedule_id;
-    final l$status = status;
+    final l$description = description;
+    final l$approved = approved;
+    final l$open_status = open_status;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$firebase_id,
-      l$description,
       l$image,
       l$language_id,
+      l$description_id,
       l$location_gps,
       l$location_text,
       l$name,
       l$schedule_id,
-      l$status,
+      l$description,
+      l$approved,
+      l$open_status,
       l$$__typename,
     ]);
   }
@@ -1689,11 +1750,6 @@ class Query$getOneRestaurant$restaurant_by_pk {
     if (l$firebase_id != lOther$firebase_id) {
       return false;
     }
-    final l$description = description;
-    final lOther$description = other.description;
-    if (l$description != lOther$description) {
-      return false;
-    }
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
@@ -1702,6 +1758,11 @@ class Query$getOneRestaurant$restaurant_by_pk {
     final l$language_id = language_id;
     final lOther$language_id = other.language_id;
     if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$description_id = description_id;
+    final lOther$description_id = other.description_id;
+    if (l$description_id != lOther$description_id) {
       return false;
     }
     final l$location_gps = location_gps;
@@ -1724,9 +1785,19 @@ class Query$getOneRestaurant$restaurant_by_pk {
     if (l$schedule_id != lOther$schedule_id) {
       return false;
     }
-    final l$status = status;
-    final lOther$status = other.status;
-    if (l$status != lOther$status) {
+    final l$description = description;
+    final lOther$description = other.description;
+    if (l$description != lOther$description) {
+      return false;
+    }
+    final l$approved = approved;
+    final lOther$approved = other.approved;
+    if (l$approved != lOther$approved) {
+      return false;
+    }
+    final l$open_status = open_status;
+    final lOther$open_status = other.open_status;
+    if (l$open_status != lOther$open_status) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -1760,14 +1831,16 @@ abstract class CopyWith$Query$getOneRestaurant$restaurant_by_pk<TRes> {
   TRes call({
     int? id,
     String? firebase_id,
-    Query$getOneRestaurant$restaurant_by_pk$description? description,
     String? image,
     String? language_id,
+    int? description_id,
     Geography? location_gps,
     String? location_text,
     String? name,
     int? schedule_id,
-    String? status,
+    Query$getOneRestaurant$restaurant_by_pk$description? description,
+    bool? approved,
+    String? open_status,
     String? $__typename,
   });
   CopyWith$Query$getOneRestaurant$restaurant_by_pk$description<TRes>
@@ -1790,14 +1863,16 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_by_pk<TRes>
   TRes call({
     Object? id = _undefined,
     Object? firebase_id = _undefined,
-    Object? description = _undefined,
     Object? image = _undefined,
     Object? language_id = _undefined,
+    Object? description_id = _undefined,
     Object? location_gps = _undefined,
     Object? location_text = _undefined,
     Object? name = _undefined,
     Object? schedule_id = _undefined,
-    Object? status = _undefined,
+    Object? description = _undefined,
+    Object? approved = _undefined,
+    Object? open_status = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getOneRestaurant$restaurant_by_pk(
@@ -1805,16 +1880,15 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_by_pk<TRes>
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
             : (firebase_id as String?),
-        description: description == _undefined
-            ? _instance.description
-            : (description
-                as Query$getOneRestaurant$restaurant_by_pk$description?),
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
+        description_id: description_id == _undefined
+            ? _instance.description_id
+            : (description_id as int?),
         location_gps: location_gps == _undefined || location_gps == null
             ? _instance.location_gps
             : (location_gps as Geography),
@@ -1827,9 +1901,16 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_by_pk<TRes>
         schedule_id: schedule_id == _undefined || schedule_id == null
             ? _instance.schedule_id
             : (schedule_id as int),
-        status: status == _undefined || status == null
-            ? _instance.status
-            : (status as String),
+        description: description == _undefined
+            ? _instance.description
+            : (description
+                as Query$getOneRestaurant$restaurant_by_pk$description?),
+        approved: approved == _undefined || approved == null
+            ? _instance.approved
+            : (approved as bool),
+        open_status: open_status == _undefined || open_status == null
+            ? _instance.open_status
+            : (open_status as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -1854,14 +1935,16 @@ class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_by_pk<TRes>
   call({
     int? id,
     String? firebase_id,
-    Query$getOneRestaurant$restaurant_by_pk$description? description,
     String? image,
     String? language_id,
+    int? description_id,
     Geography? location_gps,
     String? location_text,
     String? name,
     int? schedule_id,
-    String? status,
+    Query$getOneRestaurant$restaurant_by_pk$description? description,
+    bool? approved,
+    String? open_status,
     String? $__typename,
   }) =>
       _res;
@@ -2191,6 +2274,1262 @@ class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_by_pk$description$tran
         CopyWith$Query$getOneRestaurant$restaurant_by_pk$description$translations<
             TRes> {
   _CopyWithStubImpl$Query$getOneRestaurant$restaurant_by_pk$description$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$updateRestaurantInfo {
+  factory Variables$Mutation$updateRestaurantInfo({
+    required int id,
+    required Input$restaurant_set_input data,
+  }) =>
+      Variables$Mutation$updateRestaurantInfo._({
+        r'id': id,
+        r'data': data,
+      });
+
+  Variables$Mutation$updateRestaurantInfo._(this._$data);
+
+  factory Variables$Mutation$updateRestaurantInfo.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    final l$data = data['data'];
+    result$data['data'] =
+        Input$restaurant_set_input.fromJson((l$data as Map<String, dynamic>));
+    return Variables$Mutation$updateRestaurantInfo._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  Input$restaurant_set_input get data =>
+      (_$data['data'] as Input$restaurant_set_input);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    final l$data = data;
+    result$data['data'] = l$data.toJson();
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$updateRestaurantInfo<
+          Variables$Mutation$updateRestaurantInfo>
+      get copyWith => CopyWith$Variables$Mutation$updateRestaurantInfo(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$updateRestaurantInfo) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$data = data;
+    final lOther$data = other.data;
+    if (l$data != lOther$data) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$data = data;
+    return Object.hashAll([
+      l$id,
+      l$data,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$updateRestaurantInfo<TRes> {
+  factory CopyWith$Variables$Mutation$updateRestaurantInfo(
+    Variables$Mutation$updateRestaurantInfo instance,
+    TRes Function(Variables$Mutation$updateRestaurantInfo) then,
+  ) = _CopyWithImpl$Variables$Mutation$updateRestaurantInfo;
+
+  factory CopyWith$Variables$Mutation$updateRestaurantInfo.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$updateRestaurantInfo;
+
+  TRes call({
+    int? id,
+    Input$restaurant_set_input? data,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$updateRestaurantInfo<TRes>
+    implements CopyWith$Variables$Mutation$updateRestaurantInfo<TRes> {
+  _CopyWithImpl$Variables$Mutation$updateRestaurantInfo(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$updateRestaurantInfo _instance;
+
+  final TRes Function(Variables$Mutation$updateRestaurantInfo) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? data = _undefined,
+  }) =>
+      _then(Variables$Mutation$updateRestaurantInfo._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+        if (data != _undefined && data != null)
+          'data': (data as Input$restaurant_set_input),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$updateRestaurantInfo<TRes>
+    implements CopyWith$Variables$Mutation$updateRestaurantInfo<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$updateRestaurantInfo(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Input$restaurant_set_input? data,
+  }) =>
+      _res;
+}
+
+class Mutation$updateRestaurantInfo {
+  Mutation$updateRestaurantInfo({
+    this.update_restaurant_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateRestaurantInfo.fromJson(Map<String, dynamic> json) {
+    final l$update_restaurant_by_pk = json['update_restaurant_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateRestaurantInfo(
+      update_restaurant_by_pk: l$update_restaurant_by_pk == null
+          ? null
+          : Mutation$updateRestaurantInfo$update_restaurant_by_pk.fromJson(
+              (l$update_restaurant_by_pk as Map<String, dynamic>)),
+      $__typename: (l$$__typename as String),
+    );
+  }
+
+  final Mutation$updateRestaurantInfo$update_restaurant_by_pk?
+      update_restaurant_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_restaurant_by_pk = update_restaurant_by_pk;
+    _resultData['update_restaurant_by_pk'] =
+        l$update_restaurant_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_restaurant_by_pk = update_restaurant_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_restaurant_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$updateRestaurantInfo) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_restaurant_by_pk = update_restaurant_by_pk;
+    final lOther$update_restaurant_by_pk = other.update_restaurant_by_pk;
+    if (l$update_restaurant_by_pk != lOther$update_restaurant_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateRestaurantInfo
+    on Mutation$updateRestaurantInfo {
+  CopyWith$Mutation$updateRestaurantInfo<Mutation$updateRestaurantInfo>
+      get copyWith => CopyWith$Mutation$updateRestaurantInfo(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateRestaurantInfo<TRes> {
+  factory CopyWith$Mutation$updateRestaurantInfo(
+    Mutation$updateRestaurantInfo instance,
+    TRes Function(Mutation$updateRestaurantInfo) then,
+  ) = _CopyWithImpl$Mutation$updateRestaurantInfo;
+
+  factory CopyWith$Mutation$updateRestaurantInfo.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$updateRestaurantInfo;
+
+  TRes call({
+    Mutation$updateRestaurantInfo$update_restaurant_by_pk?
+        update_restaurant_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk<TRes>
+      get update_restaurant_by_pk;
+}
+
+class _CopyWithImpl$Mutation$updateRestaurantInfo<TRes>
+    implements CopyWith$Mutation$updateRestaurantInfo<TRes> {
+  _CopyWithImpl$Mutation$updateRestaurantInfo(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateRestaurantInfo _instance;
+
+  final TRes Function(Mutation$updateRestaurantInfo) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_restaurant_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateRestaurantInfo(
+        update_restaurant_by_pk: update_restaurant_by_pk == _undefined
+            ? _instance.update_restaurant_by_pk
+            : (update_restaurant_by_pk
+                as Mutation$updateRestaurantInfo$update_restaurant_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk<TRes>
+      get update_restaurant_by_pk {
+    final local$update_restaurant_by_pk = _instance.update_restaurant_by_pk;
+    return local$update_restaurant_by_pk == null
+        ? CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk(
+            local$update_restaurant_by_pk,
+            (e) => call(update_restaurant_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$updateRestaurantInfo<TRes>
+    implements CopyWith$Mutation$updateRestaurantInfo<TRes> {
+  _CopyWithStubImpl$Mutation$updateRestaurantInfo(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$updateRestaurantInfo$update_restaurant_by_pk?
+        update_restaurant_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk<TRes>
+      get update_restaurant_by_pk =>
+          CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk.stub(
+              _res);
+}
+
+const documentNodeMutationupdateRestaurantInfo = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'updateRestaurantInfo'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'data')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'restaurant_set_input'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_restaurant_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: VariableNode(name: NameNode(value: 'data')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'id')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'firebase_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'image'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'language_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'location_gps'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'location_text'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'schedule_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'description'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'translations'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'language_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'value'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'approved'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'open_status'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      FieldNode(
+        name: NameNode(value: '__typename'),
+        alias: null,
+        arguments: [],
+        directives: [],
+        selectionSet: null,
+      ),
+    ]),
+  ),
+]);
+Mutation$updateRestaurantInfo _parserFn$Mutation$updateRestaurantInfo(
+        Map<String, dynamic> data) =>
+    Mutation$updateRestaurantInfo.fromJson(data);
+typedef OnMutationCompleted$Mutation$updateRestaurantInfo = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$updateRestaurantInfo?,
+);
+
+class Options$Mutation$updateRestaurantInfo
+    extends graphql.MutationOptions<Mutation$updateRestaurantInfo> {
+  Options$Mutation$updateRestaurantInfo({
+    String? operationName,
+    required Variables$Mutation$updateRestaurantInfo variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$updateRestaurantInfo? onCompleted,
+    graphql.OnMutationUpdate<Mutation$updateRestaurantInfo>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$updateRestaurantInfo(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdateRestaurantInfo,
+          parserFn: _parserFn$Mutation$updateRestaurantInfo,
+        );
+
+  final OnMutationCompleted$Mutation$updateRestaurantInfo?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$updateRestaurantInfo
+    extends graphql.WatchQueryOptions<Mutation$updateRestaurantInfo> {
+  WatchOptions$Mutation$updateRestaurantInfo({
+    String? operationName,
+    required Variables$Mutation$updateRestaurantInfo variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdateRestaurantInfo,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$updateRestaurantInfo,
+        );
+}
+
+extension ClientExtension$Mutation$updateRestaurantInfo
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$updateRestaurantInfo>>
+      mutate$updateRestaurantInfo(
+              Options$Mutation$updateRestaurantInfo options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$updateRestaurantInfo>
+      watchMutation$updateRestaurantInfo(
+              WatchOptions$Mutation$updateRestaurantInfo options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
+  Mutation$updateRestaurantInfo$update_restaurant_by_pk({
+    required this.id,
+    this.firebase_id,
+    required this.image,
+    required this.language_id,
+    required this.location_gps,
+    required this.location_text,
+    required this.name,
+    required this.schedule_id,
+    this.description,
+    required this.approved,
+    required this.open_status,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateRestaurantInfo$update_restaurant_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$firebase_id = json['firebase_id'];
+    final l$image = json['image'];
+    final l$language_id = json['language_id'];
+    final l$location_gps = json['location_gps'];
+    final l$location_text = json['location_text'];
+    final l$name = json['name'];
+    final l$schedule_id = json['schedule_id'];
+    final l$description = json['description'];
+    final l$approved = json['approved'];
+    final l$open_status = json['open_status'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateRestaurantInfo$update_restaurant_by_pk(
+      id: (l$id as int),
+      firebase_id: (l$firebase_id as String?),
+      image: (l$image as String),
+      language_id: (l$language_id as String),
+      location_gps: GeographyFromJson(l$location_gps),
+      location_text: (l$location_text as String),
+      name: (l$name as String),
+      schedule_id: (l$schedule_id as int),
+      description: l$description == null
+          ? null
+          : Mutation$updateRestaurantInfo$update_restaurant_by_pk$description
+              .fromJson((l$description as Map<String, dynamic>)),
+      approved: (l$approved as bool),
+      open_status: (l$open_status as String),
+      $__typename: (l$$__typename as String),
+    );
+  }
+
+  final int id;
+
+  final String? firebase_id;
+
+  final String image;
+
+  final String language_id;
+
+  final Geography location_gps;
+
+  final String location_text;
+
+  final String name;
+
+  final int schedule_id;
+
+  final Mutation$updateRestaurantInfo$update_restaurant_by_pk$description?
+      description;
+
+  final bool approved;
+
+  final String open_status;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$firebase_id = firebase_id;
+    _resultData['firebase_id'] = l$firebase_id;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$location_gps = location_gps;
+    _resultData['location_gps'] = GeographyToJson(l$location_gps);
+    final l$location_text = location_text;
+    _resultData['location_text'] = l$location_text;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$schedule_id = schedule_id;
+    _resultData['schedule_id'] = l$schedule_id;
+    final l$description = description;
+    _resultData['description'] = l$description?.toJson();
+    final l$approved = approved;
+    _resultData['approved'] = l$approved;
+    final l$open_status = open_status;
+    _resultData['open_status'] = l$open_status;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$firebase_id = firebase_id;
+    final l$image = image;
+    final l$language_id = language_id;
+    final l$location_gps = location_gps;
+    final l$location_text = location_text;
+    final l$name = name;
+    final l$schedule_id = schedule_id;
+    final l$description = description;
+    final l$approved = approved;
+    final l$open_status = open_status;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$firebase_id,
+      l$image,
+      l$language_id,
+      l$location_gps,
+      l$location_text,
+      l$name,
+      l$schedule_id,
+      l$description,
+      l$approved,
+      l$open_status,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$updateRestaurantInfo$update_restaurant_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$firebase_id = firebase_id;
+    final lOther$firebase_id = other.firebase_id;
+    if (l$firebase_id != lOther$firebase_id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$location_gps = location_gps;
+    final lOther$location_gps = other.location_gps;
+    if (l$location_gps != lOther$location_gps) {
+      return false;
+    }
+    final l$location_text = location_text;
+    final lOther$location_text = other.location_text;
+    if (l$location_text != lOther$location_text) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$schedule_id = schedule_id;
+    final lOther$schedule_id = other.schedule_id;
+    if (l$schedule_id != lOther$schedule_id) {
+      return false;
+    }
+    final l$description = description;
+    final lOther$description = other.description;
+    if (l$description != lOther$description) {
+      return false;
+    }
+    final l$approved = approved;
+    final lOther$approved = other.approved;
+    if (l$approved != lOther$approved) {
+      return false;
+    }
+    final l$open_status = open_status;
+    final lOther$open_status = other.open_status;
+    if (l$open_status != lOther$open_status) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateRestaurantInfo$update_restaurant_by_pk
+    on Mutation$updateRestaurantInfo$update_restaurant_by_pk {
+  CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk<
+          Mutation$updateRestaurantInfo$update_restaurant_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk(
+    Mutation$updateRestaurantInfo$update_restaurant_by_pk instance,
+    TRes Function(Mutation$updateRestaurantInfo$update_restaurant_by_pk) then,
+  ) = _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk;
+
+  factory CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk;
+
+  TRes call({
+    int? id,
+    String? firebase_id,
+    String? image,
+    String? language_id,
+    Geography? location_gps,
+    String? location_text,
+    String? name,
+    int? schedule_id,
+    Mutation$updateRestaurantInfo$update_restaurant_by_pk$description?
+        description,
+    bool? approved,
+    String? open_status,
+    String? $__typename,
+  });
+  CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description<
+      TRes> get description;
+}
+
+class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk<TRes>
+    implements
+        CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk<TRes> {
+  _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateRestaurantInfo$update_restaurant_by_pk _instance;
+
+  final TRes Function(Mutation$updateRestaurantInfo$update_restaurant_by_pk)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? firebase_id = _undefined,
+    Object? image = _undefined,
+    Object? language_id = _undefined,
+    Object? location_gps = _undefined,
+    Object? location_text = _undefined,
+    Object? name = _undefined,
+    Object? schedule_id = _undefined,
+    Object? description = _undefined,
+    Object? approved = _undefined,
+    Object? open_status = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateRestaurantInfo$update_restaurant_by_pk(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        firebase_id: firebase_id == _undefined
+            ? _instance.firebase_id
+            : (firebase_id as String?),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        location_gps: location_gps == _undefined || location_gps == null
+            ? _instance.location_gps
+            : (location_gps as Geography),
+        location_text: location_text == _undefined || location_text == null
+            ? _instance.location_text
+            : (location_text as String),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        schedule_id: schedule_id == _undefined || schedule_id == null
+            ? _instance.schedule_id
+            : (schedule_id as int),
+        description: description == _undefined
+            ? _instance.description
+            : (description
+                as Mutation$updateRestaurantInfo$update_restaurant_by_pk$description?),
+        approved: approved == _undefined || approved == null
+            ? _instance.approved
+            : (approved as bool),
+        open_status: open_status == _undefined || open_status == null
+            ? _instance.open_status
+            : (open_status as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description<
+      TRes> get description {
+    final local$description = _instance.description;
+    return local$description == null
+        ? CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description
+            .stub(_then(_instance))
+        : CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description(
+            local$description, (e) => call(description: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk<TRes> {
+  _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? firebase_id,
+    String? image,
+    String? language_id,
+    Geography? location_gps,
+    String? location_text,
+    String? name,
+    int? schedule_id,
+    Mutation$updateRestaurantInfo$update_restaurant_by_pk$description?
+        description,
+    bool? approved,
+    String? open_status,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description<
+          TRes>
+      get description =>
+          CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description
+              .stub(_res);
+}
+
+class Mutation$updateRestaurantInfo$update_restaurant_by_pk$description {
+  Mutation$updateRestaurantInfo$update_restaurant_by_pk$description({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateRestaurantInfo$update_restaurant_by_pk$description.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateRestaurantInfo$update_restaurant_by_pk$description(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: (l$$__typename as String),
+    );
+  }
+
+  final List<
+          Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$updateRestaurantInfo$update_restaurant_by_pk$description) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description
+    on Mutation$updateRestaurantInfo$update_restaurant_by_pk$description {
+  CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description<
+          Mutation$updateRestaurantInfo$update_restaurant_by_pk$description>
+      get copyWith =>
+          CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description<
+    TRes> {
+  factory CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description(
+    Mutation$updateRestaurantInfo$update_restaurant_by_pk$description instance,
+    TRes Function(
+            Mutation$updateRestaurantInfo$update_restaurant_by_pk$description)
+        then,
+  ) = _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description;
+
+  factory CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description;
+
+  TRes call({
+    List<Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations> Function(
+              Iterable<
+                  CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations<
+                      Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description<
+        TRes>
+    implements
+        CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description<
+            TRes> {
+  _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateRestaurantInfo$update_restaurant_by_pk$description
+      _instance;
+
+  final TRes Function(
+      Mutation$updateRestaurantInfo$update_restaurant_by_pk$description) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateRestaurantInfo$update_restaurant_by_pk$description(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations> Function(
+                  Iterable<
+                      CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations<
+                          Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description<
+        TRes>
+    implements
+        CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description<
+            TRes> {
+  _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations {
+  Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: (l$$__typename as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations
+    on Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations {
+  CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations<
+          Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations>
+      get copyWith =>
+          CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations<
+    TRes> {
+  factory CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations(
+    Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations
+        instance,
+    TRes Function(
+            Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations)
+        then,
+  ) = _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations;
+
+  factory CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations<
+        TRes>
+    implements
+        CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations<
+            TRes> {
+  _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations
+      _instance;
+
+  final TRes Function(
+          Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations<
+        TRes>
+    implements
+        CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations<
+            TRes> {
+  _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description$translations(
       this._res);
 
   TRes _res;

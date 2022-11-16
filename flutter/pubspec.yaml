@@ -69,6 +69,7 @@ dependencies:
   # GraphQL APIs
   graphql: ^5.1.1
 
+
   # Animations
   rive: ^0.9.1
   shimmer: ^2.0.0

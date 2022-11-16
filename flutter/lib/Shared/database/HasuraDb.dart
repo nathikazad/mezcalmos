@@ -168,35 +168,35 @@ class HasuraDb {
     //   //     .forEach(((element) => mezDbgPrint(element.name)));
     // });
 
-    // graphQLClient
-    //     .subscribe(
-    //         SubscriptionOptions(document: gql(r'''subscription GetRestaurants {
-    //             restaurant {
-    //               id
-    //               name
-    //               location_text
-    //               status
-    //               image
-    //               description {
-    //                 translations {
-    //                   language_id
-    //                   value
-    //                 }
-    //               }
-    //               payment_info {
-    //                 bank_transfer
-    //                 card
-    //                 cash
-    //               }
-    //             }
-    //           }''')))
-    //     .listen((result) {
-    //   mezDbgPrint("HASURAAAAA result3");
-    //   mezDbgPrint(result.data);
-    //   // mezDbgPrint(result.parsedData?.restaurant[0].name);
-    //   // result.parsedData?.restaurant
-    //   //     .forEach(((element) => mezDbgPrint(element.name)));
-    // });
+    graphQLClient
+        .subscribe(
+            SubscriptionOptions(document: gql(r'''subscription GetRestaurants {
+                restaurant {
+                  id
+                  name
+                  location_text
+                  open_status
+                  image
+                  description {
+                    translations {
+                      language_id
+                      value
+                    }
+                  }
+                  payment_info {
+                    bank_transfer
+                    card
+                    cash
+                  }
+                }
+              }''')))
+        .listen((QueryResult<Object?> result) {
+      mezDbgPrint("👊👊👊👊👊 HASURAAAAA result3");
+      mezDbgPrint(result.data);
+      // mezDbgPrint(result.parsedData?.restaurant[0].name);
+      // result.parsedData?.restaurant
+      //     .forEach(((element) => mezDbgPrint(element.name)));
+    });
   }
 
   // DocumentNode documentNodeQueryGetRestaurants = DocumentNode(definitions: [

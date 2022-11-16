@@ -3,11 +3,56 @@ import 'package:graphql/src/core/query_result.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/category/__generated/category.graphql.dart';
+import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 final HasuraDb hasuraDb = Get.find<HasuraDb>();
+
+Future<List<Category>?> getRestaurantCategories(int id) async {
+  final QueryResult<Query$getRestaurantCategories> response = await hasuraDb
+      .graphQLClient
+      .query$getRestaurantCategories(Options$Query$getRestaurantCategories(
+          variables: Variables$Query$getRestaurantCategories(id: id)));
+  if (response.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨 Hasura get restaurant categories querry exception =>${response.exception}");
+  } else {
+    mezDbgPrint(
+        "✅✅✅ Hasura get restaurant categories querry success => ${response.data}");
+    if (response.parsedData != null) {
+      final List<Category> categories = [];
+
+      response.parsedData!.restaurant_category
+          .forEach((Query$getRestaurantCategories$restaurant_category element) {
+        // assigning category
+        final Category cat = Category(
+          position: element.position,
+          dialog: toLanguageMap(data: element.description?.translations),
+          name: toLanguageMap(data: element.name.translations),
+        );
+        // getting alll the items //
+        final List<Item> items = element.items.map(
+            (Query$getRestaurantCategories$restaurant_category$items item) {
+          return Item(
+              // TODO INT ID
+              id: item.id.toString(),
+              name: toLanguageMap(data: item.name.translations),
+              description: toLanguageMap(data: item.description?.translations),
+              cost: item.cost,
+              available: item.available);
+        }).toList();
+
+        cat.items = items;
+        categories.add(cat);
+      });
+      return categories;
+    }
+  }
+  return null;
+}
+
 Future<void> writeCategoryToHasura(Category category) async {
   final QueryResult<Mutation$addCategory> result =
       await hasuraDb.graphQLClient.mutate$addCategory(
