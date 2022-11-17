@@ -29,7 +29,7 @@ void initilizeMap(
     // Restaurant Marker
     mapController.addOrUpdateUserMarker(
       latLng: service.location.toLatLng(),
-      markerId: service.id,
+      markerId: service.firebaseId,
       customImgHttpUrl: service.image,
     )
   ]).then((_) {

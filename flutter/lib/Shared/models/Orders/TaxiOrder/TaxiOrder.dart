@@ -279,7 +279,7 @@ class TaxiOrder extends Order {
   CounterOffer? findCounterOfferByDriverId(String driverId) {
     try {
       return _counterOffers.firstWhere((CounterOffer counterOffer) =>
-          counterOffer.driverInfo.id == driverId);
+          counterOffer.driverInfo.firebaseId == driverId);
     } catch (e) {
       return null;
     }

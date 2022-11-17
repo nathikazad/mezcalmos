@@ -85,7 +85,7 @@ class _OrderCategoryBottomModalState extends State<OrderCategoryBottomModal> {
           //    Category selector
           LaundryOrderWeightSelector(
             newCategory: newCategory,
-            laundryId: widget.order.laundry!.id,
+            laundryId: widget.order.laundry!.firebaseId,
           ),
 
           SizedBox(
@@ -175,7 +175,7 @@ class _OrderCategoryBottomModalState extends State<OrderCategoryBottomModal> {
   Future<void> handlingNewOrderWeight() async {
     late LanguageType primaryLangauge;
     await laundryInfoController
-        .getLaundry(widget.order.laundry!.id)
+        .getLaundry(widget.order.laundry!.firebaseId)
         .then((Laundry value) {
       primaryLangauge = value.primaryLanguage;
     });
@@ -206,7 +206,7 @@ class _OrderCategoryBottomModalState extends State<OrderCategoryBottomModal> {
       LaundryOrderCostLineItem newCostLineItem) async {
     late LanguageType primaryLangauge;
     await laundryInfoController
-        .getLaundry(widget.order.laundry!.id)
+        .getLaundry(widget.order.laundry!.firebaseId)
         .then((Laundry value) {
       primaryLangauge = value.primaryLanguage;
     });

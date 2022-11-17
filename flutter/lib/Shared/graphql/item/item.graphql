@@ -1,0 +1,5 @@
+mutation addItem($item: restaurant_item_insert_input!) {
+  insert_restaurant_item_one(object: $item) {
+    id
+  }
+}

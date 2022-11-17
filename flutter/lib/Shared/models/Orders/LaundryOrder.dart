@@ -83,7 +83,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       : super(
             serviceProviderDropOffDriverChatId: laundryDropOffDriverChatId,
             serviceProviderPickupDriverChatId: laundryPickupDriverChatId,
-            serviceProviderId: laundry?.id,
+            serviceProviderId: laundry?.firebaseId,
             serviceProvider: laundry);
 
   factory LaundryOrder.fromData(
@@ -133,7 +133,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
                     _estimatedDropoffAtServiceProviderTime != "")
                 ? DateTime.parse(_estimatedDropoffAtServiceProviderTime)
                 : null,
-        laundry: (data["laundry"] != null) ? ServiceInfo.fromData(data["laundry"]) : null,
+        laundry: (data["laundry"] != null) ? ServiceInfo.fromHasura(data["laundry"]) : null,
         dropoffDriver: (data["dropoffDriver"] != null) ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"]) : null,
         laundryDropOffDriverChatId: data['secondaryChats']?['serviceProviderDropOffDriver'],
         customerDropOffDriverChatId: data['secondaryChats']?['customerDropOffDriver'],

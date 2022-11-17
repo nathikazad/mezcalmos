@@ -88,7 +88,7 @@ class TaxiUserInfo extends UserInfo {
       this.sitio,
       LanguageType? language,
       required this.location})
-      : super(id: id, name: name, image: image, language: language);
+      : super(firebaseId: id, name: name, image: image, language: language);
 
   factory TaxiUserInfo.fromData(data) {
     // mezDbgPrint(" TaxiUserInfo.fromData ====> $data");

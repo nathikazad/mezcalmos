@@ -112,7 +112,7 @@ class DeliveryDriverUserInfo extends UserInfo {
     this.location,
     LanguageType? language,
   }) : super(
-          id: id,
+          firebaseId: id,
           name: name,
           image: image,
           language: language,

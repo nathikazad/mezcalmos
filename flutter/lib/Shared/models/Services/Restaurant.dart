@@ -98,7 +98,7 @@ class Restaurant extends Service {
         : null;
     primaryLanguage.toOpLang();
     final Restaurant restaurant = Restaurant(
-        userInfo: ServiceInfo.fromData(restaurantData["info"]),
+        userInfo: ServiceInfo.fromHasura(restaurantData["info"]),
         description: description ?? null,
         schedule: schedule,
         restaurantState: restaurantState,

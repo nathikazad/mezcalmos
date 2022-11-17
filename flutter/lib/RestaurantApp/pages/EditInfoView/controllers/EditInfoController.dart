@@ -175,7 +175,8 @@ class ROpEditInfoController {
     if (restaurant.value!.paymentInfo.stripe != null &&
         restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
             true) {
-      updateServiceProvider(restaurant.value!.info.id, OrderType.Restaurant)
+      updateServiceProvider(
+              restaurant.value!.info.firebaseId, OrderType.Restaurant)
           .then((ServerResponse value) {
         _checkStripeDetails();
       });
@@ -195,7 +196,8 @@ class ROpEditInfoController {
   }
 
   void _reauthUrlHandler() {
-    onboardServiceProvider(restaurant.value!.info.id, OrderType.Restaurant)
+    onboardServiceProvider(
+            restaurant.value!.info.firebaseId, OrderType.Restaurant)
         .then((ServerResponse value) {
       if (value.success) {
         stripeUrl = value.data["url"];
@@ -206,7 +208,8 @@ class ROpEditInfoController {
 
   void _returnUrlHandler() {
     showStripe.value = false;
-    updateServiceProvider(restaurant.value!.info.id, OrderType.Restaurant)
+    updateServiceProvider(
+            restaurant.value!.info.firebaseId, OrderType.Restaurant)
         .then((ServerResponse value) {
       _checkStripeDetails();
     });
@@ -234,7 +237,8 @@ class ROpEditInfoController {
 
   void showPaymentSetup() {
     setupClicked.value = true;
-    onboardServiceProvider(restaurant.value!.info.id, OrderType.Restaurant)
+    onboardServiceProvider(
+            restaurant.value!.info.firebaseId, OrderType.Restaurant)
         .then((ServerResponse value) {
       if (value.success) {
         stripeUrl = value.data["url"];

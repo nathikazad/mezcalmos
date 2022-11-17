@@ -288,7 +288,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
 
     clicked.value = true;
     final LaundryRequest _laundryRequest =
-        LaundryRequest(laundryId: selectedLaundry.info.id);
+        LaundryRequest(laundryId: selectedLaundry.info.firebaseId);
     // get route info first
     await MapHelper.getDurationAndDistance(
             selectedLaundry.info.location, customerLoc!)
@@ -302,7 +302,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
         );
       }
 
-      _laundryRequest.laundryId = selectedLaundry.info.id;
+      _laundryRequest.laundryId = selectedLaundry.info.firebaseId;
       _laundryRequest.from = selectedLaundry.info.location;
       _laundryRequest.to = customerLoc;
       _laundryRequest.notes = _orderNote.text;

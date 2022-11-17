@@ -114,7 +114,7 @@ class _ROpOrderViewState extends State<ROpOrderView> {
           latLng: order.value?.restaurant.location.toLatLng(),
           customImgHttpUrl: order.value?.restaurant.image,
           fitWithinBounds: true,
-          markerId: order.value?.restaurant.id,
+          markerId: order.value?.restaurant.firebaseId,
         );
         // add customer's marker - destination
         mGoogleMapController.addOrUpdatePurpleDestinationMarker(

@@ -20,13 +20,12 @@ class Laundry extends Service {
       required LanguageType primaryLanguage,
       LanguageType? secondaryLanguage})
       : super(
-          info: userInfo,
-          schedule: schedule,
-          state: laundryState,
-          primaryLanguage: primaryLanguage,
-          secondaryLanguage: secondaryLanguage,
-          paymentInfo: paymentInfo
-        );
+            info: userInfo,
+            schedule: schedule,
+            state: laundryState,
+            primaryLanguage: primaryLanguage,
+            secondaryLanguage: secondaryLanguage,
+            paymentInfo: paymentInfo);
 
   factory Laundry.fromLaundryData(
       // ignore: avoid_annotating_with_dynamic
@@ -62,7 +61,7 @@ class Laundry extends Service {
         LanguageType.EN;
 
     final Laundry laundry = Laundry(
-        userInfo: ServiceInfo.fromData(laundryData["info"]),
+        userInfo: ServiceInfo.fromHasura(laundryData["info"]),
         schedule: schedule,
         paymentInfo: paymentInfo,
         laundryState: laundryState,

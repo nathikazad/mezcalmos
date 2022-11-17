@@ -93,7 +93,7 @@ class AuthController extends GetxController {
   Future<void> fetchUserInfoFromHasura() async {
     //TODO: fetch user from hasura without caching
     _userInfo = await Future<UserInfo>.delayed(
-        Duration.zero, () => UserInfo.fromData({}));
+        Duration.zero, () => UserInfo.fromHasura({}));
   }
 
   bool isDisplayNameSet() {

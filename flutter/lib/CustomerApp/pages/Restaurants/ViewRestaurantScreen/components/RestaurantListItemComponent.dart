@@ -77,9 +77,12 @@ class _RestaurantsListOfItemsComponentState
                     ),
                     if (widget.item.isSpecial)
                       Container(
-                          margin: const EdgeInsets.symmetric(vertical: 3),
-                          child: Text(widget.item.getPeriod!
-                              .toNormalString(removeDay: true)))
+                        margin: const EdgeInsets.symmetric(vertical: 3),
+                        child: Text(
+                          widget.item.getPeriod!
+                              .toNormalString(removeDay: true),
+                        ),
+                      )
                   ],
                 ),
               ),

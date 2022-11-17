@@ -211,8 +211,8 @@ class _ServicesViewState extends State<ServicesView> {
                                 padding: const EdgeInsets.all(3),
                                 primary: primaryBlueColor),
                             onPressed: () {
-                              Get.toNamed(
-                                  getEditInfoRoute(laundryId: laundry.info.id));
+                              Get.toNamed(getEditInfoRoute(
+                                  laundryId: laundry.info.firebaseId));
                             },
                             icon: Icon(Icons.person),
                             label: Text('${_i18n()["editProfile"]}'),
@@ -221,8 +221,8 @@ class _ServicesViewState extends State<ServicesView> {
                         Flexible(
                           child: TextButton.icon(
                             onPressed: () {
-                              Get.toNamed(
-                                  getAdminRoute(laundryId: laundry.info.id));
+                              Get.toNamed(getAdminRoute(
+                                  laundryId: laundry.info.firebaseId));
                             },
                             style: TextButton.styleFrom(
                                 backgroundColor: Colors.transparent,

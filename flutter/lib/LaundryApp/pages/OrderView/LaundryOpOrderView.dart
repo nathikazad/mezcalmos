@@ -110,7 +110,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
           latLng: order.value?.laundry?.location.toLatLng(),
           customImgHttpUrl: order.value?.laundry?.image,
           fitWithinBounds: true,
-          markerId: order.value?.laundry?.id,
+          markerId: order.value?.laundry?.firebaseId,
         );
         // add customer's marker - destination
         mGoogleMapController.addOrUpdatePurpleDestinationMarker(
@@ -151,7 +151,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
           latLng: order.value?.laundry?.location.toLatLng(),
           customImgHttpUrl: order.value?.laundry?.image,
           fitWithinBounds: true,
-          markerId: order.value?.laundry?.id,
+          markerId: order.value?.laundry?.firebaseId,
         );
         // add customer's marker - destination
         mGoogleMapController.addOrUpdatePurpleDestinationMarker(

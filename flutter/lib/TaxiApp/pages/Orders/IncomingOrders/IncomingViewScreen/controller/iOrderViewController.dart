@@ -41,12 +41,12 @@ class IOrderViewController {
     if (order.value == null) {
       onOrderNoMoreAvailable();
     } else {
-      controller.markOrderAsRead(orderId, order.value!.customer.id);
+      controller.markOrderAsRead(orderId, order.value!.customer.firebaseId);
 
       // Nathik
       // if (order.value!.inProcess()) {
       // we check valid counterOffer
-      startListeningOnCounterOffer(orderId, order.value!.customer.id);
+      startListeningOnCounterOffer(orderId, order.value!.customer.firebaseId);
 
       // populate the LatLngPoints from the encoded PolyLine String + SetState!
       if (order.value!.routeInformation != null)
@@ -55,7 +55,7 @@ class IOrderViewController {
 
       // add the corresponding markers
       mGoogleMapController.addOrUpdateUserMarker(
-        markerId: order.value?.customer.id,
+        markerId: order.value?.customer.firebaseId,
         latLng: order.value?.from.toLatLng(),
         customImgHttpUrl: order.value?.customer.image,
       );
@@ -125,7 +125,7 @@ class IOrderViewController {
     if (counterOffer.value != null && counterOffer.value!.isValid) {
       await controller.removeFromNegotiationMode(
         order.value!.orderId,
-        order.value!.customer.id,
+        order.value!.customer.firebaseId,
         newStatus: CounterOfferStatus.Cancelled,
       );
     }
@@ -154,7 +154,7 @@ class IOrderViewController {
       {CounterOfferStatus newStatus = CounterOfferStatus.Expired}) async {
     await controller.removeFromNegotiationMode(
       order.value!.orderId,
-      order.value!.customer.id,
+      order.value!.customer.firebaseId,
       newStatus: newStatus,
     );
   }
@@ -163,14 +163,14 @@ class IOrderViewController {
   Future<void> onCountOfferSent(num price) async {
     await controller.submitCounterOffer(
       order.value!.orderId,
-      order.value!.customer.id,
+      order.value!.customer.firebaseId,
       CounterOffer.buildWithExpiration(
         validTimeInSeconds: order.value!.scheduledTime != null
             ? nScheduledCounterOfferValidExpireTimeInSeconds
             : nDefaultCounterOfferValidExpireTimeInSeconds,
         price: price,
         taxiUserInfo: UserInfo(
-          id: authController.user!.id,
+          firebaseId: authController.user!.id,
           name: authController.user!.name!,
           image: authController.user!.image!,
         ),

@@ -248,7 +248,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
     // restaurant ad customer's location are fixed (fit in bound at start)
     mapController.addOrUpdateUserMarker(
       latLng: order.value?.laundry?.location.toLatLng(),
-      markerId: order.value?.laundry?.id,
+      markerId: order.value?.laundry?.firebaseId,
       customImgHttpUrl: order.value?.laundry?.image,
       fitWithinBounds: true,
     );
@@ -276,7 +276,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           // we ignore the marker within bounds
           mapController.addOrUpdateUserMarker(
             latLng: order.value?.laundry?.location.toLatLng(),
-            markerId: order.value?.laundry?.id,
+            markerId: order.value?.laundry?.firebaseId,
             customImgHttpUrl: order.value?.laundry?.image,
             fitWithinBounds: true,
           );
@@ -307,7 +307,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           // we ignore the restaurant's marker within bounds
           mapController.addOrUpdateUserMarker(
             latLng: order.value?.laundry?.location.toLatLng(),
-            markerId: order.value?.laundry?.id,
+            markerId: order.value?.laundry?.firebaseId,
             customImgHttpUrl: order.value?.laundry?.image,
             fitWithinBounds: true,
           );

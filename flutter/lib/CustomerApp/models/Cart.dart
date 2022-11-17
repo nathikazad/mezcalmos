@@ -80,7 +80,7 @@ class Cart {
     return <String, dynamic>{
       "orderType": OrderType.Restaurant.toFirebaseFormatString(),
       "routeInformation": _routeInformation?.toJson(),
-      "serviceProviderId": restaurant?.info.id,
+      "serviceProviderId": restaurant?.info.firebaseId,
       "quantity": quantity(),
       "cost": totalCost.toInt(),
       "itemsCost": itemsCost().toInt(),
@@ -240,7 +240,7 @@ class CartItem {
   }) {
     final CartItem cartItem = CartItem(
       item,
-      restaurant.info.id,
+      restaurant.info.firebaseId,
       idInCart: itemIdInCart,
       quantity: itemData["quantity"],
       notes: itemData["notes"],

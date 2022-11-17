@@ -1,30 +1,86 @@
-mutation addCategory($category: restaurant_category_insert_input!) {
-  insert_restaurant_category_one(object: $category) {
+query getRestaurants {
+  restaurant {
     id
-  }
-}
-
-query getCategory($id: Int!) {
-  restaurant_category_by_pk(id: $id) {
-    description{
-      translations{
+    image
+    language_id
+    location_text
+    name
+    location_gps
+    firebase_id
+    description {
+      translations {
         language_id
         value
       }
     }
-    name{
-      translations{
+    open_status
+    payment_info_id
+    schedule_id
+  }
+}
+
+query getOneRestaurant($id: Int!) {
+  restaurant_by_pk(id: $id) {
+    id
+    firebase_id
+    image
+    language_id
+    description_id
+    location_gps
+    location_text
+    name
+    schedule_id
+    description {
+      translations {
         language_id
         value
       }
     }
-    position
+    approved
+    open_status
+  }
+}
+mutation updateRestaurantInfo($id: Int!, $data: restaurant_set_input!) {
+  update_restaurant_by_pk(_set: $data, pk_columns: {id: $id}) {
+    id
+    firebase_id
+    image
+    language_id
+    location_gps
+    location_text
+    name
+    schedule_id
+    description {
+      translations {
+        language_id
+        value
+      }
+    }
+    approved
+    open_status
   }
 }
 
 
-query getCategories {
-  restaurant_category(order_by: {position: asc}) {
+
+subscription GetRestaurants {
+  restaurant {
     id
+    name
+    location_text
+    open_status
+    approved
+    image
+    description {
+      translations {
+        language_id
+        value
+      }
+    }
+    payment_info {
+      bank_transfer
+      card
+      cash
+    }
   }
 }
