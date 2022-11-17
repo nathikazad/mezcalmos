@@ -3,7 +3,6 @@ import { RestaurantOrderStatus, RestaurantOrderType } from '../shared/models/Ser
 import { PaymentType } from "../shared/models/Generic/Order";
 import { Location, AppType, ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { HttpsError } from "firebase-functions/v1/auth";
-import { getHasura } from "../utilities/hasura";
 
 export interface CheckoutRequest {
   customerAppType: AppType,
@@ -33,7 +32,8 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
         participant_id: v.id,
         app_type_id: "RestaurantApp"};
     })
-    
+    // fetch the restaurant
+    // construct the restaurant order model
     let orderResponse = await makeOrder(restaurantOperators)
     
     let orderId: number | undefined = orderResponse.insert_restaurant_order_one?.id;
@@ -44,6 +44,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
         "Order creation error",
       );
     }
+    // clear user cart
 
     setCustomerRestaurantChatInfo(orderResponse, orderId);
     setCustomerDeliveryDriverChatInfo(orderResponse, orderId);
