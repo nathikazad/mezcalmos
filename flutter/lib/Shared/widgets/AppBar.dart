@@ -193,37 +193,33 @@ Widget _MenuButtonAppBar() {
 }
 
 Widget _notificationAppBarIcon() {
-  return Obx(() {
-    if (Get.find<ForegroundNotificationsController>().notifications.length >
-        0) {
-      return Padding(
-        padding: const EdgeInsets.only(left: 3, right: 3),
-        child: InkWell(
-          customBorder: CircleBorder(),
-          onTap: () {
-            Get.toNamed(kNotificationsRoute);
-          },
-          child: Badge(
-            badgeColor: Colors.red,
-            showBadge: true,
-            position: BadgePosition.topEnd(top: 8, end: 0),
-            child: Ink(
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: secondaryLightBlueColor,
+  return Obx(() =>
+      Get.find<ForegroundNotificationsController>().notifications.isNotEmpty
+          ? Padding(
+              padding: const EdgeInsets.only(left: 3, right: 3),
+              child: InkWell(
+                customBorder: CircleBorder(),
+                onTap: () {
+                  Get.toNamed(kNotificationsRoute);
+                },
+                child: Badge(
+                  badgeColor: Colors.red,
+                  showBadge: true,
+                  position: BadgePosition.topEnd(top: 8, end: 0),
+                  child: Ink(
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: secondaryLightBlueColor,
+                    ),
+                    child: Icon(
+                      Icons.notifications,
+                      color: primaryBlueColor,
+                      size: 20,
+                    ),
+                  ),
+                ),
               ),
-              child: Icon(
-                Icons.notifications,
-                color: primaryBlueColor,
-                size: 20,
-              ),
-            ),
-          ),
-        ),
-      );
-    } else {
-      return Container();
-    }
-  });
+            )
+          : Container());
 }
