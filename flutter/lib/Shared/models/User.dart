@@ -109,7 +109,6 @@ class MainUserInfo {
 
 class ServiceInfo extends UserInfo {
   Location location;
-
   ServiceInfo({
     required this.location,
     required super.firebaseId,
