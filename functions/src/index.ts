@@ -136,7 +136,10 @@ function authenticatedCall(func:AuthenticatedFunction) {
         "unauthenticated",
         "Request was not authenticated.",
       );
-    } 
+    } else {
+      await userChanges.addHasuraClaim(context.auth?.uid);
+      firebaseUser = await firebase.auth().getUser(context.auth!.uid)
+    }
     return func(parseInt(firebaseUser.customClaims!["x-hasura-user-id"]), data);
   });
 }

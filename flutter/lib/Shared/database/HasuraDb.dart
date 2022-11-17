@@ -17,8 +17,8 @@ class HasuraDb {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   HasuraDb(this.appLaunchMode);
 
-  Future<void> initializeHasura({bool withAuthenticatedUser = false}) async {
-    mezDbgPrint("Inside initializeHasura $withAuthenticatedUser");
+  Future<void> initializeHasura() async {
+    mezDbgPrint("Inside initializeHasura");
     late String hasuraDbLink;
     switch (appLaunchMode) {
       case AppLaunchMode.prod:
@@ -35,19 +35,16 @@ class HasuraDb {
     HttpLink _httpLink = HttpLink(hasuraDbLink, defaultHeaders: headers);
     Link _link = _httpLink;
 
-    if (withAuthenticatedUser) {
-      if (fireAuth.FirebaseAuth.instance.currentUser == null) {
-        mezDbgPrint("Cannot initialize Hasura with user authentication");
-      } else {
-        final String hasuraAuthToken = await _getAuthorizationToken(
-            fireAuth.FirebaseAuth.instance.currentUser!,
-            appLaunchMode == AppLaunchMode.dev);
-        headers = <String, String>{'Authorization': 'Bearer $hasuraAuthToken'};
-        final AuthLink _authLink =
-            AuthLink(getToken: () async => 'Bearer $hasuraAuthToken');
-        _httpLink = HttpLink(hasuraDbLink, defaultHeaders: headers);
-        _link = _authLink.concat(_httpLink);
-      }
+    if (fireAuth.FirebaseAuth.instance.currentUser != null) {
+      final String hasuraAuthToken = await _getAuthorizationToken(
+          fireAuth.FirebaseAuth.instance.currentUser!,
+          appLaunchMode == AppLaunchMode.dev);
+      mezDbgPrint("TOKEN $hasuraAuthToken");
+      headers = <String, String>{'Authorization': 'Bearer $hasuraAuthToken'};
+      final AuthLink _authLink =
+          AuthLink(getToken: () async => 'Bearer $hasuraAuthToken');
+      _httpLink = HttpLink(hasuraDbLink, defaultHeaders: headers);
+      _link = _authLink.concat(_httpLink);
     }
     _wsLink = WebSocketLink("ws://127.0.0.1:8080/v1/graphql",
         config: SocketClientConfig(
