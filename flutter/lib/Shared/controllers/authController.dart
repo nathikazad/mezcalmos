@@ -60,6 +60,7 @@ class AuthController extends GetxController {
       mezDbgPrint(user?.hashCode);
       mezDbgPrint(user ?? "empty");
       _authStateStreamController.add(user);
+
       if (user == null) {
         await hasuraDb.initializeHasura();
         await _onSignOutCallback();
@@ -67,8 +68,7 @@ class AuthController extends GetxController {
       } else {
         mezDbgPrint('AuthController: User is currently signed in!');
 
-        final fireAuth.IdTokenResult? tokenResult =
-            await user.getIdTokenResult();
+        fireAuth.IdTokenResult? tokenResult = await user.getIdTokenResult();
         mezDbgPrint(tokenResult);
 
         if (tokenResult?.claims?['https://hasura.io/jwt/claims'] == null) {
@@ -76,31 +76,32 @@ class AuthController extends GetxController {
           await FirebaseFunctions.instance
               .httpsCallable('user-addHasuraClaim')
               .call();
+          tokenResult = await user.getIdTokenResult();
         }
         _hasuraUserId.value = int.parse(tokenResult!
             .claims!['https://hasura.io/jwt/claims']['x-hasura-user-id']);
 
         mezDbgPrint(_hasuraUserId.value);
 
-        await hasuraDb.initializeHasura(withAuthenticatedUser: true);
+        await hasuraDb.initializeHasura();
         await _onSignInCallback();
       }
     });
     super.onInit();
   }
 
-  Future<void> _fetchUserInfoFromHasura({bool cached = true}) async {
-    //TODO: fetch user from hasura
+  Future<void> fetchUserInfoFromHasura() async {
+    //TODO: fetch user from hasura without caching
     _userInfo = await Future<UserInfo>.delayed(
         Duration.zero, () => UserInfo.fromData({}));
   }
 
   bool isDisplayNameSet() {
-    return user?.name != null && user?.name != "";
+    return user?.isNameSet ?? false;
   }
 
   bool isUserImgSet() {
-    return user?.image != null && user?.image != "";
+    return user?.isImageSet ?? false;
   }
 
   DateTime? getUserCreationDate() {

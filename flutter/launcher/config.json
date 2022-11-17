@@ -133,6 +133,12 @@
                     "packageName": "com.mezcalmos.delivery",
                     "googe-service-file": "services/prod/android/delivery.json",
                     "apple-service-file": "services/prod/ios/delivery.plist"
+                },
+                "dev": {
+                    "appName": "Mezdelivery",
+                    "packageName": "com.mezcalmos.delivery",
+                    "googe-service-file": "services/prod/android/delivery.json",
+                    "apple-service-file": "services/prod/ios/delivery.plist"
                 }
             },
             "appPermissions": [

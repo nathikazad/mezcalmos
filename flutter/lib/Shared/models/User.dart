@@ -4,15 +4,21 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 class UserInfo {
   String id;
-  String? name;
-  String? image;
+  String? _name;
+  String? _image;
   LanguageType? language;
-
+  String get name => _name ?? "Unknown User";
+  bool get isNameSet => _name != null;
+  String get image => _image ?? defaultUserImgUrl;
+  bool get isImageSet => _image != null;
   UserInfo(
       {required this.id,
-      required this.name,
-      required this.image,
-      this.language});
+      required String name,
+      required String image,
+      this.language}) {
+    _name = name;
+    _image = image;
+  }
 
   factory UserInfo.fromData(data) {
     return UserInfo(

@@ -197,9 +197,10 @@ class SignIn extends GetWidget<AuthController> {
                         TextButton(
                             onPressed: () {
                               // Get.back();
-                              signIn(tTestTaxiValue, tEmailTestPassword);
+                              signIn(
+                                  tTestRestaurantOpValue, tEmailTestPassword);
                             },
-                            child: Text(tTestTaxiValue)),
+                            child: Text(tTestRestaurantOpValue)),
                         TextButton(
                             onPressed: () {
                               // Get.back();

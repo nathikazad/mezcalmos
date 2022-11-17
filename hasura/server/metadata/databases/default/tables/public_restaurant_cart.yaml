@@ -16,9 +16,3 @@ array_relationships:
         table:
           name: restaurant_cart_item
           schema: public
-computed_fields:
-  - name: cost
-    definition:
-      function:
-        name: cost
-        schema: public

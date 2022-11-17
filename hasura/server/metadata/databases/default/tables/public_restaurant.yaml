@@ -35,6 +35,23 @@ select_permissions:
     permission:
       columns:
         - location_gps
+        - approved
+        - description_id
+        - id
+        - payment_info_id
+        - schedule_id
+        - firebase_id
+        - image
+        - language_id
+        - location_text
+        - name
+        - open_status
+      filter: {}
+  - role: user
+    permission:
+      columns:
+        - location_gps
+        - approved
         - description_id
         - id
         - payment_info_id
