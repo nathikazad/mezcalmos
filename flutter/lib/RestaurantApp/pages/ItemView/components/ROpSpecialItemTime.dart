@@ -16,7 +16,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
 class ROpSpecialItemTime extends StatefulWidget {
   const ROpSpecialItemTime({Key? key, required this.viewController})
       : super(key: key);
-  final ItemViewController viewController;
+  final ROpItemViewController viewController;
 
   @override
   State<ROpSpecialItemTime> createState() => _ROpSpecialItemTimeState();

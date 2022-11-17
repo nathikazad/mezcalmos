@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
@@ -38,7 +38,7 @@ class _ROpItemViewState extends State<ROpItemView>
   String? itemId;
   String? categoryId;
   bool? specials;
-  ItemViewController viewController = ItemViewController();
+  ROpItemViewController viewController = ROpItemViewController();
   final GlobalKey<FormState> _prformKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _scformKey = GlobalKey<FormState>();
 
@@ -81,7 +81,7 @@ class _ROpItemViewState extends State<ROpItemView>
             bottomNavigationBar: _saveBtn(),
             body: Obx(
               () {
-                if (viewController.restaurant.value != null) {
+                if (viewController.pageLoaded) {
                   return TabBarView(
                     controller: _tabController,
                     children: [
@@ -282,8 +282,7 @@ class _ROpItemViewState extends State<ROpItemView>
             const SizedBox(
               height: 25,
             ),
-            if (viewController.specialMode.value == null ||
-                viewController.specialMode.value == false)
+            if (viewController.specialMode.value == false)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -343,7 +342,11 @@ class _ROpItemViewState extends State<ROpItemView>
                     showConfirmationDialog(context, onYesClick: () async {
                       await viewController
                           .deleteItem(itemId: itemId!, catgeoryId: categoryId)
-                          .then((value) => Get.back());
+                          .then((bool? value) {
+                        if (value == true) {
+                          Get.back(result: true);
+                        }
+                      });
                     },
                         title: '${_i18n()["deleteTitle"]}',
                         primaryButtonText: '${_i18n()["deleteBtn"]}',

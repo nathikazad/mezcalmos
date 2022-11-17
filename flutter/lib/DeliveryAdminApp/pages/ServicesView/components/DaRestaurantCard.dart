@@ -5,7 +5,7 @@ import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantsInfoController
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]

@@ -529,19 +529,20 @@ class _CopyWithStubImpl$Mutation$addCategory$insert_restaurant_category_one<
       _res;
 }
 
-class Variables$Query$getCategory {
-  factory Variables$Query$getCategory({required int id}) =>
-      Variables$Query$getCategory._({
+class Variables$Query$getCategoryInfoById {
+  factory Variables$Query$getCategoryInfoById({required int id}) =>
+      Variables$Query$getCategoryInfoById._({
         r'id': id,
       });
 
-  Variables$Query$getCategory._(this._$data);
+  Variables$Query$getCategoryInfoById._(this._$data);
 
-  factory Variables$Query$getCategory.fromJson(Map<String, dynamic> data) {
+  factory Variables$Query$getCategoryInfoById.fromJson(
+      Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
     final l$id = data['id'];
     result$data['id'] = (l$id as int);
-    return Variables$Query$getCategory._(result$data);
+    return Variables$Query$getCategoryInfoById._(result$data);
   }
 
   Map<String, dynamic> _$data;
@@ -554,8 +555,9 @@ class Variables$Query$getCategory {
     return result$data;
   }
 
-  CopyWith$Variables$Query$getCategory<Variables$Query$getCategory>
-      get copyWith => CopyWith$Variables$Query$getCategory(
+  CopyWith$Variables$Query$getCategoryInfoById<
+          Variables$Query$getCategoryInfoById>
+      get copyWith => CopyWith$Variables$Query$getCategoryInfoById(
             this,
             (i) => i,
           );
@@ -564,7 +566,7 @@ class Variables$Query$getCategory {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Variables$Query$getCategory) ||
+    if (!(other is Variables$Query$getCategoryInfoById) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -583,65 +585,67 @@ class Variables$Query$getCategory {
   }
 }
 
-abstract class CopyWith$Variables$Query$getCategory<TRes> {
-  factory CopyWith$Variables$Query$getCategory(
-    Variables$Query$getCategory instance,
-    TRes Function(Variables$Query$getCategory) then,
-  ) = _CopyWithImpl$Variables$Query$getCategory;
+abstract class CopyWith$Variables$Query$getCategoryInfoById<TRes> {
+  factory CopyWith$Variables$Query$getCategoryInfoById(
+    Variables$Query$getCategoryInfoById instance,
+    TRes Function(Variables$Query$getCategoryInfoById) then,
+  ) = _CopyWithImpl$Variables$Query$getCategoryInfoById;
 
-  factory CopyWith$Variables$Query$getCategory.stub(TRes res) =
-      _CopyWithStubImpl$Variables$Query$getCategory;
+  factory CopyWith$Variables$Query$getCategoryInfoById.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getCategoryInfoById;
 
   TRes call({int? id});
 }
 
-class _CopyWithImpl$Variables$Query$getCategory<TRes>
-    implements CopyWith$Variables$Query$getCategory<TRes> {
-  _CopyWithImpl$Variables$Query$getCategory(
+class _CopyWithImpl$Variables$Query$getCategoryInfoById<TRes>
+    implements CopyWith$Variables$Query$getCategoryInfoById<TRes> {
+  _CopyWithImpl$Variables$Query$getCategoryInfoById(
     this._instance,
     this._then,
   );
 
-  final Variables$Query$getCategory _instance;
+  final Variables$Query$getCategoryInfoById _instance;
 
-  final TRes Function(Variables$Query$getCategory) _then;
+  final TRes Function(Variables$Query$getCategoryInfoById) _then;
 
   static const _undefined = {};
 
-  TRes call({Object? id = _undefined}) => _then(Variables$Query$getCategory._({
+  TRes call({Object? id = _undefined}) =>
+      _then(Variables$Query$getCategoryInfoById._({
         ..._instance._$data,
         if (id != _undefined && id != null) 'id': (id as int),
       }));
 }
 
-class _CopyWithStubImpl$Variables$Query$getCategory<TRes>
-    implements CopyWith$Variables$Query$getCategory<TRes> {
-  _CopyWithStubImpl$Variables$Query$getCategory(this._res);
+class _CopyWithStubImpl$Variables$Query$getCategoryInfoById<TRes>
+    implements CopyWith$Variables$Query$getCategoryInfoById<TRes> {
+  _CopyWithStubImpl$Variables$Query$getCategoryInfoById(this._res);
 
   TRes _res;
 
   call({int? id}) => _res;
 }
 
-class Query$getCategory {
-  Query$getCategory({
+class Query$getCategoryInfoById {
+  Query$getCategoryInfoById({
     this.restaurant_category_by_pk,
     required this.$__typename,
   });
 
-  factory Query$getCategory.fromJson(Map<String, dynamic> json) {
+  factory Query$getCategoryInfoById.fromJson(Map<String, dynamic> json) {
     final l$restaurant_category_by_pk = json['restaurant_category_by_pk'];
     final l$$__typename = json['__typename'];
-    return Query$getCategory(
+    return Query$getCategoryInfoById(
       restaurant_category_by_pk: l$restaurant_category_by_pk == null
           ? null
-          : Query$getCategory$restaurant_category_by_pk.fromJson(
+          : Query$getCategoryInfoById$restaurant_category_by_pk.fromJson(
               (l$restaurant_category_by_pk as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Query$getCategory$restaurant_category_by_pk? restaurant_category_by_pk;
+  final Query$getCategoryInfoById$restaurant_category_by_pk?
+      restaurant_category_by_pk;
 
   final String $__typename;
 
@@ -670,7 +674,8 @@ class Query$getCategory {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$getCategory) || runtimeType != other.runtimeType) {
+    if (!(other is Query$getCategoryInfoById) ||
+        runtimeType != other.runtimeType) {
       return false;
     }
     final l$restaurant_category_by_pk = restaurant_category_by_pk;
@@ -687,41 +692,43 @@ class Query$getCategory {
   }
 }
 
-extension UtilityExtension$Query$getCategory on Query$getCategory {
-  CopyWith$Query$getCategory<Query$getCategory> get copyWith =>
-      CopyWith$Query$getCategory(
+extension UtilityExtension$Query$getCategoryInfoById
+    on Query$getCategoryInfoById {
+  CopyWith$Query$getCategoryInfoById<Query$getCategoryInfoById> get copyWith =>
+      CopyWith$Query$getCategoryInfoById(
         this,
         (i) => i,
       );
 }
 
-abstract class CopyWith$Query$getCategory<TRes> {
-  factory CopyWith$Query$getCategory(
-    Query$getCategory instance,
-    TRes Function(Query$getCategory) then,
-  ) = _CopyWithImpl$Query$getCategory;
+abstract class CopyWith$Query$getCategoryInfoById<TRes> {
+  factory CopyWith$Query$getCategoryInfoById(
+    Query$getCategoryInfoById instance,
+    TRes Function(Query$getCategoryInfoById) then,
+  ) = _CopyWithImpl$Query$getCategoryInfoById;
 
-  factory CopyWith$Query$getCategory.stub(TRes res) =
-      _CopyWithStubImpl$Query$getCategory;
+  factory CopyWith$Query$getCategoryInfoById.stub(TRes res) =
+      _CopyWithStubImpl$Query$getCategoryInfoById;
 
   TRes call({
-    Query$getCategory$restaurant_category_by_pk? restaurant_category_by_pk,
+    Query$getCategoryInfoById$restaurant_category_by_pk?
+        restaurant_category_by_pk,
     String? $__typename,
   });
-  CopyWith$Query$getCategory$restaurant_category_by_pk<TRes>
+  CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk<TRes>
       get restaurant_category_by_pk;
 }
 
-class _CopyWithImpl$Query$getCategory<TRes>
-    implements CopyWith$Query$getCategory<TRes> {
-  _CopyWithImpl$Query$getCategory(
+class _CopyWithImpl$Query$getCategoryInfoById<TRes>
+    implements CopyWith$Query$getCategoryInfoById<TRes> {
+  _CopyWithImpl$Query$getCategoryInfoById(
     this._instance,
     this._then,
   );
 
-  final Query$getCategory _instance;
+  final Query$getCategoryInfoById _instance;
 
-  final TRes Function(Query$getCategory) _then;
+  final TRes Function(Query$getCategoryInfoById) _then;
 
   static const _undefined = {};
 
@@ -729,47 +736,49 @@ class _CopyWithImpl$Query$getCategory<TRes>
     Object? restaurant_category_by_pk = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$getCategory(
+      _then(Query$getCategoryInfoById(
         restaurant_category_by_pk: restaurant_category_by_pk == _undefined
             ? _instance.restaurant_category_by_pk
             : (restaurant_category_by_pk
-                as Query$getCategory$restaurant_category_by_pk?),
+                as Query$getCategoryInfoById$restaurant_category_by_pk?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$getCategory$restaurant_category_by_pk<TRes>
+  CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk<TRes>
       get restaurant_category_by_pk {
     final local$restaurant_category_by_pk = _instance.restaurant_category_by_pk;
     return local$restaurant_category_by_pk == null
-        ? CopyWith$Query$getCategory$restaurant_category_by_pk.stub(
+        ? CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk.stub(
             _then(_instance))
-        : CopyWith$Query$getCategory$restaurant_category_by_pk(
+        : CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk(
             local$restaurant_category_by_pk,
             (e) => call(restaurant_category_by_pk: e));
   }
 }
 
-class _CopyWithStubImpl$Query$getCategory<TRes>
-    implements CopyWith$Query$getCategory<TRes> {
-  _CopyWithStubImpl$Query$getCategory(this._res);
+class _CopyWithStubImpl$Query$getCategoryInfoById<TRes>
+    implements CopyWith$Query$getCategoryInfoById<TRes> {
+  _CopyWithStubImpl$Query$getCategoryInfoById(this._res);
 
   TRes _res;
 
   call({
-    Query$getCategory$restaurant_category_by_pk? restaurant_category_by_pk,
+    Query$getCategoryInfoById$restaurant_category_by_pk?
+        restaurant_category_by_pk,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$getCategory$restaurant_category_by_pk<TRes>
+  CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk<TRes>
       get restaurant_category_by_pk =>
-          CopyWith$Query$getCategory$restaurant_category_by_pk.stub(_res);
+          CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk.stub(
+              _res);
 }
 
-const documentNodeQuerygetCategory = DocumentNode(definitions: [
+const documentNodeQuerygetCategoryInfoById = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.query,
-    name: NameNode(value: 'getCategory'),
+    name: NameNode(value: 'getCategoryInfoById'),
     variableDefinitions: [
       VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'id')),
@@ -795,11 +804,25 @@ const documentNodeQuerygetCategory = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'description'),
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'name'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
               FieldNode(
                 name: NameNode(value: 'translations'),
                 alias: null,
@@ -837,6 +860,1450 @@ const documentNodeQuerygetCategory = DocumentNode(definitions: [
                 selectionSet: null,
               ),
             ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'description'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'translations'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'language_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'value'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'position'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'description_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getCategoryInfoById _parserFn$Query$getCategoryInfoById(
+        Map<String, dynamic> data) =>
+    Query$getCategoryInfoById.fromJson(data);
+
+class Options$Query$getCategoryInfoById
+    extends graphql.QueryOptions<Query$getCategoryInfoById> {
+  Options$Query$getCategoryInfoById({
+    String? operationName,
+    required Variables$Query$getCategoryInfoById variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetCategoryInfoById,
+          parserFn: _parserFn$Query$getCategoryInfoById,
+        );
+}
+
+class WatchOptions$Query$getCategoryInfoById
+    extends graphql.WatchQueryOptions<Query$getCategoryInfoById> {
+  WatchOptions$Query$getCategoryInfoById({
+    String? operationName,
+    required Variables$Query$getCategoryInfoById variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetCategoryInfoById,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getCategoryInfoById,
+        );
+}
+
+class FetchMoreOptions$Query$getCategoryInfoById
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getCategoryInfoById({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getCategoryInfoById variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetCategoryInfoById,
+        );
+}
+
+extension ClientExtension$Query$getCategoryInfoById on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getCategoryInfoById>>
+      query$getCategoryInfoById(
+              Options$Query$getCategoryInfoById options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$getCategoryInfoById>
+      watchQuery$getCategoryInfoById(
+              WatchOptions$Query$getCategoryInfoById options) =>
+          this.watchQuery(options);
+  void writeQuery$getCategoryInfoById({
+    required Query$getCategoryInfoById data,
+    required Variables$Query$getCategoryInfoById variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQuerygetCategoryInfoById),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getCategoryInfoById? readQuery$getCategoryInfoById({
+    required Variables$Query$getCategoryInfoById variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQuerygetCategoryInfoById),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$getCategoryInfoById.fromJson(result);
+  }
+}
+
+class Query$getCategoryInfoById$restaurant_category_by_pk {
+  Query$getCategoryInfoById$restaurant_category_by_pk({
+    required this.id,
+    required this.name,
+    this.description,
+    required this.position,
+    this.description_id,
+    required this.$__typename,
+  });
+
+  factory Query$getCategoryInfoById$restaurant_category_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$description = json['description'];
+    final l$position = json['position'];
+    final l$description_id = json['description_id'];
+    final l$$__typename = json['__typename'];
+    return Query$getCategoryInfoById$restaurant_category_by_pk(
+      id: (l$id as int),
+      name: Query$getCategoryInfoById$restaurant_category_by_pk$name.fromJson(
+          (l$name as Map<String, dynamic>)),
+      description: l$description == null
+          ? null
+          : Query$getCategoryInfoById$restaurant_category_by_pk$description
+              .fromJson((l$description as Map<String, dynamic>)),
+      position: (l$position as int),
+      description_id: (l$description_id as int?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$getCategoryInfoById$restaurant_category_by_pk$name name;
+
+  final Query$getCategoryInfoById$restaurant_category_by_pk$description?
+      description;
+
+  final int position;
+
+  final int? description_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$description = description;
+    _resultData['description'] = l$description?.toJson();
+    final l$position = position;
+    _resultData['position'] = l$position;
+    final l$description_id = description_id;
+    _resultData['description_id'] = l$description_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$name = name;
+    final l$description = description;
+    final l$position = position;
+    final l$description_id = description_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$name,
+      l$description,
+      l$position,
+      l$description_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getCategoryInfoById$restaurant_category_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$description = description;
+    final lOther$description = other.description;
+    if (l$description != lOther$description) {
+      return false;
+    }
+    final l$position = position;
+    final lOther$position = other.position;
+    if (l$position != lOther$position) {
+      return false;
+    }
+    final l$description_id = description_id;
+    final lOther$description_id = other.description_id;
+    if (l$description_id != lOther$description_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCategoryInfoById$restaurant_category_by_pk
+    on Query$getCategoryInfoById$restaurant_category_by_pk {
+  CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk<
+          Query$getCategoryInfoById$restaurant_category_by_pk>
+      get copyWith =>
+          CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk<
+    TRes> {
+  factory CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk(
+    Query$getCategoryInfoById$restaurant_category_by_pk instance,
+    TRes Function(Query$getCategoryInfoById$restaurant_category_by_pk) then,
+  ) = _CopyWithImpl$Query$getCategoryInfoById$restaurant_category_by_pk;
+
+  factory CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCategoryInfoById$restaurant_category_by_pk;
+
+  TRes call({
+    int? id,
+    Query$getCategoryInfoById$restaurant_category_by_pk$name? name,
+    Query$getCategoryInfoById$restaurant_category_by_pk$description?
+        description,
+    int? position,
+    int? description_id,
+    String? $__typename,
+  });
+  CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$name<TRes>
+      get name;
+  CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description<TRes>
+      get description;
+}
+
+class _CopyWithImpl$Query$getCategoryInfoById$restaurant_category_by_pk<TRes>
+    implements
+        CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk<TRes> {
+  _CopyWithImpl$Query$getCategoryInfoById$restaurant_category_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCategoryInfoById$restaurant_category_by_pk _instance;
+
+  final TRes Function(Query$getCategoryInfoById$restaurant_category_by_pk)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? description = _undefined,
+    Object? position = _undefined,
+    Object? description_id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getCategoryInfoById$restaurant_category_by_pk(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Query$getCategoryInfoById$restaurant_category_by_pk$name),
+        description: description == _undefined
+            ? _instance.description
+            : (description
+                as Query$getCategoryInfoById$restaurant_category_by_pk$description?),
+        position: position == _undefined || position == null
+            ? _instance.position
+            : (position as int),
+        description_id: description_id == _undefined
+            ? _instance.description_id
+            : (description_id as int?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$name<TRes>
+      get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$name(
+        local$name, (e) => call(name: e));
+  }
+
+  CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description<TRes>
+      get description {
+    final local$description = _instance.description;
+    return local$description == null
+        ? CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description
+            .stub(_then(_instance))
+        : CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description(
+            local$description, (e) => call(description: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getCategoryInfoById$restaurant_category_by_pk<
+        TRes>
+    implements
+        CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk<TRes> {
+  _CopyWithStubImpl$Query$getCategoryInfoById$restaurant_category_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$getCategoryInfoById$restaurant_category_by_pk$name? name,
+    Query$getCategoryInfoById$restaurant_category_by_pk$description?
+        description,
+    int? position,
+    int? description_id,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$name<TRes>
+      get name =>
+          CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$name
+              .stub(_res);
+  CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description<TRes>
+      get description =>
+          CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description
+              .stub(_res);
+}
+
+class Query$getCategoryInfoById$restaurant_category_by_pk$name {
+  Query$getCategoryInfoById$restaurant_category_by_pk$name({
+    required this.id,
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$getCategoryInfoById$restaurant_category_by_pk$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$getCategoryInfoById$restaurant_category_by_pk$name(
+      id: (l$id as int),
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$getCategoryInfoById$restaurant_category_by_pk$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final List<
+          Query$getCategoryInfoById$restaurant_category_by_pk$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getCategoryInfoById$restaurant_category_by_pk$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCategoryInfoById$restaurant_category_by_pk$name
+    on Query$getCategoryInfoById$restaurant_category_by_pk$name {
+  CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$name<
+          Query$getCategoryInfoById$restaurant_category_by_pk$name>
+      get copyWith =>
+          CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$name<
+    TRes> {
+  factory CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$name(
+    Query$getCategoryInfoById$restaurant_category_by_pk$name instance,
+    TRes Function(Query$getCategoryInfoById$restaurant_category_by_pk$name)
+        then,
+  ) = _CopyWithImpl$Query$getCategoryInfoById$restaurant_category_by_pk$name;
+
+  factory CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCategoryInfoById$restaurant_category_by_pk$name;
+
+  TRes call({
+    int? id,
+    List<Query$getCategoryInfoById$restaurant_category_by_pk$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$getCategoryInfoById$restaurant_category_by_pk$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$name$translations<
+                      Query$getCategoryInfoById$restaurant_category_by_pk$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getCategoryInfoById$restaurant_category_by_pk$name<
+        TRes>
+    implements
+        CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$name<
+            TRes> {
+  _CopyWithImpl$Query$getCategoryInfoById$restaurant_category_by_pk$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCategoryInfoById$restaurant_category_by_pk$name _instance;
+
+  final TRes Function(Query$getCategoryInfoById$restaurant_category_by_pk$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getCategoryInfoById$restaurant_category_by_pk$name(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$getCategoryInfoById$restaurant_category_by_pk$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$getCategoryInfoById$restaurant_category_by_pk$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$name$translations<
+                          Query$getCategoryInfoById$restaurant_category_by_pk$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getCategoryInfoById$restaurant_category_by_pk$name<
+        TRes>
+    implements
+        CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$name<
+            TRes> {
+  _CopyWithStubImpl$Query$getCategoryInfoById$restaurant_category_by_pk$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    List<Query$getCategoryInfoById$restaurant_category_by_pk$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$getCategoryInfoById$restaurant_category_by_pk$name$translations {
+  Query$getCategoryInfoById$restaurant_category_by_pk$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$getCategoryInfoById$restaurant_category_by_pk$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$getCategoryInfoById$restaurant_category_by_pk$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCategoryInfoById$restaurant_category_by_pk$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCategoryInfoById$restaurant_category_by_pk$name$translations
+    on Query$getCategoryInfoById$restaurant_category_by_pk$name$translations {
+  CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$name$translations<
+          Query$getCategoryInfoById$restaurant_category_by_pk$name$translations>
+      get copyWith =>
+          CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$name$translations<
+    TRes> {
+  factory CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$name$translations(
+    Query$getCategoryInfoById$restaurant_category_by_pk$name$translations
+        instance,
+    TRes Function(
+            Query$getCategoryInfoById$restaurant_category_by_pk$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$getCategoryInfoById$restaurant_category_by_pk$name$translations;
+
+  factory CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCategoryInfoById$restaurant_category_by_pk$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getCategoryInfoById$restaurant_category_by_pk$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$getCategoryInfoById$restaurant_category_by_pk$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCategoryInfoById$restaurant_category_by_pk$name$translations
+      _instance;
+
+  final TRes Function(
+          Query$getCategoryInfoById$restaurant_category_by_pk$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getCategoryInfoById$restaurant_category_by_pk$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getCategoryInfoById$restaurant_category_by_pk$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$getCategoryInfoById$restaurant_category_by_pk$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getCategoryInfoById$restaurant_category_by_pk$description {
+  Query$getCategoryInfoById$restaurant_category_by_pk$description({
+    required this.id,
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$getCategoryInfoById$restaurant_category_by_pk$description.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$getCategoryInfoById$restaurant_category_by_pk$description(
+      id: (l$id as int),
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$getCategoryInfoById$restaurant_category_by_pk$description$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final List<
+          Query$getCategoryInfoById$restaurant_category_by_pk$description$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCategoryInfoById$restaurant_category_by_pk$description) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCategoryInfoById$restaurant_category_by_pk$description
+    on Query$getCategoryInfoById$restaurant_category_by_pk$description {
+  CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description<
+          Query$getCategoryInfoById$restaurant_category_by_pk$description>
+      get copyWith =>
+          CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description<
+    TRes> {
+  factory CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description(
+    Query$getCategoryInfoById$restaurant_category_by_pk$description instance,
+    TRes Function(
+            Query$getCategoryInfoById$restaurant_category_by_pk$description)
+        then,
+  ) = _CopyWithImpl$Query$getCategoryInfoById$restaurant_category_by_pk$description;
+
+  factory CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCategoryInfoById$restaurant_category_by_pk$description;
+
+  TRes call({
+    int? id,
+    List<Query$getCategoryInfoById$restaurant_category_by_pk$description$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$getCategoryInfoById$restaurant_category_by_pk$description$translations> Function(
+              Iterable<
+                  CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description$translations<
+                      Query$getCategoryInfoById$restaurant_category_by_pk$description$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getCategoryInfoById$restaurant_category_by_pk$description<
+        TRes>
+    implements
+        CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description<
+            TRes> {
+  _CopyWithImpl$Query$getCategoryInfoById$restaurant_category_by_pk$description(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCategoryInfoById$restaurant_category_by_pk$description
+      _instance;
+
+  final TRes Function(
+      Query$getCategoryInfoById$restaurant_category_by_pk$description) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getCategoryInfoById$restaurant_category_by_pk$description(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$getCategoryInfoById$restaurant_category_by_pk$description$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$getCategoryInfoById$restaurant_category_by_pk$description$translations> Function(
+                  Iterable<
+                      CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description$translations<
+                          Query$getCategoryInfoById$restaurant_category_by_pk$description$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getCategoryInfoById$restaurant_category_by_pk$description<
+        TRes>
+    implements
+        CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description<
+            TRes> {
+  _CopyWithStubImpl$Query$getCategoryInfoById$restaurant_category_by_pk$description(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    List<Query$getCategoryInfoById$restaurant_category_by_pk$description$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$getCategoryInfoById$restaurant_category_by_pk$description$translations {
+  Query$getCategoryInfoById$restaurant_category_by_pk$description$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$getCategoryInfoById$restaurant_category_by_pk$description$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$getCategoryInfoById$restaurant_category_by_pk$description$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCategoryInfoById$restaurant_category_by_pk$description$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCategoryInfoById$restaurant_category_by_pk$description$translations
+    on Query$getCategoryInfoById$restaurant_category_by_pk$description$translations {
+  CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description$translations<
+          Query$getCategoryInfoById$restaurant_category_by_pk$description$translations>
+      get copyWith =>
+          CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description$translations<
+    TRes> {
+  factory CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description$translations(
+    Query$getCategoryInfoById$restaurant_category_by_pk$description$translations
+        instance,
+    TRes Function(
+            Query$getCategoryInfoById$restaurant_category_by_pk$description$translations)
+        then,
+  ) = _CopyWithImpl$Query$getCategoryInfoById$restaurant_category_by_pk$description$translations;
+
+  factory CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCategoryInfoById$restaurant_category_by_pk$description$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getCategoryInfoById$restaurant_category_by_pk$description$translations<
+        TRes>
+    implements
+        CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description$translations<
+            TRes> {
+  _CopyWithImpl$Query$getCategoryInfoById$restaurant_category_by_pk$description$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCategoryInfoById$restaurant_category_by_pk$description$translations
+      _instance;
+
+  final TRes Function(
+          Query$getCategoryInfoById$restaurant_category_by_pk$description$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getCategoryInfoById$restaurant_category_by_pk$description$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getCategoryInfoById$restaurant_category_by_pk$description$translations<
+        TRes>
+    implements
+        CopyWith$Query$getCategoryInfoById$restaurant_category_by_pk$description$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$getCategoryInfoById$restaurant_category_by_pk$description$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$deleteCategory {
+  factory Variables$Mutation$deleteCategory({required int categoryId}) =>
+      Variables$Mutation$deleteCategory._({
+        r'categoryId': categoryId,
+      });
+
+  Variables$Mutation$deleteCategory._(this._$data);
+
+  factory Variables$Mutation$deleteCategory.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$categoryId = data['categoryId'];
+    result$data['categoryId'] = (l$categoryId as int);
+    return Variables$Mutation$deleteCategory._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get categoryId => (_$data['categoryId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$categoryId = categoryId;
+    result$data['categoryId'] = l$categoryId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$deleteCategory<Variables$Mutation$deleteCategory>
+      get copyWith => CopyWith$Variables$Mutation$deleteCategory(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$deleteCategory) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$categoryId = categoryId;
+    final lOther$categoryId = other.categoryId;
+    if (l$categoryId != lOther$categoryId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$categoryId = categoryId;
+    return Object.hashAll([l$categoryId]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$deleteCategory<TRes> {
+  factory CopyWith$Variables$Mutation$deleteCategory(
+    Variables$Mutation$deleteCategory instance,
+    TRes Function(Variables$Mutation$deleteCategory) then,
+  ) = _CopyWithImpl$Variables$Mutation$deleteCategory;
+
+  factory CopyWith$Variables$Mutation$deleteCategory.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$deleteCategory;
+
+  TRes call({int? categoryId});
+}
+
+class _CopyWithImpl$Variables$Mutation$deleteCategory<TRes>
+    implements CopyWith$Variables$Mutation$deleteCategory<TRes> {
+  _CopyWithImpl$Variables$Mutation$deleteCategory(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$deleteCategory _instance;
+
+  final TRes Function(Variables$Mutation$deleteCategory) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? categoryId = _undefined}) =>
+      _then(Variables$Mutation$deleteCategory._({
+        ..._instance._$data,
+        if (categoryId != _undefined && categoryId != null)
+          'categoryId': (categoryId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$deleteCategory<TRes>
+    implements CopyWith$Variables$Mutation$deleteCategory<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$deleteCategory(this._res);
+
+  TRes _res;
+
+  call({int? categoryId}) => _res;
+}
+
+class Mutation$deleteCategory {
+  Mutation$deleteCategory({
+    this.delete_restaurant_category_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$deleteCategory.fromJson(Map<String, dynamic> json) {
+    final l$delete_restaurant_category_by_pk =
+        json['delete_restaurant_category_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$deleteCategory(
+      delete_restaurant_category_by_pk: l$delete_restaurant_category_by_pk ==
+              null
+          ? null
+          : Mutation$deleteCategory$delete_restaurant_category_by_pk.fromJson(
+              (l$delete_restaurant_category_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$deleteCategory$delete_restaurant_category_by_pk?
+      delete_restaurant_category_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delete_restaurant_category_by_pk = delete_restaurant_category_by_pk;
+    _resultData['delete_restaurant_category_by_pk'] =
+        l$delete_restaurant_category_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delete_restaurant_category_by_pk = delete_restaurant_category_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delete_restaurant_category_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$deleteCategory) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delete_restaurant_category_by_pk = delete_restaurant_category_by_pk;
+    final lOther$delete_restaurant_category_by_pk =
+        other.delete_restaurant_category_by_pk;
+    if (l$delete_restaurant_category_by_pk !=
+        lOther$delete_restaurant_category_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$deleteCategory on Mutation$deleteCategory {
+  CopyWith$Mutation$deleteCategory<Mutation$deleteCategory> get copyWith =>
+      CopyWith$Mutation$deleteCategory(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Mutation$deleteCategory<TRes> {
+  factory CopyWith$Mutation$deleteCategory(
+    Mutation$deleteCategory instance,
+    TRes Function(Mutation$deleteCategory) then,
+  ) = _CopyWithImpl$Mutation$deleteCategory;
+
+  factory CopyWith$Mutation$deleteCategory.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$deleteCategory;
+
+  TRes call({
+    Mutation$deleteCategory$delete_restaurant_category_by_pk?
+        delete_restaurant_category_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk<TRes>
+      get delete_restaurant_category_by_pk;
+}
+
+class _CopyWithImpl$Mutation$deleteCategory<TRes>
+    implements CopyWith$Mutation$deleteCategory<TRes> {
+  _CopyWithImpl$Mutation$deleteCategory(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$deleteCategory _instance;
+
+  final TRes Function(Mutation$deleteCategory) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delete_restaurant_category_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$deleteCategory(
+        delete_restaurant_category_by_pk: delete_restaurant_category_by_pk ==
+                _undefined
+            ? _instance.delete_restaurant_category_by_pk
+            : (delete_restaurant_category_by_pk
+                as Mutation$deleteCategory$delete_restaurant_category_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk<TRes>
+      get delete_restaurant_category_by_pk {
+    final local$delete_restaurant_category_by_pk =
+        _instance.delete_restaurant_category_by_pk;
+    return local$delete_restaurant_category_by_pk == null
+        ? CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk(
+            local$delete_restaurant_category_by_pk,
+            (e) => call(delete_restaurant_category_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$deleteCategory<TRes>
+    implements CopyWith$Mutation$deleteCategory<TRes> {
+  _CopyWithStubImpl$Mutation$deleteCategory(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$deleteCategory$delete_restaurant_category_by_pk?
+        delete_restaurant_category_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk<TRes>
+      get delete_restaurant_category_by_pk =>
+          CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationdeleteCategory = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'deleteCategory'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'categoryId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delete_restaurant_category_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'categoryId')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
           ),
           FieldNode(
             name: NameNode(value: 'name'),
@@ -890,6 +2357,13 @@ const documentNodeQuerygetCategory = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'restaurant_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -902,39 +2376,66 @@ const documentNodeQuerygetCategory = DocumentNode(definitions: [
     ]),
   ),
 ]);
-Query$getCategory _parserFn$Query$getCategory(Map<String, dynamic> data) =>
-    Query$getCategory.fromJson(data);
+Mutation$deleteCategory _parserFn$Mutation$deleteCategory(
+        Map<String, dynamic> data) =>
+    Mutation$deleteCategory.fromJson(data);
+typedef OnMutationCompleted$Mutation$deleteCategory = FutureOr<void> Function(
+  dynamic,
+  Mutation$deleteCategory?,
+);
 
-class Options$Query$getCategory
-    extends graphql.QueryOptions<Query$getCategory> {
-  Options$Query$getCategory({
+class Options$Mutation$deleteCategory
+    extends graphql.MutationOptions<Mutation$deleteCategory> {
+  Options$Mutation$deleteCategory({
     String? operationName,
-    required Variables$Query$getCategory variables,
+    required Variables$Mutation$deleteCategory variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
     Object? optimisticResult,
-    Duration? pollInterval,
     graphql.Context? context,
-  }) : super(
+    OnMutationCompleted$Mutation$deleteCategory? onCompleted,
+    graphql.OnMutationUpdate<Mutation$deleteCategory>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
           variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
           cacheRereadPolicy: cacheRereadPolicy,
           optimisticResult: optimisticResult,
-          pollInterval: pollInterval,
           context: context,
-          document: documentNodeQuerygetCategory,
-          parserFn: _parserFn$Query$getCategory,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$deleteCategory(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationdeleteCategory,
+          parserFn: _parserFn$Mutation$deleteCategory,
         );
+
+  final OnMutationCompleted$Mutation$deleteCategory? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
 }
 
-class WatchOptions$Query$getCategory
-    extends graphql.WatchQueryOptions<Query$getCategory> {
-  WatchOptions$Query$getCategory({
+class WatchOptions$Mutation$deleteCategory
+    extends graphql.WatchQueryOptions<Mutation$deleteCategory> {
+  WatchOptions$Mutation$deleteCategory({
     String? operationName,
-    required Variables$Query$getCategory variables,
+    required Variables$Mutation$deleteCategory variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -952,103 +2453,70 @@ class WatchOptions$Query$getCategory
           cacheRereadPolicy: cacheRereadPolicy,
           optimisticResult: optimisticResult,
           context: context,
-          document: documentNodeQuerygetCategory,
+          document: documentNodeMutationdeleteCategory,
           pollInterval: pollInterval,
           eagerlyFetchResults: eagerlyFetchResults,
           carryForwardDataOnException: carryForwardDataOnException,
           fetchResults: fetchResults,
-          parserFn: _parserFn$Query$getCategory,
+          parserFn: _parserFn$Mutation$deleteCategory,
         );
 }
 
-class FetchMoreOptions$Query$getCategory extends graphql.FetchMoreOptions {
-  FetchMoreOptions$Query$getCategory({
-    required graphql.UpdateQuery updateQuery,
-    required Variables$Query$getCategory variables,
-  }) : super(
-          updateQuery: updateQuery,
-          variables: variables.toJson(),
-          document: documentNodeQuerygetCategory,
-        );
+extension ClientExtension$Mutation$deleteCategory on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$deleteCategory>> mutate$deleteCategory(
+          Options$Mutation$deleteCategory options) async =>
+      await this.mutate(options);
+  graphql.ObservableQuery<Mutation$deleteCategory> watchMutation$deleteCategory(
+          WatchOptions$Mutation$deleteCategory options) =>
+      this.watchMutation(options);
 }
 
-extension ClientExtension$Query$getCategory on graphql.GraphQLClient {
-  Future<graphql.QueryResult<Query$getCategory>> query$getCategory(
-          Options$Query$getCategory options) async =>
-      await this.query(options);
-  graphql.ObservableQuery<Query$getCategory> watchQuery$getCategory(
-          WatchOptions$Query$getCategory options) =>
-      this.watchQuery(options);
-  void writeQuery$getCategory({
-    required Query$getCategory data,
-    required Variables$Query$getCategory variables,
-    bool broadcast = true,
-  }) =>
-      this.writeQuery(
-        graphql.Request(
-          operation: graphql.Operation(document: documentNodeQuerygetCategory),
-          variables: variables.toJson(),
-        ),
-        data: data.toJson(),
-        broadcast: broadcast,
-      );
-  Query$getCategory? readQuery$getCategory({
-    required Variables$Query$getCategory variables,
-    bool optimistic = true,
-  }) {
-    final result = this.readQuery(
-      graphql.Request(
-        operation: graphql.Operation(document: documentNodeQuerygetCategory),
-        variables: variables.toJson(),
-      ),
-      optimistic: optimistic,
-    );
-    return result == null ? null : Query$getCategory.fromJson(result);
-  }
-}
-
-class Query$getCategory$restaurant_category_by_pk {
-  Query$getCategory$restaurant_category_by_pk({
-    this.description,
+class Mutation$deleteCategory$delete_restaurant_category_by_pk {
+  Mutation$deleteCategory$delete_restaurant_category_by_pk({
+    required this.id,
     required this.name,
     required this.position,
+    required this.restaurant_id,
     required this.$__typename,
   });
 
-  factory Query$getCategory$restaurant_category_by_pk.fromJson(
+  factory Mutation$deleteCategory$delete_restaurant_category_by_pk.fromJson(
       Map<String, dynamic> json) {
-    final l$description = json['description'];
+    final l$id = json['id'];
     final l$name = json['name'];
     final l$position = json['position'];
+    final l$restaurant_id = json['restaurant_id'];
     final l$$__typename = json['__typename'];
-    return Query$getCategory$restaurant_category_by_pk(
-      description: l$description == null
-          ? null
-          : Query$getCategory$restaurant_category_by_pk$description.fromJson(
-              (l$description as Map<String, dynamic>)),
-      name: Query$getCategory$restaurant_category_by_pk$name.fromJson(
-          (l$name as Map<String, dynamic>)),
+    return Mutation$deleteCategory$delete_restaurant_category_by_pk(
+      id: (l$id as int),
+      name: Mutation$deleteCategory$delete_restaurant_category_by_pk$name
+          .fromJson((l$name as Map<String, dynamic>)),
       position: (l$position as int),
+      restaurant_id: (l$restaurant_id as int),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Query$getCategory$restaurant_category_by_pk$description? description;
+  final int id;
 
-  final Query$getCategory$restaurant_category_by_pk$name name;
+  final Mutation$deleteCategory$delete_restaurant_category_by_pk$name name;
 
   final int position;
+
+  final int restaurant_id;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$description = description;
-    _resultData['description'] = l$description?.toJson();
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$name = name;
     _resultData['name'] = l$name.toJson();
     final l$position = position;
     _resultData['position'] = l$position;
+    final l$restaurant_id = restaurant_id;
+    _resultData['restaurant_id'] = l$restaurant_id;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1056,14 +2524,16 @@ class Query$getCategory$restaurant_category_by_pk {
 
   @override
   int get hashCode {
-    final l$description = description;
+    final l$id = id;
     final l$name = name;
     final l$position = position;
+    final l$restaurant_id = restaurant_id;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$description,
+      l$id,
       l$name,
       l$position,
+      l$restaurant_id,
       l$$__typename,
     ]);
   }
@@ -1073,13 +2543,13 @@ class Query$getCategory$restaurant_category_by_pk {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$getCategory$restaurant_category_by_pk) ||
+    if (!(other is Mutation$deleteCategory$delete_restaurant_category_by_pk) ||
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$description = description;
-    final lOther$description = other.description;
-    if (l$description != lOther$description) {
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$name = name;
@@ -1092,6 +2562,11 @@ class Query$getCategory$restaurant_category_by_pk {
     if (l$position != lOther$position) {
       return false;
     }
+    final l$restaurant_id = restaurant_id;
+    final lOther$restaurant_id = other.restaurant_id;
+    if (l$restaurant_id != lOther$restaurant_id) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -1101,122 +2576,126 @@ class Query$getCategory$restaurant_category_by_pk {
   }
 }
 
-extension UtilityExtension$Query$getCategory$restaurant_category_by_pk
-    on Query$getCategory$restaurant_category_by_pk {
-  CopyWith$Query$getCategory$restaurant_category_by_pk<
-          Query$getCategory$restaurant_category_by_pk>
-      get copyWith => CopyWith$Query$getCategory$restaurant_category_by_pk(
+extension UtilityExtension$Mutation$deleteCategory$delete_restaurant_category_by_pk
+    on Mutation$deleteCategory$delete_restaurant_category_by_pk {
+  CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk<
+          Mutation$deleteCategory$delete_restaurant_category_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$getCategory$restaurant_category_by_pk<TRes> {
-  factory CopyWith$Query$getCategory$restaurant_category_by_pk(
-    Query$getCategory$restaurant_category_by_pk instance,
-    TRes Function(Query$getCategory$restaurant_category_by_pk) then,
-  ) = _CopyWithImpl$Query$getCategory$restaurant_category_by_pk;
+abstract class CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk(
+    Mutation$deleteCategory$delete_restaurant_category_by_pk instance,
+    TRes Function(Mutation$deleteCategory$delete_restaurant_category_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$deleteCategory$delete_restaurant_category_by_pk;
 
-  factory CopyWith$Query$getCategory$restaurant_category_by_pk.stub(TRes res) =
-      _CopyWithStubImpl$Query$getCategory$restaurant_category_by_pk;
+  factory CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$deleteCategory$delete_restaurant_category_by_pk;
 
   TRes call({
-    Query$getCategory$restaurant_category_by_pk$description? description,
-    Query$getCategory$restaurant_category_by_pk$name? name,
+    int? id,
+    Mutation$deleteCategory$delete_restaurant_category_by_pk$name? name,
     int? position,
+    int? restaurant_id,
     String? $__typename,
   });
-  CopyWith$Query$getCategory$restaurant_category_by_pk$description<TRes>
-      get description;
-  CopyWith$Query$getCategory$restaurant_category_by_pk$name<TRes> get name;
+  CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk$name<TRes>
+      get name;
 }
 
-class _CopyWithImpl$Query$getCategory$restaurant_category_by_pk<TRes>
-    implements CopyWith$Query$getCategory$restaurant_category_by_pk<TRes> {
-  _CopyWithImpl$Query$getCategory$restaurant_category_by_pk(
+class _CopyWithImpl$Mutation$deleteCategory$delete_restaurant_category_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$deleteCategory$delete_restaurant_category_by_pk(
     this._instance,
     this._then,
   );
 
-  final Query$getCategory$restaurant_category_by_pk _instance;
+  final Mutation$deleteCategory$delete_restaurant_category_by_pk _instance;
 
-  final TRes Function(Query$getCategory$restaurant_category_by_pk) _then;
+  final TRes Function(Mutation$deleteCategory$delete_restaurant_category_by_pk)
+      _then;
 
   static const _undefined = {};
 
   TRes call({
-    Object? description = _undefined,
+    Object? id = _undefined,
     Object? name = _undefined,
     Object? position = _undefined,
+    Object? restaurant_id = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$getCategory$restaurant_category_by_pk(
-        description: description == _undefined
-            ? _instance.description
-            : (description
-                as Query$getCategory$restaurant_category_by_pk$description?),
+      _then(Mutation$deleteCategory$delete_restaurant_category_by_pk(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
-            : (name as Query$getCategory$restaurant_category_by_pk$name),
+            : (name
+                as Mutation$deleteCategory$delete_restaurant_category_by_pk$name),
         position: position == _undefined || position == null
             ? _instance.position
             : (position as int),
+        restaurant_id: restaurant_id == _undefined || restaurant_id == null
+            ? _instance.restaurant_id
+            : (restaurant_id as int),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$getCategory$restaurant_category_by_pk$description<TRes>
-      get description {
-    final local$description = _instance.description;
-    return local$description == null
-        ? CopyWith$Query$getCategory$restaurant_category_by_pk$description.stub(
-            _then(_instance))
-        : CopyWith$Query$getCategory$restaurant_category_by_pk$description(
-            local$description, (e) => call(description: e));
-  }
-
-  CopyWith$Query$getCategory$restaurant_category_by_pk$name<TRes> get name {
+  CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk$name<TRes>
+      get name {
     final local$name = _instance.name;
-    return CopyWith$Query$getCategory$restaurant_category_by_pk$name(
+    return CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk$name(
         local$name, (e) => call(name: e));
   }
 }
 
-class _CopyWithStubImpl$Query$getCategory$restaurant_category_by_pk<TRes>
-    implements CopyWith$Query$getCategory$restaurant_category_by_pk<TRes> {
-  _CopyWithStubImpl$Query$getCategory$restaurant_category_by_pk(this._res);
+class _CopyWithStubImpl$Mutation$deleteCategory$delete_restaurant_category_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$deleteCategory$delete_restaurant_category_by_pk(
+      this._res);
 
   TRes _res;
 
   call({
-    Query$getCategory$restaurant_category_by_pk$description? description,
-    Query$getCategory$restaurant_category_by_pk$name? name,
+    int? id,
+    Mutation$deleteCategory$delete_restaurant_category_by_pk$name? name,
     int? position,
+    int? restaurant_id,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$getCategory$restaurant_category_by_pk$description<TRes>
-      get description =>
-          CopyWith$Query$getCategory$restaurant_category_by_pk$description.stub(
-              _res);
-  CopyWith$Query$getCategory$restaurant_category_by_pk$name<TRes> get name =>
-      CopyWith$Query$getCategory$restaurant_category_by_pk$name.stub(_res);
+  CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk$name<TRes>
+      get name =>
+          CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk$name
+              .stub(_res);
 }
 
-class Query$getCategory$restaurant_category_by_pk$description {
-  Query$getCategory$restaurant_category_by_pk$description({
+class Mutation$deleteCategory$delete_restaurant_category_by_pk$name {
+  Mutation$deleteCategory$delete_restaurant_category_by_pk$name({
     required this.translations,
     required this.$__typename,
   });
 
-  factory Query$getCategory$restaurant_category_by_pk$description.fromJson(
+  factory Mutation$deleteCategory$delete_restaurant_category_by_pk$name.fromJson(
       Map<String, dynamic> json) {
     final l$translations = json['translations'];
     final l$$__typename = json['__typename'];
-    return Query$getCategory$restaurant_category_by_pk$description(
+    return Mutation$deleteCategory$delete_restaurant_category_by_pk$name(
       translations: (l$translations as List<dynamic>)
           .map((e) =>
-              Query$getCategory$restaurant_category_by_pk$description$translations
+              Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -1224,7 +2703,7 @@ class Query$getCategory$restaurant_category_by_pk$description {
   }
 
   final List<
-          Query$getCategory$restaurant_category_by_pk$description$translations>
+          Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations>
       translations;
 
   final String $__typename;
@@ -1254,7 +2733,8 @@ class Query$getCategory$restaurant_category_by_pk$description {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$getCategory$restaurant_category_by_pk$description) ||
+    if (!(other
+            is Mutation$deleteCategory$delete_restaurant_category_by_pk$name) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1279,54 +2759,56 @@ class Query$getCategory$restaurant_category_by_pk$description {
   }
 }
 
-extension UtilityExtension$Query$getCategory$restaurant_category_by_pk$description
-    on Query$getCategory$restaurant_category_by_pk$description {
-  CopyWith$Query$getCategory$restaurant_category_by_pk$description<
-          Query$getCategory$restaurant_category_by_pk$description>
+extension UtilityExtension$Mutation$deleteCategory$delete_restaurant_category_by_pk$name
+    on Mutation$deleteCategory$delete_restaurant_category_by_pk$name {
+  CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk$name<
+          Mutation$deleteCategory$delete_restaurant_category_by_pk$name>
       get copyWith =>
-          CopyWith$Query$getCategory$restaurant_category_by_pk$description(
+          CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk$name(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$getCategory$restaurant_category_by_pk$description<
+abstract class CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk$name<
     TRes> {
-  factory CopyWith$Query$getCategory$restaurant_category_by_pk$description(
-    Query$getCategory$restaurant_category_by_pk$description instance,
-    TRes Function(Query$getCategory$restaurant_category_by_pk$description) then,
-  ) = _CopyWithImpl$Query$getCategory$restaurant_category_by_pk$description;
+  factory CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk$name(
+    Mutation$deleteCategory$delete_restaurant_category_by_pk$name instance,
+    TRes Function(Mutation$deleteCategory$delete_restaurant_category_by_pk$name)
+        then,
+  ) = _CopyWithImpl$Mutation$deleteCategory$delete_restaurant_category_by_pk$name;
 
-  factory CopyWith$Query$getCategory$restaurant_category_by_pk$description.stub(
+  factory CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk$name.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$getCategory$restaurant_category_by_pk$description;
+      _CopyWithStubImpl$Mutation$deleteCategory$delete_restaurant_category_by_pk$name;
 
   TRes call({
-    List<Query$getCategory$restaurant_category_by_pk$description$translations>?
+    List<Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations>?
         translations,
     String? $__typename,
   });
   TRes translations(
-      Iterable<Query$getCategory$restaurant_category_by_pk$description$translations> Function(
+      Iterable<Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations> Function(
               Iterable<
-                  CopyWith$Query$getCategory$restaurant_category_by_pk$description$translations<
-                      Query$getCategory$restaurant_category_by_pk$description$translations>>)
+                  CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations<
+                      Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations>>)
           _fn);
 }
 
-class _CopyWithImpl$Query$getCategory$restaurant_category_by_pk$description<
+class _CopyWithImpl$Mutation$deleteCategory$delete_restaurant_category_by_pk$name<
         TRes>
     implements
-        CopyWith$Query$getCategory$restaurant_category_by_pk$description<TRes> {
-  _CopyWithImpl$Query$getCategory$restaurant_category_by_pk$description(
+        CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk$name<
+            TRes> {
+  _CopyWithImpl$Mutation$deleteCategory$delete_restaurant_category_by_pk$name(
     this._instance,
     this._then,
   );
 
-  final Query$getCategory$restaurant_category_by_pk$description _instance;
+  final Mutation$deleteCategory$delete_restaurant_category_by_pk$name _instance;
 
-  final TRes Function(Query$getCategory$restaurant_category_by_pk$description)
-      _then;
+  final TRes Function(
+      Mutation$deleteCategory$delete_restaurant_category_by_pk$name) _then;
 
   static const _undefined = {};
 
@@ -1334,40 +2816,41 @@ class _CopyWithImpl$Query$getCategory$restaurant_category_by_pk$description<
     Object? translations = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$getCategory$restaurant_category_by_pk$description(
+      _then(Mutation$deleteCategory$delete_restaurant_category_by_pk$name(
         translations: translations == _undefined || translations == null
             ? _instance.translations
             : (translations as List<
-                Query$getCategory$restaurant_category_by_pk$description$translations>),
+                Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes translations(
-          Iterable<Query$getCategory$restaurant_category_by_pk$description$translations> Function(
+          Iterable<Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations> Function(
                   Iterable<
-                      CopyWith$Query$getCategory$restaurant_category_by_pk$description$translations<
-                          Query$getCategory$restaurant_category_by_pk$description$translations>>)
+                      CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations<
+                          Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations>>)
               _fn) =>
       call(
           translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Query$getCategory$restaurant_category_by_pk$description$translations(
+              CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations(
                 e,
                 (i) => i,
               ))).toList());
 }
 
-class _CopyWithStubImpl$Query$getCategory$restaurant_category_by_pk$description<
+class _CopyWithStubImpl$Mutation$deleteCategory$delete_restaurant_category_by_pk$name<
         TRes>
     implements
-        CopyWith$Query$getCategory$restaurant_category_by_pk$description<TRes> {
-  _CopyWithStubImpl$Query$getCategory$restaurant_category_by_pk$description(
+        CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk$name<
+            TRes> {
+  _CopyWithStubImpl$Mutation$deleteCategory$delete_restaurant_category_by_pk$name(
       this._res);
 
   TRes _res;
 
   call({
-    List<Query$getCategory$restaurant_category_by_pk$description$translations>?
+    List<Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations>?
         translations,
     String? $__typename,
   }) =>
@@ -1375,19 +2858,19 @@ class _CopyWithStubImpl$Query$getCategory$restaurant_category_by_pk$description<
   translations(_fn) => _res;
 }
 
-class Query$getCategory$restaurant_category_by_pk$description$translations {
-  Query$getCategory$restaurant_category_by_pk$description$translations({
+class Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations {
+  Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations({
     required this.language_id,
     required this.value,
     required this.$__typename,
   });
 
-  factory Query$getCategory$restaurant_category_by_pk$description$translations.fromJson(
+  factory Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations.fromJson(
       Map<String, dynamic> json) {
     final l$language_id = json['language_id'];
     final l$value = json['value'];
     final l$$__typename = json['__typename'];
-    return Query$getCategory$restaurant_category_by_pk$description$translations(
+    return Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations(
       language_id: (l$language_id as String),
       value: (l$value as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -1429,7 +2912,7 @@ class Query$getCategory$restaurant_category_by_pk$description$translations {
       return true;
     }
     if (!(other
-            is Query$getCategory$restaurant_category_by_pk$description$translations) ||
+            is Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1452,30 +2935,30 @@ class Query$getCategory$restaurant_category_by_pk$description$translations {
   }
 }
 
-extension UtilityExtension$Query$getCategory$restaurant_category_by_pk$description$translations
-    on Query$getCategory$restaurant_category_by_pk$description$translations {
-  CopyWith$Query$getCategory$restaurant_category_by_pk$description$translations<
-          Query$getCategory$restaurant_category_by_pk$description$translations>
+extension UtilityExtension$Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations
+    on Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations {
+  CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations<
+          Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations>
       get copyWith =>
-          CopyWith$Query$getCategory$restaurant_category_by_pk$description$translations(
+          CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$getCategory$restaurant_category_by_pk$description$translations<
+abstract class CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations<
     TRes> {
-  factory CopyWith$Query$getCategory$restaurant_category_by_pk$description$translations(
-    Query$getCategory$restaurant_category_by_pk$description$translations
+  factory CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations(
+    Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations
         instance,
     TRes Function(
-            Query$getCategory$restaurant_category_by_pk$description$translations)
+            Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations)
         then,
-  ) = _CopyWithImpl$Query$getCategory$restaurant_category_by_pk$description$translations;
+  ) = _CopyWithImpl$Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations;
 
-  factory CopyWith$Query$getCategory$restaurant_category_by_pk$description$translations.stub(
+  factory CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$getCategory$restaurant_category_by_pk$description$translations;
+      _CopyWithStubImpl$Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations;
 
   TRes call({
     String? language_id,
@@ -1484,21 +2967,21 @@ abstract class CopyWith$Query$getCategory$restaurant_category_by_pk$description$
   });
 }
 
-class _CopyWithImpl$Query$getCategory$restaurant_category_by_pk$description$translations<
+class _CopyWithImpl$Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations<
         TRes>
     implements
-        CopyWith$Query$getCategory$restaurant_category_by_pk$description$translations<
+        CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations<
             TRes> {
-  _CopyWithImpl$Query$getCategory$restaurant_category_by_pk$description$translations(
+  _CopyWithImpl$Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations(
     this._instance,
     this._then,
   );
 
-  final Query$getCategory$restaurant_category_by_pk$description$translations
+  final Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations
       _instance;
 
   final TRes Function(
-          Query$getCategory$restaurant_category_by_pk$description$translations)
+          Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations)
       _then;
 
   static const _undefined = {};
@@ -1509,7 +2992,7 @@ class _CopyWithImpl$Query$getCategory$restaurant_category_by_pk$description$tran
     Object? $__typename = _undefined,
   }) =>
       _then(
-          Query$getCategory$restaurant_category_by_pk$description$translations(
+          Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations(
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -1522,335 +3005,12 @@ class _CopyWithImpl$Query$getCategory$restaurant_category_by_pk$description$tran
       ));
 }
 
-class _CopyWithStubImpl$Query$getCategory$restaurant_category_by_pk$description$translations<
+class _CopyWithStubImpl$Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations<
         TRes>
     implements
-        CopyWith$Query$getCategory$restaurant_category_by_pk$description$translations<
+        CopyWith$Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations<
             TRes> {
-  _CopyWithStubImpl$Query$getCategory$restaurant_category_by_pk$description$translations(
-      this._res);
-
-  TRes _res;
-
-  call({
-    String? language_id,
-    String? value,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
-class Query$getCategory$restaurant_category_by_pk$name {
-  Query$getCategory$restaurant_category_by_pk$name({
-    required this.translations,
-    required this.$__typename,
-  });
-
-  factory Query$getCategory$restaurant_category_by_pk$name.fromJson(
-      Map<String, dynamic> json) {
-    final l$translations = json['translations'];
-    final l$$__typename = json['__typename'];
-    return Query$getCategory$restaurant_category_by_pk$name(
-      translations: (l$translations as List<dynamic>)
-          .map((e) =>
-              Query$getCategory$restaurant_category_by_pk$name$translations
-                  .fromJson((e as Map<String, dynamic>)))
-          .toList(),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final List<Query$getCategory$restaurant_category_by_pk$name$translations>
-      translations;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$translations = translations;
-    _resultData['translations'] =
-        l$translations.map((e) => e.toJson()).toList();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$translations = translations;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      Object.hashAll(l$translations.map((v) => v)),
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Query$getCategory$restaurant_category_by_pk$name) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$translations = translations;
-    final lOther$translations = other.translations;
-    if (l$translations.length != lOther$translations.length) {
-      return false;
-    }
-    for (int i = 0; i < l$translations.length; i++) {
-      final l$translations$entry = l$translations[i];
-      final lOther$translations$entry = lOther$translations[i];
-      if (l$translations$entry != lOther$translations$entry) {
-        return false;
-      }
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$getCategory$restaurant_category_by_pk$name
-    on Query$getCategory$restaurant_category_by_pk$name {
-  CopyWith$Query$getCategory$restaurant_category_by_pk$name<
-          Query$getCategory$restaurant_category_by_pk$name>
-      get copyWith => CopyWith$Query$getCategory$restaurant_category_by_pk$name(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$getCategory$restaurant_category_by_pk$name<TRes> {
-  factory CopyWith$Query$getCategory$restaurant_category_by_pk$name(
-    Query$getCategory$restaurant_category_by_pk$name instance,
-    TRes Function(Query$getCategory$restaurant_category_by_pk$name) then,
-  ) = _CopyWithImpl$Query$getCategory$restaurant_category_by_pk$name;
-
-  factory CopyWith$Query$getCategory$restaurant_category_by_pk$name.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$getCategory$restaurant_category_by_pk$name;
-
-  TRes call({
-    List<Query$getCategory$restaurant_category_by_pk$name$translations>?
-        translations,
-    String? $__typename,
-  });
-  TRes translations(
-      Iterable<Query$getCategory$restaurant_category_by_pk$name$translations> Function(
-              Iterable<
-                  CopyWith$Query$getCategory$restaurant_category_by_pk$name$translations<
-                      Query$getCategory$restaurant_category_by_pk$name$translations>>)
-          _fn);
-}
-
-class _CopyWithImpl$Query$getCategory$restaurant_category_by_pk$name<TRes>
-    implements CopyWith$Query$getCategory$restaurant_category_by_pk$name<TRes> {
-  _CopyWithImpl$Query$getCategory$restaurant_category_by_pk$name(
-    this._instance,
-    this._then,
-  );
-
-  final Query$getCategory$restaurant_category_by_pk$name _instance;
-
-  final TRes Function(Query$getCategory$restaurant_category_by_pk$name) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? translations = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$getCategory$restaurant_category_by_pk$name(
-        translations: translations == _undefined || translations == null
-            ? _instance.translations
-            : (translations as List<
-                Query$getCategory$restaurant_category_by_pk$name$translations>),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  TRes translations(
-          Iterable<Query$getCategory$restaurant_category_by_pk$name$translations> Function(
-                  Iterable<
-                      CopyWith$Query$getCategory$restaurant_category_by_pk$name$translations<
-                          Query$getCategory$restaurant_category_by_pk$name$translations>>)
-              _fn) =>
-      call(
-          translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Query$getCategory$restaurant_category_by_pk$name$translations(
-                e,
-                (i) => i,
-              ))).toList());
-}
-
-class _CopyWithStubImpl$Query$getCategory$restaurant_category_by_pk$name<TRes>
-    implements CopyWith$Query$getCategory$restaurant_category_by_pk$name<TRes> {
-  _CopyWithStubImpl$Query$getCategory$restaurant_category_by_pk$name(this._res);
-
-  TRes _res;
-
-  call({
-    List<Query$getCategory$restaurant_category_by_pk$name$translations>?
-        translations,
-    String? $__typename,
-  }) =>
-      _res;
-  translations(_fn) => _res;
-}
-
-class Query$getCategory$restaurant_category_by_pk$name$translations {
-  Query$getCategory$restaurant_category_by_pk$name$translations({
-    required this.language_id,
-    required this.value,
-    required this.$__typename,
-  });
-
-  factory Query$getCategory$restaurant_category_by_pk$name$translations.fromJson(
-      Map<String, dynamic> json) {
-    final l$language_id = json['language_id'];
-    final l$value = json['value'];
-    final l$$__typename = json['__typename'];
-    return Query$getCategory$restaurant_category_by_pk$name$translations(
-      language_id: (l$language_id as String),
-      value: (l$value as String),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final String language_id;
-
-  final String value;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$language_id = language_id;
-    _resultData['language_id'] = l$language_id;
-    final l$value = value;
-    _resultData['value'] = l$value;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$language_id = language_id;
-    final l$value = value;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$language_id,
-      l$value,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$getCategory$restaurant_category_by_pk$name$translations) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$language_id = language_id;
-    final lOther$language_id = other.language_id;
-    if (l$language_id != lOther$language_id) {
-      return false;
-    }
-    final l$value = value;
-    final lOther$value = other.value;
-    if (l$value != lOther$value) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$getCategory$restaurant_category_by_pk$name$translations
-    on Query$getCategory$restaurant_category_by_pk$name$translations {
-  CopyWith$Query$getCategory$restaurant_category_by_pk$name$translations<
-          Query$getCategory$restaurant_category_by_pk$name$translations>
-      get copyWith =>
-          CopyWith$Query$getCategory$restaurant_category_by_pk$name$translations(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$getCategory$restaurant_category_by_pk$name$translations<
-    TRes> {
-  factory CopyWith$Query$getCategory$restaurant_category_by_pk$name$translations(
-    Query$getCategory$restaurant_category_by_pk$name$translations instance,
-    TRes Function(Query$getCategory$restaurant_category_by_pk$name$translations)
-        then,
-  ) = _CopyWithImpl$Query$getCategory$restaurant_category_by_pk$name$translations;
-
-  factory CopyWith$Query$getCategory$restaurant_category_by_pk$name$translations.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$getCategory$restaurant_category_by_pk$name$translations;
-
-  TRes call({
-    String? language_id,
-    String? value,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$getCategory$restaurant_category_by_pk$name$translations<
-        TRes>
-    implements
-        CopyWith$Query$getCategory$restaurant_category_by_pk$name$translations<
-            TRes> {
-  _CopyWithImpl$Query$getCategory$restaurant_category_by_pk$name$translations(
-    this._instance,
-    this._then,
-  );
-
-  final Query$getCategory$restaurant_category_by_pk$name$translations _instance;
-
-  final TRes Function(
-      Query$getCategory$restaurant_category_by_pk$name$translations) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? language_id = _undefined,
-    Object? value = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$getCategory$restaurant_category_by_pk$name$translations(
-        language_id: language_id == _undefined || language_id == null
-            ? _instance.language_id
-            : (language_id as String),
-        value: value == _undefined || value == null
-            ? _instance.value
-            : (value as String),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$getCategory$restaurant_category_by_pk$name$translations<
-        TRes>
-    implements
-        CopyWith$Query$getCategory$restaurant_category_by_pk$name$translations<
-            TRes> {
-  _CopyWithStubImpl$Query$getCategory$restaurant_category_by_pk$name$translations(
+  _CopyWithStubImpl$Mutation$deleteCategory$delete_restaurant_category_by_pk$name$translations(
       this._res);
 
   TRes _res;

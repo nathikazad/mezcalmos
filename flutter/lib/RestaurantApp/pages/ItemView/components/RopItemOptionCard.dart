@@ -5,7 +5,7 @@ import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class ROpItemOptionCard extends StatefulWidget {
@@ -19,7 +19,7 @@ class ROpItemOptionCard extends StatefulWidget {
   final String restaurantID;
   final String? categoryID;
   final String? itemId;
-  final ItemViewController viewController;
+  final ROpItemViewController viewController;
 
   static final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;

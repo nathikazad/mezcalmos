@@ -8,7 +8,9 @@ import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 //
@@ -51,12 +53,17 @@ class _ROpItemCardState extends State<ROpItemCard> {
         child: InkWell(
           onTap: (widget.viewController.reOrderMode.isTrue)
               ? null
-              : () {
-                  Get.toNamed(getEditItemRoute(
-                      itemId: widget.item.id!,
-                      categoryId: widget.category?.id ?? null,
-                      restaurntID:
-                          widget.viewController.restaurant.value!.info.id));
+              : () async {
+                  final bool? shouldRefresh = await Get.toNamed(
+                      getEditItemRoute(
+                          itemId: widget.item.id!,
+                          categoryId: widget.category?.id ?? null,
+                          restaurntID: widget.viewController.restaurant.value!
+                              .info.id)) as bool?;
+                  mezDbgPrint("After delete result ====>$shouldRefresh");
+                  if (shouldRefresh == true) {
+                    await widget.viewController.fetchCategories();
+                  }
                 },
           child: Container(
             padding: const EdgeInsets.all(5),

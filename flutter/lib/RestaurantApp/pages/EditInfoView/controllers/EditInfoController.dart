@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
@@ -130,7 +130,7 @@ class ROpEditInfoController {
           "Updating restuarnt primary description .....=>${restaurantNameTxt.text}");
 
       _contructDesc().forEach((LanguageType key, String value) async {
-        await editTranslation(
+        await update_translation(
             langType: key,
             translationId: restaurant.value!.info.descriptionId!,
             value: value);

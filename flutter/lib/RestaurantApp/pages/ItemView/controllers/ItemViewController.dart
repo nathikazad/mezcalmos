@@ -6,13 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
+import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
+import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 
-class ItemViewController {
+class ROpItemViewController {
   /// Class to control the item view on edit and add mode for restaurant app ///
 
   // controllers //
@@ -58,6 +65,14 @@ class ItemViewController {
   Rxn<DateTime> endDate = Rxn();
   Rxn<PeriodOfTime> periodOfTime = Rxn();
 
+  bool get pageLoaded {
+    if (editMode.isFalse) {
+      return restaurant.value != null;
+    } else {
+      return restaurant.value != null && editableItem.value != null;
+    }
+  }
+
   // initalisation //
   // the itemId arguments for edit mode //
   Future<void> init(
@@ -88,20 +103,19 @@ class ItemViewController {
     if (restaurant.value != null) {
       prLang = restaurant.value!.primaryLanguage;
       scLang = restaurant.value!.secondaryLanguage!;
-      _assignCategories();
+      await _assignCategories();
       mezDbgPrint("Item id ===========>>>>> $itemId");
       if (itemId != null) {
-        initEditMode(itemId: itemId, categoryId: categoryId);
+        await initEditMode(itemId: itemId, categoryId: categoryId);
       }
     }
   }
 
   // edit item init //
-  void initEditMode({required String itemId, String? categoryId}) {
+  Future<void> initEditMode(
+      {required String itemId, String? categoryId}) async {
     editMode.value = true;
-    editableItem.value = restaurant.value!.findItemById(
-      id: itemId,
-    );
+    editableItem.value = await get_one_item_by_id(int.parse(itemId));
     mezDbgPrint(editableItem.value!.toJson());
     prItemNameController.text = editableItem.value!.name[prLang]!;
     newImageUrl.value = editableItem.value!.image;
@@ -113,13 +127,13 @@ class ItemViewController {
     itemPriceController.text = editableItem.value!.cost.toString();
     mezDbgPrint(editableItem.value!.options.length);
     editableItem.value!.options.forEach((Option element) {
-      mezDbgPrint("options adding");
+      mezDbgPrint("🎤🎤🎤🎤🎤 OPTION ${element.toJson()}");
       itemOptions.add(element);
     });
-    if (categoryId != null && categoryId != ":categoryId") {
+    if (editableItem.value!.categoryId != null) {
       mezDbgPrint("category iiiiiiiiiiiiiiiid  =======>>>>> $categoryId");
-      currentCategory.value = restaurant.value!.getCategories
-          .firstWhere((Category element) => element.id == categoryId);
+      currentCategory.value =
+          await get_category_by_id(editableItem.value!.categoryId!);
     }
   }
 
@@ -127,6 +141,7 @@ class ItemViewController {
   Item _contructItem() {
     final Item newItem = Item(
         image: newImageUrl.value,
+        itemType: (specialMode.isTrue) ? ItemType.Special : ItemType.Daily,
         id: generateRandomString(5),
         startsAt: specialMode.value ? periodOfTime.value?.start : null,
         endsAt: specialMode.value ? periodOfTime.value?.end : null,
@@ -221,57 +236,71 @@ class ItemViewController {
         }
       });
     }
-    if (specialMode.value && editMode.value == false) {
-      // ignore: unawaited_futures
-      _restaurantInfoController
-          .addSpecialItem(item: _contructItem())
-          .onError((Object? error, StackTrace stackTrace) => mezDbgPrint(error))
-          .then((value) => Get.back());
-    } else if (editMode.value == false) {
-      //  ignore: unawaited_futures
-      _restaurantInfoController
-          .addItem(
-              item: _contructItem(), categoryId: currentCategory.value!.id!)
-          .onError((Object? error, StackTrace stackTrace) {
-        mezDbgPrint(error);
-        mezDbgPrint(stackTrace);
-      }).then((value) => Get.back());
-    } else {
-      mezDbgPrint("From controlllllllleeeeer =====>$isCurrentSpec");
-      // ignore: unawaited_futures
-      _restaurantInfoController
-          .editItem(
-              item: _contructItem(),
-              itemId: editableItem.value!.id!,
-              isSpecial: specialMode.value,
-              currentSpecial: isCurrentSpec,
-              categoryId: currentCategory.value?.id)
-          .onError((Object? error, StackTrace stackTrace) {
-        mezDbgPrint(error);
-        mezDbgPrint(stackTrace);
-      }).then((value) => Get.back());
+    mezDbgPrint(
+        "🍞🍞🍞 Adding ${_contructItem().name[LanguageType.EN]} to category id : ${int.parse(currentCategory.value!.id!)} ");
+    final int? newItemId = await add_one_item(
+        item: _contructItem(),
+        restaurantId: 4,
+        categoryId: int.parse(currentCategory.value!.id!));
+    if (newItemId != null) {
+      mezDbgPrint(
+          "👌🏻👌🏻👌🏻 Item added successfuly id : $newItemId 👌🏻👌🏻👌🏻");
+      Get.back(result: true);
     }
+
+    // if (specialMode.value && editMode.value == false) {
+    //   // ignore: unawaited_futures
+    //   _restaurantInfoController
+    //       .addSpecialItem(item: _contructItem())
+    //       .onError((Object? error, StackTrace stackTrace) => mezDbgPrint(error))
+    //       .then((value) => Get.back());
+    // } else if (editMode.value == false) {
+    //   //  ignore: unawaited_futures
+    //   _restaurantInfoController
+    //       .addItem(
+    //           item: _contructItem(), categoryId: currentCategory.value!.id!)
+    //       .onError((Object? error, StackTrace stackTrace) {
+    //     mezDbgPrint(error);
+    //     mezDbgPrint(stackTrace);
+    //   }).then((value) => Get.back());
+    // } else {
+    //   mezDbgPrint("From controlllllllleeeeer =====>$isCurrentSpec");
+    //   // ignore: unawaited_futures
+    //   _restaurantInfoController
+    //       .editItem(
+    //           item: _contructItem(),
+    //           itemId: editableItem.value!.id!,
+    //           isSpecial: specialMode.value,
+    //           currentSpecial: isCurrentSpec,
+    //           categoryId: currentCategory.value?.id)
+    //       .onError((Object? error, StackTrace stackTrace) {
+    //     mezDbgPrint(error);
+    //     mezDbgPrint(stackTrace);
+    //   }).then((value) => Get.back());
+    // }
     isLoading.value = false;
   }
 
   // delete item
-  Future<void> deleteItem({required String itemId, String? catgeoryId}) async {
-    await _restaurantInfoController
-        .deleteItem(
-            itemId: itemId,
-            categoryId: catgeoryId,
-            isSpecial: specialMode.value,
-            currentSpecial: isCurrentSpec)
-        .then((value) => Get.back());
+  Future<bool?> deleteItem({required String itemId, String? catgeoryId}) async {
+    final int? deletedItemId = await delete_item_by_id(int.parse(itemId));
+    if (deletedItemId != null) {
+      Get.back();
+      mezDbgPrint("Item $deletedItemId have deleted 😢😢😢");
+      return true;
+    }
+    return null;
   }
 
   // add categories //
-  void _assignCategories() {
-    restaurant.value!.getCategories.forEach((Category element) {
-      categories.add(element);
-    });
-    categories.add(noCatgeory);
-    categories.add(addNewCatgeory);
+  Future<void> _assignCategories() async {
+    categories.value =
+        await get_restaurant_categories_by_id(4, withCache: false) ?? [];
+    // restaurant.value!.getCategories.forEach((Category element) {
+    //   categories.add(element);
+    // });
+    // categories.add(noCatgeory);
+    // categories.add(addNewCatgeory);
   }
 
   // item image logic //

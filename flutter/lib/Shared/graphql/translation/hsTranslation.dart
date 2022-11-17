@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
-Future<void> editTranslation(
+Future<void> update_translation(
     {required LanguageType langType,
     required String value,
     required int translationId}) async {

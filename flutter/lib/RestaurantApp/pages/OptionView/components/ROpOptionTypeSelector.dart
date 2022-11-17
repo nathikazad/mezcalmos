@@ -4,7 +4,7 @@ import 'package:mezcalmos/RestaurantApp/pages/OptionView/components/ROpNumberSel
 import 'package:mezcalmos/RestaurantApp/pages/OptionView/controllers/ROpOptionViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:sizer/sizer.dart';
 
 //
