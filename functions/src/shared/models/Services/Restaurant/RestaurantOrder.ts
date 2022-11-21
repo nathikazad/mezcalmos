@@ -1,23 +1,55 @@
-
-import { Item, Cart } from './Cart';
-import { DeliverableOrder, OrderType } from '../../Generic/Order';
+import { PaymentType } from '../../Generic/Order';
 import { UserInfo } from '../../Generic/User';
 import { OrderNotification } from '../../Notification';
+import { AppType, Language, Location } from '../../Generic/Generic';
 
-export interface RestaurantOrder extends DeliverableOrder {
-  quantity: number;
-  notes?: number;
-  status: RestaurantOrderStatus;
-  orderTime: string;
-  items: Record<string, Item>;
-  restaurant: UserInfo;
-  itemsCost: number;
-  shippingCost: number;
+export interface RestaurantOrder {
+  orderId?: number;
+  customerId: number;
+  restaurantId: number;
+  paymentType: PaymentType;
+  toLocation: Location;
   estimatedFoodReadyTime: string;
+  actualFoodReadyTime?: string;
+  stripePaymentId?: number;
+  refundAmount?: number;
+  deliveryId?: number;
+  status: RestaurantOrderStatus;
+  reviewId?: number;
+  orderType: RestaurantOrderType;
+  orderTime?: string;
+  firebaseId?: string;
+  customerAppType: AppType;
+  notes?: string;
+  tax?: number;
+  items: Array<OrderItem>;
+  deliveryCost: number;
+  itemsCost?: number;
+  totalCost?: number;
+  chatId?: number;
+}
+export interface OrderItem {
+  orderItemId?: number;
+  itemId: number;
+  name?: Record<Language, string>;
+  selectedOptions?: Array<SelectedOption>;
+  reviewId?: number;
+  notes?: string;
+  unavailable?: boolean;
+  quantity: number;
+  orderId?: number;
+  costPerOne: number;
+}
+
+interface SelectedOption {
+  optionId: number;
+  optionNames: Record<Language, string>;
+  selectedChoices: Record<Language, string[]>;
+  //TODO choice costs
 }
 
 export enum RestaurantOrderStatus {
-  OrderReceieved = "orderReceieved",
+  OrderReceived = "orderReceived",
   PreparingOrder = "preparingOrder",
   ReadyForPickup = "readyForPickup",
   OnTheWay = "onTheWay",
@@ -31,28 +63,28 @@ export enum RestaurantOrderType {
   Delivery = "delivery",
 }
 
-interface ConstructRestaurantOrderParameters {
-  cart: Cart,
-  customer: UserInfo,
-  restaurant: UserInfo,
-  stripeFees: number
-}
-export function constructRestaurantOrder(
-  params: ConstructRestaurantOrderParameters): RestaurantOrder {
-  return <RestaurantOrder>{
-    ...params.cart,
-    customer: params.customer,
-    restaurant: params.restaurant,
-    orderType: OrderType.Restaurant,
-    status: RestaurantOrderStatus.OrderReceieved,
-    orderTime: (new Date()).toISOString(),
-    dropOffShippingCost: params.cart.shippingCost,
-    totalCostBeforeShipping: params.cart.cost - params.cart.shippingCost - params.stripeFees,
-    totalCost: params.cart.cost,
-    refundAmount: 0,
-    costToCustomer: params.cart.cost
-  }
-}
+// interface ConstructRestaurantOrderParameters {
+//   cart: Cart,
+//   customer: UserInfo,
+//   restaurant: UserInfo,
+//   stripeFees: number
+// }
+// export function constructRestaurantOrder(
+//   params: ConstructRestaurantOrderParameters): RestaurantOrder {
+//   return <RestaurantOrder>{
+//     ...params.cart,
+//     customer: params.customer,
+//     restaurant: params.restaurant,
+//     orderType: OrderType.Restaurant,
+//     status: RestaurantOrderStatus.OrderReceieved,
+//     orderTime: (new Date()).toISOString(),
+//     dropOffShippingCost: params.cart.shippingCost,
+//     totalCostBeforeShipping: params.cart.cost - params.cart.shippingCost - params.stripeFees,
+//     totalCost: params.cart.cost,
+//     refundAmount: 0,
+//     costToCustomer: params.cart.cost
+//   }
+// }
 
 export function orderInProcess(status: RestaurantOrderStatus): boolean {
   return !(status == RestaurantOrderStatus.CancelledByAdmin ||

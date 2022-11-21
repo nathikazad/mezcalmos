@@ -35,7 +35,7 @@ type chat {
   chat_info(
     """JSON select path"""
     path: String
-  ): jsonb!
+  ): jsonb
 
   """An array relationship"""
   chat_participants(
@@ -237,6 +237,7 @@ type chat_participant {
   """An object relationship"""
   chat: chat!
   chat_id: Int!
+  id: Int!
 
   """An object relationship"""
   notification_info: notification_info
@@ -301,6 +302,7 @@ input chat_participant_arr_rel_insert_input {
 """aggregate avg on columns"""
 type chat_participant_avg_fields {
   chat_id: Float
+  id: Float
   participant_id: Float
 }
 
@@ -309,6 +311,7 @@ order by avg() on columns of table "chat_participant"
 """
 input chat_participant_avg_order_by {
   chat_id: order_by
+  id: order_by
   participant_id: order_by
 }
 
@@ -322,6 +325,7 @@ input chat_participant_bool_exp {
   app_type_id: String_comparison_exp
   chat: chat_bool_exp
   chat_id: Int_comparison_exp
+  id: Int_comparison_exp
   notification_info: notification_info_bool_exp
   participant_id: Int_comparison_exp
   user: user_bool_exp
@@ -332,7 +336,7 @@ unique or primary key constraints on table "chat_participant"
 """
 enum chat_participant_constraint {
   """
-  unique or primary key constraint on columns "participant_id", "chat_id"
+  unique or primary key constraint on columns "id"
   """
   chat_participants_pkey
 }
@@ -342,6 +346,7 @@ input type for incrementing numeric columns in table "chat_participant"
 """
 input chat_participant_inc_input {
   chat_id: Int
+  id: Int
   participant_id: Int
 }
 
@@ -352,6 +357,7 @@ input chat_participant_insert_input {
   app_type_id: String
   chat: chat_obj_rel_insert_input
   chat_id: Int
+  id: Int
   notification_info: notification_info_obj_rel_insert_input
   participant_id: Int
   user: user_obj_rel_insert_input
@@ -361,6 +367,7 @@ input chat_participant_insert_input {
 type chat_participant_max_fields {
   app_type_id: String
   chat_id: Int
+  id: Int
   participant_id: Int
 }
 
@@ -370,6 +377,7 @@ order by max() on columns of table "chat_participant"
 input chat_participant_max_order_by {
   app_type_id: order_by
   chat_id: order_by
+  id: order_by
   participant_id: order_by
 }
 
@@ -377,6 +385,7 @@ input chat_participant_max_order_by {
 type chat_participant_min_fields {
   app_type_id: String
   chat_id: Int
+  id: Int
   participant_id: Int
 }
 
@@ -386,6 +395,7 @@ order by min() on columns of table "chat_participant"
 input chat_participant_min_order_by {
   app_type_id: order_by
   chat_id: order_by
+  id: order_by
   participant_id: order_by
 }
 
@@ -414,6 +424,7 @@ input chat_participant_order_by {
   app_type_id: order_by
   chat: chat_order_by
   chat_id: order_by
+  id: order_by
   notification_info: notification_info_order_by
   participant_id: order_by
   user: user_order_by
@@ -421,8 +432,7 @@ input chat_participant_order_by {
 
 """primary key columns input for table: chat_participant"""
 input chat_participant_pk_columns_input {
-  chat_id: Int!
-  participant_id: Int!
+  id: Int!
 }
 
 """
@@ -436,6 +446,9 @@ enum chat_participant_select_column {
   chat_id
 
   """column name"""
+  id
+
+  """column name"""
   participant_id
 }
 
@@ -445,12 +458,14 @@ input type for updating data in table "chat_participant"
 input chat_participant_set_input {
   app_type_id: String
   chat_id: Int
+  id: Int
   participant_id: Int
 }
 
 """aggregate stddev on columns"""
 type chat_participant_stddev_fields {
   chat_id: Float
+  id: Float
   participant_id: Float
 }
 
@@ -459,12 +474,14 @@ order by stddev() on columns of table "chat_participant"
 """
 input chat_participant_stddev_order_by {
   chat_id: order_by
+  id: order_by
   participant_id: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type chat_participant_stddev_pop_fields {
   chat_id: Float
+  id: Float
   participant_id: Float
 }
 
@@ -473,12 +490,14 @@ order by stddev_pop() on columns of table "chat_participant"
 """
 input chat_participant_stddev_pop_order_by {
   chat_id: order_by
+  id: order_by
   participant_id: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type chat_participant_stddev_samp_fields {
   chat_id: Float
+  id: Float
   participant_id: Float
 }
 
@@ -487,6 +506,7 @@ order by stddev_samp() on columns of table "chat_participant"
 """
 input chat_participant_stddev_samp_order_by {
   chat_id: order_by
+  id: order_by
   participant_id: order_by
 }
 
@@ -505,12 +525,14 @@ input chat_participant_stream_cursor_input {
 input chat_participant_stream_cursor_value_input {
   app_type_id: String
   chat_id: Int
+  id: Int
   participant_id: Int
 }
 
 """aggregate sum on columns"""
 type chat_participant_sum_fields {
   chat_id: Int
+  id: Int
   participant_id: Int
 }
 
@@ -519,6 +541,7 @@ order by sum() on columns of table "chat_participant"
 """
 input chat_participant_sum_order_by {
   chat_id: order_by
+  id: order_by
   participant_id: order_by
 }
 
@@ -531,6 +554,9 @@ enum chat_participant_update_column {
 
   """column name"""
   chat_id
+
+  """column name"""
+  id
 
   """column name"""
   participant_id
@@ -548,6 +574,7 @@ input chat_participant_updates {
 """aggregate var_pop on columns"""
 type chat_participant_var_pop_fields {
   chat_id: Float
+  id: Float
   participant_id: Float
 }
 
@@ -556,12 +583,14 @@ order by var_pop() on columns of table "chat_participant"
 """
 input chat_participant_var_pop_order_by {
   chat_id: order_by
+  id: order_by
   participant_id: order_by
 }
 
 """aggregate var_samp on columns"""
 type chat_participant_var_samp_fields {
   chat_id: Float
+  id: Float
   participant_id: Float
 }
 
@@ -570,12 +599,14 @@ order by var_samp() on columns of table "chat_participant"
 """
 input chat_participant_var_samp_order_by {
   chat_id: order_by
+  id: order_by
   participant_id: order_by
 }
 
 """aggregate variance on columns"""
 type chat_participant_variance_fields {
   chat_id: Float
+  id: Float
   participant_id: Float
 }
 
@@ -584,6 +615,7 @@ order by variance() on columns of table "chat_participant"
 """
 input chat_participant_variance_order_by {
   chat_id: order_by
+  id: order_by
   participant_id: order_by
 }
 
@@ -1376,9 +1408,9 @@ type delivery {
   customer_review_by_driver_id: Int
 
   """An object relationship"""
-  deliverer: deliverer!
-  deliverer_app_type_id: String!
-  deliverer_id: Int!
+  deliverer: deliverer
+  deliverer_app_type_id: String
+  deliverer_id: Int
   delivery_cost: money!
 
   """An object relationship"""
@@ -1394,6 +1426,7 @@ type delivery {
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
   id: Int!
+  order_time: timestamptz!
   package_cost: money!
   payment_type: String!
   pickup_address: String!
@@ -1550,6 +1583,7 @@ input delivery_bool_exp {
   estimated_arrival_at_pickup_time: timestamptz_comparison_exp
   estimated_package_ready_time: timestamptz_comparison_exp
   id: Int_comparison_exp
+  order_time: timestamptz_comparison_exp
   package_cost: money_comparison_exp
   payment_type: String_comparison_exp
   pickup_address: String_comparison_exp
@@ -1630,6 +1664,7 @@ input delivery_insert_input {
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
   id: Int
+  order_time: timestamptz
   package_cost: money
   payment_type: String
   pickup_address: String
@@ -1671,6 +1706,7 @@ type delivery_max_fields {
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
   id: Int
+  order_time: timestamptz
   package_cost: money
   payment_type: String
   pickup_address: String
@@ -1712,6 +1748,7 @@ input delivery_max_order_by {
   estimated_arrival_at_pickup_time: order_by
   estimated_package_ready_time: order_by
   id: order_by
+  order_time: order_by
   package_cost: order_by
   payment_type: order_by
   pickup_address: order_by
@@ -1751,6 +1788,7 @@ type delivery_min_fields {
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
   id: Int
+  order_time: timestamptz
   package_cost: money
   payment_type: String
   pickup_address: String
@@ -1792,6 +1830,7 @@ input delivery_min_order_by {
   estimated_arrival_at_pickup_time: order_by
   estimated_package_ready_time: order_by
   id: order_by
+  order_time: order_by
   package_cost: order_by
   payment_type: order_by
   pickup_address: order_by
@@ -1869,6 +1908,7 @@ input delivery_order_by {
   estimated_arrival_at_pickup_time: order_by
   estimated_package_ready_time: order_by
   id: order_by
+  order_time: order_by
   package_cost: order_by
   payment_type: order_by
   pickup_address: order_by
@@ -1954,6 +1994,9 @@ enum delivery_select_column {
   id
 
   """column name"""
+  order_time
+
+  """column name"""
   package_cost
 
   """column name"""
@@ -2014,6 +2057,7 @@ input delivery_set_input {
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
   id: Int
+  order_time: timestamptz
   package_cost: money
   payment_type: String
   pickup_address: String
@@ -2211,6 +2255,7 @@ input delivery_stream_cursor_value_input {
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
   id: Int
+  order_time: timestamptz
   package_cost: money
   payment_type: String
   pickup_address: String
@@ -2342,6 +2387,9 @@ enum delivery_update_column {
 
   """column name"""
   id
+
+  """column name"""
+  order_time
 
   """column name"""
   package_cost
@@ -2984,7 +3032,7 @@ type mutation_root {
   """
   delete single row from the table: "chat_participant"
   """
-  delete_chat_participant_by_pk(chat_id: Int!, participant_id: Int!): chat_participant
+  delete_chat_participant_by_pk(id: Int!): chat_participant
 
   """
   delete data from the table: "customer"
@@ -5219,7 +5267,7 @@ type query_root {
   """
   fetch data from the table: "chat_participant" using primary key columns
   """
-  chat_participant_by_pk(chat_id: Int!, participant_id: Int!): chat_participant
+  chat_participant_by_pk(id: Int!): chat_participant
 
   """
   fetch data from the table: "customer"
@@ -6522,6 +6570,11 @@ input restaurant_bool_exp {
 columns and relationships of "restaurant_cart"
 """
 type restaurant_cart {
+  """
+  A computed field, executes function "cost"
+  """
+  cost: money
+
   """An object relationship"""
   customer: customer!
   customer_id: Int!
@@ -6605,6 +6658,7 @@ input restaurant_cart_bool_exp {
   _and: [restaurant_cart_bool_exp!]
   _not: restaurant_cart_bool_exp
   _or: [restaurant_cart_bool_exp!]
+  cost: money_comparison_exp
   customer: customer_bool_exp
   customer_id: Int_comparison_exp
   items: restaurant_cart_item_bool_exp
@@ -7151,6 +7205,7 @@ input restaurant_cart_on_conflict {
 
 """Ordering options when selecting data from "restaurant_cart"."""
 input restaurant_cart_order_by {
+  cost: order_by
   customer: customer_order_by
   customer_id: order_by
   items_aggregate: restaurant_cart_item_aggregate_order_by
@@ -10805,6 +10860,11 @@ type restaurant_order {
     """filter the rows returned"""
     where: restaurant_order_item_bool_exp
   ): restaurant_order_item_aggregate!
+
+  """
+  A computed field, executes function "itemscost"
+  """
+  items_cost: money
   notes: String
   order_time: timestamptz!
   order_type: String!
@@ -10827,6 +10887,11 @@ type restaurant_order {
   tax: float8!
   to_location_address: String
   to_location_gps: geography
+
+  """
+  A computed field, executes function "totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -10931,6 +10996,7 @@ input restaurant_order_bool_exp {
   firebase_id: String_comparison_exp
   id: Int_comparison_exp
   items: restaurant_order_item_bool_exp
+  items_cost: money_comparison_exp
   notes: String_comparison_exp
   order_time: timestamptz_comparison_exp
   order_type: String_comparison_exp
@@ -10945,6 +11011,7 @@ input restaurant_order_bool_exp {
   tax: float8_comparison_exp
   to_location_address: String_comparison_exp
   to_location_gps: geography_comparison_exp
+  total_cost: money_comparison_exp
 }
 
 """Ordering options when selecting data from "restaurant"."""
@@ -11711,6 +11778,7 @@ input restaurant_order_order_by {
   firebase_id: order_by
   id: order_by
   items_aggregate: restaurant_order_item_aggregate_order_by
+  items_cost: order_by
   notes: order_by
   order_time: order_by
   order_type: order_by
@@ -11725,6 +11793,7 @@ input restaurant_order_order_by {
   tax: order_by
   to_location_address: order_by
   to_location_gps: order_by
+  total_cost: order_by
 }
 
 """primary key columns input for table: restaurant_order"""
@@ -13428,7 +13497,7 @@ type subscription_root {
   """
   fetch data from the table: "chat_participant" using primary key columns
   """
-  chat_participant_by_pk(chat_id: Int!, participant_id: Int!): chat_participant
+  chat_participant_by_pk(id: Int!): chat_participant
 
   """
   fetch data from the table in a streaming manner : "chat_participant"

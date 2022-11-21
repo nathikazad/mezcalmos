@@ -31,6 +31,7 @@ export enum OrderType {
   Laundry = "laundry",
   Water = "water"
 }
+//TODO
 
 export const pluralizeOrderType = function (orderType: OrderType): string {
   switch (orderType) {
