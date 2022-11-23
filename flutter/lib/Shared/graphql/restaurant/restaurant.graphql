@@ -7,15 +7,29 @@ query getRestaurants {
     name
     location_gps
     firebase_id
-    description {
-      translations {
-        language_id
-        value
-      }
-    }
+    description_id,
+    #description {
+    #  translations {
+    #    language_id
+    #    value
+    #  }
+    #}
     open_status
     payment_info_id
     schedule_id
+  }
+}
+
+# restaurant's description by pk
+query get_restaurant_desc_by_pk($desc_id : Int!) {
+  translation_by_pk(id : $desc_id)
+  {
+    id,
+    shared,
+    translations {
+      language_id,
+      value
+    }
   }
 }
 
