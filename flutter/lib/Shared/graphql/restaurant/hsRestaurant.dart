@@ -56,6 +56,22 @@ Future<Restaurant?> get_restaurant_by_id({required int id}) async {
     return null;
 }
 
+Future<LanguageType?> get_restaurant_priamry_lang(int restaurantId) async {
+  final QueryResult<Query$getRestaurantLang> response = await _db.graphQLClient
+      .query$getRestaurantLang(Options$Query$getRestaurantLang(
+          variables: Variables$Query$getRestaurantLang(id: restaurantId)));
+  if (response.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨 restuarnt primay lang query errors : ${response.exception}");
+  } else if (response.parsedData?.restaurant_by_pk != null) {
+    mezDbgPrint("✅✅✅ restuarnt primay lang query success");
+    return response.parsedData!.restaurant_by_pk!.language_id.toLanguageType();
+  }
+  return null;
+}
+
+// Mutations //
+
 Future<Restaurant> editRestaurant(
     {required int id, required Restaurant restaurant}) async {
   final QueryResult<Mutation$updateRestaurantInfo> response = await _db

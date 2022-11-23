@@ -12,7 +12,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
@@ -75,13 +74,13 @@ class _ROpItemViewState extends State<ROpItemView>
   Widget build(BuildContext context) {
     return Obx(
       () {
-        if (viewController.restaurant.value != null) {
+        if (viewController.isInitalized.isTrue) {
           return Scaffold(
             appBar: _appBar(),
             bottomNavigationBar: _saveBtn(),
             body: Obx(
               () {
-                if (viewController.pageLoaded) {
+                if (viewController.isInitalized.isTrue) {
                   return TabBarView(
                     controller: _tabController,
                     children: [
@@ -123,18 +122,19 @@ class _ROpItemViewState extends State<ROpItemView>
   }
 
   AppBar _appBar() {
-    return mezcalmosAppBar(AppBarLeftButtonType.Back,
-        onClick: Get.back,
+    return mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
+      Get.back(result: viewController.needToRefetch.value);
+    },
         title: '${_i18n()["item"]}',
         showNotifications: true,
         tabBar: TabBar(controller: _tabController, tabs: [
           Tab(
-            text:
-                "${viewController.restaurant.value!.primaryLanguage.toLanguageName()}",
+            child: Obx(
+                () => Text("${viewController.prLang.value.toLanguageName()}")),
           ),
           Tab(
-            text:
-                "${viewController.restaurant.value!.secondaryLanguage!.toLanguageName()}",
+            child: Obx(
+                () => Text("${viewController.scLang.value.toLanguageName()}")),
           ),
         ]));
   }
@@ -162,13 +162,14 @@ class _ROpItemViewState extends State<ROpItemView>
               autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: viewController.scItemNameController,
               validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return '${_i18n()["required"]}';
-                } else if (viewController
-                    .getItemsNames(viewController.scLang)
-                    .contains(value.replaceAll(" ", "").toLowerCase())) {
-                  return '${_i18n()["nameExist"]}';
-                }
+                // TODO validations
+                // if (value == null || value.isEmpty) {
+                //   return '${_i18n()["required"]}';
+                // } else if (viewController
+                //     .getItemsNames(viewController.scLang.value)
+                //     .contains(value.replaceAll(" ", "").toLowerCase())) {
+                //   return '${_i18n()["nameExist"]}';
+                // }
                 return null;
               },
             ),
@@ -226,13 +227,14 @@ class _ROpItemViewState extends State<ROpItemView>
               autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: viewController.prItemNameController,
               validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return '${_i18n()["required"]}';
-                } else if (viewController
-                    .getItemsNames(viewController.prLang)
-                    .contains(value.replaceAll(" ", "").toLowerCase())) {
-                  return '${_i18n()["nameExist"]}';
-                }
+                // TODO validations
+                // if (value == null || value.isEmpty) {
+                //   return '${_i18n()["required"]}';
+                // } else if (viewController
+                //     .getItemsNames(viewController.prLang.value)
+                //     .contains(value.replaceAll(" ", "").toLowerCase())) {
+                //   return '${_i18n()["nameExist"]}';
+                // }
                 return null;
               },
             ),
@@ -306,23 +308,44 @@ class _ROpItemViewState extends State<ROpItemView>
             const SizedBox(
               height: 10,
             ),
-            ROpItemOptionCard(
-              viewController: viewController,
-              itemId: itemId,
-              restaurantID: restuarantID!,
-              categoryID: categoryId,
-            ),
-            MezAddButton(
-              title: '${_i18n()["addOption"]}',
-              onClick: () async {
-                final Option? newOption = await Get.toNamed(
-                    getROpOptionRoute(restaurantId: restuarantID!)) as Option?;
-                if (newOption != null) {
-                  viewController.addOption(newOption);
-                }
-              },
-            ),
-            _deleteItemBtn()
+            Obx(() {
+              if (viewController.isEditing) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ROpItemOptionCard(
+                      viewController: viewController,
+                      itemId: viewController.editableItem.value!.id!,
+                      restaurantID: restuarantID!,
+                      categoryID: categoryId,
+                    ),
+                    MezAddButton(
+                      title: '${_i18n()["addOption"]}',
+                      onClick: () async {
+                        final bool? result = await Get.toNamed(
+                            getROpOptionRoute(
+                                restaurantId: restuarantID!,
+                                optionId: null,
+                                itemID: viewController
+                                    .editableItem.value!.id!)) as bool?;
+                        if (result == true) {
+                          await viewController.fetchItem();
+                        }
+                      },
+                    ),
+                    _deleteItemBtn(),
+                  ],
+                );
+              } else {
+                return Container(
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.all(5),
+                    child: Text(
+                      "Save item so you can manage options and choices ...",
+                      textAlign: TextAlign.center,
+                    ));
+              }
+            })
           ],
         ),
       ),

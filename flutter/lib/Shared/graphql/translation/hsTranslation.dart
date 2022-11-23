@@ -12,6 +12,7 @@ Future<void> update_translation(
     {required LanguageType langType,
     required String value,
     required int translationId}) async {
+  mezDbgPrint("Updating translation id = $translationId");
   final QueryResult<Mutation$updateTranslationValue> response = await _db
       .graphQLClient
       .mutate$updateTranslationValue(Options$Mutation$updateTranslationValue(
@@ -26,6 +27,6 @@ Future<void> update_translation(
     mezDbgPrint(
         "🚨🚨🚨 Hasura translation mutation exception =>${response.exception}");
   } else {
-    mezDbgPrint("✅✅✅ Hasura translation mutation success => ${response.data}");
+    mezDbgPrint("✅✅✅ Hasura translation mutation success ");
   }
 }

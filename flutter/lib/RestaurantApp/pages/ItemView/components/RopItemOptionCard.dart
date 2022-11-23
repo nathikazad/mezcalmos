@@ -105,17 +105,12 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
   Widget _editBtn({required Option option}) {
     return InkWell(
       onTap: () async {
-        final Option? newOp = await Get.toNamed(
-            getROpOptionRoute(restaurantId: widget.restaurantID),
-            arguments: {
-              "option": option,
-              "itemId": widget.itemId,
-              "categoryId": widget.categoryID
-            }) as Option?;
-        if (newOp != null) {
-          widget.viewController.editOption(option.id, newOp);
-        } else {
-          widget.viewController.deleteOption(optionId: option.id);
+        final bool? result = await Get.toNamed(getROpOptionRoute(
+            restaurantId: widget.restaurantID,
+            optionId: option.id,
+            itemID: widget.itemId!)) as bool?;
+        if (result == true) {
+          await widget.viewController.fetchItem();
         }
       },
       customBorder: CircleBorder(),

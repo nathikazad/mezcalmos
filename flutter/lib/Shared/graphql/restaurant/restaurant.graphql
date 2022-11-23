@@ -60,6 +60,11 @@ mutation updateRestaurantInfo($id: Int!, $data: restaurant_set_input!) {
     open_status
   }
 }
+query getRestaurantLang($id: Int!) {
+  restaurant_by_pk(id: $id) {
+    language_id
+  }
+}
 
 
 

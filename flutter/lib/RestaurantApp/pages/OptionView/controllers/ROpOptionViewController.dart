@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
-import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/graphql/item/option/hsOption.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 enum FormValid { Valid, PrimaryNotValid, SecondaryNotValid }
@@ -26,74 +26,77 @@ class ROpOptionViewController {
 
   // variables //
 
-  Rxn<Restaurant> restaurant = Rxn();
   Rx<OptionType> optionType = Rx(OptionType.ChooseOne);
   RxList<Choice> optionChoices = RxList([]);
+  Rx<LanguageType> primaryLang = Rx(LanguageType.ES);
+  Rx<LanguageType> secondaryLang = Rx(LanguageType.EN);
+
   RxnInt min = RxnInt();
   RxnInt max = RxnInt();
   RxnInt free = RxnInt();
   Rxn<Option> editableOption = Rxn<Option>();
   RxBool editMode = RxBool(false);
-
-  List<TextEditingController> prChoicesNames = [];
-  List<TextEditingController> scChoicesNames = [];
-  List<TextEditingController> choicesPrices = [];
+  RxBool initDone = RxBool(false);
+  RxBool needToFetch = RxBool(false);
 
   // constants //
-  final Map<LanguageType, String> _emptyName = {
-    LanguageType.EN: "",
-    LanguageType.ES: "",
-  };
+  int? itemId;
+
+  // getters //
+  bool get isEditing => editMode.value && editableOption.value != null;
 
 // init //
-  Future<void> init({Option? option, required String restaurantId}) async {
-    // restaurant.value = _restaurantInfoController.restaurant.value;
+  Future<void> init(
+      {String? optionId,
+      required String restaurantId,
+      required String itemID}) async {
+    itemId = int.tryParse(itemID);
+    await _assignLanguages(restaurantId);
+    if (optionId != null && int.tryParse(optionId) != null) {
+      // launch edit mode //
+      await _initEditMode(int.parse(optionId));
+    } else {
+      // add new option mode //
 
-    Get.put(RestaurantInfoController(), permanent: false);
-    restaurantInfoController = Get.find<RestaurantInfoController>();
-    restaurantInfoController.init(restId: restaurantId);
-    mezDbgPrint("ooooo ===> $restaurantId");
-    restaurant.value =
-        await restaurantInfoController.getRestaurantAsFuture(restaurantId);
+    }
+    initDone.value = true;
+  }
 
-    editableOption.value = option;
-
-    if (editableOption.value != null) {
-      initEditMode();
+  /// Getting primary language and secondary language based on restuarant info
+  Future<void> _assignLanguages(String restaurantId) async {
+    if (int.tryParse(restaurantId) != null) {
+      primaryLang.value =
+          await get_restaurant_priamry_lang(int.parse(restaurantId)) ??
+              LanguageType.ES;
+      secondaryLang.value = primaryLang.value.toOpLang();
     }
   }
 
-// when editing an existing option //
-  void initEditMode() {
-    editMode.value = true;
-    optionType.value = editableOption.value!.optionType;
-    prOptionName.text =
-        editableOption.value!.name[restaurant.value!.primaryLanguage]!;
-    scOptionName.text =
-        editableOption.value!.name[restaurant.value!.secondaryLanguage]!;
-    if (editableOption.value!.optionType == OptionType.Custom) {
-      free.value = editableOption.value!.freeChoice as int;
-      min.value = editableOption.value!.minimumChoice as int;
-      max.value = editableOption.value!.maximumChoice as int;
-      costPerExtra.text = editableOption.value!.costPerExtra.toString();
-    }
-    if (editableOption.value!.choices.isNotEmpty) {
-      editableOption.value!.choices.forEach((Choice element) {
-        optionChoices.add(element);
-        choicesPrices.add(TextEditingController());
-        prChoicesNames.add(TextEditingController());
-        scChoicesNames.add(TextEditingController());
-      });
-    }
-    if (optionChoices.isNotEmpty) {
-      for (int i = 0; i < optionChoices.length; i++) {
-        choicesPrices[i].text = optionChoices[i].cost.toString();
-        prChoicesNames[i].text =
-            optionChoices[i].name[restaurant.value!.primaryLanguage]!;
-        scChoicesNames[i].text =
-            optionChoices[i].name[restaurant.value!.secondaryLanguage]!;
+  /// When editing an existing option
+  ///
+  /// Load option info and assign them to view
+  Future<void> _initEditMode(int optionId) async {
+    editableOption.value = await get_option_by_id(optionId);
+    if (editableOption.value != null) {
+      editMode.value = true;
+      optionType.value = editableOption.value!.optionType;
+      prOptionName.text = editableOption.value!.name[primaryLang.value]!;
+      scOptionName.text = editableOption.value!.name[secondaryLang.value]!;
+      if (editableOption.value!.optionType == OptionType.Custom) {
+        free.value = editableOption.value!.freeChoice as int;
+        min.value = editableOption.value!.minimumChoice as int;
+        max.value = editableOption.value!.maximumChoice as int;
+        costPerExtra.text = editableOption.value!.costPerExtra.toString();
       }
+      _assignChoices();
     }
+  }
+
+  void _assignChoices() {
+    optionChoices.clear();
+    editableOption.value!.choices.forEach((Choice element) {
+      optionChoices.add(element);
+    });
   }
 
 // form validation //
@@ -102,76 +105,115 @@ class ROpOptionViewController {
     this.optionType.value = optionType;
   }
 
-  Option addOption() {
-    if (optionType.value == OptionType.Custom) {
-      return _constructCustomOption();
+  Future<void> saveOption() async {
+    if (isEditing == false) {
+      await _addNewOption();
     } else {
-      return _contructOption();
+      await _updateOption();
+    }
+  }
+
+  Future<void> _updateOption() async {
+    final bool result = await update_option_by_id(
+        optionId: int.parse(editableOption.value!.id),
+        option: (optionType.value == OptionType.Custom)
+            ? _constructCustomOption()
+            : _contructOption());
+    if (result) {
+      Get.snackbar('Saved', 'Option saved successfuly',
+          backgroundColor: Colors.black,
+          colorText: Colors.white,
+          shouldIconPulse: false,
+          icon: Icon(
+            Icons.check_circle,
+            color: Colors.green,
+          ));
+      needToFetch.value = true;
+    }
+  }
+
+  Future<void> _addNewOption() async {
+    mezDbgPrint("Adding new option to db ...");
+    final int? newOptionID = await add_option(
+        itemId: itemId!,
+        option: (optionType.value == OptionType.Custom)
+            ? _constructCustomOption()
+            : _contructOption());
+    if (newOptionID != null) {
+      Get.snackbar('Saved', 'Option saved successfuly',
+          backgroundColor: Colors.black,
+          colorText: Colors.white,
+          shouldIconPulse: false,
+          icon: Icon(
+            Icons.check_circle,
+            color: Colors.green,
+          ));
+      editableOption.value = await get_option_by_id(newOptionID);
+      if (editableOption.value != null) {
+        editMode.value = true;
+        needToFetch.value = true;
+      }
     }
   }
 
   Option _contructOption() {
     final Option newOption = Option(
-        id: editMode.value ? editableOption.value!.id : getRandomString(8),
-        optionType: optionType.value,
-        name: {
-          restaurant.value!.primaryLanguage: prOptionName.text,
-          restaurant.value!.secondaryLanguage!: scOptionName.text,
-        },
-        newChoices: _contructChoices());
+      id: editMode.value ? editableOption.value!.id : getRandomString(8),
+      optionType: optionType.value,
+      name: {
+        primaryLang.value: prOptionName.text,
+        secondaryLang.value: scOptionName.text,
+      },
+    );
     return newOption;
   }
 
   Option _constructCustomOption() {
     final Option newOption = Option(
-        id: getRandomString(8),
-        optionType: optionType.value,
-        maximumChoice: max.value!,
-        minimumChoice: min.value!,
-        costPerExtra: int.tryParse(costPerExtra.text) ?? 0,
-        freeChoice: free.value!,
-        name: {
-          restaurant.value!.primaryLanguage: prOptionName.text,
-          restaurant.value!.secondaryLanguage!: scOptionName.text,
-        },
-        newChoices: _contructChoices());
+      id: editMode.value ? editableOption.value!.id : getRandomString(8),
+      optionType: optionType.value,
+      maximumChoice: max.value!,
+      minimumChoice: min.value!,
+      costPerExtra: int.tryParse(costPerExtra.text) ?? 0,
+      freeChoice: free.value!,
+      name: {
+        primaryLang.value: prOptionName.text,
+        secondaryLang.value: scOptionName.text,
+      },
+      // newChoices: _contructChoices(),
+    );
     return newOption;
   }
 
-  List<Choice> _contructChoices() {
-    final List<Choice> data = [];
-    for (int i = 0; i < optionChoices.length; i++) {
-      data.add(Choice(
-        id: optionChoices[i].id,
-        name: {
-          restaurant.value!.primaryLanguage: prChoicesNames[i].text,
-          restaurant.value!.secondaryLanguage!: scChoicesNames[i].text,
-        },
-        cost: int.tryParse(choicesPrices[i].text) ?? 0,
-      ));
+  Future<bool?> deleteOption() async {
+    if (int.tryParse(editableOption.value!.id) != null) {
+      final bool result = await delete_option_by_id(
+          optionId: int.parse(editableOption.value!.id));
+      result ? Get.back() : null;
+      return result;
     }
-    return data;
+    return null;
   }
 
-  void addNewEmptyChoice() {
-    optionChoices
-        .add(Choice(id: generateRandomString(8), name: _emptyName, cost: 0));
-    choicesPrices.add(TextEditingController());
-    prChoicesNames.add(TextEditingController());
-    scChoicesNames.add(TextEditingController());
+  Future<void> fetchOption() async {
+    if (isEditing) {
+      final Option? newOp = await get_option_by_id(
+          int.parse(editableOption.value!.id),
+          withCache: false);
+      if (newOp != null) {
+        editableOption.value = newOp.copyWith();
+        editableOption.value!.choices = newOp.choices;
+
+        _assignChoices();
+      }
+    }
   }
 
-  void deleteChoice(String choiceID) {
-    optionChoices.removeWhere((Choice element) => element.id == choiceID);
+  bool get isFirstValid {
+    return prOptionName.text.removeAllWhitespace.isNotEmpty;
   }
 
-  Future<void> deleteOption(
-      {required String itemId,
-      required String optionId,
-      String? categoryId}) async {
-    await restaurantInfoController
-        .deleteOption(
-            itemId: itemId, optionId: optionId, categoryId: categoryId)
-        .then((value) => Get.back());
+  bool get isSecondValid {
+    return scOptionName.text.removeAllWhitespace.isNotEmpty;
   }
 }

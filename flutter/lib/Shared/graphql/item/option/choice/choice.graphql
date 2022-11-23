@@ -1,5 +1,36 @@
+# Mutations
 mutation addChoice($choice: restaurant_choice_insert_input!) {
   insert_restaurant_choice_one(object: $choice) {
     id
+  }
+}
+mutation updateChoiceById(
+  $id: Int!
+  $choiceData: restaurant_choice_set_input!
+) {
+  update_restaurant_choice_by_pk(pk_columns: { id: $id }, _set: $choiceData) {
+    id
+    cost
+    available
+  }
+}
+mutation deleteChoiceById($id: Int! ) {
+  
+  delete_restaurant_choice_by_pk(id: $id){id}
+}
+
+# Querries
+query getChoiceById($id: Int!) {
+  restaurant_choice_by_pk(id: $id) {
+    available
+    cost
+    id
+    name {
+      id
+      translations {
+        language_id
+        value
+      }
+    }
   }
 }

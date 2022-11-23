@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:graphql/src/core/query_result.dart';
+import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -13,7 +13,33 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
+
 // Mutations //
+Future<bool> update_item_by_id(
+    {required int itemId, required Item item}) async {
+  final QueryResult<Mutation$upadateItem> response =
+      await _db.graphQLClient.mutate$upadateItem(
+    Options$Mutation$upadateItem(
+      variables: Variables$Mutation$upadateItem(
+        id: itemId,
+        itemData: Input$restaurant_item_set_input(
+          category_id: item.categoryId,
+          cost: item.cost.toDouble(),
+          available: item.available,
+          item_type: item.itemType.toFirebaseFormatString(),
+          position: item.position,
+          special_period_end: item.startsAt?.toUtc().toString(),
+          special_period_start: item.endsAt?.toUtc().toString(),
+        ),
+      ),
+    ),
+  );
+  response.hasException
+      ? mezDbgPrint("🚨🚨🚨 Update item mutation errors ${response.exception}")
+      : mezDbgPrint("✅✅✅ Update item mutation success");
+  return !response.hasException;
+}
+
 Future<int?> add_one_item(
     {required Item item, required int restaurantId, int? categoryId}) async {
   final QueryResult<Mutation$addItem> response =
@@ -85,18 +111,22 @@ Future<int?> delete_item_by_id(int itemId) async {
 Future<Item?> get_one_item_by_id(int itemId, {bool withCache = true}) async {
   final QueryResult<Query$getItemById> response = await _db.graphQLClient
       .query$getItemById(Options$Query$getItemById(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
           variables: Variables$Query$getItemById(id: itemId)));
 
   if (response.hasException) {
     mezDbgPrint(
-        "🚨🚨🚨 Hasura add item mutation exception =>${response.exception}");
+        "🚨🚨🚨 Hasura get item guery exception =>${response.exception}");
   } else {
-    mezDbgPrint("✅✅✅ Hasura add item mutation success => ${response.data}");
+    mezDbgPrint("✅✅✅ Hasura get item query success");
     final Query$getItemById$restaurant_item_by_pk data =
         response.parsedData!.restaurant_item_by_pk!;
     final Item item = Item(
-        name: toLanguageMap(data: data.name.translations),
+        name: toLanguageMap(translations: data.name.translations),
         id: data.id.toString(),
+        nameId: data.name.id,
+        descriptionId: data.description?.id,
         categoryId: data.category_id,
         startsAt: (data.special_period_start != null)
             ? DateTime.tryParse(data.special_period_start!)
@@ -104,7 +134,9 @@ Future<Item?> get_one_item_by_id(int itemId, {bool withCache = true}) async {
         endsAt: (data.special_period_end != null)
             ? DateTime.tryParse(data.special_period_end!)
             : null,
-        description: toLanguageMap(data: data.description?.translations),
+        description: (data.description?.translations != null)
+            ? toLanguageMap(translations: data.description!.translations)
+            : null,
         cost: data.cost,
         available: data.available,
         position: data.position,
@@ -126,7 +158,8 @@ List<Option> _convertOption(
       (Query$getItemById$restaurant_item_by_pk$options$item_options oneOption) {
     final Option newOption = Option(
       id: oneOption.id.toString(),
-      name: toLanguageMap(data: oneOption.name.translations),
+      nameId: oneOption.name.id,
+      name: toLanguageMap(translations: oneOption.name.translations),
       costPerExtra: oneOption.cost_per_extra,
       freeChoice: oneOption.free_choice,
       maximumChoice: oneOption.maximum_choice,
@@ -152,7 +185,8 @@ List<Choice> _convertChoices(
           oneChoice) {
     return Choice(
         id: oneChoice.id.toString(),
-        name: toLanguageMap(data: oneChoice.name.translations),
+        nameId: oneChoice.name.id,
+        name: toLanguageMap(translations: oneChoice.name.translations),
         cost: oneChoice.cost);
   }).toList();
   return choices;

@@ -8,6 +8,8 @@ import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 
 class Item {
   String? id;
+  int? nameId;
+  int? descriptionId;
   int? categoryId;
   bool available;
   ItemType itemType;
@@ -31,6 +33,8 @@ class Item {
   int position = 0;
   Item(
       {this.id,
+      this.nameId,
+      this.descriptionId,
       this.available = false,
       this.description,
       this.image,

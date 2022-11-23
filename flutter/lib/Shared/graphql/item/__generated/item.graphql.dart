@@ -2103,6 +2103,571 @@ class _CopyWithStubImpl$Mutation$deleteItem$delete_restaurant_item_by_pk<TRes>
       _res;
 }
 
+class Variables$Mutation$upadateItem {
+  factory Variables$Mutation$upadateItem({
+    required int id,
+    required Input$restaurant_item_set_input itemData,
+  }) =>
+      Variables$Mutation$upadateItem._({
+        r'id': id,
+        r'itemData': itemData,
+      });
+
+  Variables$Mutation$upadateItem._(this._$data);
+
+  factory Variables$Mutation$upadateItem.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    final l$itemData = data['itemData'];
+    result$data['itemData'] = Input$restaurant_item_set_input.fromJson(
+        (l$itemData as Map<String, dynamic>));
+    return Variables$Mutation$upadateItem._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  Input$restaurant_item_set_input get itemData =>
+      (_$data['itemData'] as Input$restaurant_item_set_input);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    final l$itemData = itemData;
+    result$data['itemData'] = l$itemData.toJson();
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$upadateItem<Variables$Mutation$upadateItem>
+      get copyWith => CopyWith$Variables$Mutation$upadateItem(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$upadateItem) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$itemData = itemData;
+    final lOther$itemData = other.itemData;
+    if (l$itemData != lOther$itemData) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$itemData = itemData;
+    return Object.hashAll([
+      l$id,
+      l$itemData,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$upadateItem<TRes> {
+  factory CopyWith$Variables$Mutation$upadateItem(
+    Variables$Mutation$upadateItem instance,
+    TRes Function(Variables$Mutation$upadateItem) then,
+  ) = _CopyWithImpl$Variables$Mutation$upadateItem;
+
+  factory CopyWith$Variables$Mutation$upadateItem.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$upadateItem;
+
+  TRes call({
+    int? id,
+    Input$restaurant_item_set_input? itemData,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$upadateItem<TRes>
+    implements CopyWith$Variables$Mutation$upadateItem<TRes> {
+  _CopyWithImpl$Variables$Mutation$upadateItem(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$upadateItem _instance;
+
+  final TRes Function(Variables$Mutation$upadateItem) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? itemData = _undefined,
+  }) =>
+      _then(Variables$Mutation$upadateItem._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+        if (itemData != _undefined && itemData != null)
+          'itemData': (itemData as Input$restaurant_item_set_input),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$upadateItem<TRes>
+    implements CopyWith$Variables$Mutation$upadateItem<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$upadateItem(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Input$restaurant_item_set_input? itemData,
+  }) =>
+      _res;
+}
+
+class Mutation$upadateItem {
+  Mutation$upadateItem({
+    this.update_restaurant_item_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$upadateItem.fromJson(Map<String, dynamic> json) {
+    final l$update_restaurant_item_by_pk = json['update_restaurant_item_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$upadateItem(
+      update_restaurant_item_by_pk: l$update_restaurant_item_by_pk == null
+          ? null
+          : Mutation$upadateItem$update_restaurant_item_by_pk.fromJson(
+              (l$update_restaurant_item_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$upadateItem$update_restaurant_item_by_pk?
+      update_restaurant_item_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_restaurant_item_by_pk = update_restaurant_item_by_pk;
+    _resultData['update_restaurant_item_by_pk'] =
+        l$update_restaurant_item_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_restaurant_item_by_pk = update_restaurant_item_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_restaurant_item_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$upadateItem) || runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_restaurant_item_by_pk = update_restaurant_item_by_pk;
+    final lOther$update_restaurant_item_by_pk =
+        other.update_restaurant_item_by_pk;
+    if (l$update_restaurant_item_by_pk != lOther$update_restaurant_item_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$upadateItem on Mutation$upadateItem {
+  CopyWith$Mutation$upadateItem<Mutation$upadateItem> get copyWith =>
+      CopyWith$Mutation$upadateItem(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Mutation$upadateItem<TRes> {
+  factory CopyWith$Mutation$upadateItem(
+    Mutation$upadateItem instance,
+    TRes Function(Mutation$upadateItem) then,
+  ) = _CopyWithImpl$Mutation$upadateItem;
+
+  factory CopyWith$Mutation$upadateItem.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$upadateItem;
+
+  TRes call({
+    Mutation$upadateItem$update_restaurant_item_by_pk?
+        update_restaurant_item_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$upadateItem$update_restaurant_item_by_pk<TRes>
+      get update_restaurant_item_by_pk;
+}
+
+class _CopyWithImpl$Mutation$upadateItem<TRes>
+    implements CopyWith$Mutation$upadateItem<TRes> {
+  _CopyWithImpl$Mutation$upadateItem(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$upadateItem _instance;
+
+  final TRes Function(Mutation$upadateItem) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_restaurant_item_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$upadateItem(
+        update_restaurant_item_by_pk: update_restaurant_item_by_pk == _undefined
+            ? _instance.update_restaurant_item_by_pk
+            : (update_restaurant_item_by_pk
+                as Mutation$upadateItem$update_restaurant_item_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$upadateItem$update_restaurant_item_by_pk<TRes>
+      get update_restaurant_item_by_pk {
+    final local$update_restaurant_item_by_pk =
+        _instance.update_restaurant_item_by_pk;
+    return local$update_restaurant_item_by_pk == null
+        ? CopyWith$Mutation$upadateItem$update_restaurant_item_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Mutation$upadateItem$update_restaurant_item_by_pk(
+            local$update_restaurant_item_by_pk,
+            (e) => call(update_restaurant_item_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$upadateItem<TRes>
+    implements CopyWith$Mutation$upadateItem<TRes> {
+  _CopyWithStubImpl$Mutation$upadateItem(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$upadateItem$update_restaurant_item_by_pk?
+        update_restaurant_item_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$upadateItem$update_restaurant_item_by_pk<TRes>
+      get update_restaurant_item_by_pk =>
+          CopyWith$Mutation$upadateItem$update_restaurant_item_by_pk.stub(_res);
+}
+
+const documentNodeMutationupadateItem = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'upadateItem'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'itemData')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'restaurant_item_set_input'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_restaurant_item_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'id')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: VariableNode(name: NameNode(value: 'itemData')),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$upadateItem _parserFn$Mutation$upadateItem(
+        Map<String, dynamic> data) =>
+    Mutation$upadateItem.fromJson(data);
+typedef OnMutationCompleted$Mutation$upadateItem = FutureOr<void> Function(
+  dynamic,
+  Mutation$upadateItem?,
+);
+
+class Options$Mutation$upadateItem
+    extends graphql.MutationOptions<Mutation$upadateItem> {
+  Options$Mutation$upadateItem({
+    String? operationName,
+    required Variables$Mutation$upadateItem variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$upadateItem? onCompleted,
+    graphql.OnMutationUpdate<Mutation$upadateItem>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null ? null : _parserFn$Mutation$upadateItem(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupadateItem,
+          parserFn: _parserFn$Mutation$upadateItem,
+        );
+
+  final OnMutationCompleted$Mutation$upadateItem? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$upadateItem
+    extends graphql.WatchQueryOptions<Mutation$upadateItem> {
+  WatchOptions$Mutation$upadateItem({
+    String? operationName,
+    required Variables$Mutation$upadateItem variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupadateItem,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$upadateItem,
+        );
+}
+
+extension ClientExtension$Mutation$upadateItem on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$upadateItem>> mutate$upadateItem(
+          Options$Mutation$upadateItem options) async =>
+      await this.mutate(options);
+  graphql.ObservableQuery<Mutation$upadateItem> watchMutation$upadateItem(
+          WatchOptions$Mutation$upadateItem options) =>
+      this.watchMutation(options);
+}
+
+class Mutation$upadateItem$update_restaurant_item_by_pk {
+  Mutation$upadateItem$update_restaurant_item_by_pk({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Mutation$upadateItem$update_restaurant_item_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$upadateItem$update_restaurant_item_by_pk(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$upadateItem$update_restaurant_item_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$upadateItem$update_restaurant_item_by_pk
+    on Mutation$upadateItem$update_restaurant_item_by_pk {
+  CopyWith$Mutation$upadateItem$update_restaurant_item_by_pk<
+          Mutation$upadateItem$update_restaurant_item_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$upadateItem$update_restaurant_item_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$upadateItem$update_restaurant_item_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$upadateItem$update_restaurant_item_by_pk(
+    Mutation$upadateItem$update_restaurant_item_by_pk instance,
+    TRes Function(Mutation$upadateItem$update_restaurant_item_by_pk) then,
+  ) = _CopyWithImpl$Mutation$upadateItem$update_restaurant_item_by_pk;
+
+  factory CopyWith$Mutation$upadateItem$update_restaurant_item_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$upadateItem$update_restaurant_item_by_pk;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$upadateItem$update_restaurant_item_by_pk<TRes>
+    implements
+        CopyWith$Mutation$upadateItem$update_restaurant_item_by_pk<TRes> {
+  _CopyWithImpl$Mutation$upadateItem$update_restaurant_item_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$upadateItem$update_restaurant_item_by_pk _instance;
+
+  final TRes Function(Mutation$upadateItem$update_restaurant_item_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$upadateItem$update_restaurant_item_by_pk(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$upadateItem$update_restaurant_item_by_pk<TRes>
+    implements
+        CopyWith$Mutation$upadateItem$update_restaurant_item_by_pk<TRes> {
+  _CopyWithStubImpl$Mutation$upadateItem$update_restaurant_item_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Query$getItemById {
   factory Variables$Query$getItemById({required int id}) =>
       Variables$Query$getItemById._({

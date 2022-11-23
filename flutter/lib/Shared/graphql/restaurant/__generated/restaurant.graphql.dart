@@ -3497,6 +3497,525 @@ class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk$de
       _res;
 }
 
+class Variables$Query$getRestaurantLang {
+  factory Variables$Query$getRestaurantLang({required int id}) =>
+      Variables$Query$getRestaurantLang._({
+        r'id': id,
+      });
+
+  Variables$Query$getRestaurantLang._(this._$data);
+
+  factory Variables$Query$getRestaurantLang.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    return Variables$Query$getRestaurantLang._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getRestaurantLang<Variables$Query$getRestaurantLang>
+      get copyWith => CopyWith$Variables$Query$getRestaurantLang(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getRestaurantLang) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    return Object.hashAll([l$id]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getRestaurantLang<TRes> {
+  factory CopyWith$Variables$Query$getRestaurantLang(
+    Variables$Query$getRestaurantLang instance,
+    TRes Function(Variables$Query$getRestaurantLang) then,
+  ) = _CopyWithImpl$Variables$Query$getRestaurantLang;
+
+  factory CopyWith$Variables$Query$getRestaurantLang.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getRestaurantLang;
+
+  TRes call({int? id});
+}
+
+class _CopyWithImpl$Variables$Query$getRestaurantLang<TRes>
+    implements CopyWith$Variables$Query$getRestaurantLang<TRes> {
+  _CopyWithImpl$Variables$Query$getRestaurantLang(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getRestaurantLang _instance;
+
+  final TRes Function(Variables$Query$getRestaurantLang) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? id = _undefined}) =>
+      _then(Variables$Query$getRestaurantLang._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getRestaurantLang<TRes>
+    implements CopyWith$Variables$Query$getRestaurantLang<TRes> {
+  _CopyWithStubImpl$Variables$Query$getRestaurantLang(this._res);
+
+  TRes _res;
+
+  call({int? id}) => _res;
+}
+
+class Query$getRestaurantLang {
+  Query$getRestaurantLang({
+    this.restaurant_by_pk,
+    required this.$__typename,
+  });
+
+  factory Query$getRestaurantLang.fromJson(Map<String, dynamic> json) {
+    final l$restaurant_by_pk = json['restaurant_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Query$getRestaurantLang(
+      restaurant_by_pk: l$restaurant_by_pk == null
+          ? null
+          : Query$getRestaurantLang$restaurant_by_pk.fromJson(
+              (l$restaurant_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getRestaurantLang$restaurant_by_pk? restaurant_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$restaurant_by_pk = restaurant_by_pk;
+    _resultData['restaurant_by_pk'] = l$restaurant_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$restaurant_by_pk = restaurant_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$restaurant_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getRestaurantLang) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$restaurant_by_pk = restaurant_by_pk;
+    final lOther$restaurant_by_pk = other.restaurant_by_pk;
+    if (l$restaurant_by_pk != lOther$restaurant_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getRestaurantLang on Query$getRestaurantLang {
+  CopyWith$Query$getRestaurantLang<Query$getRestaurantLang> get copyWith =>
+      CopyWith$Query$getRestaurantLang(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$getRestaurantLang<TRes> {
+  factory CopyWith$Query$getRestaurantLang(
+    Query$getRestaurantLang instance,
+    TRes Function(Query$getRestaurantLang) then,
+  ) = _CopyWithImpl$Query$getRestaurantLang;
+
+  factory CopyWith$Query$getRestaurantLang.stub(TRes res) =
+      _CopyWithStubImpl$Query$getRestaurantLang;
+
+  TRes call({
+    Query$getRestaurantLang$restaurant_by_pk? restaurant_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Query$getRestaurantLang$restaurant_by_pk<TRes> get restaurant_by_pk;
+}
+
+class _CopyWithImpl$Query$getRestaurantLang<TRes>
+    implements CopyWith$Query$getRestaurantLang<TRes> {
+  _CopyWithImpl$Query$getRestaurantLang(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getRestaurantLang _instance;
+
+  final TRes Function(Query$getRestaurantLang) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? restaurant_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getRestaurantLang(
+        restaurant_by_pk: restaurant_by_pk == _undefined
+            ? _instance.restaurant_by_pk
+            : (restaurant_by_pk as Query$getRestaurantLang$restaurant_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getRestaurantLang$restaurant_by_pk<TRes> get restaurant_by_pk {
+    final local$restaurant_by_pk = _instance.restaurant_by_pk;
+    return local$restaurant_by_pk == null
+        ? CopyWith$Query$getRestaurantLang$restaurant_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Query$getRestaurantLang$restaurant_by_pk(
+            local$restaurant_by_pk, (e) => call(restaurant_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getRestaurantLang<TRes>
+    implements CopyWith$Query$getRestaurantLang<TRes> {
+  _CopyWithStubImpl$Query$getRestaurantLang(this._res);
+
+  TRes _res;
+
+  call({
+    Query$getRestaurantLang$restaurant_by_pk? restaurant_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getRestaurantLang$restaurant_by_pk<TRes>
+      get restaurant_by_pk =>
+          CopyWith$Query$getRestaurantLang$restaurant_by_pk.stub(_res);
+}
+
+const documentNodeQuerygetRestaurantLang = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getRestaurantLang'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'restaurant_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'id')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'language_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getRestaurantLang _parserFn$Query$getRestaurantLang(
+        Map<String, dynamic> data) =>
+    Query$getRestaurantLang.fromJson(data);
+
+class Options$Query$getRestaurantLang
+    extends graphql.QueryOptions<Query$getRestaurantLang> {
+  Options$Query$getRestaurantLang({
+    String? operationName,
+    required Variables$Query$getRestaurantLang variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetRestaurantLang,
+          parserFn: _parserFn$Query$getRestaurantLang,
+        );
+}
+
+class WatchOptions$Query$getRestaurantLang
+    extends graphql.WatchQueryOptions<Query$getRestaurantLang> {
+  WatchOptions$Query$getRestaurantLang({
+    String? operationName,
+    required Variables$Query$getRestaurantLang variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetRestaurantLang,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getRestaurantLang,
+        );
+}
+
+class FetchMoreOptions$Query$getRestaurantLang
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getRestaurantLang({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getRestaurantLang variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetRestaurantLang,
+        );
+}
+
+extension ClientExtension$Query$getRestaurantLang on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getRestaurantLang>> query$getRestaurantLang(
+          Options$Query$getRestaurantLang options) async =>
+      await this.query(options);
+  graphql.ObservableQuery<Query$getRestaurantLang> watchQuery$getRestaurantLang(
+          WatchOptions$Query$getRestaurantLang options) =>
+      this.watchQuery(options);
+  void writeQuery$getRestaurantLang({
+    required Query$getRestaurantLang data,
+    required Variables$Query$getRestaurantLang variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQuerygetRestaurantLang),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getRestaurantLang? readQuery$getRestaurantLang({
+    required Variables$Query$getRestaurantLang variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQuerygetRestaurantLang),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$getRestaurantLang.fromJson(result);
+  }
+}
+
+class Query$getRestaurantLang$restaurant_by_pk {
+  Query$getRestaurantLang$restaurant_by_pk({
+    required this.language_id,
+    required this.$__typename,
+  });
+
+  factory Query$getRestaurantLang$restaurant_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$$__typename = json['__typename'];
+    return Query$getRestaurantLang$restaurant_by_pk(
+      language_id: (l$language_id as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getRestaurantLang$restaurant_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getRestaurantLang$restaurant_by_pk
+    on Query$getRestaurantLang$restaurant_by_pk {
+  CopyWith$Query$getRestaurantLang$restaurant_by_pk<
+          Query$getRestaurantLang$restaurant_by_pk>
+      get copyWith => CopyWith$Query$getRestaurantLang$restaurant_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getRestaurantLang$restaurant_by_pk<TRes> {
+  factory CopyWith$Query$getRestaurantLang$restaurant_by_pk(
+    Query$getRestaurantLang$restaurant_by_pk instance,
+    TRes Function(Query$getRestaurantLang$restaurant_by_pk) then,
+  ) = _CopyWithImpl$Query$getRestaurantLang$restaurant_by_pk;
+
+  factory CopyWith$Query$getRestaurantLang$restaurant_by_pk.stub(TRes res) =
+      _CopyWithStubImpl$Query$getRestaurantLang$restaurant_by_pk;
+
+  TRes call({
+    String? language_id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getRestaurantLang$restaurant_by_pk<TRes>
+    implements CopyWith$Query$getRestaurantLang$restaurant_by_pk<TRes> {
+  _CopyWithImpl$Query$getRestaurantLang$restaurant_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getRestaurantLang$restaurant_by_pk _instance;
+
+  final TRes Function(Query$getRestaurantLang$restaurant_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getRestaurantLang$restaurant_by_pk(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getRestaurantLang$restaurant_by_pk<TRes>
+    implements CopyWith$Query$getRestaurantLang$restaurant_by_pk<TRes> {
+  _CopyWithStubImpl$Query$getRestaurantLang$restaurant_by_pk(this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Subscription$GetRestaurants {
   Subscription$GetRestaurants({
     required this.restaurant,

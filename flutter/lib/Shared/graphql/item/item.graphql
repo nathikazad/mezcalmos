@@ -32,6 +32,11 @@ mutation deleteItem($itemId: Int!) {
     id
   }
 }
+mutation upadateItem($id: Int!,$itemData: restaurant_item_set_input!) {
+  update_restaurant_item_by_pk(pk_columns: {id: $id},_set : $itemData) {
+    id
+  }
+}
 
 
 

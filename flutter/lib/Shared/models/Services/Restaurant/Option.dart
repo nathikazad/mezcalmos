@@ -5,6 +5,7 @@ class Option {
   String id;
   OptionType optionType;
   Map<LanguageType, String> name;
+  int? nameId;
   List<Choice> choices;
   int position = 0;
   num minimumChoice = 0;
@@ -24,6 +25,7 @@ class Option {
     this.costPerExtra = 0,
     this.freeChoice = 0,
     this.maximumChoice = 0,
+    this.nameId,
     this.minimumChoice = 0,
     List<Choice>? newChoices,
     this.position = 0,
@@ -111,6 +113,61 @@ class Option {
       "costPerExtra": costPerExtra,
       "freeChoice": freeChoice,
     };
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        name.hashCode ^
+        choices.hashCode ^
+        position.hashCode ^
+        minimumChoice.hashCode ^
+        freeChoice.hashCode ^
+        maximumChoice.hashCode ^
+        costPerExtra.hashCode;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Option &&
+        other.id == id &&
+        other.position == position &&
+        other.optionType == optionType &&
+        other.minimumChoice == minimumChoice &&
+        other.freeChoice == freeChoice &&
+        other.maximumChoice == maximumChoice &&
+        other.costPerExtra == costPerExtra;
+  }
+
+  Option copyWith({
+    String? id,
+    Map<LanguageType, String>? name,
+    int? nameId,
+    List<Choice>? choices,
+    int? position,
+    num? minimumChoice,
+    num? freeChoice,
+    num? maximumChoice,
+    num? costPerExtra,
+  }) {
+    final Option newOp = Option(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      nameId: nameId ?? this.nameId,
+      // choices: choices ?? this.choices,
+      position: position ?? this.position,
+      minimumChoice: minimumChoice ?? this.minimumChoice,
+      freeChoice: freeChoice ?? this.freeChoice,
+      maximumChoice: maximumChoice ?? this.maximumChoice,
+      costPerExtra: costPerExtra ?? this.costPerExtra,
+      optionType: optionType,
+    );
+    choices?.forEach((Choice element) {
+      newOp.choices.add(element);
+    });
+    return newOp;
   }
 }
 

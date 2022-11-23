@@ -21,18 +21,19 @@ dynamic GeographyToJson(Geography geography) => <String, dynamic>{
     };
 
 double MoneyFromJson(String data) {
-  return double.parse(data.split("\$")[1]);
+  final String str = data.split('\$').last.replaceAll(",", "");
+
+  return double.parse(str);
 }
 
 String MoneyToJson(double money) => "$money";
 
-Map<LanguageType, String> toLanguageMap({required data}) {
-  if (data != null) {
-    final Map<LanguageType, String> map = {};
-    data?.forEach((element) {
-      map[element.language_id.toString().toLanguageType()] = element.value;
-    });
-    return map;
-  }
-  return {};
+/// Accepts a translations array (from hasura) and return a language map object
+// ignore: avoid_annotating_with_dynamic
+Map<LanguageType, String> toLanguageMap({required List translations}) {
+  final Map<LanguageType, String> map = {};
+  translations.forEach((element) {
+    map[element.language_id.toString().toLanguageType()] = element.value;
+  });
+  return map;
 }

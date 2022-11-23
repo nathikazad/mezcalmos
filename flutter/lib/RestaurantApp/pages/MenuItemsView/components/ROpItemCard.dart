@@ -8,7 +8,6 @@ import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -60,7 +59,7 @@ class _ROpItemCardState extends State<ROpItemCard> {
                           categoryId: widget.category?.id ?? null,
                           restaurntID: widget.viewController.restaurant.value!
                               .info.id)) as bool?;
-                  mezDbgPrint("After delete result ====>$shouldRefresh");
+
                   if (shouldRefresh == true) {
                     await widget.viewController.fetchCategories();
                   }

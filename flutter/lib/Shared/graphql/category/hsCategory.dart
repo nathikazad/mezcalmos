@@ -24,38 +24,12 @@ Future<List<Category>?> get_restaurant_categories_by_id(int restaurantId,
   if (response.hasException) {
     mezDbgPrint(
         "🚨🚨🚨 Hasura get restaurant categories querry exception =>${response.exception}");
-  } else {
+  } else if (response.parsedData?.restaurant_category != null) {
     mezDbgPrint("Hasura get restaurant categories querry success ✅✅✅ ");
-    if (response.parsedData != null) {
-      final List<Category> categories = [];
-
-      response.parsedData!.restaurant_category
-          .forEach((Query$getRestaurantCategories$restaurant_category element) {
-        // assigning category
-        final Category cat = Category(
-          id: element.id.toString(),
-          position: element.position,
-          dialog: toLanguageMap(data: element.description?.translations),
-          name: toLanguageMap(data: element.name.translations),
-        );
-        // getting alll the items //
-        final List<Item> items = element.items.map(
-            (Query$getRestaurantCategories$restaurant_category$items item) {
-          return Item(
-              // TODO INT ID
-              id: item.id.toString(),
-              name: toLanguageMap(data: item.name.translations),
-              itemType: item.item_type.toItemType(),
-              description: toLanguageMap(data: item.description?.translations),
-              cost: item.cost,
-              available: item.available);
-        }).toList();
-
-        cat.items = items;
-        categories.add(cat);
-      });
-      return categories;
-    }
+    final List<Query$getRestaurantCategories$restaurant_category> data =
+        response.parsedData!.restaurant_category;
+    final List<Category> categories = _parseCategories(data);
+    return categories;
   }
   return null;
 }
@@ -84,21 +58,21 @@ Future<Category?> get_category_by_id(int id) async {
     mezDbgPrint(
         "🚨🚨🚨 Hasura get category by id querry exception =>${response.exception}");
     return null;
-  } else {
+  } else if (response.parsedData?.restaurant_category_by_pk != null) {
     mezDbgPrint("✅✅✅ Hasura get category by id query success => ");
+    final Query$getCategoryInfoById$restaurant_category_by_pk data =
+        response.parsedData!.restaurant_category_by_pk!;
     return Category(
-      id: response.parsedData?.restaurant_category_by_pk?.id.toString(),
-      descriptionId:
-          response.parsedData?.restaurant_category_by_pk?.description_id,
-      nameId: response.parsedData?.restaurant_category_by_pk?.name.id,
-      name: toLanguageMap(
-          data: response
-              .parsedData?.restaurant_category_by_pk?.name.translations),
-      dialog: toLanguageMap(
-          data: response.parsedData?.restaurant_category_by_pk?.description
-              ?.translations),
+      id: data.id.toString(),
+      descriptionId: data.description_id,
+      nameId: data.name.id,
+      name: toLanguageMap(translations: data.name.translations),
+      dialog: (data.description?.translations != null)
+          ? toLanguageMap(translations: data.description!.translations)
+          : null,
     );
   }
+  return null;
 }
 
 Future<String?> add_category(int restaurantId, Category category) async {
@@ -153,4 +127,40 @@ Future<String?> add_category(int restaurantId, Category category) async {
     return result.parsedData?.insert_restaurant_category_one?.id.toString();
   }
   return null;
+}
+
+List<Category> _parseCategories(
+    List<Query$getRestaurantCategories$restaurant_category> data) {
+  final List<Category> categories = [];
+
+  data.forEach((Query$getRestaurantCategories$restaurant_category category) {
+    // assigning category
+    final Category cat = Category(
+      id: category.id.toString(),
+      position: category.position,
+      dialog: (category.description?.translations != null)
+          ? toLanguageMap(translations: category.description!.translations)
+          : null,
+      name: toLanguageMap(translations: category.name.translations),
+    );
+    // getting alll the items //
+    final List<Item> items = category.items
+        .map((Query$getRestaurantCategories$restaurant_category$items item) {
+      return Item(
+          id: item.id.toString(),
+          nameId: item.name.id,
+          descriptionId: item.description_id,
+          name: toLanguageMap(translations: item.name.translations),
+          itemType: item.item_type.toItemType(),
+          description: (item.description?.translations != null)
+              ? toLanguageMap(translations: item.description!.translations)
+              : null,
+          cost: item.cost,
+          available: item.available);
+    }).toList();
+
+    cat.items = items;
+    categories.add(cat);
+  });
+  return categories;
 }
