@@ -170,7 +170,7 @@ class IOrderViewController {
             : nDefaultCounterOfferValidExpireTimeInSeconds,
         price: price,
         taxiUserInfo: UserInfo(
-          firebaseId: authController.user!.id,
+          firebaseId: authController.user!.firebaseId,
           name: authController.user!.name!,
           image: authController.user!.image!,
         ),
