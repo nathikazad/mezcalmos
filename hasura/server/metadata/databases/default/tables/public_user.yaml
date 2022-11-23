@@ -1,3 +1,24 @@
 table:
   name: user
   schema: public
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - deleted
+        - id
+        - email
+        - firebase_id
+        - image
+        - language_id
+        - name
+        - phone
+      filter:
+        _exists:
+          _table:
+            name: user
+            schema: public
+          _where:
+            id:
+              _eq: X-Hasura-User-Id
+      limit: 1
