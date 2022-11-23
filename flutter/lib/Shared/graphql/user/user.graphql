@@ -1,18 +1,18 @@
 # Get the user using firebase_id
 
-query getUserByFirebaseId($firebase_id: String!) {
-  user( where: {firebase_id: {_eq: $firebase_id }}, limit:1)
-  {
-    id,
-    firebase_id,
-    name
-    image,
-    email,
-    phone,
-    language_id,
-    deleted
+  query getUserByFirebaseId($firebase_id: String!) {
+    user( where: {firebase_id: {_eq: $firebase_id }}, limit:1)
+    {
+      id,
+      firebase_id,
+      name
+      image,
+      email,
+      phone,
+      language_id,
+      deleted
+    }
   }
-}
 
 # Get the Database user using pk.
 

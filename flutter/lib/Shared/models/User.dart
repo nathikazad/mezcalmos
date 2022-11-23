@@ -1,5 +1,6 @@
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
+import 'package:mezcalmos/Shared/graphql/user/__generated/user.graphql.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
@@ -16,8 +17,8 @@ class UserInfo {
   UserInfo(
       {required this.hasuraId,
       required this.firebaseId,
-      required String name,
-      required String image,
+      required String? name,
+      required String? image,
       this.language}) {
     _name = name;
     _image = image;
@@ -33,15 +34,14 @@ class UserInfo {
   //           : null);
   // }
 
-  factory UserInfo.fromHasura(Input$user_insert_input user) {
+  factory UserInfo.fromHasura(Query$getUserByFirebaseId$user user) {
     return UserInfo(
-        firebaseId: user.firebase_id!,
-        hasuraId: user.id!,
-        name: user.name!,
-        image: user.image!,
-        language: user.language_id != null
-            ? user.language_id!.toLanguageType()
-            : null);
+      firebaseId: user.firebase_id,
+      hasuraId: user.id,
+      name: user.name,
+      image: user.image,
+      language: user.language_id.toLanguageType(),
+    );
   }
 
   Map<String, dynamic> toFirebaseFormatJson() => {
