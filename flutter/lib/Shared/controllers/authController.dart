@@ -8,6 +8,7 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/graphql/user/hsUser.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -91,9 +92,13 @@ class AuthController extends GetxController {
   }
 
   Future<void> fetchUserInfoFromHasura() async {
-    //TODO: fetch user from hasura without caching
-    _userInfo = await Future<UserInfo>.delayed(
-        Duration.zero, () => UserInfo.fromHasura({}));
+    final bool isInited = await hasuraDb.clientInitilized.stream.first;
+    if (!isInited) await hasuraDb.clientInitilized.stream.first;
+    mezDbgPrint(
+        "[777] fetchingUser Info from hasure using firebaseid : ${fireAuthUser?.uid}");
+    _userInfo = await get_user_by_firebase_id(firebase_id: fireAuthUser!.uid);
+    mezDbgPrint(
+        "[77] =====> fetchUserInfoFromHasura:: userInfo ===> ${_userInfo?.toFirebaseFormatJson()}");
   }
 
   bool isDisplayNameSet() {

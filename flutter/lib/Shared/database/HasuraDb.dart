@@ -12,9 +12,11 @@ import 'package:jaguar_jwt/jaguar_jwt.dart';
 
 class HasuraDb {
   late GraphQLClient graphQLClient;
+  RxBool clientInitilized = false.obs;
+
   WebSocketLink? _wsLink;
   AppLaunchMode appLaunchMode;
-  FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
+  // FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   HasuraDb(this.appLaunchMode);
 
   Future<void> initializeHasura() async {
@@ -36,9 +38,11 @@ class HasuraDb {
     Link _link = _httpLink;
 
     if (fireAuth.FirebaseAuth.instance.currentUser != null) {
+      mezDbgPrint("[777] USER-> ${fireAuth.FirebaseAuth.instance.currentUser}");
       final String hasuraAuthToken = await _getAuthorizationToken(
-          fireAuth.FirebaseAuth.instance.currentUser!,
-          appLaunchMode == AppLaunchMode.dev);
+        fireAuth.FirebaseAuth.instance.currentUser!,
+        appLaunchMode == AppLaunchMode.dev,
+      );
       mezDbgPrint("TOKEN $hasuraAuthToken");
       headers = <String, String>{'Authorization': 'Bearer $hasuraAuthToken'};
       final AuthLink _authLink =
@@ -64,6 +68,7 @@ class HasuraDb {
       cache: GraphQLCache(),
       link: _link,
     );
+    clientInitilized.value = true;
   }
 
   Future<String> _getAuthorizationToken(User user, bool testMode) async {
