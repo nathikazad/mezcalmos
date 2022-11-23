@@ -272,7 +272,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       switch (choice) {
         case CardChoice.ApplePay:
           final ServerResponse paymentIntentResponse = await getPaymentIntent(
-              customerId: Get.find<AuthController>().user!.id,
+              customerId: Get.find<AuthController>().user!.firebaseId,
               serviceProviderId:
                   _restaurantController.cart.value.restaurant!.info.firebaseId,
               orderType: OrderType.Restaurant,
@@ -286,8 +286,10 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                   _restaurantController.cart.value.restaurant!.info.name);
           break;
         case CardChoice.GooglePay:
+          // TODO:544D-HASURA
+
           final ServerResponse paymentIntentResponse = await getPaymentIntent(
-              customerId: Get.find<AuthController>().user!.id,
+              customerId: Get.find<AuthController>().user!.firebaseId,
               serviceProviderId:
                   _restaurantController.cart.value.restaurant!.info.firebaseId,
               orderType: OrderType.Restaurant,

@@ -165,7 +165,7 @@ class RestaurantInfoTab extends StatelessWidget {
                   Icons.payments_sharp,
                   color: Colors.grey.shade800,
                 ),
-                if (restaurant.paymentInfo.acceptCard)
+                if (restaurant.paymentInfo?.acceptCard == true)
                   Padding(
                       padding: const EdgeInsets.only(left: 5),
                       child: Icon(

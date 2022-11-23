@@ -222,6 +222,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
       {required List<Item> items,
       required String restaurantId,
       bool isSpecial = false}) {
+    mezDbgPrint("[66] called :: _buildResturantItems");
     if (restaurant.restaurantsView == RestaurantsView.Rows || isSpecial) {
       return Container(
         margin: const EdgeInsets.only(top: 5),

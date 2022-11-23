@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 class UserMenu extends StatefulWidget {
@@ -25,9 +26,6 @@ class UserMenu extends StatefulWidget {
 class _UserMenuState extends State<UserMenu> {
   dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
       ['components']['Menu']['UserMenuComponent'];
-
-  /// AuthController
-  final AuthController auth = Get.find<AuthController>();
 
   /// OrderController
   final OrderController orderController = Get.find<OrderController>();
@@ -113,7 +111,7 @@ class _UserMenuState extends State<UserMenu> {
           // _inAppReview.requestReview();
           // break;
           case 4:
-            auth.signOut();
+            signOut();
             break;
           default:
         }

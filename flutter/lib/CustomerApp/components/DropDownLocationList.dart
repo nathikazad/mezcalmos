@@ -50,8 +50,10 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     super.initState();
     // default ID: _pick_ , stands for our  Pick From Map
     getSavedLocation();
-    pickLocationPlaceholder =
-        SavedLocation(name: _i18n()["pickLocation"], id: "_pick_");
+    // TODO:544D-HASURA
+
+    // pickLocationPlaceholder =
+    //     SavedLocation(name: _i18n()["pickLocation"], id: "_pick_");
 
     listOfSavedLoacations.insert(0, pickLocationPlaceholder!);
 
@@ -60,14 +62,16 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
               (SavedLocation element) => element.defaultLocation) ??
           pickLocationPlaceholder;
     } else {
-      final SavedLocation passedInLocation = SavedLocation(
-        name: widget.passedInLocation!.address,
-        location: widget.passedInLocation,
-        id: 'new',
-      );
+      // TODO:544D-HASURA
 
-      dropDownListValue = passedInLocation;
-      listOfSavedLoacations.add(passedInLocation);
+      // final SavedLocation passedInLocation = SavedLocation(
+      //   name: widget.passedInLocation!.address,
+      //   location: widget.passedInLocation,
+      //   id: 'new',
+      // );
+
+      // dropDownListValue = passedInLocation;
+      // listOfSavedLoacations.add(passedInLocation);
     }
 
     if (dropDownListValue?.location != null) {

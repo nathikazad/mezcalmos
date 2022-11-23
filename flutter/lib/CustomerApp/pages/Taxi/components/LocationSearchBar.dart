@@ -441,8 +441,10 @@ class LocationSearchBarState extends State<LocationSearchBar> {
           return LocationDropDownItem(
               icon: Icon(MezcalmosIcons.search, size: 20, color: Colors.purple),
               function: () {
+                // TODO:544D-HASURA
+// added to.String to e.id
                 final Location? _savedLoc =
-                    _authController?.getLocationById(e.id!);
+                    _authController?.getLocationById(e.id!.toString());
                 mezDbgPrint(
                     "${e.id} Saved looooooooooooocccc =====>${_savedLoc?.toFirebaseFormattedJson()}");
                 widget.newLocationChosenEvent(_savedLoc,

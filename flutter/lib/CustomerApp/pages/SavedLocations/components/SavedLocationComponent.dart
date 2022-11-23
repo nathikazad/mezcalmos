@@ -78,7 +78,11 @@ class SavedLocationComponent extends StatelessWidget {
                   onTap: () {
                     Get.toNamed<void>(
                       kPickLocationEditRoute,
-                      parameters: <String, String>{"id": savelocation.id!},
+                      parameters: <String, String>{
+                        // TODO:544D-HASURA
+// added to.String()
+                        "id": savelocation.id!.toString()
+                      },
                     );
                   },
                   customBorder: CircleBorder(),

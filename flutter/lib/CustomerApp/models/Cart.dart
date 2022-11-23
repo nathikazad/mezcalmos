@@ -110,7 +110,7 @@ class Cart {
   num get totalCost {
     num tcost = itemsCost() + (shippingCost ?? 0);
     if (paymentType == PaymentType.Card &&
-        restaurant!.paymentInfo.stripe?.chargeFeesOnCustomer == true) {
+        restaurant!.paymentInfo?.stripe?.chargeFeesOnCustomer == true) {
       tcost += stripeFees;
     }
     return tcost;

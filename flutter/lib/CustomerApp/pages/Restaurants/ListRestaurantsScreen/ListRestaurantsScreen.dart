@@ -238,7 +238,8 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
               onClick: () {
                 Get.toNamed<void>(
                   getRestaurantRoute(viewController
-                      .filteredRestaurants[index].info.firebaseId),
+                      .filteredRestaurants[index].info.hasuraId
+                      .toString()),
                   arguments: viewController.filteredRestaurants[index],
                 );
               },
