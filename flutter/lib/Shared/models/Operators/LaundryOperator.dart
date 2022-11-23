@@ -11,8 +11,7 @@ class LaundryOperatorState {
     return LaundryOperatorState(laundryId: laundryId);
   }
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "laundryId": laundryId,
       };
 }
@@ -33,9 +32,13 @@ class LaundryOperator {
       String laundryOperatorId, laundryOperatorData) {
     final LaundryOperatorState laundryOperatorState =
         LaundryOperatorState.fromSnapshot(laundryOperatorData['state']);
+    // TODO:544D-HASURA
     final UserInfo laundryOperatorInfo =
-        UserInfo.fromData(laundryOperatorData['info']);
-    
+        UserInfo(hasuraId: 1, firebaseId: "IDTEST", image: null, name: null);
+
+    // final UserInfo laundryOperatorInfo =
+    //     UserInfo.fromData(laundryOperatorData['info']);
+
     return LaundryOperator(
       operatorId: laundryOperatorId,
       state: laundryOperatorState,

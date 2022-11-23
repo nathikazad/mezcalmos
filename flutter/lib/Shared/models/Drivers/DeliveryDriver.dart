@@ -106,17 +106,13 @@ class DeliveryDriverUserInfo extends UserInfo {
   LatLng? location;
 
   DeliveryDriverUserInfo({
-    required String id,
-    required String name,
-    required String image,
+    required super.hasuraId,
+    required super.firebaseId,
+    required super.name,
+    required super.image,
     this.location,
-    LanguageType? language,
-  }) : super(
-          firebaseId: id,
-          name: name,
-          image: image,
-          language: language,
-        );
+    required super.language,
+  });
 
   factory DeliveryDriverUserInfo.fromData(data) {
     final LatLng? location = data["location"] != null
@@ -126,12 +122,22 @@ class DeliveryDriverUserInfo extends UserInfo {
     final LanguageType? language = data["language"] != null
         ? data["language"].toString().toLanguageType()
         : null;
+// TODO:544D-HASURA
+
     return DeliveryDriverUserInfo(
-        id: data["id"],
+        hasuraId: data["id"] ?? '',
+        firebaseId: data["id"] ?? "",
         name: data["name"],
         image: data["image"],
         location: location ?? null,
         language: language);
+
+    // return DeliveryDriverUserInfo(
+    //     id: data["id"],
+    //     name: data["name"],
+    //     image: data["image"],
+    //     location: location ?? null,
+    //     language: language);
   }
 
   @override

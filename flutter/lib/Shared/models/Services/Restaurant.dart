@@ -1,9 +1,13 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:location/location.dart';
+import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/__generated/restaurant.graphql.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as locModel;
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
@@ -25,6 +29,12 @@ extension ParseStringToRestaurantsView on String {
   }
 }
 
+extension ParseGeography on Geography {
+  LocationData toLocationData() {
+    return LocationData.fromMap({"latitude": latitude, "longitude": longitude});
+  }
+}
+
 class Restaurant extends Service {
   static String kNoCategoryNode = "noCategory";
   LanguageMap? description;
@@ -41,7 +51,7 @@ class Restaurant extends Service {
       required this.description,
       this.restaurantsView = RestaurantsView.Rows,
       required Schedule schedule,
-      required PaymentInfo paymentInfo,
+      required PaymentInfo? paymentInfo,
       required ServiceState restaurantState,
       required LanguageType primaryLanguage,
       this.rate,
@@ -53,6 +63,28 @@ class Restaurant extends Service {
             primaryLanguage: primaryLanguage,
             secondaryLanguage: secondaryLanguage,
             paymentInfo: paymentInfo);
+
+  factory Restaurant.fromHasuraData(Query$getRestaurants$restaurant resto) {
+    Map<LanguageType, String> translations = <LanguageType, String>{};
+    // resto.description?.translations.forEach(
+    //     (Query$getRestaurants$restaurant$description$translations trans) {
+    //   translations[trans.language_id.toLanguageType()] = trans.value;
+    // });
+
+    return Restaurant(
+        userInfo: ServiceInfo(
+            location: locModel.Location(
+                resto.location_text, resto.location_gps.toLocationData()),
+            firebaseId: resto.firebase_id!,
+            hasuraId: resto.id,
+            image: resto.image,
+            name: resto.name),
+        description: translations,
+        schedule: Schedule(openHours: {}),
+        paymentInfo: null,
+        restaurantState: ServiceState.fromServiceStateData({}),
+        primaryLanguage: resto.language_id.toLanguageType());
+  }
 
   factory Restaurant.fromRestaurantData(
       {required String restaurantId, required restaurantData}) {
@@ -229,7 +261,7 @@ class Restaurant extends Service {
   }
 
   bool acceptPayment(PaymentType p) {
-    return paymentInfo.acceptedPayments[p] == true;
+    return paymentInfo?.acceptedPayments[p] == true;
   }
 
   double getAverageCost() {
@@ -275,7 +307,10 @@ class Restaurant extends Service {
   }
 
   bool isOpen() {
-    return state.isOpen && (schedule?.isOpen() ?? false);
+    // TODO:544D-HASURA
+
+    // return state.isOpen && (schedule?.isOpen() ?? false);
+    return true;
   }
 }
 

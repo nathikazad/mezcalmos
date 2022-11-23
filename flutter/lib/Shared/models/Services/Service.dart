@@ -9,7 +9,7 @@ abstract class Service {
   ServiceState state;
   LanguageType primaryLanguage;
   LanguageType? secondaryLanguage;
-  PaymentInfo paymentInfo;
+  PaymentInfo? paymentInfo;
   Service(
       {required this.info,
       this.schedule,

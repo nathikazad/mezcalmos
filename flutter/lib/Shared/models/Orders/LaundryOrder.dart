@@ -101,7 +101,9 @@ class LaundryOrder extends TwoWayDeliverableOrder {
 
     final LaundryOrder laundryOrder = LaundryOrder(
         orderId: id,
-        customer: UserInfo.fromData(data["customer"]),
+        // TODO:544D-HASURA
+        customer: UserInfo(firebaseId: "", hasuraId: 2, name: null, image: null, language: null ),
+        // customer: UserInfo.fromData(data["customer"]),
         status: data['status'].toString().toLaundryOrderStatus(),
         cost: data['cost'],
         to: Location.fromFirebaseData(data['to']),

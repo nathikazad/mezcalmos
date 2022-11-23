@@ -137,7 +137,11 @@ class TaxiOrder extends Order {
         driver: (data["driver"] != null)
             ? TaxiUserInfo.fromData(data["driver"])
             : null,
-        customer: UserInfo.fromData(data["customer"]),
+        // customer: UserInfo.fromData(data["customer"]),
+        // TODO:544D-HASURA
+
+        customer: UserInfo(
+            hasuraId: 1, firebaseId: "firebaseId", name: null, image: null),
         rideFinishTime: data['rideFinishTime'],
         rideStartTime: data['rideStartTime'],
         status: data['status'].toString().toTaxiOrderStatus(),
@@ -181,8 +185,17 @@ class TaxiOrder extends Order {
     data["counterOffers"]?.forEach((driverId, counterOfferData) {
       try {
         final CounterOffer _tmpCountOffer = CounterOffer.fromData(
-            counterOfferData,
-            taxiUserInfo: UserInfo.fromData(counterOfferData["driverInfo"]));
+          counterOfferData,
+          taxiUserInfo:
+              // TODO:544D-HASURA
+
+              UserInfo(
+                  hasuraId: 1,
+                  firebaseId: "firebaseId",
+                  name: null,
+                  image: null),
+          // UserInfo.fromData(counterOfferData["driverInfo"]),
+        );
 
         if (_tmpCountOffer.validityTimeDifference() < 0 &&
             _tmpCountOffer.isValid) {

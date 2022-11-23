@@ -81,14 +81,14 @@ class TaxiUserInfo extends UserInfo {
   LatLng? location;
 
   TaxiUserInfo(
-      {required String id,
-      required String name,
-      required String image,
+      {required super.hasuraId,
+      required super.firebaseId,
+      required super.name,
+      required super.image,
       required this.taxiNumber,
       this.sitio,
-      LanguageType? language,
-      required this.location})
-      : super(firebaseId: id, name: name, image: image, language: language);
+      required super.language,
+      required this.location});
 
   factory TaxiUserInfo.fromData(data) {
     // mezDbgPrint(" TaxiUserInfo.fromData ====> $data");
@@ -99,13 +99,26 @@ class TaxiUserInfo extends UserInfo {
     final LanguageType? language = data["language"] != null
         ? data["language"].toString().toLanguageType()
         : null;
+
+    // TODO:544D-HASURA
+
     return TaxiUserInfo(
-        id: data["id"] ?? '',
+        hasuraId: data["hasuraId"] ?? '',
+        firebaseId: data["firebaseId"] ?? '',
         name: data["name"] ?? '',
         image: data["image"],
         taxiNumber: data["taxiNumber"].toString(),
         sitio: data["sitio"] ?? '',
         language: language,
         location: location);
+
+    // return TaxiUserInfo(
+    //     id: data["id"] ?? '',
+    //     name: data["name"] ?? '',
+    //     image: data["image"],
+    //     taxiNumber: data["taxiNumber"].toString(),
+    //     sitio: data["sitio"] ?? '',
+    //     language: language,
+    //     location: location);
   }
 }

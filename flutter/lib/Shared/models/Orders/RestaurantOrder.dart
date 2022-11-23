@@ -113,7 +113,10 @@ class RestaurantOrder extends DeliverableOrder {
             : null,
         to: Location.fromFirebaseData(data['to']),
         restaurant: ServiceInfo.fromHasura(data["restaurant"]),
-        customer: UserInfo.fromData(data["customer"]),
+        // TODO:544D-HASURA
+        customer: UserInfo(
+            hasuraId: 1, firebaseId: "firebaseId", name: null, image: null),
+        // customer: UserInfo.fromData(data["customer"]),
         itemsCost: data['itemsCost'],
         shippingCost: data["shippingCost"] ?? 0,
         dropoffDriver: (data["dropoffDriver"] != null)
