@@ -110,7 +110,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
         return singleChatComponent(
           message: message.message,
           time: intl.DateFormat('hh:mm a').format(message.timestamp.toLocal()),
-          isMe: message.userId == _authController.user!.id,
+          isMe: message.userId == _authController.user!.firebaseId,
           userImage: controller.chat.value!
               .getParticipant(message.participantType, message.userId)
               ?.image,
