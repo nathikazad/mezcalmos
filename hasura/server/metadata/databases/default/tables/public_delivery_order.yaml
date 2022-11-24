@@ -1,5 +1,5 @@
 table:
-  name: delivery
+  name: delivery_order
   schema: public
 object_relationships:
   - name: chat_with_customer

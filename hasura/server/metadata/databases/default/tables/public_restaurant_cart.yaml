@@ -22,3 +22,30 @@ computed_fields:
       function:
         name: cost
         schema: public
+insert_permissions:
+  - role: customer
+    permission:
+      check:
+        customer_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - customer_id
+        - restaurant_id
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - customer_id
+        - restaurant_id
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id
+update_permissions:
+  - role: customer
+    permission:
+      columns:
+        - restaurant_id
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id
+      check: null

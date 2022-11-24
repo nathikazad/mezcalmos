@@ -5,3 +5,13 @@ object_relationships:
   - name: notification_info
     using:
       foreign_key_constraint_on: notification_info_id
+update_permissions:
+  - role: mez_admin
+    permission:
+      columns:
+        - notification_info_id
+        - version
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check: null

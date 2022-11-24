@@ -2,23 +2,84 @@ table:
   name: user
   schema: public
 select_permissions:
-  - role: user
+  - role: anonymous
     permission:
       columns:
-        - deleted
         - id
-        - email
-        - firebase_id
         - image
         - language_id
         - name
-        - phone
+      filter: {}
+  - role: customer
+    permission:
+      columns:
+        - id
+        - image
+        - language_id
+        - name
+      filter: {}
+  - role: deliverer
+    permission:
+      columns:
+        - id
+        - image
+        - language_id
+        - name
+      filter: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - id
+        - image
+        - language_id
+        - name
+      filter: {}
+  - role: restaurant_operator
+    permission:
+      columns:
+        - id
+        - image
+        - language_id
+        - name
+      filter: {}
+update_permissions:
+  - role: customer
+    permission:
+      columns:
+        - image
+        - language_id
+        - name
       filter:
-        _exists:
-          _table:
-            name: user
-            schema: public
-          _where:
-            id:
-              _eq: X-Hasura-User-Id
-      limit: 1
+        id:
+          _eq: X-Hasura-User-Id
+      check: null
+  - role: deliverer
+    permission:
+      columns:
+        - image
+        - language_id
+        - name
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      check: null
+  - role: mez_admin
+    permission:
+      columns:
+        - image
+        - language_id
+        - name
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      check: null
+  - role: restaurant_operator
+    permission:
+      columns:
+        - image
+        - language_id
+        - name
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      check: null

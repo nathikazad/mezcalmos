@@ -18,7 +18,7 @@ array_relationships:
       foreign_key_constraint_on:
         column: customer_id
         table:
-          name: delivery
+          name: delivery_order
           schema: public
   - name: saved_locations
     using:
@@ -27,14 +27,14 @@ array_relationships:
         table:
           name: saved_location
           schema: public
-select_permissions:
-  - role: user
+update_permissions:
+  - role: customer
     permission:
       columns:
-        - notification_info_id
-        - user_id
         - app_version
+        - notification_info_id
       filter:
         user_id:
           _eq: X-Hasura-User-Id
-      limit: 1
+      check: null
+

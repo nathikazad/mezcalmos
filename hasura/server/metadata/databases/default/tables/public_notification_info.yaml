@@ -1,3 +1,97 @@
 table:
   name: notification_info
   schema: public
+insert_permissions:
+  - role: customer
+    permission:
+      check:
+        _and:
+          - app_type_id:
+              _eq: customer_mobile
+          - user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - app_type_id
+        - token
+        - user_id
+  - role: deliverer
+    permission:
+      check:
+        _and:
+          - app_type_id:
+              _eq: delivery
+          - user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - app_type_id
+        - token
+        - user_id
+  - role: mez_admin
+    permission:
+      check:
+        _and:
+          - app_type_id:
+              _eq: mez_admin
+          - user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - app_type_id
+        - token
+        - user_id
+  - role: restaurant_operator
+    permission:
+      check:
+        _and:
+          - app_type_id:
+              _eq: restaurant
+          - user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - app_type_id
+        - token
+        - user_id
+update_permissions:
+  - role: customer
+    permission:
+      columns:
+        - token
+      filter:
+        _and:
+          - app_type_id:
+              _eq: customer_mobile
+          - user_id:
+              _eq: X-Hasura-User-Id
+      check: null
+  - role: deliverer
+    permission:
+      columns:
+        - token
+      filter:
+        _and:
+          - app_type_id:
+              _eq: delivery
+          - user_id:
+              _eq: X-Hasura-User-Id
+      check: null
+  - role: mez_admin
+    permission:
+      columns:
+        - token
+      filter:
+        _and:
+          - app_type_id:
+              _eq: mez_admin
+          - user_id:
+              _eq: X-Hasura-User-Id
+      check: null
+  - role: restaurant_operator
+    permission:
+      columns:
+        - token
+      filter:
+        _and:
+          - app_type_id:
+              _eq: restaurant
+          - user_id:
+              _eq: X-Hasura-User-Id
+      check: null
