@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
@@ -35,6 +35,8 @@ class AuthController extends GetxController {
 
   Rxn<MainUserInfo> _user = Rxn<MainUserInfo>();
   MainUserInfo? get user => _user.value;
+  RxnInt _hasuraUserId = RxnInt();
+  int? get hasuraUserId => _hasuraUserId.value;
 
   Rxn<fireAuth.User> _fireAuthUser = Rxn<fireAuth.User>();
   fireAuth.User? get fireAuthUser => _fireAuthUser.value;
@@ -60,7 +62,7 @@ class AuthController extends GetxController {
   String? _previousUserValue = "init";
 
   bool preserveNavigationStackAfterSignIn = false;
-
+  final HasuraDb hasuraDb = Get.find<HasuraDb>();
   @override
   void onInit() {
     super.onInit();
@@ -78,7 +80,6 @@ class AuthController extends GetxController {
       mezDbgPrint(user?.hashCode);
       mezDbgPrint(user ?? "empty");
       _fireAuthUser.value = user;
-      final HasuraDb hasuraDb = Get.find<HasuraDb>();
 
       if (user == null) {
         await hasuraDb.initializeHasura();
@@ -92,7 +93,21 @@ class AuthController extends GetxController {
         _user.value = null;
       } else {
         mezDbgPrint('AuthController: User is currently signed in!');
-        await hasuraDb.initializeHasura(withAuthenticatedUser: true);
+        final IdTokenResult? tokenResult = await user.getIdTokenResult();
+        mezDbgPrint(tokenResult);
+
+        if (tokenResult?.claims?['https://hasura.io/jwt/claims'] == null) {
+          mezDbgPrint("No token, calling addHasuraClaims");
+          await FirebaseFunctions.instance
+              .httpsCallable('user-addHasuraClaim')
+              .call();
+        }
+        _hasuraUserId.value = int.parse(tokenResult!
+            .claims!['https://hasura.io/jwt/claims']['x-hasura-user-id']);
+
+        mezDbgPrint(_hasuraUserId.value);
+
+        await hasuraDb.initializeHasura();
         await _onSignInCallback();
         _authStateStreamController.add(user);
         await GetStorage().write(getxUserId, user.uid);

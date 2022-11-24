@@ -1,0 +1,102 @@
+import { HttpsError } from "firebase-functions/v1/auth";
+import { getHasura } from "../../../utilities/hasura";
+import { Delivery } from "../../models/Generic/Delivery";
+import { Restaurant } from "../../models/Services/Restaurant/Restaurant";
+import { RestaurantOrder } from "../../models/Services/Restaurant/RestaurantOrder";
+
+export async function setOrderChatInfo(restaurantOrder: RestaurantOrder, restaurant: Restaurant, delivery: Delivery) {
+
+  if(restaurantOrder.chatId == undefined) {
+    throw new HttpsError(
+      "internal",
+      "No chat id"
+    );
+  }
+  if(delivery.chatWithServiceProviderId == undefined) {
+    throw new HttpsError(
+      "internal",
+      "No delivery chat with restaurant id"
+    );
+  }
+  let chain = getHasura();
+  let response = await chain.query({
+    customer_by_pk: [{
+      user_id: restaurantOrder.customerId
+    }, {
+      user: {
+        name: true,
+        image: true
+      }
+    }]
+  });
+
+  await chain.mutation({
+    update_chat_by_pk: [{
+      pk_columns: {
+        id: restaurantOrder.chatId,
+      },
+      _set: {
+        chat_info: JSON.stringify({
+          CustomerApp: {
+            chatTitle: restaurant.name,
+            chatImage: restaurant.image,
+            parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`
+          },
+          RestaurantApp: {
+            chatTitle: response.customer_by_pk?.user.name ?? "Customer",
+            chatImage: response.customer_by_pk?.user.image,
+            parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`
+          },
+          MezAdminApp: {
+            chatTitle: response.customer_by_pk?.user.name ?? "Customer",
+            chatImage: response.customer_by_pk?.user.image,
+            parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`
+          },
+        }),
+      }
+    }, {
+      id: true
+    }]
+  });
+  await chain.mutation({
+    update_chat_by_pk: [{
+      pk_columns: {
+        id: delivery.chatWithCustomerId
+      },
+      _set: {
+        chat_info: JSON.stringify({
+          RestaurantApp: {
+            chatTitle: response.customer_by_pk?.user.name ?? "Customer",
+            chatImage: response.customer_by_pk?.user.image,
+            parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`
+          },
+          DeliveryApp: {
+            chatTitle: response.customer_by_pk?.user.name ?? "Customer",
+            chatImage: response.customer_by_pk?.user.image,
+            parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`
+          }
+        }),
+      }
+    }, {
+      id: true
+    },]
+  });
+  await chain.mutation({
+    update_chat_by_pk: [{
+      pk_columns: {
+        id: delivery.chatWithServiceProviderId
+      },
+      _set: {
+        chat_info: JSON.stringify({
+          DeliveryApp: {
+            chatTitle: restaurant.name,
+            chatImage: restaurant.image,
+            parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`
+          }
+        }),
+      }
+    }, {
+      id: true
+    },]
+  });
+}

@@ -6478,8 +6478,13 @@ type restaurant_cart {
   ): restaurant_cart_item_aggregate!
 
   """An object relationship"""
+<<<<<<< HEAD
   restaurant: restaurant
   restaurant_id: Int
+=======
+  restaurant: restaurant!
+  restaurant_id: Int!
+>>>>>>> hasura_ts
 }
 
 """
