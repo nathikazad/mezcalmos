@@ -61,7 +61,7 @@ class Laundry extends Service {
         LanguageType.EN;
 
     final Laundry laundry = Laundry(
-        userInfo: ServiceInfo.fromHasura(laundryData["info"]),
+        userInfo: ServiceInfo.fromData(laundryData["info"]),
         schedule: schedule,
         paymentInfo: paymentInfo,
         laundryState: laundryState,

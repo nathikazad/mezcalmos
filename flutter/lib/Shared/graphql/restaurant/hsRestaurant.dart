@@ -30,23 +30,30 @@ Future<List<Restaurant>> fetch_restaurants() async {
         "[777] fetch_restaurants :: exception :: ${response.exception}!");
   } else
     response.parsedData?.restaurant
-        .forEach((Query$getRestaurants$restaurant _r) async {
-      mezDbgPrint("[77] new restau ==> ${_r.firebase_id}");
-      // if (_r.description_id != null) {
-      //   final QueryResult<Query$get_restaurant_desc_by_pk> _desc =
-      //       await _db.graphQLClient.query$get_restaurant_desc_by_pk(
-      //     Options$Query$get_restaurant_desc_by_pk(
-      //       variables: Variables$Query$get_restaurant_desc_by_pk(
-      //         desc_id: _r.description_id!,
-      //       ),
-      //     ),
-      //   );
-
-      //   _desc.parsedData?.translation_by_pk?.translations.forEach((element) { })
-
-      // }
-
-      _restaus.add(Restaurant.fromHasuraData(_r));
+        .forEach((Query$getRestaurants$restaurant data) async {
+      _restaus.add(Restaurant(
+          userInfo: ServiceInfo(
+              hasuraId: data.id,
+              image: data.image,
+              firebaseId: data.firebase_id!,
+              name: data.name,
+              descriptionId: data.description_id,
+              //   descriptionId: data.d,
+              location:
+                  Location.fromHasura(data.location_gps, data.location_text)),
+          description: {
+            data.description!.translations.first.language_id.toLanguageType():
+                data.description!.translations.first.value,
+            data.description!.translations[1].language_id.toLanguageType():
+                data.description!.translations[1].value,
+          },
+          schedule: Schedule(openHours: {}),
+          paymentInfo: PaymentInfo(),
+          restaurantState:
+              ServiceState(data.open_status.toServiceStatus(), data.approved),
+          primaryLanguage: data.language_id.toString().toLanguageType(),
+          secondaryLanguage:
+              data.language_id.toString().toLanguageType().toOpLang()));
     });
   return _restaus;
 }
@@ -65,9 +72,9 @@ Future<Restaurant?> get_restaurant_by_id({required int id}) async {
         response.parsedData!.restaurant_by_pk!;
     return Restaurant(
         userInfo: ServiceInfo(
-            id: data.id.toString(),
+            hasuraId: data.id,
             image: data.image,
-            firebaseId: data.firebase_id,
+            firebaseId: data.firebase_id!,
             name: data.name,
             descriptionId: data.description_id,
             //   descriptionId: data.d,
@@ -134,9 +141,9 @@ Future<Restaurant> editRestaurant(
       response.parsedData!.update_restaurant_by_pk!;
   return Restaurant(
       userInfo: ServiceInfo(
-          id: data.id.toString(),
+          hasuraId: data.id,
           image: data.image,
-          firebaseId: data.firebase_id,
+          firebaseId: data.firebase_id!,
           name: data.name,
           location: Location.fromHasura(data.location_gps, data.location_text)),
       description: {

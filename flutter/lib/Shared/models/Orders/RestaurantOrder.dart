@@ -112,7 +112,7 @@ class RestaurantOrder extends DeliverableOrder {
             ? DateTime.tryParse(data["deliveryTime"])
             : null,
         to: Location.fromFirebaseData(data['to']),
-        restaurant: ServiceInfo.fromHasura(data["restaurant"]),
+        restaurant: ServiceInfo.fromData(data["restaurant"]),
         // TODO:544D-HASURA
         customer: UserInfo(
             hasuraId: 1, firebaseId: "firebaseId", name: null, image: null),

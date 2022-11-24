@@ -127,15 +127,15 @@ class ServiceInfo extends UserInfo {
     LanguageType? lang,
   }) : super(language: lang);
 
-  // factory ServiceInfo.fromHasura(data) {
-  //   return ServiceInfo(
-  //     location: Location.fromFirebaseData(data['location']),
-  //     firebaseId: data['firebase_id'],
-  //     hasuraId: data['id'],
-  //     image: data['image'],
-  //     name: data['name'],
-  //   );
-  // }
+  factory ServiceInfo.fromData(data) {
+    return ServiceInfo(
+      location: Location.fromFirebaseData(data['location']),
+      firebaseId: data['firebase_id'],
+      hasuraId: data['id'],
+      image: data['image'],
+      name: data['name'],
+    );
+  }
 
   @override
   Map<String, dynamic> toJson() => {

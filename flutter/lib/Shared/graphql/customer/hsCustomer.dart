@@ -30,6 +30,8 @@ Future<Cart?> getCustomerCart({required int customerId}) async {
   );
 
   if (_hasura_cart.parsedData != null) {
-    _hasura_cart.parsedData!.customer_by_pk.cart.
+    // TODO:544D-HASURA-CHECK
+
+    // _hasura_cart.parsedData!.customer_by_pk.cart.
   }
 }

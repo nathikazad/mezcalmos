@@ -7,13 +7,14 @@ query getRestaurants {
     name
     location_gps
     firebase_id
+    approved
     description_id,
-    #description {
-    #  translations {
-    #    language_id
-    #    value
-    #  }
-    #}
+    description {
+      translations {
+        language_id
+        value
+      }
+    }
     open_status
     payment_info_id
     schedule_id

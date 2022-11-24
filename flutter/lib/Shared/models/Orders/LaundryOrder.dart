@@ -102,7 +102,12 @@ class LaundryOrder extends TwoWayDeliverableOrder {
     final LaundryOrder laundryOrder = LaundryOrder(
         orderId: id,
         // TODO:544D-HASURA
-        customer: UserInfo(firebaseId: "", hasuraId: 2, name: null, image: null, language: null ),
+        customer: UserInfo(
+            firebaseId: "",
+            hasuraId: 2,
+            name: null,
+            image: null,
+            language: null),
         // customer: UserInfo.fromData(data["customer"]),
         status: data['status'].toString().toLaundryOrderStatus(),
         cost: data['cost'],
@@ -123,11 +128,13 @@ class LaundryOrder extends TwoWayDeliverableOrder {
                 ? DateTime.parse(_estimatedPickupFromServiceProviderTime)
                 : null,
         estimatedDropoffAtCustomerTime:
-            (_estimatedDropoffAtCustomerTime != null && _estimatedDropoffAtCustomerTime != "")
+            (_estimatedDropoffAtCustomerTime != null &&
+                    _estimatedDropoffAtCustomerTime != "")
                 ? DateTime.parse(_estimatedDropoffAtCustomerTime)
                 : null,
         estimatedPickupFromCustomerTime:
-            (_estimatedPickupFromCustomerTime != null && _estimatedPickupFromCustomerTime != "")
+            (_estimatedPickupFromCustomerTime != null &&
+                    _estimatedPickupFromCustomerTime != "")
                 ? DateTime.parse(_estimatedPickupFromCustomerTime)
                 : null,
         estimatedDropoffAtServiceProviderTime:
@@ -135,7 +142,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
                     _estimatedDropoffAtServiceProviderTime != "")
                 ? DateTime.parse(_estimatedDropoffAtServiceProviderTime)
                 : null,
-        laundry: (data["laundry"] != null) ? ServiceInfo.fromHasura(data["laundry"]) : null,
+        laundry: (data["laundry"] != null) ? ServiceInfo.fromData(data["laundry"]) : null,
         dropoffDriver: (data["dropoffDriver"] != null) ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"]) : null,
         laundryDropOffDriverChatId: data['secondaryChats']?['serviceProviderDropOffDriver'],
         customerDropOffDriverChatId: data['secondaryChats']?['customerDropOffDriver'],

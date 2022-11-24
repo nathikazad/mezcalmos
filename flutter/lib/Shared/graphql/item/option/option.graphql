@@ -12,7 +12,6 @@ mutation updateOption($optionId: Int!, $optionData: restaurant_option_set_input!
   }
 }
 mutation deleteOptionbyId($id: Int!, ) {
-  
   delete_restaurant_option_by_pk(id: $id){id}
 }
 
