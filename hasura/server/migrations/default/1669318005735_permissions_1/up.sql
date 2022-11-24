@@ -107,9 +107,6 @@ FROM
 
 alter table "public"."delivery" rename to "delivery_order";
 
-alter table "public"."delivery_order" add column "order_time" timestamptz
- not null default now();
-
 alter table "public"."restaurant_order" add column "cancellation_time" timestamptz
  null;
 

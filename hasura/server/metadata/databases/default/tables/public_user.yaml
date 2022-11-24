@@ -46,9 +46,11 @@ update_permissions:
   - role: customer
     permission:
       columns:
+        - email
         - image
         - language_id
         - name
+        - phone
       filter:
         id:
           _eq: X-Hasura-User-Id
@@ -56,9 +58,11 @@ update_permissions:
   - role: deliverer
     permission:
       columns:
+        - email
         - image
         - language_id
         - name
+        - phone
       filter:
         id:
           _eq: X-Hasura-User-Id
@@ -66,9 +70,11 @@ update_permissions:
   - role: mez_admin
     permission:
       columns:
+        - email
         - image
         - language_id
         - name
+        - phone
       filter:
         id:
           _eq: X-Hasura-User-Id
@@ -76,9 +82,11 @@ update_permissions:
   - role: restaurant_operator
     permission:
       columns:
+        - email
         - image
         - language_id
         - name
+        - phone
       filter:
         id:
           _eq: X-Hasura-User-Id
