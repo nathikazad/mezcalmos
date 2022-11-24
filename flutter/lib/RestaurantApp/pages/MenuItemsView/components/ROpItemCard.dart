@@ -58,7 +58,7 @@ class _ROpItemCardState extends State<ROpItemCard> {
                           itemId: widget.item.id!,
                           categoryId: widget.category?.id ?? null,
                           restaurntID: widget.viewController.restaurant.value!
-                              .info.id)) as bool?;
+                              .info.firebaseId)) as bool?;
 
                   if (shouldRefresh == true) {
                     await widget.viewController.fetchCategories();

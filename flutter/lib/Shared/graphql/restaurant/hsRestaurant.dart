@@ -29,32 +29,33 @@ Future<List<Restaurant>> fetch_restaurants() async {
     mezDbgPrint(
         "[777] fetch_restaurants :: exception :: ${response.exception}!");
   } else
-    response.parsedData?.restaurant
-        .forEach((Query$getRestaurants$restaurant data) async {
-      _restaus.add(Restaurant(
-          userInfo: ServiceInfo(
-              hasuraId: data.id,
-              image: data.image,
-              firebaseId: data.firebase_id!,
-              name: data.name,
-              descriptionId: data.description_id,
-              //   descriptionId: data.d,
-              location:
-                  Location.fromHasura(data.location_gps, data.location_text)),
-          description: {
-            data.description!.translations.first.language_id.toLanguageType():
-                data.description!.translations.first.value,
-            data.description!.translations[1].language_id.toLanguageType():
-                data.description!.translations[1].value,
-          },
-          schedule: Schedule(openHours: {}),
-          paymentInfo: PaymentInfo(),
-          restaurantState:
-              ServiceState(data.open_status.toServiceStatus(), data.approved),
-          primaryLanguage: data.language_id.toString().toLanguageType(),
-          secondaryLanguage:
-              data.language_id.toString().toLanguageType().toOpLang()));
-    });
+    mezDbgPrint("rESTAUS ===> ${response.data}");
+  response.parsedData?.restaurant
+      .forEach((Query$getRestaurants$restaurant data) async {
+    _restaus.add(Restaurant(
+        userInfo: ServiceInfo(
+            hasuraId: data.id,
+            image: data.image,
+            firebaseId: data.firebase_id!,
+            name: data.name,
+            descriptionId: data.description_id,
+            //   descriptionId: data.d,
+            location:
+                Location.fromHasura(data.location_gps, data.location_text)),
+        description: {
+          data.description!.translations.first.language_id.toLanguageType():
+              data.description!.translations.first.value,
+          data.description!.translations[1].language_id.toLanguageType():
+              data.description!.translations[1].value,
+        },
+        schedule: Schedule(openHours: {}),
+        paymentInfo: PaymentInfo(),
+        restaurantState:
+            ServiceState(data.open_status.toServiceStatus(), data.approved),
+        primaryLanguage: data.language_id.toString().toLanguageType(),
+        secondaryLanguage:
+            data.language_id.toString().toLanguageType().toOpLang()));
+  });
   return _restaus;
 }
 

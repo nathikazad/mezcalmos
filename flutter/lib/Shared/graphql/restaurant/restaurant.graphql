@@ -10,10 +10,10 @@ query getRestaurants {
     approved
     description_id,
     description {
-      translations {
-        language_id
-        value
-      }
+ 				translations {
+          language_id
+          value
+        }
     }
     open_status
     payment_info_id
