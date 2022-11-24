@@ -1,5 +1,52 @@
+
+# MUTATIONS 
 mutation addOption($option: restaurant_option_insert_input!) {
   insert_restaurant_option_one(object: $option) {
     id
+  }
+}
+
+mutation updateOption($optionId: Int!, $optionData: restaurant_option_set_input!) {
+  update_restaurant_option_by_pk(_set: $optionData, pk_columns: {id: $optionId}) {
+    id
+  }
+}
+mutation deleteOptionbyId($id: Int!, ) {
+  
+  delete_restaurant_option_by_pk(id: $id){id}
+}
+
+# Querries
+
+query getOptionById($optionId : Int!){
+  restaurant_option_by_pk(id: $optionId){
+      id
+        free_choice
+        cost_per_extra
+        option_type
+        position
+        maximum_choice
+        minimum_choice
+        name {
+          id
+          translations {
+            language_id
+            value
+          }
+        }
+        choices {
+          option_choices {
+            available
+            cost
+            id
+            name {
+              id
+              translations {
+                language_id
+                value
+              }
+            }
+          }
+        }
   }
 }

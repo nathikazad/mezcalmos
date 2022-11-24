@@ -246,15 +246,33 @@ class _CopyWithStubImpl$Input$jsonb_cast_exp<TRes>
 
 
 fin = open("__generated/schema.graphql.dart", "rt")
-#read file contents to string
 data = fin.read()
-#replace all occurrences of the required string
 data = data.replace(toBeReplaced, replaceWith)
-#close the input file
 fin.close()
-#open the input file in write mode
 fin = open("__generated/schema.graphql.dart", "wt")
-#overrite the input file with the resulting data
 fin.write(data)
-#close the file
 fin.close()
+
+import glob
+
+firstToBeReplacedSubs = """FieldNode(
+        name: NameNode(value: '__typename'),
+        alias: null,
+        arguments: [],
+        directives: [],
+        selectionSet: null,
+      ),"""
+firstReplaceWithSubs = ""
+secondToBeReplacedSubs = "$__typename: (l$$__typename as String),"
+secondReplaceWithSubs = """$__typename: ((l$$__typename ?? "none") as String),"""
+
+for filename in filter(lambda p: "generated" in p and "schema" not in p, glob.iglob('./**/*.dart', recursive=True)):
+  print(filename)
+  fin = open(filename, "rt")
+  data = fin.read()
+  data = data.replace(firstToBeReplacedSubs, firstReplaceWithSubs)
+  data = data.replace(secondToBeReplacedSubs, secondReplaceWithSubs)
+  fin.close()
+  fin = open(filename, "wt")
+  fin.write(data)
+  fin.close()

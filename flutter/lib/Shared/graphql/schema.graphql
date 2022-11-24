@@ -6355,6 +6355,56 @@ type query_root {
   service_provider_payment_info_by_pk(id: Int!): service_provider_payment_info
 
   """
+  execute function "special_items" which returns "restaurant_item"
+  """
+  special_items(
+    """
+    input parameters for function "special_items"
+    """
+    args: special_items_args!
+
+    """distinct select on columns"""
+    distinct_on: [restaurant_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [restaurant_item_order_by!]
+
+    """filter the rows returned"""
+    where: restaurant_item_bool_exp
+  ): [restaurant_item!]!
+
+  """
+  execute function "special_items" and query aggregates on result of table type "restaurant_item"
+  """
+  special_items_aggregate(
+    """
+    input parameters for function "special_items_aggregate"
+    """
+    args: special_items_args!
+
+    """distinct select on columns"""
+    distinct_on: [restaurant_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [restaurant_item_order_by!]
+
+    """filter the rows returned"""
+    where: restaurant_item_bool_exp
+  ): restaurant_item_aggregate!
+
+  """
   fetch data from the table: "stripe_info"
   """
   stripe_info(
@@ -6751,6 +6801,26 @@ type restaurant {
     where: restaurant_operator_bool_exp
   ): restaurant_operator_aggregate!
   schedule_id: Int!
+
+  """
+  A computed field, executes function "special_items"
+  """
+  specials(
+    """distinct select on columns"""
+    distinct_on: [restaurant_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [restaurant_item_order_by!]
+
+    """filter the rows returned"""
+    where: restaurant_item_bool_exp
+  ): [restaurant_item!]
 }
 
 """
@@ -6810,6 +6880,7 @@ input restaurant_bool_exp {
   payment_info_id: Int_comparison_exp
   restaurant_operators: restaurant_operator_bool_exp
   schedule_id: Int_comparison_exp
+  specials: restaurant_item_bool_exp
 }
 
 """
@@ -9636,6 +9707,9 @@ type restaurant_operator {
   notification_info: notification_info!
   notification_info_id: Int!
   owner: Boolean!
+
+  """An object relationship"""
+  restaurant: restaurant!
   restaurant_id: Int!
 
   """awaiting_approval,authorized,banned"""
@@ -9726,6 +9800,7 @@ input restaurant_operator_bool_exp {
   notification_info: notification_info_bool_exp
   notification_info_id: Int_comparison_exp
   owner: Boolean_comparison_exp
+  restaurant: restaurant_bool_exp
   restaurant_id: Int_comparison_exp
   status: String_comparison_exp
   user_id: Int_comparison_exp
@@ -9761,6 +9836,7 @@ input restaurant_operator_insert_input {
   notification_info: notification_info_obj_rel_insert_input
   notification_info_id: Int
   owner: Boolean
+  restaurant: restaurant_obj_rel_insert_input
   restaurant_id: Int
 
   """awaiting_approval,authorized,banned"""
@@ -9848,6 +9924,7 @@ input restaurant_operator_order_by {
   notification_info: notification_info_order_by
   notification_info_id: order_by
   owner: order_by
+  restaurant: restaurant_order_by
   restaurant_id: order_by
   status: order_by
   user_id: order_by
@@ -11263,6 +11340,7 @@ input restaurant_order_by {
   payment_info_id: order_by
   restaurant_operators_aggregate: restaurant_operator_aggregate_order_by
   schedule_id: order_by
+  specials_aggregate: restaurant_item_aggregate_order_by
 }
 
 """
@@ -12460,6 +12538,8 @@ input restaurant_pk_columns_input {
   id: Int!
 }
 
+scalar restaurant_scalar
+
 """
 select columns of table "restaurant"
 """
@@ -13643,6 +13723,10 @@ type service_provider_payment_info_var_samp_fields {
 type service_provider_payment_info_variance_fields {
   id: Float
   stripe_info_id: Float
+}
+
+input special_items_args {
+  restaurant_row: restaurant_scalar
 }
 
 input st_d_within_geography_input {
@@ -15240,6 +15324,56 @@ type subscription_root {
     """filter the rows returned"""
     where: service_provider_payment_info_bool_exp
   ): [service_provider_payment_info!]!
+
+  """
+  execute function "special_items" which returns "restaurant_item"
+  """
+  special_items(
+    """
+    input parameters for function "special_items"
+    """
+    args: special_items_args!
+
+    """distinct select on columns"""
+    distinct_on: [restaurant_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [restaurant_item_order_by!]
+
+    """filter the rows returned"""
+    where: restaurant_item_bool_exp
+  ): [restaurant_item!]!
+
+  """
+  execute function "special_items" and query aggregates on result of table type "restaurant_item"
+  """
+  special_items_aggregate(
+    """
+    input parameters for function "special_items_aggregate"
+    """
+    args: special_items_args!
+
+    """distinct select on columns"""
+    distinct_on: [restaurant_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [restaurant_item_order_by!]
+
+    """filter the rows returned"""
+    where: restaurant_item_bool_exp
+  ): restaurant_item_aggregate!
 
   """
   fetch data from the table: "stripe_info"

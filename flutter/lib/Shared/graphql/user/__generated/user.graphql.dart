@@ -115,7 +115,7 @@ class Query$getUserByFirebaseId {
           .map((e) => Query$getUserByFirebaseId$user.fromJson(
               (e as Map<String, dynamic>)))
           .toList(),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -362,13 +362,7 @@ const documentNodeQuerygetUserByFirebaseId = DocumentNode(definitions: [
           ),
         ]),
       ),
-      FieldNode(
-        name: NameNode(value: '__typename'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
+      
     ]),
   ),
 ]);
@@ -515,7 +509,7 @@ class Query$getUserByFirebaseId$user {
       phone: (l$phone as String?),
       language_id: (l$language_id as String),
       deleted: (l$deleted as bool),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -846,7 +840,7 @@ class Query$getUserById {
           ? null
           : Query$getUserById$user_by_pk.fromJson(
               (l$user_by_pk as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1047,13 +1041,7 @@ const documentNodeQuerygetUserById = DocumentNode(definitions: [
           ),
         ]),
       ),
-      FieldNode(
-        name: NameNode(value: '__typename'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
+      
     ]),
   ),
 ]);
@@ -1188,7 +1176,7 @@ class Query$getUserById$user_by_pk {
       email: (l$email as String?),
       phone: (l$phone as String?),
       language_id: (l$language_id as String),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1520,7 +1508,7 @@ class Mutation$changeUserImg {
           ? null
           : Mutation$changeUserImg$update_user_by_pk.fromJson(
               (l$update_user_by_pk as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1708,13 +1696,7 @@ const documentNodeMutationchangeUserImg = DocumentNode(definitions: [
           ),
         ]),
       ),
-      FieldNode(
-        name: NameNode(value: '__typename'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
+      
     ]),
   ),
 ]);
@@ -1825,7 +1807,7 @@ class Mutation$changeUserImg$update_user_by_pk {
     final l$$__typename = json['__typename'];
     return Mutation$changeUserImg$update_user_by_pk(
       image: (l$image as String?),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -2080,7 +2062,7 @@ class Mutation$changeUserName {
           ? null
           : Mutation$changeUserName$update_user_by_pk.fromJson(
               (l$update_user_by_pk as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -2269,13 +2251,7 @@ const documentNodeMutationchangeUserName = DocumentNode(definitions: [
           ),
         ]),
       ),
-      FieldNode(
-        name: NameNode(value: '__typename'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
+      
     ]),
   ),
 ]);
@@ -2386,7 +2362,7 @@ class Mutation$changeUserName$update_user_by_pk {
     final l$$__typename = json['__typename'];
     return Mutation$changeUserName$update_user_by_pk(
       name: (l$name as String?),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 

@@ -1,6 +1,9 @@
 SET check_function_bodies = false;
 INSERT INTO public."user" (id, firebase_id, name, image, language_id, deleted) VALUES (1, '1', 'asd', NULL, 'en', false);
 INSERT INTO public."user" (id, firebase_id, name, image, language_id, deleted) VALUES (2, '2', 'testop', 'abc', 'en', false);
+INSERT INTO topology.language (id) VALUES ('en');
+INSERT INTO topology.language (id) VALUES ('es');
+INSERT INTO public."user" (id, firebase_id, name, image, language_id, deleted) VALUES (3, '3', 'testmezadmin', NULL, 'en', false);
 INSERT INTO public.customer (user_id, app_version, notification_info_id) VALUES (1, 'xyz', NULL);
 INSERT INTO topology.app_type (id) VALUES ('RestaurantApp');
 INSERT INTO topology.app_type (id) VALUES ('CustomerMobile');

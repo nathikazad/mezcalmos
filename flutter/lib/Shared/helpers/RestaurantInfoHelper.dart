@@ -1,4 +1,4 @@
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 
 typedef CatgeoriesList = List<Category>;
 

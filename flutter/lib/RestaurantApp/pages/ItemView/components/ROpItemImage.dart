@@ -12,7 +12,7 @@ class ROpItemImage extends StatelessWidget {
     Key? key,
     required this.viewController,
   }) : super(key: key);
-  final ItemViewController viewController;
+  final ROpItemViewController viewController;
 
   @override
   Widget build(BuildContext context) {

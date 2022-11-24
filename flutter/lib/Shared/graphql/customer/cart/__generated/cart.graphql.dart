@@ -118,7 +118,7 @@ class Mutation$addItemToCart {
           ? null
           : Mutation$addItemToCart$insert_restaurant_cart_item_one.fromJson(
               (l$insert_restaurant_cart_item_one as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -367,13 +367,7 @@ const documentNodeMutationaddItemToCart = DocumentNode(definitions: [
           ),
         ]),
       ),
-      FieldNode(
-        name: NameNode(value: '__typename'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
+      
     ]),
   ),
 ]);
@@ -489,7 +483,7 @@ class Mutation$addItemToCart$insert_restaurant_cart_item_one {
       restaurant_cart:
           Mutation$addItemToCart$insert_restaurant_cart_item_one$restaurant_cart
               .fromJson((l$restaurant_cart as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -659,7 +653,7 @@ class Mutation$addItemToCart$insert_restaurant_cart_item_one$restaurant_cart {
       items_aggregate:
           Mutation$addItemToCart$insert_restaurant_cart_item_one$restaurant_cart$items_aggregate
               .fromJson((l$items_aggregate as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -825,7 +819,7 @@ class Mutation$addItemToCart$insert_restaurant_cart_item_one$restaurant_cart$ite
           ? null
           : Mutation$addItemToCart$insert_restaurant_cart_item_one$restaurant_cart$items_aggregate$aggregate
               .fromJson((l$aggregate as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -993,7 +987,7 @@ class Mutation$addItemToCart$insert_restaurant_cart_item_one$restaurant_cart$ite
           ? null
           : Mutation$addItemToCart$insert_restaurant_cart_item_one$restaurant_cart$items_aggregate$aggregate$sum
               .fromJson((l$sum as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1159,7 +1153,7 @@ class Mutation$addItemToCart$insert_restaurant_cart_item_one$restaurant_cart$ite
     return Mutation$addItemToCart$insert_restaurant_cart_item_one$restaurant_cart$items_aggregate$aggregate$sum(
       cost_per_one:
           l$cost_per_one == null ? null : MoneyFromJson(l$cost_per_one),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1408,7 +1402,7 @@ class Mutation$removeItemFromCart {
               : Mutation$removeItemFromCart$delete_restaurant_cart_item_by_pk
                   .fromJson((l$delete_restaurant_cart_item_by_pk
                       as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1594,13 +1588,7 @@ const documentNodeMutationremoveItemFromCart = DocumentNode(definitions: [
           ),
         ]),
       ),
-      FieldNode(
-        name: NameNode(value: '__typename'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
+      
     ]),
   ),
 ]);
@@ -1714,7 +1702,7 @@ class Mutation$removeItemFromCart$delete_restaurant_cart_item_by_pk {
     final l$$__typename = json['__typename'];
     return Mutation$removeItemFromCart$delete_restaurant_cart_item_by_pk(
       id: (l$id as int),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1950,7 +1938,7 @@ class Mutation$clearCart {
           ? null
           : Mutation$clearCart$delete_restaurant_cart.fromJson(
               (l$delete_restaurant_cart as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -2177,13 +2165,7 @@ const documentNodeMutationclearCart = DocumentNode(definitions: [
           ),
         ]),
       ),
-      FieldNode(
-        name: NameNode(value: '__typename'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
+      
     ]),
   ),
 ]);
@@ -2295,7 +2277,7 @@ class Mutation$clearCart$delete_restaurant_cart {
               Mutation$clearCart$delete_restaurant_cart$returning.fromJson(
                   (e as Map<String, dynamic>)))
           .toList(),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -2451,7 +2433,7 @@ class Mutation$clearCart$delete_restaurant_cart$returning {
       items_aggregate:
           Mutation$clearCart$delete_restaurant_cart$returning$items_aggregate
               .fromJson((l$items_aggregate as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -2607,7 +2589,7 @@ class Mutation$clearCart$delete_restaurant_cart$returning$items_aggregate {
           ? null
           : Mutation$clearCart$delete_restaurant_cart$returning$items_aggregate$aggregate
               .fromJson((l$aggregate as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -2771,7 +2753,7 @@ class Mutation$clearCart$delete_restaurant_cart$returning$items_aggregate$aggreg
     final l$$__typename = json['__typename'];
     return Mutation$clearCart$delete_restaurant_cart$returning$items_aggregate$aggregate(
       count: (l$count as int),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 

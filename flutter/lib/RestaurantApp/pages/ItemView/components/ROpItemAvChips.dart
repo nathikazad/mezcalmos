@@ -13,7 +13,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
 class ROpItemAvChips extends StatelessWidget {
   const ROpItemAvChips({Key? key, required this.viewController})
       : super(key: key);
-  final ItemViewController viewController;
+  final ROpItemViewController viewController;
 
   @override
   Widget build(BuildContext context) {

@@ -1,14 +1,15 @@
 import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:graphql/client.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:get/get.dart';
+import 'package:graphql/client.dart';
+import 'package:jaguar_jwt/jaguar_jwt.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart' show mezDbgPrint;
-import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
-import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:jaguar_jwt/jaguar_jwt.dart';
 
 class HasuraDb {
   late GraphQLClient graphQLClient;

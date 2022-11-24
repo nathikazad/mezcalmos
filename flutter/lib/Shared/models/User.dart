@@ -115,24 +115,27 @@ class MainUserInfo {
 
 class ServiceInfo extends UserInfo {
   Location location;
+  int? descriptionId;
+
   ServiceInfo({
     required this.location,
     required super.firebaseId,
     required super.hasuraId,
     required super.image,
+    this.descriptionId,
     required super.name,
     LanguageType? lang,
   }) : super(language: lang);
 
-  factory ServiceInfo.fromHasura(data) {
-    return ServiceInfo(
-      location: Location.fromFirebaseData(data['location']),
-      firebaseId: data['firebase_id'],
-      hasuraId: data['id'],
-      image: data['image'],
-      name: data['name'],
-    );
-  }
+  // factory ServiceInfo.fromHasura(data) {
+  //   return ServiceInfo(
+  //     location: Location.fromFirebaseData(data['location']),
+  //     firebaseId: data['firebase_id'],
+  //     hasuraId: data['id'],
+  //     image: data['image'],
+  //     name: data['name'],
+  //   );
+  // }
 
   @override
   Map<String, dynamic> toJson() => {

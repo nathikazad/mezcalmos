@@ -2,8 +2,11 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
+import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 
 class ROpMenuViewController {
   /// Handles ui logic of the menu view inside the restaurant app
@@ -18,7 +21,9 @@ class ROpMenuViewController {
   // state variables
   Rxn<Restaurant> restaurant = Rxn<Restaurant>();
   RxBool reOrderMode = RxBool(false);
-  // rO stands for Reordable categories //
+  //main categories //
+  RxList<Category> mainCategories = RxList<Category>([]);
+// rO stands for Reordable categories //
   RxList<Category> rOcategories = RxList<Category>([]);
 
 // IMPORTANT //
@@ -26,6 +31,8 @@ class ROpMenuViewController {
   Future<void> init({required String restaurantId}) async {
     // assigning restaurant data and start the stream subscription //
     mezDbgPrint("INIT MENU VIEW =======>$restaurantId");
+    await fetchCategories();
+    mezDbgPrint("Main Categories length ====>${mainCategories.length}");
     Get.put(RestaurantInfoController(), permanent: false);
     restaurantInfoController = Get.find<RestaurantInfoController>();
     restaurantInfoController.init(restId: restaurantId);
@@ -40,6 +47,15 @@ class ROpMenuViewController {
     });
   }
 
+  Future<void> fetchCategories() async {
+    final List<Category>? _categories =
+        await get_restaurant_categories_by_id(4, withCache: false);
+    if (_categories != null) {
+      mainCategories.clear();
+      mainCategories.value.addAll(_categories);
+    }
+  }
+
   // IMPORTANT //
   // This method needs to be called on the dispose method of the view
   void dispose() {
@@ -47,10 +63,13 @@ class ROpMenuViewController {
   }
 
   // Catgeory methods //
-  Future<void> deleteCategory({required String categoryId}) async {
-    await restaurantInfoController
-        .deleteCategory(categoryId: categoryId)
-        .then((value) => Get.back());
+  Future<bool> deleteCategory({required String categoryId}) async {
+    mezDbgPrint("Deleting category ========>>>$categoryId");
+    final bool result = await delete_category(int.parse(categoryId));
+    if (result) {
+      await fetchCategories();
+    }
+    return result;
   }
 
   // Reorder methods //

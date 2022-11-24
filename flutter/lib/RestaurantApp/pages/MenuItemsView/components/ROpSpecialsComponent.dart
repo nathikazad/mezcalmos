@@ -6,7 +6,7 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/controllers/ROpMenuV
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:sizer/sizer.dart';
 

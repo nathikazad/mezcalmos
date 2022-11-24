@@ -79,7 +79,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
             if (_formKey.currentState?.validate() ?? false) {
               if (shouldSave) {
                 _viewController.saveCategory().then((value) {
-                  Get.back();
+                  Get.back(result: true);
                 });
               } else {
                 Get.back(result: _viewController.constructCategory());

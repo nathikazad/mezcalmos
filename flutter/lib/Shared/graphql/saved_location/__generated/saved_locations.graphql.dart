@@ -116,7 +116,7 @@ class Query$getCustomerLocations {
           .map((e) => Query$getCustomerLocations$saved_location.fromJson(
               (e as Map<String, dynamic>)))
           .toList(),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -340,13 +340,7 @@ const documentNodeQuerygetCustomerLocations = DocumentNode(definitions: [
           ),
         ]),
       ),
-      FieldNode(
-        name: NameNode(value: '__typename'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
+      
     ]),
   ),
 ]);
@@ -485,7 +479,7 @@ class Query$getCustomerLocations$saved_location {
       location_gps: GeographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
       $default: (l$$default as bool),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -776,7 +770,7 @@ class Query$getSavedLocation {
           ? null
           : Query$getSavedLocation$saved_location_by_pk.fromJson(
               (l$saved_location_by_pk as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -976,13 +970,7 @@ const documentNodeQuerygetSavedLocation = DocumentNode(definitions: [
           ),
         ]),
       ),
-      FieldNode(
-        name: NameNode(value: '__typename'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
+      
     ]),
   ),
 ]);
@@ -1118,7 +1106,7 @@ class Query$getSavedLocation$saved_location_by_pk {
       location_gps: GeographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
       $default: (l$$default as bool),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1505,7 +1493,7 @@ class Mutation$updateSavedLocation {
           ? null
           : Mutation$updateSavedLocation$update_saved_location_by_pk.fromJson(
               (l$update_saved_location_by_pk as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1771,13 +1759,7 @@ const documentNodeMutationupdateSavedLocation = DocumentNode(definitions: [
           ),
         ]),
       ),
-      FieldNode(
-        name: NameNode(value: '__typename'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
+      
     ]),
   ),
 ]);
@@ -1904,7 +1886,7 @@ class Mutation$updateSavedLocation$update_saved_location_by_pk {
       location_gps: GeographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
       $default: (l$$default as bool),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -2209,7 +2191,7 @@ class Mutation$deleteSavedLocation {
           ? null
           : Mutation$deleteSavedLocation$delete_saved_location_by_pk.fromJson(
               (l$delete_saved_location_by_pk as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -2390,13 +2372,7 @@ const documentNodeMutationdeleteSavedLocation = DocumentNode(definitions: [
           ),
         ]),
       ),
-      FieldNode(
-        name: NameNode(value: '__typename'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
+      
     ]),
   ),
 ]);
@@ -2511,7 +2487,7 @@ class Mutation$deleteSavedLocation$delete_saved_location_by_pk {
     final l$$__typename = json['__typename'];
     return Mutation$deleteSavedLocation$delete_saved_location_by_pk(
       name: (l$name as String),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -2754,7 +2730,7 @@ class Mutation$addSavedLocation {
           ? null
           : Mutation$addSavedLocation$insert_saved_location_one.fromJson(
               (l$insert_saved_location_one as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -2933,13 +2909,7 @@ const documentNodeMutationaddSavedLocation = DocumentNode(definitions: [
           ),
         ]),
       ),
-      FieldNode(
-        name: NameNode(value: '__typename'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
+      
     ]),
   ),
 ]);
@@ -3052,7 +3022,7 @@ class Mutation$addSavedLocation$insert_saved_location_one {
     final l$$__typename = json['__typename'];
     return Mutation$addSavedLocation$insert_saved_location_one(
       id: (l$id as int),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 

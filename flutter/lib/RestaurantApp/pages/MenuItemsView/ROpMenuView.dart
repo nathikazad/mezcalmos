@@ -33,6 +33,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
   String? restaurantID;
   @override
   void initState() {
+    mezDbgPrint("init menu view");
     _tabController = TabController(length: 2, vsync: this);
     restaurantID = Get.parameters["restaurantId"];
     if (restaurantID != null) {
@@ -78,7 +79,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
       }),
       body: Obx(
         () {
-          if (viewController.restaurant.value != null) {
+          if (viewController.mainCategories.isNotEmpty) {
             return TabBarView(
               controller: _tabController,
               children: [
@@ -92,18 +93,28 @@ class _ROpMenuViewState extends State<ROpMenuView>
                         height: 5,
                       ),
                       MezAddButton(
-                        onClick: () {
-                          Get.toNamed(
-                              getROpCategoryRoute(restaurantId: restaurantID!));
+                        onClick: () async {
+                          mezDbgPrint("Tapped");
+
+                          final bool? newCategoryAdded = await Get.toNamed(
+                              getROpCategoryRoute(
+                                  restaurantId: restaurantID!)) as bool?;
+                          if (newCategoryAdded == true) {
+                            await viewController.fetchCategories();
+                          }
                         },
                         title: '${_i18n()["addCategory"]}',
                         btnColor: primaryBlueColor,
                         primaryColor: Colors.white,
                       ),
                       MezAddButton(
-                        onClick: () {
-                          Get.toNamed(
-                              getROpAddItemRoute(restaurantId: restaurantID!));
+                        onClick: () async {
+                          final bool? newItemAdded = await Get.toNamed(
+                              getROpAddItemRoute(
+                                  restaurantId: restaurantID!)) as bool?;
+                          if (newItemAdded == true) {
+                            await viewController.fetchCategories();
+                          }
                         },
                         title: '${_i18n()["addItem"]}',
                       ),
@@ -127,7 +138,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
                         height: 5,
                       ),
                       _categoriesItemsList(),
-                      _noCategoryItemsList()
+                      //   _noCategoryItemsList()
                     ],
                   ),
                 ),
@@ -225,12 +236,11 @@ class _ROpMenuViewState extends State<ROpMenuView>
                 })
             : Column(
                 children: List.generate(
-                    viewController.restaurant.value!.getCategories.length,
+                    viewController.mainCategories.length,
                     (int index) => ROpCategoryItems(
                         viewController: viewController,
                         restaurantId: restaurantID!,
-                        category: viewController
-                            .restaurant.value!.getCategories[index])),
+                        category: viewController.mainCategories[index])),
               ),
       ),
     );

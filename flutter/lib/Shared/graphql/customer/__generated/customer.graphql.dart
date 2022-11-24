@@ -145,7 +145,7 @@ class Mutation$setCusAppVersion {
           ? null
           : Mutation$setCusAppVersion$update_customer_by_pk.fromJson(
               (l$update_customer_by_pk as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -341,13 +341,7 @@ const documentNodeMutationsetCusAppVersion = DocumentNode(definitions: [
           ),
         ]),
       ),
-      FieldNode(
-        name: NameNode(value: '__typename'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
+      
     ]),
   ),
 ]);
@@ -460,7 +454,7 @@ class Mutation$setCusAppVersion$update_customer_by_pk {
     final l$$__typename = json['__typename'];
     return Mutation$setCusAppVersion$update_customer_by_pk(
       app_version: (l$app_version as String),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -686,7 +680,7 @@ class Query$getCustomerCart {
           ? null
           : Query$getCustomerCart$customer_by_pk.fromJson(
               (l$customer_by_pk as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -910,13 +904,7 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
           ),
         ]),
       ),
-      FieldNode(
-        name: NameNode(value: '__typename'),
-        alias: null,
-        arguments: [],
-        directives: [],
-        selectionSet: null,
-      ),
+      
     ]),
   ),
 ]);
@@ -1043,7 +1031,7 @@ class Query$getCustomerCart$customer_by_pk {
           ? null
           : Query$getCustomerCart$customer_by_pk$cart.fromJson(
               (l$cart as Map<String, dynamic>)),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1184,7 +1172,7 @@ class Query$getCustomerCart$customer_by_pk$cart {
           .map((e) => Query$getCustomerCart$customer_by_pk$cart$items.fromJson(
               (e as Map<String, dynamic>)))
           .toList(),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
@@ -1349,7 +1337,7 @@ class Query$getCustomerCart$customer_by_pk$cart$items {
       note: (l$note as String?),
       quantity: (l$quantity as int),
       restaurant_item_id: (l$restaurant_item_id as int),
-      $__typename: (l$$__typename as String),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 

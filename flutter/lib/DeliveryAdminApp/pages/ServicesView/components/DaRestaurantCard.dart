@@ -5,7 +5,7 @@ import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantsInfoController
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
@@ -46,7 +46,8 @@ class DaRestaurantCard extends StatelessWidget {
                         ),
                       ),
                       Switch(
-                        value: restaurant.state.open,
+                        // TODO: Switch open @m66are
+                        value: restaurant.state.approved,
                         onChanged: (bool v) {
                           Get.find<RestaurantsInfoController>().setOpen(
                               isAv: v,
@@ -63,10 +64,10 @@ class DaRestaurantCard extends StatelessWidget {
                       Flexible(
                         child: TextButton.icon(
                           style: TextButton.styleFrom(
+                              foregroundColor: primaryBlueColor,
                               backgroundColor: Colors.transparent,
                               textStyle: Get.textTheme.bodyText1,
-                              padding: const EdgeInsets.all(3),
-                              primary: primaryBlueColor),
+                              padding: const EdgeInsets.all(3)),
                           onPressed: () {
                             Get.toNamed(getROpEditInfoRoute(
                                 restaurantId: restaurant.info.firebaseId));
@@ -82,10 +83,10 @@ class DaRestaurantCard extends StatelessWidget {
                                 restaurantId: restaurant.info.firebaseId));
                           },
                           style: TextButton.styleFrom(
+                              foregroundColor: primaryBlueColor,
                               backgroundColor: Colors.transparent,
                               textStyle: Get.textTheme.bodyText1,
-                              padding: const EdgeInsets.all(3),
-                              primary: primaryBlueColor),
+                              padding: const EdgeInsets.all(3)),
                           icon: Icon(Icons.settings),
                           label: Text('${_i18n()["editAdmin"]}'),
                         ),

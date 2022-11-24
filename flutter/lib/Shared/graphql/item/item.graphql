@@ -1,5 +1,102 @@
+# MUTATIONS
 mutation addItem($item: restaurant_item_insert_input!) {
   insert_restaurant_item_one(object: $item) {
     id
+    name {
+      translations {
+        language_id
+        value
+      }
+      id
+    }
+    description {
+      id
+      translations {
+        language_id
+        value
+      }
+    }
+    cost
+    position
+    category_id
+    item_type
+    available
+
+    restaurant_id
+    special_period_end
+    special_period_start
+  }
+}
+mutation deleteItem($itemId: Int!) {
+  delete_restaurant_item_by_pk(id: $itemId) {
+    id
+  }
+}
+mutation upadateItem($id: Int!,$itemData: restaurant_item_set_input!) {
+  update_restaurant_item_by_pk(pk_columns: {id: $id},_set : $itemData) {
+    id
+  }
+}
+
+
+
+#  QUERIES 
+query getItemById($id: Int!) {
+  restaurant_item_by_pk(id: $id) {
+    id
+    name {
+      translations {
+        language_id
+        value
+      }
+      id
+    }
+    description {
+      id
+      translations {
+        language_id
+        value
+      }
+    }
+    cost
+    position
+    category_id
+    item_type
+    available
+    restaurant_id
+    special_period_end
+    special_period_start
+    options {
+      item_options {
+        id
+        free_choice
+        cost_per_extra
+        option_type
+        position
+        maximum_choice
+        minimum_choice
+        name {
+          id
+          translations {
+            language_id
+            value
+          }
+        }
+        choices {
+          option_choices {
+            available
+            cost
+            id
+            name {
+              id
+              translations {
+                language_id
+                value
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

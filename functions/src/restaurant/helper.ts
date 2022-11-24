@@ -1,47 +1,8 @@
-import { RestaurantOrder } from "../shared/models/Services/Restaurant/RestaurantOrder";
-import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
-import * as customerNodes from "../shared/databaseNodes/customer";
-import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
-import *  as rootDbNodes from "../shared/databaseNodes/root";
-import { OrderType } from "../shared/models/Generic/Order";
-import { ServerResponse, ServerResponseStatus, ValidationPass } from "../shared/models/Generic/Generic";
-import { checkDeliveryAdmin } from "../shared/helper/authorizer";
+import { ServerResponseStatus, ValidationPass } from "../shared/models/Generic/Generic";
+// import { checkDeliveryAdmin } from "../shared/helper/authorizer";
+import { getRestaurantCheckDetails } from "../shared/graphql/restaurant/restaurantCheck";
 
-export async function finishOrder(
-  order: RestaurantOrder,
-  orderId: string) {
-  // moving the order node from /customers/inProcessOrders => /customers/pastOrders/
-  customerNodes.pastOrders(order.customer.id!, orderId).set(order)
-  customerNodes.inProcessOrders(order.customer.id!, orderId).remove();
-
-
-  // moving the order node from /restaurants/inProcessOrders => /restaurants/pastOrders/
-  restaurantNodes.pastOrders(order.restaurant.id!, orderId).set(order)
-  restaurantNodes.inProcessOrders(order.restaurant.id!, orderId).remove();
-
-  // and finally remove from root /inProcessOrders   
-  await rootDbNodes.pastOrders(OrderType.Restaurant, orderId).set(order)
-  await rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).remove();
-
-  if (order.dropoffDriver) {
-    await deliveryDriverNodes.pastOrders(order.dropoffDriver.id!, orderId).set(order)
-    await deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id!, orderId).remove();
-  }
-}
-
-async function checkRestaurantOperator(restaurantId: string, operatorId: string): Promise<ServerResponse | undefined> {
-  let operator = (await restaurantNodes.restaurantOperators(restaurantId, operatorId).once('value')).val();
-  let isOperator = operator != null && operator == true
-  if (!isOperator) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: "Only authorized restaurant operators can run this operation"
-    }
-  }
-  return undefined;
-}
-
-export async function passChecksForRestaurant(data: any, userId: string, checkInPastOrderAlso: boolean = false): Promise<ValidationPass> {
+export async function passChecksForRestaurant(data: any, userId: number): Promise<ValidationPass> {
 
   if (data.orderId == null) {
     return {
@@ -54,53 +15,46 @@ export async function passChecksForRestaurant(data: any, userId: string, checkIn
     }
   }
 
-  let orderId: string = data.orderId;
-  let order: RestaurantOrder = (await rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).once('value')).val();
+  let response = await getRestaurantCheckDetails(data, userId);
+  let order = response.restaurant_order_by_pk;
+
   if (order == null) {
-    if (checkInPastOrderAlso) {
-      order = (await rootDbNodes.pastOrders(OrderType.Restaurant, orderId).once('value')).val();
-      if (order == null) {
-        return {
-          ok: false,
-          error: {
-            status: ServerResponseStatus.Error,
-            errorMessage: `Order does not exist`,
-            errorCode: "orderDontExist"
-          }
-        }
-      }
-    } else {
-      return {
-        ok: false,
-        error: {
-          status: ServerResponseStatus.Error,
-          errorMessage: `Order does not exist`,
-          errorCode: "orderDontExist"
-        }
+    return {
+      ok: false,
+      error: {
+        status: ServerResponseStatus.Error,
+        errorMessage: `Order does not exist`,
+        errorCode: "orderDontExist"
       }
     }
   }
 
   if (data.fromRestaurantOperator) {
-    let response = await checkRestaurantOperator(order.restaurant.id, userId)
-    if (response != undefined) {
+
+    if(response.restaurant_operator[0]?.restaurant_id != order.restaurant_id) {
       return {
         ok: false,
-        error: response
+        error: {
+          status: ServerResponseStatus.Error,
+          errorMessage: "Only authorized restaurant operators can run this operation"
+        }
       };
     }
   } else {
-    let response = await checkDeliveryAdmin(userId);
-    if (response != undefined) {
+    // let response = await checkDeliveryAdmin(userId);
+    if (response.mez_admin_by_pk == null) {
       return {
         ok: false,
-        error: response
+        error: {
+          status: ServerResponseStatus.Error,
+          errorMessage: "Only admins can run this operation"
+        }
       };
     }
   }
 
   return {
     ok: true,
-    order: order
+    // order: order
   }
 }
