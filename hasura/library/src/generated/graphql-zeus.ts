@@ -148,7 +148,6 @@ end). throws an error if top level container is not an array */
 	/** An object relationship */
 	chat?:ValueTypes["chat"],
 	chat_id?:true,
-	id?:true,
 	/** An object relationship */
 	notification_info?:ValueTypes["notification_info"],
 	participant_id?:true,
@@ -200,14 +199,12 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 	/** aggregate avg on columns */
 ["chat_participant_avg_fields"]: AliasType<{
 	chat_id?:true,
-	id?:true,
 	participant_id?:true,
 		__typename?: true
 }>;
 	/** order by avg() on columns of table "chat_participant" */
 ["chat_participant_avg_order_by"]: {
 	chat_id?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
 	participant_id?:ValueTypes["order_by"]
 };
 	/** Boolean expression to filter rows from the table "chat_participant". All fields are combined with a logical 'AND'. */
@@ -218,7 +215,6 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 	app_type_id?:ValueTypes["String_comparison_exp"],
 	chat?:ValueTypes["chat_bool_exp"],
 	chat_id?:ValueTypes["Int_comparison_exp"],
-	id?:ValueTypes["Int_comparison_exp"],
 	notification_info?:ValueTypes["notification_info_bool_exp"],
 	participant_id?:ValueTypes["Int_comparison_exp"],
 	user?:ValueTypes["user_bool_exp"]
@@ -228,7 +224,6 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 	/** input type for incrementing numeric columns in table "chat_participant" */
 ["chat_participant_inc_input"]: {
 	chat_id?:number,
-	id?:number,
 	participant_id?:number
 };
 	/** input type for inserting data into table "chat_participant" */
@@ -236,7 +231,6 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 	app_type_id?:string,
 	chat?:ValueTypes["chat_obj_rel_insert_input"],
 	chat_id?:number,
-	id?:number,
 	notification_info?:ValueTypes["notification_info_obj_rel_insert_input"],
 	participant_id?:number,
 	user?:ValueTypes["user_obj_rel_insert_input"]
@@ -245,7 +239,6 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 ["chat_participant_max_fields"]: AliasType<{
 	app_type_id?:true,
 	chat_id?:true,
-	id?:true,
 	participant_id?:true,
 		__typename?: true
 }>;
@@ -253,14 +246,12 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 ["chat_participant_max_order_by"]: {
 	app_type_id?:ValueTypes["order_by"],
 	chat_id?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
 	participant_id?:ValueTypes["order_by"]
 };
 	/** aggregate min on columns */
 ["chat_participant_min_fields"]: AliasType<{
 	app_type_id?:true,
 	chat_id?:true,
-	id?:true,
 	participant_id?:true,
 		__typename?: true
 }>;
@@ -268,7 +259,6 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 ["chat_participant_min_order_by"]: {
 	app_type_id?:ValueTypes["order_by"],
 	chat_id?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
 	participant_id?:ValueTypes["order_by"]
 };
 	/** response of any mutation on the table "chat_participant" */
@@ -290,14 +280,14 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 	app_type_id?:ValueTypes["order_by"],
 	chat?:ValueTypes["chat_order_by"],
 	chat_id?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
 	notification_info?:ValueTypes["notification_info_order_by"],
 	participant_id?:ValueTypes["order_by"],
 	user?:ValueTypes["user_order_by"]
 };
 	/** primary key columns input for table: chat_participant */
 ["chat_participant_pk_columns_input"]: {
-	id:number
+	chat_id:number,
+	participant_id:number
 };
 	/** select columns of table "chat_participant" */
 ["chat_participant_select_column"]:chat_participant_select_column;
@@ -305,46 +295,39 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 ["chat_participant_set_input"]: {
 	app_type_id?:string,
 	chat_id?:number,
-	id?:number,
 	participant_id?:number
 };
 	/** aggregate stddev on columns */
 ["chat_participant_stddev_fields"]: AliasType<{
 	chat_id?:true,
-	id?:true,
 	participant_id?:true,
 		__typename?: true
 }>;
 	/** order by stddev() on columns of table "chat_participant" */
 ["chat_participant_stddev_order_by"]: {
 	chat_id?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
 	participant_id?:ValueTypes["order_by"]
 };
 	/** aggregate stddev_pop on columns */
 ["chat_participant_stddev_pop_fields"]: AliasType<{
 	chat_id?:true,
-	id?:true,
 	participant_id?:true,
 		__typename?: true
 }>;
 	/** order by stddev_pop() on columns of table "chat_participant" */
 ["chat_participant_stddev_pop_order_by"]: {
 	chat_id?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
 	participant_id?:ValueTypes["order_by"]
 };
 	/** aggregate stddev_samp on columns */
 ["chat_participant_stddev_samp_fields"]: AliasType<{
 	chat_id?:true,
-	id?:true,
 	participant_id?:true,
 		__typename?: true
 }>;
 	/** order by stddev_samp() on columns of table "chat_participant" */
 ["chat_participant_stddev_samp_order_by"]: {
 	chat_id?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
 	participant_id?:ValueTypes["order_by"]
 };
 	/** Streaming cursor of the table "chat_participant" */
@@ -358,20 +341,17 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 ["chat_participant_stream_cursor_value_input"]: {
 	app_type_id?:string,
 	chat_id?:number,
-	id?:number,
 	participant_id?:number
 };
 	/** aggregate sum on columns */
 ["chat_participant_sum_fields"]: AliasType<{
 	chat_id?:true,
-	id?:true,
 	participant_id?:true,
 		__typename?: true
 }>;
 	/** order by sum() on columns of table "chat_participant" */
 ["chat_participant_sum_order_by"]: {
 	chat_id?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
 	participant_id?:ValueTypes["order_by"]
 };
 	/** update columns of table "chat_participant" */
@@ -386,40 +366,34 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 	/** aggregate var_pop on columns */
 ["chat_participant_var_pop_fields"]: AliasType<{
 	chat_id?:true,
-	id?:true,
 	participant_id?:true,
 		__typename?: true
 }>;
 	/** order by var_pop() on columns of table "chat_participant" */
 ["chat_participant_var_pop_order_by"]: {
 	chat_id?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
 	participant_id?:ValueTypes["order_by"]
 };
 	/** aggregate var_samp on columns */
 ["chat_participant_var_samp_fields"]: AliasType<{
 	chat_id?:true,
-	id?:true,
 	participant_id?:true,
 		__typename?: true
 }>;
 	/** order by var_samp() on columns of table "chat_participant" */
 ["chat_participant_var_samp_order_by"]: {
 	chat_id?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
 	participant_id?:ValueTypes["order_by"]
 };
 	/** aggregate variance on columns */
 ["chat_participant_variance_fields"]: AliasType<{
 	chat_id?:true,
-	id?:true,
 	participant_id?:true,
 		__typename?: true
 }>;
 	/** order by variance() on columns of table "chat_participant" */
 ["chat_participant_variance_order_by"]: {
 	chat_id?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
 	participant_id?:ValueTypes["order_by"]
 };
 	/** primary key columns input for table: chat */
@@ -962,7 +936,6 @@ count?: [{	columns?:ValueTypes["deliverer_select_column"][],	distinct?:boolean},
 	estimated_arrival_at_pickup_time?:true,
 	estimated_package_ready_time?:true,
 	id?:true,
-	order_time?:true,
 	package_cost?:true,
 	payment_type?:true,
 	pickup_address?:true,
@@ -975,9 +948,7 @@ count?: [{	columns?:ValueTypes["deliverer_select_column"][],	distinct?:boolean},
 	/** orderReceived */
 	status?:true,
 	stripe_payment_id?:true,
-	/** in meters */
 	trip_distance?:true,
-	/** in seconds */
 	trip_duration?:true,
 	trip_polyline?:true,
 		__typename?: true
@@ -1038,10 +1009,6 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
 	stripe_payment_id?:true,
-	/** in meters */
-	trip_distance?:true,
-	/** in seconds */
-	trip_duration?:true,
 		__typename?: true
 }>;
 	/** order by avg() on columns of table "delivery" */
@@ -1058,11 +1025,7 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"],
-	/** in meters */
-	trip_distance?:ValueTypes["order_by"],
-	/** in seconds */
-	trip_duration?:ValueTypes["order_by"]
+	stripe_payment_id?:ValueTypes["order_by"]
 };
 	/** Boolean expression to filter rows from the table "delivery". All fields are combined with a logical 'AND'. */
 ["delivery_bool_exp"]: {
@@ -1095,7 +1058,6 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	estimated_arrival_at_pickup_time?:ValueTypes["timestamptz_comparison_exp"],
 	estimated_package_ready_time?:ValueTypes["timestamptz_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
-	order_time?:ValueTypes["timestamptz_comparison_exp"],
 	package_cost?:ValueTypes["money_comparison_exp"],
 	payment_type?:ValueTypes["String_comparison_exp"],
 	pickup_address?:ValueTypes["String_comparison_exp"],
@@ -1106,8 +1068,8 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_type?:ValueTypes["String_comparison_exp"],
 	status?:ValueTypes["String_comparison_exp"],
 	stripe_payment_id?:ValueTypes["Int_comparison_exp"],
-	trip_distance?:ValueTypes["Int_comparison_exp"],
-	trip_duration?:ValueTypes["Int_comparison_exp"],
+	trip_distance?:ValueTypes["String_comparison_exp"],
+	trip_duration?:ValueTypes["String_comparison_exp"],
 	trip_polyline?:ValueTypes["String_comparison_exp"]
 };
 	/** unique or primary key constraints on table "delivery" */
@@ -1126,11 +1088,7 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	package_cost?:ValueTypes["money"],
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number
+	stripe_payment_id?:number
 };
 	/** input type for inserting data into table "delivery" */
 ["delivery_insert_input"]: {
@@ -1160,7 +1118,6 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	estimated_arrival_at_pickup_time?:ValueTypes["timestamptz"],
 	estimated_package_ready_time?:ValueTypes["timestamptz"],
 	id?:number,
-	order_time?:ValueTypes["timestamptz"],
 	package_cost?:ValueTypes["money"],
 	payment_type?:string,
 	pickup_address?:string,
@@ -1172,10 +1129,8 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number,
+	trip_distance?:string,
+	trip_duration?:string,
 	trip_polyline?:string
 };
 	/** aggregate max on columns */
@@ -1198,7 +1153,6 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	estimated_arrival_at_pickup_time?:true,
 	estimated_package_ready_time?:true,
 	id?:true,
-	order_time?:true,
 	package_cost?:true,
 	payment_type?:true,
 	pickup_address?:true,
@@ -1208,9 +1162,7 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	/** orderReceived */
 	status?:true,
 	stripe_payment_id?:true,
-	/** in meters */
 	trip_distance?:true,
-	/** in seconds */
 	trip_duration?:true,
 	trip_polyline?:true,
 		__typename?: true
@@ -1235,7 +1187,6 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	estimated_arrival_at_pickup_time?:ValueTypes["order_by"],
 	estimated_package_ready_time?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
-	order_time?:ValueTypes["order_by"],
 	package_cost?:ValueTypes["order_by"],
 	payment_type?:ValueTypes["order_by"],
 	pickup_address?:ValueTypes["order_by"],
@@ -1245,9 +1196,7 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	/** orderReceived */
 	status?:ValueTypes["order_by"],
 	stripe_payment_id?:ValueTypes["order_by"],
-	/** in meters */
 	trip_distance?:ValueTypes["order_by"],
-	/** in seconds */
 	trip_duration?:ValueTypes["order_by"],
 	trip_polyline?:ValueTypes["order_by"]
 };
@@ -1271,7 +1220,6 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	estimated_arrival_at_pickup_time?:true,
 	estimated_package_ready_time?:true,
 	id?:true,
-	order_time?:true,
 	package_cost?:true,
 	payment_type?:true,
 	pickup_address?:true,
@@ -1281,9 +1229,7 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	/** orderReceived */
 	status?:true,
 	stripe_payment_id?:true,
-	/** in meters */
 	trip_distance?:true,
-	/** in seconds */
 	trip_duration?:true,
 	trip_polyline?:true,
 		__typename?: true
@@ -1308,7 +1254,6 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	estimated_arrival_at_pickup_time?:ValueTypes["order_by"],
 	estimated_package_ready_time?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
-	order_time?:ValueTypes["order_by"],
 	package_cost?:ValueTypes["order_by"],
 	payment_type?:ValueTypes["order_by"],
 	pickup_address?:ValueTypes["order_by"],
@@ -1318,9 +1263,7 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	/** orderReceived */
 	status?:ValueTypes["order_by"],
 	stripe_payment_id?:ValueTypes["order_by"],
-	/** in meters */
 	trip_distance?:ValueTypes["order_by"],
-	/** in seconds */
 	trip_duration?:ValueTypes["order_by"],
 	trip_polyline?:ValueTypes["order_by"]
 };
@@ -1372,7 +1315,6 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	estimated_arrival_at_pickup_time?:ValueTypes["order_by"],
 	estimated_package_ready_time?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
-	order_time?:ValueTypes["order_by"],
 	package_cost?:ValueTypes["order_by"],
 	payment_type?:ValueTypes["order_by"],
 	pickup_address?:ValueTypes["order_by"],
@@ -1415,7 +1357,6 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	estimated_arrival_at_pickup_time?:ValueTypes["timestamptz"],
 	estimated_package_ready_time?:ValueTypes["timestamptz"],
 	id?:number,
-	order_time?:ValueTypes["timestamptz"],
 	package_cost?:ValueTypes["money"],
 	payment_type?:string,
 	pickup_address?:string,
@@ -1426,10 +1367,8 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number,
+	trip_distance?:string,
+	trip_duration?:string,
 	trip_polyline?:string
 };
 	/** aggregate stddev on columns */
@@ -1447,10 +1386,6 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
 	stripe_payment_id?:true,
-	/** in meters */
-	trip_distance?:true,
-	/** in seconds */
-	trip_duration?:true,
 		__typename?: true
 }>;
 	/** order by stddev() on columns of table "delivery" */
@@ -1467,11 +1402,7 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"],
-	/** in meters */
-	trip_distance?:ValueTypes["order_by"],
-	/** in seconds */
-	trip_duration?:ValueTypes["order_by"]
+	stripe_payment_id?:ValueTypes["order_by"]
 };
 	/** aggregate stddev_pop on columns */
 ["delivery_stddev_pop_fields"]: AliasType<{
@@ -1488,10 +1419,6 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
 	stripe_payment_id?:true,
-	/** in meters */
-	trip_distance?:true,
-	/** in seconds */
-	trip_duration?:true,
 		__typename?: true
 }>;
 	/** order by stddev_pop() on columns of table "delivery" */
@@ -1508,11 +1435,7 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"],
-	/** in meters */
-	trip_distance?:ValueTypes["order_by"],
-	/** in seconds */
-	trip_duration?:ValueTypes["order_by"]
+	stripe_payment_id?:ValueTypes["order_by"]
 };
 	/** aggregate stddev_samp on columns */
 ["delivery_stddev_samp_fields"]: AliasType<{
@@ -1529,10 +1452,6 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
 	stripe_payment_id?:true,
-	/** in meters */
-	trip_distance?:true,
-	/** in seconds */
-	trip_duration?:true,
 		__typename?: true
 }>;
 	/** order by stddev_samp() on columns of table "delivery" */
@@ -1549,11 +1468,7 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"],
-	/** in meters */
-	trip_distance?:ValueTypes["order_by"],
-	/** in seconds */
-	trip_duration?:ValueTypes["order_by"]
+	stripe_payment_id?:ValueTypes["order_by"]
 };
 	/** Streaming cursor of the table "delivery" */
 ["delivery_stream_cursor_input"]: {
@@ -1584,7 +1499,6 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	estimated_arrival_at_pickup_time?:ValueTypes["timestamptz"],
 	estimated_package_ready_time?:ValueTypes["timestamptz"],
 	id?:number,
-	order_time?:ValueTypes["timestamptz"],
 	package_cost?:ValueTypes["money"],
 	payment_type?:string,
 	pickup_address?:string,
@@ -1595,10 +1509,8 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number,
+	trip_distance?:string,
+	trip_duration?:string,
 	trip_polyline?:string
 };
 	/** aggregate sum on columns */
@@ -1616,10 +1528,6 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
 	stripe_payment_id?:true,
-	/** in meters */
-	trip_distance?:true,
-	/** in seconds */
-	trip_duration?:true,
 		__typename?: true
 }>;
 	/** order by sum() on columns of table "delivery" */
@@ -1636,11 +1544,7 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"],
-	/** in meters */
-	trip_distance?:ValueTypes["order_by"],
-	/** in seconds */
-	trip_duration?:ValueTypes["order_by"]
+	stripe_payment_id?:ValueTypes["order_by"]
 };
 	/** update columns of table "delivery" */
 ["delivery_update_column"]:delivery_update_column;
@@ -1666,10 +1570,6 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
 	stripe_payment_id?:true,
-	/** in meters */
-	trip_distance?:true,
-	/** in seconds */
-	trip_duration?:true,
 		__typename?: true
 }>;
 	/** order by var_pop() on columns of table "delivery" */
@@ -1686,11 +1586,7 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"],
-	/** in meters */
-	trip_distance?:ValueTypes["order_by"],
-	/** in seconds */
-	trip_duration?:ValueTypes["order_by"]
+	stripe_payment_id?:ValueTypes["order_by"]
 };
 	/** aggregate var_samp on columns */
 ["delivery_var_samp_fields"]: AliasType<{
@@ -1707,10 +1603,6 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
 	stripe_payment_id?:true,
-	/** in meters */
-	trip_distance?:true,
-	/** in seconds */
-	trip_duration?:true,
 		__typename?: true
 }>;
 	/** order by var_samp() on columns of table "delivery" */
@@ -1727,11 +1619,7 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"],
-	/** in meters */
-	trip_distance?:ValueTypes["order_by"],
-	/** in seconds */
-	trip_duration?:ValueTypes["order_by"]
+	stripe_payment_id?:ValueTypes["order_by"]
 };
 	/** aggregate variance on columns */
 ["delivery_variance_fields"]: AliasType<{
@@ -1748,10 +1636,6 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
 	stripe_payment_id?:true,
-	/** in meters */
-	trip_distance?:true,
-	/** in seconds */
-	trip_duration?:true,
 		__typename?: true
 }>;
 	/** order by variance() on columns of table "delivery" */
@@ -1768,11 +1652,7 @@ count?: [{	columns?:ValueTypes["delivery_select_column"][],	distinct?:boolean},t
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"],
-	/** in meters */
-	trip_distance?:ValueTypes["order_by"],
-	/** in seconds */
-	trip_duration?:ValueTypes["order_by"]
+	stripe_payment_id?:ValueTypes["order_by"]
 };
 	["float8"]:unknown;
 	/** Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'. */
@@ -2088,7 +1968,7 @@ delete_chat?: [{	/** filter the rows which have to be deleted */
 delete_chat_by_pk?: [{	id:number},ValueTypes["chat"]],
 delete_chat_participant?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["chat_participant_bool_exp"]},ValueTypes["chat_participant_mutation_response"]],
-delete_chat_participant_by_pk?: [{	id:number},ValueTypes["chat_participant"]],
+delete_chat_participant_by_pk?: [{	chat_id:number,	participant_id:number},ValueTypes["chat_participant"]],
 delete_customer?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["customer_bool_exp"]},ValueTypes["customer_mutation_response"]],
 delete_customer_by_pk?: [{	user_id:number},ValueTypes["customer"]],
@@ -2124,7 +2004,7 @@ delete_restaurant_item?: [{	/** filter the rows which have to be deleted */
 delete_restaurant_item_by_pk?: [{	id:number},ValueTypes["restaurant_item"]],
 delete_restaurant_item_option_map?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["restaurant_item_option_map_bool_exp"]},ValueTypes["restaurant_item_option_map_mutation_response"]],
-delete_restaurant_item_option_map_by_pk?: [{	item_id:number,	option_id:number},ValueTypes["restaurant_item_option_map"]],
+delete_restaurant_item_option_map_by_pk?: [{	id:number},ValueTypes["restaurant_item_option_map"]],
 delete_restaurant_operator?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["restaurant_operator_bool_exp"]},ValueTypes["restaurant_operator_mutation_response"]],
 delete_restaurant_operator_by_pk?: [{	id:number},ValueTypes["restaurant_operator"]],
@@ -2133,7 +2013,7 @@ delete_restaurant_option?: [{	/** filter the rows which have to be deleted */
 delete_restaurant_option_by_pk?: [{	id:number},ValueTypes["restaurant_option"]],
 delete_restaurant_option_choice_map?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["restaurant_option_choice_map_bool_exp"]},ValueTypes["restaurant_option_choice_map_mutation_response"]],
-delete_restaurant_option_choice_map_by_pk?: [{	choice_id:number,	option_id:number},ValueTypes["restaurant_option_choice_map"]],
+delete_restaurant_option_choice_map_by_pk?: [{	id:number},ValueTypes["restaurant_option_choice_map"]],
 delete_restaurant_order?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["restaurant_order_bool_exp"]},ValueTypes["restaurant_order_mutation_response"]],
 delete_restaurant_order_by_pk?: [{	id:number},ValueTypes["restaurant_order"]],
@@ -2787,7 +2667,7 @@ chat_participant_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["chat_participant_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["chat_participant_bool_exp"]},ValueTypes["chat_participant_aggregate"]],
-chat_participant_by_pk?: [{	id:number},ValueTypes["chat_participant"]],
+chat_participant_by_pk?: [{	chat_id:number,	participant_id:number},ValueTypes["chat_participant"]],
 customer?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["customer_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -2943,7 +2823,7 @@ restaurant_item_option_map_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["restaurant_item_option_map_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["restaurant_item_option_map_bool_exp"]},ValueTypes["restaurant_item_option_map_aggregate"]],
-restaurant_item_option_map_by_pk?: [{	item_id:number,	option_id:number},ValueTypes["restaurant_item_option_map"]],
+restaurant_item_option_map_by_pk?: [{	id:number},ValueTypes["restaurant_item_option_map"]],
 restaurant_operator?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["restaurant_operator_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -2982,7 +2862,7 @@ restaurant_option_choice_map_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["restaurant_option_choice_map_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["restaurant_option_choice_map_bool_exp"]},ValueTypes["restaurant_option_choice_map_aggregate"]],
-restaurant_option_choice_map_by_pk?: [{	choice_id:number,	option_id:number},ValueTypes["restaurant_option_choice_map"]],
+restaurant_option_choice_map_by_pk?: [{	id:number},ValueTypes["restaurant_option_choice_map"]],
 restaurant_order?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["restaurant_order_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -3226,8 +3106,6 @@ count?: [{	columns?:ValueTypes["restaurant_select_column"][],	distinct?:boolean}
 };
 	/** columns and relationships of "restaurant_cart" */
 ["restaurant_cart"]: AliasType<{
-	/** A computed field, executes function "cost" */
-	cost?:true,
 	/** An object relationship */
 	customer?:ValueTypes["customer"],
 	customer_id?:true,
@@ -3280,7 +3158,6 @@ count?: [{	columns?:ValueTypes["restaurant_cart_select_column"][],	distinct?:boo
 	_and?:ValueTypes["restaurant_cart_bool_exp"][],
 	_not?:ValueTypes["restaurant_cart_bool_exp"],
 	_or?:ValueTypes["restaurant_cart_bool_exp"][],
-	cost?:ValueTypes["money_comparison_exp"],
 	customer?:ValueTypes["customer_bool_exp"],
 	customer_id?:ValueTypes["Int_comparison_exp"],
 	items?:ValueTypes["restaurant_cart_item_bool_exp"],
@@ -3672,7 +3549,6 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 };
 	/** Ordering options when selecting data from "restaurant_cart". */
 ["restaurant_cart_order_by"]: {
-	cost?:ValueTypes["order_by"],
 	customer?:ValueTypes["customer_order_by"],
 	customer_id?:ValueTypes["order_by"],
 	items_aggregate?:ValueTypes["restaurant_cart_item_aggregate_order_by"],
@@ -4667,6 +4543,7 @@ count?: [{	columns?:ValueTypes["restaurant_item_select_column"][],	distinct?:boo
 };
 	/** columns and relationships of "restaurant_item_option_map" */
 ["restaurant_item_option_map"]: AliasType<{
+	id?:true,
 	item_id?:true,
 item_options?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["restaurant_option_select_column"][],	/** limit the number of rows returned */
@@ -4726,12 +4603,14 @@ count?: [{	columns?:ValueTypes["restaurant_item_option_map_select_column"][],	di
 };
 	/** aggregate avg on columns */
 ["restaurant_item_option_map_avg_fields"]: AliasType<{
+	id?:true,
 	item_id?:true,
 	option_id?:true,
 		__typename?: true
 }>;
 	/** order by avg() on columns of table "restaurant_item_option_map" */
 ["restaurant_item_option_map_avg_order_by"]: {
+	id?:ValueTypes["order_by"],
 	item_id?:ValueTypes["order_by"],
 	option_id?:ValueTypes["order_by"]
 };
@@ -4740,6 +4619,7 @@ count?: [{	columns?:ValueTypes["restaurant_item_option_map_select_column"][],	di
 	_and?:ValueTypes["restaurant_item_option_map_bool_exp"][],
 	_not?:ValueTypes["restaurant_item_option_map_bool_exp"],
 	_or?:ValueTypes["restaurant_item_option_map_bool_exp"][],
+	id?:ValueTypes["Int_comparison_exp"],
 	item_id?:ValueTypes["Int_comparison_exp"],
 	item_options?:ValueTypes["restaurant_option_bool_exp"],
 	option_id?:ValueTypes["Int_comparison_exp"]
@@ -4748,34 +4628,40 @@ count?: [{	columns?:ValueTypes["restaurant_item_option_map_select_column"][],	di
 ["restaurant_item_option_map_constraint"]:restaurant_item_option_map_constraint;
 	/** input type for incrementing numeric columns in table "restaurant_item_option_map" */
 ["restaurant_item_option_map_inc_input"]: {
+	id?:number,
 	item_id?:number,
 	option_id?:number
 };
 	/** input type for inserting data into table "restaurant_item_option_map" */
 ["restaurant_item_option_map_insert_input"]: {
+	id?:number,
 	item_id?:number,
 	item_options?:ValueTypes["restaurant_option_arr_rel_insert_input"],
 	option_id?:number
 };
 	/** aggregate max on columns */
 ["restaurant_item_option_map_max_fields"]: AliasType<{
+	id?:true,
 	item_id?:true,
 	option_id?:true,
 		__typename?: true
 }>;
 	/** order by max() on columns of table "restaurant_item_option_map" */
 ["restaurant_item_option_map_max_order_by"]: {
+	id?:ValueTypes["order_by"],
 	item_id?:ValueTypes["order_by"],
 	option_id?:ValueTypes["order_by"]
 };
 	/** aggregate min on columns */
 ["restaurant_item_option_map_min_fields"]: AliasType<{
+	id?:true,
 	item_id?:true,
 	option_id?:true,
 		__typename?: true
 }>;
 	/** order by min() on columns of table "restaurant_item_option_map" */
 ["restaurant_item_option_map_min_order_by"]: {
+	id?:ValueTypes["order_by"],
 	item_id?:ValueTypes["order_by"],
 	option_id?:ValueTypes["order_by"]
 };
@@ -4795,52 +4681,59 @@ count?: [{	columns?:ValueTypes["restaurant_item_option_map_select_column"][],	di
 };
 	/** Ordering options when selecting data from "restaurant_item_option_map". */
 ["restaurant_item_option_map_order_by"]: {
+	id?:ValueTypes["order_by"],
 	item_id?:ValueTypes["order_by"],
 	item_options_aggregate?:ValueTypes["restaurant_option_aggregate_order_by"],
 	option_id?:ValueTypes["order_by"]
 };
 	/** primary key columns input for table: restaurant_item_option_map */
 ["restaurant_item_option_map_pk_columns_input"]: {
-	item_id:number,
-	option_id:number
+	id:number
 };
 	/** select columns of table "restaurant_item_option_map" */
 ["restaurant_item_option_map_select_column"]:restaurant_item_option_map_select_column;
 	/** input type for updating data in table "restaurant_item_option_map" */
 ["restaurant_item_option_map_set_input"]: {
+	id?:number,
 	item_id?:number,
 	option_id?:number
 };
 	/** aggregate stddev on columns */
 ["restaurant_item_option_map_stddev_fields"]: AliasType<{
+	id?:true,
 	item_id?:true,
 	option_id?:true,
 		__typename?: true
 }>;
 	/** order by stddev() on columns of table "restaurant_item_option_map" */
 ["restaurant_item_option_map_stddev_order_by"]: {
+	id?:ValueTypes["order_by"],
 	item_id?:ValueTypes["order_by"],
 	option_id?:ValueTypes["order_by"]
 };
 	/** aggregate stddev_pop on columns */
 ["restaurant_item_option_map_stddev_pop_fields"]: AliasType<{
+	id?:true,
 	item_id?:true,
 	option_id?:true,
 		__typename?: true
 }>;
 	/** order by stddev_pop() on columns of table "restaurant_item_option_map" */
 ["restaurant_item_option_map_stddev_pop_order_by"]: {
+	id?:ValueTypes["order_by"],
 	item_id?:ValueTypes["order_by"],
 	option_id?:ValueTypes["order_by"]
 };
 	/** aggregate stddev_samp on columns */
 ["restaurant_item_option_map_stddev_samp_fields"]: AliasType<{
+	id?:true,
 	item_id?:true,
 	option_id?:true,
 		__typename?: true
 }>;
 	/** order by stddev_samp() on columns of table "restaurant_item_option_map" */
 ["restaurant_item_option_map_stddev_samp_order_by"]: {
+	id?:ValueTypes["order_by"],
 	item_id?:ValueTypes["order_by"],
 	option_id?:ValueTypes["order_by"]
 };
@@ -4853,17 +4746,20 @@ count?: [{	columns?:ValueTypes["restaurant_item_option_map_select_column"][],	di
 };
 	/** Initial value of the column from where the streaming should start */
 ["restaurant_item_option_map_stream_cursor_value_input"]: {
+	id?:number,
 	item_id?:number,
 	option_id?:number
 };
 	/** aggregate sum on columns */
 ["restaurant_item_option_map_sum_fields"]: AliasType<{
+	id?:true,
 	item_id?:true,
 	option_id?:true,
 		__typename?: true
 }>;
 	/** order by sum() on columns of table "restaurant_item_option_map" */
 ["restaurant_item_option_map_sum_order_by"]: {
+	id?:ValueTypes["order_by"],
 	item_id?:ValueTypes["order_by"],
 	option_id?:ValueTypes["order_by"]
 };
@@ -4878,34 +4774,40 @@ count?: [{	columns?:ValueTypes["restaurant_item_option_map_select_column"][],	di
 };
 	/** aggregate var_pop on columns */
 ["restaurant_item_option_map_var_pop_fields"]: AliasType<{
+	id?:true,
 	item_id?:true,
 	option_id?:true,
 		__typename?: true
 }>;
 	/** order by var_pop() on columns of table "restaurant_item_option_map" */
 ["restaurant_item_option_map_var_pop_order_by"]: {
+	id?:ValueTypes["order_by"],
 	item_id?:ValueTypes["order_by"],
 	option_id?:ValueTypes["order_by"]
 };
 	/** aggregate var_samp on columns */
 ["restaurant_item_option_map_var_samp_fields"]: AliasType<{
+	id?:true,
 	item_id?:true,
 	option_id?:true,
 		__typename?: true
 }>;
 	/** order by var_samp() on columns of table "restaurant_item_option_map" */
 ["restaurant_item_option_map_var_samp_order_by"]: {
+	id?:ValueTypes["order_by"],
 	item_id?:ValueTypes["order_by"],
 	option_id?:ValueTypes["order_by"]
 };
 	/** aggregate variance on columns */
 ["restaurant_item_option_map_variance_fields"]: AliasType<{
+	id?:true,
 	item_id?:true,
 	option_id?:true,
 		__typename?: true
 }>;
 	/** order by variance() on columns of table "restaurant_item_option_map" */
 ["restaurant_item_option_map_variance_order_by"]: {
+	id?:ValueTypes["order_by"],
 	item_id?:ValueTypes["order_by"],
 	option_id?:ValueTypes["order_by"]
 };
@@ -5626,6 +5528,7 @@ count?: [{	columns?:ValueTypes["restaurant_option_select_column"][],	distinct?:b
 	/** columns and relationships of "restaurant_option_choice_map" */
 ["restaurant_option_choice_map"]: AliasType<{
 	choice_id?:true,
+	id?:true,
 option_choices?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["restaurant_choice_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -5685,12 +5588,14 @@ count?: [{	columns?:ValueTypes["restaurant_option_choice_map_select_column"][],	
 	/** aggregate avg on columns */
 ["restaurant_option_choice_map_avg_fields"]: AliasType<{
 	choice_id?:true,
+	id?:true,
 	option_id?:true,
 		__typename?: true
 }>;
 	/** order by avg() on columns of table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_avg_order_by"]: {
 	choice_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
 	option_id?:ValueTypes["order_by"]
 };
 	/** Boolean expression to filter rows from the table "restaurant_option_choice_map".
@@ -5700,6 +5605,7 @@ All fields are combined with a logical 'AND'. */
 	_not?:ValueTypes["restaurant_option_choice_map_bool_exp"],
 	_or?:ValueTypes["restaurant_option_choice_map_bool_exp"][],
 	choice_id?:ValueTypes["Int_comparison_exp"],
+	id?:ValueTypes["Int_comparison_exp"],
 	option_choices?:ValueTypes["restaurant_choice_bool_exp"],
 	option_id?:ValueTypes["Int_comparison_exp"]
 };
@@ -5708,34 +5614,40 @@ All fields are combined with a logical 'AND'. */
 	/** input type for incrementing numeric columns in table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_inc_input"]: {
 	choice_id?:number,
+	id?:number,
 	option_id?:number
 };
 	/** input type for inserting data into table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_insert_input"]: {
 	choice_id?:number,
+	id?:number,
 	option_choices?:ValueTypes["restaurant_choice_arr_rel_insert_input"],
 	option_id?:number
 };
 	/** aggregate max on columns */
 ["restaurant_option_choice_map_max_fields"]: AliasType<{
 	choice_id?:true,
+	id?:true,
 	option_id?:true,
 		__typename?: true
 }>;
 	/** order by max() on columns of table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_max_order_by"]: {
 	choice_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
 	option_id?:ValueTypes["order_by"]
 };
 	/** aggregate min on columns */
 ["restaurant_option_choice_map_min_fields"]: AliasType<{
 	choice_id?:true,
+	id?:true,
 	option_id?:true,
 		__typename?: true
 }>;
 	/** order by min() on columns of table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_min_order_by"]: {
 	choice_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
 	option_id?:ValueTypes["order_by"]
 };
 	/** response of any mutation on the table "restaurant_option_choice_map" */
@@ -5755,52 +5667,59 @@ All fields are combined with a logical 'AND'. */
 	/** Ordering options when selecting data from "restaurant_option_choice_map". */
 ["restaurant_option_choice_map_order_by"]: {
 	choice_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
 	option_choices_aggregate?:ValueTypes["restaurant_choice_aggregate_order_by"],
 	option_id?:ValueTypes["order_by"]
 };
 	/** primary key columns input for table: restaurant_option_choice_map */
 ["restaurant_option_choice_map_pk_columns_input"]: {
-	choice_id:number,
-	option_id:number
+	id:number
 };
 	/** select columns of table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_select_column"]:restaurant_option_choice_map_select_column;
 	/** input type for updating data in table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_set_input"]: {
 	choice_id?:number,
+	id?:number,
 	option_id?:number
 };
 	/** aggregate stddev on columns */
 ["restaurant_option_choice_map_stddev_fields"]: AliasType<{
 	choice_id?:true,
+	id?:true,
 	option_id?:true,
 		__typename?: true
 }>;
 	/** order by stddev() on columns of table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_stddev_order_by"]: {
 	choice_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
 	option_id?:ValueTypes["order_by"]
 };
 	/** aggregate stddev_pop on columns */
 ["restaurant_option_choice_map_stddev_pop_fields"]: AliasType<{
 	choice_id?:true,
+	id?:true,
 	option_id?:true,
 		__typename?: true
 }>;
 	/** order by stddev_pop() on columns of table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_stddev_pop_order_by"]: {
 	choice_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
 	option_id?:ValueTypes["order_by"]
 };
 	/** aggregate stddev_samp on columns */
 ["restaurant_option_choice_map_stddev_samp_fields"]: AliasType<{
 	choice_id?:true,
+	id?:true,
 	option_id?:true,
 		__typename?: true
 }>;
 	/** order by stddev_samp() on columns of table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_stddev_samp_order_by"]: {
 	choice_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
 	option_id?:ValueTypes["order_by"]
 };
 	/** Streaming cursor of the table "restaurant_option_choice_map" */
@@ -5813,17 +5732,20 @@ All fields are combined with a logical 'AND'. */
 	/** Initial value of the column from where the streaming should start */
 ["restaurant_option_choice_map_stream_cursor_value_input"]: {
 	choice_id?:number,
+	id?:number,
 	option_id?:number
 };
 	/** aggregate sum on columns */
 ["restaurant_option_choice_map_sum_fields"]: AliasType<{
 	choice_id?:true,
+	id?:true,
 	option_id?:true,
 		__typename?: true
 }>;
 	/** order by sum() on columns of table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_sum_order_by"]: {
 	choice_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
 	option_id?:ValueTypes["order_by"]
 };
 	/** update columns of table "restaurant_option_choice_map" */
@@ -5838,34 +5760,40 @@ All fields are combined with a logical 'AND'. */
 	/** aggregate var_pop on columns */
 ["restaurant_option_choice_map_var_pop_fields"]: AliasType<{
 	choice_id?:true,
+	id?:true,
 	option_id?:true,
 		__typename?: true
 }>;
 	/** order by var_pop() on columns of table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_var_pop_order_by"]: {
 	choice_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
 	option_id?:ValueTypes["order_by"]
 };
 	/** aggregate var_samp on columns */
 ["restaurant_option_choice_map_var_samp_fields"]: AliasType<{
 	choice_id?:true,
+	id?:true,
 	option_id?:true,
 		__typename?: true
 }>;
 	/** order by var_samp() on columns of table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_var_samp_order_by"]: {
 	choice_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
 	option_id?:ValueTypes["order_by"]
 };
 	/** aggregate variance on columns */
 ["restaurant_option_choice_map_variance_fields"]: AliasType<{
 	choice_id?:true,
+	id?:true,
 	option_id?:true,
 		__typename?: true
 }>;
 	/** order by variance() on columns of table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_variance_order_by"]: {
 	choice_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
 	option_id?:ValueTypes["order_by"]
 };
 	/** unique or primary key constraints on table "restaurant_option" */
@@ -6188,8 +6116,6 @@ items_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["restaurant_order_item_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["restaurant_order_item_bool_exp"]},ValueTypes["restaurant_order_item_aggregate"]],
-	/** A computed field, executes function "itemscost" */
-	items_cost?:true,
 	notes?:true,
 	order_time?:true,
 	order_type?:true,
@@ -6207,8 +6133,6 @@ items_aggregate?: [{	/** distinct select on columns */
 	tax?:true,
 	to_location_address?:true,
 	to_location_gps?:true,
-	/** A computed field, executes function "totalcost" */
-	total_cost?:true,
 		__typename?: true
 }>;
 	/** aggregated selection of "restaurant_order" */
@@ -6297,7 +6221,6 @@ count?: [{	columns?:ValueTypes["restaurant_order_select_column"][],	distinct?:bo
 	firebase_id?:ValueTypes["String_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	items?:ValueTypes["restaurant_order_item_bool_exp"],
-	items_cost?:ValueTypes["money_comparison_exp"],
 	notes?:ValueTypes["String_comparison_exp"],
 	order_time?:ValueTypes["timestamptz_comparison_exp"],
 	order_type?:ValueTypes["String_comparison_exp"],
@@ -6311,8 +6234,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_select_column"][],	distinct?:bo
 	stripe_payment_id?:ValueTypes["Int_comparison_exp"],
 	tax?:ValueTypes["float8_comparison_exp"],
 	to_location_address?:ValueTypes["String_comparison_exp"],
-	to_location_gps?:ValueTypes["geography_comparison_exp"],
-	total_cost?:ValueTypes["money_comparison_exp"]
+	to_location_gps?:ValueTypes["geography_comparison_exp"]
 };
 	/** Ordering options when selecting data from "restaurant". */
 ["restaurant_order_by"]: {
@@ -6882,7 +6804,6 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	firebase_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	items_aggregate?:ValueTypes["restaurant_order_item_aggregate_order_by"],
-	items_cost?:ValueTypes["order_by"],
 	notes?:ValueTypes["order_by"],
 	order_time?:ValueTypes["order_by"],
 	order_type?:ValueTypes["order_by"],
@@ -6896,8 +6817,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	stripe_payment_id?:ValueTypes["order_by"],
 	tax?:ValueTypes["order_by"],
 	to_location_address?:ValueTypes["order_by"],
-	to_location_gps?:ValueTypes["order_by"],
-	total_cost?:ValueTypes["order_by"]
+	to_location_gps?:ValueTypes["order_by"]
 };
 	/** primary key columns input for table: restaurant_order */
 ["restaurant_order_pk_columns_input"]: {
@@ -7959,7 +7879,7 @@ chat_participant_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["chat_participant_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["chat_participant_bool_exp"]},ValueTypes["chat_participant_aggregate"]],
-chat_participant_by_pk?: [{	id:number},ValueTypes["chat_participant"]],
+chat_participant_by_pk?: [{	chat_id:number,	participant_id:number},ValueTypes["chat_participant"]],
 chat_participant_stream?: [{	/** maximum number of rows returned in a single batch */
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["chat_participant_stream_cursor_input"][],	/** filter the rows returned */
@@ -8159,7 +8079,7 @@ restaurant_item_option_map_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["restaurant_item_option_map_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["restaurant_item_option_map_bool_exp"]},ValueTypes["restaurant_item_option_map_aggregate"]],
-restaurant_item_option_map_by_pk?: [{	item_id:number,	option_id:number},ValueTypes["restaurant_item_option_map"]],
+restaurant_item_option_map_by_pk?: [{	id:number},ValueTypes["restaurant_item_option_map"]],
 restaurant_item_option_map_stream?: [{	/** maximum number of rows returned in a single batch */
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["restaurant_item_option_map_stream_cursor_input"][],	/** filter the rows returned */
@@ -8210,7 +8130,7 @@ restaurant_option_choice_map_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["restaurant_option_choice_map_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["restaurant_option_choice_map_bool_exp"]},ValueTypes["restaurant_option_choice_map_aggregate"]],
-restaurant_option_choice_map_by_pk?: [{	choice_id:number,	option_id:number},ValueTypes["restaurant_option_choice_map"]],
+restaurant_option_choice_map_by_pk?: [{	id:number},ValueTypes["restaurant_option_choice_map"]],
 restaurant_option_choice_map_stream?: [{	/** maximum number of rows returned in a single batch */
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["restaurant_option_choice_map_stream_cursor_input"][],	/** filter the rows returned */
@@ -9313,7 +9233,6 @@ end). throws an error if top level container is not an array */
 			/** An object relationship */
 	chat?:PartialObjects["chat"],
 			chat_id?:number,
-			id?:number,
 			/** An object relationship */
 	notification_info?:PartialObjects["notification_info"],
 			participant_id?:number,
@@ -9365,13 +9284,11 @@ end). throws an error if top level container is not an array */
 ["chat_participant_avg_fields"]: {
 		__typename?: "chat_participant_avg_fields";
 			chat_id?:number,
-			id?:number,
 			participant_id?:number
 	},
 	/** order by avg() on columns of table "chat_participant" */
 ["chat_participant_avg_order_by"]: {
 	chat_id?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
 	participant_id?:PartialObjects["order_by"]
 },
 	/** Boolean expression to filter rows from the table "chat_participant". All fields are combined with a logical 'AND'. */
@@ -9382,7 +9299,6 @@ end). throws an error if top level container is not an array */
 	app_type_id?:PartialObjects["String_comparison_exp"],
 	chat?:PartialObjects["chat_bool_exp"],
 	chat_id?:PartialObjects["Int_comparison_exp"],
-	id?:PartialObjects["Int_comparison_exp"],
 	notification_info?:PartialObjects["notification_info_bool_exp"],
 	participant_id?:PartialObjects["Int_comparison_exp"],
 	user?:PartialObjects["user_bool_exp"]
@@ -9392,7 +9308,6 @@ end). throws an error if top level container is not an array */
 	/** input type for incrementing numeric columns in table "chat_participant" */
 ["chat_participant_inc_input"]: {
 	chat_id?:number,
-	id?:number,
 	participant_id?:number
 },
 	/** input type for inserting data into table "chat_participant" */
@@ -9400,7 +9315,6 @@ end). throws an error if top level container is not an array */
 	app_type_id?:string,
 	chat?:PartialObjects["chat_obj_rel_insert_input"],
 	chat_id?:number,
-	id?:number,
 	notification_info?:PartialObjects["notification_info_obj_rel_insert_input"],
 	participant_id?:number,
 	user?:PartialObjects["user_obj_rel_insert_input"]
@@ -9410,14 +9324,12 @@ end). throws an error if top level container is not an array */
 		__typename?: "chat_participant_max_fields";
 			app_type_id?:string,
 			chat_id?:number,
-			id?:number,
 			participant_id?:number
 	},
 	/** order by max() on columns of table "chat_participant" */
 ["chat_participant_max_order_by"]: {
 	app_type_id?:PartialObjects["order_by"],
 	chat_id?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
 	participant_id?:PartialObjects["order_by"]
 },
 	/** aggregate min on columns */
@@ -9425,14 +9337,12 @@ end). throws an error if top level container is not an array */
 		__typename?: "chat_participant_min_fields";
 			app_type_id?:string,
 			chat_id?:number,
-			id?:number,
 			participant_id?:number
 	},
 	/** order by min() on columns of table "chat_participant" */
 ["chat_participant_min_order_by"]: {
 	app_type_id?:PartialObjects["order_by"],
 	chat_id?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
 	participant_id?:PartialObjects["order_by"]
 },
 	/** response of any mutation on the table "chat_participant" */
@@ -9454,14 +9364,14 @@ end). throws an error if top level container is not an array */
 	app_type_id?:PartialObjects["order_by"],
 	chat?:PartialObjects["chat_order_by"],
 	chat_id?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
 	notification_info?:PartialObjects["notification_info_order_by"],
 	participant_id?:PartialObjects["order_by"],
 	user?:PartialObjects["user_order_by"]
 },
 	/** primary key columns input for table: chat_participant */
 ["chat_participant_pk_columns_input"]: {
-	id:number
+	chat_id:number,
+	participant_id:number
 },
 	/** select columns of table "chat_participant" */
 ["chat_participant_select_column"]:chat_participant_select_column,
@@ -9469,46 +9379,39 @@ end). throws an error if top level container is not an array */
 ["chat_participant_set_input"]: {
 	app_type_id?:string,
 	chat_id?:number,
-	id?:number,
 	participant_id?:number
 },
 	/** aggregate stddev on columns */
 ["chat_participant_stddev_fields"]: {
 		__typename?: "chat_participant_stddev_fields";
 			chat_id?:number,
-			id?:number,
 			participant_id?:number
 	},
 	/** order by stddev() on columns of table "chat_participant" */
 ["chat_participant_stddev_order_by"]: {
 	chat_id?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
 	participant_id?:PartialObjects["order_by"]
 },
 	/** aggregate stddev_pop on columns */
 ["chat_participant_stddev_pop_fields"]: {
 		__typename?: "chat_participant_stddev_pop_fields";
 			chat_id?:number,
-			id?:number,
 			participant_id?:number
 	},
 	/** order by stddev_pop() on columns of table "chat_participant" */
 ["chat_participant_stddev_pop_order_by"]: {
 	chat_id?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
 	participant_id?:PartialObjects["order_by"]
 },
 	/** aggregate stddev_samp on columns */
 ["chat_participant_stddev_samp_fields"]: {
 		__typename?: "chat_participant_stddev_samp_fields";
 			chat_id?:number,
-			id?:number,
 			participant_id?:number
 	},
 	/** order by stddev_samp() on columns of table "chat_participant" */
 ["chat_participant_stddev_samp_order_by"]: {
 	chat_id?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
 	participant_id?:PartialObjects["order_by"]
 },
 	/** Streaming cursor of the table "chat_participant" */
@@ -9522,20 +9425,17 @@ end). throws an error if top level container is not an array */
 ["chat_participant_stream_cursor_value_input"]: {
 	app_type_id?:string,
 	chat_id?:number,
-	id?:number,
 	participant_id?:number
 },
 	/** aggregate sum on columns */
 ["chat_participant_sum_fields"]: {
 		__typename?: "chat_participant_sum_fields";
 			chat_id?:number,
-			id?:number,
 			participant_id?:number
 	},
 	/** order by sum() on columns of table "chat_participant" */
 ["chat_participant_sum_order_by"]: {
 	chat_id?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
 	participant_id?:PartialObjects["order_by"]
 },
 	/** update columns of table "chat_participant" */
@@ -9551,39 +9451,33 @@ end). throws an error if top level container is not an array */
 ["chat_participant_var_pop_fields"]: {
 		__typename?: "chat_participant_var_pop_fields";
 			chat_id?:number,
-			id?:number,
 			participant_id?:number
 	},
 	/** order by var_pop() on columns of table "chat_participant" */
 ["chat_participant_var_pop_order_by"]: {
 	chat_id?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
 	participant_id?:PartialObjects["order_by"]
 },
 	/** aggregate var_samp on columns */
 ["chat_participant_var_samp_fields"]: {
 		__typename?: "chat_participant_var_samp_fields";
 			chat_id?:number,
-			id?:number,
 			participant_id?:number
 	},
 	/** order by var_samp() on columns of table "chat_participant" */
 ["chat_participant_var_samp_order_by"]: {
 	chat_id?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
 	participant_id?:PartialObjects["order_by"]
 },
 	/** aggregate variance on columns */
 ["chat_participant_variance_fields"]: {
 		__typename?: "chat_participant_variance_fields";
 			chat_id?:number,
-			id?:number,
 			participant_id?:number
 	},
 	/** order by variance() on columns of table "chat_participant" */
 ["chat_participant_variance_order_by"]: {
 	chat_id?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
 	participant_id?:PartialObjects["order_by"]
 },
 	/** primary key columns input for table: chat */
@@ -10119,7 +10013,6 @@ the end). throws an error if top level container is not an array */
 			estimated_arrival_at_pickup_time?:PartialObjects["timestamptz"],
 			estimated_package_ready_time?:PartialObjects["timestamptz"],
 			id?:number,
-			order_time?:PartialObjects["timestamptz"],
 			package_cost?:PartialObjects["money"],
 			payment_type?:string,
 			pickup_address?:string,
@@ -10132,10 +10025,8 @@ the end). throws an error if top level container is not an array */
 			/** orderReceived */
 	status?:string,
 			stripe_payment_id?:number,
-			/** in meters */
-	trip_distance?:number,
-			/** in seconds */
-	trip_duration?:number,
+			trip_distance?:string,
+			trip_duration?:string,
 			trip_polyline?:string
 	},
 	/** aggregated selection of "delivery" */
@@ -10194,11 +10085,7 @@ the end). throws an error if top level container is not an array */
 			package_cost?:number,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number,
-			/** in meters */
-	trip_distance?:number,
-			/** in seconds */
-	trip_duration?:number
+			stripe_payment_id?:number
 	},
 	/** order by avg() on columns of table "delivery" */
 ["delivery_avg_order_by"]: {
@@ -10214,11 +10101,7 @@ the end). throws an error if top level container is not an array */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"],
-	/** in meters */
-	trip_distance?:PartialObjects["order_by"],
-	/** in seconds */
-	trip_duration?:PartialObjects["order_by"]
+	stripe_payment_id?:PartialObjects["order_by"]
 },
 	/** Boolean expression to filter rows from the table "delivery". All fields are combined with a logical 'AND'. */
 ["delivery_bool_exp"]: {
@@ -10251,7 +10134,6 @@ the end). throws an error if top level container is not an array */
 	estimated_arrival_at_pickup_time?:PartialObjects["timestamptz_comparison_exp"],
 	estimated_package_ready_time?:PartialObjects["timestamptz_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
-	order_time?:PartialObjects["timestamptz_comparison_exp"],
 	package_cost?:PartialObjects["money_comparison_exp"],
 	payment_type?:PartialObjects["String_comparison_exp"],
 	pickup_address?:PartialObjects["String_comparison_exp"],
@@ -10262,8 +10144,8 @@ the end). throws an error if top level container is not an array */
 	service_provider_type?:PartialObjects["String_comparison_exp"],
 	status?:PartialObjects["String_comparison_exp"],
 	stripe_payment_id?:PartialObjects["Int_comparison_exp"],
-	trip_distance?:PartialObjects["Int_comparison_exp"],
-	trip_duration?:PartialObjects["Int_comparison_exp"],
+	trip_distance?:PartialObjects["String_comparison_exp"],
+	trip_duration?:PartialObjects["String_comparison_exp"],
 	trip_polyline?:PartialObjects["String_comparison_exp"]
 },
 	/** unique or primary key constraints on table "delivery" */
@@ -10282,11 +10164,7 @@ the end). throws an error if top level container is not an array */
 	package_cost?:PartialObjects["money"],
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number
+	stripe_payment_id?:number
 },
 	/** input type for inserting data into table "delivery" */
 ["delivery_insert_input"]: {
@@ -10316,7 +10194,6 @@ the end). throws an error if top level container is not an array */
 	estimated_arrival_at_pickup_time?:PartialObjects["timestamptz"],
 	estimated_package_ready_time?:PartialObjects["timestamptz"],
 	id?:number,
-	order_time?:PartialObjects["timestamptz"],
 	package_cost?:PartialObjects["money"],
 	payment_type?:string,
 	pickup_address?:string,
@@ -10328,10 +10205,8 @@ the end). throws an error if top level container is not an array */
 	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number,
+	trip_distance?:string,
+	trip_duration?:string,
 	trip_polyline?:string
 },
 	/** aggregate max on columns */
@@ -10355,7 +10230,6 @@ the end). throws an error if top level container is not an array */
 			estimated_arrival_at_pickup_time?:PartialObjects["timestamptz"],
 			estimated_package_ready_time?:PartialObjects["timestamptz"],
 			id?:number,
-			order_time?:PartialObjects["timestamptz"],
 			package_cost?:PartialObjects["money"],
 			payment_type?:string,
 			pickup_address?:string,
@@ -10365,10 +10239,8 @@ the end). throws an error if top level container is not an array */
 			/** orderReceived */
 	status?:string,
 			stripe_payment_id?:number,
-			/** in meters */
-	trip_distance?:number,
-			/** in seconds */
-	trip_duration?:number,
+			trip_distance?:string,
+			trip_duration?:string,
 			trip_polyline?:string
 	},
 	/** order by max() on columns of table "delivery" */
@@ -10391,7 +10263,6 @@ the end). throws an error if top level container is not an array */
 	estimated_arrival_at_pickup_time?:PartialObjects["order_by"],
 	estimated_package_ready_time?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
-	order_time?:PartialObjects["order_by"],
 	package_cost?:PartialObjects["order_by"],
 	payment_type?:PartialObjects["order_by"],
 	pickup_address?:PartialObjects["order_by"],
@@ -10401,9 +10272,7 @@ the end). throws an error if top level container is not an array */
 	/** orderReceived */
 	status?:PartialObjects["order_by"],
 	stripe_payment_id?:PartialObjects["order_by"],
-	/** in meters */
 	trip_distance?:PartialObjects["order_by"],
-	/** in seconds */
 	trip_duration?:PartialObjects["order_by"],
 	trip_polyline?:PartialObjects["order_by"]
 },
@@ -10428,7 +10297,6 @@ the end). throws an error if top level container is not an array */
 			estimated_arrival_at_pickup_time?:PartialObjects["timestamptz"],
 			estimated_package_ready_time?:PartialObjects["timestamptz"],
 			id?:number,
-			order_time?:PartialObjects["timestamptz"],
 			package_cost?:PartialObjects["money"],
 			payment_type?:string,
 			pickup_address?:string,
@@ -10438,10 +10306,8 @@ the end). throws an error if top level container is not an array */
 			/** orderReceived */
 	status?:string,
 			stripe_payment_id?:number,
-			/** in meters */
-	trip_distance?:number,
-			/** in seconds */
-	trip_duration?:number,
+			trip_distance?:string,
+			trip_duration?:string,
 			trip_polyline?:string
 	},
 	/** order by min() on columns of table "delivery" */
@@ -10464,7 +10330,6 @@ the end). throws an error if top level container is not an array */
 	estimated_arrival_at_pickup_time?:PartialObjects["order_by"],
 	estimated_package_ready_time?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
-	order_time?:PartialObjects["order_by"],
 	package_cost?:PartialObjects["order_by"],
 	payment_type?:PartialObjects["order_by"],
 	pickup_address?:PartialObjects["order_by"],
@@ -10474,9 +10339,7 @@ the end). throws an error if top level container is not an array */
 	/** orderReceived */
 	status?:PartialObjects["order_by"],
 	stripe_payment_id?:PartialObjects["order_by"],
-	/** in meters */
 	trip_distance?:PartialObjects["order_by"],
-	/** in seconds */
 	trip_duration?:PartialObjects["order_by"],
 	trip_polyline?:PartialObjects["order_by"]
 },
@@ -10528,7 +10391,6 @@ the end). throws an error if top level container is not an array */
 	estimated_arrival_at_pickup_time?:PartialObjects["order_by"],
 	estimated_package_ready_time?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
-	order_time?:PartialObjects["order_by"],
 	package_cost?:PartialObjects["order_by"],
 	payment_type?:PartialObjects["order_by"],
 	pickup_address?:PartialObjects["order_by"],
@@ -10571,7 +10433,6 @@ the end). throws an error if top level container is not an array */
 	estimated_arrival_at_pickup_time?:PartialObjects["timestamptz"],
 	estimated_package_ready_time?:PartialObjects["timestamptz"],
 	id?:number,
-	order_time?:PartialObjects["timestamptz"],
 	package_cost?:PartialObjects["money"],
 	payment_type?:string,
 	pickup_address?:string,
@@ -10582,10 +10443,8 @@ the end). throws an error if top level container is not an array */
 	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number,
+	trip_distance?:string,
+	trip_duration?:string,
 	trip_polyline?:string
 },
 	/** aggregate stddev on columns */
@@ -10603,11 +10462,7 @@ the end). throws an error if top level container is not an array */
 			package_cost?:number,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number,
-			/** in meters */
-	trip_distance?:number,
-			/** in seconds */
-	trip_duration?:number
+			stripe_payment_id?:number
 	},
 	/** order by stddev() on columns of table "delivery" */
 ["delivery_stddev_order_by"]: {
@@ -10623,11 +10478,7 @@ the end). throws an error if top level container is not an array */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"],
-	/** in meters */
-	trip_distance?:PartialObjects["order_by"],
-	/** in seconds */
-	trip_duration?:PartialObjects["order_by"]
+	stripe_payment_id?:PartialObjects["order_by"]
 },
 	/** aggregate stddev_pop on columns */
 ["delivery_stddev_pop_fields"]: {
@@ -10644,11 +10495,7 @@ the end). throws an error if top level container is not an array */
 			package_cost?:number,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number,
-			/** in meters */
-	trip_distance?:number,
-			/** in seconds */
-	trip_duration?:number
+			stripe_payment_id?:number
 	},
 	/** order by stddev_pop() on columns of table "delivery" */
 ["delivery_stddev_pop_order_by"]: {
@@ -10664,11 +10511,7 @@ the end). throws an error if top level container is not an array */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"],
-	/** in meters */
-	trip_distance?:PartialObjects["order_by"],
-	/** in seconds */
-	trip_duration?:PartialObjects["order_by"]
+	stripe_payment_id?:PartialObjects["order_by"]
 },
 	/** aggregate stddev_samp on columns */
 ["delivery_stddev_samp_fields"]: {
@@ -10685,11 +10528,7 @@ the end). throws an error if top level container is not an array */
 			package_cost?:number,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number,
-			/** in meters */
-	trip_distance?:number,
-			/** in seconds */
-	trip_duration?:number
+			stripe_payment_id?:number
 	},
 	/** order by stddev_samp() on columns of table "delivery" */
 ["delivery_stddev_samp_order_by"]: {
@@ -10705,11 +10544,7 @@ the end). throws an error if top level container is not an array */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"],
-	/** in meters */
-	trip_distance?:PartialObjects["order_by"],
-	/** in seconds */
-	trip_duration?:PartialObjects["order_by"]
+	stripe_payment_id?:PartialObjects["order_by"]
 },
 	/** Streaming cursor of the table "delivery" */
 ["delivery_stream_cursor_input"]: {
@@ -10740,7 +10575,6 @@ the end). throws an error if top level container is not an array */
 	estimated_arrival_at_pickup_time?:PartialObjects["timestamptz"],
 	estimated_package_ready_time?:PartialObjects["timestamptz"],
 	id?:number,
-	order_time?:PartialObjects["timestamptz"],
 	package_cost?:PartialObjects["money"],
 	payment_type?:string,
 	pickup_address?:string,
@@ -10751,10 +10585,8 @@ the end). throws an error if top level container is not an array */
 	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number,
+	trip_distance?:string,
+	trip_duration?:string,
 	trip_polyline?:string
 },
 	/** aggregate sum on columns */
@@ -10772,11 +10604,7 @@ the end). throws an error if top level container is not an array */
 			package_cost?:PartialObjects["money"],
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number,
-			/** in meters */
-	trip_distance?:number,
-			/** in seconds */
-	trip_duration?:number
+			stripe_payment_id?:number
 	},
 	/** order by sum() on columns of table "delivery" */
 ["delivery_sum_order_by"]: {
@@ -10792,11 +10620,7 @@ the end). throws an error if top level container is not an array */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"],
-	/** in meters */
-	trip_distance?:PartialObjects["order_by"],
-	/** in seconds */
-	trip_duration?:PartialObjects["order_by"]
+	stripe_payment_id?:PartialObjects["order_by"]
 },
 	/** update columns of table "delivery" */
 ["delivery_update_column"]:delivery_update_column,
@@ -10822,11 +10646,7 @@ the end). throws an error if top level container is not an array */
 			package_cost?:number,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number,
-			/** in meters */
-	trip_distance?:number,
-			/** in seconds */
-	trip_duration?:number
+			stripe_payment_id?:number
 	},
 	/** order by var_pop() on columns of table "delivery" */
 ["delivery_var_pop_order_by"]: {
@@ -10842,11 +10662,7 @@ the end). throws an error if top level container is not an array */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"],
-	/** in meters */
-	trip_distance?:PartialObjects["order_by"],
-	/** in seconds */
-	trip_duration?:PartialObjects["order_by"]
+	stripe_payment_id?:PartialObjects["order_by"]
 },
 	/** aggregate var_samp on columns */
 ["delivery_var_samp_fields"]: {
@@ -10863,11 +10679,7 @@ the end). throws an error if top level container is not an array */
 			package_cost?:number,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number,
-			/** in meters */
-	trip_distance?:number,
-			/** in seconds */
-	trip_duration?:number
+			stripe_payment_id?:number
 	},
 	/** order by var_samp() on columns of table "delivery" */
 ["delivery_var_samp_order_by"]: {
@@ -10883,11 +10695,7 @@ the end). throws an error if top level container is not an array */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"],
-	/** in meters */
-	trip_distance?:PartialObjects["order_by"],
-	/** in seconds */
-	trip_duration?:PartialObjects["order_by"]
+	stripe_payment_id?:PartialObjects["order_by"]
 },
 	/** aggregate variance on columns */
 ["delivery_variance_fields"]: {
@@ -10904,11 +10712,7 @@ the end). throws an error if top level container is not an array */
 			package_cost?:number,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number,
-			/** in meters */
-	trip_distance?:number,
-			/** in seconds */
-	trip_duration?:number
+			stripe_payment_id?:number
 	},
 	/** order by variance() on columns of table "delivery" */
 ["delivery_variance_order_by"]: {
@@ -10924,11 +10728,7 @@ the end). throws an error if top level container is not an array */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"],
-	/** in meters */
-	trip_distance?:PartialObjects["order_by"],
-	/** in seconds */
-	trip_duration?:PartialObjects["order_by"]
+	stripe_payment_id?:PartialObjects["order_by"]
 },
 	["float8"]:any,
 	/** Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'. */
@@ -12054,8 +11854,6 @@ the end). throws an error if top level container is not an array */
 	/** columns and relationships of "restaurant_cart" */
 ["restaurant_cart"]: {
 		__typename?: "restaurant_cart";
-			/** A computed field, executes function "cost" */
-	cost?:PartialObjects["money"],
 			/** An object relationship */
 	customer?:PartialObjects["customer"],
 			customer_id?:number,
@@ -12099,7 +11897,6 @@ the end). throws an error if top level container is not an array */
 	_and?:PartialObjects["restaurant_cart_bool_exp"][],
 	_not?:PartialObjects["restaurant_cart_bool_exp"],
 	_or?:PartialObjects["restaurant_cart_bool_exp"][],
-	cost?:PartialObjects["money_comparison_exp"],
 	customer?:PartialObjects["customer_bool_exp"],
 	customer_id?:PartialObjects["Int_comparison_exp"],
 	items?:PartialObjects["restaurant_cart_item_bool_exp"],
@@ -12490,7 +12287,6 @@ the end). throws an error if top level container is not an array */
 },
 	/** Ordering options when selecting data from "restaurant_cart". */
 ["restaurant_cart_order_by"]: {
-	cost?:PartialObjects["order_by"],
 	customer?:PartialObjects["customer_order_by"],
 	customer_id?:PartialObjects["order_by"],
 	items_aggregate?:PartialObjects["restaurant_cart_item_aggregate_order_by"],
@@ -13462,6 +13258,7 @@ the end). throws an error if top level container is not an array */
 	/** columns and relationships of "restaurant_item_option_map" */
 ["restaurant_item_option_map"]: {
 		__typename?: "restaurant_item_option_map";
+			id?:number,
 			item_id?:number,
 			/** An array relationship */
 	item_options?:PartialObjects["restaurant_option"][],
@@ -13513,11 +13310,13 @@ the end). throws an error if top level container is not an array */
 	/** aggregate avg on columns */
 ["restaurant_item_option_map_avg_fields"]: {
 		__typename?: "restaurant_item_option_map_avg_fields";
+			id?:number,
 			item_id?:number,
 			option_id?:number
 	},
 	/** order by avg() on columns of table "restaurant_item_option_map" */
 ["restaurant_item_option_map_avg_order_by"]: {
+	id?:PartialObjects["order_by"],
 	item_id?:PartialObjects["order_by"],
 	option_id?:PartialObjects["order_by"]
 },
@@ -13526,6 +13325,7 @@ the end). throws an error if top level container is not an array */
 	_and?:PartialObjects["restaurant_item_option_map_bool_exp"][],
 	_not?:PartialObjects["restaurant_item_option_map_bool_exp"],
 	_or?:PartialObjects["restaurant_item_option_map_bool_exp"][],
+	id?:PartialObjects["Int_comparison_exp"],
 	item_id?:PartialObjects["Int_comparison_exp"],
 	item_options?:PartialObjects["restaurant_option_bool_exp"],
 	option_id?:PartialObjects["Int_comparison_exp"]
@@ -13534,11 +13334,13 @@ the end). throws an error if top level container is not an array */
 ["restaurant_item_option_map_constraint"]:restaurant_item_option_map_constraint,
 	/** input type for incrementing numeric columns in table "restaurant_item_option_map" */
 ["restaurant_item_option_map_inc_input"]: {
+	id?:number,
 	item_id?:number,
 	option_id?:number
 },
 	/** input type for inserting data into table "restaurant_item_option_map" */
 ["restaurant_item_option_map_insert_input"]: {
+	id?:number,
 	item_id?:number,
 	item_options?:PartialObjects["restaurant_option_arr_rel_insert_input"],
 	option_id?:number
@@ -13546,22 +13348,26 @@ the end). throws an error if top level container is not an array */
 	/** aggregate max on columns */
 ["restaurant_item_option_map_max_fields"]: {
 		__typename?: "restaurant_item_option_map_max_fields";
+			id?:number,
 			item_id?:number,
 			option_id?:number
 	},
 	/** order by max() on columns of table "restaurant_item_option_map" */
 ["restaurant_item_option_map_max_order_by"]: {
+	id?:PartialObjects["order_by"],
 	item_id?:PartialObjects["order_by"],
 	option_id?:PartialObjects["order_by"]
 },
 	/** aggregate min on columns */
 ["restaurant_item_option_map_min_fields"]: {
 		__typename?: "restaurant_item_option_map_min_fields";
+			id?:number,
 			item_id?:number,
 			option_id?:number
 	},
 	/** order by min() on columns of table "restaurant_item_option_map" */
 ["restaurant_item_option_map_min_order_by"]: {
+	id?:PartialObjects["order_by"],
 	item_id?:PartialObjects["order_by"],
 	option_id?:PartialObjects["order_by"]
 },
@@ -13581,52 +13387,59 @@ the end). throws an error if top level container is not an array */
 },
 	/** Ordering options when selecting data from "restaurant_item_option_map". */
 ["restaurant_item_option_map_order_by"]: {
+	id?:PartialObjects["order_by"],
 	item_id?:PartialObjects["order_by"],
 	item_options_aggregate?:PartialObjects["restaurant_option_aggregate_order_by"],
 	option_id?:PartialObjects["order_by"]
 },
 	/** primary key columns input for table: restaurant_item_option_map */
 ["restaurant_item_option_map_pk_columns_input"]: {
-	item_id:number,
-	option_id:number
+	id:number
 },
 	/** select columns of table "restaurant_item_option_map" */
 ["restaurant_item_option_map_select_column"]:restaurant_item_option_map_select_column,
 	/** input type for updating data in table "restaurant_item_option_map" */
 ["restaurant_item_option_map_set_input"]: {
+	id?:number,
 	item_id?:number,
 	option_id?:number
 },
 	/** aggregate stddev on columns */
 ["restaurant_item_option_map_stddev_fields"]: {
 		__typename?: "restaurant_item_option_map_stddev_fields";
+			id?:number,
 			item_id?:number,
 			option_id?:number
 	},
 	/** order by stddev() on columns of table "restaurant_item_option_map" */
 ["restaurant_item_option_map_stddev_order_by"]: {
+	id?:PartialObjects["order_by"],
 	item_id?:PartialObjects["order_by"],
 	option_id?:PartialObjects["order_by"]
 },
 	/** aggregate stddev_pop on columns */
 ["restaurant_item_option_map_stddev_pop_fields"]: {
 		__typename?: "restaurant_item_option_map_stddev_pop_fields";
+			id?:number,
 			item_id?:number,
 			option_id?:number
 	},
 	/** order by stddev_pop() on columns of table "restaurant_item_option_map" */
 ["restaurant_item_option_map_stddev_pop_order_by"]: {
+	id?:PartialObjects["order_by"],
 	item_id?:PartialObjects["order_by"],
 	option_id?:PartialObjects["order_by"]
 },
 	/** aggregate stddev_samp on columns */
 ["restaurant_item_option_map_stddev_samp_fields"]: {
 		__typename?: "restaurant_item_option_map_stddev_samp_fields";
+			id?:number,
 			item_id?:number,
 			option_id?:number
 	},
 	/** order by stddev_samp() on columns of table "restaurant_item_option_map" */
 ["restaurant_item_option_map_stddev_samp_order_by"]: {
+	id?:PartialObjects["order_by"],
 	item_id?:PartialObjects["order_by"],
 	option_id?:PartialObjects["order_by"]
 },
@@ -13639,17 +13452,20 @@ the end). throws an error if top level container is not an array */
 },
 	/** Initial value of the column from where the streaming should start */
 ["restaurant_item_option_map_stream_cursor_value_input"]: {
+	id?:number,
 	item_id?:number,
 	option_id?:number
 },
 	/** aggregate sum on columns */
 ["restaurant_item_option_map_sum_fields"]: {
 		__typename?: "restaurant_item_option_map_sum_fields";
+			id?:number,
 			item_id?:number,
 			option_id?:number
 	},
 	/** order by sum() on columns of table "restaurant_item_option_map" */
 ["restaurant_item_option_map_sum_order_by"]: {
+	id?:PartialObjects["order_by"],
 	item_id?:PartialObjects["order_by"],
 	option_id?:PartialObjects["order_by"]
 },
@@ -13665,33 +13481,39 @@ the end). throws an error if top level container is not an array */
 	/** aggregate var_pop on columns */
 ["restaurant_item_option_map_var_pop_fields"]: {
 		__typename?: "restaurant_item_option_map_var_pop_fields";
+			id?:number,
 			item_id?:number,
 			option_id?:number
 	},
 	/** order by var_pop() on columns of table "restaurant_item_option_map" */
 ["restaurant_item_option_map_var_pop_order_by"]: {
+	id?:PartialObjects["order_by"],
 	item_id?:PartialObjects["order_by"],
 	option_id?:PartialObjects["order_by"]
 },
 	/** aggregate var_samp on columns */
 ["restaurant_item_option_map_var_samp_fields"]: {
 		__typename?: "restaurant_item_option_map_var_samp_fields";
+			id?:number,
 			item_id?:number,
 			option_id?:number
 	},
 	/** order by var_samp() on columns of table "restaurant_item_option_map" */
 ["restaurant_item_option_map_var_samp_order_by"]: {
+	id?:PartialObjects["order_by"],
 	item_id?:PartialObjects["order_by"],
 	option_id?:PartialObjects["order_by"]
 },
 	/** aggregate variance on columns */
 ["restaurant_item_option_map_variance_fields"]: {
 		__typename?: "restaurant_item_option_map_variance_fields";
+			id?:number,
 			item_id?:number,
 			option_id?:number
 	},
 	/** order by variance() on columns of table "restaurant_item_option_map" */
 ["restaurant_item_option_map_variance_order_by"]: {
+	id?:PartialObjects["order_by"],
 	item_id?:PartialObjects["order_by"],
 	option_id?:PartialObjects["order_by"]
 },
@@ -14397,6 +14219,7 @@ the end). throws an error if top level container is not an array */
 ["restaurant_option_choice_map"]: {
 		__typename?: "restaurant_option_choice_map";
 			choice_id?:number,
+			id?:number,
 			/** An array relationship */
 	option_choices?:PartialObjects["restaurant_choice"][],
 			/** An aggregate relationship */
@@ -14448,11 +14271,13 @@ the end). throws an error if top level container is not an array */
 ["restaurant_option_choice_map_avg_fields"]: {
 		__typename?: "restaurant_option_choice_map_avg_fields";
 			choice_id?:number,
+			id?:number,
 			option_id?:number
 	},
 	/** order by avg() on columns of table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_avg_order_by"]: {
 	choice_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
 	option_id?:PartialObjects["order_by"]
 },
 	/** Boolean expression to filter rows from the table "restaurant_option_choice_map".
@@ -14462,6 +14287,7 @@ All fields are combined with a logical 'AND'. */
 	_not?:PartialObjects["restaurant_option_choice_map_bool_exp"],
 	_or?:PartialObjects["restaurant_option_choice_map_bool_exp"][],
 	choice_id?:PartialObjects["Int_comparison_exp"],
+	id?:PartialObjects["Int_comparison_exp"],
 	option_choices?:PartialObjects["restaurant_choice_bool_exp"],
 	option_id?:PartialObjects["Int_comparison_exp"]
 },
@@ -14470,11 +14296,13 @@ All fields are combined with a logical 'AND'. */
 	/** input type for incrementing numeric columns in table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_inc_input"]: {
 	choice_id?:number,
+	id?:number,
 	option_id?:number
 },
 	/** input type for inserting data into table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_insert_input"]: {
 	choice_id?:number,
+	id?:number,
 	option_choices?:PartialObjects["restaurant_choice_arr_rel_insert_input"],
 	option_id?:number
 },
@@ -14482,22 +14310,26 @@ All fields are combined with a logical 'AND'. */
 ["restaurant_option_choice_map_max_fields"]: {
 		__typename?: "restaurant_option_choice_map_max_fields";
 			choice_id?:number,
+			id?:number,
 			option_id?:number
 	},
 	/** order by max() on columns of table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_max_order_by"]: {
 	choice_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
 	option_id?:PartialObjects["order_by"]
 },
 	/** aggregate min on columns */
 ["restaurant_option_choice_map_min_fields"]: {
 		__typename?: "restaurant_option_choice_map_min_fields";
 			choice_id?:number,
+			id?:number,
 			option_id?:number
 	},
 	/** order by min() on columns of table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_min_order_by"]: {
 	choice_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
 	option_id?:PartialObjects["order_by"]
 },
 	/** response of any mutation on the table "restaurant_option_choice_map" */
@@ -14517,52 +14349,59 @@ All fields are combined with a logical 'AND'. */
 	/** Ordering options when selecting data from "restaurant_option_choice_map". */
 ["restaurant_option_choice_map_order_by"]: {
 	choice_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
 	option_choices_aggregate?:PartialObjects["restaurant_choice_aggregate_order_by"],
 	option_id?:PartialObjects["order_by"]
 },
 	/** primary key columns input for table: restaurant_option_choice_map */
 ["restaurant_option_choice_map_pk_columns_input"]: {
-	choice_id:number,
-	option_id:number
+	id:number
 },
 	/** select columns of table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_select_column"]:restaurant_option_choice_map_select_column,
 	/** input type for updating data in table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_set_input"]: {
 	choice_id?:number,
+	id?:number,
 	option_id?:number
 },
 	/** aggregate stddev on columns */
 ["restaurant_option_choice_map_stddev_fields"]: {
 		__typename?: "restaurant_option_choice_map_stddev_fields";
 			choice_id?:number,
+			id?:number,
 			option_id?:number
 	},
 	/** order by stddev() on columns of table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_stddev_order_by"]: {
 	choice_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
 	option_id?:PartialObjects["order_by"]
 },
 	/** aggregate stddev_pop on columns */
 ["restaurant_option_choice_map_stddev_pop_fields"]: {
 		__typename?: "restaurant_option_choice_map_stddev_pop_fields";
 			choice_id?:number,
+			id?:number,
 			option_id?:number
 	},
 	/** order by stddev_pop() on columns of table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_stddev_pop_order_by"]: {
 	choice_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
 	option_id?:PartialObjects["order_by"]
 },
 	/** aggregate stddev_samp on columns */
 ["restaurant_option_choice_map_stddev_samp_fields"]: {
 		__typename?: "restaurant_option_choice_map_stddev_samp_fields";
 			choice_id?:number,
+			id?:number,
 			option_id?:number
 	},
 	/** order by stddev_samp() on columns of table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_stddev_samp_order_by"]: {
 	choice_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
 	option_id?:PartialObjects["order_by"]
 },
 	/** Streaming cursor of the table "restaurant_option_choice_map" */
@@ -14575,17 +14414,20 @@ All fields are combined with a logical 'AND'. */
 	/** Initial value of the column from where the streaming should start */
 ["restaurant_option_choice_map_stream_cursor_value_input"]: {
 	choice_id?:number,
+	id?:number,
 	option_id?:number
 },
 	/** aggregate sum on columns */
 ["restaurant_option_choice_map_sum_fields"]: {
 		__typename?: "restaurant_option_choice_map_sum_fields";
 			choice_id?:number,
+			id?:number,
 			option_id?:number
 	},
 	/** order by sum() on columns of table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_sum_order_by"]: {
 	choice_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
 	option_id?:PartialObjects["order_by"]
 },
 	/** update columns of table "restaurant_option_choice_map" */
@@ -14601,33 +14443,39 @@ All fields are combined with a logical 'AND'. */
 ["restaurant_option_choice_map_var_pop_fields"]: {
 		__typename?: "restaurant_option_choice_map_var_pop_fields";
 			choice_id?:number,
+			id?:number,
 			option_id?:number
 	},
 	/** order by var_pop() on columns of table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_var_pop_order_by"]: {
 	choice_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
 	option_id?:PartialObjects["order_by"]
 },
 	/** aggregate var_samp on columns */
 ["restaurant_option_choice_map_var_samp_fields"]: {
 		__typename?: "restaurant_option_choice_map_var_samp_fields";
 			choice_id?:number,
+			id?:number,
 			option_id?:number
 	},
 	/** order by var_samp() on columns of table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_var_samp_order_by"]: {
 	choice_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
 	option_id?:PartialObjects["order_by"]
 },
 	/** aggregate variance on columns */
 ["restaurant_option_choice_map_variance_fields"]: {
 		__typename?: "restaurant_option_choice_map_variance_fields";
 			choice_id?:number,
+			id?:number,
 			option_id?:number
 	},
 	/** order by variance() on columns of table "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_variance_order_by"]: {
 	choice_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
 	option_id?:PartialObjects["order_by"]
 },
 	/** unique or primary key constraints on table "restaurant_option" */
@@ -14943,8 +14791,6 @@ All fields are combined with a logical 'AND'. */
 	items?:PartialObjects["restaurant_order_item"][],
 			/** An aggregate relationship */
 	items_aggregate?:PartialObjects["restaurant_order_item_aggregate"],
-			/** A computed field, executes function "itemscost" */
-	items_cost?:PartialObjects["money"],
 			notes?:string,
 			order_time?:PartialObjects["timestamptz"],
 			order_type?:string,
@@ -14961,9 +14807,7 @@ All fields are combined with a logical 'AND'. */
 			stripe_payment_id?:number,
 			tax?:PartialObjects["float8"],
 			to_location_address?:string,
-			to_location_gps?:PartialObjects["geography"],
-			/** A computed field, executes function "totalcost" */
-	total_cost?:PartialObjects["money"]
+			to_location_gps?:PartialObjects["geography"]
 	},
 	/** aggregated selection of "restaurant_order" */
 ["restaurant_order_aggregate"]: {
@@ -15051,7 +14895,6 @@ All fields are combined with a logical 'AND'. */
 	firebase_id?:PartialObjects["String_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	items?:PartialObjects["restaurant_order_item_bool_exp"],
-	items_cost?:PartialObjects["money_comparison_exp"],
 	notes?:PartialObjects["String_comparison_exp"],
 	order_time?:PartialObjects["timestamptz_comparison_exp"],
 	order_type?:PartialObjects["String_comparison_exp"],
@@ -15065,8 +14908,7 @@ All fields are combined with a logical 'AND'. */
 	stripe_payment_id?:PartialObjects["Int_comparison_exp"],
 	tax?:PartialObjects["float8_comparison_exp"],
 	to_location_address?:PartialObjects["String_comparison_exp"],
-	to_location_gps?:PartialObjects["geography_comparison_exp"],
-	total_cost?:PartialObjects["money_comparison_exp"]
+	to_location_gps?:PartialObjects["geography_comparison_exp"]
 },
 	/** Ordering options when selecting data from "restaurant". */
 ["restaurant_order_by"]: {
@@ -15635,7 +15477,6 @@ All fields are combined with a logical 'AND'. */
 	firebase_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	items_aggregate?:PartialObjects["restaurant_order_item_aggregate_order_by"],
-	items_cost?:PartialObjects["order_by"],
 	notes?:PartialObjects["order_by"],
 	order_time?:PartialObjects["order_by"],
 	order_type?:PartialObjects["order_by"],
@@ -15649,8 +15490,7 @@ All fields are combined with a logical 'AND'. */
 	stripe_payment_id?:PartialObjects["order_by"],
 	tax?:PartialObjects["order_by"],
 	to_location_address?:PartialObjects["order_by"],
-	to_location_gps?:PartialObjects["order_by"],
-	total_cost?:PartialObjects["order_by"]
+	to_location_gps?:PartialObjects["order_by"]
 },
 	/** primary key columns input for table: restaurant_order */
 ["restaurant_order_pk_columns_input"]: {
@@ -17694,7 +17534,7 @@ export type Boolean_comparison_exp = {
 /** columns and relationships of "chat" */
 export type chat = {
 	__typename?: "chat",
-	chat_info?:jsonb,
+	chat_info:jsonb,
 	/** An array relationship */
 	chat_participants:chat_participant[],
 	/** An aggregate relationship */
@@ -17836,7 +17676,6 @@ export type chat_participant = {
 	/** An object relationship */
 	chat:chat,
 	chat_id:number,
-	id:number,
 	/** An object relationship */
 	notification_info?:notification_info,
 	participant_id:number,
@@ -17893,14 +17732,12 @@ export type chat_participant_arr_rel_insert_input = {
 export type chat_participant_avg_fields = {
 	__typename?: "chat_participant_avg_fields",
 	chat_id?:number,
-	id?:number,
 	participant_id?:number
 }
 
 /** order by avg() on columns of table "chat_participant" */
 export type chat_participant_avg_order_by = {
 		chat_id?:order_by,
-	id?:order_by,
 	participant_id?:order_by
 }
 
@@ -17912,7 +17749,6 @@ export type chat_participant_bool_exp = {
 	app_type_id?:String_comparison_exp,
 	chat?:chat_bool_exp,
 	chat_id?:Int_comparison_exp,
-	id?:Int_comparison_exp,
 	notification_info?:notification_info_bool_exp,
 	participant_id?:Int_comparison_exp,
 	user?:user_bool_exp
@@ -17926,7 +17762,6 @@ export enum chat_participant_constraint {
 /** input type for incrementing numeric columns in table "chat_participant" */
 export type chat_participant_inc_input = {
 		chat_id?:number,
-	id?:number,
 	participant_id?:number
 }
 
@@ -17935,7 +17770,6 @@ export type chat_participant_insert_input = {
 		app_type_id?:string,
 	chat?:chat_obj_rel_insert_input,
 	chat_id?:number,
-	id?:number,
 	notification_info?:notification_info_obj_rel_insert_input,
 	participant_id?:number,
 	user?:user_obj_rel_insert_input
@@ -17946,7 +17780,6 @@ export type chat_participant_max_fields = {
 	__typename?: "chat_participant_max_fields",
 	app_type_id?:string,
 	chat_id?:number,
-	id?:number,
 	participant_id?:number
 }
 
@@ -17954,7 +17787,6 @@ export type chat_participant_max_fields = {
 export type chat_participant_max_order_by = {
 		app_type_id?:order_by,
 	chat_id?:order_by,
-	id?:order_by,
 	participant_id?:order_by
 }
 
@@ -17963,7 +17795,6 @@ export type chat_participant_min_fields = {
 	__typename?: "chat_participant_min_fields",
 	app_type_id?:string,
 	chat_id?:number,
-	id?:number,
 	participant_id?:number
 }
 
@@ -17971,7 +17802,6 @@ export type chat_participant_min_fields = {
 export type chat_participant_min_order_by = {
 		app_type_id?:order_by,
 	chat_id?:order_by,
-	id?:order_by,
 	participant_id?:order_by
 }
 
@@ -17996,7 +17826,6 @@ export type chat_participant_order_by = {
 		app_type_id?:order_by,
 	chat?:chat_order_by,
 	chat_id?:order_by,
-	id?:order_by,
 	notification_info?:notification_info_order_by,
 	participant_id?:order_by,
 	user?:user_order_by
@@ -18004,14 +17833,14 @@ export type chat_participant_order_by = {
 
 /** primary key columns input for table: chat_participant */
 export type chat_participant_pk_columns_input = {
-		id:number
+		chat_id:number,
+	participant_id:number
 }
 
 /** select columns of table "chat_participant" */
 export enum chat_participant_select_column {
 	app_type_id = "app_type_id",
 	chat_id = "chat_id",
-	id = "id",
 	participant_id = "participant_id"
 }
 
@@ -18019,7 +17848,6 @@ export enum chat_participant_select_column {
 export type chat_participant_set_input = {
 		app_type_id?:string,
 	chat_id?:number,
-	id?:number,
 	participant_id?:number
 }
 
@@ -18027,14 +17855,12 @@ export type chat_participant_set_input = {
 export type chat_participant_stddev_fields = {
 	__typename?: "chat_participant_stddev_fields",
 	chat_id?:number,
-	id?:number,
 	participant_id?:number
 }
 
 /** order by stddev() on columns of table "chat_participant" */
 export type chat_participant_stddev_order_by = {
 		chat_id?:order_by,
-	id?:order_by,
 	participant_id?:order_by
 }
 
@@ -18042,14 +17868,12 @@ export type chat_participant_stddev_order_by = {
 export type chat_participant_stddev_pop_fields = {
 	__typename?: "chat_participant_stddev_pop_fields",
 	chat_id?:number,
-	id?:number,
 	participant_id?:number
 }
 
 /** order by stddev_pop() on columns of table "chat_participant" */
 export type chat_participant_stddev_pop_order_by = {
 		chat_id?:order_by,
-	id?:order_by,
 	participant_id?:order_by
 }
 
@@ -18057,14 +17881,12 @@ export type chat_participant_stddev_pop_order_by = {
 export type chat_participant_stddev_samp_fields = {
 	__typename?: "chat_participant_stddev_samp_fields",
 	chat_id?:number,
-	id?:number,
 	participant_id?:number
 }
 
 /** order by stddev_samp() on columns of table "chat_participant" */
 export type chat_participant_stddev_samp_order_by = {
 		chat_id?:order_by,
-	id?:order_by,
 	participant_id?:order_by
 }
 
@@ -18080,7 +17902,6 @@ export type chat_participant_stream_cursor_input = {
 export type chat_participant_stream_cursor_value_input = {
 		app_type_id?:string,
 	chat_id?:number,
-	id?:number,
 	participant_id?:number
 }
 
@@ -18088,14 +17909,12 @@ export type chat_participant_stream_cursor_value_input = {
 export type chat_participant_sum_fields = {
 	__typename?: "chat_participant_sum_fields",
 	chat_id?:number,
-	id?:number,
 	participant_id?:number
 }
 
 /** order by sum() on columns of table "chat_participant" */
 export type chat_participant_sum_order_by = {
 		chat_id?:order_by,
-	id?:order_by,
 	participant_id?:order_by
 }
 
@@ -18103,7 +17922,6 @@ export type chat_participant_sum_order_by = {
 export enum chat_participant_update_column {
 	app_type_id = "app_type_id",
 	chat_id = "chat_id",
-	id = "id",
 	participant_id = "participant_id"
 }
 
@@ -18119,14 +17937,12 @@ export type chat_participant_updates = {
 export type chat_participant_var_pop_fields = {
 	__typename?: "chat_participant_var_pop_fields",
 	chat_id?:number,
-	id?:number,
 	participant_id?:number
 }
 
 /** order by var_pop() on columns of table "chat_participant" */
 export type chat_participant_var_pop_order_by = {
 		chat_id?:order_by,
-	id?:order_by,
 	participant_id?:order_by
 }
 
@@ -18134,14 +17950,12 @@ export type chat_participant_var_pop_order_by = {
 export type chat_participant_var_samp_fields = {
 	__typename?: "chat_participant_var_samp_fields",
 	chat_id?:number,
-	id?:number,
 	participant_id?:number
 }
 
 /** order by var_samp() on columns of table "chat_participant" */
 export type chat_participant_var_samp_order_by = {
 		chat_id?:order_by,
-	id?:order_by,
 	participant_id?:order_by
 }
 
@@ -18149,14 +17963,12 @@ export type chat_participant_var_samp_order_by = {
 export type chat_participant_variance_fields = {
 	__typename?: "chat_participant_variance_fields",
 	chat_id?:number,
-	id?:number,
 	participant_id?:number
 }
 
 /** order by variance() on columns of table "chat_participant" */
 export type chat_participant_variance_order_by = {
 		chat_id?:order_by,
-	id?:order_by,
 	participant_id?:order_by
 }
 
@@ -18790,9 +18602,9 @@ export type delivery = {
 	customer_review_by_driver?:review,
 	customer_review_by_driver_id?:number,
 	/** An object relationship */
-	deliverer?:deliverer,
-	deliverer_app_type_id?:string,
-	deliverer_id?:number,
+	deliverer:deliverer,
+	deliverer_app_type_id:string,
+	deliverer_id:number,
 	delivery_cost:money,
 	/** An object relationship */
 	driver_review_by_customer?:review,
@@ -18806,7 +18618,6 @@ export type delivery = {
 	estimated_arrival_at_pickup_time?:timestamptz,
 	estimated_package_ready_time?:timestamptz,
 	id:number,
-	order_time:timestamptz,
 	package_cost:money,
 	payment_type:string,
 	pickup_address:string,
@@ -18819,10 +18630,8 @@ export type delivery = {
 	/** orderReceived */
 	status:string,
 	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number,
+	trip_distance?:string,
+	trip_duration?:string,
 	trip_polyline?:string
 }
 
@@ -18886,11 +18695,7 @@ export type delivery_avg_fields = {
 	package_cost?:number,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number
+	stripe_payment_id?:number
 }
 
 /** order by avg() on columns of table "delivery" */
@@ -18907,11 +18712,7 @@ export type delivery_avg_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by,
-	/** in meters */
-	trip_distance?:order_by,
-	/** in seconds */
-	trip_duration?:order_by
+	stripe_payment_id?:order_by
 }
 
 /** Boolean expression to filter rows from the table "delivery". All fields are combined with a logical 'AND'. */
@@ -18945,7 +18746,6 @@ export type delivery_bool_exp = {
 	estimated_arrival_at_pickup_time?:timestamptz_comparison_exp,
 	estimated_package_ready_time?:timestamptz_comparison_exp,
 	id?:Int_comparison_exp,
-	order_time?:timestamptz_comparison_exp,
 	package_cost?:money_comparison_exp,
 	payment_type?:String_comparison_exp,
 	pickup_address?:String_comparison_exp,
@@ -18956,8 +18756,8 @@ export type delivery_bool_exp = {
 	service_provider_type?:String_comparison_exp,
 	status?:String_comparison_exp,
 	stripe_payment_id?:Int_comparison_exp,
-	trip_distance?:Int_comparison_exp,
-	trip_duration?:Int_comparison_exp,
+	trip_distance?:String_comparison_exp,
+	trip_duration?:String_comparison_exp,
 	trip_polyline?:String_comparison_exp
 }
 
@@ -18980,11 +18780,7 @@ export type delivery_inc_input = {
 	package_cost?:money,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number
+	stripe_payment_id?:number
 }
 
 /** input type for inserting data into table "delivery" */
@@ -19015,7 +18811,6 @@ export type delivery_insert_input = {
 	estimated_arrival_at_pickup_time?:timestamptz,
 	estimated_package_ready_time?:timestamptz,
 	id?:number,
-	order_time?:timestamptz,
 	package_cost?:money,
 	payment_type?:string,
 	pickup_address?:string,
@@ -19027,10 +18822,8 @@ export type delivery_insert_input = {
 	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number,
+	trip_distance?:string,
+	trip_duration?:string,
 	trip_polyline?:string
 }
 
@@ -19055,7 +18848,6 @@ export type delivery_max_fields = {
 	estimated_arrival_at_pickup_time?:timestamptz,
 	estimated_package_ready_time?:timestamptz,
 	id?:number,
-	order_time?:timestamptz,
 	package_cost?:money,
 	payment_type?:string,
 	pickup_address?:string,
@@ -19065,10 +18857,8 @@ export type delivery_max_fields = {
 	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number,
+	trip_distance?:string,
+	trip_duration?:string,
 	trip_polyline?:string
 }
 
@@ -19092,7 +18882,6 @@ export type delivery_max_order_by = {
 	estimated_arrival_at_pickup_time?:order_by,
 	estimated_package_ready_time?:order_by,
 	id?:order_by,
-	order_time?:order_by,
 	package_cost?:order_by,
 	payment_type?:order_by,
 	pickup_address?:order_by,
@@ -19102,9 +18891,7 @@ export type delivery_max_order_by = {
 	/** orderReceived */
 	status?:order_by,
 	stripe_payment_id?:order_by,
-	/** in meters */
 	trip_distance?:order_by,
-	/** in seconds */
 	trip_duration?:order_by,
 	trip_polyline?:order_by
 }
@@ -19130,7 +18917,6 @@ export type delivery_min_fields = {
 	estimated_arrival_at_pickup_time?:timestamptz,
 	estimated_package_ready_time?:timestamptz,
 	id?:number,
-	order_time?:timestamptz,
 	package_cost?:money,
 	payment_type?:string,
 	pickup_address?:string,
@@ -19140,10 +18926,8 @@ export type delivery_min_fields = {
 	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number,
+	trip_distance?:string,
+	trip_duration?:string,
 	trip_polyline?:string
 }
 
@@ -19167,7 +18951,6 @@ export type delivery_min_order_by = {
 	estimated_arrival_at_pickup_time?:order_by,
 	estimated_package_ready_time?:order_by,
 	id?:order_by,
-	order_time?:order_by,
 	package_cost?:order_by,
 	payment_type?:order_by,
 	pickup_address?:order_by,
@@ -19177,9 +18960,7 @@ export type delivery_min_order_by = {
 	/** orderReceived */
 	status?:order_by,
 	stripe_payment_id?:order_by,
-	/** in meters */
 	trip_distance?:order_by,
-	/** in seconds */
 	trip_duration?:order_by,
 	trip_polyline?:order_by
 }
@@ -19235,7 +19016,6 @@ export type delivery_order_by = {
 	estimated_arrival_at_pickup_time?:order_by,
 	estimated_package_ready_time?:order_by,
 	id?:order_by,
-	order_time?:order_by,
 	package_cost?:order_by,
 	payment_type?:order_by,
 	pickup_address?:order_by,
@@ -19278,7 +19058,6 @@ export enum delivery_select_column {
 	estimated_arrival_at_pickup_time = "estimated_arrival_at_pickup_time",
 	estimated_package_ready_time = "estimated_package_ready_time",
 	id = "id",
-	order_time = "order_time",
 	package_cost = "package_cost",
 	payment_type = "payment_type",
 	pickup_address = "pickup_address",
@@ -19315,7 +19094,6 @@ export type delivery_set_input = {
 	estimated_arrival_at_pickup_time?:timestamptz,
 	estimated_package_ready_time?:timestamptz,
 	id?:number,
-	order_time?:timestamptz,
 	package_cost?:money,
 	payment_type?:string,
 	pickup_address?:string,
@@ -19326,10 +19104,8 @@ export type delivery_set_input = {
 	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number,
+	trip_distance?:string,
+	trip_duration?:string,
 	trip_polyline?:string
 }
 
@@ -19348,11 +19124,7 @@ export type delivery_stddev_fields = {
 	package_cost?:number,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number
+	stripe_payment_id?:number
 }
 
 /** order by stddev() on columns of table "delivery" */
@@ -19369,11 +19141,7 @@ export type delivery_stddev_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by,
-	/** in meters */
-	trip_distance?:order_by,
-	/** in seconds */
-	trip_duration?:order_by
+	stripe_payment_id?:order_by
 }
 
 /** aggregate stddev_pop on columns */
@@ -19391,11 +19159,7 @@ export type delivery_stddev_pop_fields = {
 	package_cost?:number,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number
+	stripe_payment_id?:number
 }
 
 /** order by stddev_pop() on columns of table "delivery" */
@@ -19412,11 +19176,7 @@ export type delivery_stddev_pop_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by,
-	/** in meters */
-	trip_distance?:order_by,
-	/** in seconds */
-	trip_duration?:order_by
+	stripe_payment_id?:order_by
 }
 
 /** aggregate stddev_samp on columns */
@@ -19434,11 +19194,7 @@ export type delivery_stddev_samp_fields = {
 	package_cost?:number,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number
+	stripe_payment_id?:number
 }
 
 /** order by stddev_samp() on columns of table "delivery" */
@@ -19455,11 +19211,7 @@ export type delivery_stddev_samp_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by,
-	/** in meters */
-	trip_distance?:order_by,
-	/** in seconds */
-	trip_duration?:order_by
+	stripe_payment_id?:order_by
 }
 
 /** Streaming cursor of the table "delivery" */
@@ -19492,7 +19244,6 @@ export type delivery_stream_cursor_value_input = {
 	estimated_arrival_at_pickup_time?:timestamptz,
 	estimated_package_ready_time?:timestamptz,
 	id?:number,
-	order_time?:timestamptz,
 	package_cost?:money,
 	payment_type?:string,
 	pickup_address?:string,
@@ -19503,10 +19254,8 @@ export type delivery_stream_cursor_value_input = {
 	/** orderReceived */
 	status?:string,
 	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number,
+	trip_distance?:string,
+	trip_duration?:string,
 	trip_polyline?:string
 }
 
@@ -19525,11 +19274,7 @@ export type delivery_sum_fields = {
 	package_cost?:money,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number
+	stripe_payment_id?:number
 }
 
 /** order by sum() on columns of table "delivery" */
@@ -19546,11 +19291,7 @@ export type delivery_sum_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by,
-	/** in meters */
-	trip_distance?:order_by,
-	/** in seconds */
-	trip_duration?:order_by
+	stripe_payment_id?:order_by
 }
 
 /** update columns of table "delivery" */
@@ -19575,7 +19316,6 @@ export enum delivery_update_column {
 	estimated_arrival_at_pickup_time = "estimated_arrival_at_pickup_time",
 	estimated_package_ready_time = "estimated_package_ready_time",
 	id = "id",
-	order_time = "order_time",
 	package_cost = "package_cost",
 	payment_type = "payment_type",
 	pickup_address = "pickup_address",
@@ -19613,11 +19353,7 @@ export type delivery_var_pop_fields = {
 	package_cost?:number,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number
+	stripe_payment_id?:number
 }
 
 /** order by var_pop() on columns of table "delivery" */
@@ -19634,11 +19370,7 @@ export type delivery_var_pop_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by,
-	/** in meters */
-	trip_distance?:order_by,
-	/** in seconds */
-	trip_duration?:order_by
+	stripe_payment_id?:order_by
 }
 
 /** aggregate var_samp on columns */
@@ -19656,11 +19388,7 @@ export type delivery_var_samp_fields = {
 	package_cost?:number,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number
+	stripe_payment_id?:number
 }
 
 /** order by var_samp() on columns of table "delivery" */
@@ -19677,11 +19405,7 @@ export type delivery_var_samp_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by,
-	/** in meters */
-	trip_distance?:order_by,
-	/** in seconds */
-	trip_duration?:order_by
+	stripe_payment_id?:order_by
 }
 
 /** aggregate variance on columns */
@@ -19699,11 +19423,7 @@ export type delivery_variance_fields = {
 	package_cost?:number,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number,
-	/** in meters */
-	trip_distance?:number,
-	/** in seconds */
-	trip_duration?:number
+	stripe_payment_id?:number
 }
 
 /** order by variance() on columns of table "delivery" */
@@ -19720,11 +19440,7 @@ export type delivery_variance_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by,
-	/** in meters */
-	trip_distance?:order_by,
-	/** in seconds */
-	trip_duration?:order_by
+	stripe_payment_id?:order_by
 }
 
 export type float8 = any
@@ -20959,8 +20675,6 @@ export type restaurant_bool_exp = {
 /** columns and relationships of "restaurant_cart" */
 export type restaurant_cart = {
 	__typename?: "restaurant_cart",
-	/** A computed field, executes function "cost" */
-	cost?:money,
 	/** An object relationship */
 	customer:customer,
 	customer_id:number,
@@ -21008,7 +20722,6 @@ export type restaurant_cart_bool_exp = {
 		_and?:restaurant_cart_bool_exp[],
 	_not?:restaurant_cart_bool_exp,
 	_or?:restaurant_cart_bool_exp[],
-	cost?:money_comparison_exp,
 	customer?:customer_bool_exp,
 	customer_id?:Int_comparison_exp,
 	items?:restaurant_cart_item_bool_exp,
@@ -21467,8 +21180,7 @@ export type restaurant_cart_on_conflict = {
 
 /** Ordering options when selecting data from "restaurant_cart". */
 export type restaurant_cart_order_by = {
-		cost?:order_by,
-	customer?:customer_order_by,
+		customer?:customer_order_by,
 	customer_id?:order_by,
 	items_aggregate?:restaurant_cart_item_aggregate_order_by,
 	restaurant?:restaurant_order_by,
@@ -22594,6 +22306,7 @@ export type restaurant_item_on_conflict = {
 /** columns and relationships of "restaurant_item_option_map" */
 export type restaurant_item_option_map = {
 	__typename?: "restaurant_item_option_map",
+	id:number,
 	item_id:number,
 	/** An array relationship */
 	item_options:restaurant_option[],
@@ -22650,13 +22363,15 @@ export type restaurant_item_option_map_arr_rel_insert_input = {
 /** aggregate avg on columns */
 export type restaurant_item_option_map_avg_fields = {
 	__typename?: "restaurant_item_option_map_avg_fields",
+	id?:number,
 	item_id?:number,
 	option_id?:number
 }
 
 /** order by avg() on columns of table "restaurant_item_option_map" */
 export type restaurant_item_option_map_avg_order_by = {
-		item_id?:order_by,
+		id?:order_by,
+	item_id?:order_by,
 	option_id?:order_by
 }
 
@@ -22665,6 +22380,7 @@ export type restaurant_item_option_map_bool_exp = {
 		_and?:restaurant_item_option_map_bool_exp[],
 	_not?:restaurant_item_option_map_bool_exp,
 	_or?:restaurant_item_option_map_bool_exp[],
+	id?:Int_comparison_exp,
 	item_id?:Int_comparison_exp,
 	item_options?:restaurant_option_bool_exp,
 	option_id?:Int_comparison_exp
@@ -22672,18 +22388,21 @@ export type restaurant_item_option_map_bool_exp = {
 
 /** unique or primary key constraints on table "restaurant_item_option_map" */
 export enum restaurant_item_option_map_constraint {
+	restaurant_item_option_map_item_id_option_id_key = "restaurant_item_option_map_item_id_option_id_key",
 	restaurant_item_option_map_pkey = "restaurant_item_option_map_pkey"
 }
 
 /** input type for incrementing numeric columns in table "restaurant_item_option_map" */
 export type restaurant_item_option_map_inc_input = {
-		item_id?:number,
+		id?:number,
+	item_id?:number,
 	option_id?:number
 }
 
 /** input type for inserting data into table "restaurant_item_option_map" */
 export type restaurant_item_option_map_insert_input = {
-		item_id?:number,
+		id?:number,
+	item_id?:number,
 	item_options?:restaurant_option_arr_rel_insert_input,
 	option_id?:number
 }
@@ -22691,26 +22410,30 @@ export type restaurant_item_option_map_insert_input = {
 /** aggregate max on columns */
 export type restaurant_item_option_map_max_fields = {
 	__typename?: "restaurant_item_option_map_max_fields",
+	id?:number,
 	item_id?:number,
 	option_id?:number
 }
 
 /** order by max() on columns of table "restaurant_item_option_map" */
 export type restaurant_item_option_map_max_order_by = {
-		item_id?:order_by,
+		id?:order_by,
+	item_id?:order_by,
 	option_id?:order_by
 }
 
 /** aggregate min on columns */
 export type restaurant_item_option_map_min_fields = {
 	__typename?: "restaurant_item_option_map_min_fields",
+	id?:number,
 	item_id?:number,
 	option_id?:number
 }
 
 /** order by min() on columns of table "restaurant_item_option_map" */
 export type restaurant_item_option_map_min_order_by = {
-		item_id?:order_by,
+		id?:order_by,
+	item_id?:order_by,
 	option_id?:order_by
 }
 
@@ -22732,65 +22455,73 @@ export type restaurant_item_option_map_on_conflict = {
 
 /** Ordering options when selecting data from "restaurant_item_option_map". */
 export type restaurant_item_option_map_order_by = {
-		item_id?:order_by,
+		id?:order_by,
+	item_id?:order_by,
 	item_options_aggregate?:restaurant_option_aggregate_order_by,
 	option_id?:order_by
 }
 
 /** primary key columns input for table: restaurant_item_option_map */
 export type restaurant_item_option_map_pk_columns_input = {
-		item_id:number,
-	option_id:number
+		id:number
 }
 
 /** select columns of table "restaurant_item_option_map" */
 export enum restaurant_item_option_map_select_column {
+	id = "id",
 	item_id = "item_id",
 	option_id = "option_id"
 }
 
 /** input type for updating data in table "restaurant_item_option_map" */
 export type restaurant_item_option_map_set_input = {
-		item_id?:number,
+		id?:number,
+	item_id?:number,
 	option_id?:number
 }
 
 /** aggregate stddev on columns */
 export type restaurant_item_option_map_stddev_fields = {
 	__typename?: "restaurant_item_option_map_stddev_fields",
+	id?:number,
 	item_id?:number,
 	option_id?:number
 }
 
 /** order by stddev() on columns of table "restaurant_item_option_map" */
 export type restaurant_item_option_map_stddev_order_by = {
-		item_id?:order_by,
+		id?:order_by,
+	item_id?:order_by,
 	option_id?:order_by
 }
 
 /** aggregate stddev_pop on columns */
 export type restaurant_item_option_map_stddev_pop_fields = {
 	__typename?: "restaurant_item_option_map_stddev_pop_fields",
+	id?:number,
 	item_id?:number,
 	option_id?:number
 }
 
 /** order by stddev_pop() on columns of table "restaurant_item_option_map" */
 export type restaurant_item_option_map_stddev_pop_order_by = {
-		item_id?:order_by,
+		id?:order_by,
+	item_id?:order_by,
 	option_id?:order_by
 }
 
 /** aggregate stddev_samp on columns */
 export type restaurant_item_option_map_stddev_samp_fields = {
 	__typename?: "restaurant_item_option_map_stddev_samp_fields",
+	id?:number,
 	item_id?:number,
 	option_id?:number
 }
 
 /** order by stddev_samp() on columns of table "restaurant_item_option_map" */
 export type restaurant_item_option_map_stddev_samp_order_by = {
-		item_id?:order_by,
+		id?:order_by,
+	item_id?:order_by,
 	option_id?:order_by
 }
 
@@ -22804,25 +22535,29 @@ export type restaurant_item_option_map_stream_cursor_input = {
 
 /** Initial value of the column from where the streaming should start */
 export type restaurant_item_option_map_stream_cursor_value_input = {
-		item_id?:number,
+		id?:number,
+	item_id?:number,
 	option_id?:number
 }
 
 /** aggregate sum on columns */
 export type restaurant_item_option_map_sum_fields = {
 	__typename?: "restaurant_item_option_map_sum_fields",
+	id?:number,
 	item_id?:number,
 	option_id?:number
 }
 
 /** order by sum() on columns of table "restaurant_item_option_map" */
 export type restaurant_item_option_map_sum_order_by = {
-		item_id?:order_by,
+		id?:order_by,
+	item_id?:order_by,
 	option_id?:order_by
 }
 
 /** update columns of table "restaurant_item_option_map" */
 export enum restaurant_item_option_map_update_column {
+	id = "id",
 	item_id = "item_id",
 	option_id = "option_id"
 }
@@ -22838,39 +22573,45 @@ export type restaurant_item_option_map_updates = {
 /** aggregate var_pop on columns */
 export type restaurant_item_option_map_var_pop_fields = {
 	__typename?: "restaurant_item_option_map_var_pop_fields",
+	id?:number,
 	item_id?:number,
 	option_id?:number
 }
 
 /** order by var_pop() on columns of table "restaurant_item_option_map" */
 export type restaurant_item_option_map_var_pop_order_by = {
-		item_id?:order_by,
+		id?:order_by,
+	item_id?:order_by,
 	option_id?:order_by
 }
 
 /** aggregate var_samp on columns */
 export type restaurant_item_option_map_var_samp_fields = {
 	__typename?: "restaurant_item_option_map_var_samp_fields",
+	id?:number,
 	item_id?:number,
 	option_id?:number
 }
 
 /** order by var_samp() on columns of table "restaurant_item_option_map" */
 export type restaurant_item_option_map_var_samp_order_by = {
-		item_id?:order_by,
+		id?:order_by,
+	item_id?:order_by,
 	option_id?:order_by
 }
 
 /** aggregate variance on columns */
 export type restaurant_item_option_map_variance_fields = {
 	__typename?: "restaurant_item_option_map_variance_fields",
+	id?:number,
 	item_id?:number,
 	option_id?:number
 }
 
 /** order by variance() on columns of table "restaurant_item_option_map" */
 export type restaurant_item_option_map_variance_order_by = {
-		item_id?:order_by,
+		id?:order_by,
+	item_id?:order_by,
 	option_id?:order_by
 }
 
@@ -23696,6 +23437,7 @@ export type restaurant_option_bool_exp = {
 export type restaurant_option_choice_map = {
 	__typename?: "restaurant_option_choice_map",
 	choice_id:number,
+	id:number,
 	/** An array relationship */
 	option_choices:restaurant_choice[],
 	/** An aggregate relationship */
@@ -23752,12 +23494,14 @@ export type restaurant_option_choice_map_arr_rel_insert_input = {
 export type restaurant_option_choice_map_avg_fields = {
 	__typename?: "restaurant_option_choice_map_avg_fields",
 	choice_id?:number,
+	id?:number,
 	option_id?:number
 }
 
 /** order by avg() on columns of table "restaurant_option_choice_map" */
 export type restaurant_option_choice_map_avg_order_by = {
 		choice_id?:order_by,
+	id?:order_by,
 	option_id?:order_by
 }
 
@@ -23768,24 +23512,28 @@ export type restaurant_option_choice_map_bool_exp = {
 	_not?:restaurant_option_choice_map_bool_exp,
 	_or?:restaurant_option_choice_map_bool_exp[],
 	choice_id?:Int_comparison_exp,
+	id?:Int_comparison_exp,
 	option_choices?:restaurant_choice_bool_exp,
 	option_id?:Int_comparison_exp
 }
 
 /** unique or primary key constraints on table "restaurant_option_choice_map" */
 export enum restaurant_option_choice_map_constraint {
+	restaurant_option_choice_map_option_id_choice_id_key = "restaurant_option_choice_map_option_id_choice_id_key",
 	restaurant_option_choice_map_pkey = "restaurant_option_choice_map_pkey"
 }
 
 /** input type for incrementing numeric columns in table "restaurant_option_choice_map" */
 export type restaurant_option_choice_map_inc_input = {
 		choice_id?:number,
+	id?:number,
 	option_id?:number
 }
 
 /** input type for inserting data into table "restaurant_option_choice_map" */
 export type restaurant_option_choice_map_insert_input = {
 		choice_id?:number,
+	id?:number,
 	option_choices?:restaurant_choice_arr_rel_insert_input,
 	option_id?:number
 }
@@ -23794,12 +23542,14 @@ export type restaurant_option_choice_map_insert_input = {
 export type restaurant_option_choice_map_max_fields = {
 	__typename?: "restaurant_option_choice_map_max_fields",
 	choice_id?:number,
+	id?:number,
 	option_id?:number
 }
 
 /** order by max() on columns of table "restaurant_option_choice_map" */
 export type restaurant_option_choice_map_max_order_by = {
 		choice_id?:order_by,
+	id?:order_by,
 	option_id?:order_by
 }
 
@@ -23807,12 +23557,14 @@ export type restaurant_option_choice_map_max_order_by = {
 export type restaurant_option_choice_map_min_fields = {
 	__typename?: "restaurant_option_choice_map_min_fields",
 	choice_id?:number,
+	id?:number,
 	option_id?:number
 }
 
 /** order by min() on columns of table "restaurant_option_choice_map" */
 export type restaurant_option_choice_map_min_order_by = {
 		choice_id?:order_by,
+	id?:order_by,
 	option_id?:order_by
 }
 
@@ -23835,25 +23587,27 @@ export type restaurant_option_choice_map_on_conflict = {
 /** Ordering options when selecting data from "restaurant_option_choice_map". */
 export type restaurant_option_choice_map_order_by = {
 		choice_id?:order_by,
+	id?:order_by,
 	option_choices_aggregate?:restaurant_choice_aggregate_order_by,
 	option_id?:order_by
 }
 
 /** primary key columns input for table: restaurant_option_choice_map */
 export type restaurant_option_choice_map_pk_columns_input = {
-		choice_id:number,
-	option_id:number
+		id:number
 }
 
 /** select columns of table "restaurant_option_choice_map" */
 export enum restaurant_option_choice_map_select_column {
 	choice_id = "choice_id",
+	id = "id",
 	option_id = "option_id"
 }
 
 /** input type for updating data in table "restaurant_option_choice_map" */
 export type restaurant_option_choice_map_set_input = {
 		choice_id?:number,
+	id?:number,
 	option_id?:number
 }
 
@@ -23861,12 +23615,14 @@ export type restaurant_option_choice_map_set_input = {
 export type restaurant_option_choice_map_stddev_fields = {
 	__typename?: "restaurant_option_choice_map_stddev_fields",
 	choice_id?:number,
+	id?:number,
 	option_id?:number
 }
 
 /** order by stddev() on columns of table "restaurant_option_choice_map" */
 export type restaurant_option_choice_map_stddev_order_by = {
 		choice_id?:order_by,
+	id?:order_by,
 	option_id?:order_by
 }
 
@@ -23874,12 +23630,14 @@ export type restaurant_option_choice_map_stddev_order_by = {
 export type restaurant_option_choice_map_stddev_pop_fields = {
 	__typename?: "restaurant_option_choice_map_stddev_pop_fields",
 	choice_id?:number,
+	id?:number,
 	option_id?:number
 }
 
 /** order by stddev_pop() on columns of table "restaurant_option_choice_map" */
 export type restaurant_option_choice_map_stddev_pop_order_by = {
 		choice_id?:order_by,
+	id?:order_by,
 	option_id?:order_by
 }
 
@@ -23887,12 +23645,14 @@ export type restaurant_option_choice_map_stddev_pop_order_by = {
 export type restaurant_option_choice_map_stddev_samp_fields = {
 	__typename?: "restaurant_option_choice_map_stddev_samp_fields",
 	choice_id?:number,
+	id?:number,
 	option_id?:number
 }
 
 /** order by stddev_samp() on columns of table "restaurant_option_choice_map" */
 export type restaurant_option_choice_map_stddev_samp_order_by = {
 		choice_id?:order_by,
+	id?:order_by,
 	option_id?:order_by
 }
 
@@ -23907,6 +23667,7 @@ export type restaurant_option_choice_map_stream_cursor_input = {
 /** Initial value of the column from where the streaming should start */
 export type restaurant_option_choice_map_stream_cursor_value_input = {
 		choice_id?:number,
+	id?:number,
 	option_id?:number
 }
 
@@ -23914,18 +23675,21 @@ export type restaurant_option_choice_map_stream_cursor_value_input = {
 export type restaurant_option_choice_map_sum_fields = {
 	__typename?: "restaurant_option_choice_map_sum_fields",
 	choice_id?:number,
+	id?:number,
 	option_id?:number
 }
 
 /** order by sum() on columns of table "restaurant_option_choice_map" */
 export type restaurant_option_choice_map_sum_order_by = {
 		choice_id?:order_by,
+	id?:order_by,
 	option_id?:order_by
 }
 
 /** update columns of table "restaurant_option_choice_map" */
 export enum restaurant_option_choice_map_update_column {
 	choice_id = "choice_id",
+	id = "id",
 	option_id = "option_id"
 }
 
@@ -23941,12 +23705,14 @@ export type restaurant_option_choice_map_updates = {
 export type restaurant_option_choice_map_var_pop_fields = {
 	__typename?: "restaurant_option_choice_map_var_pop_fields",
 	choice_id?:number,
+	id?:number,
 	option_id?:number
 }
 
 /** order by var_pop() on columns of table "restaurant_option_choice_map" */
 export type restaurant_option_choice_map_var_pop_order_by = {
 		choice_id?:order_by,
+	id?:order_by,
 	option_id?:order_by
 }
 
@@ -23954,12 +23720,14 @@ export type restaurant_option_choice_map_var_pop_order_by = {
 export type restaurant_option_choice_map_var_samp_fields = {
 	__typename?: "restaurant_option_choice_map_var_samp_fields",
 	choice_id?:number,
+	id?:number,
 	option_id?:number
 }
 
 /** order by var_samp() on columns of table "restaurant_option_choice_map" */
 export type restaurant_option_choice_map_var_samp_order_by = {
 		choice_id?:order_by,
+	id?:order_by,
 	option_id?:order_by
 }
 
@@ -23967,12 +23735,14 @@ export type restaurant_option_choice_map_var_samp_order_by = {
 export type restaurant_option_choice_map_variance_fields = {
 	__typename?: "restaurant_option_choice_map_variance_fields",
 	choice_id?:number,
+	id?:number,
 	option_id?:number
 }
 
 /** order by variance() on columns of table "restaurant_option_choice_map" */
 export type restaurant_option_choice_map_variance_order_by = {
 		choice_id?:order_by,
+	id?:order_by,
 	option_id?:order_by
 }
 
@@ -24340,8 +24110,6 @@ export type restaurant_order = {
 	items:restaurant_order_item[],
 	/** An aggregate relationship */
 	items_aggregate:restaurant_order_item_aggregate,
-	/** A computed field, executes function "itemscost" */
-	items_cost?:money,
 	notes?:string,
 	order_time:timestamptz,
 	order_type:string,
@@ -24358,9 +24126,7 @@ export type restaurant_order = {
 	stripe_payment_id?:number,
 	tax:float8,
 	to_location_address?:string,
-	to_location_gps?:geography,
-	/** A computed field, executes function "totalcost" */
-	total_cost?:money
+	to_location_gps?:geography
 }
 
 /** aggregated selection of "restaurant_order" */
@@ -24455,7 +24221,6 @@ export type restaurant_order_bool_exp = {
 	firebase_id?:String_comparison_exp,
 	id?:Int_comparison_exp,
 	items?:restaurant_order_item_bool_exp,
-	items_cost?:money_comparison_exp,
 	notes?:String_comparison_exp,
 	order_time?:timestamptz_comparison_exp,
 	order_type?:String_comparison_exp,
@@ -24469,8 +24234,7 @@ export type restaurant_order_bool_exp = {
 	stripe_payment_id?:Int_comparison_exp,
 	tax?:float8_comparison_exp,
 	to_location_address?:String_comparison_exp,
-	to_location_gps?:geography_comparison_exp,
-	total_cost?:money_comparison_exp
+	to_location_gps?:geography_comparison_exp
 }
 
 /** Ordering options when selecting data from "restaurant". */
@@ -25116,7 +24880,6 @@ export type restaurant_order_order_by = {
 	firebase_id?:order_by,
 	id?:order_by,
 	items_aggregate?:restaurant_order_item_aggregate_order_by,
-	items_cost?:order_by,
 	notes?:order_by,
 	order_time?:order_by,
 	order_type?:order_by,
@@ -25130,8 +24893,7 @@ export type restaurant_order_order_by = {
 	stripe_payment_id?:order_by,
 	tax?:order_by,
 	to_location_address?:order_by,
-	to_location_gps?:order_by,
-	total_cost?:order_by
+	to_location_gps?:order_by
 }
 
 /** primary key columns input for table: restaurant_order */
@@ -28058,12 +27820,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		participant_id:{
 			type:"order_by",
 			array:false,
@@ -28108,12 +27864,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		id:{
-			type:"Int_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		notification_info:{
 			type:"notification_info_bool_exp",
 			array:false,
@@ -28141,12 +27891,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		participant_id:{
 			type:"Int",
 			array:false,
@@ -28168,12 +27912,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		chat_id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
 			type:"Int",
 			array:false,
 			arrayRequired:false,
@@ -28211,12 +27949,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		participant_id:{
 			type:"order_by",
 			array:false,
@@ -28232,12 +27964,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		chat_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -28289,12 +28015,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		notification_info:{
 			type:"notification_info_order_by",
 			array:false,
@@ -28315,7 +28035,13 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	chat_participant_pk_columns_input:{
-		id:{
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		participant_id:{
 			type:"Int",
 			array:false,
 			arrayRequired:false,
@@ -28336,12 +28062,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		participant_id:{
 			type:"Int",
 			array:false,
@@ -28351,12 +28071,6 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	chat_participant_stddev_order_by:{
 		chat_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -28376,12 +28090,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		participant_id:{
 			type:"order_by",
 			array:false,
@@ -28391,12 +28099,6 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	chat_participant_stddev_samp_order_by:{
 		chat_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -28436,12 +28138,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		participant_id:{
 			type:"Int",
 			array:false,
@@ -28451,12 +28147,6 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	chat_participant_sum_order_by:{
 		chat_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -28497,12 +28187,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		participant_id:{
 			type:"order_by",
 			array:false,
@@ -28517,12 +28201,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		participant_id:{
 			type:"order_by",
 			array:false,
@@ -28532,12 +28210,6 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	chat_participant_variance_order_by:{
 		chat_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -29573,18 +29245,6 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
-		},
-		trip_distance:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		trip_duration:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
 		}
 	},
 	delivery_bool_exp:{
@@ -29762,12 +29422,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		order_time:{
-			type:"timestamptz_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		package_cost:{
 			type:"money_comparison_exp",
 			array:false,
@@ -29829,13 +29483,13 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		trip_distance:{
-			type:"Int_comparison_exp",
+			type:"String_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
 		trip_duration:{
-			type:"Int_comparison_exp",
+			type:"String_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -29922,18 +29576,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		stripe_payment_id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		trip_distance:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		trip_duration:{
 			type:"Int",
 			array:false,
 			arrayRequired:false,
@@ -30097,12 +29739,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		order_time:{
-			type:"timestamptz",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		package_cost:{
 			type:"money",
 			array:false,
@@ -30164,13 +29800,13 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		trip_distance:{
-			type:"Int",
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
 		trip_duration:{
-			type:"Int",
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -30286,12 +29922,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		order_time:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -30468,12 +30098,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		order_time:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -30737,12 +30361,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		order_time:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		package_cost:{
 			type:"order_by",
 			array:false,
@@ -30952,12 +30570,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		order_time:{
-			type:"timestamptz",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		package_cost:{
 			type:"money",
 			array:false,
@@ -31013,13 +30625,13 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		trip_distance:{
-			type:"Int",
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
 		trip_duration:{
-			type:"Int",
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -31109,18 +30721,6 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
-		},
-		trip_distance:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		trip_duration:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
 		}
 	},
 	delivery_stddev_pop_order_by:{
@@ -31201,18 +30801,6 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
-		},
-		trip_distance:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		trip_duration:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
 		}
 	},
 	delivery_stddev_samp_order_by:{
@@ -31289,18 +30877,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		stripe_payment_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		trip_distance:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		trip_duration:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -31442,12 +31018,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		order_time:{
-			type:"timestamptz",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		package_cost:{
 			type:"money",
 			array:false,
@@ -31503,13 +31073,13 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		trip_distance:{
-			type:"Int",
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
 		trip_duration:{
-			type:"Int",
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -31595,18 +31165,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		stripe_payment_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		trip_distance:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		trip_duration:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -31712,18 +31270,6 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
-		},
-		trip_distance:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		trip_duration:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
 		}
 	},
 	delivery_var_samp_order_by:{
@@ -31804,18 +31350,6 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
-		},
-		trip_distance:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		trip_duration:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
 		}
 	},
 	delivery_variance_order_by:{
@@ -31892,18 +31426,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		stripe_payment_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		trip_distance:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		trip_duration:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -32709,7 +32231,13 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		delete_chat_participant_by_pk:{
-			id:{
+			chat_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			participant_id:{
 				type:"Int",
 				array:false,
 				arrayRequired:false,
@@ -32901,13 +32429,7 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		delete_restaurant_item_option_map_by_pk:{
-			item_id:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:true
-			},
-			option_id:{
+			id:{
 				type:"Int",
 				array:false,
 				arrayRequired:false,
@@ -32955,13 +32477,7 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		delete_restaurant_option_choice_map_by_pk:{
-			choice_id:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:true
-			},
-			option_id:{
+			id:{
 				type:"Int",
 				array:false,
 				arrayRequired:false,
@@ -35619,7 +35135,13 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		chat_participant_by_pk:{
-			id:{
+			chat_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			participant_id:{
 				type:"Int",
 				array:false,
 				arrayRequired:false,
@@ -36483,13 +36005,7 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		restaurant_item_option_map_by_pk:{
-			item_id:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:true
-			},
-			option_id:{
+			id:{
 				type:"Int",
 				array:false,
 				arrayRequired:false,
@@ -36705,13 +36221,7 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		restaurant_option_choice_map_by_pk:{
-			choice_id:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:true
-			},
-			option_id:{
+			id:{
 				type:"Int",
 				array:false,
 				arrayRequired:false,
@@ -37878,12 +37388,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:true
 		},
-		cost:{
-			type:"money_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		customer:{
 			type:"customer_bool_exp",
 			array:false,
@@ -38808,12 +38312,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_cart_order_by:{
-		cost:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		customer:{
 			type:"customer_order_by",
 			array:false,
@@ -41412,6 +40910,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_item_option_map_avg_order_by:{
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		item_id:{
 			type:"order_by",
 			array:false,
@@ -41444,6 +40948,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:true
 		},
+		id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		item_id:{
 			type:"Int_comparison_exp",
 			array:false,
@@ -41465,6 +40975,12 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	restaurant_item_option_map_constraint: "enum",
 	restaurant_item_option_map_inc_input:{
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		item_id:{
 			type:"Int",
 			array:false,
@@ -41479,6 +40995,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_item_option_map_insert_input:{
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		item_id:{
 			type:"Int",
 			array:false,
@@ -41499,6 +41021,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_item_option_map_max_order_by:{
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		item_id:{
 			type:"order_by",
 			array:false,
@@ -41513,6 +41041,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_item_option_map_min_order_by:{
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		item_id:{
 			type:"order_by",
 			array:false,
@@ -41547,6 +41081,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_item_option_map_order_by:{
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		item_id:{
 			type:"order_by",
 			array:false,
@@ -41567,13 +41107,7 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_item_option_map_pk_columns_input:{
-		item_id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:true
-		},
-		option_id:{
+		id:{
 			type:"Int",
 			array:false,
 			arrayRequired:false,
@@ -41582,6 +41116,12 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	restaurant_item_option_map_select_column: "enum",
 	restaurant_item_option_map_set_input:{
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		item_id:{
 			type:"Int",
 			array:false,
@@ -41596,6 +41136,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_item_option_map_stddev_order_by:{
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		item_id:{
 			type:"order_by",
 			array:false,
@@ -41610,6 +41156,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_item_option_map_stddev_pop_order_by:{
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		item_id:{
 			type:"order_by",
 			array:false,
@@ -41624,6 +41176,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_item_option_map_stddev_samp_order_by:{
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		item_id:{
 			type:"order_by",
 			array:false,
@@ -41652,6 +41210,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_item_option_map_stream_cursor_value_input:{
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		item_id:{
 			type:"Int",
 			array:false,
@@ -41666,6 +41230,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_item_option_map_sum_order_by:{
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		item_id:{
 			type:"order_by",
 			array:false,
@@ -41701,6 +41271,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_item_option_map_var_pop_order_by:{
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		item_id:{
 			type:"order_by",
 			array:false,
@@ -41715,6 +41291,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_item_option_map_var_samp_order_by:{
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		item_id:{
 			type:"order_by",
 			array:false,
@@ -41729,6 +41311,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_item_option_map_variance_order_by:{
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		item_id:{
 			type:"order_by",
 			array:false,
@@ -43662,6 +43250,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		option_id:{
 			type:"order_by",
 			array:false,
@@ -43694,6 +43288,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		option_choices:{
 			type:"restaurant_choice_bool_exp",
 			array:false,
@@ -43715,6 +43315,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		option_id:{
 			type:"Int",
 			array:false,
@@ -43724,6 +43330,12 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	restaurant_option_choice_map_insert_input:{
 		choice_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
 			type:"Int",
 			array:false,
 			arrayRequired:false,
@@ -43749,6 +43361,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		option_id:{
 			type:"order_by",
 			array:false,
@@ -43758,6 +43376,12 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	restaurant_option_choice_map_min_order_by:{
 		choice_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -43797,6 +43421,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		option_choices_aggregate:{
 			type:"restaurant_choice_aggregate_order_by",
 			array:false,
@@ -43811,13 +43441,7 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_option_choice_map_pk_columns_input:{
-		choice_id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:true
-		},
-		option_id:{
+		id:{
 			type:"Int",
 			array:false,
 			arrayRequired:false,
@@ -43827,6 +43451,12 @@ export const AllTypesProps: Record<string,any> = {
 	restaurant_option_choice_map_select_column: "enum",
 	restaurant_option_choice_map_set_input:{
 		choice_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
 			type:"Int",
 			array:false,
 			arrayRequired:false,
@@ -43846,6 +43476,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		option_id:{
 			type:"order_by",
 			array:false,
@@ -43860,6 +43496,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		option_id:{
 			type:"order_by",
 			array:false,
@@ -43869,6 +43511,12 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	restaurant_option_choice_map_stddev_samp_order_by:{
 		choice_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -43902,6 +43550,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		option_id:{
 			type:"Int",
 			array:false,
@@ -43911,6 +43565,12 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	restaurant_option_choice_map_sum_order_by:{
 		choice_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -43951,6 +43611,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		option_id:{
 			type:"order_by",
 			array:false,
@@ -43965,6 +43631,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		option_id:{
 			type:"order_by",
 			array:false,
@@ -43974,6 +43646,12 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	restaurant_option_choice_map_variance_order_by:{
 		choice_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -45062,12 +44740,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		items_cost:{
-			type:"money_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		notes:{
 			type:"String_comparison_exp",
 			array:false,
@@ -45148,12 +44820,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		to_location_gps:{
 			type:"geography_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		total_cost:{
-			type:"money_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -46784,12 +46450,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		items_cost:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		notes:{
 			type:"order_by",
 			array:false,
@@ -46869,12 +46529,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		to_location_gps:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		total_cost:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -49206,7 +48860,13 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		chat_participant_by_pk:{
-			id:{
+			chat_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			participant_id:{
 				type:"Int",
 				array:false,
 				arrayRequired:false,
@@ -50290,13 +49950,7 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		restaurant_item_option_map_by_pk:{
-			item_id:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:true
-			},
-			option_id:{
+			id:{
 				type:"Int",
 				array:false,
 				arrayRequired:false,
@@ -50572,13 +50226,7 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		restaurant_option_choice_map_by_pk:{
-			choice_id:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:true
-			},
-			option_id:{
+			id:{
 				type:"Int",
 				array:false,
 				arrayRequired:false,
@@ -52974,7 +52622,6 @@ export const ReturnTypes: Record<string,any> = {
 		app_type_id:"String",
 		chat:"chat",
 		chat_id:"Int",
-		id:"Int",
 		notification_info:"notification_info",
 		participant_id:"Int",
 		user:"user"
@@ -52998,19 +52645,16 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	chat_participant_avg_fields:{
 		chat_id:"Float",
-		id:"Float",
 		participant_id:"Float"
 	},
 	chat_participant_max_fields:{
 		app_type_id:"String",
 		chat_id:"Int",
-		id:"Int",
 		participant_id:"Int"
 	},
 	chat_participant_min_fields:{
 		app_type_id:"String",
 		chat_id:"Int",
-		id:"Int",
 		participant_id:"Int"
 	},
 	chat_participant_mutation_response:{
@@ -53019,37 +52663,30 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	chat_participant_stddev_fields:{
 		chat_id:"Float",
-		id:"Float",
 		participant_id:"Float"
 	},
 	chat_participant_stddev_pop_fields:{
 		chat_id:"Float",
-		id:"Float",
 		participant_id:"Float"
 	},
 	chat_participant_stddev_samp_fields:{
 		chat_id:"Float",
-		id:"Float",
 		participant_id:"Float"
 	},
 	chat_participant_sum_fields:{
 		chat_id:"Int",
-		id:"Int",
 		participant_id:"Int"
 	},
 	chat_participant_var_pop_fields:{
 		chat_id:"Float",
-		id:"Float",
 		participant_id:"Float"
 	},
 	chat_participant_var_samp_fields:{
 		chat_id:"Float",
-		id:"Float",
 		participant_id:"Float"
 	},
 	chat_participant_variance_fields:{
 		chat_id:"Float",
-		id:"Float",
 		participant_id:"Float"
 	},
 	chat_stddev_fields:{
@@ -53259,7 +52896,6 @@ export const ReturnTypes: Record<string,any> = {
 		estimated_arrival_at_pickup_time:"timestamptz",
 		estimated_package_ready_time:"timestamptz",
 		id:"Int",
-		order_time:"timestamptz",
 		package_cost:"money",
 		payment_type:"String",
 		pickup_address:"String",
@@ -53270,8 +52906,8 @@ export const ReturnTypes: Record<string,any> = {
 		service_provider_type:"String",
 		status:"String",
 		stripe_payment_id:"Int",
-		trip_distance:"Int",
-		trip_duration:"Int",
+		trip_distance:"String",
+		trip_duration:"String",
 		trip_polyline:"String"
 	},
 	delivery_aggregate:{
@@ -53304,9 +52940,7 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"Float",
 		service_provider_id:"Float",
 		service_provider_review_by_driver_id:"Float",
-		stripe_payment_id:"Float",
-		trip_distance:"Float",
-		trip_duration:"Float"
+		stripe_payment_id:"Float"
 	},
 	delivery_max_fields:{
 		actual_arrival_at_dropoff_time:"timestamptz",
@@ -53327,7 +52961,6 @@ export const ReturnTypes: Record<string,any> = {
 		estimated_arrival_at_pickup_time:"timestamptz",
 		estimated_package_ready_time:"timestamptz",
 		id:"Int",
-		order_time:"timestamptz",
 		package_cost:"money",
 		payment_type:"String",
 		pickup_address:"String",
@@ -53336,8 +52969,8 @@ export const ReturnTypes: Record<string,any> = {
 		service_provider_type:"String",
 		status:"String",
 		stripe_payment_id:"Int",
-		trip_distance:"Int",
-		trip_duration:"Int",
+		trip_distance:"String",
+		trip_duration:"String",
 		trip_polyline:"String"
 	},
 	delivery_min_fields:{
@@ -53359,7 +52992,6 @@ export const ReturnTypes: Record<string,any> = {
 		estimated_arrival_at_pickup_time:"timestamptz",
 		estimated_package_ready_time:"timestamptz",
 		id:"Int",
-		order_time:"timestamptz",
 		package_cost:"money",
 		payment_type:"String",
 		pickup_address:"String",
@@ -53368,8 +53000,8 @@ export const ReturnTypes: Record<string,any> = {
 		service_provider_type:"String",
 		status:"String",
 		stripe_payment_id:"Int",
-		trip_distance:"Int",
-		trip_duration:"Int",
+		trip_distance:"String",
+		trip_duration:"String",
 		trip_polyline:"String"
 	},
 	delivery_mutation_response:{
@@ -53389,9 +53021,7 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"Float",
 		service_provider_id:"Float",
 		service_provider_review_by_driver_id:"Float",
-		stripe_payment_id:"Float",
-		trip_distance:"Float",
-		trip_duration:"Float"
+		stripe_payment_id:"Float"
 	},
 	delivery_stddev_pop_fields:{
 		chat_with_customer_id:"Float",
@@ -53406,9 +53036,7 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"Float",
 		service_provider_id:"Float",
 		service_provider_review_by_driver_id:"Float",
-		stripe_payment_id:"Float",
-		trip_distance:"Float",
-		trip_duration:"Float"
+		stripe_payment_id:"Float"
 	},
 	delivery_stddev_samp_fields:{
 		chat_with_customer_id:"Float",
@@ -53423,9 +53051,7 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"Float",
 		service_provider_id:"Float",
 		service_provider_review_by_driver_id:"Float",
-		stripe_payment_id:"Float",
-		trip_distance:"Float",
-		trip_duration:"Float"
+		stripe_payment_id:"Float"
 	},
 	delivery_sum_fields:{
 		chat_with_customer_id:"Int",
@@ -53440,9 +53066,7 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"money",
 		service_provider_id:"Int",
 		service_provider_review_by_driver_id:"Int",
-		stripe_payment_id:"Int",
-		trip_distance:"Int",
-		trip_duration:"Int"
+		stripe_payment_id:"Int"
 	},
 	delivery_var_pop_fields:{
 		chat_with_customer_id:"Float",
@@ -53457,9 +53081,7 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"Float",
 		service_provider_id:"Float",
 		service_provider_review_by_driver_id:"Float",
-		stripe_payment_id:"Float",
-		trip_distance:"Float",
-		trip_duration:"Float"
+		stripe_payment_id:"Float"
 	},
 	delivery_var_samp_fields:{
 		chat_with_customer_id:"Float",
@@ -53474,9 +53096,7 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"Float",
 		service_provider_id:"Float",
 		service_provider_review_by_driver_id:"Float",
-		stripe_payment_id:"Float",
-		trip_distance:"Float",
-		trip_duration:"Float"
+		stripe_payment_id:"Float"
 	},
 	delivery_variance_fields:{
 		chat_with_customer_id:"Float",
@@ -53491,78 +53111,7 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"Float",
 		service_provider_id:"Float",
 		service_provider_review_by_driver_id:"Float",
-		stripe_payment_id:"Float",
-		trip_distance:"Float",
-		trip_duration:"Float"
-	},
-	mez_admin:{
-		notification_info:"notification_info",
-		notification_info_id:"Int",
-		user_id:"Int",
-		version:"String"
-	},
-	mez_admin_aggregate:{
-		aggregate:"mez_admin_aggregate_fields",
-		nodes:"mez_admin"
-	},
-	mez_admin_aggregate_fields:{
-		avg:"mez_admin_avg_fields",
-		count:"Int",
-		max:"mez_admin_max_fields",
-		min:"mez_admin_min_fields",
-		stddev:"mez_admin_stddev_fields",
-		stddev_pop:"mez_admin_stddev_pop_fields",
-		stddev_samp:"mez_admin_stddev_samp_fields",
-		sum:"mez_admin_sum_fields",
-		var_pop:"mez_admin_var_pop_fields",
-		var_samp:"mez_admin_var_samp_fields",
-		variance:"mez_admin_variance_fields"
-	},
-	mez_admin_avg_fields:{
-		notification_info_id:"Float",
-		user_id:"Float"
-	},
-	mez_admin_max_fields:{
-		notification_info_id:"Int",
-		user_id:"Int",
-		version:"String"
-	},
-	mez_admin_min_fields:{
-		notification_info_id:"Int",
-		user_id:"Int",
-		version:"String"
-	},
-	mez_admin_mutation_response:{
-		affected_rows:"Int",
-		returning:"mez_admin"
-	},
-	mez_admin_stddev_fields:{
-		notification_info_id:"Float",
-		user_id:"Float"
-	},
-	mez_admin_stddev_pop_fields:{
-		notification_info_id:"Float",
-		user_id:"Float"
-	},
-	mez_admin_stddev_samp_fields:{
-		notification_info_id:"Float",
-		user_id:"Float"
-	},
-	mez_admin_sum_fields:{
-		notification_info_id:"Int",
-		user_id:"Int"
-	},
-	mez_admin_var_pop_fields:{
-		notification_info_id:"Float",
-		user_id:"Float"
-	},
-	mez_admin_var_samp_fields:{
-		notification_info_id:"Float",
-		user_id:"Float"
-	},
-	mez_admin_variance_fields:{
-		notification_info_id:"Float",
-		user_id:"Float"
+		stripe_payment_id:"Float"
 	},
 	mez_admin:{
 		notification_info:"notification_info",
@@ -54024,7 +53573,6 @@ export const ReturnTypes: Record<string,any> = {
 		schedule_id:"Float"
 	},
 	restaurant_cart:{
-		cost:"money",
 		customer:"customer",
 		customer_id:"Int",
 		items:"restaurant_cart_item",
@@ -54465,6 +54013,7 @@ export const ReturnTypes: Record<string,any> = {
 		returning:"restaurant_item"
 	},
 	restaurant_item_option_map:{
+		id:"Int",
 		item_id:"Int",
 		item_options:"restaurant_option",
 		item_options_aggregate:"restaurant_option_aggregate",
@@ -54488,14 +54037,17 @@ export const ReturnTypes: Record<string,any> = {
 		variance:"restaurant_item_option_map_variance_fields"
 	},
 	restaurant_item_option_map_avg_fields:{
+		id:"Float",
 		item_id:"Float",
 		option_id:"Float"
 	},
 	restaurant_item_option_map_max_fields:{
+		id:"Int",
 		item_id:"Int",
 		option_id:"Int"
 	},
 	restaurant_item_option_map_min_fields:{
+		id:"Int",
 		item_id:"Int",
 		option_id:"Int"
 	},
@@ -54504,30 +54056,37 @@ export const ReturnTypes: Record<string,any> = {
 		returning:"restaurant_item_option_map"
 	},
 	restaurant_item_option_map_stddev_fields:{
+		id:"Float",
 		item_id:"Float",
 		option_id:"Float"
 	},
 	restaurant_item_option_map_stddev_pop_fields:{
+		id:"Float",
 		item_id:"Float",
 		option_id:"Float"
 	},
 	restaurant_item_option_map_stddev_samp_fields:{
+		id:"Float",
 		item_id:"Float",
 		option_id:"Float"
 	},
 	restaurant_item_option_map_sum_fields:{
+		id:"Int",
 		item_id:"Int",
 		option_id:"Int"
 	},
 	restaurant_item_option_map_var_pop_fields:{
+		id:"Float",
 		item_id:"Float",
 		option_id:"Float"
 	},
 	restaurant_item_option_map_var_samp_fields:{
+		id:"Float",
 		item_id:"Float",
 		option_id:"Float"
 	},
 	restaurant_item_option_map_variance_fields:{
+		id:"Float",
 		item_id:"Float",
 		option_id:"Float"
 	},
@@ -54761,6 +54320,7 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	restaurant_option_choice_map:{
 		choice_id:"Int",
+		id:"Int",
 		option_choices:"restaurant_choice",
 		option_choices_aggregate:"restaurant_choice_aggregate",
 		option_id:"Int"
@@ -54784,14 +54344,17 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	restaurant_option_choice_map_avg_fields:{
 		choice_id:"Float",
+		id:"Float",
 		option_id:"Float"
 	},
 	restaurant_option_choice_map_max_fields:{
 		choice_id:"Int",
+		id:"Int",
 		option_id:"Int"
 	},
 	restaurant_option_choice_map_min_fields:{
 		choice_id:"Int",
+		id:"Int",
 		option_id:"Int"
 	},
 	restaurant_option_choice_map_mutation_response:{
@@ -54800,30 +54363,37 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	restaurant_option_choice_map_stddev_fields:{
 		choice_id:"Float",
+		id:"Float",
 		option_id:"Float"
 	},
 	restaurant_option_choice_map_stddev_pop_fields:{
 		choice_id:"Float",
+		id:"Float",
 		option_id:"Float"
 	},
 	restaurant_option_choice_map_stddev_samp_fields:{
 		choice_id:"Float",
+		id:"Float",
 		option_id:"Float"
 	},
 	restaurant_option_choice_map_sum_fields:{
 		choice_id:"Int",
+		id:"Int",
 		option_id:"Int"
 	},
 	restaurant_option_choice_map_var_pop_fields:{
 		choice_id:"Float",
+		id:"Float",
 		option_id:"Float"
 	},
 	restaurant_option_choice_map_var_samp_fields:{
 		choice_id:"Float",
+		id:"Float",
 		option_id:"Float"
 	},
 	restaurant_option_choice_map_variance_fields:{
 		choice_id:"Float",
+		id:"Float",
 		option_id:"Float"
 	},
 	restaurant_option_max_fields:{
@@ -54928,7 +54498,6 @@ export const ReturnTypes: Record<string,any> = {
 		id:"Int",
 		items:"restaurant_order_item",
 		items_aggregate:"restaurant_order_item_aggregate",
-		items_cost:"money",
 		notes:"String",
 		order_time:"timestamptz",
 		order_type:"String",
@@ -54942,8 +54511,7 @@ export const ReturnTypes: Record<string,any> = {
 		stripe_payment_id:"Int",
 		tax:"float8",
 		to_location_address:"String",
-		to_location_gps:"geography",
-		total_cost:"money"
+		to_location_gps:"geography"
 	},
 	restaurant_order_aggregate:{
 		aggregate:"restaurant_order_aggregate_fields",
