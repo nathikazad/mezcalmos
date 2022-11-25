@@ -1,113 +1,104 @@
 {
-  "kind": "identitytoolkit#DownloadAccountResponse",
-  "users": [
-    {
-      "localId": "2Jqme9BsPUkEqH8DjOoBPJpbP5qn",
-      "createdAt": "1668606822299",
-      "lastLoginAt": "1668633556458",
-      "displayName": "customer",
-      "photoUrl": "",
-      "passwordHash": "fakeHash:salt=fakeSaltvjHJNx8AxaefO8zeiZRk:password=password",
-      "salt": "fakeSaltvjHJNx8AxaefO8zeiZRk",
-      "passwordUpdatedAt": 1668610591999,
-      "customAttributes": "{\"https://hasura.io/jwt/claims\":{\"x-hasura-default-role\":\"user\",\"x-hasura-allowed-roles\":[\"user\"],\"x-hasura-user-id\":\"3\"}}",
-      "providerUserInfo": [
+    "kind": "identitytoolkit#DownloadAccountResponse",
+    "users": [{
+            "localId": "2Jqme9BsPUkEqH8DjOoBPJpbP5qn",
+            "createdAt": "1668606822299",
+            "lastLoginAt": "1668633556458",
+            "displayName": "customer",
+            "photoUrl": "",
+            "passwordHash": "fakeHash:salt=fakeSaltvjHJNx8AxaefO8zeiZRk:password=password",
+            "salt": "fakeSaltvjHJNx8AxaefO8zeiZRk",
+            "passwordUpdatedAt": 1668610591999,
+            "customAttributes": "{\"https://hasura.io/jwt/claims\":{\"x-hasura-default-role\":\"anonymous\",\"x-hasura-allowed-roles\":[\"anonymous\",\"customer\",\"mez_admin\",\"deliverer\",\"restaurant_operator\"],\"x-hasura-user-id\":\"3\"}}",
+            "providerUserInfo": [{
+                "providerId": "password",
+                "email": "customer@mezcalmos.com",
+                "federatedId": "customer@mezcalmos.com",
+                "rawId": "customer@mezcalmos.com",
+                "displayName": "customer",
+                "photoUrl": ""
+            }],
+            "validSince": "1668610591",
+            "email": "customer@mezcalmos.com",
+            "emailVerified": true,
+            "disabled": false,
+            "initialEmail": "customer@gmail.com",
+            "lastRefreshAt": "2022-11-16T21:19:16.559Z"
+        },
         {
-          "providerId": "password",
-          "email": "customer@mezcalmos.com",
-          "federatedId": "customer@mezcalmos.com",
-          "rawId": "customer@mezcalmos.com",
-          "displayName": "customer",
-          "photoUrl": ""
-        }
-      ],
-      "validSince": "1668610591",
-      "email": "customer@mezcalmos.com",
-      "emailVerified": true,
-      "disabled": false,
-      "initialEmail": "customer@gmail.com",
-      "lastRefreshAt": "2022-11-16T21:19:16.559Z"
-    },
-    {
-      "localId": "PUkEqH82Jqme9BsDjOoBPJpbP5qn",
-      "createdAt": "1668606822299",
-      "lastLoginAt": "1668633556458",
-      "displayName": "restaurantop",
-      "photoUrl": "",
-      "passwordHash": "fakeHash:salt=fakeSaltvjHJNx8AxaefO8zeiZRk:password=password",
-      "salt": "fakeSaltvjHJNx8AxaefO8zeiZRk",
-      "passwordUpdatedAt": 1668610591999,
-      "customAttributes": "{\"https://hasura.io/jwt/claims\":{\"x-hasura-default-role\":\"user\",\"x-hasura-allowed-roles\":[\"user\"],\"x-hasura-user-id\":\"4\"}}",
-      "providerUserInfo": [
+            "localId": "PUkEqH82Jqme9BsDjOoBPJpbP5qn",
+            "createdAt": "1668606822299",
+            "lastLoginAt": "1668633556458",
+            "displayName": "restaurantop",
+            "photoUrl": "",
+            "passwordHash": "fakeHash:salt=fakeSaltvjHJNx8AxaefO8zeiZRk:password=password",
+            "salt": "fakeSaltvjHJNx8AxaefO8zeiZRk",
+            "passwordUpdatedAt": 1668610591999,
+            "customAttributes": "{\"https://hasura.io/jwt/claims\":{\"x-hasura-default-role\":\"user\",\"x-hasura-allowed-roles\":[\"user\"],\"x-hasura-user-id\":\"4\"}}",
+            "providerUserInfo": [{
+                "providerId": "password",
+                "email": "restaurantop@mezcalmos.com",
+                "federatedId": "restaurantop@mezcalmos.com",
+                "rawId": "restaurantop@mezcalmos.com",
+                "displayName": "restaurantop",
+                "photoUrl": ""
+            }],
+            "validSince": "1668610591",
+            "email": "restaurantop@mezcalmos.com",
+            "emailVerified": true,
+            "disabled": false,
+            "initialEmail": "restaurantop@gmail.com",
+            "lastRefreshAt": "2022-11-16T21:19:16.559Z"
+        },
         {
-          "providerId": "password",
-          "email": "restaurantop@mezcalmos.com",
-          "federatedId": "restaurantop@mezcalmos.com",
-          "rawId": "restaurantop@mezcalmos.com",
-          "displayName": "restaurantop",
-          "photoUrl": ""
-        }
-      ],
-      "validSince": "1668610591",
-      "email": "restaurantop@mezcalmos.com",
-      "emailVerified": true,
-      "disabled": false,
-      "initialEmail": "restaurantop@gmail.com",
-      "lastRefreshAt": "2022-11-16T21:19:16.559Z"
-    },
-    {
-      "localId": "QJpbP5qn2Jqme9BsPUkEqH8DjOoB",
-      "createdAt": "1668606822299",
-      "lastLoginAt": "1668633556458",
-      "displayName": "mezAdmin",
-      "photoUrl": "",
-      "passwordHash": "fakeHash:salt=fakeSaltvjHJNx8AxaefO8zeiZRk:password=password",
-      "salt": "fakeSaltvjHJNx8AxaefO8zeiZRk",
-      "passwordUpdatedAt": 1668610591999,
-      "customAttributes": "{\"https://hasura.io/jwt/claims\":{\"x-hasura-default-role\":\"user\",\"x-hasura-allowed-roles\":[\"user\"],\"x-hasura-user-id\":\"5\"}}",
-      "providerUserInfo": [
+            "localId": "QJpbP5qn2Jqme9BsPUkEqH8DjOoB",
+            "createdAt": "1668606822299",
+            "lastLoginAt": "1668633556458",
+            "displayName": "mezAdmin",
+            "photoUrl": "",
+            "passwordHash": "fakeHash:salt=fakeSaltvjHJNx8AxaefO8zeiZRk:password=password",
+            "salt": "fakeSaltvjHJNx8AxaefO8zeiZRk",
+            "passwordUpdatedAt": 1668610591999,
+            "customAttributes": "{\"https://hasura.io/jwt/claims\":{\"x-hasura-default-role\":\"user\",\"x-hasura-allowed-roles\":[\"user\"],\"x-hasura-user-id\":\"5\"}}",
+            "providerUserInfo": [{
+                "providerId": "password",
+                "email": "mezAdmin@mezcalmos.com",
+                "federatedId": "mezAdmin@mezcalmos.com",
+                "rawId": "mezAdmin@mezcalmos.com",
+                "displayName": "mezAdmin",
+                "photoUrl": ""
+            }],
+            "validSince": "1668610591",
+            "email": "mezAdmin@mezcalmos.com",
+            "emailVerified": true,
+            "disabled": false,
+            "initialEmail": "mezAdmin@gmail.com",
+            "lastRefreshAt": "2022-11-16T21:19:16.559Z"
+        },
         {
-          "providerId": "password",
-          "email": "mezAdmin@mezcalmos.com",
-          "federatedId": "mezAdmin@mezcalmos.com",
-          "rawId": "mezAdmin@mezcalmos.com",
-          "displayName": "mezAdmin",
-          "photoUrl": ""
+            "localId": "jOoBP2Jqme9BsPUkEqH8DJpbP5qn",
+            "createdAt": "1668606822299",
+            "lastLoginAt": "1668633556458",
+            "displayName": "deliverydriver",
+            "photoUrl": "",
+            "passwordHash": "fakeHash:salt=fakeSaltvjHJNx8AxaefO8zeiZRk:password=password",
+            "salt": "fakeSaltvjHJNx8AxaefO8zeiZRk",
+            "passwordUpdatedAt": 1668610591999,
+            "customAttributes": "{\"https://hasura.io/jwt/claims\":{\"x-hasura-default-role\":\"user\",\"x-hasura-allowed-roles\":[\"user\"],\"x-hasura-user-id\":\"6\"}}",
+            "providerUserInfo": [{
+                "providerId": "password",
+                "email": "deliverydriver@mezcalmos.com",
+                "federatedId": "deliverydriver@mezcalmos.com",
+                "rawId": "deliverydriver@mezcalmos.com",
+                "displayName": "deliverydriver",
+                "photoUrl": ""
+            }],
+            "validSince": "1668610591",
+            "email": "deliverydriver@mezcalmos.com",
+            "emailVerified": true,
+            "disabled": false,
+            "initialEmail": "deliverydriver@gmail.com",
+            "lastRefreshAt": "2022-11-16T21:19:16.559Z"
         }
-      ],
-      "validSince": "1668610591",
-      "email": "mezAdmin@mezcalmos.com",
-      "emailVerified": true,
-      "disabled": false,
-      "initialEmail": "mezAdmin@gmail.com",
-      "lastRefreshAt": "2022-11-16T21:19:16.559Z"
-    },
-    {
-      "localId": "jOoBP2Jqme9BsPUkEqH8DJpbP5qn",
-      "createdAt": "1668606822299",
-      "lastLoginAt": "1668633556458",
-      "displayName": "deliverydriver",
-      "photoUrl": "",
-      "passwordHash": "fakeHash:salt=fakeSaltvjHJNx8AxaefO8zeiZRk:password=password",
-      "salt": "fakeSaltvjHJNx8AxaefO8zeiZRk",
-      "passwordUpdatedAt": 1668610591999,
-      "customAttributes": "{\"https://hasura.io/jwt/claims\":{\"x-hasura-default-role\":\"user\",\"x-hasura-allowed-roles\":[\"user\"],\"x-hasura-user-id\":\"6\"}}",
-      "providerUserInfo": [
-        {
-          "providerId": "password",
-          "email": "deliverydriver@mezcalmos.com",
-          "federatedId": "deliverydriver@mezcalmos.com",
-          "rawId": "deliverydriver@mezcalmos.com",
-          "displayName": "deliverydriver",
-          "photoUrl": ""
-        }
-      ],
-      "validSince": "1668610591",
-      "email": "deliverydriver@mezcalmos.com",
-      "emailVerified": true,
-      "disabled": false,
-      "initialEmail": "deliverydriver@gmail.com",
-      "lastRefreshAt": "2022-11-16T21:19:16.559Z"
-    }
-  ]
+    ]
 }

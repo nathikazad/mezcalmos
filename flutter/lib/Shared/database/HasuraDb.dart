@@ -7,13 +7,12 @@ import 'package:graphql/client.dart';
 import 'package:jaguar_jwt/jaguar_jwt.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart' show mezDbgPrint;
 
 class HasuraDb {
   late GraphQLClient graphQLClient;
-  RxBool clientInitilized = false.obs;
 
   WebSocketLink? _wsLink;
   AppLaunchMode appLaunchMode;
@@ -45,7 +44,10 @@ class HasuraDb {
         appLaunchMode == AppLaunchMode.dev,
       );
       mezDbgPrint("TOKEN $hasuraAuthToken");
-      headers = <String, String>{'Authorization': 'Bearer $hasuraAuthToken'};
+      headers = <String, String>{
+        'Authorization': 'Bearer $hasuraAuthToken',
+        'x-hasura-role': _getRoleBasedOnApp(),
+      };
       final AuthLink _authLink =
           AuthLink(getToken: () async => 'Bearer $hasuraAuthToken');
       _httpLink = HttpLink(hasuraDbLink, defaultHeaders: headers);
@@ -69,7 +71,6 @@ class HasuraDb {
       cache: GraphQLCache(),
       link: _link,
     );
-    clientInitilized.value = true;
   }
 
   Future<String> _getAuthorizationToken(User user, bool testMode) async {
@@ -80,6 +81,24 @@ class HasuraDb {
       return issueJwtHS256(claims, 'secret-for-testing-locally-with-emulator');
     }
     return token;
+  }
+
+  /// this return by default customer we are not handling all app types
+  String _getRoleBasedOnApp() {
+    final AppType appType = Get.find<SettingsController>().appType;
+    switch (appType) {
+      case AppType.CustomerApp:
+        return "customer";
+      case AppType.DeliveryAdminApp:
+        return "mez_admin";
+      case AppType.DeliveryApp:
+        return "deliverer";
+      case AppType.RestaurantApp:
+        return "restaurant_operator";
+
+      default:
+        return "customer";
+    }
   }
 }
 
