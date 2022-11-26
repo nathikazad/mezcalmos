@@ -1,20 +1,25 @@
 import { isSignedIn } from "../shared/helper/authorizer";
 import { orderInProcess, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
-import *  as rootDbNodes from "../shared/databaseNodes/root";
-import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
-import { OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
-import { finishOrder } from "./helper";
-import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
+// import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
+// import { capturePayment } from "../utilities/stripe/payment";
+import { getRestaurantOrder } from "../shared/graphql/restaurant/order/getRestaurantOrder";
+import { updateOrderStatus } from "../shared/graphql/restaurant/order/updateOrder"
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
+import { OrderType } from "../shared/models/Generic/Order";
 import { restaurantOrderStatusChangeMessages } from "./bgNotificationMessages";
-import { pushNotification } from "../utilities/senders/notifyUser";
-import { ParticipantType } from "../shared/models/Generic/Chat";
 import { orderUrl } from "../utilities/senders/appRoutes";
-import { capturePayment } from "../utilities/stripe/payment";
+import { ParticipantType } from "../shared/models/Generic/Chat";
+import { pushNotification } from "../utilities/senders/notifyUser";
+import { getMezAdmins } from "../shared/graphql/restaurant/mezAdmin/getMezAdmins";
+import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
+import { RestaurantOperator } from "../shared/models/Services/Restaurant/Restaurant";
+import { MezAdmin } from "../shared/models/Generic/User";
+import { getDelivery } from "../shared/graphql/delivery/getDelivery";
+import { Delivery } from "../shared/models/Generic/Delivery";
+
 // Customer Canceling
-export async function cancelOrderFromCustomer(userId: string, data: any) {
+export async function cancelOrderFromCustomer(userId: number, data: any) {
 
   let response: ServerResponse | undefined = isSignedIn(userId);
   if (response != undefined) {
@@ -29,9 +34,12 @@ export async function cancelOrderFromCustomer(userId: string, data: any) {
     }
   }
 
-  let orderId: string = data.orderId;
-
-  let order: RestaurantOrder = (await rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).once('value')).val();
+  let mezAdminPromise = getMezAdmins();
+  let order: RestaurantOrder = await getRestaurantOrder(data.orderId);
+  let restaurantOperatorsPromise = getRestaurantOperators(order.restaurantId);
+  let promiseResponse = await Promise.all([mezAdminPromise, restaurantOperatorsPromise]);
+  let mezAdmins: MezAdmin[] = promiseResponse[0];
+  let restaurantOperators: RestaurantOperator[] = promiseResponse[1];
   if (order == null) {
     return {
       status: ServerResponseStatus.Error,
@@ -40,7 +48,7 @@ export async function cancelOrderFromCustomer(userId: string, data: any) {
     }
   }
 
-  if (order.customer.id != userId) {
+  if (order.customerId != userId) {
     return {
       status: ServerResponseStatus.Error,
       errorMessage: `Order does not belong to customer`,
@@ -56,32 +64,31 @@ export async function cancelOrderFromCustomer(userId: string, data: any) {
     }
   }
 
-
   switch (order.status) {
-    case RestaurantOrderStatus.OrderReceieved:
-      if (order.paymentType == PaymentType.Card) {
-        order = (await capturePayment(order, 0)) as RestaurantOrder
+    case RestaurantOrderStatus.OrderReceived:
+      // if (order.paymentType == PaymentType.Card) {
+        // order = (await capturePayment(order, 0)) as RestaurantOrder
         // TODO: cancel delivery payment intent by capturing 0
-      }
+      // }
 
       order.refundAmount = order.totalCost;
-      order.costToCustomer = order.totalCost - order.refundAmount;
+      // order.costToCustomer = order.totalCost - order.refundAmount;
       break;
     case RestaurantOrderStatus.PreparingOrder:
     case RestaurantOrderStatus.ReadyForPickup:
-      if (order.paymentType == PaymentType.Card) {
-        order = (await capturePayment(order, order.totalCost)) as RestaurantOrder
+      // if (order.paymentType == PaymentType.Card) {
+        // order = (await capturePayment(order, order.totalCost)) as RestaurantOrder
         // TODO: cancel delivery payment intent by capturing 0
-      }
+      // }
 
-      order.refundAmount = order.refundAmount + order.shippingCost;
-      order.costToCustomer = order.totalCost - order.refundAmount;
+      order.refundAmount = (order.refundAmount ?? 0) + order.deliveryCost;
+      // order.costToCustomer = order.totalCost - order.refundAmount;
       break;
-    case RestaurantOrderStatus.OnTheWay:
-      if (order.paymentType == PaymentType.Card) {
-        order = (await capturePayment(order)) as RestaurantOrder
+    // case RestaurantOrderStatus.OnTheWay:
+    //   if (order.paymentType == PaymentType.Card) {
+        // order = (await capturePayment(order)) as RestaurantOrder
         // TODO: capture delivery payment intent
-      }
+      // }
 
       break;
 
@@ -91,27 +98,17 @@ export async function cancelOrderFromCustomer(userId: string, data: any) {
 
 
   order.status = RestaurantOrderStatus.CancelledByCustomer;
-  await finishOrder(order, orderId);
+  // await finishOrder(order, orderId);
 
-  deliveryAdminNodes.deliveryAdmins().once('value', (snapshot) => {
-    let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-    restaurantNodes.restaurantOperators(order.serviceProviderId!).once('value').then((snapshot) => {
-      let restaurantOperators: Record<string, boolean> = snapshot.val();
-      notifyOthersCancelledOrder(deliveryAdmins, orderId, order, restaurantOperators);
-    });
-  });
+  // deliveryAdminNodes.deliveryAdmins().once('value', (snapshot) => {
+  //   let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
 
+  //TODO
+      // notifyOthersCancelledOrder(deliveryAdmins, orderId, order, restaurantOperators);
+  //   });
 
-  return { status: ServerResponseStatus.Success, orderId: data.orderId }
-};
-
-
-async function notifyOthersCancelledOrder(
-  deliveryAdmins: Record<string, DeliveryAdmin>,
-  orderId: string,
-  order: RestaurantOrder,
-  restaurantOperators: Record<string, boolean>) {
-
+  updateOrderStatus(order)
+  
   let notification: Notification = {
     foreground: <RestaurantOrderStatusChangeNotification>{
       status: RestaurantOrderStatus.CancelledByCustomer,
@@ -119,24 +116,65 @@ async function notifyOthersCancelledOrder(
       notificationType: NotificationType.OrderStatusChange,
       orderType: OrderType.Restaurant,
       notificationAction: NotificationAction.ShowPopUp,
-      orderId: orderId
+      orderId: data.orderId
     },
     background: restaurantOrderStatusChangeMessages[RestaurantOrderStatus.CancelledByCustomer],
-    linkUrl: orderUrl(ParticipantType.DeliveryAdmin, OrderType.Restaurant, orderId)
+    linkUrl: orderUrl(OrderType.Restaurant, data.orderId)
   }
-
-  for (let adminId in deliveryAdmins) {
-    pushNotification(adminId!, notification, ParticipantType.DeliveryAdmin);
+  mezAdmins.forEach((m) => {
+      pushNotification(m.user?.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+  });
+  restaurantOperators.forEach((r) => {
+    pushNotification(r.user?.firebaseId!, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
+  });
+  if(order.deliveryId != undefined) {
+    let delivery: Delivery = await getDelivery(order.deliveryId);
+    if(delivery.deliverer != undefined) {
+      notification.linkUrl = orderUrl(OrderType.Restaurant, order.orderId!);
+      pushNotification(delivery.deliverer.user?.firebaseId!, 
+        notification, 
+        delivery.deliverer.notificationInfo,
+        ParticipantType.DeliveryDriver,
+        delivery.deliverer.user?.language,
+      );
+    }
   }
-
-  for (let operatorId in restaurantOperators) {
-    pushNotification(operatorId, notification, ParticipantType.RestaurantOperator);
-  }
-
-  if (order.dropoffDriver) {
-    notification.linkUrl = orderUrl(ParticipantType.DeliveryDriver, OrderType.Restaurant, orderId)
-    pushNotification(order.dropoffDriver.id, notification, ParticipantType.DeliveryDriver);
-  }
+  
+  return { status: ServerResponseStatus.Success, orderId: data.orderId }
+};
 
 
-}
+// async function notifyOthersCancelledOrder(
+//   deliveryAdmins: Record<string, DeliveryAdmin>,
+//   orderId: string,
+//   order: RestaurantOrder,
+//   restaurantOperators: Record<string, boolean>) {
+
+//   let notification: Notification = {
+//     foreground: <RestaurantOrderStatusChangeNotification>{
+//       status: RestaurantOrderStatus.CancelledByCustomer,
+//       time: (new Date()).toISOString(),
+//       notificationType: NotificationType.OrderStatusChange,
+//       orderType: OrderType.Restaurant,
+//       notificationAction: NotificationAction.ShowPopUp,
+//       orderId: orderId
+//     },
+//     background: restaurantOrderStatusChangeMessages[RestaurantOrderStatus.CancelledByCustomer],
+//     linkUrl: orderUrl(ParticipantType.DeliveryAdmin, OrderType.Restaurant, orderId)
+//   }
+
+//   for (let adminId in deliveryAdmins) {
+//     pushNotification(adminId!, notification, ParticipantType.DeliveryAdmin);
+//   }
+
+//   for (let operatorId in restaurantOperators) {
+//     pushNotification(operatorId, notification, ParticipantType.RestaurantOperator);
+//   }
+
+//   if (order.dropoffDriver) {
+//     notification.linkUrl = orderUrl(ParticipantType.DeliveryDriver, OrderType.Restaurant, orderId)
+//     pushNotification(order.dropoffDriver.id, notification, ParticipantType.DeliveryDriver);
+//   }
+
+
+// }

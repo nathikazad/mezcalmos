@@ -14,10 +14,10 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
     //   order = (await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId, data.stripeFees)) as RestaurantOrder
     // }
 
-  let restaurantOperatorsDetails = restaurant.restaurantOperators.map((v) => {
+  let restaurantOperatorsDetails = restaurant.restaurantOperators!.map((v) => {
     return {
       participant_id: v.id,
-      app_type_id: "RestaurantApp"
+      app_type_id: "restaurant"
     };
   });
   let response = await chain.mutation({
@@ -71,7 +71,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
             delivery_cost: restaurantOrder.deliveryCost,
             status: DeliveryStatus.OrderReceived,
             service_provider_id: restaurantOrder.restaurantId,
-            service_provider_type: "Restaurant",
+            service_provider_type: "restaurant",
             // trip_distance: deliveryDetails.tripDistance,
             // trip_duration: deliveryDetails.tripDuration,
             // trip_polyline: deliveryDetails.tripPolyline,

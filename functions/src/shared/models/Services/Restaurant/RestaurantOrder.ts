@@ -1,7 +1,9 @@
 import { PaymentType } from '../../Generic/Order';
-import { UserInfo } from '../../Generic/User';
+// import { CustomerInfo, UserInfo } from '../../Generic/User';
 import { OrderNotification } from '../../Notification';
 import { AppType, Language, Location } from '../../Generic/Generic';
+// import { Restaurant } from './Restaurant';
+// import { Delivery } from '../../Generic/Delivery';
 
 export interface RestaurantOrder {
   orderId?: number;
@@ -9,7 +11,7 @@ export interface RestaurantOrder {
   restaurantId: number;
   paymentType: PaymentType;
   toLocation: Location;
-  estimatedFoodReadyTime: string;
+  estimatedFoodReadyTime?: string;
   actualFoodReadyTime?: string;
   stripePaymentId?: number;
   refundAmount?: number;
@@ -27,6 +29,8 @@ export interface RestaurantOrder {
   itemsCost?: number;
   totalCost?: number;
   chatId?: number;
+  // customer?: CustomerInfo;
+  // delivery?: Delivery;
 }
 export interface OrderItem {
   orderItemId?: number;
@@ -41,7 +45,7 @@ export interface OrderItem {
   costPerOne: number;
 }
 
-interface SelectedOption {
+export interface SelectedOption {
   optionId: number;
   optionNames: Record<Language, string>;
   selectedChoices: Record<Language, string[]>;
@@ -93,7 +97,11 @@ export function orderInProcess(status: RestaurantOrderStatus): boolean {
 }
 
 export interface NewRestaurantOrderNotification extends OrderNotification {
-  restaurant: UserInfo
+  restaurant: {
+    name: string,
+    image: string,
+    id: number
+  }
 }
 
 export interface RestaurantOrderStatusChangeNotification extends OrderNotification {

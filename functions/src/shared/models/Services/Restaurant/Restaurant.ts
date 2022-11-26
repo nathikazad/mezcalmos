@@ -1,4 +1,6 @@
-import { AppType, Language, Location } from "../../Generic/Generic";
+import { Language, Location, NotificationInfo } from "../../Generic/Generic";
+import { UserInfo } from "../../Generic/User";
+import { ForegroundNotification } from "../../Notification";
 
 // export interface ChooseManyOption {
 //   cost: number;
@@ -36,17 +38,18 @@ import { AppType, Language, Location } from "../../Generic/Generic";
 // }
 
 export interface Restaurant {
-  restaurantId: number;
+  restaurantId?: number;
   name: string;
   image: string;
+  firebaseId?: string;
   location: Location;
   description?: Record<Language, string>;
   scheduleId: number;
   paymentInfoId?: number;
-  openStatus: OpenStatus;
+  openStatus?: OpenStatus;
   // LanguageId: Language;
-  approved: boolean;
-  restaurantOperators: Array<RestaurantOperator>
+  approved?: boolean;
+  restaurantOperators?: Array<RestaurantOperator>
 }
 
 export enum OpenStatus {
@@ -56,21 +59,26 @@ export enum OpenStatus {
 }
 
 export interface RestaurantOperator {
-  id: number;
+  id?: number;
   userId: number;
   restaurantId: number;
   status: OperatorStatus;
-  owner: boolean;
+  owner?: boolean;
   appVersion?: string;
   currentGps?: Location;
-  notificationInfo: NotificationInfo;
+  notificationInfo?: NotificationInfo;
+  user?: UserInfo;
 }
-export interface NotificationInfo {
-  token: string;
-  AppTypeId: AppType;
-}
+
 export enum OperatorStatus {
   AwaitingApproval = "awaitingApproval",
   Authorized = "authorized",
   Banned = "banned"
 }
+
+export interface NewRestaurantNotification extends ForegroundNotification {
+  name: string,
+  image: string,
+  id: number
+}
+

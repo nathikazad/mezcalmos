@@ -804,7 +804,11 @@ type customer {
     """filter the rows returned"""
     where: delivery_bool_exp
   ): delivery_aggregate!
-  notification_info_id: Int
+
+  """
+  A computed field, executes function "customer_notification_token"
+  """
+  notification_token: String
 
   """An object relationship"""
   user: user!
@@ -838,7 +842,6 @@ type customer_aggregate_fields {
 
 """aggregate avg on columns"""
 type customer_avg_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
@@ -852,7 +855,7 @@ input customer_bool_exp {
   app_version: String_comparison_exp
   cart: restaurant_cart_bool_exp
   deliveries: delivery_bool_exp
-  notification_info_id: Int_comparison_exp
+  notification_token: String_comparison_exp
   user: user_bool_exp
   user_id: Int_comparison_exp
 }
@@ -876,7 +879,6 @@ enum customer_constraint {
 input type for incrementing numeric columns in table "customer"
 """
 input customer_inc_input {
-  notification_info_id: Int
   user_id: Int
 }
 
@@ -887,7 +889,6 @@ input customer_insert_input {
   app_version: String
   cart: restaurant_cart_obj_rel_insert_input
   deliveries: delivery_arr_rel_insert_input
-  notification_info_id: Int
   user: user_obj_rel_insert_input
   user_id: Int
 }
@@ -895,14 +896,12 @@ input customer_insert_input {
 """aggregate max on columns"""
 type customer_max_fields {
   app_version: String
-  notification_info_id: Int
   user_id: Int
 }
 
 """aggregate min on columns"""
 type customer_min_fields {
   app_version: String
-  notification_info_id: Int
   user_id: Int
 }
 
@@ -941,7 +940,7 @@ input customer_order_by {
   app_version: order_by
   cart: restaurant_cart_order_by
   deliveries_aggregate: delivery_aggregate_order_by
-  notification_info_id: order_by
+  notification_token: order_by
   user: user_order_by
   user_id: order_by
 }
@@ -959,9 +958,6 @@ enum customer_select_column {
   app_version
 
   """column name"""
-  notification_info_id
-
-  """column name"""
   user_id
 }
 
@@ -970,25 +966,21 @@ input type for updating data in table "customer"
 """
 input customer_set_input {
   app_version: String
-  notification_info_id: Int
   user_id: Int
 }
 
 """aggregate stddev on columns"""
 type customer_stddev_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
 """aggregate stddev_pop on columns"""
 type customer_stddev_pop_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
 """aggregate stddev_samp on columns"""
 type customer_stddev_samp_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
@@ -1006,13 +998,11 @@ input customer_stream_cursor_input {
 """Initial value of the column from where the streaming should start"""
 input customer_stream_cursor_value_input {
   app_version: String
-  notification_info_id: Int
   user_id: Int
 }
 
 """aggregate sum on columns"""
 type customer_sum_fields {
-  notification_info_id: Int
   user_id: Int
 }
 
@@ -1022,9 +1012,6 @@ update columns of table "customer"
 enum customer_update_column {
   """column name"""
   app_version
-
-  """column name"""
-  notification_info_id
 
   """column name"""
   user_id
@@ -1041,19 +1028,16 @@ input customer_updates {
 
 """aggregate var_pop on columns"""
 type customer_var_pop_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
 """aggregate var_samp on columns"""
 type customer_var_samp_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
 """aggregate variance on columns"""
 type customer_variance_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
@@ -1426,6 +1410,11 @@ type delivery {
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
   id: Int!
+
+  """
+  A computed field, executes function "delivery_notification_token"
+  """
+  notification_token: String
   order_time: timestamptz!
   package_cost: money!
   payment_type: String!
@@ -1583,6 +1572,7 @@ input delivery_bool_exp {
   estimated_arrival_at_pickup_time: timestamptz_comparison_exp
   estimated_package_ready_time: timestamptz_comparison_exp
   id: Int_comparison_exp
+  notification_token: String_comparison_exp
   order_time: timestamptz_comparison_exp
   package_cost: money_comparison_exp
   payment_type: String_comparison_exp
@@ -1908,6 +1898,7 @@ input delivery_order_by {
   estimated_arrival_at_pickup_time: order_by
   estimated_package_ready_time: order_by
   id: order_by
+  notification_token: order_by
   order_time: order_by
   package_cost: order_by
   payment_type: order_by
@@ -2757,9 +2748,13 @@ input jsonb_comparison_exp {
 columns and relationships of "mez_admin"
 """
 type mez_admin {
+  """
+  A computed field, executes function "mez_admin_notification_token"
+  """
+  notification_token: String
+
   """An object relationship"""
-  notification_info: notification_info
-  notification_info_id: Int
+  user: user
   user_id: Int!
   version: String
 }
@@ -2791,7 +2786,6 @@ type mez_admin_aggregate_fields {
 
 """aggregate avg on columns"""
 type mez_admin_avg_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
@@ -2802,8 +2796,8 @@ input mez_admin_bool_exp {
   _and: [mez_admin_bool_exp!]
   _not: mez_admin_bool_exp
   _or: [mez_admin_bool_exp!]
-  notification_info: notification_info_bool_exp
-  notification_info_id: Int_comparison_exp
+  notification_token: String_comparison_exp
+  user: user_bool_exp
   user_id: Int_comparison_exp
   version: String_comparison_exp
 }
@@ -2822,7 +2816,6 @@ enum mez_admin_constraint {
 input type for incrementing numeric columns in table "mez_admin"
 """
 input mez_admin_inc_input {
-  notification_info_id: Int
   user_id: Int
 }
 
@@ -2830,22 +2823,19 @@ input mez_admin_inc_input {
 input type for inserting data into table "mez_admin"
 """
 input mez_admin_insert_input {
-  notification_info: notification_info_obj_rel_insert_input
-  notification_info_id: Int
+  user: user_obj_rel_insert_input
   user_id: Int
   version: String
 }
 
 """aggregate max on columns"""
 type mez_admin_max_fields {
-  notification_info_id: Int
   user_id: Int
   version: String
 }
 
 """aggregate min on columns"""
 type mez_admin_min_fields {
-  notification_info_id: Int
   user_id: Int
   version: String
 }
@@ -2872,8 +2862,8 @@ input mez_admin_on_conflict {
 
 """Ordering options when selecting data from "mez_admin"."""
 input mez_admin_order_by {
-  notification_info: notification_info_order_by
-  notification_info_id: order_by
+  notification_token: order_by
+  user: user_order_by
   user_id: order_by
   version: order_by
 }
@@ -2888,9 +2878,6 @@ select columns of table "mez_admin"
 """
 enum mez_admin_select_column {
   """column name"""
-  notification_info_id
-
-  """column name"""
   user_id
 
   """column name"""
@@ -2901,26 +2888,22 @@ enum mez_admin_select_column {
 input type for updating data in table "mez_admin"
 """
 input mez_admin_set_input {
-  notification_info_id: Int
   user_id: Int
   version: String
 }
 
 """aggregate stddev on columns"""
 type mez_admin_stddev_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
 """aggregate stddev_pop on columns"""
 type mez_admin_stddev_pop_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
 """aggregate stddev_samp on columns"""
 type mez_admin_stddev_samp_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
@@ -2937,14 +2920,12 @@ input mez_admin_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input mez_admin_stream_cursor_value_input {
-  notification_info_id: Int
   user_id: Int
   version: String
 }
 
 """aggregate sum on columns"""
 type mez_admin_sum_fields {
-  notification_info_id: Int
   user_id: Int
 }
 
@@ -2952,9 +2933,6 @@ type mez_admin_sum_fields {
 update columns of table "mez_admin"
 """
 enum mez_admin_update_column {
-  """column name"""
-  notification_info_id
-
   """column name"""
   user_id
 
@@ -2973,19 +2951,16 @@ input mez_admin_updates {
 
 """aggregate var_pop on columns"""
 type mez_admin_var_pop_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
 """aggregate var_samp on columns"""
 type mez_admin_var_samp_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
 """aggregate variance on columns"""
 type mez_admin_variance_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
@@ -4966,6 +4941,11 @@ enum notification_info_constraint {
   unique or primary key constraint on columns "id"
   """
   notification_info_pkey
+
+  """
+  unique or primary key constraint on columns "app_type_id", "user_id"
+  """
+  notification_info_user_id_app_type_id_key
 }
 
 """
@@ -6505,6 +6485,26 @@ type restaurant {
     where: restaurant_operator_bool_exp
   ): restaurant_operator_aggregate!
   schedule_id: Int!
+
+  """
+  A computed field, executes function "special_items"
+  """
+  specials(
+    """distinct select on columns"""
+    distinct_on: [restaurant_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [restaurant_item_order_by!]
+
+    """filter the rows returned"""
+    where: restaurant_item_bool_exp
+  ): [restaurant_item!]
 }
 
 """
@@ -6564,6 +6564,7 @@ input restaurant_bool_exp {
   payment_info_id: Int_comparison_exp
   restaurant_operators: restaurant_operator_bool_exp
   schedule_id: Int_comparison_exp
+  specials: restaurant_item_bool_exp
 }
 
 """
@@ -9387,14 +9388,18 @@ type restaurant_operator {
   current_gps: geography
   id: Int!
 
-  """An object relationship"""
-  notification_info: notification_info!
-  notification_info_id: Int!
+  """
+  A computed field, executes function "restaurant_operator_notification_token"
+  """
+  notification_token: String
   owner: Boolean!
   restaurant_id: Int!
 
   """awaiting_approval,authorized,banned"""
   status: String!
+
+  """An object relationship"""
+  user: user!
   user_id: Int!
 }
 
@@ -9453,7 +9458,6 @@ input restaurant_operator_arr_rel_insert_input {
 """aggregate avg on columns"""
 type restaurant_operator_avg_fields {
   id: Float
-  notification_info_id: Float
   restaurant_id: Float
   user_id: Float
 }
@@ -9463,7 +9467,6 @@ order by avg() on columns of table "restaurant_operator"
 """
 input restaurant_operator_avg_order_by {
   id: order_by
-  notification_info_id: order_by
   restaurant_id: order_by
   user_id: order_by
 }
@@ -9478,11 +9481,11 @@ input restaurant_operator_bool_exp {
   app_version: String_comparison_exp
   current_gps: geography_comparison_exp
   id: Int_comparison_exp
-  notification_info: notification_info_bool_exp
-  notification_info_id: Int_comparison_exp
+  notification_token: String_comparison_exp
   owner: Boolean_comparison_exp
   restaurant_id: Int_comparison_exp
   status: String_comparison_exp
+  user: user_bool_exp
   user_id: Int_comparison_exp
 }
 
@@ -9501,7 +9504,6 @@ input type for incrementing numeric columns in table "restaurant_operator"
 """
 input restaurant_operator_inc_input {
   id: Int
-  notification_info_id: Int
   restaurant_id: Int
   user_id: Int
 }
@@ -9513,13 +9515,12 @@ input restaurant_operator_insert_input {
   app_version: String
   current_gps: geography
   id: Int
-  notification_info: notification_info_obj_rel_insert_input
-  notification_info_id: Int
   owner: Boolean
   restaurant_id: Int
 
   """awaiting_approval,authorized,banned"""
   status: String
+  user: user_obj_rel_insert_input
   user_id: Int
 }
 
@@ -9527,7 +9528,6 @@ input restaurant_operator_insert_input {
 type restaurant_operator_max_fields {
   app_version: String
   id: Int
-  notification_info_id: Int
   restaurant_id: Int
 
   """awaiting_approval,authorized,banned"""
@@ -9541,7 +9541,6 @@ order by max() on columns of table "restaurant_operator"
 input restaurant_operator_max_order_by {
   app_version: order_by
   id: order_by
-  notification_info_id: order_by
   restaurant_id: order_by
 
   """awaiting_approval,authorized,banned"""
@@ -9553,7 +9552,6 @@ input restaurant_operator_max_order_by {
 type restaurant_operator_min_fields {
   app_version: String
   id: Int
-  notification_info_id: Int
   restaurant_id: Int
 
   """awaiting_approval,authorized,banned"""
@@ -9567,7 +9565,6 @@ order by min() on columns of table "restaurant_operator"
 input restaurant_operator_min_order_by {
   app_version: order_by
   id: order_by
-  notification_info_id: order_by
   restaurant_id: order_by
 
   """awaiting_approval,authorized,banned"""
@@ -9600,11 +9597,11 @@ input restaurant_operator_order_by {
   app_version: order_by
   current_gps: order_by
   id: order_by
-  notification_info: notification_info_order_by
-  notification_info_id: order_by
+  notification_token: order_by
   owner: order_by
   restaurant_id: order_by
   status: order_by
+  user: user_order_by
   user_id: order_by
 }
 
@@ -9627,9 +9624,6 @@ enum restaurant_operator_select_column {
   id
 
   """column name"""
-  notification_info_id
-
-  """column name"""
   owner
 
   """column name"""
@@ -9649,7 +9643,6 @@ input restaurant_operator_set_input {
   app_version: String
   current_gps: geography
   id: Int
-  notification_info_id: Int
   owner: Boolean
   restaurant_id: Int
 
@@ -9661,7 +9654,6 @@ input restaurant_operator_set_input {
 """aggregate stddev on columns"""
 type restaurant_operator_stddev_fields {
   id: Float
-  notification_info_id: Float
   restaurant_id: Float
   user_id: Float
 }
@@ -9671,7 +9663,6 @@ order by stddev() on columns of table "restaurant_operator"
 """
 input restaurant_operator_stddev_order_by {
   id: order_by
-  notification_info_id: order_by
   restaurant_id: order_by
   user_id: order_by
 }
@@ -9679,7 +9670,6 @@ input restaurant_operator_stddev_order_by {
 """aggregate stddev_pop on columns"""
 type restaurant_operator_stddev_pop_fields {
   id: Float
-  notification_info_id: Float
   restaurant_id: Float
   user_id: Float
 }
@@ -9689,7 +9679,6 @@ order by stddev_pop() on columns of table "restaurant_operator"
 """
 input restaurant_operator_stddev_pop_order_by {
   id: order_by
-  notification_info_id: order_by
   restaurant_id: order_by
   user_id: order_by
 }
@@ -9697,7 +9686,6 @@ input restaurant_operator_stddev_pop_order_by {
 """aggregate stddev_samp on columns"""
 type restaurant_operator_stddev_samp_fields {
   id: Float
-  notification_info_id: Float
   restaurant_id: Float
   user_id: Float
 }
@@ -9707,7 +9695,6 @@ order by stddev_samp() on columns of table "restaurant_operator"
 """
 input restaurant_operator_stddev_samp_order_by {
   id: order_by
-  notification_info_id: order_by
   restaurant_id: order_by
   user_id: order_by
 }
@@ -9728,7 +9715,6 @@ input restaurant_operator_stream_cursor_value_input {
   app_version: String
   current_gps: geography
   id: Int
-  notification_info_id: Int
   owner: Boolean
   restaurant_id: Int
 
@@ -9740,7 +9726,6 @@ input restaurant_operator_stream_cursor_value_input {
 """aggregate sum on columns"""
 type restaurant_operator_sum_fields {
   id: Int
-  notification_info_id: Int
   restaurant_id: Int
   user_id: Int
 }
@@ -9750,7 +9735,6 @@ order by sum() on columns of table "restaurant_operator"
 """
 input restaurant_operator_sum_order_by {
   id: order_by
-  notification_info_id: order_by
   restaurant_id: order_by
   user_id: order_by
 }
@@ -9767,9 +9751,6 @@ enum restaurant_operator_update_column {
 
   """column name"""
   id
-
-  """column name"""
-  notification_info_id
 
   """column name"""
   owner
@@ -9796,7 +9777,6 @@ input restaurant_operator_updates {
 """aggregate var_pop on columns"""
 type restaurant_operator_var_pop_fields {
   id: Float
-  notification_info_id: Float
   restaurant_id: Float
   user_id: Float
 }
@@ -9806,7 +9786,6 @@ order by var_pop() on columns of table "restaurant_operator"
 """
 input restaurant_operator_var_pop_order_by {
   id: order_by
-  notification_info_id: order_by
   restaurant_id: order_by
   user_id: order_by
 }
@@ -9814,7 +9793,6 @@ input restaurant_operator_var_pop_order_by {
 """aggregate var_samp on columns"""
 type restaurant_operator_var_samp_fields {
   id: Float
-  notification_info_id: Float
   restaurant_id: Float
   user_id: Float
 }
@@ -9824,7 +9802,6 @@ order by var_samp() on columns of table "restaurant_operator"
 """
 input restaurant_operator_var_samp_order_by {
   id: order_by
-  notification_info_id: order_by
   restaurant_id: order_by
   user_id: order_by
 }
@@ -9832,7 +9809,6 @@ input restaurant_operator_var_samp_order_by {
 """aggregate variance on columns"""
 type restaurant_operator_variance_fields {
   id: Float
-  notification_info_id: Float
   restaurant_id: Float
   user_id: Float
 }
@@ -9842,7 +9818,6 @@ order by variance() on columns of table "restaurant_operator"
 """
 input restaurant_operator_variance_order_by {
   id: order_by
-  notification_info_id: order_by
   restaurant_id: order_by
   user_id: order_by
 }
@@ -11033,6 +11008,7 @@ input restaurant_order_by {
   payment_info_id: order_by
   restaurant_operators_aggregate: restaurant_operator_aggregate_order_by
   schedule_id: order_by
+  specials_aggregate: restaurant_item_aggregate_order_by
 }
 
 """

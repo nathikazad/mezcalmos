@@ -56,7 +56,7 @@ export interface NewCallBackgroundNotification {
 
 export interface OrderNotification extends ForegroundNotification {
   orderType: OrderType,
-  orderId: string,
+  orderId: number,
 }
 
 export interface NotificationForQueue {

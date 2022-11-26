@@ -1,16 +1,17 @@
 import { ParticipantType } from "../../shared/models/Generic/Chat";
 import { OrderType } from "../../shared/models/Generic/Order";
 
-export function orderUrl(
-  participantType: ParticipantType,
-  orderType: OrderType,
-  orderId: string): string {
+export function orderUrl(orderType: OrderType, orderId: number): string {
   return `/${orderType}Orders/${orderId}`
+}
+
+export function restaurantUrl(restaurantId: number) {
+  return `/Restaurants/${restaurantId}`
 }
 
 export function chatUrl(
   chatId: string,
-  orderId?: string,
+  orderId?: number,
   orderType?: OrderType,
   recipientType?: ParticipantType,
   senderType?: ParticipantType): string {
@@ -18,7 +19,7 @@ export function chatUrl(
   if (orderId != null)
     str += `?orderId=${orderId}`
   if (orderType != null && recipientType != null) 
-    str += `&orderLink=${orderUrl(recipientType, orderType, orderId!)}`
+    str += `&orderLink=${orderUrl(orderType, orderId!)}`
 
   switch (recipientType) {
     case null:

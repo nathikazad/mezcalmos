@@ -1,15 +1,20 @@
 import { ServerResponse, ServerResponseStatus, ValidationPass } from "../shared/models/Generic/Generic";
 // import { PaymentType } from "../shared/models/Generic/Order";
-import { orderInProcess, RestaurantOrder, RestaurantOrderStatus } from "../shared/models/Services/Restaurant/RestaurantOrder";
+import { orderInProcess, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import { passChecksForRestaurant } from "./helper";
-// import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-// import { pushNotification } from "../utilities/senders/notifyUser";
-// import { restaurantOrderStatusChangeMessages } from "./bgNotificationMessages";
-// import { ParticipantType } from "../shared/models/Generic/Chat";
-// import { orderUrl } from "../utilities/senders/appRoutes";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+import { pushNotification } from "../utilities/senders/notifyUser";
+import { restaurantOrderStatusChangeMessages } from "./bgNotificationMessages";
+import { ParticipantType } from "../shared/models/Generic/Chat";
+import { orderUrl } from "../utilities/senders/appRoutes";
 // import { refundPayment } from "../utilities/stripe/payment";
 import { getRestaurantOrder } from "../shared/graphql/restaurant/order/getRestaurantOrder";
-import { setEstFoodReadyTime, updateOrderStatus } from "../shared/graphql/restaurant/order/updateOrder";
+import { updateOrderStatus } from "../shared/graphql/restaurant/order/updateOrder";
+import { OrderType } from "../shared/models/Generic/Order";
+import { getCustomer } from "../shared/graphql/restaurant/customer/getCustomer";
+import { getDelivery } from "../shared/graphql/delivery/getDelivery";
+import { Delivery } from "../shared/models/Generic/Delivery";
+import { CustomerInfo } from "../shared/models/Generic/User";
 
 let statusArrayInSeq: Array<RestaurantOrderStatus> =
   [RestaurantOrderStatus.OrderReceived,
@@ -44,6 +49,17 @@ async function changeStatus(statusDetails: any, newStatus: RestaurantOrderStatus
     return validationPass.error!;
   }
   let order = await getRestaurantOrder(statusDetails.orderId);
+  let customer: CustomerInfo;
+  let delivery: Delivery
+  if(order.deliveryId == null) {
+    customer = await getCustomer(order.customerId);
+  } else {
+    let customerPromise = getCustomer(order.customerId);
+    let deliveryPromise = getDelivery(order.deliveryId);
+    let response = await Promise.all([customerPromise, deliveryPromise]);
+    customer = response[0];
+    delivery = response[1];
+  }
   // let order: RestaurantOrder = validationPass.order;
 
   // if (order == null) {
@@ -80,47 +96,56 @@ async function changeStatus(statusDetails: any, newStatus: RestaurantOrderStatus
     // order.costToCustomer = order.totalCost - order.refundAmount;
   } 
   updateOrderStatus(order);
+  
+  let notification: Notification = {
+    foreground: <RestaurantOrderStatusChangeNotification>{
+      status: newStatus,
+      time: (new Date()).toISOString(),
+      notificationType: NotificationType.OrderStatusChange,
+      orderType: OrderType.Restaurant,
+      notificationAction: newStatus != RestaurantOrderStatus.CancelledByAdmin
+        ? NotificationAction.ShowSnackBarAlways : NotificationAction.ShowPopUp,
+      orderId: order.orderId
+    },
+    background: restaurantOrderStatusChangeMessages[newStatus],
+    linkUrl: orderUrl(OrderType.Restaurant, statusDetails.orderId)
+  }
 
-  // let notification: Notification = {
-  //   foreground: <RestaurantOrderStatusChangeNotification>{
-  //     status: newStatus,
-  //     time: (new Date()).toISOString(),
-  //     notificationType: NotificationType.OrderStatusChange,
-  //     orderType: OrderType.Restaurant,
-  //     notificationAction: newStatus != RestaurantOrderStatus.CancelledByAdmin
-  //       ? NotificationAction.ShowSnackBarAlways : NotificationAction.ShowPopUp,
-  //     orderId: orderId
-  //   },
-  //   background: restaurantOrderStatusChangeMessages[newStatus],
-  //   linkUrl: orderUrl(ParticipantType.Customer, OrderType.Restaurant, orderId)
-  // }
-
-  // pushNotification(order.customer.id!, notification).then(() => {
-  //   if (order.dropoffDriver) {
-  //     notification.linkUrl = orderUrl(ParticipantType.DeliveryDriver, OrderType.Restaurant, orderId);
-  //     pushNotification(order.dropoffDriver.id!, notification, ParticipantType.DeliveryDriver);
-  //   }
-  // });
-  //TODO
-
+  pushNotification(
+    customer.firebaseId, 
+    notification, 
+    customer.notificationInfo,
+    ParticipantType.Customer, 
+    customer.language
+  ).then(() => {
+    if (delivery.deliverer && delivery.deliverer.user?.firebaseId) {
+      notification.linkUrl = orderUrl(OrderType.Restaurant, order.orderId!);
+      pushNotification(delivery.deliverer.user?.firebaseId, 
+        notification, 
+        delivery.deliverer.notificationInfo,
+        ParticipantType.DeliveryDriver,
+        delivery.deliverer.user?.language,
+      );
+    }
+  });
 
   return { status: ServerResponseStatus.Success }
 }
-export async function setEstimatedFoodReadyTime(userId: number, data: any): Promise<ServerResponse> {
+// export async function setEstimatedFoodReadyTime(userId: number, data: any): Promise<ServerResponse> {
 
-  if (data.estimatedFoodReadyTime == null || data.orderId == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Expected estimatedFoodReadyTime`,
-      errorCode: "invalidParam"
-    }
-  }
+//   if (data.estimatedFoodReadyTime == null || data.orderId == null) {
+//     return {
+//       status: ServerResponseStatus.Error,
+//       errorMessage: `Expected estimatedFoodReadyTime`,
+//       errorCode: "invalidParam"
+//     }
+//   }
 
-  let validationPass: ValidationPass = await passChecksForRestaurant(data, userId);
-  if (!validationPass.ok) {
-    return validationPass.error!;
-  }
-  setEstFoodReadyTime(data.orderId, data.estimatedFoodReadyTime);
+//   let validationPass: ValidationPass = await passChecksForRestaurant(data, userId);
+//   if (!validationPass.ok) {
+//     return validationPass.error!;
+//   }
+//   setEstFoodReadyTime(data.orderId, data.estimatedFoodReadyTime);
 
   // let order: RestaurantOrder = validationPass.order;
   // order.estimatedFoodReadyTime = data.estimatedFoodReadyTime;
@@ -131,8 +156,8 @@ export async function setEstimatedFoodReadyTime(userId: number, data: any): Prom
   // if (order.dropoffDriver)
   //   deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
 
-  return { status: ServerResponseStatus.Success }
-};
+//   return { status: ServerResponseStatus.Success }
+// };
 
 export async function refundCustomerCustomAmount(userId: number, data: any) {
 

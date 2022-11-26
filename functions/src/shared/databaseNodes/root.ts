@@ -2,8 +2,8 @@ import * as firebase from "firebase-admin";
 import { OrderType } from "../models/Generic/Order";
 import { ParticipantType } from "../models/Generic/Chat";
 
-export function notificationsNode(particpantType: ParticipantType, userId: string) {
-  return firebase.database().ref(`/notifications/${particpantType}/${userId}`)
+export function notificationsNode(particpantType: ParticipantType, firebaseUserId: string) {
+  return firebase.database().ref(`/notifications/${particpantType}/${firebaseUserId}`)
 }
 
 export function userInfoNode(userId: string) {
@@ -19,6 +19,7 @@ const participantTypeToNodeMap: { [id in ParticipantType]: string } = {
   [ParticipantType.Laundry]: "laundries",
   [ParticipantType.LaundryOperator]: "operators/laundry",
   [ParticipantType.RestaurantOperator]: "operators/restaurant",
+  [ParticipantType.MezAdmin]: "medAdmins",
 };
 
 export function notificationInfoNode(participantType: ParticipantType, userId: string) {
