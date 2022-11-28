@@ -115,7 +115,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
                     _navigationLink(
                         onClick: () async {
                           _drawerController.closeMenu();
-                          await authController.signOut();
+                          //  await authController.signOut();
                         },
                         icon: Icons.logout,
                         titleWidget: Text(

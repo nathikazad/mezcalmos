@@ -26,7 +26,7 @@ query get_restaurant_desc_by_pk($desc_id : Int!) {
   translation_by_pk(id : $desc_id)
   {
     id,
-    shared,
+  
     translations {
       language_id,
       value

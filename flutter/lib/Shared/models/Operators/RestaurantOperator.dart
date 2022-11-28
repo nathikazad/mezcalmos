@@ -2,13 +2,17 @@ import 'package:mezcalmos/Shared/models/User.dart';
 
 class RestaurantOperatorState {
   final String? restaurantId;
+  final OperatorStatus operatorState;
   const RestaurantOperatorState({
     required this.restaurantId,
+    required this.operatorState,
   });
 
   factory RestaurantOperatorState.fromSnapshot(data) {
     final String restaurantId = data['restaurantId'] ?? null;
-    return RestaurantOperatorState(restaurantId: restaurantId);
+    return RestaurantOperatorState(
+        restaurantId: restaurantId,
+        operatorState: OperatorStatus.Awaiting_approval);
   }
 
   Map<String, dynamic> toJson() => {
@@ -53,4 +57,20 @@ class RestaurantOperator {
         "state": state.toJson(),
         "info": info.toFirebaseFormatJson(),
       };
+}
+
+enum OperatorStatus { Awaiting_approval, Authorized, Banned }
+
+extension ParseOperatorStateToString on OperatorStatus {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToOperatorState on String {
+  OperatorStatus toOperartorStatus() {
+    return OperatorStatus.values.firstWhere(
+        (OperatorStatus e) => e.toFirebaseFormatString().toLowerCase() == this);
+  }
 }

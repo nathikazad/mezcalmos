@@ -20,6 +20,7 @@ query getUserById($id: Int!) {
   user_by_pk(id: $id)
   {
     deleted,
+    firebase_id,
     name,
     image,
     email,

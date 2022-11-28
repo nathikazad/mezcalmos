@@ -100,9 +100,9 @@ class ROpEditInfoController {
       scRestaurantDescTxt.text =
           restaurant.value?.description?[restaurant.value!.secondaryLanguage] ??
               '';
-      bankName.text = restaurant.value!.paymentInfo.bankInfo?.bankName ?? "";
+      bankName.text = restaurant.value!.paymentInfo?.bankInfo?.bankName ?? "";
       bankNumber.text =
-          restaurant.value!.paymentInfo.bankInfo?.accountNumber.toString() ??
+          restaurant.value!.paymentInfo?.bankInfo?.accountNumber.toString() ??
               "";
     }
   }
@@ -122,7 +122,7 @@ class ROpEditInfoController {
         restaurantNameTxt.text != restaurant.value?.info.name) {
       mezDbgPrint("Updating restuarnt name .....=>${restaurantNameTxt.text}");
       // await restaurantInfoController.setRestaurantName(restaurantNameTxt.text);
-      newRestaurant.info.name = restaurantNameTxt.text;
+      // newRestaurant.info.name = restaurantNameTxt.text;
       mezDbgPrint("Restuarnt name done ....=>${restaurantNameTxt.text}");
     }
     if (_updatePrDesc() || _updateScDesc()) {
@@ -140,7 +140,8 @@ class ROpEditInfoController {
       await restaurantInfoController
           .uploadImgToDb(imageFile: newImageFile.value!)
           .then((String value) {
-        newRestaurant.info.image = value;
+        //todo update image on db
+        // newRestaurant.info.image = value;
       });
     }
     if (newLocation.value != null &&
@@ -182,8 +183,8 @@ class ROpEditInfoController {
 
   // stripe and payments methods //
   void checkStripe() {
-    if (restaurant.value!.paymentInfo.stripe != null &&
-        restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
+    if (restaurant.value!.paymentInfo?.stripe != null &&
+        restaurant.value!.paymentInfo?.acceptedPayments[PaymentType.Card] ==
             true) {
       updateServiceProvider(
               restaurant.value!.info.firebaseId, OrderType.Restaurant)
@@ -226,19 +227,19 @@ class ROpEditInfoController {
   }
 
   void _checkStripeDetails() {
-    if (restaurant.value!.paymentInfo.stripe?.detailsSubmitted == false) {
+    if (restaurant.value!.paymentInfo?.stripe?.detailsSubmitted == false) {
       showSetupStripe.value = true;
-    } else if (restaurant.value!.paymentInfo.stripe?.chargesEnabled == false ||
-        restaurant.value!.paymentInfo.stripe?.payoutsEnabled == false) {
+    } else if (restaurant.value!.paymentInfo?.stripe?.chargesEnabled == false ||
+        restaurant.value!.paymentInfo?.stripe?.payoutsEnabled == false) {
       showStripeReqs.value = true;
     }
     mezDbgPrint("Checking boooools ");
     mezDbgPrint(
-        "details ==========>>>>> ${restaurant.value!.paymentInfo.stripe?.detailsSubmitted}");
+        "details ==========>>>>> ${restaurant.value!.paymentInfo?.stripe?.detailsSubmitted}");
     mezDbgPrint(
-        "charges ==========>>>>> ${restaurant.value!.paymentInfo.stripe?.chargesEnabled}");
+        "charges ==========>>>>> ${restaurant.value!.paymentInfo?.stripe?.chargesEnabled}");
     mezDbgPrint(
-        "payouts ==========>>>>> ${restaurant.value!.paymentInfo.stripe?.payoutsEnabled}");
+        "payouts ==========>>>>> ${restaurant.value!.paymentInfo?.stripe?.payoutsEnabled}");
   }
 
   Future<void> switchChargeFees(bool v) async {
@@ -265,28 +266,29 @@ class ROpEditInfoController {
   }
 
   bool get showSetupBtn {
-    return (restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
+    return (restaurant.value!.paymentInfo?.acceptedPayments[PaymentType.Card] ==
                 true &&
-            restaurant.value!.paymentInfo.stripe == null) ||
-        (restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
+            restaurant.value!.paymentInfo?.stripe == null) ||
+        (restaurant.value!.paymentInfo?.acceptedPayments[PaymentType.Card] ==
                 true &&
-            (!restaurant.value!.paymentInfo.detailsSubmitted ||
-                !restaurant.value!.paymentInfo.chargesEnabled ||
-                !restaurant.value!.paymentInfo.stripe!.requirements.isEmpty));
+            (restaurant.value!.paymentInfo?.detailsSubmitted == false ||
+                restaurant.value!.paymentInfo?.chargesEnabled == false ||
+                restaurant.value!.paymentInfo?.stripe!.requirements.isEmpty ==
+                    true));
   }
 
   bool getChargeFessOnCustomer() {
-    return restaurant.value!.paymentInfo.stripe?.chargeFeesOnCustomer ?? true;
+    return restaurant.value!.paymentInfo?.stripe?.chargeFeesOnCustomer ?? true;
   }
 
   bool get showFeesOption {
-    return (restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
+    return (restaurant.value!.paymentInfo?.acceptedPayments[PaymentType.Card] ==
             true &&
-        restaurant.value!.paymentInfo.stripe != null);
+        restaurant.value!.paymentInfo?.stripe != null);
   }
 
   bool get showStatusIcon {
-    return (restaurant.value!.paymentInfo.stripe?.requirements.isNotEmpty ==
+    return (restaurant.value!.paymentInfo?.stripe?.requirements.isNotEmpty ==
         true);
   }
 
@@ -296,7 +298,7 @@ class ROpEditInfoController {
 
   bool get isBankTrue {
     return restaurant
-            .value!.paymentInfo.acceptedPayments[PaymentType.BankTransfer] ==
+            .value!.paymentInfo?.acceptedPayments[PaymentType.BankTransfer] ==
         true;
   }
 

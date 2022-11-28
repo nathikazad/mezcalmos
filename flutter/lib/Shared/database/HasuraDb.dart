@@ -45,7 +45,7 @@ class HasuraDb {
       );
       mezDbgPrint("TOKEN $hasuraAuthToken");
       headers = <String, String>{
-        'Authorization': 'Bearer $hasuraAuthToken',
+        'authorization': 'Bearer $hasuraAuthToken',
         'x-hasura-role': _getRoleBasedOnApp(),
       };
       final AuthLink _authLink =

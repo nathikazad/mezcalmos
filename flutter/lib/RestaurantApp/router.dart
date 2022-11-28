@@ -109,7 +109,7 @@ class XRouter {
         GetPage(name: kMenuView, page: () => ROpMenuView()),
         GetPage(
             name: kCurrentOrdersListView,
-            page: () => LaundryOpCurrentOrdersListView()),
+            page: () => ROpCurrentOrdersListView()),
         GetPage(name: kPastOrdersListView, page: () => ROpPastOrdersList()),
         GetPage(name: kHomeRoute, page: () => RestaurantWrapper()),
         GetPage(

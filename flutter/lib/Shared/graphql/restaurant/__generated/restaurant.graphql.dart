@@ -1379,13 +1379,6 @@ const documentNodeQueryget_restaurant_desc_by_pk = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'shared'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'translations'),
             alias: null,
             arguments: [],
@@ -1544,7 +1537,6 @@ extension ClientExtension$Query$get_restaurant_desc_by_pk
 class Query$get_restaurant_desc_by_pk$translation_by_pk {
   Query$get_restaurant_desc_by_pk$translation_by_pk({
     required this.id,
-    required this.shared,
     required this.translations,
     required this.$__typename,
   });
@@ -1552,12 +1544,10 @@ class Query$get_restaurant_desc_by_pk$translation_by_pk {
   factory Query$get_restaurant_desc_by_pk$translation_by_pk.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
-    final l$shared = json['shared'];
     final l$translations = json['translations'];
     final l$$__typename = json['__typename'];
     return Query$get_restaurant_desc_by_pk$translation_by_pk(
       id: (l$id as int),
-      shared: (l$shared as bool),
       translations: (l$translations as List<dynamic>)
           .map((e) =>
               Query$get_restaurant_desc_by_pk$translation_by_pk$translations
@@ -1569,8 +1559,6 @@ class Query$get_restaurant_desc_by_pk$translation_by_pk {
 
   final int id;
 
-  final bool shared;
-
   final List<Query$get_restaurant_desc_by_pk$translation_by_pk$translations>
       translations;
 
@@ -1580,8 +1568,6 @@ class Query$get_restaurant_desc_by_pk$translation_by_pk {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
-    final l$shared = shared;
-    _resultData['shared'] = l$shared;
     final l$translations = translations;
     _resultData['translations'] =
         l$translations.map((e) => e.toJson()).toList();
@@ -1593,12 +1579,10 @@ class Query$get_restaurant_desc_by_pk$translation_by_pk {
   @override
   int get hashCode {
     final l$id = id;
-    final l$shared = shared;
     final l$translations = translations;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
-      l$shared,
       Object.hashAll(l$translations.map((v) => v)),
       l$$__typename,
     ]);
@@ -1616,11 +1600,6 @@ class Query$get_restaurant_desc_by_pk$translation_by_pk {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
-      return false;
-    }
-    final l$shared = shared;
-    final lOther$shared = other.shared;
-    if (l$shared != lOther$shared) {
       return false;
     }
     final l$translations = translations;
@@ -1668,7 +1647,6 @@ abstract class CopyWith$Query$get_restaurant_desc_by_pk$translation_by_pk<
 
   TRes call({
     int? id,
-    bool? shared,
     List<Query$get_restaurant_desc_by_pk$translation_by_pk$translations>?
         translations,
     String? $__typename,
@@ -1697,15 +1675,11 @@ class _CopyWithImpl$Query$get_restaurant_desc_by_pk$translation_by_pk<TRes>
 
   TRes call({
     Object? id = _undefined,
-    Object? shared = _undefined,
     Object? translations = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_restaurant_desc_by_pk$translation_by_pk(
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        shared: shared == _undefined || shared == null
-            ? _instance.shared
-            : (shared as bool),
         translations: translations == _undefined || translations == null
             ? _instance.translations
             : (translations as List<
@@ -1738,7 +1712,6 @@ class _CopyWithStubImpl$Query$get_restaurant_desc_by_pk$translation_by_pk<TRes>
 
   call({
     int? id,
-    bool? shared,
     List<Query$get_restaurant_desc_by_pk$translation_by_pk$translations>?
         translations,
     String? $__typename,

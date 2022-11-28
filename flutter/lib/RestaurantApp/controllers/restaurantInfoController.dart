@@ -52,7 +52,10 @@ class RestaurantInfoController extends GetxController {
         .child(serviceProviderInfos(
             orderType: OrderType.Restaurant, providerId: restId))
         .once()
-        .then<Restaurant>((DatabaseEvent event) {
+        .catchError((Object? error, StackTrace stackTrace) {
+      mezDbgPrint("Error ERror 🚨 $error $stackTrace");
+    }).then((DatabaseEvent event) {
+      mezDbgPrint("Data event ppppppppppp => ${event.snapshot.value}");
       return Restaurant.fromRestaurantData(
           restaurantId: restaurantId, restaurantData: event.snapshot.value);
     });

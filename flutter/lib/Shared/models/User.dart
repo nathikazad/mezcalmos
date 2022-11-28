@@ -1,6 +1,5 @@
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
-import 'package:mezcalmos/Shared/graphql/user/__generated/user.graphql.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
@@ -34,15 +33,15 @@ class UserInfo {
   //           : null);
   // }
 
-  factory UserInfo.fromHasura(Query$getUserByFirebaseId$user user) {
-    return UserInfo(
-      firebaseId: user.firebase_id,
-      hasuraId: user.id,
-      name: user.name,
-      image: user.image,
-      language: user.language_id.toLanguageType(),
-    );
-  }
+  // factory UserInfo.fromHasura(Query$getUserByFirebaseId$user user) {
+  //   return UserInfo(
+  //     firebaseId: user.firebase_id,
+  //     hasuraId: user.id,
+  //     name: user.name,
+  //     image: user.image,
+  //     language: user.language_id.toLanguageType(),
+  //   );
+  // }
 
   Map<String, dynamic> toFirebaseFormatJson() => {
         "id": firebaseId,
@@ -128,6 +127,7 @@ class ServiceInfo extends UserInfo {
   }) : super(language: lang);
 
   factory ServiceInfo.fromData(data) {
+    mezDbgPrint(" 👋👋👋👋 Service info data $data");
     return ServiceInfo(
       location: Location.fromFirebaseData(data['location']),
       firebaseId: data['firebase_id'],
