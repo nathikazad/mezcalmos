@@ -5,7 +5,10 @@ import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
@@ -80,7 +83,7 @@ class Cart {
     return <String, dynamic>{
       "orderType": OrderType.Restaurant.toFirebaseFormatString(),
       "routeInformation": _routeInformation?.toJson(),
-      "serviceProviderId": restaurant?.info.id,
+      "serviceProviderId": restaurant?.info.firebaseId,
       "quantity": quantity(),
       "cost": totalCost.toInt(),
       "itemsCost": itemsCost().toInt(),
@@ -110,7 +113,7 @@ class Cart {
   num get totalCost {
     num tcost = itemsCost() + (shippingCost ?? 0);
     if (paymentType == PaymentType.Card &&
-        restaurant!.paymentInfo.stripe?.chargeFeesOnCustomer == true) {
+        restaurant!.paymentInfo?.stripe?.chargeFeesOnCustomer == true) {
       tcost += stripeFees;
     }
     return tcost;
@@ -240,7 +243,7 @@ class CartItem {
   }) {
     final CartItem cartItem = CartItem(
       item,
-      restaurant.info.id,
+      restaurant.info.firebaseId,
       idInCart: itemIdInCart,
       quantity: itemData["quantity"],
       notes: itemData["notes"],

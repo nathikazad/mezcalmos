@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -13,7 +13,7 @@ class ROpItemCategorySelector extends StatefulWidget {
   const ROpItemCategorySelector({Key? key, required this.viewController})
       : super(key: key);
 
-  final ItemViewController viewController;
+  final ROpItemViewController viewController;
 
   @override
   State<ROpItemCategorySelector> createState() =>
@@ -55,8 +55,8 @@ class _ROpItemCategorySelectorState extends State<ROpItemCategorySelector> {
                 // ignore: unawaited_futures
                 final Category? newCat = await Get.toNamed(
                     getROpCategoryRoute(
-                        restaurantId:
-                            widget.viewController.restaurant.value!.info.id),
+                        restaurantId: widget
+                            .viewController.restaurant.value!.info.firebaseId),
                     arguments: {"shouldSave": false}) as Category?;
 
                 if (newCat != null) {

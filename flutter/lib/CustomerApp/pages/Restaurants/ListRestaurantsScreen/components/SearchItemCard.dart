@@ -6,7 +6,7 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:sizer/sizer.dart';
 
 class SearchItemCard extends StatelessWidget {
@@ -21,7 +21,7 @@ class SearchItemCard extends StatelessWidget {
         onTap: () {
           if (item.restaurant != null && item.id != null) {
             Get.toNamed(
-              getItemRoute(item.restaurant!.info.id, item.id!),
+              getItemRoute(item.restaurant!.info.firebaseId, item.id!),
               arguments: {
                 "mode": ViewItemScreenMode.AddItemMode,
                 "showViewRestaurant": true

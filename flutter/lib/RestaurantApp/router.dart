@@ -7,6 +7,7 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/ROpMenuView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OptionView/ROpOptionView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/ROpOrderView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/PastOrdresList/ROpPastOrdersList.dart';
+import 'package:mezcalmos/RestaurantApp/pages/ROpChoiceView/ROpChoiceView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/RestaurantWrapper.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ReviewsView/ROpReviewsView.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -25,18 +26,40 @@ const String kAddItemView = '/itemView/:restaurantId';
 
 const String kEditItemView = '/itemView/:restaurantId/:itemId/:categoryId';
 const String kOrderView = '/orderView/:orderId';
-const String kOptionView = "/optionView/:restaurantId/:itemId";
+const String kOptionView = "/optionView/:restaurantId/:itemId/:optionId";
+const String kChoiceView = "/Choice/:restaurantId:/:optionId/:choiceId";
 
 String getROpEditInfoRoute({required String restaurantId}) {
   return kEditInfoView.replaceFirst(":restaurantId", restaurantId);
+}
+
+String getROpChoiceRoute(
+    {required String? choiceId,
+    required String restaurantId,
+    required String optionId}) {
+  String route = kChoiceView.replaceFirst(":restaurantId", restaurantId);
+  route = route.replaceFirst(":optionId", optionId);
+  if (choiceId != null) {
+    route = route.replaceFirst(":choiceId", choiceId);
+  }
+
+  return route;
 }
 
 String getROpReviewsoRoute({required String restaurantId}) {
   return kReviewsView.replaceFirst(":restaurantId", restaurantId);
 }
 
-String getROpOptionRoute({required String restaurantId, String? itemId}) {
-  return kOptionView.replaceFirst(":restaurantId", restaurantId);
+String getROpOptionRoute(
+    {required String restaurantId,
+    required String? optionId,
+    required String itemID}) {
+  String route = kOptionView.replaceFirst(":restaurantId", restaurantId);
+  route = route.replaceFirst(":itemId", itemID);
+  if (optionId != null) {
+    route = route.replaceFirst(":optionId", optionId);
+  }
+  return route;
 }
 
 String getROpAddItemRoute({required String restaurantId}) {
@@ -107,7 +130,8 @@ class XRouter {
         ),
         GetPage(name: kOrderView, page: () => ROpOrderView()),
         GetPage(name: kOptionView, page: () => ROpOptionView()),
-        GetPage(name: kReviewsView, page: () => ROpReviewsView())
+        GetPage(name: kReviewsView, page: () => ROpReviewsView()),
+        GetPage(name: kChoiceView, page: () => ROpChoiceView()),
       ] +
       SharedRouter.sharedRoutes;
 }

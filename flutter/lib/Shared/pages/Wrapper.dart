@@ -93,7 +93,7 @@ class _WrapperState extends State<Wrapper> {
         );
         break;
       default:
-        // Major/Minor - forcing the app to stay in AppNeedsUpdate
+        // Major / Minor - forcing the app to stay in AppNeedsUpdate.
         Get.toNamed<void>(
           kAppNeedsUpdate,
           arguments: <String, dynamic>{
@@ -107,32 +107,29 @@ class _WrapperState extends State<Wrapper> {
     // We should Priotorize the AppNeedsUpdate route to force users to update
     if (!isCurrentRoute(kAppNeedsUpdate)) {
       if (user == null) {
+        mezDbgPrint("[777] user == null");
         if (AppType.CustomerApp == settingsController.appType) {
+          mezDbgPrint("[777] app = customerApp .. routing to home!");
           // if (Get.currentRoute != kSignInRouteOptional) {
           await Get.offNamedUntil<void>(
               kHomeRoute, ModalRoute.withName(kWrapperRoute));
         } else {
           await Get.offNamedUntil<void>(
-              kSignInRouteRequired, ModalRoute.withName(kWrapperRoute));
+            kSignInRouteRequired,
+            ModalRoute.withName(kWrapperRoute),
+          );
         }
       } else {
+        mezDbgPrint("[777] user != null");
+
         await waitTillUserInfoLoaded();
         redirectIfUserInfosNotSet();
       }
     }
   }
 
-  Future<void> waitTillUserInfoLoaded() {
-    if (Get.find<AuthController>().user != null) {
-      return Future<void>.value(null);
-    } else {
-      final Completer<void> completer = Completer<void>();
-      Get.find<AuthController>()
-          .userInfoStream
-          .first
-          .then((MainUserInfo? value) => completer.complete());
-      return completer.future;
-    }
+  Future<void> waitTillUserInfoLoaded() async {
+    return Get.find<AuthController>().fetchUserInfoFromHasura();
   }
 
   void redirectIfUserInfosNotSet() {

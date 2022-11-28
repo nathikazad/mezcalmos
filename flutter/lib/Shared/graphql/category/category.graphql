@@ -1,0 +1,94 @@
+mutation addCategory($category: restaurant_category_insert_input!) {
+  insert_restaurant_category_one(object: $category) {
+    id
+  }
+}
+
+query getCategoryInfoById($id: Int!) {
+  restaurant_category_by_pk(id: $id) {
+     id
+    name {
+      id
+      translations {
+        language_id
+        value
+      }
+    }
+    description {
+      id
+      translations {
+        language_id
+        value
+      }
+    }
+    position
+    description_id
+  }
+}
+
+mutation deleteCategory($categoryId: Int!) {
+  delete_restaurant_category_by_pk(id: $categoryId) {
+    id
+    name {
+      translations {
+        language_id
+        value
+      }
+    }
+    position
+    restaurant_id
+  }
+}
+
+
+
+query getRestaurantCategories($id: Int) {
+  restaurant_category( where: { restaurant_id: { _eq: $id } }) {
+    id
+    name {
+      id
+      translations {
+        language_id
+        value
+      }
+    }
+    description {
+      id
+      translations {
+        language_id
+        value
+      }
+    }
+    position
+    description_id
+    items {
+      id
+      name {
+        id
+        translations {
+          language_id
+          value
+        }
+      }
+      description {
+        id
+        translations {
+          language_id
+          value
+        }
+      }
+      item_type
+     
+
+      cost
+      available
+      position
+      restaurant_id
+      special_period_end
+      special_period_start
+      category_id
+      description_id
+      archived
+    }
+  }
+}

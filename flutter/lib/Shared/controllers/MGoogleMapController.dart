@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -11,6 +12,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/MezMarker.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
@@ -123,8 +125,7 @@ class MGoogleMapController {
     if (latLng != null) {
       BitmapDescriptor icon;
 
-      final String? uImg = Get.find<AuthController>().user?.image ??
-          Get.find<AuthController>().user?.bigImage;
+      final String? uImg = Get.find<AuthController>().user?.image;
 
       if (uImg == null) {
         icon = await bitmapDescriptorLoader(
@@ -143,8 +144,9 @@ class MGoogleMapController {
             isBytes: true);
       }
 
-      final String mId =
-          (markerId ?? Get.find<AuthController>().user?.id ?? 'ANONYMOUS');
+      final String mId = (markerId ??
+          fireAuth.FirebaseAuth.instance.currentUser?.uid ??
+          'ANONYMOUS');
 
       // default userId is authenticated's
       _addOrUpdateMarker(
@@ -242,7 +244,8 @@ class MGoogleMapController {
   }
 
   void removerAuthenticatedUserMarker() {
-    final String _mId = (Get.find<AuthController>().user?.id ?? 'ANONYMOUS');
+    final String _mId =
+        (fireAuth.FirebaseAuth.instance.currentUser?.uid ?? 'ANONYMOUS');
     markers.removeWhere((Marker _marker) => _marker.markerId.value == _mId);
   }
 

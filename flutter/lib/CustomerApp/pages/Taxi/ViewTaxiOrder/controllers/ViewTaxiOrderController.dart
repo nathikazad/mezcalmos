@@ -157,10 +157,10 @@ class ViewTaxiOrderController {
     bottomPadding.value = 10.0;
 
     if (order.value!.driver != null)
-      mGoogleMapController.removeMarkerById(order.value!.driver!.id);
+      mGoogleMapController.removeMarkerById(order.value!.driver!.firebaseId);
     // adding customer's marker
     mGoogleMapController.addOrUpdateUserMarker(
-      markerId: order.value?.customer.id,
+      markerId: order.value?.customer.firebaseId,
       latLng: order.value?.from.toLatLng(),
     );
     // updating destination marker.
@@ -185,12 +185,12 @@ class ViewTaxiOrderController {
         );
         // taxi driver marker
         mGoogleMapController.addOrUpdateTaxiDriverMarker(
-          order.value?.driver?.id,
+          order.value?.driver?.firebaseId,
           order.value?.driver?.location,
         );
         // customer marker
         mGoogleMapController.addOrUpdateUserMarker(
-          markerId: order.value?.customer.id,
+          markerId: order.value?.customer.firebaseId,
           latLng: order.value?.from.toLatLng(),
         );
         break;
@@ -209,10 +209,10 @@ class ViewTaxiOrderController {
         //     order.value!.driver!.id, order.value!.from.toLatLng());
 
         // removing customer marker
-        mGoogleMapController.removeMarkerById(order.value?.customer.id);
+        mGoogleMapController.removeMarkerById(order.value?.customer.firebaseId);
         // updating driver's marker
         mGoogleMapController.addOrUpdateTaxiDriverMarker(
-          order.value?.driver?.id,
+          order.value?.driver?.firebaseId,
           order.value?.driver?.location,
         );
         // updating destination marker.
@@ -233,7 +233,7 @@ class ViewTaxiOrderController {
         );
         // customer marker
         mGoogleMapController.addOrUpdateUserMarker(
-          markerId: order.value?.customer.id,
+          markerId: order.value?.customer.firebaseId,
           latLng: order.value?.from.toLatLng(),
         );
         break;

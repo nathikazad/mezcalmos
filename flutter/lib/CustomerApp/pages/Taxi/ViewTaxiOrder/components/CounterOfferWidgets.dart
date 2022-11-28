@@ -141,7 +141,7 @@ class CounterOfferWidgets {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Text>[
                   Text(
-                    offer.driverInfo.name,
+                    offer.driverInfo.name ?? "Unknown driver",
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
@@ -179,8 +179,8 @@ class CounterOfferWidgets {
                                 await viewController.taxiController
                                     .acceptCounterOffer(
                               viewController.order.value!.orderId,
-                              viewController.order.value!.customer.id,
-                              offer.driverInfo.id,
+                              viewController.order.value!.customer.firebaseId,
+                              offer.driverInfo.firebaseId,
                             );
                             if (_response.success) {
                               viewController.clickedAccept.value = false;
@@ -214,8 +214,9 @@ class CounterOfferWidgets {
                           viewController.taxiController
                               .rejectCounterOffer(
                                   viewController.order.value!.orderId,
-                                  viewController.order.value!.customer.id,
-                                  offer.driverInfo.id)
+                                  viewController
+                                      .order.value!.customer.firebaseId,
+                                  offer.driverInfo.firebaseId)
                               .then(
                             (_) {
                               if (viewController.counterOffers.isEmpty) {

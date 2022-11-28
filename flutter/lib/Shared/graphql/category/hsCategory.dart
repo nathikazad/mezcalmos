@@ -1,0 +1,166 @@
+import 'package:get/instance_manager.dart';
+import 'package:graphql/client.dart';
+import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
+import 'package:mezcalmos/Shared/graphql/category/__generated/category.graphql.dart';
+import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
+
+final HasuraDb hasuraDb = Get.find<HasuraDb>();
+
+Future<List<Category>?> get_restaurant_categories_by_id(int restaurantId,
+    {bool withCache = true}) async {
+  final QueryResult<Query$getRestaurantCategories> response = await hasuraDb
+      .graphQLClient
+      .query$getRestaurantCategories(Options$Query$getRestaurantCategories(
+          fetchPolicy:
+              (!withCache) ? FetchPolicy.noCache : FetchPolicy.cacheAndNetwork,
+          variables:
+              Variables$Query$getRestaurantCategories(id: restaurantId)));
+  if (response.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨 Hasura get restaurant categories querry exception =>${response.exception}");
+  } else if (response.parsedData?.restaurant_category != null) {
+    mezDbgPrint("Hasura get restaurant categories querry success ✅✅✅ ");
+    final List<Query$getRestaurantCategories$restaurant_category> data =
+        response.parsedData!.restaurant_category;
+    final List<Category> categories = _parseCategories(data);
+    return categories;
+  }
+  return null;
+}
+
+Future<bool> delete_category(int id) async {
+  final QueryResult<Mutation$deleteCategory> response = await hasuraDb
+      .graphQLClient
+      .mutate$deleteCategory(Options$Mutation$deleteCategory(
+          variables: Variables$Mutation$deleteCategory(categoryId: id)));
+  if (response.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨 Hasura delete category mutation exception =>${response.exception}");
+    return false;
+  } else {
+    mezDbgPrint("✅✅✅ Hasura delete category mutation success ");
+    return true;
+  }
+}
+
+Future<Category?> get_category_by_id(int id) async {
+  final QueryResult<Query$getCategoryInfoById> response = await hasuraDb
+      .graphQLClient
+      .query$getCategoryInfoById(Options$Query$getCategoryInfoById(
+          variables: Variables$Query$getCategoryInfoById(id: id)));
+  if (response.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨 Hasura get category by id querry exception =>${response.exception}");
+    return null;
+  } else if (response.parsedData?.restaurant_category_by_pk != null) {
+    mezDbgPrint("✅✅✅ Hasura get category by id query success => ");
+    final Query$getCategoryInfoById$restaurant_category_by_pk data =
+        response.parsedData!.restaurant_category_by_pk!;
+    return Category(
+      id: data.id.toString(),
+      descriptionId: data.description_id,
+      nameId: data.name.id,
+      name: toLanguageMap(translations: data.name.translations),
+      dialog: (data.description?.translations != null)
+          ? toLanguageMap(translations: data.description!.translations)
+          : null,
+    );
+  }
+  return null;
+}
+
+Future<String?> add_category(int restaurantId, Category category) async {
+  final QueryResult<Mutation$addCategory> result =
+      await hasuraDb.graphQLClient.mutate$addCategory(
+    Options$Mutation$addCategory(
+      variables: Variables$Mutation$addCategory(
+        category: Input$restaurant_category_insert_input(
+          restaurant_id: restaurantId,
+
+          position: category.position,
+          // items: Input$restaurant_item_arr_rel_insert_input(
+          //     data: category.items
+          //         .map((Item e) => convert_item_to_hasura(e))
+          //         .toList()),
+          name: Input$translation_obj_rel_insert_input(
+            data: Input$translation_insert_input(
+              translations: Input$translation_value_arr_rel_insert_input(
+                  data: <Input$translation_value_insert_input>[
+                    Input$translation_value_insert_input(
+                        language_id: LanguageType.EN.toFirebaseFormatString(),
+                        value: category.name?[LanguageType.EN]),
+                    Input$translation_value_insert_input(
+                        language_id: LanguageType.ES.toFirebaseFormatString(),
+                        value: category.name?[LanguageType.ES]),
+                  ]),
+            ),
+          ),
+          // description //
+          description: Input$translation_obj_rel_insert_input(
+            data: Input$translation_insert_input(
+              translations: Input$translation_value_arr_rel_insert_input(
+                  data: <Input$translation_value_insert_input>[
+                    Input$translation_value_insert_input(
+                        language_id: LanguageType.EN.toFirebaseFormatString(),
+                        value: category.dialog?[LanguageType.EN]),
+                    Input$translation_value_insert_input(
+                        language_id: LanguageType.ES.toFirebaseFormatString(),
+                        value: category.dialog?[LanguageType.ES]),
+                  ]),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+  if (result.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨 Hasura add category mutation exception =>${result.exception}");
+  } else {
+    mezDbgPrint("✅✅✅ Hasura add category mutation success => ${result.data}");
+    return result.parsedData?.insert_restaurant_category_one?.id.toString();
+  }
+  return null;
+}
+
+List<Category> _parseCategories(
+    List<Query$getRestaurantCategories$restaurant_category> data) {
+  final List<Category> categories = [];
+
+  data.forEach((Query$getRestaurantCategories$restaurant_category category) {
+    // assigning category
+    final Category cat = Category(
+      id: category.id.toString(),
+      position: category.position,
+      dialog: (category.description?.translations != null)
+          ? toLanguageMap(translations: category.description!.translations)
+          : null,
+      name: toLanguageMap(translations: category.name.translations),
+    );
+    // getting alll the items //
+    final List<Item> items = category.items
+        .map((Query$getRestaurantCategories$restaurant_category$items item) {
+      return Item(
+          id: item.id.toString(),
+          nameId: item.name.id,
+          descriptionId: item.description_id,
+          name: toLanguageMap(translations: item.name.translations),
+          itemType: item.item_type.toItemType(),
+          description: (item.description?.translations != null)
+              ? toLanguageMap(translations: item.description!.translations)
+              : null,
+          cost: item.cost,
+          available: item.available);
+    }).toList();
+
+    cat.items = items;
+    categories.add(cat);
+  });
+  return categories;
+}

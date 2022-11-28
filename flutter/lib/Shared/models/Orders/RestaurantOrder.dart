@@ -3,7 +3,7 @@ import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
@@ -113,7 +113,10 @@ class RestaurantOrder extends DeliverableOrder {
             : null,
         to: Location.fromFirebaseData(data['to']),
         restaurant: ServiceInfo.fromData(data["restaurant"]),
-        customer: UserInfo.fromData(data["customer"]),
+        // TODO:544D-HASURA
+        customer: UserInfo(
+            hasuraId: 1, firebaseId: "firebaseId", name: null, image: null),
+        // customer: UserInfo.fromData(data["customer"]),
         itemsCost: data['itemsCost'],
         shippingCost: data["shippingCost"] ?? 0,
         dropoffDriver: (data["dropoffDriver"] != null)
@@ -202,8 +205,6 @@ class RestaurantOrder extends DeliverableOrder {
             (RestaurantOrderItem element) => element.image != null) !=
         null;
   }
-
-
 
   String clipBoardText(LanguageType languageType) {
     String text = "";

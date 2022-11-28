@@ -32,8 +32,14 @@ class RestaurantOperator {
       String restaurantOperatorId, restaurantOperatorData) {
     final RestaurantOperatorState restaurantOperatorState =
         RestaurantOperatorState.fromSnapshot(restaurantOperatorData['state']);
+
+    // TODO:544D-HASURA
+
     final UserInfo restaurantOperatorInfo =
-        UserInfo.fromData(restaurantOperatorData['info']);
+        UserInfo(hasuraId: 1, firebaseId: "IDTEST", image: null, name: null);
+
+    // final UserInfo restaurantOperatorInfo =
+    // UserInfo.fromData(restaurantOperatorData['info']);
 
     return RestaurantOperator(
       operatorId: restaurantOperatorId,

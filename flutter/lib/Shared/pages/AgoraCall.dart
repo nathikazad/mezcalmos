@@ -347,7 +347,7 @@ class _AgoraCallState extends State<AgoraCall> {
                 // @Nathik this part does not work
                 final dynamic _agoraAuth = (await _sagora.getAgoraToken(
                   chatId,
-                  Get.find<AuthController>().user!.id,
+                  Get.find<AuthController>().user!.firebaseId,
                   talkingTo!.participantType == ParticipantType.Customer
                       ? ParticipantType.DeliveryDriver
                       : ParticipantType.Customer,

@@ -417,7 +417,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
         case TaxiOrdersStatus.OnTheWay:
           // Add the customer's Marker
           mGoogleMapController.addOrUpdateUserMarker(
-              markerId: orderStreamEvent.customer.id,
+              markerId: orderStreamEvent.customer.firebaseId,
               latLng: orderStreamEvent.from.toLatLng(),
               customImgHttpUrl: orderStreamEvent.customer.image);
           // add the Taxi's
@@ -432,7 +432,8 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           break;
         case TaxiOrdersStatus.InTransit:
           // no more showing the customer's marker
-          mGoogleMapController.removeMarkerById(orderStreamEvent.customer.id);
+          mGoogleMapController
+              .removeMarkerById(orderStreamEvent.customer.firebaseId);
           // add the destination marker
           mGoogleMapController.addOrUpdatePurpleDestinationMarker(
             latLng: orderStreamEvent.to.toLatLng(),
@@ -440,10 +441,11 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           break;
         case TaxiOrdersStatus.DroppedOff:
           // no more showing the taxi's Marker:
-          mGoogleMapController.removeMarkerById(orderStreamEvent.driver!.id);
+          mGoogleMapController
+              .removeMarkerById(orderStreamEvent.driver!.firebaseId);
           // Add the customer's from Marker
           mGoogleMapController.addOrUpdateUserMarker(
-            markerId: orderStreamEvent.customer.id,
+            markerId: orderStreamEvent.customer.firebaseId,
             latLng: orderStreamEvent.from.toLatLng(),
             customImgHttpUrl: orderStreamEvent.customer.image,
           );
@@ -477,7 +479,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
       // we simply keep updating the taxi's Marker's location , only if inProcess!
       if (orderStreamEvent.inProcess()) {
         mGoogleMapController.addOrUpdateTaxiDriverMarker(
-          orderStreamEvent.driver?.id,
+          orderStreamEvent.driver?.firebaseId,
           orderStreamEvent.driver?.location,
         );
       }

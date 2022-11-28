@@ -154,7 +154,7 @@ class LocationPickerState extends State<LocationPicker> {
           // onPress: showGrayedOutButton
         );
       case BottomButtomToShow.Confirm:
-        if (Get.find<AuthController>().fireAuthUser != null) {
+        if (Get.find<AuthController>().isUserSignedIn) {
           return buildBottomButton(_i18n()['confirm'].toString().capitalize,
               notifier: widget.notifyParentOfConfirm);
         } else {

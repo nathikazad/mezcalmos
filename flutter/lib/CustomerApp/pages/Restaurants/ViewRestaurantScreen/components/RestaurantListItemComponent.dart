@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:sizer/sizer.dart';
 
 class RestaurantsListOfItemsComponent extends StatefulWidget {
@@ -77,9 +77,12 @@ class _RestaurantsListOfItemsComponentState
                     ),
                     if (widget.item.isSpecial)
                       Container(
-                          margin: const EdgeInsets.symmetric(vertical: 3),
-                          child: Text(widget.item.getPeriod!
-                              .toNormalString(removeDay: true)))
+                        margin: const EdgeInsets.symmetric(vertical: 3),
+                        child: Text(
+                          widget.item.getPeriod!
+                              .toNormalString(removeDay: true),
+                        ),
+                      )
                   ],
                 ),
               ),

@@ -18,7 +18,14 @@ array_relationships:
       foreign_key_constraint_on:
         column: customer_id
         table:
-          name: delivery
+          name: delivery_order
+          schema: public
+  - name: saved_locations
+    using:
+      foreign_key_constraint_on:
+        column: customer_id
+        table:
+          name: saved_location
           schema: public
 computed_fields:
   - name: notification_token
@@ -26,3 +33,12 @@ computed_fields:
       function:
         name: customer_notification_token
         schema: public
+update_permissions:
+  - role: customer
+    permission:
+      columns:
+        - app_version
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check: null

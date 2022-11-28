@@ -61,9 +61,9 @@ Image showDefaultOrUserImg({Uint8List? memoryImg}) {
         memoryImage: memoryImg,
         assetInCaseFailed: aDefaultDbUserImgAsset);
   }
+
   return mLoadImage(
-      url: Get.find<AuthController>().user!.bigImage ??
-          Get.find<AuthController>().user!.image,
+      url: Get.find<AuthController>().user!.image,
       assetInCaseFailed: aDefaultDbUserImgAsset);
 }
 

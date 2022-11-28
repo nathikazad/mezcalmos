@@ -13,18 +13,6 @@ alter table "public"."notification_info" drop constraint "notification_info_app_
   references "topology"."app_type"
   ("id") on update cascade on delete restrict;
 
-CREATE FUNCTION special_items(restaurant_row restaurant) 
-    RETURNS SETOF restaurant_item
-    LANGUAGE sql
-    STABLE
-AS $$
-    SELECT *
-    FROM restaurant_item r
-    WHERE r.restaurant_id = restaurant_row.id AND r.item_type = 'special';
-    
-$$;
--- DROP FUNCTION cost;
-
 alter table "public"."notification_info" add constraint "notification_info_user_id_app_type_id_key" unique ("user_id", "app_type_id");
 
 CREATE FUNCTION notification_token(delivery_row delivery) 

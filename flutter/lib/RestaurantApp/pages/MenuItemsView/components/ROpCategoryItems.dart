@@ -6,7 +6,8 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/controllers/ROpMenuV
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -46,10 +47,11 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                   Flexible(
                     fit: FlexFit.tight,
                     child: Text(
-                      widget.category.name![userLanguage]!,
+                      widget.category.name?[userLanguage] ?? "",
                       style: Get.textTheme.bodyText1,
                     ),
                   ),
+                  Text(widget.category.id.toString()),
                   (widget.viewController.reOrderMode.isTrue)
                       ? ROpRerorderIcon()
                       : _categoryMenuBtn(context)
@@ -134,11 +136,16 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                       height: 15,
                     ),
                     InkWell(
-                      onTap: () {
+                      onTap: () async {
                         Get.back();
-                        Get.toNamed(getCategoryEditRoute(
-                            categoryId: widget.category.id!,
-                            restaurantId: widget.restaurantId));
+                        final bool? result = await Get.toNamed(
+                            getCategoryEditRoute(
+                                categoryId: widget.category.id!,
+                                restaurantId: widget.restaurantId)) as bool;
+                        mezDbgPrint("After edit ......$result");
+                        if (result == true) {
+                          await widget.viewController.fetchCategories();
+                        }
                       },
                       child: Container(
                           padding: const EdgeInsets.symmetric(
@@ -151,15 +158,24 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                     ),
                     Divider(),
                     InkWell(
-                      onTap: () {
-                        showConfirmationDialog(context,
+                      onTap: () async {
+                        await showConfirmationDialog(context,
                             title: '${_i18n()["deleteTitle"]}',
                             helperText: '${_i18n()["deleteHelper"]}',
                             primaryButtonText: '${_i18n()["deleteBtn"]}',
                             onYesClick: () async {
+                          mezDbgPrint("Clicked bbbbbbbb ${widget.category.id}");
                           await widget.viewController
-                              .deleteCategory(categoryId: widget.category.id!);
-                        }).then((value) => Get.back());
+                              .deleteCategory(categoryId: widget.category.id!)
+                              .then((bool value) {
+                            if (value) {
+                              Get.until((Route route) =>
+                                  route.settings.name ==
+                                  getROpMenuRoute(
+                                      restaurantId: widget.restaurantId));
+                            }
+                          });
+                        });
                       },
                       child: Container(
                           alignment: Alignment.center,

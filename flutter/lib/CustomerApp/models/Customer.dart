@@ -1,6 +1,9 @@
 import 'package:collection/collection.dart';
+import 'package:location/location.dart';
+import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
+import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 
 class Customer {
   // List<Order> currentOrders = [];
@@ -17,9 +20,9 @@ class Customer {
     notificationInfo = data?["notificationInfo"];
 
     if (data["savedLocations"] != null) {
-      Map<String, dynamic>.from(data["savedLocations"])
+      Map<int, dynamic>.from(data["savedLocations"])
           .entries
-          .forEach((MapEntry<String, dynamic> entry) {
+          .forEach((MapEntry<int, dynamic> entry) {
         savedLocations.add(
           SavedLocation.fromData(id: entry.key, data: entry.value),
         );
@@ -60,25 +63,51 @@ class Customer {
   }
 }
 
+extension ParseGeography on Geography {
+  LocationData toLocationData() {
+    return LocationData.fromMap({"latitude": latitude, "longitude": longitude});
+  }
+}
+
+extension ParseLocationData on LocationData {
+  Geography? toGeography() {
+    if (latitude != null && longitude != null) {
+      return Geography(latitude!, longitude!);
+    }
+    return null;
+  }
+}
+
 class SavedLocation {
   String name;
-  String? id;
-  Location? location;
+  int id;
+  LocModel.Location location;
   bool defaultLocation;
 
   SavedLocation(
       {required this.name,
-      this.location,
-      this.id,
+      required this.id,
+      required this.location,
       this.defaultLocation = false});
 
+  factory SavedLocation.fromHasuraData(
+      {required Input$saved_location_insert_input savedLocation}) {
+    return SavedLocation(
+      name: savedLocation.name!,
+      location: LocModel.Location(savedLocation.location_text!,
+          savedLocation.location_gps!.toLocationData()),
+      id: savedLocation.id!,
+      defaultLocation: savedLocation.$default ?? false,
+    );
+  }
+
   factory SavedLocation.fromData({
-    required String id,
+    required int id,
     required data,
   }) {
     return SavedLocation(
         name: data["name"],
-        location: Location.fromFirebaseData(data),
+        location: LocModel.Location.fromFirebaseData(data),
         id: id,
         defaultLocation: data["default"] ?? false);
   }
@@ -97,10 +126,10 @@ class SavedLocation {
 typedef SavedLocations = List<SavedLocation>;
 
 extension SavedLocationsFunctions on SavedLocations {
-  Map<String, Object> toFirebaseFormattedJson() {
-    final Map<String, Object> json = <String, Object>{};
+  Map<int, Object> toFirebaseFormattedJson() {
+    final Map<int, Object> json = <int, Object>{};
     forEach((SavedLocation savedLocation) =>
-        json[savedLocation.id!] = savedLocation.toFirebaseFormattedJson());
+        json[savedLocation.id] = savedLocation.toFirebaseFormattedJson());
     return json;
   }
 }

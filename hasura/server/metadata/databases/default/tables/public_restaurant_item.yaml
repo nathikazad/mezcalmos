@@ -11,6 +11,15 @@ object_relationships:
   - name: name
     using:
       foreign_key_constraint_on: name_id
+  - name: restaurant
+    using:
+      manual_configuration:
+        column_mapping:
+          restaurant_id: id
+        insertion_order: null
+        remote_table:
+          name: restaurant
+          schema: public
 array_relationships:
   - name: options
     using:
@@ -19,3 +28,186 @@ array_relationships:
         table:
           name: restaurant_item_option_map
           schema: public
+insert_permissions:
+  - role: mez_admin
+    permission:
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - archived
+        - available
+        - category_id
+        - cost
+        - description_id
+        - item_type
+        - name_id
+        - position
+        - restaurant_id
+        - special_period_end
+        - special_period_start
+  - role: restaurant_operator
+    permission:
+      check:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - available
+        - category_id
+        - cost
+        - description_id
+        - item_type
+        - name_id
+        - position
+        - restaurant_id
+        - special_period_end
+        - special_period_start
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - archived
+        - available
+        - category_id
+        - description_id
+        - id
+        - name_id
+        - position
+        - restaurant_id
+        - cost
+        - special_period_end
+        - special_period_start
+        - item_type
+      filter: {}
+  - role: customer
+    permission:
+      columns:
+        - archived
+        - available
+        - category_id
+        - description_id
+        - id
+        - name_id
+        - position
+        - restaurant_id
+        - cost
+        - special_period_end
+        - special_period_start
+        - item_type
+      filter: {}
+  - role: deliverer
+    permission:
+      columns:
+        - archived
+        - available
+        - category_id
+        - description_id
+        - id
+        - name_id
+        - position
+        - restaurant_id
+        - cost
+        - special_period_end
+        - special_period_start
+        - item_type
+      filter: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - archived
+        - available
+        - category_id
+        - description_id
+        - id
+        - name_id
+        - position
+        - restaurant_id
+        - cost
+        - special_period_end
+        - special_period_start
+        - item_type
+      filter: {}
+  - role: restaurant_operator
+    permission:
+      columns:
+        - archived
+        - available
+        - category_id
+        - description_id
+        - id
+        - name_id
+        - position
+        - restaurant_id
+        - cost
+        - special_period_end
+        - special_period_start
+        - item_type
+      filter: {}
+update_permissions:
+  - role: mez_admin
+    permission:
+      columns:
+        - archived
+        - available
+        - category_id
+        - cost
+        - description_id
+        - name_id
+        - position
+        - special_period_end
+        - special_period_start
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null
+  - role: restaurant_operator
+    permission:
+      columns:
+        - archived
+        - available
+        - category_id
+        - cost
+        - description_id
+        - name_id
+        - position
+        - restaurant_id
+        - special_period_end
+        - special_period_start
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null
+delete_permissions:
+  - role: mez_admin
+    permission:
+      backend_only: false
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      backend_only: false
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id

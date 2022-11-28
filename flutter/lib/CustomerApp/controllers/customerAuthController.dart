@@ -60,15 +60,6 @@ class CustomerAuthController extends GetxController {
       });
       // update info //
       await _userInfoStreamListener?.cancel();
-      _authController.userInfoStream.listen((MainUserInfo? userInfo) {
-        if (userInfo != null) {
-          _databaseHelper.firebaseDatabase
-              .ref()
-              .child(customerInfoNode(_authController.fireAuthUser!.uid))
-              .set(userInfo.toFirebaseFormatJson());
-        }
-      });
-      //
 
       final String? deviceNotificationToken =
           await _notificationsController.getToken();
@@ -95,35 +86,38 @@ class CustomerAuthController extends GetxController {
   }
 
   void editLocation(SavedLocation savedLocation) {
-    _databaseHelper.firebaseDatabase
-        .ref()
-        .child(
-          savedLocationNode(
-              _authController.fireAuthUser!.uid, savedLocation.id!),
-        )
-        .set(savedLocation.toFirebaseFormattedJson());
+    // TODO:544D-HASURA
+    // _databaseHelper.firebaseDatabase
+    //     .ref()
+    //     .child(
+    //       savedLocationNode(
+    //           _authController.fireAuthUser!.uid, savedLocation.id!),
+    //     )
+    //     .set(savedLocation.toFirebaseFormattedJson());
   }
 
   void setAsDefaultLocation(SavedLocation newDefaultLocation) {
-    customer.value!.savedLocations.forEach((SavedLocation savedLocation) {
-      savedLocation.defaultLocation = newDefaultLocation.id == savedLocation.id;
-    });
-    _databaseHelper.firebaseDatabase
-        .ref()
-        .child(savedLocationsNode(_authController.fireAuthUser!.uid))
-        .update(customer.value!.savedLocations.toFirebaseFormattedJson());
+    // TODO:544D-HASURA
+    // customer.value!.savedLocations.forEach((SavedLocation savedLocation) {
+    //   savedLocation.defaultLocation = newDefaultLocation.id == savedLocation.id;
+    // });
+    // _databaseHelper.firebaseDatabase
+    //     .ref()
+    //     .child(savedLocationsNode(_authController.fireAuthUser!.uid))
+    //     .update(customer.value!.savedLocations.toFirebaseFormattedJson());
   }
 
   void deleteLocation(SavedLocation savedLocation) {
-    _databaseHelper.firebaseDatabase
-        .ref()
-        .child(
-          savedLocationNode(
-            _authController.fireAuthUser!.uid,
-            savedLocation.id!,
-          ),
-        )
-        .remove();
+    // TODO:544D-HASURA
+    // _databaseHelper.firebaseDatabase
+    // .ref()
+    // .child(
+    //   savedLocationNode(
+    //     _authController.fireAuthUser!.uid,
+    //     savedLocation.id!,
+    //   ),
+    // )
+    // .remove();
   }
 
   Location? getLocationById(String locationId) {

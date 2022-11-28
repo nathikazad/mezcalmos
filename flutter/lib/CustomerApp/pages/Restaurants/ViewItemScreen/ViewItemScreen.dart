@@ -14,7 +14,8 @@ import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:sizer/sizer.dart';
 
@@ -122,7 +123,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
         resizeToAvoidBottomInset: true,
         bottomSheet: (cartItem.value != null && currentRestaurant != null)
             ? BottomBarItemViewScreen(
-                currentRestaurantId: currentRestaurant?.info.id,
+                currentRestaurantId: currentRestaurant?.info.firebaseId,
                 cartItem: cartItem,
                 mode: widget.viewItemScreenMode,
               )
@@ -169,7 +170,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                           onTap: () {
                             Get.toNamed(
                                 getRestaurantRoute(
-                                  currentRestaurant!.info.id,
+                                  currentRestaurant!.info.firebaseId,
                                 ),
                                 arguments: currentRestaurant);
                           },

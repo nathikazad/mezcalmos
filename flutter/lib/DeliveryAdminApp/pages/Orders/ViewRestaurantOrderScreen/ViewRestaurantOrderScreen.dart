@@ -257,7 +257,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
         }
         mapController.addOrUpdateUserMarker(
           latLng: order.value?.dropoffDriver?.location,
-          markerId: order.value?.dropoffDriver?.id,
+          markerId: order.value?.dropoffDriver?.firebaseId,
           customImgHttpUrl: order.value?.dropoffDriver?.image,
           fitWithinBounds: true,
         );
@@ -285,7 +285,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
 
         mapController.addOrUpdateUserMarker(
           latLng: order.value?.dropoffDriver?.location,
-          markerId: order.value?.dropoffDriver?.id,
+          markerId: order.value?.dropoffDriver?.firebaseId,
           customImgHttpUrl: order.value?.dropoffDriver?.image,
           fitWithinBounds: true,
         );

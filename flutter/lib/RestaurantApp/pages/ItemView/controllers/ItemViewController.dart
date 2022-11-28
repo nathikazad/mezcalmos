@@ -2,32 +2,37 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
+import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
+import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
+import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 
-class ItemViewController {
-  /// Class to control the item view on edit and add mode for restaurant app ///
-
-  // controllers //
-
+class ROpItemViewController {
   late RestaurantInfoController _restaurantInfoController;
 
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
-  // Text editing controllers //
-  //
+
   final TextEditingController prItemNameController = TextEditingController();
   final TextEditingController scItemNameController = TextEditingController();
   final TextEditingController prItemDescController = TextEditingController();
   final TextEditingController scItemDescController = TextEditingController();
   final TextEditingController itemPriceController = TextEditingController();
-  // Constant //
+
   Category addNewCatgeory = Category(name: {
     LanguageType.EN: "Add new category",
     LanguageType.ES: "Añadir nueva categoria"
@@ -36,12 +41,12 @@ class ItemViewController {
     LanguageType.EN: "No category",
     LanguageType.ES: "Ninguna Categoria"
   }, id: "noCategory");
-  // Variables //
+
   final Rxn<Restaurant> restaurant = Rxn();
   final RxList<Category> categories = RxList.empty();
   final Rxn<Category> currentCategory = Rxn();
-  late LanguageType prLang;
-  late LanguageType scLang;
+  Rx<LanguageType> prLang = Rx(LanguageType.ES);
+  Rx<LanguageType> scLang = Rx(LanguageType.ES);
   final Rxn<File> newImageFile = Rxn();
   final Rxn<String> newImageUrl = Rxn();
   final RxBool imageLoading = RxBool(false);
@@ -58,50 +63,61 @@ class ItemViewController {
   Rxn<DateTime> endDate = Rxn();
   Rxn<PeriodOfTime> periodOfTime = Rxn();
 
-  // initalisation //
-  // the itemId arguments for edit mode //
+  RxBool needToRefetch = RxBool(false);
+  RxBool isInitalized = RxBool(false);
+
+  bool get pageLoaded {
+    if (editMode.isFalse) {
+      return restaurant.value != null;
+    } else {
+      return restaurant.value != null && editableItem.value != null;
+    }
+  }
+
+  bool get isEditing => editMode.value && editableItem.value != null;
+
   Future<void> init(
       {String? itemId,
       String? categoryId,
       bool? specials,
       required String restaurantId}) async {
-    Get.put(RestaurantInfoController(), permanent: false);
-    _restaurantInfoController = Get.find<RestaurantInfoController>();
-    _restaurantInfoController.init(restId: restaurantId);
-    restaurant.value =
-        await _restaurantInfoController.getRestaurantAsFuture(restaurantId);
-    mezDbgPrint(
-        "RestaurantId ===============================>>> $restaurantId");
-    mezDbgPrint(
-        "Restaurant ===============================>>> ${restaurant.value!.toJson()}");
-    _restaurantInfoController
-        .getRestaurant(restaurantId)
-        .listen((Restaurant? event) {
-      if (event != null) {
-        restaurant.value = event;
-      }
-    });
-    if (specials != null) {
-      specialMode.value = specials;
+    // Get.put(RestaurantInfoController(), permanent: false);
+    // _restaurantInfoController = Get.find<RestaurantInfoController>();
+    // _restaurantInfoController.init(restId: restaurantId);
+    // restaurant.value =
+    //     await _restaurantInfoController.getRestaurantAsFuture(restaurantId);
+    // mezDbgPrint(
+    //     "RestaurantId ===============================>>> $restaurantId");
+    // mezDbgPrint(
+    //     "Restaurant ===============================>>> ${restaurant.value!.toJson()}");
+    // _restaurantInfoController
+    //     .getRestaurant(restaurantId)
+    //     .listen((Restaurant? event) {
+    //   if (event != null) {
+    //     restaurant.value = event;
+    //   }
+    // });
+    // if (specials != null) {
+    //   specialMode.value = specials;
+    // }
+    // mezDbgPrint("Special mode =============>${specialMode.value}");
+
+    prLang.value = await get_restaurant_priamry_lang(4) ?? LanguageType.ES;
+    scLang.value = prLang.value.toOpLang();
+    await _assignCategories();
+    mezDbgPrint("Item id ===========>>>>> $itemId");
+    if (itemId != null) {
+      await _initEditMode(itemId: itemId, categoryId: categoryId);
     }
-    mezDbgPrint("Special mode =============>${specialMode.value}");
-    if (restaurant.value != null) {
-      prLang = restaurant.value!.primaryLanguage;
-      scLang = restaurant.value!.secondaryLanguage!;
-      _assignCategories();
-      mezDbgPrint("Item id ===========>>>>> $itemId");
-      if (itemId != null) {
-        initEditMode(itemId: itemId, categoryId: categoryId);
-      }
-    }
+
+    isInitalized.value = true;
   }
 
-  // edit item init //
-  void initEditMode({required String itemId, String? categoryId}) {
+  Future<void> _initEditMode(
+      {required String itemId, String? categoryId}) async {
     editMode.value = true;
-    editableItem.value = restaurant.value!.findItemById(
-      id: itemId,
-    );
+    editableItem.value =
+        await get_one_item_by_id(int.parse(itemId), withCache: false);
     mezDbgPrint(editableItem.value!.toJson());
     prItemNameController.text = editableItem.value!.name[prLang]!;
     newImageUrl.value = editableItem.value!.image;
@@ -111,61 +127,40 @@ class ItemViewController {
     periodOfTime.value = editableItem.value!.getPeriod;
 
     itemPriceController.text = editableItem.value!.cost.toString();
+    _assignChoices();
+    if (editableItem.value!.categoryId != null) {
+      currentCategory.value =
+          await get_category_by_id(editableItem.value!.categoryId!);
+    }
+  }
+
+  void _assignChoices() {
     mezDbgPrint(editableItem.value!.options.length);
+    itemOptions.clear();
     editableItem.value!.options.forEach((Option element) {
-      mezDbgPrint("options adding");
       itemOptions.add(element);
     });
-    if (categoryId != null && categoryId != ":categoryId") {
-      mezDbgPrint("category iiiiiiiiiiiiiiiid  =======>>>>> $categoryId");
-      currentCategory.value = restaurant.value!.getCategories
-          .firstWhere((Category element) => element.id == categoryId);
-    }
   }
 
-// contruct item //
   Item _contructItem() {
     final Item newItem = Item(
-        image: newImageUrl.value,
-        id: generateRandomString(5),
-        startsAt: specialMode.value ? periodOfTime.value?.start : null,
-        endsAt: specialMode.value ? periodOfTime.value?.end : null,
-        available: editableItem.value?.available ?? false,
-        name: {
-          restaurant.value!.primaryLanguage: prItemNameController.text,
-          restaurant.value!.secondaryLanguage!: scItemNameController.text,
-        },
-        description: {
-          restaurant.value!.primaryLanguage: prItemDescController.text,
-          restaurant.value!.secondaryLanguage!: scItemDescController.text,
-        },
-        cost: num.parse(itemPriceController.text),
-        newOptions: _contructOptions());
+      image: newImageUrl.value,
+      itemType: (specialMode.isTrue) ? ItemType.Special : ItemType.Daily,
+      id: editMode.value ? editableItem.value!.id : generateRandomString(5),
+      startsAt: specialMode.value ? periodOfTime.value?.start : null,
+      endsAt: specialMode.value ? periodOfTime.value?.end : null,
+      available: editableItem.value?.available ?? false,
+      name: {
+        prLang.value: prItemNameController.text,
+        scLang.value: scItemNameController.text,
+      },
+      description: {
+        prLang.value: prItemDescController.text,
+        scLang.value: scItemDescController.text,
+      },
+      cost: num.parse(itemPriceController.text),
+    );
     return newItem;
-  }
-
-  List<Option> _contructOptions() {
-    final List<Option> data = [];
-    for (int i = 0; i < itemOptions.length; i++) {
-      data.add(Option(
-        id: itemOptions[i].id,
-        name: {
-          restaurant.value!.primaryLanguage: itemOptions[i].name[prLang]!,
-          restaurant.value!.secondaryLanguage!: itemOptions[i].name[scLang]!,
-        },
-        optionType: itemOptions[i].optionType,
-        newChoices: itemOptions[i].choices,
-        costPerExtra: itemOptions[i].costPerExtra,
-        freeChoice: itemOptions[i].freeChoice,
-        minimumChoice: itemOptions[i].minimumChoice,
-        maximumChoice: itemOptions[i].maximumChoice,
-      ));
-    }
-    return data;
-  }
-
-  void addOption(Option option) {
-    itemOptions.add(option);
   }
 
   void switchChoiceAv(
@@ -184,24 +179,10 @@ class ItemViewController {
     editableItem.refresh();
   }
 
-  //
-
-  void editOption(String optionId, Option newOption) {
-    final int index =
-        itemOptions.indexWhere((Option element) => element.id == optionId);
-    itemOptions[index] = newOption;
-  }
-
-  void deleteOption({required String optionId}) {
-    itemOptions.removeWhere((Option element) => element.id == optionId);
-  }
-
-// push item to db //
   Future<void> saveItem() async {
     isLoading.value = true;
     mezDbgPrint("Saving item =========<<<<=========");
 
-    //  uploading image if needed
     if (newImageFile.value != null) {
       mezDbgPrint("m66are =====> uploading new image");
       await _restaurantInfoController
@@ -221,60 +202,88 @@ class ItemViewController {
         }
       });
     }
-    if (specialMode.value && editMode.value == false) {
-      // ignore: unawaited_futures
-      _restaurantInfoController
-          .addSpecialItem(item: _contructItem())
-          .onError((Object? error, StackTrace stackTrace) => mezDbgPrint(error))
-          .then((value) => Get.back());
-    } else if (editMode.value == false) {
-      //  ignore: unawaited_futures
-      _restaurantInfoController
-          .addItem(
-              item: _contructItem(), categoryId: currentCategory.value!.id!)
-          .onError((Object? error, StackTrace stackTrace) {
-        mezDbgPrint(error);
-        mezDbgPrint(stackTrace);
-      }).then((value) => Get.back());
+
+    if (editMode.isFalse) {
+      mezDbgPrint(
+          "🍞🍞🍞 Adding ${_contructItem().name[LanguageType.EN]} to category id : ${int.parse(currentCategory.value!.id!)} ");
+      final int? newItemId = await add_one_item(
+          item: _contructItem(),
+          restaurantId: 4,
+          categoryId: int.parse(currentCategory.value!.id!));
+      if (newItemId != null) {
+        mezDbgPrint(
+            "👌🏻👌🏻👌🏻 Item added successfuly id : $newItemId 👌🏻👌🏻👌🏻");
+
+        editableItem.value = await get_one_item_by_id(newItemId);
+        editMode.value = true;
+        needToRefetch.value = true;
+      }
     } else {
-      mezDbgPrint("From controlllllllleeeeer =====>$isCurrentSpec");
-      // ignore: unawaited_futures
-      _restaurantInfoController
-          .editItem(
-              item: _contructItem(),
-              itemId: editableItem.value!.id!,
-              isSpecial: specialMode.value,
-              currentSpecial: isCurrentSpec,
-              categoryId: currentCategory.value?.id)
-          .onError((Object? error, StackTrace stackTrace) {
-        mezDbgPrint(error);
-        mezDbgPrint(stackTrace);
-      }).then((value) => Get.back());
+      mezDbgPrint("👌🏻👌🏻👌🏻 Editing item ..... 👌🏻👌🏻👌🏻");
+      await _updateName();
+      if (editableItem.value!.descriptionId != null) {
+        await _updateDescription();
+      }
+      final bool result = await update_item_by_id(
+          itemId: int.parse(editableItem.value!.id!), item: _contructItem());
+      if (result) {
+        Get.snackbar('Saved', 'Item saved successfuly',
+            backgroundColor: Colors.black,
+            colorText: Colors.white,
+            shouldIconPulse: false,
+            icon: Icon(
+              Icons.check_circle,
+              color: Colors.green,
+            ));
+        needToRefetch.value = true;
+      }
     }
+
     isLoading.value = false;
   }
 
-  // delete item
-  Future<void> deleteItem({required String itemId, String? catgeoryId}) async {
-    await _restaurantInfoController
-        .deleteItem(
-            itemId: itemId,
-            categoryId: catgeoryId,
-            isSpecial: specialMode.value,
-            currentSpecial: isCurrentSpec)
-        .then((value) => Get.back());
+  Future<void> _updateDescription() async {
+    if (!fd.mapEquals(
+        editableItem.value!.description, _contructItem().description)) {
+      _contructItem()
+          .description
+          ?.forEach((LanguageType key, String value) async {
+        await update_translation(
+            langType: key,
+            value: value,
+            translationId: editableItem.value!.descriptionId!);
+      });
+    }
   }
 
-  // add categories //
-  void _assignCategories() {
-    restaurant.value!.getCategories.forEach((Category element) {
-      categories.add(element);
-    });
-    categories.add(noCatgeory);
-    categories.add(addNewCatgeory);
+  Future<void> _updateName() async {
+    mezDbgPrint(
+        "UPDATE NAME ${!fd.mapEquals(editableItem.value!.name, _contructItem().name)}");
+    if (!fd.mapEquals(editableItem.value!.name, _contructItem().name)) {
+      _contructItem().name.forEach((LanguageType key, String value) async {
+        mezDbgPrint("updatttttt ${editableItem.value?.nameId}");
+        await update_translation(
+            langType: key,
+            value: value,
+            translationId: editableItem.value!.nameId!);
+      });
+    }
   }
 
-  // item image logic //
+  Future<bool?> deleteItem({required String itemId, String? catgeoryId}) async {
+    final int? deletedItemId = await delete_item_by_id(int.parse(itemId));
+    if (deletedItemId != null) {
+      Get.back();
+      mezDbgPrint("Item $deletedItemId have deleted 😢😢😢");
+      return true;
+    }
+    return null;
+  }
+
+  Future<void> _assignCategories() async {
+    categories.value =
+        await get_restaurant_categories_by_id(4, withCache: false) ?? [];
+  }
 
   Future<void> editImage(context) async {
     final imPicker.ImageSource? _from = await imagePickerChoiceDialog(context);
@@ -334,5 +343,20 @@ class ItemViewController {
     prItemNameController.clear();
     scItemNameController.clear();
     scItemDescController.clear();
+  }
+
+  Future<void> fetchItem() async {
+    if (isEditing) {
+      mezDbgPrint("⌛️⌛️⌛️⌛️⌛️ Refetching item data from hasura.... ");
+      final Item? newItem = await get_one_item_by_id(
+          int.parse(editableItem.value!.id!),
+          withCache: false);
+
+      if (newItem != null) {
+        editableItem.value = newItem;
+        editableItem.value!.options = newItem.options;
+        _assignChoices();
+      }
+    }
   }
 }

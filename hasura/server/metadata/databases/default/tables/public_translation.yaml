@@ -1,6 +1,17 @@
 table:
   name: translation
   schema: public
+object_relationships:
+  - name: restaurant
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: restaurant
+          schema: public
 array_relationships:
   - name: translations
     using:
@@ -9,3 +20,85 @@ array_relationships:
         table:
           name: translation_value
           schema: public
+insert_permissions:
+  - role: mez_admin
+    permission:
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - id
+        - service_provider_id
+        - service_provider_type
+  - role: restaurant_operator
+    permission:
+      check:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - id
+        - service_provider_id
+        - service_provider_type
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - id
+        - service_provider_id
+        - service_provider_type
+      filter: {}
+  - role: customer
+    permission:
+      columns:
+        - id
+        - service_provider_id
+        - service_provider_type
+      filter: {}
+  - role: deliverer
+    permission:
+      columns:
+        - id
+        - service_provider_id
+        - service_provider_type
+      filter: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - id
+        - service_provider_id
+        - service_provider_type
+      filter: {}
+  - role: restaurant_operator
+    permission:
+      columns:
+        - id
+        - service_provider_id
+        - service_provider_type
+      filter: {}
+delete_permissions:
+  - role: mez_admin
+    permission:
+      backend_only: false
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      backend_only: false
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id

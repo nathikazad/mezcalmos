@@ -17,3 +17,12 @@ computed_fields:
       function:
         name: mez_admin_notification_token
         schema: public
+update_permissions:
+  - role: mez_admin
+    permission:
+      columns:
+        - version
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check: null

@@ -3,7 +3,9 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 enum UserInteraction { isSearching, isSorting, isSearchingAndSorting, Nothing }
@@ -118,8 +120,9 @@ extension RestaurantFilters on RestaurantList {
       categoryItems.forEach((Item item) {
         item.restaurant = category.restaurant;
         item.category = category;
-        if (item.restaurant?.info.id != null && item.id != null)
-          item.linkUrl = getItemRoute(item.restaurant!.info.id, item.id!);
+        if (item.restaurant?.info.firebaseId != null && item.id != null)
+          item.linkUrl =
+              getItemRoute(item.restaurant!.info.firebaseId, item.id!);
       });
       items.addAll(categoryItems);
       return items;

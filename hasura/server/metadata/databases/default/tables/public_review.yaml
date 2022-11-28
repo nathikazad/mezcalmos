@@ -1,3 +1,99 @@
 table:
   name: review
   schema: public
+insert_permissions:
+  - role: customer
+    permission:
+      check:
+        from_entity_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - from_entity_id
+        - id
+        - rating
+        - to_entity_id
+        - from_entity_type
+        - note
+        - to_entity_type
+  - role: deliverer
+    permission:
+      check:
+        from_entity_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - from_entity_id
+        - id
+        - rating
+        - to_entity_id
+        - from_entity_type
+        - note
+        - to_entity_type
+  - role: restaurant_operator
+    permission:
+      check:
+        from_entity_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - from_entity_id
+        - id
+        - rating
+        - to_entity_id
+        - from_entity_type
+        - note
+        - to_entity_type
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - from_entity_id
+        - id
+        - rating
+        - to_entity_id
+        - from_entity_type
+        - note
+        - to_entity_type
+      filter: {}
+  - role: customer
+    permission:
+      columns:
+        - from_entity_id
+        - id
+        - rating
+        - to_entity_id
+        - from_entity_type
+        - note
+        - to_entity_type
+      filter: {}
+  - role: deliverer
+    permission:
+      columns:
+        - from_entity_id
+        - id
+        - rating
+        - to_entity_id
+        - from_entity_type
+        - note
+        - to_entity_type
+      filter: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - from_entity_id
+        - id
+        - rating
+        - to_entity_id
+        - from_entity_type
+        - note
+        - to_entity_type
+      filter: {}
+  - role: restaurant_operator
+    permission:
+      columns:
+        - from_entity_id
+        - id
+        - rating
+        - to_entity_id
+        - from_entity_type
+        - note
+        - to_entity_type
+      filter: {}

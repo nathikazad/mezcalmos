@@ -36,3 +36,153 @@ computed_fields:
       function:
         name: totalcost
         schema: public
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - id
+        - customer_id
+        - restaurant_id
+        - payment_type
+        - to_location_gps
+        - to_location_address
+        - estimated_food_ready_time
+        - actual_food_ready_time
+        - stripe_payment_id
+        - refund_amount
+        - delivery_id
+        - status
+        - review_id
+        - order_type
+        - order_time
+        - firebase_id
+        - customer_app_type
+        - notes
+        - tax
+        - chat_id
+        - delivery_cost
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id
+  - role: deliverer
+    permission:
+      columns:
+        - to_location_gps
+        - tax
+        - chat_id
+        - customer_id
+        - delivery_id
+        - id
+        - refund_amount
+        - restaurant_id
+        - review_id
+        - stripe_payment_id
+        - delivery_cost
+        - customer_app_type
+        - firebase_id
+        - notes
+        - order_type
+        - payment_type
+        - to_location_address
+        - actual_food_ready_time
+        - estimated_food_ready_time
+        - order_time
+        - status
+      filter:
+        delivery:
+          deliverer:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - to_location_gps
+        - tax
+        - chat_id
+        - customer_id
+        - delivery_id
+        - id
+        - refund_amount
+        - restaurant_id
+        - review_id
+        - stripe_payment_id
+        - delivery_cost
+        - customer_app_type
+        - firebase_id
+        - notes
+        - order_type
+        - payment_type
+        - to_location_address
+        - actual_food_ready_time
+        - estimated_food_ready_time
+        - order_time
+        - status
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      columns:
+        - to_location_gps
+        - tax
+        - chat_id
+        - customer_id
+        - delivery_id
+        - id
+        - refund_amount
+        - restaurant_id
+        - review_id
+        - stripe_payment_id
+        - delivery_cost
+        - customer_app_type
+        - firebase_id
+        - notes
+        - order_type
+        - payment_type
+        - to_location_address
+        - actual_food_ready_time
+        - estimated_food_ready_time
+        - order_time
+        - status
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+update_permissions:
+  - role: customer
+    permission:
+      columns:
+        - review_id
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id
+      check: null
+  - role: mez_admin
+    permission:
+      columns:
+        - estimated_food_ready_time
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null
+  - role: restaurant_operator
+    permission:
+      columns:
+        - estimated_food_ready_time
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null

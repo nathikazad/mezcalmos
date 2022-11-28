@@ -5,7 +5,7 @@ import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class ROpItemOptionCard extends StatefulWidget {
@@ -19,7 +19,7 @@ class ROpItemOptionCard extends StatefulWidget {
   final String restaurantID;
   final String? categoryID;
   final String? itemId;
-  final ItemViewController viewController;
+  final ROpItemViewController viewController;
 
   static final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
@@ -105,17 +105,12 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
   Widget _editBtn({required Option option}) {
     return InkWell(
       onTap: () async {
-        final Option? newOp = await Get.toNamed(
-            getROpOptionRoute(restaurantId: widget.restaurantID),
-            arguments: {
-              "option": option,
-              "itemId": widget.itemId,
-              "categoryId": widget.categoryID
-            }) as Option?;
-        if (newOp != null) {
-          widget.viewController.editOption(option.id, newOp);
-        } else {
-          widget.viewController.deleteOption(optionId: option.id);
+        final bool? result = await Get.toNamed(getROpOptionRoute(
+            restaurantId: widget.restaurantID,
+            optionId: option.id,
+            itemID: widget.itemId!)) as bool?;
+        if (result == true) {
+          await widget.viewController.fetchItem();
         }
       },
       customBorder: CircleBorder(),

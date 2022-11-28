@@ -10,7 +10,7 @@ import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 
@@ -211,8 +211,8 @@ class _ServicesViewState extends State<ServicesView> {
                                 padding: const EdgeInsets.all(3),
                                 primary: primaryBlueColor),
                             onPressed: () {
-                              Get.toNamed(
-                                  getEditInfoRoute(laundryId: laundry.info.id));
+                              Get.toNamed(getEditInfoRoute(
+                                  laundryId: laundry.info.firebaseId));
                             },
                             icon: Icon(Icons.person),
                             label: Text('${_i18n()["editProfile"]}'),
@@ -221,8 +221,8 @@ class _ServicesViewState extends State<ServicesView> {
                         Flexible(
                           child: TextButton.icon(
                             onPressed: () {
-                              Get.toNamed(
-                                  getAdminRoute(laundryId: laundry.info.id));
+                              Get.toNamed(getAdminRoute(
+                                  laundryId: laundry.info.firebaseId));
                             },
                             style: TextButton.styleFrom(
                                 backgroundColor: Colors.transparent,

@@ -419,17 +419,30 @@ class RestaurantSliverAppBar extends StatelessWidget {
     });
   }
 
+// TODO:544D-HASURA
+// this
+  // Widget getAppbarIconsButton() {
+  //   return Obx(() {
+  //     return Row(
+  //       children: [
+  //         if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
+  //         if (Get.find<AuthController>().isUserSignedIn)
+  //           _notificationAppBarIcon(),
+  //         if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
+  //       ],
+  //     );
+  //   });
+  // }
+
   Widget getAppbarIconsButton() {
-    return Obx(() {
-      return Row(
-        children: [
-          if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
-          if (Get.find<AuthController>().isUserSignedIn)
-            _notificationAppBarIcon(),
-          if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
-        ],
-      );
-    });
+    return Row(
+      children: [
+        if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
+        if (Get.find<AuthController>().isUserSignedIn)
+          _notificationAppBarIcon(),
+        if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
+      ],
+    );
   }
 
   double _getBottomPadding() {

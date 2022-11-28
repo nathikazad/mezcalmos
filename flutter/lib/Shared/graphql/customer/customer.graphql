@@ -1,0 +1,21 @@
+mutation setCusAppVersion($customer_id:Int!, $version: String!) {
+  update_customer_by_pk(pk_columns : {user_id:$customer_id} , _set: { app_version:$version })
+  {
+     app_version
+  }
+}
+
+# Get Customer's Cart items
+query getCustomerCart($customer_id: Int!) {
+  customer_by_pk(user_id: $customer_id) {
+    cart {
+      items {
+        cost_per_one
+        id
+        note
+        quantity
+        restaurant_item_id
+      }
+    }
+  }
+}

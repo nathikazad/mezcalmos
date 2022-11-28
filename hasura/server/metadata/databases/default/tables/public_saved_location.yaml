@@ -1,0 +1,3 @@
+table:
+  name: saved_location
+  schema: public

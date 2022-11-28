@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 
 class RestaurantsInfoController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -22,31 +22,31 @@ class RestaurantsInfoController extends GetxController {
         "--------------------> RestaurantsInfoController Initialized !");
   }
 
-  Future<List<Restaurant>> getRestaurants() async {
-    final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
-            .ref()
-            .child(serviceProviderInfos(orderType: OrderType.Restaurant))
-            .once())
-        .snapshot;
-    final List<Restaurant> restaurants = <Restaurant>[];
-    if (snapshot.value == null) return restaurants;
-    // ignore: avoid_annotating_with_dynamic
-    (snapshot.value as dynamic)
-        ?.forEach((dynamic restaurantId, dynamic restaurantData) {
-      if (restaurantData["state"]["available"] == true) {
-        try {
-          restaurants.add(Restaurant.fromRestaurantData(
-              restaurantId: restaurantId, restaurantData: restaurantData));
-        } catch (e, stc) {
-          mezDbgPrint("Restaurant add error");
-          mezDbgPrint("Restaurant add error $stc");
-        }
-      }
-    });
-    restaurants.where((Restaurant a) => a.state.isAuthorized);
+  Future<List<Restaurant>> getRestaurants() async => fetch_restaurants();
+  // final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
+  //         .ref()
+  //         .child(serviceProviderInfos(orderType: OrderType.Restaurant))
+  //         .once())
+  //     .snapshot;
+  // final List<Restaurant> restaurants = <Restaurant>[];
+  // if (snapshot.value == null) return restaurants;
+  // // ignore: avoid_annotating_with_dynamic
+  // (snapshot.value as dynamic)
+  //     ?.forEach((dynamic restaurantId, dynamic restaurantData) {
+  //   if (restaurantData["state"]["available"] == true) {
+  //     try {
+  //       restaurants.add(Restaurant.fromRestaurantData(
+  //           restaurantId: restaurantId, restaurantData: restaurantData));
+  //     } catch (e, stc) {
+  //       mezDbgPrint("Restaurant add error");
+  //       mezDbgPrint("Restaurant add error $stc");
+  //     }
+  //   }
+  // });
+  // restaurants.where((Restaurant a) => a.state.isAuthorized);
 
-    return restaurants.reversed.toList();
-  }
+  // return restaurants.reversed.toList();
+  // }
 
   Future<int> getShippingPrice() async {
     final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase

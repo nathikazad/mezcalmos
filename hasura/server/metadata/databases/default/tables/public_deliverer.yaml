@@ -2,6 +2,51 @@ table:
   name: deliverer
   schema: public
 object_relationships:
+  - name: restaurant
+    using:
+      manual_configuration:
+        column_mapping:
+          delivery_company_id: id
+          delivery_company_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: restaurant
+          schema: public
   - name: user
     using:
       foreign_key_constraint_on: user_id
+select_permissions:
+  - role: restaurant_operator
+    permission:
+      columns:
+        - current_location
+        - online
+        - status
+        - user_id
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+update_permissions:
+  - role: deliverer
+    permission:
+      columns:
+        - app_version
+        - current_location
+        - notification_info_id
+        - online
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check: null
+  - role: restaurant_operator
+    permission:
+      columns:
+        - status
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null

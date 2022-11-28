@@ -11,7 +11,9 @@ import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
@@ -27,7 +29,6 @@ class RestaurantInfoController extends GetxController {
     restaurantId = restId;
   }
 
-  StreamSubscription? _restaurantInfoListener;
   Stream<Restaurant?> getRestaurant(String restaurantId) {
     return _databaseHelper.firebaseDatabase
         .ref()
@@ -498,7 +499,7 @@ class RestaurantInfoController extends GetxController {
     String _uploadedImgUrl;
     final List<String> splitted = imageFile.path.split('.');
     final String imgPath =
-        "restaurants/${restaurant.value?.info.id}/items/${getRandomString(8)}.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
+        "restaurants/${restaurant.value?.info.firebaseId}/items/${getRandomString(8)}.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
     try {
       await firebase_storage.FirebaseStorage.instance
           .ref(imgPath)
@@ -597,8 +598,6 @@ class RestaurantInfoController extends GetxController {
     mezDbgPrint(
         "[+] RestaurantAuthController::dispose ---------> Was invoked ! $hashCode");
 
-    _restaurantInfoListener?.cancel();
-    _restaurantInfoListener = null;
     super.onClose();
   }
 }

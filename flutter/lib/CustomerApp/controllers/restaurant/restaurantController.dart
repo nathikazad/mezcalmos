@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
@@ -61,7 +61,7 @@ class RestaurantController extends GetxController {
             // if not clear the old associated restaurant
             if (associatedRestaurant != null) {
               if (cartData["serviceProviderId"] !=
-                  associatedRestaurant?.info.id) {
+                  associatedRestaurant?.info.firebaseId) {
                 associatedRestaurant = null;
               }
             }
@@ -241,7 +241,7 @@ class RestaurantController extends GetxController {
           "@@saadf@@ restaurantController::addItem ---> associatedRestaurant == null !");
       associatedRestaurant = await getAssociatedRestaurant(restaurantId);
       cart.value = Cart(restaurant: associatedRestaurant!);
-    } else if (associatedRestaurant!.info.id != restaurantId) {
+    } else if (associatedRestaurant!.info.firebaseId != restaurantId) {
       mezDbgPrint(
           "@@saadf@@ restaurantController::addItem ---> associatedRestaurant!.id != restaurantId!");
 
@@ -288,29 +288,31 @@ class RestaurantController extends GetxController {
 
   bool get showPaymentPicker {
     return cart.value.restaurant?.paymentInfo
-                .acceptedPayments[PaymentType.Card] ==
+                ?.acceptedPayments[PaymentType.Card] ==
             true ||
         cart.value.restaurant?.paymentInfo
-                .acceptedPayments[PaymentType.BankTransfer] ==
+                ?.acceptedPayments[PaymentType.BankTransfer] ==
             true;
   }
 
   bool get showFees {
     return cart.value.paymentType == PaymentType.Card &&
-        (cart.value.restaurant?.paymentInfo.stripe?.chargeFeesOnCustomer ??
+        (cart.value.restaurant?.paymentInfo?.stripe?.chargeFeesOnCustomer ??
             true);
   }
 
   void clearCart() {
-    _databaseHelper.firebaseDatabase
-        .ref()
-        .child(customerCart(_authController.user!.id))
-        .remove()
-        .then((_) {
-      mezDbgPrint("============= /// :your cart is deleted \\\ ============= ");
-      cart.value = Cart(restaurant: associatedRestaurant);
-    });
-    Get.appUpdate();
+    // TODO:544D-HASURA
+
+    // _databaseHelper.firebaseDatabase
+    //     .ref()
+    //     .child(customerCart(_authController.user!.id))
+    //     .remove()
+    //     .then((_) {
+    //   mezDbgPrint("============= /// :your cart is deleted \\\ ============= ");
+    //   cart.value = Cart(restaurant: associatedRestaurant);
+    // });
+    // Get.appUpdate();
   }
 
   Future<ServerResponse> checkout({String? stripePaymentId}) async {

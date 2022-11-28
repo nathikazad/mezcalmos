@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 
 class RestaurantgridItemCard extends StatefulWidget {
   const RestaurantgridItemCard(
@@ -36,7 +37,7 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
       child: InkWell(
         onTap: () {
           Get.toNamed(
-            getItemRoute(widget.restaurant.info.id, widget.item.id!),
+            getItemRoute(widget.restaurant.info.firebaseId, widget.item.id!),
             arguments: {
               "mode": ViewItemScreenMode.AddItemMode,
               "isSpecial": widget.isSpecial

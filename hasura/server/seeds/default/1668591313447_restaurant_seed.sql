@@ -1,8 +1,8 @@
 SET check_function_bodies = false;
-INSERT INTO topology.language (id) VALUES ('en');
-INSERT INTO topology.language (id) VALUES ('es');
 INSERT INTO public."user" (id, firebase_id, name, image, language_id, deleted) VALUES (1, '1', 'asd', NULL, 'en', false);
 INSERT INTO public."user" (id, firebase_id, name, image, language_id, deleted) VALUES (2, '2', 'testop', 'abc', 'en', false);
+INSERT INTO topology.language (id) VALUES ('en');
+INSERT INTO topology.language (id) VALUES ('es');
 INSERT INTO public."user" (id, firebase_id, name, image, language_id, deleted) VALUES (3, '3', 'testmezadmin', NULL, 'en', false);
 INSERT INTO public.customer (user_id, app_version, notification_info_id) VALUES (1, 'xyz', NULL);
 INSERT INTO topology.app_type (id) VALUES ('RestaurantApp');
@@ -15,6 +15,7 @@ INSERT INTO public.translation (id, shared) VALUES (1, false);
 INSERT INTO public.translation (id, shared) VALUES (2, false);
 INSERT INTO public.translation (id, shared) VALUES (3, false);
 INSERT INTO public.restaurant (id, name, image, location_gps, location_text, description_id, firebase_id, schedule_id, payment_info_id, open_status, language_id, approved) VALUES (1, 'qwe', 'qwe', '0101000020E6100000CB4A9352D0E14540BF9A030473842640', 'abc', NULL, NULL, 1, NULL, 'open', 'en', true);
+INSERT INTO public.restaurant_cart (customer_id , restaurant_id ) VALUES (1, 1);
 INSERT INTO public.restaurant_category (id, name_id, description_id, "position", restaurant_id, schedule_id) VALUES (1, 3, NULL, 1, 1, NULL);
 INSERT INTO public.restaurant_item (id, name_id, description_id, "position", category_id, available, item_type, restaurant_id, special_period_start, special_period_end, archived, cost) VALUES (1, 1, NULL, 0, 1, true, 'daily', 1, NULL, NULL, false, '$25.00');
 INSERT INTO public.restaurant_item (id, name_id, description_id, "position", category_id, available, item_type, restaurant_id, special_period_start, special_period_end, archived, cost) VALUES (2, 2, NULL, 0, 1, true, 'daily', 1, NULL, NULL, false, '$30.00');

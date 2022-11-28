@@ -272,7 +272,8 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
         ]);
         break;
       case TaxiOrdersStatus.OnTheWay:
-        final String _driverName = widget.order.value!.driver!.name;
+        final String _driverName =
+            widget.order.value?.driver?.name ?? "Unknown driver";
         _widgies.assignAll(<Widget>[
           avatarWithTitleAndDesc(
             // description: _i18n()?['rideFinished'],

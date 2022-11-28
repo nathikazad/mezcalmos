@@ -84,7 +84,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
     mapController.addOrUpdateUserMarker(
       latLng: order.value?.laundry?.location.toLatLng(),
       customImgHttpUrl: order.value?.laundry?.image,
-      markerId: order.value?.laundry?.id,
+      markerId: order.value?.laundry?.firebaseId,
     );
 
     if (order.value?.routeInformation?.polyline != null)
@@ -236,7 +236,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
     mapController.addOrUpdateUserMarker(
       latLng: laundryOrder.laundry?.location.toLatLng(),
       customImgHttpUrl: laundryOrder.laundry?.image,
-      markerId: laundryOrder.laundry?.id,
+      markerId: laundryOrder.laundry?.firebaseId,
       fitWithinBounds: fitLaundryMarkerInBounds,
     );
     // Destination Marker
@@ -387,7 +387,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
         mapController.addOrUpdateUserMarker(
           latLng: laundryOrder.laundry?.location.toLatLng(),
           customImgHttpUrl: laundryOrder.laundry?.image,
-          markerId: laundryOrder.laundry?.id,
+          markerId: laundryOrder.laundry?.firebaseId,
           fitWithinBounds: true,
         );
       }

@@ -41,6 +41,7 @@ select_permissions:
     permission:
       columns:
         - location_gps
+        - approved
         - description_id
         - id
         - payment_info_id
@@ -52,3 +53,102 @@ select_permissions:
         - name
         - open_status
       filter: {}
+  - role: customer
+    permission:
+      columns:
+        - location_gps
+        - approved
+        - description_id
+        - id
+        - payment_info_id
+        - schedule_id
+        - firebase_id
+        - image
+        - language_id
+        - location_text
+        - name
+        - open_status
+      filter: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - location_gps
+        - approved
+        - description_id
+        - id
+        - payment_info_id
+        - schedule_id
+        - firebase_id
+        - image
+        - language_id
+        - location_text
+        - name
+        - service_provider_type
+        - open_status
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      columns:
+        - approved
+        - description_id
+        - firebase_id
+        - id
+        - image
+        - language_id
+        - location_gps
+        - location_text
+        - name
+        - open_status
+        - payment_info_id
+        - schedule_id
+        - service_provider_type
+      filter:
+        restaurant_operators:
+          user_id:
+            _eq: X-Hasura-User-Id
+update_permissions:
+  - role: mez_admin
+    permission:
+      columns:
+        - approved
+        - description_id
+        - image
+        - language_id
+        - location_gps
+        - location_text
+        - name
+        - open_status
+        - schedule_id
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null
+  - role: restaurant_operator
+    permission:
+      columns:
+        - description_id
+        - image
+        - location_gps
+        - location_text
+        - name
+        - open_status
+        - self_delivery
+      filter:
+        restaurant_operators:
+          user_id:
+            _eq: X-Hasura-User-Id
+      check: null
+      set:
+        location_gps: ""

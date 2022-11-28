@@ -208,22 +208,20 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget getAppbarIconsButton() {
-    return Obx(() {
-      return Row(
-        children: [
-          SizedBox(
-            width: 5,
-          ),
-          if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
-          if (Get.find<AuthController>().isUserSignedIn)
-            _notificationAppBarIcon(),
-          if (Get.find<AuthController>().isUserSignedIn && showPastOrders)
-            _ordersAppBarIcon(),
-          SizedBox(
-            width: 10,
-          ),
-        ],
-      );
-    });
+    return Row(
+      children: [
+        SizedBox(
+          width: 5,
+        ),
+        if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
+        if (Get.find<AuthController>().isUserSignedIn)
+          _notificationAppBarIcon(),
+        if (Get.find<AuthController>().isUserSignedIn && showPastOrders)
+          _ordersAppBarIcon(),
+        SizedBox(
+          width: 10,
+        ),
+      ],
+    );
   }
 }

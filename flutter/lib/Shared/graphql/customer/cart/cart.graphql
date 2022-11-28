@@ -1,0 +1,43 @@
+# Add Item to cart and return total cart price.
+
+mutation addItemToCart($item: restaurant_cart_item_insert_input!) {
+  insert_restaurant_cart_item_one(object: $item ){
+    id,
+    restaurant_cart {
+      items_aggregate {
+        aggregate {
+          sum {
+            cost_per_one
+          }
+        }
+      }
+    }
+  }
+}
+
+
+# Remove Item from Cart
+mutation removeItemFromCart($item_id : Int!)
+{
+  delete_restaurant_cart_item_by_pk(id: $item_id)
+  {
+  	id,
+  }
+}
+
+
+# Remove all items from Cart.
+mutation clearCart($customer_id : Int!)
+{
+  delete_restaurant_cart(where : {customer_id: {_eq:  $customer_id }})
+  {
+    returning {
+      items_aggregate {
+        aggregate {
+          count
+        }
+      }
+    }
+  }
+}
+

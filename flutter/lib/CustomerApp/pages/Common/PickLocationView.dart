@@ -200,27 +200,31 @@ class _PickLocationViewState extends State<PickLocationView> {
       );
       if (_result != null && _result != "") {
         await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
-        savedLocation = SavedLocation(
-            name: _result, location: locationPickerController.location.value!);
-        Get.find<CustomerAuthController>()
-            .customer
-            .value
-            ?.savedLocations
-            .forEach((SavedLocation location) {
-          if (location.name.toLowerCase() ==
-                  savedLocation?.name.toLowerCase() ||
-              location.location?.address.toLowerCase() ==
-                  savedLocation?.location?.address.toLowerCase()) {
-            // delete from db
-            Get.find<CustomerAuthController>().deleteLocation(location);
-          }
-        });
+        // TODO:544D-HASURA
+
+        // savedLocation = SavedLocation(
+        //     name: _result, location: locationPickerController.location.value!);
+        // Get.find<CustomerAuthController>()
+        //     .customer
+        //     .value
+        //     ?.savedLocations
+        //     .forEach((SavedLocation location) {
+        //   if (location.name.toLowerCase() ==
+        //           savedLocation?.name.toLowerCase() ||
+        //       location.location?.address.toLowerCase() ==
+        //           savedLocation?.location?.address.toLowerCase()) {
+        //     // delete from db
+        //     Get.find<CustomerAuthController>().deleteLocation(location);
+        //   }
+        // });
         Get.find<CustomerAuthController>().saveNewLocation(savedLocation!);
       } else {
         await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
-        savedLocation = SavedLocation(
-            name: locationPickerController.location.value!.address,
-            location: locationPickerController.location.value!);
+        // TODO:544D-HASURA
+
+        // savedLocation = SavedLocation(
+        //     name: locationPickerController.location.value!.address,
+        //     location: locationPickerController.location.value!);
       }
       setState(() {
         locationPickerController

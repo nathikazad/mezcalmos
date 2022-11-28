@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:location/location.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as locModel;
 
 typedef OnDropDownNewValue = void Function({String? newValue});
 
@@ -35,7 +37,20 @@ class _LaundryLocPickerState extends State<LaundryLocPicker> {
     super.initState();
     setState(() {
       // default ID: _pick_ , stands for our  Pick From Map
-      loc = SavedLocation(name: _i18n()["pickLocation"], id: "_pick_");
+      // TODO:544D-HASURA
+
+      // loc = SavedLocation(name: _i18n()["pickLocation"], id: "_pick_");
+
+      loc = SavedLocation(
+          name: _i18n()["pickLocation"],
+          location: locModel.Location(
+            "address",
+            LocationData.fromMap({
+              "latitude": 17.07555488925666,
+              "longitude": -96.72663344788708
+            }),
+          ),
+          id: 1);
 
       listOfSavedLoacations.add(loc!);
 

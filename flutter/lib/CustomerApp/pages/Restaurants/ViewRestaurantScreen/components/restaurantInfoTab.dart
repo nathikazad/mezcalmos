@@ -6,7 +6,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/com
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
@@ -34,7 +34,7 @@ class RestaurantInfoTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     mezDbgPrint(
-        "Restaurant ==> ${restaurant.info.id}  : Rate [${restaurant.rate}] - Reviews List: [${restaurant.reviews.length}]");
+        "Restaurant ==> ${restaurant.info.firebaseId}  : Rate [${restaurant.rate}] - Reviews List: [${restaurant.reviews.length}]");
     final LanguageType userLanguage =
         Get.find<LanguageController>().userLanguageKey;
     return Column(
@@ -165,7 +165,7 @@ class RestaurantInfoTab extends StatelessWidget {
                   Icons.payments_sharp,
                   color: Colors.grey.shade800,
                 ),
-                if (restaurant.paymentInfo.acceptCard)
+                if (restaurant.paymentInfo?.acceptCard == true)
                   Padding(
                       padding: const EdgeInsets.only(left: 5),
                       child: Icon(

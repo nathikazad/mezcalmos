@@ -12,7 +12,9 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -34,7 +36,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
   @override
   void initState() {
     restaurant = Get.arguments as Restaurant;
-    mezDbgPrint(restaurant.info.id);
+    mezDbgPrint(restaurant.info.firebaseId);
     _viewController.init(restaurant: restaurant, vsync: this);
     super.initState();
   }
@@ -180,7 +182,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             ),
           _buildResturantItems(
             items: category.items,
-            restaurantId: restaurant.info.id,
+            restaurantId: restaurant.info.firebaseId,
             isSpecial: false,
           ),
           SizedBox(
@@ -207,7 +209,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           ),
           _buildResturantItems(
             items: specItems.values.toList()[index],
-            restaurantId: restaurant.info.id,
+            restaurantId: restaurant.info.firebaseId,
             isSpecial: true,
           ),
           SizedBox(
@@ -222,6 +224,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
       {required List<Item> items,
       required String restaurantId,
       bool isSpecial = false}) {
+    mezDbgPrint("[66] called :: _buildResturantItems");
     if (restaurant.restaurantsView == RestaurantsView.Rows || isSpecial) {
       return Container(
         margin: const EdgeInsets.only(top: 5),

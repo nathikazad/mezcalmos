@@ -83,7 +83,6 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
   } catch (e) {
     functions.logger.error(e);
     functions.logger.error(`Order request error ${customerId}`);
-
     throw new HttpsError(
       "internal",
        (<Error>e).message

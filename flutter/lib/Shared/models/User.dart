@@ -1,31 +1,51 @@
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
+import 'package:mezcalmos/Shared/graphql/user/__generated/user.graphql.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 class UserInfo {
-  String id;
-  String name;
-  String image;
+  String firebaseId;
+  int hasuraId;
+  String? _name;
+  String? _image;
   LanguageType? language;
-
+  String get name => _name ?? "Unknown User";
+  bool get isNameSet => _name != null;
+  String get image => _image ?? defaultUserImgUrl;
+  bool get isImageSet => _image != null;
   UserInfo(
-      {required this.id,
-      required this.name,
-      required this.image,
-      this.language});
+      {required this.hasuraId,
+      required this.firebaseId,
+      required String? name,
+      required String? image,
+      this.language}) {
+    _name = name;
+    _image = image;
+  }
 
-  factory UserInfo.fromData(data) {
+  // factory UserInfo.fromData(data) {
+  //   return UserInfo(
+  //       id: data["id"],
+  //       name: data["name"],
+  //       image: data["image"],
+  //       language: data["language"] != null
+  //           ? data["language"].toString().toLanguageType()
+  //           : null);
+  // }
+
+  factory UserInfo.fromHasura(Query$getUserByFirebaseId$user user) {
     return UserInfo(
-        id: data["id"],
-        name: data["name"],
-        image: data["image"],
-        language: data["language"] != null
-            ? data["language"].toString().toLanguageType()
-            : null);
+      firebaseId: user.firebase_id,
+      hasuraId: user.id,
+      name: user.name,
+      image: user.image,
+      language: user.language_id.toLanguageType(),
+    );
   }
 
   Map<String, dynamic> toFirebaseFormatJson() => {
-        "id": id,
+        "id": firebaseId,
         "name": name,
         "image": image,
         "language":
@@ -34,7 +54,7 @@ class UserInfo {
 }
 
 class MainUserInfo {
-  String id;
+  int id;
   String? name;
   String? image;
   LanguageType? language;
@@ -63,13 +83,24 @@ class MainUserInfo {
         phone: data['phone'],
         email: data['email']);
   }
-
-  UserInfo constructUserInfo() {
-    return UserInfo(
-        id: id,
-        name: name ?? "Not available",
-        image: image ?? defaultUserImgUrl);
+  factory MainUserInfo.fromHasura(data) {
+    return MainUserInfo(
+        id: data["id"],
+        name: data["name"],
+        image: data["image"],
+        language: data["language"] != null
+            ? data["language"].toString().toLanguageType()
+            : null,
+        phone: data['phone'],
+        email: data['email']);
   }
+
+  // UserInfo constructUserInfo() {
+  //   return UserInfo(
+  //       id: id,
+  //       name: name ?? "Not available",
+  //       image: image ?? defaultUserImgUrl);
+  // }
 
   Map<String, dynamic> toFirebaseFormatJson() => {
         "id": id,
@@ -84,26 +115,31 @@ class MainUserInfo {
 
 class ServiceInfo extends UserInfo {
   Location location;
+  int? descriptionId;
 
   ServiceInfo({
     required this.location,
-    required String id,
-    required String image,
-    required String name,
+    required super.firebaseId,
+    required super.hasuraId,
+    required super.image,
+    this.descriptionId,
+    required super.name,
     LanguageType? lang,
-  }) : super(id: id, image: image, name: name, language: lang);
+  }) : super(language: lang);
 
   factory ServiceInfo.fromData(data) {
     return ServiceInfo(
-        location: Location.fromFirebaseData(data['location']),
-        id: data['id'],
-        image: data['image'],
-        name: data['name']);
+      location: Location.fromFirebaseData(data['location']),
+      firebaseId: data['firebase_id'],
+      hasuraId: data['id'],
+      image: data['image'],
+      name: data['name'],
+    );
   }
 
   @override
   Map<String, dynamic> toJson() => {
-        "uid": id,
+        "uid": firebaseId,
         "name": name,
         "image": image,
         "location": location.toFirebaseFormattedJson(),

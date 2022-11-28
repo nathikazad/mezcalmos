@@ -1,20 +1,22 @@
 import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:graphql/client.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:get/get.dart';
+import 'package:graphql/client.dart';
+import 'package:jaguar_jwt/jaguar_jwt.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart' show mezDbgPrint;
-import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
-import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:jaguar_jwt/jaguar_jwt.dart';
 
 class HasuraDb {
   late GraphQLClient graphQLClient;
+
   WebSocketLink? _wsLink;
   AppLaunchMode appLaunchMode;
-  FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
+  // FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   HasuraDb(this.appLaunchMode);
 
   Future<void> initializeHasura() async {
@@ -36,11 +38,16 @@ class HasuraDb {
     Link _link = _httpLink;
 
     if (fireAuth.FirebaseAuth.instance.currentUser != null) {
+      mezDbgPrint("[777] USER-> ${fireAuth.FirebaseAuth.instance.currentUser}");
       final String hasuraAuthToken = await _getAuthorizationToken(
-          fireAuth.FirebaseAuth.instance.currentUser!,
-          appLaunchMode == AppLaunchMode.dev);
+        fireAuth.FirebaseAuth.instance.currentUser!,
+        appLaunchMode == AppLaunchMode.dev,
+      );
       mezDbgPrint("TOKEN $hasuraAuthToken");
-      headers = <String, String>{'Authorization': 'Bearer $hasuraAuthToken'};
+      headers = <String, String>{
+        'Authorization': 'Bearer $hasuraAuthToken',
+        'x-hasura-role': _getRoleBasedOnApp(),
+      };
       final AuthLink _authLink =
           AuthLink(getToken: () async => 'Bearer $hasuraAuthToken');
       _httpLink = HttpLink(hasuraDbLink, defaultHeaders: headers);
@@ -74,6 +81,24 @@ class HasuraDb {
       return issueJwtHS256(claims, 'secret-for-testing-locally-with-emulator');
     }
     return token;
+  }
+
+  /// this return by default customer we are not handling all app types
+  String _getRoleBasedOnApp() {
+    final AppType appType = Get.find<SettingsController>().appType;
+    switch (appType) {
+      case AppType.CustomerApp:
+        return "customer";
+      case AppType.DeliveryAdminApp:
+        return "mez_admin";
+      case AppType.DeliveryApp:
+        return "deliverer";
+      case AppType.RestaurantApp:
+        return "restaurant_operator";
+
+      default:
+        return "customer";
+    }
   }
 }
 

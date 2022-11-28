@@ -83,7 +83,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       : super(
             serviceProviderDropOffDriverChatId: laundryDropOffDriverChatId,
             serviceProviderPickupDriverChatId: laundryPickupDriverChatId,
-            serviceProviderId: laundry?.id,
+            serviceProviderId: laundry?.firebaseId,
             serviceProvider: laundry);
 
   factory LaundryOrder.fromData(
@@ -101,7 +101,14 @@ class LaundryOrder extends TwoWayDeliverableOrder {
 
     final LaundryOrder laundryOrder = LaundryOrder(
         orderId: id,
-        customer: UserInfo.fromData(data["customer"]),
+        // TODO:544D-HASURA
+        customer: UserInfo(
+            firebaseId: "",
+            hasuraId: 2,
+            name: null,
+            image: null,
+            language: null),
+        // customer: UserInfo.fromData(data["customer"]),
         status: data['status'].toString().toLaundryOrderStatus(),
         cost: data['cost'],
         to: Location.fromFirebaseData(data['to']),
@@ -121,11 +128,13 @@ class LaundryOrder extends TwoWayDeliverableOrder {
                 ? DateTime.parse(_estimatedPickupFromServiceProviderTime)
                 : null,
         estimatedDropoffAtCustomerTime:
-            (_estimatedDropoffAtCustomerTime != null && _estimatedDropoffAtCustomerTime != "")
+            (_estimatedDropoffAtCustomerTime != null &&
+                    _estimatedDropoffAtCustomerTime != "")
                 ? DateTime.parse(_estimatedDropoffAtCustomerTime)
                 : null,
         estimatedPickupFromCustomerTime:
-            (_estimatedPickupFromCustomerTime != null && _estimatedPickupFromCustomerTime != "")
+            (_estimatedPickupFromCustomerTime != null &&
+                    _estimatedPickupFromCustomerTime != "")
                 ? DateTime.parse(_estimatedPickupFromCustomerTime)
                 : null,
         estimatedDropoffAtServiceProviderTime:

@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
 import 'package:sizer/sizer.dart';
@@ -177,7 +178,7 @@ class MezSideMenu extends GetWidget<AuthController> {
               title: _i18n()["logout"],
               onClick: () async {
                 _drawerController.closeMenu();
-                await controller.signOut();
+                await signOut();
               },
             ),
           ),
