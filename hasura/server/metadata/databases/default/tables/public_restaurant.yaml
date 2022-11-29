@@ -40,51 +40,51 @@ select_permissions:
   - role: anonymous
     permission:
       columns:
-        - location_gps
         - approved
         - description_id
-        - id
-        - payment_info_id
-        - schedule_id
         - firebase_id
+        - id
         - image
         - language_id
+        - location_gps
         - location_text
         - name
         - open_status
+        - payment_info_id
+        - schedule
       filter: {}
   - role: customer
     permission:
       columns:
-        - location_gps
         - approved
         - description_id
-        - id
-        - payment_info_id
-        - schedule_id
         - firebase_id
+        - id
         - image
         - language_id
+        - location_gps
         - location_text
         - name
         - open_status
+        - payment_info_id
+        - schedule
       filter: {}
   - role: mez_admin
     permission:
       columns:
-        - location_gps
         - approved
         - description_id
-        - id
-        - payment_info_id
-        - schedule_id
         - firebase_id
+        - id
         - image
         - language_id
+        - location_gps
         - location_text
         - name
-        - service_provider_type
         - open_status
+        - payment_info_id
+        - schedule
+        - service_provider_type
       filter:
         _exists:
           _table:
@@ -107,7 +107,7 @@ select_permissions:
         - name
         - open_status
         - payment_info_id
-        - schedule_id
+        - schedule
         - service_provider_type
       filter:
         restaurant_operators:
@@ -125,7 +125,7 @@ update_permissions:
         - location_text
         - name
         - open_status
-        - schedule_id
+        - schedule
       filter:
         _exists:
           _table:
@@ -144,6 +144,7 @@ update_permissions:
         - location_text
         - name
         - open_status
+        - schedule
         - self_delivery
       filter:
         restaurant_operators:

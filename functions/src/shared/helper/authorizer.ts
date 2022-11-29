@@ -13,12 +13,3 @@ export async function checkDeliveryAdmin(adminId: string): Promise<ServerRespons
   }
   return undefined;
 }
-export function isSignedIn(userId: number): ServerResponse | undefined {
-  if (!userId)
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: "User needs to be signed in"
-    }
-  return undefined;
-}
-

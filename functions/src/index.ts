@@ -131,7 +131,7 @@ function authenticatedCall(func:AuthenticatedFunction) {
       );
     }
     let firebaseUser = await firebase.auth().getUser(context.auth!.uid)
-    if(!firebaseUser.customClaims!["x-hasura-user-id"]) {
+    if(!firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"]) {
       throw new HttpsError(
         "unauthenticated",
         "Request was not authenticated.",
@@ -140,6 +140,6 @@ function authenticatedCall(func:AuthenticatedFunction) {
       await userChanges.addHasuraClaim(context.auth?.uid);
       firebaseUser = await firebase.auth().getUser(context.auth!.uid)
     }
-    return func(parseInt(firebaseUser.customClaims!["x-hasura-user-id"]), data);
+    return func(parseInt(firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"]), data);
   });
 }

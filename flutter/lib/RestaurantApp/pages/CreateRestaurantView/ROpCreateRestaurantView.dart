@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/components/ROpCreateImagePicker.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/controllers/ROpCreateRestuarantViewController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -24,6 +26,8 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu,
           title: "Create restaurant"),
+      key: Get.find<SideMenuDrawerController>().getNewKey(),
+      drawer: ROpDrawer(),
       bottomNavigationBar: MezButton(
         withGradient: true,
         borderRadius: 0,

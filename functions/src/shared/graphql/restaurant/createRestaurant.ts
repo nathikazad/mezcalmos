@@ -6,9 +6,9 @@ import { OperatorStatus, Restaurant } from "../../models/Services/Restaurant/Res
 export async function createRestaurant(
   restaurant: Restaurant, 
   restaurantOperatorUserId: number, 
-  restaurantOperatorNotificationToken: string = ""
+  restaurantOperatorNotificationToken?: string 
 ) {
-
+ 
   let chain = getHasura();
 
   let response = await chain.mutation({
@@ -16,11 +16,14 @@ export async function createRestaurant(
       object: {
         name: restaurant.name,
         image: restaurant.image,
-        location_gps: JSON.stringify(restaurant.location.gps),
+        location_gps: JSON.stringify( {
+          "type": "Point",
+          "coordinates": [restaurant.location.lng,restaurant.location.lat]
+        }),
         location_text: restaurant.location.address,
-        schedule_id: restaurant.scheduleId,
+       schedule: JSON.stringify(restaurant.schedule),
         firebase_id: restaurant.firebaseId ?? undefined,
-        open_status: restaurant.openStatus,
+       
         restaurant_operators: {
           data: [{
             user_id: restaurantOperatorUserId,
@@ -41,8 +44,8 @@ export async function createRestaurant(
       "restaurant creation error"
     );
   }
-  if(restaurantOperatorNotificationToken != "") {
-    await chain.mutation({
+  if(restaurantOperatorNotificationToken) {
+     chain.mutation({
       insert_notification_info_one: [{
         object: {
           user_id: restaurantOperatorUserId,

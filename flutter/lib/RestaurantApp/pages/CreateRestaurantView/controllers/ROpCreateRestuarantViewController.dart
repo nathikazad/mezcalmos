@@ -1,12 +1,14 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class ROpCreateRestuarantViewController {
   // instances //
@@ -52,7 +54,39 @@ class ROpCreateRestuarantViewController {
       return null;
   }
 
-  Future<void> createRestaurant() async {
-    mezDbgPrint("Called create restaurant");
+  Map<String, Object?> _constructRestaurant() {
+    return {
+      "name": restaurantName.text,
+      "image": restaurantImage.value,
+      "location": restaurantLocation.value?.toFirebaseFormattedJson(),
+      "schedule": {
+        "friday": {"from": "8:00", "isOpen": true, "to": "20:00"},
+        "monday": {"from": "8:00", "isOpen": true, "to": "20:00"},
+        "saturday": {"from": "8:00", "isOpen": true, "to": "19:00"},
+        "sunday": {"from": "8:00", "isOpen": true, "to": "16:00"},
+        "thursday": {"from": "8:00", "isOpen": true, "to": "20:00"},
+        "tuesday": {"from": "8:00", "isOpen": true, "to": "20:00"},
+        "wednesday": {"from": "8:00", "isOpen": true, "to": "20:00"}
+      },
+    };
+  }
+
+  Future<ServerResponse> createRestaurant() async {
+    if (restaurantImage.value == null) {
+      restaurantImage.value =
+          "https://img.freepik.com/premium-vector/restaurant-logo-design-template_79169-56.jpg?w=2000";
+    }
+    final HttpsCallable cloudFunction =
+        FirebaseFunctions.instance.httpsCallable('restaurant-createRestaurant');
+    try {
+      final HttpsCallableResult response =
+          await cloudFunction.call(_constructRestaurant());
+      mezDbgPrint("Response : ${response.data}");
+      return ServerResponse.fromJson(response.data);
+    } catch (e) {
+      mezDbgPrint("Errrooooooooor =======> $e");
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
+    }
   }
 }

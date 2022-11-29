@@ -1,10 +1,9 @@
 import {
   Language,
   Location,
-  ServerResponse,
+  
   ServerResponseStatus,
 } from "../shared/models/Generic/Generic";
-import { isSignedIn } from "../shared/helper/authorizer";
 import { NewRestaurantNotification, Restaurant } from "../shared/models/Services/Restaurant/Restaurant";
 import { createRestaurant } from "../shared/graphql/restaurant/createRestaurant";
 import { getUser } from "../shared/graphql/user/getUser";
@@ -19,20 +18,13 @@ export interface RestaurantDetails {
   name: string,
   image: string,
   location: Location,
-  scheduleId: number,
+  schedule:JSON,
   restaurantOperatorNotificationToken?: string,
   firebaseId?: string
 }
 
 export async function createNewRestaurant(userId: number, restaurantDetails: RestaurantDetails) {
-
-  let response: ServerResponse | undefined = isSignedIn(userId);
-  if (response != undefined) {
-    return {
-      ok: false,
-      error: response,
-    };
-  }
+  
   let userPromise = getUser(userId);
   let mezAdminsPromise = getMezAdmins();
   let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
@@ -42,16 +34,15 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
     name: restaurantDetails.name,
     image: restaurantDetails.image,
     location: restaurantDetails.location,
-    scheduleId: restaurantDetails.scheduleId,
+    schedule: restaurantDetails.schedule
+   
   }
   if(restaurantDetails.firebaseId != undefined) {
     restaurant.firebaseId = restaurantDetails.firebaseId
   }
-  if(restaurantDetails.restaurantOperatorNotificationToken != undefined) {
+
     await createRestaurant(restaurant, userId, restaurantDetails.restaurantOperatorNotificationToken);
-  } else {
-    await createRestaurant(restaurant, userId);
-  }
+  
 
   notifyAdmins(mezAdmins, restaurant);
 
@@ -73,8 +64,8 @@ function notifyAdmins(mezAdmins: MezAdmin[], restaurant: Restaurant) {
     },
     background: {
       [Language.ES]: {
-        title: "",
-        body: ``
+        title: "Nuevo restaurante",
+        body: `Hay un nuevo restaurante`
       },
       [Language.EN]: {
         title: "New Restaurant",

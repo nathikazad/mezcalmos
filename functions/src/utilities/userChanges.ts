@@ -80,8 +80,8 @@ export async function addHasuraClaim(uid: string | undefined) {
     }
     const customClaims = {
       "https://hasura.io/jwt/claims": {
-        "x-hasura-default-role": "user",
-        "x-hasura-allowed-roles": ["user"], // add admin role for admin users
+        "x-hasura-default-role": "anonymous",
+        "x-hasura-allowed-roles": ["anonymous","restaurant_operator","customer","mez_admin","deliverer"], // add admin role for admin users
         "x-hasura-user-id": hasuraUserId?.toString()
       }
     };

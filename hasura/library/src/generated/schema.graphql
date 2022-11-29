@@ -860,42 +860,6 @@ type customer {
     where: saved_location_bool_exp
   ): saved_location_aggregate!
 
-  """An array relationship"""
-  saved_locations(
-    """distinct select on columns"""
-    distinct_on: [saved_location_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [saved_location_order_by!]
-
-    """filter the rows returned"""
-    where: saved_location_bool_exp
-  ): [saved_location!]!
-
-  """An aggregate relationship"""
-  saved_locations_aggregate(
-    """distinct select on columns"""
-    distinct_on: [saved_location_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [saved_location_order_by!]
-
-    """filter the rows returned"""
-    where: saved_location_bool_exp
-  ): saved_location_aggregate!
-
   """An object relationship"""
   user: user!
   user_id: Int!
@@ -940,13 +904,8 @@ input customer_bool_exp {
   _or: [customer_bool_exp!]
   app_version: String_comparison_exp
   cart: restaurant_cart_bool_exp
-<<<<<<< HEAD
   deliveries: delivery_order_bool_exp
   notification_token: String_comparison_exp
-=======
-  deliveries: delivery_bool_exp
-  notification_info_id: Int_comparison_exp
->>>>>>> 72d4d873 (setup)
   saved_locations: saved_location_bool_exp
   user: user_bool_exp
   user_id: Int_comparison_exp
@@ -980,12 +939,7 @@ input type for inserting data into table "customer"
 input customer_insert_input {
   app_version: String
   cart: restaurant_cart_obj_rel_insert_input
-<<<<<<< HEAD
   deliveries: delivery_order_arr_rel_insert_input
-=======
-  deliveries: delivery_arr_rel_insert_input
-  notification_info_id: Int
->>>>>>> 72d4d873 (setup)
   saved_locations: saved_location_arr_rel_insert_input
   user: user_obj_rel_insert_input
   user_id: Int
@@ -1037,13 +991,8 @@ input customer_on_conflict {
 input customer_order_by {
   app_version: order_by
   cart: restaurant_cart_order_by
-<<<<<<< HEAD
   deliveries_aggregate: delivery_order_aggregate_order_by
   notification_token: order_by
-=======
-  deliveries_aggregate: delivery_aggregate_order_by
-  notification_info_id: order_by
->>>>>>> 72d4d873 (setup)
   saved_locations_aggregate: saved_location_aggregate_order_by
   user: user_order_by
   user_id: order_by
@@ -1544,11 +1493,8 @@ type delivery_order {
 
   """An object relationship"""
   deliverer: deliverer
-<<<<<<< HEAD
 
   """restaurant, delivery"""
-=======
->>>>>>> 72d4d873 (setup)
   deliverer_app_type_id: String
   deliverer_id: Int
   delivery_cost: money!
@@ -2362,21 +2308,6 @@ enum delivery_order_public_select_column {
   actual_package_ready_time
 
   """column name"""
-<<<<<<< HEAD
-=======
-  cancellation_time
-
-  """column name"""
-  chat_with_customer_id
-
-  """column name"""
-  chat_with_service_provider_id
-
-  """column name"""
-  current_gps
-
-  """column name"""
->>>>>>> 72d4d873 (setup)
   customer_id
 
   """column name"""
@@ -2404,26 +2335,7 @@ enum delivery_order_public_select_column {
   estimated_package_ready_time
 
   """column name"""
-<<<<<<< HEAD
   order_time
-=======
-  id
-
-  """column name"""
-  order_time
-
-  """column name"""
-  package_cost
-
-  """column name"""
-  payment_type
-
-  """column name"""
-  pickup_address
-
-  """column name"""
-  pickup_gps
->>>>>>> 72d4d873 (setup)
 
   """column name"""
   service_provider_id
@@ -2452,13 +2364,6 @@ input delivery_order_public_set_input {
   actual_arrival_at_pickup_time: timestamptz
   actual_delivered_time: timestamptz
   actual_package_ready_time: timestamptz
-<<<<<<< HEAD
-=======
-  cancellation_time: timestamptz
-  chat_with_customer_id: Int
-  chat_with_service_provider_id: Int
-  current_gps: geography
->>>>>>> 72d4d873 (setup)
   customer_id: Int
   customer_review_by_driver_id: Int
   deliverer_app_type_id: String
@@ -2468,7 +2373,6 @@ input delivery_order_public_set_input {
   estimated_arrival_at_dropoff_time: timestamptz
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
-<<<<<<< HEAD
   order_time: timestamptz
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
@@ -2476,32 +2380,6 @@ input delivery_order_public_set_input {
   status: String
   trip_distance: Int
   trip_duration: Int
-=======
-  id: Int
-  order_time: timestamptz
-  package_cost: money
-  payment_type: String
-  pickup_address: String
-  pickup_gps: geography
-  service_provider_id: Int
-  service_provider_review_by_driver_id: Int
-  service_provider_type: String
-
-  """
-  orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
-  delivered, cancelledByCustomer, cancelledByDeliverer,
-  cancelledByServiceProvider
-  """
-  status: String
-  stripe_payment_id: Int
-
-  """in meters"""
-  trip_distance: Int
-
-  """in seconds"""
-  trip_duration: Int
-  trip_polyline: String
->>>>>>> 72d4d873 (setup)
 }
 
 """aggregate stddev on columns"""
@@ -2513,43 +2391,8 @@ type delivery_order_public_stddev_fields {
   driver_review_by_service_provider_id: Float
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
-<<<<<<< HEAD
   trip_distance: Float
   trip_duration: Float
-=======
-  stripe_payment_id: Float
-
-  """in meters"""
-  trip_distance: Float
-
-  """in seconds"""
-  trip_duration: Float
-}
-
-"""
-order by stddev() on columns of table "delivery"
-"""
-input delivery_stddev_order_by {
-  chat_with_customer_id: order_by
-  chat_with_service_provider_id: order_by
-  customer_id: order_by
-  customer_review_by_driver_id: order_by
-  deliverer_id: order_by
-  delivery_cost: order_by
-  driver_review_by_customer_id: order_by
-  driver_review_by_service_provider_id: order_by
-  id: order_by
-  package_cost: order_by
-  service_provider_id: order_by
-  service_provider_review_by_driver_id: order_by
-  stripe_payment_id: order_by
-
-  """in meters"""
-  trip_distance: order_by
-
-  """in seconds"""
-  trip_duration: order_by
->>>>>>> 72d4d873 (setup)
 }
 
 """aggregate stddev_pop on columns"""
@@ -2561,43 +2404,8 @@ type delivery_order_public_stddev_pop_fields {
   driver_review_by_service_provider_id: Float
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
-<<<<<<< HEAD
   trip_distance: Float
   trip_duration: Float
-=======
-  stripe_payment_id: Float
-
-  """in meters"""
-  trip_distance: Float
-
-  """in seconds"""
-  trip_duration: Float
-}
-
-"""
-order by stddev_pop() on columns of table "delivery"
-"""
-input delivery_stddev_pop_order_by {
-  chat_with_customer_id: order_by
-  chat_with_service_provider_id: order_by
-  customer_id: order_by
-  customer_review_by_driver_id: order_by
-  deliverer_id: order_by
-  delivery_cost: order_by
-  driver_review_by_customer_id: order_by
-  driver_review_by_service_provider_id: order_by
-  id: order_by
-  package_cost: order_by
-  service_provider_id: order_by
-  service_provider_review_by_driver_id: order_by
-  stripe_payment_id: order_by
-
-  """in meters"""
-  trip_distance: order_by
-
-  """in seconds"""
-  trip_duration: order_by
->>>>>>> 72d4d873 (setup)
 }
 
 """aggregate stddev_samp on columns"""
@@ -2609,52 +2417,14 @@ type delivery_order_public_stddev_samp_fields {
   driver_review_by_service_provider_id: Float
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
-<<<<<<< HEAD
   trip_distance: Float
-=======
-  stripe_payment_id: Float
-
-  """in meters"""
-  trip_distance: Float
-
-  """in seconds"""
->>>>>>> 72d4d873 (setup)
   trip_duration: Float
 }
 
 """
 Streaming cursor of the table "delivery_order_public"
 """
-<<<<<<< HEAD
 input delivery_order_public_stream_cursor_input {
-=======
-input delivery_stddev_samp_order_by {
-  chat_with_customer_id: order_by
-  chat_with_service_provider_id: order_by
-  customer_id: order_by
-  customer_review_by_driver_id: order_by
-  deliverer_id: order_by
-  delivery_cost: order_by
-  driver_review_by_customer_id: order_by
-  driver_review_by_service_provider_id: order_by
-  id: order_by
-  package_cost: order_by
-  service_provider_id: order_by
-  service_provider_review_by_driver_id: order_by
-  stripe_payment_id: order_by
-
-  """in meters"""
-  trip_distance: order_by
-
-  """in seconds"""
-  trip_duration: order_by
-}
-
-"""
-Streaming cursor of the table "delivery"
-"""
-input delivery_stream_cursor_input {
->>>>>>> 72d4d873 (setup)
   """Stream column input with initial value"""
   initial_value: delivery_order_public_stream_cursor_value_input!
 
@@ -2668,13 +2438,6 @@ input delivery_order_public_stream_cursor_value_input {
   actual_arrival_at_pickup_time: timestamptz
   actual_delivered_time: timestamptz
   actual_package_ready_time: timestamptz
-<<<<<<< HEAD
-=======
-  cancellation_time: timestamptz
-  chat_with_customer_id: Int
-  chat_with_service_provider_id: Int
-  current_gps: geography
->>>>>>> 72d4d873 (setup)
   customer_id: Int
   customer_review_by_driver_id: Int
   deliverer_app_type_id: String
@@ -2684,7 +2447,6 @@ input delivery_order_public_stream_cursor_value_input {
   estimated_arrival_at_dropoff_time: timestamptz
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
-<<<<<<< HEAD
   order_time: timestamptz
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
@@ -2692,32 +2454,6 @@ input delivery_order_public_stream_cursor_value_input {
   status: String
   trip_distance: Int
   trip_duration: Int
-=======
-  id: Int
-  order_time: timestamptz
-  package_cost: money
-  payment_type: String
-  pickup_address: String
-  pickup_gps: geography
-  service_provider_id: Int
-  service_provider_review_by_driver_id: Int
-  service_provider_type: String
-
-  """
-  orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
-  delivered, cancelledByCustomer, cancelledByDeliverer,
-  cancelledByServiceProvider
-  """
-  status: String
-  stripe_payment_id: Int
-
-  """in meters"""
-  trip_distance: Int
-
-  """in seconds"""
-  trip_duration: Int
-  trip_polyline: String
->>>>>>> 72d4d873 (setup)
 }
 
 """aggregate sum on columns"""
@@ -2729,7 +2465,6 @@ type delivery_order_public_sum_fields {
   driver_review_by_service_provider_id: Int
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
-<<<<<<< HEAD
   trip_distance: Int
   trip_duration: Int
 }
@@ -2780,50 +2515,12 @@ type delivery_order_public_variance_fields {
   service_provider_review_by_driver_id: Float
   trip_distance: Float
   trip_duration: Float
-=======
-  stripe_payment_id: Int
-
-  """in meters"""
-  trip_distance: Int
-
-  """in seconds"""
-  trip_duration: Int
->>>>>>> 72d4d873 (setup)
 }
 
 """
 select columns of table "delivery_order"
 """
-<<<<<<< HEAD
 enum delivery_order_select_column {
-=======
-input delivery_sum_order_by {
-  chat_with_customer_id: order_by
-  chat_with_service_provider_id: order_by
-  customer_id: order_by
-  customer_review_by_driver_id: order_by
-  deliverer_id: order_by
-  delivery_cost: order_by
-  driver_review_by_customer_id: order_by
-  driver_review_by_service_provider_id: order_by
-  id: order_by
-  package_cost: order_by
-  service_provider_id: order_by
-  service_provider_review_by_driver_id: order_by
-  stripe_payment_id: order_by
-
-  """in meters"""
-  trip_distance: order_by
-
-  """in seconds"""
-  trip_duration: order_by
-}
-
-"""
-update columns of table "delivery"
-"""
-enum delivery_update_column {
->>>>>>> 72d4d873 (setup)
   """column name"""
   actual_arrival_at_dropoff_time
 
@@ -5242,8 +4939,30 @@ type mutation_root {
   update data of the table: "restaurant"
   """
   update_restaurant(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: restaurant_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: restaurant_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: restaurant_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: restaurant_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: restaurant_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: restaurant_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: restaurant_set_input
@@ -5256,8 +4975,30 @@ type mutation_root {
   update single row of the table: "restaurant"
   """
   update_restaurant_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: restaurant_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: restaurant_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: restaurant_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: restaurant_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: restaurant_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: restaurant_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: restaurant_set_input
@@ -7699,7 +7440,10 @@ type restaurant {
     """filter the rows returned"""
     where: restaurant_operator_bool_exp
   ): restaurant_operator_aggregate!
-  schedule_id: Int!
+  schedule(
+    """JSON select path"""
+    path: String
+  ): jsonb
   self_delivery: Boolean!
   service_provider_type: String!
 
@@ -7749,12 +7493,16 @@ type restaurant_aggregate_fields {
   variance: restaurant_variance_fields
 }
 
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input restaurant_append_input {
+  schedule: jsonb
+}
+
 """aggregate avg on columns"""
 type restaurant_avg_fields {
   description_id: Float
   id: Float
   payment_info_id: Float
-  schedule_id: Float
 }
 
 """
@@ -7780,7 +7528,7 @@ input restaurant_bool_exp {
   payment_info: service_provider_payment_info_bool_exp
   payment_info_id: Int_comparison_exp
   restaurant_operators: restaurant_operator_bool_exp
-  schedule_id: Int_comparison_exp
+  schedule: jsonb_comparison_exp
   self_delivery: Boolean_comparison_exp
   service_provider_type: String_comparison_exp
   specials: restaurant_item_bool_exp
@@ -9540,13 +9288,34 @@ enum restaurant_constraint {
 }
 
 """
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input restaurant_delete_at_path_input {
+  schedule: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input restaurant_delete_elem_input {
+  schedule: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input restaurant_delete_key_input {
+  schedule: String
+}
+
+"""
 input type for incrementing numeric columns in table "restaurant"
 """
 input restaurant_inc_input {
   description_id: Int
   id: Int
   payment_info_id: Int
-  schedule_id: Int
 }
 
 """
@@ -9571,7 +9340,7 @@ input restaurant_insert_input {
   payment_info: service_provider_payment_info_obj_rel_insert_input
   payment_info_id: Int
   restaurant_operators: restaurant_operator_arr_rel_insert_input
-  schedule_id: Int
+  schedule: jsonb
   self_delivery: Boolean
   service_provider_type: String
 }
@@ -10681,7 +10450,6 @@ type restaurant_max_fields {
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
   payment_info_id: Int
-  schedule_id: Int
   service_provider_type: String
 }
 
@@ -10698,7 +10466,6 @@ type restaurant_min_fields {
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
   payment_info_id: Int
-  schedule_id: Int
   service_provider_type: String
 }
 
@@ -12482,7 +12249,7 @@ input restaurant_order_by {
   payment_info: service_provider_payment_info_order_by
   payment_info_id: order_by
   restaurant_operators_aggregate: restaurant_operator_aggregate_order_by
-  schedule_id: order_by
+  schedule: order_by
   self_delivery: order_by
   service_provider_type: order_by
   specials_aggregate: restaurant_item_aggregate_order_by
@@ -13984,6 +13751,11 @@ input restaurant_pk_columns_input {
   id: Int!
 }
 
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input restaurant_prepend_input {
+  schedule: jsonb
+}
+
 """
 select columns of table "restaurant"
 """
@@ -14022,7 +13794,7 @@ enum restaurant_select_column {
   payment_info_id
 
   """column name"""
-  schedule_id
+  schedule
 
   """column name"""
   self_delivery
@@ -14048,7 +13820,7 @@ input restaurant_set_input {
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
   payment_info_id: Int
-  schedule_id: Int
+  schedule: jsonb
   self_delivery: Boolean
   service_provider_type: String
 }
@@ -14058,7 +13830,6 @@ type restaurant_stddev_fields {
   description_id: Float
   id: Float
   payment_info_id: Float
-  schedule_id: Float
 }
 
 """aggregate stddev_pop on columns"""
@@ -14066,7 +13837,6 @@ type restaurant_stddev_pop_fields {
   description_id: Float
   id: Float
   payment_info_id: Float
-  schedule_id: Float
 }
 
 """aggregate stddev_samp on columns"""
@@ -14074,7 +13844,6 @@ type restaurant_stddev_samp_fields {
   description_id: Float
   id: Float
   payment_info_id: Float
-  schedule_id: Float
 }
 
 """
@@ -14103,7 +13872,7 @@ input restaurant_stream_cursor_value_input {
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
   payment_info_id: Int
-  schedule_id: Int
+  schedule: jsonb
   self_delivery: Boolean
   service_provider_type: String
 }
@@ -14113,7 +13882,6 @@ type restaurant_sum_fields {
   description_id: Int
   id: Int
   payment_info_id: Int
-  schedule_id: Int
 }
 
 """
@@ -14154,7 +13922,7 @@ enum restaurant_update_column {
   payment_info_id
 
   """column name"""
-  schedule_id
+  schedule
 
   """column name"""
   self_delivery
@@ -14164,8 +13932,30 @@ enum restaurant_update_column {
 }
 
 input restaurant_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: restaurant_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: restaurant_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: restaurant_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: restaurant_delete_key_input
+
   """increments the numeric columns with given value of the filtered values"""
   _inc: restaurant_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: restaurant_prepend_input
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_set_input
@@ -14177,7 +13967,6 @@ type restaurant_var_pop_fields {
   description_id: Float
   id: Float
   payment_info_id: Float
-  schedule_id: Float
 }
 
 """aggregate var_samp on columns"""
@@ -14185,7 +13974,6 @@ type restaurant_var_samp_fields {
   description_id: Float
   id: Float
   payment_info_id: Float
-  schedule_id: Float
 }
 
 """aggregate variance on columns"""
@@ -14193,7 +13981,6 @@ type restaurant_variance_fields {
   description_id: Float
   id: Float
   payment_info_id: Float
-  schedule_id: Float
 }
 
 """
@@ -17609,8 +17396,8 @@ type translation {
 
   """An object relationship"""
   restaurant: restaurant
-  service_provider_id: Int
-  service_provider_type: String
+  service_provider_id: Int!
+  service_provider_type: String!
 
   """An array relationship"""
   translations(
