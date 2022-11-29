@@ -55,7 +55,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (_viewController.restaurant.value != null) {
+      if (_viewController.isLoading) {
         return Scaffold(
           appBar: _addCategoryAppBar(),
           body: _getRightBody(),

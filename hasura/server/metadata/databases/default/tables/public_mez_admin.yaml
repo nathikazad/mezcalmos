@@ -2,14 +2,25 @@ table:
   name: mez_admin
   schema: public
 object_relationships:
-  - name: notification_info
+  - name: user
     using:
-      foreign_key_constraint_on: notification_info_id
+      manual_configuration:
+        column_mapping:
+          user_id: id
+        insertion_order: null
+        remote_table:
+          name: user
+          schema: public
+computed_fields:
+  - name: notification_token
+    definition:
+      function:
+        name: mez_admin_notification_token
+        schema: public
 update_permissions:
   - role: mez_admin
     permission:
       columns:
-        - notification_info_id
         - version
       filter:
         user_id:

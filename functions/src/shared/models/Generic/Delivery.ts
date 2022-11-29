@@ -1,5 +1,6 @@
-import { AppType, GPS, Location } from "./Generic";
+import { AppType, GPS, Location, NotificationInfo } from "./Generic";
 import { PaymentType } from "./Order";
+import { UserInfo } from "./User";
 
 export interface Delivery {
     deliveryId?: number;
@@ -33,6 +34,19 @@ export interface Delivery {
     tripDistance?: number;
     tripDuration?: number;
     orderTime: string;
+    deliverer?: Deliverer;
+}
+
+export interface Deliverer {
+    id?: number,
+    userId: number,
+    deliveryCompanyType?: string,
+    deliveryCompanyId?: number,
+    status?: string,
+    appVersion?: string,
+    currentLocation?: Location
+    user?: UserInfo,
+    notificationInfo?: NotificationInfo
 }
 
 export enum DeliveryStatus {

@@ -4,11 +4,11 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class AddCategoryController {
@@ -29,7 +29,7 @@ class AddCategoryController {
   /// Variables ///
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
-  Rxn<Restaurant> restaurant = Rxn();
+  late int restaurantId;
   Rxn<Category> category = Rxn<Category>();
 
   Rxn<LanguageType> primaryLang = Rxn();
@@ -40,27 +40,31 @@ class AddCategoryController {
   RxBool editMode = RxBool(false);
   String? editableCategoryId;
 
+  bool get isLoading {
+    if (editMode.value) {
+      return category.value != null;
+    } else
+      return primaryLang.value != null && secondaryLang.value != null;
+  }
+
   /// LOGIC ///
 
   // INIT STATE ///
   Future<void> init({required String restaurantId, String? categoryId}) async {
+    this.restaurantId = int.parse(restaurantId);
     mezDbgPrint("INIT CATEGORY VIEW ========================>$categoryId");
+    this.restaurantId = int.parse(restaurantId);
 
-    Get.put(RestaurantInfoController(), permanent: false);
-    restaurantInfoController = Get.find<RestaurantInfoController>();
-    restaurantInfoController.init(restId: restaurantId);
-    restaurant.value =
-        await restaurantInfoController.getRestaurantAsFuture(restaurantId);
-    initLanguages();
+    await initLanguages();
 
     if (categoryId != null) {
       await initEditMode(categoryId);
     }
   }
 
-  void initLanguages() {
-    primaryLang.value = restaurant.value!.primaryLanguage;
-    secondaryLang.value = restaurant.value!.secondaryLanguage!;
+  Future<void> initLanguages() async {
+    primaryLang.value = await get_restaurant_priamry_lang(restaurantId);
+    secondaryLang.value = primaryLang.value!.toOpLang();
   }
 
   Future<void> initEditMode(String categoryId) async {
@@ -108,7 +112,8 @@ class AddCategoryController {
       // await restaurantInfoController.editCategory(
       //     category: constructCategory(), categoryId: editableCategoryId!);
     } else {
-      final String? newCatId = await add_category(4, constructCategory());
+      final String? newCatId = await add_category(
+          category: constructCategory(), restaurantId: restaurantId);
       mezDbgPrint("New category inserted id : $newCatId");
       // await restaurantInfoController.addCategory(
       //   category: constructCategory(),
@@ -134,11 +139,11 @@ class AddCategoryController {
 
   List<String> getCatNames(LanguageType languageType) {
     final List<String> data = [];
-    restaurant.value!.getCategories.forEach((Category element) {
-      if (element.name?[languageType] != null) {
-        data.add(element.name![languageType]!.toLowerCase());
-      }
-    });
+    // restaurant.value!.getCategories.forEach((Category element) {
+    //   if (element.name?[languageType] != null) {
+    //     data.add(element.name![languageType]!.toLowerCase());
+    //   }
+    // });
 
     return data;
   }

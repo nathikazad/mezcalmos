@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/item/__generated/item.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/item/option/hsOption.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
@@ -17,6 +18,7 @@ HasuraDb _db = Get.find<HasuraDb>();
 // Mutations //
 Future<bool> update_item_by_id(
     {required int itemId, required Item item}) async {
+  mezDbgPrint("Item type =======> ${item.itemType.toFirebaseFormatString()}");
   final QueryResult<Mutation$upadateItem> response =
       await _db.graphQLClient.mutate$upadateItem(
     Options$Mutation$upadateItem(
@@ -26,7 +28,6 @@ Future<bool> update_item_by_id(
           category_id: item.categoryId,
           cost: item.cost.toDouble(),
           available: item.available,
-          item_type: item.itemType.toFirebaseFormatString(),
           position: item.position,
           special_period_end: item.startsAt?.toUtc().toString(),
           special_period_start: item.endsAt?.toUtc().toString(),
@@ -48,6 +49,8 @@ Future<int?> add_one_item(
               item: Input$restaurant_item_insert_input(
     name: Input$translation_obj_rel_insert_input(
       data: Input$translation_insert_input(
+        service_provider_id: restaurantId,
+        service_provider_type: OrderType.Restaurant.toFirebaseFormatString(),
         translations: Input$translation_value_arr_rel_insert_input(
             data: <Input$translation_value_insert_input>[
               Input$translation_value_insert_input(
@@ -61,6 +64,8 @@ Future<int?> add_one_item(
     ),
     description: Input$translation_obj_rel_insert_input(
       data: Input$translation_insert_input(
+        service_provider_id: restaurantId,
+        service_provider_type: OrderType.Restaurant.toFirebaseFormatString(),
         translations: Input$translation_value_arr_rel_insert_input(
             data: <Input$translation_value_insert_input>[
               Input$translation_value_insert_input(

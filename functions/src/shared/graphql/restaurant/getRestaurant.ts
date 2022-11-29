@@ -1,6 +1,6 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
-import { AppType } from "../../models/Generic/Generic";
+import { AppType, Language } from "../../models/Generic/Generic";
 import { OpenStatus, OperatorStatus, Restaurant, RestaurantOperator } from "../../models/Services/Restaurant/Restaurant";
 
 export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
@@ -12,6 +12,7 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
     }, {
       id: true,
       name: true,
+      schedule : [{path :'' },true],
       description: {
         translations: [{ }, {
           language_id: true,
@@ -22,7 +23,7 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
       location_gps: true,
       location_text: true,
       open_status: true,
-      schedule_id: true,
+     
       approved: true
     }],
     restaurant_operator: [{
@@ -36,9 +37,10 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
       user_id: true,
       status: true,
       owner: true,
-      notification_info: {
-        token: true,
-        app_type_id: true
+      notification_token: true,
+      user: {
+        firebase_id: true,
+        language_id: true,
       }
     }]
   });
@@ -57,9 +59,14 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
       restaurantId: restaurantId,
       status: r.status as OperatorStatus,
       owner: r.owner,
-      notificationInfo: {
-        AppTypeId: r.notification_info.app_type_id as AppType,
-        token: r.notification_info.token
+      notificationInfo: (r.notification_token) ? {
+        AppTypeId: AppType.RestaurantApp,
+        token: r.notification_token
+      } : undefined,
+      user: {
+        id: r.user_id,
+        firebaseId: r.user.firebase_id,
+        language: r.user.language_id as Language
       }
     }
   });
@@ -77,7 +84,7 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
       prev[current.language_id] = current.value;
       return prev;
     }, {}),
-    scheduleId: response.restaurant_by_pk.schedule_id,
+    schedule: response.restaurant_by_pk.schedule,
     openStatus: response.restaurant_by_pk.open_status as OpenStatus,
     approved: response.restaurant_by_pk.approved,
     restaurantOperators

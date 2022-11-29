@@ -818,7 +818,11 @@ type customer {
     """filter the rows returned"""
     where: delivery_order_bool_exp
   ): delivery_order_aggregate!
-  notification_info_id: Int
+
+  """
+  A computed field, executes function "customer_notification_token"
+  """
+  notification_token: String
 
   """An array relationship"""
   saved_locations(
@@ -888,7 +892,6 @@ type customer_aggregate_fields {
 
 """aggregate avg on columns"""
 type customer_avg_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
@@ -902,7 +905,7 @@ input customer_bool_exp {
   app_version: String_comparison_exp
   cart: restaurant_cart_bool_exp
   deliveries: delivery_order_bool_exp
-  notification_info_id: Int_comparison_exp
+  notification_token: String_comparison_exp
   saved_locations: saved_location_bool_exp
   user: user_bool_exp
   user_id: Int_comparison_exp
@@ -927,7 +930,6 @@ enum customer_constraint {
 input type for incrementing numeric columns in table "customer"
 """
 input customer_inc_input {
-  notification_info_id: Int
   user_id: Int
 }
 
@@ -938,7 +940,6 @@ input customer_insert_input {
   app_version: String
   cart: restaurant_cart_obj_rel_insert_input
   deliveries: delivery_order_arr_rel_insert_input
-  notification_info_id: Int
   saved_locations: saved_location_arr_rel_insert_input
   user: user_obj_rel_insert_input
   user_id: Int
@@ -947,14 +948,12 @@ input customer_insert_input {
 """aggregate max on columns"""
 type customer_max_fields {
   app_version: String
-  notification_info_id: Int
   user_id: Int
 }
 
 """aggregate min on columns"""
 type customer_min_fields {
   app_version: String
-  notification_info_id: Int
   user_id: Int
 }
 
@@ -993,7 +992,7 @@ input customer_order_by {
   app_version: order_by
   cart: restaurant_cart_order_by
   deliveries_aggregate: delivery_order_aggregate_order_by
-  notification_info_id: order_by
+  notification_token: order_by
   saved_locations_aggregate: saved_location_aggregate_order_by
   user: user_order_by
   user_id: order_by
@@ -1012,9 +1011,6 @@ enum customer_select_column {
   app_version
 
   """column name"""
-  notification_info_id
-
-  """column name"""
   user_id
 }
 
@@ -1023,25 +1019,21 @@ input type for updating data in table "customer"
 """
 input customer_set_input {
   app_version: String
-  notification_info_id: Int
   user_id: Int
 }
 
 """aggregate stddev on columns"""
 type customer_stddev_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
 """aggregate stddev_pop on columns"""
 type customer_stddev_pop_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
 """aggregate stddev_samp on columns"""
 type customer_stddev_samp_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
@@ -1059,13 +1051,11 @@ input customer_stream_cursor_input {
 """Initial value of the column from where the streaming should start"""
 input customer_stream_cursor_value_input {
   app_version: String
-  notification_info_id: Int
   user_id: Int
 }
 
 """aggregate sum on columns"""
 type customer_sum_fields {
-  notification_info_id: Int
   user_id: Int
 }
 
@@ -1075,9 +1065,6 @@ update columns of table "customer"
 enum customer_update_column {
   """column name"""
   app_version
-
-  """column name"""
-  notification_info_id
 
   """column name"""
   user_id
@@ -1094,19 +1081,16 @@ input customer_updates {
 
 """aggregate var_pop on columns"""
 type customer_var_pop_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
 """aggregate var_samp on columns"""
 type customer_var_samp_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
 """aggregate variance on columns"""
 type customer_variance_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
@@ -3113,20 +3097,14 @@ type delivery_order_public {
   actual_package_ready_time: timestamptz
   customer_id: Int
   customer_review_by_driver_id: Int
-
-  """An object relationship"""
-  deliverer: delivery_driver
-  deliverer_app_type_id: String
-  deliverer_id: Int
+  delivery_driver_id: Int
+  delivery_driver_type: String
   driver_review_by_customer_id: Int
   driver_review_by_service_provider_id: Int
   estimated_arrival_at_dropoff_time: timestamptz
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
   order_time: timestamptz
-
-  """An object relationship"""
-  restaurant: restaurant
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
   service_provider_type: String
@@ -3164,7 +3142,7 @@ type delivery_order_public_aggregate_fields {
 type delivery_order_public_avg_fields {
   customer_id: Float
   customer_review_by_driver_id: Float
-  deliverer_id: Float
+  delivery_driver_id: Float
   driver_review_by_customer_id: Float
   driver_review_by_service_provider_id: Float
   service_provider_id: Float
@@ -3186,16 +3164,14 @@ input delivery_order_public_bool_exp {
   actual_package_ready_time: timestamptz_comparison_exp
   customer_id: Int_comparison_exp
   customer_review_by_driver_id: Int_comparison_exp
-  deliverer: delivery_driver_bool_exp
-  deliverer_app_type_id: String_comparison_exp
-  deliverer_id: Int_comparison_exp
+  delivery_driver_id: Int_comparison_exp
+  delivery_driver_type: String_comparison_exp
   driver_review_by_customer_id: Int_comparison_exp
   driver_review_by_service_provider_id: Int_comparison_exp
   estimated_arrival_at_dropoff_time: timestamptz_comparison_exp
   estimated_arrival_at_pickup_time: timestamptz_comparison_exp
   estimated_package_ready_time: timestamptz_comparison_exp
   order_time: timestamptz_comparison_exp
-  restaurant: restaurant_bool_exp
   service_provider_id: Int_comparison_exp
   service_provider_review_by_driver_id: Int_comparison_exp
   service_provider_type: String_comparison_exp
@@ -3210,7 +3186,7 @@ input type for incrementing numeric columns in table "delivery_order_public"
 input delivery_order_public_inc_input {
   customer_id: Int
   customer_review_by_driver_id: Int
-  deliverer_id: Int
+  delivery_driver_id: Int
   driver_review_by_customer_id: Int
   driver_review_by_service_provider_id: Int
   service_provider_id: Int
@@ -3229,16 +3205,14 @@ input delivery_order_public_insert_input {
   actual_package_ready_time: timestamptz
   customer_id: Int
   customer_review_by_driver_id: Int
-  deliverer: delivery_driver_obj_rel_insert_input
-  deliverer_app_type_id: String
-  deliverer_id: Int
+  delivery_driver_id: Int
+  delivery_driver_type: String
   driver_review_by_customer_id: Int
   driver_review_by_service_provider_id: Int
   estimated_arrival_at_dropoff_time: timestamptz
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
   order_time: timestamptz
-  restaurant: restaurant_obj_rel_insert_input
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
   service_provider_type: String
@@ -3255,8 +3229,8 @@ type delivery_order_public_max_fields {
   actual_package_ready_time: timestamptz
   customer_id: Int
   customer_review_by_driver_id: Int
-  deliverer_app_type_id: String
-  deliverer_id: Int
+  delivery_driver_id: Int
+  delivery_driver_type: String
   driver_review_by_customer_id: Int
   driver_review_by_service_provider_id: Int
   estimated_arrival_at_dropoff_time: timestamptz
@@ -3279,8 +3253,8 @@ type delivery_order_public_min_fields {
   actual_package_ready_time: timestamptz
   customer_id: Int
   customer_review_by_driver_id: Int
-  deliverer_app_type_id: String
-  deliverer_id: Int
+  delivery_driver_id: Int
+  delivery_driver_type: String
   driver_review_by_customer_id: Int
   driver_review_by_service_provider_id: Int
   estimated_arrival_at_dropoff_time: timestamptz
@@ -3314,16 +3288,14 @@ input delivery_order_public_order_by {
   actual_package_ready_time: order_by
   customer_id: order_by
   customer_review_by_driver_id: order_by
-  deliverer: delivery_driver_order_by
-  deliverer_app_type_id: order_by
-  deliverer_id: order_by
+  delivery_driver_id: order_by
+  delivery_driver_type: order_by
   driver_review_by_customer_id: order_by
   driver_review_by_service_provider_id: order_by
   estimated_arrival_at_dropoff_time: order_by
   estimated_arrival_at_pickup_time: order_by
   estimated_package_ready_time: order_by
   order_time: order_by
-  restaurant: restaurant_order_by
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
   service_provider_type: order_by
@@ -3355,10 +3327,10 @@ enum delivery_order_public_select_column {
   customer_review_by_driver_id
 
   """column name"""
-  deliverer_app_type_id
+  delivery_driver_id
 
   """column name"""
-  deliverer_id
+  delivery_driver_type
 
   """column name"""
   driver_review_by_customer_id
@@ -3407,8 +3379,8 @@ input delivery_order_public_set_input {
   actual_package_ready_time: timestamptz
   customer_id: Int
   customer_review_by_driver_id: Int
-  deliverer_app_type_id: String
-  deliverer_id: Int
+  delivery_driver_id: Int
+  delivery_driver_type: String
   driver_review_by_customer_id: Int
   driver_review_by_service_provider_id: Int
   estimated_arrival_at_dropoff_time: timestamptz
@@ -3427,7 +3399,7 @@ input delivery_order_public_set_input {
 type delivery_order_public_stddev_fields {
   customer_id: Float
   customer_review_by_driver_id: Float
-  deliverer_id: Float
+  delivery_driver_id: Float
   driver_review_by_customer_id: Float
   driver_review_by_service_provider_id: Float
   service_provider_id: Float
@@ -3440,7 +3412,7 @@ type delivery_order_public_stddev_fields {
 type delivery_order_public_stddev_pop_fields {
   customer_id: Float
   customer_review_by_driver_id: Float
-  deliverer_id: Float
+  delivery_driver_id: Float
   driver_review_by_customer_id: Float
   driver_review_by_service_provider_id: Float
   service_provider_id: Float
@@ -3453,7 +3425,7 @@ type delivery_order_public_stddev_pop_fields {
 type delivery_order_public_stddev_samp_fields {
   customer_id: Float
   customer_review_by_driver_id: Float
-  deliverer_id: Float
+  delivery_driver_id: Float
   driver_review_by_customer_id: Float
   driver_review_by_service_provider_id: Float
   service_provider_id: Float
@@ -3481,8 +3453,8 @@ input delivery_order_public_stream_cursor_value_input {
   actual_package_ready_time: timestamptz
   customer_id: Int
   customer_review_by_driver_id: Int
-  deliverer_app_type_id: String
-  deliverer_id: Int
+  delivery_driver_id: Int
+  delivery_driver_type: String
   driver_review_by_customer_id: Int
   driver_review_by_service_provider_id: Int
   estimated_arrival_at_dropoff_time: timestamptz
@@ -3501,7 +3473,7 @@ input delivery_order_public_stream_cursor_value_input {
 type delivery_order_public_sum_fields {
   customer_id: Int
   customer_review_by_driver_id: Int
-  deliverer_id: Int
+  delivery_driver_id: Int
   driver_review_by_customer_id: Int
   driver_review_by_service_provider_id: Int
   service_provider_id: Int
@@ -3523,7 +3495,7 @@ input delivery_order_public_updates {
 type delivery_order_public_var_pop_fields {
   customer_id: Float
   customer_review_by_driver_id: Float
-  deliverer_id: Float
+  delivery_driver_id: Float
   driver_review_by_customer_id: Float
   driver_review_by_service_provider_id: Float
   service_provider_id: Float
@@ -3536,7 +3508,7 @@ type delivery_order_public_var_pop_fields {
 type delivery_order_public_var_samp_fields {
   customer_id: Float
   customer_review_by_driver_id: Float
-  deliverer_id: Float
+  delivery_driver_id: Float
   driver_review_by_customer_id: Float
   driver_review_by_service_provider_id: Float
   service_provider_id: Float
@@ -3549,7 +3521,7 @@ type delivery_order_public_var_samp_fields {
 type delivery_order_public_variance_fields {
   customer_id: Float
   customer_review_by_driver_id: Float
-  deliverer_id: Float
+  delivery_driver_id: Float
   driver_review_by_customer_id: Float
   driver_review_by_service_provider_id: Float
   service_provider_id: Float
@@ -4410,9 +4382,13 @@ input jsonb_comparison_exp {
 columns and relationships of "mez_admin"
 """
 type mez_admin {
+  """
+  A computed field, executes function "mez_admin_notification_token"
+  """
+  notification_token: String
+
   """An object relationship"""
-  notification_info: notification_info
-  notification_info_id: Int
+  user: user
   user_id: Int!
   version: String
 }
@@ -4444,7 +4420,6 @@ type mez_admin_aggregate_fields {
 
 """aggregate avg on columns"""
 type mez_admin_avg_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
@@ -4455,8 +4430,8 @@ input mez_admin_bool_exp {
   _and: [mez_admin_bool_exp!]
   _not: mez_admin_bool_exp
   _or: [mez_admin_bool_exp!]
-  notification_info: notification_info_bool_exp
-  notification_info_id: Int_comparison_exp
+  notification_token: String_comparison_exp
+  user: user_bool_exp
   user_id: Int_comparison_exp
   version: String_comparison_exp
 }
@@ -4475,7 +4450,6 @@ enum mez_admin_constraint {
 input type for incrementing numeric columns in table "mez_admin"
 """
 input mez_admin_inc_input {
-  notification_info_id: Int
   user_id: Int
 }
 
@@ -4483,22 +4457,19 @@ input mez_admin_inc_input {
 input type for inserting data into table "mez_admin"
 """
 input mez_admin_insert_input {
-  notification_info: notification_info_obj_rel_insert_input
-  notification_info_id: Int
+  user: user_obj_rel_insert_input
   user_id: Int
   version: String
 }
 
 """aggregate max on columns"""
 type mez_admin_max_fields {
-  notification_info_id: Int
   user_id: Int
   version: String
 }
 
 """aggregate min on columns"""
 type mez_admin_min_fields {
-  notification_info_id: Int
   user_id: Int
   version: String
 }
@@ -4525,8 +4496,8 @@ input mez_admin_on_conflict {
 
 """Ordering options when selecting data from "mez_admin"."""
 input mez_admin_order_by {
-  notification_info: notification_info_order_by
-  notification_info_id: order_by
+  notification_token: order_by
+  user: user_order_by
   user_id: order_by
   version: order_by
 }
@@ -4541,9 +4512,6 @@ select columns of table "mez_admin"
 """
 enum mez_admin_select_column {
   """column name"""
-  notification_info_id
-
-  """column name"""
   user_id
 
   """column name"""
@@ -4554,26 +4522,22 @@ enum mez_admin_select_column {
 input type for updating data in table "mez_admin"
 """
 input mez_admin_set_input {
-  notification_info_id: Int
   user_id: Int
   version: String
 }
 
 """aggregate stddev on columns"""
 type mez_admin_stddev_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
 """aggregate stddev_pop on columns"""
 type mez_admin_stddev_pop_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
 """aggregate stddev_samp on columns"""
 type mez_admin_stddev_samp_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
@@ -4590,14 +4554,12 @@ input mez_admin_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input mez_admin_stream_cursor_value_input {
-  notification_info_id: Int
   user_id: Int
   version: String
 }
 
 """aggregate sum on columns"""
 type mez_admin_sum_fields {
-  notification_info_id: Int
   user_id: Int
 }
 
@@ -4605,9 +4567,6 @@ type mez_admin_sum_fields {
 update columns of table "mez_admin"
 """
 enum mez_admin_update_column {
-  """column name"""
-  notification_info_id
-
   """column name"""
   user_id
 
@@ -4626,19 +4585,16 @@ input mez_admin_updates {
 
 """aggregate var_pop on columns"""
 type mez_admin_var_pop_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
 """aggregate var_samp on columns"""
 type mez_admin_var_samp_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
 """aggregate variance on columns"""
 type mez_admin_variance_fields {
-  notification_info_id: Float
   user_id: Float
 }
 
@@ -6138,8 +6094,30 @@ type mutation_root {
   update data of the table: "restaurant"
   """
   update_restaurant(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: restaurant_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: restaurant_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: restaurant_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: restaurant_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: restaurant_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: restaurant_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: restaurant_set_input
@@ -6152,8 +6130,30 @@ type mutation_root {
   update single row of the table: "restaurant"
   """
   update_restaurant_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: restaurant_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: restaurant_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: restaurant_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: restaurant_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: restaurant_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: restaurant_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: restaurant_set_input
@@ -6926,6 +6926,11 @@ enum notification_info_constraint {
   unique or primary key constraint on columns "id"
   """
   notification_info_pkey
+
+  """
+  unique or primary key constraint on columns "app_type_id", "user_id"
+  """
+  notification_info_user_id_app_type_id_key
 }
 
 """
@@ -8716,9 +8721,32 @@ type restaurant {
     """filter the rows returned"""
     where: restaurant_operator_bool_exp
   ): restaurant_operator_aggregate!
-  schedule_id: Int!
+  schedule(
+    """JSON select path"""
+    path: String
+  ): jsonb
   self_delivery: Boolean!
   service_provider_type: String!
+
+  """
+  A computed field, executes function "special_items"
+  """
+  specials(
+    """distinct select on columns"""
+    distinct_on: [restaurant_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [restaurant_item_order_by!]
+
+    """filter the rows returned"""
+    where: restaurant_item_bool_exp
+  ): [restaurant_item!]
 }
 
 """
@@ -8746,12 +8774,16 @@ type restaurant_aggregate_fields {
   variance: restaurant_variance_fields
 }
 
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input restaurant_append_input {
+  schedule: jsonb
+}
+
 """aggregate avg on columns"""
 type restaurant_avg_fields {
   description_id: Float
   id: Float
   payment_info_id: Float
-  schedule_id: Float
 }
 
 """
@@ -8778,9 +8810,10 @@ input restaurant_bool_exp {
   payment_info: service_provider_payment_info_bool_exp
   payment_info_id: Int_comparison_exp
   restaurant_operators: restaurant_operator_bool_exp
-  schedule_id: Int_comparison_exp
+  schedule: jsonb_comparison_exp
   self_delivery: Boolean_comparison_exp
   service_provider_type: String_comparison_exp
+  specials: restaurant_item_bool_exp
 }
 
 """
@@ -10537,13 +10570,34 @@ enum restaurant_constraint {
 }
 
 """
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input restaurant_delete_at_path_input {
+  schedule: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input restaurant_delete_elem_input {
+  schedule: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input restaurant_delete_key_input {
+  schedule: String
+}
+
+"""
 input type for incrementing numeric columns in table "restaurant"
 """
 input restaurant_inc_input {
   description_id: Int
   id: Int
   payment_info_id: Int
-  schedule_id: Int
 }
 
 """
@@ -10569,7 +10623,7 @@ input restaurant_insert_input {
   payment_info: service_provider_payment_info_obj_rel_insert_input
   payment_info_id: Int
   restaurant_operators: restaurant_operator_arr_rel_insert_input
-  schedule_id: Int
+  schedule: jsonb
   self_delivery: Boolean
   service_provider_type: String
 }
@@ -11679,7 +11733,6 @@ type restaurant_max_fields {
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
   payment_info_id: Int
-  schedule_id: Int
   service_provider_type: String
 }
 
@@ -11696,7 +11749,6 @@ type restaurant_min_fields {
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
   payment_info_id: Int
-  schedule_id: Int
   service_provider_type: String
 }
 
@@ -11739,9 +11791,10 @@ type restaurant_operator {
   delivery_driver_type: String!
   id: Int!
 
-  """An object relationship"""
-  notification_info: notification_info!
-  notification_info_id: Int!
+  """
+  A computed field, executes function "restaurant_operator_notification_token"
+  """
+  notification_token: String
   owner: Boolean!
 
   """An object relationship"""
@@ -11750,6 +11803,9 @@ type restaurant_operator {
 
   """awaiting_approval,authorized,banned"""
   status: String!
+
+  """An object relationship"""
+  user: user!
   user_id: Int!
 }
 
@@ -11808,7 +11864,6 @@ input restaurant_operator_arr_rel_insert_input {
 """aggregate avg on columns"""
 type restaurant_operator_avg_fields {
   id: Float
-  notification_info_id: Float
   restaurant_id: Float
   user_id: Float
 }
@@ -11818,7 +11873,6 @@ order by avg() on columns of table "restaurant_operator"
 """
 input restaurant_operator_avg_order_by {
   id: order_by
-  notification_info_id: order_by
   restaurant_id: order_by
   user_id: order_by
 }
@@ -11834,12 +11888,12 @@ input restaurant_operator_bool_exp {
   current_gps: geography_comparison_exp
   delivery_driver_type: String_comparison_exp
   id: Int_comparison_exp
-  notification_info: notification_info_bool_exp
-  notification_info_id: Int_comparison_exp
+  notification_token: String_comparison_exp
   owner: Boolean_comparison_exp
   restaurant: restaurant_bool_exp
   restaurant_id: Int_comparison_exp
   status: String_comparison_exp
+  user: user_bool_exp
   user_id: Int_comparison_exp
 }
 
@@ -11851,6 +11905,16 @@ enum restaurant_operator_constraint {
   unique or primary key constraint on columns "id"
   """
   restaurant_operator_pkey
+
+  """
+  unique or primary key constraint on columns "restaurant_id"
+  """
+  restaurant_operator_restaurant_id_key
+
+  """
+  unique or primary key constraint on columns "user_id"
+  """
+  restaurant_operator_user_id_key
 }
 
 """
@@ -11858,7 +11922,6 @@ input type for incrementing numeric columns in table "restaurant_operator"
 """
 input restaurant_operator_inc_input {
   id: Int
-  notification_info_id: Int
   restaurant_id: Int
   user_id: Int
 }
@@ -11871,14 +11934,13 @@ input restaurant_operator_insert_input {
   current_gps: geography
   delivery_driver_type: String
   id: Int
-  notification_info: notification_info_obj_rel_insert_input
-  notification_info_id: Int
   owner: Boolean
   restaurant: restaurant_obj_rel_insert_input
   restaurant_id: Int
 
   """awaiting_approval,authorized,banned"""
   status: String
+  user: user_obj_rel_insert_input
   user_id: Int
 }
 
@@ -11887,7 +11949,6 @@ type restaurant_operator_max_fields {
   app_version: String
   delivery_driver_type: String
   id: Int
-  notification_info_id: Int
   restaurant_id: Int
 
   """awaiting_approval,authorized,banned"""
@@ -11902,7 +11963,6 @@ input restaurant_operator_max_order_by {
   app_version: order_by
   delivery_driver_type: order_by
   id: order_by
-  notification_info_id: order_by
   restaurant_id: order_by
 
   """awaiting_approval,authorized,banned"""
@@ -11915,7 +11975,6 @@ type restaurant_operator_min_fields {
   app_version: String
   delivery_driver_type: String
   id: Int
-  notification_info_id: Int
   restaurant_id: Int
 
   """awaiting_approval,authorized,banned"""
@@ -11930,7 +11989,6 @@ input restaurant_operator_min_order_by {
   app_version: order_by
   delivery_driver_type: order_by
   id: order_by
-  notification_info_id: order_by
   restaurant_id: order_by
 
   """awaiting_approval,authorized,banned"""
@@ -11974,12 +12032,12 @@ input restaurant_operator_order_by {
   current_gps: order_by
   delivery_driver_type: order_by
   id: order_by
-  notification_info: notification_info_order_by
-  notification_info_id: order_by
+  notification_token: order_by
   owner: order_by
   restaurant: restaurant_order_by
   restaurant_id: order_by
   status: order_by
+  user: user_order_by
   user_id: order_by
 }
 
@@ -12005,9 +12063,6 @@ enum restaurant_operator_select_column {
   id
 
   """column name"""
-  notification_info_id
-
-  """column name"""
   owner
 
   """column name"""
@@ -12028,7 +12083,6 @@ input restaurant_operator_set_input {
   current_gps: geography
   delivery_driver_type: String
   id: Int
-  notification_info_id: Int
   owner: Boolean
   restaurant_id: Int
 
@@ -12040,7 +12094,6 @@ input restaurant_operator_set_input {
 """aggregate stddev on columns"""
 type restaurant_operator_stddev_fields {
   id: Float
-  notification_info_id: Float
   restaurant_id: Float
   user_id: Float
 }
@@ -12050,7 +12103,6 @@ order by stddev() on columns of table "restaurant_operator"
 """
 input restaurant_operator_stddev_order_by {
   id: order_by
-  notification_info_id: order_by
   restaurant_id: order_by
   user_id: order_by
 }
@@ -12058,7 +12110,6 @@ input restaurant_operator_stddev_order_by {
 """aggregate stddev_pop on columns"""
 type restaurant_operator_stddev_pop_fields {
   id: Float
-  notification_info_id: Float
   restaurant_id: Float
   user_id: Float
 }
@@ -12068,7 +12119,6 @@ order by stddev_pop() on columns of table "restaurant_operator"
 """
 input restaurant_operator_stddev_pop_order_by {
   id: order_by
-  notification_info_id: order_by
   restaurant_id: order_by
   user_id: order_by
 }
@@ -12076,7 +12126,6 @@ input restaurant_operator_stddev_pop_order_by {
 """aggregate stddev_samp on columns"""
 type restaurant_operator_stddev_samp_fields {
   id: Float
-  notification_info_id: Float
   restaurant_id: Float
   user_id: Float
 }
@@ -12086,7 +12135,6 @@ order by stddev_samp() on columns of table "restaurant_operator"
 """
 input restaurant_operator_stddev_samp_order_by {
   id: order_by
-  notification_info_id: order_by
   restaurant_id: order_by
   user_id: order_by
 }
@@ -12108,7 +12156,6 @@ input restaurant_operator_stream_cursor_value_input {
   current_gps: geography
   delivery_driver_type: String
   id: Int
-  notification_info_id: Int
   owner: Boolean
   restaurant_id: Int
 
@@ -12120,7 +12167,6 @@ input restaurant_operator_stream_cursor_value_input {
 """aggregate sum on columns"""
 type restaurant_operator_sum_fields {
   id: Int
-  notification_info_id: Int
   restaurant_id: Int
   user_id: Int
 }
@@ -12130,7 +12176,6 @@ order by sum() on columns of table "restaurant_operator"
 """
 input restaurant_operator_sum_order_by {
   id: order_by
-  notification_info_id: order_by
   restaurant_id: order_by
   user_id: order_by
 }
@@ -12150,9 +12195,6 @@ enum restaurant_operator_update_column {
 
   """column name"""
   id
-
-  """column name"""
-  notification_info_id
 
   """column name"""
   owner
@@ -12179,7 +12221,6 @@ input restaurant_operator_updates {
 """aggregate var_pop on columns"""
 type restaurant_operator_var_pop_fields {
   id: Float
-  notification_info_id: Float
   restaurant_id: Float
   user_id: Float
 }
@@ -12189,7 +12230,6 @@ order by var_pop() on columns of table "restaurant_operator"
 """
 input restaurant_operator_var_pop_order_by {
   id: order_by
-  notification_info_id: order_by
   restaurant_id: order_by
   user_id: order_by
 }
@@ -12197,7 +12237,6 @@ input restaurant_operator_var_pop_order_by {
 """aggregate var_samp on columns"""
 type restaurant_operator_var_samp_fields {
   id: Float
-  notification_info_id: Float
   restaurant_id: Float
   user_id: Float
 }
@@ -12207,7 +12246,6 @@ order by var_samp() on columns of table "restaurant_operator"
 """
 input restaurant_operator_var_samp_order_by {
   id: order_by
-  notification_info_id: order_by
   restaurant_id: order_by
   user_id: order_by
 }
@@ -12215,7 +12253,6 @@ input restaurant_operator_var_samp_order_by {
 """aggregate variance on columns"""
 type restaurant_operator_variance_fields {
   id: Float
-  notification_info_id: Float
   restaurant_id: Float
   user_id: Float
 }
@@ -12225,7 +12262,6 @@ order by variance() on columns of table "restaurant_operator"
 """
 input restaurant_operator_variance_order_by {
   id: order_by
-  notification_info_id: order_by
   restaurant_id: order_by
   user_id: order_by
 }
@@ -13533,9 +13569,10 @@ input restaurant_order_by {
   payment_info: service_provider_payment_info_order_by
   payment_info_id: order_by
   restaurant_operators_aggregate: restaurant_operator_aggregate_order_by
-  schedule_id: order_by
+  schedule: order_by
   self_delivery: order_by
   service_provider_type: order_by
+  specials_aggregate: restaurant_item_aggregate_order_by
 }
 
 """
@@ -15034,6 +15071,11 @@ input restaurant_pk_columns_input {
   id: Int!
 }
 
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input restaurant_prepend_input {
+  schedule: jsonb
+}
+
 """
 select columns of table "restaurant"
 """
@@ -15072,7 +15114,7 @@ enum restaurant_select_column {
   payment_info_id
 
   """column name"""
-  schedule_id
+  schedule
 
   """column name"""
   self_delivery
@@ -15098,7 +15140,7 @@ input restaurant_set_input {
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
   payment_info_id: Int
-  schedule_id: Int
+  schedule: jsonb
   self_delivery: Boolean
   service_provider_type: String
 }
@@ -15108,7 +15150,6 @@ type restaurant_stddev_fields {
   description_id: Float
   id: Float
   payment_info_id: Float
-  schedule_id: Float
 }
 
 """aggregate stddev_pop on columns"""
@@ -15116,7 +15157,6 @@ type restaurant_stddev_pop_fields {
   description_id: Float
   id: Float
   payment_info_id: Float
-  schedule_id: Float
 }
 
 """aggregate stddev_samp on columns"""
@@ -15124,7 +15164,6 @@ type restaurant_stddev_samp_fields {
   description_id: Float
   id: Float
   payment_info_id: Float
-  schedule_id: Float
 }
 
 """
@@ -15153,7 +15192,7 @@ input restaurant_stream_cursor_value_input {
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
   payment_info_id: Int
-  schedule_id: Int
+  schedule: jsonb
   self_delivery: Boolean
   service_provider_type: String
 }
@@ -15163,7 +15202,6 @@ type restaurant_sum_fields {
   description_id: Int
   id: Int
   payment_info_id: Int
-  schedule_id: Int
 }
 
 """
@@ -15204,7 +15242,7 @@ enum restaurant_update_column {
   payment_info_id
 
   """column name"""
-  schedule_id
+  schedule
 
   """column name"""
   self_delivery
@@ -15214,8 +15252,30 @@ enum restaurant_update_column {
 }
 
 input restaurant_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: restaurant_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: restaurant_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: restaurant_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: restaurant_delete_key_input
+
   """increments the numeric columns with given value of the filtered values"""
   _inc: restaurant_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: restaurant_prepend_input
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_set_input
@@ -15227,7 +15287,6 @@ type restaurant_var_pop_fields {
   description_id: Float
   id: Float
   payment_info_id: Float
-  schedule_id: Float
 }
 
 """aggregate var_samp on columns"""
@@ -15235,7 +15294,6 @@ type restaurant_var_samp_fields {
   description_id: Float
   id: Float
   payment_info_id: Float
-  schedule_id: Float
 }
 
 """aggregate variance on columns"""
@@ -15243,7 +15301,6 @@ type restaurant_variance_fields {
   description_id: Float
   id: Float
   payment_info_id: Float
-  schedule_id: Float
 }
 
 """

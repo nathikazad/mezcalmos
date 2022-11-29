@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
@@ -11,6 +9,8 @@ import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.d
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/operatorNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/restaurantNodes.dart';
+import 'package:mezcalmos/Shared/graphql/restaurantOperator/hsRestaurantOperator.dart';
+import 'package:mezcalmos/Shared/graphql/user/hsUser.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
@@ -19,6 +19,7 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class RestaurantOpAuthController extends GetxController {
   Rxn<RestaurantOperator> operator = Rxn();
+  final int operatorId = Get.find<AuthController>().hasuraUserId!;
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
   // RestaurantInfoController _restaurantInfoController =
@@ -43,62 +44,74 @@ class RestaurantOpAuthController extends GetxController {
     mezDbgPrint("RestaurantAuthController: init $hashCode");
     mezDbgPrint(
         "RestaurantAuthController: calling handle state change first time");
-    setupRestaurantOperator(Get.find<AuthController>().fireAuthUser!);
+    // Todo @m66are remove this restaurant id hard code
+    restaurantId = "GVTnpkENslMDiYRENOvKVINtt133";
+    setupRestaurantOperator();
     super.onInit();
   }
 
-  Future<void> setupRestaurantOperator(User user) async {
-    mezDbgPrint("RestaurantAuthController: handle state change user value");
-    mezDbgPrint(user);
-    // mezDbgPrint(_authController.fireAuthUser);
+  Future<void> setupRestaurantOperator() async {
+    final RestaurantOperatorState? operatorState =
+        await get_operator_state(operatorId: operatorId);
+    final UserInfo operatorInfo =
+        await get_user_by_hasura_id(hasuraId: operatorId);
+    if (operatorState != null) {
+      operator.value = RestaurantOperator(
+          state: operatorState,
+          info: operatorInfo,
+          operatorId: operatorId.toString());
+    }
+    // mezDbgPrint("RestaurantAuthController: handle state change user value");
+    // mezDbgPrint(user);
 
-    mezDbgPrint(
-        "RestaurantAuthController: restaurantNode =======>>>>>> init ${operatorStateNode(operatorType: OperatorType.Restaurant, uid: user.uid)}");
-    await _restaurantOperatorNodeListener?.cancel();
-    _restaurantOperatorNodeListener = null;
+    // mezDbgPrint(
+    //     "RestaurantAuthController: restaurantNode =======>>>>>> init ${operatorStateNode(operatorType: OperatorType.Restaurant, uid: user.uid)}");
+    // await _restaurantOperatorNodeListener?.cancel();
+    // _restaurantOperatorNodeListener = null;
 
-    await _databaseHelper.firebaseDatabase
-        .reference()
-        .child(operatorAuthNode(
-            operatorType: OperatorType.Restaurant, uid: user.uid))
-        .once()
-        .then((DatabaseEvent value) => mezDbgPrint(value));
-    // mezDbgPrint("Listening");
-    _restaurantOperatorNodeListener = _databaseHelper.firebaseDatabase
-        .reference()
-        .child(operatorAuthNode(
-            operatorType: OperatorType.Restaurant, uid: user.uid))
-        .onValue
-        .listen((DatabaseEvent event) async {
-      if (event.snapshot.value.toString() == _previousStateValue) {
-        return;
-      }
-      _previousStateValue = event.snapshot.value.toString();
+    // await _databaseHelper.firebaseDatabase
+    //     .reference()
+    //     .child(operatorAuthNode(
+    //         operatorType: OperatorType.Restaurant, uid: user.uid))
+    //     .once()
+    //     .then((DatabaseEvent value) => mezDbgPrint(value));
+    // // mezDbgPrint("Listening");
+    // _restaurantOperatorNodeListener = _databaseHelper.firebaseDatabase
+    //     .reference()
+    //     .child(operatorAuthNode(
+    //         operatorType: OperatorType.Restaurant, uid: user.uid))
+    //     .onValue
+    //     .listen((DatabaseEvent event) async {
+    //   if (event.snapshot.value.toString() == _previousStateValue) {
+    //     return;
+    //   }
+    //   _previousStateValue = event.snapshot.value.toString();
 
-      if (event.snapshot.value != null) {
-        operator.value =
-            RestaurantOperator.fromData(user.uid, event.snapshot.value);
+    //   if (event.snapshot.value != null) {
+    //     operator.value =
+    //         RestaurantOperator.fromData(user.uid, event.snapshot.value);
 
-        saveAppVersionIfNecessary();
-        await _userInfoStreamListener?.cancel();
-        _authController.userInfoStream.listen((MainUserInfo? userInfo) {
-          if (userInfo != null) {
-            _databaseHelper.firebaseDatabase
-                .ref()
-                .child(operatorInfoNode(
-                    operatorType: OperatorType.Restaurant, uid: user.uid))
-                .set(userInfo.toFirebaseFormatJson());
-          }
-        });
-        unawaited(saveNotificationToken());
-        if (restaurantId != operator.value!.state.restaurantId) {
-          // init controllers with new id
-          restaurantId = operator.value!.state.restaurantId;
-          await _orderController.init(restaurantId!);
-          //  await _restaurantInfoController.init(restaurantId!);
-        }
-      }
-    });
+    //     saveAppVersionIfNecessary();
+    //     // TODO user info stream fix @m66are
+    //     // await _userInfoStreamListener?.cancel();
+    //     // _authController.userInfoStream.listen((MainUserInfo? userInfo) {
+    //     //   if (userInfo != null) {
+    //     //     _databaseHelper.firebaseDatabase
+    //     //         .ref()
+    //     //         .child(operatorInfoNode(
+    //     //             operatorType: OperatorType.Restaurant, uid: user.uid))
+    //     //         .set(userInfo.toFirebaseFormatJson());
+    //     //   }
+    //     // });
+    //     unawaited(saveNotificationToken());
+    //     if (restaurantId != operator.value!.state.restaurantId) {
+    //       // init controllers with new id
+    //       restaurantId = operator.value!.state.restaurantId;
+    //       await _orderController.init(restaurantId!);
+    //       //  await _restaurantInfoController.init(restaurantId!);
+    //     }
+    //   }
+    // });
   }
 
   Future<void> saveNotificationToken() async {

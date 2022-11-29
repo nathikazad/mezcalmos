@@ -1,16 +1,23 @@
 // import { RestaurantOrderType } from './shared/models/Services/Restaurant/RestaurantOrder';
 // import { PaymentType } from "./shared/models/Generic/Order";
-// import { Location, AppType } from "./shared/models/Generic/Generic";
+// import { Location } from "./shared/models/Generic/Generic";
 // import { checkout, CheckoutRequest } from "./restaurant/checkoutCart";
+import * as firebase from "firebase-admin";
+import { AuthorizeDetails, authorizeOperator } from "./restaurant/authorizeOperator";
+// import { createNewRestaurant } from "./restaurant/createNewRestaurant";
+// import { prepareOrder } from "./restaurant/adminStatusChanges"
+// import { cancelOrderFromCustomer } from "./restaurant/cancelOrderFromCustomer";
 
-import { prepareOrder } from "./restaurant/adminStatusChanges"
-
+firebase.initializeApp({
+  databaseURL: "http://localhost:9000/?ns=mezcalmos-31f1c-default-rtdb"
+});
+process.env.FUNCTIONS_EMULATOR = "true"
 // const location: Location = {
 //   gps: {
-//     type: "point",
+//     type: "Point",
 //     coordinates: [23, 44]
 //   },
-//   address: "qwe",
+//   address: "qweul",
 // }
 
 // const checkoutRequest: CheckoutRequest = {
@@ -24,24 +31,31 @@ import { prepareOrder } from "./restaurant/adminStatusChanges"
 //   tripDistance: 0,
 //   tripDuration: 0,
 //   tripPolyline: "",
-//   estimatedFoodReadyTime: "abc",
-//   items: [
-//     {
-//       itemId: 1,
-//       quantity: 2,
-//       costPerOne: 25
-//     },
-//     {
-//       itemId: 2,
-//       quantity: 1,
-//       costPerOne: 30
-//     }
-//   ]
 // }
 // checkout(1, checkoutRequest);
 
-let statusDetails = {
-  orderId: 13,
-  fromRestaurantOperator: true
+// let statusDetails = {
+//   orderId: 16,
+//   fromRestaurantOperator: true
+// }
+// prepareOrder(2, statusDetails)
+
+// cancelOrderFromCustomer(1, { orderId: 16 })
+
+// let restaurantDetails = {
+//   name: "restaurant2",
+//   image: "abc",
+//   location: location,
+//   scheduleId: 1,
+//   restaurantOperatorNotificationToken: "aaa",
+//   firebaseId: "5"
+// }
+// createNewRestaurant(4, restaurantDetails);
+
+let authorizeDetails: AuthorizeDetails = {
+  restaurantOwnerOperatorId: 3,
+  newOperatorUserId: 5,
+  newOperatorNotificationToken: "rty"
 }
-prepareOrder(2, statusDetails)
+
+authorizeOperator(4, authorizeDetails);

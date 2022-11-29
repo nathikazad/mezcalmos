@@ -54,11 +54,11 @@ class _ROpItemCardState extends State<ROpItemCard> {
               ? null
               : () async {
                   final bool? shouldRefresh = await Get.toNamed(
-                      getEditItemRoute(
-                          itemId: widget.item.id!,
-                          categoryId: widget.category?.id ?? null,
-                          restaurntID: widget.viewController.restaurant.value!
-                              .info.firebaseId)) as bool?;
+                          getEditItemRoute(
+                              itemId: widget.item.id!,
+                              categoryId: widget.category?.id ?? null,
+                              restaurntID: widget.viewController.restaurnatId))
+                      as bool?;
 
                   if (shouldRefresh == true) {
                     await widget.viewController.fetchCategories();

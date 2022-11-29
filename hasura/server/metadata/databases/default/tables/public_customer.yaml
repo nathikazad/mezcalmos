@@ -27,12 +27,17 @@ array_relationships:
         table:
           name: saved_location
           schema: public
+computed_fields:
+  - name: notification_token
+    definition:
+      function:
+        name: customer_notification_token
+        schema: public
 update_permissions:
   - role: customer
     permission:
       columns:
         - app_version
-        - notification_info_id
       filter:
         user_id:
           _eq: X-Hasura-User-Id

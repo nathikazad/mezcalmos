@@ -1,10 +1,11 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { Delivery } from "../../models/Generic/Delivery";
+import { CustomerInfo } from "../../models/Generic/User";
 import { Restaurant } from "../../models/Services/Restaurant/Restaurant";
 import { RestaurantOrder } from "../../models/Services/Restaurant/RestaurantOrder";
 
-export async function setOrderChatInfo(restaurantOrder: RestaurantOrder, restaurant: Restaurant, delivery: Delivery) {
+export async function setOrderChatInfo(restaurantOrder: RestaurantOrder, restaurant: Restaurant, delivery: Delivery, customer: CustomerInfo) {
 
   if(restaurantOrder.chatId == undefined) {
     throw new HttpsError(
@@ -19,18 +20,8 @@ export async function setOrderChatInfo(restaurantOrder: RestaurantOrder, restaur
     );
   }
   let chain = getHasura();
-  let response = await chain.query({
-    customer_by_pk: [{
-      user_id: restaurantOrder.customerId
-    }, {
-      user: {
-        name: true,
-        image: true
-      }
-    }]
-  });
 
-  await chain.mutation({
+  chain.mutation({
     update_chat_by_pk: [{
       pk_columns: {
         id: restaurantOrder.chatId,
@@ -43,13 +34,13 @@ export async function setOrderChatInfo(restaurantOrder: RestaurantOrder, restaur
             parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`
           },
           RestaurantApp: {
-            chatTitle: response.customer_by_pk?.user.name ?? "Customer",
-            chatImage: response.customer_by_pk?.user.image,
+            chatTitle: customer.name ?? "Customer",
+            chatImage: customer.image,
             parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`
           },
           MezAdminApp: {
-            chatTitle: response.customer_by_pk?.user.name ?? "Customer",
-            chatImage: response.customer_by_pk?.user.image,
+            chatTitle: customer.name ?? "Customer",
+            chatImage: customer.image,
             parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`
           },
         }),
@@ -58,7 +49,7 @@ export async function setOrderChatInfo(restaurantOrder: RestaurantOrder, restaur
       id: true
     }]
   });
-  await chain.mutation({
+  chain.mutation({
     update_chat_by_pk: [{
       pk_columns: {
         id: delivery.chatWithCustomerId
@@ -66,13 +57,13 @@ export async function setOrderChatInfo(restaurantOrder: RestaurantOrder, restaur
       _set: {
         chat_info: JSON.stringify({
           RestaurantApp: {
-            chatTitle: response.customer_by_pk?.user.name ?? "Customer",
-            chatImage: response.customer_by_pk?.user.image,
+            chatTitle: customer.name ?? "Customer",
+            chatImage: customer.image,
             parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`
           },
           DeliveryApp: {
-            chatTitle: response.customer_by_pk?.user.name ?? "Customer",
-            chatImage: response.customer_by_pk?.user.image,
+            chatTitle: customer.name ?? "Customer",
+            chatImage: customer.image,
             parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`
           }
         }),
@@ -81,7 +72,7 @@ export async function setOrderChatInfo(restaurantOrder: RestaurantOrder, restaur
       id: true
     },]
   });
-  await chain.mutation({
+  chain.mutation({
     update_chat_by_pk: [{
       pk_columns: {
         id: delivery.chatWithServiceProviderId

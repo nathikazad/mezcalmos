@@ -17,17 +17,29 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
         payment_type: true,
         customer_id: true,
         to_location_gps: true,
+        order_time: true,
+        restaurant: {
+          location_gps: true,
+        },
+        delivery_id: true,
         // to_location_address: true,
         estimated_food_ready_time: true,
         customer_app_type: true,
         delivery_cost: true,
+        customer: {
+          user: {
+            firebase_id: true,
+            language_id: true,
+          },
+          app_version: true,
+        },
         items: [{}, {
           // in_json: [{path: "[name(en,es), selected_options]"}, true]
           id: true,
           restaurant_item_id: true,
           quantity: true,
           cost_per_one: true,
-        }]
+        }],
       }
     ]
   })
@@ -60,6 +72,9 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
     customerAppType: response.restaurant_order_by_pk.customer_app_type as AppType,
     deliveryCost: response.restaurant_order_by_pk.delivery_cost,
     items
+  }
+  if(response.restaurant_order_by_pk.delivery_id != undefined) {
+    restaurantOrder.deliveryId = response.restaurant_order_by_pk.delivery_id
   }
   return restaurantOrder;
 }

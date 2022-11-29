@@ -17,7 +17,6 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
@@ -42,7 +41,6 @@ class ROpItemViewController {
     LanguageType.ES: "Ninguna Categoria"
   }, id: "noCategory");
 
-  final Rxn<Restaurant> restaurant = Rxn();
   final RxList<Category> categories = RxList.empty();
   final Rxn<Category> currentCategory = Rxn();
   Rx<LanguageType> prLang = Rx(LanguageType.ES);
@@ -66,16 +64,8 @@ class ROpItemViewController {
   RxBool needToRefetch = RxBool(false);
   RxBool isInitalized = RxBool(false);
 
-  bool get pageLoaded {
-    if (editMode.isFalse) {
-      return restaurant.value != null;
-    } else {
-      return restaurant.value != null && editableItem.value != null;
-    }
-  }
-
   bool get isEditing => editMode.value && editableItem.value != null;
-
+  late int restaurantId;
   Future<void> init(
       {String? itemId,
       String? categoryId,
@@ -101,7 +91,7 @@ class ROpItemViewController {
     //   specialMode.value = specials;
     // }
     // mezDbgPrint("Special mode =============>${specialMode.value}");
-
+    this.restaurantId = int.parse(restaurantId);
     prLang.value = await get_restaurant_priamry_lang(4) ?? LanguageType.ES;
     scLang.value = prLang.value.toOpLang();
     await _assignCategories();
@@ -208,7 +198,7 @@ class ROpItemViewController {
           "🍞🍞🍞 Adding ${_contructItem().name[LanguageType.EN]} to category id : ${int.parse(currentCategory.value!.id!)} ");
       final int? newItemId = await add_one_item(
           item: _contructItem(),
-          restaurantId: 4,
+          restaurantId: restaurantId,
           categoryId: int.parse(currentCategory.value!.id!));
       if (newItemId != null) {
         mezDbgPrint(
@@ -282,7 +272,8 @@ class ROpItemViewController {
 
   Future<void> _assignCategories() async {
     categories.value =
-        await get_restaurant_categories_by_id(4, withCache: false) ?? [];
+        await get_restaurant_categories_by_id(restaurantId, withCache: false) ??
+            [];
   }
 
   Future<void> editImage(context) async {
@@ -308,9 +299,9 @@ class ROpItemViewController {
   }
 
   bool get isCurrentSpec {
-    mezDbgPrint(
-        "Current spec ====> ${restaurant.value!.currentSpecials.contains(editableItem.value)}");
-    return restaurant.value!.currentSpecials.contains(editableItem.value);
+    // TODO Update to hasura @m66are
+
+    return false;
   }
 
   ImageProvider? get getRightImage {
@@ -324,15 +315,16 @@ class ROpItemViewController {
 
   List<String> getItemsNames(LanguageType languageType) {
     final List<String> data = [];
-    final List<Item> items = restaurant.value!.getAllItems();
-    if (editMode.isTrue) {
-      items.removeWhere((Item element) => element.id == editableItem.value!.id);
-    }
-    items.forEach((Item element) {
-      if (element.name[languageType] != null) {
-        data.add(element.name[languageType]!.replaceAll(" ", "").toLowerCase());
-      }
-    });
+    // TODO Update to hasura @m66are
+    // final List<Item> items = restaurant.value!.getAllItems();
+    // if (editMode.isTrue) {
+    //   items.removeWhere((Item element) => element.id == editableItem.value!.id);
+    // }
+    // items.forEach((Item element) {
+    //   if (element.name[languageType] != null) {
+    //     data.add(element.name[languageType]!.replaceAll(" ", "").toLowerCase());
+    //   }
+    // });
 
     return data;
   }

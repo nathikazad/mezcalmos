@@ -2,9 +2,6 @@ table:
   name: restaurant_operator
   schema: public
 object_relationships:
-  - name: notification_info
-    using:
-      foreign_key_constraint_on: notification_info_id
   - name: restaurant
     using:
       manual_configuration:
@@ -14,6 +11,15 @@ object_relationships:
         remote_table:
           name: restaurant
           schema: public
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+computed_fields:
+  - name: notification_token
+    definition:
+      function:
+        name: restaurant_operator_notification_token
+        schema: public
 insert_permissions:
   - role: restaurant_operator
     permission:
@@ -45,7 +51,6 @@ update_permissions:
       columns:
         - app_version
         - current_gps
-        - notification_info_id
       filter:
         user_id:
           _eq: X-Hasura-User-Id

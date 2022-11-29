@@ -119,7 +119,7 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
                       _navigationLink(
                           onClick: () async {
                             _drawerController.closeMenu();
-                            await authController.signOut();
+                            //   await authController.signOut();
                           },
                           icon: Icons.logout,
                           titleWidget: Text(

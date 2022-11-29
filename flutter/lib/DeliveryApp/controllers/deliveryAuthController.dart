@@ -106,14 +106,15 @@ class DeliveryAuthController extends GetxController {
     _locationListener = await _listenForLocation();
 
     await _userInfoStreamListener?.cancel();
-    _authController.userInfoStream.listen((MainUserInfo? userInfo) {
-      if (userInfo != null) {
-        _databaseHelper.firebaseDatabase
-            .ref()
-            .child(deliveryDriverInfoNode(user.uid))
-            .set(userInfo.toFirebaseFormatJson());
-      }
-    });
+    // TODO removed the info stream
+    // _authController.userInfoStream.listen((MainUserInfo? userInfo) {
+    //   if (userInfo != null) {
+    //     _databaseHelper.firebaseDatabase
+    //         .ref()
+    //         .child(deliveryDriverInfoNode(user.uid))
+    //         .set(userInfo.toFirebaseFormatJson());
+    //   }
+    // });
   }
 
   Future<void> saveNotificationToken() async {

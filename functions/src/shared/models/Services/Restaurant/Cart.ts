@@ -1,21 +1,18 @@
-import { Item, Option } from "./Item";
+import { SelectedOption } from "./RestaurantOrder";
 
 export interface Cart {
   customerId: number;
   restaurantId?: number;
-  itemsCost: number;
-  deliveryCost?: number;
-  totalCost: number;
-  items: Record<string, CartItem>;
+  cost: number;
+  items: Array<CartItem>;
 }
 
-export interface CartItem extends Item {
-  cartItemId: number;
+export interface CartItem {
+  cartItemId?: number;
   itemId: number;
   customerId: number;
-  selectedOption: Option;
+  selectedOptions?: Array<SelectedOption>;
   quantity: number;
   costPerOne: number;
   note?: string;
 }
-

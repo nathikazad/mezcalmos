@@ -82,9 +82,9 @@ export async function addHasuraClaim(uid: string | undefined) {
     }
     const customClaims = {
       "https://hasura.io/jwt/claims": {
-        "x-hasura-default-role": "customer",
-        "x-hasura-allowed-roles": ["customer", "mez_admin", "restaurant_operator", "delivery_driver", "delivery_operator"], // add admin role for admin users
-        "x-hasura-user-id": hasuraUserId?.toString()
+        "x-hasura-default-role": "anonymous",
+        "x-hasura-allowed-roles": ["anonymous","restaurant_operator","customer","mez_admin","deliverer", "delivery_operator"], // add admin role for admin users
+      "x-hasura-user-id": hasuraUserId?.toString()
       }
     };
     await firebase.auth().setCustomUserClaims(uid, customClaims)

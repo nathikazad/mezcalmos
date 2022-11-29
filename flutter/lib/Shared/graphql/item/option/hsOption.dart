@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/item/option/__generated/option.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/item/option/choice/hsChoice.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -49,14 +50,19 @@ Future<Option?> get_option_by_id(int optionId, {bool withCache = true}) async {
 }
 
 // Mutations //
-Future<int?> add_option({required Option option, required int itemId}) async {
+Future<int?> add_option(
+    {required Option option,
+    required int itemId,
+    required int restaurantId}) async {
   final QueryResult<Mutation$addOption> response =
       await _db.graphQLClient.mutate$addOption(
     Options$Mutation$addOption(
       variables: Variables$Mutation$addOption(
         option: Input$restaurant_option_insert_input(
+          restaurant_id: restaurantId,
           items: Input$restaurant_item_option_map_arr_rel_insert_input(data: [
-            Input$restaurant_item_option_map_insert_input(item_id: itemId)
+            Input$restaurant_item_option_map_insert_input(
+                item_id: itemId, restaurant_id: restaurantId)
           ]),
           position: option.position,
           option_type: option.optionType.toFirebaseFormatString(),
@@ -69,6 +75,9 @@ Future<int?> add_option({required Option option, required int itemId}) async {
                   .toList()),
           name: Input$translation_obj_rel_insert_input(
             data: Input$translation_insert_input(
+              service_provider_id: restaurantId,
+              service_provider_type:
+                  OrderType.Restaurant.toFirebaseFormatString(),
               translations: Input$translation_value_arr_rel_insert_input(
                   data: <Input$translation_value_insert_input>[
                     Input$translation_value_insert_input(

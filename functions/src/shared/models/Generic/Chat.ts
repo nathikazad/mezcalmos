@@ -42,7 +42,8 @@ export enum ParticipantType {
   DeliveryDriver = "deliveryDriver",
   Laundry = "laundry",
   LaundryOperator = "laundryOperator",
-  RestaurantOperator = "restaurantOperator"
+  RestaurantOperator = "restaurantOperator",
+  MezAdmin = "mezAdmin"
 }
 
 export const nonNotifiableParticipants: Array<ParticipantType> = [ParticipantType.Restaurant, ParticipantType.Laundry];

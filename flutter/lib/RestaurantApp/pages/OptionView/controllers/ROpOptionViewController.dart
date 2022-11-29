@@ -45,11 +45,14 @@ class ROpOptionViewController {
   // getters //
   bool get isEditing => editMode.value && editableOption.value != null;
 
+  late int restaurantId;
+
 // init //
   Future<void> init(
       {String? optionId,
       required String restaurantId,
       required String itemID}) async {
+    this.restaurantId = int.parse(restaurantId);
     itemId = int.tryParse(itemID);
     await _assignLanguages(restaurantId);
     if (optionId != null && int.tryParse(optionId) != null) {
@@ -136,6 +139,7 @@ class ROpOptionViewController {
     mezDbgPrint("Adding new option to db ...");
     final int? newOptionID = await add_option(
         itemId: itemId!,
+        restaurantId: restaurantId,
         option: (optionType.value == OptionType.Custom)
             ? _constructCustomOption()
             : _contructOption());

@@ -1,13 +1,21 @@
 import { UserInfo } from "./User";
 
 export interface Location {
-  gps: GPS;
-  address?: string;
+ 
+  address: string;
+  lat: number;
+  lng: number;
+
 }
 
-export interface GPS {
-  type: string;
-  coordinates: [number, number];
+
+
+export interface Review {
+  rating: number,
+  fromEntityId: number,
+  fromEntityType: string,
+  toEntityId: number,
+  toEntityType: string
 }
 
 export enum Language {
@@ -16,12 +24,19 @@ export enum Language {
 }
 
 export enum AppType {
-  CustomerWeb = "CustomerWeb",
-  CustomerMobile = "CustomerMobile",
-  RestaurantApp = "RestaurantApp"
+  CustomerWeb = "customer_web",
+  CustomerMobile = "customer_mobile",
+  RestaurantApp = "restaurant",
+  DeliveryApp = "delivery",
+  DeliveryAdmin = "delivery_admin",
+  MezAdmin = "mez_admin"
 }
 
-export type NotificationInfo = Record<TokenType, string>;
+// export type NotificationInfo = Record<TokenType, string>;
+export interface NotificationInfo {
+  token: string;
+  AppTypeId: AppType;
+}
 
 export enum TokenType {
   DeviceNotificationToken = "deviceNotificationToken",
