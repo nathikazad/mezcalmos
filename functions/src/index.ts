@@ -4,10 +4,10 @@ import * as firebase from "firebase-admin";
 // import * as stripeServiceProvderFunctions from './utilities/stripe/serviceProvider'
 // import * as stripeCardFunctions from './utilities/stripe/card'
 import * as restaurantStatusChange from './restaurant/adminStatusChanges'
-// import { createRestaurant } from "./restaurant/createNewRestaurant";
+ import { createNewRestaurant } from "./restaurant/createNewRestaurant";
 import { checkout } from "./restaurant/checkoutCart";
 // import { addReview } from "./restaurant/addReview";
-// import { cancelOrderFromCustomer } from "./restaurant/cancelOrderFromCustomer";
+ import { cancelOrderFromCustomer } from "./restaurant/cancelOrderFromCustomer";
 // import { requestRide } from "./taxi/request";
 // import * as taxiStatusChange from './taxi/taxiStatusChange'
 // import { acceptRide } from "./taxi/accept";
@@ -55,7 +55,7 @@ export const stripe = {
 }
 
 export const restaurant = {
-  createRestaurant: authenticatedCall((userId, data) => createRestaurant(userId, data)),
+  createRestaurant: authenticatedCall((userId, data) => createNewRestaurant(userId, data)),
   checkoutCart: authenticatedCall((userId, data) => checkout(userId, data)),
   // addReview: authenticatedCall((userId, data) => addReview(userId, data)),
   prepareOrder: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),
