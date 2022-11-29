@@ -1,5 +1,5 @@
 table:
-  name: deliverer
+  name: delivery_driver
   schema: public
 object_relationships:
   - name: delivery_company
@@ -39,7 +39,7 @@ select_permissions:
             user_id:
               _eq: X-Hasura-User-Id
 update_permissions:
-  - role: deliverer
+  - role: delivery_driver
     permission:
       columns:
         - app_version

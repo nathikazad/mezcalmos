@@ -65,7 +65,7 @@ select_permissions:
         - restaurant_id
         - cost
       filter: {}
-  - role: deliverer
+  - role: delivery_driver
     permission:
       columns:
         - available

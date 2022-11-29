@@ -72,7 +72,7 @@ select_permissions:
         - restaurant_id
         - schedule_id
       filter: {}
-  - role: deliverer
+  - role: delivery_driver
     permission:
       columns:
         - description_id

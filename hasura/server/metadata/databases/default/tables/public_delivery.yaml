@@ -11,9 +11,9 @@ object_relationships:
   - name: customer_review_by_driver
     using:
       foreign_key_constraint_on: customer_review_by_driver_id
-  - name: deliverer
+  - name: delivery_driver
     using:
-      foreign_key_constraint_on: deliverer_id
+      foreign_key_constraint_on: delivery_driver_id
   - name: driver_review_by_customer
     using:
       foreign_key_constraint_on: driver_review_by_customer_id
@@ -44,7 +44,7 @@ select_permissions:
         - chat_with_service_provider_id
         - customer_id
         - customer_review_by_driver_id
-        - deliverer_id
+        - delivery_driver_id
         - driver_review_by_customer_id
         - driver_review_by_service_provider_id
         - id
@@ -69,11 +69,11 @@ select_permissions:
         - trip_distance
         - trip_duration
         - status
-        - deliverer_app_type_id
+        - delivery_driver_type
       filter:
         customer_id:
           _eq: X-Hasura-User-Id
-  - role: deliverer
+  - role: delivery_driver
     permission:
       columns:
         - current_gps
@@ -83,7 +83,7 @@ select_permissions:
         - chat_with_service_provider_id
         - customer_id
         - customer_review_by_driver_id
-        - deliverer_id
+        - delivery_driver_id
         - driver_review_by_customer_id
         - driver_review_by_service_provider_id
         - id
@@ -108,9 +108,9 @@ select_permissions:
         - trip_distance
         - trip_duration
         - status
-        - deliverer_app_type_id
+        - delivery_driver_type
       filter:
-        deliverer:
+        delivery_driver:
           user_id:
             _eq: X-Hasura-User-Id
   - role: mez_admin
@@ -123,7 +123,7 @@ select_permissions:
         - chat_with_service_provider_id
         - customer_id
         - customer_review_by_driver_id
-        - deliverer_id
+        - delivery_driver_id
         - driver_review_by_customer_id
         - driver_review_by_service_provider_id
         - id
@@ -148,7 +148,7 @@ select_permissions:
         - trip_distance
         - trip_duration
         - status
-        - deliverer_app_type_id
+        - delivery_driver_type
       filter:
         _exists:
           _table:
@@ -167,7 +167,7 @@ select_permissions:
         - chat_with_service_provider_id
         - customer_id
         - customer_review_by_driver_id
-        - deliverer_id
+        - delivery_driver_id
         - driver_review_by_customer_id
         - driver_review_by_service_provider_id
         - id
@@ -192,20 +192,20 @@ select_permissions:
         - trip_distance
         - trip_duration
         - status
-        - deliverer_app_type_id
+        - delivery_driver_type
       filter:
         restaurant:
           restaurant_operators:
             user_id:
               _eq: X-Hasura-User-Id
 update_permissions:
-  - role: deliverer
+  - role: delivery_driver
     permission:
       columns:
         - estimated_arrival_at_dropoff_time
         - estimated_arrival_at_pickup_time
       filter:
-        deliverer:
+        delivery_driver:
           user_id:
             _eq: X-Hasura-User-Id
       check: null

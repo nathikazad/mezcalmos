@@ -14,7 +14,7 @@ insert_permissions:
         - app_type_id
         - token
         - user_id
-  - role: deliverer
+  - role: delivery_driver
     permission:
       check:
         _and:
@@ -62,7 +62,7 @@ update_permissions:
           - user_id:
               _eq: X-Hasura-User-Id
       check: null
-  - role: deliverer
+  - role: delivery_driver
     permission:
       columns:
         - token

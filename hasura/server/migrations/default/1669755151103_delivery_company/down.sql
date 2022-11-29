@@ -1,4 +1,34 @@
 
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- CREATE OR REPLACE VIEW "public"."delivery_order_public" AS
+--  SELECT delivery_order.id AS delivery_driver_id,
+--     delivery_order.delivery_driver_type,
+--     delivery_order.order_time,
+--     delivery_order.estimated_package_ready_time,
+--     delivery_order.actual_package_ready_time,
+--     delivery_order.estimated_arrival_at_pickup_time,
+--     delivery_order.actual_arrival_at_pickup_time,
+--     delivery_order.estimated_arrival_at_dropoff_time,
+--     delivery_order.actual_arrival_at_dropoff_time,
+--     delivery_order.actual_delivered_time,
+--     delivery_order.status,
+--     delivery_order.driver_review_by_service_provider_id,
+--     delivery_order.driver_review_by_customer_id,
+--     delivery_order.service_provider_review_by_driver_id,
+--     delivery_order.customer_review_by_driver_id,
+--     delivery_order.customer_id,
+--     delivery_order.service_provider_id,
+--     delivery_order.service_provider_type,
+--     delivery_order.trip_distance,
+--     delivery_order.trip_duration
+--    FROM delivery_order;
+
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- DROP VIEW "public"."delivery_order_public";
+
+
 comment on column "public"."delivery_order"."delivery_driver_type" is E'restaurant, delivery_driver, delivery_operator';
 
 alter table "public"."delivery_order" rename column "delivery_driver_type" to "delivery_driver_app_type_id";

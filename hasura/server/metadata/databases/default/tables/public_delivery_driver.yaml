@@ -39,7 +39,7 @@ select_permissions:
             user_id:
               _eq: X-Hasura-User-Id
 update_permissions:
-  - role: deliverer
+  - role: delivery_driver
     permission:
       columns:
         - app_version

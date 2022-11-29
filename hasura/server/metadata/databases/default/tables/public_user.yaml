@@ -18,7 +18,7 @@ select_permissions:
         - language_id
         - name
       filter: {}
-  - role: deliverer
+  - role: delivery_driver
     permission:
       columns:
         - id
@@ -55,7 +55,7 @@ update_permissions:
         id:
           _eq: X-Hasura-User-Id
       check: null
-  - role: deliverer
+  - role: delivery_driver
     permission:
       columns:
         - email
