@@ -3,7 +3,7 @@ import * as firebase from "firebase-admin";
 // import * as stripePaymentFunctions from './utilities/stripe/payment'
 // import * as stripeServiceProvderFunctions from './utilities/stripe/serviceProvider'
 // import * as stripeCardFunctions from './utilities/stripe/card'
-// import * as restaurantStatusChange from './restaurant/adminStatusChanges'
+import * as restaurantStatusChange from './restaurant/adminStatusChanges'
 // import { createRestaurant } from "./restaurant/createNewRestaurant";
 import { checkout } from "./restaurant/checkoutCart";
 // import { addReview } from "./restaurant/addReview";
@@ -55,13 +55,13 @@ export const stripe = {
 }
 
 export const restaurant = {
-  // createRestaurant: authenticatedCall((userId, data) => createRestaurant(userId, data)),
+  createRestaurant: authenticatedCall((userId, data) => createRestaurant(userId, data)),
   checkoutCart: authenticatedCall((userId, data) => checkout(userId, data)),
   // addReview: authenticatedCall((userId, data) => addReview(userId, data)),
-  // prepareOrder: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),
-  // readyForOrderPickup: authenticatedCall((userId, data) => restaurantStatusChange.readyForPickupOrder(userId, data)),
-  // cancelOrderFromAdmin: authenticatedCall((userId, data) => restaurantStatusChange.cancelOrder(userId, data)),
-  // cancelOrderFromCustomer: authenticatedCall((userId, data) => cancelOrderFromCustomer(userId, data)),
+  prepareOrder: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),
+  readyForOrderPickup: authenticatedCall((userId, data) => restaurantStatusChange.readyForPickupOrder(userId, data)),
+  cancelOrderFromAdmin: authenticatedCall((userId, data) => restaurantStatusChange.cancelOrder(userId, data)),
+  cancelOrderFromCustomer: authenticatedCall((userId, data) => cancelOrderFromCustomer(userId, data)),
   // setEstimatedFoodReadyTime: authenticatedCall((userId, data) => restaurantStatusChange.setEstimatedFoodReadyTime(userId, data)),
   // markOrderItemUnavailable: authenticatedCall((userId, data) => restaurantStatusChange.markOrderItemUnavailable(userId, data)),
   // refundCustomerCustomAmount: authenticatedCall((userId, data) => restaurantStatusChange.refundCustomerCustomAmount(userId, data)),
