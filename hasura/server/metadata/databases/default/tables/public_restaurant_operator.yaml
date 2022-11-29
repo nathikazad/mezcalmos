@@ -28,13 +28,17 @@ select_permissions:
   - role: restaurant_operator
     permission:
       columns:
+        - current_gps
         - id
+        - owner
         - restaurant_id
         - status
         - user_id
       filter:
-        user_id:
-          _eq: X-Hasura-User-Id
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
 update_permissions:
   - role: restaurant_operator
     permission:

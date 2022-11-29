@@ -9,7 +9,7 @@ object_relationships:
           deliverer_id: id
         insertion_order: null
         remote_table:
-          name: deliverer
+          name: delivery_driver
           schema: public
   - name: restaurant
     using:

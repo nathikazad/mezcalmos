@@ -16,6 +16,16 @@ array_relationships:
         table:
           name: restaurant_category
           schema: public
+  - name: delivery_drivers
+    using:
+      manual_configuration:
+        column_mapping:
+          id: delivery_company_id
+          service_provider_type: delivery_company_type
+        insertion_order: null
+        remote_table:
+          name: delivery_driver
+          schema: public
   - name: orders
     using:
       foreign_key_constraint_on:
