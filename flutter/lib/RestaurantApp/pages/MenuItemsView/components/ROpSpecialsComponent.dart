@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:grouped_list/grouped_list.dart';
-import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpSpecialItemCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/controllers/ROpMenuViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
-import 'package:sizer/sizer.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -55,49 +50,49 @@ class ROpSpecialsComponent extends StatelessWidget {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        GroupedListView<Item, DateTime>(
-                          shrinkWrap: true,
-                          order: GroupedListOrder.ASC,
-                          elements:
-                              viewController.restaurant.value!.currentSpecials,
-                          groupBy: (Item element) => DateTime(
-                            element.startsAt!.toLocal().year,
-                            element.startsAt!.toLocal().month,
-                            element.startsAt!.toLocal().day,
-                          ),
-                          // groupComparator: (DateTime value1, DateTime value2) =>
-                          //     value2
-                          //         .toLocal()
-                          //         .day
-                          //         .compareTo(value1.toLocal().day),
-                          itemComparator: (Item element1, Item element2) =>
-                              element2.startsAt!
-                                  .toLocal()
-                                  .compareTo(element1.startsAt!.toLocal()),
-                          physics: NeverScrollableScrollPhysics(),
-                          groupHeaderBuilder: (Item element) {
-                            return Container(
-                              margin: const EdgeInsets.symmetric(vertical: 8),
-                              child: Text(
-                                element.startsAt!
-                                    .toLocal()
-                                    .toDayName(withDateNumber: true),
-                                style: Get.textTheme.headline3
-                                    ?.copyWith(fontSize: 13.sp),
-                              ),
-                            );
-                          },
-                          separator: SizedBox(
-                            height: 5,
-                          ),
-                          itemBuilder: (BuildContext context, Item element) {
-                            return ROpSpecialItemCard(
-                              item: element,
-                              viewController: viewController,
-                              isCurrent: true,
-                            );
-                          },
-                        ),
+                        // GroupedListView<Item, DateTime>(
+                        //   shrinkWrap: true,
+                        //   order: GroupedListOrder.ASC,
+                        //   elements:
+                        //       viewController.restaurant.value!.currentSpecials,
+                        //   groupBy: (Item element) => DateTime(
+                        //     element.startsAt!.toLocal().year,
+                        //     element.startsAt!.toLocal().month,
+                        //     element.startsAt!.toLocal().day,
+                        //   ),
+                        //   // groupComparator: (DateTime value1, DateTime value2) =>
+                        //   //     value2
+                        //   //         .toLocal()
+                        //   //         .day
+                        //   //         .compareTo(value1.toLocal().day),
+                        //   itemComparator: (Item element1, Item element2) =>
+                        //       element2.startsAt!
+                        //           .toLocal()
+                        //           .compareTo(element1.startsAt!.toLocal()),
+                        //   physics: NeverScrollableScrollPhysics(),
+                        //   groupHeaderBuilder: (Item element) {
+                        //     return Container(
+                        //       margin: const EdgeInsets.symmetric(vertical: 8),
+                        //       child: Text(
+                        //         element.startsAt!
+                        //             .toLocal()
+                        //             .toDayName(withDateNumber: true),
+                        //         style: Get.textTheme.headline3
+                        //             ?.copyWith(fontSize: 13.sp),
+                        //       ),
+                        //     );
+                        //   },
+                        //   separator: SizedBox(
+                        //     height: 5,
+                        //   ),
+                        //   itemBuilder: (BuildContext context, Item element) {
+                        //     return ROpSpecialItemCard(
+                        //       item: element,
+                        //       viewController: viewController,
+                        //       isCurrent: true,
+                        //     );
+                        //   },
+                        // ),
                       ],
                     );
                   },
@@ -116,17 +111,17 @@ class ROpSpecialsComponent extends StatelessWidget {
                 SizedBox(
                   height: 15,
                 ),
-                Obx(
-                  () => Column(
-                    children: List.generate(
-                        viewController.restaurant.value!.pastSpecials.length,
-                        (int index) => ROpSpecialItemCard(
-                            isCurrent: false,
-                            viewController: viewController,
-                            item: viewController
-                                .restaurant.value!.pastSpecials[index])),
-                  ),
-                ),
+                // Obx(
+                //   () => Column(
+                //     children: List.generate(
+                //         viewController.restaurant.value!.pastSpecials.length,
+                //         (int index) => ROpSpecialItemCard(
+                //             isCurrent: false,
+                //             viewController: viewController,
+                //             item: viewController
+                //                 .restaurant.value!.pastSpecials[index])),
+                //   ),
+                // ),
               ],
             ),
           ),

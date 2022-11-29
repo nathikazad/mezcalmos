@@ -115,7 +115,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
                     _navigationLink(
                         onClick: () async {
                           _drawerController.closeMenu();
-                          //  await authController.signOut();
+                          await authController.signOut();
                         },
                         icon: Icons.logout,
                         titleWidget: Text(
@@ -203,7 +203,8 @@ class _ROpDrawerState extends State<ROpDrawer> {
             onClick: () {
               _drawerController.closeMenu();
               Get.toNamed(getROpMenuRoute(
-                  restaurantId: restaurantOpAuthController.restaurantId!));
+                  restaurantId: restaurantOpAuthController
+                      .operator.value!.state.restaurantId!));
             },
             titleWidget: Text(
               "${_i18n()["menu"] ?? "Menu"}",

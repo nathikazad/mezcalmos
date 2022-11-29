@@ -33,9 +33,7 @@ class ROpSpecialItemCard extends StatelessWidget {
         onTap: () {
           Get.toNamed(
               getEditItemRoute(
-                  itemId: item.id!,
-                  restaurntID:
-                      viewController.restaurant.value!.info.firebaseId),
+                  itemId: item.id!, restaurntID: viewController.restaurnatId),
               arguments: {"specials": true});
         },
         child: Container(

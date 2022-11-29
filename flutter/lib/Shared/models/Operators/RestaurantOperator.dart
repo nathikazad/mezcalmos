@@ -57,6 +57,10 @@ class RestaurantOperator {
         "state": state.toJson(),
         "info": info.toFirebaseFormatJson(),
       };
+  bool get isAuthorized {
+    return state.operatorState == OperatorStatus.Authorized &&
+        state.restaurantId != null;
+  }
 }
 
 enum OperatorStatus { Awaiting_approval, Authorized, Banned }

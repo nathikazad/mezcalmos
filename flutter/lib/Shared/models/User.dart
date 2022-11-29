@@ -13,6 +13,7 @@ class UserInfo {
   bool get isNameSet => _name != null;
   String get image => _image ?? defaultUserImgUrl;
   bool get isImageSet => _image != null;
+
   UserInfo(
       {required this.hasuraId,
       required this.firebaseId,

@@ -18,11 +18,14 @@ Future<RestaurantOperatorState?> get_operator_state(
   if (response.hasException) {
     throw Exception("get opertor restaurant id error ${response.exception}");
   } else {
-    final Query$getOperatorRestaurantInfo$restaurant_operator data =
-        response.parsedData!.restaurant_operator.first;
-    final RestaurantOperatorState state = RestaurantOperatorState(
-        restaurantId: data.restaurant_id.toString(),
-        operatorState: data.status.toOperartorStatus());
-    return state;
+    final List<Query$getOperatorRestaurantInfo$restaurant_operator>? data =
+        response.parsedData?.restaurant_operator;
+    if (data != null && data.isNotEmpty) {
+      final RestaurantOperatorState state = RestaurantOperatorState(
+          restaurantId: data.first.restaurant_id.toString(),
+          operatorState: data.first.status.toOperartorStatus());
+      return state;
+    }
   }
+  return null;
 }

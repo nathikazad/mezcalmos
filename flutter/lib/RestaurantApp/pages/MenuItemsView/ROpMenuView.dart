@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpCategoryItems.dart';
-import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpItemCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpSpecialsComponent.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/controllers/ROpMenuViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
@@ -79,7 +78,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
       }),
       body: Obx(
         () {
-          if (viewController.mainCategories.isNotEmpty) {
+          if (viewController.pageLoaded.value) {
             return TabBarView(
               controller: _tabController,
               children: [
@@ -246,32 +245,32 @@ class _ROpMenuViewState extends State<ROpMenuView>
     );
   }
 
-  Widget _noCategoryItemsList() {
-    if (viewController.restaurant.value!.getItemsWithoutCategory != null) {
-      return Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('${_i18n()["noCategory"]}'),
-            SizedBox(
-              height: 5,
-            ),
-            Column(
-              children: List.generate(
-                  viewController
-                      .restaurant.value!.getAvItemsWithoutCategories!.length,
-                  (int index) => ROpItemCard(
-                      viewController: viewController,
-                      item: viewController.restaurant.value!
-                          .getAvItemsWithoutCategories![index])),
-            ),
-          ],
-        ),
-      );
-    } else {
-      return Container();
-    }
-  }
+  // Widget _noCategoryItemsList() {
+  //   if (viewController.restaurant.value!.getItemsWithoutCategory != null) {
+  //     return Container(
+  //       child: Column(
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           Text('${_i18n()["noCategory"]}'),
+  //           SizedBox(
+  //             height: 5,
+  //           ),
+  //           Column(
+  //             children: List.generate(
+  //                 viewController
+  //                     .restaurant.value!.getAvItemsWithoutCategories!.length,
+  //                 (int index) => ROpItemCard(
+  //                     viewController: viewController,
+  //                     item: viewController.restaurant.value!
+  //                         .getAvItemsWithoutCategories![index])),
+  //           ),
+  //         ],
+  //       ),
+  //     );
+  //   } else {
+  //     return Container();
+  //   }
+  // }
 
   void handleBack() {
     mezDbgPrint(viewController.reOrderMode.value);

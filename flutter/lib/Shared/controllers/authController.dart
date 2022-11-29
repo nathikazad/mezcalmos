@@ -10,7 +10,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/user/hsUser.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
@@ -196,6 +195,10 @@ class AuthController extends GetxController {
       //     .child('image')
       //     .set(compressedImageUrl);
     }
+  }
+
+  Future<void> signOut() async {
+    await _auth.signOut();
   }
 
   void changeLanguage(LanguageType newLanguage) {

@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/category/__generated/category.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -34,17 +35,20 @@ Future<List<Category>?> get_restaurant_categories_by_id(int restaurantId,
   return null;
 }
 
-Future<bool> delete_category(int id) async {
+Future<bool> delete_category(int categoryId) async {
+  mezDbgPrint("========>Category id in mutuaion $categoryId");
   final QueryResult<Mutation$deleteCategory> response = await hasuraDb
       .graphQLClient
       .mutate$deleteCategory(Options$Mutation$deleteCategory(
-          variables: Variables$Mutation$deleteCategory(categoryId: id)));
+          variables:
+              Variables$Mutation$deleteCategory(categoryId: categoryId)));
   if (response.hasException) {
     mezDbgPrint(
         "🚨🚨🚨 Hasura delete category mutation exception =>${response.exception}");
     return false;
   } else {
-    mezDbgPrint("✅✅✅ Hasura delete category mutation success ");
+    mezDbgPrint(
+        "✅✅✅ Hasura delete category mutation success ${response.parsedData} ");
     return true;
   }
 }
@@ -75,7 +79,8 @@ Future<Category?> get_category_by_id(int id) async {
   return null;
 }
 
-Future<String?> add_category(int restaurantId, Category category) async {
+Future<String?> add_category(
+    {required int restaurantId, required Category category}) async {
   final QueryResult<Mutation$addCategory> result =
       await hasuraDb.graphQLClient.mutate$addCategory(
     Options$Mutation$addCategory(
@@ -90,6 +95,10 @@ Future<String?> add_category(int restaurantId, Category category) async {
           //         .toList()),
           name: Input$translation_obj_rel_insert_input(
             data: Input$translation_insert_input(
+              service_provider_id: restaurantId,
+              service_provider_type:
+                  OrderType.Restaurant.toFirebaseFormatString(),
+              // service_provider_type = OrderType.restaurant,
               translations: Input$translation_value_arr_rel_insert_input(
                   data: <Input$translation_value_insert_input>[
                     Input$translation_value_insert_input(
@@ -104,6 +113,9 @@ Future<String?> add_category(int restaurantId, Category category) async {
           // description //
           description: Input$translation_obj_rel_insert_input(
             data: Input$translation_insert_input(
+              service_provider_id: restaurantId,
+              service_provider_type:
+                  OrderType.Restaurant.toFirebaseFormatString(),
               translations: Input$translation_value_arr_rel_insert_input(
                   data: <Input$translation_value_insert_input>[
                     Input$translation_value_insert_input(

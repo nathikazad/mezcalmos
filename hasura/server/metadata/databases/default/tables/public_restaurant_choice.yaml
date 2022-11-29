@@ -36,11 +36,7 @@ insert_permissions:
         - restaurant_id
   - role: restaurant_operator
     permission:
-      check:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      check: {}
       columns:
         - available
         - cost
