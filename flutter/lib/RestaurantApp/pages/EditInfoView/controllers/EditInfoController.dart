@@ -59,16 +59,14 @@ class ROpEditInfoController {
   final RxBool setupClicked = RxBool(false);
   final RxBool showStripeReqs = RxBool(false);
   RxString currentUrl = RxString("");
+  late int restaurantId;
 
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
 
   Future<void> init({required String restaurantId}) async {
-    mezDbgPrint("INIT EDIT PROFILE VIEW =======>$restaurantId");
+    this.restaurantId = int.parse(restaurantId);
 
-    Get.put(RestaurantInfoController(), permanent: false);
-    restaurantInfoController = Get.find<RestaurantInfoController>();
-    restaurantInfoController.init(restId: restaurantId);
-    restaurant.value = await get_restaurant_by_id(id: 4);
+    restaurant.value = await get_restaurant_by_id(id: this.restaurantId);
     mezDbgPrint(
         "🍔🍔🍔🍔 Restaurant Data ===========> ${restaurant.value?.toJson()}");
     // restaurantInfoController

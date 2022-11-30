@@ -65,24 +65,13 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
   }
 
   Future<void> _getRestaurant() async {
-    Get.put(RestaurantInfoController(), permanent: true);
-    Get.find<RestaurantInfoController>()
-        .init(restId: _restaurantOpAuthController.restaurantId!);
     final int id = int.parse(Get.find<RestaurantOpAuthController>()
         .operator
         .value!
         .state
         .restaurantId!);
-    try {
-      restaurant.value = await get_restaurant_by_id(id: id);
-    } catch (e, stk) {
-      isValidRestaurant.value = false;
-      mezDbgPrint(e);
-      mezDbgPrint(stk);
-      // MezSnackbar("OOPS",
-      //     "No restaurant with ID ${_restaurantOpAuthController.restaurantId} found",
-      //     position: SnackPosition.TOP);
-    }
+
+    restaurant.value = await get_restaurant_by_id(id: id);
   }
 
   @override

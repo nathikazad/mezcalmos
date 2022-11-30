@@ -71,7 +71,7 @@ export interface RestaurantOperator {
 }
 
 export enum OperatorStatus {
-  AwaitingApproval = "awaitingApproval",
+  AwaitingApproval = "awaiting_approval",
   Authorized = "authorized",
   Banned = "banned"
 }

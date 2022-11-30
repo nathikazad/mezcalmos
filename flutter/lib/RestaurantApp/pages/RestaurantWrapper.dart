@@ -89,7 +89,7 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
     if (operator == null) {
       // ignore: unawaited_futures, inference_faQilure_on_function_invocation
       Get.toNamed(kCreateRestaurant);
-    } else if (operator.isAuthorized) {
+    } else {
       Get.toNamed(kCurrentOrdersListView);
       // Get.to(SomethingWentWrongScreen());
 

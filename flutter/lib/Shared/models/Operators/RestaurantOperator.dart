@@ -17,6 +17,7 @@ class RestaurantOperatorState {
 
   Map<String, dynamic> toJson() => {
         "restaurantId": restaurantId,
+        "operatorStat": operatorState.toFirebaseFormatString(),
       };
 }
 
@@ -59,6 +60,11 @@ class RestaurantOperator {
       };
   bool get isAuthorized {
     return state.operatorState == OperatorStatus.Authorized &&
+        state.restaurantId != null;
+  }
+
+  bool get isWaiting {
+    return state.operatorState == OperatorStatus.Awaiting_approval &&
         state.restaurantId != null;
   }
 }

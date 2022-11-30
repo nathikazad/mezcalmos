@@ -27,7 +27,7 @@ export async function createRestaurant(
         restaurant_operators: {
           data: [{
             user_id: restaurantOperatorUserId,
-            status: OperatorStatus.Authorized,
+            status: OperatorStatus.AwaitingApproval,
             owner: true,
           }]
         }

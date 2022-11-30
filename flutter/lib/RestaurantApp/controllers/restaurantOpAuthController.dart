@@ -45,22 +45,24 @@ class RestaurantOpAuthController extends GetxController {
     mezDbgPrint(
         "RestaurantAuthController: calling handle state change first time");
     // Todo @m66are remove this restaurant id hard code
-    restaurantId = "GVTnpkENslMDiYRENOvKVINtt133";
+
     setupRestaurantOperator();
     super.onInit();
   }
 
   Future<void> setupRestaurantOperator() async {
     final RestaurantOperatorState? operatorState =
-        await get_operator_state(operatorId: operatorId);
+        await get_operator_state(operatorId: operatorId, withCache: false);
     final UserInfo operatorInfo =
         await get_user_by_hasura_id(hasuraId: operatorId);
     if (operatorState != null) {
+      restaurantId = operatorState.restaurantId;
       operator.value = RestaurantOperator(
           state: operatorState,
           info: operatorInfo,
           operatorId: operatorId.toString());
     }
+    mezDbgPrint("👑👑 Restaurant Operator :: ${operator.value?.toJson()}");
     // mezDbgPrint("RestaurantAuthController: handle state change user value");
     // mezDbgPrint(user);
 

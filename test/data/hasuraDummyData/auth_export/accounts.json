@@ -34,7 +34,7 @@
             "passwordHash": "fakeHash:salt=fakeSaltvjHJNx8AxaefO8zeiZRk:password=password",
             "salt": "fakeSaltvjHJNx8AxaefO8zeiZRk",
             "passwordUpdatedAt": 1668610591999,
-            "customAttributes": "{\"https://hasura.io/jwt/claims\":{\"x-hasura-default-role\":\"anonymous\",\"x-hasura-allowed-roles\":[\"anonymous\",\"customer\",\"mez_admin\",\"deliverer\",\"restaurant_operator\"],\"x-hasura-user-id\":\"3\"}}",
+            "customAttributes": "{\"https://hasura.io/jwt/claims\":{\"x-hasura-default-role\":\"anonymous\",\"x-hasura-allowed-roles\":[\"anonymous\",\"customer\",\"mez_admin\",\"deliverer\",\"restaurant_operator\"],\"x-hasura-user-id\":\"4\"}}",
             "providerUserInfo": [{
                 "providerId": "password",
                 "email": "restaurantop@mezcalmos.com",

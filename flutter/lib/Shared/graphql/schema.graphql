@@ -4972,8 +4972,29 @@ type mutation_root {
   update data of the table: "restaurant"
   """
   update_restaurant(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: restaurant_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: restaurant_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    """
+    _delete_elem: restaurant_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: restaurant_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: restaurant_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: restaurant_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: restaurant_set_input
@@ -4986,8 +5007,29 @@ type mutation_root {
   update single row of the table: "restaurant"
   """
   update_restaurant_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: restaurant_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: restaurant_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    """
+    _delete_elem: restaurant_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: restaurant_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: restaurant_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: restaurant_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: restaurant_set_input
@@ -7429,7 +7471,10 @@ type restaurant {
     """filter the rows returned"""
     where: restaurant_operator_bool_exp
   ): restaurant_operator_aggregate!
-  schedule_id: Int!
+  schedule(
+    """JSON select path"""
+    path: String
+  ): jsonb
   self_delivery: Boolean!
   service_provider_type: String!
 
@@ -7479,12 +7524,16 @@ type restaurant_aggregate_fields {
   variance: restaurant_variance_fields
 }
 
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input restaurant_append_input {
+  schedule: jsonb
+}
+
 """aggregate avg on columns"""
 type restaurant_avg_fields {
   description_id: Float
   id: Float
   payment_info_id: Float
-  schedule_id: Float
 }
 
 """
@@ -7510,7 +7559,7 @@ input restaurant_bool_exp {
   payment_info: service_provider_payment_info_bool_exp
   payment_info_id: Int_comparison_exp
   restaurant_operators: restaurant_operator_bool_exp
-  schedule_id: Int_comparison_exp
+  schedule: jsonb_comparison_exp
   self_delivery: Boolean_comparison_exp
   service_provider_type: String_comparison_exp
   specials: restaurant_item_bool_exp
@@ -9270,13 +9319,33 @@ enum restaurant_constraint {
 }
 
 """
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input restaurant_delete_at_path_input {
+  schedule: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+"""
+input restaurant_delete_elem_input {
+  schedule: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input restaurant_delete_key_input {
+  schedule: String
+}
+
+"""
 input type for incrementing numeric columns in table "restaurant"
 """
 input restaurant_inc_input {
   description_id: Int
   id: Int
   payment_info_id: Int
-  schedule_id: Int
 }
 
 """
@@ -9301,7 +9370,7 @@ input restaurant_insert_input {
   payment_info: service_provider_payment_info_obj_rel_insert_input
   payment_info_id: Int
   restaurant_operators: restaurant_operator_arr_rel_insert_input
-  schedule_id: Int
+  schedule: jsonb
   self_delivery: Boolean
   service_provider_type: String
 }
@@ -10411,7 +10480,6 @@ type restaurant_max_fields {
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
   payment_info_id: Int
-  schedule_id: Int
   service_provider_type: String
 }
 
@@ -10428,7 +10496,6 @@ type restaurant_min_fields {
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
   payment_info_id: Int
-  schedule_id: Int
   service_provider_type: String
 }
 
@@ -10583,6 +10650,11 @@ enum restaurant_operator_constraint {
   unique or primary key constraint on columns "id"
   """
   restaurant_operator_pkey
+
+  """
+  unique or primary key constraint on columns "user_id"
+  """
+  restaurant_operator_user_id_key
 }
 
 """
@@ -12211,7 +12283,7 @@ input restaurant_order_by {
   payment_info: service_provider_payment_info_order_by
   payment_info_id: order_by
   restaurant_operators_aggregate: restaurant_operator_aggregate_order_by
-  schedule_id: order_by
+  schedule: order_by
   self_delivery: order_by
   service_provider_type: order_by
   specials_aggregate: restaurant_item_aggregate_order_by
@@ -13713,6 +13785,11 @@ input restaurant_pk_columns_input {
   id: Int!
 }
 
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input restaurant_prepend_input {
+  schedule: jsonb
+}
+
 """
 select columns of table "restaurant"
 """
@@ -13751,7 +13828,7 @@ enum restaurant_select_column {
   payment_info_id
 
   """column name"""
-  schedule_id
+  schedule
 
   """column name"""
   self_delivery
@@ -13777,7 +13854,7 @@ input restaurant_set_input {
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
   payment_info_id: Int
-  schedule_id: Int
+  schedule: jsonb
   self_delivery: Boolean
   service_provider_type: String
 }
@@ -13787,7 +13864,6 @@ type restaurant_stddev_fields {
   description_id: Float
   id: Float
   payment_info_id: Float
-  schedule_id: Float
 }
 
 """aggregate stddev_pop on columns"""
@@ -13795,7 +13871,6 @@ type restaurant_stddev_pop_fields {
   description_id: Float
   id: Float
   payment_info_id: Float
-  schedule_id: Float
 }
 
 """aggregate stddev_samp on columns"""
@@ -13803,7 +13878,6 @@ type restaurant_stddev_samp_fields {
   description_id: Float
   id: Float
   payment_info_id: Float
-  schedule_id: Float
 }
 
 """
@@ -13832,7 +13906,7 @@ input restaurant_stream_cursor_value_input {
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
   payment_info_id: Int
-  schedule_id: Int
+  schedule: jsonb
   self_delivery: Boolean
   service_provider_type: String
 }
@@ -13842,7 +13916,6 @@ type restaurant_sum_fields {
   description_id: Int
   id: Int
   payment_info_id: Int
-  schedule_id: Int
 }
 
 """
@@ -13883,7 +13956,7 @@ enum restaurant_update_column {
   payment_info_id
 
   """column name"""
-  schedule_id
+  schedule
 
   """column name"""
   self_delivery
@@ -13893,8 +13966,29 @@ enum restaurant_update_column {
 }
 
 input restaurant_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: restaurant_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: restaurant_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+  """
+  _delete_elem: restaurant_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: restaurant_delete_key_input
+
   """increments the numeric columns with given value of the filtered values"""
   _inc: restaurant_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: restaurant_prepend_input
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_set_input
@@ -13906,7 +14000,6 @@ type restaurant_var_pop_fields {
   description_id: Float
   id: Float
   payment_info_id: Float
-  schedule_id: Float
 }
 
 """aggregate var_samp on columns"""
@@ -13914,7 +14007,6 @@ type restaurant_var_samp_fields {
   description_id: Float
   id: Float
   payment_info_id: Float
-  schedule_id: Float
 }
 
 """aggregate variance on columns"""
@@ -13922,7 +14014,6 @@ type restaurant_variance_fields {
   description_id: Float
   id: Float
   payment_info_id: Float
-  schedule_id: Float
 }
 
 """

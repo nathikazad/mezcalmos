@@ -8,27 +8,25 @@ query getRestaurants {
     location_gps
     firebase_id
     approved
-    description_id,
+    description_id
     description {
- 				translations {
-          language_id
-          value
-        }
+      translations {
+        language_id
+        value
+      }
     }
     open_status
     payment_info_id
-    schedule_id
   }
 }
 
 # restaurant's description by pk
-query get_restaurant_desc_by_pk($desc_id : Int!) {
-  translation_by_pk(id : $desc_id)
-  {
-    id,
-  
+query get_restaurant_desc_by_pk($desc_id: Int!) {
+  translation_by_pk(id: $desc_id) {
+    id
+
     translations {
-      language_id,
+      language_id
       value
     }
   }
@@ -44,7 +42,7 @@ query getOneRestaurant($id: Int!) {
     location_gps
     location_text
     name
-    schedule_id
+   
     description {
       translations {
         language_id
@@ -56,10 +54,8 @@ query getOneRestaurant($id: Int!) {
   }
 }
 mutation updateRestaurantInfo($id: Int!, $data: restaurant_set_input!) {
-  update_restaurant_by_pk(_set: $data, pk_columns: {id: $id}) {
-    open_status
-    payment_info_id
-    schedule_id
+  update_restaurant_by_pk(_set: $data, pk_columns: { id: $id }) {
+    id
   }
 }
 
@@ -73,7 +69,8 @@ query getOneRestaurant($id: Int!) {
     location_gps
     location_text
     name
-    schedule_id
+    
+
     description {
       translations {
         language_id
@@ -85,7 +82,7 @@ query getOneRestaurant($id: Int!) {
   }
 }
 mutation updateRestaurantInfo($id: Int!, $data: restaurant_set_input!) {
-  update_restaurant_by_pk(_set: $data, pk_columns: {id: $id}) {
+  update_restaurant_by_pk(_set: $data, pk_columns: { id: $id }) {
     id
     firebase_id
     image
@@ -93,7 +90,7 @@ mutation updateRestaurantInfo($id: Int!, $data: restaurant_set_input!) {
     location_gps
     location_text
     name
-    schedule_id
+  
     description {
       translations {
         language_id
@@ -109,8 +106,6 @@ query getRestaurantLang($id: Int!) {
     language_id
   }
 }
-
-
 
 subscription GetRestaurants {
   restaurant {

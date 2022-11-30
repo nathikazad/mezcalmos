@@ -70,36 +70,42 @@ Future<Restaurant?> get_restaurant_by_id({required int id}) async {
   } else if (response.parsedData != null) {
     mezDbgPrint(
         "✅✅✅✅ Hasura querry success, data : ${response.parsedData?.restaurant_by_pk?.toJson()} ");
-    final Query$getOneRestaurant$restaurant_by_pk data =
-        response.parsedData!.restaurant_by_pk!;
-    return Restaurant(
-        userInfo: ServiceInfo(
-            hasuraId: data.id,
-            image: data.image,
-            firebaseId: data.firebase_id ?? "",
-            name: data.name,
-            descriptionId: data.description_id,
-            //   descriptionId: data.d,
-            location:
-                Location.fromHasura(data.location_gps, data.location_text)),
-        description: (data.description?.translations != null)
-            ? {
-                data.description!.translations.first.language_id
-                        .toLanguageType():
-                    data.description!.translations.first.value,
-                data.description!.translations[1].language_id.toLanguageType():
-                    data.description!.translations[1].value,
-              }
-            : null,
-        schedule: Schedule(openHours: {}),
-        paymentInfo: PaymentInfo(),
-        restaurantState:
-            ServiceState(data.open_status.toServiceStatus(), data.approved),
-        primaryLanguage: data.language_id.toString().toLanguageType(),
-        secondaryLanguage:
-            data.language_id.toString().toLanguageType().toOpLang());
+    final Query$getOneRestaurant$restaurant_by_pk? data =
+        response.parsedData?.restaurant_by_pk!;
+
+    if (data != null) {
+      mezDbgPrint(
+          "response data ====> ${response.data} 🍔🍔🍔 Restaurant data ${data.toJson()}");
+      return Restaurant(
+          userInfo: ServiceInfo(
+              hasuraId: data.id,
+              image: data.image,
+              firebaseId: data.firebase_id ?? "",
+              name: data.name,
+              descriptionId: data.description_id,
+              location:
+                  Location.fromHasura(data.location_gps, data.location_text)),
+          description: (data.description?.translations != null)
+              ? {
+                  data.description!.translations.first.language_id
+                          .toLanguageType():
+                      data.description!.translations.first.value,
+                  data.description!.translations[1].language_id
+                          .toLanguageType():
+                      data.description!.translations[1].value,
+                }
+              : null,
+          schedule: Schedule(openHours: {}),
+          paymentInfo: PaymentInfo(),
+          restaurantState:
+              ServiceState(data.open_status.toServiceStatus(), data.approved),
+          primaryLanguage: data.language_id.toString().toLanguageType(),
+          secondaryLanguage:
+              data.language_id.toString().toLanguageType().toOpLang());
+    }
   } else
     return null;
+  return null;
 }
 
 Future<LanguageType?> get_restaurant_priamry_lang(int restaurantId) async {
