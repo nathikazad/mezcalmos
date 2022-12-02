@@ -1,6 +1,5 @@
-import { isSignedIn } from "../shared/helper/authorizer";
 import { orderInProcess, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
-import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 // import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 // import { capturePayment } from "../utilities/stripe/payment";
 import { getRestaurantOrder } from "../shared/graphql/restaurant/order/getRestaurantOrder";
@@ -15,53 +14,55 @@ import { getMezAdmins } from "../shared/graphql/restaurant/mezAdmin/getMezAdmins
 import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { RestaurantOperator } from "../shared/models/Services/Restaurant/Restaurant";
 import { MezAdmin } from "../shared/models/Generic/User";
-import { getDelivery } from "../shared/graphql/delivery/getDelivery";
-import { Delivery } from "../shared/models/Generic/Delivery";
+import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
+import { DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Services/Delivery/DeliveryOrder";
+import { HttpsError } from "firebase-functions/v1/auth";
+import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
 
 // Customer Canceling
 export async function cancelOrderFromCustomer(userId: number, data: any) {
 
-  let response: ServerResponse | undefined = isSignedIn(userId);
-  if (response != undefined) {
-    return response;
-  }
+  // let response: ServerResponse | undefined = isSignedIn(userId);
+  // if (response != undefined) {
+  //   return response;
+  // }
 
   if (data.orderId == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Expected order id`,
-      errorCode: "orderIdNotGiven"
-    }
+    throw new HttpsError(
+      "internal", 
+      `Expected order id`,
+    );
   }
 
   let mezAdminPromise = getMezAdmins();
   let order: RestaurantOrder = await getRestaurantOrder(data.orderId);
   let restaurantOperatorsPromise = getRestaurantOperators(order.restaurantId);
-  let promiseResponse = await Promise.all([mezAdminPromise, restaurantOperatorsPromise]);
+  let deliveryPromise = getDeliveryOrder(order.deliveryId!);
+  //delivery id assumed to be not null
+
+  let promiseResponse = await Promise.all([mezAdminPromise, restaurantOperatorsPromise, deliveryPromise]);
   let mezAdmins: MezAdmin[] = promiseResponse[0];
   let restaurantOperators: RestaurantOperator[] = promiseResponse[1];
+  let deliveryOrder: DeliveryOrder = promiseResponse[2];
   if (order == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Order does not exist`,
-      errorCode: "orderDontExist"
-    }
+    throw new HttpsError(
+      "internal",
+      `Order does not exist`,
+    );
   }
 
   if (order.customerId != userId) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Order does not belong to customer`,
-      errorCode: "notCustomerOrder"
-    }
+    throw new HttpsError(
+      "internal",
+      `Order does not belong to customer`,
+    );
   }
 
   if (!orderInProcess(order.status)) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Order cannot be cancelled because it is not in process`,
-      errorCode: "orderNotInProcess"
-    }
+    throw new HttpsError(
+      "internal",
+      `Order cannot be cancelled because it is not in process`,
+    );
   }
 
   switch (order.status) {
@@ -108,6 +109,8 @@ export async function cancelOrderFromCustomer(userId: number, data: any) {
   //   });
 
   updateOrderStatus(order)
+  deliveryOrder.status = DeliveryOrderStatus.CancelledByCustomer;
+  updateDeliveryOrderStatus(deliveryOrder);
   
   let notification: Notification = {
     foreground: <RestaurantOrderStatusChangeNotification>{
@@ -128,14 +131,14 @@ export async function cancelOrderFromCustomer(userId: number, data: any) {
     pushNotification(r.user?.firebaseId!, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
   });
   if(order.deliveryId != undefined) {
-    let delivery: Delivery = await getDelivery(order.deliveryId);
-    if(delivery.deliverer != undefined) {
+    let delivery: DeliveryOrder = await getDeliveryOrder(order.deliveryId);
+    if(delivery.deliveryDriver != undefined) {
       notification.linkUrl = orderUrl(OrderType.Restaurant, order.orderId!);
-      pushNotification(delivery.deliverer.user?.firebaseId!, 
+      pushNotification(delivery.deliveryDriver.user?.firebaseId!, 
         notification, 
-        delivery.deliverer.notificationInfo,
+        delivery.deliveryDriver.notificationInfo,
         ParticipantType.DeliveryDriver,
-        delivery.deliverer.user?.language,
+        delivery.deliveryDriver.user?.language,
       );
     }
   }

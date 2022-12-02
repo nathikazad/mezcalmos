@@ -16,7 +16,10 @@ export async function createRestaurant(
       object: {
         name: restaurant.name,
         image: restaurant.image,
-        location_gps: JSON.stringify(restaurant.location.gps),
+        location_gps: JSON.stringify({
+            "type": "point",
+            "coordinates": [restaurant.location.lng, restaurant.location.lat]
+          }),
         location_text: restaurant.location.address,
         schedule_id: restaurant.scheduleId,
         firebase_id: restaurant.firebaseId ?? undefined,

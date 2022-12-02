@@ -1,4 +1,4 @@
-import { ServerResponse, ServerResponseStatus, ValidationPass } from "../shared/models/Generic/Generic";
+import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
 // import { PaymentType } from "../shared/models/Generic/Order";
 import { orderInProcess, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import { passChecksForRestaurant } from "./helper";
@@ -12,9 +12,11 @@ import { getRestaurantOrder } from "../shared/graphql/restaurant/order/getRestau
 import { updateOrderStatus } from "../shared/graphql/restaurant/order/updateOrder";
 import { OrderType } from "../shared/models/Generic/Order";
 import { getCustomer } from "../shared/graphql/restaurant/customer/getCustomer";
-import { getDelivery } from "../shared/graphql/delivery/getDelivery";
-import { Delivery } from "../shared/models/Generic/Delivery";
+import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
+import { DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Services/Delivery/DeliveryOrder";
 import { CustomerInfo } from "../shared/models/Generic/User";
+import { HttpsError } from "firebase-functions/v1/auth";
+import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
 
 let statusArrayInSeq: Array<RestaurantOrderStatus> =
   [RestaurantOrderStatus.OrderReceived,
@@ -44,22 +46,21 @@ function expectedPreviousStatus(status: RestaurantOrderStatus): RestaurantOrderS
 
 async function changeStatus(statusDetails: any, newStatus: RestaurantOrderStatus, userId: number): Promise<ServerResponse> {
 
-  let validationPass: ValidationPass = await passChecksForRestaurant(statusDetails, userId);
-  if (!validationPass.ok) {
-    return validationPass.error!;
-  }
+  await passChecksForRestaurant(statusDetails, userId);
+
   let order = await getRestaurantOrder(statusDetails.orderId);
-  let customer: CustomerInfo;
-  let delivery: Delivery
-  if(order.deliveryId == null) {
-    customer = await getCustomer(order.customerId);
-  } else {
-    let customerPromise = getCustomer(order.customerId);
-    let deliveryPromise = getDelivery(order.deliveryId);
-    let response = await Promise.all([customerPromise, deliveryPromise]);
-    customer = response[0];
-    delivery = response[1];
+  if(!(order.deliveryId)) {
+    throw new HttpsError(
+      "internal",
+      "No delivery id"
+    );
   }
+  let customerPromise = getCustomer(order.customerId);
+  let deliveryPromise = getDeliveryOrder(order.deliveryId);
+  let response = await Promise.all([customerPromise, deliveryPromise]);
+  let customer: CustomerInfo = response[0];
+  let deliveryOrder: DeliveryOrder = response[1];
+
   // let order: RestaurantOrder = validationPass.order;
 
   // if (order == null) {
@@ -71,18 +72,17 @@ async function changeStatus(statusDetails: any, newStatus: RestaurantOrderStatus
   // }
 
   if (newStatus == RestaurantOrderStatus.CancelledByAdmin) {
-    if (!orderInProcess(order.status))
-      return {
-        status: ServerResponseStatus.Error,
-        errorMessage: `Order cannot be cancelled because it is not in process`,
-        errorCode: "orderNotInProcess"
-      }
-  } else if (expectedPreviousStatus(newStatus) != order.status) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Status is not ${expectedPreviousStatus(newStatus)} but ${order.status}`,
-      errorCode: "invalidOrderStatus"
+    if (!orderInProcess(order.status)) {
+      throw new HttpsError(
+        "internal",
+        "Order cannot be cancelled because it is not in process"
+      );
     }
+  } else if (expectedPreviousStatus(newStatus) != order.status) {
+    throw new HttpsError(
+      "internal", 
+      `Status is not ${expectedPreviousStatus(newStatus)} but ${order.status}`,
+    );
   }
 
   order.status = newStatus;
@@ -96,7 +96,11 @@ async function changeStatus(statusDetails: any, newStatus: RestaurantOrderStatus
     // order.costToCustomer = order.totalCost - order.refundAmount;
   } 
   updateOrderStatus(order);
-  
+  if(order.status == RestaurantOrderStatus.ReadyForPickup && deliveryOrder.status != DeliveryOrderStatus.AtPickup) {
+    deliveryOrder.status = DeliveryOrderStatus.PackageReady;
+    updateDeliveryOrderStatus(deliveryOrder);
+  }
+    
   let notification: Notification = {
     foreground: <RestaurantOrderStatusChangeNotification>{
       status: newStatus,
@@ -118,13 +122,13 @@ async function changeStatus(statusDetails: any, newStatus: RestaurantOrderStatus
     ParticipantType.Customer, 
     customer.language
   ).then(() => {
-    if (delivery.deliverer && delivery.deliverer.user?.firebaseId) {
+    if (deliveryOrder.deliveryDriver && deliveryOrder.deliveryDriver.user?.firebaseId) {
       notification.linkUrl = orderUrl(OrderType.Restaurant, order.orderId!);
-      pushNotification(delivery.deliverer.user?.firebaseId, 
+      pushNotification(deliveryOrder.deliveryDriver.user?.firebaseId, 
         notification, 
-        delivery.deliverer.notificationInfo,
+        deliveryOrder.deliveryDriver.notificationInfo,
         ParticipantType.DeliveryDriver,
-        delivery.deliverer.user?.language,
+        deliveryOrder.deliveryDriver.user?.language,
       );
     }
   });
@@ -162,42 +166,34 @@ async function changeStatus(statusDetails: any, newStatus: RestaurantOrderStatus
 export async function refundCustomerCustomAmount(userId: number, data: any) {
 
   if (data.refundAmount == null || data.orderId == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Expected refundAmount`,
-      errorCode: "invalidParam"
-    }
+    throw new HttpsError(
+      "internal", 
+      `Expected refundAmount`,
+    );
   }
-  let validationPass: ValidationPass = await passChecksForRestaurant(data, userId);
-  if (!validationPass.ok) {
-    return validationPass.error!;
-  }
+  await passChecksForRestaurant(data, userId);
   return //refund(data.orderId, validationPass.order, data.refundAmount);
 };
 
 export async function markOrderItemUnavailable(userId: number, data: any) {
 
   if (data.itemId == null || data.orderId == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Expected itemId and orderId`,
-      errorCode: "invalidParam"
-    }
+    throw new HttpsError(
+      "internal",
+      `Expected itemId and orderId`,
+    );
   }
-  let validationPass: ValidationPass = await passChecksForRestaurant(data, userId);
-  if (!validationPass.ok) {
-    return validationPass.error!;
-  }
+  await passChecksForRestaurant(data, userId);
+
   // let order: RestaurantOrder = validationPass.order;
   let order: RestaurantOrder = await getRestaurantOrder(data.orderId);
   let item = order.items.find((i) => i.orderItemId == data.itemId);
   
   if (item == undefined) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `invalid item id`,
-      errorCode: "invalidParam"
-    }
+    throw new HttpsError(
+      "internal",
+      `invalid item id`,
+    );
   }
   item.unavailable = true;
 

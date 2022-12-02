@@ -71,7 +71,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     // clear user cart
     clearCart(customerId);
 
-    setOrderChatInfo(restaurantOrder, restaurant, orderResponse.delivery, customer);
+    setOrderChatInfo(restaurantOrder, restaurant, orderResponse.deliveryOrder, customer);
 
     notifyAdmins(mezAdmins, orderResponse.restaurantOrder.orderId!, restaurant);
 
@@ -172,7 +172,9 @@ function notifyOperators(orderId: number, restaurant: Restaurant) {
   }
   if(restaurant.restaurantOperators != undefined) {
     restaurant.restaurantOperators.forEach((r) => {
-      pushNotification(r.user?.firebaseId!, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
+      if(r.user) {
+        pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
+      }
     });
   }
 }

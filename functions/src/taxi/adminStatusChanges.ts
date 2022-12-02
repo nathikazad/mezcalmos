@@ -1,14 +1,13 @@
 import { Language, ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
-import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
-import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
-import { TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/Services/Taxi/TaxiOrder";
+import { checkDeliveryAdmin } from "../shared/helper/authorizer";
+import { TaxiOrder, TaxiOrderStatus } from "../shared/models/Services/Taxi/TaxiOrder";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
-import { BackgroundNotification, Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { pushNotification } from "../utilities/senders/notifyUser";
-import { ParticipantType } from "../shared/models/Generic/Chat";
-import { orderUrl } from "../utilities/senders/appRoutes";
+import { BackgroundNotification } from "../shared/models/Notification";
+// import { pushNotification } from "../utilities/senders/notifyUser";
+// import { ParticipantType } from "../shared/models/Generic/Chat";
+// import { orderUrl } from "../utilities/senders/appRoutes";
 
 export async function forwardToLocalCompany(userId: string, data: any) {
   let response: ServerResponse = await changeStatus(data, TaxiOrderStatus.ForwardingToLocalCompany, userId)
@@ -25,12 +24,12 @@ export async function submitForwardResult(userId: string, data: any) {
 
 async function changeStatus(data: any, newStatus: TaxiOrderStatus, userId: string): Promise<ServerResponse> {
 
-  let response = await isSignedIn(userId)
-  if (response != undefined) {
-    return response;
-  }
+  // let response = await isSignedIn(userId)
+  // if (response != undefined) {
+  //   return response;
+  // }
 
-  response = await checkDeliveryAdmin(userId)
+  let response = await checkDeliveryAdmin(userId)
   if (response != undefined) {
     return response;
   }
@@ -78,37 +77,37 @@ async function changeStatus(data: any, newStatus: TaxiOrderStatus, userId: strin
   if (newStatus == TaxiOrderStatus.ForwardingSuccessful && data.taxiNumber) {
     backgroundNotification[Language.EN].body.replace(", ", ` ${data.taxiNumber} `);
     backgroundNotification[Language.ES].body.replace(", ", ` ${data.taxiNumber} `);
-    order.driver = {
-      taxiNumber: data.taxiNumber,
-      id: "none",
-      image: "none"
-    }
+    // order.driver = {
+    //   taxiNumber: data.taxiNumber,
+    //   id: "none",
+    //   image: "none"
+    // }
   }
 
-  let notification: Notification = {
-    foreground: <TaxiOrderStatusChangeNotification>{
-      status: order.status,
-      time: (new Date()).toISOString(),
-      notificationType: NotificationType.OrderStatusChange,
-      orderType: OrderType.Taxi,
-      notificationAction: NotificationAction.ShowPopUp,
-      orderId: orderId
-    },
-    background: backgroundNotification!,
-    linkUrl: orderUrl(ParticipantType.Customer, OrderType.Taxi, orderId)
-  }
+  // let notification: Notification = {
+  //   foreground: <TaxiOrderStatusChangeNotification>{
+  //     status: order.status,
+  //     time: (new Date()).toISOString(),
+  //     notificationType: NotificationType.OrderStatusChange,
+  //     orderType: OrderType.Taxi,
+  //     notificationAction: NotificationAction.ShowPopUp,
+  //     orderId: orderId
+  //   },
+  //   background: backgroundNotification!,
+  //   linkUrl: orderUrl(ParticipantType.Customer, OrderType.Taxi, orderId)
+  // }
 
-  pushNotification(order.customer.id!, notification);
+  // pushNotification(order.customer.firebaseId!, notification);
 
-  if (newStatus == TaxiOrderStatus.ForwardingToLocalCompany) {
-    customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-    await rootDbNodes.inProcessOrders(OrderType.Taxi, orderId).set(order);
-    await rootDbNodes.openOrders(OrderType.Taxi, orderId).remove();
-  } else {
-    await rootDbNodes.pastOrders(OrderType.Taxi, orderId).set(order);
-    await rootDbNodes.inProcessOrders(OrderType.Taxi, orderId).remove();
-    customerNodes.inProcessOrders(order.customer.id!, orderId).remove();
-    customerNodes.pastOrders(order.customer.id!, orderId).set(order);
-  }
+  // if (newStatus == TaxiOrderStatus.ForwardingToLocalCompany) {
+  //   customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
+  //   await rootDbNodes.inProcessOrders(OrderType.Taxi, orderId).set(order);
+  //   await rootDbNodes.openOrders(OrderType.Taxi, orderId).remove();
+  // } else {
+  //   await rootDbNodes.pastOrders(OrderType.Taxi, orderId).set(order);
+  //   await rootDbNodes.inProcessOrders(OrderType.Taxi, orderId).remove();
+  //   customerNodes.inProcessOrders(order.customer.id!, orderId).remove();
+  //   customerNodes.pastOrders(order.customer.id!, orderId).set(order);
+  // }
   return { status: ServerResponseStatus.Success }
 }

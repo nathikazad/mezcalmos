@@ -1,11 +1,10 @@
 import { ServerResponseStatus, ValidationPass } from "../shared/models/Generic/Generic";
 import { DeliveryAction, TwoWayDeliverableOrder } from "../shared/models/Generic/Order";
 import * as customerNodes from "../shared/databaseNodes/customer";
-import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
+// import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
-import { isSignedIn } from "../shared/helper/authorizer";
-import { DeliveryDriverType } from "../shared/models/Drivers/DeliveryDriver";
 import { updateServiceProviderOrder } from "../shared/controllers/orderController";
+import { DeliveryDriverType } from "../shared/models/Services/Delivery/DeliveryOrder";
 
 export async function setEstimatedTime(userId: string, data: any) {
   if (data.orderId == null || data.estimatedTime == null || data.deliveryDriverType == null
@@ -29,16 +28,16 @@ export async function setEstimatedTime(userId: string, data: any) {
   let order: TwoWayDeliverableOrder = validationPass.order;
   if(!order.estimatedDeliveryTimes ) 
   {
-    order.estimatedDeliveryTimes = {
-      pickup: {
-        pickup: null,
-        dropoff: null
-      }, 
-      dropoff: {
-        pickup: null,
-        dropoff: null
-      }
-    };
+    // order.estimatedDeliveryTimes = {
+    //   pickup: {
+    //     pickup: null,
+    //     dropoff: null
+    //   }, 
+    //   dropoff: {
+    //     pickup: null,
+    //     dropoff: null
+    //   }
+    // };
   }
   console.log("[After] estimatedDeliveryTimes ==>",order.estimatedDeliveryTimes);
   if (!order.estimatedDeliveryTimes[deliveryDriverType]) {
@@ -50,30 +49,30 @@ export async function setEstimatedTime(userId: string, data: any) {
   order.estimatedDeliveryTimes[deliveryDriverType]![deliveryAction] = data.estimatedTime;
  
   updateServiceProviderOrder(orderId, order);
-  customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
+  customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).update(order);
   rootDbNodes.inProcessOrders(order.orderType, orderId).update(order);
 
-  switch (deliveryDriverType) {
-    case DeliveryDriverType.DropOff:
-      deliveryDriverNodes.inProcessOrders(order.dropoffDriver!.id, orderId).update(order);
-      break;
-    case DeliveryDriverType.Pickup:
-      deliveryDriverNodes.inProcessOrders(order.pickupDriver!.id, orderId).update(order);
-      break;
-  }
+  // switch (deliveryDriverType) {
+  //   case DeliveryDriverType.DropOff:
+  //     deliveryDriverNodes.inProcessOrders(order.dropoffDriver!.id, orderId).update(order);
+  //     break;
+  //   case DeliveryDriverType.Pickup:
+  //     deliveryDriverNodes.inProcessOrders(order.pickupDriver!.id, orderId).update(order);
+  //     break;
+  // }
 
 
   return { status: ServerResponseStatus.Success }
 };
 
 async function passChecksForDriver(data: any, userId: string): Promise<ValidationPass> {
-  let response = isSignedIn(userId)
-  if (response != undefined) {
-    return {
-      ok: false,
-      error: response
-    }
-  }
+  // let response = isSignedIn(userId)
+  // if (response != undefined) {
+  //   return {
+  //     ok: false,
+  //     error: response
+  //   }
+  // }
 
   let orderId: string = data.orderId;
   let order: TwoWayDeliverableOrder = (await rootDbNodes.inProcessOrders(data.orderType, orderId).once('value')).val();
@@ -87,28 +86,28 @@ async function passChecksForDriver(data: any, userId: string): Promise<Validatio
       }
     }
   }
-   switch (data.deliveryDriverType) {
-    case DeliveryDriverType.Pickup:
-      if (order.pickupDriver != null && order.pickupDriver.id != userId)
-        return {
-          ok: false,
-          error: {
-            status: ServerResponseStatus.Error,
-            errorMessage: `Driver is not pickup driver`,
-            errorCode: "driverNotAuthorized"
-          }
-        }
-    case DeliveryDriverType.DropOff:
-      if (order.dropoffDriver != null && order.dropoffDriver.id != userId)
-        return {
-          ok: false,
-          error: {
-            status: ServerResponseStatus.Error,
-            errorMessage: `Driver is not drop off driver`,
-            errorCode: "driverNotAuthorized"
-          }
-        }
-  }
+  //  switch (data.deliveryDriverType) {
+  //   case DeliveryDriverType.Pickup:
+  //     if (order.pickupDriver != null && order.pickupDriver.id != userId)
+  //       return {
+  //         ok: false,
+  //         error: {
+  //           status: ServerResponseStatus.Error,
+  //           errorMessage: `Driver is not pickup driver`,
+  //           errorCode: "driverNotAuthorized"
+  //         }
+  //       }
+  //   case DeliveryDriverType.DropOff:
+  //     if (order.dropoffDriver != null && order.dropoffDriver.id != userId)
+  //       return {
+  //         ok: false,
+  //         error: {
+  //           status: ServerResponseStatus.Error,
+  //           errorMessage: `Driver is not drop off driver`,
+  //           errorCode: "driverNotAuthorized"
+  //         }
+  //       }
+  // }
 
   return {
     ok: true,

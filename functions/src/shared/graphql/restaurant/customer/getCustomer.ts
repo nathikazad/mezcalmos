@@ -24,15 +24,14 @@ export async function getCustomer(customerId: number): Promise<CustomerInfo> {
             "Customer not found"
         );
     }
-    
     return {
         id: customerId,
-        firebaseId: response.customer_by_pk?.user.firebase_id ?? "",
-        language: response.customer_by_pk?.user.language_id as Language,
-        notificationInfo: {
+        firebaseId: response.customer_by_pk.user.firebase_id,
+        language: response.customer_by_pk.user.language_id as Language,
+        notificationInfo: (response.customer_by_pk.notification_token) ? {
             AppTypeId: AppType.CustomerMobile,
-            token: response.customer_by_pk?.notification_token ?? ""
-        },
+            token: response.customer_by_pk.notification_token
+        } : undefined,
         appVersion: response.customer_by_pk.app_version
     }
 }

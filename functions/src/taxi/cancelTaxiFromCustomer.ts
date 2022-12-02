@@ -1,25 +1,24 @@
 import * as functions from "firebase-functions";
-import { isSignedIn } from "../shared/helper/authorizer";
 import * as rootNodes from "../shared/databaseNodes/root";
 import * as taxiNodes from "../shared/databaseNodes/taxi";
 import * as customerNodes from "../shared/databaseNodes/customer";
-import { pushNotification } from "../utilities/senders/notifyUser";
+// import { pushNotification } from "../utilities/senders/notifyUser";
 import { OrderType } from "../shared/models/Generic/Order";
-import { Language, ServerResponseStatus } from "../shared/models/Generic/Generic";
-import { orderInProcess, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/Services/Taxi/TaxiOrder";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
-import { ParticipantType } from "../shared/models/Generic/Chat";
-import { orderUrl } from "../utilities/senders/appRoutes";
+import { ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { orderInProcess, TaxiOrder, TaxiOrderStatus } from "../shared/models/Services/Taxi/TaxiOrder";
+// import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+// import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
+// import { ParticipantType } from "../shared/models/Generic/Chat";
+// import { orderUrl } from "../utilities/senders/appRoutes";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 
 export async function cancelTaxiFromCustomer(userId: string, data: any) {
 
-  let response = isSignedIn(userId);
-  if (response != undefined) {
-    return response;
-  }
+  // let response = isSignedIn(userId);
+  // if (response != undefined) {
+  //   return response;
+  // }
 
   if (data.orderId == null) {
     return {
@@ -77,7 +76,7 @@ export async function cancelTaxiFromCustomer(userId: string, data: any) {
       }
     }
 
-    if (order.customer.id != userId) {
+    if (order.customer.firebaseId != userId) {
       return {
         status: ServerResponseStatus.Error,
         errorMessage: `Order does not belong to customer`,
@@ -101,28 +100,28 @@ export async function cancelTaxiFromCustomer(userId: string, data: any) {
     rootNodes.openOrders(OrderType.Taxi, orderId).remove();
     rootNodes.inProcessOrders(OrderType.Taxi, orderId).remove();
     rootNodes.pastOrders(OrderType.Taxi, orderId).set(order);
-    await customerNodes.pastOrders(order.customer.id!, orderId).set(order);
-    await customerNodes.inProcessOrders(order.customer.id!, orderId).remove();
+    await customerNodes.pastOrders(order.customer.firebaseId!, orderId).set(order);
+    await customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).remove();
     
     if (order.driver !=  null)
     {
-      taxiNodes.inProcessOrders(order.driver.id, orderId).remove();
-      taxiNodes.pastOrders(order.driver.id, orderId).set(order);
-      taxiNodes.currentOrderIdNode(order.driver.id).remove()
-      let notification: Notification = {
-        foreground: <TaxiOrderStatusChangeNotification>{
-          status: TaxiOrderStatus.CancelledByCustomer,
-          time: (new Date()).toISOString(),
-          notificationType: NotificationType.OrderStatusChange,
-          orderType: OrderType.Taxi,
-          orderId: orderId,
-          notificationAction: NotificationAction.ShowPopUp
-        },
-        background: taxiOrderStatusChangeMessages[TaxiOrderStatus.CancelledByCustomer],
-        linkUrl: orderUrl(ParticipantType.Taxi, OrderType.Taxi, orderId)
-      }
+      taxiNodes.inProcessOrders(order.driver.firebaseId, orderId).remove();
+      taxiNodes.pastOrders(order.driver.firebaseId, orderId).set(order);
+      taxiNodes.currentOrderIdNode(order.driver.firebaseId).remove()
+      // let notification: Notification = {
+      //   foreground: <TaxiOrderStatusChangeNotification>{
+      //     status: TaxiOrderStatus.CancelledByCustomer,
+      //     time: (new Date()).toISOString(),
+      //     notificationType: NotificationType.OrderStatusChange,
+      //     orderType: OrderType.Taxi,
+      //     orderId: parseInt(orderId),
+      //     notificationAction: NotificationAction.ShowPopUp
+      //   },
+      //   background: taxiOrderStatusChangeMessages[TaxiOrderStatus.CancelledByCustomer],
+      //   linkUrl: orderUrl(OrderType.Taxi, parseInt(orderId))
+      // }
       
-      pushNotification(order.driver.id, notification, ParticipantType.Taxi);
+      // pushNotification(order.driver.firebaseId, notification, ParticipantType.Taxi);
     }
 
     deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
@@ -150,29 +149,29 @@ export async function cancelTaxiFromCustomer(userId: string, data: any) {
 async function notifyDeliveryAdminsNewOrder(deliveryAdmins: Record<string, DeliveryAdmin>,
   orderId: string) {
 
-  let notification: Notification = {
-    foreground: <TaxiOrderStatusChangeNotification>{
-      time: (new Date()).toISOString(),
-      status: TaxiOrderStatus.CancelledByCustomer,
-      notificationType: NotificationType.OrderStatusChange,
-      orderType: OrderType.Taxi,
-      orderId: orderId,
-      notificationAction: NotificationAction.ShowSnackBarAlways,
-    },
-    background: {
-      [Language.ES]: {
-        title: "Pedido de Taxi Cancellado",
-        body: `El cliente cancelo el pedido de taxi`
-      },
-      [Language.EN]: {
-        title: "Taxi Order Cancelled",
-        body: `The customer cancelled the order`
-      }
-    },
-    linkUrl: orderUrl(ParticipantType.DeliveryAdmin, OrderType.Taxi, orderId)
-  }
+  // let notification: Notification = {
+  //   foreground: <TaxiOrderStatusChangeNotification>{
+  //     time: (new Date()).toISOString(),
+  //     status: TaxiOrderStatus.CancelledByCustomer,
+  //     notificationType: NotificationType.OrderStatusChange,
+  //     orderType: OrderType.Taxi,
+  //     orderId: orderId,
+  //     notificationAction: NotificationAction.ShowSnackBarAlways,
+  //   },
+  //   background: {
+  //     [Language.ES]: {
+  //       title: "Pedido de Taxi Cancellado",
+  //       body: `El cliente cancelo el pedido de taxi`
+  //     },
+  //     [Language.EN]: {
+  //       title: "Taxi Order Cancelled",
+  //       body: `The customer cancelled the order`
+  //     }
+  //   },
+  //   linkUrl: orderUrl(ParticipantType.DeliveryAdmin, OrderType.Taxi, orderId)
+  // }
 
-  for (let adminId in deliveryAdmins) {
-    pushNotification(adminId!, notification, ParticipantType.DeliveryAdmin);
-  }
+  // for (let adminId in deliveryAdmins) {
+  //   pushNotification(adminId!, notification, ParticipantType.DeliveryAdmin);
+  // }
 }

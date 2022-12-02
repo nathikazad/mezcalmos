@@ -50,7 +50,8 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
     );
   }
   let toLocation: Location = {
-    gps: response.restaurant_order_by_pk.to_location_gps,
+    lat: response.restaurant_order_by_pk.to_location_gps.coordinates[1],
+    lng: response.restaurant_order_by_pk.to_location_gps.coordinates[0],
   }
   let items: OrderItem[] = response.restaurant_order_by_pk.items.map((i) => {
     return {

@@ -1,4 +1,3 @@
-import { isSignedIn } from "../shared/helper/authorizer";
 import * as functions from "firebase-functions";
 import * as rootNodes from "../shared/databaseNodes/root";
 import * as taxiNodes from "../shared/databaseNodes/taxi";
@@ -10,7 +9,7 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { orderInProcess, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/Services/Taxi/TaxiOrder";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
-import { ParticipantType } from "../shared/models/Generic/Chat";
+// import { ParticipantType } from "../shared/models/Generic/Chat";
 import { orderUrl } from "../utilities/senders/appRoutes";
 
 let statusArrayInSeq: Array<TaxiOrderStatus> =
@@ -46,9 +45,9 @@ function expectedPreviousStatus(status: TaxiOrderStatus): TaxiOrderStatus {
 }
 
 async function changeStatus(data: any, newStatus: TaxiOrderStatus, userId: string): Promise<ServerResponse> {
-  let response = isSignedIn(userId)
-  if (response != undefined)
-    return response;
+  // let response = isSignedIn(userId)
+  // if (response != undefined)
+  //   return response;
   // user signed in
   let taxiId: string = userId;
   let orderId = (await currentOrderIdNode(taxiId).once('value')).val();
@@ -108,14 +107,14 @@ async function changeStatus(data: any, newStatus: TaxiOrderStatus, userId: strin
 
     if (newStatus == TaxiOrderStatus.InTransit || newStatus == TaxiOrderStatus.OnTheWay ) {
       rootNodes.inProcessOrders(OrderType.Taxi, orderId).update(order);
-      customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
+      customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).update(order);
       taxiNodes.inProcessOrders(taxiId, orderId).update(order);
     } else {
       //TaxiOrderStatus.OnTheWay -> executes this
       rootNodes.inProcessOrders(OrderType.Taxi, orderId).remove();
       rootNodes.pastOrders(OrderType.Taxi, orderId).set(order);
-      await customerNodes.pastOrders(order.customer.id!, orderId).set(order);
-      customerNodes.inProcessOrders(order.customer.id!, orderId).remove();
+      await customerNodes.pastOrders(order.customer.firebaseId!, orderId).set(order);
+      customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).remove();
       taxiNodes.inProcessOrders(taxiId, orderId).remove();
       taxiNodes.pastOrders(taxiId, orderId).set(order);
       currentOrderIdNode(taxiId).remove()
@@ -132,10 +131,10 @@ async function changeStatus(data: any, newStatus: TaxiOrderStatus, userId: strin
           ? NotificationAction.ShowSnackBarAlways : NotificationAction.ShowPopUp,
       },
       background: taxiOrderStatusChangeMessages[newStatus],
-      linkUrl: orderUrl(ParticipantType.Customer, OrderType.Taxi, orderId)
+      linkUrl: orderUrl(OrderType.Taxi, parseInt(orderId))
     }
 
-    pushNotification(order.customer.id!, notification);
+    pushNotification(order.customer.firebaseId!, notification);
 
     return {
       status: ServerResponseStatus.Success,

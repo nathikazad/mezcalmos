@@ -1,10 +1,4 @@
-import {
-  Language,
-  Location,
-  ServerResponse,
-  ServerResponseStatus,
-} from "../shared/models/Generic/Generic";
-import { isSignedIn } from "../shared/helper/authorizer";
+import { Language, Location, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { NewRestaurantNotification, Restaurant } from "../shared/models/Services/Restaurant/Restaurant";
 import { createRestaurant } from "../shared/graphql/restaurant/createRestaurant";
 import { getUser } from "../shared/graphql/user/getUser";
@@ -26,13 +20,6 @@ export interface RestaurantDetails {
 
 export async function createNewRestaurant(userId: number, restaurantDetails: RestaurantDetails) {
 
-  let response: ServerResponse | undefined = isSignedIn(userId);
-  if (response != undefined) {
-    return {
-      ok: false,
-      error: response,
-    };
-  }
   let userPromise = getUser(userId);
   let mezAdminsPromise = getMezAdmins();
   let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);

@@ -724,6 +724,8 @@ count?: [{	columns?:ValueTypes["customer_select_column"][],	distinct?:boolean},t
 	delivery_company_type?:true,
 	id?:true,
 	notification_info_id?:true,
+	/** A computed field, executes function "driver_notification_token" */
+	notification_token?:true,
 	online?:true,
 	/** An object relationship */
 	restaurant?:ValueTypes["restaurant"],
@@ -774,6 +776,7 @@ count?: [{	columns?:ValueTypes["deliverer_select_column"][],	distinct?:boolean},
 	delivery_company_type?:ValueTypes["String_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	notification_info_id?:ValueTypes["Int_comparison_exp"],
+	notification_token?:ValueTypes["String_comparison_exp"],
 	online?:ValueTypes["Boolean_comparison_exp"],
 	restaurant?:ValueTypes["restaurant_bool_exp"],
 	status?:ValueTypes["String_comparison_exp"],
@@ -856,6 +859,7 @@ count?: [{	columns?:ValueTypes["deliverer_select_column"][],	distinct?:boolean},
 	delivery_company_type?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	notification_info_id?:ValueTypes["order_by"],
+	notification_token?:ValueTypes["order_by"],
 	online?:ValueTypes["order_by"],
 	restaurant?:ValueTypes["restaurant_order_by"],
 	status?:ValueTypes["order_by"],
@@ -1002,6 +1006,8 @@ count?: [{	columns?:ValueTypes["deliverer_select_column"][],	distinct?:boolean},
 	estimated_arrival_at_pickup_time?:true,
 	estimated_package_ready_time?:true,
 	id?:true,
+	/** A computed field, executes function "delivery_notification_token" */
+	notification_token?:true,
 	order_time?:true,
 	package_cost?:true,
 	payment_type?:true,
@@ -1140,6 +1146,7 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	estimated_arrival_at_pickup_time?:ValueTypes["timestamptz_comparison_exp"],
 	estimated_package_ready_time?:ValueTypes["timestamptz_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
+	notification_token?:ValueTypes["String_comparison_exp"],
 	order_time?:ValueTypes["timestamptz_comparison_exp"],
 	package_cost?:ValueTypes["money_comparison_exp"],
 	payment_type?:ValueTypes["String_comparison_exp"],
@@ -1440,6 +1447,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:ValueTypes["order_by"],
 	estimated_package_ready_time?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
+	notification_token?:ValueTypes["order_by"],
 	order_time?:ValueTypes["order_by"],
 	package_cost?:ValueTypes["order_by"],
 	payment_type?:ValueTypes["order_by"],
@@ -11146,6 +11154,8 @@ the end). throws an error if top level container is not an array */
 			delivery_company_type?:string,
 			id?:number,
 			notification_info_id?:number,
+			/** A computed field, executes function "driver_notification_token" */
+	notification_token?:string,
 			online?:boolean,
 			/** An object relationship */
 	restaurant?:PartialObjects["restaurant"],
@@ -11195,6 +11205,7 @@ the end). throws an error if top level container is not an array */
 	delivery_company_type?:PartialObjects["String_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	notification_info_id?:PartialObjects["Int_comparison_exp"],
+	notification_token?:PartialObjects["String_comparison_exp"],
 	online?:PartialObjects["Boolean_comparison_exp"],
 	restaurant?:PartialObjects["restaurant_bool_exp"],
 	status?:PartialObjects["String_comparison_exp"],
@@ -11277,6 +11288,7 @@ the end). throws an error if top level container is not an array */
 	delivery_company_type?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	notification_info_id?:PartialObjects["order_by"],
+	notification_token?:PartialObjects["order_by"],
 	online?:PartialObjects["order_by"],
 	restaurant?:PartialObjects["restaurant_order_by"],
 	status?:PartialObjects["order_by"],
@@ -11424,6 +11436,8 @@ the end). throws an error if top level container is not an array */
 			estimated_arrival_at_pickup_time?:PartialObjects["timestamptz"],
 			estimated_package_ready_time?:PartialObjects["timestamptz"],
 			id?:number,
+			/** A computed field, executes function "delivery_notification_token" */
+	notification_token?:string,
 			order_time?:PartialObjects["timestamptz"],
 			package_cost?:PartialObjects["money"],
 			payment_type?:string,
@@ -11561,6 +11575,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:PartialObjects["timestamptz_comparison_exp"],
 	estimated_package_ready_time?:PartialObjects["timestamptz_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
+	notification_token?:PartialObjects["String_comparison_exp"],
 	order_time?:PartialObjects["timestamptz_comparison_exp"],
 	package_cost?:PartialObjects["money_comparison_exp"],
 	payment_type?:PartialObjects["String_comparison_exp"],
@@ -11861,6 +11876,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:PartialObjects["order_by"],
 	estimated_package_ready_time?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
+	notification_token?:PartialObjects["order_by"],
 	order_time?:PartialObjects["order_by"],
 	package_cost?:PartialObjects["order_by"],
 	payment_type?:PartialObjects["order_by"],
@@ -20977,6 +20993,8 @@ export type deliverer = {
 	delivery_company_type:string,
 	id:number,
 	notification_info_id?:number,
+	/** A computed field, executes function "driver_notification_token" */
+	notification_token?:string,
 	online:boolean,
 	/** An object relationship */
 	restaurant?:restaurant,
@@ -21030,6 +21048,7 @@ export type deliverer_bool_exp = {
 	delivery_company_type?:String_comparison_exp,
 	id?:Int_comparison_exp,
 	notification_info_id?:Int_comparison_exp,
+	notification_token?:String_comparison_exp,
 	online?:Boolean_comparison_exp,
 	restaurant?:restaurant_bool_exp,
 	status?:String_comparison_exp,
@@ -21125,6 +21144,7 @@ export type deliverer_order_by = {
 	delivery_company_type?:order_by,
 	id?:order_by,
 	notification_info_id?:order_by,
+	notification_token?:order_by,
 	online?:order_by,
 	restaurant?:restaurant_order_by,
 	status?:order_by,
@@ -21307,6 +21327,8 @@ export type delivery_order = {
 	estimated_arrival_at_pickup_time?:timestamptz,
 	estimated_package_ready_time?:timestamptz,
 	id:number,
+	/** A computed field, executes function "delivery_notification_token" */
+	notification_token?:string,
 	order_time:timestamptz,
 	package_cost:money,
 	payment_type:string,
@@ -21451,6 +21473,7 @@ export type delivery_order_bool_exp = {
 	estimated_arrival_at_pickup_time?:timestamptz_comparison_exp,
 	estimated_package_ready_time?:timestamptz_comparison_exp,
 	id?:Int_comparison_exp,
+	notification_token?:String_comparison_exp,
 	order_time?:timestamptz_comparison_exp,
 	package_cost?:money_comparison_exp,
 	payment_type?:String_comparison_exp,
@@ -21764,6 +21787,7 @@ export type delivery_order_order_by = {
 	estimated_arrival_at_pickup_time?:order_by,
 	estimated_package_ready_time?:order_by,
 	id?:order_by,
+	notification_token?:order_by,
 	order_time?:order_by,
 	package_cost?:order_by,
 	payment_type?:order_by,
@@ -30655,8 +30679,8 @@ export type translation = {
 	id:number,
 	/** An object relationship */
 	restaurant?:restaurant,
-	service_provider_id?:number,
-	service_provider_type?:string,
+	service_provider_id:number,
+	service_provider_type:string,
 	/** An array relationship */
 	translations:translation_value[],
 	/** An aggregate relationship */
@@ -33001,6 +33025,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		notification_token:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		online:{
 			type:"Boolean_comparison_exp",
 			array:false,
@@ -33193,6 +33223,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		notification_info_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		notification_token:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -33752,6 +33788,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		id:{
 			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		notification_token:{
+			type:"String_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -34762,6 +34804,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		notification_token:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -60352,6 +60400,7 @@ export const ReturnTypes: Record<string,any> = {
 		delivery_company_type:"String",
 		id:"Int",
 		notification_info_id:"Int",
+		notification_token:"String",
 		online:"Boolean",
 		restaurant:"restaurant",
 		status:"String",
@@ -60473,6 +60522,7 @@ export const ReturnTypes: Record<string,any> = {
 		estimated_arrival_at_pickup_time:"timestamptz",
 		estimated_package_ready_time:"timestamptz",
 		id:"Int",
+		notification_token:"String",
 		order_time:"timestamptz",
 		package_cost:"money",
 		payment_type:"String",

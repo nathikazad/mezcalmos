@@ -1,5 +1,4 @@
 import Stripe from 'stripe';
-import { isSignedIn } from "../../shared/helper/authorizer";
 import { ServerResponseStatus } from '../../shared/models/Generic/Generic';
 import { getKeys } from '../../shared/keys';
 import { Keys } from '../../shared/models/Generic/Keys';
@@ -12,10 +11,10 @@ let keys: Keys = getKeys();
 
 export async function getPaymentIntent(userId: string, data: any) {
 
-  let response = isSignedIn(userId)
-  if (response != undefined) {
-    return response;
-  }
+  // let response = isSignedIn(userId)
+  // if (response != undefined) {
+  //   return response;
+  // }
 
   if (data.serviceProviderId == null ||
     data.orderType == null || data.paymentAmount == null) {

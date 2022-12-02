@@ -1,14 +1,15 @@
 import { UserInfo } from "./User";
 
 export interface Location {
-  gps: GPS;
+  lat: number,
+  lng: number,
   address?: string;
 }
 
-export interface GPS {
-  type: string;
-  coordinates: [number, number];
-}
+// export interface GPS {
+//   type: string;
+//   coordinates: [number, number];
+// }
 
 export interface Review {
   rating: number,

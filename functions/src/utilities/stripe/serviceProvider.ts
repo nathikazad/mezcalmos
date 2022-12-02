@@ -1,5 +1,4 @@
 import Stripe from 'stripe';
-import { isSignedIn } from "../../shared/helper/authorizer";
 import { ServerResponseStatus, ValidationPass } from '../../shared/models/Generic/Generic';
 import { getKeys } from '../../shared/keys';
 import { Keys } from '../../shared/models/Generic/Keys';
@@ -149,13 +148,13 @@ export async function getServiceProviderStripeId(serviceProviderId: string, orde
 }
 
 async function passChecksForOperator(userId: string, data: any): Promise<ValidationPass> {
-  let response = isSignedIn(userId);
-  if (response != undefined) {
-    return {
-      ok: false,
-      error: response
-    }
-  }
+  // let response = isSignedIn(userId);
+  // if (response != undefined) {
+  //   return {
+  //     ok: false,
+  //     error: response
+  //   }
+  // }
 
   if (data.serviceProviderId == null || data.orderType == null)
     return {

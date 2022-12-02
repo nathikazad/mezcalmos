@@ -1,0 +1,85 @@
+import { HttpsError } from "firebase-functions/v1/auth";
+import { getHasura } from "../../../utilities/hasura";
+import { AppType, Language } from "../../models/Generic/Generic";
+import { DeliveryDriverType, DeliveryDriver } from "../../models/Services/Delivery/DeliveryOrder";
+
+export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriverType: DeliveryDriverType): Promise<DeliveryDriver> {
+  
+  let chain = getHasura();
+  let response;
+  if(deliveryDriverType == DeliveryDriverType.RestaurantOperator) {
+    response = await chain.query({
+      restaurant_operator_by_pk: [{
+        id: deliveryDriverId
+      }, {
+        user: {
+          id: true,
+          firebase_id: true,
+          language_id: true,
+        },
+        notification_token: true
+      }]
+    });
+    if(response.restaurant_operator_by_pk == null) {
+      throw new HttpsError(
+        "internal",
+        "No operator with that id found"
+      );
+    }
+    return {
+      userId: response.restaurant_operator_by_pk.user.id,
+      user: {
+        id:  response.restaurant_operator_by_pk.user.id,
+        firebaseId: response.restaurant_operator_by_pk.user.firebase_id,
+        language: response.restaurant_operator_by_pk.user.language_id as Language
+      },
+      notificationInfo: (response.restaurant_operator_by_pk.notification_token) ? {
+        AppTypeId: AppType.RestaurantApp,
+        token: response.restaurant_operator_by_pk.notification_token
+      } : undefined,
+      deliveryDriverType: DeliveryDriverType.RestaurantOperator
+    } 
+  }
+  else {
+    response = await chain.query({
+      deliverer_by_pk: [{
+        id: deliveryDriverId
+      }, {
+        user_id: true,
+        delivery_company_type: true,
+        delivery_company_id: true,
+        status: true,
+        online: true,
+        user: {
+          firebase_id: true,
+          language_id: true
+        },
+        notification_token: true,
+      }]
+    });
+    if(response.deliverer_by_pk == null) {
+      throw new HttpsError(
+        "internal",
+        "No delivery driver with that id found"
+      );
+    }
+    return {
+      id: deliveryDriverId,
+      userId: response.deliverer_by_pk.user_id,
+      deliveryCompanyType: response.deliverer_by_pk.delivery_company_type,
+      deliveryCompanyId: response.deliverer_by_pk.delivery_company_id,
+      status: response.deliverer_by_pk.status,
+      online: response.deliverer_by_pk.online,
+      user: {
+        id: response.deliverer_by_pk.user_id,
+        firebaseId: response.deliverer_by_pk.user.firebase_id,
+        language: response.deliverer_by_pk.user.language_id as Language
+      },
+      notificationInfo: (response.deliverer_by_pk.notification_token) ? {
+        AppTypeId: AppType.DeliveryApp,
+        token: response.deliverer_by_pk.notification_token
+      } : undefined,
+      deliveryDriverType: DeliveryDriverType.DeliveryDriver
+    }
+  }
+}

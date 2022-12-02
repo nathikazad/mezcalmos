@@ -1,34 +1,28 @@
-// const keys = require("../keys").keys()
-// const hasuraModule = require("../hasura");
-
-// const hasura = new hasuraModule.Hasura(keys.hasura)
-
 import * as functions from "firebase-functions";
-import { constructLaundryOrder, ConstructLaundryOrderParameters, LaundryOrder, NewLaundryOrderNotification } from '../shared/models/Services/Laundry/LaundryOrder';
+import { constructLaundryOrder, ConstructLaundryOrderParameters, LaundryOrder } from '../shared/models/Services/Laundry/LaundryOrder';
 import { buildChatForOrder, ChatObject, ParticipantType } from "../shared/models/Generic/Chat";
 import { OrderType } from "../shared/models/Generic/Order";
 import { UserInfo } from "../shared/models/Generic/User";
-import { Language, ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootNodes from "../shared/databaseNodes/root";
 import * as laundryNodes from "../shared/databaseNodes/services/laundry";
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
-import { isSignedIn } from "../shared/helper/authorizer";
 import * as chatController from "../shared/controllers/chatController";
 import { getUserInfo } from "../shared/controllers/rootController";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { pushNotification } from "../utilities/senders/notifyUser";
-import { orderUrl } from "../utilities/senders/appRoutes";
+// import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+// import { pushNotification } from "../utilities/senders/notifyUser";
+// import { orderUrl } from "../utilities/senders/appRoutes";
 import { Laundry } from "../shared/models/Services/Laundry/Laundry";
 import { getLaundry } from "./laundryController";
-import { updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
+// import { updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
 
 export async function requestLaundry(userId: string, data: any) {
 
-  let response = isSignedIn(userId)
-  if (response != undefined)
-    return response;
+  // let response = isSignedIn(userId)
+  // if (response != undefined)
+  //   return response;
 
   let customerId: string = userId;
   if (!data.laundryId)
@@ -72,12 +66,12 @@ export async function requestLaundry(userId: string, data: any) {
     let orderId: string = (await customerNodes.inProcessOrders(customerId).push(null)).key!;
 
     if (data.stripePaymentId)
-      await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId, data.stripeFees)
+      // await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId, data.stripeFees)
 
     customerNodes.inProcessOrders(customerId, orderId).set(order);
 
     rootNodes.inProcessOrders(OrderType.Laundry, orderId).set(order);
-    laundryNodes.inProcessOrders(laundry.info.id, orderId).set(order);
+    laundryNodes.inProcessOrders(laundry.info.firebaseId, orderId).set(order);
 
 
     let chat: ChatObject = buildChatForOrder(orderId, OrderType.Laundry);
@@ -128,29 +122,29 @@ export async function requestLaundry(userId: string, data: any) {
 async function notifyParticipants(participants: Array<string>,
   orderId: string, participantType: ParticipantType) {
 
-  let notification: Notification = {
-    foreground: <NewLaundryOrderNotification>{
-      time: (new Date()).toISOString(),
-      notificationType: NotificationType.NewOrder,
-      orderType: OrderType.Laundry,
-      orderId: orderId,
-      notificationAction: NotificationAction.ShowSnackBarAlways,
-    },
-    background: {
-      [Language.ES]: {
-        title: "Nueva Pedido",
-        body: `Hay una nueva orden de lavaderia`
-      },
-      [Language.EN]: {
-        title: "New Order",
-        body: `There is a new laundry order`
-      }
-    },
-    linkUrl: orderUrl(participantType, OrderType.Laundry, orderId)
-  }
+  // let notification: Notification = {
+  //   foreground: <NewLaundryOrderNotification>{
+  //     time: (new Date()).toISOString(),
+  //     notificationType: NotificationType.NewOrder,
+  //     orderType: OrderType.Laundry,
+  //     orderId: parseInt(orderId),
+  //     notificationAction: NotificationAction.ShowSnackBarAlways,
+  //   },
+  //   background: {
+  //     [Language.ES]: {
+  //       title: "Nueva Pedido",
+  //       body: `Hay una nueva orden de lavaderia`
+  //     },
+  //     [Language.EN]: {
+  //       title: "New Order",
+  //       body: `There is a new laundry order`
+  //     }
+  //   },
+  //   linkUrl: orderUrl(OrderType.Laundry, parseInt(orderId))
+  // }
 
-  for (let index in participants) {
-    let participantId: string = participants[index]
-    pushNotification(participantId, notification, participantType);
-  }
+  // for (let index in participants) {
+  //   let participantId: string = participants[index]
+  //   pushNotification(participantId, notification, participantType);
+  // }
 }

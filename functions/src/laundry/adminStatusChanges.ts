@@ -9,7 +9,6 @@ import { expectedPreviousStatus, finishOrder, passChecksForLaundry } from "./hel
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { LaundryOrderStatusChangeMessages } from "./bgNotificationMessages";
-import { ParticipantType } from "../shared/models/Generic/Chat";
 import { orderUrl } from "../utilities/senders/appRoutes";
 
 export async function cancelOrder(userId: string, data: any) {
@@ -52,10 +51,10 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, userId: st
   if (newStatus == LaundryOrderStatus.CancelledByAdmin)
     await finishOrder(order, orderId);
   else if (newStatus == LaundryOrderStatus.ReadyForDelivery) {
-    customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-    laundryNodes.inProcessOrders(order.laundry.id, orderId).update(order);
+    customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).update(order);
+    laundryNodes.inProcessOrders(order.laundry.firebaseId, orderId).update(order);
     await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
-    deliveryDriverNodes.inProcessOrders(order.dropoffDriver!.id, orderId).update(order);
+    deliveryDriverNodes.inProcessOrders(order.dropoffDriver!.firebaseId, orderId).update(order);
   }
 
   let notification: Notification = {
@@ -69,16 +68,16 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, userId: st
       orderId: orderId
     },
     background: LaundryOrderStatusChangeMessages[newStatus],
-    linkUrl: orderUrl(ParticipantType.Customer, OrderType.Laundry, orderId)
+    linkUrl: orderUrl(OrderType.Laundry, orderId)
   }
 
-  await pushNotification(order.customer.id!, notification);
+  await pushNotification(order.customer.firebaseId!, notification);
 
-  notification.linkUrl = orderUrl(ParticipantType.DeliveryDriver, OrderType.Laundry, orderId)
-  if (order.dropoffDriver)
-    pushNotification(order.dropoffDriver.id!, notification, ParticipantType.DeliveryDriver);
-  else if (order.pickupDriver)
-    pushNotification(order.pickupDriver.id!, notification, ParticipantType.DeliveryDriver);
+  notification.linkUrl = orderUrl(OrderType.Laundry, orderId)
+  // if (order.dropoffDriver)
+  //   pushNotification(order.dropoffDriver.firebaseId!, notification, ParticipantType.DeliveryDriver);
+  // else if (order.pickupDriver)
+  //   pushNotification(order.pickupDriver.firebaseId!, notification, ParticipantType.DeliveryDriver);
 
 
 
@@ -115,13 +114,13 @@ export async function setWeight(userId: string, data: any) {
 
   let orderId = data.orderId;
   order.costsByType = data.costsByType;
-  order.cost = order.shippingCost + order.costsByType.weighedCost
+  // order.cost = order.shippingCost + order.costsByType?.weighedCost
 
-  customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-  await laundryNodes.inProcessOrders(order.laundry.id, orderId).update(order);
+  customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).update(order);
+  await laundryNodes.inProcessOrders(order.laundry.firebaseId, orderId).update(order);
   rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
   if (order.dropoffDriver)
-    deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
+    deliveryDriverNodes.inProcessOrders(order.dropoffDriver.firebaseId, orderId).update(order);
 
   return { status: ServerResponseStatus.Success }
 };
@@ -146,11 +145,11 @@ export async function setEstimatedLaundryReadyTime(userId: string, data: any) {
   let orderId = data.orderId;
   order.estimatedLaundryReadyTime = data.estimatedLaundryReadyTime;
 
-  customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-  await laundryNodes.inProcessOrders(order.laundry.id, orderId).update(order);
+  customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).update(order);
+  await laundryNodes.inProcessOrders(order.laundry.firebaseId, orderId).update(order);
   rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
   if (order.dropoffDriver)
-    deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
+    deliveryDriverNodes.inProcessOrders(order.dropoffDriver.firebaseId, orderId).update(order);
 
   return { status: ServerResponseStatus.Success }
 };

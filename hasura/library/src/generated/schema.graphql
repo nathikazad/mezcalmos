@@ -1104,6 +1104,11 @@ type deliverer {
   delivery_company_type: String!
   id: Int!
   notification_info_id: Int
+
+  """
+  A computed field, executes function "driver_notification_token"
+  """
+  notification_token: String
   online: Boolean!
 
   """An object relationship"""
@@ -1163,6 +1168,7 @@ input deliverer_bool_exp {
   delivery_company_type: String_comparison_exp
   id: Int_comparison_exp
   notification_info_id: Int_comparison_exp
+  notification_token: String_comparison_exp
   online: Boolean_comparison_exp
   restaurant: restaurant_bool_exp
   status: String_comparison_exp
@@ -1283,6 +1289,7 @@ input deliverer_order_by {
   delivery_company_type: order_by
   id: order_by
   notification_info_id: order_by
+  notification_token: order_by
   online: order_by
   restaurant: restaurant_order_by
   status: order_by
@@ -1512,6 +1519,11 @@ type delivery_order {
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
   id: Int!
+
+  """
+  A computed field, executes function "delivery_notification_token"
+  """
+  notification_token: String
   order_time: timestamptz!
   package_cost: money!
   payment_type: String!
@@ -1677,6 +1689,7 @@ input delivery_order_bool_exp {
   estimated_arrival_at_pickup_time: timestamptz_comparison_exp
   estimated_package_ready_time: timestamptz_comparison_exp
   id: Int_comparison_exp
+  notification_token: String_comparison_exp
   order_time: timestamptz_comparison_exp
   package_cost: money_comparison_exp
   payment_type: String_comparison_exp
@@ -2040,6 +2053,7 @@ input delivery_order_order_by {
   estimated_arrival_at_pickup_time: order_by
   estimated_package_ready_time: order_by
   id: order_by
+  notification_token: order_by
   order_time: order_by
   package_cost: order_by
   payment_type: order_by
@@ -17306,8 +17320,8 @@ type translation {
 
   """An object relationship"""
   restaurant: restaurant
-  service_provider_id: Int
-  service_provider_type: String
+  service_provider_id: Int!
+  service_provider_type: String!
 
   """An array relationship"""
   translations(

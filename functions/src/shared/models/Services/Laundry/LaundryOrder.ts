@@ -12,8 +12,8 @@ export interface LaundryOrder extends TwoWayDeliverableOrder {
   shippingCost: number;
   costPerKilo: number;
   routeInformation?: RouteInformation;
-  costsByType: CostsByType;
-  estimatedLaundryReadyTime: string
+  costsByType?: CostsByType;
+  estimatedLaundryReadyTime?: string
 }
 export interface CostsByType {
   byType: any;
@@ -43,7 +43,7 @@ export interface ConstructLaundryOrderParameters {
 
 export function constructLaundryOrder(
   params: ConstructLaundryOrderParameters, customer: UserInfo, laundry: UserInfo): LaundryOrder {
-  return <LaundryOrder>{
+  return <LaundryOrder><unknown>{
     customer: customer,
     orderType: OrderType.Laundry,
     status: LaundryOrderStatus.OrderReceieved,
@@ -56,7 +56,7 @@ export function constructLaundryOrder(
     to: params.to,
     shippingCost: params.shippingCost || 0,
     costPerKilo: 20,
-    routeInformation  : params.routeInformation
+    routeInformation: params.routeInformation
   }
 }
 

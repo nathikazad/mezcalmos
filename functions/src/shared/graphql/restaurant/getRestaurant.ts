@@ -77,7 +77,8 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
     image: response.restaurant_by_pk.image,
     location: {
       address: response.restaurant_by_pk.location_text,
-      gps: response.restaurant_by_pk.location_gps
+      lat: response.restaurant_by_pk.location_gps.coordinates[1],
+      lng: response.restaurant_by_pk.location_gps.coordinates[0],
     },
     description: response.restaurant_by_pk.description?.translations.reduce((prev:Record<any, any>, current) => {
       prev[current.language_id] = current.value;

@@ -1,244 +1,168 @@
-// const keys = require("../keys").keys()
-// const hasuraModule = require("../hasura");
-
-// const hasura = new hasuraModule.Hasura(keys.hasura)
-
-import { OrderType, TwoWayDeliverableOrder } from "../shared/models/Generic/Order";
-import { UserInfo } from "../shared/models/Generic/User";
-import { AuthorizationStatus, ServerResponseStatus } from "../shared/models/Generic/Generic";
-import * as customerNodes from "../shared/databaseNodes/customer";
-import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
-import *  as rootNodes from "../shared/databaseNodes/root";
-import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
-import { getInProcessOrder, getUserInfo } from "../shared/controllers/rootController";
-import { getDeliveryDriver } from "../shared/controllers/deliveryController";
-import { CancelDeliveryOrderNotification, DeliveryDriver, DeliveryDriverType, NewDeliveryOrderNotification } from "../shared/models/Drivers/DeliveryDriver";
-import { pushChat, deleteChat } from "../shared/controllers/chatController";
-import { buildChatForOrder, ChatObject, ParticipantType } from "../shared/models/Generic/Chat";
-import * as chatController from "../shared/controllers/chatController";
+import { OrderType } from "../shared/models/Generic/Order";
+import { ServerResponseStatus } from "../shared/models/Generic/Generic";
+// import { checkDeliveryAdmin } from "../shared/helper/authorizer";
+import { ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { deliveryCancelOrderMessage, deliveryNewOrderMessage } from "./bgNotificationMessages";
-import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
-import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
+import { deliveryNewOrderMessage } from "./bgNotificationMessages";
+// import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 import { orderUrl } from "../utilities/senders/appRoutes";
-import { LaundryOrder, LaundryOrderStatus } from "../shared/models/Services/Laundry/LaundryOrder";
-import { RestaurantOrder, RestaurantOrderStatus } from "../shared/models/Services/Restaurant/RestaurantOrder";
-import { addServiceProviderAndOperatorsToChat, updateServiceProviderOrder } from "../shared/controllers/orderController";
+import { getDeliveryDriver } from "../shared/graphql/delivery/getDeliveryDriver";
+import { DelivererStatus, DeliveryDriver, DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus, NewDeliveryOrderNotification } from "../shared/models/Services/Delivery/DeliveryOrder";
+import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
+import { assignDeliveryDriver } from "../shared/graphql/delivery/assignDeliverer";
+import { setDeliveryChatInfo } from "../shared/graphql/chat/setChatInfo";
+import { HttpsError } from "firebase-functions/v1/auth";
+import { deleteDeliveryChatMessages } from "../shared/graphql/chat/deleteChatMessages";
 
-export async function assignDriver(userId: string, data: any) {
+export interface AssignDriverDetails {
+  deliveryId: number,
+  deliveryDriverId: number,
+  orderType: OrderType,
+  orderId: number,
+  deliveryDriverType: DeliveryDriverType,
+  changeDriver?: boolean
+}
 
-  if (!data.orderId || !data.orderType || !data.deliveryDriverId || !data.deliveryDriverType) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: "Required orderId, orderType and deliveryDriverId"
+export async function assignDriver(userId: number, assignDriverDetails: AssignDriverDetails) {
+
+  //TODO
+  // response = await checkDeliveryAdmin(userId)
+  // if (response != undefined) {
+  //   return response;
+  // }
+  let deliveryOrderPromise = getDeliveryOrder(assignDriverDetails.deliveryId);
+  let deliveryDriverPromise = getDeliveryDriver(assignDriverDetails.deliveryDriverId, assignDriverDetails.deliveryDriverType);
+  let promiseResponse = await Promise.all([deliveryOrderPromise, deliveryDriverPromise]);
+  let deliveryOrder: DeliveryOrder = promiseResponse[0];
+  let deliveryDriver: DeliveryDriver = promiseResponse[1];
+  if(deliveryOrder.status != DeliveryOrderStatus.OrderReceived && 
+    deliveryOrder.status != DeliveryOrderStatus.PackageReady) {
+    throw new HttpsError(
+      "internal",
+      "delivery order is already assigned, complete or cancelled"
+    );
+  }
+  if(deliveryOrder.deliveryDriverId != null) {
+    throw new HttpsError(
+      "internal",
+      "delivery driver already assigned"
+    );
+  }
+  if(deliveryDriver.deliveryDriverType == DeliveryDriverType.DeliveryDriver) {
+    if(deliveryDriver.status != DelivererStatus.Authorized) {
+      throw new HttpsError(
+        "internal",
+        "delivery driver not authorized"
+      );
+    }
+    if(deliveryDriver.online != true) {
+      throw new HttpsError(
+        "internal",
+        "delivery driver not online"
+      );
     }
   }
+  
 
-  let response = isSignedIn(userId)
-  if (response != undefined)
-    return response;
-
-  response = await checkDeliveryAdmin(userId)
-  if (response != undefined) {
-    return response;
+  //TODO
+  if (assignDriverDetails.changeDriver) {
+    // let returnVal = removeOldDriver(deliveryDriverType, order, orderId);
+    // if (returnVal != null) return returnVal;
+    deleteDeliveryChatMessages(deliveryOrder);
   }
 
-  let deliveryDriverId: string = data.deliveryDriverId;
-  let orderId: string = data.orderId;
-  let deliveryDriver: DeliveryDriver = (await getDeliveryDriver(deliveryDriverId));
-  let deliveryDriverType: DeliveryDriverType = data.deliveryDriverType;
-  let driverInfo: UserInfo = await getUserInfo(deliveryDriverId);
-  let order: TwoWayDeliverableOrder = await getInProcessOrder(data.orderType, orderId);
+  await assignDeliveryDriver(assignDriverDetails);
 
+  setDeliveryChatInfo(deliveryOrder, deliveryDriver);
+  
+  if(deliveryDriver.notificationInfo) {
 
-  if (!deliveryDriver || !deliveryDriver.state ||
-    deliveryDriver.state.authorizationStatus != AuthorizationStatus.Authorized) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: "User is not an authorized driver"
+    let notification: Notification = {
+      foreground: <NewDeliveryOrderNotification>{
+        time: (new Date()).toISOString(),
+        notificationType: NotificationType.NewOrder,
+        orderType: assignDriverDetails.orderType,
+        notificationAction: NotificationAction.ShowPopUp,
+        orderId: assignDriverDetails.orderId,
+        deliveryDriverType: assignDriverDetails.deliveryDriverType
+      },
+      background: deliveryNewOrderMessage,
+      linkUrl: orderUrl(assignDriverDetails.orderType, assignDriverDetails.orderId)
     }
+    let participantType: ParticipantType = deliveryDriver.deliveryDriverType == DeliveryDriverType.DeliveryDriver
+      ? ParticipantType.DeliveryDriver
+      : ParticipantType.RestaurantOperator;
+
+    pushNotification(
+      deliveryDriver.user?.firebaseId!, 
+      notification, 
+      deliveryDriver.notificationInfo, 
+      participantType
+    );
   }
-
-  if (data.deliveryDriverType != DeliveryDriverType.Pickup
-    && data.deliveryDriverType != DeliveryDriverType.DropOff) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: "Invalid delivery driver type"
-    }
-  }
-
-  if (data.changeDriver) {
-    let returnVal = removeOldDriver(deliveryDriverType, order, orderId);
-    if (returnVal != null) return returnVal;
-  }
-
-  let serviceProviderDriverChatId: string = await pushChat();
-  let customerDriverChatId: string = await pushChat();
-  order.secondaryChats = order.secondaryChats ?? {};
-
-  switch (deliveryDriverType) {
-    case DeliveryDriverType.DropOff:
-      if (order.dropoffDriver != null)
-        return {
-          status: ServerResponseStatus.Error,
-          errorMessage: "dropoffDriver is already set"
-        }
-      if(deliveryDriverId == order.pickupDriver?.id){
-        deliveryDriverNodes.pastOrders(deliveryDriverId, orderId).remove();
-      }
-      order.dropoffDriver = driverInfo;
-      order.secondaryChats.serviceProviderDropOffDriver = serviceProviderDriverChatId
-      order.secondaryChats.customerDropOffDriver = customerDriverChatId
-      break;
-    case DeliveryDriverType.Pickup:
-      if (order.pickupDriver != null)
-        return {
-          status: ServerResponseStatus.Error,
-          errorMessage: "pickupDriver is already set"
-        }
-      order.pickupDriver = driverInfo;
-      order.secondaryChats.serviceProviderPickupDriver = serviceProviderDriverChatId
-      order.secondaryChats.customerPickupDriver = customerDriverChatId
-      break;
-  }
-
-  customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-  rootNodes.inProcessOrders(data.orderType, orderId).update(order);
-  deliveryDriverNodes.inProcessOrders(deliveryDriverId, orderId).update(order);
-
-
-  updateServiceProviderOrder(orderId, order);
-
-  let serviceProviderchat: ChatObject = await createServiceProviderChat(serviceProviderDriverChatId, data, orderId, driverInfo);
-  addServiceProviderAndOperatorsToChat(orderId, order, serviceProviderchat, serviceProviderDriverChatId);
-
-  await createCustomerChat(customerDriverChatId, data, orderId, driverInfo, order);
-
-  let notification: Notification = {
-    foreground: <NewDeliveryOrderNotification>{
-      time: (new Date()).toISOString(),
-      notificationType: NotificationType.NewOrder,
-      orderType: data.orderType,
-      notificationAction: NotificationAction.ShowPopUp,
-      orderId: orderId,
-      deliveryDriverType: deliveryDriverType
-    },
-    background: deliveryNewOrderMessage,
-    linkUrl: orderUrl(ParticipantType.DeliveryDriver, data.orderType, orderId)
-  }
-
-  pushNotification(deliveryDriverId, notification, ParticipantType.DeliveryDriver);
-
-
   return {
     status: ServerResponseStatus.Success,
   }
 };
 
-async function createServiceProviderChat(serviceProviderDriverChatId: string, data: any, orderId: string, driverInfo: UserInfo) {
-  let serviceProviderchat: ChatObject = buildChatForOrder(serviceProviderDriverChatId, data.orderType, orderId);
-  serviceProviderchat.addParticipant({
-    ...driverInfo,
-    particpantType: ParticipantType.DeliveryDriver
-  });
-  await chatController.setChat(serviceProviderDriverChatId, serviceProviderchat.chatData);
+// function removeOldDriver(deliveryDriverType: DeliveryDriverType, order: TwoWayDeliverableOrder, orderId: string) {
+  // let notification: Notification = {
+  //   foreground: <CancelDeliveryOrderNotification>{
+  //     time: (new Date()).toISOString(),
+  //     notificationType: NotificationType.OrderStatusChange,
+  //     orderType: order.orderType,
+  //     notificationAction: NotificationAction.ShowPopUp,
+  //     orderId: orderId,
+  //     deliveryDriverType: deliveryDriverType,
+  //     status: order.orderType == OrderType.Laundry ? LaundryOrderStatus.CancelledByAdmin : RestaurantOrderStatus.CancelledByAdmin,
+  //   },
+  //   background: deliveryCancelOrderMessage,
+  //   linkUrl: orderUrl(ParticipantType.DeliveryDriver, order.orderType, orderId)
+  // }
+//   switch (deliveryDriverType) {
+//     case DeliveryDriverType.DropOff:
+//       if (order.dropoffDriver == null)
+//         return {
+//           status: ServerResponseStatus.Error,
+//           errorMessage: "dropoffDriver is not set"
+//         }
+//       deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).remove();
+//       addCancelledOrderToPast(order.dropoffDriver.id, order, orderId);
+//       pushNotification(order.dropoffDriver.id, notification, ParticipantType.DeliveryDriver);
+//       delete order.dropoffDriver;
+//       deleteChat(order.secondaryChats.serviceProviderDropOffDriver!);
+//       order.secondaryChats.serviceProviderDropOffDriver = null;
+//       deleteChat(order.secondaryChats.customerDropOffDriver!);
+//       order.secondaryChats.customerDropOffDriver = null;
+//       return null;
+//     case DeliveryDriverType.Pickup:
+//       if (order.pickupDriver == null)
+//         return {
+//           status: ServerResponseStatus.Error,
+//           errorMessage: "pickupDriver is not  set"
+//         }
+//       deliveryDriverNodes.inProcessOrders(order.pickupDriver.id, orderId).remove();
+//       addCancelledOrderToPast(order.pickupDriver.id, order, orderId);
+//       pushNotification(order.pickupDriver.id, notification, ParticipantType.DeliveryDriver);
+//       delete order.pickupDriver;
+//       deleteChat(order.secondaryChats.serviceProviderPickupDriver!);
+//       order.secondaryChats.serviceProviderPickupDriver = null;
+//       deleteChat(order.secondaryChats.customerPickupDriver!);
+//       order.secondaryChats.customerPickupDriver = null;
+//       return null;
+//   }
+// }
 
-  deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
-    let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-    chatController.addParticipantsToChat(Object.keys(deliveryAdmins), serviceProviderchat, serviceProviderDriverChatId, ParticipantType.DeliveryAdmin);
-  });
-  return serviceProviderchat;
-}
+// function addCancelledOrderToPast(driverId: string, order: TwoWayDeliverableOrder, orderId: string) {
+//   if (order.orderType == OrderType.Restaurant) {
+//     let rOrder: RestaurantOrder = <RestaurantOrder>{ ...order }
+//     rOrder.status = RestaurantOrderStatus.CancelledByAdmin;
+//     deliveryDriverNodes.pastOrders(driverId, orderId).update(rOrder)
+//   } else if (order.orderType == OrderType.Laundry) {
+//     let lOrder: LaundryOrder = <LaundryOrder>{ ...order }
+//     lOrder.status = LaundryOrderStatus.CancelledByAdmin;
+//     deliveryDriverNodes.pastOrders(driverId, orderId).update(lOrder)
+//   }
 
-async function createCustomerChat(customerDriverChatId: string, data: any, orderId: string, driverInfo: UserInfo, order: TwoWayDeliverableOrder) {
-  let customerChat: ChatObject = buildChatForOrder(customerDriverChatId, data.orderType, orderId);
-  customerChat.addParticipant({
-    ...driverInfo,
-    particpantType: ParticipantType.DeliveryDriver
-  });
-  customerChat.addParticipant({
-    ...order.customer,
-    particpantType: ParticipantType.Customer
-  });
-  switch (order.orderType) {
-    case OrderType.Laundry:
-      customerChat.addParticipant({
-        ...(order as LaundryOrder).laundry,
-        particpantType: ParticipantType.Laundry
-      });
-      break;
-    case OrderType.Restaurant:
-      customerChat.addParticipant({
-        ...(order as RestaurantOrder).restaurant,
-        particpantType: ParticipantType.Restaurant
-      });
-      break;
-
-    default:
-      break;
-  }
-
-  await chatController.setChat(customerDriverChatId, customerChat.chatData);
-}
-
-function removeOldDriver(deliveryDriverType: DeliveryDriverType, order: TwoWayDeliverableOrder, orderId: string) {
-  let notification: Notification = {
-    foreground: <CancelDeliveryOrderNotification>{
-      time: (new Date()).toISOString(),
-      notificationType: NotificationType.OrderStatusChange,
-      orderType: order.orderType,
-      notificationAction: NotificationAction.ShowPopUp,
-      orderId: orderId,
-      deliveryDriverType: deliveryDriverType,
-      status: order.orderType == OrderType.Laundry ? LaundryOrderStatus.CancelledByAdmin : RestaurantOrderStatus.CancelledByAdmin,
-    },
-    background: deliveryCancelOrderMessage,
-    linkUrl: orderUrl(ParticipantType.DeliveryDriver, order.orderType, orderId)
-  }
-  switch (deliveryDriverType) {
-    case DeliveryDriverType.DropOff:
-      if (order.dropoffDriver == null)
-        return {
-          status: ServerResponseStatus.Error,
-          errorMessage: "dropoffDriver is not set"
-        }
-      deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).remove();
-      addCancelledOrderToPast(order.dropoffDriver.id, order, orderId);
-      pushNotification(order.dropoffDriver.id, notification, ParticipantType.DeliveryDriver);
-      delete order.dropoffDriver;
-      deleteChat(order.secondaryChats.serviceProviderDropOffDriver!);
-      order.secondaryChats.serviceProviderDropOffDriver = null;
-      deleteChat(order.secondaryChats.customerDropOffDriver!);
-      order.secondaryChats.customerDropOffDriver = null;
-      return null;
-    case DeliveryDriverType.Pickup:
-      if (order.pickupDriver == null)
-        return {
-          status: ServerResponseStatus.Error,
-          errorMessage: "pickupDriver is not  set"
-        }
-      deliveryDriverNodes.inProcessOrders(order.pickupDriver.id, orderId).remove();
-      addCancelledOrderToPast(order.pickupDriver.id, order, orderId);
-      pushNotification(order.pickupDriver.id, notification, ParticipantType.DeliveryDriver);
-      delete order.pickupDriver;
-      deleteChat(order.secondaryChats.serviceProviderPickupDriver!);
-      order.secondaryChats.serviceProviderPickupDriver = null;
-      deleteChat(order.secondaryChats.customerPickupDriver!);
-      order.secondaryChats.customerPickupDriver = null;
-      return null;
-  }
-}
-
-function addCancelledOrderToPast(driverId: string, order: TwoWayDeliverableOrder, orderId: string) {
-  if (order.orderType == OrderType.Restaurant) {
-    let rOrder: RestaurantOrder = <RestaurantOrder>{ ...order }
-    rOrder.status = RestaurantOrderStatus.CancelledByAdmin;
-    deliveryDriverNodes.pastOrders(driverId, orderId).update(rOrder)
-  } else if (order.orderType == OrderType.Laundry) {
-    let lOrder: LaundryOrder = <LaundryOrder>{ ...order }
-    lOrder.status = LaundryOrderStatus.CancelledByAdmin;
-    deliveryDriverNodes.pastOrders(driverId, orderId).update(lOrder)
-  }
-
-}
+// }

@@ -1,11 +1,11 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { Delivery, DeliveryStatus } from "../../../models/Generic/Delivery";
+import { DeliveryOrder, DeliveryOrderStatus } from "../../../models/Services/Delivery/DeliveryOrder";
 import { Restaurant } from "../../../models/Services/Restaurant/Restaurant";
 import { RestaurantOrder, RestaurantOrderStatus } from "../../../models/Services/Restaurant/RestaurantOrder";
 
 export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, restaurant: Restaurant)
-  : Promise<{ restaurantOrder:RestaurantOrder, delivery:Delivery }> {
+  : Promise<{ restaurantOrder: RestaurantOrder, deliveryOrder: DeliveryOrder }> {
 
   let chain = getHasura();
   
@@ -43,10 +43,13 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
             customer_id: restaurantOrder.customerId,
             dropoff_gps: JSON.stringify({
               "type": "Point",
-              "coordinates": restaurantOrder.toLocation.gps.coordinates,
+              "coordinates": [restaurantOrder.toLocation.lng, restaurantOrder.toLocation.lat]
             }),
             dropoff_address: restaurantOrder.toLocation.address,
-            pickup_gps: JSON.stringify(restaurant.location.gps),
+            pickup_gps: JSON.stringify({
+              "type": "Point",
+              "coordinates": [restaurant.location.lng, restaurant.location.lat]
+            }),
             pickup_address: restaurant.location.address,
             chat_with_customer: {
               data: {
@@ -69,7 +72,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
             },
             payment_type: restaurantOrder.paymentType,
             delivery_cost: restaurantOrder.deliveryCost,
-            status: DeliveryStatus.OrderReceived,
+            status: DeliveryOrderStatus.OrderReceived,
             service_provider_id: restaurantOrder.restaurantId,
             service_provider_type: "restaurant",
             // trip_distance: deliveryDetails.tripDistance,
@@ -81,7 +84,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
         payment_type: restaurantOrder.paymentType,
         to_location_gps: JSON.stringify({
           "type": "Point",
-          "coordinates": restaurantOrder.toLocation.gps.coordinates
+          "coordinates": [restaurantOrder.toLocation.lng, restaurantOrder.toLocation.lat]
         }),
         to_location_address: restaurantOrder.toLocation.address,
         notes: restaurantOrder.notes,
@@ -127,21 +130,21 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
   }
   restaurantOrder.orderId = response.insert_restaurant_order_one.id;
   restaurantOrder.chatId = response.insert_restaurant_order_one.chat_id;
-  let delivery: Delivery = {
+  let deliveryOrder: DeliveryOrder = {
     deliveryId: response.insert_restaurant_order_one.delivery.id,
     pickupLocation: restaurant.location,
     dropoffLocation: restaurantOrder.toLocation,
     chatWithServiceProviderId: response.insert_restaurant_order_one.delivery.chat_with_service_provider_id,
     chatWithCustomerId: response.insert_restaurant_order_one.delivery.chat_with_customer_id,
     paymentType: restaurantOrder.paymentType,
-    status: DeliveryStatus.OrderReceived,
+    status: DeliveryOrderStatus.OrderReceived,
     customerId: restaurantOrder.customerId,
     deliveryCost: restaurantOrder.deliveryCost,
     packageCost: restaurantOrder.paymentType == "cash" ? response.insert_restaurant_order_one.items_cost : 0,
     orderTime: response.insert_restaurant_order_one.order_time
   }
 
-  return { restaurantOrder, delivery };
+  return { restaurantOrder, deliveryOrder };
   
 }
 

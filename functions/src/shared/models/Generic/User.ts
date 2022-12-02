@@ -13,7 +13,7 @@ export interface UserInfo {
 
 export interface CustomerInfo extends UserInfo {
   appVersion: string,
-  notificationInfo: NotificationInfo
+  notificationInfo?: NotificationInfo
 }
 
 export interface MezAdmin {

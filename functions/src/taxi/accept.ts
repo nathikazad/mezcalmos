@@ -4,7 +4,6 @@ import * as functions from "firebase-functions";
 import * as rootNodes from "../shared/databaseNodes/root";
 import * as taxiNodes from "../shared/databaseNodes/taxi";
 import * as customerNodes from "../shared/databaseNodes/customer";
-import { isSignedIn } from "../shared/helper/authorizer";
 import { AuthorizationStatus, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
 import { UserInfo } from "../shared/models/Generic/User";
@@ -20,9 +19,9 @@ import { getTaxi } from "../shared/controllers/taxiController";
 import { orderUrl } from "../utilities/senders/appRoutes";
 
 export async function acceptRide(userId: string, data: any) {
-  let response = isSignedIn(userId)
-  if (response != undefined)
-    return response;
+  // let response = isSignedIn(userId)
+  // if (response != undefined)
+  //   return response;
 
   if (!data.orderId) {
     return {
@@ -80,7 +79,7 @@ export async function acceptRide(userId: string, data: any) {
       };
     }
 
-    if (order.customer.id == taxiId) {
+    if (order.customer.firebaseId == taxiId) {
       return {
         status: ServerResponseStatus.Error,
         errorMessage: "Driver and Customer cannot have same id"
@@ -95,7 +94,7 @@ export async function acceptRide(userId: string, data: any) {
     }
 
     if (data.counterOfferDriverId) {
-      let orderFromCustomerNode : TaxiOrder = (await customerNodes.inProcessOrders(order.customer.id, orderId).get()).val();
+      let orderFromCustomerNode : TaxiOrder = (await customerNodes.inProcessOrders(order.customer.firebaseId, orderId).get()).val();
 
       if (!orderFromCustomerNode.counterOffers || !orderFromCustomerNode.counterOffers![data.counterOfferDriverId]
         || orderFromCustomerNode.counterOffers![data.counterOfferDriverId].status != CounterOfferStatus.Accepted) {
@@ -110,9 +109,10 @@ export async function acceptRide(userId: string, data: any) {
     order.status = (order.status == TaxiOrderStatus.LookingForTaxi) ? TaxiOrderStatus.OnTheWay : TaxiOrderStatus.Scheduled;
     order.acceptRideTime = (new Date()).toISOString()
     order.driver = <TaxiInfo>{
-      id: taxiId,
+      id: parseInt(taxiId),
       name: driverInfo.name,
       image: driverInfo.image,
+      firebaseId: driverInfo.firebaseId,
       language: driverInfo.language,
       taxiNumber: taxi.details?.taxiNumber ?? "00-000",
     }
@@ -123,7 +123,7 @@ export async function acceptRide(userId: string, data: any) {
     rootNodes.inProcessOrders(OrderType.Taxi, orderId).set(order);
     rootNodes.openOrders(OrderType.Taxi, orderId).remove();
 
-    customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
+    customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).update(order);
 
 
 
@@ -147,13 +147,13 @@ export async function acceptRide(userId: string, data: any) {
           notificationType: NotificationType.OrderStatusChange,
           orderType: OrderType.Taxi,
           notificationAction: NotificationAction.ShowSnackBarAlways,
-          orderId: orderId
+          orderId: parseInt(orderId)
         },
         background: taxiOrderStatusChangeMessages[TaxiOrderStatus.OnTheWay],
-        linkUrl: orderUrl(ParticipantType.Customer, OrderType.Taxi, orderId)
+        linkUrl: orderUrl(OrderType.Taxi, parseInt(orderId))
       }
 
-      pushNotification(order.customer.id!, notification);
+      pushNotification(order.customer.firebaseId!, notification);
     }
 
     return {
