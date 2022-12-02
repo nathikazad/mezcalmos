@@ -44,7 +44,7 @@ export interface Restaurant {
   firebaseId?: string;
   location: Location;
   description?: Record<Language, string>;
-  scheduleId: number;
+  schedule?: any;
   paymentInfoId?: number;
   openStatus?: OpenStatus;
   // LanguageId: Language;

@@ -64,35 +64,6 @@ select_permissions:
       filter:
         customer_id:
           _eq: X-Hasura-User-Id
-  - role: deliverer
-    permission:
-      columns:
-        - to_location_gps
-        - tax
-        - chat_id
-        - customer_id
-        - delivery_id
-        - id
-        - refund_amount
-        - restaurant_id
-        - review_id
-        - stripe_payment_id
-        - delivery_cost
-        - customer_app_type
-        - firebase_id
-        - notes
-        - order_type
-        - payment_type
-        - to_location_address
-        - actual_food_ready_time
-        - estimated_food_ready_time
-        - order_time
-        - status
-      filter:
-        delivery:
-          deliverer:
-            user_id:
-              _eq: X-Hasura-User-Id
   - role: mez_admin
     permission:
       columns:

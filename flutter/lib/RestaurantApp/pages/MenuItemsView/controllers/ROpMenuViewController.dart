@@ -6,7 +6,6 @@ import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 
 class ROpMenuViewController {
   /// Handles ui logic of the menu view inside the restaurant app
@@ -19,37 +18,28 @@ class ROpMenuViewController {
   StreamSubscription? _restaurantListener;
 
   // state variables
-  Rxn<Restaurant> restaurant = Rxn<Restaurant>();
   RxBool reOrderMode = RxBool(false);
   //main categories //
   RxList<Category> mainCategories = RxList<Category>([]);
 // rO stands for Reordable categories //
   RxList<Category> rOcategories = RxList<Category>([]);
-
+  late String restaurnatId;
+  RxBool pageLoaded = RxBool(false);
 // IMPORTANT //
   // This method needs to be called on the initState method of the view
   Future<void> init({required String restaurantId}) async {
+    restaurnatId = restaurantId;
     // assigning restaurant data and start the stream subscription //
     mezDbgPrint("INIT MENU VIEW =======>$restaurantId");
     await fetchCategories();
+    pageLoaded.value = true;
     mezDbgPrint("Main Categories length ====>${mainCategories.length}");
-    Get.put(RestaurantInfoController(), permanent: false);
-    restaurantInfoController = Get.find<RestaurantInfoController>();
-    restaurantInfoController.init(restId: restaurantId);
-    restaurant.value =
-        await restaurantInfoController.getRestaurantAsFuture(restaurantId);
-    _restaurantListener = restaurantInfoController
-        .getRestaurant(restaurantId)
-        .listen((Restaurant? event) {
-      if (event != null) {
-        restaurant.value = event;
-      }
-    });
   }
 
   Future<void> fetchCategories() async {
-    final List<Category>? _categories =
-        await get_restaurant_categories_by_id(4, withCache: false);
+    final List<Category>? _categories = await get_restaurant_categories_by_id(
+        int.parse(restaurnatId),
+        withCache: false);
     if (_categories != null) {
       mainCategories.clear();
       mainCategories.value.addAll(_categories);
@@ -77,8 +67,8 @@ class ROpMenuViewController {
   void startReoderMode() {
     if (reOrderMode.isFalse) {
       // sorting items first //
-      for (int i = 0; i < restaurant.value!.getCategories.length; i++) {
-        rOcategories.add(restaurant.value!.getCategories[i]);
+      for (int i = 0; i < mainCategories.length; i++) {
+        rOcategories.add(mainCategories[i]);
         // sorting items inside category //
         for (int j = 0; j < rOcategories[i].items.length; j++) {
           rOcategories[i].items[j].position = j;

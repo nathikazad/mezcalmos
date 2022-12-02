@@ -9,7 +9,7 @@ object_relationships:
     using:
       foreign_key_constraint_on: translation_id
 insert_permissions:
-  - role: deliverer
+  - role: delivery_driver
     permission:
       check:
         _exists:
@@ -50,7 +50,7 @@ select_permissions:
         - language_id
         - value
       filter: {}
-  - role: deliverer
+  - role: delivery_driver
     permission:
       columns:
         - translation_id
@@ -72,7 +72,7 @@ select_permissions:
         - value
       filter: {}
 update_permissions:
-  - role: deliverer
+  - role: delivery_driver
     permission:
       columns:
         - value
@@ -97,7 +97,7 @@ update_permissions:
                 _eq: X-Hasura-User-Id
       check: null
 delete_permissions:
-  - role: deliverer
+  - role: delivery_driver
     permission:
       backend_only: false
       filter:

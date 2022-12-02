@@ -43,6 +43,7 @@ class HasuraDb {
         fireAuth.FirebaseAuth.instance.currentUser!,
         appLaunchMode == AppLaunchMode.dev,
       );
+      mezDbgPrint("ROLE ${_getRoleBasedOnApp()}");
       mezDbgPrint("TOKEN $hasuraAuthToken");
       headers = <String, String>{
         'Authorization': 'Bearer $hasuraAuthToken',

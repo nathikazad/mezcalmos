@@ -11,6 +11,7 @@ import 'package:mezcalmos/RestaurantApp/pages/CurrentOrdersList/components/ROpOr
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
@@ -25,16 +26,15 @@ import 'package:sizer/sizer.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpPastOrdersList'];
 
-class LaundryOpCurrentOrdersListView extends StatefulWidget {
-  const LaundryOpCurrentOrdersListView({Key? key}) : super(key: key);
+class ROpCurrentOrdersListView extends StatefulWidget {
+  const ROpCurrentOrdersListView({Key? key}) : super(key: key);
 
   @override
-  State<LaundryOpCurrentOrdersListView> createState() =>
-      _LaundryOpCurrentOrdersListViewState();
+  State<ROpCurrentOrdersListView> createState() =>
+      _ROpCurrentOrdersListViewState();
 }
 
-class _LaundryOpCurrentOrdersListViewState
-    extends State<LaundryOpCurrentOrdersListView> {
+class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
   ROpOrderController orderController = Get.find<ROpOrderController>();
   RxBool isValidRestaurant = true.obs;
 
@@ -48,6 +48,7 @@ class _LaundryOpCurrentOrdersListViewState
   StreamSubscription? _pastOrdersListener;
   @override
   void initState() {
+    mezDbgPrint("INIT ORDERS 👋👋👋👋👋👋");
     _getRestaurant();
     inProcessOrders = orderController.currentOrders;
     pastOrders = orderController.pastOrders;
@@ -67,19 +68,17 @@ class _LaundryOpCurrentOrdersListViewState
     Get.put(RestaurantInfoController(), permanent: true);
     Get.find<RestaurantInfoController>()
         .init(restId: _restaurantOpAuthController.restaurantId!);
+    final int id = int.parse(Get.find<RestaurantOpAuthController>()
+        .operator
+        .value!
+        .state
+        .restaurantId!);
     try {
-      restaurant.value = await Get.find<RestaurantInfoController>()
-          .getRestaurantAsFuture(_restaurantOpAuthController.restaurantId!);
-      _restStream = Get.find<RestaurantInfoController>()
-          .getRestaurant(_restaurantOpAuthController.restaurantId!)
-          .listen((Restaurant? event) {
-        if (event != null) {
-          restaurant.value = event;
-        }
-      });
-    } catch (e) {
+      restaurant.value = await get_restaurant_by_id(id: id);
+    } catch (e, stk) {
       isValidRestaurant.value = false;
       mezDbgPrint(e);
+      mezDbgPrint(stk);
       // MezSnackbar("OOPS",
       //     "No restaurant with ID ${_restaurantOpAuthController.restaurantId} found",
       //     position: SnackPosition.TOP);

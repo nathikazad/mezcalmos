@@ -1,7 +1,17 @@
 table:
-  name: deliverer
+  name: delivery_driver
   schema: public
 object_relationships:
+  - name: delivery_company
+    using:
+      manual_configuration:
+        column_mapping:
+          delivery_company_id: id
+          delivery_company_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: delivery_company
+          schema: public
   - name: restaurant
     using:
       manual_configuration:
@@ -35,7 +45,7 @@ select_permissions:
             user_id:
               _eq: X-Hasura-User-Id
 update_permissions:
-  - role: deliverer
+  - role: delivery_driver
     permission:
       columns:
         - app_version

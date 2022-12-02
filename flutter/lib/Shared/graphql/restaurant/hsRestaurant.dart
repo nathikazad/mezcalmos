@@ -68,25 +68,29 @@ Future<Restaurant?> get_restaurant_by_id({required int id}) async {
     mezDbgPrint("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
     return null;
   } else if (response.parsedData != null) {
-    mezDbgPrint("✅✅✅✅ Hasura querry success, data : ${response.data} ");
+    mezDbgPrint(
+        "✅✅✅✅ Hasura querry success, data : ${response.parsedData?.restaurant_by_pk?.toJson()} ");
     final Query$getOneRestaurant$restaurant_by_pk data =
         response.parsedData!.restaurant_by_pk!;
     return Restaurant(
         userInfo: ServiceInfo(
             hasuraId: data.id,
             image: data.image,
-            firebaseId: data.firebase_id!,
+            firebaseId: data.firebase_id ?? "",
             name: data.name,
             descriptionId: data.description_id,
             //   descriptionId: data.d,
             location:
                 Location.fromHasura(data.location_gps, data.location_text)),
-        description: {
-          data.description!.translations.first.language_id.toLanguageType():
-              data.description!.translations.first.value,
-          data.description!.translations[1].language_id.toLanguageType():
-              data.description!.translations[1].value,
-        },
+        description: (data.description?.translations != null)
+            ? {
+                data.description!.translations.first.language_id
+                        .toLanguageType():
+                    data.description!.translations.first.value,
+                data.description!.translations[1].language_id.toLanguageType():
+                    data.description!.translations[1].value,
+              }
+            : null,
         schedule: Schedule(openHours: {}),
         paymentInfo: PaymentInfo(),
         restaurantState:

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:math';
+
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
@@ -10,7 +10,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/user/hsUser.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
@@ -60,9 +59,9 @@ class AuthController extends GetxController {
       mezDbgPrint('Authcontroller:: Auth state change!');
       mezDbgPrint(user?.hashCode);
       mezDbgPrint(user ?? "empty");
-      _authStateStreamController.add(user);
 
       if (user == null) {
+        _hasuraUserId.value = null;
         await hasuraDb.initializeHasura();
         await _onSignOutCallback();
         mezDbgPrint('AuthController: User is currently signed out!');
@@ -72,14 +71,14 @@ class AuthController extends GetxController {
         fireAuth.IdTokenResult? tokenResult = await user.getIdTokenResult();
         mezDbgPrint(tokenResult);
 
-        if (tokenResult?.claims?['https://hasura.io/jwt/claims'] == null) {
+        if (tokenResult.claims?['https://hasura.io/jwt/claims'] == null) {
           mezDbgPrint("No token, calling addHasuraClaims");
           await FirebaseFunctions.instance
               .httpsCallable('user-addHasuraClaim')
               .call();
           tokenResult = await user.getIdTokenResult();
         }
-        _hasuraUserId.value = int.parse(tokenResult!
+        _hasuraUserId.value = int.parse(tokenResult
             .claims!['https://hasura.io/jwt/claims']['x-hasura-user-id']);
 
         mezDbgPrint(_hasuraUserId.value);
@@ -87,16 +86,17 @@ class AuthController extends GetxController {
         await hasuraDb.initializeHasura();
         await _onSignInCallback();
       }
+      _authStateStreamController.add(user);
     });
+
     super.onInit();
   }
 
   Future<void> fetchUserInfoFromHasura() async {
-    final bool isInited = await hasuraDb.clientInitilized.stream.first;
-    if (!isInited) await hasuraDb.clientInitilized.stream.first;
     mezDbgPrint(
         "[777] fetchingUser Info from hasure using firebaseid : ${fireAuthUser?.uid}");
-    _userInfo = await get_user_by_firebase_id(firebase_id: fireAuthUser!.uid);
+
+    _userInfo = await get_user_by_hasura_id(hasuraId: _hasuraUserId.value!);
     mezDbgPrint(
         "[77] =====> fetchUserInfoFromHasura:: userInfo ===> ${_userInfo?.toFirebaseFormatJson()}");
   }
@@ -108,6 +108,11 @@ class AuthController extends GetxController {
   bool isUserImgSet() {
     return user?.isImageSet ?? false;
   }
+
+  /// only use this for test purposes
+  ///
+  /// set a default image just for test purposes
+  Future<void> _setTestImage() async {}
 
   DateTime? getUserCreationDate() {
     return fireAuth.FirebaseAuth.instance.currentUser!.metadata.creationTime;
@@ -190,6 +195,10 @@ class AuthController extends GetxController {
       //     .child('image')
       //     .set(compressedImageUrl);
     }
+  }
+
+  Future<void> signOut() async {
+    await _auth.signOut();
   }
 
   void changeLanguage(LanguageType newLanguage) {

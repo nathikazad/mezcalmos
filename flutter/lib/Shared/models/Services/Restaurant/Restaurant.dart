@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
@@ -57,6 +58,7 @@ class Restaurant extends Service {
 
   factory Restaurant.fromRestaurantData(
       {required String restaurantId, required restaurantData}) {
+    mezDbgPrint("Restaurant id $restaurantId \n Data : $restaurantData");
     // List<Object?> availableLanguages =
     //     restaurantData["details"]["languages"] as List<Object?>;
     final ServiceState restaurantState =

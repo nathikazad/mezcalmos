@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/item/option/choice/__generated/choice.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
@@ -35,20 +36,29 @@ Future<Choice?> get_choice_by_id(int choiceId) async {
 }
 
 // Mutations //
-Future<int?> add_choice({required Choice choice, required int optionId}) async {
+Future<int?> add_choice(
+    {required Choice choice,
+    required int optionId,
+    required int restaurantId}) async {
+  mezDbgPrint(choice.toJson());
   final QueryResult<Mutation$addChoice> response =
       await _db.graphQLClient.mutate$addChoice(
     Options$Mutation$addChoice(
       variables: Variables$Mutation$addChoice(
         choice: Input$restaurant_choice_insert_input(
           available: choice.available,
+          restaurant_id: restaurantId,
           cost: choice.cost.toDouble(),
           options:
               Input$restaurant_option_choice_map_arr_rel_insert_input(data: [
-            Input$restaurant_option_choice_map_insert_input(option_id: optionId)
+            Input$restaurant_option_choice_map_insert_input(
+                option_id: optionId, restaurant_id: restaurantId)
           ]),
           name: Input$translation_obj_rel_insert_input(
             data: Input$translation_insert_input(
+              service_provider_id: restaurantId,
+              service_provider_type:
+                  OrderType.Restaurant.toFirebaseFormatString(),
               translations: Input$translation_value_arr_rel_insert_input(
                 data: [
                   Input$translation_value_insert_input(

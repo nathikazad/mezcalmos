@@ -998,6 +998,13 @@ const documentNodeQuerygetUserById = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'firebase_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'name'),
             alias: null,
             arguments: [],
@@ -1153,6 +1160,7 @@ extension ClientExtension$Query$getUserById on graphql.GraphQLClient {
 class Query$getUserById$user_by_pk {
   Query$getUserById$user_by_pk({
     required this.deleted,
+    required this.firebase_id,
     this.name,
     this.image,
     this.email,
@@ -1163,6 +1171,7 @@ class Query$getUserById$user_by_pk {
 
   factory Query$getUserById$user_by_pk.fromJson(Map<String, dynamic> json) {
     final l$deleted = json['deleted'];
+    final l$firebase_id = json['firebase_id'];
     final l$name = json['name'];
     final l$image = json['image'];
     final l$email = json['email'];
@@ -1171,6 +1180,7 @@ class Query$getUserById$user_by_pk {
     final l$$__typename = json['__typename'];
     return Query$getUserById$user_by_pk(
       deleted: (l$deleted as bool),
+      firebase_id: (l$firebase_id as String),
       name: (l$name as String?),
       image: (l$image as String?),
       email: (l$email as String?),
@@ -1181,6 +1191,8 @@ class Query$getUserById$user_by_pk {
   }
 
   final bool deleted;
+
+  final String firebase_id;
 
   final String? name;
 
@@ -1198,6 +1210,8 @@ class Query$getUserById$user_by_pk {
     final _resultData = <String, dynamic>{};
     final l$deleted = deleted;
     _resultData['deleted'] = l$deleted;
+    final l$firebase_id = firebase_id;
+    _resultData['firebase_id'] = l$firebase_id;
     final l$name = name;
     _resultData['name'] = l$name;
     final l$image = image;
@@ -1216,6 +1230,7 @@ class Query$getUserById$user_by_pk {
   @override
   int get hashCode {
     final l$deleted = deleted;
+    final l$firebase_id = firebase_id;
     final l$name = name;
     final l$image = image;
     final l$email = email;
@@ -1224,6 +1239,7 @@ class Query$getUserById$user_by_pk {
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$deleted,
+      l$firebase_id,
       l$name,
       l$image,
       l$email,
@@ -1245,6 +1261,11 @@ class Query$getUserById$user_by_pk {
     final l$deleted = deleted;
     final lOther$deleted = other.deleted;
     if (l$deleted != lOther$deleted) {
+      return false;
+    }
+    final l$firebase_id = firebase_id;
+    final lOther$firebase_id = other.firebase_id;
+    if (l$firebase_id != lOther$firebase_id) {
       return false;
     }
     final l$name = name;
@@ -1301,6 +1322,7 @@ abstract class CopyWith$Query$getUserById$user_by_pk<TRes> {
 
   TRes call({
     bool? deleted,
+    String? firebase_id,
     String? name,
     String? image,
     String? email,
@@ -1325,6 +1347,7 @@ class _CopyWithImpl$Query$getUserById$user_by_pk<TRes>
 
   TRes call({
     Object? deleted = _undefined,
+    Object? firebase_id = _undefined,
     Object? name = _undefined,
     Object? image = _undefined,
     Object? email = _undefined,
@@ -1336,6 +1359,9 @@ class _CopyWithImpl$Query$getUserById$user_by_pk<TRes>
         deleted: deleted == _undefined || deleted == null
             ? _instance.deleted
             : (deleted as bool),
+        firebase_id: firebase_id == _undefined || firebase_id == null
+            ? _instance.firebase_id
+            : (firebase_id as String),
         name: name == _undefined ? _instance.name : (name as String?),
         image: image == _undefined ? _instance.image : (image as String?),
         email: email == _undefined ? _instance.email : (email as String?),
@@ -1357,6 +1383,7 @@ class _CopyWithStubImpl$Query$getUserById$user_by_pk<TRes>
 
   call({
     bool? deleted,
+    String? firebase_id,
     String? name,
     String? image,
     String? email,

@@ -11,6 +11,8 @@ export interface Location {
 //   coordinates: [number, number];
 // }
 
+
+
 export interface Review {
   rating: number,
   fromEntityId: number,

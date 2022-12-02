@@ -15,7 +15,7 @@ insert_permissions:
         - from_entity_type
         - note
         - to_entity_type
-  - role: deliverer
+  - role: delivery_driver
     permission:
       check:
         from_entity_id:
@@ -64,7 +64,7 @@ select_permissions:
         - note
         - to_entity_type
       filter: {}
-  - role: deliverer
+  - role: delivery_driver
     permission:
       columns:
         - from_entity_id

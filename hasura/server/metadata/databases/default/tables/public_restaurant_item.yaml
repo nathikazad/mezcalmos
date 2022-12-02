@@ -102,7 +102,7 @@ select_permissions:
         - special_period_start
         - item_type
       filter: {}
-  - role: deliverer
+  - role: delivery_driver
     permission:
       columns:
         - archived

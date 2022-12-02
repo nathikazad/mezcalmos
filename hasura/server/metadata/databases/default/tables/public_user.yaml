@@ -13,34 +13,50 @@ select_permissions:
   - role: customer
     permission:
       columns:
+        - deleted
+        - email
+        - firebase_id
         - id
         - image
         - language_id
         - name
+        - phone
       filter: {}
-  - role: deliverer
+  - role: delivery_driver
     permission:
       columns:
+        - deleted
+        - email
+        - firebase_id
         - id
         - image
         - language_id
         - name
+        - phone
       filter: {}
   - role: mez_admin
     permission:
       columns:
+        - deleted
+        - email
+        - firebase_id
         - id
         - image
         - language_id
         - name
+        - phone
       filter: {}
   - role: restaurant_operator
     permission:
       columns:
+        - deleted
+        - email
+        - firebase_id
         - id
         - image
         - language_id
         - name
+        - phone
       filter: {}
 update_permissions:
   - role: customer
@@ -55,7 +71,7 @@ update_permissions:
         id:
           _eq: X-Hasura-User-Id
       check: null
-  - role: deliverer
+  - role: delivery_driver
     permission:
       columns:
         - email

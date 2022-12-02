@@ -203,7 +203,8 @@ class _ROpDrawerState extends State<ROpDrawer> {
             onClick: () {
               _drawerController.closeMenu();
               Get.toNamed(getROpMenuRoute(
-                  restaurantId: restaurantOpAuthController.restaurantId!));
+                  restaurantId: restaurantOpAuthController
+                      .operator.value!.state.restaurantId!));
             },
             titleWidget: Text(
               "${_i18n()["menu"] ?? "Menu"}",

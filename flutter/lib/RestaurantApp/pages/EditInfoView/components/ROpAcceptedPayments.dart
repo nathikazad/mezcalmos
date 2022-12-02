@@ -62,7 +62,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
                       shape: CircleBorder(),
                       activeColor: primaryBlueColor,
                       value: widget.viewController.restaurant.value!.paymentInfo
-                              .acceptedPayments[PaymentType.Cash] ==
+                              ?.acceptedPayments[PaymentType.Cash] ==
                           true,
                       onChanged: (bool? v) {}),
                 ),
@@ -163,7 +163,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
                   ]),
               activeColor: primaryBlueColor,
               value: widget.viewController.restaurant.value!.paymentInfo
-                      .acceptedPayments[PaymentType.Card] ==
+                      ?.acceptedPayments[PaymentType.Card] ==
                   true,
               onChanged: (bool? v) {
                 widget.viewController.handleCardCheckBoxClick(v!);
@@ -376,15 +376,17 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
 
   Widget _reqWidget() {
     return Obx(() {
-      if (widget
-          .viewController.restaurant.value!.paymentInfo.getReqs.isNotEmpty)
+      if (widget.viewController.restaurant.value!.paymentInfo?.getReqs
+              .isNotEmpty ==
+          true)
         return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               if (widget.viewController.restaurant.value!.paymentInfo
-                  .shouldFixPayouts)
+                      ?.shouldFixPayouts ==
+                  true)
                 Container(
                   margin: const EdgeInsets.only(bottom: 5),
                   child: Text('${_i18n()["setupHelper"]}'),
@@ -419,16 +421,16 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: List.generate(
-                    widget.viewController.restaurant.value!.paymentInfo.stripe
+                    widget.viewController.restaurant.value!.paymentInfo?.stripe
                             ?.requirements.length ??
                         0,
                     (int index) => Container(
                           margin: EdgeInsets.only(top: 5, bottom: 3),
                           child: Text(
-                              "- ${widget.viewController.restaurant.value!.paymentInfo.stripe?.requirements[index]}"),
+                              "- ${widget.viewController.restaurant.value!.paymentInfo?.stripe?.requirements[index]}"),
                         )),
               ),
-              if (widget.viewController.restaurant.value!.paymentInfo.stripe
+              if (widget.viewController.restaurant.value!.paymentInfo?.stripe
                       ?.email !=
                   null)
                 Column(
@@ -436,7 +438,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
                   children: [
                     Divider(),
                     Text(
-                      "${_i18n()["emailId"]} : ${widget.viewController.restaurant.value!.paymentInfo.stripe?.email}",
+                      "${_i18n()["emailId"]} : ${widget.viewController.restaurant.value!.paymentInfo?.stripe?.email}",
                       style: Get.textTheme.bodyText1,
                     ),
                   ],

@@ -1,0 +1,3 @@
+table:
+  name: delivery_operator
+  schema: public

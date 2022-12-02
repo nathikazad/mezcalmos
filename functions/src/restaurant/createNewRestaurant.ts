@@ -13,7 +13,7 @@ export interface RestaurantDetails {
   name: string,
   image: string,
   location: Location,
-  scheduleId: number,
+  schedule:JSON,
   restaurantOperatorNotificationToken?: string,
   firebaseId?: string
 }
@@ -29,16 +29,15 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
     name: restaurantDetails.name,
     image: restaurantDetails.image,
     location: restaurantDetails.location,
-    scheduleId: restaurantDetails.scheduleId,
+    schedule: restaurantDetails.schedule
+   
   }
   if(restaurantDetails.firebaseId != undefined) {
     restaurant.firebaseId = restaurantDetails.firebaseId
   }
-  if(restaurantDetails.restaurantOperatorNotificationToken != undefined) {
+
     await createRestaurant(restaurant, userId, restaurantDetails.restaurantOperatorNotificationToken);
-  } else {
-    await createRestaurant(restaurant, userId);
-  }
+  
 
   notifyAdmins(mezAdmins, restaurant);
 
@@ -60,8 +59,8 @@ function notifyAdmins(mezAdmins: MezAdmin[], restaurant: Restaurant) {
     },
     background: {
       [Language.ES]: {
-        title: "",
-        body: ``
+        title: "Nuevo restaurante",
+        body: `Hay un nuevo restaurante`
       },
       [Language.EN]: {
         title: "New Restaurant",

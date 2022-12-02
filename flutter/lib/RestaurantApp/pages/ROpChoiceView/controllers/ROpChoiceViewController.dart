@@ -12,15 +12,15 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class ROpChoiceViewController {
   // vars //
-  String? restaurantId;
+  late int restaurantId;
   String? optionId;
 
   Rxn<Choice> choice = Rxn();
   RxBool editMode = RxBool(false);
   RxBool isAv = RxBool(false);
   RxBool needToFetch = RxBool(false);
-  Rxn<LanguageType> primaryLang = Rxn();
-  Rxn<LanguageType> secondaryLang = Rxn();
+  Rx<LanguageType> primaryLang = Rx(LanguageType.ES);
+  Rx<LanguageType> secondaryLang = Rx(LanguageType.EN);
 
   // text inputs //
   TextEditingController prChoiceName = TextEditingController();
@@ -33,7 +33,7 @@ class ROpChoiceViewController {
       required String optionId,
       required String restaurantId}) async {
     this.optionId = optionId;
-    this.restaurantId = restaurantId;
+    this.restaurantId = int.parse(restaurantId);
     await _assignLanguages();
 
     if (choiceId != null) {
@@ -42,10 +42,9 @@ class ROpChoiceViewController {
   }
 
   Future<void> _assignLanguages() async {
-    primaryLang.value = await get_restaurant_priamry_lang(4);
-    if (primaryLang.value != null) {
-      secondaryLang.value = primaryLang.value!.toOpLang();
-    }
+    primaryLang.value =
+        await get_restaurant_priamry_lang(restaurantId) ?? LanguageType.ES;
+    secondaryLang.value = primaryLang.value.toOpLang();
   }
 
   // dispose //
@@ -60,8 +59,8 @@ class ROpChoiceViewController {
     return Choice(
       id: editMode.isTrue ? choice.value!.id : generateRandomString(5),
       name: {
-        primaryLang.value!: prChoiceName.text,
-        secondaryLang.value!: scChoiceName.text,
+        primaryLang.value: prChoiceName.text,
+        secondaryLang.value: scChoiceName.text,
       },
       cost: num.tryParse(choicePriceText.text) ?? 0,
       available: isAv.value,
@@ -120,9 +119,11 @@ class ROpChoiceViewController {
   }
 
   Future<void> _addNewChoice() async {
-    mezDbgPrint("Adding new choice to option id : $optionId");
+    mezDbgPrint("Restaurant id ========<<<$restaurantId");
     final int? newChoiceId = await add_choice(
-        choice: _contructChoice(), optionId: int.parse(optionId!));
+        choice: _contructChoice(),
+        optionId: int.parse(optionId!),
+        restaurantId: restaurantId);
     if (newChoiceId != null) {
       Get.snackbar('Added', 'Choice has been added successfuly',
           backgroundColor: Colors.black,

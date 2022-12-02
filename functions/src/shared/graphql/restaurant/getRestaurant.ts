@@ -12,6 +12,7 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
     }, {
       id: true,
       name: true,
+      schedule : [{path :'' },true],
       description: {
         translations: [{ }, {
           language_id: true,
@@ -22,7 +23,7 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
       location_gps: true,
       location_text: true,
       open_status: true,
-      schedule_id: true,
+     
       approved: true
     }],
     restaurant_operator: [{
@@ -84,7 +85,7 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
       prev[current.language_id] = current.value;
       return prev;
     }, {}),
-    scheduleId: response.restaurant_by_pk.schedule_id,
+    schedule: response.restaurant_by_pk.schedule,
     openStatus: response.restaurant_by_pk.open_status as OpenStatus,
     approved: response.restaurant_by_pk.approved,
     restaurantOperators

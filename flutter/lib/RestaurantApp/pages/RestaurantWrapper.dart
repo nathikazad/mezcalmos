@@ -3,18 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
-import 'package:mezcalmos/RestaurantApp/notificationHandler.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/operatorNodes.dart';
-import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
-import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
-import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -43,11 +37,12 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
             Duration(seconds: 10),
             onTimeout: () => null,
           );
-    }).asyncMap((event) async => restaurantOperator = await event);
+    }).asyncMap((Future event) async => restaurantOperator = await event);
   }
 
   void _operatorInfoStreamListener() {
-    _operatorInfoStreanSub = operatorInfoStream().listen((event) {
+    _operatorInfoStreanSub =
+        operatorInfoStream().listen((RestaurantOperator? event) {
       if (Get.currentRoute != kUserProfile && event == null) {
         Get.to(SomethingWentWrongScreen());
       }
@@ -64,36 +59,40 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
 
       restaurantOperator =
           Get.find<RestaurantOpAuthController>().operator.value;
-      mezDbgPrint("RESTAURANT OPERATOR ==> $restaurantOperator");
-      if (restaurantOperator == null)
-        restaurantOperator = await Get.find<RestaurantOpAuthController>()
-            .operatorInfoStream
-            .first
-            .timeout(Duration(seconds: 10), onTimeout: () => null);
-      if (restaurantOperator == null) _operatorInfoStreamListener();
-      mezDbgPrint("RestaurantWrapper::microtask data received");
       handleState(restaurantOperator);
-    });
 
-    final String userId = Get.find<AuthController>().fireAuthUser!.uid;
-    _notificationsStreamListener = initializeShowNotificationsListener();
-    Get.find<ForegroundNotificationsController>()
-        .startListeningForNotificationsFromFirebase(
-      operatorNotificationsNode(
-          uid: userId, operatorType: OperatorType.Restaurant),
-      restaurantNotificationHandler,
-    );
+      //   mezDbgPrint("RESTAURANT OPERATOR ==> $restaurantOperator");
+      //   if (restaurantOperator == null)
+      //     restaurantOperator = await Get.find<RestaurantOpAuthController>()
+      //         .operatorInfoStream
+      //         .first
+      //         .timeout(Duration(seconds: 10), onTimeout: () => null);
+      //   if (restaurantOperator == null) _operatorInfoStreamListener();
+      //   mezDbgPrint("RestaurantWrapper::microtask data received");
+      //   handleState(restaurantOperator);
+      // });
+
+      // final String userId = Get.find<AuthController>().fireAuthUser!.uid;
+      // _notificationsStreamListener = initializeShowNotificationsListener();
+      // Get.find<ForegroundNotificationsController>()
+      //     .startListeningForNotificationsFromFirebase(
+      //   operatorNotificationsNode(
+      //       uid: userId, operatorType: OperatorType.Restaurant),
+      //   restaurantNotificationHandler,
+    });
     super.initState();
   }
 
   void handleState(RestaurantOperator? operator) {
     mezDbgPrint(operator);
-    if (operator != null && operator.state.restaurantId != null) {
+
+    if (operator == null) {
       // ignore: unawaited_futures, inference_faQilure_on_function_invocation
+      Get.toNamed(kCreateRestaurant);
+    } else if (operator.isAuthorized) {
       Get.toNamed(kCurrentOrdersListView);
-    } else {
       // Get.to(SomethingWentWrongScreen());
-      mezDbgPrint("RestaurantWrappper::handleState state is null, ERROR");
+
     }
   }
 

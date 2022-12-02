@@ -230,7 +230,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
                       final bool? refetch = await Get.toNamed(getROpChoiceRoute(
                         choiceId: null,
                         optionId: _viewController.editableOption.value!.id,
-                        restaurantId: 4.toString(),
+                        restaurantId: restaurantId!,
                       )) as bool?;
                       if (refetch == true) {
                         await _viewController.fetchOption();
