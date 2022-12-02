@@ -42,7 +42,7 @@ export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriver
   }
   else {
     response = await chain.query({
-      deliverer_by_pk: [{
+      delivery_driver_by_pk: [{
         id: deliveryDriverId
       }, {
         user_id: true,
@@ -57,7 +57,7 @@ export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriver
         notification_token: true,
       }]
     });
-    if(response.deliverer_by_pk == null) {
+    if(response.delivery_driver_by_pk == null) {
       throw new HttpsError(
         "internal",
         "No delivery driver with that id found"
@@ -65,19 +65,19 @@ export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriver
     }
     return {
       id: deliveryDriverId,
-      userId: response.deliverer_by_pk.user_id,
-      deliveryCompanyType: response.deliverer_by_pk.delivery_company_type,
-      deliveryCompanyId: response.deliverer_by_pk.delivery_company_id,
-      status: response.deliverer_by_pk.status,
-      online: response.deliverer_by_pk.online,
+      userId: response.delivery_driver_by_pk.user_id,
+      deliveryCompanyType: response.delivery_driver_by_pk.delivery_company_type,
+      deliveryCompanyId: response.delivery_driver_by_pk.delivery_company_id,
+      status: response.delivery_driver_by_pk.status,
+      online: response.delivery_driver_by_pk.online,
       user: {
-        id: response.deliverer_by_pk.user_id,
-        firebaseId: response.deliverer_by_pk.user.firebase_id,
-        language: response.deliverer_by_pk.user.language_id as Language
+        id: response.delivery_driver_by_pk.user_id,
+        firebaseId: response.delivery_driver_by_pk.user.firebase_id,
+        language: response.delivery_driver_by_pk.user.language_id as Language
       },
-      notificationInfo: (response.deliverer_by_pk.notification_token) ? {
+      notificationInfo: (response.delivery_driver_by_pk.notification_token) ? {
         AppTypeId: AppType.DeliveryApp,
-        token: response.deliverer_by_pk.notification_token
+        token: response.delivery_driver_by_pk.notification_token
       } : undefined,
       deliveryDriverType: DeliveryDriverType.DeliveryDriver
     }

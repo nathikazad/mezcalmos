@@ -1,17 +1,9 @@
 import { Review, ServerResponseStatus } from "../shared/models/Generic/Generic";
-import { isSignedIn } from "../shared/helper/authorizer";
 import { getUser } from "../shared/graphql/user/getUser";
 import { createReview } from "../shared/graphql/restaurant/createReview";
 
 export async function addReview(userId: number, review: Review) {
 
-  let response = isSignedIn(userId);
-  if (response != undefined) {
-    return {
-      ok: false,
-      error: response,
-    };
-  }
   await getUser(userId);
   await createReview(review);
 

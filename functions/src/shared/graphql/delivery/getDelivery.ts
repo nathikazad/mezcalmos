@@ -23,10 +23,10 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
         delivery_cost: true,
         package_cost: true,
         order_time: true,
-        deliverer_app_type_id: true,
+        delivery_driver_type: true,
         notification_token: true,
-        deliverer_id: true,
-        deliverer: {
+        delivery_driver_id: true,
+        delivery_driver: {
           id: true,
           delivery_company_type: true,
           delivery_company_id: true,
@@ -66,13 +66,15 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
     deliveryCost: response.delivery_order_by_pk.delivery_cost,
     packageCost: response.delivery_order_by_pk.package_cost,
     orderTime: response.delivery_order_by_pk.order_time,
-    delivererAppType: response.delivery_order_by_pk.deliverer_app_type_id as AppType
+    deliveryDriverType: response.delivery_order_by_pk.delivery_driver_type as DeliveryDriverType
   }
-
-  if(response.delivery_order_by_pk.deliverer_app_type_id == AppType.RestaurantApp) {
+  if(!(response.delivery_order_by_pk.delivery_driver_id)) {
+    return delivery;
+  }
+  if(response.delivery_order_by_pk.delivery_driver_type == DeliveryDriverType.RestaurantOperator) {
     let operatorResponse = await chain.query({
       restaurant_operator_by_pk: [{
-        id: response.delivery_order_by_pk.deliverer_id!
+        id: response.delivery_order_by_pk.delivery_driver_id
       }, {
         user_id: true,
         user: {
@@ -81,12 +83,18 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
         }
       }]
     });
+    if(operatorResponse.restaurant_operator_by_pk == null) {
+      throw new HttpsError(
+        "internal",
+        "No restaurant operator with that id found"
+      );
+    }
     delivery.deliveryDriver = {
-      userId: operatorResponse.restaurant_operator_by_pk?.user_id!,
+      userId: operatorResponse.restaurant_operator_by_pk.user_id,
       user: {
-        id: operatorResponse.restaurant_operator_by_pk?.user_id!,
-        firebaseId: operatorResponse.restaurant_operator_by_pk?.user.firebase_id!,
-        language: operatorResponse.restaurant_operator_by_pk?.user.language_id as Language
+        id: operatorResponse.restaurant_operator_by_pk.user_id,
+        firebaseId: operatorResponse.restaurant_operator_by_pk.user.firebase_id,
+        language: operatorResponse.restaurant_operator_by_pk.user.language_id as Language
       },
       notificationInfo: (response.delivery_order_by_pk.notification_token) ? {
         AppTypeId: AppType.RestaurantApp,
@@ -94,17 +102,17 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
       } : undefined,
       deliveryDriverType: DeliveryDriverType.RestaurantOperator
     }
-  } else if(response.delivery_order_by_pk.deliverer) {
+  } else if(response.delivery_order_by_pk.delivery_driver) {
     delivery.deliveryDriver = {
-      id: response.delivery_order_by_pk.deliverer.id,
-      deliveryCompanyType: response.delivery_order_by_pk.deliverer.delivery_company_type,
-      deliveryCompanyId: response.delivery_order_by_pk.deliverer.delivery_company_id,
-      status: response.delivery_order_by_pk.deliverer.status,
-      userId: response.delivery_order_by_pk.deliverer.user.id,
+      id: response.delivery_order_by_pk.delivery_driver.id,
+      deliveryCompanyType: response.delivery_order_by_pk.delivery_driver.delivery_company_type,
+      deliveryCompanyId: response.delivery_order_by_pk.delivery_driver.delivery_company_id,
+      status: response.delivery_order_by_pk.delivery_driver.status,
+      userId: response.delivery_order_by_pk.delivery_driver.user.id,
       user: {
-        id: response.delivery_order_by_pk.deliverer.user.id,
-        firebaseId: response.delivery_order_by_pk.deliverer.user.firebase_id,
-        language: response.delivery_order_by_pk.deliverer.user.language_id as Language
+        id: response.delivery_order_by_pk.delivery_driver.user.id,
+        firebaseId: response.delivery_order_by_pk.delivery_cost.user.firebase_id,
+        language: response.delivery_order_by_pk.delivery_driver.user.language_id as Language
       },
       notificationInfo: (response.delivery_order_by_pk.notification_token) ? {
         AppTypeId: AppType.DeliveryApp,

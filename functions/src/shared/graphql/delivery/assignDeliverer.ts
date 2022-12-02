@@ -1,14 +1,9 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { AssignDriverDetails } from "../../../delivery/assignDriver";
 import { getHasura } from "../../../utilities/hasura";
-import { AppType } from "../../models/Generic/Generic";
-import { DeliveryDriverType } from "../../models/Services/Delivery/DeliveryOrder";
 
 export async function assignDeliveryDriver(assignDriverDetails: AssignDriverDetails) {
   let chain = getHasura();
-  let driverAppType: AppType = (assignDriverDetails.deliveryDriverType == DeliveryDriverType.DeliveryDriver)
-    ? AppType.DeliveryApp
-    : AppType.RestaurantApp;
 
   let response = await chain.mutation({
     update_delivery_order_by_pk: [{
@@ -16,7 +11,7 @@ export async function assignDeliveryDriver(assignDriverDetails: AssignDriverDeta
         id: assignDriverDetails.deliveryId
       },
       _set: {
-        deliverer_app_type_id: driverAppType,
+        delivery_driver_type: assignDriverDetails.deliveryDriverType,
         deliverer_id: assignDriverDetails.deliveryDriverId
       }
     }, {

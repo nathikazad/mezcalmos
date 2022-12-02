@@ -1,4 +1,4 @@
-import { AppType, Location, NotificationInfo } from "../../Generic/Generic";
+import { Location, NotificationInfo } from "../../Generic/Generic";
 import { PaymentType } from "../../Generic/Order";
 import { UserInfo } from "../../Generic/User";
 import { OrderNotification } from "../../Notification";
@@ -7,7 +7,7 @@ export interface DeliveryOrder {
     deliveryId?: number;
     pickupLocation: Location;
     dropoffLocation: Location;
-    delivererAppType?: AppType;
+    deliveryDriverType?: DeliveryDriverType
     deliveryDriverId?: number;
     chatWithServiceProviderId?: number;
     chatWithCustomerId: number;

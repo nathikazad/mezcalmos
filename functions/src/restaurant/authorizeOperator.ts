@@ -1,8 +1,7 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { createRestaurantOperator } from "../shared/graphql/restaurant/operators/createRestaurantOperator";
 import { getRestaurantOperator } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
-import { isSignedIn } from "../shared/helper/authorizer";
-import { AppType, ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { AppType, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { OperatorStatus, RestaurantOperator } from "../shared/models/Services/Restaurant/Restaurant";
 
 export interface AuthorizeDetails {
@@ -12,13 +11,7 @@ export interface AuthorizeDetails {
 }
 
 export async function authorizeOperator(ownerUserId: number, authorizeDetails: AuthorizeDetails) {
-  let response: ServerResponse | undefined = isSignedIn(ownerUserId);
-  if (response != undefined) {
-    return {
-      ok: false,
-      error: response,
-    };
-  }
+  
   let restaurantOwner: RestaurantOperator = await getRestaurantOperator(authorizeDetails.restaurantOwnerOperatorId);
 
   if(restaurantOwner.userId != ownerUserId) {
