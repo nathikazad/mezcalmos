@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpDriversView/components/ROpDriverCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpDriversView/controllers/ROpDriversViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
@@ -12,7 +12,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -32,7 +31,7 @@ class _ROpDriversViewState extends State<ROpDriversView> {
   ROpDriversViewController viewController = ROpDriversViewController();
   @override
   void initState() {
-    viewController.init(restaurantId: widget.restID);
+    viewController.init(restaurantID: int.parse(widget.restID));
     super.initState();
   }
 
@@ -50,107 +49,45 @@ class _ROpDriversViewState extends State<ROpDriversView> {
           ordersRoute: kPastOrdersListView,
           showNotifications: true,
         ),
-        body: Obx(() {
-          if (viewController.restaurant.value != null) {
-            return (viewController.restaurant.value!.selfDelivery)
-                ? _buildDrivers()
-                : _buildSelfDeliveryFalse();
-          } else {
-            return MezLogoAnimation(
-              centered: true,
-            );
-          }
-        }),
-      ),
-    );
-  }
-
-  Container _buildSelfDeliveryFalse() {
-    return Container(
-      alignment: Alignment.center,
-      margin: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            '${_i18n()["falseTitle"]}',
-            style: Get.textTheme.bodyText1?.copyWith(fontSize: 15.sp),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Image.asset(
-            "assets/images/restaurantApp/driversList.png",
-            height: 35.h,
-            width: 80.w,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          MezButton(
-            label: "Turn on self delivery",
-            withGradient: true,
-            borderRadius: 50,
-            onClick: () async {
-              await viewController.switchSelfDelivery(true);
-            },
-          )
-          // Text(
-          //   '${_i18n()["falseDesc"]}',
-          //   style: Get.textTheme.bodyText2,
-          // ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDrivers() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(12),
-      child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            MezButton(
-              label: '${_i18n()["addDriver"]}',
-              backgroundColor: secondaryLightBlueColor,
-              textColor: primaryBlueColor,
-              onClick: () async {
-                if (viewController.restaurant.value?.qr != null &&
-                    viewController.restaurant.value?.link != null) {
-                  await _addDriverSheet();
-                } else {
-                  mezDbgPrint(
-                      "OperatorId ===> ${Get.find<RestaurantOpAuthController>().operator.value?.info.id}");
-
-                  mezDbgPrint(
-                      "viewController.restaurantId ===> ${viewController.restaurant.value?.info.id}");
-                  ServerResponse? resp = await viewController
-                      .restaurantInfoController
-                      ?.generateLink(
-                    restaurantId: viewController.restaurant.value!.info.id,
-                  );
-
-                  if (resp?.success == true) {
-                    await _addDriverSheet();
-                  }
-                }
-              },
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(12),
+          child: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                MezButton(
+                    label: '${_i18n()["addDriver"]}',
+                    backgroundColor: secondaryLightBlueColor,
+                    textColor: primaryBlueColor,
+                    onClick: () async {
+                      await viewController.fetchServiceLinks();
+                      if (viewController.hasLinks) {
+                        await _addDriverSheet();
+                      } else {
+                        final ServerResponse res =
+                            await viewController.generateLinks();
+                        if (res.success) {
+                          //  await viewController.fetchOperators();
+                          await _addDriverSheet();
+                        } else {
+                          mezDbgPrint("👋 ERROR ${res.errorMessage}");
+                        }
+                      }
+                    }),
+                SizedBox(
+                  height: 25,
+                ),
+                Column(
+                  children: List.generate(
+                      viewController.drivers.length,
+                      (int index) => ROpListDriverCard(
+                            driver: viewController.drivers[index],
+                            viewController: viewController,
+                          )),
+                )
+              ],
             ),
-            SizedBox(
-              height: 25,
-            ),
-            Column(
-              children: List.generate(
-                  viewController.drivers.length,
-                  (int index) => ROpListDriverCard(
-                        driver: viewController.drivers[index],
-                        viewController: viewController,
-                      )),
-            )
-          ],
+          ),
         ),
       ),
     );
@@ -177,7 +114,7 @@ class _ROpDriversViewState extends State<ROpDriversView> {
                     alignment: Alignment.center,
                     child: Text(
                       'Ask your driver to scan this QR code on their phone',
-                      style: Get.textTheme.headline3?.copyWith(fontSize: 17.sp),
+                      style: Get.textTheme.bodyText1,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -185,15 +122,19 @@ class _ROpDriversViewState extends State<ROpDriversView> {
                     height: 25,
                   ),
                   // QR
-                  Container(
-                    height: 15.h,
-                    width: 15.h,
-                    color: Colors.black,
-                    child: viewController.restaurant.value?.qr != null
-                        ? CachedNetworkImage(
-                            imageUrl: viewController.restaurant.value!.qr!,
-                          )
-                        : null,
+                  Obx(
+                    () => Container(
+                      height: 25.h,
+                      width: 25.h,
+                      child:
+                          viewController.serviceLink.value?.driverQrImageLink !=
+                                  null
+                              ? CachedNetworkImage(
+                                  imageUrl: viewController
+                                      .serviceLink.value!.driverQrImageLink!,
+                                )
+                              : CircularProgressIndicator(),
+                    ),
                   ),
                   const SizedBox(
                     height: 25,
@@ -204,7 +145,14 @@ class _ROpDriversViewState extends State<ROpDriversView> {
                     backgroundColor: secondaryLightBlueColor,
                     textColor: primaryBlueColor,
                     onClick: () async {
-                      Get.back();
+                      await Clipboard.setData(ClipboardData(
+                              text: viewController
+                                  .serviceLink.value!.operatorDeepLink
+                                  .toString()))
+                          .whenComplete(() {
+                        Get.back();
+                        _copiedSnackBar();
+                      });
                     },
                   ),
                   const SizedBox(
@@ -228,4 +176,15 @@ class _ROpDriversViewState extends State<ROpDriversView> {
               ));
         });
   }
+}
+
+SnackbarController _copiedSnackBar() {
+  return Get.snackbar('Copied', 'Link copied successfuly',
+      backgroundColor: Colors.black,
+      colorText: Colors.white,
+      shouldIconPulse: false,
+      icon: Icon(
+        Icons.check_circle,
+        color: Colors.green,
+      ));
 }

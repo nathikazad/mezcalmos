@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpReorderIcon.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/controllers/ROpMenuViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
@@ -39,9 +38,6 @@ class _ROpItemCardState extends State<ROpItemCard> {
   void initState() {
     super.initState();
   }
-
-  RestaurantInfoController _restaurantInfoController =
-      Get.find<RestaurantInfoController>();
 
   RxBool imageError = RxBool(false);
   @override
@@ -128,12 +124,12 @@ class _ROpItemCardState extends State<ROpItemCard> {
                       onChanged: (widget.viewController.reOrderMode.isTrue)
                           ? null
                           : (bool v) {
-                              _restaurantInfoController.switchItemAvailable(
-                                  itemId: widget.item.id!,
-                                  value: v,
-                                  caytegoryId: (widget.category != null)
-                                      ? widget.category!.id
-                                      : null);
+                              // _restaurantInfoController.switchItemAvailable(
+                              //     itemId: widget.item.id!,
+                              //     value: v,
+                              //     caytegoryId: (widget.category != null)
+                              //         ? widget.category!.id
+                              //         : null);
                             },
                       activeColor: primaryBlueColor,
                       activeTrackColor: secondaryLightBlueColor,

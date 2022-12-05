@@ -4947,6 +4947,19 @@ type mutation_root {
   delete_saved_location_by_pk(id: Int!): saved_location
 
   """
+  delete data from the table: "service_link"
+  """
+  delete_service_link(
+    """filter the rows which have to be deleted"""
+    where: service_link_bool_exp!
+  ): service_link_mutation_response
+
+  """
+  delete single row from the table: "service_link"
+  """
+  delete_service_link_by_pk(id: Int!): service_link
+
+  """
   delete data from the table: "service_provider_payment_info"
   """
   delete_service_provider_payment_info(
@@ -5577,6 +5590,28 @@ type mutation_root {
     """upsert condition"""
     on_conflict: saved_location_on_conflict
   ): saved_location
+
+  """
+  insert data into the table: "service_link"
+  """
+  insert_service_link(
+    """the rows to be inserted"""
+    objects: [service_link_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: service_link_on_conflict
+  ): service_link_mutation_response
+
+  """
+  insert a single row into the table: "service_link"
+  """
+  insert_service_link_one(
+    """the row to be inserted"""
+    object: service_link_insert_input!
+
+    """upsert condition"""
+    on_conflict: service_link_on_conflict
+  ): service_link
 
   """
   insert data into the table: "service_provider_payment_info"
@@ -6645,6 +6680,40 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [saved_location_updates!]!
   ): [saved_location_mutation_response]
+
+  """
+  update data of the table: "service_link"
+  """
+  update_service_link(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: service_link_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: service_link_set_input
+
+    """filter the rows which have to be updated"""
+    where: service_link_bool_exp!
+  ): service_link_mutation_response
+
+  """
+  update single row of the table: "service_link"
+  """
+  update_service_link_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: service_link_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: service_link_set_input
+    pk_columns: service_link_pk_columns_input!
+  ): service_link
+
+  """
+  update multiples rows of table: "service_link"
+  """
+  update_service_link_many(
+    """updates to execute, in order"""
+    updates: [service_link_updates!]!
+  ): [service_link_mutation_response]
 
   """
   update data of the table: "service_provider_payment_info"
@@ -8256,6 +8325,49 @@ type query_root {
   saved_location_by_pk(id: Int!): saved_location
 
   """
+  fetch data from the table: "service_link"
+  """
+  service_link(
+    """distinct select on columns"""
+    distinct_on: [service_link_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_link_order_by!]
+
+    """filter the rows returned"""
+    where: service_link_bool_exp
+  ): [service_link!]!
+
+  """
+  fetch aggregated fields from the table: "service_link"
+  """
+  service_link_aggregate(
+    """distinct select on columns"""
+    distinct_on: [service_link_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_link_order_by!]
+
+    """filter the rows returned"""
+    where: service_link_bool_exp
+  ): service_link_aggregate!
+
+  """fetch data from the table: "service_link" using primary key columns"""
+  service_link_by_pk(id: Int!): service_link
+
+  """
   fetch data from the table: "service_provider_payment_info"
   """
   service_provider_payment_info(
@@ -8659,6 +8771,8 @@ type restaurant {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String!
+  operator_deep_link: String
+  operator_qr_image_link: String
 
   """An array relationship"""
   orders(
@@ -8820,6 +8934,8 @@ input restaurant_bool_exp {
   location_text: String_comparison_exp
   name: String_comparison_exp
   open_status: String_comparison_exp
+  operator_deep_link: String_comparison_exp
+  operator_qr_image_link: String_comparison_exp
   orders: restaurant_order_bool_exp
   payment_info: service_provider_payment_info_bool_exp
   payment_info_id: Int_comparison_exp
@@ -10633,6 +10749,8 @@ input restaurant_insert_input {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
+  operator_deep_link: String
+  operator_qr_image_link: String
   orders: restaurant_order_arr_rel_insert_input
   payment_info: service_provider_payment_info_obj_rel_insert_input
   payment_info_id: Int
@@ -11746,6 +11864,8 @@ type restaurant_max_fields {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
+  operator_deep_link: String
+  operator_qr_image_link: String
   payment_info_id: Int
   service_provider_type: String
 }
@@ -11762,6 +11882,8 @@ type restaurant_min_fields {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
+  operator_deep_link: String
+  operator_qr_image_link: String
   payment_info_id: Int
   service_provider_type: String
 }
@@ -13579,6 +13701,8 @@ input restaurant_order_by {
   location_text: order_by
   name: order_by
   open_status: order_by
+  operator_deep_link: order_by
+  operator_qr_image_link: order_by
   orders_aggregate: restaurant_order_aggregate_order_by
   payment_info: service_provider_payment_info_order_by
   payment_info_id: order_by
@@ -15125,6 +15249,12 @@ enum restaurant_select_column {
   open_status
 
   """column name"""
+  operator_deep_link
+
+  """column name"""
+  operator_qr_image_link
+
+  """column name"""
   payment_info_id
 
   """column name"""
@@ -15153,6 +15283,8 @@ input restaurant_set_input {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
+  operator_deep_link: String
+  operator_qr_image_link: String
   payment_info_id: Int
   schedule: jsonb
   self_delivery: Boolean
@@ -15205,6 +15337,8 @@ input restaurant_stream_cursor_value_input {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
+  operator_deep_link: String
+  operator_qr_image_link: String
   payment_info_id: Int
   schedule: jsonb
   self_delivery: Boolean
@@ -15251,6 +15385,12 @@ enum restaurant_update_column {
 
   """column name"""
   open_status
+
+  """column name"""
+  operator_deep_link
+
+  """column name"""
+  operator_qr_image_link
 
   """column name"""
   payment_info_id
@@ -16008,6 +16148,304 @@ order by variance() on columns of table "saved_location"
 input saved_location_variance_order_by {
   customer_id: order_by
   id: order_by
+}
+
+"""
+columns and relationships of "service_link"
+"""
+type service_link {
+  driver_deep_link: String
+  driver_qr_image_link: String
+  id: Int!
+  operator_deep_link: String
+  operator_qr_image_link: String
+
+  """An object relationship"""
+  restaurant: restaurant
+  service_provider_id: Int!
+  service_provider_type: String!
+}
+
+"""
+aggregated selection of "service_link"
+"""
+type service_link_aggregate {
+  aggregate: service_link_aggregate_fields
+  nodes: [service_link!]!
+}
+
+"""
+aggregate fields of "service_link"
+"""
+type service_link_aggregate_fields {
+  avg: service_link_avg_fields
+  count(columns: [service_link_select_column!], distinct: Boolean): Int!
+  max: service_link_max_fields
+  min: service_link_min_fields
+  stddev: service_link_stddev_fields
+  stddev_pop: service_link_stddev_pop_fields
+  stddev_samp: service_link_stddev_samp_fields
+  sum: service_link_sum_fields
+  var_pop: service_link_var_pop_fields
+  var_samp: service_link_var_samp_fields
+  variance: service_link_variance_fields
+}
+
+"""aggregate avg on columns"""
+type service_link_avg_fields {
+  id: Float
+  service_provider_id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "service_link". All fields are combined with a logical 'AND'.
+"""
+input service_link_bool_exp {
+  _and: [service_link_bool_exp!]
+  _not: service_link_bool_exp
+  _or: [service_link_bool_exp!]
+  driver_deep_link: String_comparison_exp
+  driver_qr_image_link: String_comparison_exp
+  id: Int_comparison_exp
+  operator_deep_link: String_comparison_exp
+  operator_qr_image_link: String_comparison_exp
+  restaurant: restaurant_bool_exp
+  service_provider_id: Int_comparison_exp
+  service_provider_type: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "service_link"
+"""
+enum service_link_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  service_links_pkey
+
+  """
+  unique or primary key constraint on columns "service_provider_id"
+  """
+  service_links_provider_id_key
+}
+
+"""
+input type for incrementing numeric columns in table "service_link"
+"""
+input service_link_inc_input {
+  id: Int
+  service_provider_id: Int
+}
+
+"""
+input type for inserting data into table "service_link"
+"""
+input service_link_insert_input {
+  driver_deep_link: String
+  driver_qr_image_link: String
+  id: Int
+  operator_deep_link: String
+  operator_qr_image_link: String
+  restaurant: restaurant_obj_rel_insert_input
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""aggregate max on columns"""
+type service_link_max_fields {
+  driver_deep_link: String
+  driver_qr_image_link: String
+  id: Int
+  operator_deep_link: String
+  operator_qr_image_link: String
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""aggregate min on columns"""
+type service_link_min_fields {
+  driver_deep_link: String
+  driver_qr_image_link: String
+  id: Int
+  operator_deep_link: String
+  operator_qr_image_link: String
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""
+response of any mutation on the table "service_link"
+"""
+type service_link_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [service_link!]!
+}
+
+"""
+on_conflict condition type for table "service_link"
+"""
+input service_link_on_conflict {
+  constraint: service_link_constraint!
+  update_columns: [service_link_update_column!]! = []
+  where: service_link_bool_exp
+}
+
+"""Ordering options when selecting data from "service_link"."""
+input service_link_order_by {
+  driver_deep_link: order_by
+  driver_qr_image_link: order_by
+  id: order_by
+  operator_deep_link: order_by
+  operator_qr_image_link: order_by
+  restaurant: restaurant_order_by
+  service_provider_id: order_by
+  service_provider_type: order_by
+}
+
+"""primary key columns input for table: service_link"""
+input service_link_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "service_link"
+"""
+enum service_link_select_column {
+  """column name"""
+  driver_deep_link
+
+  """column name"""
+  driver_qr_image_link
+
+  """column name"""
+  id
+
+  """column name"""
+  operator_deep_link
+
+  """column name"""
+  operator_qr_image_link
+
+  """column name"""
+  service_provider_id
+
+  """column name"""
+  service_provider_type
+}
+
+"""
+input type for updating data in table "service_link"
+"""
+input service_link_set_input {
+  driver_deep_link: String
+  driver_qr_image_link: String
+  id: Int
+  operator_deep_link: String
+  operator_qr_image_link: String
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""aggregate stddev on columns"""
+type service_link_stddev_fields {
+  id: Float
+  service_provider_id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type service_link_stddev_pop_fields {
+  id: Float
+  service_provider_id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type service_link_stddev_samp_fields {
+  id: Float
+  service_provider_id: Float
+}
+
+"""
+Streaming cursor of the table "service_link"
+"""
+input service_link_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: service_link_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input service_link_stream_cursor_value_input {
+  driver_deep_link: String
+  driver_qr_image_link: String
+  id: Int
+  operator_deep_link: String
+  operator_qr_image_link: String
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""aggregate sum on columns"""
+type service_link_sum_fields {
+  id: Int
+  service_provider_id: Int
+}
+
+"""
+update columns of table "service_link"
+"""
+enum service_link_update_column {
+  """column name"""
+  driver_deep_link
+
+  """column name"""
+  driver_qr_image_link
+
+  """column name"""
+  id
+
+  """column name"""
+  operator_deep_link
+
+  """column name"""
+  operator_qr_image_link
+
+  """column name"""
+  service_provider_id
+
+  """column name"""
+  service_provider_type
+}
+
+input service_link_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: service_link_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: service_link_set_input
+  where: service_link_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type service_link_var_pop_fields {
+  id: Float
+  service_provider_id: Float
+}
+
+"""aggregate var_samp on columns"""
+type service_link_var_samp_fields {
+  id: Float
+  service_provider_id: Float
+}
+
+"""aggregate variance on columns"""
+type service_link_variance_fields {
+  id: Float
+  service_provider_id: Float
 }
 
 """
@@ -18122,6 +18560,63 @@ type subscription_root {
     """filter the rows returned"""
     where: saved_location_bool_exp
   ): [saved_location!]!
+
+  """
+  fetch data from the table: "service_link"
+  """
+  service_link(
+    """distinct select on columns"""
+    distinct_on: [service_link_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_link_order_by!]
+
+    """filter the rows returned"""
+    where: service_link_bool_exp
+  ): [service_link!]!
+
+  """
+  fetch aggregated fields from the table: "service_link"
+  """
+  service_link_aggregate(
+    """distinct select on columns"""
+    distinct_on: [service_link_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_link_order_by!]
+
+    """filter the rows returned"""
+    where: service_link_bool_exp
+  ): service_link_aggregate!
+
+  """fetch data from the table: "service_link" using primary key columns"""
+  service_link_by_pk(id: Int!): service_link
+
+  """
+  fetch data from the table in a streaming manner : "service_link"
+  """
+  service_link_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [service_link_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: service_link_bool_exp
+  ): [service_link!]!
 
   """
   fetch data from the table: "service_provider_payment_info"

@@ -314,6 +314,13 @@ const documentNodeQuerygetOperatorRestaurantInfo = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'owner'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -444,6 +451,7 @@ class Query$getOperatorRestaurantInfo$restaurant_operator {
   Query$getOperatorRestaurantInfo$restaurant_operator({
     required this.restaurant_id,
     required this.status,
+    required this.owner,
     required this.$__typename,
   });
 
@@ -451,10 +459,12 @@ class Query$getOperatorRestaurantInfo$restaurant_operator {
       Map<String, dynamic> json) {
     final l$restaurant_id = json['restaurant_id'];
     final l$status = json['status'];
+    final l$owner = json['owner'];
     final l$$__typename = json['__typename'];
     return Query$getOperatorRestaurantInfo$restaurant_operator(
       restaurant_id: (l$restaurant_id as int),
       status: (l$status as String),
+      owner: (l$owner as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -462,6 +472,8 @@ class Query$getOperatorRestaurantInfo$restaurant_operator {
   final int restaurant_id;
 
   final String status;
+
+  final bool owner;
 
   final String $__typename;
 
@@ -471,6 +483,8 @@ class Query$getOperatorRestaurantInfo$restaurant_operator {
     _resultData['restaurant_id'] = l$restaurant_id;
     final l$status = status;
     _resultData['status'] = l$status;
+    final l$owner = owner;
+    _resultData['owner'] = l$owner;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -480,10 +494,12 @@ class Query$getOperatorRestaurantInfo$restaurant_operator {
   int get hashCode {
     final l$restaurant_id = restaurant_id;
     final l$status = status;
+    final l$owner = owner;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$restaurant_id,
       l$status,
+      l$owner,
       l$$__typename,
     ]);
   }
@@ -505,6 +521,11 @@ class Query$getOperatorRestaurantInfo$restaurant_operator {
     final l$status = status;
     final lOther$status = other.status;
     if (l$status != lOther$status) {
+      return false;
+    }
+    final l$owner = owner;
+    final lOther$owner = other.owner;
+    if (l$owner != lOther$owner) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -541,6 +562,7 @@ abstract class CopyWith$Query$getOperatorRestaurantInfo$restaurant_operator<
   TRes call({
     int? restaurant_id,
     String? status,
+    bool? owner,
     String? $__typename,
   });
 }
@@ -563,6 +585,7 @@ class _CopyWithImpl$Query$getOperatorRestaurantInfo$restaurant_operator<TRes>
   TRes call({
     Object? restaurant_id = _undefined,
     Object? status = _undefined,
+    Object? owner = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getOperatorRestaurantInfo$restaurant_operator(
@@ -572,6 +595,9 @@ class _CopyWithImpl$Query$getOperatorRestaurantInfo$restaurant_operator<TRes>
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
+        owner: owner == _undefined || owner == null
+            ? _instance.owner
+            : (owner as bool),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -590,6 +616,7 @@ class _CopyWithStubImpl$Query$getOperatorRestaurantInfo$restaurant_operator<
   call({
     int? restaurant_id,
     String? status,
+    bool? owner,
     String? $__typename,
   }) =>
       _res;

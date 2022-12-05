@@ -4,14 +4,16 @@ enum ResponseStatus { Success, Error }
 
 extension ParseResponseStatusToString on ResponseStatus {
   String toShortString() {
-    return this.toString().split('.').last;
+    return toString().split('.').last;
   }
 }
 
 extension ParseStringToResponseStatus on String {
   ResponseStatus toResponseStatus() {
+    mezDbgPrint("Causin g so many errors ===========> $this");
+
     return ResponseStatus.values.firstWhere(
-        (e) => e.toShortString().toLowerCase() == this.toLowerCase());
+        (ResponseStatus e) => e.toShortString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -30,7 +32,7 @@ class ServerResponse {
 
   bool get success => status == ResponseStatus.Success;
 
-  factory ServerResponse.fromJson(dynamic json) {
+  factory ServerResponse.fromJson(json) {
     mezDbgPrint("printing the data inside ServerResponse");
     mezDbgPrint(json);
     final ResponseStatus status = json["status"].toString().toResponseStatus();

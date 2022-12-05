@@ -27,7 +27,7 @@ class ROpMenuView extends StatefulWidget {
 }
 
 class _ROpMenuViewState extends State<ROpMenuView>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late TabController _tabController;
   ROpMenuViewController viewController = ROpMenuViewController();
   String? restaurantID;
@@ -38,10 +38,8 @@ class _ROpMenuViewState extends State<ROpMenuView>
     if (restaurantID != null) {
       _tabController = TabController(length: 2, vsync: this);
       Future.microtask(() async {
-        await viewController.init(restaurantId: restaurantID!);
+        await viewController.init(restId: restaurantID!);
       });
-    } else {
-      Get.back();
     }
 
     super.initState();
@@ -197,36 +195,38 @@ class _ROpMenuViewState extends State<ROpMenuView>
     return Obx(
       () => Container(
         alignment: Alignment.centerLeft,
-        child: (viewController.reOrderMode.isTrue)
-            ? ReorderableListView(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                children: <Widget>[
-                  for (int index = 0;
-                      index < viewController.rOcategories.length;
-                      index += 1)
-                    ROpCategoryItems(
-                        key: Key('$index'),
-                        category: viewController.rOcategories[index],
-                        restaurantId: restaurantID!,
-                        viewController: viewController)
-                ],
-                onReorder: (int oldIndex, int newIndex) {
-                  // to avoid last element missbehavior
-                  if (oldIndex < newIndex) {
-                    newIndex -= 1;
-                  }
-                  viewController.rorderSingleCategory(
-                      oldIndex: oldIndex, newIndex: newIndex);
-                })
-            : Column(
-                children: List.generate(
-                    viewController.mainCategories.length,
-                    (int index) => ROpCategoryItems(
-                        viewController: viewController,
-                        restaurantId: restaurantID!,
-                        category: viewController.mainCategories[index])),
-              ),
+        child:
+            // (viewController.reOrderMode.isTrue)
+            //     ? ReorderableListView(
+            //         shrinkWrap: true,
+            //         physics: NeverScrollableScrollPhysics(),
+            //         children: <Widget>[
+            //           for (int index = 0;
+            //               index < viewController.rOcategories.length;
+            //               index += 1)
+            //             ROpCategoryItems(
+            //                 key: Key('$index'),
+            //                 category: viewController.rOcategories[index],
+            //                 restaurantId: restaurantID!,
+            //                 viewController: viewController)
+            //         ],
+            //         onReorder: (int oldIndex, int newIndex) {
+            //           // to avoid last element missbehavior
+            //           if (oldIndex < newIndex) {
+            //             newIndex -= 1;
+            //           }
+            //           viewController.rorderSingleCategory(
+            //               oldIndex: oldIndex, newIndex: newIndex);
+            //         })
+            //     :
+            Column(
+          children: List.generate(
+              viewController.mainCategories.length,
+              (int index) => ROpCategoryItems(
+                  viewController: viewController,
+                  restaurantId: restaurantID!,
+                  category: viewController.mainCategories[index])),
+        ),
       ),
     );
   }

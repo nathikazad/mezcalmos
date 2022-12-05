@@ -62,6 +62,7 @@ class RestaurantOpAuthController extends GetxController {
           info: operatorInfo,
           operatorId: operatorId.toString());
     }
+
     mezDbgPrint("👑👑 Restaurant Operator :: ${operator.value?.toJson()}");
     // mezDbgPrint("RestaurantAuthController: handle state change user value");
     // mezDbgPrint(user);

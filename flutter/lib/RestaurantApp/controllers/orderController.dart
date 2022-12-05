@@ -182,7 +182,7 @@ class ROpOrderController extends GetxController {
         "changeDeliveryMode", order.orderId,
         optionalParams: {
           "deliveryMode": mode.toFirebaseFormatString(),
-          "customerId": order.customer.id,
+          "customerId": order.customer.firebaseId,
           "restaurantId": restaurantID!,
           "orderType": OrderType.Restaurant.toFirebaseFormatString(),
         });
@@ -209,7 +209,7 @@ class ROpOrderController extends GetxController {
     await _callRestaurantCloudFunction("assignSelfDelivery", order.orderId,
         optionalParams: {
           "enable": false,
-          "customerId": order.customer.id,
+          "customerId": order.customer.firebaseId,
           "restaurantId": restaurantID!,
           "orderType": OrderType.Restaurant.toFirebaseFormatString(),
         });
@@ -274,7 +274,7 @@ class ROpOrderController extends GetxController {
             .ref()
             .child(customerInProcessOrder(
               orderId: order.orderId,
-              customerId: order.customer.id,
+              customerId: order.customer.firebaseId,
             ))
             .child("selfDeliveryDetails")
             .child("location")
@@ -318,7 +318,7 @@ class ROpOrderController extends GetxController {
         optionalParams: {
           "time": utc.toUtc().toString(),
           "restaurantId": order.restaurantId,
-          "customerId": order.customer.id,
+          "customerId": order.customer.firebaseId,
           "orderType": OrderType.Restaurant.toFirebaseFormatString(),
         });
   }

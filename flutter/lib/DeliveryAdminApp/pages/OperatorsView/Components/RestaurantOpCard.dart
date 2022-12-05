@@ -39,8 +39,8 @@ class RestaurantOperatorCard extends StatelessWidget {
             MezIconButton(
               onTap: () async {
                 await showConfirmationDialog(context, onYesClick: () async {
-                  final bool result =
-                      await viewController.removeOp(opId: op.info.id);
+                  final bool result = await viewController.removeOp(
+                      opId: op.info.hasuraId.toString());
                   if (result) {
                     Get.back();
                   }

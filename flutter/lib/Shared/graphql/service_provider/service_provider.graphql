@@ -1,0 +1,12 @@
+query getServiceProviderLinks($serviceProviderId: Int!) {
+  service_link(where: {service_provider_id: {_eq: $serviceProviderId}}) {
+    id
+    driver_deep_link
+    driver_qr_image_link
+    operator_deep_link
+    operator_qr_image_link
+    service_provider_id
+    service_provider_type
+  }
+}
+

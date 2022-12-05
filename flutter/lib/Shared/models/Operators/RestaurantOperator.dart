@@ -3,15 +3,17 @@ import 'package:mezcalmos/Shared/models/User.dart';
 class RestaurantOperatorState {
   final String? restaurantId;
   final OperatorStatus operatorState;
-  const RestaurantOperatorState({
-    required this.restaurantId,
-    required this.operatorState,
-  });
+  final bool owner;
+  const RestaurantOperatorState(
+      {required this.restaurantId,
+      required this.operatorState,
+      required this.owner});
 
   factory RestaurantOperatorState.fromSnapshot(data) {
     final String restaurantId = data['restaurantId'] ?? null;
     return RestaurantOperatorState(
         restaurantId: restaurantId,
+        owner: false,
         operatorState: OperatorStatus.Awaiting_approval);
   }
 

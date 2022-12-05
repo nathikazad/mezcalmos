@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 
 class OperatorsViewController {
   StreamSubscription? _restStream;
@@ -38,13 +37,6 @@ class OperatorsViewController {
 
   Future<void> _getOperators() async {
     ops.clear();
-    restaurant.value!.state.operators.forEach((String element) async {
-      final RestaurantOperator? op =
-          await _restaurantsInfoController.getOperatorById(element);
-      if (op != null && !ops.contains(op)) {
-        ops.add(op);
-      }
-    });
   }
 
   // dispose //
@@ -56,15 +48,17 @@ class OperatorsViewController {
 
   // add Operator //
   Future<bool> addOperator() async {
-    final ServerResponse response =
-        await _restaurantsInfoController.addOperator(
-            restId: restaurant.value!.info.id, opId: emailOrPhone.text);
-    return response.success;
+    // final ServerResponse response =
+    //     await _restaurantsInfoController.addOperator(
+    //         restId: restaurant.value!.info.id, opId: emailOrPhone.text);
+    // return response.success;
+    return true;
   }
 
   Future<bool> removeOp({required String opId}) async {
-    final ServerResponse response = await _restaurantsInfoController
-        .removeOperator(restId: restaurant.value!.info.id, opId: opId);
-    return response.success;
+    // final ServerResponse response = await _restaurantsInfoController
+    //     .removeOperator(restId: restaurant.value!.info.id, opId: opId);
+    // return response.success;
+    return true;
   }
 }

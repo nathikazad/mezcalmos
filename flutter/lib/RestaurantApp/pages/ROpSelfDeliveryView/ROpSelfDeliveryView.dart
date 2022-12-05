@@ -257,7 +257,7 @@ class _ROpSelfDeliveryViewState extends State<ROpSelfDeliveryView> {
           mapController.addOrUpdatePurpleDestinationMarker(
               latLng: order.to.toLatLng(),
               fitWithinBounds: true,
-              markerId: order.customer.id);
+              markerId: order.customer.hasuraId.toString());
         }
         // update position of our delivery Guy
         // mapController.addOrUpdateUserMarker(
@@ -282,7 +282,7 @@ class _ROpSelfDeliveryViewState extends State<ROpSelfDeliveryView> {
           mapController.addOrUpdatePurpleDestinationMarker(
               latLng: order.to.toLatLng(),
               fitWithinBounds: true,
-              markerId: order.customer.id);
+              markerId: order.customer.hasuraId.toString());
         }
         // updating our delivery guy location
         mezDbgPrint(

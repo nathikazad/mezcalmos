@@ -4,6 +4,7 @@ import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/components/ROpCreateImagePicker.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/controllers/ROpCreateRestuarantViewController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -37,7 +38,17 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
           if (_formKey.currentState?.validate() == true) {
             final ServerResponse res = await viewController.createRestaurant();
             if (res.success) {
-              await Get.toNamed(kWrapperRoute);
+              await showStatusInfoDialog(
+                context,
+                primaryClickTitle: "OK",
+                primaryCallBack: () {
+                  Get.toNamed(kWrapperRoute);
+                },
+                status: "Your restaurantis under review",
+                description:
+                    "You can start adding items to your menu and you’ll be notified once your restaurant is approved.",
+              );
+              //
             } else {
               Get.snackbar('Error',
                   res.errorMessage ?? "Unkwown error, please try again",

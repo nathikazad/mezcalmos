@@ -27,6 +27,7 @@ Future<RestaurantOperatorState?> get_operator_state(
       mezDbgPrint("👊👊👊 ${data?.first.status}");
       final RestaurantOperatorState state = RestaurantOperatorState(
           restaurantId: data!.first.restaurant_id.toString(),
+          owner: data.first.owner,
           operatorState: data.first.status.toOperartorStatus());
       return state;
     }

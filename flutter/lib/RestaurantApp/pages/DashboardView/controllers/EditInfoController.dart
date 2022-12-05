@@ -7,11 +7,12 @@ import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpTabsViewView/controllers/ROpTabsViewViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
@@ -62,31 +63,16 @@ class ROpEditInfoController {
 
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
   ROpTabsViewViewController? tabsViewViewController;
-
+  late int restaurantId;
   Future<void> init({
     required String restaurantId,
     ROpTabsViewViewController? tabsViewViewController,
   }) async {
+    this.restaurantId = int.parse(restaurantId);
     mezDbgPrint("INIT EDIT PROFILE VIEW =======>$restaurantId");
     this.tabsViewViewController = tabsViewViewController;
-    if (!RestaurantInfoController().initialized) {
-      Get.put(RestaurantInfoController(), permanent: false);
-    }
-    restaurantInfoController = Get.find<RestaurantInfoController>();
-    if (restaurantInfoController != null) {
-      restaurantInfoController!.init(restId: restaurantId);
-      restaurant.value =
-          await restaurantInfoController!.getRestaurantAsFuture(restaurantId);
-      restaurantInfoController!
-          .getRestaurant(restaurantId)
-          .listen((Restaurant? event) {
-        if (event != null) {
-          restaurant.value = event;
-          _updateResTInfo();
-        }
-      });
-      _updateResTInfo();
-    }
+    restaurant.value = await get_restaurant_by_id(id: this.restaurantId);
+    _updateResTInfo();
   }
 
   void _updateResTInfo() {
@@ -94,9 +80,9 @@ class ROpEditInfoController {
       _settingSchedules();
       isAvailable.value = restaurant.value!.state.available;
       restaurantNameTxt.text = restaurant.value?.info.name ?? '';
-      bankName.text = restaurant.value!.paymentInfo.bankInfo?.bankName ?? "";
+      bankName.text = restaurant.value!.paymentInfo?.bankInfo?.bankName ?? "";
       bankNumber.text =
-          restaurant.value!.paymentInfo.bankInfo?.accountNumber.toString() ??
+          restaurant.value!.paymentInfo?.bankInfo?.accountNumber.toString() ??
               "";
 
       newLocation.value = restaurant.value!.info.location;
@@ -196,10 +182,11 @@ class ROpEditInfoController {
 
   // stripe and payments methods //
   void checkStripe() {
-    if (restaurant.value!.paymentInfo.stripe != null &&
-        restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
+    if (restaurant.value!.paymentInfo?.stripe != null &&
+        restaurant.value!.paymentInfo?.acceptedPayments[PaymentType.Card] ==
             true) {
-      updateServiceProvider(restaurant.value!.info.id, OrderType.Restaurant)
+      updateServiceProvider(
+              restaurant.value!.info.firebaseId, OrderType.Restaurant)
           .then((ServerResponse value) {
         _checkStripeDetails();
       });
@@ -219,7 +206,8 @@ class ROpEditInfoController {
   }
 
   void _reauthUrlHandler() {
-    onboardServiceProvider(restaurant.value!.info.id, OrderType.Restaurant)
+    onboardServiceProvider(
+            restaurant.value!.info.firebaseId, OrderType.Restaurant)
         .then((ServerResponse value) {
       if (value.success) {
         stripeUrl = value.data["url"];
@@ -230,26 +218,20 @@ class ROpEditInfoController {
 
   void _returnUrlHandler() {
     showStripe.value = false;
-    updateServiceProvider(restaurant.value!.info.id, OrderType.Restaurant)
+    updateServiceProvider(
+            restaurant.value!.info.firebaseId, OrderType.Restaurant)
         .then((ServerResponse value) {
       _checkStripeDetails();
     });
   }
 
   void _checkStripeDetails() {
-    if (restaurant.value!.paymentInfo.stripe?.detailsSubmitted == false) {
+    if (restaurant.value!.paymentInfo?.stripe?.detailsSubmitted == false) {
       showSetupStripe.value = true;
-    } else if (restaurant.value!.paymentInfo.stripe?.chargesEnabled == false ||
-        restaurant.value!.paymentInfo.stripe?.payoutsEnabled == false) {
+    } else if (restaurant.value!.paymentInfo?.stripe?.chargesEnabled == false ||
+        restaurant.value!.paymentInfo?.stripe?.payoutsEnabled == false) {
       showStripeReqs.value = true;
     }
-    mezDbgPrint("Checking boooools ");
-    mezDbgPrint(
-        "details ==========>>>>> ${restaurant.value!.paymentInfo.stripe?.detailsSubmitted}");
-    mezDbgPrint(
-        "charges ==========>>>>> ${restaurant.value!.paymentInfo.stripe?.chargesEnabled}");
-    mezDbgPrint(
-        "payouts ==========>>>>> ${restaurant.value!.paymentInfo.stripe?.payoutsEnabled}");
   }
 
   Future<void> switchChargeFees(bool v) async {
@@ -258,7 +240,8 @@ class ROpEditInfoController {
 
   void showPaymentSetup() {
     setupClicked.value = true;
-    onboardServiceProvider(restaurant.value!.info.id, OrderType.Restaurant)
+    onboardServiceProvider(
+            restaurant.value!.info.firebaseId, OrderType.Restaurant)
         .then((ServerResponse value) {
       if (value.success) {
         stripeUrl = value.data["url"];
@@ -275,27 +258,27 @@ class ROpEditInfoController {
   }
 
   bool get showSetupBtn {
-    return (restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
+    return (restaurant.value!.paymentInfo?.acceptedPayments[PaymentType.Card] ==
                 true &&
-            restaurant.value!.paymentInfo.stripe == null) ||
-        (restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
+            restaurant.value!.paymentInfo?.stripe == null) ||
+        (restaurant.value!.paymentInfo?.acceptedPayments[PaymentType.Card] ==
                 true &&
-            (!restaurant.value!.paymentInfo.detailsSubmitted ||
-                !restaurant.value!.paymentInfo.chargesEnabled));
+            (restaurant.value!.paymentInfo?.detailsSubmitted == false ||
+                restaurant.value!.paymentInfo?.chargesEnabled == false));
   }
 
   bool getChargeFessOnCustomer() {
-    return restaurant.value!.paymentInfo.stripe?.chargeFeesOnCustomer ?? true;
+    return restaurant.value!.paymentInfo?.stripe?.chargeFeesOnCustomer ?? true;
   }
 
   bool get showFeesOption {
-    return (restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
+    return (restaurant.value!.paymentInfo?.acceptedPayments[PaymentType.Card] ==
             true &&
-        restaurant.value!.paymentInfo.stripe != null);
+        restaurant.value!.paymentInfo?.stripe != null);
   }
 
   bool get showStatusIcon {
-    return (restaurant.value!.paymentInfo.stripe?.requirements.isNotEmpty ==
+    return (restaurant.value!.paymentInfo?.stripe?.requirements.isNotEmpty ==
         true);
   }
 
@@ -305,7 +288,7 @@ class ROpEditInfoController {
 
   bool get isBankTrue {
     return restaurant
-            .value!.paymentInfo.acceptedPayments[PaymentType.BankTransfer] ==
+            .value!.paymentInfo?.acceptedPayments[PaymentType.BankTransfer] ==
         true;
   }
 
@@ -401,6 +384,8 @@ class ROpEditInfoController {
         break;
       case 4:
         return '${_i18n()["reviews"]}';
+      case 6:
+        return 'Operators';
         break;
       default:
         return "";

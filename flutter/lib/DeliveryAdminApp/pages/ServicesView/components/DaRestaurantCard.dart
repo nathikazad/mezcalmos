@@ -95,7 +95,7 @@ class DaRestaurantCard extends StatelessWidget {
                         child: TextButton.icon(
                           onPressed: () {
                             Get.toNamed(getRestaurantOperatorsRoute(
-                                restaurant.info.id));
+                                restaurant.info.hasuraId.toString()));
                           },
                           style: TextButton.styleFrom(
                               foregroundColor: primaryBlueColor,
@@ -104,7 +104,7 @@ class DaRestaurantCard extends StatelessWidget {
                               padding: const EdgeInsets.all(3)),
                           icon: Icon(Icons.support_agent),
                           label: Text(
-                              '${_i18n()["operators"]} (${restaurant.state.operators.length})'),
+                              '${_i18n()["operators"]} (${restaurant.operators.length})'),
                         ),
                       )
                     ],

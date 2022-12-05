@@ -111,6 +111,21 @@ class ROpDashboardPage extends StatelessWidget {
               _divider(),
               _navigationLink(
                   onClick: () async {
+                    await pageController.animateToPage(6,
+                        duration: Duration(milliseconds: 1),
+                        curve: Curves.easeIn);
+                  },
+                  icon: Icons.people,
+                  titleWidget: Text(
+                    'Operators',
+                    style: Get.textTheme.bodyText1?.copyWith(
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.grey.shade900),
+                  )),
+              _divider(),
+              _navigationLink(
+                  onClick: () async {
                     await pageController.animateToPage(3,
                         duration: Duration(milliseconds: 1),
                         curve: Curves.easeIn);
@@ -184,19 +199,17 @@ class ROpDashboardPage extends StatelessWidget {
               _divider(),
               _navigationLink(
                   onClick: () async {
-                    await pageController.animateToPage(2,
-                        duration: Duration(milliseconds: 1),
-                        curve: Curves.easeIn);
+                    // await pageController.animateToPage(2,
+                    //     duration: Duration(milliseconds: 1),
+                    //     curve: Curves.easeIn);
                   },
                   icon: Icons.delivery_dining,
-                  trailingWidget: Obx(
-                    () => Switch(
-                      value: viewController.restaurant.value!.selfDelivery,
-                      onChanged: (bool v) {
-                        viewController.switchSelfDelivery(v);
-                      },
-                      activeColor: primaryBlueColor,
-                    ),
+                  trailingWidget: Switch(
+                    value: true,
+                    onChanged: (bool v) {
+                      viewController.switchSelfDelivery(v);
+                    },
+                    activeColor: primaryBlueColor,
                   ),
                   titleWidget: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

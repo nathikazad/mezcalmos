@@ -53,11 +53,11 @@ class _ROpDriversMapComponentState extends State<ROpDriversMapComponent> {
   void getDriversMarkers() {
     widget.drivers.forEach((DeliveryDriver _driver) {
       if (_driver.driverLocation != null) {
-        mapController.addOrUpdateUserMarker(
-          latLng: _driver.driverLocation,
-          customImgHttpUrl: _driver.driverInfo.image,
-          markerId: _driver.driverInfo.id,
-        );
+        // mapController.addOrUpdateUserMarker(
+        //   latLng: _driver.driverLocation,
+        //   customImgHttpUrl: _driver.driverInfo.image,
+        //   markerId: _driver.driverInfo.id,
+        // );
       }
     });
   }

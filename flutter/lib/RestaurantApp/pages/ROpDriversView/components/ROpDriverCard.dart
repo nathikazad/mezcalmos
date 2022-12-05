@@ -94,9 +94,10 @@ class _ROpListDriverCardState extends State<ROpListDriverCard> {
                       helperText: '${_i18n()["rmText"]}',
                       primaryButtonText: '${_i18n()["rmBtn"]}',
                       onYesClick: () async {
-                    final bool result = await widget.viewController
-                        .removeDriver(widget.driver.deliveryDriverId);
-                    if (result) Get.back();
+                    // TODO remove driver
+                    // final bool result = await widget.viewController
+                    //     .removeDriver(widget.driver.deliveryDriverId);
+                    // if (result) Get.back();
                   });
                 },
                 icon: Icons.delete_outline,
