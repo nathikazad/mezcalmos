@@ -16,10 +16,12 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
 
   let restaurantOperatorsDetails = restaurant.restaurantOperators!.map((v) => {
     return {
-      participant_id: v.id,
+      participant_id: v.userId,
       app_type_id: "restaurant"
     };
   });
+  console.log("Rest ops ================>>>>")
+console.log(restaurantOperatorsDetails)
   let response = await chain.mutation({
     insert_restaurant_order_one: [{
       object: {
@@ -27,9 +29,13 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
         restaurant_id: restaurantOrder.restaurantId,
         customer_app_type: restaurantOrder.customerAppType,
         chat: {
+        
           data: {
+            
             chat_participants: {
               data: [{
+                
+              
                 participant_id: restaurantOrder.customerId,
                 app_type_id: restaurantOrder.customerAppType
               },
