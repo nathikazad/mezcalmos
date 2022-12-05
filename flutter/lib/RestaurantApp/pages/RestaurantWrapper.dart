@@ -57,9 +57,10 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
     mezDbgPrint("RestaurantWrapper::init state");
     Future<void>.microtask(() async {
       mezDbgPrint("RestaurantWrapper::microtask handleState first time");
-      await Get.find<RestaurantOpAuthController>().setupRestaurantOperator();
+
       restaurantOperator =
           Get.find<RestaurantOpAuthController>().operator.value;
+
       handleState(restaurantOperator);
 
       //   mezDbgPrint("RESTAURANT OPERATOR ==> $restaurantOperator");
@@ -89,9 +90,10 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
 
     if (operator == null) {
       // ignore: unawaited_futures, inference_faQilure_on_function_invocation
+
       Get.toNamed(kCreateRestaurant);
     } else {
-      Get.toNamed(kTabsView);
+      Get.toNamed(kCurrentOrdersListView);
       // Get.to(SomethingWentWrongScreen());
 
     }
