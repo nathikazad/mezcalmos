@@ -20,8 +20,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
       app_type_id: "restaurant"
     };
   });
-  console.log("Rest ops ================>>>>")
-console.log(restaurantOperatorsDetails)
+
   let response = await chain.mutation({
     insert_restaurant_order_one: [{
       object: {
