@@ -29,7 +29,8 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
     name: restaurantDetails.name,
     image: restaurantDetails.image,
     location: restaurantDetails.location,
-    schedule: restaurantDetails.schedule
+    schedule: restaurantDetails.schedule,
+    
    
   }
   if(restaurantDetails.firebaseId != undefined) {

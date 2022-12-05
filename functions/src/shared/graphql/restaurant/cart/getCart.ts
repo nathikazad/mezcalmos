@@ -4,7 +4,7 @@ import { Cart, CartItem } from "../../../models/Services/Restaurant/Cart";
 
 export async function getCart(customerId: number): Promise<Cart> {
     let chain = getHasura();
-  
+   
     let response =  await chain.query({
         restaurant_cart: [{
             where: {
@@ -24,7 +24,8 @@ export async function getCart(customerId: number): Promise<Cart> {
             }]
         }]
     });
-    if(response.restaurant_cart == null) {
+
+    if(response.restaurant_cart == null || response.restaurant_cart.length == 0) {
         throw new HttpsError(
           "internal",
           "Cart for that customer does not exist"

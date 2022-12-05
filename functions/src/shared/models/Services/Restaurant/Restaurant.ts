@@ -1,6 +1,8 @@
 import { Language, Location, NotificationInfo } from "../../Generic/Generic";
+import { OrderType } from "../../Generic/Order";
 import { UserInfo } from "../../Generic/User";
 import { ForegroundNotification } from "../../Notification";
+import { ServiceLink } from "../Service";
 
 // export interface ChooseManyOption {
 //   cost: number;
@@ -47,10 +49,13 @@ export interface Restaurant {
   schedule?: any;
   paymentInfoId?: number;
   openStatus?: OpenStatus;
+ 
   // LanguageId: Language;
   approved?: boolean;
   restaurantOperators?: Array<RestaurantOperator>
+  links?: ServiceLink;
 }
+
 
 export enum OpenStatus {
   Open = "open",

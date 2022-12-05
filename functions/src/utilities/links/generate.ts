@@ -1,106 +1,175 @@
 import * as functions from "firebase-functions";
 import {
-    ServerResponse,
-    ServerResponseStatus,
+  ServerResponseStatus,
 } from "../../shared/models/Generic/Generic";
 
 // import * as firebase from "firebase-admin";
-import { isSignedIn } from "../../shared/helper/authorizer";
-import { operatorInfo } from "../../shared/databaseNodes/operators/operator";
-import { OrderType } from "../../shared/models/Generic/Order";
-import { generateDeepLink } from "./deeplink";
+import { generateDeepLink, linkRecipientType, providerType } from "./deeplink";
 import { generateQr } from "./qr";
-import { serviceProviderDetails } from "../../shared/databaseNodes/services/serviceProvider";
-import * as restaurantNodes from "../../shared/databaseNodes/services/restaurant";
+import { getRestaurant } from "../../shared/graphql/restaurant/getRestaurant";
+import { Restaurant } from "../../shared/models/Services/Restaurant/Restaurant";
+import {
+  insertServiceLink,
+  setOperatorDeepLink,
+  setOperatorQrImageLink,
+  updateDriverLink,
+  updateOperatorLink,
+} from "../../shared/graphql/restaurant/setLinks";
+import { ServiceLink, ServiceProviderType } from "../../shared/models/Services/Service";
+import { getRestaurantLinks } from "../../shared/graphql/restaurant/getRestaurantLinks";
 
 
-export const generateLink = functions.https.onCall(async (data, context) => {
 
-    let response: ServerResponse | undefined = await isSignedIn(context.auth);
-    if (response != undefined) {
-      return {
-        ok: false,
-        error: response,
-      };
-    }
+export interface restaurantLinks {
+  providerId: number,
+  providerType:string ,
   
-    if (!data.providerId || !data.providerType) {
+}
+
+export async function generateOperatorLink(userId: number, restaurantLinks: restaurantLinks) {
+  // let response: ServerResponse | undefined = await isSignedIn(context.auth);
+  // if (response != undefined) {
+  //   return {
+  //     ok: false,
+  //     error: response,
+  //   };
+  // }
+
+  if (!restaurantLinks.providerId || !restaurantLinks.providerType) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: "required parameters providerId and providerType.",
+    };
+  }
+  console.log("inside generate restaurant links ")
+  let oldRestaurantLinks: ServiceLink|null = await getRestaurantLinks(restaurantLinks.providerId);
+  let restLink: string;
+  let restQr;
+  
+  if (oldRestaurantLinks == null || !oldRestaurantLinks.operator_deep_link || !oldRestaurantLinks.operator_qr_image_link) {
+    //  const pTypeAsOrderType: OrderType = (data.providerType as string).toLowerCase() as OrderType;
+    const link: string | null = await generateDeepLink(
+      providerType.Restaurant,
+      restaurantLinks.providerId,
+      linkRecipientType.restaurantOperator
+    );
+    if (!link) {
       return {
         status: ServerResponseStatus.Error,
-        errorMessage:
-          "required parameters providerId and providerType.",
+        errorMessage: "Failed generating your link, try later!",
       };
     }
-    // check if the operator is assigned to that restaurant and authorized.
-    // to replace with checkRestaurantOperator
-    const pTypeAsOrderType : OrderType = (data.providerType as string).toLowerCase() as OrderType;
-
-    const operatorRestaurantId = (await operatorInfo(pTypeAsOrderType , context.auth?.uid).child('state/restaurantId').once('value')).val();
-    if (!operatorRestaurantId || operatorRestaurantId != data.providerId) {
-        return {
-            status: ServerResponseStatus.Error,
-            errorMessage:
-              `Unauthorized operator! => operatorRestaurantId:${operatorRestaurantId}`,
-          };
+    restLink = link;
+       const qr: string | null = await generateQr(restLink!);
+    if (!qr) {
+      return {
+        status: ServerResponseStatus.Error,
+        errorMessage: "Failed generating your link, try later!",
+      };
     }
-    // check if the deepLink is already there in db.
-    const restaurantDetailsNode = serviceProviderDetails(pTypeAsOrderType, data.providerId);
-    let restaurantLink:string|null = (await restaurantDetailsNode.child('link').once('value')).val();
-    if (!restaurantLink) {
-
-        // restaurant does not have a link yet.
-        const link : string | null = await generateDeepLink(data.providerType, data.providerId);
-        if (!link) {
-            return {
-                status: ServerResponseStatus.Error,
-                errorMessage:
-                  "Failed generating your link, try later!",
-              };
-        }
-        restaurantLink = link;
-        // we write it to the details node :
-        try {
-            restaurantNodes.info(data.providerId).child('details').child('link').set(link);
-        } catch (error) {
-            functions.logger.error(`Link Error ==> ${error}`);
-        }
+    restQr = qr;
+    let serviceLink: ServiceLink = {
+      service_provider_id: restaurantLinks.providerId ,
+      service_provider_type:restaurantLinks.providerType as ServiceProviderType,
+      operator_deep_link: restLink,
+      operator_qr_image_link : qr,
+      
+    }
+    if (oldRestaurantLinks == null) {
+      // insert for the first time 
+      await insertServiceLink(serviceLink);
+    } else {
+      // update operator links
+      serviceLink.id = oldRestaurantLinks.id;
+      await updateOperatorLink(serviceLink);
 
     }
-    // check if Qr code os already there set in the db if not generate it
-    let restaurantQr : string|null = (await restaurantDetailsNode.child('qr').once('value')).val();
-    if (!restaurantQr) {
-        // restaurant does not have a QR yet.
-        const qr : string | null = await generateQr(restaurantLink);
-        if (!qr) {
-            return {
-                status: ServerResponseStatus.Error,
-                errorMessage:
-                  "Failed generating your link, try later!",
-              };
-        }
-        restaurantQr = qr;
-        // we write it to the details node :
-        try {
-            restaurantNodes.info(data.providerId).child('details').child('qr').set(qr);
-        } catch (error) {
-            functions.logger.error(`QR Error ==> ${error}`);
-        }
+    
 
-    }
-     
+  } 
+  return {
+    status: ServerResponseStatus.Success,
+    results: {
+      qr: restQr,
+      link: restLink!,
+    },
+    // errorMessage:
+    //   "Failed generating your link, try later!",
+  };
+}
+
+
+export async function generateDriverLink(userId: number, restaurantLinks: restaurantLinks) {
+  // let response: ServerResponse | undefined = await isSignedIn(context.auth);
+  // if (response != undefined) {
+  //   return {
+  //     ok: false,
+  //     error: response,
+  //   };
+  // }
+
+  if (!restaurantLinks.providerId || !restaurantLinks.providerType) {
     return {
-        status: ServerResponseStatus.Success,
-        results : {
-            "qr"    : restaurantQr,
-            "link"  : restaurantLink
-        }
-        // errorMessage:
-        //   "Failed generating your link, try later!",
+      status: ServerResponseStatus.Error,
+      errorMessage: "required parameters providerId and providerType.",
+    };
+  }
+  console.log("inside generate driver links ")
+  let oldRestaurantLinks: ServiceLink|null = await getRestaurantLinks(restaurantLinks.providerId);
+  let restLink: string;
+  let restQr;
+  
+  if (oldRestaurantLinks == null || !oldRestaurantLinks.driver_deep_link || !oldRestaurantLinks.driver_qr_image_link) {
+    //  const pTypeAsOrderType: OrderType = (data.providerType as string).toLowerCase() as OrderType;
+    const link: string | null = await generateDeepLink(
+      providerType.Restaurant,
+      restaurantLinks.providerId,
+      linkRecipientType.deliveryDriver
+    );
+    if (!link) {
+      return {
+        status: ServerResponseStatus.Error,
+        errorMessage: "Failed generating your link, try later!",
       };
+    }
+    restLink = link;
+       const qr: string | null = await generateQr(restLink!);
+    if (!qr) {
+      return {
+        status: ServerResponseStatus.Error,
+        errorMessage: "Failed generating your link, try later!",
+      };
+    }
+    restQr = qr;
+    let serviceLink: ServiceLink = {
+      service_provider_id: restaurantLinks.providerId ,
+      service_provider_type:restaurantLinks.providerType as ServiceProviderType,
+      driver_deep_link: restLink,
+      driver_qr_image_link : qr,
+      
+    }
+    if (oldRestaurantLinks == null) {
+      // insert for the first time 
+      await insertServiceLink(serviceLink);
+    } else {
 
-}); 
+      // update driver links
+      serviceLink.id = oldRestaurantLinks.id;
+      await updateDriverLink(serviceLink);
 
+    }
+    
 
-
+  } 
+  return {
+    status: ServerResponseStatus.Success,
+    results: {
+      qr: restQr,
+      link: restLink!,
+    },
+    // errorMessage:
+    //   "Failed generating your link, try later!",
+  };
+}
 
 
