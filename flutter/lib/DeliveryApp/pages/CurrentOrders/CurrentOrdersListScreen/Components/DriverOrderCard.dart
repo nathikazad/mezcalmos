@@ -148,7 +148,37 @@ class DriverOrderCard extends StatelessWidget {
               ),
             ),
           );
-
+        case RestaurantOrderStatus.OrderReceived:
+          if ((order as RestaurantOrder).isScheduled()) {
+            return Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: secondaryLightBlueColor,
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: Center(
+                child: Text(
+                  "${_i18n()["scheduled"]}",
+                  style: Get.textTheme.bodyText1
+                      ?.copyWith(color: primaryBlueColor),
+                ),
+              ),
+            );
+          } else {
+            return Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.amber.shade100,
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: Center(
+                child: Text(
+                  "${_i18n()["waiting"]}",
+                  style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
+                ),
+              ),
+            );
+          }
         default:
           return Container(
             padding: const EdgeInsets.all(8),

@@ -1,26 +1,40 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class DeliveryDriverState {
   bool isAuthorized;
   bool isOnline;
+  String? serviceProviderId;
+  OrderType? serviceProviderType;
 
   DeliveryDriverState({
     required this.isAuthorized,
     required this.isOnline,
+    this.serviceProviderId,
+    this.serviceProviderType,
   });
 
   factory DeliveryDriverState.fromSnapshot(data) {
     final bool isAuthorized =
         data == null ? false : data['authorizationStatus'] == "authorized";
     final bool isOnline = data == null ? false : data['isOnline'] == true;
-    return DeliveryDriverState(isAuthorized: isAuthorized, isOnline: isOnline);
+
+    return DeliveryDriverState(
+      isAuthorized: isAuthorized,
+      isOnline: isOnline,
+      serviceProviderId: data?["serviceProviderId"],
+      serviceProviderType:
+          data?["serviceProviderType"]?.toString().toOrderType(),
+    );
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         "authorizationStatus": isAuthorized,
         "isOnline": isOnline,
+        "serviceProviderId": serviceProviderId,
+        "serviceProviderType": serviceProviderType?.toFirebaseFormatString(),
       };
 }
 
@@ -28,7 +42,7 @@ class DeliveryDriverState {
 class DeliveryDriver {
   DeliveryDriverState deliveryDriverState;
   DeliveryDriverUserInfo driverInfo;
-  LatLng driverLocation;
+  LatLng? driverLocation;
   DateTime? lastLocationUpdateTime;
   String deliveryDriverId;
 
@@ -50,7 +64,7 @@ class DeliveryDriver {
         DeliveryDriverUserInfo.fromData(deliveryDriverData['info']);
 
     /// driverLocation
-    final dynamic driverLocation = deliveryDriverData['location'] == null
+    final dynamic? driverLocation = deliveryDriverData['location'] == null
         ? null
         : LatLng(deliveryDriverData["location"]["position"]["lat"],
             deliveryDriverData["location"]["position"]["lng"]);
@@ -74,15 +88,32 @@ class DeliveryDriver {
   Map<String, dynamic> toJson() => <String, dynamic>{
         "authorizationStatus": deliveryDriverState.isAuthorized,
         "isOnline": deliveryDriverState.isOnline,
-        "driverLocation": driverLocation.toJson(),
+        "driverLocation": driverLocation?.toJson(),
         "lastLocationUpdateTime":
             lastLocationUpdateTime?.toUtc().toIso8601String(),
       };
+  bool get isAssociated {
+    return deliveryDriverState.serviceProviderId != null;
+  }
 
   @override
   String toString() {
     return 'DeliveryDriver{deliveryDriverState: $deliveryDriverState, driverInfo: $driverInfo, driverLocation: $driverLocation, lastLocationUpdateTime: $lastLocationUpdateTime, deliveryDriverId: $deliveryDriverId}';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is DeliveryDriver &&
+        other.deliveryDriverId == deliveryDriverId;
+  }
+
+  @override
+  int get hashCode =>
+      driverLocation.hashCode ^
+      lastLocationUpdateTime.hashCode ^
+      deliveryDriverId.hashCode;
 }
 
 enum DriverUserInfoAndUpdateStatus {

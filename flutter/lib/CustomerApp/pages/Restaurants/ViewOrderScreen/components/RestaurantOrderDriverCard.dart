@@ -28,6 +28,17 @@ class RestaurantOrderDriverCard extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.only(left: 3),
+            child: Text(
+              '${_i18n()["driver"]}',
+              style: Get.textTheme.bodyText1,
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
           Card(
               child: Container(
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
@@ -84,8 +95,76 @@ class RestaurantOrderDriverCard extends StatelessWidget {
           )),
         ],
       );
+    } else if (order.selfDeliveryDetails != null) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.only(left: 3),
+            child: Text(
+              '${_i18n()["driver"]}',
+              style: Get.textTheme.bodyText1,
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Card(
+              child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 5),
+            child: Row(
+              children: [
+                Stack(
+                  alignment: Alignment.center,
+                  clipBehavior: Clip.none,
+                  children: [
+                    CircleAvatar(
+                        radius: 23,
+                        backgroundImage:
+                            CachedNetworkImageProvider(order.restaurant.image)),
+                    Positioned(
+                      right: -35,
+                      child: CircleAvatar(
+                        radius: 23,
+                        child: Icon(
+                          Icons.delivery_dining,
+                          size: 30,
+                          color: Colors.white,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  width: 45,
+                ),
+                Flexible(
+                  fit: FlexFit.tight,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        order.restaurant.name,
+                        style: Get.textTheme.bodyText1,
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text('${_i18n()["selfDeliveryTitle"]}'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )),
+        ],
+      );
     } else {
-      return Container();
+      return SizedBox();
     }
   }
 }

@@ -64,6 +64,7 @@ class _RestaurantOrderFromToComponentState
           subtitle: (_showFoodReadyTime())
               ? "${_i18n()["foodReady"]} ${widget.order.estimatedFoodReadyTime!.getEstimatedTime()}"
               : null,
+          secondSubtitle: _getDeliveryTime(),
           customerName: widget.order.customer.name,
           enableExpand: (widget.order.inProcess()) ? _isTimesSetted() : true,
           customerTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff, context),
@@ -111,6 +112,13 @@ class _RestaurantOrderFromToComponentState
     );
   }
 
+  String? _getDeliveryTime() {
+    if (widget.order.isScheduled()) {
+      return "${_i18n()["dvTime"]}: ${widget.order.deliveryTime!.toLocal().toDayName()}, ${DateFormat("hh:mm a").format(widget.order.deliveryTime!.toLocal())}";
+    }
+    return null;
+  }
+
   bool _isTimesSetted() {
     return widget.order.estimatedDropoffAtCustomerTime != null &&
         widget.order.estimatedPickupFromServiceProviderTime != null;
@@ -122,7 +130,12 @@ class _RestaurantOrderFromToComponentState
       case RestaurantOrderStatus.CancelledByAdmin:
       case RestaurantOrderStatus.CancelledByCustomer:
         return '${_i18n()["orderStatus"]["canceled"]}';
-      case RestaurantOrderStatus.OrderReceieved:
+      case RestaurantOrderStatus.OrderReceived:
+        if (widget.order.isScheduled()) {
+          return '${_i18n()["orderStatus"]["scheduled"]}';
+        } else {
+          return '${_i18n()["orderStatus"]["waiting"]}';
+        }
       case RestaurantOrderStatus.PreparingOrder:
         return '${_i18n()["orderStatus"]["waiting"]}';
 
@@ -138,14 +151,14 @@ class _RestaurantOrderFromToComponentState
   }
 
   bool isInPickUpPhase() {
-    return widget.order.status == RestaurantOrderStatus.OrderReceieved ||
+    return widget.order.status == RestaurantOrderStatus.OrderReceived ||
         widget.order.status == RestaurantOrderStatus.ReadyForPickup ||
         widget.order.status == RestaurantOrderStatus.PreparingOrder;
   }
 
   bool _showFoodReadyTime() {
     return widget.order.estimatedFoodReadyTime != null &&
-        (widget.order.status == RestaurantOrderStatus.OrderReceieved ||
+        (widget.order.status == RestaurantOrderStatus.OrderReceived ||
             widget.order.status == RestaurantOrderStatus.PreparingOrder);
   }
 

@@ -29,7 +29,8 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
     name: restaurantDetails.name,
     image: restaurantDetails.image,
     location: restaurantDetails.location,
-    schedule: restaurantDetails.schedule
+    schedule: restaurantDetails.schedule,
+    
    
   }
   if(restaurantDetails.firebaseId != undefined) {
@@ -125,7 +126,7 @@ let restaurantTemplateInJson = `{
     "location": {
       "address": "Boulevard Lic. José Murat a un costado del Hotel Yurimar, Puerto Escondido, México, 70934",
       "lat": 15.861492064236634,
-      "lng": -97.05935736662569
+      "lng": -97.05935736662569  
     },
     "name": null
   },

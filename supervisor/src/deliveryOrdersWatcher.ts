@@ -51,7 +51,7 @@ async function checkdeliverableOrders() {
       switch (orderType) {
         case OrderType.Laundry:
           console.log("laundry order")
-          if ((deliverableOrder as LaundryOrder).status != LaundryOrderStatus.OrderReceieved)
+          if ((deliverableOrder as LaundryOrder).status != LaundryOrderStatus.OrderReceived)
             continue
           console.log("status received")
           operators = (await laundryNodes.laundryOperators(deliverableOrder.serviceProviderId!).once('value')).val()
@@ -59,7 +59,7 @@ async function checkdeliverableOrders() {
         case OrderType.Restaurant:
           console.log("restaurant order")
           // console.log(deliverableOrder)
-          if ((deliverableOrder as RestaurantOrder).status != RestaurantOrderStatus.OrderReceieved)
+          if ((deliverableOrder as RestaurantOrder).status != RestaurantOrderStatus.OrderReceived)
             continue
           console.log("status received")
           operators = (await restaurantNodes.restaurantOperators(deliverableOrder.serviceProviderId!).once('value')).val()

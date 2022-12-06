@@ -157,7 +157,7 @@ class _LaundryOrderFromToComponentState
 
   String _getOrderStatus() {
     switch (widget.order.status) {
-      case LaundryOrderStatus.OrderReceieved:
+      case LaundryOrderStatus.OrderReceived:
         return "${_i18n()["orderStatus"]["readyForPickup"]}";
       case LaundryOrderStatus.OtwPickupFromCustomer:
         return "${_i18n()["orderStatus"]["pickupOtw"]}";

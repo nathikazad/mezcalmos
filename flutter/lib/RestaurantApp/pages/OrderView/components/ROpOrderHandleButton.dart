@@ -35,15 +35,16 @@ class _ROpOrderHandleButtonState extends State<ROpOrderHandleButton> {
   }
 
   Future<void> handleClick() async {
-    if (widget.order.status == RestaurantOrderStatus.OrderReceieved) {
-      await orderController.startPreparingOrder(widget.order.orderId);
+    if (widget.order.status == RestaurantOrderStatus.OrderReceived) {
+      await orderController.prepareOrder(int.parse(widget.order.orderId));
     } else if (widget.order.status == RestaurantOrderStatus.PreparingOrder) {
-      await orderController.setAsReadyForOrderPickup(widget.order.orderId);
+      await orderController
+          .setReadyForDelivery(int.parse(widget.order.orderId));
     }
   }
 
   String? get getBtnTitle {
-    if (widget.order.status == RestaurantOrderStatus.OrderReceieved) {
+    if (widget.order.status == RestaurantOrderStatus.OrderReceived) {
       return '${_i18n()["prepareOrder"]}';
     } else if (widget.order.status == RestaurantOrderStatus.PreparingOrder) {
       return '${_i18n()["orderReady"]}';
@@ -52,7 +53,7 @@ class _ROpOrderHandleButtonState extends State<ROpOrderHandleButton> {
   }
 
   bool get _showBtn {
-    return widget.order.status == RestaurantOrderStatus.OrderReceieved ||
+    return widget.order.status == RestaurantOrderStatus.OrderReceived ||
         widget.order.status == RestaurantOrderStatus.PreparingOrder;
   }
 }

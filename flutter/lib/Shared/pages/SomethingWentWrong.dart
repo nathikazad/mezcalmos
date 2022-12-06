@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
-dynamic lang() => Get.find<LanguageController>().strings["Shared"]["pages"]
+dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
     ["SomethingWentWrongScreen"];
 
 String getUserPhoneOrEmail() {
@@ -55,7 +55,7 @@ class SomethingWentWrongScreen extends StatelessWidget {
                   children: [
                     Center(
                       child: Text(
-                        lang()['noRestaurantFoundOnOperator'] +
+                        _i18n()['noRestaurantFoundOnOperator'] +
                             " (${getUserPhoneOrEmail()}).",
                         style: TextStyle(
                           color: Colors.red,
@@ -70,7 +70,7 @@ class SomethingWentWrongScreen extends StatelessWidget {
                     ),
                     Center(
                       child: Text(
-                        lang()['pleaseContactAdmin'] + ": +2126899034",
+                        _i18n()['pleaseContactAdmin'],
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.black,

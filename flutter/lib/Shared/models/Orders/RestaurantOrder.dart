@@ -1,18 +1,21 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/DeliveryMode.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
+import 'package:mezcalmos/Shared/models/Utilities/SelfDeliveryDetails.dart';
 
 //ignore_for_file:constant_identifier_names
 enum RestaurantOrderStatus {
-  OrderReceieved,
+  OrderReceived,
   PreparingOrder,
   ReadyForPickup,
   OnTheWay,
@@ -46,12 +49,15 @@ class RestaurantOrder extends DeliverableOrder {
   DateTime? estimatedFoodReadyTime;
   DateTime? deliveryTime;
   Review? review;
+  DeliveryMode deliveryMode;
+  SelfDeliveryDetails? selfDeliveryDetails;
 
   RestaurantOrder(
       {required super.orderId,
       super.orderType = OrderType.Restaurant,
       required this.status,
       required this.quantity,
+      this.selfDeliveryDetails,
       required super.serviceProviderId,
       required super.paymentType,
       required super.orderTime,
@@ -59,6 +65,7 @@ class RestaurantOrder extends DeliverableOrder {
       required ServiceInfo restaurant,
       required super.customer,
       required super.to,
+      required this.deliveryMode,
       this.estimatedFoodReadyTime,
       super.dropoffDriver,
       this.deliveryTime,
@@ -86,6 +93,10 @@ class RestaurantOrder extends DeliverableOrder {
     dynamic id,
     dynamic data,
   ) {
+    if (data?["to"]?["lat"] == null) {
+      mezDbgPrint("to nul =================>>>>>>>>>>>>>>$data");
+      mezDbgPrint("to nul =================>>>>>>>>>>>>>>$id");
+    }
     final RestaurantOrder restaurantOrder = RestaurantOrder(
         orderId: id,
         status: data["status"].toString().toRestaurantOrderStatus(),
@@ -93,6 +104,8 @@ class RestaurantOrder extends DeliverableOrder {
         serviceProviderId: data["serviceProviderId"],
         paymentType: data["paymentType"].toString().toPaymentType(),
         orderTime: DateTime.parse(data["orderTime"]),
+        deliveryMode: data?["deliveryMode"]?.toString().toDeliveryMode() ??
+            DeliveryMode.None,
         estimatedFoodReadyTime: (data["estimatedFoodReadyTime"] != null)
             ? DateTime.parse(data["estimatedFoodReadyTime"])
             : null,
@@ -118,7 +131,11 @@ class RestaurantOrder extends DeliverableOrder {
             hasuraId: 1, firebaseId: "firebaseId", name: null, image: null),
         // customer: UserInfo.fromData(data["customer"]),
         itemsCost: data['itemsCost'],
+        // selfDelivery: data['selfDelivery'] ?? false,
         shippingCost: data["shippingCost"] ?? 0,
+        selfDeliveryDetails: (data["selfDeliveryDetails"] != null)
+            ? SelfDeliveryDetails.fromMap(data["selfDeliveryDetails"])
+            : null,
         dropoffDriver: (data["dropoffDriver"] != null)
             ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
             : null,
@@ -175,6 +192,11 @@ class RestaurantOrder extends DeliverableOrder {
         status == RestaurantOrderStatus.CancelledByAdmin;
   }
 
+  bool isScheduled() {
+    return deliveryTime != null &&
+        deliveryTime!.toLocal().isAfter(DateTime.now().toLocal());
+  }
+
   //   String getRightChatId() {
   //   if (getCurrentPhase() == LaundryOrderPhase.Pickup &&
   //       customerPickupDriverChatId != null) {
@@ -190,7 +212,7 @@ class RestaurantOrder extends DeliverableOrder {
 
   @override
   bool inProcess() {
-    return status == RestaurantOrderStatus.OrderReceieved ||
+    return status == RestaurantOrderStatus.OrderReceived ||
         status == RestaurantOrderStatus.PreparingOrder ||
         status == RestaurantOrderStatus.ReadyForPickup ||
         status == RestaurantOrderStatus.OnTheWay;
@@ -200,10 +222,29 @@ class RestaurantOrder extends DeliverableOrder {
     return status == RestaurantOrderStatus.OnTheWay;
   }
 
+  bool inSelfDelivery() {
+    return (status == RestaurantOrderStatus.ReadyForPickup ||
+            status == RestaurantOrderStatus.OnTheWay) &&
+        (deliveryMode == DeliveryMode.SelfDeliveryByDriver ||
+            deliveryMode == DeliveryMode.SelfDeliveryByRestaurant);
+  }
+
+  bool get selfDelivery {
+    return deliveryMode == DeliveryMode.SelfDeliveryByDriver ||
+        deliveryMode == DeliveryMode.SelfDeliveryByRestaurant;
+  }
+
   bool get showItemsImages {
     return items.firstWhereOrNull(
             (RestaurantOrderItem element) => element.image != null) !=
         null;
+  }
+
+  DateTime? get estDropOffTime {
+    if (deliveryMode == DeliveryMode.SelfDeliveryByRestaurant) {
+      return selfDeliveryDetails?.estDeliveryTime;
+    }
+    return estimatedDropoffAtCustomerTime;
   }
 
   String clipBoardText(LanguageType languageType) {

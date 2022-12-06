@@ -94,7 +94,7 @@ class AuthController extends GetxController {
 
   Future<void> fetchUserInfoFromHasura() async {
     mezDbgPrint(
-        "[777] fetchingUser Info from hasure using firebaseid : ${fireAuthUser?.uid}");
+        "[777] fetchingUser Info from hasure using firebaseid : ${fireAuthUser?.uid} \n hasura id : $hasuraUserId ");
 
     _userInfo = await get_user_by_hasura_id(hasuraId: _hasuraUserId.value!);
     mezDbgPrint(

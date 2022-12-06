@@ -15,6 +15,7 @@ export async function createRestaurant(
     insert_restaurant_one: [{
       object: {
         name: restaurant.name,
+      
         image: restaurant.image,
         location_gps: JSON.stringify({
             "type": "point",
@@ -27,7 +28,7 @@ export async function createRestaurant(
         restaurant_operators: {
           data: [{
             user_id: restaurantOperatorUserId,
-            status: OperatorStatus.Authorized,
+            status: OperatorStatus.AwaitingApproval,
             owner: true,
           }]
         }

@@ -72,38 +72,8 @@ class ROpSpecialItemCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Flexible(
-                          child: Text(item.cost.toPriceString(),
-                              style: Get.textTheme.bodyText1),
-                        ),
-                        SizedBox(
-                          width: 25,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            if (isCurrent) {
-                              viewController.removeFromSpecials(item: item);
-                            } else {
-                              viewController.addToSpecials(item: item);
-                            }
-                          },
-                          customBorder: CircleBorder(),
-                          child: Ink(
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: secondaryLightBlueColor),
-                            child: Icon(
-                              (isCurrent) ? Icons.remove : Icons.add,
-                              color: primaryBlueColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    Text(item.cost.toPriceString(),
+                        style: Get.textTheme.bodyText1),
                     SizedBox(
                       height: 5,
                     ),

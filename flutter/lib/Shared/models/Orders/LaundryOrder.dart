@@ -11,7 +11,7 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 enum LaundryOrderStatus {
-  OrderReceieved,
+  OrderReceived,
   OtwPickupFromCustomer,
   PickedUpFromCustomer,
   AtLaundry,
@@ -219,7 +219,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
 
   @override
   bool inProcess() {
-    return status == LaundryOrderStatus.OrderReceieved ||
+    return status == LaundryOrderStatus.OrderReceived ||
         status == LaundryOrderStatus.OtwPickupFromCustomer ||
         status == LaundryOrderStatus.PickedUpFromCustomer ||
         status == LaundryOrderStatus.AtLaundry ||
@@ -241,7 +241,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
 
   LaundryOrderPhase getCurrentPhase() {
     switch (status) {
-      case LaundryOrderStatus.OrderReceieved:
+      case LaundryOrderStatus.OrderReceived:
       case LaundryOrderStatus.OtwPickupFromCustomer:
       case LaundryOrderStatus.PickedUpFromCustomer:
         return LaundryOrderPhase.Pickup;

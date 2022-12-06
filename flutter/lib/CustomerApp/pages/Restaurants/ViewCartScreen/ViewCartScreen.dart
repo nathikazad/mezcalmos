@@ -19,10 +19,6 @@ import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-
-// ignore: constant_identifier_names
-enum DropDownResult { Null, String }
 
 class ViewCartScreen extends StatefulWidget {
   @override
@@ -38,12 +34,6 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   /// RestaurantController
   RestaurantController _restaurantController = Get.find<RestaurantController>();
   ViewCartController viewCartController = ViewCartController();
-
-  /// _clickedOrderNow
-  bool _clickedOrderNow = false;
-
-  /// DropDownResult
-  DropDownResult ddResult = DropDownResult.Null;
 
   /// _textEditingController
   TextEditingController _textEditingController = TextEditingController();
@@ -110,14 +100,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
             child: ViewCartBody(
               viewCartController: viewCartController,
               setLocationCallBack: ({Location? location}) {
-                if (location != null) {
+                if (location != null && location.isValidLocation()) {
                   _restaurantController.cart.value.toLocation = location;
                   _restaurantController.updateShippingPrice().then(
                       (bool value) => _restaurantController.cart.refresh());
                 }
-                // setState(() {
-                //   orderToLocation = location;
-                // });
               },
               notesTextController: _textEditingController,
             ),
@@ -208,54 +195,39 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     }
   }
 
-  /// Call this right after customer presses Checkout
-  /// Uses : Make sure that the order has been successfully written to database + already consumed by the listener.
-  // Future<void> avoidCheckoutRaceCondition(String orderId) async {
-  //   if (Get.find<OrderController>().getOrder(orderId) == null) {
-  //     mezDbgPrint(
-  //         "[+] s@@d ==> [ CHECKOUT RESTAURANT ORDER ]  RACING CONDITION HAPPENING ... ");
-  //     await Get.find<OrderController>()
-  //         ._getInProcessOrderStream(orderId)
-  //         .firstWhere((order) => order != null);
-  //   } else
-  //     mezDbgPrint(
-  //         "[+] s@@d ==> [ CHECKOUT RESTAURANT ORDER ] NO RACING CONDITION HAPPEND ! ");
-  // }
-
-//itemviewscreen -
   Future<void> checkoutActionButton() async {
     _restaurantController.cart.value.toLocation = orderToLocation;
     _restaurantController.cart.value.notes = _textEditingController.text;
     try {
-      if (_restaurantController.getOrderDistance <= 10) {
-        final String? stripePaymentId =
-            await acceptPaymentByCardChoice(viewCartController.getCardChoice);
+      // if (_restaurantController.getOrderDistance <= 10) {
+      final String? stripePaymentId =
+          await acceptPaymentByCardChoice(viewCartController.getCardChoice);
 
-        final ServerResponse _serverResponse = await _restaurantController
-            .checkout(stripePaymentId: stripePaymentId);
+      final ServerResponse _serverResponse = await _restaurantController
+          .checkout(stripePaymentId: stripePaymentId);
 
-        if (_serverResponse.success) {
-          _restaurantController.clearCart();
-          popEverythingAndNavigateTo(
-              getRestaurantOrderRoute(_serverResponse.data["orderId"]));
-        } else {
-          print(_serverResponse);
-          if (_serverResponse.errorCode == "serverError") {
-            // do something
-          } else if (_serverResponse.errorCode == "inMoreThanThreeOrders") {
-            // do something
-          } else if (_serverResponse.errorCode == "restaurantClosed") {
-            // do something
-          } else {
-            // do something
-          }
-        }
+      if (_serverResponse.success) {
+        _restaurantController.clearCart();
+        popEverythingAndNavigateTo(
+            getRestaurantOrderRoute(_serverResponse.data["orderId"]));
       } else {
-        MezSnackbar(
-          '${_i18n()["ops"]}',
-          '${_i18n()["distanceError"]}',
-        );
+        print(_serverResponse);
+        if (_serverResponse.errorCode == "serverError") {
+          // do something
+        } else if (_serverResponse.errorCode == "inMoreThanThreeOrders") {
+          // do something
+        } else if (_serverResponse.errorCode == "restaurantClosed") {
+          // do something
+        } else {
+          // do something
+        }
       }
+      // } else {
+      //   MezSnackbar(
+      //     '${_i18n()["ops"]}',
+      //     '${_i18n()["distanceError"]}',
+      //   );
+      // }
     } catch (e, s) {
       mezDbgPrint(
         "Error happened during generating order's routeInfos / Stripe payment ===> #$e\n\nStackTrace ==> #$s",
@@ -272,9 +244,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       switch (choice) {
         case CardChoice.ApplePay:
           final ServerResponse paymentIntentResponse = await getPaymentIntent(
-              customerId: Get.find<AuthController>().user!.firebaseId,
-              serviceProviderId:
-                  _restaurantController.cart.value.restaurant!.info.firebaseId,
+              customerId: Get.find<AuthController>().user!.hasuraId.toString(),
+              serviceProviderId: _restaurantController
+                  .cart.value.restaurant!.info.hasuraId
+                  .toString()
+                  .toString(),
               orderType: OrderType.Restaurant,
               paymentAmount: _restaurantController.cart.value.totalCost);
           stripePaymentId = extractPaymentIdFromIntent(
@@ -289,9 +263,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           // TODO:544D-HASURA
 
           final ServerResponse paymentIntentResponse = await getPaymentIntent(
-              customerId: Get.find<AuthController>().user!.firebaseId,
-              serviceProviderId:
-                  _restaurantController.cart.value.restaurant!.info.firebaseId,
+              customerId: Get.find<AuthController>().user!.hasuraId.toString(),
+              serviceProviderId: _restaurantController
+                  .cart.value.restaurant!.info.hasuraId
+                  .toString()
+                  .toString(),
               orderType: OrderType.Restaurant,
               paymentAmount: _restaurantController.cart.value.totalCost);
           stripePaymentId = extractPaymentIdFromIntent(
@@ -304,8 +280,10 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           break;
         case CardChoice.SavedCard:
           stripePaymentId = await acceptPaymentWithSavedCard(
-              serviceProviderId:
-                  _restaurantController.cart.value.restaurant!.info.firebaseId,
+              serviceProviderId: _restaurantController
+                  .cart.value.restaurant!.info.hasuraId
+                  .toString()
+                  .toString(),
               paymentAmount: _restaurantController.cart.value.totalCost,
               card: viewCartController.card.value!);
           break;

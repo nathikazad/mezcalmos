@@ -4,7 +4,9 @@ import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/components/ROpCreateImagePicker.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/controllers/ROpCreateRestuarantViewController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -34,7 +36,30 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
         label: "Create restaurant",
         onClick: () async {
           if (_formKey.currentState?.validate() == true) {
-            await viewController.createRestaurant();
+            final ServerResponse res = await viewController.createRestaurant();
+            if (res.success) {
+              await showStatusInfoDialog(
+                context,
+                primaryClickTitle: "OK",
+                primaryCallBack: () {
+                  Get.toNamed(kWrapperRoute);
+                },
+                status: "Your restaurantis under review",
+                description:
+                    "You can start adding items to your menu and you’ll be notified once your restaurant is approved.",
+              );
+              //
+            } else {
+              Get.snackbar('Error',
+                  res.errorMessage ?? "Unkwown error, please try again",
+                  backgroundColor: Colors.black,
+                  colorText: Colors.white,
+                  shouldIconPulse: false,
+                  icon: Icon(
+                    Icons.error,
+                    color: Colors.red,
+                  ));
+            }
           }
         },
       ),
@@ -60,6 +85,7 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
                 style: Get.textTheme.bodyText1,
                 decoration: InputDecoration(
                   labelText: "Enter your restaurant name",
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
                 ),
               ),
               SizedBox(height: 25),
@@ -76,6 +102,7 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
                 style: Get.textTheme.bodyText1,
                 decoration: InputDecoration(
                   labelText: "Enter your restaurant description",
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
                   alignLabelWithHint: true,
                 ),
                 maxLines: 6,

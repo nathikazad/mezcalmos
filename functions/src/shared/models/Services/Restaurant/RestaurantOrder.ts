@@ -61,6 +61,12 @@ export enum RestaurantOrderStatus {
   CancelledByAdmin = "cancelledByAdmin",
   CancelledByCustomer = "cancelledByCustomer"
 }
+export enum DeliveryMode {
+  ForwardedToMezCalmos = "forwardedToMezCalmos",
+  SelfDeliveryByRestaurant = "selfDeliveryByRestaurant",
+  SelfDeliveryByDriver = "SelfDeliveryByDriver",
+  None = "none",
+}
 
 export enum RestaurantOrderType {
   Pickup = "pickup",
@@ -80,7 +86,7 @@ export enum RestaurantOrderType {
 //     customer: params.customer,
 //     restaurant: params.restaurant,
 //     orderType: OrderType.Restaurant,
-//     status: RestaurantOrderStatus.OrderReceieved,
+//     status: RestaurantOrderStatus.OrderReceived,
 //     orderTime: (new Date()).toISOString(),
 //     dropOffShippingCost: params.cart.shippingCost,
 //     totalCostBeforeShipping: params.cart.cost - params.cart.shippingCost - params.stripeFees,

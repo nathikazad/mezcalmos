@@ -118,6 +118,7 @@ select_permissions:
         - open_status
         - payment_info_id
         - schedule
+        - self_delivery
         - service_provider_type
       filter:
         restaurant_operators:
@@ -150,6 +151,7 @@ update_permissions:
       columns:
         - description_id
         - image
+        - language_id
         - location_gps
         - location_text
         - name

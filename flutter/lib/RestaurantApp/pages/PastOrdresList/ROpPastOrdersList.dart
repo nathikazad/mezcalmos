@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
-import 'package:mezcalmos/RestaurantApp/pages/CurrentOrdersList/components/ROpOrderCard.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -27,16 +26,16 @@ class _ROpPastOrdersListState extends State<ROpPastOrdersList> {
   StreamSubscription? _pastOrdersListener;
   @override
   void initState() {
-    inProcessOrders = orderController.currentOrders;
-    pastOrders = orderController.pastOrders;
-    _inProcessOrdersListener = orderController.currentOrders.stream
-        .listen((List<RestaurantOrder> event) {
-      inProcessOrders.value = event;
-    });
-    _pastOrdersListener =
-        orderController.pastOrders.stream.listen((List<RestaurantOrder> event) {
-      pastOrders.value = event;
-    });
+    // inProcessOrders = orderController.currentOrders;
+    // pastOrders = orderController.pastOrders;
+    // _inProcessOrdersListener = orderController.currentOrders.stream
+    //     .listen((List<RestaurantOrder> event) {
+    //   inProcessOrders.value = event;
+    // });
+    // _pastOrdersListener =
+    //     orderController.pastOrders.stream.listen((List<RestaurantOrder> event) {
+    //   pastOrders.value = event;
+    // });
 
     super.initState();
   }
@@ -73,17 +72,17 @@ class _ROpPastOrdersListState extends State<ROpPastOrdersList> {
                   style: textTheme.bodyText1,
                 ),
                 const SizedBox(height: 5),
-                ListView.builder(
-                  shrinkWrap: true,
-                  reverse: true,
-                  itemCount: pastOrders.length,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (_, int index) {
-                    return ROpOrderCard(
-                      order: pastOrders[index],
-                    );
-                  },
-                ),
+                // ListView.builder(
+                //   shrinkWrap: true,
+                //   reverse: true,
+                //   itemCount: pastOrders.length,
+                //   physics: const NeverScrollableScrollPhysics(),
+                //   itemBuilder: (_, int index) {
+                //     return ROpOrderCard(
+                //       order: pastOrders[index],
+                //     );
+                //   },
+                // ),
               ],
             ),
           ),
@@ -101,16 +100,16 @@ class _ROpPastOrdersListState extends State<ROpPastOrdersList> {
           style: textTheme.bodyText1,
         ),
         const SizedBox(height: 5),
-        ListView.builder(
-          shrinkWrap: true,
-          itemCount: inProcessOrders.length,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (_, int index) {
-            return ROpOrderCard(
-              order: inProcessOrders[index],
-            );
-          },
-        ),
+        // ListView.builder(
+        //   shrinkWrap: true,
+        //   itemCount: inProcessOrders.length,
+        //   physics: const NeverScrollableScrollPhysics(),
+        //   itemBuilder: (_, int index) {
+        //     return ROpOrderCard(
+        //       order: inProcessOrders[index],
+        //     );
+        //   },
+        // ),
         Divider(),
       ],
     );

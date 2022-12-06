@@ -34,7 +34,7 @@ class RestaurantInfoTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     mezDbgPrint(
-        "Restaurant ==> ${restaurant.info.firebaseId}  : Rate [${restaurant.rate}] - Reviews List: [${restaurant.reviews.length}]");
+        "Restaurant ==> ${restaurant.info.hasuraId.toString().toString()}  : Rate [${restaurant.rate}] - Reviews List: [${restaurant.reviews.length}]");
     final LanguageType userLanguage =
         Get.find<LanguageController>().userLanguageKey;
     return Column(

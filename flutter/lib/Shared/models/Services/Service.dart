@@ -28,6 +28,19 @@ class ServiceState {
   ServiceState(this.status, this.approved);
 
   factory ServiceState.fromServiceStateData(stateData) {
+    final List<String> ops = [];
+    final List<String> dvs = [];
+
+    stateData?["operators"]?.forEach((key, val) {
+      if (val == true) {
+        ops.add(key);
+      }
+    });
+    stateData?["drivers"]?.forEach((key, val) {
+      if (val == true) {
+        dvs.add(key);
+      }
+    });
     return ServiceState(
       stateData?["status"]?.toString().toServiceStatus() ??
           ServiceStatus.Closed_temporarily,

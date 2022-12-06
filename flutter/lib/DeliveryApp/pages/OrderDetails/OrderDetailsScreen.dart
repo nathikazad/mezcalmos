@@ -7,8 +7,10 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -71,6 +73,23 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 SizedBox(
                   height: 20,
                 ),
+                if (_getDeliveryTime() != null)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${_i18n()["dvTime"]}',
+                        style: Get.textTheme.bodyText1,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(_getDeliveryTime()!),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
                 Text(
                   "${_i18n()["from"]}",
                   style: Get.textTheme.bodyText1,
@@ -159,7 +178,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           Text(
               order.value!.isCanceled()
                   ? "${_i18n()["cancelled"]}"
-                  : "${_i18n()["approved"]}",
+                  : (_getDeliveryTime() != null)
+                      ? "${_i18n()["scheduled"]}"
+                      : "${_i18n()["approved"]}",
               style: Get.textTheme.bodyText1?.copyWith(
                   color: order.value!.isCanceled()
                       ? Colors.red
@@ -256,5 +277,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         return (order.value as LaundryOrder).laundry!.location.address;
       }
     }
+  }
+
+  String? _getDeliveryTime() {
+    if (order.value!.orderType == OrderType.Restaurant &&
+        (order.value as RestaurantOrder).isScheduled()) {
+      return "${DateFormat.yMMMd(userLangCode).format((order.value as RestaurantOrder).deliveryTime!.toLocal()).capitalizeFirstofEach}, ${DateFormat("hh:mm a").format((order.value as RestaurantOrder).deliveryTime!.toLocal())}";
+    }
+    return null;
   }
 }

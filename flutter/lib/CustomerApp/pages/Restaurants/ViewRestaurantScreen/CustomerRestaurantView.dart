@@ -36,7 +36,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
   @override
   void initState() {
     restaurant = Get.arguments as Restaurant;
-    mezDbgPrint(restaurant.info.firebaseId);
+    mezDbgPrint(restaurant.info.hasuraId.toString().toString());
     _viewController.init(restaurant: restaurant, vsync: this);
     super.initState();
   }
@@ -163,15 +163,14 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (category.name?[userLanguage] != null)
-            Container(
-              margin: const EdgeInsets.only(top: 10, bottom: 5),
-              child: Text(
-                category.name![userLanguage]!,
-                style: Get.theme.textTheme.headline3
-                    ?.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700),
-              ),
+          Container(
+            margin: const EdgeInsets.only(top: 10, bottom: 5),
+            child: Text(
+              category.name?[userLanguage] ?? "",
+              style: Get.theme.textTheme.headline3
+                  ?.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700),
             ),
+          ),
           if (category.dialog?[userLanguage] != null)
             Container(
               child: Text(
@@ -182,7 +181,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             ),
           _buildResturantItems(
             items: category.items,
-            restaurantId: restaurant.info.firebaseId,
+            restaurantId: restaurant.info.hasuraId.toString(),
             isSpecial: false,
           ),
           SizedBox(
@@ -209,7 +208,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           ),
           _buildResturantItems(
             items: specItems.values.toList()[index],
-            restaurantId: restaurant.info.firebaseId,
+            restaurantId: restaurant.info.hasuraId.toString(),
             isSpecial: true,
           ),
           SizedBox(

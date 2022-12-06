@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
@@ -14,8 +13,6 @@ class ROpMenuViewController {
   ROpMenuViewController();
 
 // instances and streams subscriptions
-  late RestaurantInfoController restaurantInfoController;
-  StreamSubscription? _restaurantListener;
 
   // state variables
   RxBool reOrderMode = RxBool(false);
@@ -27,10 +24,10 @@ class ROpMenuViewController {
   RxBool pageLoaded = RxBool(false);
 // IMPORTANT //
   // This method needs to be called on the initState method of the view
-  Future<void> init({required String restaurantId}) async {
-    restaurnatId = restaurantId;
+  Future<void> init({required String restId}) async {
+    restaurnatId = restId;
     // assigning restaurant data and start the stream subscription //
-    mezDbgPrint("INIT MENU VIEW =======>$restaurantId");
+    mezDbgPrint("INIT MENU VIEW FROM CONTROLLER =======>$restaurnatId");
     await fetchCategories();
     pageLoaded.value = true;
     mezDbgPrint("Main Categories length ====>${mainCategories.length}");
@@ -48,9 +45,7 @@ class ROpMenuViewController {
 
   // IMPORTANT //
   // This method needs to be called on the dispose method of the view
-  void dispose() {
-    _restaurantListener?.cancel();
-  }
+  void dispose() {}
 
   // Catgeory methods //
   Future<bool> deleteCategory({required String categoryId}) async {
@@ -118,14 +113,14 @@ class ROpMenuViewController {
 
   Future<void> saveReorder() async {
     for (int i = 0; i < rOcategories.length; i++) {
-      await restaurantInfoController.editCategoryPosition(
-          position: rOcategories[i].position, categoryId: rOcategories[i].id!);
-      for (int j = 0; j < rOcategories[i].items.length; j++) {
-        await restaurantInfoController.editItemPosition(
-            position: rOcategories[i].items[j].position,
-            categoryId: rOcategories[i].id!,
-            itemId: rOcategories[i].items[j].id!);
-      }
+      // await restaurantInfoController!.editCategoryPosition(
+      //     position: rOcategories[i].position, categoryId: rOcategories[i].id!);
+      // for (int j = 0; j < rOcategories[i].items.length; j++) {
+      //   await restaurantInfoController!.editItemPosition(
+      //       position: rOcategories[i].items[j].position,
+      //       categoryId: rOcategories[i].id!,
+      //       itemId: rOcategories[i].items[j].id!);
+      // }
     }
   }
 
@@ -140,20 +135,20 @@ class ROpMenuViewController {
 
   // ----------------------------------------------------- Specials ----------------------------------------------------- //
   Future<void> removeFromSpecials({required Item item}) async {
-    await restaurantInfoController.removeSpecial(item: item);
+    //  await restaurantInfoController!.removeSpecial(item: item);
   }
 
   Future<void> addToSpecials({
     required Item item,
   }) async {
-    await restaurantInfoController.addToSpecials(item: item);
+    //  await restaurantInfoController!.addToSpecials(item: item);
   }
 
   Future<void> switchSpecialItemAv(
       {required bool v,
       required String itemId,
       required bool isCurrent}) async {
-    await restaurantInfoController.switchSpecialItemAv(
-        itemId: itemId, value: v, isCurrent: isCurrent);
+    //  await restaurantInfoController!
+    //      .switchSpecialItemAv(itemId: itemId, value: v, isCurrent: isCurrent);
   }
 }

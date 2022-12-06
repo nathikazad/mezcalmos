@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpOrderView']["components"]["ROpOrderEstTime"];
@@ -23,6 +24,19 @@ class DaRestaurantOrderTime extends StatefulWidget {
 }
 
 class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
+  final Rxn<TimeOfDay> selectedTime = Rxn();
+  final Rxn<DateTime> selectedDate = Rxn();
+
+  @override
+  void initState() {
+    selectedDate.value = widget.order.estimatedFoodReadyTime?.toLocal() ??
+        DateTime.now().toLocal();
+    selectedTime.value = TimeOfDay.fromDateTime(
+        widget.order.estimatedFoodReadyTime?.toLocal() ??
+            DateTime.now().toLocal());
+    super.initState();
+  }
+
   RestaurantOrderController orderController =
       Get.find<RestaurantOrderController>();
   RxBool isClicked = RxBool(false);
@@ -78,11 +92,6 @@ class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
   Widget _editSetButton(BuildContext context) {
     return InkWell(
         onTap: () async {
-          final Rxn<DateTime> selectedDate =
-              Rxn(widget.order.estimatedFoodReadyTime);
-          final Rxn<TimeOfDay> selectedTime = Rxn(TimeOfDay.fromDateTime(
-              widget.order.estimatedFoodReadyTime ?? DateTime.now()));
-
           await showModalBottomSheet(
               isScrollControlled: true,
               shape: RoundedRectangleBorder(
@@ -107,15 +116,17 @@ class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
                       SizedBox(
                         height: 25,
                       ),
-                      _dateSelector(context, selectedDate),
+                      _dateSelector(context),
                       SizedBox(
                         height: 20,
                       ),
-                      _timeSelector(context, selectedTime, selectedDate),
+                      _timeSelector(
+                        context,
+                      ),
                       SizedBox(
                         height: 20,
                       ),
-                      _confirmButton(selectedDate),
+                      _confirmButton(),
                       SizedBox(
                         height: 15,
                       ),
@@ -149,10 +160,11 @@ class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
         ));
   }
 
-  Widget _confirmButton(Rxn<DateTime> selectedDate) {
+  Widget _confirmButton() {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () {
+        mezDbgPrint("Select date =====>>>>>${selectedDate.value}");
         if (selectedDate.value != null) {
           _setOrderEstTime(selectedDate.value!);
         }
@@ -210,8 +222,9 @@ class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
     );
   }
 
-  Widget _timeSelector(BuildContext context, Rxn<TimeOfDay> selectedTime,
-      Rxn<DateTime> selectedDate) {
+  Widget _timeSelector(
+    BuildContext context,
+  ) {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () {
@@ -275,7 +288,9 @@ class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
     );
   }
 
-  Widget _dateSelector(BuildContext context, Rxn<DateTime> selectedDate) {
+  Widget _dateSelector(
+    BuildContext context,
+  ) {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () async {
@@ -323,7 +338,8 @@ class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
 
   void _setOrderEstTime(DateTime value) {
     isClicked.value = true;
-    if (value.difference(widget.order.orderTime).inMinutes > 5) {
+    if (value.difference(widget.order.orderTime).inMinutes > 5 &&
+        value.difference(DateTime.now().toLocal()).inMinutes > 5) {
       orderController
           .setEstimatedFoodReadyTime(widget.order.orderId, value)
           .whenComplete(() {
@@ -338,16 +354,13 @@ class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
       });
     } else {
       isClicked.value = false;
-      Get.showSnackbar(GetSnackBar(
-        snackPosition: SnackPosition.TOP,
-        title: '${_i18n()["error"]}',
-        message: '${_i18n()["minTimes"]}',
-      ));
+      MezSnackbar('${_i18n()["error"]}', '${_i18n()["minTimes"]}',
+          position: SnackPosition.TOP);
     }
   }
 
   bool get _showBtn {
-    return widget.order.status == RestaurantOrderStatus.OrderReceieved ||
+    return widget.order.status == RestaurantOrderStatus.OrderReceived ||
         widget.order.status == RestaurantOrderStatus.PreparingOrder;
   }
 }

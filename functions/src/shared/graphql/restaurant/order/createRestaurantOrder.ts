@@ -20,6 +20,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
       app_type_id: "restaurant"
     };
   });
+
   let response = await chain.mutation({
     insert_restaurant_order_one: [{
       object: {
@@ -27,9 +28,13 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
         restaurant_id: restaurantOrder.restaurantId,
         customer_app_type: restaurantOrder.customerAppType,
         chat: {
+        
           data: {
+            
             chat_participants: {
               data: [{
+                
+              
                 participant_id: restaurantOrder.customerId,
                 app_type_id: restaurantOrder.customerAppType
               },
@@ -43,12 +48,12 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
             customer_id: restaurantOrder.customerId,
             dropoff_gps: JSON.stringify({
               "type": "Point",
-              "coordinates": [restaurantOrder.toLocation.lng, restaurantOrder.toLocation.lat]
+              "coordinates": [restaurantOrder.toLocation.lng,restaurantOrder.toLocation.lat],
             }),
             dropoff_address: restaurantOrder.toLocation.address,
             pickup_gps: JSON.stringify({
               "type": "Point",
-              "coordinates": [restaurant.location.lng, restaurant.location.lat]
+              "coordinates": [restaurantOrder.toLocation.lng,restaurantOrder.toLocation.lat],
             }),
             pickup_address: restaurant.location.address,
             chat_with_customer: {
@@ -84,7 +89,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
         payment_type: restaurantOrder.paymentType,
         to_location_gps: JSON.stringify({
           "type": "Point",
-          "coordinates": [restaurantOrder.toLocation.lng, restaurantOrder.toLocation.lat]
+          "coordinates": [restaurantOrder.toLocation.lng,restaurantOrder.toLocation.lat],
         }),
         to_location_address: restaurantOrder.toLocation.address,
         notes: restaurantOrder.notes,

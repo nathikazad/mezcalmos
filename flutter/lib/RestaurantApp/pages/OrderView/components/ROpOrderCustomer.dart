@@ -35,11 +35,12 @@ class ROpOrderCustomer extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-                    radius: 25,
-                    backgroundImage:
-                        CachedNetworkImageProvider(order.customer.image),
-                  ),
+                  if (order.customer.image.isURL)
+                    CircleAvatar(
+                      radius: 25,
+                      backgroundImage:
+                          CachedNetworkImageProvider(order.customer.image),
+                    ),
                   SizedBox(
                     width: 10,
                   ),

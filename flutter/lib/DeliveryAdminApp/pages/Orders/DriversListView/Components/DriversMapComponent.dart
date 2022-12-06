@@ -54,7 +54,7 @@ class _DriversMapCompnonetState extends State<DriversMapCompnonet> {
       mapController.addOrUpdateUserMarker(
         latLng: _driver.driverLocation,
         customImgHttpUrl: _driver.driverInfo.image,
-        markerId: _driver.driverInfo.firebaseId,
+        markerId: _driver.driverInfo.hasuraId.toString(),
       );
     });
   }

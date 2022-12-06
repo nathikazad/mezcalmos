@@ -25,7 +25,8 @@ class CustomerLaundrySelectCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
           onTap: () {
-            Get.toNamed(getSingleLaundryRoute(laundry.info.firebaseId));
+            Get.toNamed(
+                getSingleLaundryRoute(laundry.info.hasuraId.toString()));
           },
           child: Container(
             child: _laundryInfoHeader(),

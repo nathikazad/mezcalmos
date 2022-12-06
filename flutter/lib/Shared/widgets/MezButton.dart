@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:sizer/sizer.dart';
 
 class MezButton extends StatefulWidget {
   const MezButton({
@@ -13,6 +14,7 @@ class MezButton extends StatefulWidget {
     this.borderRadius = 10,
     this.textStyle,
     this.height = 55,
+    this.icon,
     required this.label,
     this.onClick,
   }) : super(key: key);
@@ -26,6 +28,7 @@ class MezButton extends StatefulWidget {
   final Future<void> Function()? onClick;
   final double? borderRadius;
   final TextStyle? textStyle;
+  final IconData? icon;
 
   @override
   State<MezButton> createState() => _MezButtonState();
@@ -81,11 +84,28 @@ class _MezButtonState extends State<MezButton> {
                           color: Colors.white,
                         ),
                       )
-                    : Text(
-                        widget.label,
-                        style: widget.textStyle ??
-                            Get.textTheme.bodyText1?.copyWith(
-                                color: widget.textColor ?? Colors.white),
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          if (widget.icon != null)
+                            Padding(
+                              padding: const EdgeInsets.only(right: 5),
+                              child: Icon(
+                                widget.icon,
+                                color: widget.textColor ?? Colors.white,
+                                size: 15.sp,
+                              ),
+                            ),
+                          Flexible(
+                            child: Text(
+                              widget.label,
+                              style: widget.textStyle ??
+                                  Get.textTheme.bodyText1?.copyWith(
+                                      color: widget.textColor ?? Colors.white),
+                            ),
+                          ),
+                        ],
                       ),
               ),
             )),

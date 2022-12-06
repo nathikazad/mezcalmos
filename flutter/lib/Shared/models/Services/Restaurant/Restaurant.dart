@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
@@ -10,6 +11,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceLink.dart';
 
 enum RestaurantsView { Rows, Grid }
 
@@ -32,9 +34,11 @@ class Restaurant extends Service {
   LanguageMap? description;
   List<Item> currentSpecials = <Item>[];
   List<Item> pastSpecials = <Item>[];
+  List<RestaurantOperator> operators = [];
   List<Review> reviews = <Review>[];
   num? rate;
-
+  bool selfDelivery;
+  ServiceLink? serviceLink;
   List<Category> _categories = <Category>[];
   List<Item> itemsWithoutCategory = <Item>[];
   RestaurantsView restaurantsView;
@@ -47,6 +51,8 @@ class Restaurant extends Service {
       required ServiceState restaurantState,
       required LanguageType primaryLanguage,
       this.rate,
+      this.serviceLink,
+      this.selfDelivery = false,
       LanguageType? secondaryLanguage})
       : super(
             info: userInfo,

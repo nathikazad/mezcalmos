@@ -46,7 +46,7 @@ extension parseDateTime on DateTime {
     } else if (isTomorrow) {
       return '${_i18n()["tomorrow"]}';
     } else if (isYesterday) {
-      return "Yesterday";
+      return '${_i18n()["yesterday"]}';
     } else if (withDateNumber) {
       return "${DateFormat.MMMEd(userLangCode).format(this).replaceAll(".", "")}";
     } else {
