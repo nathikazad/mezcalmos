@@ -38,7 +38,8 @@ class _ROpOrderHandleButtonState extends State<ROpOrderHandleButton> {
     if (widget.order.status == RestaurantOrderStatus.OrderReceived) {
       await orderController.prepareOrder(int.parse(widget.order.orderId));
     } else if (widget.order.status == RestaurantOrderStatus.PreparingOrder) {
-      await orderController.setAsReadyForOrderPickup(widget.order.orderId);
+      await orderController
+          .setReadyForDelivery(int.parse(widget.order.orderId));
     }
   }
 

@@ -24,7 +24,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
         package_cost: true,
         order_time: true,
         delivery_driver_type: true,
-        notification_token: true,
+     
         delivery_driver_id: true,
         delivery_driver: {
           id: true,
@@ -96,10 +96,11 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
         firebaseId: operatorResponse.restaurant_operator_by_pk.user.firebase_id,
         language: operatorResponse.restaurant_operator_by_pk.user.language_id as Language
       },
-      notificationInfo: (response.delivery_order_by_pk.notification_token) ? {
-        AppTypeId: AppType.RestaurantApp,
-        token: response.delivery_order_by_pk.notification_token as string
-      } : undefined,
+      // notificationInfo: (response.delivery_order_by_pk.notification_token) ? {
+      //   AppTypeId: AppType.RestaurantApp,
+      //   token: response.delivery_order_by_pk.notification_token as string
+      // } : undefined,
+      notificationInfo : undefined,
       deliveryDriverType: DeliveryDriverType.RestaurantOperator
     }
   } else if(response.delivery_order_by_pk.delivery_driver) {
@@ -114,10 +115,11 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
         firebaseId: response.delivery_order_by_pk.delivery_cost.user.firebase_id,
         language: response.delivery_order_by_pk.delivery_driver.user.language_id as Language
       },
-      notificationInfo: (response.delivery_order_by_pk.notification_token) ? {
-        AppTypeId: AppType.DeliveryApp,
-        token: response.delivery_order_by_pk.notification_token as string
-      } : undefined,
+      // notificationInfo: (response.delivery_order_by_pk.notification_token) ? {
+      //   AppTypeId: AppType.DeliveryApp,
+      //   token: response.delivery_order_by_pk.notification_token as string
+      // } : undefined,
+      notificationInfo: undefined,
       deliveryDriverType: DeliveryDriverType.DeliveryDriver
 
     }

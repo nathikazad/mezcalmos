@@ -1,4 +1,5 @@
 
+
 alter table "public"."restaurant" add column "operator_deep_link" text
  null;
 
@@ -28,3 +29,25 @@ alter table "public"."service_link" alter column "driver_qr_image_link" set not 
 alter table "public"."service_link" alter column "driver_qr_image_link" drop not null;
 
 alter table "public"."service_link" alter column "driver_deep_link" drop not null;
+
+
+alter table "public"."restaurant_order" drop column "tax" cascade;
+
+alter table "public"."restaurant_order" add column "tax" money
+ not null default '0';
+
+alter table "public"."restaurant_order" drop column "refund_amount" cascade;
+
+alter table "public"."restaurant_order" add column "refund_amount" money
+ not null default '0';
+
+alter table "public"."restaurant_order" drop constraint "restaurant_order_customer_id_fkey",
+  add constraint "restaurant_order_customer_id_fkey"
+  foreign key ("customer_id")
+  references "public"."customer"
+  ("user_id") on update restrict on delete restrict;
+
+
+alter table "public"."restaurant" drop column "operator_qr_image_link" cascade;
+
+alter table "public"."restaurant" drop column "operator_deep_link" cascade;

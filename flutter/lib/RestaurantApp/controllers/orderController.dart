@@ -147,6 +147,26 @@ class ROpOrderController extends GetxController {
     }
   }
 
+  Future setReadyForDelivery(int orderId) async {
+    await _callRestaurantCloudFunction(
+        'restaurant-readyForOrderPickup', orderId.toString());
+    // final HttpsCallable cloudFunction = FirebaseFunctions.instance
+    //     .httpsCallable('restaurant-readyForOrderPickup');
+    // try {
+    //   final HttpsCallableResult response = await cloudFunction.call({
+    //     "orderId": orderId,
+    //     "fromRestaurantOperator": true,
+    //   });
+    //   mezDbgPrint("Response : ${response.data}");
+
+    //   return ServerResponse.fromJson(response.data);
+    // } catch (e) {
+    //   mezDbgPrint("Errrooooooooor =======> $e");
+    //   return ServerResponse(ResponseStatus.Error,
+    //       errorMessage: "Server Error", errorCode: "serverError");
+    // }
+  }
+
 // -----------OLD STUFF --------------//
 
   // Stream<RestaurantOrder?> getOrderStream(String orderId) {
@@ -325,11 +345,6 @@ class ROpOrderController extends GetxController {
 
   Future<ServerResponse> finishRestaurantDelivery(String orderId) async {
     return _callRestaurantCloudFunction("finishDelivery", orderId);
-  }
-
-  Future<ServerResponse> setAsReadyForOrderPickup(String orderId) async {
-    mezDbgPrint("Seeting order ready for delivery");
-    return _callRestaurantCloudFunction("readyForOrderPickup", orderId);
   }
 
   Future<ServerResponse> startPreparingOrder(String orderId) async {
