@@ -50,7 +50,7 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
               ? null
               : () async {
                   switch (widget.order.status) {
-                    case LaundryOrderStatus.OrderReceieved:
+                    case LaundryOrderStatus.OrderReceived:
                       setState(() {
                         clicked = true;
                       });
@@ -220,7 +220,7 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
 
   String _getActionButtonText() {
     switch (widget.order.status) {
-      case LaundryOrderStatus.OrderReceieved:
+      case LaundryOrderStatus.OrderReceived:
         return '${_i18n()["pickupOrder"]}';
       case LaundryOrderStatus.OtwPickupFromCustomer:
         return '${_i18n()["confirmPickup"]}';

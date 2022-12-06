@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
@@ -9,7 +8,6 @@ import 'package:mezcalmos/RestaurantApp/pages/ROpSelfDeliveryView/components/Ani
 import 'package:mezcalmos/RestaurantApp/pages/ROpSelfDeliveryView/components/ROpControllButtons.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpSelfDeliveryView/components/ROpOrderFromTo.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpSelfDeliveryView/controllers/ROpMapInitHelper.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/helpers/LocationDataHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -47,7 +45,7 @@ class _ROpSelfDeliveryViewState extends State<ROpSelfDeliveryView> {
     final String orderId = Get.parameters['orderId']!;
 
     controller.clearOrderNotifications(orderId);
-    order.value = controller.getOrder(orderId) as RestaurantOrder;
+    //  order.value = controller.getOrder(orderId) as RestaurantOrder;
 
     if (order.value != null && order.value!.inSelfDelivery()) {
       controller.startLocationListener(order.value!);
@@ -58,26 +56,26 @@ class _ROpSelfDeliveryViewState extends State<ROpSelfDeliveryView> {
           encodedPolylineString: order.value!.routeInformation!.polyline);
     }
 
-    _orderListener =
-        controller.getOrderStream(orderId).listen((Order? newOrderEvent) async {
-      if (newOrderEvent != null) {
-        order.value = newOrderEvent as RestaurantOrder;
-        await controller.startLocationListener(order.value!);
-        if (!order.value!.inProcess()) {
-          await controller.stopLocationListener();
-          await _orderListener?.cancel();
-          await Future.microtask(() {
-            SchedulerBinding.instance.addPostFrameCallback((_) {
-              Get.offAndToNamed(getROpOrderRoute(orderId));
-            });
-          });
-        }
-        handleRestaurantOrder(newOrderEvent);
-        order.refresh();
-        mezDbgPrint(
-            "Inside self delivery listnere ======>>>>> ${order.value!.status}");
-      }
-    });
+    // _orderListener =
+    //     controller.getOrderStream(orderId).listen((Order? newOrderEvent) async {
+    //   if (newOrderEvent != null) {
+    //     order.value = newOrderEvent as RestaurantOrder;
+    //     await controller.startLocationListener(order.value!);
+    //     if (!order.value!.inProcess()) {
+    //       await controller.stopLocationListener();
+    //       await _orderListener?.cancel();
+    //       await Future.microtask(() {
+    //         SchedulerBinding.instance.addPostFrameCallback((_) {
+    //           Get.offAndToNamed(getROpOrderRoute(orderId));
+    //         });
+    //       });
+    //     }
+    //     handleRestaurantOrder(newOrderEvent);
+    //     order.refresh();
+    //     mezDbgPrint(
+    //         "Inside self delivery listnere ======>>>>> ${order.value!.status}");
+    //   }
+    // });
 
     // init the map
     Future<void>.microtask(

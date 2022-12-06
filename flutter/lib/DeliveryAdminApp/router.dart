@@ -14,7 +14,6 @@ import 'package:mezcalmos/LaundryApp/pages/AdminView/LaundryOpAdminView.dart';
 import 'package:mezcalmos/LaundryApp/pages/CategoryView/CategoryView.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/EditInfoView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CategoryView/CategoryView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/EditInfoView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/ROpItemView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/ROpMenuView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OptionView/ROpOptionView.dart';
@@ -146,7 +145,7 @@ class XRouter {
             page: () => AddRestaurantServiceView()),
 
         // Restaurants Routes Pages //
-        GetPage(name: kRestuarntEditInfoView, page: () => ROpEditInfoView()),
+        //   GetPage(name: kRestuarntEditInfoView, page: () => ROpEditInfoView()),
         GetPage(name: krMenuView, page: () => ROpMenuView()),
         GetPage(
           name: krCategoryView,

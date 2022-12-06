@@ -33,7 +33,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
   String? restaurantID;
   @override
   void initState() {
-    restaurantID = widget.restID ?? Get.arguments["restaurantId"];
+    restaurantID = widget.restID ?? Get.parameters["restaurantId"];
 
     if (restaurantID != null) {
       _tabController = TabController(length: 2, vsync: this);

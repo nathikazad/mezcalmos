@@ -247,8 +247,8 @@ class ButtonsStyle {
     // );
   }
 
-  // this button for OrderReceieved
-  static Widget orderReceievedButtonWidget(String orderId) {
+  // this button for OrderReceived
+  static Widget OrderReceivedButtonWidget(String orderId) {
     final RestaurantOrderController controller =
         Get.find<RestaurantOrderController>();
     return MezButton(

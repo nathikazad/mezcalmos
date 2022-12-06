@@ -4220,23 +4220,6 @@ input delivery_order_variance_order_by {
   trip_duration: order_by
 }
 
-scalar float8
-
-"""
-Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'.
-"""
-input float8_comparison_exp {
-  _eq: float8
-  _gt: float8
-  _gte: float8
-  _in: [float8!]
-  _is_null: Boolean
-  _lt: float8
-  _lte: float8
-  _neq: float8
-  _nin: [float8!]
-}
-
 scalar geography
 
 input geography_cast_exp {
@@ -13540,7 +13523,7 @@ type restaurant_order {
   order_time: timestamptz!
   order_type: String!
   payment_type: String!
-  refund_amount: Int!
+  refund_amount: money!
 
   """An object relationship"""
   restaurant: restaurant!
@@ -13555,7 +13538,7 @@ type restaurant_order {
   """
   status: String!
   stripe_payment_id: Int
-  tax: float8!
+  tax: money!
   to_location_address: String
   to_location_gps: geography
 
@@ -13673,14 +13656,14 @@ input restaurant_order_bool_exp {
   order_time: timestamptz_comparison_exp
   order_type: String_comparison_exp
   payment_type: String_comparison_exp
-  refund_amount: Int_comparison_exp
+  refund_amount: money_comparison_exp
   restaurant: restaurant_bool_exp
   restaurant_id: Int_comparison_exp
   review: review_bool_exp
   review_id: Int_comparison_exp
   status: String_comparison_exp
   stripe_payment_id: Int_comparison_exp
-  tax: float8_comparison_exp
+  tax: money_comparison_exp
   to_location_address: String_comparison_exp
   to_location_gps: geography_comparison_exp
   total_cost: money_comparison_exp
@@ -13742,11 +13725,11 @@ input restaurant_order_inc_input {
   delivery_cost: money
   delivery_id: Int
   id: Int
-  refund_amount: Int
+  refund_amount: money
   restaurant_id: Int
   review_id: Int
   stripe_payment_id: Int
-  tax: float8
+  tax: money
 }
 
 """
@@ -13771,7 +13754,7 @@ input restaurant_order_insert_input {
   order_time: timestamptz
   order_type: String
   payment_type: String
-  refund_amount: Int
+  refund_amount: money
   restaurant: restaurant_obj_rel_insert_input
   restaurant_id: Int
   review: review_obj_rel_insert_input
@@ -13782,7 +13765,7 @@ input restaurant_order_insert_input {
   """
   status: String
   stripe_payment_id: Int
-  tax: float8
+  tax: money
   to_location_address: String
   to_location_gps: geography
 }
@@ -14312,7 +14295,7 @@ type restaurant_order_max_fields {
   order_time: timestamptz
   order_type: String
   payment_type: String
-  refund_amount: Int
+  refund_amount: money
   restaurant_id: Int
   review_id: Int
 
@@ -14321,7 +14304,7 @@ type restaurant_order_max_fields {
   """
   status: String
   stripe_payment_id: Int
-  tax: float8
+  tax: money
   to_location_address: String
 }
 
@@ -14372,7 +14355,7 @@ type restaurant_order_min_fields {
   order_time: timestamptz
   order_type: String
   payment_type: String
-  refund_amount: Int
+  refund_amount: money
   restaurant_id: Int
   review_id: Int
 
@@ -14381,7 +14364,7 @@ type restaurant_order_min_fields {
   """
   status: String
   stripe_payment_id: Int
-  tax: float8
+  tax: money
   to_location_address: String
 }
 
@@ -14859,7 +14842,7 @@ input restaurant_order_set_input {
   order_time: timestamptz
   order_type: String
   payment_type: String
-  refund_amount: Int
+  refund_amount: money
   restaurant_id: Int
   review_id: Int
 
@@ -14868,7 +14851,7 @@ input restaurant_order_set_input {
   """
   status: String
   stripe_payment_id: Int
-  tax: float8
+  tax: money
   to_location_address: String
   to_location_gps: geography
 }
@@ -14990,7 +14973,7 @@ input restaurant_order_stream_cursor_value_input {
   order_time: timestamptz
   order_type: String
   payment_type: String
-  refund_amount: Int
+  refund_amount: money
   restaurant_id: Int
   review_id: Int
 
@@ -14999,7 +14982,7 @@ input restaurant_order_stream_cursor_value_input {
   """
   status: String
   stripe_payment_id: Int
-  tax: float8
+  tax: money
   to_location_address: String
   to_location_gps: geography
 }
@@ -15011,11 +14994,11 @@ type restaurant_order_sum_fields {
   delivery_cost: money
   delivery_id: Int
   id: Int
-  refund_amount: Int
+  refund_amount: money
   restaurant_id: Int
   review_id: Int
   stripe_payment_id: Int
-  tax: float8
+  tax: money
 }
 
 """

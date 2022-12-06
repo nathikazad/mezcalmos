@@ -9,8 +9,8 @@ query getRestaurants {
     firebase_id
     approved
     description_id
-    operator_deep_link
-    operator_qr_image_link
+  
+   
     description {
       translations {
         language_id
@@ -43,8 +43,8 @@ query getOneRestaurant($id: Int!) {
     description_id
     location_gps
     location_text
-    operator_deep_link
-    operator_qr_image_link
+   
+   
     name
 
     description {

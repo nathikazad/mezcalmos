@@ -57,7 +57,7 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
     mezDbgPrint("RestaurantWrapper::init state");
     Future<void>.microtask(() async {
       mezDbgPrint("RestaurantWrapper::microtask handleState first time");
-
+      await Get.find<RestaurantOpAuthController>().setupRestaurantOperator();
       restaurantOperator =
           Get.find<RestaurantOpAuthController>().operator.value;
 
@@ -93,7 +93,7 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
 
       Get.toNamed(kCreateRestaurant);
     } else {
-      Get.toNamed(kCurrentOrdersListView);
+      Get.toNamed(kTabsView);
       // Get.to(SomethingWentWrongScreen());
 
     }

@@ -72,7 +72,7 @@ String getOrderStatus(RestaurantOrderStatus status) {
       return '${_i18n()["canceledByAdmin"]}';
     case RestaurantOrderStatus.CancelledByCustomer:
       return '${_i18n()["canceledByCustomer"]}';
-    case RestaurantOrderStatus.OrderReceieved:
+    case RestaurantOrderStatus.OrderReceived:
       return '${_i18n()["received"]}';
     case RestaurantOrderStatus.PreparingOrder:
       return '${_i18n()["preparing"]}';
@@ -94,7 +94,7 @@ String getOrderHelperText(RestaurantOrderStatus status) {
       return '${_i18n()["helperTextCanceledByAdmin"]}';
     case RestaurantOrderStatus.CancelledByCustomer:
       return '${_i18n()["helperTextCanceledByCustomer"]}';
-    case RestaurantOrderStatus.OrderReceieved:
+    case RestaurantOrderStatus.OrderReceived:
       return '${_i18n()["helperTextReceived"]}';
     case RestaurantOrderStatus.PreparingOrder:
       return '${_i18n()["helperTextPreparing"]}';

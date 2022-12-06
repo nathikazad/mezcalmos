@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -101,8 +100,8 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                       widget.order.selfDelivery)
                     MezIconButton(
                       onTap: () {
-                        Get.toNamed(getROpPickDriverRoute(
-                            orderId: widget.order.orderId));
+                        // Get.toNamed(getROpPickDriverRoute(
+                        //     orderId: widget.order.orderId));
                       },
                       icon: Icons.edit,
                     ),
@@ -192,13 +191,13 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                     widget.order.selfDelivery))
               MezIconButton(
                 onTap: () async {
-                  final bool? forwardToMezCalmos = await Get.toNamed(
-                          getROpPickDriverRoute(orderId: widget.order.orderId))
-                      as bool?;
-                  if (forwardToMezCalmos != null &&
-                      forwardToMezCalmos == false) {
-                    showSet.value = false;
-                  }
+                  // final bool? forwardToMezCalmos = await Get.toNamed(
+                  //         getROpPickDriverRoute(orderId: widget.order.orderId))
+                  //     as bool?;
+                  // if (forwardToMezCalmos != null &&
+                  //     forwardToMezCalmos == false) {
+                  //   showSet.value = false;
+                  // }
                 },
                 icon: Icons.edit,
               ),
@@ -252,13 +251,13 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
               widget.order.deliveryMode != DeliveryMode.ForwardedToMezCalmos) {
             return InkWell(
                 onTap: () async {
-                  final bool? forwardToMezCalmos = await Get.toNamed(
-                          getROpPickDriverRoute(orderId: widget.order.orderId))
-                      as bool?;
-                  if (forwardToMezCalmos != null &&
-                      forwardToMezCalmos == false) {
-                    showSet.value = false;
-                  }
+                  // final bool? forwardToMezCalmos = await Get.toNamed(
+                  //         getROpPickDriverRoute(orderId: widget.order.orderId))
+                  //     as bool?;
+                  // if (forwardToMezCalmos != null &&
+                  //     forwardToMezCalmos == false) {
+                  //   showSet.value = false;
+                  // }
                 },
                 child: Ink(
                   padding: const EdgeInsets.all(5),

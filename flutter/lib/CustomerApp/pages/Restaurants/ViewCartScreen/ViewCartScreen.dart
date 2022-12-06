@@ -19,7 +19,6 @@ import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class ViewCartScreen extends StatefulWidget {
   @override
@@ -245,9 +244,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       switch (choice) {
         case CardChoice.ApplePay:
           final ServerResponse paymentIntentResponse = await getPaymentIntent(
-              customerId: Get.find<AuthController>().user!.firebaseId,
-              serviceProviderId:
-                  _restaurantController.cart.value.restaurant!.info.firebaseId,
+              customerId: Get.find<AuthController>().user!.hasuraId.toString(),
+              serviceProviderId: _restaurantController
+                  .cart.value.restaurant!.info.hasuraId
+                  .toString()
+                  .toString(),
               orderType: OrderType.Restaurant,
               paymentAmount: _restaurantController.cart.value.totalCost);
           stripePaymentId = extractPaymentIdFromIntent(
@@ -262,9 +263,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           // TODO:544D-HASURA
 
           final ServerResponse paymentIntentResponse = await getPaymentIntent(
-              customerId: Get.find<AuthController>().user!.firebaseId,
-              serviceProviderId:
-                  _restaurantController.cart.value.restaurant!.info.firebaseId,
+              customerId: Get.find<AuthController>().user!.hasuraId.toString(),
+              serviceProviderId: _restaurantController
+                  .cart.value.restaurant!.info.hasuraId
+                  .toString()
+                  .toString(),
               orderType: OrderType.Restaurant,
               paymentAmount: _restaurantController.cart.value.totalCost);
           stripePaymentId = extractPaymentIdFromIntent(
@@ -277,8 +280,10 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           break;
         case CardChoice.SavedCard:
           stripePaymentId = await acceptPaymentWithSavedCard(
-              serviceProviderId:
-                  _restaurantController.cart.value.restaurant!.info.firebaseId,
+              serviceProviderId: _restaurantController
+                  .cart.value.restaurant!.info.hasuraId
+                  .toString()
+                  .toString(),
               paymentAmount: _restaurantController.cart.value.totalCost,
               card: viewCartController.card.value!);
           break;

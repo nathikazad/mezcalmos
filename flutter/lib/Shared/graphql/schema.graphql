@@ -1553,6 +1553,11 @@ type delivery_driver {
   delivery_driver_type: String!
   id: Int!
   notification_info_id: Int
+
+  """
+  A computed field, executes function "driver_notification_token"
+  """
+  notification_token: String
   online: Boolean!
 
   """An object relationship"""
@@ -1651,6 +1656,7 @@ input delivery_driver_bool_exp {
   delivery_driver_type: String_comparison_exp
   id: Int_comparison_exp
   notification_info_id: Int_comparison_exp
+  notification_token: String_comparison_exp
   online: Boolean_comparison_exp
   restaurant: restaurant_bool_exp
   status: String_comparison_exp
@@ -1809,6 +1815,7 @@ input delivery_driver_order_by {
   delivery_driver_type: order_by
   id: order_by
   notification_info_id: order_by
+  notification_token: order_by
   online: order_by
   restaurant: restaurant_order_by
   status: order_by
@@ -2567,6 +2574,11 @@ type delivery_order {
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
   id: Int!
+
+  """
+  A computed field, executes function "delivery_notification_token"
+  """
+  notification_token: String
   order_time: timestamptz!
   package_cost: money!
   payment_type: String!
@@ -2742,6 +2754,7 @@ input delivery_order_bool_exp {
   estimated_arrival_at_pickup_time: timestamptz_comparison_exp
   estimated_package_ready_time: timestamptz_comparison_exp
   id: Int_comparison_exp
+  notification_token: String_comparison_exp
   order_time: timestamptz_comparison_exp
   package_cost: money_comparison_exp
   payment_type: String_comparison_exp
@@ -3117,6 +3130,7 @@ input delivery_order_order_by {
   estimated_arrival_at_pickup_time: order_by
   estimated_package_ready_time: order_by
   id: order_by
+  notification_token: order_by
   order_time: order_by
   package_cost: order_by
   payment_type: order_by
@@ -4254,23 +4268,6 @@ input delivery_order_variance_order_by {
 
   """in seconds"""
   trip_duration: order_by
-}
-
-scalar float8
-
-"""
-Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'.
-"""
-input float8_comparison_exp {
-  _eq: float8
-  _gt: float8
-  _gte: float8
-  _in: [float8!]
-  _is_null: Boolean
-  _lt: float8
-  _lte: float8
-  _neq: float8
-  _nin: [float8!]
 }
 
 scalar geography
@@ -8788,8 +8785,6 @@ type restaurant {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String!
-  operator_deep_link: String
-  operator_qr_image_link: String
 
   """An array relationship"""
   orders(
@@ -8951,8 +8946,6 @@ input restaurant_bool_exp {
   location_text: String_comparison_exp
   name: String_comparison_exp
   open_status: String_comparison_exp
-  operator_deep_link: String_comparison_exp
-  operator_qr_image_link: String_comparison_exp
   orders: restaurant_order_bool_exp
   payment_info: service_provider_payment_info_bool_exp
   payment_info_id: Int_comparison_exp
@@ -10765,8 +10758,6 @@ input restaurant_insert_input {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
-  operator_deep_link: String
-  operator_qr_image_link: String
   orders: restaurant_order_arr_rel_insert_input
   payment_info: service_provider_payment_info_obj_rel_insert_input
   payment_info_id: Int
@@ -11880,8 +11871,6 @@ type restaurant_max_fields {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
-  operator_deep_link: String
-  operator_qr_image_link: String
   payment_info_id: Int
   service_provider_type: String
 }
@@ -11898,8 +11887,6 @@ type restaurant_min_fields {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
-  operator_deep_link: String
-  operator_qr_image_link: String
   payment_info_id: Int
   service_provider_type: String
 }
@@ -13555,7 +13542,7 @@ type restaurant_order {
   order_time: timestamptz!
   order_type: String!
   payment_type: String!
-  refund_amount: Int!
+  refund_amount: money!
 
   """An object relationship"""
   restaurant: restaurant!
@@ -13570,7 +13557,7 @@ type restaurant_order {
   """
   status: String!
   stripe_payment_id: Int
-  tax: float8!
+  tax: money!
   to_location_address: String
   to_location_gps: geography
 
@@ -13688,14 +13675,14 @@ input restaurant_order_bool_exp {
   order_time: timestamptz_comparison_exp
   order_type: String_comparison_exp
   payment_type: String_comparison_exp
-  refund_amount: Int_comparison_exp
+  refund_amount: money_comparison_exp
   restaurant: restaurant_bool_exp
   restaurant_id: Int_comparison_exp
   review: review_bool_exp
   review_id: Int_comparison_exp
   status: String_comparison_exp
   stripe_payment_id: Int_comparison_exp
-  tax: float8_comparison_exp
+  tax: money_comparison_exp
   to_location_address: String_comparison_exp
   to_location_gps: geography_comparison_exp
   total_cost: money_comparison_exp
@@ -13716,8 +13703,6 @@ input restaurant_order_by {
   location_text: order_by
   name: order_by
   open_status: order_by
-  operator_deep_link: order_by
-  operator_qr_image_link: order_by
   orders_aggregate: restaurant_order_aggregate_order_by
   payment_info: service_provider_payment_info_order_by
   payment_info_id: order_by
@@ -13757,11 +13742,11 @@ input restaurant_order_inc_input {
   delivery_cost: money
   delivery_id: Int
   id: Int
-  refund_amount: Int
+  refund_amount: money
   restaurant_id: Int
   review_id: Int
   stripe_payment_id: Int
-  tax: float8
+  tax: money
 }
 
 """
@@ -13786,7 +13771,7 @@ input restaurant_order_insert_input {
   order_time: timestamptz
   order_type: String
   payment_type: String
-  refund_amount: Int
+  refund_amount: money
   restaurant: restaurant_obj_rel_insert_input
   restaurant_id: Int
   review: review_obj_rel_insert_input
@@ -13797,7 +13782,7 @@ input restaurant_order_insert_input {
   """
   status: String
   stripe_payment_id: Int
-  tax: float8
+  tax: money
   to_location_address: String
   to_location_gps: geography
 }
@@ -14327,7 +14312,7 @@ type restaurant_order_max_fields {
   order_time: timestamptz
   order_type: String
   payment_type: String
-  refund_amount: Int
+  refund_amount: money
   restaurant_id: Int
   review_id: Int
 
@@ -14336,7 +14321,7 @@ type restaurant_order_max_fields {
   """
   status: String
   stripe_payment_id: Int
-  tax: float8
+  tax: money
   to_location_address: String
 }
 
@@ -14387,7 +14372,7 @@ type restaurant_order_min_fields {
   order_time: timestamptz
   order_type: String
   payment_type: String
-  refund_amount: Int
+  refund_amount: money
   restaurant_id: Int
   review_id: Int
 
@@ -14396,7 +14381,7 @@ type restaurant_order_min_fields {
   """
   status: String
   stripe_payment_id: Int
-  tax: float8
+  tax: money
   to_location_address: String
 }
 
@@ -14874,7 +14859,7 @@ input restaurant_order_set_input {
   order_time: timestamptz
   order_type: String
   payment_type: String
-  refund_amount: Int
+  refund_amount: money
   restaurant_id: Int
   review_id: Int
 
@@ -14883,7 +14868,7 @@ input restaurant_order_set_input {
   """
   status: String
   stripe_payment_id: Int
-  tax: float8
+  tax: money
   to_location_address: String
   to_location_gps: geography
 }
@@ -15005,7 +14990,7 @@ input restaurant_order_stream_cursor_value_input {
   order_time: timestamptz
   order_type: String
   payment_type: String
-  refund_amount: Int
+  refund_amount: money
   restaurant_id: Int
   review_id: Int
 
@@ -15014,7 +14999,7 @@ input restaurant_order_stream_cursor_value_input {
   """
   status: String
   stripe_payment_id: Int
-  tax: float8
+  tax: money
   to_location_address: String
   to_location_gps: geography
 }
@@ -15026,11 +15011,11 @@ type restaurant_order_sum_fields {
   delivery_cost: money
   delivery_id: Int
   id: Int
-  refund_amount: Int
+  refund_amount: money
   restaurant_id: Int
   review_id: Int
   stripe_payment_id: Int
-  tax: float8
+  tax: money
 }
 
 """
@@ -15264,12 +15249,6 @@ enum restaurant_select_column {
   open_status
 
   """column name"""
-  operator_deep_link
-
-  """column name"""
-  operator_qr_image_link
-
-  """column name"""
   payment_info_id
 
   """column name"""
@@ -15298,8 +15277,6 @@ input restaurant_set_input {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
-  operator_deep_link: String
-  operator_qr_image_link: String
   payment_info_id: Int
   schedule: jsonb
   self_delivery: Boolean
@@ -15352,8 +15329,6 @@ input restaurant_stream_cursor_value_input {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
-  operator_deep_link: String
-  operator_qr_image_link: String
   payment_info_id: Int
   schedule: jsonb
   self_delivery: Boolean
@@ -15400,12 +15375,6 @@ enum restaurant_update_column {
 
   """column name"""
   open_status
-
-  """column name"""
-  operator_deep_link
-
-  """column name"""
-  operator_qr_image_link
 
   """column name"""
   payment_info_id

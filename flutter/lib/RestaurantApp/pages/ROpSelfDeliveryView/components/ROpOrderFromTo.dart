@@ -109,7 +109,7 @@ class _ROpOrderFromToState extends State<ROpOrderFromTo> {
       case RestaurantOrderStatus.CancelledByAdmin:
       case RestaurantOrderStatus.CancelledByCustomer:
         return '${_i18n()["orderStatus"]["canceled"]}';
-      case RestaurantOrderStatus.OrderReceieved:
+      case RestaurantOrderStatus.OrderReceived:
         if (widget.order.isScheduled()) {
           return '${_i18n()["orderStatus"]["scheduled"]}';
         } else {
@@ -130,14 +130,14 @@ class _ROpOrderFromToState extends State<ROpOrderFromTo> {
   }
 
   bool isInPickUpPhase() {
-    return widget.order.status == RestaurantOrderStatus.OrderReceieved ||
+    return widget.order.status == RestaurantOrderStatus.OrderReceived ||
         widget.order.status == RestaurantOrderStatus.ReadyForPickup ||
         widget.order.status == RestaurantOrderStatus.PreparingOrder;
   }
 
   bool _showFoodReadyTime() {
     return widget.order.estimatedFoodReadyTime != null &&
-        (widget.order.status == RestaurantOrderStatus.OrderReceieved ||
+        (widget.order.status == RestaurantOrderStatus.OrderReceived ||
             widget.order.status == RestaurantOrderStatus.PreparingOrder);
   }
 

@@ -36,7 +36,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
   @override
   void initState() {
     restaurant = Get.arguments as Restaurant;
-    mezDbgPrint(restaurant.info.firebaseId);
+    mezDbgPrint(restaurant.info.hasuraId.toString().toString());
     _viewController.init(restaurant: restaurant, vsync: this);
     super.initState();
   }
@@ -181,7 +181,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             ),
           _buildResturantItems(
             items: category.items,
-            restaurantId: restaurant.info.firebaseId,
+            restaurantId: restaurant.info.hasuraId.toString(),
             isSpecial: false,
           ),
           SizedBox(
@@ -208,7 +208,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           ),
           _buildResturantItems(
             items: specItems.values.toList()[index],
-            restaurantId: restaurant.info.firebaseId,
+            restaurantId: restaurant.info.hasuraId.toString(),
             isSpecial: true,
           ),
           SizedBox(

@@ -233,20 +233,6 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'operator_deep_link'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'operator_qr_image_link'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'description'),
             alias: null,
             arguments: [],
@@ -422,8 +408,6 @@ class Query$getRestaurants$restaurant {
     this.firebase_id,
     required this.approved,
     this.description_id,
-    this.operator_deep_link,
-    this.operator_qr_image_link,
     this.description,
     required this.open_status,
     this.payment_info_id,
@@ -440,8 +424,6 @@ class Query$getRestaurants$restaurant {
     final l$firebase_id = json['firebase_id'];
     final l$approved = json['approved'];
     final l$description_id = json['description_id'];
-    final l$operator_deep_link = json['operator_deep_link'];
-    final l$operator_qr_image_link = json['operator_qr_image_link'];
     final l$description = json['description'];
     final l$open_status = json['open_status'];
     final l$payment_info_id = json['payment_info_id'];
@@ -456,8 +438,6 @@ class Query$getRestaurants$restaurant {
       firebase_id: (l$firebase_id as String?),
       approved: (l$approved as bool),
       description_id: (l$description_id as int?),
-      operator_deep_link: (l$operator_deep_link as String?),
-      operator_qr_image_link: (l$operator_qr_image_link as String?),
       description: l$description == null
           ? null
           : Query$getRestaurants$restaurant$description.fromJson(
@@ -485,10 +465,6 @@ class Query$getRestaurants$restaurant {
   final bool approved;
 
   final int? description_id;
-
-  final String? operator_deep_link;
-
-  final String? operator_qr_image_link;
 
   final Query$getRestaurants$restaurant$description? description;
 
@@ -518,10 +494,6 @@ class Query$getRestaurants$restaurant {
     _resultData['approved'] = l$approved;
     final l$description_id = description_id;
     _resultData['description_id'] = l$description_id;
-    final l$operator_deep_link = operator_deep_link;
-    _resultData['operator_deep_link'] = l$operator_deep_link;
-    final l$operator_qr_image_link = operator_qr_image_link;
-    _resultData['operator_qr_image_link'] = l$operator_qr_image_link;
     final l$description = description;
     _resultData['description'] = l$description?.toJson();
     final l$open_status = open_status;
@@ -544,8 +516,6 @@ class Query$getRestaurants$restaurant {
     final l$firebase_id = firebase_id;
     final l$approved = approved;
     final l$description_id = description_id;
-    final l$operator_deep_link = operator_deep_link;
-    final l$operator_qr_image_link = operator_qr_image_link;
     final l$description = description;
     final l$open_status = open_status;
     final l$payment_info_id = payment_info_id;
@@ -560,8 +530,6 @@ class Query$getRestaurants$restaurant {
       l$firebase_id,
       l$approved,
       l$description_id,
-      l$operator_deep_link,
-      l$operator_qr_image_link,
       l$description,
       l$open_status,
       l$payment_info_id,
@@ -623,16 +591,6 @@ class Query$getRestaurants$restaurant {
     if (l$description_id != lOther$description_id) {
       return false;
     }
-    final l$operator_deep_link = operator_deep_link;
-    final lOther$operator_deep_link = other.operator_deep_link;
-    if (l$operator_deep_link != lOther$operator_deep_link) {
-      return false;
-    }
-    final l$operator_qr_image_link = operator_qr_image_link;
-    final lOther$operator_qr_image_link = other.operator_qr_image_link;
-    if (l$operator_qr_image_link != lOther$operator_qr_image_link) {
-      return false;
-    }
     final l$description = description;
     final lOther$description = other.description;
     if (l$description != lOther$description) {
@@ -685,8 +643,6 @@ abstract class CopyWith$Query$getRestaurants$restaurant<TRes> {
     String? firebase_id,
     bool? approved,
     int? description_id,
-    String? operator_deep_link,
-    String? operator_qr_image_link,
     Query$getRestaurants$restaurant$description? description,
     String? open_status,
     int? payment_info_id,
@@ -718,8 +674,6 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
     Object? firebase_id = _undefined,
     Object? approved = _undefined,
     Object? description_id = _undefined,
-    Object? operator_deep_link = _undefined,
-    Object? operator_qr_image_link = _undefined,
     Object? description = _undefined,
     Object? open_status = _undefined,
     Object? payment_info_id = _undefined,
@@ -751,12 +705,6 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
         description_id: description_id == _undefined
             ? _instance.description_id
             : (description_id as int?),
-        operator_deep_link: operator_deep_link == _undefined
-            ? _instance.operator_deep_link
-            : (operator_deep_link as String?),
-        operator_qr_image_link: operator_qr_image_link == _undefined
-            ? _instance.operator_qr_image_link
-            : (operator_qr_image_link as String?),
         description: description == _undefined
             ? _instance.description
             : (description as Query$getRestaurants$restaurant$description?),
@@ -796,8 +744,6 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant<TRes>
     String? firebase_id,
     bool? approved,
     int? description_id,
-    String? operator_deep_link,
-    String? operator_qr_image_link,
     Query$getRestaurants$restaurant$description? description,
     String? open_status,
     int? payment_info_id,
@@ -2220,20 +2166,6 @@ const documentNodeQuerygetOneRestaurant = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'operator_deep_link'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'operator_qr_image_link'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'name'),
             alias: null,
             arguments: [],
@@ -2428,8 +2360,6 @@ class Query$getOneRestaurant$restaurant_by_pk {
     this.description_id,
     required this.location_gps,
     required this.location_text,
-    this.operator_deep_link,
-    this.operator_qr_image_link,
     required this.name,
     this.description,
     required this.approved,
@@ -2446,8 +2376,6 @@ class Query$getOneRestaurant$restaurant_by_pk {
     final l$description_id = json['description_id'];
     final l$location_gps = json['location_gps'];
     final l$location_text = json['location_text'];
-    final l$operator_deep_link = json['operator_deep_link'];
-    final l$operator_qr_image_link = json['operator_qr_image_link'];
     final l$name = json['name'];
     final l$description = json['description'];
     final l$approved = json['approved'];
@@ -2461,8 +2389,6 @@ class Query$getOneRestaurant$restaurant_by_pk {
       description_id: (l$description_id as int?),
       location_gps: GeographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
-      operator_deep_link: (l$operator_deep_link as String?),
-      operator_qr_image_link: (l$operator_qr_image_link as String?),
       name: (l$name as String),
       description: l$description == null
           ? null
@@ -2487,10 +2413,6 @@ class Query$getOneRestaurant$restaurant_by_pk {
   final Geography location_gps;
 
   final String location_text;
-
-  final String? operator_deep_link;
-
-  final String? operator_qr_image_link;
 
   final String name;
 
@@ -2518,10 +2440,6 @@ class Query$getOneRestaurant$restaurant_by_pk {
     _resultData['location_gps'] = GeographyToJson(l$location_gps);
     final l$location_text = location_text;
     _resultData['location_text'] = l$location_text;
-    final l$operator_deep_link = operator_deep_link;
-    _resultData['operator_deep_link'] = l$operator_deep_link;
-    final l$operator_qr_image_link = operator_qr_image_link;
-    _resultData['operator_qr_image_link'] = l$operator_qr_image_link;
     final l$name = name;
     _resultData['name'] = l$name;
     final l$description = description;
@@ -2544,8 +2462,6 @@ class Query$getOneRestaurant$restaurant_by_pk {
     final l$description_id = description_id;
     final l$location_gps = location_gps;
     final l$location_text = location_text;
-    final l$operator_deep_link = operator_deep_link;
-    final l$operator_qr_image_link = operator_qr_image_link;
     final l$name = name;
     final l$description = description;
     final l$approved = approved;
@@ -2559,8 +2475,6 @@ class Query$getOneRestaurant$restaurant_by_pk {
       l$description_id,
       l$location_gps,
       l$location_text,
-      l$operator_deep_link,
-      l$operator_qr_image_link,
       l$name,
       l$description,
       l$approved,
@@ -2611,16 +2525,6 @@ class Query$getOneRestaurant$restaurant_by_pk {
     final l$location_text = location_text;
     final lOther$location_text = other.location_text;
     if (l$location_text != lOther$location_text) {
-      return false;
-    }
-    final l$operator_deep_link = operator_deep_link;
-    final lOther$operator_deep_link = other.operator_deep_link;
-    if (l$operator_deep_link != lOther$operator_deep_link) {
-      return false;
-    }
-    final l$operator_qr_image_link = operator_qr_image_link;
-    final lOther$operator_qr_image_link = other.operator_qr_image_link;
-    if (l$operator_qr_image_link != lOther$operator_qr_image_link) {
       return false;
     }
     final l$name = name;
@@ -2679,8 +2583,6 @@ abstract class CopyWith$Query$getOneRestaurant$restaurant_by_pk<TRes> {
     int? description_id,
     Geography? location_gps,
     String? location_text,
-    String? operator_deep_link,
-    String? operator_qr_image_link,
     String? name,
     Query$getOneRestaurant$restaurant_by_pk$description? description,
     bool? approved,
@@ -2712,8 +2614,6 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_by_pk<TRes>
     Object? description_id = _undefined,
     Object? location_gps = _undefined,
     Object? location_text = _undefined,
-    Object? operator_deep_link = _undefined,
-    Object? operator_qr_image_link = _undefined,
     Object? name = _undefined,
     Object? description = _undefined,
     Object? approved = _undefined,
@@ -2740,12 +2640,6 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_by_pk<TRes>
         location_text: location_text == _undefined || location_text == null
             ? _instance.location_text
             : (location_text as String),
-        operator_deep_link: operator_deep_link == _undefined
-            ? _instance.operator_deep_link
-            : (operator_deep_link as String?),
-        operator_qr_image_link: operator_qr_image_link == _undefined
-            ? _instance.operator_qr_image_link
-            : (operator_qr_image_link as String?),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -2788,8 +2682,6 @@ class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_by_pk<TRes>
     int? description_id,
     Geography? location_gps,
     String? location_text,
-    String? operator_deep_link,
-    String? operator_qr_image_link,
     String? name,
     Query$getOneRestaurant$restaurant_by_pk$description? description,
     bool? approved,

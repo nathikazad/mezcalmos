@@ -116,8 +116,6 @@ select_permissions:
         - location_text
         - name
         - open_status
-        - operator_deep_link
-        - operator_qr_image_link
         - payment_info_id
         - schedule
         - self_delivery
@@ -158,8 +156,6 @@ update_permissions:
         - location_text
         - name
         - open_status
-        - operator_deep_link
-        - operator_qr_image_link
         - schedule
         - self_delivery
       filter:

@@ -1,17 +1,20 @@
 import 'dart:async';
 
-import 'package:async/async.dart' show StreamGroup;
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart' as mat;
+// import 'package:flutter/material.dart' as Material;
 import 'package:get/get.dart';
 import 'package:location/location.dart';
+import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/restaurantNodes.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
+import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryMode.dart';
@@ -23,11 +26,12 @@ class ROpOrderController extends GetxController {
   ForegroundNotificationsController _foregroundNotificationsController =
       Get.find<ForegroundNotificationsController>();
 
-  RxList<RestaurantOrder> currentOrders = <RestaurantOrder>[].obs;
-  RxList<RestaurantOrder> pastOrders = <RestaurantOrder>[].obs;
-  StreamSubscription? _currentOrdersListener;
-  StreamSubscription? _pastOrdersListener;
-  String? restaurantID;
+  RxList<MinimalRestaurantOrder> currentOrders = <MinimalRestaurantOrder>[].obs;
+  RxList<MinimalRestaurantOrder> pastOrders = <MinimalRestaurantOrder>[].obs;
+  Rxn<RestaurantOrder> order = Rxn();
+  StreamSubscription? _minOrdersListener;
+  StreamSubscription? _singleOrderListener;
+  int? restaurantId;
 
   Rxn<LocationData> _currentLocation = Rxn<LocationData>(
       // LocationData.fromMap({"latitude": 15.8337, "longitude": -97.04205})
@@ -39,115 +43,146 @@ class ROpOrderController extends GetxController {
 
   StreamSubscription<LocationData>? _locationListener;
 
-  Future<void> init(String restaurantId) async {
-    restaurantID = restaurantId;
+  String? _appLifeCyclePauseCallbackId;
+  String? _appLifeCycleResumeCallbackId;
+  final AppLifeCycleController _appLifeCycleController =
+      Get.find<AppLifeCycleController>();
 
-    mezDbgPrint(
-        "--------------------> Start listening on past orders  ${serviceProviderPastOrders(orderType: OrderType.Restaurant, providerId: restaurantId)}");
-    await _pastOrdersListener?.cancel();
-    _pastOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
-        .child(serviceProviderPastOrders(
-            orderType: OrderType.Restaurant, providerId: restaurantId))
-        .onValue
-        .listen((DatabaseEvent event) {
-      final List<RestaurantOrder> orders = [];
-      if (event.snapshot.value != null) {
-        (event.snapshot.value as dynamic).keys.forEach((orderId) {
-          final dynamic orderData = (event.snapshot.value as dynamic)[orderId];
+  @override
+  Future<void> onInit() async {
+    await _assignRestaurantId();
 
-          try {
-            orders.add(RestaurantOrder.fromData(orderId, orderData));
-          } catch (e) {
-            mezDbgPrint('PAST ORDER EROOOOOOR +++++++++++++++++ $orderId');
-          }
-        });
-      }
-      pastOrders.value = orders;
-    }, onError: (error) {
-      mezDbgPrint('EROOOOOOR +++++++++++++++++ $error');
+    _appLifeCyclePauseCallbackId = _appLifeCycleController
+        .attachCallback(mat.AppLifecycleState.paused, () {
+      _minOrdersListener?.cancel();
+      _singleOrderListener?.cancel();
+      _minOrdersListener = null;
+      _singleOrderListener = null;
     });
 
-    mezDbgPrint(
-        "Starting listening on inProcess : ${serviceProviderInProcessOrders(orderType: OrderType.Restaurant, providerId: restaurantId)}");
-    await _currentOrdersListener?.cancel();
-    _currentOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
-        .child(serviceProviderInProcessOrders(
-            orderType: OrderType.Restaurant, providerId: restaurantId))
-        .onValue
-        .listen((DatabaseEvent event) {
-      // mezDbgPrint("[][][][][ got new inProcess Order ]]");
-
-      final List<RestaurantOrder> orders = [];
-      if (event.snapshot.value != null) {
-        // mezDbgPrint("orderController: new incoming order data");
-        (event.snapshot.value as dynamic).keys?.forEach((orderId) {
-          // mezDbgPrint("Hndling Order : $orderId");
-          final dynamic orderData = (event.snapshot.value as dynamic)[orderId];
-          try {
-            orders.add(RestaurantOrder.fromData(orderId, orderData));
-          } catch (e, stk) {
-            mezDbgPrint('PAST ORDER EROOOOOOR +++++++++++++++++ $orderId');
-            mezDbgPrint('PAST ORDER EROOOOOOR +++++++++++++++++ $e');
-            mezDbgPrint('PAST ORDER EROOOOOOR +++++++++++++++++ $stk');
-          }
-        });
+    _appLifeCycleResumeCallbackId = _appLifeCycleController
+        .attachCallback(mat.AppLifecycleState.resumed, () {
+      startListeningOnOrders();
+      if (order.value != null) {
+        startListeningOnSingleOrder(int.parse(order.value!.orderId));
       }
-      currentOrders.value = orders;
     });
+    mezDbgPrint(
+        "--------------------> Start listening on restaurant $restaurantId orders");
+
+    super.onInit();
   }
 
-  RestaurantOrder? getOrder(String orderId) {
-    try {
-      return currentOrders.firstWhere((DeliverableOrder order) {
-        return order.orderId == orderId;
-      });
-    } on StateError {
-      try {
-        return pastOrders.firstWhere((DeliverableOrder order) {
-          return order.orderId == orderId;
-        });
-      } on StateError {
-        return null;
-      }
+  Future<void> _assignRestaurantId() async {
+    await Get.find<RestaurantOpAuthController>().setupRestaurantOperator();
+    if (Get.find<RestaurantOpAuthController>()
+            .operator
+            .value!
+            .state
+            .restaurantId !=
+        null) {
+      restaurantId = int.parse(Get.find<RestaurantOpAuthController>()
+          .operator
+          .value!
+          .state
+          .restaurantId!);
     }
   }
 
-  Stream<RestaurantOrder?> getOrderStream(String orderId) {
-    return StreamGroup.merge(<Stream<RestaurantOrder?>>[
-      _getCurrentOrderStream(orderId),
-      _getPastOrderStream(orderId)
-    ]);
-  }
-
-  Stream<RestaurantOrder?> _getCurrentOrderStream(String orderId) {
-    return currentOrders.stream.map<RestaurantOrder?>((_) {
-      try {
-        return currentOrders.firstWhere(
-          (RestaurantOrder currentOrder) => currentOrder.orderId == orderId,
-        );
-      } on StateError catch (_) {
-        // do nothing
-        // return null;
+  void startListeningOnOrders() {
+    _minOrdersListener?.cancel();
+    _minOrdersListener =
+        listen_on_minimal_restaurant_orders(restaurantId: restaurantId!)
+            .listen((List<MinimalRestaurantOrder>? event) {
+      if (event != null) {
+        currentOrders.value = event
+            .where((MinimalRestaurantOrder element) => element.isPast == false)
+            .toList();
+        pastOrders.value = event
+            .where((MinimalRestaurantOrder element) => element.isPast == true)
+            .toList();
       }
-      return null;
     });
   }
 
-  Stream<RestaurantOrder?> _getPastOrderStream(String orderId) {
-    return pastOrders.stream.map<RestaurantOrder?>((_) {
-      try {
-        return pastOrders.firstWhere(
-          (RestaurantOrder pastOrder) => pastOrder.orderId == orderId,
-        );
-      } on StateError catch (_) {
-        // do nothing
-        // return null;
+  void startListeningOnSingleOrder(int orderId) {
+    _singleOrderListener?.cancel();
+    _singleOrderListener = listen_on_restaurant_order_by_id(orderId: orderId)
+        .listen((RestaurantOrder? event) {
+      if (event != null) {
+        order.value = event;
       }
-      return null;
     });
   }
+
+  Future<RestaurantOrder?> fetchOrder(int orderId) async {
+    final RestaurantOrder? data =
+        await get_restaurant_order_by_id(orderId: orderId);
+    order.value = data;
+    return data;
+  }
+
+  Future<List<MinimalRestaurantOrder>?> fetchOrders() async {
+    final List<MinimalRestaurantOrder>? data =
+        await get_minimal_restaurant_orders(restaurantId: restaurantId!);
+    currentOrders.value = data ?? [];
+    return data;
+  }
+
+  Future<ServerResponse> prepareOrder(int orderId) async {
+    final HttpsCallable cloudFunction =
+        FirebaseFunctions.instance.httpsCallable('restaurant-prepareOrder');
+    try {
+      final HttpsCallableResult response = await cloudFunction.call({
+        "orderId": orderId,
+        "fromRestaurantOperator": true,
+      });
+      mezDbgPrint("Response : ${response.data}");
+
+      return ServerResponse.fromJson(response.data);
+    } catch (e) {
+      mezDbgPrint("Errrooooooooor =======> $e");
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
+    }
+  }
+
+// -----------OLD STUFF --------------//
+
+  // Stream<RestaurantOrder?> getOrderStream(String orderId) {
+  //   return StreamGroup.merge(<Stream<RestaurantOrder?>>[
+  //     _getCurrentOrderStream(orderId),
+  //     _getPastOrderStream(orderId)
+  //   ]);
+  // }
+
+  // Stream<RestaurantOrder?> _getCurrentOrderStream(String orderId) {
+  //   return currentOrders.stream.map<RestaurantOrder?>((_) {
+  //     try {
+  //       return currentOrders.firstWhere(
+  //         (RestaurantOrder currentOrder) => currentOrder.orderId == orderId,
+  //       );
+  //     } on StateError catch (_) {
+  //       // do nothing
+  //       // return null;
+  //     }
+  //     return null;
+  //   });
+  // }
+
+  // Stream<RestaurantOrder?> _getPastOrderStream(String orderId) {
+  //   return pastOrders.stream.map<RestaurantOrder?>((_) {
+  //     try {
+  //       return pastOrders.firstWhere(
+  //         (RestaurantOrder pastOrder) => pastOrder.orderId == orderId,
+  //       );
+  //     } on StateError catch (_) {
+  //       // do nothing
+  //       // return null;
+  //     }
+  //     return null;
+  //   });
+  // }
 
   Future<ServerResponse> cancelOrder(String orderId) async {
     return _callRestaurantCloudFunction("cancelOrderFromAdmin", orderId);
@@ -183,7 +218,7 @@ class ROpOrderController extends GetxController {
         optionalParams: {
           "deliveryMode": mode.toFirebaseFormatString(),
           "customerId": order.customer.firebaseId,
-          "restaurantId": restaurantID!,
+          "restaurantId": restaurantId,
           "orderType": OrderType.Restaurant.toFirebaseFormatString(),
         });
     mezDbgPrint(
@@ -210,7 +245,7 @@ class ROpOrderController extends GetxController {
         optionalParams: {
           "enable": false,
           "customerId": order.customer.firebaseId,
-          "restaurantId": restaurantID!,
+          "restaurantId": restaurantId,
           "orderType": OrderType.Restaurant.toFirebaseFormatString(),
         });
     await _locationListener?.cancel();
@@ -251,7 +286,7 @@ class ROpOrderController extends GetxController {
             .ref()
             .child(restaurantOpInProcessOrdersNode(
               orderId: order.orderId,
-              uid: restaurantID!,
+              uid: restaurantId.toString(),
             ))
             .child("selfDeliveryDetails")
             .child("location")
@@ -274,7 +309,7 @@ class ROpOrderController extends GetxController {
             .ref()
             .child(customerInProcessOrder(
               orderId: order.orderId,
-              customerId: order.customer.firebaseId,
+              customerId: order.customer.hasuraId.toString(),
             ))
             .child("selfDeliveryDetails")
             .child("location")
@@ -365,10 +400,10 @@ class ROpOrderController extends GetxController {
     mezDbgPrint(
         "--------------------> CurrentROpOrderController::onClose called  !");
     print("[+] Orderontroller::onClose ---------> Was invoked !");
-    _currentOrdersListener?.cancel();
-    _currentOrdersListener = null;
-    _pastOrdersListener?.cancel();
-    _pastOrdersListener = null;
+    _minOrdersListener?.cancel();
+    _minOrdersListener = null;
+    _singleOrderListener?.cancel();
+    _singleOrderListener = null;
     _locationListener?.cancel();
     _locationListener = null;
     super.onClose();

@@ -3,7 +3,7 @@ const firebase = require("firebase-admin");
 const notification = require("../notification");
 
 statusArrayInSeq =
-  ["orderReceieved",
+  ["OrderReceived",
     "preparingOrder",
     "readyForPickup",
     "onTheWay",

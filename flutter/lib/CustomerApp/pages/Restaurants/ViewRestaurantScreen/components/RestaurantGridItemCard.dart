@@ -39,7 +39,8 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
           onTap: () {
             Get.toNamed(
               getItemRoute(
-                  widget.restaurant.info.hasuraId.toString(), widget.item.id!),
+                  widget.restaurant.info.hasuraId.toString().toString(),
+                  widget.item.id!),
               arguments: {
                 "mode": ViewItemScreenMode.AddItemMode,
                 "isSpecial": widget.isSpecial

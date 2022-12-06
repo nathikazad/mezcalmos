@@ -179,8 +179,9 @@ class CounterOfferWidgets {
                                 await viewController.taxiController
                                     .acceptCounterOffer(
                               viewController.order.value!.orderId,
-                              viewController.order.value!.customer.firebaseId,
-                              offer.driverInfo.firebaseId,
+                              viewController.order.value!.customer.hasuraId
+                                  .toString(),
+                              offer.driverInfo.hasuraId.toString(),
                             );
                             if (_response.success) {
                               viewController.clickedAccept.value = false;
@@ -214,9 +215,9 @@ class CounterOfferWidgets {
                           viewController.taxiController
                               .rejectCounterOffer(
                                   viewController.order.value!.orderId,
-                                  viewController
-                                      .order.value!.customer.firebaseId,
-                                  offer.driverInfo.firebaseId)
+                                  viewController.order.value!.customer.hasuraId
+                                      .toString(),
+                                  offer.driverInfo.hasuraId.toString())
                               .then(
                             (_) {
                               if (viewController.counterOffers.isEmpty) {

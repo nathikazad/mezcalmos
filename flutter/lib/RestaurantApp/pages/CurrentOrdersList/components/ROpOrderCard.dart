@@ -5,8 +5,8 @@ import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -18,7 +18,7 @@ class ROpOrderCard extends StatelessWidget {
     required this.order,
   }) : super(key: key);
 
-  final RestaurantOrder order;
+  final MinimalRestaurantOrder order;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class ROpOrderCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          Get.toNamed(getROpOrderRoute(order.orderId));
+          Get.toNamed(getROpOrderRoute(order.id.toString()));
         },
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -45,18 +45,19 @@ class ROpOrderCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          order.customer.name,
+                          order.customerName,
                           style: textTheme.bodyText1,
                         ),
                         SizedBox(
                           height: 5,
                         ),
-                        Text(
-                          order.to.address,
-                          style: textTheme.bodyText2,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        if (order.toAdress != null)
+                          Text(
+                            order.toAdress!,
+                            style: textTheme.bodyText2,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                       ],
                     ),
                   ),
@@ -64,11 +65,12 @@ class ROpOrderCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(order.orderTime.toDayAmPm()),
-                      CircleAvatar(
-                        radius: 25,
-                        backgroundImage:
-                            CachedNetworkImageProvider(order.customer.image),
-                      ),
+                      if (order.customerImage != null)
+                        CircleAvatar(
+                          radius: 25,
+                          backgroundImage:
+                              CachedNetworkImageProvider(order.customerImage!),
+                        ),
                     ],
                   )
                   // getOrderWidget()
@@ -85,7 +87,7 @@ class ROpOrderCard extends StatelessWidget {
                     fit: BoxFit.contain,
                   ),
                   Text(
-                    " \$${order.itemsCost}",
+                    " \$${order.totalCost}",
                     style: Get.textTheme.bodyText1,
                   ),
                   Spacer(),
@@ -96,52 +98,6 @@ class ROpOrderCard extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _orderImageComponent() {
-    return CachedNetworkImage(
-      imageUrl: order.customer.image,
-      fit: BoxFit.fill,
-      imageBuilder: (BuildContext context, ImageProvider<Object> image) {
-        return Container(
-          height: 60,
-          width: 60,
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(image: image, fit: BoxFit.cover)),
-        );
-      },
-      placeholder: (_, __) {
-        return Shimmer.fromColors(
-          child: Container(
-            color: Colors.grey,
-          ),
-          highlightColor: Colors.grey[400]!,
-          baseColor: Colors.grey[300]!,
-          direction: ShimmerDirection.ltr,
-          period: const Duration(seconds: 1),
-        );
-      },
-      errorWidget: (_, __, ___) {
-        return Container(
-          height: 50,
-          width: 50,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: primaryBlueColor,
-            shape: BoxShape.circle,
-          ),
-          child: Text(
-            'C n'.toUpperCase(),
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 18.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        );
-      },
     );
   }
 

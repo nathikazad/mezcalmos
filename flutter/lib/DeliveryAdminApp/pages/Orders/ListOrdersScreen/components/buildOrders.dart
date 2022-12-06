@@ -194,7 +194,7 @@ class DeliveryAdminOrderComponent extends StatelessWidget {
             border: Border.all(color: const Color(0xffececec), width: 0.5),
             color: const Color(0x3bff0000));
         break;
-      case RestaurantOrderStatus.OrderReceieved:
+      case RestaurantOrderStatus.OrderReceived:
         myDecoration = BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
             border: Border.all(color: const Color(0xffececec), width: 0.5),
@@ -266,7 +266,7 @@ Widget _getOrderIcon(RestaurantOrderStatus status) {
         child: Image.asset(tick),
       );
       break;
-    case RestaurantOrderStatus.OrderReceieved:
+    case RestaurantOrderStatus.OrderReceived:
       myWidget = Container(
         height: 30,
         width: 30,

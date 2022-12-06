@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpPickDriverView/components/ROpDriverSelectCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpPickDriverView/components/ROpSelfDriverCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpPickDriverView/controllers/ROpPickDriverViewController.dart';
@@ -32,7 +31,8 @@ class _ROpPickDriverViewState extends State<ROpPickDriverView> {
   void initState() {
     orderID = Get.parameters["orderId"];
     if (orderID != null) {
-      order.value = Get.find<ROpOrderController>().getOrder(orderID!);
+      // order.value =
+      //     Get.find<ROpOrderController>().fetchOrder(int.parse(orderID!));
       if (order.value != null) {
         viewController.init(restaurantId: order.value!.restaurantId);
       } else {

@@ -124,9 +124,10 @@ extension RestaurantFilters on RestaurantList {
       categoryItems.forEach((Item item) {
         item.restaurant = category.restaurant;
         item.category = category;
-        if (item.restaurant?.info.firebaseId != null && item.id != null)
+        if (item.restaurant?.info.hasuraId.toString() != null &&
+            item.id != null)
           item.linkUrl =
-              getItemRoute(item.restaurant!.info.firebaseId, item.id!);
+              getItemRoute(item.restaurant!.info.hasuraId.toString(), item.id!);
       });
       items.addAll(categoryItems);
       return items;

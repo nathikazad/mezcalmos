@@ -212,7 +212,7 @@ class _ServicesViewState extends State<ServicesView> {
                                 primary: primaryBlueColor),
                             onPressed: () {
                               Get.toNamed(getEditInfoRoute(
-                                  laundryId: laundry.info.firebaseId));
+                                  laundryId: laundry.info.hasuraId.toString()));
                             },
                             icon: Icon(Icons.person),
                             label: Text('${_i18n()["editProfile"]}'),
@@ -222,7 +222,7 @@ class _ServicesViewState extends State<ServicesView> {
                           child: TextButton.icon(
                             onPressed: () {
                               Get.toNamed(getAdminRoute(
-                                  laundryId: laundry.info.firebaseId));
+                                  laundryId: laundry.info.hasuraId.toString()));
                             },
                             style: TextButton.styleFrom(
                                 backgroundColor: Colors.transparent,

@@ -51,7 +51,9 @@ class DaRestaurantCard extends StatelessWidget {
                         onChanged: (bool v) {
                           Get.find<RestaurantsInfoController>().setOpen(
                               isAv: v,
-                              restaurantId: restaurant.info.firebaseId);
+                              restaurantId: restaurant.info.hasuraId
+                                  .toString()
+                                  .toString());
                         },
                         activeColor: primaryBlueColor,
                       )
@@ -70,7 +72,9 @@ class DaRestaurantCard extends StatelessWidget {
                               padding: const EdgeInsets.all(3)),
                           onPressed: () {
                             Get.toNamed(getROpEditInfoRoute(
-                                restaurantId: restaurant.info.firebaseId));
+                                restaurantId: restaurant.info.hasuraId
+                                    .toString()
+                                    .toString()));
                           },
                           icon: Icon(Icons.person),
                           label: Text('${_i18n()["editProfile"]}'),
@@ -80,7 +84,9 @@ class DaRestaurantCard extends StatelessWidget {
                         child: TextButton.icon(
                           onPressed: () {
                             Get.toNamed(getROpMenuRoute(
-                                restaurantId: restaurant.info.firebaseId));
+                                restaurantId: restaurant.info.hasuraId
+                                    .toString()
+                                    .toString()));
                           },
                           style: TextButton.styleFrom(
                               foregroundColor: primaryBlueColor,

@@ -33,6 +33,12 @@ computed_fields:
       function:
         name: customer_notification_token
         schema: public
+select_permissions:
+  - role: restaurant_operator
+    permission:
+      columns:
+        - user_id
+      filter: {}
 update_permissions:
   - role: customer
     permission:

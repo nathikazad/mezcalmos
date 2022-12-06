@@ -1,22 +1,29 @@
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 class UserInfo {
-  String firebaseId;
+  String? firebaseId;
   int hasuraId;
   String? _name;
   String? _image;
   LanguageType? language;
   String get name => _name ?? "Unknown User";
   bool get isNameSet => _name != null;
-  String get image => _image ?? defaultUserImgUrl;
   bool get isImageSet => _image != null;
+  String get image {
+    if (_image != null && _image!.toString().isURL) {
+      return _image!;
+    } else {
+      return defaultUserImgUrl;
+    }
+  }
 
   UserInfo(
       {required this.hasuraId,
-      required this.firebaseId,
+      this.firebaseId,
       required String? name,
       required String? image,
       this.language}) {
@@ -119,7 +126,7 @@ class ServiceInfo extends UserInfo {
 
   ServiceInfo({
     required this.location,
-    required super.firebaseId,
+    super.firebaseId,
     required super.hasuraId,
     required super.image,
     this.descriptionId,

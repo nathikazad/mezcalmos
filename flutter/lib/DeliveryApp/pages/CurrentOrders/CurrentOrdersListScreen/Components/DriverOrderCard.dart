@@ -148,7 +148,7 @@ class DriverOrderCard extends StatelessWidget {
               ),
             ),
           );
-        case RestaurantOrderStatus.OrderReceieved:
+        case RestaurantOrderStatus.OrderReceived:
           if ((order as RestaurantOrder).isScheduled()) {
             return Container(
               padding: const EdgeInsets.all(8),

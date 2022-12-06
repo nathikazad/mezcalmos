@@ -2901,19 +2901,6 @@ cancelledByServiceProvider */
 	/** in seconds */
 	trip_duration?:ValueTypes["order_by"]
 };
-	["float8"]:unknown;
-	/** Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'. */
-["float8_comparison_exp"]: {
-	_eq?:ValueTypes["float8"],
-	_gt?:ValueTypes["float8"],
-	_gte?:ValueTypes["float8"],
-	_in?:ValueTypes["float8"][],
-	_is_null?:boolean,
-	_lt?:ValueTypes["float8"],
-	_lte?:ValueTypes["float8"],
-	_neq?:ValueTypes["float8"],
-	_nin?:ValueTypes["float8"][]
-};
 	["geography"]:unknown;
 	["geography_cast_exp"]: {
 	geometry?:ValueTypes["geometry_comparison_exp"]
@@ -7843,14 +7830,14 @@ count?: [{	columns?:ValueTypes["restaurant_order_select_column"][],	distinct?:bo
 	order_time?:ValueTypes["timestamptz_comparison_exp"],
 	order_type?:ValueTypes["String_comparison_exp"],
 	payment_type?:ValueTypes["String_comparison_exp"],
-	refund_amount?:ValueTypes["Int_comparison_exp"],
+	refund_amount?:ValueTypes["money_comparison_exp"],
 	restaurant?:ValueTypes["restaurant_bool_exp"],
 	restaurant_id?:ValueTypes["Int_comparison_exp"],
 	review?:ValueTypes["review_bool_exp"],
 	review_id?:ValueTypes["Int_comparison_exp"],
 	status?:ValueTypes["String_comparison_exp"],
 	stripe_payment_id?:ValueTypes["Int_comparison_exp"],
-	tax?:ValueTypes["float8_comparison_exp"],
+	tax?:ValueTypes["money_comparison_exp"],
 	to_location_address?:ValueTypes["String_comparison_exp"],
 	to_location_gps?:ValueTypes["geography_comparison_exp"],
 	total_cost?:ValueTypes["money_comparison_exp"]
@@ -7890,11 +7877,11 @@ count?: [{	columns?:ValueTypes["restaurant_order_select_column"][],	distinct?:bo
 	delivery_cost?:ValueTypes["money"],
 	delivery_id?:number,
 	id?:number,
-	refund_amount?:number,
+	refund_amount?:ValueTypes["money"],
 	restaurant_id?:number,
 	review_id?:number,
 	stripe_payment_id?:number,
-	tax?:ValueTypes["float8"]
+	tax?:ValueTypes["money"]
 };
 	/** input type for inserting data into table "restaurant_order" */
 ["restaurant_order_insert_input"]: {
@@ -7916,7 +7903,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_select_column"][],	distinct?:bo
 	order_time?:ValueTypes["timestamptz"],
 	order_type?:string,
 	payment_type?:string,
-	refund_amount?:number,
+	refund_amount?:ValueTypes["money"],
 	restaurant?:ValueTypes["restaurant_obj_rel_insert_input"],
 	restaurant_id?:number,
 	review?:ValueTypes["review_obj_rel_insert_input"],
@@ -7924,7 +7911,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_select_column"][],	distinct?:bo
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
-	tax?:ValueTypes["float8"],
+	tax?:ValueTypes["money"],
 	to_location_address?:string,
 	to_location_gps?:ValueTypes["geography"]
 };
@@ -8682,13 +8669,13 @@ count?: [{	columns?:ValueTypes["restaurant_order_public_select_column"][],	disti
 	order_time?:ValueTypes["timestamptz"],
 	order_type?:string,
 	payment_type?:string,
-	refund_amount?:number,
+	refund_amount?:ValueTypes["money"],
 	restaurant_id?:number,
 	review_id?:number,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
-	tax?:ValueTypes["float8"],
+	tax?:ValueTypes["money"],
 	to_location_address?:string,
 	to_location_gps?:ValueTypes["geography"]
 };
@@ -8796,13 +8783,13 @@ count?: [{	columns?:ValueTypes["restaurant_order_public_select_column"][],	disti
 	order_time?:ValueTypes["timestamptz"],
 	order_type?:string,
 	payment_type?:string,
-	refund_amount?:number,
+	refund_amount?:ValueTypes["money"],
 	restaurant_id?:number,
 	review_id?:number,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
-	tax?:ValueTypes["float8"],
+	tax?:ValueTypes["money"],
 	to_location_address?:string,
 	to_location_gps?:ValueTypes["geography"]
 };
@@ -14429,19 +14416,6 @@ cancelledByServiceProvider */
 	/** in seconds */
 	trip_duration?:PartialObjects["order_by"]
 },
-	["float8"]:any,
-	/** Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'. */
-["float8_comparison_exp"]: {
-	_eq?:PartialObjects["float8"],
-	_gt?:PartialObjects["float8"],
-	_gte?:PartialObjects["float8"],
-	_in?:PartialObjects["float8"][],
-	_is_null?:boolean,
-	_lt?:PartialObjects["float8"],
-	_lte?:PartialObjects["float8"],
-	_neq?:PartialObjects["float8"],
-	_nin?:PartialObjects["float8"][]
-},
 	["geography"]:any,
 	["geography_cast_exp"]: {
 	geometry?:PartialObjects["geometry_comparison_exp"]
@@ -18771,7 +18745,7 @@ All fields are combined with a logical 'AND'. */
 			order_time?:PartialObjects["timestamptz"],
 			order_type?:string,
 			payment_type?:string,
-			refund_amount?:number,
+			refund_amount?:PartialObjects["money"],
 			/** An object relationship */
 	restaurant?:PartialObjects["restaurant"],
 			restaurant_id?:number,
@@ -18781,7 +18755,7 @@ All fields are combined with a logical 'AND'. */
 			/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 			stripe_payment_id?:number,
-			tax?:PartialObjects["float8"],
+			tax?:PartialObjects["money"],
 			to_location_address?:string,
 			to_location_gps?:PartialObjects["geography"],
 			/** A computed field, executes function "totalcost" */
@@ -18879,14 +18853,14 @@ All fields are combined with a logical 'AND'. */
 	order_time?:PartialObjects["timestamptz_comparison_exp"],
 	order_type?:PartialObjects["String_comparison_exp"],
 	payment_type?:PartialObjects["String_comparison_exp"],
-	refund_amount?:PartialObjects["Int_comparison_exp"],
+	refund_amount?:PartialObjects["money_comparison_exp"],
 	restaurant?:PartialObjects["restaurant_bool_exp"],
 	restaurant_id?:PartialObjects["Int_comparison_exp"],
 	review?:PartialObjects["review_bool_exp"],
 	review_id?:PartialObjects["Int_comparison_exp"],
 	status?:PartialObjects["String_comparison_exp"],
 	stripe_payment_id?:PartialObjects["Int_comparison_exp"],
-	tax?:PartialObjects["float8_comparison_exp"],
+	tax?:PartialObjects["money_comparison_exp"],
 	to_location_address?:PartialObjects["String_comparison_exp"],
 	to_location_gps?:PartialObjects["geography_comparison_exp"],
 	total_cost?:PartialObjects["money_comparison_exp"]
@@ -18926,11 +18900,11 @@ All fields are combined with a logical 'AND'. */
 	delivery_cost?:PartialObjects["money"],
 	delivery_id?:number,
 	id?:number,
-	refund_amount?:number,
+	refund_amount?:PartialObjects["money"],
 	restaurant_id?:number,
 	review_id?:number,
 	stripe_payment_id?:number,
-	tax?:PartialObjects["float8"]
+	tax?:PartialObjects["money"]
 },
 	/** input type for inserting data into table "restaurant_order" */
 ["restaurant_order_insert_input"]: {
@@ -18952,7 +18926,7 @@ All fields are combined with a logical 'AND'. */
 	order_time?:PartialObjects["timestamptz"],
 	order_type?:string,
 	payment_type?:string,
-	refund_amount?:number,
+	refund_amount?:PartialObjects["money"],
 	restaurant?:PartialObjects["restaurant_obj_rel_insert_input"],
 	restaurant_id?:number,
 	review?:PartialObjects["review_obj_rel_insert_input"],
@@ -18960,7 +18934,7 @@ All fields are combined with a logical 'AND'. */
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
-	tax?:PartialObjects["float8"],
+	tax?:PartialObjects["money"],
 	to_location_address?:string,
 	to_location_gps?:PartialObjects["geography"]
 },
@@ -19349,13 +19323,13 @@ All fields are combined with a logical 'AND'. */
 			order_time?:PartialObjects["timestamptz"],
 			order_type?:string,
 			payment_type?:string,
-			refund_amount?:number,
+			refund_amount?:PartialObjects["money"],
 			restaurant_id?:number,
 			review_id?:number,
 			/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 			stripe_payment_id?:number,
-			tax?:PartialObjects["float8"],
+			tax?:PartialObjects["money"],
 			to_location_address?:string
 	},
 	/** order by max() on columns of table "restaurant_order" */
@@ -19400,13 +19374,13 @@ All fields are combined with a logical 'AND'. */
 			order_time?:PartialObjects["timestamptz"],
 			order_type?:string,
 			payment_type?:string,
-			refund_amount?:number,
+			refund_amount?:PartialObjects["money"],
 			restaurant_id?:number,
 			review_id?:number,
 			/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 			stripe_payment_id?:number,
-			tax?:PartialObjects["float8"],
+			tax?:PartialObjects["money"],
 			to_location_address?:string
 	},
 	/** order by min() on columns of table "restaurant_order" */
@@ -19709,13 +19683,13 @@ All fields are combined with a logical 'AND'. */
 	order_time?:PartialObjects["timestamptz"],
 	order_type?:string,
 	payment_type?:string,
-	refund_amount?:number,
+	refund_amount?:PartialObjects["money"],
 	restaurant_id?:number,
 	review_id?:number,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
-	tax?:PartialObjects["float8"],
+	tax?:PartialObjects["money"],
 	to_location_address?:string,
 	to_location_gps?:PartialObjects["geography"]
 },
@@ -19823,13 +19797,13 @@ All fields are combined with a logical 'AND'. */
 	order_time?:PartialObjects["timestamptz"],
 	order_type?:string,
 	payment_type?:string,
-	refund_amount?:number,
+	refund_amount?:PartialObjects["money"],
 	restaurant_id?:number,
 	review_id?:number,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
-	tax?:PartialObjects["float8"],
+	tax?:PartialObjects["money"],
 	to_location_address?:string,
 	to_location_gps?:PartialObjects["geography"]
 },
@@ -19841,11 +19815,11 @@ All fields are combined with a logical 'AND'. */
 			delivery_cost?:PartialObjects["money"],
 			delivery_id?:number,
 			id?:number,
-			refund_amount?:number,
+			refund_amount?:PartialObjects["money"],
 			restaurant_id?:number,
 			review_id?:number,
 			stripe_payment_id?:number,
-			tax?:PartialObjects["float8"]
+			tax?:PartialObjects["money"]
 	},
 	/** order by sum() on columns of table "restaurant_order" */
 ["restaurant_order_sum_order_by"]: {
@@ -25614,21 +25588,6 @@ export type delivery_order_variance_order_by = {
 	trip_duration?:order_by
 }
 
-export type float8 = any
-
-/** Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'. */
-export type float8_comparison_exp = {
-		_eq?:float8,
-	_gt?:float8,
-	_gte?:float8,
-	_in?:float8[],
-	_is_null?:boolean,
-	_lt?:float8,
-	_lte?:float8,
-	_neq?:float8,
-	_nin?:float8[]
-}
-
 export type geography = any
 
 export type geography_cast_exp = {
@@ -30577,7 +30536,7 @@ export type restaurant_order = {
 	order_time:timestamptz,
 	order_type:string,
 	payment_type:string,
-	refund_amount:number,
+	refund_amount:money,
 	/** An object relationship */
 	restaurant:restaurant,
 	restaurant_id:number,
@@ -30587,7 +30546,7 @@ export type restaurant_order = {
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status:string,
 	stripe_payment_id?:number,
-	tax:float8,
+	tax:money,
 	to_location_address?:string,
 	to_location_gps?:geography,
 	/** A computed field, executes function "totalcost" */
@@ -30692,14 +30651,14 @@ export type restaurant_order_bool_exp = {
 	order_time?:timestamptz_comparison_exp,
 	order_type?:String_comparison_exp,
 	payment_type?:String_comparison_exp,
-	refund_amount?:Int_comparison_exp,
+	refund_amount?:money_comparison_exp,
 	restaurant?:restaurant_bool_exp,
 	restaurant_id?:Int_comparison_exp,
 	review?:review_bool_exp,
 	review_id?:Int_comparison_exp,
 	status?:String_comparison_exp,
 	stripe_payment_id?:Int_comparison_exp,
-	tax?:float8_comparison_exp,
+	tax?:money_comparison_exp,
 	to_location_address?:String_comparison_exp,
 	to_location_gps?:geography_comparison_exp,
 	total_cost?:money_comparison_exp
@@ -30746,11 +30705,11 @@ export type restaurant_order_inc_input = {
 	delivery_cost?:money,
 	delivery_id?:number,
 	id?:number,
-	refund_amount?:number,
+	refund_amount?:money,
 	restaurant_id?:number,
 	review_id?:number,
 	stripe_payment_id?:number,
-	tax?:float8
+	tax?:money
 }
 
 /** input type for inserting data into table "restaurant_order" */
@@ -30773,7 +30732,7 @@ export type restaurant_order_insert_input = {
 	order_time?:timestamptz,
 	order_type?:string,
 	payment_type?:string,
-	refund_amount?:number,
+	refund_amount?:money,
 	restaurant?:restaurant_obj_rel_insert_input,
 	restaurant_id?:number,
 	review?:review_obj_rel_insert_input,
@@ -30781,7 +30740,7 @@ export type restaurant_order_insert_input = {
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
-	tax?:float8,
+	tax?:money,
 	to_location_address?:string,
 	to_location_gps?:geography
 }
@@ -31232,13 +31191,13 @@ export type restaurant_order_max_fields = {
 	order_time?:timestamptz,
 	order_type?:string,
 	payment_type?:string,
-	refund_amount?:number,
+	refund_amount?:money,
 	restaurant_id?:number,
 	review_id?:number,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
-	tax?:float8,
+	tax?:money,
 	to_location_address?:string
 }
 
@@ -31285,13 +31244,13 @@ export type restaurant_order_min_fields = {
 	order_time?:timestamptz,
 	order_type?:string,
 	payment_type?:string,
-	refund_amount?:number,
+	refund_amount?:money,
 	restaurant_id?:number,
 	review_id?:number,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
-	tax?:float8,
+	tax?:money,
 	to_location_address?:string
 }
 
@@ -31656,13 +31615,13 @@ export type restaurant_order_set_input = {
 	order_time?:timestamptz,
 	order_type?:string,
 	payment_type?:string,
-	refund_amount?:number,
+	refund_amount?:money,
 	restaurant_id?:number,
 	review_id?:number,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
-	tax?:float8,
+	tax?:money,
 	to_location_address?:string,
 	to_location_gps?:geography
 }
@@ -31778,13 +31737,13 @@ export type restaurant_order_stream_cursor_value_input = {
 	order_time?:timestamptz,
 	order_type?:string,
 	payment_type?:string,
-	refund_amount?:number,
+	refund_amount?:money,
 	restaurant_id?:number,
 	review_id?:number,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
-	tax?:float8,
+	tax?:money,
 	to_location_address?:string,
 	to_location_gps?:geography
 }
@@ -31797,11 +31756,11 @@ export type restaurant_order_sum_fields = {
 	delivery_cost?:money,
 	delivery_id?:number,
 	id?:number,
-	refund_amount?:number,
+	refund_amount?:money,
 	restaurant_id?:number,
 	review_id?:number,
 	stripe_payment_id?:number,
-	tax?:float8
+	tax?:money
 }
 
 /** order by sum() on columns of table "restaurant_order" */
@@ -41849,63 +41808,6 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
-		}
-	},
-	float8: "String",
-	float8_comparison_exp:{
-		_eq:{
-			type:"float8",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		_gt:{
-			type:"float8",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		_gte:{
-			type:"float8",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		_in:{
-			type:"float8",
-			array:true,
-			arrayRequired:false,
-			required:true
-		},
-		_is_null:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		_lt:{
-			type:"float8",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		_lte:{
-			type:"float8",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		_neq:{
-			type:"float8",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		_nin:{
-			type:"float8",
-			array:true,
-			arrayRequired:false,
-			required:true
 		}
 	},
 	geography: "String",
@@ -56780,7 +56682,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		refund_amount:{
-			type:"Int_comparison_exp",
+			type:"money_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -56822,7 +56724,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		tax:{
-			type:"float8_comparison_exp",
+			type:"money_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -57019,7 +56921,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		refund_amount:{
-			type:"Int",
+			type:"money",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -57043,7 +56945,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		tax:{
-			type:"float8",
+			type:"money",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -57159,7 +57061,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		refund_amount:{
-			type:"Int",
+			type:"money",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -57201,7 +57103,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		tax:{
-			type:"float8",
+			type:"money",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -59116,7 +59018,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		refund_amount:{
-			type:"Int",
+			type:"money",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -59146,7 +59048,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		tax:{
-			type:"float8",
+			type:"money",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -59450,7 +59352,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		refund_amount:{
-			type:"Int",
+			type:"money",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -59480,7 +59382,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		tax:{
-			type:"float8",
+			type:"money",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -69143,14 +69045,14 @@ export const ReturnTypes: Record<string,any> = {
 		order_time:"timestamptz",
 		order_type:"String",
 		payment_type:"String",
-		refund_amount:"Int",
+		refund_amount:"money",
 		restaurant:"restaurant",
 		restaurant_id:"Int",
 		review:"review",
 		review_id:"Int",
 		status:"String",
 		stripe_payment_id:"Int",
-		tax:"float8",
+		tax:"money",
 		to_location_address:"String",
 		to_location_gps:"geography",
 		total_cost:"money"
@@ -69315,12 +69217,12 @@ export const ReturnTypes: Record<string,any> = {
 		order_time:"timestamptz",
 		order_type:"String",
 		payment_type:"String",
-		refund_amount:"Int",
+		refund_amount:"money",
 		restaurant_id:"Int",
 		review_id:"Int",
 		status:"String",
 		stripe_payment_id:"Int",
-		tax:"float8",
+		tax:"money",
 		to_location_address:"String"
 	},
 	restaurant_order_min_fields:{
@@ -69338,12 +69240,12 @@ export const ReturnTypes: Record<string,any> = {
 		order_time:"timestamptz",
 		order_type:"String",
 		payment_type:"String",
-		refund_amount:"Int",
+		refund_amount:"money",
 		restaurant_id:"Int",
 		review_id:"Int",
 		status:"String",
 		stripe_payment_id:"Int",
-		tax:"float8",
+		tax:"money",
 		to_location_address:"String"
 	},
 	restaurant_order_mutation_response:{
@@ -69482,11 +69384,11 @@ export const ReturnTypes: Record<string,any> = {
 		delivery_cost:"money",
 		delivery_id:"Int",
 		id:"Int",
-		refund_amount:"Int",
+		refund_amount:"money",
 		restaurant_id:"Int",
 		review_id:"Int",
 		stripe_payment_id:"Int",
-		tax:"float8"
+		tax:"money"
 	},
 	restaurant_order_var_pop_fields:{
 		chat_id:"Float",

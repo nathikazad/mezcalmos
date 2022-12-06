@@ -1,11 +1,12 @@
 import 'dart:async';
+
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 
 enum ProviderDeepLinkType {
   // ignore: constant_identifier_names
@@ -84,7 +85,7 @@ class DeepLinkHandler {
             getLaundryOrderRoute(providerId),
           ),
         );
-        
+
         break;
       default:
         mezDbgPrint("@deepLink@ ===> handling unknown default type");

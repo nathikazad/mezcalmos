@@ -28,8 +28,9 @@ class AuthHooks {
     Get.put(BackgroundNotificationsController(), permanent: true);
 
     // Get.put(RestaurantInfoController(), permanent: true);
-    Get.put(ROpOrderController(), permanent: true);
+
     Get.put(RestaurantOpAuthController(), permanent: true);
+    Get.put(ROpOrderController(), permanent: true);
 
     Get.put(MessageController(), permanent: true);
   }

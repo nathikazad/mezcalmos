@@ -1,3 +1,4 @@
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class Geography {
@@ -7,8 +8,13 @@ class Geography {
 }
 
 Geography GeographyFromJson(data) {
-  final List<dynamic> coordinates = data["coordinates"];
-  return Geography(coordinates[0], coordinates[1]);
+  final List<dynamic> cors = data["coordinates"];
+
+  mezDbgPrint(
+      "🥵🥵🥵🥵 Data coming to geaography ${data["coordinates"][0].runtimeType}\n ${data["coordinates"][1].runtimeType} \n $cors");
+  final double test = double.parse(cors[0].toString());
+  final double testTwo = double.parse(cors[1].toString());
+  return Geography(test, testTwo);
 }
 
 dynamic GeographyToJson(Geography geography) => <String, dynamic>{
