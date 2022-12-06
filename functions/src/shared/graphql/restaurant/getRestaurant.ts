@@ -5,14 +5,13 @@ import { OpenStatus, OperatorStatus, Restaurant, RestaurantOperator } from "../.
 
 export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
   let chain = getHasura();
-
   let response = await chain.query({
     restaurant_by_pk: [{
       id: restaurantId
     }, {
       id: true,
       name: true,
-      schedule : [{path :'' },true],
+      // schedule : [{path :'' },true],
       description: {
         translations: [{ }, {
           language_id: true,
@@ -85,7 +84,7 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
       prev[current.language_id] = current.value;
       return prev;
     }, {}),
-    schedule: response.restaurant_by_pk.schedule,
+    // schedule: response.restaurant_by_pk.schedule,
     openStatus: response.restaurant_by_pk.open_status as OpenStatus,
     approved: response.restaurant_by_pk.approved,
     restaurantOperators

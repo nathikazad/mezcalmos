@@ -16,7 +16,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
 
   let restaurantOperatorsDetails = restaurant.restaurantOperators!.map((v) => {
     return {
-      participant_id: v.id,
+      participant_id: v.userId,
       app_type_id: "restaurant"
     };
   });
