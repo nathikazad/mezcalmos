@@ -1,107 +1,23 @@
 {
-  "hosting": [
-    {
-      "target": "customers",
-      "public": "dist/customers",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
-      "appAssociation": "AUTO",
-      "rewrites": [
-        {
-          "source": "/providerType/providerId/**",
-          "dynamicLinks": true
-        },
-        {
-          "source": "!/providerType/providerId/**",
-          "destination": "/index.html"
-        }
-      ]
-    },
-    {
-      "target": "taxis",
-      "public": "dist/taxis",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
-    },
-    {
-      "target": "deliveries",
-      "public": "dist/deliveries",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
-    },
-    {
-      "target": "admin",
-      "public": "dist/admin",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
-    }
-  ],
-  "database": [
-    {
-      "target": "main",
-      "rules": "database.rules.json"
-    }
-  ],
+  "functions": {
+    "source": "functions"
+  },
   "emulators": {
+    "auth": {
+      "port": 9099
+    },
     "functions": {
-      "port": 5001,
-      "host": "0.0.0.0"
+      "port": 5001
     },
     "database": {
-      "port": 9000,
-      "host": "0.0.0.0"
+      "port": 9000
     },
     "hosting": {
-      "port": 5000,
-      "host": "0.0.0.0"
-    },
-    "auth": {
-      "port": 9099,
-      "host": "0.0.0.0"
+      "port": 5000
     },
     "ui": {
       "enabled": true
     },
-    "storage": {
-      "port": 9199
-    },
     "singleProjectMode": true
-  },
-  "functions": {
-    "predeploy": "npm --prefix \"$RESOURCE_DIR\" run build",
-    "source": "functions"
-  },
-  "storage": {
-    "rules": "storage.rules"
   }
 }
