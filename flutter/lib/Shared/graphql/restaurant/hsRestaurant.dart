@@ -5,10 +5,12 @@ import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/__generated/restaurant.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
@@ -57,6 +59,55 @@ Future<List<Restaurant>> fetch_restaurants() async {
             data.language_id.toString().toLanguageType().toOpLang()));
   });
   return _restaus;
+}
+
+Future<List<Item>> fetch_restaurant_items({required int restaurant_id}) async {
+  mezDbgPrint("[66] fetch_restaurant_items called !");
+
+  final List<Item> _items = [];
+  final QueryResult<Query$getRestaurantItems> response =
+      await _db.graphQLClient.query$getRestaurantItems(
+    Options$Query$getRestaurantItems(
+      variables: Variables$Query$getRestaurantItems(
+        restaurant_id: restaurant_id,
+      ),
+    ),
+  );
+
+  if (response.hasException) {
+    mezDbgPrint(
+        "[66] fetch_restaurant_items :: exception ::  ${response.exception}");
+  }
+
+  response.parsedData?.restaurant_item.forEach((element) {
+    mezDbgPrint("[66] Adding item ${element.id}");
+    _items.add(
+      Item(
+        name: {
+          element.name.translations.first.language_id.toLanguageType():
+              element.name.translations.first.value,
+          element.name.translations[1].language_id.toLanguageType():
+              element.name.translations[1].value,
+        },
+        available: element.available,
+        categoryId: element.category_id,
+        description: element.description != null
+            ? {
+                element.description!.translations.first.language_id
+                        .toLanguageType():
+                    element.description!.translations.first.value,
+                element.description!.translations[1].language_id
+                        .toLanguageType():
+                    element.description!.translations[1].value,
+              }
+            : null,
+        cost: element.cost,
+        itemType: element.item_type.toItemType(),
+      ),
+    );
+  });
+
+  return _items;
 }
 
 Future<Restaurant?> get_restaurant_by_id({required int id}) async {

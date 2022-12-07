@@ -67,10 +67,10 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       this.estimatedLaundryReadyTime,
       this.routeInformation,
       super.dropoffDriver,
-      String? laundryDropOffDriverChatId,
+      int? laundryDropOffDriverChatId,
       super.customerDropOffDriverChatId,
       super.pickupDriver,
-      String? laundryPickupDriverChatId,
+      int? laundryPickupDriverChatId,
       super.customerPickupDriverChatId,
       super.estimatedPickupFromCustomerTime,
       super.estimatedDropoffAtServiceProviderTime,
@@ -78,18 +78,16 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       super.estimatedDropoffAtCustomerTime,
       this.notes,
       super.orderType = OrderType.Laundry,
+      required super.chatId,
       super.notifiedAdmin,
       super.notifiedOperator})
       : super(
             serviceProviderDropOffDriverChatId: laundryDropOffDriverChatId,
             serviceProviderPickupDriverChatId: laundryPickupDriverChatId,
-            serviceProviderId: laundry?.firebaseId,
+            serviceProviderId: laundry?.hasuraId,
             serviceProvider: laundry);
 
-  factory LaundryOrder.fromData(
-    id,
-    data,
-  ) {
+  factory LaundryOrder.fromData(id, data) {
     final dynamic _estimatedPickupFromServiceProviderTime =
         data["estimatedDeliveryTimes"]?["dropoff"]?["pickup"];
     final dynamic _estimatedDropoffAtCustomerTime =
@@ -100,6 +98,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         data["estimatedDeliveryTimes"]?["pickup"]?["dropoff"];
 
     final LaundryOrder laundryOrder = LaundryOrder(
+        chatId: 1,
         orderId: id,
         // TODO:544D-HASURA
         customer: UserInfo(
@@ -197,7 +196,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         status == LaundryOrderStatus.ReadyForDelivery;
   }
 
-  String? getCustomerDriverChatId() {
+  int? getCustomerDriverChatId() {
     if (getCurrentPhase() == LaundryOrderPhase.Pickup &&
         customerPickupDriverChatId != null) {
       return customerPickupDriverChatId;
@@ -207,7 +206,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
     return null;
   }
 
-  String? getServiceDriverChatId() {
+  int? getServiceDriverChatId() {
     if (getCurrentPhase() == LaundryOrderPhase.Pickup &&
         serviceProviderPickupDriverChatId != null) {
       return serviceProviderPickupDriverChatId;

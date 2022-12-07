@@ -443,10 +443,10 @@ Future<void> showStatusInfoDialog(
 
 Future<void> showReviewDialog(
   BuildContext context, {
-  required String orderId,
+  required int orderId,
   required OrderType orderType,
 }) async {
-  final String? serviceId =
+  final int? serviceId =
       Get.find<OrderController>().getOrder(orderId)?.serviceProviderId;
   final OrderType? orderType =
       Get.find<OrderController>().getOrder(orderId)?.orderType;

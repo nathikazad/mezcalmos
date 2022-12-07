@@ -340,7 +340,6 @@ const documentNodeQuerygetCustomerLocations = DocumentNode(definitions: [
           ),
         ]),
       ),
-      
     ]),
   ),
 ]);
@@ -476,7 +475,7 @@ class Query$getCustomerLocations$saved_location {
     return Query$getCustomerLocations$saved_location(
       id: (l$id as int),
       name: (l$name as String),
-      location_gps: GeographyFromJson(l$location_gps),
+      location_gps: geographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
       $default: (l$$default as bool),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -502,7 +501,7 @@ class Query$getCustomerLocations$saved_location {
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location_gps = location_gps;
-    _resultData['location_gps'] = GeographyToJson(l$location_gps);
+    _resultData['location_gps'] = geographyToJson(l$location_gps);
     final l$location_text = location_text;
     _resultData['location_text'] = l$location_text;
     final l$$default = $default;
@@ -970,7 +969,6 @@ const documentNodeQuerygetSavedLocation = DocumentNode(definitions: [
           ),
         ]),
       ),
-      
     ]),
   ),
 ]);
@@ -1103,7 +1101,7 @@ class Query$getSavedLocation$saved_location_by_pk {
     return Query$getSavedLocation$saved_location_by_pk(
       id: (l$id as int),
       name: (l$name as String),
-      location_gps: GeographyFromJson(l$location_gps),
+      location_gps: geographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
       $default: (l$$default as bool),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -1129,7 +1127,7 @@ class Query$getSavedLocation$saved_location_by_pk {
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location_gps = location_gps;
-    _resultData['location_gps'] = GeographyToJson(l$location_gps);
+    _resultData['location_gps'] = geographyToJson(l$location_gps);
     final l$location_text = location_text;
     _resultData['location_text'] = l$location_text;
     final l$$default = $default;
@@ -1313,7 +1311,7 @@ class Variables$Mutation$updateSavedLocation {
         (l$location_id as Map<String, dynamic>));
     if (data.containsKey('gps')) {
       final l$gps = data['gps'];
-      result$data['gps'] = l$gps == null ? null : GeographyFromJson(l$gps);
+      result$data['gps'] = l$gps == null ? null : geographyFromJson(l$gps);
     }
     final l$name = data['name'];
     result$data['name'] = (l$name as String);
@@ -1338,7 +1336,7 @@ class Variables$Mutation$updateSavedLocation {
     result$data['location_id'] = l$location_id.toJson();
     if (_$data.containsKey('gps')) {
       final l$gps = gps;
-      result$data['gps'] = l$gps == null ? null : GeographyToJson(l$gps);
+      result$data['gps'] = l$gps == null ? null : geographyToJson(l$gps);
     }
     final l$name = name;
     result$data['name'] = l$name;
@@ -1759,7 +1757,6 @@ const documentNodeMutationupdateSavedLocation = DocumentNode(definitions: [
           ),
         ]),
       ),
-      
     ]),
   ),
 ]);
@@ -1883,7 +1880,7 @@ class Mutation$updateSavedLocation$update_saved_location_by_pk {
     return Mutation$updateSavedLocation$update_saved_location_by_pk(
       id: (l$id as int),
       name: (l$name as String),
-      location_gps: GeographyFromJson(l$location_gps),
+      location_gps: geographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
       $default: (l$$default as bool),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -1909,7 +1906,7 @@ class Mutation$updateSavedLocation$update_saved_location_by_pk {
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location_gps = location_gps;
-    _resultData['location_gps'] = GeographyToJson(l$location_gps);
+    _resultData['location_gps'] = geographyToJson(l$location_gps);
     final l$location_text = location_text;
     _resultData['location_text'] = l$location_text;
     final l$$default = $default;
@@ -2372,7 +2369,6 @@ const documentNodeMutationdeleteSavedLocation = DocumentNode(definitions: [
           ),
         ]),
       ),
-      
     ]),
   ),
 ]);
@@ -2909,7 +2905,6 @@ const documentNodeMutationaddSavedLocation = DocumentNode(definitions: [
           ),
         ]),
       ),
-      
     ]),
   ),
 ]);

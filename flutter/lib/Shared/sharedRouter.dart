@@ -39,23 +39,24 @@ const String kAgoraCallScreen = '/agora';
 const String kPickLocationWithoutAuth = "/pick_location/noAuth";
 const String kPickLocationEdit = "/pick_location/edit";
 
-String getMessagesRoute(
-    {required String chatId,
-    String? orderLink,
-    String? orderId,
-    OrderType? orderType,
-    ParticipantType recipientType = ParticipantType.Customer,
-    String? recipientId}) {
-  String mainUrl = kMessagesRoute.replaceFirst(":chatId", chatId);
+String getMessagesRoute({
+  required int chatId,
+  String? orderLink,
+  int? orderId,
+  OrderType? orderType,
+  ParticipantType recipientType = ParticipantType.Customer,
+  String? recipientId,
+}) {
+  String mainUrl = kMessagesRoute.replaceFirst(":chatId", chatId.toString());
 
-  if (recipientId != null)
-    mainUrl += "?recipientId=$recipientId";
-  else
-    mainUrl += "?recipientType=${recipientType.toFirebaseFormattedString()}";
-  if (orderLink != null) mainUrl += "&orderLink=$orderLink";
-  if (orderId != null) mainUrl += "&orderId=$orderId";
-  if (orderType != null)
-    mainUrl += "&orderType=${orderType.toFirebaseFormatString()}";
+  // if (recipientId != null)
+  //   mainUrl += "?recipientId=$recipientId";
+  // else
+  //   mainUrl += "?recipientType=${recipientType.toFirebaseFormattedString()}";
+  // if (orderLink != null) mainUrl += "&orderLink=$orderLink";
+  // if (orderId != null) mainUrl += "&orderId=$orderId";
+  // if (orderType != null)
+  // mainUrl += "&orderType=${orderType.toFirebaseFormatString()}";
   return mainUrl;
 }
 

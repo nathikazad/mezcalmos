@@ -18,6 +18,21 @@ enum ParticipantType {
   RestaurantOperator
 }
 
+extension HasuraAppTypeIdParser on String {
+  ParticipantType toParticipantTypeFromHasuraAppTypeId() {
+    final String _formatted = toLowerCase();
+    switch (_formatted) {
+      case 'customer_mobile':
+      case 'customer_web':
+        return ParticipantType.Customer;
+      case 'restaurant':
+        return ParticipantType.Restaurant;
+      default:
+        return ParticipantType.Customer;
+    }
+  }
+}
+
 extension ParseParticipantTypeToString on ParticipantType {
   String toFirebaseFormattedString() {
     final String str = toString().split('.').last;
@@ -58,13 +73,14 @@ extension ParseStringToParticipantType on String {
 class Participant {
   String image;
   String name;
-  String id;
+  int id;
   ParticipantType participantType;
-  Participant(
-      {required this.image,
-      required this.name,
-      required this.participantType,
-      required this.id});
+  Participant({
+    required this.image,
+    required this.name,
+    required this.participantType,
+    required this.id,
+  });
 
   @override
   String toString() {
@@ -89,7 +105,7 @@ class ParticipantWithAgora extends Participant {
       {required String image,
       required String name,
       required ParticipantType participantType,
-      required String id,
+      required int id,
       this.agora})
       : super(
             id: id, image: image, participantType: participantType, name: name);
@@ -100,13 +116,50 @@ class Message {
   DateTime timestamp;
   String get formatedTime => DateFormat('HH:mm').format(timestamp).toString();
   String userId;
-  ParticipantType participantType;
+  // ParticipantType participantType;
   Message({
     required this.message,
     required this.timestamp,
     required this.userId,
-    required this.participantType,
+    // required this.participantType,
   });
+}
+
+class HasuraChatInfo {
+  final String chatTite;
+  final String chatImg;
+  final String parentlink;
+
+  HasuraChatInfo({
+    required this.chatTite,
+    required this.chatImg,
+    required this.parentlink,
+  });
+}
+
+class HasuraChat {
+  final int id;
+  final List<Message> messages;
+  final HasuraChatInfo chatInfo;
+  DateTime creationTime;
+  List<Participant> _participants = [];
+
+  HasuraChat({
+    required this.id,
+    required this.messages,
+    required this.chatInfo,
+    required this.creationTime,
+    required List<Participant> participants,
+  }) {
+    _participants = participants;
+  }
+
+  // Participant? getParticipant(
+  //         ParticipantType participantType, String participantId) =>
+  //     _participants[participantType]?[participantId];
+
+  // Map<String, Participant>? getParticipants(ParticipantType participantType) =>
+  //     _participants[participantType];
 }
 
 class Chat {
@@ -177,8 +230,8 @@ class Chat {
           message: messageData['message'],
           timestamp: DateTime.parse(messageData['timestamp']),
           userId: messageData['userId'],
-          participantType:
-              messageData['participantType'].toString().toParticipantType(),
+          // participantType:
+          //     messageData['participantType'].toString().toParticipantType(),
         ));
       } catch (e) {
         // _messages.add(Message(m['message'], null, m['userId']));

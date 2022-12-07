@@ -204,10 +204,12 @@ class _StartingPointState extends State<StartingPoint> {
       firebaseDb.setPersistenceEnabled(true);
       firebaseDb.setPersistenceCacheSizeBytes(10000000);
       await FirebaseAuth.instance.useEmulator(_host + authPort);
+      mezDbgPrint(
+          "[+] Cloud Functions - dev - endpoint::${_host.replaceAll('http://', '')}:$functionPort");
       FirebaseFunctions.instance
           .useFunctionsEmulator(_host.replaceAll('http://', ''), functionPort);
     } else if (_launchMode == AppLaunchMode.stage) {
-      mezDbgPrint("[+] Entered Staging check ----.");
+      mezDbgPrint("[+] Entered Staging check ----");
       firebaseDb =
           FirebaseDatabase.instanceFor(app: _app, databaseURL: stagingDb);
     } else {

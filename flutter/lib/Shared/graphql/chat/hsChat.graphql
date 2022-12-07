@@ -1,0 +1,35 @@
+
+# Get chat infos
+query get_chat_info($chat_id :Int!) {
+  chat_by_pk(id: $chat_id) {
+    messages,
+    chat_info,
+    creation_time,
+    chat_participants {
+      app_type_id,
+      user {
+        image,
+        name,
+        id
+      }
+    }
+  }
+}
+
+
+
+# Get chat infos
+subscription get_chat_info($chat_id :Int!) {
+  chat_by_pk(id: $chat_id) {
+    messages
+  }
+}
+
+
+# Append messages
+mutation add_message($chat_id : Int! ,  $msg : jsonb!)
+{
+  update_chat( where: {id : {_eq :$chat_id}} , _append : {messages : $msg}){
+    affected_rows
+  }
+}

@@ -121,8 +121,8 @@ extension RestaurantFilters on RestaurantList {
         item.restaurant = category.restaurant;
         item.category = category;
         if (item.restaurant?.info.firebaseId != null && item.id != null)
-          item.linkUrl =
-              getItemRoute(item.restaurant!.info.firebaseId, item.id!);
+          item.linkUrl = getItemRoute(
+              item.restaurant!.info.firebaseId, item.id.toString());
       });
       items.addAll(categoryItems);
       return items;

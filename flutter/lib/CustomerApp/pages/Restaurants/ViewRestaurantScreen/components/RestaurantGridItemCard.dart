@@ -37,7 +37,8 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
       child: InkWell(
         onTap: () {
           Get.toNamed(
-            getItemRoute(widget.restaurant.info.firebaseId, widget.item.id!),
+            getItemRoute(
+                widget.restaurant.info.firebaseId, widget.item.id.toString()),
             arguments: {
               "mode": ViewItemScreenMode.AddItemMode,
               "isSpecial": widget.isSpecial

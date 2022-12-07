@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -12,7 +13,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 
 //ignore_for_file:constant_identifier_names
 enum RestaurantOrderStatus {
-  OrderReceieved,
+  OrderReceived,
   PreparingOrder,
   ReadyForPickup,
   OnTheWay,
@@ -30,8 +31,13 @@ extension ParseRestaurantOrderStatusToString on RestaurantOrderStatus {
 
 extension ParseStringToRestaurantOrderStatus on String {
   RestaurantOrderStatus toRestaurantOrderStatus() {
+    mezDbgPrint(this);
     return RestaurantOrderStatus.values.firstWhere(
-        (RestaurantOrderStatus e) => e.toFirebaseFormatString() == this);
+      (RestaurantOrderStatus e) {
+        mezDbgPrint("ENUM :: $e ||| STR :: $this");
+        return e.toFirebaseFormatString() == this;
+      },
+    );
   }
 }
 
@@ -47,37 +53,38 @@ class RestaurantOrder extends DeliverableOrder {
   DateTime? deliveryTime;
   Review? review;
 
-  RestaurantOrder(
-      {required super.orderId,
-      super.orderType = OrderType.Restaurant,
-      required this.status,
-      required this.quantity,
-      required super.serviceProviderId,
-      required super.paymentType,
-      required super.orderTime,
-      required super.cost,
-      required ServiceInfo restaurant,
-      required super.customer,
-      required super.to,
-      this.estimatedFoodReadyTime,
-      super.dropoffDriver,
-      this.deliveryTime,
-      String? dropOffDriverChatId,
-      required this.itemsCost,
-      required this.shippingCost,
-      super.customerDropOffDriverChatId,
-      super.estimatedPickupFromServiceProviderTime,
-      super.estimatedDropoffAtCustomerTime,
-      this.notes,
-      super.routeInformation,
-      super.notifiedAdmin,
-      super.notifiedOperator,
-      super.totalCostBeforeShipping,
-      super.totalCost,
-      super.refundAmount,
-      super.costToCustomer,
-      super.dropOffShippingCost})
-      : super(
+  RestaurantOrder({
+    required super.orderId,
+    super.orderType = OrderType.Restaurant,
+    required this.status,
+    required this.quantity,
+    required super.serviceProviderId,
+    required super.paymentType,
+    required super.orderTime,
+    required super.cost,
+    required ServiceInfo restaurant,
+    required super.customer,
+    required super.to,
+    this.estimatedFoodReadyTime,
+    super.dropoffDriver,
+    this.deliveryTime,
+    int? dropOffDriverChatId,
+    required this.itemsCost,
+    required this.shippingCost,
+    super.customerDropOffDriverChatId,
+    super.estimatedPickupFromServiceProviderTime,
+    super.estimatedDropoffAtCustomerTime,
+    this.notes,
+    super.routeInformation,
+    super.notifiedAdmin,
+    super.notifiedOperator,
+    super.totalCostBeforeShipping,
+    super.totalCost,
+    super.refundAmount,
+    super.costToCustomer,
+    super.dropOffShippingCost,
+    required super.chatId,
+  }) : super(
             serviceProvider: restaurant,
             serviceProviderDropOffDriverChatId: dropOffDriverChatId);
 
@@ -88,6 +95,7 @@ class RestaurantOrder extends DeliverableOrder {
   ) {
     final RestaurantOrder restaurantOrder = RestaurantOrder(
         orderId: id,
+        chatId: 1,
         status: data["status"].toString().toRestaurantOrderStatus(),
         quantity: data["quantity"],
         serviceProviderId: data["serviceProviderId"],
@@ -162,7 +170,7 @@ class RestaurantOrder extends DeliverableOrder {
     return restaurantOrder;
   }
 
-  String get restaurantId => serviceProviderId!;
+  int get restaurantId => serviceProviderId!;
 
   @override
   String toString() {
@@ -190,7 +198,7 @@ class RestaurantOrder extends DeliverableOrder {
 
   @override
   bool inProcess() {
-    return status == RestaurantOrderStatus.OrderReceieved ||
+    return status == RestaurantOrderStatus.OrderReceived ||
         status == RestaurantOrderStatus.PreparingOrder ||
         status == RestaurantOrderStatus.ReadyForPickup ||
         status == RestaurantOrderStatus.OnTheWay;
@@ -241,8 +249,8 @@ class RestaurantOrder extends DeliverableOrder {
 class RestaurantOrderItem {
   num costPerOne;
   num totalCost;
-  String idInCart;
-  String idInRestaurant;
+  int idInCart;
+  int idInRestaurant;
   LanguageMap name;
   String? image;
   int quantity;

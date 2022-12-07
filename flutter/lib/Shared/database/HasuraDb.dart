@@ -33,7 +33,9 @@ class HasuraDb {
         hasuraDbLink = hasuraDevLink;
         break;
     }
-    Map<String, String> headers = <String, String>{};
+    Map<String, String> headers = <String, String>{
+      "x-hasura-admin-secret": "myadminsecretkey"
+    };
     HttpLink _httpLink = HttpLink(hasuraDbLink, defaultHeaders: headers);
     Link _link = _httpLink;
 
@@ -47,7 +49,7 @@ class HasuraDb {
       mezDbgPrint("TOKEN $hasuraAuthToken");
       headers = <String, String>{
         'Authorization': 'Bearer $hasuraAuthToken',
-        'x-hasura-role': _getRoleBasedOnApp(),
+        'x-hasura-role': _getRoleBasedOnApp()
       };
       final AuthLink _authLink =
           AuthLink(getToken: () async => 'Bearer $hasuraAuthToken');

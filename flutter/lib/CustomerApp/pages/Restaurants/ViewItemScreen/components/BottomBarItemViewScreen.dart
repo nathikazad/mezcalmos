@@ -8,10 +8,13 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/graphql/customer/cart/__generated/cart.graphql.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
         ["pages"]["Restaurants"]["ViewItemScreen"]["components"]
@@ -23,11 +26,13 @@ class BottomBarItemViewScreen extends StatefulWidget {
     required this.cartItem,
     required this.mode,
     this.currentRestaurantId,
+    required this.restaurant,
   }) : super(key: key);
 
   final Rxn<CartItem> cartItem;
   final ViewItemScreenMode mode;
-  final String? currentRestaurantId;
+  final Restaurant restaurant;
+  final int? currentRestaurantId;
 
   @override
   _BottomBarItemViewScreenState createState() =>
@@ -109,21 +114,44 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                           .canAddSpecial(item: widget.cartItem.value!) ==
                       false)
                   ? () async {
+                      mezDbgPrint("[cc] Exec :: _addSpecialItemCallBack ");
                       await _addSpecialItemCallBack();
                     }
                   : () async {
+                      mezDbgPrint("[cc] Exec :: other ");
+
                       if (auth.fireAuthUser != null) {
                         if (ViewItemScreenMode.AddItemMode == widget.mode) {
+                          mezDbgPrint("[cc] Exec :: AddItemMode ");
+
                           if (restaurantCartController
                                   .associatedRestaurant?.info.firebaseId !=
                               null) {
+                            mezDbgPrint("[cc] Exec :: AddItemMode :: if 1 ");
+
                             if (restaurantCartController
-                                    .associatedRestaurant?.info.firebaseId ==
+                                    .associatedRestaurant?.info.hasuraId ==
                                 widget.currentRestaurantId) {
+                              mezDbgPrint("[cc] Exec :: AddItemMode :: if 2 ");
+
                               mezDbgPrint(
                                   "the first id is ${restaurantCartController.associatedRestaurant?.info.firebaseId} and the scond is ${widget.currentRestaurantId}");
-                              await restaurantCartController
-                                  .addItem(widget.cartItem.value!);
+                              Cart? _c = await getCustomerCart(
+                                customerId: auth.user!.hasuraId,
+                              );
+                              mezDbgPrint(
+                                  "[cc] got customer cart from db ::  cart ==> ${_c?.cartItems.length}");
+                              if (_c == null) {
+                                mezDbgPrint(
+                                    "No customer Cart created yet! .. creating");
+                                await create_customer_cart(
+                                    restaurant_id: restaurantCartController
+                                        .associatedRestaurant!.info.hasuraId);
+                              }
+                              await add_item_to_cart(
+                                  cartItem: widget.cartItem.value!);
+                              restaurantCartController.cart.value.restaurant =
+                                  widget.restaurant;
                               await Get.offNamed<void>(kCartRoute);
                             } else {
                               mezDbgPrint(
@@ -155,6 +183,9 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                               );
                             }
                           } else {
+                            mezDbgPrint(
+                                "[cc] Exec :: AddItemMode :: ${restaurantCartController.associatedRestaurant} ");
+
                             if (restaurantCartController.cart.value
                                         .canAddSpecial(
                                             item: widget.cartItem.value!) !=
@@ -166,8 +197,25 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                               mezDbgPrint("Error");
                               MezSnackbar("Error", "Special time error");
                             } else {
-                              await restaurantCartController
-                                  .addItem(widget.cartItem.value!);
+                              restaurantCartController.associatedRestaurant =
+                                  widget.restaurant;
+                              mezDbgPrint(
+                                  "Hasura Id ==> ${auth.user!.hasuraId}");
+                              Cart? _c = await getCustomerCart(
+                                customerId: auth.user!.hasuraId,
+                              );
+                              if (_c == null) {
+                                mezDbgPrint(
+                                    "No customer Cart created yet! .. creating");
+                                await create_customer_cart(
+                                    restaurant_id: restaurantCartController
+                                        .associatedRestaurant!.info.hasuraId);
+                              }
+                              int? item_id = await add_item_to_cart(
+                                cartItem: widget.cartItem.value!,
+                              );
+                              widget.cartItem.value?.idInCart = item_id;
+                              widget.cartItem.refresh();
                               await Get.offNamed<void>(kCartRoute);
                             }
                           }

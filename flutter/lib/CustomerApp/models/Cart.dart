@@ -1,6 +1,10 @@
 import 'dart:math';
 
 import 'package:collection/collection.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
+import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
@@ -75,7 +79,7 @@ class Cart {
   }
 
   Map<String, dynamic> toFirebaseFormattedJson() {
-    final Map<String, dynamic> items = {};
+    final Map<int, dynamic> items = {};
     cartItems.forEach((CartItem cartItem) {
       items[cartItem.idInCart!] = cartItem.toFirebaseFunctionFormattedJson();
     });
@@ -124,27 +128,39 @@ class Cart {
       : 0;
 
   void addItem(CartItem cartItem) {
-    if (cartItem.idInCart == null) {
-      cartItem.idInCart = getRandomString(5);
-    } else {
-      final int index = cartItems.indexWhere(
-          (CartItem element) => element.idInCart == cartItem.idInCart);
-      cartItems.removeAt(index);
-    }
-
+    mezDbgPrint(
+        "[cc] Index ==> ${cartItem.idInCart} | cartItems.len ${cartItems.length}");
+    final int index = cartItems.indexWhere((CartItem element) {
+      return element.idInCart == cartItem.idInCart;
+    });
+    if (index != -1) cartItems.removeAt(index);
     cartItems.add(CartItem.clone(cartItem));
   }
 
-  void incrementItem(String id, int quantity) {
+  /// returns new quantity applied
+  CartItem? incrementItem(int id, int quantity) {
     final CartItem? item = getItem(id);
-    if (item != null) item.quantity += quantity;
+    if (item != null) {
+      if (Get.find<AuthController>().user?.hasuraId != null) {
+        update_item_quantity(
+          quantity: item.quantity + quantity,
+          customer_id: Get.find<AuthController>().user!.hasuraId,
+          item_id: id,
+        );
+      }
+      item.quantity += quantity;
+      return item;
+    }
   }
 
-  void deleteItem(String itemId) {
+  void deleteItem(int itemId) {
+    if (Get.find<AuthController>().user?.hasuraId != null) {
+      delete_item_by_id(itemId);
+    }
     cartItems.removeWhere((CartItem cartItem) => cartItem.idInCart == itemId);
   }
 
-  CartItem? getItem(String id) {
+  CartItem? getItem(int id) {
     return cartItems
         .firstWhereOrNull((CartItem cartItem) => cartItem.idInCart == id);
   }
@@ -219,8 +235,8 @@ class Cart {
 }
 
 class CartItem {
-  String restaurantId;
-  String? idInCart;
+  int restaurantId;
+  int? idInCart;
   Item item;
   int quantity;
 
@@ -239,11 +255,11 @@ class CartItem {
     required itemData,
     required Item item,
     required Restaurant restaurant,
-    required String itemIdInCart,
+    required int itemIdInCart,
   }) {
     final CartItem cartItem = CartItem(
       item,
-      restaurant.info.firebaseId,
+      restaurant.info.hasuraId,
       idInCart: itemIdInCart,
       quantity: itemData["quantity"],
       notes: itemData["notes"],

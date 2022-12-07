@@ -9,9 +9,9 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 abstract class Order {
-  String orderId;
+  int orderId;
   OrderType orderType;
-  String? serviceProviderId;
+  int? serviceProviderId;
   PaymentType paymentType;
   DateTime orderTime;
   UserInfo customer;
@@ -24,8 +24,10 @@ abstract class Order {
   num? totalCost;
   num? refundAmount;
   num? costToCustomer;
+  int chatId;
 
   Order({
+    required this.chatId,
     required this.orderId,
     required this.orderType,
     this.serviceProviderId,
@@ -46,7 +48,7 @@ abstract class Order {
     switch (orderType) {
       case OrderType.Restaurant:
         return (this as RestaurantOrder).status ==
-            RestaurantOrderStatus.OrderReceieved;
+            RestaurantOrderStatus.OrderReceived;
       case OrderType.Laundry:
         return (this as LaundryOrder).status ==
             LaundryOrderStatus.OrderReceieved;
@@ -117,8 +119,8 @@ extension ParseStringToOrderType on String {
 
 abstract class DeliverableOrder extends Order {
   DeliveryDriverUserInfo? dropoffDriver;
-  String? serviceProviderDropOffDriverChatId;
-  String? customerDropOffDriverChatId;
+  int? serviceProviderDropOffDriverChatId;
+  int? customerDropOffDriverChatId;
   DateTime? estimatedPickupFromServiceProviderTime;
   DateTime? estimatedDropoffAtCustomerTime;
   num? dropOffShippingCost;
@@ -126,6 +128,7 @@ abstract class DeliverableOrder extends Order {
   bool notifiedAdmin;
   DeliverableOrder(
       {required super.orderId,
+      required super.chatId,
       super.serviceProviderId,
       required super.paymentType,
       required super.orderTime,
@@ -151,13 +154,14 @@ abstract class DeliverableOrder extends Order {
 
 abstract class TwoWayDeliverableOrder extends DeliverableOrder {
   DeliveryDriverUserInfo? pickupDriver;
-  String? serviceProviderPickupDriverChatId;
-  String? customerPickupDriverChatId;
+  int? serviceProviderPickupDriverChatId;
+  int? customerPickupDriverChatId;
   DateTime? estimatedPickupFromCustomerTime;
   DateTime? estimatedDropoffAtServiceProviderTime;
   num? pickupShippingCost;
   TwoWayDeliverableOrder(
       {required super.orderId,
+      required super.chatId,
       super.serviceProviderId,
       required super.paymentType,
       required super.orderTime,

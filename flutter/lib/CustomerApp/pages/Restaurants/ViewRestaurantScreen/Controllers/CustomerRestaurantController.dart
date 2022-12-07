@@ -4,10 +4,13 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
@@ -28,11 +31,37 @@ class CustomerRestaurantController {
   Map<int, dynamic> itemKeys = {};
   RxBool pauseRectGetterIndex = RxBool(false);
 
-  void init({required Restaurant restaurant, required TickerProvider vsync}) {
+  void init(
+      {required Restaurant restaurant, required TickerProvider vsync}) async {
     this.restaurant.value = restaurant;
     _getShippingPrice();
     _initControllers(vsync, restaurant);
     assignKeys();
+    final List<Category>? _cats =
+        await get_restaurant_categories_by_id(restaurant.info.hasuraId);
+    if (_cats != null) {
+      this.restaurant.value?.setCategories(_cats);
+      this.restaurant.refresh();
+    }
+
+    // final List<Item> _items =
+    //     await fetch_restaurant_items(restaurant_id: restaurant.info.hasuraId);
+
+    // _cats.forEach((Category cat) {
+    //   if (item.itemType == ItemType.Special && item.endsAt != null) {
+    //     if (DateTime.now()
+    //         .toLocal()
+    //         .difference(item.endsAt!.toLocal())
+    //         .inSeconds
+    //         .isNegative) {
+    //       this.restaurant.value?.currentSpecials.add(item);
+    //     } else {
+    //       this.restaurant.value?.pastSpecials.add(item);
+    //     }
+    //   } else {
+    //     this.restaurant.value?.itemsWithoutCategory.add(item);
+    //   }
+    // });
   }
 
   Future<void> _getShippingPrice() async {
@@ -119,7 +148,7 @@ class CustomerRestaurantController {
 
   Map<DateTime, List<Item>> getGroupedSpecials() {
     // Creating the map
-
+    mezDbgPrint("[66] - getGroupedSpecials");
     final Map<DateTime, List<Item>> data = restaurant.value!.currentSpecials
         .where((Item element) =>
             element.available &&

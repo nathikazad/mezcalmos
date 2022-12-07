@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantControlle
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
@@ -134,6 +135,7 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
             _restaurantController.deleteItem(cartItem.idInCart!);
             if (_restaurantController.cart.value.quantity() == 0) {
               _restaurantController.clearCart();
+              _restaurantController.cart.refresh();
               Get.until((Route route) => route.settings.name == kHomeRoute);
             } else {
               Get.back(closeOverlays: true);

@@ -171,10 +171,16 @@ Future<Route?> getDurationAndDistance(
     LocModel.Location from, LocModel.Location to) async {
   //units=metric => this is so we can get distances in km , cuz default is miles !
   /// Note : distance.text is in [KM] while distance.value is in [M]!
+
+  mezDbgPrint(
+      "[tt] Called getDurationAndDistance \n- TO :  lat(${to.latitude}) | lng(to(${to.longitude}) \n- FROM :  lat(${from.latitude}) | lng(to(${from.longitude})!");
   final String url =
-      "https://maps.googleapis.com/maps/api/directions/json?units=metric&region=mx&destination=${to.latitude}%2C${to.longitude}&origin=${from.latitude}%2C${from.longitude}&key=$placesApikey";
+      "https://maps.googleapis.com/maps/api/directions/json?units=metric&region=mx&destination=${to.longitude}%2C${to.latitude}&origin=${from.longitude}%2C${from.latitude}&key=$placesApikey";
+  mezDbgPrint("URL ==> $url");
   final http.Response resp = await http.get(Uri.parse(url));
   final Map<String, dynamic> respJson = json.decode(resp.body);
+
+  mezDbgPrint("[tt] resp :: $respJson!");
 
   if (respJson["status"] == "OK") {
     final RideDistance distance =

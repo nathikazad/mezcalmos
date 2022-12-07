@@ -33,12 +33,13 @@ class _SavedCardsListViewState extends State<SavedCardsListView> {
   RxList<CreditCard> cards = RxList([]);
   @override
   void initState() {
-    cards.value = controller.customer.value!.savedCards;
-    cardsStream = controller.customer.stream.listen((Customer? event) {
-      if (event != null) {
-        cards.value = event.savedCards;
-      }
-    });
+    cards.value = controller.customer!.savedCards;
+    // TODO: hasura-ch
+    // cardsStream = controller.customer?.listen((Customer? event) {
+    //   if (event != null) {
+    //     cards.value = event.savedCards;
+    //   }
+    // });
     super.initState();
   }
 

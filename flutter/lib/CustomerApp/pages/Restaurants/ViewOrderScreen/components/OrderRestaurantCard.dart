@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -74,11 +75,16 @@ class OrderRestaurantCard extends StatelessWidget {
                       showRedDot: Get.find<OrderController>()
                           .orderHaveNewMessageNotifications(order.orderId),
                       onTap: () {
+                        mezDbgPrint("[log] PUSHING TO => ${getMessagesRoute(
+                          chatId: order.orderId,
+                          orderId: order.orderId,
+                          recipientType: ParticipantType.Restaurant,
+                        )}");
                         Get.toNamed<void>(
                           getMessagesRoute(
-                            chatId: order.orderId,
-                            orderId: order.orderId,
-                            recipientType: ParticipantType.Restaurant,
+                            chatId: order.chatId,
+                            // orderId: order.orderId,
+                            // recipientType: ParticipantType.Restaurant,
                           ),
                         );
                       }),

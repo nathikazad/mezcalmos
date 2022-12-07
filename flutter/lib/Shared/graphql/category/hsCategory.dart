@@ -15,6 +15,7 @@ final HasuraDb hasuraDb = Get.find<HasuraDb>();
 
 Future<List<Category>?> get_restaurant_categories_by_id(int restaurantId,
     {bool withCache = true}) async {
+  mezDbgPrint("[66] get_restaurant_categories_by_id called !");
   final QueryResult<Query$getRestaurantCategories> response = await hasuraDb
       .graphQLClient
       .query$getRestaurantCategories(Options$Query$getRestaurantCategories(
@@ -159,7 +160,7 @@ List<Category> _parseCategories(
     final List<Item> items = category.items
         .map((Query$getRestaurantCategories$restaurant_category$items item) {
       return Item(
-          id: item.id.toString(),
+          id: item.id,
           nameId: item.name.id,
           descriptionId: item.description_id,
           name: toLanguageMap(translations: item.name.translations),

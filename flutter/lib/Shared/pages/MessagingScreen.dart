@@ -24,6 +24,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
@@ -37,10 +38,10 @@ class MessagingScreen extends StatefulWidget {
 
 // TODO : REFACTORING !
 class _MessagingScreenState extends State<MessagingScreen> {
-  late final String? orderLink;
-  late final OrderType? orderType;
-  late final String? orderId;
-  late final String chatId;
+  // late final String? orderLink;
+  // late final OrderType? orderType;
+  // late final String? orderId;
+  late final int chatId;
   Sagora? sagora;
   ParticipantType recipientType = ParticipantType.Customer;
   // ParticipantType? senderType;
@@ -60,18 +61,18 @@ class _MessagingScreenState extends State<MessagingScreen> {
       Get.back<void>();
     }
 
-    chatId = Get.parameters['chatId']!;
-    orderLink = Get.parameters['orderLink'];
-    orderId = Get.parameters['orderId'];
-    orderType = Get.parameters['orderType']?.toString().toOrderType();
-    if (Get.parameters['recipientId'] != null)
-      recipientId = Get.parameters['recipientId'];
-    else if (Get.parameters['recipientType'] != null) {
-      recipientType =
-          Get.parameters['recipientType']!.toString().toParticipantType();
-    }
+    chatId = int.parse(Get.parameters['chatId']!);
+    // orderLink = Get.parameters['orderLink'];
+    // orderId = Get.parameters['orderId'];
+    // orderType = Get.parameters['orderType']?.toString().toOrderType();
+    // if (Get.parameters['recipientId'] != null)
+    //   recipientId = Get.parameters['recipientId'];
+    // else if (Get.parameters['recipientType'] != null) {
+    //   recipientType =
+    //       Get.parameters['recipientType']!.toString().toParticipantType();
+    // }
     controller.clearMessageNotifications(chatId: chatId);
-    mezDbgPrint("@AYROUT ===> ${Get.parameters} | orderLink ==> $orderLink");
+    // mezDbgPrint("@AYROUT ===> ${Get.parameters} | orderLink ==> $orderLink");
     controller.loadChat(chatId: chatId, onValueCallBack: _fillCallBack);
     setState(() {
       isChatLoaded = true;
@@ -111,9 +112,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
           message: message.message,
           time: intl.DateFormat('hh:mm a').format(message.timestamp.toLocal()),
           isMe: message.userId == _authController.user!.firebaseId,
-          userImage: controller.chat.value!
-              .getParticipant(message.participantType, message.userId)
-              ?.image,
+          userImage: controller.chat.value?.chatInfo.chatImg,
         );
       },
     ));
@@ -121,12 +120,12 @@ class _MessagingScreenState extends State<MessagingScreen> {
   }
 
   /// Using this for now, to limit the calls only between deliveryDrivers<->Customers
-  bool isReciepientNotAdmin() {
-    final ParticipantType? _pType =
-        controller.recipient(recipientType: recipientType)?.participantType;
-    return [ParticipantType.Customer, ParticipantType.DeliveryDriver]
-        .contains(_pType);
-  }
+  // bool isReciepientNotAdmin() {
+  //   final ParticipantType? _pType =
+  //       controller.recipient(recipientType: recipientType)?.participantType;
+  //   return [ParticipantType.Customer, ParticipantType.DeliveryDriver]
+  //       .contains(_pType);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -165,31 +164,39 @@ class _MessagingScreenState extends State<MessagingScreen> {
         ),
         title: Obx(
           () {
-            return (controller
-                        .recipient(recipientType: recipientType)
-                        ?.participantType ==
-                    ParticipantType.DeliveryAdmin)
-                ? Text(
-                    "Administrador",
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  )
+            return controller.chat.value?.chatInfo.chatTite == null
+                ? ThreeDotsLoading()
                 : Text(
-                    controller
-                            .recipient(
-                                recipientType: recipientType,
-                                recipientId: recipientId)
-                            ?.name ??
-                        "User",
+                    controller.chat.value!.chatInfo.chatTite,
                     style: TextStyle(
                       fontSize: 18,
                     ),
                   );
+            // return (controller
+            //             .recipient(recipientType: recipientType)
+            //             ?.participantType ==
+            //         ParticipantType.DeliveryAdmin)
+            //     ? Text(
+            //         "Administrador",
+            //         style: TextStyle(
+            //           fontSize: 18,
+            //         ),
+            //       )
+            //     : Text(
+            //         controller
+            //                 .recipient(
+            //                     recipientType: recipientType,
+            //                     recipientId: recipientId)
+            //                 ?.name ??
+            //             "User",
+            //         style: TextStyle(
+            //           fontSize: 18,
+            //         ),
+            //       );
           },
         ),
         actions: <Widget>[
-          if (orderLink != null)
+          if (controller.chat.value?.chatInfo.parentlink != null)
             InkWell(
               child: Container(
                 width: 60,
@@ -211,14 +218,16 @@ class _MessagingScreenState extends State<MessagingScreen> {
                   ),
                 ),
               ),
-              onTap: () => Get.toNamed<void>(orderLink!),
+              onTap: () => Get.toNamed<void>(
+                controller.chat.value!.chatInfo.parentlink,
+              ),
             ),
           Container(
               child: controller.isUserAuthorizedToCall() &&
-                      isReciepientNotAdmin() &&
+                      // isReciepientNotAdmin() &&
                       sagora != null
                   ? InkWell(
-                      onTap: () async => _onCallPress(),
+                      // onTap: () async => _onCallPress(),
                       child: Container(
                         width: 30,
                         height: 30,
@@ -269,7 +278,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                         textEditingController: _textEditingController,
                         controller: controller,
                         chatId: chatId,
-                        orderId: orderId,
+                        // orderId: orderId,
                       )
                     ],
                   ),
@@ -282,83 +291,83 @@ class _MessagingScreenState extends State<MessagingScreen> {
     );
   }
 
-  Future<void> _onCallPress() async {
-    // all the none-null forcing used down below, are garanteed to work 100%
-    // and will never throw a null check error/exception.
-    if (await sagora!.checkAgoraPermissions()) {
-      mezDbgPrint("#############----1-----######");
-      ParticipantType _calleeType = ParticipantType.DeliveryDriver;
-      switch (controller.appType) {
-        case AppType.DeliveryApp:
-          _calleeType = ParticipantType.Customer;
-          break;
-        default:
-      }
-      mezDbgPrint("#############----2-----######");
-      mezDbgPrint(_calleeType);
-      // we get the one We're trying to call first.
-      final Participant? _recipient = controller.recipient(
-        recipientType: _calleeType,
-      );
-      mezDbgPrint("1 [RECIPIENT::calleeType ] $_calleeType");
+  // Future<void> _onCallPress() async {
+  //   // all the none-null forcing used down below, are garanteed to work 100%
+  //   // and will never throw a null check error/exception.
+  //   if (await sagora!.checkAgoraPermissions()) {
+  //     mezDbgPrint("#############----1-----######");
+  //     ParticipantType _calleeType = ParticipantType.DeliveryDriver;
+  //     switch (controller.appType) {
+  //       case AppType.DeliveryApp:
+  //         _calleeType = ParticipantType.Customer;
+  //         break;
+  //       default:
+  //     }
+  //     mezDbgPrint("#############----2-----######");
+  //     mezDbgPrint(_calleeType);
+  //     // we get the one We're trying to call first.
+  //     final Participant? _recipient = controller.recipient(
+  //       recipientType: _calleeType,
+  //     );
+  //     mezDbgPrint("1 [RECIPIENT::calleeType ] $_calleeType");
 
-      if (_recipient != null) {
-        await controller.callUser(
-          chatId: chatId,
-          callee: _recipient,
-          orderId: orderId,
-        );
-        mezDbgPrint("3 - sender id ${controller.sender()?.id}");
-        mezDbgPrint("3 - sender name ${controller.sender()?.participantType}");
+  //     if (_recipient != null) {
+  //       await controller.callUser(
+  //         chatId: chatId,
+  //         callee: _recipient,
+  //         orderId: orderId,
+  //       );
+  //       mezDbgPrint("3 - sender id ${controller.sender()?.id}");
+  //       mezDbgPrint("3 - sender name ${controller.sender()?.participantType}");
 
-        // Request Agora auth
+  //       // Request Agora auth
 
-        final dynamic _agoraAuth = (await sagora!.getAgoraToken(
-          chatId,
-          controller.sender()!.id,
-          controller.sender()!.participantType,
-        ))
-            .snapshot
-            .value;
+  //       final dynamic _agoraAuth = (await sagora!.getAgoraToken(
+  //         chatId,
+  //         controller.sender()!.id,
+  //         controller.sender()!.participantType,
+  //       ))
+  //           .snapshot
+  //           .value;
 
-        mezDbgPrint("4 - A_agoraAuth $_agoraAuth");
+  //       mezDbgPrint("4 - A_agoraAuth $_agoraAuth");
 
-        // then we join if it's not null && it's not expired
-        if (_agoraAuth != null) {
-          mezDbgPrint("AgoraAuth  :: passed validation test !");
-          // await FlutterCallkitIncoming.startCall(chatId);
-          // then join channel
-          // ignore: unawaited_futures
-          await sagora!.handleIfInChannelAlready();
+  //       // then we join if it's not null && it's not expired
+  //       if (_agoraAuth != null) {
+  //         mezDbgPrint("AgoraAuth  :: passed validation test !");
+  //         // await FlutterCallkitIncoming.startCall(chatId);
+  //         // then join channel
+  //         // ignore: unawaited_futures
+  //         await sagora!.handleIfInChannelAlready();
 
-          // ignore: unawaited_futures
-          sagora!
-              .joinChannel(
-            token: _agoraAuth['token'],
-            channelId: chatId,
-            uid: _agoraAuth['uid'],
-          )
-              .then((value) {
-            mezDbgPrint(
-                "[][][] MessageScreen :: sagora.joinChannel :: done ! ==> pushing to AgoraCall Screen !!!!");
+  //         // ignore: unawaited_futures
+  //         sagora!
+  //             .joinChannel(
+  //           token: _agoraAuth['token'],
+  //           channelId: chatId,
+  //           uid: _agoraAuth['uid'],
+  //         )
+  //             .then((value) {
+  //           mezDbgPrint(
+  //               "[][][] MessageScreen :: sagora.joinChannel :: done ! ==> pushing to AgoraCall Screen !!!!");
 
-            sagora!.callStatus.value = CallStatus.calling;
-            Get.toNamed<void>(kAgoraCallScreen, arguments: {
-              "chatId": chatId,
-              "talkingTo": _recipient,
-            });
-          }).onError((Object? error, StackTrace stackTrace) {
-            mezDbgPrint("Error ===> $error | $stackTrace");
-            sagora!.callStatus.value = CallStatus.none;
-          });
-        } else {
-          sagora!.callStatus.value = CallStatus.none;
-        }
-      }
-    } else {
-      mezDbgPrint("AGORA :: PERMISSIONS :: NOT :: DONE ");
-    }
-  }
+  //           sagora!.callStatus.value = CallStatus.calling;
+  //           Get.toNamed<void>(kAgoraCallScreen, arguments: {
+  //             "chatId": chatId,
+  //             "talkingTo": _recipient,
+  //           });
+  //         }).onError((Object? error, StackTrace stackTrace) {
+  //           mezDbgPrint("Error ===> $error | $stackTrace");
+  //           sagora!.callStatus.value = CallStatus.none;
+  //         });
+  //       } else {
+  //         sagora!.callStatus.value = CallStatus.none;
+  //       }
+  //     }
+  //   } else {
+  //     mezDbgPrint("AGORA :: PERMISSIONS :: NOT :: DONE ");
+  //   }
+  // }
 
   Widget singleChatComponent({
     required String message,
@@ -457,15 +466,15 @@ class _MessagingScreenState extends State<MessagingScreen> {
 }
 
 class SendMessageBox extends StatelessWidget {
-  const SendMessageBox(
-      {Key? key,
-      required RxString typedMsg,
-      required TextEditingController textEditingController,
-      required this.controller,
-      required this.chatId,
-      this.orderType,
-      this.orderId})
-      : _typedMsg = typedMsg,
+  const SendMessageBox({
+    Key? key,
+    required RxString typedMsg,
+    required TextEditingController textEditingController,
+    required this.controller,
+    required this.chatId,
+    // this.orderType,
+    // this.orderId
+  })  : _typedMsg = typedMsg,
         _textEditingController = textEditingController,
         super(key: key);
 
@@ -473,9 +482,9 @@ class SendMessageBox extends StatelessWidget {
 
   final TextEditingController _textEditingController;
   final MessageController controller;
-  final String chatId;
-  final String? orderId;
-  final OrderType? orderType;
+  final int chatId;
+  // final String? orderId;
+  // final OrderType? orderType;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -537,10 +546,11 @@ class SendMessageBox extends StatelessWidget {
                     _textEditingController.text.replaceAll(' ', '').length > 0;
                 if (msgReady2Send) {
                   controller.sendMessage(
-                      message: _typedMsg.value,
-                      chatId: chatId,
-                      orderId: orderId,
-                      orderType: orderType);
+                    message: _typedMsg.value,
+                    chatId: chatId,
+                    // orderId: orderId,
+                    // orderType: orderType,
+                  );
                   _textEditingController.clear();
                   _typedMsg.value = "";
                 } else {

@@ -40,7 +40,7 @@ class DeepLinkHandler {
         deepLink.queryParameters.containsKey('id') == true) {
       mezDbgPrint("@deepLink@ ===>checking query params");
 
-      final String providerId = deepLink.queryParameters['id']!;
+      final int providerId = int.parse(deepLink.queryParameters['id']!);
       mezDbgPrint("@deepLink@ ===> query has [id]");
 
       final CustomerDeepLinkType? providerType =
@@ -59,14 +59,14 @@ class DeepLinkHandler {
 
   /// This Do the routing magic depending on [providerType] given.
   Future<void> _handleRoutingByType({
-    required String providerId,
+    required int providerId,
     required CustomerDeepLinkType providerType,
   }) async {
     switch (providerType) {
       case CustomerDeepLinkType.Restaurant:
         mezDbgPrint("@deepLink@ ===> handling restaurant routing ! ");
         final Restaurant? _rest = await Get.find<RestaurantsInfoController>()
-            .getRestaurant(providerId);
+            .getRestaurant(providerId as int);
         if (_rest != null) {
           Future<void>.delayed(
             Duration.zero,

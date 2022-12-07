@@ -41,7 +41,6 @@ class _ViewCartBodyState extends State<ViewCartBody> {
   void initState() {
     // TODO: implement initState
     widget.viewCartController.init();
-
     super.initState();
   }
 
@@ -126,17 +125,19 @@ class _ViewCartBodyState extends State<ViewCartBody> {
                     padding: EdgeInsets.only(
                         bottom: MediaQuery.of(context).viewInsets.bottom),
                     child: TextFormField(
-                        scrollPadding: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).viewInsets.bottom +
-                                20.h),
-                        style: Get.textTheme.bodyText2
-                            ?.copyWith(fontWeight: FontWeight.w700),
-                        controller: widget.notesTextController,
-                        maxLines: 7,
-                        minLines: 4,
-                        decoration: InputDecoration(
-                            hintText: "${_i18n()["notes"]}",
-                            fillColor: Colors.white)),
+                      scrollPadding: EdgeInsets.only(
+                          bottom:
+                              MediaQuery.of(context).viewInsets.bottom + 20.h),
+                      style: Get.textTheme.bodyText2
+                          ?.copyWith(fontWeight: FontWeight.w700),
+                      controller: widget.notesTextController,
+                      maxLines: 7,
+                      minLines: 4,
+                      decoration: InputDecoration(
+                        hintText: "${_i18n()["notes"]}",
+                        fillColor: Colors.white,
+                      ),
+                    ),
                   ),
                   SizedBox(
                     height: 15,

@@ -71,12 +71,12 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                             .hasNewMessageNotification(
                                 order.customerDropOffDriverChatId!),
                         onTap: () {
-                          Get.toNamed(getMessagesRoute(
-                            recipientType: ParticipantType.DeliveryDriver,
-                            orderType: OrderType.Restaurant,
-                            orderId: order.orderId,
-                            chatId: order.customerDropOffDriverChatId!,
-                          ));
+                          Get.toNamed(getMessagesRoute(chatId: order.chatId
+                              // recipientType: ParticipantType.DeliveryDriver,
+                              // orderType: OrderType.Restaurant,
+                              // orderId: order.orderId,
+                              // chatId: order.customerDropOffDriverChatId!,
+                              ));
                         }),
                   )
               ],

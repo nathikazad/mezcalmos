@@ -220,10 +220,11 @@ class RequestTaxiController {
     final ServerResponse response =
         await controller.requestTaxi(taxiRequest.value);
     if (response.success) {
-      final String orderId = response.data["orderId"];
+      final int orderId = int.parse(response.data["orderId"]);
       // await waitForCurrentOrderStreamFirstTrigger(orderId);
       // in case the widget is still mounted , then make dart scheduale this delayed call as soon as possible ,
       // so we don't fall into assertion error ('!_debugLocked': is not true.)
+
       await Future<void>.delayed(Duration.zero, () {
         popEverythingAndNavigateTo(getTaxiOrderRoute(orderId));
       });

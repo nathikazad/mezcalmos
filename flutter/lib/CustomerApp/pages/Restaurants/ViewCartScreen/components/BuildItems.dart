@@ -66,7 +66,8 @@ class CartItemsBuilder extends StatelessWidget {
               onEdit: () {
                 mezDbgPrint(
                     " the data inside the expansion ${cartItem.toFirebaseFunctionFormattedJson()}");
-                Get.toNamed(editCartItemRoute("${cartItem.idInCart}"));
+                if (cartItem.idInCart != null)
+                  Get.toNamed(editCartItemRoute(cartItem.idInCart!));
               },
             ),
           ));

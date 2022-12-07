@@ -11,6 +11,8 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -40,7 +42,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   ViewCartController viewCartController = ViewCartController();
 
   /// _clickedOrderNow
-  bool _clickedOrderNow = false;
+  // bool _clickedOrderNow = false;
 
   /// DropDownResult
   DropDownResult ddResult = DropDownResult.Null;
@@ -61,19 +63,27 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   @override
   void initState() {
     super.initState();
-    mezDbgPrint(
-        "Cart items =====================>>>${_restaurantController.cart.value.cartItems}");
-    if (Get.find<CustomerAuthController>().customer.value?.savedCards == null)
-      savedCardChoice =
-          Get.find<CustomerAuthController>().customer.value!.savedCards.first;
-    orderToLocation = Get.find<CustomerAuthController>()
-        .customer
-        .value!
-        .defaultLocation
-        ?.location;
-    if (orderToLocation != null) {
-      _restaurantController.cart.value.toLocation = orderToLocation;
-    }
+
+    getCustomerCart(
+      customerId: Get.find<AuthController>().user!.hasuraId,
+    ).then((value) {
+      if (value != null) {
+        mezDbgPrint("Got cart! ===> ${value?.restaurant?.info}");
+        _restaurantController.cart.value = value!;
+        mezDbgPrint(
+            "Cart items =====================>>>${_restaurantController.cart.value.cartItems}");
+        if (Get.find<CustomerAuthController>().customer?.savedCards == null)
+          savedCardChoice =
+              Get.find<CustomerAuthController>().customer!.savedCards.first;
+        orderToLocation = Get.find<CustomerAuthController>()
+            .customer!
+            .defaultLocation
+            ?.location;
+        if (orderToLocation != null) {
+          _restaurantController.cart.value.toLocation = orderToLocation;
+        }
+      }
+    });
 
     _restaurantController
         .updateShippingPrice()
@@ -81,13 +91,10 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
     // check if cart empty
     // if yes redirect to home page
-
     if (_restaurantController.cart.value.cartPeriod != null) {
       _restaurantController.cart.value.deliveryTime =
           _restaurantController.cart.value.cartPeriod?.start;
     }
-    mezDbgPrint(
-        "item is special ===== ${_restaurantController.cart.value.cartItems.first.isSpecial}");
   }
 
   @override
@@ -227,17 +234,23 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     _restaurantController.cart.value.toLocation = orderToLocation;
     _restaurantController.cart.value.notes = _textEditingController.text;
     try {
-      if (_restaurantController.getOrderDistance <= 10) {
+      // if (_restaurantController.getOrderDistance <= 10) {
+      if (true) {
         final String? stripePaymentId =
             await acceptPaymentByCardChoice(viewCartController.getCardChoice);
 
         final ServerResponse _serverResponse = await _restaurantController
             .checkout(stripePaymentId: stripePaymentId);
 
+        mezDbgPrint("datatatatataat => ${_serverResponse.data}");
+
         if (_serverResponse.success) {
           _restaurantController.clearCart();
           popEverythingAndNavigateTo(
-              getRestaurantOrderRoute(_serverResponse.data["orderId"]));
+            getRestaurantOrderRoute(
+              _serverResponse.data["orderId"],
+            ),
+          );
         } else {
           print(_serverResponse);
           if (_serverResponse.errorCode == "serverError") {

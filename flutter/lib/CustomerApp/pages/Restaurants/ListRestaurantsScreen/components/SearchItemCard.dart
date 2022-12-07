@@ -21,7 +21,8 @@ class SearchItemCard extends StatelessWidget {
         onTap: () {
           if (item.restaurant != null && item.id != null) {
             Get.toNamed(
-              getItemRoute(item.restaurant!.info.firebaseId, item.id!),
+              getItemRoute(
+                  item.restaurant!.info.firebaseId, item.id.toString()),
               arguments: {
                 "mode": ViewItemScreenMode.AddItemMode,
                 "showViewRestaurant": true

@@ -17284,8 +17284,8 @@ type translation {
 
   """An object relationship"""
   restaurant: restaurant
-  service_provider_id: Int!
-  service_provider_type: String!
+  service_provider_id: Int
+  service_provider_type: String
 
   """An array relationship"""
   translations(

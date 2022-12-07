@@ -206,7 +206,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     if (noOfCurrentTaxiOrders == 0) {
       Get.toNamed<void>(kTaxiRequestRoute);
     } else {
-      final String orderId = _orderController!.currentOrders
+      final int orderId = _orderController!.currentOrders
           .firstWhere(
               (Order currentOrder) => currentOrder.orderType == OrderType.Taxi)
           .orderId;
@@ -266,7 +266,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
               getServiceRoute(
                   orderType: OrderType.Restaurant,
                   serviceRoute: kRestaurantsRoute,
-                  singleOrderRoute: (String orderId) {
+                  singleOrderRoute: (int orderId) {
                     Get.toNamed<void>(getRestaurantOrderRoute(orderId));
                   });
             },
@@ -283,7 +283,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
               getServiceRoute(
                   orderType: OrderType.Laundry,
                   serviceRoute: kLaundriesListRoute,
-                  singleOrderRoute: (String v) {
+                  singleOrderRoute: (int v) {
                     Get.toNamed<void>(getLaundryOrderRoute(v));
                   });
             },
@@ -312,7 +312,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   void getServiceRoute(
       {required OrderType orderType,
       required String serviceRoute,
-      required void Function(String) singleOrderRoute}) {
+      required void Function(int) singleOrderRoute}) {
     if (Get.find<AuthController>().fireAuthUser != null) {
       final List<Order> orders = _orderController!.currentOrders
           .where((Order p0) => p0.orderType == orderType)

@@ -11,6 +11,8 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -74,39 +76,38 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
     showViewRestaurant = Get.arguments?["showViewRestaurant"] ?? false;
     isSpecial = Get.arguments?["isSpecial"] ?? false;
     if (widget.viewItemScreenMode == ViewItemScreenMode.AddItemMode) {
-      final String? restaurantId = Get.parameters['restaurantId'];
-      controller.getRestaurant("$restaurantId").then((Restaurant? value) {
-        setState(() {
-          currentRestaurant = value;
-        });
-      });
-      final String? itemId = Get.parameters['itemId'];
-      mezDbgPrint("IS SPECIAL ITEM==========>>>>$isSpecial");
-      controller.getRestaurant(restaurantId!).then((Restaurant? restaurant) {
-        if (restaurant?.findItemById(id: itemId!) != null) {
-          cartItem.value = CartItem(
-              restaurant!.findItemById(
-                id: itemId!,
-              )!,
-              restaurantId);
-        } else {
-          Future.delayed(Duration.zero, () {
-            Get.back();
+      final int? restaurantId = Get.parameters['restaurantId'] == null
+          ? null
+          : int.parse(Get.parameters['restaurantId']!);
+      if (restaurantId != null) {
+        get_restaurant_by_id(id: restaurantId).then((Restaurant? rest) {
+          setState(() {
+            currentRestaurant = rest;
           });
+        });
+      }
+
+      final String? itemId = Get.parameters['itemId'];
+      get_one_item_by_id(int.parse(itemId!)).then((Item? _item) {
+        if (_item != null) {
+          mezDbgPrint("[66] Got Item ==> |item : ${_item.id}|");
+          cartItem.value = CartItem(_item, restaurantId!);
+        } else {
+          mezDbgPrint("[66] Failed getting Item ==> |item|");
         }
       });
-      mezDbgPrint(cartItem.value);
+      mezDbgPrint("IS SPECIAL ITEM==========>>>>$isSpecial");
+      mezDbgPrint("CartValue =--> ${cartItem.value}");
     } else {
       cartItem.value = CartItem.clone(restaurantCartController
           .cart.value.cartItems
           .firstWhere((CartItem item) {
         return item.idInCart == Get.parameters["cartItemId"];
       }));
-      controller
-          .getRestaurant(cartItem.value!.restaurantId)
-          .then((Restaurant? value) {
+      get_restaurant_by_id(id: cartItem.value!.restaurantId)
+          .then((Restaurant? rest) {
         setState(() {
-          currentRestaurant = value;
+          currentRestaurant = rest;
         });
       });
     }
@@ -123,7 +124,8 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
         resizeToAvoidBottomInset: true,
         bottomSheet: (cartItem.value != null && currentRestaurant != null)
             ? BottomBarItemViewScreen(
-                currentRestaurantId: currentRestaurant?.info.firebaseId,
+                restaurant: currentRestaurant!,
+                currentRestaurantId: currentRestaurant?.info.hasuraId,
                 cartItem: cartItem,
                 mode: widget.viewItemScreenMode,
               )
@@ -169,10 +171,11 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                           borderRadius: BorderRadius.circular(18),
                           onTap: () {
                             Get.toNamed(
-                                getRestaurantRoute(
-                                  currentRestaurant!.info.firebaseId,
-                                ),
-                                arguments: currentRestaurant);
+                              getRestaurantRoute(
+                                currentRestaurant!.info.hasuraId,
+                              ),
+                              arguments: currentRestaurant,
+                            );
                           },
                           child: Ink(
                             padding: const EdgeInsets.symmetric(
@@ -239,12 +242,14 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                 if (item.options.isNotEmpty)
                   Column(
                     children: List.generate(
-                        cartItem.value!.item.options.length,
-                        (int index) => ItemOptionCard(
-                            cartItem: cartItem,
-                            editMode: widget.viewItemScreenMode ==
-                                ViewItemScreenMode.EditItemMode,
-                            option: cartItem.value!.item.options[index])),
+                      cartItem.value!.item.options.length,
+                      (int index) => ItemOptionCard(
+                        cartItem: cartItem,
+                        editMode: widget.viewItemScreenMode ==
+                            ViewItemScreenMode.EditItemMode,
+                        option: cartItem.value!.item.options[index],
+                      ),
+                    ),
                   ),
                 SizedBox(
                   height: 15,

@@ -124,6 +124,7 @@ export const restaurant = {
 type AuthenticatedFunction = (userId:number, data:any) => any;
 function authenticatedCall(func:AuthenticatedFunction) {
   return functions.https.onCall(async (data, context) =>  {
+    console.log("[+] authenticatedCall :: ", data);
     if (!context.auth?.uid) {
       throw new HttpsError(
         "unauthenticated",

@@ -91,7 +91,7 @@ class TaxiOrder extends Order {
   }
 
   TaxiOrder({
-    required String orderId,
+    required int orderId,
     required num cost,
     required this.from,
     required Location to,
@@ -105,6 +105,7 @@ class TaxiOrder extends Order {
     this.scheduledTime,
     required this.status,
     required UserInfo customer,
+    required super.chatId,
   }) : super(
             orderTime: orderTime,
             orderId: orderId,
@@ -134,6 +135,7 @@ class TaxiOrder extends Order {
     // mezDbgPrint("TAXI ID ------>>>>>>>>>>>>>>>>>>>> $id");
     final TaxiOrder taxiOrder = TaxiOrder(
         orderId: id,
+        chatId: 1,
         driver: (data["driver"] != null)
             ? TaxiUserInfo.fromData(data["driver"])
             : null,

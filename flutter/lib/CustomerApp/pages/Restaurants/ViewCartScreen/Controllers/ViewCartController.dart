@@ -44,8 +44,9 @@ class ViewCartController {
 
   Future<void> _addingValusToOptions() async {
     options.add({PickerChoice.Cash: null});
-    if (controller.cart.value.restaurant!
-        .acceptPayment(PaymentType.BankTransfer)) {
+    if (controller.cart.value.restaurant
+            ?.acceptPayment(PaymentType.BankTransfer) ==
+        true) {
       options.add({PickerChoice.BankTransfer: null});
     }
     if (await isApplePaySupported()) {
@@ -61,25 +62,26 @@ class ViewCartController {
   }
 
   void _addAndListenToCustomerCards() {
-    customerCards.value =
-        Get.find<CustomerAuthController>().customer.value!.savedCards;
-    cardsListener = Get.find<CustomerAuthController>()
-        .customer
-        .stream
-        .listen((Customer? event) {
-      if (event != null) {
-        customerCards.clear();
-        customerCards.value.addAll(event.savedCards);
-        if (customerCards.isEmpty) {
-          options.removeWhere((PaymentOption element) =>
-              element.entries.first.key == PickerChoice.SavedCard);
-        }
-        if (pickerChoice.value?.entries.first.key == PickerChoice.SavedCard &&
-            customerCards.isEmpty) {
-          pickerChoice.value = options.first;
-        }
-      }
-    });
+    // TODO: hasura-ch
+    // customerCards.value =
+    //     Get.find<CustomerAuthController>().customer.value!.savedCards;
+    // cardsListener = Get.find<CustomerAuthController>()
+    //     .customer
+    //     .stream
+    //     .listen((Customer? event) {
+    //   if (event != null) {
+    //     customerCards.clear();
+    //     customerCards.value.addAll(event.savedCards);
+    //     if (customerCards.isEmpty) {
+    //       options.removeWhere((PaymentOption element) =>
+    //           element.entries.first.key == PickerChoice.SavedCard);
+    //     }
+    //     if (pickerChoice.value?.entries.first.key == PickerChoice.SavedCard &&
+    //         customerCards.isEmpty) {
+    //       pickerChoice.value = options.first;
+    //     }
+    //   }
+    // });
   }
 
   void _updateListWithNewCard() {

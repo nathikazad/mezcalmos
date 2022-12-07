@@ -1,14 +1,14 @@
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 class Review {
-  String? id;
+  int? id;
   String comment;
   num rating;
-  String serviceProviderId;
+  int serviceProviderId;
   String authorName;
   OrderType? orderType;
-  String orderId;
-  String? authorId;
+  int orderId;
+  int? authorId;
   DateTime? reviewTime;
   Review({
     required this.comment,
@@ -36,7 +36,7 @@ class Review {
   }
 
   // ignore: avoid_annotating_with_dynamic
-  factory Review.fromMap(String? key, dynamic map) {
+  factory Review.fromMap(int? key, dynamic map) {
     return Review(
       id: key,
       comment: map['comment'] ?? '',

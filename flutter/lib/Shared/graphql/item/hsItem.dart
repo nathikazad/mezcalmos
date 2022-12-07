@@ -129,7 +129,7 @@ Future<Item?> get_one_item_by_id(int itemId, {bool withCache = true}) async {
         response.parsedData!.restaurant_item_by_pk!;
     final Item item = Item(
         name: toLanguageMap(translations: data.name.translations),
-        id: data.id.toString(),
+        id: data.id,
         nameId: data.name.id,
         descriptionId: data.description?.id,
         categoryId: data.category_id,

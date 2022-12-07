@@ -436,7 +436,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   }
 
   List<LocationDropDownItem> getSavedLocationsWithCallbacks() {
-    return _authController!.customer.value?.savedLocations
+    return _authController!.customer?.savedLocations
             .map<LocationDropDownItem>((SavedLocation e) {
           return LocationDropDownItem(
               icon: Icon(MezcalmosIcons.search, size: 20, color: Colors.purple),
@@ -444,7 +444,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
                 // TODO:544D-HASURA
 // added to.String to e.id
                 final Location? _savedLoc =
-                    _authController?.getLocationById(e.id!.toString());
+                    _authController?.getLocationById(e.id);
                 mezDbgPrint(
                     "${e.id} Saved looooooooooooocccc =====>${_savedLoc?.toFirebaseFormattedJson()}");
                 widget.newLocationChosenEvent(_savedLoc,

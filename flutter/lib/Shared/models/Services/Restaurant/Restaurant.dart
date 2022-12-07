@@ -144,6 +144,12 @@ class Restaurant extends Service {
     return restaurant;
   }
 
+  void setCategories(List<Category> cats) {
+    _categories = cats;
+    _categories
+        .sort((Category a, Category b) => a.position.compareTo(b.position));
+  }
+
   List<Category> get getAvailableCategories {
     List<Category> categories = _categories
         .where((Category category) => category.id != kNoCategoryNode)
@@ -199,12 +205,15 @@ class Restaurant extends Service {
     required String id,
   }) {
     Item? returnVal;
-
+    mezDbgPrint("Restaurant cats::len ==> ${_categories.length}");
     currentSpecials.forEach((Item item) {
+      mezDbgPrint("[66][currentSpecials]  => Item ${item.id}");
       if (item.id == id) returnVal = item;
     });
     if (returnVal == null) {
       pastSpecials.forEach((Item item) {
+        mezDbgPrint("[66][pastSpecials]  => Item ${item.id}");
+
         if (item.id == id) returnVal = item;
       });
     }
@@ -212,11 +221,17 @@ class Restaurant extends Service {
     if (returnVal == null) {
       _categories.forEach((Category category) {
         category.items.forEach((Item item) {
+          mezDbgPrint(
+              "[66][_categories] |_ [category.items]  => Item ${item.id}");
+
           if (item.id == id) returnVal = item;
         });
       });
       if (returnVal == null) {
         getAvItemsWithoutCategories?.forEach((Item element) {
+          mezDbgPrint(
+              "[66][getAvItemsWithoutCategories]  => Item ${element.id}");
+
           if (element.id == id) {
             returnVal = element;
           }
@@ -278,6 +293,8 @@ class Restaurant extends Service {
   }
 
   bool isOpen() {
-    return state.isOpen && (schedule?.isOpen() ?? false);
+// TODO:544D-HASURA
+    return true;
+    // return state.isOpen && (schedule?.isOpen() ?? true);
   }
 }

@@ -7,7 +7,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 
 class Item {
-  String? id;
+  int? id;
   int? nameId;
   int? descriptionId;
   int? categoryId;
@@ -49,7 +49,7 @@ class Item {
       : options = newOptions ?? <Option>[];
 
   factory Item.itemFromData(
-    String itemId,
+    int itemId,
     itemData,
   ) {
     final Item item = Item(

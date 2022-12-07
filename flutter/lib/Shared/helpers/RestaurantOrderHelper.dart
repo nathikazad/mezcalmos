@@ -16,7 +16,7 @@ extension RestaurantOrderHelper on RestaurantOrder {
         return '${_i18n()["canceledByAdmin"]}';
       case RestaurantOrderStatus.CancelledByCustomer:
         return '${_i18n()["canceledByCustomer"]}';
-      case RestaurantOrderStatus.OrderReceieved:
+      case RestaurantOrderStatus.OrderReceived:
         return '${_i18n()["received"]}';
       case RestaurantOrderStatus.PreparingOrder:
         return '${_i18n()["preparing"]}';
@@ -49,7 +49,7 @@ extension RestaurantOrderHelper on RestaurantOrder {
           ),
         );
 
-      case RestaurantOrderStatus.OrderReceieved:
+      case RestaurantOrderStatus.OrderReceived:
         return Container(
           // padding: const EdgeInsets.only(right: 10.0),
           child: Icon(

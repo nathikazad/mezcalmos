@@ -116,7 +116,7 @@ Widget buildWigetOnOrderStatus(
         ],
       );
       break;
-    case RestaurantOrderStatus.OrderReceieved:
+    case RestaurantOrderStatus.OrderReceived:
       mezDbgPrint("Order Receieved");
       myWidget = Row(
         mainAxisAlignment: MainAxisAlignment.center,

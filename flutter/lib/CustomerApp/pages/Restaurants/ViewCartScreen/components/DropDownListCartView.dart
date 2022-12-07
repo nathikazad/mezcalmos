@@ -60,7 +60,7 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
         dropDownListValue = loc;
       });
 
-      customerAuthController.customer.value?.savedLocations
+      customerAuthController.customer?.savedLocations
           .forEach((SavedLocation element) {
         listOfSavedLoacations.add(element);
       });

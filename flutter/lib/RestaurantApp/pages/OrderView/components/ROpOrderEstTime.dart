@@ -362,7 +362,7 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
   }
 
   bool get _showBtn {
-    return widget.order.status == RestaurantOrderStatus.OrderReceieved ||
+    return widget.order.status == RestaurantOrderStatus.OrderReceived ||
         widget.order.status == RestaurantOrderStatus.PreparingOrder;
   }
 }

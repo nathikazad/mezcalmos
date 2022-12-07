@@ -45,12 +45,12 @@ class TaxiController extends GetxController {
     return _temp;
   }
 
-  Future<ServerResponse> cancelTaxi(String orderId) async {
+  Future<ServerResponse> cancelTaxi(int orderId) async {
     final HttpsCallable cancelTaxiFunction =
         FirebaseFunctions.instance.httpsCallable('taxi-cancelFromCustomer');
     try {
       final HttpsCallableResult<dynamic> response =
-          await cancelTaxiFunction.call(<String, String>{"orderId": orderId});
+          await cancelTaxiFunction.call(<String, dynamic>{"orderId": orderId});
       return ServerResponse.fromJson(response.data);
     } catch (e) {
       return ServerResponse(ResponseStatus.Error,
@@ -83,7 +83,7 @@ class TaxiController extends GetxController {
     }
   }
 
-  void updateRideCost({required String orderId, required double cost}) {
+  void updateRideCost({required int orderId, required double cost}) {
     if (cost >= 35) {
       // update order in Customers node
       _databaseHelper.firebaseDatabase
@@ -113,9 +113,9 @@ class TaxiController extends GetxController {
   }
 
   Future<ServerResponse> acceptCounterOffer(
-    String orderId,
-    String customerId,
-    String driverId,
+    int orderId,
+    int customerId,
+    int driverId,
   ) async {
     await _databaseHelper.firebaseDatabase
         .ref()
@@ -145,9 +145,9 @@ class TaxiController extends GetxController {
   }
 
   Future<void> rejectCounterOffer(
-    String orderId,
-    String customerId,
-    String driverId,
+    int orderId,
+    int customerId,
+    int driverId,
   ) async {
     await _databaseHelper.firebaseDatabase
         .ref()

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class Geography {
@@ -6,12 +8,12 @@ class Geography {
   Geography(this.latitude, this.longitude);
 }
 
-Geography GeographyFromJson(data) {
+Geography geographyFromJson(data) {
   final List<dynamic> coordinates = data["coordinates"];
   return Geography(coordinates[0], coordinates[1]);
 }
 
-dynamic GeographyToJson(Geography geography) => <String, dynamic>{
+dynamic geographyToJson(Geography geography) => <String, dynamic>{
       "type": "Point",
       "crs": {
         "type": "name",
@@ -20,13 +22,13 @@ dynamic GeographyToJson(Geography geography) => <String, dynamic>{
       "coordinates": [geography.latitude, geography.longitude]
     };
 
-double MoneyFromJson(String data) {
+double moneyFromJson(String data) {
   final String str = data.split('\$').last.replaceAll(",", "");
 
   return double.parse(str);
 }
 
-String MoneyToJson(double money) => "$money";
+String moneyToJson(double money) => "$money";
 
 /// Accepts a translations array (from hasura) and return a language map object
 // ignore: avoid_annotating_with_dynamic
@@ -36,4 +38,14 @@ Map<LanguageType, String> toLanguageMap({required List translations}) {
     map[element.language_id.toString().toLanguageType()] = element.value;
   });
   return map;
+}
+
+/// Decode a jsonString into a Map<String, dynamic>
+Map<String, dynamic> mapFromJson(String jsonString) {
+  return jsonDecode(jsonString);
+}
+
+/// Stringify a Map object
+String mapToJson(Map<String, dynamic> map) {
+  return jsonEncode(map);
 }

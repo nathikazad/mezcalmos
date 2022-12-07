@@ -16,7 +16,7 @@ final HasuraDb hasuraDb = Get.find<HasuraDb>();
 /// Fetch all Customer's SavedLocations.
 ///
 /// [customer_id] is the user's hasuraId
-Future<List<SavedLocation>> get_customer_location(
+Future<List<SavedLocation>> get_customer_locations(
     {required int customer_id}) async {
   final Query$getCustomerLocations? _customer_saved_locations =
       hasuraDb.graphQLClient.readQuery$getCustomerLocations(

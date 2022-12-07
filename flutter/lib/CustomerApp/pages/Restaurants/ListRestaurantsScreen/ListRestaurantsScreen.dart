@@ -237,9 +237,8 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
               shippingPrice: viewController.baseShippingPrice,
               onClick: () {
                 Get.toNamed<void>(
-                  getRestaurantRoute(viewController
-                      .filteredRestaurants[index].info.hasuraId
-                      .toString()),
+                  getRestaurantRoute(
+                      viewController.filteredRestaurants[index].info.hasuraId),
                   arguments: viewController.filteredRestaurants[index],
                 );
               },

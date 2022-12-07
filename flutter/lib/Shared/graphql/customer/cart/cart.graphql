@@ -2,16 +2,7 @@
 
 mutation addItemToCart($item: restaurant_cart_item_insert_input!) {
   insert_restaurant_cart_item_one(object: $item ){
-    id,
-    restaurant_cart {
-      items_aggregate {
-        aggregate {
-          sum {
-            cost_per_one
-          }
-        }
-      }
-    }
+    id
   }
 }
 
@@ -26,18 +17,195 @@ mutation removeItemFromCart($item_id : Int!)
 }
 
 
-# Remove all items from Cart.
-mutation clearCart($customer_id : Int!)
-{
-  delete_restaurant_cart(where : {customer_id: {_eq:  $customer_id }})
-  {
-    returning {
-      items_aggregate {
-        aggregate {
-          count
+
+
+query getCustomerCart($customer_id: Int!) {
+  customer_by_pk(user_id: $customer_id) {
+    cart {
+      restaurant {
+       	id
+    		firebase_id
+    		image
+    		language_id
+    		description_id
+    		location_gps
+    		location_text
+    		name
+    		#schedule_id
+    		description {
+      	translations {
+        		language_id
+        		value
+      		}
+    		}
+    		approved
+    		open_status 
+      }
+      items {
+        restaurant_item {
+          item_type
+          name {
+            translations {
+              language_id,
+              value
+            }
+          }
+          description {
+            translations {
+              language_id,
+              value
+            }
+          },
+          position,
+          category_id,
+          available,
+          restaurant_id,
+          special_period_end,
+          special_period_start,
+          archived,
+          cost
         }
+        cost_per_one
+        id
+        note
+        quantity
       }
     }
   }
 }
 
+
+# Create a customer Cart
+mutation create_customer_cart($cart : restaurant_cart_insert_input!) {
+  insert_restaurant_cart_one(object : $cart) {
+    cost,
+    customer_id,
+    restaurant_id,
+  }
+}
+
+
+subscription listen_on_customer_cart($customer_id: Int!) {
+  customer_by_pk(user_id: $customer_id) {
+    cart {
+      restaurant_id,
+      items {
+        restaurant_item {
+          item_type
+          name {
+            translations {
+              language_id,
+              value
+            }
+          }
+          description {
+            translations {
+              language_id,
+              value
+            }
+          },
+          position,
+          category_id,
+          available,
+          restaurant_id,
+          special_period_end,
+          special_period_start,
+          archived,
+          cost
+        }
+        cost_per_one
+        id
+        note
+        quantity
+      }
+    }
+  }
+}
+
+
+# Remove all items from Cart by customerId.
+mutation clearCart($customer_id : Int!)
+{
+  delete_restaurant_cart_item(where : {customer_id: {_eq:  $customer_id }})
+  {
+    affected_rows
+  }
+}
+
+
+# increment/decrement Item quantity.
+mutation update_item_quantity($customer_id : Int!, $item_id: Int!, $quantity :Int!)
+{
+  update_restaurant_cart_item( where: { id : {_eq: $item_id }, _and :{customer_id : {_eq : $customer_id}}}, _set : {quantity: $quantity})
+  {
+    affected_rows
+  }
+}
+
+
+
+mutation updateCart($customer_id : Int!, $restaurant_id : Int , $items : [restaurant_cart_item_insert_input!]!)
+{
+  # Update Cart's restaurant id
+  update_restaurant_cart(where: {customer_id: {_eq: $customer_id}}, _set: {restaurant_id: $restaurant_id}) {
+    returning {
+      restaurant {
+       	id
+    		firebase_id
+    		image
+    		language_id
+    		description_id
+    		location_gps
+    		location_text
+    		name
+    		#schedule_id
+    		description {
+      	translations {
+        		language_id
+        		value
+      		}
+    		}
+    		approved
+    		open_status 
+      }
+  	}
+  },
+
+  # We delete all cart's Items
+  delete_restaurant_cart_item(where: {customer_id: {_eq: $customer_id}}) {
+    affected_rows
+  },
+  
+  # We Insert new list of items
+  insert_restaurant_cart_item(objects: $items) {
+    returning {
+         restaurant_item {
+          item_type
+          name {
+            translations {
+              language_id,
+              value
+            }
+          }
+          description {
+            translations {
+              language_id,
+              value
+            }
+          },
+          position,
+          category_id,
+          available,
+          restaurant_id,
+          special_period_end,
+          special_period_start,
+          archived,
+          cost
+        },
+        cost_per_one
+        id
+        note
+        quantity
+      }
+  	}
+}

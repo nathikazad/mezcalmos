@@ -44,26 +44,27 @@ class _SavedLocationViewState extends State<SavedLocationView> {
     mezDbgPrint(savedLocations);
     mezDbgPrint("==============");
     setState(() {
-      savedLocations.assignAll(
-          _customerAuthController.customer.value?.savedLocations ?? []);
+      savedLocations
+          .assignAll(_customerAuthController.customer?.savedLocations ?? []);
     });
     mezDbgPrint("==============");
     mezDbgPrint(savedLocations);
     mezDbgPrint("==============");
     // then start a listener in case there are changes in /savedLocations db node!
-    savedLocationsStreamSub = _customerAuthController.customer
-        .map<List<SavedLocation>>((Customer? customerInstance) {
-      return customerInstance?.savedLocations ?? <SavedLocation>[];
-    }).listen((List<SavedLocation> _savedLocations) {
-      mezDbgPrint("==============");
-      mezDbgPrint(savedLocations);
-      mezDbgPrint("==============");
-      mezDbgPrint("New Data ! $_savedLocations");
-      setState(() {
-        // set the new locations!
-        savedLocations.assignAll(_savedLocations);
-      });
-    });
+    // TODO: hasura-ch
+    // savedLocationsStreamSub = _customerAuthController.customer
+    //     .map<List<SavedLocation>>((Customer? customerInstance) {
+    //   return customerInstance?.savedLocations ?? <SavedLocation>[];
+    // }).listen((List<SavedLocation> _savedLocations) {
+    //   mezDbgPrint("==============");
+    //   mezDbgPrint(savedLocations);
+    //   mezDbgPrint("==============");
+    //   mezDbgPrint("New Data ! $_savedLocations");
+    //   setState(() {
+    //     // set the new locations!
+    //     savedLocations.assignAll(_savedLocations);
+    //   });
+    // });
   }
 
   @override

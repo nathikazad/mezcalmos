@@ -182,7 +182,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             ),
           _buildResturantItems(
             items: category.items,
-            restaurantId: restaurant.info.firebaseId,
+            restaurantId: restaurant.info.hasuraId,
             isSpecial: false,
           ),
           SizedBox(
@@ -209,7 +209,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           ),
           _buildResturantItems(
             items: specItems.values.toList()[index],
-            restaurantId: restaurant.info.firebaseId,
+            restaurantId: restaurant.info.hasuraId,
             isSpecial: true,
           ),
           SizedBox(
@@ -222,7 +222,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
 
   Widget _buildResturantItems(
       {required List<Item> items,
-      required String restaurantId,
+      required int restaurantId,
       bool isSpecial = false}) {
     mezDbgPrint("[66] called :: _buildResturantItems");
     if (restaurant.restaurantsView == RestaurantsView.Rows || isSpecial) {
@@ -234,8 +234,11 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             children.add(RestaurantsListOfItemsComponent(
                 item: item,
                 function: () {
+                  mezDbgPrint(
+                      "[66] IUtem id ===> ${item.id} -- route ==> ${getItemRoute(restaurantId.toString(), item.id.toString())}");
                   Get.toNamed(
-                    getItemRoute(restaurantId, item.id!),
+                    getItemRoute(restaurantId.toString(), item.id.toString())
+                        .replaceAll(' ', ''),
                     arguments: {
                       "mode": ViewItemScreenMode.AddItemMode,
                       "isSpecial": isSpecial

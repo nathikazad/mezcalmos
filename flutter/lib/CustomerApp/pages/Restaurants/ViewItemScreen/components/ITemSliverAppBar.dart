@@ -209,15 +209,13 @@ class ItemSliverAppBar extends StatelessWidget {
   }
 
   Widget getAppbarIconsButton() {
-    return Obx(() {
-      return Row(
-        children: [
-          if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
-          if (Get.find<AuthController>().isUserSignedIn)
-            _notificationAppBarIcon(),
-          if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
-        ],
-      );
-    });
+    return Row(
+      children: [
+        if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
+        if (Get.find<AuthController>().isUserSignedIn)
+          _notificationAppBarIcon(),
+        if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
+      ],
+    );
   }
 }

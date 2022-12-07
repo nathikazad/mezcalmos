@@ -84,8 +84,10 @@ class AuthController extends GetxController {
         mezDbgPrint(_hasuraUserId.value);
 
         await hasuraDb.initializeHasura();
+        await fetchUserInfoFromHasura();
         await _onSignInCallback();
       }
+
       _authStateStreamController.add(user);
     });
 

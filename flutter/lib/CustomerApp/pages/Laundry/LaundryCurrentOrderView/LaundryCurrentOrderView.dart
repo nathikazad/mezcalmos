@@ -58,11 +58,12 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
       mezDbgPrint("Order id null from the parameters ######");
       Get.back<void>();
     }
-    controller.clearOrderNotifications(orderId);
-    order.value = controller.getOrder(orderId) as LaundryOrder?;
+    controller.clearOrderNotifications(int.parse(orderId));
+    order.value = controller.getOrder(int.parse(orderId)) as LaundryOrder?;
 
-    _orderListener =
-        controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
+    _orderListener = controller
+        .getOrderStream(int.parse(orderId))
+        .listen((Order? newOrderEvent) {
       if (newOrderEvent != null) {
         order.value = newOrderEvent as LaundryOrder?;
 

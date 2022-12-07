@@ -80,7 +80,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
     }
   }
 
-  String? _getRightChatId() {
+  int? _getRightChatId() {
     if (order.getCurrentPhase() == LaundryOrderPhase.Pickup &&
         order.customerPickupDriverChatId != null) {
       return order.customerPickupDriverChatId;

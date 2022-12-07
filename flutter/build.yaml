@@ -10,17 +10,25 @@ targets:
           clients:
             - graphql
           scalars:
+            timestamptz:
+              type: String
             json:
               type: Map<String, dynamic>
+              # fromJsonFunctionName: mapFromJson
+              # toJsonFunctionName: mapToJson
+              # import: package:mezcalmos/Shared/graphql/hasuraTypes.dart
             jsonb:
               type: Map<String, dynamic>
+              # fromJsonFunctionName: mapFromJson
+              # toJsonFunctionName: mapToJson
+              # import: package:mezcalmos/Shared/graphql/hasuraTypes.dart
             geography:
               type: Geography
-              fromJsonFunctionName: GeographyFromJson
-              toJsonFunctionName: GeographyToJson
+              fromJsonFunctionName: geographyFromJson
+              toJsonFunctionName: geographyToJson
               import: package:mezcalmos/Shared/graphql/hasuraTypes.dart
             money:
               type: double
-              fromJsonFunctionName: MoneyFromJson
-              toJsonFunctionName: MoneyToJson
+              fromJsonFunctionName: moneyFromJson
+              toJsonFunctionName: moneyToJson
               import: package:mezcalmos/Shared/graphql/hasuraTypes.dart

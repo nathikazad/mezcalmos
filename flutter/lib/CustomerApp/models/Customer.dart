@@ -15,38 +15,51 @@ class Customer {
   SavedLocation? get defaultLocation => savedLocations.firstWhereOrNull(
       (SavedLocation savedLocation) => savedLocation.defaultLocation);
 
-  Customer.fromSnapshotData(data) {
-    appVersion = data?["versionNumber"] ?? null;
-    notificationInfo = data?["notificationInfo"];
+  Customer({
+    this.appVersion,
+    this.notificationInfo,
+  });
 
-    if (data["savedLocations"] != null) {
-      Map<int, dynamic>.from(data["savedLocations"])
-          .entries
-          .forEach((MapEntry<int, dynamic> entry) {
-        savedLocations.add(
-          SavedLocation.fromData(id: entry.key, data: entry.value),
-        );
-      });
-      // if none of the locations are default, then set the first location as default
-      if (savedLocations.length > 0 &&
-          savedLocations
-                  .where((SavedLocation savedLocation) =>
-                      savedLocation.defaultLocation)
-                  .length ==
-              0) savedLocations[0].defaultLocation = true;
-    }
-    if (data["stripe"] != null) {
-      if (data["stripe"]["cards"] != null) {
-        Map<String, dynamic>.from(data["stripe"]["cards"])
-            .entries
-            .forEach((MapEntry<String, dynamic> entry) {
-          savedCards.add(
-            CreditCard.fromData(id: entry.key, data: entry.value),
-          );
-        });
-      }
-    }
+  void addSavedLocation(SavedLocation loc) {
+    savedLocations.add(loc);
   }
+
+  void addCreditCard(CreditCard card) {
+    savedCards.add(card);
+  }
+
+  // Customer.fromSnapshotData(data) {
+  //   appVersion = data?["versionNumber"] ?? null;
+  //   notificationInfo = data?["notificationInfo"];
+
+  //   if (data["savedLocations"] != null) {
+  //     Map<int, dynamic>.from(data["savedLocations"])
+  //         .entries
+  //         .forEach((MapEntry<int, dynamic> entry) {
+  //       savedLocations.add(
+  //         SavedLocation.fromData(id: entry.key, data: entry.value),
+  //       );
+  //     });
+  //     // if none of the locations are default, then set the first location as default
+  //     if (savedLocations.length > 0 &&
+  //         savedLocations
+  //                 .where((SavedLocation savedLocation) =>
+  //                     savedLocation.defaultLocation)
+  //                 .length ==
+  //             0) savedLocations[0].defaultLocation = true;
+  //   }
+  //   if (data["stripe"] != null) {
+  //     if (data["stripe"]["cards"] != null) {
+  //       Map<String, dynamic>.from(data["stripe"]["cards"])
+  //           .entries
+  //           .forEach((MapEntry<String, dynamic> entry) {
+  //         savedCards.add(
+  //           CreditCard.fromData(id: entry.key, data: entry.value),
+  //         );
+  //       });
+  //     }
+  //   }
+  // }
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{"notificationInfo": notificationInfo};

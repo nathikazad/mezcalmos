@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,7 +10,6 @@ import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -103,6 +101,10 @@ class _WrapperState extends State<Wrapper> {
     }
   }
 
+  // get FireAuth USer -> add _authStream
+  //        ----
+  //    -> getch user from hasura
+
   Future<void> handleAuthStateChange(fireAuth.User? user) async {
     // We should Priotorize the AppNeedsUpdate route to force users to update
     if (!isCurrentRoute(kAppNeedsUpdate)) {
@@ -122,15 +124,15 @@ class _WrapperState extends State<Wrapper> {
       } else {
         mezDbgPrint("[777] user != null");
 
-        await waitTillUserInfoLoaded();
+        // await waitTillUserInfoLoaded();
         redirectIfUserInfosNotSet();
       }
     }
   }
 
-  Future<void> waitTillUserInfoLoaded() async {
-    return Get.find<AuthController>().fetchUserInfoFromHasura();
-  }
+  // Future<void> waitTillUserInfoLoaded() async {
+  //   return Get.find<AuthController>().fetchUserInfoFromHasura();
+  // }
 
   void redirectIfUserInfosNotSet() {
     if ((!Get.find<AuthController>().isDisplayNameSet() ||

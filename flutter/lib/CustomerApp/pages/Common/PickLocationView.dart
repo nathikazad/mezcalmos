@@ -69,15 +69,15 @@ class _PickLocationViewState extends State<PickLocationView> {
     } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
       final String? x = Get.parameters["id"];
       savedLocation = Get.find<CustomerAuthController>()
-          .customer()!
+          .customer!
           .savedLocations
           .firstWhere((SavedLocation saved) => saved.id == x);
       GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {
         setState(() {
           locationPickerController.location.value = Location.fromFirebaseData({
-            "address": savedLocation!.location?.address,
-            "lat": savedLocation?.location?.latitude,
-            "lng": savedLocation?.location?.longitude,
+            "address": savedLocation!.location.address,
+            "lat": savedLocation?.location.latitude,
+            "lng": savedLocation?.location.longitude,
           });
         });
       });
@@ -248,13 +248,12 @@ class _PickLocationViewState extends State<PickLocationView> {
 
         _isDuplicatedSavedLocation = Get.find<CustomerAuthController>()
             .customer
-            .value
             ?.savedLocations
             .firstWhereOrNull((SavedLocation location) =>
                 location.name.toLowerCase() ==
                     savedLocation?.name.toLowerCase() ||
-                location.location?.address.toLowerCase() ==
-                    savedLocation?.location?.address.toLowerCase());
+                location.location.address.toLowerCase() ==
+                    savedLocation?.location.address.toLowerCase());
       }
       if (_isDuplicatedSavedLocation != null) {
         MezSnackbar("Oops",

@@ -14,7 +14,9 @@ export async function getCustomer(customerId: number): Promise<CustomerInfo> {
             notification_token: true,
             user: {
                 firebase_id: true,
-                language_id: true
+                language_id: true,
+                name : true,
+                image:true
             }
         }]
     });
@@ -28,6 +30,8 @@ export async function getCustomer(customerId: number): Promise<CustomerInfo> {
         id: customerId,
         firebaseId: response.customer_by_pk.user.firebase_id,
         language: response.customer_by_pk.user.language_id as Language,
+        name : response.customer_by_pk.user.name,
+        image : response.customer_by_pk.user.image,
         notificationInfo: (response.customer_by_pk.notification_token) ? {
             AppTypeId: AppType.CustomerMobile,
             token: response.customer_by_pk.notification_token

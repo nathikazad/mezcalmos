@@ -145,6 +145,7 @@ class LocationPickerState extends State<LocationPicker> {
     );
   }
 
+  /******************************  Widgets ************************************/
   Widget bottomButton() {
     switch (widget.locationPickerMapController._bottomButtomToShow.value) {
       case BottomButtomToShow.Pick:

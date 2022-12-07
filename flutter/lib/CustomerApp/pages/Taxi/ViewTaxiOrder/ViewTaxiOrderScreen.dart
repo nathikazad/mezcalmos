@@ -50,7 +50,9 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
       mezDbgPrint("Order id null from the parameters ######");
       Get.back<void>();
     }
-    viewController.init(Get.parameters['orderId']!).then((bool initSuccess) {
+    viewController
+        .init(int.parse(Get.parameters['orderId']!))
+        .then((bool initSuccess) {
       if (!initSuccess) {
         Get.back<void>();
         MezSnackbar("Error", "Order does not exist");
