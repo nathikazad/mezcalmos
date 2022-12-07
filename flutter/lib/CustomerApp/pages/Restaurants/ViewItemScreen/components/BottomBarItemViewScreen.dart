@@ -14,7 +14,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:mezcalmos/Shared/graphql/customer/cart/__generated/cart.graphql.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
         ["pages"]["Restaurants"]["ViewItemScreen"]["components"]

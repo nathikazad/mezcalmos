@@ -366,7 +366,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         if (order.value?.selfDeliveryDetails != null) {
           mapController.addOrUpdateUserMarker(
             latLng: order.value?.selfDeliveryDetails?.location,
-            markerId: order.value?.orderId,
+            markerId: order.value?.orderId.toString(),
             customImgHttpUrl: defaultDriverImgUrl,
             fitWithinBounds: true,
           );
@@ -403,7 +403,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         if (order.value?.selfDeliveryDetails != null) {
           mapController.addOrUpdateUserMarker(
             latLng: order.value?.selfDeliveryDetails?.location,
-            markerId: order.value?.orderId,
+            markerId: order.value?.orderId.toString(),
             customImgHttpUrl: defaultDriverImgUrl,
             fitWithinBounds: true,
           );
