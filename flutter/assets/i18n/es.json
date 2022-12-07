@@ -21,6 +21,7 @@
             },
             "DropDownLocationList": {
                 "ops": "Oops",
+                "wrongAddress": "Dirección incorrecta/inválida elegida!",
                 "distanceError": "¡La distancia entre usted y el restaurante es de más de 10 km!",
                 "chooseLoc": "Elegir la ubicación",
                 "pickLocation": "Elegir del mapa"
@@ -274,8 +275,13 @@
                             "willBeDelivered": "Tiempo de entrega estimado"
                         },
                         "RestaurantOrderDriverCard": {
-                            "dropOffTime": "Hora de entrega"
+                            "dropOffTime": "Hora de entrega",
+                            "selfDeliveryTitle": "Entrega manejada por restaurante",
+                            "driver": "Conductor de entrega"
 
+                        },
+                        "OrderRestaurantCard": {
+                            "restaurant": "Restaurante"
                         },
                         "notesWidget": {
                             "notes": "Nota de pedido:"
@@ -736,7 +742,7 @@
         "pages": {
             "SomethingWentWrongScreen": {
                 "noRestaurantFoundOnOperator": "No se encontró ningún restaurante en su operador",
-                "pleaseContactAdmin": "Póngase en contacto con el administrador"
+                "pleaseContactAdmin": "Póngase en contacto con el administrador: +5219541184711"
             },
             "AuthScreens": {
                 "SMS": {
@@ -1209,8 +1215,9 @@
             "ServicesView": {
                 "services": "Servicios",
                 "noLaundries": "No hay lavas disponibles",
-                "editProfile": "Editar perfil",
-                "editAdmin": "Editar administrador"
+                "editProfile": "Perfil",
+                "editAdmin": "Administrador",
+                "operators": "Operadoras"
             },
             "Orders": {
                 "components": {
@@ -1439,6 +1446,8 @@
             "OrderDetailsScreen": {
                 "cancelled": "Cancelada",
                 "approved": "Aprobada",
+                "scheduled": "Programada",
+                "dvTime": "El tiempo de entrega",
                 "paymentMethod": "Método de pago",
                 "cash": "Dinero",
                 "from": "De",
@@ -1476,7 +1485,8 @@
                             "ready": "Listo",
                             "inTransit": "En Tránsito",
                             "delivered": "Entregada",
-                            "cancelled": "Cancelada"
+                            "cancelled": "Cancelada",
+                            "scheduled": "Programada"
                         }
                     },
                     "CurrentOrdersListScreen": {
@@ -1539,6 +1549,7 @@
                             "restaurantDelivery": "Entrega de restaurantes",
                             "oops": "Ups",
                             "foodReady": "preparación de la comida",
+                            "dvTime": "El tiempo de entrega",
                             "set": "Establecer",
                             "time": "Tiempo",
                             "dropoff": "Entregar",
@@ -1550,6 +1561,8 @@
                                 "preparing": "Orden se está preparando",
                                 "readyForPickup": "Listo para recojer",
                                 "deliveryOtw": "Entrega en el camino",
+                                "justReady": "Listo para la entrega",
+                                "scheduled": "Pedido programado",
                                 "delivered": "Orden Entregado",
                                 "canceled": "Orden Cancelada"
                             },
@@ -1559,7 +1572,9 @@
                                 "timeErrorTitle": "La hora no esta",
                                 "timeErrorBody": "Establezca primero los tiempos estimados",
                                 "notReadyTitle": "Esperando el pedido",
-                                "notReadyBody": "El pedido aún no está listo para la entrega"
+                                "notReadyBody": "El pedido aún no está listo para la entrega",
+                                "startDelivery": "Iniciar entrega"
+
 
 
                             }
@@ -1916,14 +1931,19 @@
                     },
                     "ROpOrderEstTime": {
                         "title": "Tiempo estimado de preparación",
+                        "deliveryTitle": "Tiempo de entrega estimado",
                         "set": "Establecer",
                         "confirm": "Confirmar",
                         "cancel": "Cancelar",
-                        "Error": "Error",
-                        "minTimes": "Mínimo 5 Miutes Prepare el tiempo"
+                        "error": "Error",
+                        "minTimes": "Mínimo 5 Miutes Prepare el tiempo",
+                        "deliveryMinTimes": "Tiempo de entrega bajo 5 minutos"
                     },
                     "ROpDriverCard": {
-                        "noDriver": "No hay controlador asignado todavía"
+                        "noDriver": "No hay controlador asignado todavía",
+                        "set": "Colocar",
+                        "selfDelivery": "Autoentrega",
+                        "forwarded": "Reenviado a Mezcalmos"
                     },
                     "ROpOrderCustomer": {
                         "customer": "Cliente"
@@ -2006,8 +2026,8 @@
                 "cancelHelperText": "¿Estás seguro de que quieres cancelar el proceso de reorden?",
                 "components": {
                     "ROpSpecialsComponent": {
-                        "currentSp": "Artículos especiales actuales",
-                        "recentSp": "Artículos especiales recientes"
+                        "currentSp": "Especiales actuales",
+                        "recentSp": "Especiales viejos"
                     },
                     "ROpItemCard": {
                         "category": "Categoría",
@@ -2026,11 +2046,75 @@
 
                 }
             },
+            "ROpPickDriverView": {
+                "components": {
+                    "ROpSelfDeliveryCard": {
+                        "selfDelivery": "Autoentrega",
+                        "assign": "Asignar"
+                    },
+                    "ROpDriverSelectCard": {
+                        "available": "Disponible",
+                        "unavailable": "Indisponible",
+                        "assign": "Asignar"
+                    }
+                },
+                "pick": "Seleccionar conductor",
+                "fwdMezcalmos": "Avanzar a MezCalmos",
+                "assigning": "Asignación del controlador ..."
+
+            },
+            "ROpDriversView": {
+                "components": {
+                    "ROpListDriverCard": {
+                        "available": "Disponible",
+                        "unavailable": "Indisponible",
+                        "rmBtn": "Sí, retire el controlador",
+                        "rmTitle": "Eliminar el controlador",
+                        "rmText": "¿Estás seguro de que quieres eliminar este controlador?"
+                    }
+                },
+                "drivers": "Conductoras",
+                "falseTitle": "Active la entrega de autocontrol para entregar con sus propios controladores",
+                "falseDesc": "Vaya a Perfil> En atajos, active la entrega de sí mismo",
+                "trueTitle": "Controle su entrega agregando sus propios controladores",
+                "trueDesc": "Autorice los controladores agregándolos usando correo electrónico o número de teléfono (deben haber creado una cuenta con nuestra aplicación de entrega)",
+                "assDrivers": "Conductores asociados",
+                "addDriver": "Agregar controlador",
+                "newDv": "Nuevo conductor",
+                "phoneOrEmail": "Número de teléfono o correo electrónico",
+                "cancel": "Cancelar"
+            },
+            "ROpTabsViewView": {
+                "orders": "Pedidos",
+                "menu": "Menú",
+                "drivers": "Conductoras",
+                "profile": "Perfil"
+            },
+            "ROpDashboardPage": {
+                "openTitle": "Disponibilidad de restaurantes",
+                "openSubtitle": "Esto cerrará su restaurante indefinidamente",
+                "settings": "Ajustes",
+                "restInfo": "Informacións",
+                "schedule": "Horas Laborales",
+                "payments": "Pagos",
+                "reviews": "Reseñas",
+                "shortcuts": "Atajos",
+                "shareRest": "Compartir restaurante",
+                "selfDvTitle": "Entrega",
+                "selfDvDesc": "Controle sus propias entregas.",
+                "privacyPolicies": "Políticas de privacidad",
+                "logout": "Cerrar sesión"
+            },
             "ROpEditInfoView": {
                 "controllers": {
                     "ROpEditInfoController": {
                         "error": "error",
-                        "selectPrimaryFirst": "Seleccione primero el idioma primario"
+                        "selectPrimaryFirst": "Seleccione primero el idioma primario",
+                        "dashboard": "Tablero",
+                        "informations": "Información",
+                        "reviews": "Reseñas",
+                        "schedule": "Calendario",
+                        "payments": "Pagos"
 
                     }
                 },
@@ -2054,7 +2138,7 @@
                         "acceptedPayments": "Pagos aceptados",
                         "setup": "configurar",
                         "fees": "Tarifa",
-                        "chargeCustomer": "Cargar tarifas de Stripe en el cliente",
+                        "chargeCustomer": "cobrar tarifas de procesamiento del cliente",
 
                         "setupHelper": "Gracias por la configuración, ahora puede recibir pagos, pero no podrá retirar dinero a su cuenta bancaria.",
                         "reqs": "Requisitos",

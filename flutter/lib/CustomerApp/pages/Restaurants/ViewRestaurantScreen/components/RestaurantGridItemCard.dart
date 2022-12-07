@@ -33,60 +33,64 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: InkWell(
-        onTap: () {
-          Get.toNamed(
-            getItemRoute(
-                widget.restaurant.info.firebaseId, widget.item.id.toString()),
-            arguments: {
-              "mode": ViewItemScreenMode.AddItemMode,
-              "isSpecial": widget.isSpecial
-            },
-          );
-        },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Obx(() {
-              if (isImageExist.isTrue) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 15),
-                  child: CircleAvatar(
-                    radius: 30,
-                    backgroundImage:
-                        CachedNetworkImageProvider(widget.item.image!),
-                    onBackgroundImageError: (Object e, StackTrace? s) {
-                      isImageExist.value = false;
-                    },
-                  ),
-                );
-              } else {
-                return SizedBox();
-              }
-            }),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              widget.item.name[userLanguage] ?? "",
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              "\$${widget.item.cost}",
-              style: Get.textTheme.bodyText1,
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: 5,
-            ),
-          ],
+    if (widget.item.available) {
+      return Card(
+        child: InkWell(
+          onTap: () {
+            Get.toNamed(
+              getItemRoute(
+                  widget.restaurant.info.hasuraId.toString().toString(),
+                  widget.item.id!),
+              arguments: {
+                "mode": ViewItemScreenMode.AddItemMode,
+                "isSpecial": widget.isSpecial
+              },
+            );
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Obx(() {
+                if (isImageExist.isTrue) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 15),
+                    child: CircleAvatar(
+                      radius: 30,
+                      backgroundImage:
+                          CachedNetworkImageProvider(widget.item.image!),
+                      onBackgroundImageError: (Object e, StackTrace? s) {
+                        isImageExist.value = false;
+                      },
+                    ),
+                  );
+                } else {
+                  return SizedBox();
+                }
+              }),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                widget.item.name[userLanguage] ?? "",
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                "\$${widget.item.cost}",
+                style: Get.textTheme.bodyText1,
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    } else
+      return SizedBox();
   }
 }

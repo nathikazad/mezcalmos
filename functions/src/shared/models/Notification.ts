@@ -9,6 +9,7 @@ export enum NotificationType {
   OrderStatusChange = "orderStatusChange",
   NewMessage = "newMessage",
   NewCounterOffer = "newCounterOffer",
+  AssignDriver = "assignDriver",
   Call = "call"
 }
 

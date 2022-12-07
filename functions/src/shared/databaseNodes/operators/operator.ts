@@ -7,4 +7,5 @@ export function operatorInfo(orderType: OrderType, operatorId?: string) {
     dbNode += `/${operatorId}`
   }
   return firebase.database().ref(dbNode);
+
 }

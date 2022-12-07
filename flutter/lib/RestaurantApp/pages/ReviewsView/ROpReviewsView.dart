@@ -7,7 +7,6 @@ import 'package:mezcalmos/RestaurantApp/pages/ReviewsView/Components/ROpReviewsF
 import 'package:mezcalmos/RestaurantApp/pages/ReviewsView/Controllers/ROpReviewsViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:sizer/sizer.dart';
 
@@ -17,7 +16,8 @@ dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
 
 //
 class ROpReviewsView extends StatefulWidget {
-  const ROpReviewsView({super.key});
+  const ROpReviewsView({super.key, required this.restId});
+  final String restId;
 
   @override
   State<ROpReviewsView> createState() => _ROpReviewsViewState();
@@ -28,7 +28,7 @@ class _ROpReviewsViewState extends State<ROpReviewsView> {
   String? restaurantID;
   @override
   void initState() {
-    restaurantID = Get.parameters["restaurantId"];
+    restaurantID = widget.restId;
     if (restaurantID != null) {
       viewController.init(restaurantId: restaurantID!);
     } else {
@@ -41,8 +41,6 @@ class _ROpReviewsViewState extends State<ROpReviewsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: Get.back, title: '${_i18n()["reviews"]}'),
       body: Obx(() {
         if (viewController.restaurant.value != null) {
           if (viewController.hasReviews) {

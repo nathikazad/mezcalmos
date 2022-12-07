@@ -70,7 +70,7 @@ async function checkoutCart(uid, data) {
       image: restaurant.details.photo
     },
     orderType: "restaurant",
-    status: "orderReceieved",
+    status: "OrderReceived",
     orderTime: (new Date()).toISOString(),
   }
 

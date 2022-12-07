@@ -39,12 +39,13 @@ class _DriversListScreenState extends State<DriversListScreen> {
   void initState() {
     super.initState();
     order = Get.arguments as Order?;
-    deliveryDrivers.value = deliveryDriverController.deliveryDrivers;
+    deliveryDrivers.value = deliveryDriverController.deliveryDrivers
+        .where((DeliveryDriver p0) => p0.isAssociated == false)
+        .toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    final TextTheme txt = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
         title: Text('${_i18n()["title"]}'),

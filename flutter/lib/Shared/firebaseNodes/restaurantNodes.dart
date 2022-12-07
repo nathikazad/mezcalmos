@@ -4,6 +4,14 @@ String restuarantAuthNode({
   return 'restaurants/info/$uid';
 }
 
+String restaurantOpInProcessOrdersNode({required String uid, String? orderId}) {
+  if (orderId == null) {
+    return 'restaurants/inProcessOrders/$uid';
+  } else {
+    return 'restaurants/inProcessOrders/$uid/$orderId';
+  }
+}
+
 String restaurantAvailabeNode({required String uid}) {
   return restuarantAuthNode(uid: uid) + "/state/available";
 }
@@ -13,7 +21,7 @@ String restaurantOpenNode({required String uid}) {
 }
 
 String dailyMenuNode({required String uid}) {
-  return restuarantAuthNode(uid: uid) + "/menu/daily/";
+  return restuarantAuthNode(uid: uid) + "/menu/daily";
 }
 
 String categoryNode({required String uid, required String categoryId}) {
@@ -83,6 +91,10 @@ String pastSpecialsNode({required String uid}) {
 
 String detailsNode({required String uid}) {
   return restuarantAuthNode(uid: uid) + "/details/";
+}
+
+String selfDeliveryNode({required String uid}) {
+  return restuarantAuthNode(uid: uid) + "/details/selfDelivery";
 }
 
 String bankInfoNode({required String uid}) {

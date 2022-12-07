@@ -17,7 +17,7 @@ class ButtonsStyle {
   RxBool isLoading = RxBool(false);
 
   /// this button for cancel order
-  static Widget cancelButtonWidget(String orderId) {
+  static Widget cancelButtonWidget(int orderId) {
     final RestaurantOrderController controller =
         Get.find<RestaurantOrderController>();
 
@@ -247,8 +247,8 @@ class ButtonsStyle {
     // );
   }
 
-  // this button for OrderReceieved
-  static Widget orderReceievedButtonWidget(String orderId) {
+  // this button for OrderReceived
+  static Widget OrderReceivedButtonWidget(int orderId) {
     final RestaurantOrderController controller =
         Get.find<RestaurantOrderController>();
     return MezButton(

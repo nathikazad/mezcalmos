@@ -77,7 +77,7 @@ class LaundryOpOrderTimes extends StatelessWidget {
 
   String? _getEstimatedText() {
     switch (order.status) {
-      case LaundryOrderStatus.OrderReceieved:
+      case LaundryOrderStatus.OrderReceived:
 
       case LaundryOrderStatus.OtwPickupFromCustomer:
         if (order.estimatedPickupFromCustomerTime != null) {
@@ -109,7 +109,7 @@ class LaundryOpOrderTimes extends StatelessWidget {
 
   String? _getRightTitle() {
     switch (order.status) {
-      case LaundryOrderStatus.OrderReceieved:
+      case LaundryOrderStatus.OrderReceived:
 
       case LaundryOrderStatus.OtwPickupFromCustomer:
         if (order.estimatedPickupFromCustomerTime != null) {
@@ -141,7 +141,7 @@ class LaundryOpOrderTimes extends StatelessWidget {
 
   IconData _getIcon() {
     switch (order.status) {
-      case LaundryOrderStatus.OrderReceieved:
+      case LaundryOrderStatus.OrderReceived:
 
       case LaundryOrderStatus.OtwPickupFromCustomer:
         return Icons.route;

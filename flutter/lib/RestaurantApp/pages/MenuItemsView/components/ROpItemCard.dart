@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpReorderIcon.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/controllers/ROpMenuViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
@@ -39,9 +38,6 @@ class _ROpItemCardState extends State<ROpItemCard> {
   void initState() {
     super.initState();
   }
-
-  RestaurantInfoController _restaurantInfoController =
-      Get.find<RestaurantInfoController>();
 
   RxBool imageError = RxBool(false);
   @override
@@ -84,9 +80,12 @@ class _ROpItemCardState extends State<ROpItemCard> {
                     SizedBox(
                       width: 15,
                     ),
-                    Text(
-                      widget.item.name[userLanguage] ?? "",
-                      style: Get.textTheme.bodyText1,
+                    Flexible(
+                      child: Text(
+                        widget.item.name[userLanguage] ?? "",
+                        style: Get.textTheme.bodyText1,
+                        maxLines: 2,
+                      ),
                     ),
                     Spacer(),
                     (widget.viewController.reOrderMode.isTrue)
@@ -110,26 +109,27 @@ class _ROpItemCardState extends State<ROpItemCard> {
                   children: [
                     Text('${_i18n()["category"]}: '),
                     Flexible(
-                      flex: 6,
                       fit: FlexFit.tight,
                       child: Text(
                         widget.category?.name![userLanguage] ?? "Error",
-                        style: Get.textTheme.bodyText1,
+                        style: Get.textTheme.bodyText2,
                       ),
                     ),
-                    Spacer(),
-                    Text('${_i18n()["itemStatus"]}'),
+                    Text(
+                      '${_i18n()["available"]}',
+                      maxLines: 2,
+                    ),
                     Switch(
                       value: widget.item.available,
                       onChanged: (widget.viewController.reOrderMode.isTrue)
                           ? null
                           : (bool v) {
-                              _restaurantInfoController.switchItemAvailable(
-                                  itemId: widget.item.id!,
-                                  value: v,
-                                  caytegoryId: (widget.category != null)
-                                      ? widget.category!.id
-                                      : null);
+                              // _restaurantInfoController.switchItemAvailable(
+                              //     itemId: widget.item.id!,
+                              //     value: v,
+                              //     caytegoryId: (widget.category != null)
+                              //         ? widget.category!.id
+                              //         : null);
                             },
                       activeColor: primaryBlueColor,
                       activeTrackColor: secondaryLightBlueColor,

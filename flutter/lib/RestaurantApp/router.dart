@@ -2,25 +2,29 @@ import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/RestaurantApp/pages/CategoryView/CategoryView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/ROpCreateRestaurantView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CurrentOrdersList/ROpCurrentOrders.dart';
-import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/EditInfoView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/DashboardView/ROpDashboardView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/ROpItemView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/ROpMenuView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OptionView/ROpOptionView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/ROpOrderView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/PastOrdresList/ROpPastOrdersList.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpChoiceView/ROpChoiceView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/ROpPickDriverView/ROpPickDriverView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/ROpSelfDeliveryView/ROpSelfDeliveryView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/ROpTabsViewView/ROpTabsViewView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/RestaurantWrapper.dart';
-import 'package:mezcalmos/RestaurantApp/pages/ReviewsView/ROpReviewsView.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 // const String kCurrentOrdersListRoute = '/currentOrders';
 const String kCreateRestaurant = '/createRestuarant';
 const String kCurrentOrdersListView = '/orders';
-const String kReviewsView = '/reviews/:restaurantId';
+const String kTabsView = '/tabsView';
+// const String kReviewsView = '/reviews/:restaurantId';
 const String kPastOrdersListView = '/pastorders';
 const String kMenuView = '/menu/:restaurantId';
 
 const String kEditInfoView = '/editInfo/:restaurantId';
+const String kDashboardView = '/dashboard/:restaurantId';
 
 const String kCategoryView = '/categoryScreen/:restaurantId';
 const String kEditCategoryScreen = '/categoryScreen/:categoryId/:restaurantId';
@@ -30,9 +34,11 @@ const String kEditItemView = '/itemView/:restaurantId/:itemId/:categoryId';
 const String kOrderView = '/orderView/:orderId';
 const String kOptionView = "/optionView/:restaurantId/:itemId/:optionId";
 const String kChoiceView = "/Choice/:restaurantId:/:optionId/:choiceId";
+const String kSelfDeliveryView = '/selfDelivery/:orderId';
+const String kPickDriver = '/pickDriver/:orderId';
 
 String getROpEditInfoRoute({required String restaurantId}) {
-  return kEditInfoView.replaceFirst(":restaurantId", restaurantId);
+  return kDashboardView.replaceFirst(":restaurantId", restaurantId);
 }
 
 String getROpChoiceRoute(
@@ -48,9 +54,13 @@ String getROpChoiceRoute(
   return route;
 }
 
-String getROpReviewsoRoute({required String restaurantId}) {
-  return kReviewsView.replaceFirst(":restaurantId", restaurantId);
+String getROpSelfDelivery({required String orderId}) {
+  return kSelfDeliveryView.replaceFirst(":orderId", orderId);
 }
+
+// String getROpReviewsoRoute({required String restaurantId}) {
+//   return kReviewsView.replaceFirst(":restaurantId", restaurantId);
+// }
 
 String getROpOptionRoute(
     {required String restaurantId,
@@ -107,7 +117,7 @@ String getEditOptionRoute({required String itemId}) {
 // GetX based Router (For navigating)
 class XRouter {
   static dynamic mainRoutes = [
-        GetPage(name: kEditInfoView, page: () => ROpEditInfoView()),
+        GetPage(name: kDashboardView, page: () => ROpDashboardView()),
         GetPage(name: kMenuView, page: () => ROpMenuView()),
         GetPage(
             name: kCurrentOrdersListView,
@@ -132,9 +142,11 @@ class XRouter {
         ),
         GetPage(name: kOrderView, page: () => ROpOrderView()),
         GetPage(name: kOptionView, page: () => ROpOptionView()),
-        GetPage(name: kReviewsView, page: () => ROpReviewsView()),
         GetPage(name: kChoiceView, page: () => ROpChoiceView()),
         GetPage(name: kCreateRestaurant, page: () => ROpCreateRestuarantView()),
+        GetPage(name: kTabsView, page: () => ROpTabsViewView()),
+        GetPage(name: kPickDriver, page: () => ROpPickDriverView()),
+        GetPage(name: kSelfDeliveryView, page: () => ROpSelfDeliveryView()),
       ] +
       SharedRouter.sharedRoutes;
 }

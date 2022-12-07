@@ -48,10 +48,10 @@ String getSingleLaundryRoute(String laundryId) {
   return kSingleLaundryRoute.replaceFirst(":laundryId", laundryId);
 }
 
-String getItemRoute(String restaurantId, String itemId) {
+String getItemRoute(String restaurantId, int itemId) {
   return kViewRestaurantItemRoute
       .replaceFirst(":restaurantId", restaurantId)
-      .replaceFirst(":itemId", itemId);
+      .replaceFirst(":itemId", itemId.toString());
 }
 
 String editCartItemRoute(int cartItemId) {

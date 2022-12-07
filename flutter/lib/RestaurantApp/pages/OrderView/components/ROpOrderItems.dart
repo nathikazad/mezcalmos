@@ -226,7 +226,11 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                   if (!response.success) {
                     Get.snackbar("Error", response.errorMessage ?? "Error");
                   }
-                }).whenComplete(() {
+                }).whenComplete(() async {
+                  if (!(_maximumRefund() > 0)) {
+                    await Get.find<ROpOrderController>()
+                        .cancelOrder(widget.order.orderId);
+                  }
                   setState(() {
                     isLoading = false;
                   });
@@ -272,6 +276,15 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
             )),
       ),
     );
+  }
+
+  num _maximumRefund() {
+    if (widget.order.refundAmount != null) {
+      return (widget.order.totalCostBeforeShipping! -
+          widget.order.refundAmount!);
+    } else {
+      return widget.order.totalCost!;
+    }
   }
 
   List<Widget> buildChoices(

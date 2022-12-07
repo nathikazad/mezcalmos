@@ -83,14 +83,18 @@ class ListRestaurantsController {
       restaurant.itemsWithoutCategory.forEach((Item item) {
         final Item _item = item;
         _item.restaurant = restaurant;
-        filteredItems.add(_item);
+        if (item.available) {
+          filteredItems.add(_item);
+        }
       });
       // filteredItems.addAll(element.itemsWithoutCategory);
       restaurant.getAvailableCategories.forEach((Category cat) {
         cat.items.forEach((Item item) {
           final Item _item = item;
           _item.restaurant = restaurant;
-          filteredItems.add(_item);
+          if (item.available) {
+            filteredItems.add(_item);
+          }
         });
       });
     });
@@ -120,9 +124,10 @@ extension RestaurantFilters on RestaurantList {
       categoryItems.forEach((Item item) {
         item.restaurant = category.restaurant;
         item.category = category;
-        if (item.restaurant?.info.firebaseId != null && item.id != null)
-          item.linkUrl = getItemRoute(
-              item.restaurant!.info.firebaseId, item.id.toString());
+        if (item.restaurant?.info.hasuraId.toString() != null &&
+            item.id != null)
+          item.linkUrl =
+              getItemRoute(item.restaurant!.info.hasuraId.toString(), item.id!);
       });
       items.addAll(categoryItems);
       return items;

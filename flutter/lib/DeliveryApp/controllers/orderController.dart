@@ -170,7 +170,7 @@ class OrderController extends GetxController {
   }
 
   void clearNewOrderNotificationsOfPastOrders() {
-    final List<String> currentOrderIds = <String>[];
+    final List<int> currentOrderIds = <int>[];
     currentOrders.forEach((Order order) => currentOrderIds.add(order.orderId));
     _foregroundNotificationsController
         .notifications()
@@ -184,7 +184,7 @@ class OrderController extends GetxController {
   }
 
   Future<ServerResponse> setEstimatedTime(
-      String orderId,
+      int orderId,
       DateTime estimatedTime,
       DeliveryDriverType deliveryDriverType,
       DeliveryAction deliveryAction,

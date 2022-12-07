@@ -87,7 +87,7 @@ class Cart {
     return <String, dynamic>{
       "orderType": OrderType.Restaurant.toFirebaseFormatString(),
       "routeInformation": _routeInformation?.toJson(),
-      "serviceProviderId": restaurant?.info.firebaseId,
+      "serviceProviderId": restaurant?.info.hasuraId.toString(),
       "quantity": quantity(),
       "cost": totalCost.toInt(),
       "itemsCost": itemsCost().toInt(),

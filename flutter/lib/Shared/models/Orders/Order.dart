@@ -51,7 +51,7 @@ abstract class Order {
             RestaurantOrderStatus.OrderReceived;
       case OrderType.Laundry:
         return (this as LaundryOrder).status ==
-            LaundryOrderStatus.OrderReceieved;
+            LaundryOrderStatus.OrderReceived;
       case OrderType.Taxi:
         return (this as TaxiOrder).status == TaxiOrdersStatus.LookingForTaxi ||
             (this as TaxiOrder).status ==

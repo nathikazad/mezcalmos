@@ -5,9 +5,15 @@ import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['CustomerApp']["pages"]
+        ["Restaurants"]["ViewOrderScreen"]["components"]["OrderRestaurantCard"];
 
 class OrderRestaurantCard extends StatelessWidget {
   const OrderRestaurantCard({Key? key, required this.order}) : super(key: key);
@@ -19,6 +25,17 @@ class OrderRestaurantCard extends StatelessWidget {
       children: [
         SizedBox(
           height: 20,
+        ),
+        Container(
+          alignment: Alignment.centerLeft,
+          padding: const EdgeInsets.only(left: 3),
+          child: Text(
+            '${_i18n()["restaurant"]}',
+            style: Get.textTheme.bodyText1,
+          ),
+        ),
+        SizedBox(
+          height: 10,
         ),
         Card(
           child: Container(

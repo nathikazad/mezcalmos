@@ -20,8 +20,8 @@ class Location {
 
   factory Location.fromHasura(Geography locationData, address) {
     mezDbgPrint("Location data =====>$locationData");
-    final LocationData position =
-        buildLocationData(locationData.latitude, locationData.longitude);
+    final LocationData position = buildLocationData(
+        locationData.latitude.toDouble(), locationData.longitude.toDouble());
     return Location(address, position);
   }
 
@@ -56,6 +56,11 @@ class Location {
 
     return other is Location && other.address == address;
   }
+
+  bool isValidLocation() =>
+      address.replaceAll(' ', '') != "0.0,0.0" &&
+      position.latitude != 0 &&
+      position.longitude != 0;
 
   @override
   int get hashCode => address.hashCode;

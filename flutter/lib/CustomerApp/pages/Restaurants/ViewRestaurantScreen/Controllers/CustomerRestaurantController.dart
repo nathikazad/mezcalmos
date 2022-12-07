@@ -59,7 +59,7 @@ class CustomerRestaurantController {
     //       this.restaurant.value?.pastSpecials.add(item);
     //     }
     //   } else {
-    //     this.restaurant.value?.itemsWithoutCategory.add(item);
+    //     this.restaurantq.value?.itemsWithoutCategory.add(item);
     //   }
     // });
   }
@@ -82,8 +82,8 @@ class CustomerRestaurantController {
   }
 
   void _initControllers(TickerProvider vsync, Restaurant restaurant) {
-    tabsController =
-        TabController(length: restaurant.getCategories.length, vsync: vsync);
+    tabsController = TabController(
+        length: restaurant.getAvailableCategories.length, vsync: vsync);
     specialstabsController =
         TabController(length: getGroupedSpecials().length, vsync: vsync);
 
@@ -186,9 +186,11 @@ class CustomerRestaurantController {
   }
 
   List<Category> get catsList {
-    final List<Category> data = restaurant.value!.getCategories;
-    mezDbgPrint("[66] Categories list ===> ${data.length}");
-    if (restaurant.value!.itemsWithoutCategory.isNotEmpty) {
+    final List<Category> data = restaurant.value!.getAvailableCategories;
+    if (restaurant.value!.itemsWithoutCategory
+        .where((Item element) => element.available == true)
+        .toList()
+        .isNotEmpty) {
       data.add(restaurant.value!.getNoCategory!);
     }
     return data;
@@ -199,7 +201,8 @@ class CustomerRestaurantController {
   }
 
   bool get showCategoriesChips {
-    return restaurant.value!.getCategories.length > 1 && showInfo.isFalse;
+    return restaurant.value!.getAvailableCategories.length > 1 &&
+        showInfo.isFalse;
   }
 
   TabController get getTabController {

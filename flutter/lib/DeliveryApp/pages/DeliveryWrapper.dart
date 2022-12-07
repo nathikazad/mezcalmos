@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
+import 'package:mezcalmos/DeliveryApp/deepLinkHandler.dart';
 import 'package:mezcalmos/DeliveryApp/notificationHandler.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -13,7 +14,8 @@ import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Notification.dart' as MezNotification;
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
+    as MezNotification;
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -25,6 +27,8 @@ class DeliveryWrapper extends StatefulWidget {
 }
 
 class _DeliveryWrapperState extends State<DeliveryWrapper> {
+  final DeepLinkHandler _deepLinkHandler = DeepLinkHandler();
+
   StreamSubscription<MezNotification.Notification>?
       _notificationsStreamListener;
   StreamSubscription<bool>? _locationStreamSub;
@@ -62,6 +66,7 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
             deliveryDriverNotificationsNode(userId),
             deliveryDriverNotificationHandler);
     super.initState();
+    Future.wait([_deepLinkHandler.startDynamicLinkCheckRoutine()]);
   }
 
   // void listenForLocationPermissions() {

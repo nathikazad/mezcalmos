@@ -72,6 +72,8 @@ const String getxPackageName = "packageName";
 const String getxAppStoreId = "iosAppStoreId";
 const String defaultUserImgUrl =
     "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d";
+const String defaultDriverImgUrl =
+    "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/drivers%2FdeliveryIcon.png?alt=media&token=f02da9dd-07c6-42dc-888e-8bf3646f74cc";
 
 // ----------------- Assets Strings ----------------- //
 const String aDefaultNotificationsSound = 'assets/sounds/notif-alert.mp3';

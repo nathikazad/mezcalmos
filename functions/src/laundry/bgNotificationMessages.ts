@@ -4,7 +4,7 @@ import { LaundryOrderStatus } from "../shared/models/Services/Laundry/LaundryOrd
 
 export const LaundryOrderStatusChangeMessages:
   { [id in LaundryOrderStatus]: BackgroundNotification } = {
-  [LaundryOrderStatus.OrderReceieved]: {
+  [LaundryOrderStatus.OrderReceived]: {
     [Language.EN]: {
       title: "Your order has been received",
       body: "Laundry has recieved your order and a delivery driver will be sent shortly."

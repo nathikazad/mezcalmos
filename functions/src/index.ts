@@ -20,10 +20,12 @@ import { checkout } from "./restaurant/checkoutCart";
 // import * as laundryDelivery from './delivery/laundryStatusChange'
 // import * as restaurantDelivery from './delivery/restaurantStatusChange'
 import { HttpsError } from "firebase-functions/v1/auth";
+
 import { getAuthUsingOTP, sendOTPForLogin } from "./utilities/otpAuth";
 // import { assignDriver } from "./delivery/assignDriver";
 // import { setEstimatedTime } from "./delivery/setEstimatedTime";
 import * as userChanges from './utilities/userChanges'
+import { generateDriverLink,generateOperatorLink } from "./utilities/links/generate";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -54,8 +56,12 @@ export const stripe = {
   // updateServiceProvider: authenticatedCall((userId, data) => stripeServiceProvderFunctions.updateServiceProvider(userId, data)),
 }
 
+
+
 export const restaurant = {
   createRestaurant: authenticatedCall((userId, data) => createNewRestaurant(userId, data)),
+  genOperatorLink: authenticatedCall((userId, data) => generateOperatorLink(userId,data )),
+  genDriverLink: authenticatedCall((userId, data) => generateDriverLink(userId,data )),
   checkoutCart: authenticatedCall((userId, data) => checkout(userId, data)),
   // addReview: authenticatedCall((userId, data) => addReview(userId, data)),
   prepareOrder: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),

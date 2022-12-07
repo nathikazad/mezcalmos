@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/pages/MessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/NoInternetConnectionScreen.dart';
 import 'package:mezcalmos/Shared/pages/Notifications/ViewNotifications.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationview.dart';
+import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileScreen.dart';
 import 'package:mezcalmos/Shared/pages/Wrapper.dart';
@@ -38,6 +39,7 @@ const String kAgoraCallScreen = '/agora';
 // const String kInAppReview = '/in-app_review';
 const String kPickLocationWithoutAuth = "/pick_location/noAuth";
 const String kPickLocationEdit = "/pick_location/edit";
+const String kSomethingWentWrongScreen = "/SomethingWentWrongScreen";
 
 String getMessagesRoute({
   required int chatId,
@@ -81,6 +83,9 @@ bool isCurrentRoute(String route) {
 // GetX based Router (For navigating)
 class SharedRouter {
   static List<GetPage> sharedRoutes = [
+    GetPage(
+        name: kSomethingWentWrongScreen,
+        page: () => SomethingWentWrongScreen()),
     GetPage(name: kUserProfile, page: () => UserProfile()),
     GetPage(name: kAppNeedsUpdate, page: () => AppNeedsUpdateScreen()),
     // GetPage(name: kInAppReview, page: () => InAppReviewPage()),

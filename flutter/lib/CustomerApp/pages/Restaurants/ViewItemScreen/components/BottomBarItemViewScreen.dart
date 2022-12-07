@@ -125,7 +125,8 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                           mezDbgPrint("[cc] Exec :: AddItemMode ");
 
                           if (restaurantCartController
-                                  .associatedRestaurant?.info.firebaseId !=
+                                  .associatedRestaurant?.info.hasuraId
+                                  .toString() !=
                               null) {
                             mezDbgPrint("[cc] Exec :: AddItemMode :: if 1 ");
 
@@ -155,7 +156,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                               await Get.offNamed<void>(kCartRoute);
                             } else {
                               mezDbgPrint(
-                                  "not true ${restaurantCartController.associatedRestaurant?.info.firebaseId} and the other is ${widget.currentRestaurantId}");
+                                  "not true ${restaurantCartController.associatedRestaurant?.info.hasuraId.toString()} and the other is ${widget.currentRestaurantId}");
 
                               await showStatusInfoDialog(
                                 context,

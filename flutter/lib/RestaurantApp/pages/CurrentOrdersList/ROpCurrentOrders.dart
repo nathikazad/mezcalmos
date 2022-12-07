@@ -13,7 +13,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -27,7 +26,9 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpPastOrdersList'];
 
 class ROpCurrentOrdersListView extends StatefulWidget {
-  const ROpCurrentOrdersListView({Key? key}) : super(key: key);
+  const ROpCurrentOrdersListView({Key? key, this.canGoBack = true})
+      : super(key: key);
+  final bool canGoBack;
 
   @override
   State<ROpCurrentOrdersListView> createState() =>
@@ -40,56 +41,50 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
 
   RestaurantOpAuthController _restaurantOpAuthController =
       Get.find<RestaurantOpAuthController>();
+
   Rxn<Restaurant> restaurant = Rxn();
-  RxList<RestaurantOrder> inProcessOrders = RxList.empty();
-  RxList<RestaurantOrder> pastOrders = RxList.empty();
   StreamSubscription? _inProcessOrdersListener;
-  StreamSubscription? _restStream;
-  StreamSubscription? _pastOrdersListener;
+
   @override
   void initState() {
     mezDbgPrint("INIT ORDERS 👋👋👋👋👋👋");
     _getRestaurant();
-    inProcessOrders = orderController.currentOrders;
-    pastOrders = orderController.pastOrders;
-    _inProcessOrdersListener = orderController.currentOrders.stream
-        .listen((List<RestaurantOrder> event) {
-      inProcessOrders.value = event;
-    });
-    _pastOrdersListener =
-        orderController.pastOrders.stream.listen((List<RestaurantOrder> event) {
-      pastOrders.value = event;
-    });
+    _initOrders();
 
     super.initState();
   }
 
+  Future<void> _initOrders() async {
+    await orderController.fetchOrders();
+    orderController.startListeningOnOrders();
+    // inProcessOrders.value = await get_minimal_restaurant_orders(
+    //         restaurantId:
+    //             int.parse(_restaurantOpAuthController.restaurantId!)) ??
+    //     [];
+    // _inProcessOrdersListener = listen_on_minimal_restaurant_orders(
+    //         restaurantId: int.parse(_restaurantOpAuthController.restaurantId!))
+    //     .listen((List<MinimalRestaurantOrder>? event) {
+    //   mezDbgPrint("Streaaam triggred 😍");
+    //   if (event != null) {
+    //     inProcessOrders.value = event;
+    //   }
+    // });
+  }
+
   Future<void> _getRestaurant() async {
-    Get.put(RestaurantInfoController(), permanent: true);
-    Get.find<RestaurantInfoController>()
-        .init(restId: _restaurantOpAuthController.restaurantId!);
     final int id = int.parse(Get.find<RestaurantOpAuthController>()
         .operator
         .value!
         .state
         .restaurantId!);
-    try {
-      restaurant.value = await get_restaurant_by_id(id: id);
-    } catch (e, stk) {
-      isValidRestaurant.value = false;
-      mezDbgPrint(e);
-      mezDbgPrint(stk);
-      // MezSnackbar("OOPS",
-      //     "No restaurant with ID ${_restaurantOpAuthController.restaurantId} found",
-      //     position: SnackPosition.TOP);
-    }
+
+    restaurant.value = await get_restaurant_by_id(id: id);
   }
 
   @override
   void dispose() {
-    _pastOrdersListener?.cancel();
     _inProcessOrdersListener?.cancel();
-    _restStream?.cancel();
+
     Get.delete<RestaurantInfoController>(force: true);
 
     super.dispose();
@@ -97,49 +92,54 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () {
-        if (restaurant.value != null) {
-          return Scaffold(
-            appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu,
-                showNotifications: true, ordersRoute: kPastOrdersListView),
-            key: Get.find<SideMenuDrawerController>().getNewKey(),
-            drawer: ROpDrawer(),
-            body: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 8, right: 8, left: 8),
-                  child: TitleWithOnOffSwitcher(
-                    title: "${_i18n()["incomingOrders"]}",
-                    onTurnedOn: () {
-                      _restaurantOpAuthController.turnOpenOn();
-                    },
-                    onTurnedOff: () {
-                      _restaurantOpAuthController.turnOpenOff();
-                    },
-                    initialSwitcherValue: restaurant.value!.state.isOpen,
-                  ),
-                ),
-                Container(
-                    child: (restaurant.value!.state.isOpen)
-                        ? _inProcessOrders()
-                        : _offlineWidget()),
-              ],
-            ),
-          );
-        } else {
-          return isValidRestaurant.value
-              ? Container(
-                  alignment: Alignment.center,
-                  color: Colors.white,
-                  child: MezLogoAnimation(
-                    centered: true,
-                  ),
-                )
-              : SomethingWentWrongScreen();
-        }
+    return WillPopScope(
+      onWillPop: () async {
+        return widget.canGoBack;
       },
+      child: Obx(
+        () {
+          if (restaurant.value != null) {
+            return Scaffold(
+              appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu,
+                  showNotifications: true, ordersRoute: kPastOrdersListView),
+              key: Get.find<SideMenuDrawerController>().getNewKey(),
+              drawer: ROpDrawer(),
+              body: Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 8, right: 8, left: 8),
+                    child: TitleWithOnOffSwitcher(
+                      title: "${_i18n()["incomingOrders"]}",
+                      onTurnedOn: () {
+                        _restaurantOpAuthController.turnOpenOn();
+                      },
+                      onTurnedOff: () {
+                        _restaurantOpAuthController.turnOpenOff();
+                      },
+                      initialSwitcherValue: restaurant.value!.state.isOpen,
+                    ),
+                  ),
+                  Container(
+                      child: (restaurant.value!.state.isOpen)
+                          ? _inProcessOrders()
+                          : _offlineWidget()),
+                ],
+              ),
+            );
+          } else {
+            return isValidRestaurant.value
+                ? Container(
+                    alignment: Alignment.center,
+                    color: Colors.white,
+                    child: MezLogoAnimation(
+                      centered: true,
+                    ),
+                  )
+                : SomethingWentWrongScreen();
+          }
+        },
+      ),
     );
   }
 
@@ -165,7 +165,7 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
   Widget _inProcessOrders() {
     return Container(
         alignment: Alignment.center,
-        child: (inProcessOrders.value.isNotEmpty)
+        child: (orderController.currentOrders.value.isNotEmpty)
             ? Scrollbar(
                 child: SingleChildScrollView(
                   padding: EdgeInsets.all(8),
@@ -182,11 +182,11 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
                           const SizedBox(height: 5),
                           ListView.builder(
                             shrinkWrap: true,
-                            itemCount: inProcessOrders.length,
+                            itemCount: orderController.currentOrders.length,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (_, int index) {
                               return ROpOrderCard(
-                                order: inProcessOrders[index],
+                                order: orderController.currentOrders[index],
                               );
                             },
                           ),

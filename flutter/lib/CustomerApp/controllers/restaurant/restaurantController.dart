@@ -277,7 +277,8 @@ class RestaurantController extends GetxController {
           "@@saadf@@ restaurantController::addItem ---> associatedRestaurant == null !");
       associatedRestaurant = await getAssociatedRestaurant(restaurantId);
       cart.value = Cart(restaurant: associatedRestaurant!);
-    } else if (associatedRestaurant!.info.firebaseId != restaurantId) {
+    } else if (associatedRestaurant!.info.hasuraId.toString().toString() !=
+        restaurantId) {
       mezDbgPrint(
           "@@saadf@@ restaurantController::addItem ---> associatedRestaurant!.id != restaurantId!");
 

@@ -82,6 +82,7 @@ class ROpCreateRestuarantViewController {
       final HttpsCallableResult response =
           await cloudFunction.call(_constructRestaurant());
       mezDbgPrint("Response : ${response.data}");
+
       return ServerResponse.fromJson(response.data);
     } catch (e) {
       mezDbgPrint("Errrooooooooor =======> $e");

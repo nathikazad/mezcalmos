@@ -27,7 +27,7 @@ extension LaundryOrderWidgets on LaundryOrder {
       case LaundryOrderStatus.CancelledByCustomer:
         return _i18n()['canceled'];
 
-      case LaundryOrderStatus.OrderReceieved:
+      case LaundryOrderStatus.OrderReceived:
         return _i18n()['orderReceived'];
       case LaundryOrderStatus.OtwPickupFromCustomer:
         return _i18n()['otwPickUp'];
@@ -53,7 +53,7 @@ extension LaundryOrderWidgets on LaundryOrder {
       case LaundryOrderStatus.CancelledByCustomer:
         return _i18n()['canceled'];
 
-      case LaundryOrderStatus.OrderReceieved:
+      case LaundryOrderStatus.OrderReceived:
         return _i18n()['orderReceived'];
       case LaundryOrderStatus.OtwPickupFromCustomer:
         return _i18n()['otwToCustomer'];
@@ -130,7 +130,7 @@ extension LaundryOrderWidgets on LaundryOrder {
         );
 
         break;
-      case LaundryOrderStatus.OrderReceieved:
+      case LaundryOrderStatus.OrderReceived:
         orderWidget = Container(
           child: Icon(
             Icons.local_laundry_service,

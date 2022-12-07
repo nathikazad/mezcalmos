@@ -6,10 +6,10 @@ import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.da
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderWeighSelector.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
@@ -85,7 +85,7 @@ class _OrderCategoryBottomModalState extends State<OrderCategoryBottomModal> {
           //    Category selector
           LaundryOrderWeightSelector(
             newCategory: newCategory,
-            laundryId: widget.order.laundry!.firebaseId,
+            laundryId: widget.order.laundry!.hasuraId.toString(),
           ),
 
           SizedBox(
@@ -175,7 +175,7 @@ class _OrderCategoryBottomModalState extends State<OrderCategoryBottomModal> {
   Future<void> handlingNewOrderWeight() async {
     late LanguageType primaryLangauge;
     await laundryInfoController
-        .getLaundry(widget.order.laundry!.firebaseId)
+        .getLaundry(widget.order.laundry!.hasuraId.toString())
         .then((Laundry value) {
       primaryLangauge = value.primaryLanguage;
     });
@@ -197,7 +197,7 @@ class _OrderCategoryBottomModalState extends State<OrderCategoryBottomModal> {
         _tempCatgeory.name != widget.oldItem!.name) {
       handlingCategroryAlreadySelected();
     } else {
-      settingNewOrderWeight(newCostLineItem);
+      await settingNewOrderWeight(newCostLineItem);
     }
   }
 
@@ -206,7 +206,7 @@ class _OrderCategoryBottomModalState extends State<OrderCategoryBottomModal> {
       LaundryOrderCostLineItem newCostLineItem) async {
     late LanguageType primaryLangauge;
     await laundryInfoController
-        .getLaundry(widget.order.laundry!.firebaseId)
+        .getLaundry(widget.order.laundry!.hasuraId.toString())
         .then((Laundry value) {
       primaryLangauge = value.primaryLanguage;
     });

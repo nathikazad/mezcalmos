@@ -63,7 +63,7 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
                   onTap: () {
                     mezDbgPrint(widget.item.id);
                     Get.toNamed(getCategoryRoute(
-                        laundryId: widget.laundry.info.firebaseId,
+                        laundryId: widget.laundry.info.hasuraId.toString(),
                         categoryId: widget.item.id));
                   },
                   child: Ink(
@@ -133,7 +133,8 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
     laundryCosts.lineItems = categories;
 
     await _laundryInfoController.setCosts(
-        laundryCosts: laundryCosts, laundryId: widget.laundry.info.firebaseId);
+        laundryCosts: laundryCosts,
+        laundryId: widget.laundry.info.hasuraId.toString());
 
     await Get.delete<OpLaundryInfoController>(force: true);
   }

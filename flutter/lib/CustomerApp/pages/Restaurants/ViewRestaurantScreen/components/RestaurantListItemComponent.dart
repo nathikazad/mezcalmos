@@ -34,78 +34,78 @@ class _RestaurantsListOfItemsComponentState
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 8),
-      child: Container(
-        height: 75,
-        alignment: Alignment.centerLeft,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 8,
-        ),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(10),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Obx(() {
-                if (isImageExist.isTrue) {
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 15),
-                    child: CircleAvatar(
-                      radius: 30,
-                      backgroundImage:
-                          CachedNetworkImageProvider(widget.item.image!),
-                      onBackgroundImageError: (Object e, StackTrace? s) {
-                        isImageExist.value = false;
-                      },
-                    ),
-                  );
-                } else {
-                  return SizedBox();
-                }
-              }),
-              Flexible(
-                fit: FlexFit.tight,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "${widget.item.name[userLanguage]?.capitalizeFirstofEach}",
-                      style: Get.textTheme.headline3?.copyWith(
-                        fontSize: 13.sp,
-                      ),
-                    ),
-                    if (widget.item.isSpecial)
-                      Container(
-                        margin: const EdgeInsets.symmetric(vertical: 3),
-                        child: Text(
-                          widget.item.getPeriod!
-                              .toNormalString(removeDay: true),
-                        ),
-                      )
-                  ],
-                ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Text("\$${widget.item.cost}",
-                    style: Get.textTheme.headline3),
-              ),
-              SizedBox(
-                width: 3,
-              ),
-            ],
+    if (widget.item.available) {
+      return Card(
+        margin: const EdgeInsets.only(bottom: 8),
+        child: Container(
+          height: 75,
+          alignment: Alignment.centerLeft,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 8,
           ),
-          onTap: () {
-            mezDbgPrint(widget.function);
-            widget.function!();
-          },
+          child: InkWell(
+            borderRadius: BorderRadius.circular(10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Obx(() {
+                  if (isImageExist.isTrue) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: CircleAvatar(
+                        radius: 30,
+                        backgroundImage:
+                            CachedNetworkImageProvider(widget.item.image!),
+                        onBackgroundImageError: (Object e, StackTrace? s) {
+                          isImageExist.value = false;
+                        },
+                      ),
+                    );
+                  } else {
+                    return SizedBox();
+                  }
+                }),
+                Flexible(
+                  fit: FlexFit.tight,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "${widget.item.name[userLanguage]?.capitalizeFirstofEach}",
+                        style: Get.textTheme.headline3?.copyWith(
+                          fontSize: 13.sp,
+                        ),
+                      ),
+                      if (widget.item.isSpecial)
+                        Container(
+                            margin: const EdgeInsets.symmetric(vertical: 3),
+                            child: Text(widget.item.getPeriod!
+                                .toNormalString(removeDay: true)))
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text("\$${widget.item.cost}",
+                      style: Get.textTheme.headline3),
+                ),
+                SizedBox(
+                  width: 3,
+                ),
+              ],
+            ),
+            onTap: () {
+              widget.function!();
+            },
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      return SizedBox();
+    }
   }
 }

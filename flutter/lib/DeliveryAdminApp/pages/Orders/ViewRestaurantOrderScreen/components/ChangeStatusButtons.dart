@@ -23,7 +23,7 @@ List<Widget> buildRestOrderButtons(
 Widget? changeStatusButton(Rxn<RestaurantOrder> order) {
   switch (order.value!.status) {
     case RestaurantOrderStatus.OrderReceived:
-      return ButtonsStyle.orderReceievedButtonWidget(order.value!.orderId);
+      return ButtonsStyle.OrderReceivedButtonWidget(order.value!.orderId);
 
     case RestaurantOrderStatus.PreparingOrder:
       return ButtonsStyle.preparingOrderButtonWidget(order.value!);

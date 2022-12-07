@@ -172,7 +172,7 @@ class RestaurantOrderController extends GetxController {
   }
 
   Future<ServerResponse> setEstimatedFoodReadyTime(
-      String orderId, DateTime estimatedTime) async {
+      int orderId, DateTime estimatedTime) async {
     mezDbgPrint("inside clod set delivery time $estimatedTime");
     return _callRestaurantCloudFunction("setEstimatedFoodReadyTime", orderId,
         optionalParams: {
@@ -181,30 +181,30 @@ class RestaurantOrderController extends GetxController {
         });
   }
 
-  Future<ServerResponse> cancelOrder(String orderId) async {
+  Future<ServerResponse> cancelOrder(int orderId) async {
     return _callRestaurantCloudFunction("cancelOrderFromAdmin", orderId);
   }
 
-  Future<ServerResponse> prepareOrder(String orderId) async {
+  Future<ServerResponse> prepareOrder(int orderId) async {
     return _callRestaurantCloudFunction("prepareOrder", orderId);
   }
 
-  Future<ServerResponse> readyForPickupOrder(String orderId) async {
+  Future<ServerResponse> readyForPickupOrder(int orderId) async {
     return _callRestaurantCloudFunction("readyForOrderPickup", orderId);
   }
 
   // Need to be removed
-  Future<ServerResponse> deliverOrder(String orderId) async {
+  Future<ServerResponse> deliverOrder(int orderId) async {
     return _callRestaurantCloudFunction("deliverOrder", orderId);
   }
 
   // Need to be removed
-  Future<ServerResponse> dropOrder(String orderId) async {
+  Future<ServerResponse> dropOrder(int orderId) async {
     return _callRestaurantCloudFunction("dropOrder", orderId);
   }
 
   Future<ServerResponse> _callRestaurantCloudFunction(
-      String functionName, String orderId,
+      String functionName, int orderId,
       {Map<String, dynamic>? optionalParams}) async {
     final HttpsCallable dropOrderFunction =
         FirebaseFunctions.instance.httpsCallable('restaurant-$functionName');

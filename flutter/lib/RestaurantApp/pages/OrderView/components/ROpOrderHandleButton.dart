@@ -36,9 +36,9 @@ class _ROpOrderHandleButtonState extends State<ROpOrderHandleButton> {
 
   Future<void> handleClick() async {
     if (widget.order.status == RestaurantOrderStatus.OrderReceived) {
-      await orderController.startPreparingOrder(widget.order.orderId);
+      await orderController.prepareOrder(widget.order.orderId);
     } else if (widget.order.status == RestaurantOrderStatus.PreparingOrder) {
-      await orderController.setAsReadyForOrderPickup(widget.order.orderId);
+      await orderController.setReadyForDelivery(widget.order.orderId);
     }
   }
 

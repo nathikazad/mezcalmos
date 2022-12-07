@@ -13,7 +13,6 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]
     ["components"]["LaundryAppDrawer"];
@@ -102,26 +101,6 @@ class _ROpDrawerState extends State<ROpDrawer> {
                       ),
                     ),
                     _languageSwitcher(),
-                    _navigationLink(
-                        onClick: () {
-                          _drawerController.closeMenu();
-                          launch(GetStorage().read(getxPrivacyPolicyLink));
-                        },
-                        icon: Icons.privacy_tip,
-                        titleWidget: Text(
-                          "${_i18n()["privacyPolicies"]}",
-                          style: Get.textTheme.bodyText1,
-                        )),
-                    _navigationLink(
-                        onClick: () async {
-                          _drawerController.closeMenu();
-                          await authController.signOut();
-                        },
-                        icon: Icons.logout,
-                        titleWidget: Text(
-                          "${_i18n()["logout"]}",
-                          style: Get.textTheme.bodyText1,
-                        )),
                   ],
                 ),
               ),
@@ -213,8 +192,8 @@ class _ROpDrawerState extends State<ROpDrawer> {
         _navigationLink(
             onClick: () {
               _drawerController.closeMenu();
-              Get.toNamed(getROpReviewsoRoute(
-                  restaurantId: restaurantOpAuthController.restaurantId!));
+              // Get.toNamed(getROpReviewsoRoute(
+              //     restaurantId: restaurantOpAuthController.restaurantId!));
             },
             icon: Icons.star_rate_rounded,
             titleWidget: Text(
@@ -228,16 +207,6 @@ class _ROpDrawerState extends State<ROpDrawer> {
             icon: Icons.notifications,
             titleWidget: Text(
               "${_i18n()["notifications"]}",
-              style: Get.textTheme.bodyText1,
-            )),
-        _navigationLink(
-            onClick: () {
-              _drawerController.closeMenu();
-              Get.toNamed(kPastOrdersListView);
-            },
-            icon: Icons.history,
-            titleWidget: Text(
-              "${_i18n()["pastOrders"]}",
               style: Get.textTheme.bodyText1,
             )),
       ],

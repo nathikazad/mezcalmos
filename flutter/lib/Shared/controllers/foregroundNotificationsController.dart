@@ -48,10 +48,11 @@ class ForegroundNotificationsController extends GetxController {
         .child(notificationNode)
         .onChildAddedWitchCatch()
         .then((Stream<DatabaseEvent> stream) {
-      _notificationNodeAddListener = stream.listen((event) {
+      _notificationNodeAddListener = stream.listen((DatabaseEvent event) {
         try {
           final Notification _notification =
               notificationHandler(event.snapshot.key!, event.snapshot.value);
+
           final bool alreadyOnLinkPage = isCurrentRoute(_notification.linkUrl);
 
           switch (_notification.notificationAction) {
@@ -93,8 +94,8 @@ class ForegroundNotificationsController extends GetxController {
         .ref()
         .child(notificationNode)
         .onChildRemovedWitchCatch()
-        .then((value) {
-      _notificationNodeRemoveListener = value.listen((event) {
+        .then((Stream<DatabaseEvent> value) {
+      _notificationNodeRemoveListener = value.listen((DatabaseEvent event) {
         final Notification _notifaction =
             notificationHandler(event.snapshot.key!, event.snapshot.value);
         notifications.value = notifications

@@ -17,6 +17,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     bool autoBack = false,
     VoidCallback? onClick,
     String? title,
+    bool showLeftBtn = true,
     Widget? titleWidget,
     bool showNotifications = false,
     String? ordersRoute,
@@ -68,7 +69,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
       elevation: 0,
       bottom: tabBar,
       automaticallyImplyLeading: false,
-      leading: _getRightLeading(),
+      leading: (showLeftBtn) ? _getRightLeading() : null,
       actions: [
         if (showNotifications && Get.find<AuthController>().isUserSignedIn)
           _notificationAppBarIcon(),
@@ -82,25 +83,25 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
         )
       ],
       // titleSpacing: 20,
-      title: FittedBox(
-        fit: BoxFit.fitWidth,
-        child: (title != null)
-            ? Text(
-                title,
-                style: TextStyle(
-                  fontFamily: "Poppins",
-                  fontWeight: FontWeight.w600,
-                  fontSize: 15.sp,
-                  color: Colors.black,
-                ),
-                textAlign: TextAlign.center,
-              )
-            : (titleWidget != null)
-                ? titleWidget
-                : MezcalmosSharedWidgets.fillTitle(
-                    actionLength: 2,
-                    showLogo: (Get.width > 320) ? true : false),
-      ));
+      title: (title != null)
+          ? Text(
+              title,
+              style: TextStyle(
+                fontFamily: "Poppins",
+                fontWeight: FontWeight.w600,
+                fontSize: 15.sp,
+                color: Colors.black,
+              ),
+              textAlign: TextAlign.center,
+            )
+          : (titleWidget != null)
+              ? titleWidget
+              : FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: MezcalmosSharedWidgets.fillTitle(
+                      actionLength: 2,
+                      showLogo: (Get.width > 320) ? true : false),
+                ));
 }
 
 Widget _BackButtonAppBar({required VoidCallback? click}) {
@@ -123,8 +124,11 @@ Widget _BackButtonAppBar({required VoidCallback? click}) {
           gradient: click == null
               ? null
               : LinearGradient(colors: [
-                  Color.fromARGB(255, 97, 127, 255),
-                  Color.fromARGB(255, 198, 90, 252),
+                  primaryBlueColor,
+                  primaryBlueColor,
+
+                  // Color.fromARGB(255, 97, 127, 255),
+                  // Color.fromARGB(255, 198, 90, 252),
                 ], begin: Alignment.topLeft, end: Alignment.bottomRight),
         ),
         child: Icon(

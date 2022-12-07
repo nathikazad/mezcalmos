@@ -22,14 +22,15 @@ class AuthHooks {
 
   static void onSignInHook() {
     mezDbgPrint(
-        "[+] CustomerApp::AuthHooks::onSignInHook -> Callback Executed.");
+        "[+] Restaurant App::AuthHooks::onSignInHook -> Callback Executed.");
 
     Get.put(ForegroundNotificationsController(), permanent: true);
     Get.put(BackgroundNotificationsController(), permanent: true);
 
     // Get.put(RestaurantInfoController(), permanent: true);
-    Get.put(ROpOrderController(), permanent: true);
+
     Get.put(RestaurantOpAuthController(), permanent: true);
+    Get.put(ROpOrderController(), permanent: true);
 
     Get.put(MessageController(), permanent: true);
   }

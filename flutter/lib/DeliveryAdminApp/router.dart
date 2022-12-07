@@ -3,6 +3,7 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/AddServiceViews/AddLaundryServi
 import 'package:mezcalmos/DeliveryAdminApp/pages/AddServiceViews/AddRestaurantView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/AdminWrapper.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Dashboard/AdminDashboardView.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/OperatorsView/OperatorsView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/DriversListView/DriverListScreen.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/LaundryOrderScreen.dart.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/ListOrdersScreen.dart';
@@ -13,7 +14,6 @@ import 'package:mezcalmos/LaundryApp/pages/AdminView/LaundryOpAdminView.dart';
 import 'package:mezcalmos/LaundryApp/pages/CategoryView/CategoryView.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/EditInfoView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CategoryView/CategoryView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/EditInfoView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/ROpItemView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/ROpMenuView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OptionView/ROpOptionView.dart';
@@ -41,6 +41,7 @@ const String kAddLaundryServiceRoute = "/addLaundryService";
 const String kAddRestaurantServiceRoute = "/addRestaurantService";
 // restuarnts routs consts //
 const String krMenuView = '/menu/:restaurantId';
+const String krOperators = '/operators/:restaurantId';
 
 const String kRestuarntEditInfoView = '/restaurants/editInfo/:restaurantId';
 
@@ -54,6 +55,10 @@ const String krOptionView = "/optionView/:restaurantId/:itemId";
 //
 String getRestaurantRoute(String restaurantId) {
   return kRestaurantRoute.replaceFirst(":restaurantId", restaurantId);
+}
+
+String getRestaurantOperatorsRoute(String restaurantId) {
+  return krOperators.replaceFirst(":restaurantId", restaurantId);
 }
 
 String getRestaurantOrderRoute(String orderId) {
@@ -140,7 +145,7 @@ class XRouter {
             page: () => AddRestaurantServiceView()),
 
         // Restaurants Routes Pages //
-        GetPage(name: kRestuarntEditInfoView, page: () => ROpEditInfoView()),
+        //   GetPage(name: kRestuarntEditInfoView, page: () => ROpEditInfoView()),
         GetPage(name: krMenuView, page: () => ROpMenuView()),
         GetPage(
           name: krCategoryView,
@@ -158,7 +163,8 @@ class XRouter {
           name: krEditItemView,
           page: () => ROpItemView(),
         ),
-        GetPage(name: krOptionView, page: () => ROpOptionView())
+        GetPage(name: krOptionView, page: () => ROpOptionView()),
+        GetPage(name: krOperators, page: () => OperatorsView())
       ] +
       SharedRouter.sharedRoutes;
 }

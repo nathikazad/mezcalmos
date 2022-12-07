@@ -1,4 +1,3 @@
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 String rootTaxiOpenOrdersNode() => "orders/open/taxi";
@@ -27,6 +26,12 @@ String rootInProcessOrderDriverLocationNode(
     String driverAddress = "driver"}) {
   return rootInProcessOrdersNode(orderType: orderType, orderId: orderId) +
       '/$driverAddress/location';
+}
+
+String rootSelfDeliveryPosition(
+    {required OrderType orderType, required int orderId}) {
+  return rootInProcessOrdersNode(orderId: orderId, orderType: orderType) +
+      "/selfDeliveryPosition";
 }
 
 String rootInProcessOrdersNode({OrderType? orderType, int? orderId}) {

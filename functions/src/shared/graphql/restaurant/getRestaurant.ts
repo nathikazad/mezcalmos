@@ -5,7 +5,6 @@ import { OpenStatus, OperatorStatus, Restaurant, RestaurantOperator } from "../.
 
 export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
   let chain = getHasura();
-  console.log("restaurantId [+++] ==> ", restaurantId)
   let response = await chain.query({
     restaurant_by_pk: [{
       id: restaurantId
@@ -23,6 +22,8 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
       location_gps: true,
       location_text: true,
       open_status: true,
+      operator_deep_link: true,
+      operator_qr_image_link:true,
      
       approved: true
     }],
@@ -76,6 +77,8 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
     restaurantId: response.restaurant_by_pk.id,
     name: response.restaurant_by_pk.name,
     image: response.restaurant_by_pk.image,
+
+    
     location: {
       address: response.restaurant_by_pk.location_text,
       lat : response.restaurant_by_pk.location_gps.coordinates[1],
