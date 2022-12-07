@@ -5,7 +5,6 @@ import { OpenStatus, OperatorStatus, Restaurant, RestaurantOperator } from "../.
 
 export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
   let chain = getHasura();
-
   let response = await chain.query({
     restaurant_by_pk: [{
       id: restaurantId

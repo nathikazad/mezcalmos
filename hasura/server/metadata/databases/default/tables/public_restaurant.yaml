@@ -26,6 +26,13 @@ array_relationships:
         remote_table:
           name: delivery_driver
           schema: public
+  - name: items
+    using:
+      foreign_key_constraint_on:
+        column: restaurant_id
+        table:
+          name: restaurant_item
+          schema: public
   - name: orders
     using:
       foreign_key_constraint_on:
@@ -118,7 +125,6 @@ select_permissions:
         - open_status
         - payment_info_id
         - schedule
-        - self_delivery
         - service_provider_type
       filter:
         restaurant_operators:
@@ -151,7 +157,6 @@ update_permissions:
       columns:
         - description_id
         - image
-        - language_id
         - location_gps
         - location_text
         - name
