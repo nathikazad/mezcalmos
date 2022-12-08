@@ -40,7 +40,6 @@ Future<int?> add_choice(
     {required Choice choice,
     required int optionId,
     required int restaurantId}) async {
-  mezDbgPrint(choice.toJson());
   final QueryResult<Mutation$addChoice> response =
       await _db.graphQLClient.mutate$addChoice(
     Options$Mutation$addChoice(

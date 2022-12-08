@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
@@ -42,6 +43,7 @@ class Restaurant extends Service {
   List<Category> _categories = <Category>[];
   List<Item> itemsWithoutCategory = <Item>[];
   RestaurantsView restaurantsView;
+  DeliveryCost? deliveryCost;
   Restaurant(
       {required ServiceInfo userInfo,
       required this.description,
@@ -50,6 +52,7 @@ class Restaurant extends Service {
       required PaymentInfo paymentInfo,
       required ServiceState restaurantState,
       required LanguageType primaryLanguage,
+      this.deliveryCost,
       this.rate,
       this.serviceLink,
       this.selfDelivery = false,

@@ -137,6 +137,7 @@ class ROpOptionViewController {
 
   Future<void> _addNewOption() async {
     mezDbgPrint("Adding new option to db ...");
+
     final int? newOptionID = await add_option(
         itemId: itemId!,
         restaurantId: restaurantId,

@@ -45,7 +45,7 @@ class DriverSelectCard extends StatelessWidget {
                     style: txt.bodyText1,
                   ),
                   const SizedBox(height: 5),
-                  (driver.deliveryDriverState.isOnline)
+                  (driver.deliveryDriverState.online)
                       ? Row(
                           children: <Widget>[
                             Icon(

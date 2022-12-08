@@ -11,6 +11,8 @@ HasuraDb _db = Get.find<HasuraDb>();
 Future<void> update_translation(
     {required LanguageType langType,
     required String value,
+    // required ServiceType serviceType,
+    // required int serviceId,
     required int translationId}) async {
   mezDbgPrint("Updating translation id = $translationId");
   final QueryResult<Mutation$updateTranslationValue> response = await _db

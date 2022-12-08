@@ -43,8 +43,7 @@ query getOneRestaurant($id: Int!) {
     description_id
     location_gps
     location_text
-   
-   
+    self_delivery
     name
 
     description {
@@ -60,6 +59,12 @@ query getOneRestaurant($id: Int!) {
 mutation updateRestaurantInfo($id: Int!, $data: restaurant_set_input!) {
   update_restaurant_by_pk(_set: $data, pk_columns: { id: $id }) {
     id
+  }
+}
+mutation switchRestaurantSelfDelivery($restauarntId: Int!,$value : Boolean) {
+  update_restaurant_by_pk(pk_columns: {id: $restauarntId}, _set: {self_delivery: $value}) {
+    id
+    self_delivery
   }
 }
 
