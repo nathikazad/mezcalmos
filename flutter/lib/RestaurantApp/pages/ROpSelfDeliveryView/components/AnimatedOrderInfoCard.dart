@@ -295,14 +295,14 @@ class ROpAnimatedOrderCard extends StatelessWidget {
             withPadding: false,
             onTap: onCustomerMsgClick,
             showRedDot: Get.find<ROpOrderController>()
-                .hasNewMessageNotification(order.orderId),
+                .hasNewMessageNotification(order.orderId.toString()),
           ),
         ),
       ],
     );
   }
 
-  String? _customerDriverChatId() {
+  int? _customerDriverChatId() {
     switch (order.orderType) {
       case OrderType.Laundry:
         return (order as LaundryOrder).getCustomerDriverChatId();
@@ -315,7 +315,7 @@ class ROpAnimatedOrderCard extends StatelessWidget {
     return null;
   }
 
-  String? _serviceDriverChatId() {
+  int? _serviceDriverChatId() {
     switch (order.orderType) {
       case OrderType.Laundry:
         return (order as LaundryOrder).getServiceDriverChatId();

@@ -33,7 +33,8 @@ class ROpSpecialItemCard extends StatelessWidget {
         onTap: () {
           Get.toNamed(
               getEditItemRoute(
-                  itemId: item.id!, restaurntID: viewController.restaurnatId),
+                  itemId: item.id!.toString(),
+                  restaurntID: viewController.restaurnatId),
               arguments: {"specials": true});
         },
         child: Container(
@@ -86,7 +87,9 @@ class ROpSpecialItemCard extends StatelessWidget {
                           value: item.available,
                           onChanged: (bool v) {
                             viewController.switchSpecialItemAv(
-                                v: v, itemId: item.id!, isCurrent: isCurrent);
+                                v: v,
+                                itemId: item.id!.toString(),
+                                isCurrent: isCurrent);
                           },
                           activeColor: primaryBlueColor,
                           activeTrackColor: secondaryLightBlueColor,

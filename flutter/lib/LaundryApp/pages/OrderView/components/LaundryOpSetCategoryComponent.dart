@@ -172,7 +172,8 @@ class _LaundyOpSetCategoryComponentState
       if (oldCosts.lineItems.length > 1) {
         oldCosts.lineItems.removeWhere(
             (LaundryOrderCostLineItem element) => element.name == item.name);
-        orderController.setOrderWeight(widget.order.orderId, oldCosts);
+        orderController.setOrderWeight(
+            widget.order.orderId.toString(), oldCosts);
       } else {
         Get.snackbar(
           "${_i18n()["error"]}",

@@ -189,7 +189,7 @@ class DeliveryDriverUserInfo extends UserInfo {
 
 // ignore: constant_identifier_names
 // this is to distinguish between pick up and drop off driver
-enum DeliveryDriverType { Pickup, DropOff }
+enum DeliveryDriverType { Restaurant, Delivery_driver }
 
 // this is to distinguish between which action the driver is doing
 // for example dropoff driver is picking up order from restaurant

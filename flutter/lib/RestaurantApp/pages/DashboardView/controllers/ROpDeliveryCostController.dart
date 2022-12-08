@@ -54,6 +54,7 @@ class ROpDeliveryCostController {
         serviceProviderType: OrderType.Restaurant,
         serviceProviderId: editInfoController.restaurantId,
         minimumCost: double.parse(minCost.text),
+        freeDeliveryKmRange: double.parse(freeKmRange.text),
         costPerKm: double.parse(costPerKm.text));
   }
 

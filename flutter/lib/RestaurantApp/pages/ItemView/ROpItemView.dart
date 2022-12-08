@@ -315,7 +315,7 @@ class _ROpItemViewState extends State<ROpItemView>
                   children: [
                     ROpItemOptionCard(
                       viewController: viewController,
-                      itemId: viewController.editableItem.value!.id!,
+                      itemId: viewController.editableItem.value!.id!.toString(),
                       restaurantID: restuarantID!,
                       categoryID: categoryId,
                     ),
@@ -326,8 +326,8 @@ class _ROpItemViewState extends State<ROpItemView>
                             getROpOptionRoute(
                                 restaurantId: restuarantID!,
                                 optionId: null,
-                                itemID: viewController
-                                    .editableItem.value!.id!)) as bool?;
+                                itemID: viewController.editableItem.value!.id!
+                                    .toString())) as bool?;
                         if (result == true) {
                           await viewController.fetchItem();
                         }

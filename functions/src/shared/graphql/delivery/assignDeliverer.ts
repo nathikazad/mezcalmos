@@ -8,11 +8,11 @@ export async function assignDeliveryDriver(assignDriverDetails: AssignDriverDeta
   let response = await chain.mutation({
     update_delivery_order_by_pk: [{
       pk_columns: {
-        id: assignDriverDetails.deliveryId
+        id: assignDriverDetails.deliveryOrderId
       },
       _set: {
         delivery_driver_type: assignDriverDetails.deliveryDriverType,
-        deliverer_id: assignDriverDetails.deliveryDriverId
+      delivery_driver_id: assignDriverDetails.deliveryDriverId
       }
     }, {
       id: true

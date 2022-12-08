@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
@@ -58,7 +58,8 @@ class LaundryOpCustomer extends StatelessWidget {
                   Obx(
                     () => MessageButton(
                         showRedDot: Get.find<OrderController>()
-                            .hasNewMessageNotification(order.orderId),
+                            .hasNewMessageNotification(
+                                order.orderId.toString()),
                         onTap: () {
                           Get.toNamed(getMessagesRoute(
                               orderId: order.orderId,
@@ -97,7 +98,7 @@ class LaundryOpCustomer extends StatelessWidget {
           ),
           Obx(
             () => Get.find<OrderController>()
-                    .hasNewMessageNotification(order.orderId)
+                    .hasNewMessageNotification(order.orderId.toString())
                 ? Positioned(
                     left: 27,
                     top: 10,

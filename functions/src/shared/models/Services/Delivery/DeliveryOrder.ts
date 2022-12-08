@@ -76,8 +76,8 @@ export enum ServiceProviderType {
 }
 
 export enum DeliveryDriverType {
-    RestaurantOperator = "restaurantOperator",
-    DeliveryDriver = "deliveryDriver"
+    RestaurantOperator = "restaurant",
+    DeliveryDriver = "delivery_driver"
 }
 
 export interface NewDeliveryOrderNotification extends OrderNotification {

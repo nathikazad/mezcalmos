@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
+import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpDriverCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpEstDeliveryTime.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderCustomer.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderEstTime.dart';
@@ -135,7 +136,7 @@ class _ROpOrderViewState extends State<ROpOrderView> {
                 ROpOrderEstTime(order: viewController.order.value!),
                 if (viewController.order.value?.selfDelivery ?? false)
                   ROpEstDeliveryTime(order: viewController.order.value!),
-                //   ROpDriverCard(order: viewController.order.value!),
+                ROpDriverCard(order: viewController.order.value!),
                 _getMapWidget(),
                 ROpOrderCustomer(order: viewController.order.value!),
                 _orderItemsList(),

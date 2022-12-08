@@ -65,8 +65,8 @@ let ch : CheckoutRequest = {
 // getRestaurant(checkoutRequest.restaurantId).then((restaurant: Restaurant) = {
 //    console.log(restaurant);
 // });
-console.log(ch);
-checkout(1, ch).then((resp) => {
+console.log("Calling make order ====================>>>>>>>>>>>>>>>>>",ch);
+checkout(3, ch).then((resp) => {
   console.log(resp);
 });
 // let statusDetails = {

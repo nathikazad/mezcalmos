@@ -64,7 +64,8 @@ class ROpOrderCustomer extends StatelessWidget {
                   Obx(
                     () => MessageButton(
                         showRedDot: Get.find<ROpOrderController>()
-                            .hasNewMessageNotification(order.orderId),
+                            .hasNewMessageNotification(
+                                order.orderId.toString()),
                         onTap: () {
                           Get.toNamed(getMessagesRoute(
                               orderId: order.orderId,

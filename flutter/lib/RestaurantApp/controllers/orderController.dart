@@ -64,7 +64,7 @@ class ROpOrderController extends GetxController {
         .attachCallback(mat.AppLifecycleState.resumed, () {
       startListeningOnOrders();
       if (order.value != null) {
-        startListeningOnSingleOrder(int.parse(order.value!.orderId));
+        startListeningOnSingleOrder(int.parse(order.value!.orderId.toString()));
       }
     });
     mezDbgPrint(
@@ -204,8 +204,9 @@ class ROpOrderController extends GetxController {
   //   });
   // }
 
-  Future<ServerResponse> cancelOrder(String orderId) async {
-    return _callRestaurantCloudFunction("cancelOrderFromAdmin", orderId);
+  Future<ServerResponse> cancelOrder(int orderId) async {
+    return _callRestaurantCloudFunction(
+        "cancelOrderFromAdmin", orderId.toString());
   }
 
   bool hasNewMessageNotification(String chatId) {
@@ -234,7 +235,7 @@ class ROpOrderController extends GetxController {
   Future<void> changeDeliveryMode(
       {required RestaurantOrder order, required DeliveryMode mode}) async {
     final ServerResponse response = await _callRestaurantCloudFunction(
-        "changeDeliveryMode", order.orderId,
+        "changeDeliveryMode", order.orderId.toString(),
         optionalParams: {
           "deliveryMode": mode.toFirebaseFormatString(),
           "customerId": order.customer.firebaseId,
@@ -261,7 +262,8 @@ class ROpOrderController extends GetxController {
   }
 
   Future<void> endSelfDelivery(RestaurantOrder order) async {
-    await _callRestaurantCloudFunction("assignSelfDelivery", order.orderId,
+    await _callRestaurantCloudFunction(
+        "assignSelfDelivery", order.orderId.toString(),
         optionalParams: {
           "enable": false,
           "customerId": order.customer.firebaseId,
@@ -305,7 +307,7 @@ class ROpOrderController extends GetxController {
         await _databaseHelper.firebaseDatabase
             .ref()
             .child(restaurantOpInProcessOrdersNode(
-              orderId: order.orderId,
+              orderId: order.orderId.toString(),
               uid: restaurantId.toString(),
             ))
             .child("selfDeliveryDetails")
@@ -328,7 +330,7 @@ class ROpOrderController extends GetxController {
         await _databaseHelper.firebaseDatabase
             .ref()
             .child(customerInProcessOrder(
-              orderId: order.orderId,
+              orderId: order.orderId.toString(),
               customerId: order.customer.hasuraId.toString(),
             ))
             .child("selfDeliveryDetails")
@@ -364,7 +366,8 @@ class ROpOrderController extends GetxController {
   Future<ServerResponse> setEstimatedSelfDeliveryTime(
       RestaurantOrder order, DateTime utc) async {
     mezDbgPrint("inside clod set delivery time $utc");
-    return _callRestaurantCloudFunction("assignSelfDeliveryTime", order.orderId,
+    return _callRestaurantCloudFunction(
+        "assignSelfDeliveryTime", order.orderId.toString(),
         optionalParams: {
           "time": utc.toUtc().toString(),
           "restaurantId": order.restaurantId,

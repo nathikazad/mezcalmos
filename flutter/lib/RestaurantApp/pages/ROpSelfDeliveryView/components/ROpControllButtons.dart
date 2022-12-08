@@ -70,7 +70,7 @@ class _ROpControllButtonsState extends State<ROpControllButtons> {
                 clicked = true;
               });
               await restaurantOrderController
-                  .startRestaurantDelivery(widget.order.orderId)
+                  .startRestaurantDelivery(widget.order.orderId.toString())
                   .then((ServerResponse value) {
                 setState(() {
                   clicked = false;
@@ -262,7 +262,7 @@ class _ROpControllButtonsState extends State<ROpControllButtons> {
           await restaurantOrderController.stopLocationListener();
           await Future.delayed(Duration(seconds: 2), () {
             restaurantOrderController
-                .finishRestaurantDelivery(widget.order.orderId)
+                .finishRestaurantDelivery(widget.order.orderId.toString())
                 .then((ServerResponse value) {
               if (value.success) {
                 setState(() {

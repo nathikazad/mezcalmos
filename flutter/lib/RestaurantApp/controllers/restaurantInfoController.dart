@@ -348,7 +348,7 @@ class RestaurantInfoController extends GetxController {
     required String deliveryDriverId,
     required String orderId,
     required OrderType orderType,
-    DeliveryDriverType deliveryDriverType = DeliveryDriverType.DropOff,
+    DeliveryDriverType deliveryDriverType = DeliveryDriverType.Delivery_driver,
     bool changeDriver = false,
   }) async {
     final HttpsCallable dropOrderFunction =

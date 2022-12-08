@@ -136,7 +136,7 @@ class ROpItemViewController {
     final Item newItem = Item(
       image: newImageUrl.value,
       itemType: (specialMode.isTrue) ? ItemType.Special : ItemType.Daily,
-      id: editMode.value ? editableItem.value!.id : generateRandomString(5),
+      id: editMode.value ? editableItem.value!.id : null,
       startsAt: specialMode.value ? periodOfTime.value?.start : null,
       endsAt: specialMode.value ? periodOfTime.value?.end : null,
       available: editableItem.value?.available ?? false,
@@ -215,7 +215,7 @@ class ROpItemViewController {
         await _updateDescription();
       }
       final bool result = await update_item_by_id(
-          itemId: int.parse(editableItem.value!.id!), item: _contructItem());
+          itemId: editableItem.value!.id!, item: _contructItem());
       if (result) {
         Get.snackbar('Saved', 'Item saved successfuly',
             backgroundColor: Colors.black,
@@ -340,9 +340,8 @@ class ROpItemViewController {
   Future<void> fetchItem() async {
     if (isEditing) {
       mezDbgPrint("⌛️⌛️⌛️⌛️⌛️ Refetching item data from hasura.... ");
-      final Item? newItem = await get_one_item_by_id(
-          int.parse(editableItem.value!.id!),
-          withCache: false);
+      final Item? newItem =
+          await get_one_item_by_id(editableItem.value!.id!, withCache: false);
 
       if (newItem != null) {
         editableItem.value = newItem;
