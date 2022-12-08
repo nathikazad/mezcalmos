@@ -20,14 +20,37 @@ class HasuraDb {
   WebSocketLink? _wsLink;
   AppLaunchMode appLaunchMode;
   // FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
-  HasuraDb(this.appLaunchMode);
+  HasuraDb(this.appLaunchMode) {
+    _appLifeCycleController.attachCallback(AppLifecycleState.paused, () {
+      cancelJWTExpirationCheckTimer();
+      pauseAllSubscriptions();
+    });
+
+    _appLifeCycleController.attachCallback(AppLifecycleState.resumed, () async {
+      if (expirationTime != null) {
+        if (checkIfJWTExpired()) {
+          await setupClient();
+        } else {
+          startJWTExpirationCheckTimer();
+        }
+      }
+      resumeAllSubscriptions();
+    });
+  }
+
   Map<String, HasuraSubscription> hasuraSubscriptions =
       <String, HasuraSubscription>{};
-  String? _appLifeCyclePauseCallbackId;
-  String? _appLifeCycleResumeCallbackId;
   final AppLifeCycleController _appLifeCycleController =
       Get.find<AppLifeCycleController>();
+  Timer? expirationCheckTimer;
+  num? expirationTime;
+
   Future<void> initializeHasura() async {
+    cancelAllSubscriptions();
+    await setupClient();
+  }
+
+  Future<void> setupClient() async {
     mezDbgPrint("Inside initializeHasura");
     late String hasuraDbLink;
     switch (appLaunchMode) {
@@ -63,6 +86,12 @@ class HasuraDb {
           AuthLink(getToken: () async => 'Bearer $hasuraAuthToken');
       _httpLink = HttpLink(hasuraDbLink, defaultHeaders: headers);
       _link = _authLink.concat(_httpLink);
+
+      expirationTime = JwtDecoder.decode(hasuraAuthToken)["exp"];
+      startJWTExpirationCheckTimer();
+    } else {
+      expirationTime = null;
+      cancelJWTExpirationCheckTimer();
     }
     _wsLink = WebSocketLink("ws://127.0.0.1:8080/v1/graphql",
         config: SocketClientConfig(
@@ -82,33 +111,6 @@ class HasuraDb {
       cache: GraphQLCache(),
       link: _link,
     );
-
-    if (_appLifeCyclePauseCallbackId != null)
-      _appLifeCycleController.removeCallbackIdOfState(
-          AppLifecycleState.paused, _appLifeCyclePauseCallbackId);
-    if (_appLifeCycleResumeCallbackId != null)
-      _appLifeCycleController.removeCallbackIdOfState(
-          AppLifecycleState.resumed, _appLifeCycleResumeCallbackId);
-
-    _appLifeCyclePauseCallbackId =
-        _appLifeCycleController.attachCallback(AppLifecycleState.paused, () {
-      hasuraSubscriptions.forEach(
-          (String subscriptionId, HasuraSubscription hasuraSubscription) {
-        pauseSubscription(subscriptionId);
-      });
-      //kill timer to refresh JWT
-    });
-
-    _appLifeCycleResumeCallbackId =
-        _appLifeCycleController.attachCallback(AppLifecycleState.resumed, () {
-      // check if JWT is valid
-      // if not create new JWT
-      // start timer to refresh JWT
-      hasuraSubscriptions.forEach(
-          (String subscriptionId, HasuraSubscription hasuraSubscription) {
-        resumeSubscription(subscriptionId);
-      });
-    });
   }
 
   Future<String> _getAuthorizationToken(User user, bool testMode) async {
@@ -119,6 +121,32 @@ class HasuraDb {
       return issueJwtHS256(claims, 'secret-for-testing-locally-with-emulator');
     }
     return token;
+  }
+
+  void startJWTExpirationCheckTimer() {
+    expirationCheckTimer?.cancel();
+    expirationCheckTimer =
+        Timer.periodic(new Duration(seconds: 300), (Timer timer) async {
+      if (expirationTime != null && checkIfJWTExpired()) {
+        expirationCheckTimer?.cancel();
+        expirationCheckTimer = null;
+        pauseAllSubscriptions();
+        await setupClient();
+        resumeAllSubscriptions();
+      }
+    });
+  }
+
+  void cancelJWTExpirationCheckTimer() {
+    expirationCheckTimer?.cancel();
+    expirationCheckTimer = null;
+  }
+
+  bool checkIfJWTExpired() {
+    final num timeToExpire =
+        expirationTime! - (DateTime.now().millisecondsSinceEpoch / 1000).ceil();
+    mezDbgPrint("♥️♥️♥️♥️♥️♥️♥️ $timeToExpire");
+    return timeToExpire < 600;
   }
 
   /// this return by default customer we are not handling all app types
@@ -158,6 +186,29 @@ class HasuraDb {
   void cancelSubscription(String subscriptionId) {
     hasuraSubscriptions[subscriptionId]?.cancel();
     hasuraSubscriptions.remove(subscriptionId);
+  }
+
+  void pauseAllSubscriptions() {
+    mezDbgPrint("Pausing all subscriptions");
+    hasuraSubscriptions.forEach(
+        (String subscriptionId, HasuraSubscription hasuraSubscription) {
+      pauseSubscription(subscriptionId);
+    });
+  }
+
+  void resumeAllSubscriptions() {
+    mezDbgPrint("Resuming all subscriptions");
+    hasuraSubscriptions.forEach(
+        (String subscriptionId, HasuraSubscription hasuraSubscription) {
+      resumeSubscription(subscriptionId);
+    });
+  }
+
+  void cancelAllSubscriptions() {
+    hasuraSubscriptions.forEach(
+        (String subscriptionId, HasuraSubscription hasuraSubscription) {
+      cancelSubscription(subscriptionId);
+    });
   }
 }
 

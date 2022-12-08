@@ -5,6 +5,7 @@ import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dar
 import 'package:mezcalmos/Shared/graphql/item/option/hsOption.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';

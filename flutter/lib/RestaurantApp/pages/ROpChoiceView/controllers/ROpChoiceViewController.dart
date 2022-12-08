@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
@@ -57,7 +58,7 @@ class ROpChoiceViewController {
   /// if the edit mode is false it will generate a random id
   Choice _contructChoice() {
     return Choice(
-      id: editMode.isTrue ? choice.value!.id : generateRandomString(5),
+      id: editMode.isTrue ? choice.value!.id : getRandomString(5),
       name: {
         primaryLang.value: prChoiceName.text,
         secondaryLang.value: scChoiceName.text,
