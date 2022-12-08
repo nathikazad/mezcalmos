@@ -350,6 +350,7 @@ const documentNodeQueryget_chat_info = DocumentNode(definitions: [
           ),
         ]),
       ),
+      
     ]),
   ),
 ]);
@@ -1286,6 +1287,7 @@ const documentNodeSubscriptionget_chat_info = DocumentNode(definitions: [
           ),
         ]),
       ),
+      
     ]),
   ),
 ]);
@@ -1830,6 +1832,7 @@ const documentNodeMutationadd_message = DocumentNode(definitions: [
           ),
         ]),
       ),
+      
     ]),
   ),
 ]);

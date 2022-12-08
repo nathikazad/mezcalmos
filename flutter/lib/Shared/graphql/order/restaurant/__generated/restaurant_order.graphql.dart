@@ -730,13 +730,6 @@ const documentNodeSubscriptionget_user_orders = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'deliverer_id'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
                 name: NameNode(value: 'delivery_cost'),
                 alias: null,
                 arguments: [],
@@ -761,6 +754,7 @@ const documentNodeSubscriptionget_user_orders = DocumentNode(definitions: [
           ),
         ]),
       ),
+      
     ]),
   ),
 ]);
@@ -913,7 +907,7 @@ class Subscription$get_user_orders$restaurant_order_by_pk {
       estimated_food_ready_time: (l$estimated_food_ready_time as String?),
       actual_food_ready_time: (l$actual_food_ready_time as String?),
       stripe_payment_id: (l$stripe_payment_id as int?),
-      refund_amount: (l$refund_amount as int),
+      refund_amount: moneyFromJson(l$refund_amount),
       delivery_id: (l$delivery_id as int?),
       status: (l$status as String),
       review_id: (l$review_id as int?),
@@ -922,7 +916,7 @@ class Subscription$get_user_orders$restaurant_order_by_pk {
       firebase_id: (l$firebase_id as String?),
       customer_app_type: (l$customer_app_type as String),
       notes: (l$notes as String?),
-      tax: (l$tax as num),
+      tax: moneyFromJson(l$tax),
       chat_id: (l$chat_id as int),
       delivery_cost: moneyFromJson(l$delivery_cost),
       delivery: l$delivery == null
@@ -952,7 +946,7 @@ class Subscription$get_user_orders$restaurant_order_by_pk {
 
   final int? stripe_payment_id;
 
-  final int refund_amount;
+  final double refund_amount;
 
   final int? delivery_id;
 
@@ -970,7 +964,7 @@ class Subscription$get_user_orders$restaurant_order_by_pk {
 
   final String? notes;
 
-  final num tax;
+  final double tax;
 
   final int chat_id;
 
@@ -1002,7 +996,7 @@ class Subscription$get_user_orders$restaurant_order_by_pk {
     final l$stripe_payment_id = stripe_payment_id;
     _resultData['stripe_payment_id'] = l$stripe_payment_id;
     final l$refund_amount = refund_amount;
-    _resultData['refund_amount'] = l$refund_amount;
+    _resultData['refund_amount'] = moneyToJson(l$refund_amount);
     final l$delivery_id = delivery_id;
     _resultData['delivery_id'] = l$delivery_id;
     final l$status = status;
@@ -1020,7 +1014,7 @@ class Subscription$get_user_orders$restaurant_order_by_pk {
     final l$notes = notes;
     _resultData['notes'] = l$notes;
     final l$tax = tax;
-    _resultData['tax'] = l$tax;
+    _resultData['tax'] = moneyToJson(l$tax);
     final l$chat_id = chat_id;
     _resultData['chat_id'] = l$chat_id;
     final l$delivery_cost = delivery_cost;
@@ -1251,7 +1245,7 @@ abstract class CopyWith$Subscription$get_user_orders$restaurant_order_by_pk<
     String? estimated_food_ready_time,
     String? actual_food_ready_time,
     int? stripe_payment_id,
-    int? refund_amount,
+    double? refund_amount,
     int? delivery_id,
     String? status,
     int? review_id,
@@ -1260,7 +1254,7 @@ abstract class CopyWith$Subscription$get_user_orders$restaurant_order_by_pk<
     String? firebase_id,
     String? customer_app_type,
     String? notes,
-    num? tax,
+    double? tax,
     int? chat_id,
     double? delivery_cost,
     Subscription$get_user_orders$restaurant_order_by_pk$delivery? delivery,
@@ -1348,7 +1342,7 @@ class _CopyWithImpl$Subscription$get_user_orders$restaurant_order_by_pk<TRes>
             : (stripe_payment_id as int?),
         refund_amount: refund_amount == _undefined || refund_amount == null
             ? _instance.refund_amount
-            : (refund_amount as int),
+            : (refund_amount as double),
         delivery_id: delivery_id == _undefined
             ? _instance.delivery_id
             : (delivery_id as int?),
@@ -1371,7 +1365,7 @@ class _CopyWithImpl$Subscription$get_user_orders$restaurant_order_by_pk<TRes>
                 ? _instance.customer_app_type
                 : (customer_app_type as String),
         notes: notes == _undefined ? _instance.notes : (notes as String?),
-        tax: tax == _undefined || tax == null ? _instance.tax : (tax as num),
+        tax: tax == _undefined || tax == null ? _instance.tax : (tax as double),
         chat_id: chat_id == _undefined || chat_id == null
             ? _instance.chat_id
             : (chat_id as int),
@@ -1435,7 +1429,7 @@ class _CopyWithStubImpl$Subscription$get_user_orders$restaurant_order_by_pk<
     String? estimated_food_ready_time,
     String? actual_food_ready_time,
     int? stripe_payment_id,
-    int? refund_amount,
+    double? refund_amount,
     int? delivery_id,
     String? status,
     int? review_id,
@@ -1444,7 +1438,7 @@ class _CopyWithStubImpl$Subscription$get_user_orders$restaurant_order_by_pk<
     String? firebase_id,
     String? customer_app_type,
     String? notes,
-    num? tax,
+    double? tax,
     int? chat_id,
     double? delivery_cost,
     Subscription$get_user_orders$restaurant_order_by_pk$delivery? delivery,
@@ -3045,7 +3039,6 @@ class Subscription$get_user_orders$restaurant_order_by_pk$delivery {
     this.actual_arrival_at_dropoff_time,
     this.cancellation_time,
     this.current_gps,
-    this.deliverer_id,
     required this.delivery_cost,
     required this.$__typename,
   });
@@ -3060,7 +3053,6 @@ class Subscription$get_user_orders$restaurant_order_by_pk$delivery {
         json['actual_arrival_at_dropoff_time'];
     final l$cancellation_time = json['cancellation_time'];
     final l$current_gps = json['current_gps'];
-    final l$deliverer_id = json['deliverer_id'];
     final l$delivery_cost = json['delivery_cost'];
     final l$$__typename = json['__typename'];
     return Subscription$get_user_orders$restaurant_order_by_pk$delivery(
@@ -3073,7 +3065,6 @@ class Subscription$get_user_orders$restaurant_order_by_pk$delivery {
       cancellation_time: (l$cancellation_time as String?),
       current_gps:
           l$current_gps == null ? null : geographyFromJson(l$current_gps),
-      deliverer_id: (l$deliverer_id as int?),
       delivery_cost: moneyFromJson(l$delivery_cost),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -3090,8 +3081,6 @@ class Subscription$get_user_orders$restaurant_order_by_pk$delivery {
   final String? cancellation_time;
 
   final Geography? current_gps;
-
-  final int? deliverer_id;
 
   final double delivery_cost;
 
@@ -3114,8 +3103,6 @@ class Subscription$get_user_orders$restaurant_order_by_pk$delivery {
     final l$current_gps = current_gps;
     _resultData['current_gps'] =
         l$current_gps == null ? null : geographyToJson(l$current_gps);
-    final l$deliverer_id = deliverer_id;
-    _resultData['deliverer_id'] = l$deliverer_id;
     final l$delivery_cost = delivery_cost;
     _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
     final l$$__typename = $__typename;
@@ -3131,7 +3118,6 @@ class Subscription$get_user_orders$restaurant_order_by_pk$delivery {
     final l$actual_arrival_at_dropoff_time = actual_arrival_at_dropoff_time;
     final l$cancellation_time = cancellation_time;
     final l$current_gps = current_gps;
-    final l$deliverer_id = deliverer_id;
     final l$delivery_cost = delivery_cost;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -3141,7 +3127,6 @@ class Subscription$get_user_orders$restaurant_order_by_pk$delivery {
       l$actual_arrival_at_dropoff_time,
       l$cancellation_time,
       l$current_gps,
-      l$deliverer_id,
       l$delivery_cost,
       l$$__typename,
     ]);
@@ -3191,11 +3176,6 @@ class Subscription$get_user_orders$restaurant_order_by_pk$delivery {
     if (l$current_gps != lOther$current_gps) {
       return false;
     }
-    final l$deliverer_id = deliverer_id;
-    final lOther$deliverer_id = other.deliverer_id;
-    if (l$deliverer_id != lOther$deliverer_id) {
-      return false;
-    }
     final l$delivery_cost = delivery_cost;
     final lOther$delivery_cost = other.delivery_cost;
     if (l$delivery_cost != lOther$delivery_cost) {
@@ -3240,7 +3220,6 @@ abstract class CopyWith$Subscription$get_user_orders$restaurant_order_by_pk$deli
     String? actual_arrival_at_dropoff_time,
     String? cancellation_time,
     Geography? current_gps,
-    int? deliverer_id,
     double? delivery_cost,
     String? $__typename,
   });
@@ -3270,7 +3249,6 @@ class _CopyWithImpl$Subscription$get_user_orders$restaurant_order_by_pk$delivery
     Object? actual_arrival_at_dropoff_time = _undefined,
     Object? cancellation_time = _undefined,
     Object? current_gps = _undefined,
-    Object? deliverer_id = _undefined,
     Object? delivery_cost = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -3295,9 +3273,6 @@ class _CopyWithImpl$Subscription$get_user_orders$restaurant_order_by_pk$delivery
         current_gps: current_gps == _undefined
             ? _instance.current_gps
             : (current_gps as Geography?),
-        deliverer_id: deliverer_id == _undefined
-            ? _instance.deliverer_id
-            : (deliverer_id as int?),
         delivery_cost: delivery_cost == _undefined || delivery_cost == null
             ? _instance.delivery_cost
             : (delivery_cost as double),
@@ -3324,7 +3299,6 @@ class _CopyWithStubImpl$Subscription$get_user_orders$restaurant_order_by_pk$deli
     String? actual_arrival_at_dropoff_time,
     String? cancellation_time,
     Geography? current_gps,
-    int? deliverer_id,
     double? delivery_cost,
     String? $__typename,
   }) =>

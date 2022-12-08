@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/graphql/customer/__generated/customer.graphql.d
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/DeliveryMode.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
@@ -121,6 +122,9 @@ Future<List<RestaurantOrder>> get_customer_orders(
     List<Query$get_customer_orders$restaurant_order>? _orders =
         _res.parsedData?.restaurant_order;
     if (_orders != null) {
+      mezDbgPrint(
+          "[tt] found orders :: CUS_ID ($customer_id) :: len :: ${_orders.length}");
+
       _orders.forEach((Query$get_customer_orders$restaurant_order _o) {
         num _itemsCost = 0;
         _o.items.forEach((item) {
@@ -128,6 +132,7 @@ Future<List<RestaurantOrder>> get_customer_orders(
         });
         _ret.add(
           RestaurantOrder(
+            deliveryMode: DeliveryMode.None,
             orderId: _o.id,
             chatId: _o.chat_id,
             status: _o.status.toRestaurantOrderStatus(),

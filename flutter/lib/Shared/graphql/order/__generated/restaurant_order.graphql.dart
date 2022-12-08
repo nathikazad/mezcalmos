@@ -1004,12 +1004,12 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
       payment_type: (l$payment_type as String),
       to_location_gps: l$to_location_gps == null
           ? null
-          : GeographyFromJson(l$to_location_gps),
+          : geographyFromJson(l$to_location_gps),
       to_location_address: (l$to_location_address as String?),
       estimated_food_ready_time: (l$estimated_food_ready_time as String?),
       actual_food_ready_time: (l$actual_food_ready_time as String?),
       stripe_payment_id: (l$stripe_payment_id as int?),
-      refund_amount: MoneyFromJson(l$refund_amount),
+      refund_amount: moneyFromJson(l$refund_amount),
       delivery_id: (l$delivery_id as int?),
       status: (l$status as String),
       review_id: (l$review_id as int?),
@@ -1020,11 +1020,11 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
       customer:
           Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$customer
               .fromJson((l$customer as Map<String, dynamic>)),
-      tax: MoneyFromJson(l$tax),
-      total_cost: l$total_cost == null ? null : MoneyFromJson(l$total_cost),
-      items_cost: l$items_cost == null ? null : MoneyFromJson(l$items_cost),
+      tax: moneyFromJson(l$tax),
+      total_cost: l$total_cost == null ? null : moneyFromJson(l$total_cost),
+      items_cost: l$items_cost == null ? null : moneyFromJson(l$items_cost),
       chat_id: (l$chat_id as int),
-      delivery_cost: MoneyFromJson(l$delivery_cost),
+      delivery_cost: moneyFromJson(l$delivery_cost),
       delivery: l$delivery == null
           ? null
           : Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery
@@ -1104,7 +1104,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     _resultData['payment_type'] = l$payment_type;
     final l$to_location_gps = to_location_gps;
     _resultData['to_location_gps'] =
-        l$to_location_gps == null ? null : GeographyToJson(l$to_location_gps);
+        l$to_location_gps == null ? null : geographyToJson(l$to_location_gps);
     final l$to_location_address = to_location_address;
     _resultData['to_location_address'] = l$to_location_address;
     final l$estimated_food_ready_time = estimated_food_ready_time;
@@ -1114,7 +1114,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$stripe_payment_id = stripe_payment_id;
     _resultData['stripe_payment_id'] = l$stripe_payment_id;
     final l$refund_amount = refund_amount;
-    _resultData['refund_amount'] = MoneyToJson(l$refund_amount);
+    _resultData['refund_amount'] = moneyToJson(l$refund_amount);
     final l$delivery_id = delivery_id;
     _resultData['delivery_id'] = l$delivery_id;
     final l$status = status;
@@ -1132,17 +1132,17 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$customer = customer;
     _resultData['customer'] = l$customer.toJson();
     final l$tax = tax;
-    _resultData['tax'] = MoneyToJson(l$tax);
+    _resultData['tax'] = moneyToJson(l$tax);
     final l$total_cost = total_cost;
     _resultData['total_cost'] =
-        l$total_cost == null ? null : MoneyToJson(l$total_cost);
+        l$total_cost == null ? null : moneyToJson(l$total_cost);
     final l$items_cost = items_cost;
     _resultData['items_cost'] =
-        l$items_cost == null ? null : MoneyToJson(l$items_cost);
+        l$items_cost == null ? null : moneyToJson(l$items_cost);
     final l$chat_id = chat_id;
     _resultData['chat_id'] = l$chat_id;
     final l$delivery_cost = delivery_cost;
-    _resultData['delivery_cost'] = MoneyToJson(l$delivery_cost);
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
     final l$delivery = delivery;
     _resultData['delivery'] = l$delivery?.toJson();
     final l$$__typename = $__typename;
@@ -1681,7 +1681,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$resta
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       language_id: (l$language_id as String),
-      location_gps: GeographyFromJson(l$location_gps),
+      location_gps: geographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
       name: (l$name as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -1715,7 +1715,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$resta
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$location_gps = location_gps;
-    _resultData['location_gps'] = GeographyToJson(l$location_gps);
+    _resultData['location_gps'] = geographyToJson(l$location_gps);
     final l$location_text = location_text;
     _resultData['location_text'] = l$location_text;
     final l$name = name;
@@ -1939,7 +1939,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items
       restaurant_item:
           Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items$restaurant_item
               .fromJson((l$restaurant_item as Map<String, dynamic>)),
-      cost_per_one: MoneyFromJson(l$cost_per_one),
+      cost_per_one: moneyFromJson(l$cost_per_one),
       id: (l$id as int),
       notes: (l$notes as String?),
       quantity: (l$quantity as int),
@@ -1965,7 +1965,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items
     final l$restaurant_item = restaurant_item;
     _resultData['restaurant_item'] = l$restaurant_item.toJson();
     final l$cost_per_one = cost_per_one;
-    _resultData['cost_per_one'] = MoneyToJson(l$cost_per_one);
+    _resultData['cost_per_one'] = moneyToJson(l$cost_per_one);
     final l$id = id;
     _resultData['id'] = l$id;
     final l$notes = notes;
@@ -2204,7 +2204,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items
       special_period_end: (l$special_period_end as String?),
       special_period_start: (l$special_period_start as String?),
       archived: (l$archived as bool),
-      cost: MoneyFromJson(l$cost),
+      cost: moneyFromJson(l$cost),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -2258,7 +2258,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items
     final l$archived = archived;
     _resultData['archived'] = l$archived;
     final l$cost = cost;
-    _resultData['cost'] = MoneyToJson(l$cost);
+    _resultData['cost'] = moneyToJson(l$cost);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -3614,8 +3614,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
           (l$actual_arrival_at_dropoff_time as String?),
       cancellation_time: (l$cancellation_time as String?),
       current_gps:
-          l$current_gps == null ? null : GeographyFromJson(l$current_gps),
-      delivery_cost: MoneyFromJson(l$delivery_cost),
+          l$current_gps == null ? null : geographyFromJson(l$current_gps),
+      delivery_cost: moneyFromJson(l$delivery_cost),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -3652,9 +3652,9 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     _resultData['cancellation_time'] = l$cancellation_time;
     final l$current_gps = current_gps;
     _resultData['current_gps'] =
-        l$current_gps == null ? null : GeographyToJson(l$current_gps);
+        l$current_gps == null ? null : geographyToJson(l$current_gps);
     final l$delivery_cost = delivery_cost;
-    _resultData['delivery_cost'] = MoneyToJson(l$delivery_cost);
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -4875,12 +4875,12 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
       payment_type: (l$payment_type as String),
       to_location_gps: l$to_location_gps == null
           ? null
-          : GeographyFromJson(l$to_location_gps),
+          : geographyFromJson(l$to_location_gps),
       to_location_address: (l$to_location_address as String?),
       estimated_food_ready_time: (l$estimated_food_ready_time as String?),
       actual_food_ready_time: (l$actual_food_ready_time as String?),
       stripe_payment_id: (l$stripe_payment_id as int?),
-      refund_amount: MoneyFromJson(l$refund_amount),
+      refund_amount: moneyFromJson(l$refund_amount),
       delivery_id: (l$delivery_id as int?),
       status: (l$status as String),
       review_id: (l$review_id as int?),
@@ -4888,13 +4888,13 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
       order_time: (l$order_time as String),
       firebase_id: (l$firebase_id as String?),
       customer_app_type: (l$customer_app_type as String),
-      tax: MoneyFromJson(l$tax),
-      total_cost: l$total_cost == null ? null : MoneyFromJson(l$total_cost),
-      items_cost: l$items_cost == null ? null : MoneyFromJson(l$items_cost),
+      tax: moneyFromJson(l$tax),
+      total_cost: l$total_cost == null ? null : moneyFromJson(l$total_cost),
+      items_cost: l$items_cost == null ? null : moneyFromJson(l$items_cost),
       chat_id: (l$chat_id as int),
       customer: Query$get_restaurant_order_by_id$restaurant_order_by_pk$customer
           .fromJson((l$customer as Map<String, dynamic>)),
-      delivery_cost: MoneyFromJson(l$delivery_cost),
+      delivery_cost: moneyFromJson(l$delivery_cost),
       delivery: l$delivery == null
           ? null
           : Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery
@@ -4973,7 +4973,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     _resultData['payment_type'] = l$payment_type;
     final l$to_location_gps = to_location_gps;
     _resultData['to_location_gps'] =
-        l$to_location_gps == null ? null : GeographyToJson(l$to_location_gps);
+        l$to_location_gps == null ? null : geographyToJson(l$to_location_gps);
     final l$to_location_address = to_location_address;
     _resultData['to_location_address'] = l$to_location_address;
     final l$estimated_food_ready_time = estimated_food_ready_time;
@@ -4983,7 +4983,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     final l$stripe_payment_id = stripe_payment_id;
     _resultData['stripe_payment_id'] = l$stripe_payment_id;
     final l$refund_amount = refund_amount;
-    _resultData['refund_amount'] = MoneyToJson(l$refund_amount);
+    _resultData['refund_amount'] = moneyToJson(l$refund_amount);
     final l$delivery_id = delivery_id;
     _resultData['delivery_id'] = l$delivery_id;
     final l$status = status;
@@ -4999,19 +4999,19 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     final l$customer_app_type = customer_app_type;
     _resultData['customer_app_type'] = l$customer_app_type;
     final l$tax = tax;
-    _resultData['tax'] = MoneyToJson(l$tax);
+    _resultData['tax'] = moneyToJson(l$tax);
     final l$total_cost = total_cost;
     _resultData['total_cost'] =
-        l$total_cost == null ? null : MoneyToJson(l$total_cost);
+        l$total_cost == null ? null : moneyToJson(l$total_cost);
     final l$items_cost = items_cost;
     _resultData['items_cost'] =
-        l$items_cost == null ? null : MoneyToJson(l$items_cost);
+        l$items_cost == null ? null : moneyToJson(l$items_cost);
     final l$chat_id = chat_id;
     _resultData['chat_id'] = l$chat_id;
     final l$customer = customer;
     _resultData['customer'] = l$customer.toJson();
     final l$delivery_cost = delivery_cost;
-    _resultData['delivery_cost'] = MoneyToJson(l$delivery_cost);
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
     final l$delivery = delivery;
     _resultData['delivery'] = l$delivery?.toJson();
     final l$$__typename = $__typename;
@@ -5535,7 +5535,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant {
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       language_id: (l$language_id as String),
-      location_gps: GeographyFromJson(l$location_gps),
+      location_gps: geographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
       name: (l$name as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -5569,7 +5569,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant {
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$location_gps = location_gps;
-    _resultData['location_gps'] = GeographyToJson(l$location_gps);
+    _resultData['location_gps'] = geographyToJson(l$location_gps);
     final l$location_text = location_text;
     _resultData['location_text'] = l$location_text;
     final l$name = name;
@@ -5790,7 +5790,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$items {
       restaurant_item:
           Query$get_restaurant_order_by_id$restaurant_order_by_pk$items$restaurant_item
               .fromJson((l$restaurant_item as Map<String, dynamic>)),
-      cost_per_one: MoneyFromJson(l$cost_per_one),
+      cost_per_one: moneyFromJson(l$cost_per_one),
       id: (l$id as int),
       notes: (l$notes as String?),
       quantity: (l$quantity as int),
@@ -5816,7 +5816,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$items {
     final l$restaurant_item = restaurant_item;
     _resultData['restaurant_item'] = l$restaurant_item.toJson();
     final l$cost_per_one = cost_per_one;
-    _resultData['cost_per_one'] = MoneyToJson(l$cost_per_one);
+    _resultData['cost_per_one'] = moneyToJson(l$cost_per_one);
     final l$id = id;
     _resultData['id'] = l$id;
     final l$notes = notes;
@@ -6050,7 +6050,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$items$restaurant_i
       special_period_end: (l$special_period_end as String?),
       special_period_start: (l$special_period_start as String?),
       archived: (l$archived as bool),
-      cost: MoneyFromJson(l$cost),
+      cost: moneyFromJson(l$cost),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -6104,7 +6104,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$items$restaurant_i
     final l$archived = archived;
     _resultData['archived'] = l$archived;
     final l$cost = cost;
-    _resultData['cost'] = MoneyToJson(l$cost);
+    _resultData['cost'] = moneyToJson(l$cost);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -7455,8 +7455,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
           (l$actual_arrival_at_dropoff_time as String?),
       cancellation_time: (l$cancellation_time as String?),
       current_gps:
-          l$current_gps == null ? null : GeographyFromJson(l$current_gps),
-      delivery_cost: MoneyFromJson(l$delivery_cost),
+          l$current_gps == null ? null : geographyFromJson(l$current_gps),
+      delivery_cost: moneyFromJson(l$delivery_cost),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -7493,9 +7493,9 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
     _resultData['cancellation_time'] = l$cancellation_time;
     final l$current_gps = current_gps;
     _resultData['current_gps'] =
-        l$current_gps == null ? null : GeographyToJson(l$current_gps);
+        l$current_gps == null ? null : geographyToJson(l$current_gps);
     final l$delivery_cost = delivery_cost;
-    _resultData['delivery_cost'] = MoneyToJson(l$delivery_cost);
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -8699,25 +8699,25 @@ class Subscription$get_restaurant_orders$restaurant_order {
               (l$customer as Map<String, dynamic>)),
       to_location_gps: l$to_location_gps == null
           ? null
-          : GeographyFromJson(l$to_location_gps),
+          : geographyFromJson(l$to_location_gps),
       to_location_address: (l$to_location_address as String?),
       estimated_food_ready_time: (l$estimated_food_ready_time as String?),
       actual_food_ready_time: (l$actual_food_ready_time as String?),
       stripe_payment_id: (l$stripe_payment_id as int?),
-      refund_amount: MoneyFromJson(l$refund_amount),
+      refund_amount: moneyFromJson(l$refund_amount),
       delivery_id: (l$delivery_id as int?),
       status: (l$status as String),
-      total_cost: l$total_cost == null ? null : MoneyFromJson(l$total_cost),
-      items_cost: l$items_cost == null ? null : MoneyFromJson(l$items_cost),
+      total_cost: l$total_cost == null ? null : moneyFromJson(l$total_cost),
+      items_cost: l$items_cost == null ? null : moneyFromJson(l$items_cost),
       review_id: (l$review_id as int?),
       order_type: (l$order_type as String),
       order_time: (l$order_time as String),
       firebase_id: (l$firebase_id as String?),
       customer_app_type: (l$customer_app_type as String),
       notes: (l$notes as String?),
-      tax: MoneyFromJson(l$tax),
+      tax: moneyFromJson(l$tax),
       chat_id: (l$chat_id as int),
-      delivery_cost: MoneyFromJson(l$delivery_cost),
+      delivery_cost: moneyFromJson(l$delivery_cost),
       delivery: l$delivery == null
           ? null
           : Subscription$get_restaurant_orders$restaurant_order$delivery
@@ -8793,7 +8793,7 @@ class Subscription$get_restaurant_orders$restaurant_order {
     _resultData['customer'] = l$customer.toJson();
     final l$to_location_gps = to_location_gps;
     _resultData['to_location_gps'] =
-        l$to_location_gps == null ? null : GeographyToJson(l$to_location_gps);
+        l$to_location_gps == null ? null : geographyToJson(l$to_location_gps);
     final l$to_location_address = to_location_address;
     _resultData['to_location_address'] = l$to_location_address;
     final l$estimated_food_ready_time = estimated_food_ready_time;
@@ -8803,17 +8803,17 @@ class Subscription$get_restaurant_orders$restaurant_order {
     final l$stripe_payment_id = stripe_payment_id;
     _resultData['stripe_payment_id'] = l$stripe_payment_id;
     final l$refund_amount = refund_amount;
-    _resultData['refund_amount'] = MoneyToJson(l$refund_amount);
+    _resultData['refund_amount'] = moneyToJson(l$refund_amount);
     final l$delivery_id = delivery_id;
     _resultData['delivery_id'] = l$delivery_id;
     final l$status = status;
     _resultData['status'] = l$status;
     final l$total_cost = total_cost;
     _resultData['total_cost'] =
-        l$total_cost == null ? null : MoneyToJson(l$total_cost);
+        l$total_cost == null ? null : moneyToJson(l$total_cost);
     final l$items_cost = items_cost;
     _resultData['items_cost'] =
-        l$items_cost == null ? null : MoneyToJson(l$items_cost);
+        l$items_cost == null ? null : moneyToJson(l$items_cost);
     final l$review_id = review_id;
     _resultData['review_id'] = l$review_id;
     final l$order_type = order_type;
@@ -8827,11 +8827,11 @@ class Subscription$get_restaurant_orders$restaurant_order {
     final l$notes = notes;
     _resultData['notes'] = l$notes;
     final l$tax = tax;
-    _resultData['tax'] = MoneyToJson(l$tax);
+    _resultData['tax'] = moneyToJson(l$tax);
     final l$chat_id = chat_id;
     _resultData['chat_id'] = l$chat_id;
     final l$delivery_cost = delivery_cost;
-    _resultData['delivery_cost'] = MoneyToJson(l$delivery_cost);
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
     final l$delivery = delivery;
     _resultData['delivery'] = l$delivery?.toJson();
     final l$$__typename = $__typename;
@@ -9349,7 +9349,7 @@ class Subscription$get_restaurant_orders$restaurant_order$restaurant {
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       language_id: (l$language_id as String),
-      location_gps: GeographyFromJson(l$location_gps),
+      location_gps: geographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
       name: (l$name as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -9383,7 +9383,7 @@ class Subscription$get_restaurant_orders$restaurant_order$restaurant {
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$location_gps = location_gps;
-    _resultData['location_gps'] = GeographyToJson(l$location_gps);
+    _resultData['location_gps'] = geographyToJson(l$location_gps);
     final l$location_text = location_text;
     _resultData['location_text'] = l$location_text;
     final l$name = name;
@@ -9604,7 +9604,7 @@ class Subscription$get_restaurant_orders$restaurant_order$items {
       restaurant_item:
           Subscription$get_restaurant_orders$restaurant_order$items$restaurant_item
               .fromJson((l$restaurant_item as Map<String, dynamic>)),
-      cost_per_one: MoneyFromJson(l$cost_per_one),
+      cost_per_one: moneyFromJson(l$cost_per_one),
       id: (l$id as int),
       notes: (l$notes as String?),
       quantity: (l$quantity as int),
@@ -9630,7 +9630,7 @@ class Subscription$get_restaurant_orders$restaurant_order$items {
     final l$restaurant_item = restaurant_item;
     _resultData['restaurant_item'] = l$restaurant_item.toJson();
     final l$cost_per_one = cost_per_one;
-    _resultData['cost_per_one'] = MoneyToJson(l$cost_per_one);
+    _resultData['cost_per_one'] = moneyToJson(l$cost_per_one);
     final l$id = id;
     _resultData['id'] = l$id;
     final l$notes = notes;
@@ -9863,7 +9863,7 @@ class Subscription$get_restaurant_orders$restaurant_order$items$restaurant_item 
       special_period_end: (l$special_period_end as String?),
       special_period_start: (l$special_period_start as String?),
       archived: (l$archived as bool),
-      cost: MoneyFromJson(l$cost),
+      cost: moneyFromJson(l$cost),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -9917,7 +9917,7 @@ class Subscription$get_restaurant_orders$restaurant_order$items$restaurant_item 
     final l$archived = archived;
     _resultData['archived'] = l$archived;
     final l$cost = cost;
-    _resultData['cost'] = MoneyToJson(l$cost);
+    _resultData['cost'] = moneyToJson(l$cost);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -11261,8 +11261,8 @@ class Subscription$get_restaurant_orders$restaurant_order$delivery {
           (l$actual_arrival_at_dropoff_time as String?),
       cancellation_time: (l$cancellation_time as String?),
       current_gps:
-          l$current_gps == null ? null : GeographyFromJson(l$current_gps),
-      delivery_cost: MoneyFromJson(l$delivery_cost),
+          l$current_gps == null ? null : geographyFromJson(l$current_gps),
+      delivery_cost: moneyFromJson(l$delivery_cost),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -11299,9 +11299,9 @@ class Subscription$get_restaurant_orders$restaurant_order$delivery {
     _resultData['cancellation_time'] = l$cancellation_time;
     final l$current_gps = current_gps;
     _resultData['current_gps'] =
-        l$current_gps == null ? null : GeographyToJson(l$current_gps);
+        l$current_gps == null ? null : geographyToJson(l$current_gps);
     final l$delivery_cost = delivery_cost;
-    _resultData['delivery_cost'] = MoneyToJson(l$delivery_cost);
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -12009,7 +12009,7 @@ class Subscription$listen_restaurant_min_orders$restaurant_order {
       id: (l$id as int),
       order_time: (l$order_time as String),
       status: (l$status as String),
-      total_cost: l$total_cost == null ? null : MoneyFromJson(l$total_cost),
+      total_cost: l$total_cost == null ? null : moneyFromJson(l$total_cost),
       to_location_address: (l$to_location_address as String?),
       customer:
           Subscription$listen_restaurant_min_orders$restaurant_order$customer
@@ -12043,7 +12043,7 @@ class Subscription$listen_restaurant_min_orders$restaurant_order {
     _resultData['status'] = l$status;
     final l$total_cost = total_cost;
     _resultData['total_cost'] =
-        l$total_cost == null ? null : MoneyToJson(l$total_cost);
+        l$total_cost == null ? null : moneyToJson(l$total_cost);
     final l$to_location_address = to_location_address;
     _resultData['to_location_address'] = l$to_location_address;
     final l$customer = customer;
@@ -13091,7 +13091,7 @@ class Query$get_restaurant_min_orders$restaurant_order {
       id: (l$id as int),
       order_time: (l$order_time as String),
       status: (l$status as String),
-      total_cost: l$total_cost == null ? null : MoneyFromJson(l$total_cost),
+      total_cost: l$total_cost == null ? null : moneyFromJson(l$total_cost),
       to_location_address: (l$to_location_address as String?),
       customer:
           Query$get_restaurant_min_orders$restaurant_order$customer.fromJson(
@@ -13124,7 +13124,7 @@ class Query$get_restaurant_min_orders$restaurant_order {
     _resultData['status'] = l$status;
     final l$total_cost = total_cost;
     _resultData['total_cost'] =
-        l$total_cost == null ? null : MoneyToJson(l$total_cost);
+        l$total_cost == null ? null : moneyToJson(l$total_cost);
     final l$to_location_address = to_location_address;
     _resultData['to_location_address'] = l$to_location_address;
     final l$customer = customer;
@@ -14680,12 +14680,12 @@ class Query$querry_restaurant_orders_by_restaurant_id$restaurant_order {
       payment_type: (l$payment_type as String),
       to_location_gps: l$to_location_gps == null
           ? null
-          : GeographyFromJson(l$to_location_gps),
+          : geographyFromJson(l$to_location_gps),
       to_location_address: (l$to_location_address as String?),
       estimated_food_ready_time: (l$estimated_food_ready_time as String?),
       actual_food_ready_time: (l$actual_food_ready_time as String?),
       stripe_payment_id: (l$stripe_payment_id as int?),
-      refund_amount: MoneyFromJson(l$refund_amount),
+      refund_amount: moneyFromJson(l$refund_amount),
       delivery_id: (l$delivery_id as int?),
       status: (l$status as String),
       review_id: (l$review_id as int?),
@@ -14697,11 +14697,11 @@ class Query$querry_restaurant_orders_by_restaurant_id$restaurant_order {
           Query$querry_restaurant_orders_by_restaurant_id$restaurant_order$customer
               .fromJson((l$customer as Map<String, dynamic>)),
       notes: (l$notes as String?),
-      tax: MoneyFromJson(l$tax),
-      total_cost: l$total_cost == null ? null : MoneyFromJson(l$total_cost),
-      items_cost: l$items_cost == null ? null : MoneyFromJson(l$items_cost),
+      tax: moneyFromJson(l$tax),
+      total_cost: l$total_cost == null ? null : moneyFromJson(l$total_cost),
+      items_cost: l$items_cost == null ? null : moneyFromJson(l$items_cost),
       chat_id: (l$chat_id as int),
-      delivery_cost: MoneyFromJson(l$delivery_cost),
+      delivery_cost: moneyFromJson(l$delivery_cost),
       delivery: l$delivery == null
           ? null
           : Query$querry_restaurant_orders_by_restaurant_id$restaurant_order$delivery
@@ -14779,7 +14779,7 @@ class Query$querry_restaurant_orders_by_restaurant_id$restaurant_order {
     _resultData['payment_type'] = l$payment_type;
     final l$to_location_gps = to_location_gps;
     _resultData['to_location_gps'] =
-        l$to_location_gps == null ? null : GeographyToJson(l$to_location_gps);
+        l$to_location_gps == null ? null : geographyToJson(l$to_location_gps);
     final l$to_location_address = to_location_address;
     _resultData['to_location_address'] = l$to_location_address;
     final l$estimated_food_ready_time = estimated_food_ready_time;
@@ -14789,7 +14789,7 @@ class Query$querry_restaurant_orders_by_restaurant_id$restaurant_order {
     final l$stripe_payment_id = stripe_payment_id;
     _resultData['stripe_payment_id'] = l$stripe_payment_id;
     final l$refund_amount = refund_amount;
-    _resultData['refund_amount'] = MoneyToJson(l$refund_amount);
+    _resultData['refund_amount'] = moneyToJson(l$refund_amount);
     final l$delivery_id = delivery_id;
     _resultData['delivery_id'] = l$delivery_id;
     final l$status = status;
@@ -14809,17 +14809,17 @@ class Query$querry_restaurant_orders_by_restaurant_id$restaurant_order {
     final l$notes = notes;
     _resultData['notes'] = l$notes;
     final l$tax = tax;
-    _resultData['tax'] = MoneyToJson(l$tax);
+    _resultData['tax'] = moneyToJson(l$tax);
     final l$total_cost = total_cost;
     _resultData['total_cost'] =
-        l$total_cost == null ? null : MoneyToJson(l$total_cost);
+        l$total_cost == null ? null : moneyToJson(l$total_cost);
     final l$items_cost = items_cost;
     _resultData['items_cost'] =
-        l$items_cost == null ? null : MoneyToJson(l$items_cost);
+        l$items_cost == null ? null : moneyToJson(l$items_cost);
     final l$chat_id = chat_id;
     _resultData['chat_id'] = l$chat_id;
     final l$delivery_cost = delivery_cost;
-    _resultData['delivery_cost'] = MoneyToJson(l$delivery_cost);
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
     final l$delivery = delivery;
     _resultData['delivery'] = l$delivery?.toJson();
     final l$$__typename = $__typename;
@@ -15355,7 +15355,7 @@ class Query$querry_restaurant_orders_by_restaurant_id$restaurant_order$restauran
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       language_id: (l$language_id as String),
-      location_gps: GeographyFromJson(l$location_gps),
+      location_gps: geographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
       name: (l$name as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -15389,7 +15389,7 @@ class Query$querry_restaurant_orders_by_restaurant_id$restaurant_order$restauran
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$location_gps = location_gps;
-    _resultData['location_gps'] = GeographyToJson(l$location_gps);
+    _resultData['location_gps'] = geographyToJson(l$location_gps);
     final l$location_text = location_text;
     _resultData['location_text'] = l$location_text;
     final l$name = name;
@@ -15613,7 +15613,7 @@ class Query$querry_restaurant_orders_by_restaurant_id$restaurant_order$items {
       restaurant_item:
           Query$querry_restaurant_orders_by_restaurant_id$restaurant_order$items$restaurant_item
               .fromJson((l$restaurant_item as Map<String, dynamic>)),
-      cost_per_one: MoneyFromJson(l$cost_per_one),
+      cost_per_one: moneyFromJson(l$cost_per_one),
       id: (l$id as int),
       notes: (l$notes as String?),
       quantity: (l$quantity as int),
@@ -15639,7 +15639,7 @@ class Query$querry_restaurant_orders_by_restaurant_id$restaurant_order$items {
     final l$restaurant_item = restaurant_item;
     _resultData['restaurant_item'] = l$restaurant_item.toJson();
     final l$cost_per_one = cost_per_one;
-    _resultData['cost_per_one'] = MoneyToJson(l$cost_per_one);
+    _resultData['cost_per_one'] = moneyToJson(l$cost_per_one);
     final l$id = id;
     _resultData['id'] = l$id;
     final l$notes = notes;
@@ -15878,7 +15878,7 @@ class Query$querry_restaurant_orders_by_restaurant_id$restaurant_order$items$res
       special_period_end: (l$special_period_end as String?),
       special_period_start: (l$special_period_start as String?),
       archived: (l$archived as bool),
-      cost: MoneyFromJson(l$cost),
+      cost: moneyFromJson(l$cost),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -15932,7 +15932,7 @@ class Query$querry_restaurant_orders_by_restaurant_id$restaurant_order$items$res
     final l$archived = archived;
     _resultData['archived'] = l$archived;
     final l$cost = cost;
-    _resultData['cost'] = MoneyToJson(l$cost);
+    _resultData['cost'] = moneyToJson(l$cost);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -17288,8 +17288,8 @@ class Query$querry_restaurant_orders_by_restaurant_id$restaurant_order$delivery 
           (l$actual_arrival_at_dropoff_time as String?),
       cancellation_time: (l$cancellation_time as String?),
       current_gps:
-          l$current_gps == null ? null : GeographyFromJson(l$current_gps),
-      delivery_cost: MoneyFromJson(l$delivery_cost),
+          l$current_gps == null ? null : geographyFromJson(l$current_gps),
+      delivery_cost: moneyFromJson(l$delivery_cost),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -17326,9 +17326,9 @@ class Query$querry_restaurant_orders_by_restaurant_id$restaurant_order$delivery 
     _resultData['cancellation_time'] = l$cancellation_time;
     final l$current_gps = current_gps;
     _resultData['current_gps'] =
-        l$current_gps == null ? null : GeographyToJson(l$current_gps);
+        l$current_gps == null ? null : geographyToJson(l$current_gps);
     final l$delivery_cost = delivery_cost;
-    _resultData['delivery_cost'] = MoneyToJson(l$delivery_cost);
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;

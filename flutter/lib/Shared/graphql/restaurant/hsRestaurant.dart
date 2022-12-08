@@ -39,18 +39,19 @@ Future<List<Restaurant>> fetch_restaurants() async {
         userInfo: ServiceInfo(
             hasuraId: data.id,
             image: data.image,
-            firebaseId: data.firebase_id!,
+            firebaseId: data.firebase_id,
             name: data.name,
             descriptionId: data.description_id,
             //   descriptionId: data.d,
             location:
                 Location.fromHasura(data.location_gps, data.location_text)),
-        description: {
-          data.description!.translations.first.language_id.toLanguageType():
-              data.description!.translations.first.value,
-          data.description!.translations[1].language_id.toLanguageType():
-              data.description!.translations[1].value,
-        },
+        description: null,
+        // {
+        //   data.description!.translations.first.language_id.toLanguageType():
+        //       data.description!.translations.first.value,
+        //   data.description!.translations[1].language_id.toLanguageType():
+        //       data.description!.translations[1].value,
+        // },
         schedule: Schedule(openHours: {}),
         paymentInfo: PaymentInfo(),
         restaurantState:

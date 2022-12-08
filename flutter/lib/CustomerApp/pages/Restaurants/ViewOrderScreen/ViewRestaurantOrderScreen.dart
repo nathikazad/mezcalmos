@@ -18,6 +18,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/graphql/order/restaurant/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -108,7 +109,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
       updateMapIfDeliveryPhase(order.value!.status);
     }
 
-    _orderListener = listen_on_restaurant_order(order_id: orderId)
+    mezDbgPrint("Listening on + OrderId ($orderId)");
+    _orderListener = listen_on_restaurant_order_by_id(orderId: orderId)
         .listen((RestaurantOrder? _order) {
       mezDbgPrint(
           "[+] listen_on_restaurant_order Trigger ===> ${_order?.orderId}");

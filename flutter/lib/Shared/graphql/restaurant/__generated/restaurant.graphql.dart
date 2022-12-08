@@ -5955,7 +5955,6 @@ class _CopyWithStubImpl$Subscription$GetRestaurants$restaurant$payment_info<
       _res;
 }
 
-<<<<<<< HEAD
 class Variables$Query$getRestaurantItems {
   factory Variables$Query$getRestaurantItems({required int restaurant_id}) =>
       Variables$Query$getRestaurantItems._({
@@ -5970,27 +5969,10 @@ class Variables$Query$getRestaurantItems {
     final l$restaurant_id = data['restaurant_id'];
     result$data['restaurant_id'] = (l$restaurant_id as int);
     return Variables$Query$getRestaurantItems._(result$data);
-=======
-class Variables$Query$getRestaurantOperators {
-  factory Variables$Query$getRestaurantOperators({required int restaurantId}) =>
-      Variables$Query$getRestaurantOperators._({
-        r'restaurantId': restaurantId,
-      });
-
-  Variables$Query$getRestaurantOperators._(this._$data);
-
-  factory Variables$Query$getRestaurantOperators.fromJson(
-      Map<String, dynamic> data) {
-    final result$data = <String, dynamic>{};
-    final l$restaurantId = data['restaurantId'];
-    result$data['restaurantId'] = (l$restaurantId as int);
-    return Variables$Query$getRestaurantOperators._(result$data);
->>>>>>> origin/hsFlutter
   }
 
   Map<String, dynamic> _$data;
 
-<<<<<<< HEAD
   int get restaurant_id => (_$data['restaurant_id'] as int);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
@@ -6002,19 +5984,6 @@ class Variables$Query$getRestaurantOperators {
   CopyWith$Variables$Query$getRestaurantItems<
           Variables$Query$getRestaurantItems>
       get copyWith => CopyWith$Variables$Query$getRestaurantItems(
-=======
-  int get restaurantId => (_$data['restaurantId'] as int);
-  Map<String, dynamic> toJson() {
-    final result$data = <String, dynamic>{};
-    final l$restaurantId = restaurantId;
-    result$data['restaurantId'] = l$restaurantId;
-    return result$data;
-  }
-
-  CopyWith$Variables$Query$getRestaurantOperators<
-          Variables$Query$getRestaurantOperators>
-      get copyWith => CopyWith$Variables$Query$getRestaurantOperators(
->>>>>>> origin/hsFlutter
             this,
             (i) => i,
           );
@@ -6023,7 +5992,6 @@ class Variables$Query$getRestaurantOperators {
     if (identical(this, other)) {
       return true;
     }
-<<<<<<< HEAD
     if (!(other is Variables$Query$getRestaurantItems) ||
         runtimeType != other.runtimeType) {
       return false;
@@ -6031,15 +5999,6 @@ class Variables$Query$getRestaurantOperators {
     final l$restaurant_id = restaurant_id;
     final lOther$restaurant_id = other.restaurant_id;
     if (l$restaurant_id != lOther$restaurant_id) {
-=======
-    if (!(other is Variables$Query$getRestaurantOperators) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$restaurantId = restaurantId;
-    final lOther$restaurantId = other.restaurantId;
-    if (l$restaurantId != lOther$restaurantId) {
->>>>>>> origin/hsFlutter
       return false;
     }
     return true;
@@ -6047,7 +6006,6 @@ class Variables$Query$getRestaurantOperators {
 
   @override
   int get hashCode {
-<<<<<<< HEAD
     final l$restaurant_id = restaurant_id;
     return Object.hashAll([l$restaurant_id]);
   }
@@ -6068,33 +6026,10 @@ abstract class CopyWith$Variables$Query$getRestaurantItems<TRes> {
 class _CopyWithImpl$Variables$Query$getRestaurantItems<TRes>
     implements CopyWith$Variables$Query$getRestaurantItems<TRes> {
   _CopyWithImpl$Variables$Query$getRestaurantItems(
-=======
-    final l$restaurantId = restaurantId;
-    return Object.hashAll([l$restaurantId]);
-  }
-}
-
-abstract class CopyWith$Variables$Query$getRestaurantOperators<TRes> {
-  factory CopyWith$Variables$Query$getRestaurantOperators(
-    Variables$Query$getRestaurantOperators instance,
-    TRes Function(Variables$Query$getRestaurantOperators) then,
-  ) = _CopyWithImpl$Variables$Query$getRestaurantOperators;
-
-  factory CopyWith$Variables$Query$getRestaurantOperators.stub(TRes res) =
-      _CopyWithStubImpl$Variables$Query$getRestaurantOperators;
-
-  TRes call({int? restaurantId});
-}
-
-class _CopyWithImpl$Variables$Query$getRestaurantOperators<TRes>
-    implements CopyWith$Variables$Query$getRestaurantOperators<TRes> {
-  _CopyWithImpl$Variables$Query$getRestaurantOperators(
->>>>>>> origin/hsFlutter
     this._instance,
     this._then,
   );
 
-<<<<<<< HEAD
   final Variables$Query$getRestaurantItems _instance;
 
   final TRes Function(Variables$Query$getRestaurantItems) _then;
@@ -6132,67 +6067,19 @@ class Query$getRestaurantItems {
           .map((e) => Query$getRestaurantItems$restaurant_item.fromJson(
               (e as Map<String, dynamic>)))
           .toList(),
-=======
-  final Variables$Query$getRestaurantOperators _instance;
-
-  final TRes Function(Variables$Query$getRestaurantOperators) _then;
-
-  static const _undefined = {};
-
-  TRes call({Object? restaurantId = _undefined}) =>
-      _then(Variables$Query$getRestaurantOperators._({
-        ..._instance._$data,
-        if (restaurantId != _undefined && restaurantId != null)
-          'restaurantId': (restaurantId as int),
-      }));
-}
-
-class _CopyWithStubImpl$Variables$Query$getRestaurantOperators<TRes>
-    implements CopyWith$Variables$Query$getRestaurantOperators<TRes> {
-  _CopyWithStubImpl$Variables$Query$getRestaurantOperators(this._res);
-
-  TRes _res;
-
-  call({int? restaurantId}) => _res;
-}
-
-class Query$getRestaurantOperators {
-  Query$getRestaurantOperators({
-    this.restaurant_by_pk,
-    required this.$__typename,
-  });
-
-  factory Query$getRestaurantOperators.fromJson(Map<String, dynamic> json) {
-    final l$restaurant_by_pk = json['restaurant_by_pk'];
-    final l$$__typename = json['__typename'];
-    return Query$getRestaurantOperators(
-      restaurant_by_pk: l$restaurant_by_pk == null
-          ? null
-          : Query$getRestaurantOperators$restaurant_by_pk.fromJson(
-              (l$restaurant_by_pk as Map<String, dynamic>)),
->>>>>>> origin/hsFlutter
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-<<<<<<< HEAD
   final List<Query$getRestaurantItems$restaurant_item> restaurant_item;
-=======
-  final Query$getRestaurantOperators$restaurant_by_pk? restaurant_by_pk;
->>>>>>> origin/hsFlutter
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-<<<<<<< HEAD
     final l$restaurant_item = restaurant_item;
     _resultData['restaurant_item'] =
         l$restaurant_item.map((e) => e.toJson()).toList();
-=======
-    final l$restaurant_by_pk = restaurant_by_pk;
-    _resultData['restaurant_by_pk'] = l$restaurant_by_pk?.toJson();
->>>>>>> origin/hsFlutter
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -6200,17 +6087,10 @@ class Query$getRestaurantOperators {
 
   @override
   int get hashCode {
-<<<<<<< HEAD
     final l$restaurant_item = restaurant_item;
     final l$$__typename = $__typename;
     return Object.hashAll([
       Object.hashAll(l$restaurant_item.map((v) => v)),
-=======
-    final l$restaurant_by_pk = restaurant_by_pk;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$restaurant_by_pk,
->>>>>>> origin/hsFlutter
       l$$__typename,
     ]);
   }
@@ -6220,7 +6100,6 @@ class Query$getRestaurantOperators {
     if (identical(this, other)) {
       return true;
     }
-<<<<<<< HEAD
     if (!(other is Query$getRestaurantItems) ||
         runtimeType != other.runtimeType) {
       return false;
@@ -6237,17 +6116,6 @@ class Query$getRestaurantOperators {
         return false;
       }
     }
-=======
-    if (!(other is Query$getRestaurantOperators) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$restaurant_by_pk = restaurant_by_pk;
-    final lOther$restaurant_by_pk = other.restaurant_by_pk;
-    if (l$restaurant_by_pk != lOther$restaurant_by_pk) {
-      return false;
-    }
->>>>>>> origin/hsFlutter
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -6257,7 +6125,6 @@ class Query$getRestaurantOperators {
   }
 }
 
-<<<<<<< HEAD
 extension UtilityExtension$Query$getRestaurantItems
     on Query$getRestaurantItems {
   CopyWith$Query$getRestaurantItems<Query$getRestaurantItems> get copyWith =>
@@ -6291,55 +6158,17 @@ abstract class CopyWith$Query$getRestaurantItems<TRes> {
 class _CopyWithImpl$Query$getRestaurantItems<TRes>
     implements CopyWith$Query$getRestaurantItems<TRes> {
   _CopyWithImpl$Query$getRestaurantItems(
-=======
-extension UtilityExtension$Query$getRestaurantOperators
-    on Query$getRestaurantOperators {
-  CopyWith$Query$getRestaurantOperators<Query$getRestaurantOperators>
-      get copyWith => CopyWith$Query$getRestaurantOperators(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$getRestaurantOperators<TRes> {
-  factory CopyWith$Query$getRestaurantOperators(
-    Query$getRestaurantOperators instance,
-    TRes Function(Query$getRestaurantOperators) then,
-  ) = _CopyWithImpl$Query$getRestaurantOperators;
-
-  factory CopyWith$Query$getRestaurantOperators.stub(TRes res) =
-      _CopyWithStubImpl$Query$getRestaurantOperators;
-
-  TRes call({
-    Query$getRestaurantOperators$restaurant_by_pk? restaurant_by_pk,
-    String? $__typename,
-  });
-  CopyWith$Query$getRestaurantOperators$restaurant_by_pk<TRes>
-      get restaurant_by_pk;
-}
-
-class _CopyWithImpl$Query$getRestaurantOperators<TRes>
-    implements CopyWith$Query$getRestaurantOperators<TRes> {
-  _CopyWithImpl$Query$getRestaurantOperators(
->>>>>>> origin/hsFlutter
     this._instance,
     this._then,
   );
 
-<<<<<<< HEAD
   final Query$getRestaurantItems _instance;
 
   final TRes Function(Query$getRestaurantItems) _then;
-=======
-  final Query$getRestaurantOperators _instance;
-
-  final TRes Function(Query$getRestaurantOperators) _then;
->>>>>>> origin/hsFlutter
 
   static const _undefined = {};
 
   TRes call({
-<<<<<<< HEAD
     Object? restaurant_item = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -6349,21 +6178,10 @@ class _CopyWithImpl$Query$getRestaurantOperators<TRes>
                 ? _instance.restaurant_item
                 : (restaurant_item
                     as List<Query$getRestaurantItems$restaurant_item>),
-=======
-    Object? restaurant_by_pk = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$getRestaurantOperators(
-        restaurant_by_pk: restaurant_by_pk == _undefined
-            ? _instance.restaurant_by_pk
-            : (restaurant_by_pk
-                as Query$getRestaurantOperators$restaurant_by_pk?),
->>>>>>> origin/hsFlutter
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-<<<<<<< HEAD
   TRes restaurant_item(
           Iterable<Query$getRestaurantItems$restaurant_item> Function(
                   Iterable<
@@ -6381,27 +6199,10 @@ class _CopyWithImpl$Query$getRestaurantOperators<TRes>
 class _CopyWithStubImpl$Query$getRestaurantItems<TRes>
     implements CopyWith$Query$getRestaurantItems<TRes> {
   _CopyWithStubImpl$Query$getRestaurantItems(this._res);
-=======
-  CopyWith$Query$getRestaurantOperators$restaurant_by_pk<TRes>
-      get restaurant_by_pk {
-    final local$restaurant_by_pk = _instance.restaurant_by_pk;
-    return local$restaurant_by_pk == null
-        ? CopyWith$Query$getRestaurantOperators$restaurant_by_pk.stub(
-            _then(_instance))
-        : CopyWith$Query$getRestaurantOperators$restaurant_by_pk(
-            local$restaurant_by_pk, (e) => call(restaurant_by_pk: e));
-  }
-}
-
-class _CopyWithStubImpl$Query$getRestaurantOperators<TRes>
-    implements CopyWith$Query$getRestaurantOperators<TRes> {
-  _CopyWithStubImpl$Query$getRestaurantOperators(this._res);
->>>>>>> origin/hsFlutter
 
   TRes _res;
 
   call({
-<<<<<<< HEAD
     List<Query$getRestaurantItems$restaurant_item>? restaurant_item,
     String? $__typename,
   }) =>
@@ -6416,24 +6217,6 @@ const documentNodeQuerygetRestaurantItems = DocumentNode(definitions: [
     variableDefinitions: [
       VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'restaurant_id')),
-=======
-    Query$getRestaurantOperators$restaurant_by_pk? restaurant_by_pk,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Query$getRestaurantOperators$restaurant_by_pk<TRes>
-      get restaurant_by_pk =>
-          CopyWith$Query$getRestaurantOperators$restaurant_by_pk.stub(_res);
-}
-
-const documentNodeQuerygetRestaurantOperators = DocumentNode(definitions: [
-  OperationDefinitionNode(
-    type: OperationType.query,
-    name: NameNode(value: 'getRestaurantOperators'),
-    variableDefinitions: [
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'restaurantId')),
->>>>>>> origin/hsFlutter
         type: NamedTypeNode(
           name: NameNode(value: 'Int'),
           isNonNull: true,
@@ -6445,7 +6228,6 @@ const documentNodeQuerygetRestaurantOperators = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-<<<<<<< HEAD
         name: NameNode(value: 'restaurant_item'),
         alias: null,
         arguments: [
@@ -6462,20 +6244,11 @@ const documentNodeQuerygetRestaurantOperators = DocumentNode(definitions: [
                 ]),
               )
             ]),
-=======
-        name: NameNode(value: 'restaurant_by_pk'),
-        alias: null,
-        arguments: [
-          ArgumentNode(
-            name: NameNode(value: 'id'),
-            value: VariableNode(name: NameNode(value: 'restaurantId')),
->>>>>>> origin/hsFlutter
           )
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-<<<<<<< HEAD
             name: NameNode(value: 'id'),
             alias: null,
             arguments: [],
@@ -6535,9 +6308,6 @@ const documentNodeQuerygetRestaurantOperators = DocumentNode(definitions: [
           ),
           FieldNode(
             name: NameNode(value: 'description'),
-=======
-            name: NameNode(value: 'restaurant_operators'),
->>>>>>> origin/hsFlutter
             alias: null,
             arguments: [],
             directives: [],
@@ -6550,7 +6320,6 @@ const documentNodeQuerygetRestaurantOperators = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
-<<<<<<< HEAD
                 name: NameNode(value: 'translations'),
                 alias: null,
                 arguments: [],
@@ -6581,15 +6350,11 @@ const documentNodeQuerygetRestaurantOperators = DocumentNode(definitions: [
               ),
               FieldNode(
                 name: NameNode(value: '__typename'),
-=======
-                name: NameNode(value: 'current_gps'),
->>>>>>> origin/hsFlutter
                 alias: null,
                 arguments: [],
                 directives: [],
                 selectionSet: null,
               ),
-<<<<<<< HEAD
             ]),
           ),
           FieldNode(
@@ -6656,37 +6421,11 @@ const documentNodeQuerygetRestaurantOperators = DocumentNode(definitions: [
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
                 name: NameNode(value: 'item_options'),
-=======
-              FieldNode(
-                name: NameNode(value: 'status'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'restaurant_id'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'owner'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'user'),
->>>>>>> origin/hsFlutter
                 alias: null,
                 arguments: [],
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
-<<<<<<< HEAD
                     name: NameNode(value: 'id'),
                     alias: null,
                     arguments: [],
@@ -6730,9 +6469,6 @@ const documentNodeQuerygetRestaurantOperators = DocumentNode(definitions: [
                   ),
                   FieldNode(
                     name: NameNode(value: 'minimum_choice'),
-=======
-                    name: NameNode(value: 'phone'),
->>>>>>> origin/hsFlutter
                     alias: null,
                     arguments: [],
                     directives: [],
@@ -6743,7 +6479,6 @@ const documentNodeQuerygetRestaurantOperators = DocumentNode(definitions: [
                     alias: null,
                     arguments: [],
                     directives: [],
-<<<<<<< HEAD
                     selectionSet: SelectionSetNode(selections: [
                       FieldNode(
                         name: NameNode(value: 'id'),
@@ -6891,37 +6626,6 @@ const documentNodeQuerygetRestaurantOperators = DocumentNode(definitions: [
                         selectionSet: null,
                       ),
                     ]),
-=======
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'image'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'language_id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'firebase_id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
->>>>>>> origin/hsFlutter
                   ),
                   FieldNode(
                     name: NameNode(value: '__typename'),
@@ -6954,7 +6658,6 @@ const documentNodeQuerygetRestaurantOperators = DocumentNode(definitions: [
     ]),
   ),
 ]);
-<<<<<<< HEAD
 Query$getRestaurantItems _parserFn$Query$getRestaurantItems(
         Map<String, dynamic> data) =>
     Query$getRestaurantItems.fromJson(data);
@@ -6964,17 +6667,6 @@ class Options$Query$getRestaurantItems
   Options$Query$getRestaurantItems({
     String? operationName,
     required Variables$Query$getRestaurantItems variables,
-=======
-Query$getRestaurantOperators _parserFn$Query$getRestaurantOperators(
-        Map<String, dynamic> data) =>
-    Query$getRestaurantOperators.fromJson(data);
-
-class Options$Query$getRestaurantOperators
-    extends graphql.QueryOptions<Query$getRestaurantOperators> {
-  Options$Query$getRestaurantOperators({
-    String? operationName,
-    required Variables$Query$getRestaurantOperators variables,
->>>>>>> origin/hsFlutter
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -6990,7 +6682,6 @@ class Options$Query$getRestaurantOperators
           optimisticResult: optimisticResult,
           pollInterval: pollInterval,
           context: context,
-<<<<<<< HEAD
           document: documentNodeQuerygetRestaurantItems,
           parserFn: _parserFn$Query$getRestaurantItems,
         );
@@ -7001,18 +6692,6 @@ class WatchOptions$Query$getRestaurantItems
   WatchOptions$Query$getRestaurantItems({
     String? operationName,
     required Variables$Query$getRestaurantItems variables,
-=======
-          document: documentNodeQuerygetRestaurantOperators,
-          parserFn: _parserFn$Query$getRestaurantOperators,
-        );
-}
-
-class WatchOptions$Query$getRestaurantOperators
-    extends graphql.WatchQueryOptions<Query$getRestaurantOperators> {
-  WatchOptions$Query$getRestaurantOperators({
-    String? operationName,
-    required Variables$Query$getRestaurantOperators variables,
->>>>>>> origin/hsFlutter
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -7030,16 +6709,11 @@ class WatchOptions$Query$getRestaurantOperators
           cacheRereadPolicy: cacheRereadPolicy,
           optimisticResult: optimisticResult,
           context: context,
-<<<<<<< HEAD
           document: documentNodeQuerygetRestaurantItems,
-=======
-          document: documentNodeQuerygetRestaurantOperators,
->>>>>>> origin/hsFlutter
           pollInterval: pollInterval,
           eagerlyFetchResults: eagerlyFetchResults,
           carryForwardDataOnException: carryForwardDataOnException,
           fetchResults: fetchResults,
-<<<<<<< HEAD
           parserFn: _parserFn$Query$getRestaurantItems,
         );
 }
@@ -7068,76 +6742,29 @@ extension ClientExtension$Query$getRestaurantItems on graphql.GraphQLClient {
   void writeQuery$getRestaurantItems({
     required Query$getRestaurantItems data,
     required Variables$Query$getRestaurantItems variables,
-=======
-          parserFn: _parserFn$Query$getRestaurantOperators,
-        );
-}
-
-class FetchMoreOptions$Query$getRestaurantOperators
-    extends graphql.FetchMoreOptions {
-  FetchMoreOptions$Query$getRestaurantOperators({
-    required graphql.UpdateQuery updateQuery,
-    required Variables$Query$getRestaurantOperators variables,
-  }) : super(
-          updateQuery: updateQuery,
-          variables: variables.toJson(),
-          document: documentNodeQuerygetRestaurantOperators,
-        );
-}
-
-extension ClientExtension$Query$getRestaurantOperators
-    on graphql.GraphQLClient {
-  Future<graphql.QueryResult<Query$getRestaurantOperators>>
-      query$getRestaurantOperators(
-              Options$Query$getRestaurantOperators options) async =>
-          await this.query(options);
-  graphql.ObservableQuery<Query$getRestaurantOperators>
-      watchQuery$getRestaurantOperators(
-              WatchOptions$Query$getRestaurantOperators options) =>
-          this.watchQuery(options);
-  void writeQuery$getRestaurantOperators({
-    required Query$getRestaurantOperators data,
-    required Variables$Query$getRestaurantOperators variables,
->>>>>>> origin/hsFlutter
     bool broadcast = true,
   }) =>
       this.writeQuery(
         graphql.Request(
-<<<<<<< HEAD
           operation:
               graphql.Operation(document: documentNodeQuerygetRestaurantItems),
-=======
-          operation: graphql.Operation(
-              document: documentNodeQuerygetRestaurantOperators),
->>>>>>> origin/hsFlutter
           variables: variables.toJson(),
         ),
         data: data.toJson(),
         broadcast: broadcast,
       );
-<<<<<<< HEAD
   Query$getRestaurantItems? readQuery$getRestaurantItems({
     required Variables$Query$getRestaurantItems variables,
-=======
-  Query$getRestaurantOperators? readQuery$getRestaurantOperators({
-    required Variables$Query$getRestaurantOperators variables,
->>>>>>> origin/hsFlutter
     bool optimistic = true,
   }) {
     final result = this.readQuery(
       graphql.Request(
-<<<<<<< HEAD
         operation:
             graphql.Operation(document: documentNodeQuerygetRestaurantItems),
-=======
-        operation: graphql.Operation(
-            document: documentNodeQuerygetRestaurantOperators),
->>>>>>> origin/hsFlutter
         variables: variables.toJson(),
       ),
       optimistic: optimistic,
     );
-<<<<<<< HEAD
     return result == null ? null : Query$getRestaurantItems.fromJson(result);
   }
 }
@@ -7193,35 +6820,11 @@ class Query$getRestaurantItems$restaurant_item {
       options: (l$options as List<dynamic>)
           .map((e) => Query$getRestaurantItems$restaurant_item$options.fromJson(
               (e as Map<String, dynamic>)))
-=======
-    return result == null
-        ? null
-        : Query$getRestaurantOperators.fromJson(result);
-  }
-}
-
-class Query$getRestaurantOperators$restaurant_by_pk {
-  Query$getRestaurantOperators$restaurant_by_pk({
-    required this.restaurant_operators,
-    required this.$__typename,
-  });
-
-  factory Query$getRestaurantOperators$restaurant_by_pk.fromJson(
-      Map<String, dynamic> json) {
-    final l$restaurant_operators = json['restaurant_operators'];
-    final l$$__typename = json['__typename'];
-    return Query$getRestaurantOperators$restaurant_by_pk(
-      restaurant_operators: (l$restaurant_operators as List<dynamic>)
-          .map((e) =>
-              Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators
-                  .fromJson((e as Map<String, dynamic>)))
->>>>>>> origin/hsFlutter
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-<<<<<<< HEAD
   final int id;
 
   final Query$getRestaurantItems$restaurant_item$name name;
@@ -7245,16 +6848,11 @@ class Query$getRestaurantOperators$restaurant_by_pk {
   final String? special_period_start;
 
   final List<Query$getRestaurantItems$restaurant_item$options> options;
-=======
-  final List<Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators>
-      restaurant_operators;
->>>>>>> origin/hsFlutter
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-<<<<<<< HEAD
     final l$id = id;
     _resultData['id'] = l$id;
     final l$name = name;
@@ -7279,11 +6877,6 @@ class Query$getRestaurantOperators$restaurant_by_pk {
     _resultData['special_period_start'] = l$special_period_start;
     final l$options = options;
     _resultData['options'] = l$options.map((e) => e.toJson()).toList();
-=======
-    final l$restaurant_operators = restaurant_operators;
-    _resultData['restaurant_operators'] =
-        l$restaurant_operators.map((e) => e.toJson()).toList();
->>>>>>> origin/hsFlutter
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -7291,7 +6884,6 @@ class Query$getRestaurantOperators$restaurant_by_pk {
 
   @override
   int get hashCode {
-<<<<<<< HEAD
     final l$id = id;
     final l$name = name;
     final l$description = description;
@@ -7318,12 +6910,6 @@ class Query$getRestaurantOperators$restaurant_by_pk {
       l$special_period_end,
       l$special_period_start,
       Object.hashAll(l$options.map((v) => v)),
-=======
-    final l$restaurant_operators = restaurant_operators;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      Object.hashAll(l$restaurant_operators.map((v) => v)),
->>>>>>> origin/hsFlutter
       l$$__typename,
     ]);
   }
@@ -7333,220 +6919,7 @@ class Query$getRestaurantOperators$restaurant_by_pk {
     if (identical(this, other)) {
       return true;
     }
-<<<<<<< HEAD
     if (!(other is Query$getRestaurantItems$restaurant_item) ||
-=======
-    if (!(other is Query$getRestaurantOperators$restaurant_by_pk) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$restaurant_operators = restaurant_operators;
-    final lOther$restaurant_operators = other.restaurant_operators;
-    if (l$restaurant_operators.length != lOther$restaurant_operators.length) {
-      return false;
-    }
-    for (int i = 0; i < l$restaurant_operators.length; i++) {
-      final l$restaurant_operators$entry = l$restaurant_operators[i];
-      final lOther$restaurant_operators$entry = lOther$restaurant_operators[i];
-      if (l$restaurant_operators$entry != lOther$restaurant_operators$entry) {
-        return false;
-      }
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$getRestaurantOperators$restaurant_by_pk
-    on Query$getRestaurantOperators$restaurant_by_pk {
-  CopyWith$Query$getRestaurantOperators$restaurant_by_pk<
-          Query$getRestaurantOperators$restaurant_by_pk>
-      get copyWith => CopyWith$Query$getRestaurantOperators$restaurant_by_pk(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$getRestaurantOperators$restaurant_by_pk<TRes> {
-  factory CopyWith$Query$getRestaurantOperators$restaurant_by_pk(
-    Query$getRestaurantOperators$restaurant_by_pk instance,
-    TRes Function(Query$getRestaurantOperators$restaurant_by_pk) then,
-  ) = _CopyWithImpl$Query$getRestaurantOperators$restaurant_by_pk;
-
-  factory CopyWith$Query$getRestaurantOperators$restaurant_by_pk.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$getRestaurantOperators$restaurant_by_pk;
-
-  TRes call({
-    List<Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators>?
-        restaurant_operators,
-    String? $__typename,
-  });
-  TRes restaurant_operators(
-      Iterable<Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators> Function(
-              Iterable<
-                  CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators<
-                      Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators>>)
-          _fn);
-}
-
-class _CopyWithImpl$Query$getRestaurantOperators$restaurant_by_pk<TRes>
-    implements CopyWith$Query$getRestaurantOperators$restaurant_by_pk<TRes> {
-  _CopyWithImpl$Query$getRestaurantOperators$restaurant_by_pk(
-    this._instance,
-    this._then,
-  );
-
-  final Query$getRestaurantOperators$restaurant_by_pk _instance;
-
-  final TRes Function(Query$getRestaurantOperators$restaurant_by_pk) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? restaurant_operators = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$getRestaurantOperators$restaurant_by_pk(
-        restaurant_operators: restaurant_operators == _undefined ||
-                restaurant_operators == null
-            ? _instance.restaurant_operators
-            : (restaurant_operators as List<
-                Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators>),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  TRes restaurant_operators(
-          Iterable<Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators> Function(
-                  Iterable<
-                      CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators<
-                          Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators>>)
-              _fn) =>
-      call(
-          restaurant_operators: _fn(_instance.restaurant_operators.map((e) =>
-              CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators(
-                e,
-                (i) => i,
-              ))).toList());
-}
-
-class _CopyWithStubImpl$Query$getRestaurantOperators$restaurant_by_pk<TRes>
-    implements CopyWith$Query$getRestaurantOperators$restaurant_by_pk<TRes> {
-  _CopyWithStubImpl$Query$getRestaurantOperators$restaurant_by_pk(this._res);
-
-  TRes _res;
-
-  call({
-    List<Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators>?
-        restaurant_operators,
-    String? $__typename,
-  }) =>
-      _res;
-  restaurant_operators(_fn) => _res;
-}
-
-class Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators {
-  Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators({
-    required this.id,
-    this.current_gps,
-    required this.status,
-    required this.restaurant_id,
-    required this.owner,
-    required this.user,
-    required this.$__typename,
-  });
-
-  factory Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$current_gps = json['current_gps'];
-    final l$status = json['status'];
-    final l$restaurant_id = json['restaurant_id'];
-    final l$owner = json['owner'];
-    final l$user = json['user'];
-    final l$$__typename = json['__typename'];
-    return Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators(
-      id: (l$id as int),
-      current_gps:
-          l$current_gps == null ? null : GeographyFromJson(l$current_gps),
-      status: (l$status as String),
-      restaurant_id: (l$restaurant_id as int),
-      owner: (l$owner as bool),
-      user:
-          Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user
-              .fromJson((l$user as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int id;
-
-  final Geography? current_gps;
-
-  final String status;
-
-  final int restaurant_id;
-
-  final bool owner;
-
-  final Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user
-      user;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$current_gps = current_gps;
-    _resultData['current_gps'] =
-        l$current_gps == null ? null : GeographyToJson(l$current_gps);
-    final l$status = status;
-    _resultData['status'] = l$status;
-    final l$restaurant_id = restaurant_id;
-    _resultData['restaurant_id'] = l$restaurant_id;
-    final l$owner = owner;
-    _resultData['owner'] = l$owner;
-    final l$user = user;
-    _resultData['user'] = l$user.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$current_gps = current_gps;
-    final l$status = status;
-    final l$restaurant_id = restaurant_id;
-    final l$owner = owner;
-    final l$user = user;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$current_gps,
-      l$status,
-      l$restaurant_id,
-      l$owner,
-      l$user,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators) ||
->>>>>>> origin/hsFlutter
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -7555,7 +6928,6 @@ class Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators {
     if (l$id != lOther$id) {
       return false;
     }
-<<<<<<< HEAD
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
@@ -7589,16 +6961,6 @@ class Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators {
     final l$available = available;
     final lOther$available = other.available;
     if (l$available != lOther$available) {
-=======
-    final l$current_gps = current_gps;
-    final lOther$current_gps = other.current_gps;
-    if (l$current_gps != lOther$current_gps) {
-      return false;
-    }
-    final l$status = status;
-    final lOther$status = other.status;
-    if (l$status != lOther$status) {
->>>>>>> origin/hsFlutter
       return false;
     }
     final l$restaurant_id = restaurant_id;
@@ -7606,7 +6968,6 @@ class Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators {
     if (l$restaurant_id != lOther$restaurant_id) {
       return false;
     }
-<<<<<<< HEAD
     final l$special_period_end = special_period_end;
     final lOther$special_period_end = other.special_period_end;
     if (l$special_period_end != lOther$special_period_end) {
@@ -7629,18 +6990,6 @@ class Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators {
         return false;
       }
     }
-=======
-    final l$owner = owner;
-    final lOther$owner = other.owner;
-    if (l$owner != lOther$owner) {
-      return false;
-    }
-    final l$user = user;
-    final lOther$user = other.user;
-    if (l$user != lOther$user) {
-      return false;
-    }
->>>>>>> origin/hsFlutter
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -7650,26 +6999,16 @@ class Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators {
   }
 }
 
-<<<<<<< HEAD
 extension UtilityExtension$Query$getRestaurantItems$restaurant_item
     on Query$getRestaurantItems$restaurant_item {
   CopyWith$Query$getRestaurantItems$restaurant_item<
           Query$getRestaurantItems$restaurant_item>
       get copyWith => CopyWith$Query$getRestaurantItems$restaurant_item(
-=======
-extension UtilityExtension$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators
-    on Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators {
-  CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators<
-          Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators>
-      get copyWith =>
-          CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators(
->>>>>>> origin/hsFlutter
             this,
             (i) => i,
           );
 }
 
-<<<<<<< HEAD
 abstract class CopyWith$Query$getRestaurantItems$restaurant_item<TRes> {
   factory CopyWith$Query$getRestaurantItems$restaurant_item(
     Query$getRestaurantItems$restaurant_item instance,
@@ -7708,62 +7047,18 @@ abstract class CopyWith$Query$getRestaurantItems$restaurant_item<TRes> {
 class _CopyWithImpl$Query$getRestaurantItems$restaurant_item<TRes>
     implements CopyWith$Query$getRestaurantItems$restaurant_item<TRes> {
   _CopyWithImpl$Query$getRestaurantItems$restaurant_item(
-=======
-abstract class CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators<
-    TRes> {
-  factory CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators(
-    Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators instance,
-    TRes Function(
-            Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators)
-        then,
-  ) = _CopyWithImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators;
-
-  factory CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators;
-
-  TRes call({
-    int? id,
-    Geography? current_gps,
-    String? status,
-    int? restaurant_id,
-    bool? owner,
-    Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user?
-        user,
-    String? $__typename,
-  });
-  CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user<
-      TRes> get user;
-}
-
-class _CopyWithImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators<
-        TRes>
-    implements
-        CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators<
-            TRes> {
-  _CopyWithImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators(
->>>>>>> origin/hsFlutter
     this._instance,
     this._then,
   );
 
-<<<<<<< HEAD
   final Query$getRestaurantItems$restaurant_item _instance;
 
   final TRes Function(Query$getRestaurantItems$restaurant_item) _then;
-=======
-  final Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators
-      _instance;
-
-  final TRes Function(
-      Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators) _then;
->>>>>>> origin/hsFlutter
 
   static const _undefined = {};
 
   TRes call({
     Object? id = _undefined,
-<<<<<<< HEAD
     Object? name = _undefined,
     Object? description = _undefined,
     Object? cost = _undefined,
@@ -7814,38 +7109,10 @@ class _CopyWithImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_ope
             ? _instance.options
             : (options
                 as List<Query$getRestaurantItems$restaurant_item$options>),
-=======
-    Object? current_gps = _undefined,
-    Object? status = _undefined,
-    Object? restaurant_id = _undefined,
-    Object? owner = _undefined,
-    Object? user = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        current_gps: current_gps == _undefined
-            ? _instance.current_gps
-            : (current_gps as Geography?),
-        status: status == _undefined || status == null
-            ? _instance.status
-            : (status as String),
-        restaurant_id: restaurant_id == _undefined || restaurant_id == null
-            ? _instance.restaurant_id
-            : (restaurant_id as int),
-        owner: owner == _undefined || owner == null
-            ? _instance.owner
-            : (owner as bool),
-        user: user == _undefined || user == null
-            ? _instance.user
-            : (user
-                as Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user),
->>>>>>> origin/hsFlutter
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-<<<<<<< HEAD
   CopyWith$Query$getRestaurantItems$restaurant_item$name<TRes> get name {
     final local$name = _instance.name;
     return CopyWith$Query$getRestaurantItems$restaurant_item$name(
@@ -7879,29 +7146,11 @@ class _CopyWithImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_ope
 class _CopyWithStubImpl$Query$getRestaurantItems$restaurant_item<TRes>
     implements CopyWith$Query$getRestaurantItems$restaurant_item<TRes> {
   _CopyWithStubImpl$Query$getRestaurantItems$restaurant_item(this._res);
-=======
-  CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user<
-      TRes> get user {
-    final local$user = _instance.user;
-    return CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user(
-        local$user, (e) => call(user: e));
-  }
-}
-
-class _CopyWithStubImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators<
-        TRes>
-    implements
-        CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators<
-            TRes> {
-  _CopyWithStubImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators(
-      this._res);
->>>>>>> origin/hsFlutter
 
   TRes _res;
 
   call({
     int? id,
-<<<<<<< HEAD
     Query$getRestaurantItems$restaurant_item$name? name,
     Query$getRestaurantItems$restaurant_item$description? description,
     double? cost,
@@ -8819,56 +8068,10 @@ class Query$getRestaurantItems$restaurant_item$options$item_options {
               Query$getRestaurantItems$restaurant_item$options$item_options$choices
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
-=======
-    Geography? current_gps,
-    String? status,
-    int? restaurant_id,
-    bool? owner,
-    Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user?
-        user,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user<
-          TRes>
-      get user =>
-          CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user
-              .stub(_res);
-}
-
-class Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user {
-  Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user({
-    this.phone,
-    this.name,
-    this.image,
-    required this.language_id,
-    required this.id,
-    required this.firebase_id,
-    required this.$__typename,
-  });
-
-  factory Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user.fromJson(
-      Map<String, dynamic> json) {
-    final l$phone = json['phone'];
-    final l$name = json['name'];
-    final l$image = json['image'];
-    final l$language_id = json['language_id'];
-    final l$id = json['id'];
-    final l$firebase_id = json['firebase_id'];
-    final l$$__typename = json['__typename'];
-    return Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user(
-      phone: (l$phone as String?),
-      name: (l$name as String?),
-      image: (l$image as String?),
-      language_id: (l$language_id as String),
-      id: (l$id as int),
-      firebase_id: (l$firebase_id as String),
->>>>>>> origin/hsFlutter
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-<<<<<<< HEAD
   final int id;
 
   final int free_choice;
@@ -8888,25 +8091,11 @@ class Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user {
   final List<
           Query$getRestaurantItems$restaurant_item$options$item_options$choices>
       choices;
-=======
-  final String? phone;
-
-  final String? name;
-
-  final String? image;
-
-  final String language_id;
-
-  final int id;
-
-  final String firebase_id;
->>>>>>> origin/hsFlutter
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-<<<<<<< HEAD
     final l$id = id;
     _resultData['id'] = l$id;
     final l$free_choice = free_choice;
@@ -8925,20 +8114,6 @@ class Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user {
     _resultData['name'] = l$name.toJson();
     final l$choices = choices;
     _resultData['choices'] = l$choices.map((e) => e.toJson()).toList();
-=======
-    final l$phone = phone;
-    _resultData['phone'] = l$phone;
-    final l$name = name;
-    _resultData['name'] = l$name;
-    final l$image = image;
-    _resultData['image'] = l$image;
-    final l$language_id = language_id;
-    _resultData['language_id'] = l$language_id;
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$firebase_id = firebase_id;
-    _resultData['firebase_id'] = l$firebase_id;
->>>>>>> origin/hsFlutter
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -8946,7 +8121,6 @@ class Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user {
 
   @override
   int get hashCode {
-<<<<<<< HEAD
     final l$id = id;
     final l$free_choice = free_choice;
     final l$cost_per_extra = cost_per_extra;
@@ -8967,22 +8141,6 @@ class Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user {
       l$minimum_choice,
       l$name,
       Object.hashAll(l$choices.map((v) => v)),
-=======
-    final l$phone = phone;
-    final l$name = name;
-    final l$image = image;
-    final l$language_id = language_id;
-    final l$id = id;
-    final l$firebase_id = firebase_id;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$phone,
-      l$name,
-      l$image,
-      l$language_id,
-      l$id,
-      l$firebase_id,
->>>>>>> origin/hsFlutter
       l$$__typename,
     ]);
   }
@@ -8993,7 +8151,6 @@ class Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user {
       return true;
     }
     if (!(other
-<<<<<<< HEAD
             is Query$getRestaurantItems$restaurant_item$options$item_options) ||
         runtimeType != other.runtimeType) {
       return false;
@@ -9031,15 +8188,6 @@ class Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user {
     final l$minimum_choice = minimum_choice;
     final lOther$minimum_choice = other.minimum_choice;
     if (l$minimum_choice != lOther$minimum_choice) {
-=======
-            is Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$phone = phone;
-    final lOther$phone = other.phone;
-    if (l$phone != lOther$phone) {
->>>>>>> origin/hsFlutter
       return false;
     }
     final l$name = name;
@@ -9047,7 +8195,6 @@ class Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user {
     if (l$name != lOther$name) {
       return false;
     }
-<<<<<<< HEAD
     final l$choices = choices;
     final lOther$choices = other.choices;
     if (l$choices.length != lOther$choices.length) {
@@ -9481,11 +8628,6 @@ class Query$getRestaurantItems$restaurant_item$options$item_options$name$transla
     if (!(other
             is Query$getRestaurantItems$restaurant_item$options$item_options$name$translations) ||
         runtimeType != other.runtimeType) {
-=======
-    final l$image = image;
-    final lOther$image = other.image;
-    if (l$image != lOther$image) {
->>>>>>> origin/hsFlutter
       return false;
     }
     final l$language_id = language_id;
@@ -9493,7 +8635,6 @@ class Query$getRestaurantItems$restaurant_item$options$item_options$name$transla
     if (l$language_id != lOther$language_id) {
       return false;
     }
-<<<<<<< HEAD
     final l$value = value;
     final lOther$value = other.value;
     if (l$value != lOther$value) {
@@ -9866,22 +9007,14 @@ class Query$getRestaurantItems$restaurant_item$options$item_options$choices$opti
     if (l$cost != lOther$cost) {
       return false;
     }
-=======
->>>>>>> origin/hsFlutter
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
       return false;
     }
-<<<<<<< HEAD
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
-=======
-    final l$firebase_id = firebase_id;
-    final lOther$firebase_id = other.firebase_id;
-    if (l$firebase_id != lOther$firebase_id) {
->>>>>>> origin/hsFlutter
       return false;
     }
     final l$$__typename = $__typename;
@@ -9893,27 +9026,17 @@ class Query$getRestaurantItems$restaurant_item$options$item_options$choices$opti
   }
 }
 
-<<<<<<< HEAD
 extension UtilityExtension$Query$getRestaurantItems$restaurant_item$options$item_options$choices$option_choices
     on Query$getRestaurantItems$restaurant_item$options$item_options$choices$option_choices {
   CopyWith$Query$getRestaurantItems$restaurant_item$options$item_options$choices$option_choices<
           Query$getRestaurantItems$restaurant_item$options$item_options$choices$option_choices>
       get copyWith =>
           CopyWith$Query$getRestaurantItems$restaurant_item$options$item_options$choices$option_choices(
-=======
-extension UtilityExtension$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user
-    on Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user {
-  CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user<
-          Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user>
-      get copyWith =>
-          CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user(
->>>>>>> origin/hsFlutter
             this,
             (i) => i,
           );
 }
 
-<<<<<<< HEAD
 abstract class CopyWith$Query$getRestaurantItems$restaurant_item$options$item_options$choices$option_choices<
     TRes> {
   factory CopyWith$Query$getRestaurantItems$restaurant_item$options$item_options$choices$option_choices(
@@ -9946,62 +9069,20 @@ class _CopyWithImpl$Query$getRestaurantItems$restaurant_item$options$item_option
         CopyWith$Query$getRestaurantItems$restaurant_item$options$item_options$choices$option_choices<
             TRes> {
   _CopyWithImpl$Query$getRestaurantItems$restaurant_item$options$item_options$choices$option_choices(
-=======
-abstract class CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user<
-    TRes> {
-  factory CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user(
-    Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user
-        instance,
-    TRes Function(
-            Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user)
-        then,
-  ) = _CopyWithImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user;
-
-  factory CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user;
-
-  TRes call({
-    String? phone,
-    String? name,
-    String? image,
-    String? language_id,
-    int? id,
-    String? firebase_id,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user<
-        TRes>
-    implements
-        CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user<
-            TRes> {
-  _CopyWithImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user(
->>>>>>> origin/hsFlutter
     this._instance,
     this._then,
   );
 
-<<<<<<< HEAD
   final Query$getRestaurantItems$restaurant_item$options$item_options$choices$option_choices
       _instance;
 
   final TRes Function(
           Query$getRestaurantItems$restaurant_item$options$item_options$choices$option_choices)
-=======
-  final Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user
-      _instance;
-
-  final TRes Function(
-          Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user)
->>>>>>> origin/hsFlutter
       _then;
 
   static const _undefined = {};
 
   TRes call({
-<<<<<<< HEAD
     Object? available = _undefined,
     Object? cost = _undefined,
     Object? id = _undefined,
@@ -10399,7 +9480,1147 @@ class _CopyWithImpl$Query$getRestaurantItems$restaurant_item$options$item_option
         value: value == _undefined || value == null
             ? _instance.value
             : (value as String),
-=======
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getRestaurantItems$restaurant_item$options$item_options$choices$option_choices$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getRestaurantItems$restaurant_item$options$item_options$choices$option_choices$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$getRestaurantItems$restaurant_item$options$item_options$choices$option_choices$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$getRestaurantOperators {
+  factory Variables$Query$getRestaurantOperators({required int restaurantId}) =>
+      Variables$Query$getRestaurantOperators._({
+        r'restaurantId': restaurantId,
+      });
+
+  Variables$Query$getRestaurantOperators._(this._$data);
+
+  factory Variables$Query$getRestaurantOperators.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$restaurantId = data['restaurantId'];
+    result$data['restaurantId'] = (l$restaurantId as int);
+    return Variables$Query$getRestaurantOperators._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get restaurantId => (_$data['restaurantId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$restaurantId = restaurantId;
+    result$data['restaurantId'] = l$restaurantId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getRestaurantOperators<
+          Variables$Query$getRestaurantOperators>
+      get copyWith => CopyWith$Variables$Query$getRestaurantOperators(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getRestaurantOperators) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$restaurantId = restaurantId;
+    final lOther$restaurantId = other.restaurantId;
+    if (l$restaurantId != lOther$restaurantId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$restaurantId = restaurantId;
+    return Object.hashAll([l$restaurantId]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getRestaurantOperators<TRes> {
+  factory CopyWith$Variables$Query$getRestaurantOperators(
+    Variables$Query$getRestaurantOperators instance,
+    TRes Function(Variables$Query$getRestaurantOperators) then,
+  ) = _CopyWithImpl$Variables$Query$getRestaurantOperators;
+
+  factory CopyWith$Variables$Query$getRestaurantOperators.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getRestaurantOperators;
+
+  TRes call({int? restaurantId});
+}
+
+class _CopyWithImpl$Variables$Query$getRestaurantOperators<TRes>
+    implements CopyWith$Variables$Query$getRestaurantOperators<TRes> {
+  _CopyWithImpl$Variables$Query$getRestaurantOperators(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getRestaurantOperators _instance;
+
+  final TRes Function(Variables$Query$getRestaurantOperators) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? restaurantId = _undefined}) =>
+      _then(Variables$Query$getRestaurantOperators._({
+        ..._instance._$data,
+        if (restaurantId != _undefined && restaurantId != null)
+          'restaurantId': (restaurantId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getRestaurantOperators<TRes>
+    implements CopyWith$Variables$Query$getRestaurantOperators<TRes> {
+  _CopyWithStubImpl$Variables$Query$getRestaurantOperators(this._res);
+
+  TRes _res;
+
+  call({int? restaurantId}) => _res;
+}
+
+class Query$getRestaurantOperators {
+  Query$getRestaurantOperators({
+    this.restaurant_by_pk,
+    required this.$__typename,
+  });
+
+  factory Query$getRestaurantOperators.fromJson(Map<String, dynamic> json) {
+    final l$restaurant_by_pk = json['restaurant_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Query$getRestaurantOperators(
+      restaurant_by_pk: l$restaurant_by_pk == null
+          ? null
+          : Query$getRestaurantOperators$restaurant_by_pk.fromJson(
+              (l$restaurant_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getRestaurantOperators$restaurant_by_pk? restaurant_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$restaurant_by_pk = restaurant_by_pk;
+    _resultData['restaurant_by_pk'] = l$restaurant_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$restaurant_by_pk = restaurant_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$restaurant_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getRestaurantOperators) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$restaurant_by_pk = restaurant_by_pk;
+    final lOther$restaurant_by_pk = other.restaurant_by_pk;
+    if (l$restaurant_by_pk != lOther$restaurant_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getRestaurantOperators
+    on Query$getRestaurantOperators {
+  CopyWith$Query$getRestaurantOperators<Query$getRestaurantOperators>
+      get copyWith => CopyWith$Query$getRestaurantOperators(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getRestaurantOperators<TRes> {
+  factory CopyWith$Query$getRestaurantOperators(
+    Query$getRestaurantOperators instance,
+    TRes Function(Query$getRestaurantOperators) then,
+  ) = _CopyWithImpl$Query$getRestaurantOperators;
+
+  factory CopyWith$Query$getRestaurantOperators.stub(TRes res) =
+      _CopyWithStubImpl$Query$getRestaurantOperators;
+
+  TRes call({
+    Query$getRestaurantOperators$restaurant_by_pk? restaurant_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Query$getRestaurantOperators$restaurant_by_pk<TRes>
+      get restaurant_by_pk;
+}
+
+class _CopyWithImpl$Query$getRestaurantOperators<TRes>
+    implements CopyWith$Query$getRestaurantOperators<TRes> {
+  _CopyWithImpl$Query$getRestaurantOperators(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getRestaurantOperators _instance;
+
+  final TRes Function(Query$getRestaurantOperators) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? restaurant_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getRestaurantOperators(
+        restaurant_by_pk: restaurant_by_pk == _undefined
+            ? _instance.restaurant_by_pk
+            : (restaurant_by_pk
+                as Query$getRestaurantOperators$restaurant_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getRestaurantOperators$restaurant_by_pk<TRes>
+      get restaurant_by_pk {
+    final local$restaurant_by_pk = _instance.restaurant_by_pk;
+    return local$restaurant_by_pk == null
+        ? CopyWith$Query$getRestaurantOperators$restaurant_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Query$getRestaurantOperators$restaurant_by_pk(
+            local$restaurant_by_pk, (e) => call(restaurant_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getRestaurantOperators<TRes>
+    implements CopyWith$Query$getRestaurantOperators<TRes> {
+  _CopyWithStubImpl$Query$getRestaurantOperators(this._res);
+
+  TRes _res;
+
+  call({
+    Query$getRestaurantOperators$restaurant_by_pk? restaurant_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getRestaurantOperators$restaurant_by_pk<TRes>
+      get restaurant_by_pk =>
+          CopyWith$Query$getRestaurantOperators$restaurant_by_pk.stub(_res);
+}
+
+const documentNodeQuerygetRestaurantOperators = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getRestaurantOperators'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'restaurantId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'restaurant_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'restaurantId')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'restaurant_operators'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'current_gps'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'status'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'restaurant_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'owner'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'user'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'phone'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'language_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'firebase_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getRestaurantOperators _parserFn$Query$getRestaurantOperators(
+        Map<String, dynamic> data) =>
+    Query$getRestaurantOperators.fromJson(data);
+
+class Options$Query$getRestaurantOperators
+    extends graphql.QueryOptions<Query$getRestaurantOperators> {
+  Options$Query$getRestaurantOperators({
+    String? operationName,
+    required Variables$Query$getRestaurantOperators variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetRestaurantOperators,
+          parserFn: _parserFn$Query$getRestaurantOperators,
+        );
+}
+
+class WatchOptions$Query$getRestaurantOperators
+    extends graphql.WatchQueryOptions<Query$getRestaurantOperators> {
+  WatchOptions$Query$getRestaurantOperators({
+    String? operationName,
+    required Variables$Query$getRestaurantOperators variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetRestaurantOperators,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getRestaurantOperators,
+        );
+}
+
+class FetchMoreOptions$Query$getRestaurantOperators
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getRestaurantOperators({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getRestaurantOperators variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetRestaurantOperators,
+        );
+}
+
+extension ClientExtension$Query$getRestaurantOperators
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getRestaurantOperators>>
+      query$getRestaurantOperators(
+              Options$Query$getRestaurantOperators options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$getRestaurantOperators>
+      watchQuery$getRestaurantOperators(
+              WatchOptions$Query$getRestaurantOperators options) =>
+          this.watchQuery(options);
+  void writeQuery$getRestaurantOperators({
+    required Query$getRestaurantOperators data,
+    required Variables$Query$getRestaurantOperators variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQuerygetRestaurantOperators),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getRestaurantOperators? readQuery$getRestaurantOperators({
+    required Variables$Query$getRestaurantOperators variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQuerygetRestaurantOperators),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$getRestaurantOperators.fromJson(result);
+  }
+}
+
+class Query$getRestaurantOperators$restaurant_by_pk {
+  Query$getRestaurantOperators$restaurant_by_pk({
+    required this.restaurant_operators,
+    required this.$__typename,
+  });
+
+  factory Query$getRestaurantOperators$restaurant_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$restaurant_operators = json['restaurant_operators'];
+    final l$$__typename = json['__typename'];
+    return Query$getRestaurantOperators$restaurant_by_pk(
+      restaurant_operators: (l$restaurant_operators as List<dynamic>)
+          .map((e) =>
+              Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators>
+      restaurant_operators;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$restaurant_operators = restaurant_operators;
+    _resultData['restaurant_operators'] =
+        l$restaurant_operators.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$restaurant_operators = restaurant_operators;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$restaurant_operators.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getRestaurantOperators$restaurant_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$restaurant_operators = restaurant_operators;
+    final lOther$restaurant_operators = other.restaurant_operators;
+    if (l$restaurant_operators.length != lOther$restaurant_operators.length) {
+      return false;
+    }
+    for (int i = 0; i < l$restaurant_operators.length; i++) {
+      final l$restaurant_operators$entry = l$restaurant_operators[i];
+      final lOther$restaurant_operators$entry = lOther$restaurant_operators[i];
+      if (l$restaurant_operators$entry != lOther$restaurant_operators$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getRestaurantOperators$restaurant_by_pk
+    on Query$getRestaurantOperators$restaurant_by_pk {
+  CopyWith$Query$getRestaurantOperators$restaurant_by_pk<
+          Query$getRestaurantOperators$restaurant_by_pk>
+      get copyWith => CopyWith$Query$getRestaurantOperators$restaurant_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getRestaurantOperators$restaurant_by_pk<TRes> {
+  factory CopyWith$Query$getRestaurantOperators$restaurant_by_pk(
+    Query$getRestaurantOperators$restaurant_by_pk instance,
+    TRes Function(Query$getRestaurantOperators$restaurant_by_pk) then,
+  ) = _CopyWithImpl$Query$getRestaurantOperators$restaurant_by_pk;
+
+  factory CopyWith$Query$getRestaurantOperators$restaurant_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getRestaurantOperators$restaurant_by_pk;
+
+  TRes call({
+    List<Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators>?
+        restaurant_operators,
+    String? $__typename,
+  });
+  TRes restaurant_operators(
+      Iterable<Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators> Function(
+              Iterable<
+                  CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators<
+                      Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getRestaurantOperators$restaurant_by_pk<TRes>
+    implements CopyWith$Query$getRestaurantOperators$restaurant_by_pk<TRes> {
+  _CopyWithImpl$Query$getRestaurantOperators$restaurant_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getRestaurantOperators$restaurant_by_pk _instance;
+
+  final TRes Function(Query$getRestaurantOperators$restaurant_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? restaurant_operators = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getRestaurantOperators$restaurant_by_pk(
+        restaurant_operators: restaurant_operators == _undefined ||
+                restaurant_operators == null
+            ? _instance.restaurant_operators
+            : (restaurant_operators as List<
+                Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes restaurant_operators(
+          Iterable<Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators> Function(
+                  Iterable<
+                      CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators<
+                          Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators>>)
+              _fn) =>
+      call(
+          restaurant_operators: _fn(_instance.restaurant_operators.map((e) =>
+              CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getRestaurantOperators$restaurant_by_pk<TRes>
+    implements CopyWith$Query$getRestaurantOperators$restaurant_by_pk<TRes> {
+  _CopyWithStubImpl$Query$getRestaurantOperators$restaurant_by_pk(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators>?
+        restaurant_operators,
+    String? $__typename,
+  }) =>
+      _res;
+  restaurant_operators(_fn) => _res;
+}
+
+class Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators {
+  Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators({
+    required this.id,
+    this.current_gps,
+    required this.status,
+    required this.restaurant_id,
+    required this.owner,
+    required this.user,
+    required this.$__typename,
+  });
+
+  factory Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$current_gps = json['current_gps'];
+    final l$status = json['status'];
+    final l$restaurant_id = json['restaurant_id'];
+    final l$owner = json['owner'];
+    final l$user = json['user'];
+    final l$$__typename = json['__typename'];
+    return Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators(
+      id: (l$id as int),
+      current_gps:
+          l$current_gps == null ? null : geographyFromJson(l$current_gps),
+      status: (l$status as String),
+      restaurant_id: (l$restaurant_id as int),
+      owner: (l$owner as bool),
+      user:
+          Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user
+              .fromJson((l$user as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Geography? current_gps;
+
+  final String status;
+
+  final int restaurant_id;
+
+  final bool owner;
+
+  final Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user
+      user;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$current_gps = current_gps;
+    _resultData['current_gps'] =
+        l$current_gps == null ? null : geographyToJson(l$current_gps);
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$restaurant_id = restaurant_id;
+    _resultData['restaurant_id'] = l$restaurant_id;
+    final l$owner = owner;
+    _resultData['owner'] = l$owner;
+    final l$user = user;
+    _resultData['user'] = l$user.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$current_gps = current_gps;
+    final l$status = status;
+    final l$restaurant_id = restaurant_id;
+    final l$owner = owner;
+    final l$user = user;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$current_gps,
+      l$status,
+      l$restaurant_id,
+      l$owner,
+      l$user,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$current_gps = current_gps;
+    final lOther$current_gps = other.current_gps;
+    if (l$current_gps != lOther$current_gps) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$restaurant_id = restaurant_id;
+    final lOther$restaurant_id = other.restaurant_id;
+    if (l$restaurant_id != lOther$restaurant_id) {
+      return false;
+    }
+    final l$owner = owner;
+    final lOther$owner = other.owner;
+    if (l$owner != lOther$owner) {
+      return false;
+    }
+    final l$user = user;
+    final lOther$user = other.user;
+    if (l$user != lOther$user) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators
+    on Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators {
+  CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators<
+          Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators>
+      get copyWith =>
+          CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators<
+    TRes> {
+  factory CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators(
+    Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators instance,
+    TRes Function(
+            Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators)
+        then,
+  ) = _CopyWithImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators;
+
+  factory CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators;
+
+  TRes call({
+    int? id,
+    Geography? current_gps,
+    String? status,
+    int? restaurant_id,
+    bool? owner,
+    Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user?
+        user,
+    String? $__typename,
+  });
+  CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user<
+      TRes> get user;
+}
+
+class _CopyWithImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators<
+        TRes>
+    implements
+        CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators<
+            TRes> {
+  _CopyWithImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators
+      _instance;
+
+  final TRes Function(
+      Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? current_gps = _undefined,
+    Object? status = _undefined,
+    Object? restaurant_id = _undefined,
+    Object? owner = _undefined,
+    Object? user = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        current_gps: current_gps == _undefined
+            ? _instance.current_gps
+            : (current_gps as Geography?),
+        status: status == _undefined || status == null
+            ? _instance.status
+            : (status as String),
+        restaurant_id: restaurant_id == _undefined || restaurant_id == null
+            ? _instance.restaurant_id
+            : (restaurant_id as int),
+        owner: owner == _undefined || owner == null
+            ? _instance.owner
+            : (owner as bool),
+        user: user == _undefined || user == null
+            ? _instance.user
+            : (user
+                as Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user<
+      TRes> get user {
+    final local$user = _instance.user;
+    return CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user(
+        local$user, (e) => call(user: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators<
+        TRes>
+    implements
+        CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators<
+            TRes> {
+  _CopyWithStubImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Geography? current_gps,
+    String? status,
+    int? restaurant_id,
+    bool? owner,
+    Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user?
+        user,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user<
+          TRes>
+      get user =>
+          CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user
+              .stub(_res);
+}
+
+class Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user {
+  Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user({
+    this.phone,
+    this.name,
+    this.image,
+    required this.language_id,
+    required this.id,
+    required this.firebase_id,
+    required this.$__typename,
+  });
+
+  factory Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user.fromJson(
+      Map<String, dynamic> json) {
+    final l$phone = json['phone'];
+    final l$name = json['name'];
+    final l$image = json['image'];
+    final l$language_id = json['language_id'];
+    final l$id = json['id'];
+    final l$firebase_id = json['firebase_id'];
+    final l$$__typename = json['__typename'];
+    return Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user(
+      phone: (l$phone as String?),
+      name: (l$name as String?),
+      image: (l$image as String?),
+      language_id: (l$language_id as String),
+      id: (l$id as int),
+      firebase_id: (l$firebase_id as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? phone;
+
+  final String? name;
+
+  final String? image;
+
+  final String language_id;
+
+  final int id;
+
+  final String firebase_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$phone = phone;
+    _resultData['phone'] = l$phone;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$firebase_id = firebase_id;
+    _resultData['firebase_id'] = l$firebase_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$phone = phone;
+    final l$name = name;
+    final l$image = image;
+    final l$language_id = language_id;
+    final l$id = id;
+    final l$firebase_id = firebase_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$phone,
+      l$name,
+      l$image,
+      l$language_id,
+      l$id,
+      l$firebase_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$phone = phone;
+    final lOther$phone = other.phone;
+    if (l$phone != lOther$phone) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$firebase_id = firebase_id;
+    final lOther$firebase_id = other.firebase_id;
+    if (l$firebase_id != lOther$firebase_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user
+    on Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user {
+  CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user<
+          Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user>
+      get copyWith =>
+          CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user<
+    TRes> {
+  factory CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user(
+    Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user
+        instance,
+    TRes Function(
+            Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user)
+        then,
+  ) = _CopyWithImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user;
+
+  factory CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user;
+
+  TRes call({
+    String? phone,
+    String? name,
+    String? image,
+    String? language_id,
+    int? id,
+    String? firebase_id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user<
+        TRes>
+    implements
+        CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user<
+            TRes> {
+  _CopyWithImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user
+      _instance;
+
+  final TRes Function(
+          Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
     Object? phone = _undefined,
     Object? name = _undefined,
     Object? image = _undefined,
@@ -10420,44 +10641,29 @@ class _CopyWithImpl$Query$getRestaurantItems$restaurant_item$options$item_option
         firebase_id: firebase_id == _undefined || firebase_id == null
             ? _instance.firebase_id
             : (firebase_id as String),
->>>>>>> origin/hsFlutter
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
 }
 
-<<<<<<< HEAD
-class _CopyWithStubImpl$Query$getRestaurantItems$restaurant_item$options$item_options$choices$option_choices$name$translations<
-        TRes>
-    implements
-        CopyWith$Query$getRestaurantItems$restaurant_item$options$item_options$choices$option_choices$name$translations<
-            TRes> {
-  _CopyWithStubImpl$Query$getRestaurantItems$restaurant_item$options$item_options$choices$option_choices$name$translations(
-=======
 class _CopyWithStubImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user<
         TRes>
     implements
         CopyWith$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user<
             TRes> {
   _CopyWithStubImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user(
->>>>>>> origin/hsFlutter
       this._res);
 
   TRes _res;
 
   call({
-<<<<<<< HEAD
-    String? language_id,
-    String? value,
-=======
     String? phone,
     String? name,
     String? image,
     String? language_id,
     int? id,
     String? firebase_id,
->>>>>>> origin/hsFlutter
     String? $__typename,
   }) =>
       _res;

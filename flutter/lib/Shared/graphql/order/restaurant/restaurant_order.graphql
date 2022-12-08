@@ -65,7 +65,7 @@ subscription get_user_orders($order_id :Int!) {
       actual_arrival_at_dropoff_time,
       cancellation_time,
       current_gps,
-      deliverer_id,
+      #deliverer_id,
       delivery_cost    
     }
 	},

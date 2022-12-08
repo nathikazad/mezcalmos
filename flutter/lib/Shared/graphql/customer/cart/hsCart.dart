@@ -48,7 +48,7 @@ Future<Cart?> getCustomerCart({required int customerId}) async {
                 userInfo: ServiceInfo(
                   hasuraId: _cart_data.restaurant!.id,
                   image: _cart_data.restaurant!.image,
-                  firebaseId: _cart_data.restaurant!.firebase_id!,
+                  firebaseId: _cart_data.restaurant?.firebase_id,
                   name: _cart_data.restaurant!.name,
                   descriptionId: _cart_data.restaurant!.description_id,
                   //   descriptionId: data.d,
@@ -57,17 +57,19 @@ Future<Cart?> getCustomerCart({required int customerId}) async {
                     _cart_data.restaurant!.location_text,
                   ),
                 ),
-                description: {
-                  _cart_data
-                          .restaurant!.description!.translations.first.language_id
-                          .toLanguageType():
-                      _cart_data
-                          .restaurant!.description!.translations.first.value,
-                  _cart_data
-                          .restaurant!.description!.translations[1].language_id
-                          .toLanguageType():
-                      _cart_data.restaurant!.description!.translations[1].value,
-                },
+                description: null,
+
+                // {
+                //   _cart_data
+                //           .restaurant!.description!.translations.first.language_id
+                //           .toLanguageType():
+                //       _cart_data
+                //           .restaurant!.description!.translations.first.value,
+                //   _cart_data
+                //           .restaurant!.description!.translations[1].language_id
+                //           .toLanguageType():
+                //       _cart_data.restaurant!.description!.translations[1].value,
+                // },
                 schedule: Schedule(openHours: {}),
                 paymentInfo: PaymentInfo(),
                 restaurantState: ServiceState(

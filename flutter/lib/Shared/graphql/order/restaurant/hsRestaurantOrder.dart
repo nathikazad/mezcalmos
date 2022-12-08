@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/graphql/order/restaurant/__generated/restaurant_order.graphql.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/DeliveryMode.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
@@ -32,6 +33,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order({required int order_id}) {
         _itemsCost += (item.cost_per_one * item.quantity);
       });
       final RestaurantOrder res = RestaurantOrder(
+        deliveryMode: DeliveryMode.None,
         orderId: _o.id,
         chatId: _o.chat_id,
         status: _o.status.toRestaurantOrderStatus(),

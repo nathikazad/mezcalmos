@@ -81,7 +81,8 @@ class Cart {
   Map<String, dynamic> toFirebaseFormattedJson() {
     final Map<int, dynamic> items = {};
     cartItems.forEach((CartItem cartItem) {
-      items[cartItem.idInCart!] = cartItem.toFirebaseFunctionFormattedJson();
+      if (cartItem.idInCart != null)
+        items[cartItem.idInCart!] = cartItem.toFirebaseFunctionFormattedJson();
     });
 
     return <String, dynamic>{
