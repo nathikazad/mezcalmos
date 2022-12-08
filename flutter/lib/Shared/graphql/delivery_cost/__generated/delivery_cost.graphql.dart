@@ -510,13 +510,13 @@ class Query$getDeliveryCostByServiceProviderId$delivery_cost {
     final l$service_provider_type = json['service_provider_type'];
     final l$$__typename = json['__typename'];
     return Query$getDeliveryCostByServiceProviderId$delivery_cost(
-      cost_per_km: MoneyFromJson(l$cost_per_km),
+      cost_per_km: moneyFromJson(l$cost_per_km),
       free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
       free_delivery_minimum_cost: l$free_delivery_minimum_cost == null
           ? null
-          : MoneyFromJson(l$free_delivery_minimum_cost),
+          : moneyFromJson(l$free_delivery_minimum_cost),
       id: (l$id as int),
-      minimum_cost: MoneyFromJson(l$minimum_cost),
+      minimum_cost: moneyFromJson(l$minimum_cost),
       service_provider_id: (l$service_provider_id as int),
       service_provider_type: (l$service_provider_type as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -542,18 +542,18 @@ class Query$getDeliveryCostByServiceProviderId$delivery_cost {
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$cost_per_km = cost_per_km;
-    _resultData['cost_per_km'] = MoneyToJson(l$cost_per_km);
+    _resultData['cost_per_km'] = moneyToJson(l$cost_per_km);
     final l$free_delivery_km_range = free_delivery_km_range;
     _resultData['free_delivery_km_range'] = l$free_delivery_km_range;
     final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
     _resultData['free_delivery_minimum_cost'] =
         l$free_delivery_minimum_cost == null
             ? null
-            : MoneyToJson(l$free_delivery_minimum_cost);
+            : moneyToJson(l$free_delivery_minimum_cost);
     final l$id = id;
     _resultData['id'] = l$id;
     final l$minimum_cost = minimum_cost;
-    _resultData['minimum_cost'] = MoneyToJson(l$minimum_cost);
+    _resultData['minimum_cost'] = moneyToJson(l$minimum_cost);
     final l$service_provider_id = service_provider_id;
     _resultData['service_provider_id'] = l$service_provider_id;
     final l$service_provider_type = service_provider_type;
@@ -1786,13 +1786,13 @@ class Mutation$updateDeliveryCost$update_delivery_cost_by_pk {
     final l$service_provider_type = json['service_provider_type'];
     final l$$__typename = json['__typename'];
     return Mutation$updateDeliveryCost$update_delivery_cost_by_pk(
-      cost_per_km: MoneyFromJson(l$cost_per_km),
+      cost_per_km: moneyFromJson(l$cost_per_km),
       free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
       free_delivery_minimum_cost: l$free_delivery_minimum_cost == null
           ? null
-          : MoneyFromJson(l$free_delivery_minimum_cost),
+          : moneyFromJson(l$free_delivery_minimum_cost),
       id: (l$id as int),
-      minimum_cost: MoneyFromJson(l$minimum_cost),
+      minimum_cost: moneyFromJson(l$minimum_cost),
       service_provider_id: (l$service_provider_id as int),
       service_provider_type: (l$service_provider_type as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -1818,18 +1818,18 @@ class Mutation$updateDeliveryCost$update_delivery_cost_by_pk {
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$cost_per_km = cost_per_km;
-    _resultData['cost_per_km'] = MoneyToJson(l$cost_per_km);
+    _resultData['cost_per_km'] = moneyToJson(l$cost_per_km);
     final l$free_delivery_km_range = free_delivery_km_range;
     _resultData['free_delivery_km_range'] = l$free_delivery_km_range;
     final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
     _resultData['free_delivery_minimum_cost'] =
         l$free_delivery_minimum_cost == null
             ? null
-            : MoneyToJson(l$free_delivery_minimum_cost);
+            : moneyToJson(l$free_delivery_minimum_cost);
     final l$id = id;
     _resultData['id'] = l$id;
     final l$minimum_cost = minimum_cost;
-    _resultData['minimum_cost'] = MoneyToJson(l$minimum_cost);
+    _resultData['minimum_cost'] = moneyToJson(l$minimum_cost);
     final l$service_provider_id = service_provider_id;
     _resultData['service_provider_id'] = l$service_provider_id;
     final l$service_provider_type = service_provider_type;

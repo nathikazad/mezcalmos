@@ -2,14 +2,17 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:jaguar_jwt/jaguar_jwt.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart' show mezDbgPrint;
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
 class HasuraDb {
   late GraphQLClient graphQLClient;
@@ -18,7 +21,12 @@ class HasuraDb {
   AppLaunchMode appLaunchMode;
   // FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   HasuraDb(this.appLaunchMode);
-
+  Map<String, HasuraSubscription> hasuraSubscriptions =
+      <String, HasuraSubscription>{};
+  String? _appLifeCyclePauseCallbackId;
+  String? _appLifeCycleResumeCallbackId;
+  final AppLifeCycleController _appLifeCycleController =
+      Get.find<AppLifeCycleController>();
   Future<void> initializeHasura() async {
     mezDbgPrint("Inside initializeHasura");
     late String hasuraDbLink;
@@ -74,6 +82,33 @@ class HasuraDb {
       cache: GraphQLCache(),
       link: _link,
     );
+
+    if (_appLifeCyclePauseCallbackId != null)
+      _appLifeCycleController.removeCallbackIdOfState(
+          AppLifecycleState.paused, _appLifeCyclePauseCallbackId);
+    if (_appLifeCycleResumeCallbackId != null)
+      _appLifeCycleController.removeCallbackIdOfState(
+          AppLifecycleState.resumed, _appLifeCycleResumeCallbackId);
+
+    _appLifeCyclePauseCallbackId =
+        _appLifeCycleController.attachCallback(AppLifecycleState.paused, () {
+      hasuraSubscriptions.forEach(
+          (String subscriptionId, HasuraSubscription hasuraSubscription) {
+        pauseSubscription(subscriptionId);
+      });
+      //kill timer to refresh JWT
+    });
+
+    _appLifeCycleResumeCallbackId =
+        _appLifeCycleController.attachCallback(AppLifecycleState.resumed, () {
+      // check if JWT is valid
+      // if not create new JWT
+      // start timer to refresh JWT
+      hasuraSubscriptions.forEach(
+          (String subscriptionId, HasuraSubscription hasuraSubscription) {
+        resumeSubscription(subscriptionId);
+      });
+    });
   }
 
   Future<String> _getAuthorizationToken(User user, bool testMode) async {
@@ -103,39 +138,31 @@ class HasuraDb {
         return "customer";
     }
   }
+
+  String createSubscription(
+      {required Function start, required Function cancel}) {
+    final String subscriptionId = getRandomString(10);
+    hasuraSubscriptions[subscriptionId] = HasuraSubscription(start, cancel);
+    start();
+    return subscriptionId;
+  }
+
+  void resumeSubscription(String subscriptionId) {
+    hasuraSubscriptions[subscriptionId]?.start();
+  }
+
+  void pauseSubscription(String subscriptionId) {
+    hasuraSubscriptions[subscriptionId]?.cancel();
+  }
+
+  void cancelSubscription(String subscriptionId) {
+    hasuraSubscriptions[subscriptionId]?.cancel();
+    hasuraSubscriptions.remove(subscriptionId);
+  }
 }
 
-    // import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
-    // import 'package:mezcalmos/Shared/graphql/restaurant/__generated/restaurant.graphql.dart';
-    // import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-    // import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-    // import 'package:mezcalmos/Shared/graphql/restaurant/mezRestaurant.dart';
-
-    // final QueryResult result = await graphQLClient
-    //     .query(QueryOptions(document: gql(r'''subscription GetRestaurants {
-    //     restaurant {
-    //       id
-    //       name
-    //       location_text
-    //       status
-    //       image
-    //       description {
-    //         translations {
-    //           language_id
-    //           value
-    //         }
-    //       }
-    //       payment_info {
-    //         bank_transfer
-    //         card
-    //         cash
-    //       }
-    //     }
-    //   }''')));
-
-    // mezDbgPrint("HASURAAAAA result3");
-    // mezDbgPrint(result.data);
-
-    // if (!withAuthenticatedUser)
-    //   fireAuth.FirebaseAuth.instance.signInWithEmailAndPassword(
-    //       email: "customer@customer.com", password: "password");
+class HasuraSubscription {
+  Function start;
+  Function cancel;
+  HasuraSubscription(this.start, this.cancel);
+}
