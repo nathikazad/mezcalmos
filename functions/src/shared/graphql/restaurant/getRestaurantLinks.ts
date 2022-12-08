@@ -18,7 +18,7 @@ export async function getRestaurantLinks(restaurantId: number): Promise<ServiceL
         driver_deep_link :true,
         driver_qr_image_link :true,
         operator_deep_link: true,
-          operator_qr_image_link: true,
+        operator_qr_image_link: true,
         service_provider_id: true,
         service_provider_type:true,
       }],
@@ -41,7 +41,7 @@ export async function getRestaurantLinks(restaurantId: number): Promise<ServiceL
         driver_deep_link: response.service_link[0].driver_deep_link,
         driver_qr_image_link: response.service_link[0].driver_qr_image_link,
         operator_deep_link: response.service_link[0].operator_deep_link,
-            operator_qr_image_link: response.service_link[0].operator_qr_image_link,
+        operator_qr_image_link: response.service_link[0].operator_qr_image_link,
         
         }
         return serviceLink;

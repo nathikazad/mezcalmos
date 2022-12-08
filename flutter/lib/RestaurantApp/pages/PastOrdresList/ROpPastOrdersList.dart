@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
+import 'package:mezcalmos/RestaurantApp/pages/CurrentOrdersList/components/ROpOrderCard.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -65,24 +66,24 @@ class _ROpPastOrdersListState extends State<ROpPastOrdersList> {
               crossAxisAlignment: CrossAxisAlignment.start,
               // padding: const EdgeInsets.all(10),
               children: <Widget>[
-                if (inProcessOrders.isNotEmpty)
+                if (orderController.currentOrders.isNotEmpty)
                   _buildInProcessOrders(textTheme),
                 Text(
                   "${_i18n()["pastOrders"]}",
                   style: textTheme.bodyText1,
                 ),
                 const SizedBox(height: 5),
-                // ListView.builder(
-                //   shrinkWrap: true,
-                //   reverse: true,
-                //   itemCount: pastOrders.length,
-                //   physics: const NeverScrollableScrollPhysics(),
-                //   itemBuilder: (_, int index) {
-                //     return ROpOrderCard(
-                //       order: pastOrders[index],
-                //     );
-                //   },
-                // ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  reverse: true,
+                  itemCount: orderController.pastOrders.length,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (_, int index) {
+                    return ROpOrderCard(
+                      order: orderController.pastOrders[index],
+                    );
+                  },
+                ),
               ],
             ),
           ),

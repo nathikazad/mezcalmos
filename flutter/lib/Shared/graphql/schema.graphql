@@ -2939,6 +2939,11 @@ type delivery_order {
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
   id: Int!
+
+  """
+  A computed field, executes function "delivery_notification_token"
+  """
+  notification_token: String
   order_time: timestamptz!
   package_cost: money!
   payment_type: String!
@@ -3114,6 +3119,7 @@ input delivery_order_bool_exp {
   estimated_arrival_at_pickup_time: timestamptz_comparison_exp
   estimated_package_ready_time: timestamptz_comparison_exp
   id: Int_comparison_exp
+  notification_token: String_comparison_exp
   order_time: timestamptz_comparison_exp
   package_cost: money_comparison_exp
   payment_type: String_comparison_exp
@@ -3489,6 +3495,7 @@ input delivery_order_order_by {
   estimated_arrival_at_pickup_time: order_by
   estimated_package_ready_time: order_by
   id: order_by
+  notification_token: order_by
   order_time: order_by
   package_cost: order_by
   payment_type: order_by
@@ -9248,42 +9255,6 @@ type restaurant {
   firebase_id: String
   id: Int!
   image: String!
-
-  """An array relationship"""
-  items(
-    """distinct select on columns"""
-    distinct_on: [restaurant_item_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [restaurant_item_order_by!]
-
-    """filter the rows returned"""
-    where: restaurant_item_bool_exp
-  ): [restaurant_item!]!
-
-  """An aggregate relationship"""
-  items_aggregate(
-    """distinct select on columns"""
-    distinct_on: [restaurant_item_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [restaurant_item_order_by!]
-
-    """filter the rows returned"""
-    where: restaurant_item_bool_exp
-  ): restaurant_item_aggregate!
   language_id: String!
   location_gps: geography!
   location_text: String!
@@ -9447,7 +9418,6 @@ input restaurant_bool_exp {
   firebase_id: String_comparison_exp
   id: Int_comparison_exp
   image: String_comparison_exp
-  items: restaurant_item_bool_exp
   language_id: String_comparison_exp
   location_gps: geography_comparison_exp
   location_text: String_comparison_exp
@@ -11258,7 +11228,6 @@ input restaurant_insert_input {
   firebase_id: String
   id: Int
   image: String
-  items: restaurant_item_arr_rel_insert_input
   language_id: String
   location_gps: geography
   location_text: String
@@ -14206,7 +14175,6 @@ input restaurant_order_by {
   firebase_id: order_by
   id: order_by
   image: order_by
-  items_aggregate: restaurant_item_aggregate_order_by
   language_id: order_by
   location_gps: order_by
   location_text: order_by

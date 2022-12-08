@@ -121,7 +121,8 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                               .then((Object? value) {
                             Get.until((Route route) =>
                                 route.settings.name ==
-                                getLaundryOpOrderRoute(widget.order.orderId));
+                                getLaundryOpOrderRoute(
+                                    widget.order.orderId.toString()));
                           });
                         });
                       },
@@ -275,7 +276,8 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
         oldCosts.lineItems.removeWhere(
             (LaundryOrderCostLineItem element) => element.id == item.id);
 
-        await orderController.setOrderWeight(widget.order.orderId, oldCosts);
+        await orderController.setOrderWeight(
+            widget.order.orderId.toString(), oldCosts);
         mezDbgPrint("deleted");
       } else {
         Get.snackbar(
@@ -349,7 +351,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
     }
 
     await orderController
-        .setOrderWeight(widget.order.orderId, oldCosts)
+        .setOrderWeight(widget.order.orderId.toString(), oldCosts)
         .then((ServerResponse value) {
       mezDbgPrint("Done");
 

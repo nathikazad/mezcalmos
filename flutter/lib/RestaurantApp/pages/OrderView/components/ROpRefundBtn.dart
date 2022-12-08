@@ -187,7 +187,8 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
                                               true) {
                                             await Get.find<ROpOrderController>()
                                                 .refundCustomerCustomAmount(
-                                                    widget.order.orderId,
+                                                    widget.order.orderId
+                                                        .toString(),
                                                     num.parse(
                                                         refundAmount.text))
                                                 .then((ServerResponse value) {

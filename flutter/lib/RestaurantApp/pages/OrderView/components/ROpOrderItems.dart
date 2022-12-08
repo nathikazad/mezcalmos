@@ -220,8 +220,8 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                   isLoading = true;
                 });
                 await Get.find<ROpOrderController>()
-                    .markItemUnavailable(
-                        widget.order.orderId, widget.item.idInCart)
+                    .markItemUnavailable(widget.order.orderId.toString(),
+                        widget.item.idInCart.toString())
                     .then((ServerResponse response) {
                   if (!response.success) {
                     Get.snackbar("Error", response.errorMessage ?? "Error");

@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
+import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
@@ -117,7 +119,8 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                         },
                         showRedDot: Get.find<ROpOrderController>()
                             .hasNewMessageNotification(widget
-                                .order.serviceProviderDropOffDriverChatId!),
+                                .order.serviceProviderDropOffDriverChatId!
+                                .toString()),
                       ),
                     )
                 ])
@@ -128,12 +131,9 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
   }
 
   Future<void> _checkSelfDelivery() async {
-    if (!RestaurantInfoController().initialized) {
-      Get.put(RestaurantInfoController(), permanent: false);
-    }
+    restaurant.value =
+        await get_restaurant_by_id(id: widget.order.restaurantId);
 
-    restaurant.value = await Get.find<RestaurantInfoController>()
-        .getRestaurantAsFuture(widget.order.restaurantId);
     showSet.value = restaurant.value!.selfDelivery;
   }
 
@@ -187,8 +187,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
               ),
             ),
             if (widget.order.inProcess() &&
-                (widget.order.dropoffDriver != null ||
-                    widget.order.selfDelivery))
+                (widget.order.dropoffDriver != null))
               MezIconButton(
                 onTap: () async {
                   // final bool? forwardToMezCalmos = await Get.toNamed(
@@ -247,17 +246,17 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
           ),
         ),
         Obx(() {
-          if (showSet.isTrue &&
-              widget.order.deliveryMode != DeliveryMode.ForwardedToMezCalmos) {
+          if (showSet.isTrue) {
             return InkWell(
                 onTap: () async {
-                  // final bool? forwardToMezCalmos = await Get.toNamed(
-                  //         getROpPickDriverRoute(orderId: widget.order.orderId))
-                  //     as bool?;
-                  // if (forwardToMezCalmos != null &&
-                  //     forwardToMezCalmos == false) {
-                  //   showSet.value = false;
-                  // }
+                  final bool? forwardToMezCalmos = await Get.toNamed(
+                      getROpPickDriverRoute(
+                          serviceProviderId: widget.order.restaurantId,
+                          orderId: widget.order.orderId)) as bool?;
+                  if (forwardToMezCalmos != null &&
+                      forwardToMezCalmos == false) {
+                    showSet.value = false;
+                  }
                 },
                 child: Ink(
                   padding: const EdgeInsets.all(5),

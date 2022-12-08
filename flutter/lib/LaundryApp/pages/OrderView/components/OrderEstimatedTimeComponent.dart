@@ -237,7 +237,8 @@ class _OrderEstimatedTimeComponentState
                       ),
                       textButtonTheme: TextButtonThemeData(
                         style: TextButton.styleFrom(
-                          primary: primaryBlueColor, // button text color
+                          foregroundColor:
+                              primaryBlueColor, // button text color
                         ),
                       ),
                     ),
@@ -327,7 +328,7 @@ class _OrderEstimatedTimeComponentState
     isClicked.value = true;
     if (value.difference(widget.order.orderTime).inMinutes > 30) {
       orderController
-          .setEstimatedLaundryReadyTime(widget.order.orderId, value)
+          .setEstimatedLaundryReadyTime(widget.order.orderId.toString(), value)
           .whenComplete(() {
         isClicked.value = false;
       }).then((ServerResponse value) {

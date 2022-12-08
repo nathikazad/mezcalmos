@@ -325,39 +325,38 @@ Future<List<RestaurantOrder>?> get_restaurant_orders_by_restaurant_id(
   }
 }
 
-// Stream<List<MinimalRestaurantOrder>?> listen_on_minimal_restaurant_orders(
-//     {required int restaurantId}) async* {
-//   yield* _hasuraDb.graphQLClient
-//       .watchSubscription$listen_restaurant_min_orders(
-//         WatchOptions$Subscription$listen_restaurant_min_orders(
-//           fetchPolicy: FetchPolicy.noCache,
-//           variables: Variables$Subscription$listen_restaurant_min_orders(
-//               restaurantId: restaurantId),
-//         ),
-//       )
-//       .stream
-//       .asyncMap<List<MinimalRestaurantOrder>?>(
-//           (QueryResult<Subscription$listen_restaurant_min_orders> event) {
-//     final List<Subscription$listen_restaurant_min_orders$restaurant_order>?
-//         ordersData = event.parsedData?.restaurant_order;
-//     if (ordersData != null) {
-//       final List<MinimalRestaurantOrder> orders = ordersData.map(
-//           (Subscription$listen_restaurant_min_orders$restaurant_order
-//               orderData) {
-//         return MinimalRestaurantOrder(
-//             id: orderData.id,
-//             toAdress: orderData.to_location_address,
-//             orderTime: DateTime.parse(orderData.order_time),
-//             customerName: orderData.customer.user.name!,
-//             customerImage: orderData.customer.user.image,
-//             status: orderData.status.toRestaurantOrderStatus(),
-//             totalCost: orderData.total_cost!);
-//       }).toList();
-//       return orders;
-//     }
-//     return null;
-//   });
-// }
+Stream<List<MinimalRestaurantOrder>?> listen_on_minimal_restaurant_orders(
+    {required int restaurantId}) {
+  return _hasuraDb.graphQLClient
+      .subscribe$listen_restaurant_min_orders(
+    Options$Subscription$listen_restaurant_min_orders(
+      fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Subscription$listen_restaurant_min_orders(
+          restaurantId: restaurantId),
+    ),
+  )
+      .map<List<MinimalRestaurantOrder>?>(
+          (QueryResult<Subscription$listen_restaurant_min_orders> event) {
+    final List<Subscription$listen_restaurant_min_orders$restaurant_order>?
+        ordersData = event.parsedData?.restaurant_order;
+    if (ordersData != null) {
+      final List<MinimalRestaurantOrder> orders = ordersData.map(
+          (Subscription$listen_restaurant_min_orders$restaurant_order
+              orderData) {
+        return MinimalRestaurantOrder(
+            id: orderData.id,
+            toAdress: orderData.to_location_address,
+            orderTime: DateTime.parse(orderData.order_time),
+            customerName: orderData.customer.user.name!,
+            customerImage: orderData.customer.user.image,
+            status: orderData.status.toRestaurantOrderStatus(),
+            totalCost: orderData.total_cost!);
+      }).toList();
+      return orders;
+    }
+    return null;
+  });
+}
 
 Future<List<MinimalRestaurantOrder>?> get_minimal_restaurant_orders(
     {required int restaurantId}) async {

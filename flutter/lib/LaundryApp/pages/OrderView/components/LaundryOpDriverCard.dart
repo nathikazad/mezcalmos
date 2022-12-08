@@ -4,11 +4,11 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
@@ -70,7 +70,8 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
                   Obx(
                     () => MessageButton(
                         showRedDot: Get.find<OrderController>()
-                            .hasNewMessageNotification(_getCorrectChatId()),
+                            .hasNewMessageNotification(
+                                _getCorrectChatId().toString()),
                         onTap: () {
                           Get.toNamed(getMessagesRoute(
                               orderId: order.orderId,
@@ -139,7 +140,7 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
     }
   }
 
-  String _getCorrectChatId() {
+  int _getCorrectChatId() {
     if (order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
       return order.serviceProviderPickupDriverChatId!;
     } else {

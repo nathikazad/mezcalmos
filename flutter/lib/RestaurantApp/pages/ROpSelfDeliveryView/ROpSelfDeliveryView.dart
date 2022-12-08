@@ -107,7 +107,7 @@ class _ROpSelfDeliveryViewState extends State<ROpSelfDeliveryView> {
     // Restaurant Marker
     mapController.addOrUpdateUserMarker(
       latLng: order.value?.restaurant.location.toLatLng(),
-      markerId: order.value?.restaurantId,
+      markerId: order.value?.restaurantId.toString(),
       customImgHttpUrl: order.value?.restaurant.image,
     );
     if (order.value != null)

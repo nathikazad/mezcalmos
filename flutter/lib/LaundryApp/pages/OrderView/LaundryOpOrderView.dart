@@ -276,7 +276,8 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
                   ? () {
                       isClicked.value = true;
                       controller
-                          .setAsReadyForDelivery(order.value!.orderId)
+                          .setAsReadyForDelivery(
+                              order.value!.orderId.toString())
                           .whenComplete(() => isClicked.value = false);
                     }
                   : null,

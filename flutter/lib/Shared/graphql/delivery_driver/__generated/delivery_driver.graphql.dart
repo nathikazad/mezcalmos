@@ -557,7 +557,7 @@ class Query$getDriversByServiceId$delivery_driver {
       app_version: (l$app_version as String?),
       current_location: l$current_location == null
           ? null
-          : GeographyFromJson(l$current_location),
+          : geographyFromJson(l$current_location),
       delivery_driver_type: (l$delivery_driver_type as String),
       delivery_company_type: (l$delivery_company_type as String),
       delivery_company_id: (l$delivery_company_id as int),
@@ -596,7 +596,7 @@ class Query$getDriversByServiceId$delivery_driver {
     _resultData['app_version'] = l$app_version;
     final l$current_location = current_location;
     _resultData['current_location'] =
-        l$current_location == null ? null : GeographyToJson(l$current_location);
+        l$current_location == null ? null : geographyToJson(l$current_location);
     final l$delivery_driver_type = delivery_driver_type;
     _resultData['delivery_driver_type'] = l$delivery_driver_type;
     final l$delivery_company_type = delivery_company_type;

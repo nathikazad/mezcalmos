@@ -29,7 +29,7 @@ class LaundryOpOrderCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          Get.toNamed(getLaundryOpOrderRoute(laundryOrder.orderId));
+          Get.toNamed(getLaundryOpOrderRoute(laundryOrder.orderId.toString()));
         },
         child: Container(
           padding: EdgeInsets.all(8),
