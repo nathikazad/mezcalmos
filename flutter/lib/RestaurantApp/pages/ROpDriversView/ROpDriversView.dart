@@ -77,13 +77,15 @@ class _ROpDriversViewState extends State<ROpDriversView> {
                 SizedBox(
                   height: 25,
                 ),
-                Column(
-                  children: List.generate(
-                      viewController.drivers.length,
-                      (int index) => ROpListDriverCard(
-                            driver: viewController.drivers[index],
-                            viewController: viewController,
-                          )),
+                Obx(
+                  () => Column(
+                    children: List.generate(
+                        viewController.drivers.length,
+                        (int index) => ROpListDriverCard(
+                              driver: viewController.drivers[index],
+                              viewController: viewController,
+                            )),
+                  ),
                 )
               ],
             ),

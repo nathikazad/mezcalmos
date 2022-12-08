@@ -4,6 +4,7 @@ import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/components/ROpEditInfoWidgets.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpDashboardPage.dart';
+import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpDeliveryCost.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpInfoPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpPaymentsPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpSchedulePage.dart';
@@ -119,7 +120,11 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
                 //
                 ROpReviewsView(restId: widget.restID!),
                 //
-                ROpOperatorsView(restaurantId: int.parse(widget.restID!))
+                ROpOperatorsView(restaurantId: int.parse(widget.restID!)),
+                if (editInfoController.restaurant.value!.selfDelivery)
+                  ROpDeliveryCost(
+                    editInfoController: editInfoController,
+                  )
                 // ROpAcceptedPayments(viewController: editInfoController)
               ],
             ),

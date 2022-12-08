@@ -8,6 +8,7 @@ import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dar
 import 'package:mezcalmos/RestaurantApp/pages/ROpTabsViewView/controllers/ROpTabsViewViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
+import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
@@ -71,8 +72,13 @@ class ROpEditInfoController {
     this.restaurantId = int.parse(restaurantId);
     mezDbgPrint("INIT EDIT PROFILE VIEW =======>$restaurantId");
     this.tabsViewViewController = tabsViewViewController;
-    restaurant.value = await get_restaurant_by_id(id: this.restaurantId);
+    await fetchRestaurant();
     _updateResTInfo();
+  }
+
+  Future<void> fetchRestaurant() async {
+    restaurant.value =
+        await get_restaurant_by_id(id: restaurantId, withCache: false);
   }
 
   void _updateResTInfo() {
@@ -117,46 +123,44 @@ class ROpEditInfoController {
 
   Future<void> updateLaundryInfo() async {
     btnClicked.value = true;
-    if (restaurantNameTxt.text != '' &&
-        restaurantNameTxt.text != restaurant.value?.info.name) {
-      mezDbgPrint("Updating restuarnt name .....=>${restaurantNameTxt.text}");
 
-      await restaurantInfoController!.setRestaurantName(restaurantNameTxt.text);
-      mezDbgPrint("Restuarnt name done ....=>${restaurantNameTxt.text}");
-    }
     if (_updatePrDesc() || _updateScDesc()) {
       mezDbgPrint(
           "Updating restuarnt primary description .....=>${restaurantNameTxt.text}");
-
-      await restaurantInfoController!.setRestaurantDesc(_contructDesc());
-      mezDbgPrint("Restuarnt name done ....=>${restaurantNameTxt.text}");
-    }
-    if (newImageFile.value != null) {
-      await restaurantInfoController!
-          .uploadImgToDb(imageFile: newImageFile.value!)
-          .then((String value) {
-        restaurantInfoController!.setRestaurantImage(value);
+      _contructDesc().forEach((LanguageType key, String value) async {
+        await update_translation(
+            langType: key,
+            value: value,
+            translationId: restaurant.value!.info.descriptionId!);
       });
     }
-    if (newLocation.value != null &&
-        newLocation.value?.address != restaurant.value?.info.location.address) {
-      await restaurantInfoController!.setLocation(newLocation.value!);
-    }
-    if (editablePrLang.value != null &&
-        editablePrLang.value != primaryLang.value) {
-      mezDbgPrint("SEEETTING PRIMARY LANG =======>${editablePrLang.value}");
-      await restaurantInfoController!.setPrimaryLanguage(editablePrLang.value!);
-      mezDbgPrint("SEEETTING SECOND LANG =======>${editableScLang.value}");
-      await restaurantInfoController!
-          .setSecondaryLanguage(editablePrLang.value?.toOpLang());
-    }
 
-    if (newSchedule.value != null && newSchedule.value != oldSchedule.value) {
-      await restaurantInfoController!.setSchedule(newSchedule.value!);
-    }
-    if (isAvailable.value != restaurant.value!.state.available) {
-      await restaurantInfoController!.setAvailabilty(isAvailable.value);
-    }
+    // if (newImageFile.value != null) {
+    //   await restaurantInfoController!
+    //       .uploadImgToDb(imageFile: newImageFile.value!)
+    //       .then((String value) {
+    //     restaurantInfoController!.setRestaurantImage(value);
+    //   });
+    // }
+    // if (newLocation.value != null &&
+    //     newLocation.value?.address != restaurant.value?.info.location.address) {
+    //   await restaurantInfoController!.setLocation(newLocation.value!);
+    // }
+    // if (editablePrLang.value != null &&
+    //     editablePrLang.value != primaryLang.value) {
+    //   mezDbgPrint("SEEETTING PRIMARY LANG =======>${editablePrLang.value}");
+    //   await restaurantInfoController!.setPrimaryLanguage(editablePrLang.value!);
+    //   mezDbgPrint("SEEETTING SECOND LANG =======>${editableScLang.value}");
+    //   await restaurantInfoController!
+    //       .setSecondaryLanguage(editablePrLang.value?.toOpLang());
+    // }
+
+    // if (newSchedule.value != null && newSchedule.value != oldSchedule.value) {
+    //   await restaurantInfoController!.setSchedule(newSchedule.value!);
+    // }
+    // if (isAvailable.value != restaurant.value!.state.available) {
+    //   await restaurantInfoController!.setAvailabilty(isAvailable.value);
+    // }
 
     btnClicked.value = false;
   }
@@ -177,7 +181,16 @@ class ROpEditInfoController {
   }
 
   Future<void> switchSelfDelivery(bool v) async {
-    await restaurantInfoController!.switchSelfDelivery(v);
+    try {
+      final bool? res =
+          await switch_restaurant_self_delivery(id: restaurantId, value: v);
+      if (res == true) {
+        await fetchRestaurant();
+      }
+    } on Exception catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
   }
 
   // stripe and payments methods //
@@ -386,6 +399,8 @@ class ROpEditInfoController {
         return '${_i18n()["reviews"]}';
       case 6:
         return 'Operators';
+      case 7:
+        return 'Delivery cost';
         break;
       default:
         return "";

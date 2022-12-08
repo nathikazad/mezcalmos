@@ -63,10 +63,9 @@ class _DriversListScreenState extends State<DriversListScreen> {
               itemBuilder: (_, int index) {
                 return DriverSelectCard(
                   driver: deliveryDrivers[index],
-                  function:
-                      (deliveryDrivers[index].deliveryDriverState.isOnline)
-                          ? () => Get.back(result: deliveryDrivers[index])
-                          : null,
+                  function: (deliveryDrivers[index].deliveryDriverState.online)
+                      ? () => Get.back(result: deliveryDrivers[index])
+                      : null,
                 );
               },
             ),

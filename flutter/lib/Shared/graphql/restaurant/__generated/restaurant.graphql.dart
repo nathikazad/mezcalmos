@@ -2166,6 +2166,13 @@ const documentNodeQuerygetOneRestaurant = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'self_delivery'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'name'),
             alias: null,
             arguments: [],
@@ -2360,6 +2367,7 @@ class Query$getOneRestaurant$restaurant_by_pk {
     this.description_id,
     required this.location_gps,
     required this.location_text,
+    required this.self_delivery,
     required this.name,
     this.description,
     required this.approved,
@@ -2376,6 +2384,7 @@ class Query$getOneRestaurant$restaurant_by_pk {
     final l$description_id = json['description_id'];
     final l$location_gps = json['location_gps'];
     final l$location_text = json['location_text'];
+    final l$self_delivery = json['self_delivery'];
     final l$name = json['name'];
     final l$description = json['description'];
     final l$approved = json['approved'];
@@ -2389,6 +2398,7 @@ class Query$getOneRestaurant$restaurant_by_pk {
       description_id: (l$description_id as int?),
       location_gps: GeographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
+      self_delivery: (l$self_delivery as bool),
       name: (l$name as String),
       description: l$description == null
           ? null
@@ -2413,6 +2423,8 @@ class Query$getOneRestaurant$restaurant_by_pk {
   final Geography location_gps;
 
   final String location_text;
+
+  final bool self_delivery;
 
   final String name;
 
@@ -2440,6 +2452,8 @@ class Query$getOneRestaurant$restaurant_by_pk {
     _resultData['location_gps'] = GeographyToJson(l$location_gps);
     final l$location_text = location_text;
     _resultData['location_text'] = l$location_text;
+    final l$self_delivery = self_delivery;
+    _resultData['self_delivery'] = l$self_delivery;
     final l$name = name;
     _resultData['name'] = l$name;
     final l$description = description;
@@ -2462,6 +2476,7 @@ class Query$getOneRestaurant$restaurant_by_pk {
     final l$description_id = description_id;
     final l$location_gps = location_gps;
     final l$location_text = location_text;
+    final l$self_delivery = self_delivery;
     final l$name = name;
     final l$description = description;
     final l$approved = approved;
@@ -2475,6 +2490,7 @@ class Query$getOneRestaurant$restaurant_by_pk {
       l$description_id,
       l$location_gps,
       l$location_text,
+      l$self_delivery,
       l$name,
       l$description,
       l$approved,
@@ -2525,6 +2541,11 @@ class Query$getOneRestaurant$restaurant_by_pk {
     final l$location_text = location_text;
     final lOther$location_text = other.location_text;
     if (l$location_text != lOther$location_text) {
+      return false;
+    }
+    final l$self_delivery = self_delivery;
+    final lOther$self_delivery = other.self_delivery;
+    if (l$self_delivery != lOther$self_delivery) {
       return false;
     }
     final l$name = name;
@@ -2583,6 +2604,7 @@ abstract class CopyWith$Query$getOneRestaurant$restaurant_by_pk<TRes> {
     int? description_id,
     Geography? location_gps,
     String? location_text,
+    bool? self_delivery,
     String? name,
     Query$getOneRestaurant$restaurant_by_pk$description? description,
     bool? approved,
@@ -2614,6 +2636,7 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_by_pk<TRes>
     Object? description_id = _undefined,
     Object? location_gps = _undefined,
     Object? location_text = _undefined,
+    Object? self_delivery = _undefined,
     Object? name = _undefined,
     Object? description = _undefined,
     Object? approved = _undefined,
@@ -2640,6 +2663,9 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_by_pk<TRes>
         location_text: location_text == _undefined || location_text == null
             ? _instance.location_text
             : (location_text as String),
+        self_delivery: self_delivery == _undefined || self_delivery == null
+            ? _instance.self_delivery
+            : (self_delivery as bool),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -2682,6 +2708,7 @@ class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_by_pk<TRes>
     int? description_id,
     Geography? location_gps,
     String? location_text,
+    bool? self_delivery,
     String? name,
     Query$getOneRestaurant$restaurant_by_pk$description? description,
     bool? approved,
@@ -3905,6 +3932,630 @@ class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk<
       get description =>
           CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description
               .stub(_res);
+}
+
+class Variables$Mutation$switchRestaurantSelfDelivery {
+  factory Variables$Mutation$switchRestaurantSelfDelivery({
+    required int restauarntId,
+    bool? value,
+  }) =>
+      Variables$Mutation$switchRestaurantSelfDelivery._({
+        r'restauarntId': restauarntId,
+        if (value != null) r'value': value,
+      });
+
+  Variables$Mutation$switchRestaurantSelfDelivery._(this._$data);
+
+  factory Variables$Mutation$switchRestaurantSelfDelivery.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$restauarntId = data['restauarntId'];
+    result$data['restauarntId'] = (l$restauarntId as int);
+    if (data.containsKey('value')) {
+      final l$value = data['value'];
+      result$data['value'] = (l$value as bool?);
+    }
+    return Variables$Mutation$switchRestaurantSelfDelivery._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get restauarntId => (_$data['restauarntId'] as int);
+  bool? get value => (_$data['value'] as bool?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$restauarntId = restauarntId;
+    result$data['restauarntId'] = l$restauarntId;
+    if (_$data.containsKey('value')) {
+      final l$value = value;
+      result$data['value'] = l$value;
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$switchRestaurantSelfDelivery<
+          Variables$Mutation$switchRestaurantSelfDelivery>
+      get copyWith => CopyWith$Variables$Mutation$switchRestaurantSelfDelivery(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$switchRestaurantSelfDelivery) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$restauarntId = restauarntId;
+    final lOther$restauarntId = other.restauarntId;
+    if (l$restauarntId != lOther$restauarntId) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (_$data.containsKey('value') != other._$data.containsKey('value')) {
+      return false;
+    }
+    if (l$value != lOther$value) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$restauarntId = restauarntId;
+    final l$value = value;
+    return Object.hashAll([
+      l$restauarntId,
+      _$data.containsKey('value') ? l$value : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$switchRestaurantSelfDelivery<TRes> {
+  factory CopyWith$Variables$Mutation$switchRestaurantSelfDelivery(
+    Variables$Mutation$switchRestaurantSelfDelivery instance,
+    TRes Function(Variables$Mutation$switchRestaurantSelfDelivery) then,
+  ) = _CopyWithImpl$Variables$Mutation$switchRestaurantSelfDelivery;
+
+  factory CopyWith$Variables$Mutation$switchRestaurantSelfDelivery.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$switchRestaurantSelfDelivery;
+
+  TRes call({
+    int? restauarntId,
+    bool? value,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$switchRestaurantSelfDelivery<TRes>
+    implements CopyWith$Variables$Mutation$switchRestaurantSelfDelivery<TRes> {
+  _CopyWithImpl$Variables$Mutation$switchRestaurantSelfDelivery(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$switchRestaurantSelfDelivery _instance;
+
+  final TRes Function(Variables$Mutation$switchRestaurantSelfDelivery) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? restauarntId = _undefined,
+    Object? value = _undefined,
+  }) =>
+      _then(Variables$Mutation$switchRestaurantSelfDelivery._({
+        ..._instance._$data,
+        if (restauarntId != _undefined && restauarntId != null)
+          'restauarntId': (restauarntId as int),
+        if (value != _undefined) 'value': (value as bool?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$switchRestaurantSelfDelivery<TRes>
+    implements CopyWith$Variables$Mutation$switchRestaurantSelfDelivery<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$switchRestaurantSelfDelivery(this._res);
+
+  TRes _res;
+
+  call({
+    int? restauarntId,
+    bool? value,
+  }) =>
+      _res;
+}
+
+class Mutation$switchRestaurantSelfDelivery {
+  Mutation$switchRestaurantSelfDelivery({
+    this.update_restaurant_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$switchRestaurantSelfDelivery.fromJson(
+      Map<String, dynamic> json) {
+    final l$update_restaurant_by_pk = json['update_restaurant_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$switchRestaurantSelfDelivery(
+      update_restaurant_by_pk: l$update_restaurant_by_pk == null
+          ? null
+          : Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk
+              .fromJson((l$update_restaurant_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk?
+      update_restaurant_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_restaurant_by_pk = update_restaurant_by_pk;
+    _resultData['update_restaurant_by_pk'] =
+        l$update_restaurant_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_restaurant_by_pk = update_restaurant_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_restaurant_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$switchRestaurantSelfDelivery) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_restaurant_by_pk = update_restaurant_by_pk;
+    final lOther$update_restaurant_by_pk = other.update_restaurant_by_pk;
+    if (l$update_restaurant_by_pk != lOther$update_restaurant_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$switchRestaurantSelfDelivery
+    on Mutation$switchRestaurantSelfDelivery {
+  CopyWith$Mutation$switchRestaurantSelfDelivery<
+          Mutation$switchRestaurantSelfDelivery>
+      get copyWith => CopyWith$Mutation$switchRestaurantSelfDelivery(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$switchRestaurantSelfDelivery<TRes> {
+  factory CopyWith$Mutation$switchRestaurantSelfDelivery(
+    Mutation$switchRestaurantSelfDelivery instance,
+    TRes Function(Mutation$switchRestaurantSelfDelivery) then,
+  ) = _CopyWithImpl$Mutation$switchRestaurantSelfDelivery;
+
+  factory CopyWith$Mutation$switchRestaurantSelfDelivery.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$switchRestaurantSelfDelivery;
+
+  TRes call({
+    Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk?
+        update_restaurant_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk<TRes>
+      get update_restaurant_by_pk;
+}
+
+class _CopyWithImpl$Mutation$switchRestaurantSelfDelivery<TRes>
+    implements CopyWith$Mutation$switchRestaurantSelfDelivery<TRes> {
+  _CopyWithImpl$Mutation$switchRestaurantSelfDelivery(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$switchRestaurantSelfDelivery _instance;
+
+  final TRes Function(Mutation$switchRestaurantSelfDelivery) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_restaurant_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$switchRestaurantSelfDelivery(
+        update_restaurant_by_pk: update_restaurant_by_pk == _undefined
+            ? _instance.update_restaurant_by_pk
+            : (update_restaurant_by_pk
+                as Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk<TRes>
+      get update_restaurant_by_pk {
+    final local$update_restaurant_by_pk = _instance.update_restaurant_by_pk;
+    return local$update_restaurant_by_pk == null
+        ? CopyWith$Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk(
+            local$update_restaurant_by_pk,
+            (e) => call(update_restaurant_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$switchRestaurantSelfDelivery<TRes>
+    implements CopyWith$Mutation$switchRestaurantSelfDelivery<TRes> {
+  _CopyWithStubImpl$Mutation$switchRestaurantSelfDelivery(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk?
+        update_restaurant_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk<TRes>
+      get update_restaurant_by_pk =>
+          CopyWith$Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationswitchRestaurantSelfDelivery =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'switchRestaurantSelfDelivery'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'restauarntId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'value')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Boolean'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_restaurant_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'restauarntId')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'self_delivery'),
+                value: VariableNode(name: NameNode(value: 'value')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'self_delivery'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$switchRestaurantSelfDelivery
+    _parserFn$Mutation$switchRestaurantSelfDelivery(
+            Map<String, dynamic> data) =>
+        Mutation$switchRestaurantSelfDelivery.fromJson(data);
+typedef OnMutationCompleted$Mutation$switchRestaurantSelfDelivery
+    = FutureOr<void> Function(
+  dynamic,
+  Mutation$switchRestaurantSelfDelivery?,
+);
+
+class Options$Mutation$switchRestaurantSelfDelivery
+    extends graphql.MutationOptions<Mutation$switchRestaurantSelfDelivery> {
+  Options$Mutation$switchRestaurantSelfDelivery({
+    String? operationName,
+    required Variables$Mutation$switchRestaurantSelfDelivery variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$switchRestaurantSelfDelivery? onCompleted,
+    graphql.OnMutationUpdate<Mutation$switchRestaurantSelfDelivery>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$switchRestaurantSelfDelivery(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationswitchRestaurantSelfDelivery,
+          parserFn: _parserFn$Mutation$switchRestaurantSelfDelivery,
+        );
+
+  final OnMutationCompleted$Mutation$switchRestaurantSelfDelivery?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$switchRestaurantSelfDelivery
+    extends graphql.WatchQueryOptions<Mutation$switchRestaurantSelfDelivery> {
+  WatchOptions$Mutation$switchRestaurantSelfDelivery({
+    String? operationName,
+    required Variables$Mutation$switchRestaurantSelfDelivery variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationswitchRestaurantSelfDelivery,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$switchRestaurantSelfDelivery,
+        );
+}
+
+extension ClientExtension$Mutation$switchRestaurantSelfDelivery
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$switchRestaurantSelfDelivery>>
+      mutate$switchRestaurantSelfDelivery(
+              Options$Mutation$switchRestaurantSelfDelivery options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$switchRestaurantSelfDelivery>
+      watchMutation$switchRestaurantSelfDelivery(
+              WatchOptions$Mutation$switchRestaurantSelfDelivery options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk {
+  Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk({
+    required this.id,
+    required this.self_delivery,
+    required this.$__typename,
+  });
+
+  factory Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$self_delivery = json['self_delivery'];
+    final l$$__typename = json['__typename'];
+    return Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk(
+      id: (l$id as int),
+      self_delivery: (l$self_delivery as bool),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final bool self_delivery;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$self_delivery = self_delivery;
+    _resultData['self_delivery'] = l$self_delivery;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$self_delivery = self_delivery;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$self_delivery,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$self_delivery = self_delivery;
+    final lOther$self_delivery = other.self_delivery;
+    if (l$self_delivery != lOther$self_delivery) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk
+    on Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk {
+  CopyWith$Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk<
+          Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk(
+    Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk instance,
+    TRes Function(Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk;
+
+  factory CopyWith$Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk;
+
+  TRes call({
+    int? id,
+    bool? self_delivery,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk _instance;
+
+  final TRes Function(
+      Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? self_delivery = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        self_delivery: self_delivery == _undefined || self_delivery == null
+            ? _instance.self_delivery
+            : (self_delivery as bool),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$switchRestaurantSelfDelivery$update_restaurant_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    bool? self_delivery,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Mutation$updateRestaurantInfo$update_restaurant_by_pk$description {

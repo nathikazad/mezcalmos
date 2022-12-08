@@ -1,0 +1,27 @@
+
+# Get all service 
+query getDeliveryCostByServiceProviderId($serviceProviderId: Int!) {
+  delivery_cost(where: {service_provider_id: {_eq: $serviceProviderId}}) {
+    cost_per_km
+    free_delivery_km_range
+    free_delivery_minimum_cost
+    id
+    minimum_cost
+    service_provider_id
+    service_provider_type
+  }
+}
+mutation addDeliveryCost($deliveryCost :  delivery_cost_insert_input!) {
+  insert_delivery_cost_one(object:$deliveryCost){id}
+}
+mutation updateDeliveryCost($id: Int!,$data : delivery_cost_set_input) {
+  update_delivery_cost_by_pk(pk_columns: {id:$id},_set: $data ) {
+    cost_per_km
+    free_delivery_km_range
+    free_delivery_minimum_cost
+    id
+    minimum_cost
+    service_provider_id
+    service_provider_type
+  }
+}

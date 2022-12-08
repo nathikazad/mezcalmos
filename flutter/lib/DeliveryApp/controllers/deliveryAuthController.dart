@@ -83,7 +83,7 @@ class DeliveryAuthController extends GetxController {
           _state.value = DeliveryDriverState.fromSnapshot(event.snapshot.value);
         } else {
           _state.value =
-              DeliveryDriverState(isAuthorized: false, isOnline: false);
+              DeliveryDriverState(isAuthorized: false, online: false);
         }
         mezDbgPrint(
             "/////////////////////////////////////////////${_state.value?.toJson()}////////////////////////////////////////////////////");
@@ -92,7 +92,7 @@ class DeliveryAuthController extends GetxController {
           await saveNotificationToken();
         }
 
-        if (_state.value!.isOnline == false) {
+        if (_state.value!.online == false) {
           await Location().enableBackgroundMode(enable: false);
           _locationListener?.pause();
         } else {
