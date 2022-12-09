@@ -8,6 +8,7 @@ import 'package:mezcalmos/RestaurantApp/pages/CurrentOrdersList/components/ROpOr
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpPastOrdersList'];
@@ -56,7 +57,7 @@ class _ROpPastOrdersListState extends State<ROpPastOrdersList> {
       appBar: LaundryAppAppBar(
         showOrders: false,
         leftBtnType: AppBarLeftButtonType.Back,
-        onClick: Get.back,
+        onClick: MezRouter.back,
       ),
       body: Obx(
         () => Scrollbar(

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
     ["MezWorkingHours"];
@@ -280,7 +281,7 @@ class MezEditDayScheduleSheet extends StatelessWidget {
             ),
             TextButton(
                 onPressed: () {
-                  Future.delayed(Duration.zero, Get.back)
+                  Future.delayed(Duration.zero, MezRouter.back)
                       .then((value) => schedule.refresh());
                 },
                 child: Container(
@@ -292,7 +293,7 @@ class MezEditDayScheduleSheet extends StatelessWidget {
                   backgroundColor: Colors.red,
                 ),
                 onPressed: () {
-                  Future.delayed(Duration.zero, Get.back)
+                  Future.delayed(Duration.zero, MezRouter.back)
                       .then((value) => schedule.refresh());
                 },
                 child: Container(

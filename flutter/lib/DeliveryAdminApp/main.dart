@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 const String defaultDb = "test";
 const String defaultLaunchMode = "stage";
@@ -23,7 +24,7 @@ List<SideMenuItem> sideMenuItems = [
       if (AdminAuthController().initialized ||
           Get.find<AdminAuthController>().admin?.authorized != true) {
       } else {
-        Get.toNamed<void>(kServicesRoute);
+        MezRouter.toNamed<void>(kServicesRoute);
       }
     },
     icon: Icons.store_rounded,
@@ -35,7 +36,7 @@ List<SideMenuItem> sideMenuItems = [
       if (AdminAuthController().initialized ||
           Get.find<AdminAuthController>().admin?.authorized != true) {
       } else {
-        Get.toNamed<void>(kAdminDashboard);
+        MezRouter.toNamed<void>(kAdminDashboard);
       }
     },
     icon: Icons.space_dashboard,

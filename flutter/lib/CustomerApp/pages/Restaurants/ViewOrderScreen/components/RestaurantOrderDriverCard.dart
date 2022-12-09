@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -82,12 +83,14 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                             .hasNewMessageNotification(
                                 order.customerDropOffDriverChatId!),
                         onTap: () {
-                          Get.toNamed(getMessagesRoute(chatId: order.chatId
-                              // recipientType: ParticipantType.DeliveryDriver,
-                              // orderType: OrderType.Restaurant,
-                              // orderId: order.orderId,
-                              // chatId: order.customerDropOffDriverChatId!,
-                              ));
+                          MezRouter.toNamed(
+                            getMessagesRoute(chatId: order.chatId
+                                // recipientType: ParticipantType.DeliveryDriver,
+                                // orderType: OrderType.Restaurant,
+                                // orderId: order.orderId,
+                                // chatId: order.customerDropOffDriverChatId!,
+                                ),
+                          );
                         }),
                   )
               ],

@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class IncomingOrderCard extends StatelessWidget {
   final TaxiOrder order;
@@ -18,7 +19,7 @@ class IncomingOrderCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => Future.delayed(
         Duration.zero,
-        () => Get.toNamed<void>(
+        () => MezRouter.toNamed<void>(
           order.status != TaxiOrdersStatus.Scheduled && !isPast
               ? getIncomingOrderRoute(order.orderId)
               : getTaxiOrderRoute(order.orderId),

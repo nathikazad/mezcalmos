@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 enum TwoButtonDialogButton { Left, Right }
+
 enum YesNoDialogButton { Yes, No }
 
 dynamic _i18n() =>
@@ -83,7 +85,7 @@ Future<void> oneButtonDialog({
               width: 80,
               child: InkWell(
                 child: buttonStyle,
-                onTap: Get.back,
+                onTap: MezRouter.back,
               ),
             ),
           )
@@ -166,7 +168,7 @@ Future<TwoButtonDialogButton?> twoButtonDialog({
                       child: leftButton,
                       onTap: onTapButtonLeft ??
                           () {
-                            Get.back();
+                            MezRouter.back();
                             twoButtonDialogButton = TwoButtonDialogButton.Left;
                             leftButtonCallback?.call();
 
@@ -183,7 +185,7 @@ Future<TwoButtonDialogButton?> twoButtonDialog({
                       child: rightButton,
                       onTap: onTapButtonRight ??
                           () {
-                            Get.back<void>();
+                            MezRouter.back<void>();
                             twoButtonDialogButton = TwoButtonDialogButton.Right;
                             rightButtonCallback?.call();
                           },
@@ -478,7 +480,7 @@ class MezUpdaterDialog {
                     flex: 1,
                     child: Container(
                       child: GestureDetector(
-                        onTap: () => Get.back<void>(closeOverlays: true),
+                        onTap: () => MezRouter.back<void>(closeOverlays: true),
                         child: Obx(
                           () => FittedBox(
                             fit: BoxFit.fitWidth,

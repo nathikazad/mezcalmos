@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['helpers']
     ["NotificationsHelper"];
@@ -38,7 +39,7 @@ Future<void> _displayNotification(notifs.Notification notification) async {
     notificationSnackBar(notification.imgUrl, notification.title,
         notification.body, notification.formattedTime, () async {
       // mezDbgPrint("Notification route ===> ${notification.linkUrl} !");
-      await Get.toNamed(notification.linkUrl);
+      await MezRouter.toNamed(notification.linkUrl);
     });
   }
 }
@@ -61,9 +62,9 @@ Future<void> decideWhichButtonDialogToUse(
       showSmallIcon: notification.secondaryIcon != null,
       bottomRightIcon: notification.secondaryIcon,
       primaryCallBack: () {
-        Get.back(closeOverlays: true);
+        MezRouter.back(closeOverlays: true);
       },
-      secondaryCallBack: () => Get.toNamed(notification.linkUrl),
+      secondaryCallBack: () => MezRouter.toNamed(notification.linkUrl),
     );
 }
 

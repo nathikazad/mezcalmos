@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class IOrderViewController {
   final AnimatedSliderController animatedSliderController;
@@ -109,7 +110,7 @@ class IOrderViewController {
         await cancelStreamsSubscriptions();
         // Go to CurrentOrder View !
         Future<void>.delayed(Duration.zero, () {
-          Get.offNamedUntil(
+          MezRouter.offNamedUntil(
               getTaxiOrderRoute(orderId), ModalRoute.withName(kHomeRoute));
         });
       }
@@ -136,13 +137,13 @@ class IOrderViewController {
       // canceling Subscription Just to Avoid possible Racing Conditions
       await cancelStreamsSubscriptions();
       // Go to CurrentOrder View !
-      unawaited(Get.offNamedUntil<void>(
+      unawaited(MezRouter.offNamedUntil<void>(
           getTaxiOrderRoute(_orderId), ModalRoute.withName(kHomeRoute)));
       // Notice the User !
     } else {
       // in case Taxi User failed accepting the iOrderViewController.order.
       clickedAcceptButton.value = false;
-      Get.back<void>();
+      MezRouter.back<void>();
       MezSnackbar("Oops..", serverResponse.errorMessage!);
     }
   }

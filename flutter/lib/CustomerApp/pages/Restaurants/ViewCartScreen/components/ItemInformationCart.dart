@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
@@ -136,9 +137,10 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
             if (_restaurantController.cart.value.quantity() == 0) {
               _restaurantController.clearCart();
               _restaurantController.cart.refresh();
-              Get.until((Route route) => route.settings.name == kHomeRoute);
+              MezRouter.untill(
+                  (Route route) => route.settings.name == kHomeRoute);
             } else {
-              Get.back(closeOverlays: true);
+              MezRouter.back(closeOverlays: true);
             }
           });
         },

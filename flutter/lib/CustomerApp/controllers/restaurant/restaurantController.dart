@@ -24,7 +24,7 @@ class RestaurantController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
 
-  StreamSubscription<dynamic>? _cartListener;
+  StreamSubscription? _cartListener;
   Restaurant? associatedRestaurant;
   Rx<Cart> cart = Cart().obs;
   RxnNum minShiipingPrice = RxnNum();
@@ -189,12 +189,13 @@ class RestaurantController extends GetxController {
       if (routeInfo != null) {
         _orderDistanceInKm = routeInfo.distance.distanceInMeters / 1000;
         mezDbgPrint(
-            "ORDER DISTANCE VARIABLEEEE ========>>>>>>>$_orderDistanceInKm");
-        mezDbgPrint(
-            "place :::: $loc distance from controller :::::::===> ${(routeInfo.distance.distanceInMeters / 1000)}");
-        if ((routeInfo.distance.distanceInMeters / 1000) <= 10) {
-          final num shippingCost =
-              perKmPrice.value! * (routeInfo.distance.distanceInMeters / 1000);
+            "[[+]] Shipping Distance in km ========>>>>>>>$_orderDistanceInKm");
+        mezDbgPrint("[[+]] MinShippingPrice ===> ${minShiipingPrice.value}");
+        mezDbgPrint("[[+]] perKmPrice ===> ${perKmPrice.value}");
+        if (_orderDistanceInKm <= 15) {
+          final num shippingCost = perKmPrice.value! * (_orderDistanceInKm);
+          mezDbgPrint(
+              "[[+]] Calculated final ShippingCost  ========>>>>>>>$shippingCost");
           if (shippingCost < minShiipingPrice.value!) {
             mezDbgPrint(
                 "LESS THAN MINIMUM COST ===================== $shippingCost << ${minShiipingPrice.value}");
@@ -202,6 +203,11 @@ class RestaurantController extends GetxController {
           } else {
             cart.value.shippingCost = shippingCost.ceil();
           }
+          cart.value.setRouteInformation = MapHelper.RouteInformation(
+            polyline: routeInfo.encodedPolyLine,
+            distance: routeInfo.distance,
+            duration: routeInfo.duration,
+          );
 
           mezDbgPrint(
               "SHIPPPPPING COOOOST =========>>>>>>>>>>>${cart.value.shippingCost}");

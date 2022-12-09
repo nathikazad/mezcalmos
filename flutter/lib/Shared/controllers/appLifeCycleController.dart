@@ -69,3 +69,11 @@ class AppLifeCycleController extends GetxController
     mezDbgPrint("[+] AppLifeCycleController :: AppStateChanged :: $state");
   }
 }
+
+String getRandomString(int length) {
+  const String _chars =
+      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  final Random _rnd = Random();
+  return String.fromCharCodes(Iterable.generate(
+      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+}

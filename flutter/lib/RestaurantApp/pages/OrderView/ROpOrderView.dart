@@ -29,6 +29,7 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpOrderView'];
@@ -120,7 +121,7 @@ class _ROpOrderViewState extends State<ROpOrderView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: Get.back,
+          onClick: MezRouter.back,
           titleWidget: Obx(() =>
               Text("${viewController.order.value?.customer.name ?? ""}"))),
       body: Obx(() {

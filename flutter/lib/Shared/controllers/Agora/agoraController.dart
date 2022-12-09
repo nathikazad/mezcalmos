@@ -6,6 +6,7 @@ import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/chatNodes.dart';
@@ -97,7 +98,7 @@ class Sagora extends GetxController {
         removeSession();
 
         // if (Get.currentRoute == kAgoraCallScreen) {
-        //   Get.back<void>();
+        //   MezRouter.back<void>();
         // }
       },
       userJoined: (uid, elapsed) {
@@ -182,7 +183,7 @@ class Sagora extends GetxController {
           callStatus.value = CallStatus.none;
           await FlutterCallkitIncoming.endAllCalls();
           // change to decline to update view parts.
-          // if (Get.currentRoute == kAgoraCallScreen) Get.back<void>();
+          // if (Get.currentRoute == kAgoraCallScreen) MezRouter.back<void>();
           break;
         case CallEvent.ACTION_CALL_ENDED:
           mezDbgPrint("CallEvent.ACTION_CALL_ENDED!");
@@ -203,7 +204,7 @@ class Sagora extends GetxController {
           callStatus.value = CallStatus.none;
 
           // if (Get.currentRoute == kAgoraCallScreen) {
-          //   Get.back<void>(closeOverlays: true);
+          //   MezRouter.back<void>(closeOverlays: true);
           // }
           break;
         case CallEvent.ACTION_CALL_ACCEPT:
@@ -225,7 +226,7 @@ class Sagora extends GetxController {
             callStatus.value = CallStatus.inCall;
             if (Get.currentRoute == kAgoraCallScreen) {
               Future<void>.microtask(
-                () => Get.offAndToNamed<void>(kAgoraCallScreen,
+                () => MezRouter.offAndToNamed<void>(kAgoraCallScreen,
                     arguments: <String, dynamic>{
                       "chatId": event.body?['extra']?['chatId'],
                       "talkingTo": Participant(
@@ -243,7 +244,7 @@ class Sagora extends GetxController {
               // Pushing to call screen + awaiting in case we wanna return with value.
               // ignore: unawaited_futures
               Future.microtask(
-                () => Get.toNamed<void>(kAgoraCallScreen,
+                () => MezRouter.toNamed<void>(kAgoraCallScreen,
                     arguments: <String, dynamic>{
                       "chatId": event.body?['extra']?['chatId'],
                       "talkingTo": Participant(

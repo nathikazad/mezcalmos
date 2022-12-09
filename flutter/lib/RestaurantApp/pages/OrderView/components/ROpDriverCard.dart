@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/models/Utilities/DeliveryMode.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpOrderView"]["components"]["ROpDriverCard"];
@@ -111,7 +112,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                     Obx(
                       () => MessageButton(
                         onTap: () {
-                          Get.toNamed(getMessagesRoute(
+                          MezRouter.toNamed(getMessagesRoute(
                               chatId: widget
                                   .order.serviceProviderDropOffDriverChatId!,
                               recipientType: ParticipantType.DeliveryDriver,

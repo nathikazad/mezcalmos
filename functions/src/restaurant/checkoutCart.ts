@@ -64,6 +64,13 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
   // let chain = getHasura();
   // let response = await getCheckoutDetails()
 
+  if (!cart.to) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: "Shipping address can't be null!"
+    }
+  }
+
   try {
     // if (data.stripePaymentId) {
     //   order = (await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId, data.stripeFees)) as RestaurantOrder

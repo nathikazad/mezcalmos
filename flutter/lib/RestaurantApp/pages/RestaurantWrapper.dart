@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class RestaurantWrapper extends StatefulWidget {
   @override
@@ -91,9 +92,9 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
     if (operator == null) {
       // ignore: unawaited_futures, inference_faQilure_on_function_invocation
 
-      Get.toNamed(kCreateRestaurant);
+      MezRouter.toNamed(kCreateRestaurant);
     } else {
-      Get.toNamed(kTabsView);
+      MezRouter.toNamed(kTabsView);
       // Get.to(SomethingWentWrongScreen());
 
     }

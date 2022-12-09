@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart' as Gen;
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:uuid/uuid.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
   mezDbgPrint("Handling a background message");
@@ -153,11 +154,12 @@ class BackgroundNotificationsController extends GetxController {
 
     onMessageListener =
         FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      final Sagora agora = Get.find<Sagora>();
       mezDbgPrint(
           "FirebaseMessage ======> ${message.data} | ${message.contentAvailable}");
       if (message.data["notificationType"] ==
           NotificationType.Call.toFirebaseFormatString()) {
+        final Sagora agora = Get.find<Sagora>();
+
         if (message.data['callNotificationType']
                 .toString()
                 .toCallNotificationtType() ==
@@ -194,8 +196,8 @@ class BackgroundNotificationsController extends GetxController {
     if (message.data['linkUrl'].toString().contains('/messages/')) {
       if (isCurrentRoute(kWrapperRoute)) {
         Future<void>.delayed(Duration(milliseconds: 100), () {
-          Get.toNamed<void>(kHomeRoute);
-          Get.toNamed<void>(
+          MezRouter.toNamed<void>(kHomeRoute);
+          MezRouter.toNamed<void>(
             message.data["linkUrl"],
             arguments: <String, bool>{'showViewOrderBtn': true},
           );
@@ -203,7 +205,7 @@ class BackgroundNotificationsController extends GetxController {
       } else {
         Future<void>.delayed(
           Duration(milliseconds: 100),
-          () => Get.toNamed<void>(
+          () => MezRouter.toNamed<void>(
             message.data["linkUrl"],
             arguments: <String, bool>{'showViewOrderBtn': true},
           ),
@@ -212,7 +214,7 @@ class BackgroundNotificationsController extends GetxController {
     } else
       Future<void>.delayed(
         Duration(milliseconds: 100),
-        () => Get.toNamed<void>(message.data["linkUrl"]),
+        () => MezRouter.toNamed<void>(message.data["linkUrl"]),
       );
   }
 

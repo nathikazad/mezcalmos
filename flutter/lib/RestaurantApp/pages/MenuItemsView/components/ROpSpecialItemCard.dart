@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpMenuView"]["components"]["ROpItemCard"];
@@ -31,7 +32,7 @@ class ROpSpecialItemCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          Get.toNamed(
+          MezRouter.toNamed(
               getEditItemRoute(
                   itemId: item.id!.toString(),
                   restaurntID: viewController.restaurnatId),

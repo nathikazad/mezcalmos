@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
         ["pages"]["CurrentOrders"]["CurrentOrderViewScreen"]["Components"]
@@ -70,7 +71,7 @@ class LaundryOrderHeader extends StatelessWidget {
                         ? order.serviceProviderPickupDriverChatId!
                         : order.serviceProviderDropOffDriverChatId!,
                   );
-                  Get.toNamed(getMessagesRoute(
+                  MezRouter.toNamed(getMessagesRoute(
                       orderId: order.orderId,
                       orderType: OrderType.Laundry,
                       chatId:

@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpOrderView"]["components"]["ROpOrderCustomer"];
@@ -67,7 +68,7 @@ class ROpOrderCustomer extends StatelessWidget {
                             .hasNewMessageNotification(
                                 order.orderId.toString()),
                         onTap: () {
-                          Get.toNamed(getMessagesRoute(
+                          MezRouter.toNamed(getMessagesRoute(
                               orderId: order.orderId,
                               chatId: order.orderId,
                               recipientType: ParticipantType.Customer));

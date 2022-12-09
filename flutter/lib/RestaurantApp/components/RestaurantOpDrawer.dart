@@ -13,6 +13,8 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]
     ["components"]["LaundryAppDrawer"];
@@ -169,7 +171,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
         _navigationLink(
             onClick: () {
               _drawerController.closeMenu();
-              Get.toNamed(getROpEditInfoRoute(
+              MezRouter.toNamed(getROpEditInfoRoute(
                   restaurantId: restaurantOpAuthController.restaurantId!));
             },
             icon: Icons.person,
@@ -181,7 +183,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
             icon: Icons.flatware_rounded,
             onClick: () {
               _drawerController.closeMenu();
-              Get.toNamed(getROpMenuRoute(
+              MezRouter.toNamed(getROpMenuRoute(
                   restaurantId: restaurantOpAuthController
                       .operator.value!.state.restaurantId!));
             },
@@ -202,7 +204,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
             )),
         _navigationLink(
             onClick: () {
-              Get.toNamed(kNotificationsRoute);
+              MezRouter.toNamed(kNotificationsRoute);
             },
             icon: Icons.notifications,
             titleWidget: Text(

@@ -18,6 +18,7 @@ import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart' as sharedRoute;
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class LaundryOrderRequestView extends StatefulWidget {
   const LaundryOrderRequestView({Key? key}) : super(key: key);
@@ -119,7 +120,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                     Container(
                       //  margin: const EdgeInsets.all(8),
                       child: Text(
-                        '${_i18n()["deliveryLocation"]} :',
+                        '${_i18n()["deliveryLocation"]}',
                         style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
@@ -127,27 +128,19 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                       height: 10,
                     ),
                     Obx(
-                      () => Card(
-                        child: authController.user != null
-                            ? DropDownLocationList(
-                                bgColor: secondaryLightBlueColor,
-                                passedInLocation: customerLoc,
-                                onValueChangeCallback: ({Location? location}) {
-                                  setState(() {
-                                    customerLoc = location;
-                                  });
-                                },
-                              )
-                            : pickFromMapComponent(context),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 25,
+                      () => authController.user != null
+                          ? DropDownLocationList(
+                              bgColor: secondaryLightBlueColor,
+                              passedInLocation: customerLoc,
+                              onValueChangeCallback: ({Location? location}) {
+                                setState(() {
+                                  customerLoc = location;
+                                });
+                              },
+                            )
+                          : pickFromMapComponent(context),
                     ),
                     _orderNoteComponent(),
-                    SizedBox(
-                      height: 20,
-                    ),
                   ],
                 ),
               ),
@@ -159,12 +152,12 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
 
   Widget _orderNoteComponent() {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsets.symmetric(vertical: 25),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(_i18n()["notes"], style: Theme.of(context).textTheme.headline3),
-          const SizedBox(height: 10),
+          Text(_i18n()["notes"], style: Theme.of(context).textTheme.bodyText1),
+          const SizedBox(height: 15),
           TextField(
             controller: _orderNote,
             maxLines: 5,
@@ -181,43 +174,45 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     );
   }
 
-  InkWell pickFromMapComponent(BuildContext context) {
-    return InkWell(
-      onTap: () async {
-        // ignore: prefer_final_locals
-        Location? currentLoc =
-            await Get.toNamed(kPickLocationNotAuth) as Location?;
-        if (currentLoc != null) {
-          setState(() {
-            customerLoc = currentLoc;
-          });
-        }
-      },
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        alignment: Alignment.centerLeft,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: (customerLoc == null)
-                ? Colors.red
-                : Theme.of(context).primaryColorLight,
+  Widget pickFromMapComponent(BuildContext context) {
+    return Card(
+      child: InkWell(
+        onTap: () async {
+          // ignore: prefer_final_locals
+          Location? currentLoc =
+              await MezRouter.toNamed(kPickLocationNotAuth) as Location?;
+          if (currentLoc != null) {
+            setState(() {
+              customerLoc = currentLoc;
+            });
+          }
+        },
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          alignment: Alignment.centerLeft,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: (customerLoc == null)
+                  ? Colors.red
+                  : Theme.of(context).primaryColorLight,
+            ),
           ),
-        ),
-        child: Row(
-          children: <Widget>[
-            Icon(
-              Icons.place_rounded,
-              color: Theme.of(context).primaryColorLight,
-            ),
-            const SizedBox(width: 5),
-            Flexible(
-              child: Text(
-                customerLoc?.address ?? _i18n()['pickLocation'],
-                maxLines: 1,
+          child: Row(
+            children: <Widget>[
+              Icon(
+                Icons.place_rounded,
+                color: Theme.of(context).primaryColorLight,
               ),
-            ),
-          ],
+              const SizedBox(width: 5),
+              Flexible(
+                child: Text(
+                  customerLoc?.address ?? _i18n()['pickLocation'],
+                  maxLines: 1,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -238,7 +233,8 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                 onPressed: () async {
                   Get.find<AuthController>()
                       .preserveNavigationStackAfterSignIn = true;
-                  await Get.toNamed<void>(sharedRoute.kSignInRouteOptional);
+                  await MezRouter.toNamed<void>(
+                      sharedRoute.kSignInRouteOptional);
                 },
                 style: TextButton.styleFrom(
                   shape: RoundedRectangleBorder(

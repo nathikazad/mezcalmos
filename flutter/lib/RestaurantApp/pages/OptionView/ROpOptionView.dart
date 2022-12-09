@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpOptionView"];
@@ -269,7 +270,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
                           .deleteOption()
                           .then((bool? hasBennDeleted) {
                         if (hasBennDeleted == true) {
-                          Get.back(result: true);
+                          MezRouter.back(result: true);
                         }
                       });
                     },
@@ -284,7 +285,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
 
   AppBar _appBar() {
     return mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
-      Get.back(result: _viewController.needToFetch.value);
+      MezRouter.back(result: _viewController.needToFetch.value);
     },
         titleWidget: Obx(
           () => Text((_viewController.editMode.isTrue)

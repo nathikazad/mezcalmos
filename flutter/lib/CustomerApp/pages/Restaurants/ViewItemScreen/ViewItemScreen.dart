@@ -20,6 +20,7 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 
@@ -152,10 +153,6 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                 Container(
                   margin: const EdgeInsets.only(top: 10),
                   child: Row(
-                    // mainAxisAlignment:
-                    //     (currentRestaurant != null && showViewRestaurant)
-                    //         ? MainAxisAlignment.start
-                    //         : MainAxisAlignment.end,
                     children: [
                       Flexible(
                         fit: FlexFit.tight,
@@ -169,7 +166,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                         InkWell(
                           borderRadius: BorderRadius.circular(18),
                           onTap: () {
-                            Get.toNamed(
+                            MezRouter.toNamed(
                               getRestaurantRoute(
                                 currentRestaurant!.info.hasuraId,
                               ),
@@ -236,7 +233,10 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                     ),
                   ),
                 if (item.description?[userLanguage] != null &&
-                    item.description![userLanguage]!.isNotEmpty)
+                    item.description![userLanguage]!
+                        .toString()
+                        .removeAllWhitespace
+                        .isNotEmpty)
                   _itemDescription(context, item),
                 if (item.options.isNotEmpty)
                   Column(

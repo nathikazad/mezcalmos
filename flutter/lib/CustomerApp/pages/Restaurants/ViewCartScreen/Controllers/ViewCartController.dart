@@ -35,6 +35,8 @@ class ViewCartController {
   // Payment Card //
   Rxn<CreditCard> card = Rxn();
 
+  final RxBool clickedCheckout = false.obs;
+
   // init //
   Future<void> init() async {
     _addAndListenToCustomerCards();
@@ -93,6 +95,11 @@ class ViewCartController {
     });
 
     options.refresh();
+  }
+
+  bool get shoudSchedule {
+    return (controller.cart.value.restaurant?.isOpen() == false ||
+        controller.cart.value.isSpecial);
   }
 
   Future<void> _getCustomerCards() async {

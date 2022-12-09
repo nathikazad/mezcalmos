@@ -19,6 +19,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewRestaurantScreen"]["CustomerRestaurantView"];
@@ -68,21 +69,20 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
 
   Container _schedulingOrdersBottomWidget() {
     return Container(
+      alignment: Alignment.center,
       height: 60,
       decoration: BoxDecoration(color: Colors.grey.shade400),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(Icons.info),
-          SizedBox(
-            width: 5,
-          ),
           Flexible(
             child: Text(
               '${_i18n()["scheduleTitle"]}',
               style: Get.textTheme.bodyText1,
               maxLines: 2,
+              textAlign: TextAlign.center,
             ),
           ),
         ],
@@ -174,7 +174,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           if (category.dialog?[userLanguage] != null)
             Container(
               child: Text(
-                category.dialog![userLanguage]!,
+                category.dialog![userLanguage]!.inCaps,
                 style: Get.textTheme.bodyText2?.copyWith(
                     fontFamily: "Montserrat", color: Colors.grey.shade700),
               ),
@@ -235,7 +235,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
                 function: () {
                   mezDbgPrint(
                       "[66] IUtem id ===> ${item.id} -- route ==> ${getItemRoute(restaurantId.toString(), item.id!)}");
-                  Get.toNamed(
+                  MezRouter.toNamed(
                     getItemRoute(restaurantId.toString(), item.id!)
                         .replaceAll(' ', ''),
                     arguments: {

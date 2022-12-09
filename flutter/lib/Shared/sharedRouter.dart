@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
@@ -67,7 +68,7 @@ void popEverythingAndNavigateTo(route, {args}) {
 }
 
 void popUntilAndNavigateTo(untilRoute, toRoute, {args}) {
-  Get.offNamedUntil(toRoute, (Route<dynamic> route) {
+  MezRouter.offNamedUntil(toRoute, (Route<dynamic> route) {
     return (route.settings.name == untilRoute);
   }, arguments: args);
 }

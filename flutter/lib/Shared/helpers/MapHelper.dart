@@ -103,15 +103,31 @@ Future<LocModel.Location> getCurrentLocation() async {
 
 /// This is for AutoComplete location Search !
 Future<Map<String, String>> getLocationsSuggestions(String search) async {
+  final Map<String, String> _returnedPredictions = <String, String>{};
+
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
-  final LocationData loc = await Location().getLocation();
+
+  // ignore: unawaited_futures
+  final LocationData loc = await Location().getLocation().timeout(
+      Duration(seconds: 2),
+      onTimeout: () => LocationData.fromMap(
+          <String, dynamic>{"latitude": 15.872141, "longitude": -97.076737}));
+  //     .then((LocationData locData) {
+  //   loc = locData;
+  // }).catchError((Object error) {
+  //   loc = LocationData.fromMap(
+  //       <String, dynamic>{"latitude": 15.872141, "longitude": -97.076737});
+  // });
+
   final String url =
-      "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&language=$userLanguage&components=country:mx&location=${loc.latitude},${loc.longitude}&radius=11000&key=$placesApikey";
+      "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&language=$userLanguage&components=country:mx&location=${loc.latitude!},${loc.longitude!}&radius=11000&key=$placesApikey";
+
+  mezDbgPrint("===>TWRK :  ${loc.latitude}  | ${loc.longitude}<===");
+  if (loc == null) return _returnedPredictions;
 
   final http.Response resp = await http.get(Uri.parse(url));
   final Map<String, dynamic> respJson = json.decode(resp.body);
-  final Map<String, String> _returnedPredictions = <String, String>{};
 
   if (respJson["status"] == "OK") {
     respJson["predictions"].forEach((pred) {
@@ -152,15 +168,25 @@ Future<String?> getAdressFromLatLng(LatLng latlng) async {
   final String url =
       "https://maps.googleapis.com/maps/api/geocode/json?latlng=${latlng.latitude},${latlng.longitude}&key=$placesApikey";
 
-  mezDbgPrint(url);
+  http.Response? resp = null;
+  try {
+    resp = await (http.get(Uri.parse(url)).timeout(Duration(seconds: 10),
+        onTimeout: () => throw Exception(
+            "Timed out when trying to geocode LatLng(${latlng.latitude}, ${latlng.longitude})")));
+  } catch (e, _stack) {
+    logCrashes(crashInfos: "Error => $e\n\nStack => $_stack");
+  }
 
-  final http.Response resp = await http.get(Uri.parse(url));
-  final Map<String, dynamic> respJson = json.decode(resp.body);
+  if (resp != null) {
+    final Map<String, dynamic> respJson = json.decode(resp.body);
 
-  if (respJson["status"] == "OK") {
-    mezDbgPrint(respJson);
-    final String address = respJson["results"][0]["formatted_address"];
-    return address;
+    if (respJson["status"] == "OK") {
+      mezDbgPrint(respJson);
+      final String address = respJson["results"][0]["formatted_address"];
+      return address;
+    } else {
+      return null;
+    }
   } else {
     return null;
   }
@@ -195,10 +221,11 @@ Future<Route?> getDurationAndDistance(
     final List<PointLatLng> polylinePoints =
         PolylinePoints().decodePolyline(encodedPolyLine);
     return Route(
-        duration: duration,
-        distance: distance,
-        polylineList: polylinePoints,
-        encodedPolyLine: encodedPolyLine);
+      duration: duration,
+      distance: distance,
+      polylineList: polylinePoints,
+      encodedPolyLine: encodedPolyLine,
+    );
   } else {
     MezSnackbar('${_i18n()["error"]}', '${_i18n()["noRoute"]}');
     return null;

@@ -5,6 +5,7 @@ import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpItemView"]["components"]["ROpItemCategorySelector"];
@@ -53,7 +54,7 @@ class _ROpItemCategorySelectorState extends State<ROpItemCategorySelector> {
             if (newValue != null) {
               if (newValue.id == "addNew") {
                 // ignore: unawaited_futures
-                final Category? newCat = await Get.toNamed(
+                final Category? newCat = await MezRouter.toNamed(
                     getROpCategoryRoute(
                         restaurantId:
                             widget.viewController.restaurantId.toString()),

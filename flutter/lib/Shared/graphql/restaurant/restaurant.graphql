@@ -45,7 +45,6 @@ query getOneRestaurant($id: Int!) {
     location_text
     self_delivery
     name
-
     description {
       translations {
         language_id

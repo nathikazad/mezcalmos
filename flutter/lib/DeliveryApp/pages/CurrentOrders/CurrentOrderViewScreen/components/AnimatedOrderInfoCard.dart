@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
         ["pages"]["CurrentOrders"]["CurrentOrderViewScreen"]["Components"]
@@ -379,7 +380,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            Get.toNamed<void>(
+            MezRouter.toNamed<void>(
               getOrderDetailsRoute(order.orderId),
             );
           },

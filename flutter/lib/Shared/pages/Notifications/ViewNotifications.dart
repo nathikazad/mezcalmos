@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["Notifications"]["ViewNotifications"];
@@ -40,7 +41,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
     return Obx(
       () => Scaffold(
         appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-            onClick: Get.back, title: _i18n()['title']),
+            onClick: MezRouter.back, title: _i18n()['title']),
         body: Obx(() {
           if (controller.notifications.isNotEmpty) {
             return SingleChildScrollView(
@@ -150,7 +151,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          Get.offNamed(notification.linkUrl);
+          MezRouter.offNamed(notification.linkUrl);
         },
         child: Ink(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
@@ -237,7 +238,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                           secondaryButtonText: "${_i18n()["no"]}",
                           onYesClick: () async {
                         controller.clearAllNotification();
-                        Get.back();
+                        MezRouter.back();
                       });
                     },
                     child: Ink(

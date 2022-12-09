@@ -1,6 +1,14 @@
 // Usefull when trying to make Sizes adptable!
 import 'dart:async';
 import 'dart:io';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';

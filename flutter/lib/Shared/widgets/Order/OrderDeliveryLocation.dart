@@ -9,9 +9,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
 //
 
 class OrderDeliveryLocation extends StatelessWidget {
-  const OrderDeliveryLocation({super.key, required this.order, this.margin});
+  const OrderDeliveryLocation(
+      {super.key, required this.order, this.margin, this.titleTextStyle});
   final Order order;
   final EdgeInsets? margin;
+  final TextStyle? titleTextStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,8 @@ class OrderDeliveryLocation extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${_i18n()["title"]} : ',
+            '${_i18n()["title"]}',
+            style: titleTextStyle,
           ),
           const SizedBox(
             height: 10,

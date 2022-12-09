@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class ROpEditInfoWidgets {
   final ROpEditInfoController editInfoController;
@@ -24,7 +25,7 @@ class ROpEditInfoWidgets {
         alignment: Alignment.centerLeft,
         child: Text(
           "${_i18n()["workingHours"]}",
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyText2,
         ),
       ),
       SizedBox(
@@ -297,7 +298,7 @@ class ROpEditInfoWidgets {
             backgroundColor: offRedColor,
             textStyle: Get.textTheme.bodyText1?.copyWith(color: Colors.red)),
         onPressed: () {
-          Future.delayed(Duration.zero, Get.back).then((value) {
+          Future.delayed(Duration.zero, MezRouter.back).then((value) {
             editInfoController.schedulePreview.value =
                 Schedule.clone(editInfoController.newSchedule.value!);
             editInfoController.schedulePreview.refresh();
@@ -314,7 +315,7 @@ class ROpEditInfoWidgets {
   Widget _saveBtn() {
     return InkWell(
         onTap: () {
-          Future.delayed(Duration.zero, Get.back).then((value) {
+          Future.delayed(Duration.zero, MezRouter.back).then((value) {
             editInfoController.newSchedule.value =
                 Schedule.clone(editInfoController.schedulePreview.value!);
             editInfoController.newSchedule.refresh();

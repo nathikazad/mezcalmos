@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['Shared']['helpers']['ImageHelper'];
@@ -81,7 +82,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                 InkWell(
                   onTap: () {
                     _result = imPicker.ImageSource.camera;
-                    Get.back();
+                    MezRouter.back();
                   },
                   child: Container(
                     padding:
@@ -104,7 +105,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                 InkWell(
                   onTap: () {
                     _result = imPicker.ImageSource.gallery;
-                    Get.back();
+                    MezRouter.back();
                   },
                   child: Container(
                     padding:
@@ -127,7 +128,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                 // TextButton(
                 //     onPressed: () {
                 //      _result = imPicker.ImageSource.gallery;
-                //       Get.back();
+                //       MezRouter.back();
                 //     },
                 //     style: TextButton.styleFrom(
                 //         backgroundColor: Colors.purple.shade400,

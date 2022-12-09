@@ -16,10 +16,8 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/componen
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/notesWidget.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
-import 'package:mezcalmos/Shared/graphql/order/restaurant/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -28,11 +26,11 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewOrderScreen"]["ViewRestaurantOrderScreen"];
@@ -98,7 +96,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     mezDbgPrint("[=] ViewRestaurantOrderScreeen params :: ${Get.parameters}");
     final int orderId = int.parse(Get.parameters['orderId']!);
 
-    if (Get.parameters['orderId'] == null) Get.back();
+    if (Get.parameters['orderId'] == null) MezRouter.back();
     // orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as RestaurantOrder?;

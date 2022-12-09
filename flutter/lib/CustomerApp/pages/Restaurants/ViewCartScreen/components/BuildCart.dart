@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewCartScreen"]["components"]["BuildCart"];
@@ -60,7 +61,7 @@ class CartBuilder extends StatelessWidget {
                               );
                               controller.clearCart();
                               controller.cart.refresh();
-                              Get.back<void>();
+                              MezRouter.back<void>();
                             });
                           },
                           child: const Icon(

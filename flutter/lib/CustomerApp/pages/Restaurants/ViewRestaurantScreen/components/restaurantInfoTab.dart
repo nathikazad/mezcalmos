@@ -41,7 +41,7 @@ class RestaurantInfoTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         _topBarInfo(),
-        if (restaurant.description![userLanguage] != null &&
+        if (restaurant.description?[userLanguage] != null &&
             restaurant.description![userLanguage]!.isNotEmpty)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,9 +58,6 @@ class RestaurantInfoTab extends StatelessWidget {
                 ),
                 child: Text(restaurant.description?[userLanguage] ?? ""),
               ),
-              SizedBox(
-                height: 20,
-              )
             ],
           ),
         if (restaurant.schedule != null)

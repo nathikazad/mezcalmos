@@ -3,11 +3,9 @@ import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
-import 'package:mezcalmos/Shared/widgets/OrderInfoCard/OrderInfoCard.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen/Components/IncomingOrderCard.dart';
-import 'package:mezcalmos/TaxiApp/taxiOrderCardBuilder.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['ListOrdersScreen']['ListOrdersScreen'];
@@ -28,7 +26,7 @@ class PastOrderList extends StatelessWidget {
         appBar: AppBar(
           leading: Center(
             child: GestureDetector(
-              onTap: Get.back,
+              onTap: MezRouter.back,
               child: Container(
                 height: 30,
                 width: 30,

@@ -6,6 +6,7 @@ import 'package:mezcalmos/DeliveryAdminApp/constants/global.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 final f = new DateFormat('hh:mm a');
 
@@ -32,7 +33,7 @@ Widget buildOrders(RxList<Order> inProcessOrders) {
               quantity: "${element.quantity}",
               date: "${f.format(element.orderTime.toLocal())}",
               ontap: () =>
-                  Get.toNamed(getRestaurantOrderRoute(element.orderId)),
+                  MezRouter.toNamed(getRestaurantOrderRoute(element.orderId)),
             ),
           );
 

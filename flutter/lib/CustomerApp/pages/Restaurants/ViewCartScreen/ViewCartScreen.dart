@@ -21,6 +21,7 @@ import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class ViewCartScreen extends StatefulWidget {
   @override
@@ -128,16 +129,25 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                       false)
                   ? '${_i18n()["scheduleOrder"]}'
                   : '${_i18n()["orderNow"]}',
-              enabled: _restaurantController.canOrder,
+              enabled: _restaurantController.canOrder &&
+                  !viewCartController.clickedCheckout.value,
               withGradient: true,
               borderRadius: 0,
-              onClick: () async {
-                if (_restaurantController.canOrder) {
-                  await checkoutActionButton();
-                } else {
-                  _restaurantController.cart.refresh();
-                }
-              },
+              onClick: viewCartController.clickedCheckout.value
+                  ? null
+                  : () async {
+                      if (_restaurantController.canOrder &&
+                          !viewCartController.clickedCheckout.value) {
+                        viewCartController.clickedCheckout.value = true;
+                        // final bool _isCheckoutFailed =
+                        await checkoutActionButton();
+                        // if (_isCheckoutFailed) {
+                        //   viewCartController.clickedCheckout.value = false;
+                        // }
+                      } else {
+                        _restaurantController.cart.refresh();
+                      }
+                    },
             );
           } else
             return SizedBox();

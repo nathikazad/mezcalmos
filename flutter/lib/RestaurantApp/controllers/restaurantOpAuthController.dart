@@ -15,6 +15,8 @@ import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
+import 'package:flutter/material.dart' as Material;
 
 class RestaurantOpAuthController extends GetxController {
   Rxn<RestaurantOperator> operator = Rxn();
@@ -32,6 +34,11 @@ class RestaurantOpAuthController extends GetxController {
 
   StreamSubscription? _restaurantOperatorNodeListener;
   StreamSubscription<MainUserInfo>? _userInfoStreamListener;
+  final AppLifeCycleController _appLifeCycleController =
+      Get.find<AppLifeCycleController>();
+
+  String? _appLifeCyclePauseCallbackId;
+  String? _appLifeCycleResumeCallbackId;
 
   bool _checkedAppVersion = false;
   String? _previousStateValue = "init";
@@ -120,7 +127,7 @@ class RestaurantOpAuthController extends GetxController {
         await _notificationsController.getToken();
     if (deviceNotificationToken != null) {
       unawaited(_databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(operatorNotificationInfoNode(
               operatorType: OperatorType.Restaurant,
               uid: _authController.fireAuthUser!.uid))
@@ -134,7 +141,7 @@ class RestaurantOpAuthController extends GetxController {
     if (_checkedAppVersion == false) {
       final String version = GetStorage().read(getxAppVersion);
       _databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(operatorAppVersionNode(
               operatorType: OperatorType.Restaurant,
               uid: _authController.fireAuthUser!.uid))
@@ -169,6 +176,12 @@ class RestaurantOpAuthController extends GetxController {
   void onClose() {
     mezDbgPrint(
         "[+] RestaurantAuthController::dispose ---------> Was invoked ! $hashCode");
+    if (_appLifeCyclePauseCallbackId != null)
+      _appLifeCycleController.removeCallbackIdOfState(
+          Material.AppLifecycleState.paused, _appLifeCyclePauseCallbackId);
+    if (_appLifeCycleResumeCallbackId != null)
+      _appLifeCycleController.removeCallbackIdOfState(
+          Material.AppLifecycleState.resumed, _appLifeCycleResumeCallbackId);
 
     _restaurantOperatorNodeListener?.cancel();
     _restaurantOperatorNodeListener = null;
