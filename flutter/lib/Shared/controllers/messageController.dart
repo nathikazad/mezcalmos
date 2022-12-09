@@ -28,7 +28,7 @@ class MessageController extends GetxController {
 
   AuthController _authController = Get.find<AuthController>();
   SettingsController _settingsController = Get.find<SettingsController>();
-  // StreamSubscription? chatListener;
+  StreamSubscription? chatListener;
   late AppType appType;
 
   @override
@@ -59,30 +59,35 @@ class MessageController extends GetxController {
     //   });
     // });
 
-    if (chat.value == null) {
-      get_chat_info(chat_id: chatId).then((HasuraChat? value) {
-        mezDbgPrint("[77] Got Chat :: id ($chatId) :: $value !");
+    get_chat_info(chat_id: chatId).then((HasuraChat? value) {
+      mezDbgPrint("[77] Got Chat :: id ($chatId) :: $value !");
 
-        if (value != null) {
-          mezDbgPrint("[77] Got Chat !");
-          chat.value = value;
-          if (onValueCallBack != null) onValueCallBack();
-        }
+      if (value != null) {
+        mezDbgPrint("[77] Got Chat !");
+        chat.value = value;
+        if (onValueCallBack != null) onValueCallBack();
+      }
 
-        // if no listeneres we listen
-        if (chatListener == null) {
-          chatListener = chatListener = listen_on_chat_messages(chatId: chatId)
-              .listen((List<Message> msgs) {
-            mezDbgPrint("[+] Chat :: new messages :: trigger :: listener!");
-            if (msgs.isNotEmpty && msgs.length > chat.value!.messages.length) {
-              chat.value!.messages.clear();
-              chat.value!.messages.addAll(msgs);
-              if (onValueCallBack != null) onValueCallBack();
-            }
-          });
-        }
+      if (subscriptionId != null) {
+        hasuraDb.cancelSubscription(subscriptionId!);
+        chatListener?.cancel();
+        chatListener = null;
+      } // if no listeneres we listen
+      subscriptionId = hasuraDb.createSubscription(start: () {
+        chatListener = listen_on_chat_messages(chatId: chatId)
+            .listen((List<Message> msgs) {
+          mezDbgPrint("[+] Chat :: new messages :: trigger :: listener!");
+          if (msgs.isNotEmpty && msgs.length > chat.value!.messages.length) {
+            chat.value!.messages.clear();
+            chat.value!.messages.addAll(msgs);
+            if (onValueCallBack != null) onValueCallBack();
+          }
+        });
+      }, cancel: () {
+        chatListener?.cancel();
+        chatListener = null;
       });
-    }
+    });
   }
 
   bool isUserAuthorizedToCall() {
@@ -224,7 +229,6 @@ class MessageController extends GetxController {
   @override
   void onClose() {
     if (subscriptionId != null) hasuraDb.cancelSubscription(subscriptionId!);
-
     super.onClose();
   }
 }
