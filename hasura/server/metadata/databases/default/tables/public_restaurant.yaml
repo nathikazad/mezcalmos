@@ -78,6 +78,7 @@ select_permissions:
         - open_status
         - payment_info_id
         - schedule
+        - self_delivery
       filter: {}
   - role: mez_admin
     permission:

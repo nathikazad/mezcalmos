@@ -41,11 +41,11 @@ Map<LanguageType, String> toLanguageMap({required List translations}) {
 }
 
 /// Decode a jsonString into a Map<String, dynamic>
-Map<String, dynamic> mapFromJson(String jsonString) {
-  return jsonDecode(jsonString);
+T mapFromJson<T>(dynamic jsonString) {
+  return jsonDecode(jsonString.toString()) as T;
 }
 
 /// Stringify a Map object
-String mapToJson(Map<String, dynamic> map) {
+String mapToJson(dynamic map) {
   return jsonEncode(map);
 }

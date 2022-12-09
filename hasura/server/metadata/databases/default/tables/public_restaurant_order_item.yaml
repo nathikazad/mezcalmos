@@ -25,6 +25,24 @@ select_permissions:
         order:
           customer_id:
             _eq: X-Hasura-User-Id
+  - role: delivery_driver
+    permission:
+      columns:
+        - unavailable
+        - id
+        - quantity
+        - restaurant_item_id
+        - restaurant_order_id
+        - review_id
+        - in_json
+        - cost_per_one
+        - notes
+      filter:
+        order:
+          delivery:
+            delivery_driver:
+              user_id:
+                _eq: X-Hasura-User-Id
   - role: mez_admin
     permission:
       columns:

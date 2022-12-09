@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
+import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 
 class Variables$Query$get_chat_info {
   factory Variables$Query$get_chat_info({required int chat_id}) =>
@@ -476,8 +477,8 @@ class Query$get_chat_info$chat_by_pk {
     final l$chat_participants = json['chat_participants'];
     final l$$__typename = json['__typename'];
     return Query$get_chat_info$chat_by_pk(
-      messages: (l$messages as Map<String, dynamic>?),
-      chat_info: (l$chat_info as Map<String, dynamic>?),
+      messages: l$messages == null ? null : mapFromJson(l$messages),
+      chat_info: l$chat_info == null ? null : mapFromJson(l$chat_info),
       creation_time: (l$creation_time as String),
       chat_participants: (l$chat_participants as List<dynamic>)
           .map((e) => Query$get_chat_info$chat_by_pk$chat_participants.fromJson(
@@ -487,9 +488,9 @@ class Query$get_chat_info$chat_by_pk {
     );
   }
 
-  final Map<String, dynamic>? messages;
+  final dynamic? messages;
 
-  final Map<String, dynamic>? chat_info;
+  final dynamic? chat_info;
 
   final String creation_time;
 
@@ -501,9 +502,10 @@ class Query$get_chat_info$chat_by_pk {
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$messages = messages;
-    _resultData['messages'] = l$messages;
+    _resultData['messages'] = l$messages == null ? null : mapToJson(l$messages);
     final l$chat_info = chat_info;
-    _resultData['chat_info'] = l$chat_info;
+    _resultData['chat_info'] =
+        l$chat_info == null ? null : mapToJson(l$chat_info);
     final l$creation_time = creation_time;
     _resultData['creation_time'] = l$creation_time;
     final l$chat_participants = chat_participants;
@@ -594,8 +596,8 @@ abstract class CopyWith$Query$get_chat_info$chat_by_pk<TRes> {
       _CopyWithStubImpl$Query$get_chat_info$chat_by_pk;
 
   TRes call({
-    Map<String, dynamic>? messages,
-    Map<String, dynamic>? chat_info,
+    dynamic? messages,
+    dynamic? chat_info,
     String? creation_time,
     List<Query$get_chat_info$chat_by_pk$chat_participants>? chat_participants,
     String? $__typename,
@@ -631,10 +633,10 @@ class _CopyWithImpl$Query$get_chat_info$chat_by_pk<TRes>
       _then(Query$get_chat_info$chat_by_pk(
         messages: messages == _undefined
             ? _instance.messages
-            : (messages as Map<String, dynamic>?),
+            : (messages as dynamic?),
         chat_info: chat_info == _undefined
             ? _instance.chat_info
-            : (chat_info as Map<String, dynamic>?),
+            : (chat_info as dynamic?),
         creation_time: creation_time == _undefined || creation_time == null
             ? _instance.creation_time
             : (creation_time as String),
@@ -668,8 +670,8 @@ class _CopyWithStubImpl$Query$get_chat_info$chat_by_pk<TRes>
   TRes _res;
 
   call({
-    Map<String, dynamic>? messages,
-    Map<String, dynamic>? chat_info,
+    dynamic? messages,
+    dynamic? chat_info,
     String? creation_time,
     List<Query$get_chat_info$chat_by_pk$chat_participants>? chat_participants,
     String? $__typename,
@@ -1007,20 +1009,21 @@ class _CopyWithStubImpl$Query$get_chat_info$chat_by_pk$chat_participants$user<
       _res;
 }
 
-class Variables$Subscription$get_chat_info {
-  factory Variables$Subscription$get_chat_info({required int chat_id}) =>
-      Variables$Subscription$get_chat_info._({
+class Variables$Subscription$listen_on_chat_messages {
+  factory Variables$Subscription$listen_on_chat_messages(
+          {required int chat_id}) =>
+      Variables$Subscription$listen_on_chat_messages._({
         r'chat_id': chat_id,
       });
 
-  Variables$Subscription$get_chat_info._(this._$data);
+  Variables$Subscription$listen_on_chat_messages._(this._$data);
 
-  factory Variables$Subscription$get_chat_info.fromJson(
+  factory Variables$Subscription$listen_on_chat_messages.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
     final l$chat_id = data['chat_id'];
     result$data['chat_id'] = (l$chat_id as int);
-    return Variables$Subscription$get_chat_info._(result$data);
+    return Variables$Subscription$listen_on_chat_messages._(result$data);
   }
 
   Map<String, dynamic> _$data;
@@ -1033,9 +1036,9 @@ class Variables$Subscription$get_chat_info {
     return result$data;
   }
 
-  CopyWith$Variables$Subscription$get_chat_info<
-          Variables$Subscription$get_chat_info>
-      get copyWith => CopyWith$Variables$Subscription$get_chat_info(
+  CopyWith$Variables$Subscription$listen_on_chat_messages<
+          Variables$Subscription$listen_on_chat_messages>
+      get copyWith => CopyWith$Variables$Subscription$listen_on_chat_messages(
             this,
             (i) => i,
           );
@@ -1044,7 +1047,7 @@ class Variables$Subscription$get_chat_info {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Variables$Subscription$get_chat_info) ||
+    if (!(other is Variables$Subscription$listen_on_chat_messages) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1063,67 +1066,69 @@ class Variables$Subscription$get_chat_info {
   }
 }
 
-abstract class CopyWith$Variables$Subscription$get_chat_info<TRes> {
-  factory CopyWith$Variables$Subscription$get_chat_info(
-    Variables$Subscription$get_chat_info instance,
-    TRes Function(Variables$Subscription$get_chat_info) then,
-  ) = _CopyWithImpl$Variables$Subscription$get_chat_info;
+abstract class CopyWith$Variables$Subscription$listen_on_chat_messages<TRes> {
+  factory CopyWith$Variables$Subscription$listen_on_chat_messages(
+    Variables$Subscription$listen_on_chat_messages instance,
+    TRes Function(Variables$Subscription$listen_on_chat_messages) then,
+  ) = _CopyWithImpl$Variables$Subscription$listen_on_chat_messages;
 
-  factory CopyWith$Variables$Subscription$get_chat_info.stub(TRes res) =
-      _CopyWithStubImpl$Variables$Subscription$get_chat_info;
+  factory CopyWith$Variables$Subscription$listen_on_chat_messages.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Subscription$listen_on_chat_messages;
 
   TRes call({int? chat_id});
 }
 
-class _CopyWithImpl$Variables$Subscription$get_chat_info<TRes>
-    implements CopyWith$Variables$Subscription$get_chat_info<TRes> {
-  _CopyWithImpl$Variables$Subscription$get_chat_info(
+class _CopyWithImpl$Variables$Subscription$listen_on_chat_messages<TRes>
+    implements CopyWith$Variables$Subscription$listen_on_chat_messages<TRes> {
+  _CopyWithImpl$Variables$Subscription$listen_on_chat_messages(
     this._instance,
     this._then,
   );
 
-  final Variables$Subscription$get_chat_info _instance;
+  final Variables$Subscription$listen_on_chat_messages _instance;
 
-  final TRes Function(Variables$Subscription$get_chat_info) _then;
+  final TRes Function(Variables$Subscription$listen_on_chat_messages) _then;
 
   static const _undefined = {};
 
   TRes call({Object? chat_id = _undefined}) =>
-      _then(Variables$Subscription$get_chat_info._({
+      _then(Variables$Subscription$listen_on_chat_messages._({
         ..._instance._$data,
         if (chat_id != _undefined && chat_id != null)
           'chat_id': (chat_id as int),
       }));
 }
 
-class _CopyWithStubImpl$Variables$Subscription$get_chat_info<TRes>
-    implements CopyWith$Variables$Subscription$get_chat_info<TRes> {
-  _CopyWithStubImpl$Variables$Subscription$get_chat_info(this._res);
+class _CopyWithStubImpl$Variables$Subscription$listen_on_chat_messages<TRes>
+    implements CopyWith$Variables$Subscription$listen_on_chat_messages<TRes> {
+  _CopyWithStubImpl$Variables$Subscription$listen_on_chat_messages(this._res);
 
   TRes _res;
 
   call({int? chat_id}) => _res;
 }
 
-class Subscription$get_chat_info {
-  Subscription$get_chat_info({
+class Subscription$listen_on_chat_messages {
+  Subscription$listen_on_chat_messages({
     this.chat_by_pk,
     required this.$__typename,
   });
 
-  factory Subscription$get_chat_info.fromJson(Map<String, dynamic> json) {
+  factory Subscription$listen_on_chat_messages.fromJson(
+      Map<String, dynamic> json) {
     final l$chat_by_pk = json['chat_by_pk'];
     final l$$__typename = json['__typename'];
-    return Subscription$get_chat_info(
+    return Subscription$listen_on_chat_messages(
       chat_by_pk: l$chat_by_pk == null
           ? null
-          : Subscription$get_chat_info$chat_by_pk.fromJson(
+          : Subscription$listen_on_chat_messages$chat_by_pk.fromJson(
               (l$chat_by_pk as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Subscription$get_chat_info$chat_by_pk? chat_by_pk;
+  final Subscription$listen_on_chat_messages$chat_by_pk? chat_by_pk;
 
   final String $__typename;
 
@@ -1151,7 +1156,7 @@ class Subscription$get_chat_info {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Subscription$get_chat_info) ||
+    if (!(other is Subscription$listen_on_chat_messages) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1169,41 +1174,42 @@ class Subscription$get_chat_info {
   }
 }
 
-extension UtilityExtension$Subscription$get_chat_info
-    on Subscription$get_chat_info {
-  CopyWith$Subscription$get_chat_info<Subscription$get_chat_info>
-      get copyWith => CopyWith$Subscription$get_chat_info(
+extension UtilityExtension$Subscription$listen_on_chat_messages
+    on Subscription$listen_on_chat_messages {
+  CopyWith$Subscription$listen_on_chat_messages<
+          Subscription$listen_on_chat_messages>
+      get copyWith => CopyWith$Subscription$listen_on_chat_messages(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Subscription$get_chat_info<TRes> {
-  factory CopyWith$Subscription$get_chat_info(
-    Subscription$get_chat_info instance,
-    TRes Function(Subscription$get_chat_info) then,
-  ) = _CopyWithImpl$Subscription$get_chat_info;
+abstract class CopyWith$Subscription$listen_on_chat_messages<TRes> {
+  factory CopyWith$Subscription$listen_on_chat_messages(
+    Subscription$listen_on_chat_messages instance,
+    TRes Function(Subscription$listen_on_chat_messages) then,
+  ) = _CopyWithImpl$Subscription$listen_on_chat_messages;
 
-  factory CopyWith$Subscription$get_chat_info.stub(TRes res) =
-      _CopyWithStubImpl$Subscription$get_chat_info;
+  factory CopyWith$Subscription$listen_on_chat_messages.stub(TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_chat_messages;
 
   TRes call({
-    Subscription$get_chat_info$chat_by_pk? chat_by_pk,
+    Subscription$listen_on_chat_messages$chat_by_pk? chat_by_pk,
     String? $__typename,
   });
-  CopyWith$Subscription$get_chat_info$chat_by_pk<TRes> get chat_by_pk;
+  CopyWith$Subscription$listen_on_chat_messages$chat_by_pk<TRes> get chat_by_pk;
 }
 
-class _CopyWithImpl$Subscription$get_chat_info<TRes>
-    implements CopyWith$Subscription$get_chat_info<TRes> {
-  _CopyWithImpl$Subscription$get_chat_info(
+class _CopyWithImpl$Subscription$listen_on_chat_messages<TRes>
+    implements CopyWith$Subscription$listen_on_chat_messages<TRes> {
+  _CopyWithImpl$Subscription$listen_on_chat_messages(
     this._instance,
     this._then,
   );
 
-  final Subscription$get_chat_info _instance;
+  final Subscription$listen_on_chat_messages _instance;
 
-  final TRes Function(Subscription$get_chat_info) _then;
+  final TRes Function(Subscription$listen_on_chat_messages) _then;
 
   static const _undefined = {};
 
@@ -1211,42 +1217,46 @@ class _CopyWithImpl$Subscription$get_chat_info<TRes>
     Object? chat_by_pk = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Subscription$get_chat_info(
+      _then(Subscription$listen_on_chat_messages(
         chat_by_pk: chat_by_pk == _undefined
             ? _instance.chat_by_pk
-            : (chat_by_pk as Subscription$get_chat_info$chat_by_pk?),
+            : (chat_by_pk as Subscription$listen_on_chat_messages$chat_by_pk?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Subscription$get_chat_info$chat_by_pk<TRes> get chat_by_pk {
+  CopyWith$Subscription$listen_on_chat_messages$chat_by_pk<TRes>
+      get chat_by_pk {
     final local$chat_by_pk = _instance.chat_by_pk;
     return local$chat_by_pk == null
-        ? CopyWith$Subscription$get_chat_info$chat_by_pk.stub(_then(_instance))
-        : CopyWith$Subscription$get_chat_info$chat_by_pk(
+        ? CopyWith$Subscription$listen_on_chat_messages$chat_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Subscription$listen_on_chat_messages$chat_by_pk(
             local$chat_by_pk, (e) => call(chat_by_pk: e));
   }
 }
 
-class _CopyWithStubImpl$Subscription$get_chat_info<TRes>
-    implements CopyWith$Subscription$get_chat_info<TRes> {
-  _CopyWithStubImpl$Subscription$get_chat_info(this._res);
+class _CopyWithStubImpl$Subscription$listen_on_chat_messages<TRes>
+    implements CopyWith$Subscription$listen_on_chat_messages<TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_chat_messages(this._res);
 
   TRes _res;
 
   call({
-    Subscription$get_chat_info$chat_by_pk? chat_by_pk,
+    Subscription$listen_on_chat_messages$chat_by_pk? chat_by_pk,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Subscription$get_chat_info$chat_by_pk<TRes> get chat_by_pk =>
-      CopyWith$Subscription$get_chat_info$chat_by_pk.stub(_res);
+  CopyWith$Subscription$listen_on_chat_messages$chat_by_pk<TRes>
+      get chat_by_pk =>
+          CopyWith$Subscription$listen_on_chat_messages$chat_by_pk.stub(_res);
 }
 
-const documentNodeSubscriptionget_chat_info = DocumentNode(definitions: [
+const documentNodeSubscriptionlisten_on_chat_messages =
+    DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.subscription,
-    name: NameNode(value: 'get_chat_info'),
+    name: NameNode(value: 'listen_on_chat_messages'),
     variableDefinitions: [
       VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'chat_id')),
@@ -1291,15 +1301,15 @@ const documentNodeSubscriptionget_chat_info = DocumentNode(definitions: [
     ]),
   ),
 ]);
-Subscription$get_chat_info _parserFn$Subscription$get_chat_info(
-        Map<String, dynamic> data) =>
-    Subscription$get_chat_info.fromJson(data);
+Subscription$listen_on_chat_messages
+    _parserFn$Subscription$listen_on_chat_messages(Map<String, dynamic> data) =>
+        Subscription$listen_on_chat_messages.fromJson(data);
 
-class Options$Subscription$get_chat_info
-    extends graphql.SubscriptionOptions<Subscription$get_chat_info> {
-  Options$Subscription$get_chat_info({
+class Options$Subscription$listen_on_chat_messages
+    extends graphql.SubscriptionOptions<Subscription$listen_on_chat_messages> {
+  Options$Subscription$listen_on_chat_messages({
     String? operationName,
-    required Variables$Subscription$get_chat_info variables,
+    required Variables$Subscription$listen_on_chat_messages variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -1313,16 +1323,16 @@ class Options$Subscription$get_chat_info
           cacheRereadPolicy: cacheRereadPolicy,
           optimisticResult: optimisticResult,
           context: context,
-          document: documentNodeSubscriptionget_chat_info,
-          parserFn: _parserFn$Subscription$get_chat_info,
+          document: documentNodeSubscriptionlisten_on_chat_messages,
+          parserFn: _parserFn$Subscription$listen_on_chat_messages,
         );
 }
 
-class WatchOptions$Subscription$get_chat_info
-    extends graphql.WatchQueryOptions<Subscription$get_chat_info> {
-  WatchOptions$Subscription$get_chat_info({
+class WatchOptions$Subscription$listen_on_chat_messages
+    extends graphql.WatchQueryOptions<Subscription$listen_on_chat_messages> {
+  WatchOptions$Subscription$listen_on_chat_messages({
     String? operationName,
-    required Variables$Subscription$get_chat_info variables,
+    required Variables$Subscription$listen_on_chat_messages variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -1340,61 +1350,63 @@ class WatchOptions$Subscription$get_chat_info
           cacheRereadPolicy: cacheRereadPolicy,
           optimisticResult: optimisticResult,
           context: context,
-          document: documentNodeSubscriptionget_chat_info,
+          document: documentNodeSubscriptionlisten_on_chat_messages,
           pollInterval: pollInterval,
           eagerlyFetchResults: eagerlyFetchResults,
           carryForwardDataOnException: carryForwardDataOnException,
           fetchResults: fetchResults,
-          parserFn: _parserFn$Subscription$get_chat_info,
+          parserFn: _parserFn$Subscription$listen_on_chat_messages,
         );
 }
 
-class FetchMoreOptions$Subscription$get_chat_info
+class FetchMoreOptions$Subscription$listen_on_chat_messages
     extends graphql.FetchMoreOptions {
-  FetchMoreOptions$Subscription$get_chat_info({
+  FetchMoreOptions$Subscription$listen_on_chat_messages({
     required graphql.UpdateQuery updateQuery,
-    required Variables$Subscription$get_chat_info variables,
+    required Variables$Subscription$listen_on_chat_messages variables,
   }) : super(
           updateQuery: updateQuery,
           variables: variables.toJson(),
-          document: documentNodeSubscriptionget_chat_info,
+          document: documentNodeSubscriptionlisten_on_chat_messages,
         );
 }
 
-extension ClientExtension$Subscription$get_chat_info on graphql.GraphQLClient {
-  Stream<graphql.QueryResult<Subscription$get_chat_info>>
-      subscribe$get_chat_info(Options$Subscription$get_chat_info options) =>
+extension ClientExtension$Subscription$listen_on_chat_messages
+    on graphql.GraphQLClient {
+  Stream<graphql.QueryResult<Subscription$listen_on_chat_messages>>
+      subscribe$listen_on_chat_messages(
+              Options$Subscription$listen_on_chat_messages options) =>
           this.subscribe(options);
-  graphql.ObservableQuery<Subscription$get_chat_info>
-      watchSubscription$get_chat_info(
-              WatchOptions$Subscription$get_chat_info options) =>
+  graphql.ObservableQuery<Subscription$listen_on_chat_messages>
+      watchSubscription$listen_on_chat_messages(
+              WatchOptions$Subscription$listen_on_chat_messages options) =>
           this.watchQuery(options);
 }
 
-class Subscription$get_chat_info$chat_by_pk {
-  Subscription$get_chat_info$chat_by_pk({
+class Subscription$listen_on_chat_messages$chat_by_pk {
+  Subscription$listen_on_chat_messages$chat_by_pk({
     this.messages,
     required this.$__typename,
   });
 
-  factory Subscription$get_chat_info$chat_by_pk.fromJson(
+  factory Subscription$listen_on_chat_messages$chat_by_pk.fromJson(
       Map<String, dynamic> json) {
     final l$messages = json['messages'];
     final l$$__typename = json['__typename'];
-    return Subscription$get_chat_info$chat_by_pk(
-      messages: (l$messages as Map<String, dynamic>?),
+    return Subscription$listen_on_chat_messages$chat_by_pk(
+      messages: l$messages == null ? null : mapFromJson(l$messages),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Map<String, dynamic>? messages;
+  final dynamic? messages;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$messages = messages;
-    _resultData['messages'] = l$messages;
+    _resultData['messages'] = l$messages == null ? null : mapToJson(l$messages);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1415,7 +1427,7 @@ class Subscription$get_chat_info$chat_by_pk {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Subscription$get_chat_info$chat_by_pk) ||
+    if (!(other is Subscription$listen_on_chat_messages$chat_by_pk) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1433,41 +1445,42 @@ class Subscription$get_chat_info$chat_by_pk {
   }
 }
 
-extension UtilityExtension$Subscription$get_chat_info$chat_by_pk
-    on Subscription$get_chat_info$chat_by_pk {
-  CopyWith$Subscription$get_chat_info$chat_by_pk<
-          Subscription$get_chat_info$chat_by_pk>
-      get copyWith => CopyWith$Subscription$get_chat_info$chat_by_pk(
+extension UtilityExtension$Subscription$listen_on_chat_messages$chat_by_pk
+    on Subscription$listen_on_chat_messages$chat_by_pk {
+  CopyWith$Subscription$listen_on_chat_messages$chat_by_pk<
+          Subscription$listen_on_chat_messages$chat_by_pk>
+      get copyWith => CopyWith$Subscription$listen_on_chat_messages$chat_by_pk(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Subscription$get_chat_info$chat_by_pk<TRes> {
-  factory CopyWith$Subscription$get_chat_info$chat_by_pk(
-    Subscription$get_chat_info$chat_by_pk instance,
-    TRes Function(Subscription$get_chat_info$chat_by_pk) then,
-  ) = _CopyWithImpl$Subscription$get_chat_info$chat_by_pk;
+abstract class CopyWith$Subscription$listen_on_chat_messages$chat_by_pk<TRes> {
+  factory CopyWith$Subscription$listen_on_chat_messages$chat_by_pk(
+    Subscription$listen_on_chat_messages$chat_by_pk instance,
+    TRes Function(Subscription$listen_on_chat_messages$chat_by_pk) then,
+  ) = _CopyWithImpl$Subscription$listen_on_chat_messages$chat_by_pk;
 
-  factory CopyWith$Subscription$get_chat_info$chat_by_pk.stub(TRes res) =
-      _CopyWithStubImpl$Subscription$get_chat_info$chat_by_pk;
+  factory CopyWith$Subscription$listen_on_chat_messages$chat_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_chat_messages$chat_by_pk;
 
   TRes call({
-    Map<String, dynamic>? messages,
+    dynamic? messages,
     String? $__typename,
   });
 }
 
-class _CopyWithImpl$Subscription$get_chat_info$chat_by_pk<TRes>
-    implements CopyWith$Subscription$get_chat_info$chat_by_pk<TRes> {
-  _CopyWithImpl$Subscription$get_chat_info$chat_by_pk(
+class _CopyWithImpl$Subscription$listen_on_chat_messages$chat_by_pk<TRes>
+    implements CopyWith$Subscription$listen_on_chat_messages$chat_by_pk<TRes> {
+  _CopyWithImpl$Subscription$listen_on_chat_messages$chat_by_pk(
     this._instance,
     this._then,
   );
 
-  final Subscription$get_chat_info$chat_by_pk _instance;
+  final Subscription$listen_on_chat_messages$chat_by_pk _instance;
 
-  final TRes Function(Subscription$get_chat_info$chat_by_pk) _then;
+  final TRes Function(Subscription$listen_on_chat_messages$chat_by_pk) _then;
 
   static const _undefined = {};
 
@@ -1475,24 +1488,24 @@ class _CopyWithImpl$Subscription$get_chat_info$chat_by_pk<TRes>
     Object? messages = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Subscription$get_chat_info$chat_by_pk(
+      _then(Subscription$listen_on_chat_messages$chat_by_pk(
         messages: messages == _undefined
             ? _instance.messages
-            : (messages as Map<String, dynamic>?),
+            : (messages as dynamic?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
 }
 
-class _CopyWithStubImpl$Subscription$get_chat_info$chat_by_pk<TRes>
-    implements CopyWith$Subscription$get_chat_info$chat_by_pk<TRes> {
-  _CopyWithStubImpl$Subscription$get_chat_info$chat_by_pk(this._res);
+class _CopyWithStubImpl$Subscription$listen_on_chat_messages$chat_by_pk<TRes>
+    implements CopyWith$Subscription$listen_on_chat_messages$chat_by_pk<TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_chat_messages$chat_by_pk(this._res);
 
   TRes _res;
 
   call({
-    Map<String, dynamic>? messages,
+    dynamic? messages,
     String? $__typename,
   }) =>
       _res;
@@ -1501,7 +1514,7 @@ class _CopyWithStubImpl$Subscription$get_chat_info$chat_by_pk<TRes>
 class Variables$Mutation$add_message {
   factory Variables$Mutation$add_message({
     required int chat_id,
-    required Map<String, dynamic> msg,
+    required dynamic msg,
   }) =>
       Variables$Mutation$add_message._({
         r'chat_id': chat_id,
@@ -1515,20 +1528,20 @@ class Variables$Mutation$add_message {
     final l$chat_id = data['chat_id'];
     result$data['chat_id'] = (l$chat_id as int);
     final l$msg = data['msg'];
-    result$data['msg'] = (l$msg as Map<String, dynamic>);
+    result$data['msg'] = mapFromJson(l$msg);
     return Variables$Mutation$add_message._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   int get chat_id => (_$data['chat_id'] as int);
-  Map<String, dynamic> get msg => (_$data['msg'] as Map<String, dynamic>);
+  dynamic get msg => (_$data['msg'] as dynamic);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$chat_id = chat_id;
     result$data['chat_id'] = l$chat_id;
     final l$msg = msg;
-    result$data['msg'] = l$msg;
+    result$data['msg'] = mapToJson(l$msg);
     return result$data;
   }
 
@@ -1581,7 +1594,7 @@ abstract class CopyWith$Variables$Mutation$add_message<TRes> {
 
   TRes call({
     int? chat_id,
-    Map<String, dynamic>? msg,
+    dynamic? msg,
   });
 }
 
@@ -1606,8 +1619,7 @@ class _CopyWithImpl$Variables$Mutation$add_message<TRes>
         ..._instance._$data,
         if (chat_id != _undefined && chat_id != null)
           'chat_id': (chat_id as int),
-        if (msg != _undefined && msg != null)
-          'msg': (msg as Map<String, dynamic>),
+        if (msg != _undefined && msg != null) 'msg': (msg as dynamic),
       }));
 }
 
@@ -1619,7 +1631,7 @@ class _CopyWithStubImpl$Variables$Mutation$add_message<TRes>
 
   call({
     int? chat_id,
-    Map<String, dynamic>? msg,
+    dynamic? msg,
   }) =>
       _res;
 }

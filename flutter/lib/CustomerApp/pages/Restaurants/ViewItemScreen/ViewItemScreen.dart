@@ -80,7 +80,8 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
           ? null
           : int.parse(Get.parameters['restaurantId']!);
       if (restaurantId != null) {
-        get_restaurant_by_id(id: restaurantId).then((Restaurant? rest) {
+        get_restaurant_by_id(id: restaurantId, withCache: false)
+            .then((Restaurant? rest) {
           setState(() {
             currentRestaurant = rest;
           });
@@ -104,7 +105,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
           .firstWhere((CartItem item) {
         return item.idInCart == Get.parameters["cartItemId"];
       }));
-      get_restaurant_by_id(id: cartItem.value!.restaurantId)
+      get_restaurant_by_id(id: cartItem.value!.restaurantId, withCache: false)
           .then((Restaurant? rest) {
         setState(() {
           currentRestaurant = rest;
@@ -112,8 +113,6 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       });
     }
     cartItem.refresh();
-    // mezDbgPrint(
-    //     "cart item ===============>${cartItem.value!.toFirebaseFunctionFormattedJson()}");
     super.initState();
   }
 

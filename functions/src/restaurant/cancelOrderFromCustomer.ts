@@ -35,9 +35,17 @@ export async function cancelOrderFromCustomer(userId: number, data: any) {
   }
 
   let mezAdminPromise = getMezAdmins();
+  console.log("[+] getMezAdmins " , mezAdminPromise);
+
   let order: RestaurantOrder = await getRestaurantOrder(data.orderId);
+  console.log("[+] getRestaurantOrder " , order);
+
   let restaurantOperatorsPromise = getRestaurantOperators(order.restaurantId);
+  console.log("[+] getRestaurantOperators " , restaurantOperatorsPromise);
+
   let deliveryPromise = getDeliveryOrder(order.deliveryId!);
+  console.log("[+] getDeliveryOrder " , deliveryPromise);
+
   //delivery id assumed to be not null
 
   let promiseResponse = await Promise.all([mezAdminPromise, restaurantOperatorsPromise, deliveryPromise]);

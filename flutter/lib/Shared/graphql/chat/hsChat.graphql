@@ -19,7 +19,7 @@ query get_chat_info($chat_id :Int!) {
 
 
 # Get chat infos
-subscription get_chat_info($chat_id :Int!) {
+subscription listen_on_chat_messages($chat_id :Int!) {
   chat_by_pk(id: $chat_id) {
     messages
   }

@@ -10,14 +10,18 @@ import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
 Future<HasuraChat?> get_chat_info({required int chat_id}) async {
-  mezDbgPrint("[log] Called :: get_chat_info :: chat_id :: $chat_id");
-  List<Message> _get_messages(List<String>? msgs) {
+  mezDbgPrint("[log] Called :: get_chat_info :: chat_id :: $chat_id ");
+  List<Message> _get_messages(List<Object?> msgs) {
     List<Message> _ret_msgs = [];
+    mezDbgPrint(
+        "[log] Called :: get_chat_info :: chat_id :: type :: ${msgs.runtimeType}");
 
-    if (msgs != null) {
-      msgs.forEach((String jsonString) {
-        // I use the timestamp as key
-        Map<String, dynamic> msg = mapFromJson(jsonString);
+    msgs.forEach((Object? jsonString) {
+      mezDbgPrint("$jsonString :: type :: ${jsonString.runtimeType}");
+      // I use the timestamp as key
+      if (jsonString != null) {
+        Map<String, dynamic> msg = jsonString
+            as Map<String, dynamic>; //mapFromJson(jsonString as String);
         _ret_msgs.add(
           Message(
             message: msg['message'],
@@ -25,8 +29,8 @@ Future<HasuraChat?> get_chat_info({required int chat_id}) async {
             userId: msg['userId'],
           ),
         );
-      });
-    }
+      }
+    });
 
     return _ret_msgs;
   }
@@ -78,8 +82,7 @@ Future<HasuraChat?> get_chat_info({required int chat_id}) async {
       creationTime:
           DateTime.parse(_chat.parsedData!.chat_by_pk!.creation_time).toLocal(),
       id: chat_id,
-      messages: [],
-      // _get_messages(_chat.parsedData!.chat_by_pk!.messages as List<String>),
+      messages: _get_messages(_chat.parsedData!.chat_by_pk!.messages),
       participants: _get_participants(
         _chat.parsedData!.chat_by_pk!.chat_participants,
       ),
@@ -105,4 +108,35 @@ Future<void> send_message(
   } else {
     mezDbgPrint("[+] called send_message :: SUCCESS");
   }
+}
+
+// get_chat_info
+
+Stream<List<Message>> listen_on_chat_messages({required int chatId}) {
+  return _hasuraDb.graphQLClient
+      .subscribe$listen_on_chat_messages(
+    Options$Subscription$listen_on_chat_messages(
+      variables: Variables$Subscription$listen_on_chat_messages(
+        chat_id: chatId,
+      ),
+    ),
+  )
+      .map<List<Message>>(
+          (QueryResult<Subscription$listen_on_chat_messages> event) {
+    mezDbgPrint("Event from Chat::Messages 🚀🚀🚀 $event");
+    final List<Message> msgs = [];
+    final List<dynamic> _chat_msgs = event.parsedData?.chat_by_pk?.messages;
+    _chat_msgs.forEach((dynamic _msg) {
+      final Map<String, dynamic> msg =
+          _msg as Map<String, dynamic>; //mapFromJson(_msg as String);
+      msgs.add(
+        Message(
+          message: msg['message'],
+          timestamp: DateTime.parse(msg['timestamp']).toLocal(),
+          userId: msg['userId'],
+        ),
+      );
+    });
+    return msgs;
+  });
 }

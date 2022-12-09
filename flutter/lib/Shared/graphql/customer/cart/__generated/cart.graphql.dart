@@ -4420,13 +4420,6 @@ const documentNodeMutationcreate_customer_cart = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'cost'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'customer_id'),
             alias: null,
             arguments: [],
@@ -4555,7 +4548,6 @@ extension ClientExtension$Mutation$create_customer_cart
 
 class Mutation$create_customer_cart$insert_restaurant_cart_one {
   Mutation$create_customer_cart$insert_restaurant_cart_one({
-    this.cost,
     required this.customer_id,
     this.restaurant_id,
     required this.$__typename,
@@ -4563,19 +4555,15 @@ class Mutation$create_customer_cart$insert_restaurant_cart_one {
 
   factory Mutation$create_customer_cart$insert_restaurant_cart_one.fromJson(
       Map<String, dynamic> json) {
-    final l$cost = json['cost'];
     final l$customer_id = json['customer_id'];
     final l$restaurant_id = json['restaurant_id'];
     final l$$__typename = json['__typename'];
     return Mutation$create_customer_cart$insert_restaurant_cart_one(
-      cost: l$cost == null ? null : moneyFromJson(l$cost),
       customer_id: (l$customer_id as int),
       restaurant_id: (l$restaurant_id as int?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
-
-  final double? cost;
 
   final int customer_id;
 
@@ -4585,8 +4573,6 @@ class Mutation$create_customer_cart$insert_restaurant_cart_one {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$cost = cost;
-    _resultData['cost'] = l$cost == null ? null : moneyToJson(l$cost);
     final l$customer_id = customer_id;
     _resultData['customer_id'] = l$customer_id;
     final l$restaurant_id = restaurant_id;
@@ -4598,12 +4584,10 @@ class Mutation$create_customer_cart$insert_restaurant_cart_one {
 
   @override
   int get hashCode {
-    final l$cost = cost;
     final l$customer_id = customer_id;
     final l$restaurant_id = restaurant_id;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$cost,
       l$customer_id,
       l$restaurant_id,
       l$$__typename,
@@ -4617,11 +4601,6 @@ class Mutation$create_customer_cart$insert_restaurant_cart_one {
     }
     if (!(other is Mutation$create_customer_cart$insert_restaurant_cart_one) ||
         runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$cost = cost;
-    final lOther$cost = other.cost;
-    if (l$cost != lOther$cost) {
       return false;
     }
     final l$customer_id = customer_id;
@@ -4667,7 +4646,6 @@ abstract class CopyWith$Mutation$create_customer_cart$insert_restaurant_cart_one
       _CopyWithStubImpl$Mutation$create_customer_cart$insert_restaurant_cart_one;
 
   TRes call({
-    double? cost,
     int? customer_id,
     int? restaurant_id,
     String? $__typename,
@@ -4692,13 +4670,11 @@ class _CopyWithImpl$Mutation$create_customer_cart$insert_restaurant_cart_one<
   static const _undefined = {};
 
   TRes call({
-    Object? cost = _undefined,
     Object? customer_id = _undefined,
     Object? restaurant_id = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$create_customer_cart$insert_restaurant_cart_one(
-        cost: cost == _undefined ? _instance.cost : (cost as double?),
         customer_id: customer_id == _undefined || customer_id == null
             ? _instance.customer_id
             : (customer_id as int),
@@ -4722,7 +4698,6 @@ class _CopyWithStubImpl$Mutation$create_customer_cart$insert_restaurant_cart_one
   TRes _res;
 
   call({
-    double? cost,
     int? customer_id,
     int? restaurant_id,
     String? $__typename,

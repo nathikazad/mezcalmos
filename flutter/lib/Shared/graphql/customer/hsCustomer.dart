@@ -146,7 +146,7 @@ Future<List<RestaurantOrder>> get_customer_orders(
                 _o.restaurant.location_text,
                 _o.restaurant.location_gps.toLocationData(),
               ),
-              firebaseId: _o.restaurant.firebase_id!,
+              firebaseId: _o.restaurant.firebase_id,
               hasuraId: _o.restaurant.id,
               image: _o.restaurant.image,
               name: _o.restaurant.name,

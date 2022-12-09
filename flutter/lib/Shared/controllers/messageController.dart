@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/chatNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/graphql/chat/hsChat.dart';
@@ -22,9 +23,12 @@ import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 class MessageController extends GetxController {
   Rxn<HasuraChat> chat = Rxn();
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
+  HasuraDb hasuraDb = Get.find<HasuraDb>();
+  String? subscriptionId;
+
   AuthController _authController = Get.find<AuthController>();
   SettingsController _settingsController = Get.find<SettingsController>();
-  StreamSubscription? chatListener;
+  // StreamSubscription? chatListener;
   late AppType appType;
 
   @override
@@ -55,15 +59,30 @@ class MessageController extends GetxController {
     //   });
     // });
 
-    get_chat_info(chat_id: chatId).then((HasuraChat? value) {
-      mezDbgPrint("[77] Got Chat :: id ($chatId) :: $value !");
+    if (chat.value == null) {
+      get_chat_info(chat_id: chatId).then((HasuraChat? value) {
+        mezDbgPrint("[77] Got Chat :: id ($chatId) :: $value !");
 
-      if (value != null) {
-        mezDbgPrint("[77] Got Chat !");
-        chat.value = value;
-        if (onValueCallBack != null) onValueCallBack();
-      }
-    });
+        if (value != null) {
+          mezDbgPrint("[77] Got Chat !");
+          chat.value = value;
+          if (onValueCallBack != null) onValueCallBack();
+        }
+
+        // if no listeneres we listen
+        if (chatListener == null) {
+          chatListener = chatListener = listen_on_chat_messages(chatId: chatId)
+              .listen((List<Message> msgs) {
+            mezDbgPrint("[+] Chat :: new messages :: trigger :: listener!");
+            if (msgs.isNotEmpty && msgs.length > chat.value!.messages.length) {
+              chat.value!.messages.clear();
+              chat.value!.messages.addAll(msgs);
+              if (onValueCallBack != null) onValueCallBack();
+            }
+          });
+        }
+      });
+    }
   }
 
   bool isUserAuthorizedToCall() {
@@ -204,8 +223,8 @@ class MessageController extends GetxController {
 
   @override
   void onClose() {
-    chatListener?.cancel();
-    chatListener = null;
+    if (subscriptionId != null) hasuraDb.cancelSubscription(subscriptionId!);
+
     super.onClose();
   }
 }
