@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/constants/assets.dart';
-import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CurrentOrdersList/components/ROpOrderCard.dart';
+import 'package:mezcalmos/RestaurantApp/pages/CurrentOrdersList/controllers/ROpCurrentOrdersController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
@@ -36,7 +36,8 @@ class ROpCurrentOrdersListView extends StatefulWidget {
 }
 
 class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
-  ROpOrderController orderController = Get.find<ROpOrderController>();
+  ROpCurrentOrdersController viewController = ROpCurrentOrdersController();
+  // ROpOrderController orderController = Get.find<ROpOrderController>();
   RxBool isValidRestaurant = true.obs;
 
   RestaurantOpAuthController _restaurantOpAuthController =
@@ -55,20 +56,7 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
   }
 
   Future<void> _initOrders() async {
-    await orderController.fetchOrders();
-    orderController.startListeningOnOrders();
-    // inProcessOrders.value = await get_minimal_restaurant_orders(
-    //         restaurantId:
-    //             int.parse(_restaurantOpAuthController.restaurantId!)) ??
-    //     [];
-    // _inProcessOrdersListener = listen_on_minimal_restaurant_orders(
-    //         restaurantId: int.parse(_restaurantOpAuthController.restaurantId!))
-    //     .listen((List<MinimalRestaurantOrder>? event) {
-    //   mezDbgPrint("Streaaam triggred 😍");
-    //   if (event != null) {
-    //     inProcessOrders.value = event;
-    //   }
-    // });
+    await viewController.init(restaurantId: restaurant.value!.info.hasuraId);
   }
 
   Future<void> _getRestaurant() async {
@@ -165,7 +153,7 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
   Widget _inProcessOrders() {
     return Container(
         alignment: Alignment.center,
-        child: (orderController.currentOrders.value.isNotEmpty)
+        child: (viewController.currentOrders.value.isNotEmpty)
             ? Scrollbar(
                 child: SingleChildScrollView(
                   padding: EdgeInsets.all(8),
@@ -182,11 +170,11 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
                           const SizedBox(height: 5),
                           ListView.builder(
                             shrinkWrap: true,
-                            itemCount: orderController.currentOrders.length,
+                            itemCount: viewController.currentOrders.length,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (_, int index) {
                               return ROpOrderCard(
-                                order: orderController.currentOrders[index],
+                                order: viewController.currentOrders[index],
                               );
                             },
                           ),

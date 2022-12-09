@@ -24,7 +24,6 @@ class ROpPickDriverView extends StatefulWidget {
 
 class _ROpPickDriverViewState extends State<ROpPickDriverView> {
   ROpPickDriverController viewController = ROpPickDriverController();
-  // Rxn<RestaurantOrder> order = Rxn();
   int? orderID;
   int? serviceProvderId;
 
@@ -46,6 +45,12 @@ class _ROpPickDriverViewState extends State<ROpPickDriverView> {
     }
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    viewController.dispose();
+    super.dispose();
   }
 
   @override

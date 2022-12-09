@@ -22,7 +22,6 @@ select_permissions:
   - role: customer
     permission:
       columns:
-        - app_type_id
         - participant_id
       filter:
         chat:

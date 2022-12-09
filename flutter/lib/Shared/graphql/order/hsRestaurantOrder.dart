@@ -325,23 +325,23 @@ Future<List<RestaurantOrder>?> get_restaurant_orders_by_restaurant_id(
   }
 }
 
-Stream<List<MinimalRestaurantOrder>?> listen_on_minimal_restaurant_orders(
+Stream<List<MinimalRestaurantOrder>?> listen_on_current_restaurant_orders(
     {required int restaurantId}) {
   return _hasuraDb.graphQLClient
-      .subscribe$listen_restaurant_min_orders(
-    Options$Subscription$listen_restaurant_min_orders(
+      .subscribe$listen_restaurant_current_orders(
+    Options$Subscription$listen_restaurant_current_orders(
       fetchPolicy: FetchPolicy.noCache,
-      variables: Variables$Subscription$listen_restaurant_min_orders(
+      variables: Variables$Subscription$listen_restaurant_current_orders(
           restaurantId: restaurantId),
     ),
   )
       .map<List<MinimalRestaurantOrder>?>(
-          (QueryResult<Subscription$listen_restaurant_min_orders> event) {
-    final List<Subscription$listen_restaurant_min_orders$restaurant_order>?
+          (QueryResult<Subscription$listen_restaurant_current_orders> event) {
+    final List<Subscription$listen_restaurant_current_orders$restaurant_order>?
         ordersData = event.parsedData?.restaurant_order;
     if (ordersData != null) {
       final List<MinimalRestaurantOrder> orders = ordersData.map(
-          (Subscription$listen_restaurant_min_orders$restaurant_order
+          (Subscription$listen_restaurant_current_orders$restaurant_order
               orderData) {
         return MinimalRestaurantOrder(
             id: orderData.id,
@@ -358,22 +358,54 @@ Stream<List<MinimalRestaurantOrder>?> listen_on_minimal_restaurant_orders(
   });
 }
 
-Future<List<MinimalRestaurantOrder>?> get_minimal_restaurant_orders(
+Future<List<MinimalRestaurantOrder>?> get_current_restaurant_orders(
     {required int restaurantId}) async {
-  final QueryResult<Query$get_restaurant_min_orders> queryResult =
-      await _hasuraDb.graphQLClient.query$get_restaurant_min_orders(
-    Options$Query$get_restaurant_min_orders(
+  final QueryResult<Query$get_restaurant_current_orders> queryResult =
+      await _hasuraDb.graphQLClient.query$get_restaurant_current_orders(
+    Options$Query$get_restaurant_current_orders(
       fetchPolicy: FetchPolicy.networkOnly,
-      variables:
-          Variables$Query$get_restaurant_min_orders(restaurantId: restaurantId),
+      variables: Variables$Query$get_restaurant_current_orders(
+          restaurantId: restaurantId),
     ),
   );
   if (queryResult.parsedData?.restaurant_order != null) {
-    final List<Query$get_restaurant_min_orders$restaurant_order> ordersData =
+    final List<Query$get_restaurant_current_orders$restaurant_order>
+        ordersData = queryResult.parsedData!.restaurant_order;
+
+    final List<MinimalRestaurantOrder> orders = ordersData
+        .map((Query$get_restaurant_current_orders$restaurant_order orderData) {
+      return MinimalRestaurantOrder(
+          id: orderData.id,
+          toAdress: orderData.to_location_address,
+          orderTime: DateTime.parse(orderData.order_time),
+          customerName: orderData.customer.user.name!,
+          customerImage: orderData.customer.user.image,
+          status: orderData.status.toRestaurantOrderStatus(),
+          totalCost: orderData.total_cost!);
+    }).toList();
+    return orders;
+  } else {
+    throw Exception(
+        "🚨 Getting min orders exceptions \n ${queryResult.exception}");
+  }
+}
+
+Future<List<MinimalRestaurantOrder>?> get_past_restaurant_orders(
+    {required int restaurantId}) async {
+  final QueryResult<Query$get_restaurant_past_orders> queryResult =
+      await _hasuraDb.graphQLClient.query$get_restaurant_past_orders(
+    Options$Query$get_restaurant_past_orders(
+      fetchPolicy: FetchPolicy.networkOnly,
+      variables: Variables$Query$get_restaurant_past_orders(
+          restaurantId: restaurantId),
+    ),
+  );
+  if (queryResult.parsedData?.restaurant_order != null) {
+    final List<Query$get_restaurant_past_orders$restaurant_order> ordersData =
         queryResult.parsedData!.restaurant_order;
 
     final List<MinimalRestaurantOrder> orders = ordersData
-        .map((Query$get_restaurant_min_orders$restaurant_order orderData) {
+        .map((Query$get_restaurant_past_orders$restaurant_order orderData) {
       return MinimalRestaurantOrder(
           id: orderData.id,
           toAdress: orderData.to_location_address,

@@ -90,19 +90,19 @@ class ROpOrderController extends GetxController {
   }
 
   void startListeningOnOrders() {
-    _minOrdersListener?.cancel();
-    _minOrdersListener =
-        listen_on_minimal_restaurant_orders(restaurantId: restaurantId!)
-            .listen((List<MinimalRestaurantOrder>? event) {
-      if (event != null) {
-        currentOrders.value = event
-            .where((MinimalRestaurantOrder element) => element.isPast == false)
-            .toList();
-        pastOrders.value = event
-            .where((MinimalRestaurantOrder element) => element.isPast == true)
-            .toList();
-      }
-    });
+    // _minOrdersListener?.cancel();
+    // _minOrdersListener =
+    //     listen_on_minimal_restaurant_orders(restaurantId: restaurantId!)
+    //         .listen((List<MinimalRestaurantOrder>? event) {
+    //   if (event != null) {
+    //     currentOrders.value = event
+    //         .where((MinimalRestaurantOrder element) => element.isPast == false)
+    //         .toList();
+    //     pastOrders.value = event
+    //         .where((MinimalRestaurantOrder element) => element.isPast == true)
+    //         .toList();
+    //   }
+    // });
   }
 
   void startListeningOnSingleOrder(int orderId) {
@@ -123,10 +123,10 @@ class ROpOrderController extends GetxController {
   }
 
   Future<List<MinimalRestaurantOrder>?> fetchOrders() async {
-    final List<MinimalRestaurantOrder>? data =
-        await get_minimal_restaurant_orders(restaurantId: restaurantId!);
-    currentOrders.value = data ?? [];
-    return data;
+    // final List<MinimalRestaurantOrder>? data =
+    //     await get_minimal_restaurant_orders(restaurantId: restaurantId!);
+    // currentOrders.value = data ?? [];
+    return [];
   }
 
   Future<ServerResponse> prepareOrder(int orderId) async {

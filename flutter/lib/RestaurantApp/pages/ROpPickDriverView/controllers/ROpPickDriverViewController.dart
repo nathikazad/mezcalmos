@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
@@ -12,15 +11,6 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class ROpPickDriverController {
-  // instances and streams subscriptions
-  // RestaurantInfoController? restaurantInfoController;
-  // ROpOrderController orderController = Get.find<ROpOrderController>();
-  // StreamSubscription? _restaurantListener;
-
-// textControllers //
-  TextEditingController emailOrPhone = TextEditingController();
-  // state variables
-
   RxList<DeliveryDriver> drivers = RxList.empty();
   RxBool screenLoading = RxBool(false);
   late int serviceProviderId;
@@ -66,23 +56,10 @@ class ROpPickDriverController {
           errorMessage: "Server Error", errorCode: "serverError");
     }
   }
-  // screenLoading.value = false;
-
-  Future<void> assignSelfDelivery({
-    required RestaurantOrder order,
-  }) async {
-    // screenLoading.value = true;
-    // await orderController.changeDeliveryMode(
-    //     order: order, mode: DeliveryMode.SelfDeliveryByRestaurant);
-
-    // Get.back();
-    // screenLoading.value = false;
-  }
 
   // dispose //
   void dispose() {
-    // _restaurantListener?.cancel();
-    // screenLoading.value = false;
+    drivers.clear();
   }
 
   Future<void> _getDrivers() async {
@@ -90,14 +67,5 @@ class ROpPickDriverController {
     drivers.value = await get_drivers_by_service_provider_id(
             withCache: false, serviceProviderId: serviceProviderId) ??
         [];
-  }
-
-  Future<void> forwardToMezcalmos(RestaurantOrder order) async {
-    // screenLoading.value = true;
-    // await orderController.changeDeliveryMode(
-    //     order: order, mode: DeliveryMode.ForwardedToMezCalmos);
-    // await orderController.endSelfDelivery(order);
-    // Get.back(result: false);
-    // screenLoading.value = false;
   }
 }

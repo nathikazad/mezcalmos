@@ -13975,6 +13975,11 @@ type restaurant_order {
   firebase_id: String
   id: Int!
 
+  """
+  A computed field, executes function "in_process"
+  """
+  in_process: Boolean
+
   """An array relationship"""
   items(
     """distinct select on columns"""
@@ -14146,6 +14151,7 @@ input restaurant_order_bool_exp {
   estimated_food_ready_time: timestamptz_comparison_exp
   firebase_id: String_comparison_exp
   id: Int_comparison_exp
+  in_process: Boolean_comparison_exp
   items: restaurant_order_item_bool_exp
   items_cost: money_comparison_exp
   notes: String_comparison_exp
@@ -14938,6 +14944,7 @@ input restaurant_order_order_by {
   estimated_food_ready_time: order_by
   firebase_id: order_by
   id: order_by
+  in_process: order_by
   items_aggregate: restaurant_order_item_aggregate_order_by
   items_cost: order_by
   notes: order_by

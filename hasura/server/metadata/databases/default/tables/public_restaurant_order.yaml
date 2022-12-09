@@ -26,6 +26,11 @@ array_relationships:
           name: restaurant_order_item
           schema: public
 computed_fields:
+  - name: in_process
+    definition:
+      function:
+        name: in_process
+        schema: public
   - name: items_cost
     definition:
       function:
@@ -129,6 +134,7 @@ select_permissions:
         - to_location_address
         - to_location_gps
       computed_fields:
+        - in_process
         - items_cost
         - total_cost
       filter:
