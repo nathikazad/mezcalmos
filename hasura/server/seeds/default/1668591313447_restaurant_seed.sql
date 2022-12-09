@@ -5,13 +5,13 @@ SET check_function_bodies = false;
 -- -- INSERT INTO topology.language (id) VALUES ('es');
 
 INSERT INTO topology.app_type (id) VALUES ('restaurant');
-INSERT INTO topology.app_type (id) VALUES ('customer_mobile');
-INSERT INTO topology.app_type (id) VALUES ('customer_web');
+-- INSERT INTO topology.app_type (id) VALUES ('customer_mobile');
+-- INSERT INTO topology.app_type (id) VALUES ('customer_web');
 -- INSERT INTO public.notification_info (id, user_id, app_type_id, token) VALUES (3, 3, 'RestaurantApp', 'abc');
 -- INSERT INTO public.notification_info (id, user_id, app_type_id, token) VALUES (2, 2, 'CustomerMobile', 'xyz');
 -- -- INSERT INTO public.mez_admin (user_id, notification_info_id, version) VALUES (3, 3, NULL);
 
-INSERT INTO public.restaurant (id, name, image, location_gps, location_text, description_id, firebase_id, schedule_id, payment_info_id, open_status, language_id, approved) VALUES (1, 'qwe', 'qwe', '0101000020E6100000CB4A9352D0E14540BF9A030473842640', 'abc', NULL, NULL, 1, NULL, 'open', 'en', true);
+INSERT INTO public.restaurant (id, name, image, location_gps, location_text, description_id, firebase_id, schedule, payment_info_id, open_status, language_id, approved) VALUES (1, 'qwe', 'qwe', '0101000020E6100000CB4A9352D0E14540BF9A030473842640', 'abc', NULL, NULL, NULL, NULL, 'open', 'en', true);
 INSERT INTO public.translation (id,service_provider_id,service_provider_type) VALUES (1,1,'restaurant');
 INSERT INTO public.translation (id,service_provider_id,service_provider_type) VALUES (2,1,'restaurant');
 INSERT INTO public.translation (id,service_provider_id,service_provider_type) VALUES (3,1,'restaurant');

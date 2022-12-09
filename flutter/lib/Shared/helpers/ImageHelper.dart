@@ -21,14 +21,6 @@ import 'package:sizer/sizer.dart';
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['Shared']['helpers']['ImageHelper'];
 
-String generateRandomString(int len) {
-  final Random r = Random();
-  const String _chars =
-      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  return List.generate(len, (int index) => _chars[r.nextInt(_chars.length)])
-      .join();
-}
-
 /// this compresses the Original Image using jpeg format Since it's much ligher.
 ///
 /// and reduce the quality down to [qualityCompressionOfUserImage = 25%].

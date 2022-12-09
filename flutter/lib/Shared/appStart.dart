@@ -225,6 +225,11 @@ class _StartingPointState extends State<StartingPoint> {
         firebaseApp: _app,
       ),
     );
+
+    Get.put<AppLifeCycleController>(
+      AppLifeCycleController(),
+      permanent: true,
+    );
     Get.put(HasuraDb(_launchMode), permanent: true);
   }
 
@@ -268,10 +273,6 @@ class _StartingPointState extends State<StartingPoint> {
     }
     Get.put<AuthController>(
       AuthController(widget.signInCallback, widget.signOutCallback),
-      permanent: true,
-    );
-    Get.put<AppLifeCycleController>(
-      AppLifeCycleController(logs: true),
       permanent: true,
     );
     Get.put<SettingsController>(
