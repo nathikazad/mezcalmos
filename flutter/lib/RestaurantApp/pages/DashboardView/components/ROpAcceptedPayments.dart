@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
+import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpPaymentsPageController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
@@ -14,7 +14,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
 class ROpAcceptedPayments extends StatefulWidget {
   const ROpAcceptedPayments({Key? key, required this.viewController})
       : super(key: key);
-  final ROpEditInfoController viewController;
+  final ROpPaymentsPageController viewController;
 
   @override
   State<ROpAcceptedPayments> createState() => _ROpAcceptedPaymentsState();

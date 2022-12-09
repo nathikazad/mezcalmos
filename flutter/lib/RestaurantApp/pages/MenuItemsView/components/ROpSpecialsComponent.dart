@@ -15,7 +15,7 @@ class ROpSpecialsComponent extends StatelessWidget {
       {Key? key, required this.viewController, required this.restaurantID})
       : super(key: key);
   final ROpMenuViewController viewController;
-  final String restaurantID;
+  final int restaurantID;
 
   @override
   Widget build(BuildContext context) {

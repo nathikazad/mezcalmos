@@ -61,8 +61,8 @@ String getRestaurantOperatorsRoute(String restaurantId) {
   return krOperators.replaceFirst(":restaurantId", restaurantId);
 }
 
-String getRestaurantOrderRoute(String orderId) {
-  return kRestaurantOrderRoute.replaceFirst(":orderId", orderId);
+String getRestaurantOrderRoute(int orderId) {
+  return kRestaurantOrderRoute.replaceFirst(":orderId", "$orderId");
 }
 
 String getLaundryOrderRoute(String orderId) {

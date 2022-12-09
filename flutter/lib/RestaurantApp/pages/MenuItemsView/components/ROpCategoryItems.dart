@@ -21,7 +21,7 @@ class ROpCategoryItems extends StatefulWidget {
       required this.restaurantId})
       : super(key: key);
   final Category category;
-  final String restaurantId;
+  final int restaurantId;
 
   final ROpMenuViewController viewController;
 

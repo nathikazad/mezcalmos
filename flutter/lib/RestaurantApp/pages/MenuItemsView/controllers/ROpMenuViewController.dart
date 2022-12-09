@@ -20,11 +20,11 @@ class ROpMenuViewController {
   RxList<Category> mainCategories = RxList<Category>([]);
 // rO stands for Reordable categories //
   RxList<Category> rOcategories = RxList<Category>([]);
-  late String restaurnatId;
+  late int restaurnatId;
   RxBool pageLoaded = RxBool(false);
 // IMPORTANT //
   // This method needs to be called on the initState method of the view
-  Future<void> init({required String restId}) async {
+  Future<void> init({required int restId}) async {
     restaurnatId = restId;
     // assigning restaurant data and start the stream subscription //
     mezDbgPrint("INIT MENU VIEW FROM CONTROLLER =======>$restaurnatId");
@@ -34,9 +34,8 @@ class ROpMenuViewController {
   }
 
   Future<void> fetchCategories() async {
-    final List<Category>? _categories = await get_restaurant_categories_by_id(
-        int.parse(restaurnatId),
-        withCache: false);
+    final List<Category>? _categories =
+        await get_restaurant_categories_by_id(restaurnatId, withCache: false);
     if (_categories != null) {
       mainCategories.clear();
       mainCategories.value.addAll(_categories);
@@ -48,9 +47,9 @@ class ROpMenuViewController {
   void dispose() {}
 
   // Catgeory methods //
-  Future<bool> deleteCategory({required String categoryId}) async {
+  Future<bool> deleteCategory({required int categoryId}) async {
     mezDbgPrint("Deleting category ========>>>$categoryId");
-    final bool result = await delete_category(int.parse(categoryId));
+    final bool result = await delete_category(categoryId);
     if (result) {
       await fetchCategories();
     }
@@ -75,9 +74,7 @@ class ROpMenuViewController {
   }
 
   void rorderSingleItem(
-      {required String catgeoryId,
-      required int oldIndex,
-      required int newIndex}) {
+      {required int catgeoryId, required int oldIndex, required int newIndex}) {
     Category category;
 
     mezDbgPrint("Reorder Item of old index : $oldIndex ");

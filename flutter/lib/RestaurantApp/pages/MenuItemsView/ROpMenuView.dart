@@ -20,7 +20,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
 class ROpMenuView extends StatefulWidget {
   const ROpMenuView({Key? key, this.restID, this.canGoBack = true})
       : super(key: key);
-  final String? restID;
+  final int? restID;
   final bool canGoBack;
   @override
   _ROpMenuViewState createState() => _ROpMenuViewState();
@@ -30,10 +30,10 @@ class _ROpMenuViewState extends State<ROpMenuView>
     with TickerProviderStateMixin {
   late TabController _tabController;
   ROpMenuViewController viewController = ROpMenuViewController();
-  String? restaurantID;
+  int? restaurantID;
   @override
   void initState() {
-    restaurantID = widget.restID ?? Get.parameters["restaurantId"];
+    restaurantID = widget.restID ?? int.parse(Get.parameters["restaurantId"]!);
 
     if (restaurantID != null) {
       _tabController = TabController(length: 2, vsync: this);

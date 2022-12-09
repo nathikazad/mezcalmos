@@ -7,14 +7,12 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/operatorNodes.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/restaurantNodes.dart';
 import 'package:mezcalmos/Shared/graphql/restaurantOperator/hsRestaurantOperator.dart';
 import 'package:mezcalmos/Shared/graphql/user/hsUser.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class RestaurantOpAuthController extends GetxController {
   Rxn<RestaurantOperator> operator = Rxn();
@@ -25,7 +23,7 @@ class RestaurantOpAuthController extends GetxController {
   //     Get.find<RestaurantInfoController>();
   BackgroundNotificationsController _notificationsController =
       Get.find<BackgroundNotificationsController>();
-  String? restaurantId;
+  int? restaurantId;
 
   RestaurantOperatorState? get restaurantOperatorState => operator.value?.state;
   Stream<RestaurantOperator?> get operatorInfoStream => operator.stream;
@@ -144,25 +142,25 @@ class RestaurantOpAuthController extends GetxController {
   }
 
   void turnOpenOff() {
-    _databaseHelper.firebaseDatabase
-        .ref()
-        .child(restaurantOpenNode(uid: restaurantId!))
-        .set(false)
-        .catchError((err) {
-      mezDbgPrint("Error turning [ isLooking = false ] -> $err");
-      MezSnackbar("Error ~", "Failed turning it off!");
-    });
+    // _databaseHelper.firebaseDatabase
+    //     .ref()
+    //     .child(restaurantOpenNode(uid: restaurantId!))
+    //     .set(false)
+    //     .catchError((err) {
+    //   mezDbgPrint("Error turning [ isLooking = false ] -> $err");
+    //   MezSnackbar("Error ~", "Failed turning it off!");
+    // });
   }
 
   void turnOpenOn() {
-    _databaseHelper.firebaseDatabase
-        .ref()
-        .child(restaurantOpenNode(uid: restaurantId!))
-        .set(true)
-        .catchError((err) {
-      mezDbgPrint("Error turning [ isLooking = true ] -> $err");
-      MezSnackbar("Error ~", "Failed turning_listenForLocation it on!");
-    });
+    // _databaseHelper.firebaseDatabase
+    //     .ref()
+    //     .child(restaurantOpenNode(uid: restaurantId!))
+    //     .set(true)
+    //     .catchError((err) {
+    //   mezDbgPrint("Error turning [ isLooking = true ] -> $err");
+    //   MezSnackbar("Error ~", "Failed turning_listenForLocation it on!");
+    // });
   }
 
   @override

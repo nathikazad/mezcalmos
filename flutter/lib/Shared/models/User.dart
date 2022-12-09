@@ -123,10 +123,12 @@ class MainUserInfo {
 class ServiceInfo extends UserInfo {
   Location location;
   int? descriptionId;
+  LanguageMap? description;
 
   ServiceInfo({
     required this.location,
     super.firebaseId,
+    this.description,
     required super.hasuraId,
     required super.image,
     this.descriptionId,

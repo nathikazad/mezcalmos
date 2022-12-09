@@ -2,7 +2,7 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
 
 class RestaurantOperatorState {
-  final String? restaurantId;
+  final int? restaurantId;
   final AgentStatus operatorState;
   final bool owner;
   const RestaurantOperatorState(
@@ -11,7 +11,7 @@ class RestaurantOperatorState {
       required this.owner});
 
   factory RestaurantOperatorState.fromSnapshot(data) {
-    final String restaurantId = data['restaurantId'] ?? null;
+    final int restaurantId = data['restaurantId'] ?? null;
     return RestaurantOperatorState(
         restaurantId: restaurantId,
         owner: false,

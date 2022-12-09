@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 
@@ -38,23 +37,23 @@ class ROpReviewsViewController {
 
 // IMPORTANT //
   // This method needs to be called on the initState method of the view
-  Future<void> init({required String restaurantId}) async {
+  Future<void> init({required int restaurantId}) async {
     // assigning restaurant data and start the stream subscription //
-    mezDbgPrint("INIT REVIEWS VIEW =======>$restaurantId");
-    Get.put(RestaurantInfoController(), permanent: false);
-    restaurantInfoController = Get.find<RestaurantInfoController>();
-    restaurantInfoController.init(restId: restaurantId);
-    restaurant.value =
-        await restaurantInfoController.getRestaurantAsFuture(restaurantId);
-    _reviews.value = restaurant.value!.reviews;
-    _restaurantListener = restaurantInfoController
-        .getRestaurant(restaurantId)
-        .listen((Restaurant? event) {
-      if (event != null) {
-        restaurant.value = event;
-        _reviews.value = restaurant.value!.reviews;
-      }
-    });
+    // mezDbgPrint("INIT REVIEWS VIEW =======>$restaurantId");
+    // Get.put(RestaurantInfoController(), permanent: false);
+    // restaurantInfoController = Get.find<RestaurantInfoController>();
+    // restaurantInfoController.init(restId: restaurantId);
+    // restaurant.value =
+    //     await restaurantInfoController.getRestaurantAsFuture(restaurantId);
+    // _reviews.value = restaurant.value!.reviews;
+    // _restaurantListener = restaurantInfoController
+    //     .getRestaurant(restaurantId)
+    //     .listen((Restaurant? event) {
+    //   if (event != null) {
+    //     restaurant.value = event;
+    //     _reviews.value = restaurant.value!.reviews;
+    //   }
+    // });
   }
 
   // IMPORTANT //

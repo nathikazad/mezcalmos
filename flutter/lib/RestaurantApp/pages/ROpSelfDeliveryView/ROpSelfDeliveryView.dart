@@ -248,7 +248,7 @@ class _ROpSelfDeliveryViewState extends State<ROpSelfDeliveryView> {
   /// this handles Restaurant Order.
   void handleRestaurantOrder(RestaurantOrder order) {
     switch (order.status) {
-      case RestaurantOrderStatus.ReadyForPickup:
+      case RestaurantOrderStatus.Ready:
         // only update once upon ReadyForPickUp
         if (orderStatusSnapshot != order.status) {
           // ignoring customer's marker (destination)

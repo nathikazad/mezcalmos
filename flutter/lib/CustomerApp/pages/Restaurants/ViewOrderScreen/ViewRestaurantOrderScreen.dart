@@ -16,10 +16,8 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/componen
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/notesWidget.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
-import 'package:mezcalmos/Shared/graphql/order/restaurant/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -28,7 +26,6 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
@@ -343,7 +340,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   void updateMapIfDeliveryPhase(RestaurantOrderStatus status) {
     switch (status) {
-      case RestaurantOrderStatus.ReadyForPickup:
+      case RestaurantOrderStatus.Ready:
         mezDbgPrint("+ poly => ${order.value!.routeInformation?.toJson()}");
         mezDbgPrint("+ markers => ${mapController.markers.length}");
         mezDbgPrint("+ polys => ${mapController.polylines.length}");

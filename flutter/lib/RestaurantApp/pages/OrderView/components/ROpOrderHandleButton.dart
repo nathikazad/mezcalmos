@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
+import 'package:mezcalmos/RestaurantApp/pages/OrderView/controller/ROpOrderViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -10,16 +10,15 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpOrderView']["components"]["ROpOrderHandleButton"];
 
 class ROpOrderHandleButton extends StatefulWidget {
-  const ROpOrderHandleButton({Key? key, required this.order}) : super(key: key);
-  final RestaurantOrder order;
+  const ROpOrderHandleButton({Key? key, required this.viewController})
+      : super(key: key);
+  final ROpOrderViewController viewController;
 
   @override
   State<ROpOrderHandleButton> createState() => _ROpOrderHandleButtonState();
 }
 
 class _ROpOrderHandleButtonState extends State<ROpOrderHandleButton> {
-  ROpOrderController orderController = Get.find<ROpOrderController>();
-
   @override
   Widget build(BuildContext context) {
     if (_showBtn) {
@@ -35,24 +34,29 @@ class _ROpOrderHandleButtonState extends State<ROpOrderHandleButton> {
   }
 
   Future<void> handleClick() async {
-    if (widget.order.status == RestaurantOrderStatus.OrderReceived) {
-      await orderController.prepareOrder(widget.order.orderId);
-    } else if (widget.order.status == RestaurantOrderStatus.PreparingOrder) {
-      await orderController.setReadyForDelivery(widget.order.orderId);
+    if (widget.viewController.order.value!.status ==
+        RestaurantOrderStatus.OrderReceived) {
+      await widget.viewController.prepareOrder();
+    } else if (widget.viewController.orderStatus ==
+        RestaurantOrderStatus.Preparing) {
+      await widget.viewController.setReadyForDelivery();
     }
   }
 
   String? get getBtnTitle {
-    if (widget.order.status == RestaurantOrderStatus.OrderReceived) {
+    if (widget.viewController.orderStatus ==
+        RestaurantOrderStatus.OrderReceived) {
       return '${_i18n()["prepareOrder"]}';
-    } else if (widget.order.status == RestaurantOrderStatus.PreparingOrder) {
+    } else if (widget.viewController.orderStatus ==
+        RestaurantOrderStatus.Preparing) {
       return '${_i18n()["orderReady"]}';
     }
     return null;
   }
 
   bool get _showBtn {
-    return widget.order.status == RestaurantOrderStatus.OrderReceived ||
-        widget.order.status == RestaurantOrderStatus.PreparingOrder;
+    return widget.viewController.orderStatus ==
+            RestaurantOrderStatus.OrderReceived ||
+        widget.viewController.orderStatus == RestaurantOrderStatus.Preparing;
   }
 }

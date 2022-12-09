@@ -7,18 +7,19 @@ import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
-final f = new DateFormat('hh:mm a');
+final DateFormat f = new DateFormat('hh:mm a');
 
-final currency = new NumberFormat("#,##0.00", "en_US");
+final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 
 Widget buildOrders(RxList<Order> inProcessOrders) {
-  inProcessOrders.value.sort((a, b) => b.orderTime.compareTo(a.orderTime));
+  inProcessOrders.value
+      .sort((Order a, Order b) => b.orderTime.compareTo(a.orderTime));
   return SingleChildScrollView(
     child: Column(
       children: inProcessOrders.fold<List<Widget>>(
         <Widget>[],
-        (children, element) {
-          RestaurantOrder s = element as RestaurantOrder;
+        (List<Widget> children, Order element) {
+          final RestaurantOrder s = element as RestaurantOrder;
           // mezDbgPrint("${s.restaurantOrderStatus}");
           children.add(
             DeliveryAdminOrderComponent(
@@ -181,7 +182,7 @@ class DeliveryAdminOrderComponent extends StatelessWidget {
   BoxDecoration _getOrderColor(RestaurantOrderStatus status) {
     BoxDecoration? myDecoration;
     switch (status) {
-      case RestaurantOrderStatus.PreparingOrder:
+      case RestaurantOrderStatus.Preparing:
         myDecoration = BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
             border: Border.all(color: const Color(0xffececec), width: 0.5),
@@ -206,7 +207,7 @@ class DeliveryAdminOrderComponent extends StatelessWidget {
             border: Border.all(color: const Color(0xffececec), width: 0.5),
             color: const Color(0x3328af37));
         break;
-      case RestaurantOrderStatus.ReadyForPickup:
+      case RestaurantOrderStatus.Ready:
         myDecoration = BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
             border: Border.all(color: const Color(0xffececec), width: 0.5),
@@ -230,7 +231,7 @@ Widget _getOrderIcon(RestaurantOrderStatus status) {
   Widget? myWidget;
 
   switch (status) {
-    case RestaurantOrderStatus.PreparingOrder:
+    case RestaurantOrderStatus.Preparing:
       myWidget = Container(
         height: 30,
         width: 30,
@@ -245,7 +246,7 @@ Widget _getOrderIcon(RestaurantOrderStatus status) {
         child: Image.asset(circularCancel),
       );
       break;
-    case RestaurantOrderStatus.ReadyForPickup:
+    case RestaurantOrderStatus.Ready:
       myWidget = Container(
         height: 30,
         width: 30,

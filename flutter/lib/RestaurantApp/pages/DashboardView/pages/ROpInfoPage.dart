@@ -118,7 +118,7 @@ class ROpInfoPage extends StatelessWidget {
           withGradient: true,
           height: 70,
           onClick: () async {
-            await editInfoController.updateLaundryInfo().then((value) =>
+            await editInfoController.updateRestaurantInfo().then((value) =>
                 Get.snackbar('${_i18n()["saved"]}', '${_i18n()["savedText"]}',
                     backgroundColor: Colors.black,
                     colorText: Colors.white,

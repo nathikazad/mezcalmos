@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
-import 'package:mezcalmos/RestaurantApp/pages/CurrentOrdersList/ROpCurrentOrders.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/ROpDashboardView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/ROpMenuView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/ROpDriversView/ROpDriversView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/OrdersListView/ROpCurrentOrders.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpTabsViewView/controllers/ROpTabsViewViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -58,18 +57,18 @@ class _ROpTabsViewViewState extends State<ROpTabsViewView> {
           canGoBack: false,
         );
 
-      case 1:
-        return ROpDriversView(
-          restID: opAuthController.restaurantId!,
-          canGoBack: false,
-        );
+      // case 1:
+      //   return ROpDriversView(
+      //     restID: opAuthController.restaurantId!,
+      //     canGoBack: false,
+      //   );
 
-      case 2:
+      case 1:
         return ROpMenuView(
           restID: opAuthController.restaurantId!,
           canGoBack: false,
         );
-      case 3:
+      case 2:
         return ROpDashboardView(
           restID: opAuthController.restaurantId!,
           tabsViewViewController: tabsViewViewController,
@@ -101,10 +100,6 @@ class _ROpTabsViewViewState extends State<ROpTabsViewView> {
                   BottomNavigationBarItem(
                     icon: Icon(Icons.history),
                     label: '${_i18n()["orders"]}',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.delivery_dining),
-                    label: '${_i18n()["drivers"]}',
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.flatware),

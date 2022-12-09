@@ -68,7 +68,7 @@ Future<Category?> get_category_by_id(int id) async {
     final Query$getCategoryInfoById$restaurant_category_by_pk data =
         response.parsedData!.restaurant_category_by_pk!;
     return Category(
-      id: data.id.toString(),
+      id: data.id,
       descriptionId: data.description_id,
       nameId: data.name.id,
       name: toLanguageMap(translations: data.name.translations),
@@ -149,7 +149,7 @@ List<Category> _parseCategories(
   data.forEach((Query$getRestaurantCategories$restaurant_category category) {
     // assigning category
     final Category cat = Category(
-      id: category.id.toString(),
+      id: category.id,
       position: category.position,
       dialog: (category.description?.translations != null)
           ? toLanguageMap(translations: category.description!.translations)

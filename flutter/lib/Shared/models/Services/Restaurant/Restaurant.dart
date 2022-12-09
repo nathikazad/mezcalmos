@@ -43,13 +43,15 @@ class Restaurant extends Service {
   List<Category> _categories = <Category>[];
   List<Item> itemsWithoutCategory = <Item>[];
   RestaurantsView restaurantsView;
+  PaymentInfo? paymentInfo;
+  Schedule? schedule;
   DeliveryCost? deliveryCost;
   Restaurant(
       {required ServiceInfo userInfo,
       required this.description,
       this.restaurantsView = RestaurantsView.Rows,
-      required Schedule schedule,
-      required PaymentInfo paymentInfo,
+      required this.schedule,
+      required this.paymentInfo,
       required ServiceState restaurantState,
       required LanguageType primaryLanguage,
       this.deliveryCost,
@@ -185,7 +187,7 @@ class Restaurant extends Service {
 
   Category? get getNoCategory {
     if (itemsWithoutCategory.isNotEmpty) {
-      final Category noCategory = Category(id: 'noCategory');
+      final Category noCategory = Category();
       noCategory.items = itemsWithoutCategory;
       return noCategory;
     } else {

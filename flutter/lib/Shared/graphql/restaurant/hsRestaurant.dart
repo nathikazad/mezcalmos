@@ -5,8 +5,8 @@ import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/__generated/restaurant.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -82,7 +82,8 @@ Future<List<Item>> fetch_restaurant_items({required int restaurant_id}) async {
         "[66] fetch_restaurant_items :: exception ::  ${response.exception}");
   }
 
-  response.parsedData?.restaurant_item.forEach((element) {
+  response.parsedData?.restaurant_item
+      .forEach((Query$getRestaurantItems$restaurant_item element) {
     mezDbgPrint("[66] Adding item ${element.id}");
     _items.add(
       Item(
@@ -185,7 +186,7 @@ Future<LanguageType?> get_restaurant_priamry_lang(int restaurantId) async {
 
 // Mutations //
 
-Future<Restaurant> editRestaurant(
+Future<Restaurant> update_restaurant_info(
     {required int id, required Restaurant restaurant}) async {
   final QueryResult<Mutation$updateRestaurantInfo> response = await _db
       .graphQLClient
@@ -247,29 +248,6 @@ Future<bool?> switch_restaurant_self_delivery(
   } else {
     return true;
   }
-
-  // final Mutation$updateRestaurantInfo$update_restaurant_by_pk data =
-  //     response.parsedData!.update_restaurant_by_pk!;
-  // return Restaurant(
-  //     userInfo: ServiceInfo(
-  //         hasuraId: data.id,
-  //         image: data.image,
-  //         firebaseId: data.firebase_id!,
-  //         name: data.name,
-  //         location: Location.fromHasura(data.location_gps, data.location_text)),
-  //     description: {
-  //       data.description!.translations.first.language_id.toLanguageType():
-  //           data.description!.translations.first.value,
-  //       data.description!.translations[1].language_id.toLanguageType():
-  //           data.description!.translations[1].value,
-  //     },
-  //     schedule: Schedule(openHours: {}),
-  //     paymentInfo: PaymentInfo(),
-  //     restaurantState:
-  //         ServiceState(data.open_status.toServiceStatus(), data.approved),
-  //     primaryLanguage: data.language_id.toString().toLanguageType(),
-  //     secondaryLanguage:
-  //         data.language_id.toString().toLanguageType().toOpLang());
 }
 
 Future<List<RestaurantOperator>?> get_restaurant_operators(
@@ -298,7 +276,7 @@ Future<List<RestaurantOperator>?> get_restaurant_operators(
           state: RestaurantOperatorState(
               owner: opData.owner,
               operatorState: opData.status.toAgentStatus(),
-              restaurantId: restaurantId.toString()),
+              restaurantId: restaurantId),
           info: UserInfo(
               hasuraId: opData.user.id,
               firebaseId: opData.user.firebase_id,
@@ -313,4 +291,48 @@ Future<List<RestaurantOperator>?> get_restaurant_operators(
   }
 
   return null;
+}
+
+// restaurant status //
+
+Future<ServiceStatus?> get_restaurant_status(
+    {required int restaurantId}) async {
+  final QueryResult<Query$getRestaurantStatus> response =
+      await _db.graphQLClient.query$getRestaurantStatus(
+    Options$Query$getRestaurantStatus(
+      fetchPolicy: FetchPolicy.networkOnly,
+      variables: Variables$Query$getRestaurantStatus(id: restaurantId),
+    ),
+  );
+  if (response.parsedData?.restaurant_by_pk == null) {
+    throw Exception(
+        "🚨🚨🚨 Getting restaurant $restaurantId status exception \n ${response.exception}");
+  } else {
+    return response.parsedData!.restaurant_by_pk!.open_status.toServiceStatus();
+  }
+}
+
+Future<ServiceStatus> update_restaurant_status(
+    {required int id, required ServiceStatus status}) async {
+  final QueryResult<Mutation$updateRestaurantInfo> response =
+      await _db.graphQLClient.mutate$updateRestaurantInfo(
+    Options$Mutation$updateRestaurantInfo(
+      fetchPolicy: FetchPolicy.networkOnly,
+      variables: Variables$Mutation$updateRestaurantInfo(
+        id: id,
+        data: Input$restaurant_set_input(
+          open_status: status.toFirebaseFormatString(),
+        ),
+      ),
+    ),
+  );
+  if (response.parsedData?.update_restaurant_by_pk == null) {
+    throw Exception(
+        "🚨🚨🚨 Hasura status mutation exception =>${response.exception}");
+  } else {
+    mezDbgPrint("✅✅✅ Hasura mutation success => ${response.data}");
+    final Mutation$updateRestaurantInfo$update_restaurant_by_pk data =
+        response.parsedData!.update_restaurant_by_pk!;
+    return data.open_status.toServiceStatus();
+  }
 }

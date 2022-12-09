@@ -43,12 +43,12 @@ class _ROpControllButtonsState extends State<ROpControllButtons> {
   Widget _getFooterComponent() {
     switch (widget.order.status) {
       case RestaurantOrderStatus.OrderReceived:
-      case RestaurantOrderStatus.PreparingOrder:
+      case RestaurantOrderStatus.Preparing:
         return _waitingDisabledButton(
             header: "${_i18n()["RestaurantControllButtons"]["notReadyTitle"]}",
             body: "${_i18n()["RestaurantControllButtons"]["notReadyBody"]}");
 
-      case RestaurantOrderStatus.ReadyForPickup:
+      case RestaurantOrderStatus.Ready:
         return _startDeliveryButton();
       case RestaurantOrderStatus.OnTheWay:
         return _confirmDeliveryButton();

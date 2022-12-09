@@ -32,14 +32,18 @@ class ROpItemViewController {
   final TextEditingController scItemDescController = TextEditingController();
   final TextEditingController itemPriceController = TextEditingController();
 
-  Category addNewCatgeory = Category(name: {
-    LanguageType.EN: "Add new category",
-    LanguageType.ES: "Añadir nueva categoria"
-  }, id: "addNew");
-  Category noCatgeory = Category(name: {
-    LanguageType.EN: "No category",
-    LanguageType.ES: "Ninguna Categoria"
-  }, id: "noCategory");
+  Category addNewCatgeory = Category(
+    name: {
+      LanguageType.EN: "Add new category",
+      LanguageType.ES: "Añadir nueva categoria"
+    },
+  );
+  Category noCatgeory = Category(
+    name: {
+      LanguageType.EN: "No category",
+      LanguageType.ES: "Ninguna Categoria"
+    },
+  );
 
   final RxList<Category> categories = RxList.empty();
   final Rxn<Category> currentCategory = Rxn();
@@ -182,24 +186,24 @@ class ROpItemViewController {
       });
     }
 
-    if (newCategoryAdded.value == true) {
-      mezDbgPrint("Adding category ======>>>> ${currentCategory.toJson()}");
-      await _restaurantInfoController
-          .addCategory(category: currentCategory.value!)
-          .then((String? value) {
-        if (value != null) {
-          currentCategory.value!.id = value;
-        }
-      });
-    }
+    // if (newCategoryAdded.value == true) {
+    //   mezDbgPrint("Adding category ======>>>> ${currentCategory.toJson()}");
+    //   await _restaurantInfoController
+    //       .addCategory(category: currentCategory.value!)
+    //       .then((String? value) {
+    //     if (value != null) {
+    //       currentCategory.value!.id = value;
+    //     }
+    //   });
+    // }
 
     if (editMode.isFalse) {
       mezDbgPrint(
-          "🍞🍞🍞 Adding ${_contructItem().name[LanguageType.EN]} to category id : ${int.parse(currentCategory.value!.id!)} ");
+          "🍞🍞🍞 Adding ${_contructItem().name[LanguageType.EN]} to category id : currentCategory.value!.id! ");
       final int? newItemId = await add_one_item(
           item: _contructItem(),
           restaurantId: restaurantId,
-          categoryId: int.parse(currentCategory.value!.id!));
+          categoryId: currentCategory.value!.id);
       if (newItemId != null) {
         mezDbgPrint(
             "👌🏻👌🏻👌🏻 Item added successfuly id : $newItemId 👌🏻👌🏻👌🏻");

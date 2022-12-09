@@ -5,12 +5,10 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpDriversView/components/ROpDriverCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ROpDriversView/controllers/ROpDriversViewController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
@@ -18,10 +16,8 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpDriversView'];
 
 class ROpDriversView extends StatefulWidget {
-  const ROpDriversView(
-      {super.key, required this.restID, this.canGoBack = true});
-  final String restID;
-  final bool canGoBack;
+  const ROpDriversView({super.key, required this.restID});
+  final int restID;
 
   @override
   State<ROpDriversView> createState() => _ROpDriversViewState();
@@ -31,64 +27,52 @@ class _ROpDriversViewState extends State<ROpDriversView> {
   ROpDriversViewController viewController = ROpDriversViewController();
   @override
   void initState() {
-    viewController.init(restaurantID: int.parse(widget.restID));
+    viewController.init(restaurantID: widget.restID);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return widget.canGoBack;
-      },
-      child: Scaffold(
-        appBar: mezcalmosAppBar(
-          AppBarLeftButtonType.Back,
-          showLeftBtn: false,
-          title: '${_i18n()["drivers"]}',
-          ordersRoute: kPastOrdersListView,
-          showNotifications: true,
-        ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(12),
-          child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                MezButton(
-                    label: '${_i18n()["addDriver"]}',
-                    backgroundColor: secondaryLightBlueColor,
-                    textColor: primaryBlueColor,
-                    onClick: () async {
-                      await viewController.fetchServiceLinks();
-                      if (viewController.hasLinks) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(12),
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              MezButton(
+                  label: '${_i18n()["addDriver"]}',
+                  backgroundColor: secondaryLightBlueColor,
+                  textColor: primaryBlueColor,
+                  onClick: () async {
+                    await viewController.fetchServiceLinks();
+                    if (viewController.hasLinks) {
+                      await _addDriverSheet();
+                    } else {
+                      final ServerResponse res =
+                          await viewController.generateLinks();
+                      if (res.success) {
+                        //  await viewController.fetchOperators();
                         await _addDriverSheet();
                       } else {
-                        final ServerResponse res =
-                            await viewController.generateLinks();
-                        if (res.success) {
-                          //  await viewController.fetchOperators();
-                          await _addDriverSheet();
-                        } else {
-                          mezDbgPrint("👋 ERROR ${res.errorMessage}");
-                        }
+                        mezDbgPrint("👋 ERROR ${res.errorMessage}");
                       }
-                    }),
-                SizedBox(
-                  height: 25,
+                    }
+                  }),
+              SizedBox(
+                height: 25,
+              ),
+              Obx(
+                () => Column(
+                  children: List.generate(
+                      viewController.drivers.length,
+                      (int index) => ROpListDriverCard(
+                            driver: viewController.drivers[index],
+                            viewController: viewController,
+                          )),
                 ),
-                Obx(
-                  () => Column(
-                    children: List.generate(
-                        viewController.drivers.length,
-                        (int index) => ROpListDriverCard(
-                              driver: viewController.drivers[index],
-                              viewController: viewController,
-                            )),
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
         ),
       ),

@@ -33,8 +33,7 @@ class ROpSpecialItemCard extends StatelessWidget {
         onTap: () {
           Get.toNamed(
               getEditItemRoute(
-                  itemId: item.id!.toString(),
-                  restaurntID: viewController.restaurnatId),
+                  itemId: item.id!, restaurntID: viewController.restaurnatId),
               arguments: {"specials": true});
         },
         child: Container(

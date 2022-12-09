@@ -16,8 +16,8 @@ import 'package:mezcalmos/Shared/models/Utilities/SelfDeliveryDetails.dart';
 //ignore_for_file:constant_identifier_names
 enum RestaurantOrderStatus {
   OrderReceived,
-  PreparingOrder,
-  ReadyForPickup,
+  Preparing,
+  Ready,
   OnTheWay,
   Delivered,
   CancelledByAdmin,
@@ -220,8 +220,8 @@ class RestaurantOrder extends DeliverableOrder {
   @override
   bool inProcess() {
     return status == RestaurantOrderStatus.OrderReceived ||
-        status == RestaurantOrderStatus.PreparingOrder ||
-        status == RestaurantOrderStatus.ReadyForPickup ||
+        status == RestaurantOrderStatus.Preparing ||
+        status == RestaurantOrderStatus.Ready ||
         status == RestaurantOrderStatus.OnTheWay;
   }
 
@@ -230,7 +230,7 @@ class RestaurantOrder extends DeliverableOrder {
   }
 
   bool inSelfDelivery() {
-    return (status == RestaurantOrderStatus.ReadyForPickup ||
+    return (status == RestaurantOrderStatus.Ready ||
             status == RestaurantOrderStatus.OnTheWay) &&
         (deliveryMode == DeliveryMode.SelfDeliveryByDriver ||
             deliveryMode == DeliveryMode.SelfDeliveryByRestaurant);

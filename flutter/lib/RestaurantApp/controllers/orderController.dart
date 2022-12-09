@@ -81,11 +81,11 @@ class ROpOrderController extends GetxController {
             .state
             .restaurantId !=
         null) {
-      restaurantId = int.parse(Get.find<RestaurantOpAuthController>()
+      restaurantId = Get.find<RestaurantOpAuthController>()
           .operator
           .value!
           .state
-          .restaurantId!);
+          .restaurantId!;
     }
   }
 

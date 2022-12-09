@@ -111,7 +111,7 @@ class ROpDashboardPage extends StatelessWidget {
               _divider(),
               _navigationLink(
                   onClick: () async {
-                    await pageController.animateToPage(6,
+                    await pageController.animateToPage(5,
                         duration: Duration(milliseconds: 1),
                         curve: Curves.easeIn);
                   },
@@ -124,27 +124,6 @@ class ROpDashboardPage extends StatelessWidget {
                         color: Colors.grey.shade900),
                   )),
               _divider(),
-              if (viewController.restaurant.value!.selfDelivery)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _navigationLink(
-                        onClick: () async {
-                          await pageController.animateToPage(7,
-                              duration: Duration(milliseconds: 1),
-                              curve: Curves.easeIn);
-                        },
-                        icon: Icons.price_check_rounded,
-                        titleWidget: Text(
-                          'Delivery cost',
-                          style: Get.textTheme.bodyText1?.copyWith(
-                              fontSize: 11.sp,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey.shade900),
-                        )),
-                    _divider(),
-                  ],
-                ),
               _navigationLink(
                   onClick: () async {
                     await pageController.animateToPage(3,
@@ -174,6 +153,48 @@ class ROpDashboardPage extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         color: Colors.grey.shade900),
                   )),
+              if (viewController.restaurant.value!.selfDelivery)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _divider(),
+                    _navigationLink(
+                        onClick: () async {
+                          await pageController.animateToPage(6,
+                              duration: Duration(milliseconds: 1),
+                              curve: Curves.easeIn);
+                        },
+                        icon: Icons.delivery_dining,
+                        titleWidget: Text(
+                          'Drivers',
+                          style: Get.textTheme.bodyText1?.copyWith(
+                              fontSize: 11.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey.shade900),
+                        )),
+                  ],
+                ),
+              if (viewController.restaurant.value!.selfDelivery)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _divider(),
+                    _navigationLink(
+                        onClick: () async {
+                          await pageController.animateToPage(7,
+                              duration: Duration(milliseconds: 1),
+                              curve: Curves.easeIn);
+                        },
+                        icon: Icons.price_check_rounded,
+                        titleWidget: Text(
+                          'Delivery cost',
+                          style: Get.textTheme.bodyText1?.copyWith(
+                              fontSize: 11.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey.shade900),
+                        )),
+                  ],
+                ),
             ],
           ),
         ),

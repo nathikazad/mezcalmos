@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
+import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpScheduleController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
@@ -8,10 +8,10 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:sizer/sizer.dart';
 
-class ROpEditInfoWidgets {
-  final ROpEditInfoController editInfoController;
+class ROpScheduleWidgets {
+  final ROpScheduleController viewController;
   final BuildContext context;
-  ROpEditInfoWidgets({required this.editInfoController, required this.context});
+  ROpScheduleWidgets({required this.viewController, required this.context});
 
   dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
       ["MezWorkingHours"];
@@ -33,9 +33,9 @@ class ROpEditInfoWidgets {
     ];
 
     for (int i = 0;
-        i < editInfoController.newSchedule.value!.openHours.length;
+        i < viewController.newSchedule.value!.openHours.length;
         i++) {
-      editInfoController.newSchedule.value!.openHours
+      viewController.newSchedule.value!.openHours
           .forEach((Weekday key, OpenHours value) {
         if (key.index == i) {
           widgets.add(
@@ -76,21 +76,21 @@ class ROpEditInfoWidgets {
               Flexible(
                   flex: 6,
                   fit: FlexFit.loose,
-                  child: editInfoController
+                  child: viewController
                           .newSchedule.value!.openHours[weekday]!.isOpen
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                               Text(
                                 convertToAmPm(
-                                    editInfoController.newSchedule.value!
+                                    viewController.newSchedule.value!
                                         .openHours[weekday]!.from[0],
-                                    editInfoController.newSchedule.value!
+                                    viewController.newSchedule.value!
                                         .openHours[weekday]!.from[1]),
                                 textAlign: TextAlign.center,
                               ),
                               Text(
-                                " - ${convertToAmPm(editInfoController.newSchedule.value!.openHours[weekday]!.to[0], editInfoController.newSchedule.value!.openHours[weekday]!.to[1])}",
+                                " - ${convertToAmPm(viewController.newSchedule.value!.openHours[weekday]!.to[0], viewController.newSchedule.value!.openHours[weekday]!.to[1])}",
                                 textAlign: TextAlign.center,
                               ),
                             ])
@@ -103,7 +103,7 @@ class ROpEditInfoWidgets {
                   padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: (editInfoController
+                    color: (viewController
                             .newSchedule.value!.openHours[weekday]!.isOpen)
                         ? Color(0xFFE9F4E9)
                         : Color(0xFFFCE7EB),
@@ -112,13 +112,12 @@ class ROpEditInfoWidgets {
 
                   child: Center(
                       child: Text(
-                    editInfoController
-                            .newSchedule.value!.openHours[weekday]!.isOpen
+                    viewController.newSchedule.value!.openHours[weekday]!.isOpen
                         ? "${_i18n()["workingHoursCard"]["open"]}"
                         : "${_i18n()["workingHoursCard"]["closed"]}",
                     style: Get.textTheme.bodyText2?.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: editInfoController
+                        color: viewController
                                 .newSchedule.value!.openHours[weekday]!.isOpen
                             ? Color(0xFF219125)
                             : Color(0xFFE21132)),
@@ -204,13 +203,13 @@ class ROpEditInfoWidgets {
                             style: Get.textTheme.bodyText1),
                         Spacer(),
                         radioCircleButton(
-                            value: editInfoController.schedulePreview.value!
+                            value: viewController.schedulePreview.value!
                                     .openHours[weekday]!.isOpen ==
                                 true,
                             onTap: (bool? v) {
-                              editInfoController.schedulePreview.value!
+                              viewController.schedulePreview.value!
                                   .openHours[weekday]!.isOpen = true;
-                              editInfoController.schedulePreview.refresh();
+                              viewController.schedulePreview.refresh();
                             })
                       ],
                     ),
@@ -225,13 +224,13 @@ class ROpEditInfoWidgets {
                             style: Get.textTheme.bodyText1),
                         Spacer(),
                         radioCircleButton(
-                            value: editInfoController.schedulePreview.value!
+                            value: viewController.schedulePreview.value!
                                     .openHours[weekday]!.isOpen ==
                                 false,
                             onTap: (bool? v) {
-                              editInfoController.schedulePreview.value!
+                              viewController.schedulePreview.value!
                                   .openHours[weekday]!.isOpen = false;
-                              editInfoController.schedulePreview.refresh();
+                              viewController.schedulePreview.refresh();
                             })
                       ],
                     ),
@@ -239,7 +238,7 @@ class ROpEditInfoWidgets {
                 ],
               ),
             ),
-            if (editInfoController
+            if (viewController
                 .schedulePreview.value!.openHours[weekday]!.isOpen)
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
@@ -298,10 +297,10 @@ class ROpEditInfoWidgets {
             textStyle: Get.textTheme.bodyText1?.copyWith(color: Colors.red)),
         onPressed: () {
           Future.delayed(Duration.zero, Get.back).then((value) {
-            editInfoController.schedulePreview.value =
-                Schedule.clone(editInfoController.newSchedule.value!);
-            editInfoController.schedulePreview.refresh();
-            //   editInfoController.theNewSchedule.refresh();
+            viewController.schedulePreview.value =
+                Schedule.clone(viewController.newSchedule.value!);
+            viewController.schedulePreview.refresh();
+            //   viewController.theNewSchedule.refresh();
           });
         },
         child: Container(
@@ -315,9 +314,9 @@ class ROpEditInfoWidgets {
     return InkWell(
         onTap: () {
           Future.delayed(Duration.zero, Get.back).then((value) {
-            editInfoController.newSchedule.value =
-                Schedule.clone(editInfoController.schedulePreview.value!);
-            editInfoController.newSchedule.refresh();
+            viewController.newSchedule.value =
+                Schedule.clone(viewController.schedulePreview.value!);
+            viewController.newSchedule.refresh();
           });
         },
         child: Container(
@@ -342,9 +341,9 @@ class ROpEditInfoWidgets {
           showTimePicker(
             context: context,
             initialTime: TimeOfDay(
-                hour: editInfoController
+                hour: viewController
                     .schedulePreview.value!.openHours[weekday]!.to[0],
-                minute: editInfoController
+                minute: viewController
                     .schedulePreview.value!.openHours[weekday]!.to[1]),
             builder: (BuildContext context, Widget? child) {
               return Theme(
@@ -362,9 +361,11 @@ class ROpEditInfoWidgets {
             },
           ).then((TimeOfDay? value) {
             if (value != null) {
-              editInfoController.schedulePreview.value!.openHours[weekday]!.to =
-                  [value.hour.toInt(), value.minute.toInt()];
-              editInfoController.schedulePreview.refresh();
+              viewController.schedulePreview.value!.openHours[weekday]!.to = [
+                value.hour.toInt(),
+                value.minute.toInt()
+              ];
+              viewController.schedulePreview.refresh();
             }
           });
         },
@@ -374,7 +375,7 @@ class ROpEditInfoWidgets {
             width: double.infinity,
             alignment: Alignment.centerLeft,
             child: Text(
-              "${convertToAmPm(editInfoController.schedulePreview.value!.openHours[weekday]!.to[0], editInfoController.schedulePreview.value!.openHours[weekday]!.to[1])}",
+              "${convertToAmPm(viewController.schedulePreview.value!.openHours[weekday]!.to[0], viewController.schedulePreview.value!.openHours[weekday]!.to[1])}",
               style: Theme.of(context)
                   .textTheme
                   .bodyText1
@@ -394,9 +395,9 @@ class ROpEditInfoWidgets {
           showTimePicker(
               context: context,
               initialTime: TimeOfDay(
-                  hour: editInfoController
+                  hour: viewController
                       .schedulePreview.value!.openHours[weekday]!.from[0],
-                  minute: editInfoController
+                  minute: viewController
                       .schedulePreview.value!.openHours[weekday]!.from[1]),
               builder: (BuildContext context, Widget? child) {
                 return Theme(
@@ -414,9 +415,11 @@ class ROpEditInfoWidgets {
               }).then((TimeOfDay? value) {
             if (value != null) {
               // mezDbgPrint(value);
-              editInfoController.schedulePreview.value!.openHours[weekday]!
-                  .from = [value.hour.toInt(), value.minute.toInt()];
-              editInfoController.schedulePreview.refresh();
+              viewController.schedulePreview.value!.openHours[weekday]!.from = [
+                value.hour.toInt(),
+                value.minute.toInt()
+              ];
+              viewController.schedulePreview.refresh();
             }
           });
         },
@@ -426,7 +429,7 @@ class ROpEditInfoWidgets {
             alignment: Alignment.centerLeft,
             height: 50,
             child: Text(
-              "${convertToAmPm(editInfoController.schedulePreview.value!.openHours[weekday]!.from[0], editInfoController.schedulePreview.value!.openHours[weekday]!.from[1])}",
+              "${convertToAmPm(viewController.schedulePreview.value!.openHours[weekday]!.from[0], viewController.schedulePreview.value!.openHours[weekday]!.from[1])}",
               style: Theme.of(context)
                   .textTheme
                   .bodyText1

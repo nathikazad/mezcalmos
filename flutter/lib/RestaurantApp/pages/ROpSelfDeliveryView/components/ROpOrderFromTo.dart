@@ -115,10 +115,10 @@ class _ROpOrderFromToState extends State<ROpOrderFromTo> {
         } else {
           return '${_i18n()["orderStatus"]["waiting"]}';
         }
-      case RestaurantOrderStatus.PreparingOrder:
+      case RestaurantOrderStatus.Preparing:
         return '${_i18n()["orderStatus"]["waiting"]}';
 
-      case RestaurantOrderStatus.ReadyForPickup:
+      case RestaurantOrderStatus.Ready:
         return '${_i18n()["orderStatus"]["justReady"]}';
       case RestaurantOrderStatus.OnTheWay:
         return '${_i18n()["orderStatus"]["deliveryOtw"]}';
@@ -131,14 +131,14 @@ class _ROpOrderFromToState extends State<ROpOrderFromTo> {
 
   bool isInPickUpPhase() {
     return widget.order.status == RestaurantOrderStatus.OrderReceived ||
-        widget.order.status == RestaurantOrderStatus.ReadyForPickup ||
-        widget.order.status == RestaurantOrderStatus.PreparingOrder;
+        widget.order.status == RestaurantOrderStatus.Ready ||
+        widget.order.status == RestaurantOrderStatus.Preparing;
   }
 
   bool _showFoodReadyTime() {
     return widget.order.estimatedFoodReadyTime != null &&
         (widget.order.status == RestaurantOrderStatus.OrderReceived ||
-            widget.order.status == RestaurantOrderStatus.PreparingOrder);
+            widget.order.status == RestaurantOrderStatus.Preparing);
   }
 
 // @here

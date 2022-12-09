@@ -17,7 +17,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
 //
 class ROpReviewsView extends StatefulWidget {
   const ROpReviewsView({super.key, required this.restId});
-  final String restId;
+  final int restId;
 
   @override
   State<ROpReviewsView> createState() => _ROpReviewsViewState();
@@ -25,7 +25,7 @@ class ROpReviewsView extends StatefulWidget {
 
 class _ROpReviewsViewState extends State<ROpReviewsView> {
   ROpReviewsViewController viewController = ROpReviewsViewController();
-  String? restaurantID;
+  int? restaurantID;
   @override
   void initState() {
     restaurantID = widget.restId;
