@@ -20,8 +20,6 @@ import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 final HasuraDb hasuraDb = Get.find<HasuraDb>();
 
 Future<Cart?> getCustomerCart({required int customerId}) async {
-  mezDbgPrint(Get.find<AuthController>().user!.hasuraId);
-  mezDbgPrint(customerId);
   final QueryResult<Query$getCustomerCart> _get_cart_resp =
       await hasuraDb.graphQLClient.query$getCustomerCart(
     Options$Query$getCustomerCart(
@@ -86,7 +84,7 @@ Future<Cart?> getCustomerCart({required int customerId}) async {
             : null);
     _cart_data.items
         .forEach((Query$getCustomerCart$customer_by_pk$cart$items _cart_item) {
-      mezDbgPrint("Item !");
+      mezDbgPrint("Item  ID [bb] ===> ${_cart_item.id}!");
       cart.addItem(
         CartItem(
           Item(
@@ -103,7 +101,7 @@ Future<Cart?> getCustomerCart({required int customerId}) async {
           _cart_item.restaurant_item.restaurant_id,
           quantity: _cart_item.quantity,
           notes: _cart_item.note,
-          // idInCart: _cart_item.id.toString(),
+          idInCart: _cart_item.id,
         ),
       );
     });
@@ -227,7 +225,7 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) async* {
             _cart_item.restaurant_item.restaurant_id,
             quantity: _cart_item.quantity,
             notes: _cart_item.note,
-            // idInCart: _cart_item.id.toString(),
+            idInCart: _cart_item.id,
           ),
         );
       });
@@ -383,7 +381,7 @@ Future<Cart?> update_cart({
           _cart_item.restaurant_item.restaurant_id,
           quantity: _cart_item.quantity,
           notes: _cart_item.note,
-          // idInCart: _cart_item.id.toString(),
+          idInCart: _cart_item.id,
         ),
       );
     });

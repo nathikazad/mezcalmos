@@ -11,7 +11,7 @@ class MRoute {
 }
 
 /// This does not support NestedNavigation yet.
-class MezRouter {
+class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   static final List<MRoute> _navigationStack = <MRoute>[];
   // This will act as a lock, basically if there's any push/pop happening, we lock other functionalities to avoid race conditions
   // static bool _isBusy = false;
@@ -295,4 +295,18 @@ class MezRouter {
   static bool isRouteInStack<String>(String routeName) => _navigationStack
       .where((MRoute routeInstance) => routeInstance.name == routeName)
       .isNotEmpty;
+
+  @override
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    super.didPop(route, previousRoute);
+    final MRoute? _rCurrent = currentRoute();
+
+    if (previousRoute is PageRoute && route is PageRoute && _rCurrent != null) {
+      if (_rCurrent.name == route.settings.name) {
+        mezDbgPrint("[+] MissMatch on NavStack :: resolving ... done!");
+        _navigationStack.removeLast();
+        printRoutes();
+      }
+    }
+  }
 }

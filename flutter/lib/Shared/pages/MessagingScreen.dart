@@ -224,35 +224,36 @@ class _MessagingScreenState extends State<MessagingScreen> {
                 controller.chat.value!.chatInfo.parentlink,
               ),
             ),
-          Obx(
-            () => Container(
-              child: controller.isUserAuthorizedToCall() &&
-                      // isReciepientNotAdmin() &&
-                      sagora != null
-                  ? InkWell(
-                      // onTap: () async => _onCallPress(),
-                      child: Container(
-                        width: 30,
-                        height: 30,
-                        padding: EdgeInsets.all(5),
-                        margin: EdgeInsets.only(right: 7),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color.fromRGBO(103, 121, 254, 1),
-                        ),
-                        child: Center(
-                          child: FittedBox(
-                            child: Icon(
-                              Icons.call,
-                              color: Colors.white,
-                            ),
+          // Obx(
+          //   () =>
+          Container(
+            child: controller.isUserAuthorizedToCall() &&
+                    // isReciepientNotAdmin() &&
+                    sagora != null
+                ? InkWell(
+                    // onTap: () async => _onCallPress(),
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      padding: EdgeInsets.all(5),
+                      margin: EdgeInsets.only(right: 7),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color.fromRGBO(103, 121, 254, 1),
+                      ),
+                      child: Center(
+                        child: FittedBox(
+                          child: Icon(
+                            Icons.call,
+                            color: Colors.white,
                           ),
                         ),
                       ),
-                    )
-                  : SizedBox(),
-            ),
-          )
+                    ),
+                  )
+                : SizedBox(),
+          ),
+          // )
         ],
       ),
       body: isChatLoaded

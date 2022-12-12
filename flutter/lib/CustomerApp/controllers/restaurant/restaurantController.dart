@@ -260,18 +260,17 @@ class RestaurantController extends GetxController {
 
   Future<void> saveCart() async {
     if (_authController.user?.hasuraId != null) {
-      // TODO : Hasura-ch
-      // final Cart? _cart = await update_cart(
-      //   customer_id: _authController.user!.hasuraId,
-      //   restaurant_id: associatedRestaurant!.info.hasuraId,
-      //   items: cart.value.cartItems,
-      // );
-      // if (_cart != null) {
-      //   mezDbgPrint("[cc] - saveCart::update_cart -> Success!");
-      //   cart.value = _cart;
-      //   cart.refresh();
-      // }
+      final Cart? _cart = await update_cart(
+        customer_id: _authController.user!.hasuraId,
+        restaurant_id: associatedRestaurant!.info.hasuraId,
+        items: cart.value.cartItems,
+      );
+      if (_cart != null) {
+        mezDbgPrint("[cc] - saveCart::update_cart -> Success!");
+        cart.value = _cart;
+      }
     }
+    cart.refresh();
   }
 
   Future<void> addItem(CartItem cartItem) async {
@@ -304,6 +303,7 @@ class RestaurantController extends GetxController {
 
   CartItem? incrementItem(int itemId, int quantity) {
     final CartItem? _item = cart.value.incrementItem(itemId, quantity);
+    mezDbgPrint("[bb] Item -==> $_item");
     if (_item != null) {
       update_item_quantity(
         quantity: quantity,
