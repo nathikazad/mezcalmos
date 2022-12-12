@@ -13,15 +13,15 @@ targets:
             timestamptz:
               type: String
             json:
-              type: Map<String, dynamic>
-              # fromJsonFunctionName: mapFromJson
-              # toJsonFunctionName: mapToJson
-              # import: package:mezcalmos/Shared/graphql/hasuraTypes.dart
+              type: dynamic
+              fromJsonFunctionName: mapFromJson
+              toJsonFunctionName: mapToJson
+              import: package:mezcalmos/Shared/graphql/hasuraTypes.dart
             jsonb:
-              type: Map<String, dynamic>
-              # fromJsonFunctionName: mapFromJson
-              # toJsonFunctionName: mapToJson
-              # import: package:mezcalmos/Shared/graphql/hasuraTypes.dart
+              type: dynamic
+              fromJsonFunctionName: mapFromJson
+              toJsonFunctionName: mapToJson
+              import: package:mezcalmos/Shared/graphql/hasuraTypes.dart
             geography:
               type: Geography
               fromJsonFunctionName: geographyFromJson

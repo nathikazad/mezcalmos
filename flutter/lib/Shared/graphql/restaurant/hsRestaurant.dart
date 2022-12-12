@@ -137,6 +137,7 @@ Future<Restaurant?> get_restaurant_by_id(
     ),
   );
 
+  mezDbgPrint("[+] -> id : $id");
   if (response.hasException) {
     mezDbgPrint("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
     return null;

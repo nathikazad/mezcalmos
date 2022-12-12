@@ -77,6 +77,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
     setState(() {
       isChatLoaded = true;
     });
+
     super.initState();
   }
 

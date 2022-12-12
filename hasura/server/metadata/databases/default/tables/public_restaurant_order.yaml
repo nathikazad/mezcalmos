@@ -71,10 +71,8 @@ select_permissions:
         - items_cost
         - total_cost
       filter:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+        customer_id:
+          _eq: X-Hasura-User-Id
   - role: mez_admin
     permission:
       columns:

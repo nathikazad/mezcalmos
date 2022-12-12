@@ -78,7 +78,6 @@ query getCustomerCart($customer_id: Int!) {
 # Create a customer Cart
 mutation create_customer_cart($cart : restaurant_cart_insert_input!) {
   insert_restaurant_cart_one(object : $cart) {
-    cost,
     customer_id,
     restaurant_id,
   }

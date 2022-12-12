@@ -50,6 +50,15 @@ insert_permissions:
         - app_type_id
         - token
         - user_id
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - token
+        - user_id
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
 update_permissions:
   - role: customer
     permission:

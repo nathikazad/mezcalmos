@@ -115,7 +115,7 @@ class Message {
   String message;
   DateTime timestamp;
   String get formatedTime => DateFormat('HH:mm').format(timestamp).toString();
-  String userId;
+  int userId;
   // ParticipantType participantType;
   Message({
     required this.message,

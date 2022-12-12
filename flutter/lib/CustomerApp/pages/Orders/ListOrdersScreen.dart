@@ -34,6 +34,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
   @override
   void initState() {
     super.initState();
+    controller.fetchCustomerOrders();
     mezDbgPrint(
       "ListOrdersScreen: onInit current : ${controller.currentOrders.length} past : ${controller.pastOrders.length}",
     );

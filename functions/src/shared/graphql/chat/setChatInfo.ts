@@ -31,17 +31,17 @@ export async function setOrderChatInfo(restaurantOrder: RestaurantOrder, restaur
           CustomerApp: {
             chatTitle: restaurant.name,
             chatImage: restaurant.image,
-            parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`
+            parentLink: `/restaurantOrders/${restaurantOrder.orderId}`
           },
           RestaurantApp: {
             chatTitle: customer.name ?? "Customer",
             chatImage: customer.image,
-            parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`
+            parentLink: `/restaurantOrders/${restaurantOrder.orderId}`
           },
           MezAdminApp: {
             chatTitle: customer.name ?? "Customer",
             chatImage: customer.image,
-            parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`
+            parentLink: `/restaurantOrders/${restaurantOrder.orderId}`
           },
         }),
       }
