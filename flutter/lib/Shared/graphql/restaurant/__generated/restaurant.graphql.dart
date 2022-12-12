@@ -2414,7 +2414,7 @@ class Query$getOneRestaurant$restaurant_by_pk {
           : Query$getOneRestaurant$restaurant_by_pk$description.fromJson(
               (l$description as Map<String, dynamic>)),
       approved: (l$approved as bool),
-      schedule: (l$schedule as Map<String, dynamic>?),
+      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       open_status: (l$open_status as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -2442,7 +2442,7 @@ class Query$getOneRestaurant$restaurant_by_pk {
 
   final bool approved;
 
-  final Map<String, dynamic>? schedule;
+  final dynamic? schedule;
 
   final String open_status;
 
@@ -2473,7 +2473,7 @@ class Query$getOneRestaurant$restaurant_by_pk {
     final l$approved = approved;
     _resultData['approved'] = l$approved;
     final l$schedule = schedule;
-    _resultData['schedule'] = l$schedule;
+    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$open_status = open_status;
     _resultData['open_status'] = l$open_status;
     final l$$__typename = $__typename;
@@ -2629,7 +2629,7 @@ abstract class CopyWith$Query$getOneRestaurant$restaurant_by_pk<TRes> {
     String? name,
     Query$getOneRestaurant$restaurant_by_pk$description? description,
     bool? approved,
-    Map<String, dynamic>? schedule,
+    dynamic? schedule,
     String? open_status,
     String? $__typename,
   });
@@ -2701,7 +2701,7 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_by_pk<TRes>
             : (approved as bool),
         schedule: schedule == _undefined
             ? _instance.schedule
-            : (schedule as Map<String, dynamic>?),
+            : (schedule as dynamic?),
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
@@ -2738,7 +2738,7 @@ class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_by_pk<TRes>
     String? name,
     Query$getOneRestaurant$restaurant_by_pk$description? description,
     bool? approved,
-    Map<String, dynamic>? schedule,
+    dynamic? schedule,
     String? open_status,
     String? $__typename,
   }) =>
