@@ -27,39 +27,6 @@ class Customer {
     savedCards.add(card);
   }
 
-  // Customer.fromSnapshotData(data) {
-  //   appVersion = data?["versionNumber"] ?? null;
-  //   notificationInfo = data?["notificationInfo"];
-
-  //   if (data["savedLocations"] != null) {
-  //     Map<int, dynamic>.from(data["savedLocations"])
-  //         .entries
-  //         .forEach((MapEntry<int, dynamic> entry) {
-  //       savedLocations.add(
-  //         SavedLocation.fromData(id: entry.key, data: entry.value),
-  //       );
-  //     });
-  //     // if none of the locations are default, then set the first location as default
-  //     if (savedLocations.length > 0 &&
-  //         savedLocations
-  //                 .where((SavedLocation savedLocation) =>
-  //                     savedLocation.defaultLocation)
-  //                 .length ==
-  //             0) savedLocations[0].defaultLocation = true;
-  //   }
-  //   if (data["stripe"] != null) {
-  //     if (data["stripe"]["cards"] != null) {
-  //       Map<String, dynamic>.from(data["stripe"]["cards"])
-  //           .entries
-  //           .forEach((MapEntry<String, dynamic> entry) {
-  //         savedCards.add(
-  //           CreditCard.fromData(id: entry.key, data: entry.value),
-  //         );
-  //       });
-  //     }
-  //   }
-  // }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{"notificationInfo": notificationInfo};
   }
@@ -92,7 +59,7 @@ extension ParseLocationData on LocationData {
 
 class SavedLocation {
   String name;
-  int id;
+  int? id;
   LocModel.Location location;
   bool defaultLocation;
 
@@ -136,15 +103,6 @@ class SavedLocation {
 }
 
 typedef SavedLocations = List<SavedLocation>;
-
-extension SavedLocationsFunctions on SavedLocations {
-  Map<int, Object> toFirebaseFormattedJson() {
-    final Map<int, Object> json = <int, Object>{};
-    forEach((SavedLocation savedLocation) =>
-        json[savedLocation.id] = savedLocation.toFirebaseFormattedJson());
-    return json;
-  }
-}
 
 class CreditCard {
   String id;

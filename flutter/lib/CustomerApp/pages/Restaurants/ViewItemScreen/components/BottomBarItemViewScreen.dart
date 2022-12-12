@@ -133,18 +133,10 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                             if (restaurantCartController
                                     .associatedRestaurant?.info.hasuraId ==
                                 widget.currentRestaurantId) {
-                              mezDbgPrint("[cc] Exec :: AddItemMode :: if 2 ");
-
-                              mezDbgPrint(
-                                  "the first id is ${restaurantCartController.associatedRestaurant?.info.firebaseId} and the scond is ${widget.currentRestaurantId}");
-                              Cart? _c = await getCustomerCart(
+                              final Cart? _c = await getCustomerCart(
                                 customerId: auth.user!.hasuraId,
                               );
-                              mezDbgPrint(
-                                  "[cc] got customer cart from db ::  cart ==> ${_c?.cartItems.length}");
                               if (_c == null) {
-                                mezDbgPrint(
-                                    "No customer Cart created yet! .. creating");
                                 await create_customer_cart(
                                     restaurant_id: restaurantCartController
                                         .associatedRestaurant!.info.hasuraId);
@@ -155,9 +147,6 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                                   widget.restaurant;
                               await MezRouter.offNamed<void>(kCartRoute);
                             } else {
-                              mezDbgPrint(
-                                  "not true ${restaurantCartController.associatedRestaurant?.info.hasuraId.toString()} and the other is ${widget.currentRestaurantId}");
-
                               await showStatusInfoDialog(
                                 context,
                                 bottomRightIcon: Icons.shopping_cart,
@@ -184,9 +173,6 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                               );
                             }
                           } else {
-                            mezDbgPrint(
-                                "[cc] Exec :: AddItemMode :: ${restaurantCartController.associatedRestaurant} ");
-
                             if (restaurantCartController.cart.value
                                         .canAddSpecial(
                                             item: widget.cartItem.value!) !=
@@ -195,24 +181,19 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                                         .canAddSpecial(
                                             item: widget.cartItem.value!) ==
                                     false) {
-                              mezDbgPrint("Error");
                               MezSnackbar("Error", "Special time error");
                             } else {
                               restaurantCartController.associatedRestaurant =
                                   widget.restaurant;
-                              mezDbgPrint(
-                                  "Hasura Id ==> ${auth.user!.hasuraId}");
-                              Cart? _c = await getCustomerCart(
+                              final Cart? _c = await getCustomerCart(
                                 customerId: auth.user!.hasuraId,
                               );
                               if (_c == null) {
-                                mezDbgPrint(
-                                    "No customer Cart created yet! .. creating");
                                 await create_customer_cart(
                                     restaurant_id: restaurantCartController
                                         .associatedRestaurant!.info.hasuraId);
                               }
-                              int? item_id = await add_item_to_cart(
+                              final int? item_id = await add_item_to_cart(
                                 cartItem: widget.cartItem.value!,
                               );
                               widget.cartItem.value?.idInCart = item_id;

@@ -113,7 +113,6 @@ class _WrapperState extends State<Wrapper> {
         mezDbgPrint("[777] user == null");
         if (AppType.CustomerApp == settingsController.appType) {
           mezDbgPrint("[777] app = customerApp .. routing to home!");
-          // if (Get.currentRoute != kSignInRouteOptional) {
           await MezRouter.offNamedUntil<void>(
               kHomeRoute, ModalRoute.withName(kWrapperRoute));
         } else {
@@ -125,15 +124,10 @@ class _WrapperState extends State<Wrapper> {
       } else {
         mezDbgPrint("[777] user != null");
 
-        // await waitTillUserInfoLoaded();
         redirectIfUserInfosNotSet();
       }
     }
   }
-
-  // Future<void> waitTillUserInfoLoaded() async {
-  //   return Get.find<AuthController>().fetchUserInfoFromHasura();
-  // }
 
   void redirectIfUserInfosNotSet() {
     if ((!Get.find<AuthController>().isDisplayNameSet() ||

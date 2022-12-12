@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
@@ -56,18 +55,6 @@ Future<Cart?> getCustomerCart({required int customerId}) async {
                   ),
                 ),
                 description: null,
-
-                // {
-                //   _cart_data
-                //           .restaurant!.description!.translations.first.language_id
-                //           .toLanguageType():
-                //       _cart_data
-                //           .restaurant!.description!.translations.first.value,
-                //   _cart_data
-                //           .restaurant!.description!.translations[1].language_id
-                //           .toLanguageType():
-                //       _cart_data.restaurant!.description!.translations[1].value,
-                // },
                 schedule: Schedule(openHours: {}),
                 paymentInfo: PaymentInfo(),
                 restaurantState: ServiceState(
@@ -109,12 +96,6 @@ Future<Cart?> getCustomerCart({required int customerId}) async {
   }
 
   return null;
-  // if (_hasura_cart.parsedData?.customer_by_pk?.cart != null) {
-  //   _hasura_cart.parsedData!.customer_by_pk!.cart!.items
-  //       .forEach((Query$getCustomerCart$customer_by_pk$cart$items item) {
-  //         cart.addItem(CartItem(Item(name: item., itemType: itemType, cost: cost), restaurantId))
-  //       });
-  // }
 }
 
 Future<void> create_customer_cart({required int restaurant_id}) async {
@@ -168,12 +149,6 @@ Future<int?> add_item_to_cart({required CartItem cartItem}) async {
           quantity: cartItem.quantity,
           selected_options: cartItem.item.toJson(),
           restaurant_item_id: cartItem.item.id,
-
-          // restaurant_cart: Input$restaurant_cart_obj_rel_insert_input(
-          //   data: Input$restaurant_cart_insert_input(
-          //     customer_id: Get.find<AuthController>().hasuraUserId,
-          //   ),
-          // ),
         ),
       ),
     ),
@@ -190,18 +165,15 @@ Future<int?> add_item_to_cart({required CartItem cartItem}) async {
   return null;
 }
 
-Stream<Cart?> listen_on_customer_cart({required int customer_id}) async* {
-  // .subscribe$Subscription$listen_on_customer_cart$customer_by_pk$cart$items(
-
-  yield* hasuraDb.graphQLClient
+Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
+  return hasuraDb.graphQLClient
       .subscribe$listen_on_customer_cart(
     Options$Subscription$listen_on_customer_cart(
       variables: Variables$Subscription$listen_on_customer_cart(
           customer_id: customer_id),
     ),
   )
-      .asyncMap<Cart?>(
-          (QueryResult<Subscription$listen_on_customer_cart> cart) {
+      .map<Cart?>((QueryResult<Subscription$listen_on_customer_cart> cart) {
     Cart _c = Cart();
     Subscription$listen_on_customer_cart$customer_by_pk$cart? parsed_cart =
         cart.parsedData?.customer_by_pk?.cart;

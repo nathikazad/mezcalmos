@@ -14,7 +14,6 @@ import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -39,7 +38,6 @@ class _PickLocationViewState extends State<PickLocationView> {
   final LocationPickerController locationPickerController =
       LocationPickerController();
 
-  // Location? locationPickerController.location;
   SavedLocation? savedLocation;
   bool showScreenLoading = false;
   LatLng? currentLatLng;
@@ -64,7 +62,11 @@ class _PickLocationViewState extends State<PickLocationView> {
         }
       });
     } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
-      final String? x = Get.parameters["id"];
+      final int? x = int.tryParse(Get.parameters["id"] ?? "");
+      if (x == null) {
+        mezDbgPrint("Get.parameters['id'] - Location ID Was null!");
+        MezRouter.back<void>();
+      }
       savedLocation = Get.find<CustomerAuthController>()
           .customer!
           .savedLocations
@@ -82,16 +84,8 @@ class _PickLocationViewState extends State<PickLocationView> {
         });
       }).catchError((Object error) {
         if (error.runtimeType == TimeoutException) {
-          // locationPickerController.location.value = Location.fromFirebaseData({
-          //   "address": "15.872141, -97.076737",
-          //   "lat": 15.872141,
-          //   "lng": -97.076737,
-          // });
           currentLatLng = LatLng(15.872141, -97.076737);
           geoCodeAndSetLocation(currentLatLng!);
-          // setState(() {
-          //   _locationAccessFailed = true;
-          // });
         }
       });
     } else {
@@ -103,9 +97,6 @@ class _PickLocationViewState extends State<PickLocationView> {
         geoCodeAndSetLocation(currentLatLng!);
       }).catchError((Object error) {
         if (error.runtimeType == TimeoutException) {
-          // setState(() {
-          //   _locationAccessFailed = true;
-          // });
           locationPickerController.location.value = Location.fromFirebaseData({
             "address": savedLocation!.location.address,
             "lat": 15.872141,
@@ -231,32 +222,35 @@ class _PickLocationViewState extends State<PickLocationView> {
           comingFromCart: Get.arguments,
         );
         if (_result != null && _result != "") {
+          mezDbgPrint(
+              "locationPickerController.location.value ==/ ${locationPickerController.location.value?.address}");
           await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
           // TODO:544D-HASURA
 
-          // savedLocation = SavedLocation(
-          //     name: _result, location: locationPickerController.location.value!);
-          // Get.find<CustomerAuthController>()
-          //     .customer
-          //     .value
-          //     ?.savedLocations
-          //     .forEach((SavedLocation location) {
-          //   if (location.name.toLowerCase() ==
-          //           savedLocation?.name.toLowerCase() ||
-          //       location.location?.address.toLowerCase() ==
-          //           savedLocation?.location?.address.toLowerCase()) {
-          //     // delete from db
-          //     Get.find<CustomerAuthController>().deleteLocation(location);
-          //   }
-          // });
+          savedLocation = SavedLocation(
+              id: null,
+              name: _result,
+              location: locationPickerController.location.value!);
+          Get.find<CustomerAuthController>()
+              .customer
+              ?.savedLocations
+              .forEach((SavedLocation location) {
+            if (location.name.toLowerCase() ==
+                    savedLocation?.name.toLowerCase() ||
+                location.location.address.toLowerCase() ==
+                    savedLocation?.location.address.toLowerCase()) {
+              // delete from db
+              Get.find<CustomerAuthController>().deleteLocation(location);
+            }
+          });
           Get.find<CustomerAuthController>().saveNewLocation(savedLocation!);
         } else {
           await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
-          // TODO:544D-HASURA
-
-          // savedLocation = SavedLocation(
-          //     name: locationPickerController.location.value!.address,
-          //     location: locationPickerController.location.value!);
+          savedLocation = SavedLocation(
+            id: null,
+            name: locationPickerController.location.value!.address,
+            location: locationPickerController.location.value!,
+          );
         }
         setState(() {
           showScreenLoading = true;
@@ -301,7 +295,6 @@ class _PickLocationViewState extends State<PickLocationView> {
             locationPickerController
                 .setLocation(locationPickerController.location.value!);
           });
-
           MezRouter.back<SavedLocation?>(result: savedLocation);
         }
       } else if (widget.pickLocationMode == PickLocationMode.NonLoggedInPick) {
@@ -328,10 +321,6 @@ class _PickLocationViewState extends State<PickLocationView> {
             child: LocationSearchComponent(
                 hintPadding: EdgeInsets.all(12),
                 suffixPadding: EdgeInsets.only(right: 10),
-                // border: _locationAccessFailed
-                //     ? Border.all(
-                //         color: Color.fromARGB(255, 128, 62, 234), width: 1)
-                //     : null,
                 showSearchIcon: true,
                 text: locationPickerController.location.value?.address,
                 onClear: () {},
@@ -366,32 +355,7 @@ class _PickLocationViewState extends State<PickLocationView> {
                           },
                         )
                       : Center(
-                          child:
-                              // _locationAccessFailed
-                              //     ? Row(
-                              //         mainAxisAlignment: MainAxisAlignment.center,
-                              //         crossAxisAlignment: CrossAxisAlignment.center,
-                              //         children: [
-                              //           Icon(
-                              //             Icons.location_disabled_rounded,
-                              //             color: Colors.blue.shade900,
-                              //           ),
-                              //           SizedBox(
-                              //             width: 5,
-                              //           ),
-                              //           Text(
-                              //             "Could not get your location :(",
-                              //             style: TextStyle(
-                              //               color: Colors.purple.shade800,
-                              //               fontFamily: 'Montserrat',
-                              //               fontSize: 16,
-                              //               fontWeight: FontWeight.w600,
-                              //             ),
-                              //           ),
-                              //         ],
-                              //       )
-                              //     :
-                              CircularProgressIndicator(
+                          child: CircularProgressIndicator(
                             color: Colors.black,
                             strokeWidth: 1,
                           ),

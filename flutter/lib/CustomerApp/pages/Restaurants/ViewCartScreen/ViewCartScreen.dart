@@ -55,26 +55,35 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   void initState() {
     super.initState();
 
-    getCustomerCart(
-      customerId: Get.find<AuthController>().user!.hasuraId,
-    ).then((value) {
-      if (value != null) {
-        mezDbgPrint("Got cart! ===> ${value.restaurant?.info}");
-        _restaurantController.cart.value = value;
-        mezDbgPrint(
-            "Cart items =====================>>>${_restaurantController.cart.value.cartItems}");
-        if (Get.find<CustomerAuthController>().customer?.savedCards == null)
-          savedCardChoice =
-              Get.find<CustomerAuthController>().customer!.savedCards.first;
-        orderToLocation = Get.find<CustomerAuthController>()
-            .customer!
-            .defaultLocation
-            ?.location;
-        if (orderToLocation != null) {
-          _restaurantController.cart.value.toLocation = orderToLocation;
-        }
-      }
-    });
+    if (Get.find<CustomerAuthController>().customer?.savedCards == null)
+      savedCardChoice =
+          Get.find<CustomerAuthController>().customer!.savedCards.first;
+    orderToLocation =
+        Get.find<CustomerAuthController>().customer!.defaultLocation?.location;
+    if (orderToLocation != null) {
+      _restaurantController.cart.value.toLocation = orderToLocation;
+    }
+
+    // getCustomerCart(
+    //   customerId: Get.find<AuthController>().user!.hasuraId,
+    // ).then((value) {
+    //   if (value != null) {
+    //     mezDbgPrint("Got cart! ===> ${value.restaurant?.info}");
+    //     _restaurantController.cart.value = value;
+    //     mezDbgPrint(
+    //         "Cart items =====================>>>${_restaurantController.cart.value.cartItems}");
+    //     if (Get.find<CustomerAuthController>().customer?.savedCards == null)
+    //       savedCardChoice =
+    //           Get.find<CustomerAuthController>().customer!.savedCards.first;
+    //     orderToLocation = Get.find<CustomerAuthController>()
+    //         .customer!
+    //         .defaultLocation
+    //         ?.location;
+    //     if (orderToLocation != null) {
+    //       _restaurantController.cart.value.toLocation = orderToLocation;
+    //     }
+    //   }
+    // });
 
     _restaurantController
         .updateShippingPrice()
