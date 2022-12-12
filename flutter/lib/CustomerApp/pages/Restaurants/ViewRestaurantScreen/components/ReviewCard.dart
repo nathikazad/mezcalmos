@@ -35,7 +35,7 @@ class _ReviewCardState extends State<ReviewCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.review.authorName,
+                      widget.review.customer?.name ?? "TO FIX",
                       style: Get.textTheme.bodyText1,
                     ),
                     Text(
@@ -46,7 +46,7 @@ class _ReviewCardState extends State<ReviewCard> {
                       height: 5,
                     ),
                     Text(
-                      widget.review.comment,
+                      widget.review.comment ?? "TO FIX",
                       style: Get.textTheme.bodyText2,
                     ),
                     const SizedBox(
