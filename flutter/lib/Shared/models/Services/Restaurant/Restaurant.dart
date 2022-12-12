@@ -149,7 +149,7 @@ class Restaurant extends Service {
     restaurant._categories
         .sort((Category a, Category b) => a.position.compareTo(b.position));
     restaurant.reviews
-        .sort((Review a, Review b) => b.reviewTime!.compareTo(a.reviewTime!));
+        .sort((Review a, Review b) => b.reviewTime.compareTo(a.reviewTime));
     return restaurant;
   }
 
@@ -253,6 +253,10 @@ class Restaurant extends Service {
 
   bool get showReviews {
     return rate != null && reviews.isNotEmpty;
+  }
+
+  bool get hasSchedule {
+    return schedule != null && schedule!.openHours.isNotEmpty;
   }
 
   bool acceptPayment(PaymentType p) {

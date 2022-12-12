@@ -169,8 +169,9 @@ Future<Restaurant?> get_restaurant_by_id(
               descriptionId: data.description_id,
               location:
                   Location.fromHasura(data.location_gps, data.location_text)),
-          schedule: Schedule.fromData(data.schedule),
-          // schedule: Schedule(openHours: {}),
+          // schedule: Schedule.fromData(data.schedule),
+          schedule:
+              data.schedule != null ? Schedule.fromData(data.schedule) : null,
           paymentInfo: PaymentInfo(),
           selfDelivery: data.self_delivery,
           restaurantState:

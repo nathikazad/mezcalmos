@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class Geography {
@@ -41,11 +41,11 @@ Map<LanguageType, String> toLanguageMap({required List translations}) {
 }
 
 /// Decode a jsonString into a Map<String, dynamic>
-T mapFromJson<T>(dynamic jsonString) {
+T mapFromJson<T>(jsonString) {
   return jsonDecode(jsonString.toString()) as T;
 }
 
 /// Stringify a Map object
-String mapToJson(dynamic map) {
+String mapToJson(map) {
   return jsonEncode(map);
 }

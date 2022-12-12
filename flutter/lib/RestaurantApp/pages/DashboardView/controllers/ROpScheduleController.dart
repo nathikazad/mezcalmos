@@ -10,6 +10,16 @@ class ROpScheduleController {
   ROpScheduleController({
     required this.editInfoController,
   });
+
+  Map<String, dynamic> _defaultSchedule = {
+    "friday": {"from": "8:00", "isOpen": true, "to": "20:00"},
+    "monday": {"from": "8:00", "isOpen": true, "to": "20:00"},
+    "saturday": {"from": "8:00", "isOpen": false, "to": "19:00"},
+    "sunday": {"from": "8:00", "isOpen": false, "to": "16:00"},
+    "thursday": {"from": "8:00", "isOpen": true, "to": "20:00"},
+    "tuesday": {"from": "8:00", "isOpen": true, "to": "20:00"},
+    "wednesday": {"from": "8:00", "isOpen": true, "to": "20:00"},
+  };
   final Rxn<Schedule> newSchedule = Rxn();
   final Rxn<Schedule> schedulePreview = Rxn();
   final Rxn<Schedule> oldSchedule = Rxn();
@@ -20,12 +30,16 @@ class ROpScheduleController {
 
   Future<void> fetchSchedule() async {
     await editInfoController.fetchRestaurant();
-    if (restaurant.value != null) {
+    if (restaurant.value != null && restaurant.value!.schedule != null) {
       mezDbgPrint(
           "Restaurant schedule ===================> ${restaurant.value!.schedule!.toFirebaseFormattedJson()}");
       oldSchedule.value = Schedule.clone(restaurant.value!.schedule!);
       newSchedule.value = Schedule.clone(restaurant.value!.schedule!);
       schedulePreview.value = Schedule.clone(newSchedule.value!);
+    } else if (restaurant.value!.schedule == null) {
+      oldSchedule.value = Schedule.fromData(_defaultSchedule);
+      newSchedule.value = Schedule.fromData(_defaultSchedule);
+      schedulePreview.value = Schedule.fromData(_defaultSchedule);
     }
   }
 
