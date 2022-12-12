@@ -15,7 +15,9 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -40,13 +42,23 @@ Future<List<Restaurant>> fetch_restaurants() async {
         userInfo: ServiceInfo(
             hasuraId: data.id,
             image: data.image,
+            description: (data.description?.translations != null)
+                ? {
+                    data.description!.translations.first.language_id
+                            .toLanguageType():
+                        data.description!.translations.first.value,
+                    data.description!.translations[1].language_id
+                            .toLanguageType():
+                        data.description!.translations[1].value,
+                  }
+                : null,
             firebaseId: data.firebase_id,
             name: data.name,
             descriptionId: data.description_id,
             //   descriptionId: data.d,
             location:
                 Location.fromHasura(data.location_gps, data.location_text)),
-        description: null,
+
         // {
         //   data.description!.translations.first.language_id.toLanguageType():
         //       data.description!.translations.first.value,
@@ -136,27 +148,28 @@ Future<Restaurant?> get_restaurant_by_id(
 
     if (data != null) {
       mezDbgPrint(
-          "response data ====> ${response.data} 🍔🍔🍔 Restaurant data ${data.toJson()}");
+          "response data ====> ${response.data} 🍔🍔🍔 Restaurant data ${data.schedule}");
       return Restaurant(
           userInfo: ServiceInfo(
               hasuraId: data.id,
               image: data.image,
+              description: (data.description?.translations != null)
+                  ? {
+                      data.description!.translations.first.language_id
+                              .toLanguageType():
+                          data.description!.translations.first.value,
+                      data.description!.translations[1].language_id
+                              .toLanguageType():
+                          data.description!.translations[1].value,
+                    }
+                  : null,
               firebaseId: data.firebase_id ?? "",
               name: data.name,
               descriptionId: data.description_id,
               location:
                   Location.fromHasura(data.location_gps, data.location_text)),
-          description: (data.description?.translations != null)
-              ? {
-                  data.description!.translations.first.language_id
-                          .toLanguageType():
-                      data.description!.translations.first.value,
-                  data.description!.translations[1].language_id
-                          .toLanguageType():
-                      data.description!.translations[1].value,
-                }
-              : null,
-          schedule: Schedule(openHours: {}),
+          schedule: Schedule.fromData(data.schedule),
+          // schedule: Schedule(openHours: {}),
           paymentInfo: PaymentInfo(),
           selfDelivery: data.self_delivery,
           restaurantState:
@@ -196,6 +209,8 @@ Future<Restaurant> update_restaurant_info(
               data: Input$restaurant_set_input(
                   name: restaurant.info.name,
                   image: restaurant.info.image,
+                  self_delivery: restaurant.selfDelivery,
+                  schedule: restaurant.schedule?.toFirebaseFormattedJson(),
                   language_id:
                       restaurant.primaryLanguage.toFirebaseFormatString(),
                   location_gps: Geography(
@@ -216,15 +231,19 @@ Future<Restaurant> update_restaurant_info(
       userInfo: ServiceInfo(
           hasuraId: data.id,
           image: data.image,
-          firebaseId: data.firebase_id!,
+          firebaseId: data.firebase_id,
+          description: (data.description?.translations != null)
+              ? {
+                  data.description!.translations.first.language_id
+                          .toLanguageType():
+                      data.description!.translations.first.value,
+                  data.description!.translations[1].language_id
+                          .toLanguageType():
+                      data.description!.translations[1].value,
+                }
+              : null,
           name: data.name,
           location: Location.fromHasura(data.location_gps, data.location_text)),
-      description: {
-        data.description!.translations.first.language_id.toLanguageType():
-            data.description!.translations.first.value,
-        data.description!.translations[1].language_id.toLanguageType():
-            data.description!.translations[1].value,
-      },
       schedule: Schedule(openHours: {}),
       paymentInfo: PaymentInfo(),
       restaurantState:
@@ -247,6 +266,59 @@ Future<bool?> switch_restaurant_self_delivery(
     throw Exception("🚨🚨🚨 Hasura mutation exception =>${response.exception}");
   } else {
     return true;
+  }
+}
+
+Future<double?> get_restaurant_review_average(
+    {required int restaurantId, bool withCache = true}) async {
+  final QueryResult<Query$get_restaurant_review_average> response =
+      await _db.graphQLClient.query$get_restaurant_review_average(
+    Options$Query$get_restaurant_review_average(
+      fetchPolicy:
+          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+      variables: Variables$Query$get_restaurant_review_average(
+          restaurantId: restaurantId),
+    ),
+  );
+  final double? data = response
+      .parsedData?.restaurant_by_pk!.reviews_aggregate.aggregate?.avg!.rating;
+
+  if (data == null) {
+    throw Exception("🚨🚨🚨 Hasura mutation exception =>${response.exception}");
+  } else {
+    return data;
+  }
+}
+
+Future<List<Review>?> get_restaurant_reviews(
+    {required int restaurantId, bool withCache = true}) async {
+  final QueryResult<Query$get_restaurant_reviews> response =
+      await _db.graphQLClient.query$get_restaurant_reviews(
+    Options$Query$get_restaurant_reviews(
+      fetchPolicy:
+          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+      variables:
+          Variables$Query$get_restaurant_reviews(restaurantId: restaurantId),
+    ),
+  );
+  final List<Query$get_restaurant_reviews$restaurant_by_pk$reviews>? data =
+      response.parsedData?.restaurant_by_pk?.reviews;
+
+  if (data == null) {
+    throw Exception("🚨🚨🚨 Hasura query  exception =>${response.exception}");
+  } else {
+    return data.map(
+        (Query$get_restaurant_reviews$restaurant_by_pk$reviews reviewData) {
+      return Review(
+          id: reviewData.id,
+          rating: reviewData.rating,
+          comment: reviewData.note,
+          reviewTime: DateTime.parse(reviewData.created_at),
+          toEntityId: reviewData.to_entity_id,
+          toEntityType: reviewData.to_entity_type.toServiceProviderType(),
+          fromEntityId: reviewData.from_entity_id,
+          fromEntityType: reviewData.from_entity_type.toServiceProviderType());
+    }).toList();
   }
 }
 

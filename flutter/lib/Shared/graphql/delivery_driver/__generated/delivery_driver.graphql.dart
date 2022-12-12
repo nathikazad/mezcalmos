@@ -1627,3 +1627,750 @@ class _CopyWithStubImpl$Mutation$updateDeliveryDriverById$update_delivery_driver
   }) =>
       _res;
 }
+
+class Variables$Mutation$deleteDriverById {
+  factory Variables$Mutation$deleteDriverById({required int driverId}) =>
+      Variables$Mutation$deleteDriverById._({
+        r'driverId': driverId,
+      });
+
+  Variables$Mutation$deleteDriverById._(this._$data);
+
+  factory Variables$Mutation$deleteDriverById.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$driverId = data['driverId'];
+    result$data['driverId'] = (l$driverId as int);
+    return Variables$Mutation$deleteDriverById._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get driverId => (_$data['driverId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$driverId = driverId;
+    result$data['driverId'] = l$driverId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$deleteDriverById<
+          Variables$Mutation$deleteDriverById>
+      get copyWith => CopyWith$Variables$Mutation$deleteDriverById(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$deleteDriverById) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$driverId = driverId;
+    final lOther$driverId = other.driverId;
+    if (l$driverId != lOther$driverId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$driverId = driverId;
+    return Object.hashAll([l$driverId]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$deleteDriverById<TRes> {
+  factory CopyWith$Variables$Mutation$deleteDriverById(
+    Variables$Mutation$deleteDriverById instance,
+    TRes Function(Variables$Mutation$deleteDriverById) then,
+  ) = _CopyWithImpl$Variables$Mutation$deleteDriverById;
+
+  factory CopyWith$Variables$Mutation$deleteDriverById.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$deleteDriverById;
+
+  TRes call({int? driverId});
+}
+
+class _CopyWithImpl$Variables$Mutation$deleteDriverById<TRes>
+    implements CopyWith$Variables$Mutation$deleteDriverById<TRes> {
+  _CopyWithImpl$Variables$Mutation$deleteDriverById(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$deleteDriverById _instance;
+
+  final TRes Function(Variables$Mutation$deleteDriverById) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? driverId = _undefined}) =>
+      _then(Variables$Mutation$deleteDriverById._({
+        ..._instance._$data,
+        if (driverId != _undefined && driverId != null)
+          'driverId': (driverId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$deleteDriverById<TRes>
+    implements CopyWith$Variables$Mutation$deleteDriverById<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$deleteDriverById(this._res);
+
+  TRes _res;
+
+  call({int? driverId}) => _res;
+}
+
+class Mutation$deleteDriverById {
+  Mutation$deleteDriverById({
+    this.delete_delivery_driver_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$deleteDriverById.fromJson(Map<String, dynamic> json) {
+    final l$delete_delivery_driver_by_pk = json['delete_delivery_driver_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$deleteDriverById(
+      delete_delivery_driver_by_pk: l$delete_delivery_driver_by_pk == null
+          ? null
+          : Mutation$deleteDriverById$delete_delivery_driver_by_pk.fromJson(
+              (l$delete_delivery_driver_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$deleteDriverById$delete_delivery_driver_by_pk?
+      delete_delivery_driver_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delete_delivery_driver_by_pk = delete_delivery_driver_by_pk;
+    _resultData['delete_delivery_driver_by_pk'] =
+        l$delete_delivery_driver_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delete_delivery_driver_by_pk = delete_delivery_driver_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delete_delivery_driver_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$deleteDriverById) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delete_delivery_driver_by_pk = delete_delivery_driver_by_pk;
+    final lOther$delete_delivery_driver_by_pk =
+        other.delete_delivery_driver_by_pk;
+    if (l$delete_delivery_driver_by_pk != lOther$delete_delivery_driver_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$deleteDriverById
+    on Mutation$deleteDriverById {
+  CopyWith$Mutation$deleteDriverById<Mutation$deleteDriverById> get copyWith =>
+      CopyWith$Mutation$deleteDriverById(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Mutation$deleteDriverById<TRes> {
+  factory CopyWith$Mutation$deleteDriverById(
+    Mutation$deleteDriverById instance,
+    TRes Function(Mutation$deleteDriverById) then,
+  ) = _CopyWithImpl$Mutation$deleteDriverById;
+
+  factory CopyWith$Mutation$deleteDriverById.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$deleteDriverById;
+
+  TRes call({
+    Mutation$deleteDriverById$delete_delivery_driver_by_pk?
+        delete_delivery_driver_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk<TRes>
+      get delete_delivery_driver_by_pk;
+}
+
+class _CopyWithImpl$Mutation$deleteDriverById<TRes>
+    implements CopyWith$Mutation$deleteDriverById<TRes> {
+  _CopyWithImpl$Mutation$deleteDriverById(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$deleteDriverById _instance;
+
+  final TRes Function(Mutation$deleteDriverById) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delete_delivery_driver_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$deleteDriverById(
+        delete_delivery_driver_by_pk: delete_delivery_driver_by_pk == _undefined
+            ? _instance.delete_delivery_driver_by_pk
+            : (delete_delivery_driver_by_pk
+                as Mutation$deleteDriverById$delete_delivery_driver_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk<TRes>
+      get delete_delivery_driver_by_pk {
+    final local$delete_delivery_driver_by_pk =
+        _instance.delete_delivery_driver_by_pk;
+    return local$delete_delivery_driver_by_pk == null
+        ? CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk(
+            local$delete_delivery_driver_by_pk,
+            (e) => call(delete_delivery_driver_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$deleteDriverById<TRes>
+    implements CopyWith$Mutation$deleteDriverById<TRes> {
+  _CopyWithStubImpl$Mutation$deleteDriverById(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$deleteDriverById$delete_delivery_driver_by_pk?
+        delete_delivery_driver_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk<TRes>
+      get delete_delivery_driver_by_pk =>
+          CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk.stub(
+              _res);
+}
+
+const documentNodeMutationdeleteDriverById = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'deleteDriverById'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'driverId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delete_delivery_driver_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'driverId')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'user'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$deleteDriverById _parserFn$Mutation$deleteDriverById(
+        Map<String, dynamic> data) =>
+    Mutation$deleteDriverById.fromJson(data);
+typedef OnMutationCompleted$Mutation$deleteDriverById = FutureOr<void> Function(
+  dynamic,
+  Mutation$deleteDriverById?,
+);
+
+class Options$Mutation$deleteDriverById
+    extends graphql.MutationOptions<Mutation$deleteDriverById> {
+  Options$Mutation$deleteDriverById({
+    String? operationName,
+    required Variables$Mutation$deleteDriverById variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$deleteDriverById? onCompleted,
+    graphql.OnMutationUpdate<Mutation$deleteDriverById>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$deleteDriverById(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationdeleteDriverById,
+          parserFn: _parserFn$Mutation$deleteDriverById,
+        );
+
+  final OnMutationCompleted$Mutation$deleteDriverById? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$deleteDriverById
+    extends graphql.WatchQueryOptions<Mutation$deleteDriverById> {
+  WatchOptions$Mutation$deleteDriverById({
+    String? operationName,
+    required Variables$Mutation$deleteDriverById variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationdeleteDriverById,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$deleteDriverById,
+        );
+}
+
+extension ClientExtension$Mutation$deleteDriverById on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$deleteDriverById>>
+      mutate$deleteDriverById(
+              Options$Mutation$deleteDriverById options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$deleteDriverById>
+      watchMutation$deleteDriverById(
+              WatchOptions$Mutation$deleteDriverById options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$deleteDriverById$delete_delivery_driver_by_pk {
+  Mutation$deleteDriverById$delete_delivery_driver_by_pk({
+    required this.id,
+    required this.user,
+    required this.$__typename,
+  });
+
+  factory Mutation$deleteDriverById$delete_delivery_driver_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$user = json['user'];
+    final l$$__typename = json['__typename'];
+    return Mutation$deleteDriverById$delete_delivery_driver_by_pk(
+      id: (l$id as int),
+      user:
+          Mutation$deleteDriverById$delete_delivery_driver_by_pk$user.fromJson(
+              (l$user as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Mutation$deleteDriverById$delete_delivery_driver_by_pk$user user;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$user = user;
+    _resultData['user'] = l$user.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$user = user;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$user,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$deleteDriverById$delete_delivery_driver_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$user = user;
+    final lOther$user = other.user;
+    if (l$user != lOther$user) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$deleteDriverById$delete_delivery_driver_by_pk
+    on Mutation$deleteDriverById$delete_delivery_driver_by_pk {
+  CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk<
+          Mutation$deleteDriverById$delete_delivery_driver_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk(
+    Mutation$deleteDriverById$delete_delivery_driver_by_pk instance,
+    TRes Function(Mutation$deleteDriverById$delete_delivery_driver_by_pk) then,
+  ) = _CopyWithImpl$Mutation$deleteDriverById$delete_delivery_driver_by_pk;
+
+  factory CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$deleteDriverById$delete_delivery_driver_by_pk;
+
+  TRes call({
+    int? id,
+    Mutation$deleteDriverById$delete_delivery_driver_by_pk$user? user,
+    String? $__typename,
+  });
+  CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk$user<TRes>
+      get user;
+}
+
+class _CopyWithImpl$Mutation$deleteDriverById$delete_delivery_driver_by_pk<TRes>
+    implements
+        CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk<TRes> {
+  _CopyWithImpl$Mutation$deleteDriverById$delete_delivery_driver_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$deleteDriverById$delete_delivery_driver_by_pk _instance;
+
+  final TRes Function(Mutation$deleteDriverById$delete_delivery_driver_by_pk)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? user = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$deleteDriverById$delete_delivery_driver_by_pk(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        user: user == _undefined || user == null
+            ? _instance.user
+            : (user
+                as Mutation$deleteDriverById$delete_delivery_driver_by_pk$user),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk$user<TRes>
+      get user {
+    final local$user = _instance.user;
+    return CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk$user(
+        local$user, (e) => call(user: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$deleteDriverById$delete_delivery_driver_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk<TRes> {
+  _CopyWithStubImpl$Mutation$deleteDriverById$delete_delivery_driver_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Mutation$deleteDriverById$delete_delivery_driver_by_pk$user? user,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk$user<TRes>
+      get user =>
+          CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk$user
+              .stub(_res);
+}
+
+class Mutation$deleteDriverById$delete_delivery_driver_by_pk$user {
+  Mutation$deleteDriverById$delete_delivery_driver_by_pk$user({
+    this.name,
+    this.image,
+    required this.$__typename,
+  });
+
+  factory Mutation$deleteDriverById$delete_delivery_driver_by_pk$user.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$image = json['image'];
+    final l$$__typename = json['__typename'];
+    return Mutation$deleteDriverById$delete_delivery_driver_by_pk$user(
+      name: (l$name as String?),
+      image: (l$image as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? name;
+
+  final String? image;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$image = image;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$image,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$deleteDriverById$delete_delivery_driver_by_pk$user) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$deleteDriverById$delete_delivery_driver_by_pk$user
+    on Mutation$deleteDriverById$delete_delivery_driver_by_pk$user {
+  CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk$user<
+          Mutation$deleteDriverById$delete_delivery_driver_by_pk$user>
+      get copyWith =>
+          CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk$user(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk$user<
+    TRes> {
+  factory CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk$user(
+    Mutation$deleteDriverById$delete_delivery_driver_by_pk$user instance,
+    TRes Function(Mutation$deleteDriverById$delete_delivery_driver_by_pk$user)
+        then,
+  ) = _CopyWithImpl$Mutation$deleteDriverById$delete_delivery_driver_by_pk$user;
+
+  factory CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk$user.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$deleteDriverById$delete_delivery_driver_by_pk$user;
+
+  TRes call({
+    String? name,
+    String? image,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$deleteDriverById$delete_delivery_driver_by_pk$user<
+        TRes>
+    implements
+        CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk$user<
+            TRes> {
+  _CopyWithImpl$Mutation$deleteDriverById$delete_delivery_driver_by_pk$user(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$deleteDriverById$delete_delivery_driver_by_pk$user _instance;
+
+  final TRes Function(
+      Mutation$deleteDriverById$delete_delivery_driver_by_pk$user) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? image = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$deleteDriverById$delete_delivery_driver_by_pk$user(
+        name: name == _undefined ? _instance.name : (name as String?),
+        image: image == _undefined ? _instance.image : (image as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$deleteDriverById$delete_delivery_driver_by_pk$user<
+        TRes>
+    implements
+        CopyWith$Mutation$deleteDriverById$delete_delivery_driver_by_pk$user<
+            TRes> {
+  _CopyWithStubImpl$Mutation$deleteDriverById$delete_delivery_driver_by_pk$user(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}

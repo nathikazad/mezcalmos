@@ -78,23 +78,24 @@ Future<bool?> update_driver_status_by_id(
     final Mutation$updateDeliveryDriverById$update_delivery_driver_by_pk data =
         response.parsedData!.update_delivery_driver_by_pk!;
     return true;
-    //   final List<DeliveryDriver> drivers =
-    //       data.map((Query$getDriversByServiceId$delivery_driver driverData) {
-    //     return DeliveryDriver(
-    //         deliveryDriverState: DeliveryDriverState(
-    //             status: driverData.status.toAgentStatus(),
-    //             online: driverData.online,
-    //             deliveryCompanyId: driverData.delivery_company_id.toString(),
-    //             deliveryCompanyType:
-    //                 driverData.delivery_company_type.toDeliveryCompanyType()),
-    //         deliveryDriverId: driverData.id.toString(),
-    //         driverInfo: DeliveryDriverUserInfo(
-    //             hasuraId: driverData.id,
-    //             image: driverData.user.image,
-    //             language: driverData.user.language_id.toString().toLanguageType(),
-    //             name: driverData.user.name));
-    //   }).toList();
-    //   return drivers;
-    // }
+  }
+}
+
+Future<bool?> delete_delivery_driver_by_id(
+    {required int driverId, bool withCache = true}) async {
+  final QueryResult<Mutation$deleteDriverById> response =
+      await _db.graphQLClient.mutate$deleteDriverById(
+    Options$Mutation$deleteDriverById(
+      variables: Variables$Mutation$deleteDriverById(driverId: driverId),
+    ),
+  );
+
+  if (response.parsedData?.delete_delivery_driver_by_pk == null) {
+    throw Exception(
+        " 🚨🚨 Updating driver  $driverId exceptions 🚨🚨 \n ${response.exception}");
+  } else {
+    mezDbgPrint(
+        "Deleting driver mutation ✅✅ ===>${response.parsedData?.delete_delivery_driver_by_pk}");
+    return true;
   }
 }

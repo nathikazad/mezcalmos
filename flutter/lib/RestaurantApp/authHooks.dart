@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
@@ -13,7 +12,6 @@ class AuthHooks {
         "[+] CustomerApp::AuthHooks::onSignOutHook -> Callback Executed.");
     await Get.delete<MessageController>(force: true);
 
-    await Get.delete<ROpOrderController>(force: true);
     await Get.delete<RestaurantInfoController>(force: true);
     await Get.delete<BackgroundNotificationsController>(force: true);
     await Get.delete<ForegroundNotificationsController>(force: true);
@@ -30,7 +28,6 @@ class AuthHooks {
     // Get.put(RestaurantInfoController(), permanent: true);
 
     Get.put(RestaurantOpAuthController(), permanent: true);
-    Get.put(ROpOrderController(), permanent: true);
 
     Get.put(MessageController(), permanent: true);
   }

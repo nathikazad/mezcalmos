@@ -72,3 +72,12 @@ update_permissions:
             user_id:
               _eq: X-Hasura-User-Id
       check: null
+delete_permissions:
+  - role: restaurant_operator
+    permission:
+      backend_only: false
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id

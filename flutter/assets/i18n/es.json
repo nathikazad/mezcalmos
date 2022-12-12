@@ -2006,6 +2006,7 @@
                     }
                 },
                 "incomingOrders": "Órdenes entrantes",
+                "pastButton": "ver órdenes pasadas",
                 "currentOrders": "Órdenes actuales",
                 "pastOrders": "Órdenes pasadas",
                 "offlineTitle": "Estas desconectado",
@@ -2113,7 +2114,7 @@
                         "dashboard": "Tablero",
                         "informations": "Información",
                         "reviews": "Reseñas",
-                        "schedule": "Calendario",
+                        "schedule": "Horas Laborales",
                         "payments": "Pagos"
 
                     }

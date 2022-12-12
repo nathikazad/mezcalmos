@@ -9,8 +9,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
@@ -533,30 +531,30 @@ Future<void> showReviewDialog(
                 textColor: primaryBlueColor,
                 backgroundColor: secondaryLightBlueColor,
                 onClick: () async {
-                  final Review review = Review(
-                      comment: controller.text,
-                      rating: rating,
-                      orderId: orderId,
-                      orderType: orderType!,
-                      serviceProviderId: serviceId!);
-                  // mezDbgPrint(review.toString());
-                  final ServerResponse response =
-                      await Get.find<OrderController>().addReview(
-                          orderId: review.orderId,
-                          serviceId: serviceId,
-                          comment: review.comment,
-                          orderType: orderType,
-                          rate: review.rating);
-                  if (response.success) {
-                    Get.snackbar('${_i18n()["review"]["successTitle"]}',
-                        "${_i18n()["review"]["successSubtitle"]}",
-                        backgroundColor: Colors.black, colorText: Colors.white);
-                    Get.back(closeOverlays: true);
-                  } else {
-                    mezDbgPrint(response);
-                    Get.snackbar("Error", response.errorMessage ?? "error",
-                        backgroundColor: Colors.black, colorText: Colors.white);
-                  }
+                  // final Review review = Review(
+                  //     comment: controller.text,
+                  //     rating: rating,
+                  //     orderId: orderId,
+                  //     orderType: orderType!,
+                  //     serviceProviderId: serviceId!);
+                  // // mezDbgPrint(review.toString());
+                  // final ServerResponse response =
+                  //     await Get.find<OrderController>().addReview(
+                  //         orderId: review.orderId,
+                  //         serviceId: serviceId,
+                  //         comment: review.comment,
+                  //         orderType: orderType,
+                  //         rate: review.rating);
+                  // if (response.success) {
+                  //   Get.snackbar('${_i18n()["review"]["successTitle"]}',
+                  //       "${_i18n()["review"]["successSubtitle"]}",
+                  //       backgroundColor: Colors.black, colorText: Colors.white);
+                  //   Get.back(closeOverlays: true);
+                  // } else {
+                  //   mezDbgPrint(response);
+                  //   Get.snackbar("Error", response.errorMessage ?? "error",
+                  //       backgroundColor: Colors.black, colorText: Colors.white);
+                  // }
                 },
               ),
               SizedBox(height: 12),

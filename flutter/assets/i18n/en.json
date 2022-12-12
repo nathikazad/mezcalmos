@@ -2013,6 +2013,7 @@
                     }
                 },
                 "currentOrders": "Current orders",
+                "pastButton": "View past orders",
                 "pastOrders": "Past orders",
                 "incomingOrders": "Incoming orders",
                 "offlineTitle": "You are offline",

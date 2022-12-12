@@ -5,6 +5,8 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:sizer/sizer.dart';
 
 class MezButton extends StatefulWidget {
+  final double? width;
+
   const MezButton({
     Key? key,
     this.enabled = true,
@@ -14,6 +16,7 @@ class MezButton extends StatefulWidget {
     this.borderRadius = 10,
     this.textStyle,
     this.height = 55,
+    this.width,
     this.icon,
     required this.label,
     this.onClick,
@@ -60,7 +63,7 @@ class _MezButtonState extends State<MezButton> {
                       }
                     : null,
             child: Ink(
-              width: double.infinity,
+              width: widget.width ?? double.infinity,
               height: widget.height,
               decoration: BoxDecoration(
                   color: (widget.enabled && widget.onClick != null)

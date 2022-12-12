@@ -1,18 +1,18 @@
 import 'package:get/get.dart'; // getX
-import 'package:mezcalmos/RestaurantApp/pages/CategoryView/CategoryView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/ROpCreateRestaurantView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/ROpDashboardView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/ItemView/ROpItemView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/ROpMenuView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/OptionView/ROpOptionView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/OrderView/ROpOrderView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/OrdersListView/ROpCurrentOrders.dart';
-import 'package:mezcalmos/RestaurantApp/pages/OrdersListView/ROpPastOrdersList.dart';
-import 'package:mezcalmos/RestaurantApp/pages/ROpChoiceView/ROpChoiceView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/ROpPickDriverView/ROpPickDriverView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/ROpSelfDeliveryView/ROpSelfDeliveryView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/ROpTabsViewView/ROpTabsView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/ROpChoiceView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/ROpItemView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/ROpMenuView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/ROpOptionView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/ROpCurrentOrders.dart';
+import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/ROpPastOrdersList.dart';
 import 'package:mezcalmos/RestaurantApp/pages/RestaurantWrapper.dart';
+import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/ROpOrderView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/ROpPickDriverView/ROpPickDriverView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/ROpSelfDeliveryView/ROpSelfDeliveryView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/TabsView/ROpTabsView.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 

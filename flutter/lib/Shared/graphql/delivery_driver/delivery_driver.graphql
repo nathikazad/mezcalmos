@@ -26,4 +26,16 @@ mutation updateDeliveryDriverById($driverId: Int!,$driverData : delivery_driver_
   }
 }
 
+# delete delivery driver
+mutation deleteDriverById($driverId: Int!) {
+  delete_delivery_driver_by_pk(id: $driverId) {
+    id
+    user {
+      name
+      image
+    }
+  }
+}
+
+
 

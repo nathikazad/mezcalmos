@@ -32,7 +32,7 @@ extension ParseStringToRestaurantsView on String {
 
 class Restaurant extends Service {
   static String kNoCategoryNode = "noCategory";
-  LanguageMap? description;
+
   List<Item> currentSpecials = <Item>[];
   List<Item> pastSpecials = <Item>[];
   List<RestaurantOperator> operators = [];
@@ -48,7 +48,6 @@ class Restaurant extends Service {
   DeliveryCost? deliveryCost;
   Restaurant(
       {required ServiceInfo userInfo,
-      required this.description,
       this.restaurantsView = RestaurantsView.Rows,
       required this.schedule,
       required this.paymentInfo,
@@ -113,7 +112,6 @@ class Restaurant extends Service {
     primaryLanguage.toOpLang();
     final Restaurant restaurant = Restaurant(
         userInfo: ServiceInfo.fromData(restaurantData["info"]),
-        description: description ?? null,
         schedule: schedule,
         restaurantState: restaurantState,
         restaurantsView: restaurantsView,
@@ -121,11 +119,11 @@ class Restaurant extends Service {
         secondaryLanguage: secondaryLanguage,
         rate: rate,
         paymentInfo: paymentInfo);
-    if (restaurantData["details"]["reviews"] != null) {
-      restaurantData["details"]["reviews"]?.forEach((key, review) {
-        restaurant.reviews.add(Review.fromMap(key, review));
-      });
-    }
+    // if (restaurantData["details"]["reviews"] != null) {
+    //   restaurantData["details"]["reviews"]?.forEach((key, review) {
+    //     restaurant.reviews.add(Review.fromMap(key, review));
+    //   });
+    // }
     if (restaurantData['menu'] != null) {
       if (restaurantData["menu"]?["specials"] != null ||
           restaurantData["menu"]?["daily"] != null) {
@@ -278,7 +276,7 @@ class Restaurant extends Service {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      "description": description?.toFirebaseFormat(),
+      // "description": description?.toFirebaseFormat(),
       "info": info.toJson(),
       "categories": jsonEncode(_categories),
       "itemsWithoutCategory": jsonEncode(itemsWithoutCategory),
@@ -307,5 +305,22 @@ class Restaurant extends Service {
 // TODO:544D-HASURA
     return true;
     // return state.isOpen && (schedule?.isOpen() ?? true);
+  }
+
+  Restaurant copyWith({
+    ServiceInfo? userInfo,
+    ServiceState? state,
+    bool? selfDelivery,
+    PaymentInfo? paymentInfo,
+    LanguageType? primaryLanguage,
+    Schedule? schedule,
+  }) {
+    return Restaurant(
+        userInfo: userInfo ?? info,
+        selfDelivery: selfDelivery ?? this.selfDelivery,
+        schedule: schedule ?? this.schedule,
+        paymentInfo: paymentInfo ?? this.paymentInfo,
+        restaurantState: state ?? this.state,
+        primaryLanguage: primaryLanguage ?? this.primaryLanguage);
   }
 }

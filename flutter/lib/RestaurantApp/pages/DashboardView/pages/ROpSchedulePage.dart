@@ -5,6 +5,7 @@ import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfo
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpScheduleController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpEditInfoView']['ROpEditInfoView'];
@@ -35,26 +36,39 @@ class _ROpSchedulePageState extends State<ROpSchedulePage> {
 
   @override
   Widget build(BuildContext context) {
+    return Obx(() {
+      if (viewController.oldSchedule.value != null) {
+        return _buidSchedule();
+      } else {
+        return Container(
+          alignment: Alignment.center,
+          child: MezLogoAnimation(
+            centered: true,
+          ),
+        );
+      }
+    });
+  }
+
+  Widget _buidSchedule() {
     return Column(
       children: [
         Expanded(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
-            child: Obx(
-              () => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    child: viewWidgets.editWorkingHoursComponent(),
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                ],
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  child: viewWidgets.editWorkingHoursComponent(),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+              ],
             ),
           ),
         ),
@@ -64,9 +78,8 @@ class _ROpSchedulePageState extends State<ROpSchedulePage> {
           withGradient: true,
           height: 70,
           onClick: () async {
-            await widget.editInfoController.updateRestaurantInfo().then(
-                (value) => Get.snackbar(
-                    '${_i18n()["saved"]}', '${_i18n()["savedText"]}',
+            await viewController.updateSchedule().then((bool value) =>
+                Get.snackbar('${_i18n()["saved"]}', '${_i18n()["savedText"]}',
                     backgroundColor: Colors.black,
                     colorText: Colors.white,
                     shouldIconPulse: false,

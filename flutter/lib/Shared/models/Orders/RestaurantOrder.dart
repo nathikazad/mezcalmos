@@ -156,13 +156,13 @@ class RestaurantOrder extends DeliverableOrder {
         costToCustomer: data['costToCustomer'],
         notifiedAdmin: data['notified']?['admin'] ?? false,
         notifiedOperator: data['notified']?['operator'] ?? false);
-    if (data["review"] != null) {
-      restaurantOrder.review = Review.fromMap(null, data["review"]);
-      // data["reviews"]?.forEach((key, review) {
-      //   mezDbgPrint("ADD REVIEW ON ORDER===============");
-      //   restaurantOrder.reviews.add(Review.fromMap(key, review));
-      // });
-    }
+    // if (data["review"] != null) {
+    //   restaurantOrder.review = Review.fromMap(null, data["review"]);
+    //   // data["reviews"]?.forEach((key, review) {
+    //   //   mezDbgPrint("ADD REVIEW ON ORDER===============");
+    //   //   restaurantOrder.reviews.add(Review.fromMap(key, review));
+    //   // });
+    // }
     if (data["routeInformation"] != null) {
       restaurantOrder.routeInformation = RouteInformation(
         polyline: data["routeInformation"]["polyline"],

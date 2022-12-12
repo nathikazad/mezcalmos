@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
-import 'package:mezcalmos/RestaurantApp/pages/ROpTabsViewView/controllers/ROpTabsViewViewController.dart';
+import 'package:mezcalmos/RestaurantApp/pages/TabsView/controllers/ROpTabsViewViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
@@ -72,16 +72,16 @@ class ROpEditInfoController {
       restaurantNameTxt.text = restaurant.value?.info.name ?? '';
 
       newLocation.value = restaurant.value!.info.location;
-      newImageUrl.value = restaurant.value?.info.image ?? '';
+      newImageUrl.value = restaurant.value?.info.image;
       primaryLang.value = restaurant.value!.primaryLanguage;
       secondaryLang.value = restaurant.value!.secondaryLanguage;
       editablePrLang.value = restaurant.value!.primaryLanguage;
       editableScLang.value = restaurant.value!.secondaryLanguage;
 
       prRestaurantDescTxt.text =
-          restaurant.value?.description?[primaryLang] ?? '';
+          restaurant.value?.info.description?[primaryLang] ?? '';
       scRestaurantDescTxt.text =
-          restaurant.value?.description?[secondaryLang] ?? '';
+          restaurant.value?.info.description?[secondaryLang] ?? '';
     }
   }
 
@@ -96,27 +96,16 @@ class ROpEditInfoController {
             translationId: restaurant.value!.info.descriptionId!);
       });
     }
-    // final Restaurant newRestaurant = Restaurant(userInfo: ServiceInfo(), description: description, schedule: restaurant.value!.schedule!, paymentInfo: restaurant.value.paymentInfo, restaurantState: restaurantState, primaryLanguage: primaryLanguage)
-
-    // if (newImageFile.value != null) {
-    //   await restaurantInfoController!
-    //       .uploadImgToDb(imageFile: newImageFile.value!)
-    //       .then((String value) {
-    //     restaurantInfoController!.setRestaurantImage(value);
-    //   });
-    // }
-    // if (newLocation.value != null &&
-    //     newLocation.value?.address != restaurant.value?.info.location.address) {
-    //   await restaurantInfoController!.setLocation(newLocation.value!);
-    // }
-    // if (editablePrLang.value != null &&
-    //     editablePrLang.value != primaryLang.value) {
-    //   mezDbgPrint("SEEETTING PRIMARY LANG =======>${editablePrLang.value}");
-    //   await restaurantInfoController!.setPrimaryLanguage(editablePrLang.value!);
-    //   mezDbgPrint("SEEETTING SECOND LANG =======>${editableScLang.value}");
-    //   await restaurantInfoController!
-    //       .setSecondaryLanguage(editablePrLang.value?.toOpLang());
-    // }
+    await update_restaurant_info(
+        id: restaurantId,
+        restaurant: restaurant.value!.copyWith(
+          primaryLanguage: primaryLang.value,
+          userInfo: restaurant.value!.info.copyWith(
+            name: restaurantNameTxt.text,
+            location: newLocation.value,
+            image: newImageUrl.value,
+          ),
+        ));
   }
 
   void switchAv(bool value) {
@@ -190,23 +179,23 @@ class ROpEditInfoController {
   bool _updatePrDesc() {
     return (prRestaurantDescTxt.text != '' &&
         prRestaurantDescTxt.text !=
-            restaurant.value?.description?[primaryLang]);
+            restaurant.value?.info.description?[primaryLang]);
   }
 
   bool _updateScDesc() {
     return (scRestaurantDescTxt.text != '' &&
         scRestaurantDescTxt.text !=
-            restaurant.value?.description?[secondaryLang]);
+            restaurant.value?.info.description?[secondaryLang]);
   }
 
   LanguageMap _contructDesc() {
     return {
       primaryLang.value!: _updatePrDesc()
           ? prRestaurantDescTxt.text
-          : restaurant.value!.description![primaryLang]!,
+          : restaurant.value!.info.description![primaryLang]!,
       secondaryLang.value!: _updateScDesc()
           ? scRestaurantDescTxt.text
-          : restaurant.value!.description![secondaryLang]!,
+          : restaurant.value!.info.description![secondaryLang]!,
     };
   }
 

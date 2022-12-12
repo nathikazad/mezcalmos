@@ -1,6 +1,17 @@
 table:
   name: review
   schema: public
+object_relationships:
+  - name: customer
+    using:
+      manual_configuration:
+        column_mapping:
+          from_entity_id: user_id
+          from_entity_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: customer
+          schema: public
 insert_permissions:
   - role: customer
     permission:
@@ -89,11 +100,13 @@ select_permissions:
   - role: restaurant_operator
     permission:
       columns:
+        - created_at
         - from_entity_id
+        - from_entity_type
         - id
+        - note
         - rating
         - to_entity_id
-        - from_entity_type
-        - note
         - to_entity_type
       filter: {}
+      allow_aggregations: true
