@@ -28,7 +28,7 @@ void dialogRequiredSignIn() {
                   icon: Icon(Icons.close),
                   onPressed: () {
                     mezDbgPrint("Clicked back");
-                    MezRouter.back<void>();
+                    MezRouter.popDialog<void>();
                   },
                 ),
               ),
@@ -71,7 +71,7 @@ void dialogRequiredSignIn() {
                   const SizedBox(height: 15),
                   InkWell(
                     onTap: () {
-                      MezRouter.back<void>();
+                      MezRouter.popDialog<void>();
                     },
                     child: Ink(
                       padding: const EdgeInsets.all(8),

@@ -71,6 +71,8 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
     }
   }
 
+  /// USE THIS ONLY FOR ACTUAL VIEW THAT ARE ON STACK!
+  /// PS: TO POP DIALOGS / SNACKBARS .. USE [MezRouter.popDialog]
   static void back<T>({
     T? result,
     bool closeOverlays = false,
@@ -85,6 +87,20 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
       id: id,
     );
     printRoutes();
+  }
+
+  static void popDialog<T>({
+    T? result,
+    bool closeOverlays = false,
+    bool canPop = true,
+    int? id,
+  }) {
+    Get.back<T>(
+      result: result,
+      closeOverlays: closeOverlays,
+      canPop: canPop,
+      id: id,
+    );
   }
 
   /// Get.until Wrapper -> Navigation.popUntil() shortcut.

@@ -234,7 +234,7 @@ Future<num> orderWeightDialog(
                   ),
                   onTap: () {
                     if (orderWeight != 0) {
-                      MezRouter.back(result: orderWeight);
+                      MezRouter.popDialog(result: orderWeight);
                     } else {
                       Get.snackbar('Error', 'Please Provide a valid weight ');
                     }
@@ -271,7 +271,7 @@ Future<num> orderWeightDialog(
                   ),
                   onTap: () {
                     // MezRouter.back();
-                    MezRouter.back(result: 0);
+                    MezRouter.popDialog(result: 0);
                   },
                 )
               ],

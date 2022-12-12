@@ -27,10 +27,10 @@ class OrderButtons {
             _i18n()["title"],
             _i18n()["subTitle"],
             () {
-              MezRouter.back(result: true);
+              MezRouter.popDialog(result: true);
             },
             () {
-              MezRouter.back(result: false);
+              MezRouter.popDialog(result: false);
             },
             Container(height: 40, width: 40, child: Image.asset(cancelIcon)),
             LinearGradient(
@@ -86,10 +86,10 @@ class OrderButtons {
             _i18n()['readyForDeliveryTitle'],
             _i18n()['readyForDeliveryText'],
             () {
-              MezRouter.back(result: true);
+              MezRouter.popDialog(result: true);
             },
             () {
-              MezRouter.back(result: false);
+              MezRouter.popDialog(result: false);
             },
             Icon(
               Icons.dry_cleaning_rounded,

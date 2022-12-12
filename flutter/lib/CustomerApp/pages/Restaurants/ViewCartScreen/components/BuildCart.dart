@@ -61,7 +61,7 @@ class CartBuilder extends StatelessWidget {
                               );
                               controller.clearCart();
                               controller.cart.refresh();
-                              MezRouter.back<void>();
+                              MezRouter.popDialog<void>();
                             });
                           },
                           child: const Icon(

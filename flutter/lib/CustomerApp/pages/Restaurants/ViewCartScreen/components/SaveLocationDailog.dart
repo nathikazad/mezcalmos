@@ -68,7 +68,7 @@ Future<String?> savedLocationDailog({
               const SizedBox(height: 15),
               TextButton(
                 onPressed: () {
-                  MezRouter.back(result: txtController.text);
+                  MezRouter.popDialog(result: txtController.text);
                 },
                 child: Container(
                   alignment: Alignment.center,
