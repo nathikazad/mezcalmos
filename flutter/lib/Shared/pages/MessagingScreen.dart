@@ -25,6 +25,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
@@ -58,7 +59,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
     if (Get.parameters['chatId'] == null) {
       Get.snackbar("Error", "Does not have a valid chatId!");
-      Get.back<void>();
+      MezRouter.back<void>();
     }
 
     chatId = int.parse(Get.parameters['chatId']!);
@@ -140,7 +141,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
         centerTitle: true,
         leading: Center(
           child: GestureDetector(
-            onTap: () => Get.back<void>(closeOverlays: true),
+            onTap: () => MezRouter.back<void>(closeOverlays: true),
             child: Container(
               height: 30,
               width: 30,
@@ -219,36 +220,40 @@ class _MessagingScreenState extends State<MessagingScreen> {
                   ),
                 ),
               ),
-              onTap: () => Get.toNamed<void>(
+              onTap: () => MezRouter.toNamed<void>(
                 controller.chat.value!.chatInfo.parentlink,
               ),
             ),
+          // Obx(
+          //   () =>
           Container(
-              child: controller.isUserAuthorizedToCall() &&
-                      // isReciepientNotAdmin() &&
-                      sagora != null
-                  ? InkWell(
-                      // onTap: () async => _onCallPress(),
-                      child: Container(
-                        width: 30,
-                        height: 30,
-                        padding: EdgeInsets.all(5),
-                        margin: EdgeInsets.only(right: 7),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color.fromRGBO(103, 121, 254, 1),
-                        ),
-                        child: Center(
-                          child: FittedBox(
-                            child: Icon(
-                              Icons.call,
-                              color: Colors.white,
-                            ),
+            child: controller.isUserAuthorizedToCall() &&
+                    // isReciepientNotAdmin() &&
+                    sagora != null
+                ? InkWell(
+                    // onTap: () async => _onCallPress(),
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      padding: EdgeInsets.all(5),
+                      margin: EdgeInsets.only(right: 7),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color.fromRGBO(103, 121, 254, 1),
+                      ),
+                      child: Center(
+                        child: FittedBox(
+                          child: Icon(
+                            Icons.call,
+                            color: Colors.white,
                           ),
                         ),
                       ),
-                    )
-                  : SizedBox())
+                    ),
+                  )
+                : SizedBox(),
+          ),
+          // )
         ],
       ),
       body: isChatLoaded

@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -34,6 +35,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
   void initState() {
     optionId = widget.option.id;
     if (!widget.editMode) {
+      assignDefaultChoice();
       assignMinimumChoices();
     }
 
@@ -47,8 +49,8 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(widget.option.name[userLanguage].toString(),
-              style: Get.theme.textTheme.headline3),
+          Text(widget.option.name[userLanguage].toString().inCaps,
+              style: Get.theme.textTheme.bodyText1),
           if (widget.option.optionType == OptionType.Custom)
             Container(
               margin: const EdgeInsets.only(top: 5),
@@ -92,7 +94,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
               children: [
                 Flexible(
                   child: Text(
-                    choice.name[userLanguage].toString(),
+                    choice.name[userLanguage].toString().inCaps,
                     style: Get.theme.textTheme.bodyText2?.copyWith(
                       color: (widget.cartItem.value!.chosenChoices[optionId]
                                   ?.contains(choice) ??
@@ -211,12 +213,22 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
 
 // FUNCTIONS //
   void assignMinimumChoices() {
-    if (widget.option.minimumChoice > 0) {
+    // TODO : MONTASSAR
+    if (widget.option.minimumChoice == 1) {
+      widget.cartItem.value!.setNewChoices(
+          optionId: optionId, newChoices: [widget.option.getChoices.first]);
+    } else if (widget.option.minimumChoice > 0) {
       widget.cartItem.value!.setNewChoices(
           optionId: optionId,
           newChoices: widget.option.choices
               .sublist(0, (widget.option.minimumChoice as int)));
     }
+  }
+
+  void assignDefaultChoice() {
+    mezDbgPrint("GET DEFAULT CHOICE =======>${widget.option.minimumChoice}");
+    widget.cartItem.value!.setNewChoices(
+        optionId: optionId, newChoices: [widget.option.getChoices.first]);
   }
 
   void handleChoiceCheckBox(Choice choice) {

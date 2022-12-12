@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['Shared']['widgets']["MezSideMenu"];
@@ -88,9 +89,9 @@ class MezSideMenu extends GetWidget<AuthController> {
           onClick: () {
             _drawerController.closeMenu();
             if (controller.isUserSignedIn) {
-              Get.toNamed<void>(kUserProfile);
+              MezRouter.toNamed<void>(kUserProfile);
             } else
-              Get.toNamed<void>(kSignInRouteOptional);
+              MezRouter.toNamed<void>(kSignInRouteOptional);
           },
         ),
         if (controller.isUserSignedIn)
@@ -100,7 +101,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             title: "${_i18n()["notifications"]}", // _i18n()["userInfo"],
             onClick: () {
               _drawerController.closeMenu();
-              Get.toNamed<void>(kNotificationsRoute);
+              MezRouter.toNamed<void>(kNotificationsRoute);
             },
           ),
         if (_drawerController.pastOrdersRoute != null)
@@ -110,7 +111,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             title: "${_i18n()["pastOrders"]}", // _i18n()["userInfo"],
             onClick: () {
               _drawerController.closeMenu();
-              Get.toNamed<void>(_drawerController.pastOrdersRoute!);
+              MezRouter.toNamed<void>(_drawerController.pastOrdersRoute!);
             },
           ),
         SideMenuItem(

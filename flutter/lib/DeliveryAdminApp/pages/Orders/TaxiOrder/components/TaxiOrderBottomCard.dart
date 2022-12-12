@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["Orders"]["TaxiOrder"]["components"]["taxiOrderBottomCard"];
@@ -89,7 +90,7 @@ class _TaxiOrderBottomCardState extends State<TaxiOrderBottomCard> {
                     children: [
                       IconButton(
                           onPressed: () {
-                            Get.toNamed(getMessagesRoute(
+                            MezRouter.toNamed(getMessagesRoute(
                                 chatId: widget.order.orderId,
                                 orderId: widget.order.orderId,
                                 orderType: OrderType.Taxi));
@@ -313,7 +314,7 @@ class _TaxiOrderBottomCardState extends State<TaxiOrderBottomCard> {
                       forwardSuccessful: true,
                       taxiNumber: result.toString());
                   // btnClicked.value = false;
-                  Get.back(closeOverlays: true);
+                  MezRouter.back(closeOverlays: true);
                 }
               },
               child: Container(
@@ -333,7 +334,7 @@ class _TaxiOrderBottomCardState extends State<TaxiOrderBottomCard> {
                     orderId: widget.order.orderId,
                     forwardSuccessful: false,
                   );
-                  Get.back(closeOverlays: true);
+                  MezRouter.back(closeOverlays: true);
                 },
                 style: TextButton.styleFrom(backgroundColor: Colors.redAccent),
                 child: Container(
@@ -400,7 +401,7 @@ class _TaxiOrderBottomCardState extends State<TaxiOrderBottomCard> {
                 onPressed: () {
                   if (taxiNumber != 0) {
                     //Navigator.pop(context, taxiNumber);
-                    Get.back(result: taxiNumber);
+                    MezRouter.back(result: taxiNumber);
                   }
                 },
                 child: Container(

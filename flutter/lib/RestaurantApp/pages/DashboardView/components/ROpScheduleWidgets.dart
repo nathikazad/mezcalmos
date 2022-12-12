@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpScheduleController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
@@ -24,7 +25,7 @@ class ROpScheduleWidgets {
         alignment: Alignment.centerLeft,
         child: Text(
           "${_i18n()["workingHours"]}",
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyText2,
         ),
       ),
       SizedBox(
@@ -296,7 +297,7 @@ class ROpScheduleWidgets {
             backgroundColor: offRedColor,
             textStyle: Get.textTheme.bodyText1?.copyWith(color: Colors.red)),
         onPressed: () {
-          Future.delayed(Duration.zero, Get.back).then((value) {
+          Future.delayed(Duration.zero, MezRouter.back).then((value) {
             viewController.schedulePreview.value =
                 Schedule.clone(viewController.newSchedule.value!);
             viewController.schedulePreview.refresh();
@@ -313,7 +314,7 @@ class ROpScheduleWidgets {
   Widget _saveBtn() {
     return InkWell(
         onTap: () {
-          Future.delayed(Duration.zero, Get.back).then((value) {
+          Future.delayed(Duration.zero, MezRouter.back).then((value) {
             viewController.newSchedule.value =
                 Schedule.clone(viewController.schedulePreview.value!);
             viewController.newSchedule.refresh();

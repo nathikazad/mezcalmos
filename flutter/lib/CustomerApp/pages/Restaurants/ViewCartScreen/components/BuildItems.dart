@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 
@@ -67,7 +68,7 @@ class CartItemsBuilder extends StatelessWidget {
                 mezDbgPrint(
                     " the data inside the expansion ${cartItem.toFirebaseFunctionFormattedJson()}");
                 if (cartItem.idInCart != null)
-                  Get.toNamed(editCartItemRoute(cartItem.idInCart!));
+                  MezRouter.toNamed(editCartItemRoute(cartItem.idInCart!));
               },
             ),
           ));

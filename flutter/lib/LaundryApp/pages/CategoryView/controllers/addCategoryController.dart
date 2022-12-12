@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 // ignore_for_file: constant_identifier_names
 enum SelectedTab { Primary, Secondary }
@@ -107,7 +108,7 @@ class AddCategoryController {
     laundryInfoController
         .setCosts(laundryId: laundryId, laundryCosts: laundryCosts.value!)
         .then((value) {
-      Get.back();
+      MezRouter.back();
     });
   }
 
@@ -125,7 +126,7 @@ class AddCategoryController {
     laundryInfoController
         .setCosts(laundryId: laundryId, laundryCosts: laundryCosts.value!)
         .then((value) {
-      Get.back();
+      MezRouter.back();
     });
   }
 

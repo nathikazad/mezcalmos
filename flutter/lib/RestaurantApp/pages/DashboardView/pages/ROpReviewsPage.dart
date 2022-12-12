@@ -8,6 +8,7 @@ import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpRevie
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -31,7 +32,7 @@ class _ROpReviewsViewState extends State<ROpReviewsView> {
     if (restaurantID != null) {
       viewController.fetchReviewsAndRating(restaurantId: restaurantID!);
     } else {
-      Get.back();
+      MezRouter.back();
     }
 
     super.initState();

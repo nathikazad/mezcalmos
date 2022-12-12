@@ -21,6 +21,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -348,10 +349,12 @@ class _StartingPointState extends State<StartingPoint> {
     }
 
     final bool? isPreviewModeEnabled = GetStorage().read<bool?>('previewMode');
+    final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
     return DevicePreview(
       enabled: isPreviewModeEnabled == true ? true : false,
       builder: (BuildContext context) => GetMaterialApp(
+        navigatorObservers: [MezRouter()],
         useInheritedMediaQuery: true,
         locale:
             isPreviewModeEnabled == true ? DevicePreview.locale(context) : null,

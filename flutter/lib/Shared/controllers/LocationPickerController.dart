@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["components"]["LocationPicker"];
@@ -80,12 +81,13 @@ class LocationPicker extends StatefulWidget {
 
   /// showBottomButton
   final bool showBottomButton;
-  const LocationPicker(
-      {this.showBottomButton = true,
-      this.onSuccessSignIn,
-      required this.notifyParentOfLocationFinalized,
-      required this.notifyParentOfConfirm,
-      required this.locationPickerMapController});
+  const LocationPicker({
+    this.showBottomButton = true,
+    this.onSuccessSignIn,
+    required this.notifyParentOfLocationFinalized,
+    required this.notifyParentOfConfirm,
+    required this.locationPickerMapController,
+  });
   @override
   LocationPickerState createState() => LocationPickerState();
 }
@@ -98,13 +100,7 @@ class LocationPickerState extends State<LocationPicker> {
   bool userTaped = false;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    responsiveSize(context);
     return Obx(() => widget.locationPickerMapController.location.value != null
         ? Stack(
             alignment: Alignment.center,
@@ -163,7 +159,7 @@ class LocationPickerState extends State<LocationPicker> {
               notifier: (_) async {
             Get.find<AuthController>().preserveNavigationStackAfterSignIn =
                 true;
-            await Get.toNamed<void>(kSignInRouteOptional);
+            await MezRouter.toNamed<void>(kSignInRouteOptional);
 
             // call back in case User was signedOut and he signedIn before confirming his Order Successfully!
             widget.onSuccessSignIn?.call();
@@ -195,10 +191,12 @@ class LocationPickerState extends State<LocationPicker> {
       child: InkWell(
         onTap: notifier != null
             ? () async {
-                final Location _loc = await getCenterAndGeoCode();
-                notifier.call(_loc);
-                widget.locationPickerMapController._showFakeMarker.value =
-                    false;
+                final Location? _loc = await getCenterAndGeoCode();
+                if (_loc != null) {
+                  notifier.call(_loc);
+                  widget.locationPickerMapController._showFakeMarker.value =
+                      false;
+                }
               }
             : () {},
         child: Container(
@@ -299,36 +297,39 @@ class LocationPickerState extends State<LocationPicker> {
   }
 
   /******************************  helper functions ************************************/
-  Future<Location> getCenterAndGeoCode() async {
-    final LatLng _mapCenter =
+  Future<Location?> getCenterAndGeoCode() async {
+    final LatLng? _mapCenter =
         await widget.locationPickerMapController.getMapCenter();
+    Location? finalResult;
 
-    final GeoLoc.LocationData _newLocationData =
-        Location.buildLocationData(_mapCenter.latitude, _mapCenter.longitude);
+    if (_mapCenter != null) {
+      final GeoLoc.LocationData _newLocationData =
+          Location.buildLocationData(_mapCenter.latitude, _mapCenter.longitude);
 
-    final double kmDistance = MapHelper.calculateDistance(
-        _newLocationData,
-        Location.buildLocationData(
-            widget.locationPickerMapController.location.value!.latitude,
-            widget.locationPickerMapController.location.value!.longitude));
+      final double kmDistance = MapHelper.calculateDistance(
+          _newLocationData,
+          Location.buildLocationData(
+              widget.locationPickerMapController.location.value!.latitude,
+              widget.locationPickerMapController.location.value!.longitude));
 
-    String formattedAddress =
-        widget.locationPickerMapController.location.value!.address;
-    if (kmDistance > 0.5 || formattedAddress == "") {
-      // ADDED : || formattedAddress == ""  CUZ on clear we set address == "".
-      // and that's what 's leavign the textfields empty when re-picking but  distance is less than 0.5 km
-      formattedAddress = await MapHelper.getAdressFromLatLng(
-            LatLng(
-              _newLocationData.latitude!,
-              _newLocationData.longitude!,
-            ),
-          ) ??
+      String formattedAddress =
           widget.locationPickerMapController.location.value!.address;
+      if (kmDistance > 0.5 || formattedAddress == "") {
+        // ADDED : || formattedAddress == ""  CUZ on clear we set address == "".
+        // and that's what 's leavign the textfields empty when re-picking but  distance is less than 0.5 km
+        formattedAddress = await MapHelper.getAdressFromLatLng(
+              LatLng(
+                _newLocationData.latitude!,
+                _newLocationData.longitude!,
+              ),
+            ) ??
+            widget.locationPickerMapController.location.value!.address;
+      }
+
+      finalResult = Location(formattedAddress, _newLocationData);
+
+      mezDbgPrint("@===> new location : ${finalResult.toString()}");
     }
-
-    final Location finalResult = Location(formattedAddress, _newLocationData);
-
-    mezDbgPrint("@===> new location : ${finalResult.toString()}");
 
     return finalResult;
   }

@@ -15,15 +15,6 @@ Widget emptyOrWidgetSmallPhones({Widget? empty, required Widget child}) {
   }
 }
 
-void responsiveSize(BuildContext context) {
-  // ScreenUtil.init(
-  //     BoxConstraints(
-  //         maxWidth: MediaQuery.of(context).size.width,
-  //         maxHeight: MediaQuery.of(context).size.height),
-  //     designSize: Size(375, 667),
-  //     orientation: Orientation.portrait);
-}
-
 double getSizeRelativeToScreen(
         double v, double screenHeight, double screenWidth) =>
     (screenHeight / screenWidth) * v;

@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpMenuView"]["components"]["ROpCategoryItems"];
@@ -138,7 +139,7 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                     InkWell(
                       onTap: () async {
                         Get.back();
-                        final bool? result = await Get.toNamed(
+                        final bool? result = await MezRouter.toNamed(
                             getCategoryEditRoute(
                                 categoryId: widget.category.id!,
                                 restaurantId: widget.restaurantId)) as bool;
@@ -169,7 +170,7 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                               .deleteCategory(categoryId: widget.category.id!)
                               .then((bool value) {
                             if (value) {
-                              Get.until((Route route) =>
+                              MezRouter.untill((Route route) =>
                                   route.settings.name ==
                                   getROpMenuRoute(
                                       restaurantId: widget.restaurantId));

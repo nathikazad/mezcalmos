@@ -8,6 +8,7 @@ import 'package:mezcalmos/LaundryApp/pages/CurrentOrdersList/components/LaundryO
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['DashboardView']['OrdersListView']['LaundryOpOrdersListView'];
@@ -58,7 +59,7 @@ class _LaundryOpPastOrdersListState extends State<LaundryOpPastOrdersList> {
         showOrders: false,
         title: "${_i18n()["pastOrders"]}",
         leftBtnType: AppBarLeftButtonType.Back,
-        onClick: Get.back,
+        onClick: MezRouter.back,
       ),
       body: Obx(
         () => Scrollbar(

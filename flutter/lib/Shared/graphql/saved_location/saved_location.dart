@@ -7,7 +7,9 @@ import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
+import 'package:mezcalmos/Shared/graphql/saved_location/__generated/saved_location.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/saved_location/__generated/saved_locations.graphql.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
@@ -43,6 +45,42 @@ Future<List<SavedLocation>> get_customer_locations(
   return locations;
 }
 
+Stream<List<SavedLocation>?> listen_on_customer_locations(
+    {required int customer_id}) {
+  return hasuraDb.graphQLClient
+      .subscribe$listen_on_saved_locations(
+    Options$Subscription$listen_on_saved_locations(
+      variables: Variables$Subscription$listen_on_saved_locations(
+          customer_id: customer_id),
+    ),
+  )
+      .map<List<SavedLocation>?>(
+          (QueryResult<Subscription$listen_on_saved_locations> locations_res) {
+    if (locations_res.hasException) {
+      mezDbgPrint(
+          "[+] listen_on_customer_locations :: exception :: ${locations_res.exception}");
+      return null;
+    } else {
+      final List<SavedLocation> ls = [];
+      locations_res.parsedData?.saved_location.forEach(
+          (Subscription$listen_on_saved_locations$saved_location location) {
+        ls.add(
+          SavedLocation(
+            name: location.name,
+            defaultLocation: location.$default,
+            id: location.id,
+            location: LocModel.Location(
+              location.location_text,
+              location.location_gps.toLocationData(),
+            ),
+          ),
+        );
+      });
+      return ls;
+    }
+  });
+}
+
 /// Get one Customer's specific SavedLocation using a location's pk.
 Future<SavedLocation?> get_saved_location({required int location_id}) async {
   final Query$getSavedLocation$saved_location_by_pk? _saved_location = hasuraDb
@@ -67,35 +105,39 @@ Future<SavedLocation?> get_saved_location({required int location_id}) async {
 /// Update a Customer's specific SavedLocation using it's pk.
 Future<ServerResponse> update_saved_location(
     {required SavedLocation saved_location}) async {
-  final Geography? _location_gps =
-      saved_location.location.position.toGeography();
-  if (_location_gps != null) {
-    final QueryResult<Mutation$updateSavedLocation> _location_update =
-        await hasuraDb.graphQLClient.mutate$updateSavedLocation(
-      Options$Mutation$updateSavedLocation(
-        variables: Variables$Mutation$updateSavedLocation(
-          location_id:
-              Input$saved_location_pk_columns_input(id: saved_location.id),
-          $default: saved_location.defaultLocation,
-          address: saved_location.location.address,
-          name: saved_location.name,
-          gps: _location_gps,
+  if (saved_location.id != null) {
+    final Geography? _location_gps =
+        saved_location.location.position.toGeography();
+    if (_location_gps != null) {
+      final QueryResult<Mutation$updateSavedLocation> _location_update =
+          await hasuraDb.graphQLClient.mutate$updateSavedLocation(
+        Options$Mutation$updateSavedLocation(
+          variables: Variables$Mutation$updateSavedLocation(
+            location_id:
+                Input$saved_location_pk_columns_input(id: saved_location.id!),
+            $default: saved_location.defaultLocation,
+            address: saved_location.location.address,
+            name: saved_location.name,
+            gps: _location_gps,
+          ),
         ),
-      ),
-    );
-
-    if (_location_update.hasException) {
-      return ServerResponse(
-        ResponseStatus.Error,
-        errorMessage:
-            "QueryResult has errors ${_location_update.exception?.toString()}",
       );
+
+      if (_location_update.hasException) {
+        return ServerResponse(
+          ResponseStatus.Error,
+          errorMessage:
+              "QueryResult has errors ${_location_update.exception?.toString()}",
+        );
+      }
+      return ServerResponse(ResponseStatus.Success);
     }
-    return ServerResponse(ResponseStatus.Success);
   }
+
   return ServerResponse(
     ResponseStatus.Error,
-    errorMessage: "Error : saved_location.location.position is null!",
+    errorMessage:
+        "Error : saved_location.location.position is null or id given is null!",
   );
 }
 

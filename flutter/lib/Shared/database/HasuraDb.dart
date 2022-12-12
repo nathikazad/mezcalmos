@@ -12,7 +12,6 @@ import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart' show mezDbgPrint;
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
 class HasuraDb {
   late GraphQLClient graphQLClient;

@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
     ["AdminView"]["components"]["CategoryGridCard"];
@@ -62,7 +63,7 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
                   customBorder: CircleBorder(),
                   onTap: () {
                     mezDbgPrint(widget.item.id);
-                    Get.toNamed(getCategoryRoute(
+                    MezRouter.toNamed(getCategoryRoute(
                         laundryId: widget.laundry.info.hasuraId.toString(),
                         categoryId: widget.item.id));
                   },
@@ -91,7 +92,7 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
                         primaryButtonText: "${_i18n()["yesDelete"]}",
                         onYesClick: () async {
                       await deleteCategory(item: widget.item)
-                          .then((value) => Get.back());
+                          .then((value) => MezRouter.back());
                     });
                   },
                   child: Ink(

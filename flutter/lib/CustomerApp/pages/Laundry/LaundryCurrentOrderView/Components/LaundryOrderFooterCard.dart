@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -46,7 +47,7 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
                       );
 
                       if (resp.success) {
-                        Get.until(
+                        MezRouter.untill(
                           (Route<dynamic> route) =>
                               route.settings.name == kHomeRoute,
                         );

@@ -64,7 +64,8 @@ class CustomerAuthController extends GetxController {
   }
 
   void deleteLocation(SavedLocation savedLocation) {
-    delete_saved_location(saved_location_id: savedLocation.id);
+    if (savedLocation.id != null)
+      delete_saved_location(saved_location_id: savedLocation.id!);
   }
 
   Location? getLocationById(int locationId) {

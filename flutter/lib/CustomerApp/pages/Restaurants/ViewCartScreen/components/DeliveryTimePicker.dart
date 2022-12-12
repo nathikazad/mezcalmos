@@ -8,7 +8,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/DeliveryType.dart';
 import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/MezDateTimePicker.dart';
 import 'package:sizer/sizer.dart';
 
@@ -142,16 +141,16 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                           ),
                         ),
                       if (controller.cart.value.deliveryTime != null &&
-                          controller.cart.value.isSpecial == false)
+                          widget.viewCartController.shoudSchedule == false)
                         Padding(
                           padding: const EdgeInsets.only(left: 8),
                           child: InkWell(
                             customBorder: CircleBorder(),
                             onTap: () {
                               controller.cart.value.deliveryTime = null;
-                              controller.cart.value.deliveryType =
-                                  DeliveryType.Now;
+
                               controller.saveCart();
+                              controller.cart.refresh();
                             },
                             child: Ink(
                               padding: const EdgeInsets.all(3),

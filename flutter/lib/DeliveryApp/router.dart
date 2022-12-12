@@ -12,12 +12,12 @@ const String kLaundryOrderView = '/laundryOrders/:orderId';
 const String kRestaurantOrderView = '/restaurantOrders/:orderId';
 const String kOrderDetailsView = "/orderDetails/:orderId";
 const String kPastOrdersView = "/pastOrders";
-String getLaundryOrderRoute(String orderId) {
-  return kLaundryOrderView.replaceFirst(":orderId", orderId);
+String getLaundryOrderRoute(int orderId) {
+  return kLaundryOrderView.replaceFirst(":orderId", orderId.toString());
 }
 
-String getRestaurantOrderRoute(String orderId) {
-  return kRestaurantOrderView.replaceFirst(":orderId", orderId);
+String getRestaurantOrderRoute(int orderId) {
+  return kRestaurantOrderView.replaceFirst(":orderId", orderId.toString());
 }
 
 String getOrderDetailsRoute(String orderId) {

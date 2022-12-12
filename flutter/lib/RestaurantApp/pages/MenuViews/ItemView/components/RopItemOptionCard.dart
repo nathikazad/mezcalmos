@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class ROpItemOptionCard extends StatefulWidget {
   const ROpItemOptionCard(
@@ -105,7 +106,7 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
   Widget _editBtn({required Option option}) {
     return InkWell(
       onTap: () async {
-        final bool? result = await Get.toNamed(getROpOptionRoute(
+        final bool? result = await MezRouter.toNamed(getROpOptionRoute(
             restaurantId: widget.restaurantID,
             optionId: option.id,
             itemID: widget.itemId!)) as bool?;

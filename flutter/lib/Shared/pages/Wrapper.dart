@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -66,7 +67,7 @@ class _WrapperState extends State<Wrapper> {
         //  bool preventDuplicates = true (byDefault om GetX)
         Future<void>.delayed(
           Duration(milliseconds: 500),
-          () => Get.toNamed<void>(kLocationPermissionPage),
+          () => MezRouter.toNamed<void>(kLocationPermissionPage),
         );
       }
     });
@@ -91,8 +92,8 @@ class _WrapperState extends State<Wrapper> {
         );
         break;
       default:
-        // Major / Minor - forcing the app to stay in AppNeedsUpdate.
-        Get.toNamed<void>(
+        // Major/Minor - forcing the app to stay in AppNeedsUpdate
+        MezRouter.toNamed<void>(
           kAppNeedsUpdate,
           arguments: <String, dynamic>{
             "versionStatus": status,
@@ -112,11 +113,10 @@ class _WrapperState extends State<Wrapper> {
         mezDbgPrint("[777] user == null");
         if (AppType.CustomerApp == settingsController.appType) {
           mezDbgPrint("[777] app = customerApp .. routing to home!");
-          // if (Get.currentRoute != kSignInRouteOptional) {
-          await Get.offNamedUntil<void>(
+          await MezRouter.offNamedUntil<void>(
               kHomeRoute, ModalRoute.withName(kWrapperRoute));
         } else {
-          await Get.offNamedUntil<void>(
+          await MezRouter.offNamedUntil<void>(
             kSignInRouteRequired,
             ModalRoute.withName(kWrapperRoute),
           );
@@ -124,15 +124,10 @@ class _WrapperState extends State<Wrapper> {
       } else {
         mezDbgPrint("[777] user != null");
 
-        // await waitTillUserInfoLoaded();
         redirectIfUserInfosNotSet();
       }
     }
   }
-
-  // Future<void> waitTillUserInfoLoaded() async {
-  //   return Get.find<AuthController>().fetchUserInfoFromHasura();
-  // }
 
   void redirectIfUserInfosNotSet() {
     if ((!Get.find<AuthController>().isDisplayNameSet() ||
@@ -157,10 +152,11 @@ class _WrapperState extends State<Wrapper> {
 
       */
       // We pop everything till wrapper and push kHomeRoute
-      Get.offNamedUntil<void>(kHomeRoute, ModalRoute.withName(kWrapperRoute));
+      MezRouter.offNamedUntil<void>(
+          kHomeRoute, ModalRoute.withName(kWrapperRoute));
 
       // then we push kUserProfile on top of kHomeRoute
-      Get.toNamed<void>(kUserProfile);
+      MezRouter.toNamed<void>(kUserProfile);
       // now the Nav Stack is correct and looks like this :  wrapper > kHomeRoute > kUserProfile
     } else {
       // if user has all infos set and a successfull SignIn then we proceed with the usual.
@@ -170,14 +166,15 @@ class _WrapperState extends State<Wrapper> {
 
   void checkIfSignInRouteOrRedirectToHome() {
     if (authController.preserveNavigationStackAfterSignIn)
-      Get.until((Route<dynamic> route) =>
+      MezRouter.untill((Route<dynamic> route) =>
           route.settings.name == kSignInRouteOptional);
 
     if (isCurrentRoute(kSignInRouteOptional)) {
-      Get.back<void>();
+      MezRouter.back<void>();
     } else {
       if (!Get.currentRoute.contains('/messages/'))
-        Get.offNamedUntil<void>(kHomeRoute, ModalRoute.withName(kWrapperRoute));
+        MezRouter.offNamedUntil<void>(
+            kHomeRoute, ModalRoute.withName(kWrapperRoute));
     }
     authController.preserveNavigationStackAfterSignIn = false;
   }

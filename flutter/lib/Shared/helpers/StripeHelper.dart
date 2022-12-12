@@ -13,7 +13,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
-//
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["Shared"]["helpers"]["StripeHelper"];
@@ -413,7 +413,7 @@ class _CardFormState extends State<CardForm> {
           await addCard(paymentMethod: paymentMethod.id);
       mezDbgPrint("Response ====> ${serverResponse.data}");
       if (serverResponse.success) {
-        Get.back(result: serverResponse.data['cardId']);
+        MezRouter.back(result: serverResponse.data['cardId']);
       } else {
         MezSnackbar(
             "Add Card Error", serverResponse.errorMessage ?? "Unknown Error");

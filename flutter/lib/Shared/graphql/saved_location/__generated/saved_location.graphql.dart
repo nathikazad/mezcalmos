@@ -663,6 +663,649 @@ class _CopyWithStubImpl$Query$get_customer_locations$saved_location<TRes>
       _res;
 }
 
+class Variables$Subscription$listen_on_saved_locations {
+  factory Variables$Subscription$listen_on_saved_locations(
+          {required int customer_id}) =>
+      Variables$Subscription$listen_on_saved_locations._({
+        r'customer_id': customer_id,
+      });
+
+  Variables$Subscription$listen_on_saved_locations._(this._$data);
+
+  factory Variables$Subscription$listen_on_saved_locations.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$customer_id = data['customer_id'];
+    result$data['customer_id'] = (l$customer_id as int);
+    return Variables$Subscription$listen_on_saved_locations._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get customer_id => (_$data['customer_id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$customer_id = customer_id;
+    result$data['customer_id'] = l$customer_id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Subscription$listen_on_saved_locations<
+          Variables$Subscription$listen_on_saved_locations>
+      get copyWith => CopyWith$Variables$Subscription$listen_on_saved_locations(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Subscription$listen_on_saved_locations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$customer_id = customer_id;
+    final lOther$customer_id = other.customer_id;
+    if (l$customer_id != lOther$customer_id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$customer_id = customer_id;
+    return Object.hashAll([l$customer_id]);
+  }
+}
+
+abstract class CopyWith$Variables$Subscription$listen_on_saved_locations<TRes> {
+  factory CopyWith$Variables$Subscription$listen_on_saved_locations(
+    Variables$Subscription$listen_on_saved_locations instance,
+    TRes Function(Variables$Subscription$listen_on_saved_locations) then,
+  ) = _CopyWithImpl$Variables$Subscription$listen_on_saved_locations;
+
+  factory CopyWith$Variables$Subscription$listen_on_saved_locations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Subscription$listen_on_saved_locations;
+
+  TRes call({int? customer_id});
+}
+
+class _CopyWithImpl$Variables$Subscription$listen_on_saved_locations<TRes>
+    implements CopyWith$Variables$Subscription$listen_on_saved_locations<TRes> {
+  _CopyWithImpl$Variables$Subscription$listen_on_saved_locations(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Subscription$listen_on_saved_locations _instance;
+
+  final TRes Function(Variables$Subscription$listen_on_saved_locations) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? customer_id = _undefined}) =>
+      _then(Variables$Subscription$listen_on_saved_locations._({
+        ..._instance._$data,
+        if (customer_id != _undefined && customer_id != null)
+          'customer_id': (customer_id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Subscription$listen_on_saved_locations<TRes>
+    implements CopyWith$Variables$Subscription$listen_on_saved_locations<TRes> {
+  _CopyWithStubImpl$Variables$Subscription$listen_on_saved_locations(this._res);
+
+  TRes _res;
+
+  call({int? customer_id}) => _res;
+}
+
+class Subscription$listen_on_saved_locations {
+  Subscription$listen_on_saved_locations({
+    required this.saved_location,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_saved_locations.fromJson(
+      Map<String, dynamic> json) {
+    final l$saved_location = json['saved_location'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_saved_locations(
+      saved_location: (l$saved_location as List<dynamic>)
+          .map((e) =>
+              Subscription$listen_on_saved_locations$saved_location.fromJson(
+                  (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Subscription$listen_on_saved_locations$saved_location>
+      saved_location;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$saved_location = saved_location;
+    _resultData['saved_location'] =
+        l$saved_location.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$saved_location = saved_location;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$saved_location.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Subscription$listen_on_saved_locations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$saved_location = saved_location;
+    final lOther$saved_location = other.saved_location;
+    if (l$saved_location.length != lOther$saved_location.length) {
+      return false;
+    }
+    for (int i = 0; i < l$saved_location.length; i++) {
+      final l$saved_location$entry = l$saved_location[i];
+      final lOther$saved_location$entry = lOther$saved_location[i];
+      if (l$saved_location$entry != lOther$saved_location$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_saved_locations
+    on Subscription$listen_on_saved_locations {
+  CopyWith$Subscription$listen_on_saved_locations<
+          Subscription$listen_on_saved_locations>
+      get copyWith => CopyWith$Subscription$listen_on_saved_locations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_saved_locations<TRes> {
+  factory CopyWith$Subscription$listen_on_saved_locations(
+    Subscription$listen_on_saved_locations instance,
+    TRes Function(Subscription$listen_on_saved_locations) then,
+  ) = _CopyWithImpl$Subscription$listen_on_saved_locations;
+
+  factory CopyWith$Subscription$listen_on_saved_locations.stub(TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_saved_locations;
+
+  TRes call({
+    List<Subscription$listen_on_saved_locations$saved_location>? saved_location,
+    String? $__typename,
+  });
+  TRes saved_location(
+      Iterable<Subscription$listen_on_saved_locations$saved_location> Function(
+              Iterable<
+                  CopyWith$Subscription$listen_on_saved_locations$saved_location<
+                      Subscription$listen_on_saved_locations$saved_location>>)
+          _fn);
+}
+
+class _CopyWithImpl$Subscription$listen_on_saved_locations<TRes>
+    implements CopyWith$Subscription$listen_on_saved_locations<TRes> {
+  _CopyWithImpl$Subscription$listen_on_saved_locations(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_saved_locations _instance;
+
+  final TRes Function(Subscription$listen_on_saved_locations) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? saved_location = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$listen_on_saved_locations(
+        saved_location: saved_location == _undefined || saved_location == null
+            ? _instance.saved_location
+            : (saved_location
+                as List<Subscription$listen_on_saved_locations$saved_location>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes saved_location(
+          Iterable<Subscription$listen_on_saved_locations$saved_location> Function(
+                  Iterable<
+                      CopyWith$Subscription$listen_on_saved_locations$saved_location<
+                          Subscription$listen_on_saved_locations$saved_location>>)
+              _fn) =>
+      call(
+          saved_location: _fn(_instance.saved_location.map((e) =>
+              CopyWith$Subscription$listen_on_saved_locations$saved_location(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_saved_locations<TRes>
+    implements CopyWith$Subscription$listen_on_saved_locations<TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_saved_locations(this._res);
+
+  TRes _res;
+
+  call({
+    List<Subscription$listen_on_saved_locations$saved_location>? saved_location,
+    String? $__typename,
+  }) =>
+      _res;
+  saved_location(_fn) => _res;
+}
+
+const documentNodeSubscriptionlisten_on_saved_locations =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.subscription,
+    name: NameNode(value: 'listen_on_saved_locations'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'customer_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'saved_location'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'customer_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'customer_id')),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'location_gps'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'location_text'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'default'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Subscription$listen_on_saved_locations
+    _parserFn$Subscription$listen_on_saved_locations(
+            Map<String, dynamic> data) =>
+        Subscription$listen_on_saved_locations.fromJson(data);
+
+class Options$Subscription$listen_on_saved_locations extends graphql
+    .SubscriptionOptions<Subscription$listen_on_saved_locations> {
+  Options$Subscription$listen_on_saved_locations({
+    String? operationName,
+    required Variables$Subscription$listen_on_saved_locations variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeSubscriptionlisten_on_saved_locations,
+          parserFn: _parserFn$Subscription$listen_on_saved_locations,
+        );
+}
+
+class WatchOptions$Subscription$listen_on_saved_locations
+    extends graphql.WatchQueryOptions<Subscription$listen_on_saved_locations> {
+  WatchOptions$Subscription$listen_on_saved_locations({
+    String? operationName,
+    required Variables$Subscription$listen_on_saved_locations variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeSubscriptionlisten_on_saved_locations,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Subscription$listen_on_saved_locations,
+        );
+}
+
+class FetchMoreOptions$Subscription$listen_on_saved_locations
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Subscription$listen_on_saved_locations({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Subscription$listen_on_saved_locations variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeSubscriptionlisten_on_saved_locations,
+        );
+}
+
+extension ClientExtension$Subscription$listen_on_saved_locations
+    on graphql.GraphQLClient {
+  Stream<graphql.QueryResult<Subscription$listen_on_saved_locations>>
+      subscribe$listen_on_saved_locations(
+              Options$Subscription$listen_on_saved_locations options) =>
+          this.subscribe(options);
+  graphql.ObservableQuery<Subscription$listen_on_saved_locations>
+      watchSubscription$listen_on_saved_locations(
+              WatchOptions$Subscription$listen_on_saved_locations options) =>
+          this.watchQuery(options);
+}
+
+class Subscription$listen_on_saved_locations$saved_location {
+  Subscription$listen_on_saved_locations$saved_location({
+    required this.id,
+    required this.name,
+    required this.location_gps,
+    required this.location_text,
+    required this.$default,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_saved_locations$saved_location.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$location_gps = json['location_gps'];
+    final l$location_text = json['location_text'];
+    final l$$default = json['default'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_saved_locations$saved_location(
+      id: (l$id as int),
+      name: (l$name as String),
+      location_gps: geographyFromJson(l$location_gps),
+      location_text: (l$location_text as String),
+      $default: (l$$default as bool),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String name;
+
+  final Geography location_gps;
+
+  final String location_text;
+
+  final bool $default;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$location_gps = location_gps;
+    _resultData['location_gps'] = geographyToJson(l$location_gps);
+    final l$location_text = location_text;
+    _resultData['location_text'] = l$location_text;
+    final l$$default = $default;
+    _resultData['default'] = l$$default;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$name = name;
+    final l$location_gps = location_gps;
+    final l$location_text = location_text;
+    final l$$default = $default;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$name,
+      l$location_gps,
+      l$location_text,
+      l$$default,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Subscription$listen_on_saved_locations$saved_location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$location_gps = location_gps;
+    final lOther$location_gps = other.location_gps;
+    if (l$location_gps != lOther$location_gps) {
+      return false;
+    }
+    final l$location_text = location_text;
+    final lOther$location_text = other.location_text;
+    if (l$location_text != lOther$location_text) {
+      return false;
+    }
+    final l$$default = $default;
+    final lOther$$default = other.$default;
+    if (l$$default != lOther$$default) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_saved_locations$saved_location
+    on Subscription$listen_on_saved_locations$saved_location {
+  CopyWith$Subscription$listen_on_saved_locations$saved_location<
+          Subscription$listen_on_saved_locations$saved_location>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_saved_locations$saved_location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_saved_locations$saved_location<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_saved_locations$saved_location(
+    Subscription$listen_on_saved_locations$saved_location instance,
+    TRes Function(Subscription$listen_on_saved_locations$saved_location) then,
+  ) = _CopyWithImpl$Subscription$listen_on_saved_locations$saved_location;
+
+  factory CopyWith$Subscription$listen_on_saved_locations$saved_location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_saved_locations$saved_location;
+
+  TRes call({
+    int? id,
+    String? name,
+    Geography? location_gps,
+    String? location_text,
+    bool? $default,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_on_saved_locations$saved_location<TRes>
+    implements
+        CopyWith$Subscription$listen_on_saved_locations$saved_location<TRes> {
+  _CopyWithImpl$Subscription$listen_on_saved_locations$saved_location(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_saved_locations$saved_location _instance;
+
+  final TRes Function(Subscription$listen_on_saved_locations$saved_location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? location_gps = _undefined,
+    Object? location_text = _undefined,
+    Object? $default = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$listen_on_saved_locations$saved_location(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        location_gps: location_gps == _undefined || location_gps == null
+            ? _instance.location_gps
+            : (location_gps as Geography),
+        location_text: location_text == _undefined || location_text == null
+            ? _instance.location_text
+            : (location_text as String),
+        $default: $default == _undefined || $default == null
+            ? _instance.$default
+            : ($default as bool),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_saved_locations$saved_location<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_saved_locations$saved_location<TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_saved_locations$saved_location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? name,
+    Geography? location_gps,
+    String? location_text,
+    bool? $default,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Query$get_saved_location_by_id {
   factory Variables$Query$get_saved_location_by_id(
           {required int location_id}) =>

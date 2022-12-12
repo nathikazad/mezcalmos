@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['OrderView']['LaundryOpOrderView'];
@@ -61,7 +62,7 @@ class LaundryOpCustomer extends StatelessWidget {
                             .hasNewMessageNotification(
                                 order.orderId.toString()),
                         onTap: () {
-                          Get.toNamed(getMessagesRoute(
+                          MezRouter.toNamed(getMessagesRoute(
                               orderId: order.orderId,
                               orderType: OrderType.Laundry,
                               chatId: order.orderId,
@@ -81,7 +82,7 @@ class LaundryOpCustomer extends StatelessWidget {
     return InkWell(
       customBorder: CircleBorder(),
       onTap: () {
-        Get.toNamed(getMessagesRoute(
+        MezRouter.toNamed(getMessagesRoute(
             orderId: order.orderId,
             orderType: OrderType.Laundry,
             chatId: order.orderId,

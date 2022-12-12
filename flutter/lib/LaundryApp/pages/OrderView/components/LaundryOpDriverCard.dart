@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
     ["OrderView"]["Components"]["LaundryOpOrderDriverCard"];
@@ -73,7 +74,7 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
                             .hasNewMessageNotification(
                                 _getCorrectChatId().toString()),
                         onTap: () {
-                          Get.toNamed(getMessagesRoute(
+                          MezRouter.toNamed(getMessagesRoute(
                               orderId: order.orderId,
                               orderType: OrderType.Laundry,
                               chatId: _getCorrectChatId(),
@@ -165,7 +166,7 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
   }
 
   void _laundryDropOffDriverMessageRoute() {
-    Get.toNamed<dynamic>(getMessagesRoute(
+    MezRouter.toNamed<dynamic>(getMessagesRoute(
         orderId: order.orderId,
         orderType: OrderType.Laundry,
         chatId: order.serviceProviderDropOffDriverChatId!,
@@ -173,7 +174,7 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
   }
 
   void _laundryPickupDriverMessageRoute() {
-    Get.toNamed<dynamic>(getMessagesRoute(
+    MezRouter.toNamed<dynamic>(getMessagesRoute(
         orderId: order.orderId,
         orderType: OrderType.Laundry,
         chatId: order.serviceProviderPickupDriverChatId!,

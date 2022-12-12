@@ -24,7 +24,8 @@ class RestaurantController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
 
-  StreamSubscription<dynamic>? _cartListener;
+  StreamSubscription? _cartListener;
+  String? _subscriptionId;
   Restaurant? associatedRestaurant;
   Rx<Cart> cart = Cart().obs;
   RxnNum minShiipingPrice = RxnNum();
@@ -56,69 +57,29 @@ class RestaurantController extends GetxController {
         associatedRestaurant = value?.restaurant;
         cart.refresh();
       });
-      // await _cartListener?.cancel();
-      // _cartListener =
-      //     listen_on_customer_cart(customer_id: _authController.user!.hasuraId)
-      //         .listen((Cart? event) {
-      //   mezDbgPrint("[cccccccccc] Fired Stream !");
-      //   cart.value = event ?? Cart();
-      // });
-      // _cartListener = _databaseHelper.firebaseDatabase
-      //     .ref()
-      //     .child(customerCart(_authController.fireAuthUser!.uid))
-      //     .onValue
-      //     .listen((DatabaseEvent event) async {
-      //   final dynamic cartData = event.snapshot.value;
-      //   // check if cart has data
-      //   if (cartData != null) {
-      //     // assign the shipping price
-
-      //     // check if cart data is for restaurant
-      //     if (cartData["orderType"] ==
-      //         OrderType.Restaurant.toFirebaseFormatString()) {
-      //       // check if already associated restaurant with cart is the same as current restaurant,
-      //       // if not clear the old associated restaurant
-      //       if (associatedRestaurant != null) {
-      //         if (cartData["serviceProviderId"] !=
-      //             associatedRestaurant?.info.firebaseId) {
-      //           associatedRestaurant = null;
-      //         }
-      //       }
-
-      //       // if no associated restaurant data is saved, then fetch it from database
-      //       if (associatedRestaurant == null &&
-      //           cartData["serviceProviderId"] != null) {
-      //         associatedRestaurant =
-      //             await getAssociatedRestaurant(cartData["serviceProviderId"]);
-      //       }
-      //       if (cartData == null) {
-      //         cart.value = Cart();
-      //       }
-
-      //       cart.value = Cart.fromCartData(
-      //         cartData,
-      //         associatedRestaurant,
-      //       );
-      //     }
-      //   } else {
-      //     cart.value = Cart();
-      //     associatedRestaurant = null;
-      //   }
-      // });
     }
+    hasuraDb.createSubscription(start: () {
+      _cartListener = listen_on_customer_cart(
+              customer_id: Get.find<AuthController>().user!.hasuraId)
+          .listen((Cart? event) {
+        if (event != null) {
+          cart.value = event;
+          if (event.restaurant != null) associatedRestaurant = event.restaurant;
+        }
+        cart.refresh();
+      });
+    }, cancel: () {
+      if (_subscriptionId != null)
+        hasuraDb.cancelSubscription(_subscriptionId!);
+      _cartListener?.cancel();
+      _cartListener = null;
+    });
     // check for old special items and remove them
     checkCartPeriod();
   }
 
   Future<Restaurant?> getAssociatedRestaurant(int restaurantId) async {
     return get_restaurant_by_id(id: restaurantId);
-    // final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
-    //         .ref()
-    //         .child('restaurants/info/$restaurantId')
-    //         .once())
-    //     .snapshot;
-    // return Restaurant.fromRestaurantData(
-    //     restaurantId: restaurantId, restaurantData: snapshot.value);
   }
 
   Future<num?> getShippingPrice() async {
@@ -189,12 +150,13 @@ class RestaurantController extends GetxController {
       if (routeInfo != null) {
         _orderDistanceInKm = routeInfo.distance.distanceInMeters / 1000;
         mezDbgPrint(
-            "ORDER DISTANCE VARIABLEEEE ========>>>>>>>$_orderDistanceInKm");
-        mezDbgPrint(
-            "place :::: $loc distance from controller :::::::===> ${(routeInfo.distance.distanceInMeters / 1000)}");
-        if ((routeInfo.distance.distanceInMeters / 1000) <= 10) {
-          final num shippingCost =
-              perKmPrice.value! * (routeInfo.distance.distanceInMeters / 1000);
+            "[[+]] Shipping Distance in km ========>>>>>>>$_orderDistanceInKm");
+        mezDbgPrint("[[+]] MinShippingPrice ===> ${minShiipingPrice.value}");
+        mezDbgPrint("[[+]] perKmPrice ===> ${perKmPrice.value}");
+        if (_orderDistanceInKm <= 15) {
+          final num shippingCost = perKmPrice.value! * (_orderDistanceInKm);
+          mezDbgPrint(
+              "[[+]] Calculated final ShippingCost  ========>>>>>>>$shippingCost");
           if (shippingCost < minShiipingPrice.value!) {
             mezDbgPrint(
                 "LESS THAN MINIMUM COST ===================== $shippingCost << ${minShiipingPrice.value}");
@@ -202,6 +164,11 @@ class RestaurantController extends GetxController {
           } else {
             cart.value.shippingCost = shippingCost.ceil();
           }
+          cart.value.setRouteInformation = MapHelper.RouteInformation(
+            polyline: routeInfo.encodedPolyLine,
+            distance: routeInfo.distance,
+            duration: routeInfo.duration,
+          );
 
           mezDbgPrint(
               "SHIPPPPPING COOOOST =========>>>>>>>>>>>${cart.value.shippingCost}");
@@ -254,18 +221,17 @@ class RestaurantController extends GetxController {
 
   Future<void> saveCart() async {
     if (_authController.user?.hasuraId != null) {
-      // TODO : Hasura-ch
-      // final Cart? _cart = await update_cart(
-      //   customer_id: _authController.user!.hasuraId,
-      //   restaurant_id: associatedRestaurant!.info.hasuraId,
-      //   items: cart.value.cartItems,
-      // );
-      // if (_cart != null) {
-      //   mezDbgPrint("[cc] - saveCart::update_cart -> Success!");
-      //   cart.value = _cart;
-      //   cart.refresh();
-      // }
+      final Cart? _cart = await update_cart(
+        customer_id: _authController.user!.hasuraId,
+        restaurant_id: associatedRestaurant!.info.hasuraId,
+        items: cart.value.cartItems,
+      );
+      if (_cart != null) {
+        mezDbgPrint("[cc] - saveCart::update_cart -> Success!");
+        cart.value = _cart;
+      }
     }
+    cart.refresh();
   }
 
   Future<void> addItem(CartItem cartItem) async {
@@ -298,6 +264,7 @@ class RestaurantController extends GetxController {
 
   CartItem? incrementItem(int itemId, int quantity) {
     final CartItem? _item = cart.value.incrementItem(itemId, quantity);
+    mezDbgPrint("[bb] Item -==> $_item");
     if (_item != null) {
       update_item_quantity(
         quantity: quantity,
@@ -347,22 +314,12 @@ class RestaurantController extends GetxController {
   }
 
   void clearCart() {
-    // TODO:544D-HASURA
     cart.value = Cart();
     if (Get.find<AuthController>().user?.hasuraId != null) {
       clear_customer_cart(
           customer_id: Get.find<AuthController>().user!.hasuraId);
     }
     Get.appUpdate();
-    // _databaseHelper.firebaseDatabase
-    //     .ref()
-    //     .child(customerCart(_authController.user!.id))
-    //     .remove()
-    //     .then((_) {
-    //   mezDbgPrint("============= /// :your cart is deleted \\\ ============= ");
-    //   cart.value = Cart(restaurant: associatedRestaurant);
-    // });
-    // Get.appUpdate();
   }
 
   Future<ServerResponse> checkout({String? stripePaymentId}) async {
@@ -451,6 +408,7 @@ class RestaurantController extends GetxController {
   @override
   void onClose() {
     print("[+] RestaurantCartController::onClose ---------> Was invoked !");
+    if (_subscriptionId != null) hasuraDb.cancelSubscription(_subscriptionId!);
     _cartListener?.cancel();
     _cartListener = null;
     super.onClose();

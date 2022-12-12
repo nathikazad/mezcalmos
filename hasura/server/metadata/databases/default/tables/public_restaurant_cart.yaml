@@ -49,3 +49,10 @@ update_permissions:
         customer_id:
           _eq: X-Hasura-User-Id
       check: null
+delete_permissions:
+  - role: customer
+    permission:
+      backend_only: false
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id

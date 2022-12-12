@@ -6,6 +6,7 @@ import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:rive/rive.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class LaundryOrderCard extends StatelessWidget {
   final LaundryOrder order;
@@ -20,7 +21,7 @@ class LaundryOrderCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          Get.toNamed(getLaundryOrderRoute(order.orderId));
+          MezRouter.toNamed(getLaundryOrderRoute(order.orderId));
         },
         child: Container(
           width: double.infinity,

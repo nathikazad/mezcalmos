@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["Orders"]["TaxiOrder"]["components"]["taxiOrderBottomCard"];
@@ -107,7 +108,7 @@ class TaxiOpenOrderBottomCard extends StatelessWidget {
         Spacer(),
         IconButton(
             onPressed: () {
-              Get.toNamed(getMessagesRoute(
+              MezRouter.toNamed(getMessagesRoute(
                   chatId: order.orderId,
                   orderId: order.orderId,
                   orderType: OrderType.Taxi));

@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['CustomerApp']["pages"]
@@ -97,7 +98,7 @@ class OrderRestaurantCard extends StatelessWidget {
                           orderId: order.orderId,
                           recipientType: ParticipantType.Restaurant,
                         )}");
-                        Get.toNamed<void>(
+                        MezRouter.toNamed<void>(
                           getMessagesRoute(
                             chatId: order.chatId,
                             // orderId: order.orderId,

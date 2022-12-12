@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
@@ -37,9 +38,13 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
     mezDbgPrint(operator);
 
     if (operator == null) {
-      Get.toNamed(kCreateRestaurant);
+      // ignore: unawaited_futures, inference_faQilure_on_function_invocation
+
+      MezRouter.toNamed(kCreateRestaurant);
     } else {
-      Get.toNamed(kTabsView);
+      MezRouter.toNamed(kTabsView);
+      // Get.to(SomethingWentWrongScreen());
+
     }
   }
 

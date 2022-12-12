@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 void dialogRequiredSignIn() {
   dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -27,7 +28,7 @@ void dialogRequiredSignIn() {
                   icon: Icon(Icons.close),
                   onPressed: () {
                     mezDbgPrint("Clicked back");
-                    Get.back<void>();
+                    MezRouter.back<void>();
                   },
                 ),
               ),
@@ -57,12 +58,12 @@ void dialogRequiredSignIn() {
                   MezButton(
                     onClick: () async {
                       // to remove the SignIn popUp first!
-                      Get.back<void>();
+                      MezRouter.back<void>();
                       // then head to kSignInRoute.
                       Get.find<AuthController>()
                           .preserveNavigationStackAfterSignIn = true;
                       // ignore: unawaited_futures
-                      Get.toNamed<void>(kSignInRouteOptional);
+                      MezRouter.toNamed<void>(kSignInRouteOptional);
                     },
                     label: "${_i18n()["signBtn"]}",
                     withGradient: true,
@@ -70,7 +71,7 @@ void dialogRequiredSignIn() {
                   const SizedBox(height: 15),
                   InkWell(
                     onTap: () {
-                      Get.back<void>();
+                      MezRouter.back<void>();
                     },
                     child: Ink(
                       padding: const EdgeInsets.all(8),

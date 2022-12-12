@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
@@ -165,7 +166,7 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
                                         label: "${_i18n()["cancel"]}",
                                         height: 50,
                                         onClick: () async {
-                                          Get.back();
+                                          MezRouter.back();
                                         },
                                         backgroundColor: offRedColor,
                                         textColor: Colors.red,

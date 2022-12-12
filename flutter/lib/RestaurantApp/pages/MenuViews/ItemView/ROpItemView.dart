@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -57,7 +58,7 @@ class _ROpItemViewState extends State<ROpItemView>
           specials: specials,
           restaurantId: restuarantID!);
     } else
-      Get.back();
+      MezRouter.back();
 
     super.initState();
   }
@@ -123,7 +124,7 @@ class _ROpItemViewState extends State<ROpItemView>
 
   AppBar _appBar() {
     return mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
-      Get.back(result: viewController.needToRefetch.value);
+      MezRouter.back(result: viewController.needToRefetch.value);
     },
         title: '${_i18n()["item"]}',
         showNotifications: true,
@@ -322,7 +323,7 @@ class _ROpItemViewState extends State<ROpItemView>
                     MezAddButton(
                       title: '${_i18n()["addOption"]}',
                       onClick: () async {
-                        final bool? result = await Get.toNamed(
+                        final bool? result = await MezRouter.toNamed(
                             getROpOptionRoute(
                                 restaurantId: restuarantID!,
                                 optionId: null,
@@ -367,7 +368,7 @@ class _ROpItemViewState extends State<ROpItemView>
                           .deleteItem(itemId: itemId!, catgeoryId: categoryId)
                           .then((bool? value) {
                         if (value == true) {
-                          Get.back(result: true);
+                          MezRouter.back(result: true);
                         }
                       });
                     },

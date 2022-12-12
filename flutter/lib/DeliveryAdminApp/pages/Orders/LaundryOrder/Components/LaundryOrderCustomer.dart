@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class LaundryOrderCustomer extends StatelessWidget {
   final LaundryOrder order;
@@ -61,7 +62,7 @@ class LaundryOrderCustomer extends StatelessWidget {
                   shape: CircleBorder(),
                   child: InkWell(
                     onTap: () {
-                      Get.toNamed<void>(
+                      MezRouter.toNamed<void>(
                         getMessagesRoute(
                           chatId: order.orderId,
                           orderId: order.orderId,

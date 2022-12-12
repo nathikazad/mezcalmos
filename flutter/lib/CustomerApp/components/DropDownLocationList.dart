@@ -4,6 +4,7 @@ import 'package:location/location.dart' as Location;
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -193,7 +194,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
 
     // we will route the user back to the Map
     if (newLocation?.id == "_pick_") {
-      final SavedLocation? _savedLocation = await Get.toNamed(
+      final SavedLocation? _savedLocation = await MezRouter.toNamed(
         kPickLocationRoute,
         arguments: true,
       ) as SavedLocation?;

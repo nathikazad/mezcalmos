@@ -8,6 +8,7 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/DriversListView/Componen
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["Orders"]["driversListView"]["driversListScreen"];
@@ -64,7 +65,7 @@ class _DriversListScreenState extends State<DriversListScreen> {
                 return DriverSelectCard(
                   driver: deliveryDrivers[index],
                   function: (deliveryDrivers[index].deliveryDriverState.online)
-                      ? () => Get.back(result: deliveryDrivers[index])
+                      ? () => MezRouter.back(result: deliveryDrivers[index])
                       : null,
                 );
               },

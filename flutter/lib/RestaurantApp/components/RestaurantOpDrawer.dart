@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -169,7 +170,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
 
         _navigationLink(
             onClick: () {
-              Get.toNamed(kNotificationsRoute);
+              MezRouter.toNamed(kNotificationsRoute);
             },
             icon: Icons.notifications,
             titleWidget: Text(

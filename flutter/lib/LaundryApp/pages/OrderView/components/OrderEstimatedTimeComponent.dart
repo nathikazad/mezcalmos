@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
     ["OrderView"]["Components"]["OrderEstimatedTimeComponent"];
@@ -200,7 +201,7 @@ class _OrderEstimatedTimeComponentState
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () {
-        Get.back(closeOverlays: true);
+        MezRouter.back(closeOverlays: true);
       },
       child: Ink(
         height: 50,
@@ -333,7 +334,7 @@ class _OrderEstimatedTimeComponentState
         isClicked.value = false;
       }).then((ServerResponse value) {
         if (value.success) {
-          Get.back(closeOverlays: true);
+          MezRouter.back(closeOverlays: true);
         }
       });
     } else {

@@ -20,6 +20,7 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class ROpItemViewController {
   late RestaurantInfoController _restaurantInfoController;
@@ -254,7 +255,7 @@ class ROpItemViewController {
   Future<bool?> deleteItem({required String itemId, String? catgeoryId}) async {
     final int? deletedItemId = await delete_item_by_id(int.parse(itemId));
     if (deletedItemId != null) {
-      Get.back();
+      MezRouter.back();
       mezDbgPrint("Item $deletedItemId have deleted 😢😢😢");
       return true;
     }

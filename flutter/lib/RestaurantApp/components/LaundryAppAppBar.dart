@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class LaundryAppAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
@@ -39,7 +40,7 @@ class LaundryAppAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
-          Get.toNamed(kPastOrdersListView);
+          MezRouter.toNamed(kPastOrdersListView);
         },
         child: Ink(
           padding: const EdgeInsets.all(7),
@@ -63,7 +64,7 @@ class LaundryAppAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
-          Get.toNamed(kSignInRouteOptional);
+          MezRouter.toNamed(kSignInRouteOptional);
         },
         child: Ink(
           padding: const EdgeInsets.all(7),
@@ -90,7 +91,7 @@ class LaundryAppAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: InkWell(
             customBorder: CircleBorder(),
             onTap: () {
-              Get.toNamed(kNotificationsRoute);
+              MezRouter.toNamed(kNotificationsRoute);
             },
             child: Badge(
               badgeColor: Colors.red,

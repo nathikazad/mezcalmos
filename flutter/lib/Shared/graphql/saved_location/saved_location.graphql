@@ -11,6 +11,18 @@ query get_customer_locations($customer_id: Int!) {
   }
 }
 
+# listen on all customer's saved locations
+subscription listen_on_saved_locations($customer_id: Int!) {
+  saved_location(where:{customer_id : {_eq: $customer_id}})
+  {
+    id,
+    name,
+    location_gps,
+    location_text,
+    default
+  }
+}
+
 
 # Get a specific saved_location using pk.
 query get_saved_location_by_id($location_id: Int!){

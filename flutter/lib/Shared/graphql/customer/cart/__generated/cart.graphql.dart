@@ -7067,32 +7067,30 @@ class _CopyWithStubImpl$Variables$Mutation$clearCart<TRes>
 
 class Mutation$clearCart {
   Mutation$clearCart({
-    this.delete_restaurant_cart_item,
+    this.delete_restaurant_cart,
     required this.$__typename,
   });
 
   factory Mutation$clearCart.fromJson(Map<String, dynamic> json) {
-    final l$delete_restaurant_cart_item = json['delete_restaurant_cart_item'];
+    final l$delete_restaurant_cart = json['delete_restaurant_cart'];
     final l$$__typename = json['__typename'];
     return Mutation$clearCart(
-      delete_restaurant_cart_item: l$delete_restaurant_cart_item == null
+      delete_restaurant_cart: l$delete_restaurant_cart == null
           ? null
-          : Mutation$clearCart$delete_restaurant_cart_item.fromJson(
-              (l$delete_restaurant_cart_item as Map<String, dynamic>)),
+          : Mutation$clearCart$delete_restaurant_cart.fromJson(
+              (l$delete_restaurant_cart as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Mutation$clearCart$delete_restaurant_cart_item?
-      delete_restaurant_cart_item;
+  final Mutation$clearCart$delete_restaurant_cart? delete_restaurant_cart;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$delete_restaurant_cart_item = delete_restaurant_cart_item;
-    _resultData['delete_restaurant_cart_item'] =
-        l$delete_restaurant_cart_item?.toJson();
+    final l$delete_restaurant_cart = delete_restaurant_cart;
+    _resultData['delete_restaurant_cart'] = l$delete_restaurant_cart?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -7100,10 +7098,10 @@ class Mutation$clearCart {
 
   @override
   int get hashCode {
-    final l$delete_restaurant_cart_item = delete_restaurant_cart_item;
+    final l$delete_restaurant_cart = delete_restaurant_cart;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$delete_restaurant_cart_item,
+      l$delete_restaurant_cart,
       l$$__typename,
     ]);
   }
@@ -7116,10 +7114,9 @@ class Mutation$clearCart {
     if (!(other is Mutation$clearCart) || runtimeType != other.runtimeType) {
       return false;
     }
-    final l$delete_restaurant_cart_item = delete_restaurant_cart_item;
-    final lOther$delete_restaurant_cart_item =
-        other.delete_restaurant_cart_item;
-    if (l$delete_restaurant_cart_item != lOther$delete_restaurant_cart_item) {
+    final l$delete_restaurant_cart = delete_restaurant_cart;
+    final lOther$delete_restaurant_cart = other.delete_restaurant_cart;
+    if (l$delete_restaurant_cart != lOther$delete_restaurant_cart) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -7149,11 +7146,11 @@ abstract class CopyWith$Mutation$clearCart<TRes> {
       _CopyWithStubImpl$Mutation$clearCart;
 
   TRes call({
-    Mutation$clearCart$delete_restaurant_cart_item? delete_restaurant_cart_item,
+    Mutation$clearCart$delete_restaurant_cart? delete_restaurant_cart,
     String? $__typename,
   });
-  CopyWith$Mutation$clearCart$delete_restaurant_cart_item<TRes>
-      get delete_restaurant_cart_item;
+  CopyWith$Mutation$clearCart$delete_restaurant_cart<TRes>
+      get delete_restaurant_cart;
 }
 
 class _CopyWithImpl$Mutation$clearCart<TRes>
@@ -7170,28 +7167,27 @@ class _CopyWithImpl$Mutation$clearCart<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? delete_restaurant_cart_item = _undefined,
+    Object? delete_restaurant_cart = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$clearCart(
-        delete_restaurant_cart_item: delete_restaurant_cart_item == _undefined
-            ? _instance.delete_restaurant_cart_item
-            : (delete_restaurant_cart_item
-                as Mutation$clearCart$delete_restaurant_cart_item?),
+        delete_restaurant_cart: delete_restaurant_cart == _undefined
+            ? _instance.delete_restaurant_cart
+            : (delete_restaurant_cart
+                as Mutation$clearCart$delete_restaurant_cart?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Mutation$clearCart$delete_restaurant_cart_item<TRes>
-      get delete_restaurant_cart_item {
-    final local$delete_restaurant_cart_item =
-        _instance.delete_restaurant_cart_item;
-    return local$delete_restaurant_cart_item == null
-        ? CopyWith$Mutation$clearCart$delete_restaurant_cart_item.stub(
+  CopyWith$Mutation$clearCart$delete_restaurant_cart<TRes>
+      get delete_restaurant_cart {
+    final local$delete_restaurant_cart = _instance.delete_restaurant_cart;
+    return local$delete_restaurant_cart == null
+        ? CopyWith$Mutation$clearCart$delete_restaurant_cart.stub(
             _then(_instance))
-        : CopyWith$Mutation$clearCart$delete_restaurant_cart_item(
-            local$delete_restaurant_cart_item,
-            (e) => call(delete_restaurant_cart_item: e));
+        : CopyWith$Mutation$clearCart$delete_restaurant_cart(
+            local$delete_restaurant_cart,
+            (e) => call(delete_restaurant_cart: e));
   }
 }
 
@@ -7202,13 +7198,13 @@ class _CopyWithStubImpl$Mutation$clearCart<TRes>
   TRes _res;
 
   call({
-    Mutation$clearCart$delete_restaurant_cart_item? delete_restaurant_cart_item,
+    Mutation$clearCart$delete_restaurant_cart? delete_restaurant_cart,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Mutation$clearCart$delete_restaurant_cart_item<TRes>
-      get delete_restaurant_cart_item =>
-          CopyWith$Mutation$clearCart$delete_restaurant_cart_item.stub(_res);
+  CopyWith$Mutation$clearCart$delete_restaurant_cart<TRes>
+      get delete_restaurant_cart =>
+          CopyWith$Mutation$clearCart$delete_restaurant_cart.stub(_res);
 }
 
 const documentNodeMutationclearCart = DocumentNode(definitions: [
@@ -7229,7 +7225,7 @@ const documentNodeMutationclearCart = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'delete_restaurant_cart_item'),
+        name: NameNode(value: 'delete_restaurant_cart'),
         alias: null,
         arguments: [
           ArgumentNode(
@@ -7361,17 +7357,17 @@ extension ClientExtension$Mutation$clearCart on graphql.GraphQLClient {
       this.watchMutation(options);
 }
 
-class Mutation$clearCart$delete_restaurant_cart_item {
-  Mutation$clearCart$delete_restaurant_cart_item({
+class Mutation$clearCart$delete_restaurant_cart {
+  Mutation$clearCart$delete_restaurant_cart({
     required this.affected_rows,
     required this.$__typename,
   });
 
-  factory Mutation$clearCart$delete_restaurant_cart_item.fromJson(
+  factory Mutation$clearCart$delete_restaurant_cart.fromJson(
       Map<String, dynamic> json) {
     final l$affected_rows = json['affected_rows'];
     final l$$__typename = json['__typename'];
-    return Mutation$clearCart$delete_restaurant_cart_item(
+    return Mutation$clearCart$delete_restaurant_cart(
       affected_rows: (l$affected_rows as int),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -7405,7 +7401,7 @@ class Mutation$clearCart$delete_restaurant_cart_item {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Mutation$clearCart$delete_restaurant_cart_item) ||
+    if (!(other is Mutation$clearCart$delete_restaurant_cart) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -7423,25 +7419,24 @@ class Mutation$clearCart$delete_restaurant_cart_item {
   }
 }
 
-extension UtilityExtension$Mutation$clearCart$delete_restaurant_cart_item
-    on Mutation$clearCart$delete_restaurant_cart_item {
-  CopyWith$Mutation$clearCart$delete_restaurant_cart_item<
-          Mutation$clearCart$delete_restaurant_cart_item>
-      get copyWith => CopyWith$Mutation$clearCart$delete_restaurant_cart_item(
+extension UtilityExtension$Mutation$clearCart$delete_restaurant_cart
+    on Mutation$clearCart$delete_restaurant_cart {
+  CopyWith$Mutation$clearCart$delete_restaurant_cart<
+          Mutation$clearCart$delete_restaurant_cart>
+      get copyWith => CopyWith$Mutation$clearCart$delete_restaurant_cart(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$clearCart$delete_restaurant_cart_item<TRes> {
-  factory CopyWith$Mutation$clearCart$delete_restaurant_cart_item(
-    Mutation$clearCart$delete_restaurant_cart_item instance,
-    TRes Function(Mutation$clearCart$delete_restaurant_cart_item) then,
-  ) = _CopyWithImpl$Mutation$clearCart$delete_restaurant_cart_item;
+abstract class CopyWith$Mutation$clearCart$delete_restaurant_cart<TRes> {
+  factory CopyWith$Mutation$clearCart$delete_restaurant_cart(
+    Mutation$clearCart$delete_restaurant_cart instance,
+    TRes Function(Mutation$clearCart$delete_restaurant_cart) then,
+  ) = _CopyWithImpl$Mutation$clearCart$delete_restaurant_cart;
 
-  factory CopyWith$Mutation$clearCart$delete_restaurant_cart_item.stub(
-          TRes res) =
-      _CopyWithStubImpl$Mutation$clearCart$delete_restaurant_cart_item;
+  factory CopyWith$Mutation$clearCart$delete_restaurant_cart.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$clearCart$delete_restaurant_cart;
 
   TRes call({
     int? affected_rows,
@@ -7449,16 +7444,16 @@ abstract class CopyWith$Mutation$clearCart$delete_restaurant_cart_item<TRes> {
   });
 }
 
-class _CopyWithImpl$Mutation$clearCart$delete_restaurant_cart_item<TRes>
-    implements CopyWith$Mutation$clearCart$delete_restaurant_cart_item<TRes> {
-  _CopyWithImpl$Mutation$clearCart$delete_restaurant_cart_item(
+class _CopyWithImpl$Mutation$clearCart$delete_restaurant_cart<TRes>
+    implements CopyWith$Mutation$clearCart$delete_restaurant_cart<TRes> {
+  _CopyWithImpl$Mutation$clearCart$delete_restaurant_cart(
     this._instance,
     this._then,
   );
 
-  final Mutation$clearCart$delete_restaurant_cart_item _instance;
+  final Mutation$clearCart$delete_restaurant_cart _instance;
 
-  final TRes Function(Mutation$clearCart$delete_restaurant_cart_item) _then;
+  final TRes Function(Mutation$clearCart$delete_restaurant_cart) _then;
 
   static const _undefined = {};
 
@@ -7466,7 +7461,7 @@ class _CopyWithImpl$Mutation$clearCart$delete_restaurant_cart_item<TRes>
     Object? affected_rows = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Mutation$clearCart$delete_restaurant_cart_item(
+      _then(Mutation$clearCart$delete_restaurant_cart(
         affected_rows: affected_rows == _undefined || affected_rows == null
             ? _instance.affected_rows
             : (affected_rows as int),
@@ -7476,9 +7471,9 @@ class _CopyWithImpl$Mutation$clearCart$delete_restaurant_cart_item<TRes>
       ));
 }
 
-class _CopyWithStubImpl$Mutation$clearCart$delete_restaurant_cart_item<TRes>
-    implements CopyWith$Mutation$clearCart$delete_restaurant_cart_item<TRes> {
-  _CopyWithStubImpl$Mutation$clearCart$delete_restaurant_cart_item(this._res);
+class _CopyWithStubImpl$Mutation$clearCart$delete_restaurant_cart<TRes>
+    implements CopyWith$Mutation$clearCart$delete_restaurant_cart<TRes> {
+  _CopyWithStubImpl$Mutation$clearCart$delete_restaurant_cart(this._res);
 
   TRes _res;
 

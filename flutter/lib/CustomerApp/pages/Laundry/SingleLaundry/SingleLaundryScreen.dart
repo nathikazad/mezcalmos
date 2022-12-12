@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Laundry"]["SingleLaundryScreen"];
@@ -39,7 +40,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           .getLaundry(laundryId!)
           .then((Laundry value) => laundry.value = value);
     } else {
-      Get.back();
+      MezRouter.back();
     }
 
     super.initState();
@@ -137,7 +138,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
             backgroundColor: Colors.transparent),
         child: Text("${_i18n()["sendMyLaundry"]}"),
         onPressed: () {
-          Get.toNamed(kLaundryOrderRequest, arguments: laundry.value);
+          MezRouter.toNamed(kLaundryOrderRequest, arguments: laundry.value);
         },
       ),
     );

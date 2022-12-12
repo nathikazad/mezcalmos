@@ -3,12 +3,15 @@ import 'dart:async';
 import 'package:async/async.dart' show StreamGroup;
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
+    as MezNotification;
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
@@ -17,15 +20,38 @@ class LaundryOrderController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   ForegroundNotificationsController _fbNotificationsController =
       Get.find<ForegroundNotificationsController>();
+  AppLifeCycleController _appLifeCycleController =
+      Get.find<AppLifeCycleController>();
   RxList<LaundryOrder> inProcessOrders = <LaundryOrder>[].obs;
   RxList<LaundryOrder> pastOrders = <LaundryOrder>[].obs;
 
   StreamSubscription<dynamic>? _inProcessOrdersListener;
   StreamSubscription<dynamic>? _pastOrdersListener;
 
+  String? _appLifeCyclePauseCallbackId;
+  String? _appLifeCycleResumeCallbackId;
+
   @override
   void onInit() {
     mezDbgPrint("--------------------> LaundrysOrderController Initialized !");
+    listenToOrders();
+    _appLifeCyclePauseCallbackId =
+        _appLifeCycleController.attachCallback(AppLifecycleState.paused, () {
+      _pastOrdersListener?.pause();
+      _inProcessOrdersListener?.pause();
+    });
+
+    _appLifeCycleResumeCallbackId =
+        _appLifeCycleController.attachCallback(AppLifecycleState.resumed, () {
+      _pastOrdersListener?.resume();
+      _inProcessOrdersListener?.resume();
+
+      // listenToOrders();
+    });
+    super.onInit();
+  }
+
+  void listenToOrders() {
     _inProcessOrdersListener = _databaseHelper.firebaseDatabase
         .ref()
         .child(rootInProcessOrdersNode(orderType: OrderType.Laundry))
@@ -47,14 +73,12 @@ class LaundryOrderController extends GetxController {
         .orderByChild('orderTime')
         .limitToLast(5)
         .onChildAddedWitchCatch()
-        .then(
-          (value) => value.listen((dynamic event) {
-            pastOrders.add(LaundryOrder.fromData(
-                event.snapshot.key, event.snapshot.value));
-          }),
-        );
-
-    super.onInit();
+        .then((Stream stream) {
+      _pastOrdersListener = stream.listen((dynamic event) {
+        pastOrders.add(
+            LaundryOrder.fromData(event.snapshot.key, event.snapshot.value));
+      });
+    });
   }
 
   @override
@@ -64,6 +88,12 @@ class LaundryOrderController extends GetxController {
     _pastOrdersListener?.cancel();
     pastOrders.clear();
     inProcessOrders.clear();
+    if (_appLifeCyclePauseCallbackId != null)
+      _appLifeCycleController.removeCallbackIdOfState(
+          AppLifecycleState.paused, _appLifeCyclePauseCallbackId);
+    if (_appLifeCycleResumeCallbackId != null)
+      _appLifeCycleController.removeCallbackIdOfState(
+          AppLifecycleState.resumed, _appLifeCycleResumeCallbackId);
     super.onClose();
   }
 
@@ -156,17 +186,19 @@ class LaundryOrderController extends GetxController {
   bool orderHaveNewMessageNotifications(String chatId) {
     return _fbNotificationsController
         .notifications()
-        .where((Notification notification) =>
-            notification.notificationType == NotificationType.NewMessage &&
+        .where((MezNotification.Notification notification) =>
+            notification.notificationType ==
+                MezNotification.NotificationType.NewMessage &&
             notification.chatId == chatId)
         .isNotEmpty;
   }
 
   void clearNewOrderNotifications() {
     _fbNotificationsController.notifications
-        .where((Notification notification) =>
-            notification.notificationType == NotificationType.NewOrder)
-        .forEach((Notification notification) {
+        .where((MezNotification.Notification notification) =>
+            notification.notificationType ==
+            MezNotification.NotificationType.NewOrder)
+        .forEach((MezNotification.Notification notification) {
       _fbNotificationsController.removeNotification(notification.id);
     });
   }
@@ -180,16 +212,16 @@ class LaundryOrderController extends GetxController {
     }
   }
 
-
   void clearOrderNotifications(String orderId) {
     _fbNotificationsController
         .notifications()
-        .where((Notification notification) =>
+        .where((MezNotification.Notification notification) =>
             (notification.notificationType ==
-                    NotificationType.OrderStatusChange ||
-                notification.notificationType == NotificationType.NewOrder) &&
+                    MezNotification.NotificationType.OrderStatusChange ||
+                notification.notificationType ==
+                    MezNotification.NotificationType.NewOrder) &&
             notification.orderId! == orderId)
-        .forEach((Notification notification) {
+        .forEach((MezNotification.Notification notification) {
       _fbNotificationsController.removeNotification(notification.id);
     });
   }

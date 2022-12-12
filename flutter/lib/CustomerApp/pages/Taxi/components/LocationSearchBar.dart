@@ -193,7 +193,6 @@ class LocationSearchBarState extends State<LocationSearchBar> {
             widget.request.from?.address != "",
         // dropDownDxOffset: -110,
         dropDownWidth: Get.width - 25,
-        useBorders: false,
         leftTopRadius: 5,
         leftBotRaduis: 5,
         bgColor: Colors.white,
@@ -266,7 +265,6 @@ class LocationSearchBarState extends State<LocationSearchBar> {
         // suffixPadding: EdgeInsets.only(top: 20, right: 10),
         focusNode: locationSearchBarController.toTextFieldFocusNode,
         readOnly: widget.request.to?.address != null,
-        useBorders: false,
         rightTopRaduis: 5,
         rightBotRaduis: 5,
         bgColor: Colors.white,
@@ -436,22 +434,26 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   }
 
   List<LocationDropDownItem> getSavedLocationsWithCallbacks() {
-    return _authController!.customer?.savedLocations
-            .map<LocationDropDownItem>((SavedLocation e) {
-          return LocationDropDownItem(
-              icon: Icon(MezcalmosIcons.search, size: 20, color: Colors.purple),
-              function: () {
-                // TODO:544D-HASURA
-// added to.String to e.id
-                final Location? _savedLoc =
-                    _authController?.getLocationById(e.id);
-                mezDbgPrint(
-                    "${e.id} Saved looooooooooooocccc =====>${_savedLoc?.toFirebaseFormattedJson()}");
-                widget.newLocationChosenEvent(_savedLoc,
-                    locationSearchBarController.focusedTextField.value);
-              },
-              title: e.name);
-        }).toList() ??
-        <LocationDropDownItem>[];
+    List<LocationDropDownItem> ret = [];
+    _authController!.customer?.savedLocations.forEach((sLocation) {
+      if (sLocation.id != null) {
+        ret.add(
+          LocationDropDownItem(
+            icon: Icon(MezcalmosIcons.search, size: 20, color: Colors.purple),
+            function: () {
+              final Location? _savedLoc =
+                  _authController?.getLocationById(sLocation.id!);
+              mezDbgPrint(
+                  "${sLocation.id} Saved looooooooooooocccc =====>${_savedLoc?.toFirebaseFormattedJson()}");
+              widget.newLocationChosenEvent(_savedLoc,
+                  locationSearchBarController.focusedTextField.value);
+            },
+            title: sLocation.name,
+          ),
+        );
+      }
+    });
+
+    return ret;
   }
 }

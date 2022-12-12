@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]["Taxi"]
@@ -61,7 +62,7 @@ class ViewTaxiOrderScreenWidgets {
                     resp.errorMessage ?? "Failed canceling taxi :(",
                   );
                 }
-                Get.back<void>();
+                MezRouter.back<void>();
               },
             );
           },

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart' show NumberFormat;
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -271,7 +272,7 @@ Future<void> showConfirmationDialog(
                 GestureDetector(
                   onTap: () {
                     onNoClick?.call();
-                    Get.back<void>(closeOverlays: true);
+                    MezRouter.back<void>(closeOverlays: true);
                   },
                   child: Container(
                     width: double.infinity,
@@ -383,7 +384,7 @@ Future<void> showStatusInfoDialog(
               SizedBox(height: 18),
               GestureDetector(
                 onTap: (primaryCallBack == null)
-                    ? () => Get.back<void>(closeOverlays: true)
+                    ? () => MezRouter.back<void>(closeOverlays: true)
                     : primaryCallBack,
                 child: Container(
                   height: 44,
@@ -531,6 +532,7 @@ Future<void> showReviewDialog(
                 textColor: primaryBlueColor,
                 backgroundColor: secondaryLightBlueColor,
                 onClick: () async {
+                  // TODO @nathikazad do it men
                   // final Review review = Review(
                   //     comment: controller.text,
                   //     rating: rating,
@@ -560,7 +562,7 @@ Future<void> showReviewDialog(
               SizedBox(height: 12),
               InkWell(
                 onTap: () {
-                  Get.back(closeOverlays: true);
+                  MezRouter.back(closeOverlays: true);
                 },
                 child: Ink(
                   padding: const EdgeInsets.symmetric(vertical: 5),

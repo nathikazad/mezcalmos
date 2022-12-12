@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['DeliveryApp']
         ['pages']['CurrentOrders']['CurrentOrderViewScreen']['Components']
@@ -70,7 +71,7 @@ class _RestaurantOrderFromToComponentState
           customerTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff, context),
           onCustomerMsgClick: () {
             if (widget.order.customerDropOffDriverChatId != null) {
-              Get.toNamed(
+              MezRouter.toNamed(
                 getMessagesRoute(
                     orderType: OrderType.Restaurant,
                     chatId: widget.order.customerDropOffDriverChatId!,
@@ -86,7 +87,7 @@ class _RestaurantOrderFromToComponentState
               _dateTimeSetter(DeliveryAction.Pickup, context),
           onServiceMsgClick: () {
             if (widget.order.serviceProviderDropOffDriverChatId != null) {
-              Get.toNamed(
+              MezRouter.toNamed(
                 getMessagesRoute(
                     orderType: OrderType.Restaurant,
                     chatId: widget.order.serviceProviderDropOffDriverChatId!,
@@ -326,7 +327,7 @@ class _RestaurantOrderFromToComponentState
               .setEstimatedTime(
             widget.order.orderId,
             newDt.toUtc(),
-            DeliveryDriverType.DropOff,
+            DeliveryDriverType.Delivery_driver,
             deliveryAction,
             OrderType.Restaurant,
           )

@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['CategoryView'];
@@ -79,10 +80,10 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
             if (_formKey.currentState?.validate() ?? false) {
               if (shouldSave) {
                 _viewController.saveCategory().then((value) {
-                  Get.back(result: true);
+                  MezRouter.back(result: true);
                 });
               } else {
-                Get.back(result: _viewController.constructCategory());
+                MezRouter.back(result: _viewController.constructCategory());
               }
             }
           },
@@ -104,7 +105,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
   PreferredSizeWidget _addCategoryAppBar() {
     return LaundryAppAppBar(
       leftBtnType: AppBarLeftButtonType.Back,
-      onClick: Get.back,
+      onClick: MezRouter.back,
       title: (_viewController.editMode.value)
           ? _viewController.category.value?.name![userLanguage]
           : "${_i18n()["addCategory"]}",

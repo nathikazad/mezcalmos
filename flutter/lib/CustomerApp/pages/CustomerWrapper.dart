@@ -29,7 +29,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-//import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class CustomerWrapper extends StatefulWidget {
   @override
@@ -204,13 +204,13 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             .length ??
         0;
     if (noOfCurrentTaxiOrders == 0) {
-      Get.toNamed<void>(kTaxiRequestRoute);
+      MezRouter.toNamed<void>(kTaxiRequestRoute);
     } else {
       final int orderId = _orderController!.currentOrders
           .firstWhere(
               (Order currentOrder) => currentOrder.orderType == OrderType.Taxi)
           .orderId;
-      Get.toNamed<void>(getTaxiOrderRoute(orderId));
+      MezRouter.toNamed<void>(getTaxiOrderRoute(orderId));
     }
   }
 
@@ -267,7 +267,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
                   orderType: OrderType.Restaurant,
                   serviceRoute: kRestaurantsRoute,
                   singleOrderRoute: (int orderId) {
-                    Get.toNamed<void>(getRestaurantOrderRoute(orderId));
+                    MezRouter.toNamed<void>(getRestaurantOrderRoute(orderId));
                   });
             },
           ),
@@ -284,7 +284,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
                   orderType: OrderType.Laundry,
                   serviceRoute: kLaundriesListRoute,
                   singleOrderRoute: (int v) {
-                    Get.toNamed<void>(getLaundryOrderRoute(v));
+                    MezRouter.toNamed<void>(getLaundryOrderRoute(v));
                   });
             },
           ),
@@ -300,7 +300,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             //       orderType: OrderType.Taxi,
             //       serviceRoute: kTaxiRequestRoute,
             //       singleOrderRoute: (String orderId) {
-            //         Get.toNamed<void>(getTaxiOrderRoute(orderId));
+            //         MezRouter.toNamed<void>(getTaxiOrderRoute(orderId));
             //       });
             // },
           ),
@@ -318,15 +318,15 @@ class _CustomerWrapperState extends State<CustomerWrapper>
           .where((Order p0) => p0.orderType == orderType)
           .toList();
       if (orders.length == 1) {
-        //   Get.toNamed(getLaundyOrderRoute(orders[0].orderId));
+        //   MezRouter.toNamed(getLaundyOrderRoute(orders[0].orderId));
         singleOrderRoute(orders[0].orderId);
       } else if (orders.length > 1) {
-        Get.toNamed<void>(kOrdersRoute);
+        MezRouter.toNamed<void>(kOrdersRoute);
       } else {
-        Get.toNamed<void>(serviceRoute);
+        MezRouter.toNamed<void>(serviceRoute);
       }
     } else {
-      Get.toNamed<void>(serviceRoute);
+      MezRouter.toNamed<void>(serviceRoute);
     }
   }
 
@@ -356,7 +356,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   //       .listen((bool locationPermission) {
   //     if (locationPermission == false &&
   //         Get.currentRoute != kLocationPermissionPage) {
-  //       Get.toNamed<void>(kLocationPermissionPage);
+  //       MezRouter.toNamed<void>(kLocationPermissionPage);
   //     }
   //   });
   // }
