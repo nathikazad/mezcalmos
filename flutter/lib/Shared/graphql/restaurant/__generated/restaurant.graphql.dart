@@ -233,6 +233,13 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'schedule'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'description'),
             alias: null,
             arguments: [],
@@ -415,6 +422,7 @@ class Query$getRestaurants$restaurant {
     this.firebase_id,
     required this.approved,
     this.description_id,
+    this.schedule,
     this.description,
     required this.open_status,
     this.schedule,
@@ -432,6 +440,7 @@ class Query$getRestaurants$restaurant {
     final l$firebase_id = json['firebase_id'];
     final l$approved = json['approved'];
     final l$description_id = json['description_id'];
+    final l$schedule = json['schedule'];
     final l$description = json['description'];
     final l$open_status = json['open_status'];
     final l$schedule = json['schedule'];
@@ -447,6 +456,7 @@ class Query$getRestaurants$restaurant {
       firebase_id: (l$firebase_id as String?),
       approved: (l$approved as bool),
       description_id: (l$description_id as int?),
+      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       description: l$description == null
           ? null
           : Query$getRestaurants$restaurant$description.fromJson(
@@ -475,6 +485,8 @@ class Query$getRestaurants$restaurant {
   final bool approved;
 
   final int? description_id;
+
+  final dynamic? schedule;
 
   final Query$getRestaurants$restaurant$description? description;
 
@@ -506,6 +518,8 @@ class Query$getRestaurants$restaurant {
     _resultData['approved'] = l$approved;
     final l$description_id = description_id;
     _resultData['description_id'] = l$description_id;
+    final l$schedule = schedule;
+    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$description = description;
     _resultData['description'] = l$description?.toJson();
     final l$open_status = open_status;
@@ -530,6 +544,7 @@ class Query$getRestaurants$restaurant {
     final l$firebase_id = firebase_id;
     final l$approved = approved;
     final l$description_id = description_id;
+    final l$schedule = schedule;
     final l$description = description;
     final l$open_status = open_status;
     final l$schedule = schedule;
@@ -545,6 +560,7 @@ class Query$getRestaurants$restaurant {
       l$firebase_id,
       l$approved,
       l$description_id,
+      l$schedule,
       l$description,
       l$open_status,
       l$schedule,
@@ -607,6 +623,11 @@ class Query$getRestaurants$restaurant {
     if (l$description_id != lOther$description_id) {
       return false;
     }
+    final l$schedule = schedule;
+    final lOther$schedule = other.schedule;
+    if (l$schedule != lOther$schedule) {
+      return false;
+    }
     final l$description = description;
     final lOther$description = other.description;
     if (l$description != lOther$description) {
@@ -664,6 +685,7 @@ abstract class CopyWith$Query$getRestaurants$restaurant<TRes> {
     String? firebase_id,
     bool? approved,
     int? description_id,
+    dynamic? schedule,
     Query$getRestaurants$restaurant$description? description,
     String? open_status,
     dynamic? schedule,
@@ -696,6 +718,7 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
     Object? firebase_id = _undefined,
     Object? approved = _undefined,
     Object? description_id = _undefined,
+    Object? schedule = _undefined,
     Object? description = _undefined,
     Object? open_status = _undefined,
     Object? schedule = _undefined,
@@ -728,6 +751,9 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
         description_id: description_id == _undefined
             ? _instance.description_id
             : (description_id as int?),
+        schedule: schedule == _undefined
+            ? _instance.schedule
+            : (schedule as dynamic?),
         description: description == _undefined
             ? _instance.description
             : (description as Query$getRestaurants$restaurant$description?),
@@ -770,6 +796,7 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant<TRes>
     String? firebase_id,
     bool? approved,
     int? description_id,
+    dynamic? schedule,
     Query$getRestaurants$restaurant$description? description,
     String? open_status,
     dynamic? schedule,
@@ -4007,6 +4034,13 @@ const documentNodeMutationupdateRestaurantInfo = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'schedule'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'description'),
             alias: null,
             arguments: [],
@@ -4194,6 +4228,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     required this.location_gps,
     required this.location_text,
     required this.name,
+    this.schedule,
     this.description,
     required this.approved,
     required this.open_status,
@@ -4210,6 +4245,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     final l$location_gps = json['location_gps'];
     final l$location_text = json['location_text'];
     final l$name = json['name'];
+    final l$schedule = json['schedule'];
     final l$description = json['description'];
     final l$approved = json['approved'];
     final l$open_status = json['open_status'];
@@ -4223,6 +4259,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
       location_gps: geographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
       name: (l$name as String),
+      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       description: l$description == null
           ? null
           : Mutation$updateRestaurantInfo$update_restaurant_by_pk$description
@@ -4248,6 +4285,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
   final String location_text;
 
   final String name;
+
+  final dynamic? schedule;
 
   final Mutation$updateRestaurantInfo$update_restaurant_by_pk$description?
       description;
@@ -4276,6 +4315,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     _resultData['location_text'] = l$location_text;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$schedule = schedule;
+    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$description = description;
     _resultData['description'] = l$description?.toJson();
     final l$approved = approved;
@@ -4297,6 +4338,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     final l$location_gps = location_gps;
     final l$location_text = location_text;
     final l$name = name;
+    final l$schedule = schedule;
     final l$description = description;
     final l$approved = approved;
     final l$open_status = open_status;
@@ -4310,6 +4352,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
       l$location_gps,
       l$location_text,
       l$name,
+      l$schedule,
       l$description,
       l$approved,
       l$open_status,
@@ -4364,6 +4407,11 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$schedule = schedule;
+    final lOther$schedule = other.schedule;
+    if (l$schedule != lOther$schedule) {
       return false;
     }
     final l$description = description;
@@ -4421,6 +4469,7 @@ abstract class CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk<
     Geography? location_gps,
     String? location_text,
     String? name,
+    dynamic? schedule,
     Mutation$updateRestaurantInfo$update_restaurant_by_pk$description?
         description,
     bool? approved,
@@ -4455,6 +4504,7 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk<TRes>
     Object? location_gps = _undefined,
     Object? location_text = _undefined,
     Object? name = _undefined,
+    Object? schedule = _undefined,
     Object? description = _undefined,
     Object? approved = _undefined,
     Object? open_status = _undefined,
@@ -4483,6 +4533,9 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk<TRes>
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        schedule: schedule == _undefined
+            ? _instance.schedule
+            : (schedule as dynamic?),
         description: description == _undefined
             ? _instance.description
             : (description
@@ -4526,6 +4579,7 @@ class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk<
     Geography? location_gps,
     String? location_text,
     String? name,
+    dynamic? schedule,
     Mutation$updateRestaurantInfo$update_restaurant_by_pk$description?
         description,
     bool? approved,

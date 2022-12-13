@@ -158,7 +158,7 @@ class Cart {
 
   void deleteItem(int itemId) {
     if (Get.find<AuthController>().user?.hasuraId != null) {
-      delete_item_by_id(itemId);
+      rm_item_from_cart(item_id: itemId);
     }
     cartItems.removeWhere((CartItem cartItem) => cartItem.idInCart == itemId);
   }

@@ -29,15 +29,15 @@ Future<Cart?> getCustomerCart({required int customerId}) async {
 
   if (getCartResp.hasException) {
     mezDbgPrint(
-        "[cc] called :: getCustomerCart :: Exception ==> ${getCartResp.exception}");
+        "[JJ] called :: getCustomerCart :: Exception ==> ${getCartResp.exception}");
     return null;
   }
   mezDbgPrint(
-      "[cc] called :: getCustomerCart :: NO Exception CUS_ID ( $customerId )!");
+      "[JJ] called :: getCustomerCart :: NO Exception CUS_ID ( $customerId )!");
 
   final Query$getCustomerCart$customer_by_pk$cart? CartData =
       getCartResp.parsedData?.customer_by_pk?.cart;
-  mezDbgPrint("Caart_TO_JSON ==> ${CartData?.toJson()}");
+  mezDbgPrint("[JJ] Caart_TO_JSON ==> ${CartData?.toJson()}");
   if (CartData != null) {
     final Cart cart = Cart(
         restaurant: CartData.restaurant != null
@@ -69,19 +69,9 @@ Future<Cart?> getCustomerCart({required int customerId}) async {
                     CartData.restaurant!.location_text,
                   ),
                 ),
-
-                // {
-                //   _cart_data
-                //           .restaurant!.description!.translations.first.language_id
-                //           .toLanguageType():
-                //       _cart_data
-                //           .restaurant!.description!.translations.first.value,
-                //   _cart_data
-                //           .restaurant!.description!.translations[1].language_id
-                //           .toLanguageType():
-                //       _cart_data.restaurant!.description!.translations[1].value,
-                // },
-                schedule: Schedule(openHours: {}),
+                schedule: CartData.restaurant?.schedule != null
+                    ? Schedule.fromData(CartData.restaurant?.schedule)
+                    : null,
                 paymentInfo: PaymentInfo(),
                 restaurantState: ServiceState(
                   CartData.restaurant!.open_status.toServiceStatus(),
@@ -114,7 +104,7 @@ Future<Cart?> getCustomerCart({required int customerId}) async {
           cartitem.restaurant_item.restaurant_id,
           quantity: cartitem.quantity,
           notes: cartitem.note,
-          // idInCart: _cart_item.id.toString(),
+          idInCart: cartitem.id,
         ),
       );
     });
@@ -141,9 +131,9 @@ Future<void> create_customer_cart({required int restaurant_id}) async {
 
   if (InsertCartResponse.hasException) {
     mezDbgPrint(
-        "[cc] Called :: create_customer_cart :: exception ===> ${InsertCartResponse.exception}!");
+        "[[JJ]] Called :: create_customer_cart :: exception ===> ${InsertCartResponse.exception}!");
   } else {
-    mezDbgPrint("[cc] Called :: create_customer_cart :: SUCCESS!!!");
+    mezDbgPrint("[[JJ]] Called :: create_customer_cart :: SUCCESS!!!");
   }
 }
 
@@ -162,7 +152,7 @@ extension HasuraCartItem on CartItem {
 
 /// Returns Item Id
 Future<int?> add_item_to_cart({required CartItem cartItem}) async {
-  mezDbgPrint("CustomerId ==> ${Get.find<AuthController>().hasuraUserId}");
+  mezDbgPrint("[JJ] CustomerId ==> ${Get.find<AuthController>().hasuraUserId}");
   final QueryResult<Mutation$addItemToCart> AddItemResult =
       await hasuraDb.graphQLClient.mutate$addItemToCart(
     Options$Mutation$addItemToCart(
@@ -182,10 +172,10 @@ Future<int?> add_item_to_cart({required CartItem cartItem}) async {
 
   if (AddItemResult.hasException) {
     mezDbgPrint(
-        "[88] graphql::add_item_to_cart::exception :: ${AddItemResult.exception}");
+        "[[JJ]] graphql::add_item_to_cart::exception :: ${AddItemResult.exception}");
   } else {
     mezDbgPrint(
-        "[88] _add_item_result :: success :D Item Id --> ${AddItemResult.parsedData?.insert_restaurant_cart_item_one?.id}");
+        "[[JJ]] _add_item_result :: success :D Item Id --> ${AddItemResult.parsedData?.insert_restaurant_cart_item_one?.id}");
     return AddItemResult.parsedData?.insert_restaurant_cart_item_one?.id;
   }
   return null;
@@ -200,6 +190,9 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
     ),
   )
       .map<Cart?>((QueryResult<Subscription$listen_on_customer_cart> cart) {
+    mezDbgPrint(
+        "[[JJ]]  listen_on_customer_cart:::TRIGGERED:: ${cart.toString()} ::");
+
     final Cart _c = Cart();
     final Subscription$listen_on_customer_cart$customer_by_pk$cart? parsedCart =
         cart.parsedData?.customer_by_pk?.cart;
@@ -223,7 +216,7 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
             cartitem.restaurant_item.restaurant_id,
             quantity: cartitem.quantity,
             notes: cartitem.note,
-            // idInCart: _cart_item.id.toString(),
+            idInCart: cartitem.id,
           ),
         );
       });
@@ -352,7 +345,9 @@ Future<Cart?> update_cart({
                     restaurantCart.restaurant!.location_text,
                   ),
                 ),
-                schedule: Schedule(openHours: {}),
+                schedule: restaurantCart.restaurant?.schedule != null
+                    ? Schedule.fromData(restaurantCart.restaurant?.schedule)
+                    : null,
                 paymentInfo: PaymentInfo(),
                 restaurantState: ServiceState(
                   restaurantCart.restaurant!.open_status.toServiceStatus(),
@@ -384,7 +379,7 @@ Future<Cart?> update_cart({
           cartItem.restaurant_item.restaurant_id,
           quantity: cartItem.quantity,
           notes: cartItem.note,
-          // idInCart: _cart_item.id.toString(),
+          idInCart: cartItem.id,
         ),
       );
     });

@@ -1402,6 +1402,13 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'schedule'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'description'),
                     alias: null,
                     arguments: [],
@@ -2154,6 +2161,7 @@ class Query$getCustomerCart$customer_by_pk$cart$restaurant {
     required this.location_gps,
     required this.location_text,
     required this.name,
+    this.schedule,
     this.description,
     required this.approved,
     required this.open_status,
@@ -2170,6 +2178,7 @@ class Query$getCustomerCart$customer_by_pk$cart$restaurant {
     final l$location_gps = json['location_gps'];
     final l$location_text = json['location_text'];
     final l$name = json['name'];
+    final l$schedule = json['schedule'];
     final l$description = json['description'];
     final l$approved = json['approved'];
     final l$open_status = json['open_status'];
@@ -2183,6 +2192,7 @@ class Query$getCustomerCart$customer_by_pk$cart$restaurant {
       location_gps: geographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
       name: (l$name as String),
+      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       description: l$description == null
           ? null
           : Query$getCustomerCart$customer_by_pk$cart$restaurant$description
@@ -2208,6 +2218,8 @@ class Query$getCustomerCart$customer_by_pk$cart$restaurant {
   final String location_text;
 
   final String name;
+
+  final dynamic? schedule;
 
   final Query$getCustomerCart$customer_by_pk$cart$restaurant$description?
       description;
@@ -2236,6 +2248,8 @@ class Query$getCustomerCart$customer_by_pk$cart$restaurant {
     _resultData['location_text'] = l$location_text;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$schedule = schedule;
+    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$description = description;
     _resultData['description'] = l$description?.toJson();
     final l$approved = approved;
@@ -2257,6 +2271,7 @@ class Query$getCustomerCart$customer_by_pk$cart$restaurant {
     final l$location_gps = location_gps;
     final l$location_text = location_text;
     final l$name = name;
+    final l$schedule = schedule;
     final l$description = description;
     final l$approved = approved;
     final l$open_status = open_status;
@@ -2270,6 +2285,7 @@ class Query$getCustomerCart$customer_by_pk$cart$restaurant {
       l$location_gps,
       l$location_text,
       l$name,
+      l$schedule,
       l$description,
       l$approved,
       l$open_status,
@@ -2324,6 +2340,11 @@ class Query$getCustomerCart$customer_by_pk$cart$restaurant {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$schedule = schedule;
+    final lOther$schedule = other.schedule;
+    if (l$schedule != lOther$schedule) {
       return false;
     }
     final l$description = description;
@@ -2381,6 +2402,7 @@ abstract class CopyWith$Query$getCustomerCart$customer_by_pk$cart$restaurant<
     Geography? location_gps,
     String? location_text,
     String? name,
+    dynamic? schedule,
     Query$getCustomerCart$customer_by_pk$cart$restaurant$description?
         description,
     bool? approved,
@@ -2415,6 +2437,7 @@ class _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$restaurant<TRes>
     Object? location_gps = _undefined,
     Object? location_text = _undefined,
     Object? name = _undefined,
+    Object? schedule = _undefined,
     Object? description = _undefined,
     Object? approved = _undefined,
     Object? open_status = _undefined,
@@ -2443,6 +2466,9 @@ class _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$restaurant<TRes>
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        schedule: schedule == _undefined
+            ? _instance.schedule
+            : (schedule as dynamic?),
         description: description == _undefined
             ? _instance.description
             : (description
@@ -2486,6 +2512,7 @@ class _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$restaurant<
     Geography? location_gps,
     String? location_text,
     String? name,
+    dynamic? schedule,
     Query$getCustomerCart$customer_by_pk$cart$restaurant$description?
         description,
     bool? approved,
@@ -8656,6 +8683,13 @@ const documentNodeMutationupdateCart = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'schedule'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'description'),
                     alias: null,
                     arguments: [],
@@ -9425,6 +9459,7 @@ class Mutation$updateCart$update_restaurant_cart$returning$restaurant {
     required this.location_gps,
     required this.location_text,
     required this.name,
+    this.schedule,
     this.description,
     required this.approved,
     required this.open_status,
@@ -9441,6 +9476,7 @@ class Mutation$updateCart$update_restaurant_cart$returning$restaurant {
     final l$location_gps = json['location_gps'];
     final l$location_text = json['location_text'];
     final l$name = json['name'];
+    final l$schedule = json['schedule'];
     final l$description = json['description'];
     final l$approved = json['approved'];
     final l$open_status = json['open_status'];
@@ -9454,6 +9490,7 @@ class Mutation$updateCart$update_restaurant_cart$returning$restaurant {
       location_gps: geographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
       name: (l$name as String),
+      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       description: l$description == null
           ? null
           : Mutation$updateCart$update_restaurant_cart$returning$restaurant$description
@@ -9479,6 +9516,8 @@ class Mutation$updateCart$update_restaurant_cart$returning$restaurant {
   final String location_text;
 
   final String name;
+
+  final dynamic? schedule;
 
   final Mutation$updateCart$update_restaurant_cart$returning$restaurant$description?
       description;
@@ -9507,6 +9546,8 @@ class Mutation$updateCart$update_restaurant_cart$returning$restaurant {
     _resultData['location_text'] = l$location_text;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$schedule = schedule;
+    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$description = description;
     _resultData['description'] = l$description?.toJson();
     final l$approved = approved;
@@ -9528,6 +9569,7 @@ class Mutation$updateCart$update_restaurant_cart$returning$restaurant {
     final l$location_gps = location_gps;
     final l$location_text = location_text;
     final l$name = name;
+    final l$schedule = schedule;
     final l$description = description;
     final l$approved = approved;
     final l$open_status = open_status;
@@ -9541,6 +9583,7 @@ class Mutation$updateCart$update_restaurant_cart$returning$restaurant {
       l$location_gps,
       l$location_text,
       l$name,
+      l$schedule,
       l$description,
       l$approved,
       l$open_status,
@@ -9596,6 +9639,11 @@ class Mutation$updateCart$update_restaurant_cart$returning$restaurant {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$schedule = schedule;
+    final lOther$schedule = other.schedule;
+    if (l$schedule != lOther$schedule) {
       return false;
     }
     final l$description = description;
@@ -9655,6 +9703,7 @@ abstract class CopyWith$Mutation$updateCart$update_restaurant_cart$returning$res
     Geography? location_gps,
     String? location_text,
     String? name,
+    dynamic? schedule,
     Mutation$updateCart$update_restaurant_cart$returning$restaurant$description?
         description,
     bool? approved,
@@ -9692,6 +9741,7 @@ class _CopyWithImpl$Mutation$updateCart$update_restaurant_cart$returning$restaur
     Object? location_gps = _undefined,
     Object? location_text = _undefined,
     Object? name = _undefined,
+    Object? schedule = _undefined,
     Object? description = _undefined,
     Object? approved = _undefined,
     Object? open_status = _undefined,
@@ -9720,6 +9770,9 @@ class _CopyWithImpl$Mutation$updateCart$update_restaurant_cart$returning$restaur
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        schedule: schedule == _undefined
+            ? _instance.schedule
+            : (schedule as dynamic?),
         description: description == _undefined
             ? _instance.description
             : (description
@@ -9764,6 +9817,7 @@ class _CopyWithStubImpl$Mutation$updateCart$update_restaurant_cart$returning$res
     Geography? location_gps,
     String? location_text,
     String? name,
+    dynamic? schedule,
     Mutation$updateCart$update_restaurant_cart$returning$restaurant$description?
         description,
     bool? approved,
