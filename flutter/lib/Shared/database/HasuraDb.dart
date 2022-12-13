@@ -35,6 +35,7 @@ class HasuraDb {
       }
       resumeAllSubscriptions();
     });
+    mezDbgPrint("Hasura DB initalized 👌🏻👌🏻👌🏻👌🏻👌🏻👌🏻👌🏻👌🏻👌🏻");
   }
 
   Map<String, HasuraSubscription> hasuraSubscriptions =

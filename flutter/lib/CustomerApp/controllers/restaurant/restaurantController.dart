@@ -8,9 +8,9 @@ import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
+import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
-import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
+import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart' as hsCart;
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -33,12 +33,14 @@ class RestaurantController extends GetxController {
   RxnNum baseShippingPrice = RxnNum();
   RxBool isShippingSet = RxBool(false);
   num _orderDistanceInKm = 0;
+  HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
   num get getOrderDistance => _orderDistanceInKm;
 
   @override
   Future<void> onInit() async {
     super.onInit();
+
     mezDbgPrint(
         "--------------------> RestaurantsCartController Initialized !");
 
@@ -48,9 +50,11 @@ class RestaurantController extends GetxController {
       minShiipingPrice.value = await getMinShippingPrice();
       perKmPrice.value = await getPerKmShippingPrice();
       // ignore: unawaited_futures
-      getCustomerCart(
+      hsCart
+          .getCustomerCart(
         customerId: Get.find<AuthController>().user!.hasuraId,
-      ).then((Cart? value) {
+      )
+          .then((Cart? value) {
         mezDbgPrint(
             "[cc] Cart Controller ===> ${value?.toFirebaseFormattedJson()}");
         cart.value = value ?? Cart();
@@ -58,22 +62,26 @@ class RestaurantController extends GetxController {
         cart.refresh();
       });
     }
-    hasuraDb.createSubscription(start: () {
-      _cartListener = listen_on_customer_cart(
-              customer_id: Get.find<AuthController>().user!.hasuraId)
-          .listen((Cart? event) {
-        if (event != null) {
-          cart.value = event;
-          if (event.restaurant != null) associatedRestaurant = event.restaurant;
-        }
-        cart.refresh();
+    if (Get.find<AuthController>().user?.hasuraId != null) {
+      _hasuraDb.createSubscription(start: () {
+        _cartListener = hsCart
+            .listen_on_customer_cart(
+                customer_id: Get.find<AuthController>().user!.hasuraId)
+            .listen((Cart? event) {
+          if (event != null) {
+            cart.value = event;
+            if (event.restaurant != null)
+              associatedRestaurant = event.restaurant;
+          }
+          cart.refresh();
+        });
+      }, cancel: () {
+        if (_subscriptionId != null)
+          _hasuraDb.cancelSubscription(_subscriptionId!);
+        _cartListener?.cancel();
+        _cartListener = null;
       });
-    }, cancel: () {
-      if (_subscriptionId != null)
-        hasuraDb.cancelSubscription(_subscriptionId!);
-      _cartListener?.cancel();
-      _cartListener = null;
-    });
+    }
     // check for old special items and remove them
     checkCartPeriod();
   }
@@ -221,7 +229,7 @@ class RestaurantController extends GetxController {
 
   Future<void> saveCart() async {
     if (_authController.user?.hasuraId != null) {
-      final Cart? _cart = await update_cart(
+      final Cart? _cart = await hsCart.update_cart(
         customer_id: _authController.user!.hasuraId,
         restaurant_id: associatedRestaurant!.info.hasuraId,
         items: cart.value.cartItems,
@@ -266,7 +274,7 @@ class RestaurantController extends GetxController {
     final CartItem? _item = cart.value.incrementItem(itemId, quantity);
     mezDbgPrint("[bb] Item -==> $_item");
     if (_item != null) {
-      update_item_quantity(
+      hsCart.update_item_quantity(
         quantity: quantity,
         customer_id: _authController.user!.hasuraId,
         item_id: _item.idInCart!,
@@ -316,7 +324,7 @@ class RestaurantController extends GetxController {
   void clearCart() {
     cart.value = Cart();
     if (Get.find<AuthController>().user?.hasuraId != null) {
-      clear_customer_cart(
+      hsCart.clear_customer_cart(
           customer_id: Get.find<AuthController>().user!.hasuraId);
     }
     Get.appUpdate();
@@ -326,7 +334,7 @@ class RestaurantController extends GetxController {
     final HttpsCallable checkoutRestaurantCart =
         FirebaseFunctions.instance.httpsCallable("restaurant-checkoutCart");
     try {
-      Map<String, dynamic> payload = <String, dynamic>{
+      final Map<String, dynamic> payload = <String, dynamic>{
         // "customerId": _authController.user!.hasuraId,
         // "checkoutRequest": <String, dynamic>{
         "customerAppType": "customer_mobile",
@@ -408,7 +416,7 @@ class RestaurantController extends GetxController {
   @override
   void onClose() {
     print("[+] RestaurantCartController::onClose ---------> Was invoked !");
-    if (_subscriptionId != null) hasuraDb.cancelSubscription(_subscriptionId!);
+    if (_subscriptionId != null) _hasuraDb.cancelSubscription(_subscriptionId!);
     _cartListener?.cancel();
     _cartListener = null;
     super.onClose();

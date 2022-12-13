@@ -16,11 +16,11 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
-final HasuraDb hasuraDb = Get.find<HasuraDb>();
+final HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
 Future<Cart?> getCustomerCart({required int customerId}) async {
   final QueryResult<Query$getCustomerCart> getCartResp =
-      await hasuraDb.graphQLClient.query$getCustomerCart(
+      await _hasuraDb.graphQLClient.query$getCustomerCart(
     Options$Query$getCustomerCart(
       fetchPolicy: FetchPolicy.noCache,
       variables: Variables$Query$getCustomerCart(customer_id: customerId),
@@ -127,7 +127,7 @@ Future<Cart?> getCustomerCart({required int customerId}) async {
 Future<void> create_customer_cart({required int restaurant_id}) async {
   mezDbgPrint("[cc] Called :: create_customer_cart!");
   final QueryResult<Mutation$create_customer_cart> InsertCartResponse =
-      await hasuraDb.graphQLClient.mutate$create_customer_cart(
+      await _hasuraDb.graphQLClient.mutate$create_customer_cart(
     Options$Mutation$create_customer_cart(
       fetchPolicy: FetchPolicy.noCache,
       variables: Variables$Mutation$create_customer_cart(
@@ -164,7 +164,7 @@ extension HasuraCartItem on CartItem {
 Future<int?> add_item_to_cart({required CartItem cartItem}) async {
   mezDbgPrint("CustomerId ==> ${Get.find<AuthController>().hasuraUserId}");
   final QueryResult<Mutation$addItemToCart> AddItemResult =
-      await hasuraDb.graphQLClient.mutate$addItemToCart(
+      await _hasuraDb.graphQLClient.mutate$addItemToCart(
     Options$Mutation$addItemToCart(
       fetchPolicy: FetchPolicy.noCache,
       variables: Variables$Mutation$addItemToCart(
@@ -192,7 +192,7 @@ Future<int?> add_item_to_cart({required CartItem cartItem}) async {
 }
 
 Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
-  return hasuraDb.graphQLClient
+  return _hasuraDb.graphQLClient
       .subscribe$listen_on_customer_cart(
     Options$Subscription$listen_on_customer_cart(
       variables: Variables$Subscription$listen_on_customer_cart(
@@ -235,7 +235,7 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
 Future rm_item_from_cart({required int item_id}) async {
   mezDbgPrint("CustomerId ==> ${Get.find<AuthController>().hasuraUserId}");
   final QueryResult<Mutation$removeItemFromCart> RmItemResult =
-      await hasuraDb.graphQLClient.mutate$removeItemFromCart(
+      await _hasuraDb.graphQLClient.mutate$removeItemFromCart(
     Options$Mutation$removeItemFromCart(
       fetchPolicy: FetchPolicy.noCache,
       variables: Variables$Mutation$removeItemFromCart(item_id: item_id),
@@ -252,7 +252,7 @@ Future rm_item_from_cart({required int item_id}) async {
 
 Future clear_customer_cart({required int customer_id}) async {
   final QueryResult<Mutation$clearCart> RmItemsResult =
-      await hasuraDb.graphQLClient.mutate$clearCart(
+      await _hasuraDb.graphQLClient.mutate$clearCart(
     Options$Mutation$clearCart(
       fetchPolicy: FetchPolicy.noCache,
       variables: Variables$Mutation$clearCart(customer_id: customer_id),
@@ -272,7 +272,7 @@ Future<void> update_item_quantity(
     required int customer_id,
     required int item_id}) async {
   final QueryResult<Mutation$update_item_quantity> _resp =
-      await hasuraDb.graphQLClient.mutate$update_item_quantity(
+      await _hasuraDb.graphQLClient.mutate$update_item_quantity(
     Options$Mutation$update_item_quantity(
       fetchPolicy: FetchPolicy.noCache,
       variables: Variables$Mutation$update_item_quantity(
@@ -298,7 +298,7 @@ Future<Cart?> update_cart({
 }) async {
   Cart? retCart = null;
   final QueryResult<Mutation$updateCart> _cart =
-      await hasuraDb.graphQLClient.mutate$updateCart(
+      await _hasuraDb.graphQLClient.mutate$updateCart(
     Options$Mutation$updateCart(
       fetchPolicy: FetchPolicy.noCache,
       variables: Variables$Mutation$updateCart(

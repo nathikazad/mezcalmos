@@ -31,6 +31,7 @@ query getCustomerCart($customer_id: Int!) {
     		location_gps
     		location_text
     		name
+        self_delivery
     		#schedule_id
     		description {
       	translations {

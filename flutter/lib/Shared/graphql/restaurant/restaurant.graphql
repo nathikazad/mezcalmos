@@ -17,6 +17,7 @@ query getRestaurants {
         value
       }
     }
+    self_delivery
     open_status
     schedule
     payment_info_id

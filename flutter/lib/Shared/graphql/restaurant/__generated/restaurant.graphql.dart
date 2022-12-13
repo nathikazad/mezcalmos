@@ -277,6 +277,13 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
+            name: NameNode(value: 'self_delivery'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'open_status'),
             alias: null,
             arguments: [],
@@ -416,6 +423,7 @@ class Query$getRestaurants$restaurant {
     required this.approved,
     this.description_id,
     this.description,
+    required this.self_delivery,
     required this.open_status,
     this.schedule,
     this.payment_info_id,
@@ -433,6 +441,7 @@ class Query$getRestaurants$restaurant {
     final l$approved = json['approved'];
     final l$description_id = json['description_id'];
     final l$description = json['description'];
+    final l$self_delivery = json['self_delivery'];
     final l$open_status = json['open_status'];
     final l$schedule = json['schedule'];
     final l$payment_info_id = json['payment_info_id'];
@@ -451,6 +460,7 @@ class Query$getRestaurants$restaurant {
           ? null
           : Query$getRestaurants$restaurant$description.fromJson(
               (l$description as Map<String, dynamic>)),
+      self_delivery: (l$self_delivery as bool),
       open_status: (l$open_status as String),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       payment_info_id: (l$payment_info_id as int?),
@@ -477,6 +487,8 @@ class Query$getRestaurants$restaurant {
   final int? description_id;
 
   final Query$getRestaurants$restaurant$description? description;
+
+  final bool self_delivery;
 
   final String open_status;
 
@@ -508,6 +520,8 @@ class Query$getRestaurants$restaurant {
     _resultData['description_id'] = l$description_id;
     final l$description = description;
     _resultData['description'] = l$description?.toJson();
+    final l$self_delivery = self_delivery;
+    _resultData['self_delivery'] = l$self_delivery;
     final l$open_status = open_status;
     _resultData['open_status'] = l$open_status;
     final l$schedule = schedule;
@@ -531,6 +545,7 @@ class Query$getRestaurants$restaurant {
     final l$approved = approved;
     final l$description_id = description_id;
     final l$description = description;
+    final l$self_delivery = self_delivery;
     final l$open_status = open_status;
     final l$schedule = schedule;
     final l$payment_info_id = payment_info_id;
@@ -546,6 +561,7 @@ class Query$getRestaurants$restaurant {
       l$approved,
       l$description_id,
       l$description,
+      l$self_delivery,
       l$open_status,
       l$schedule,
       l$payment_info_id,
@@ -612,6 +628,11 @@ class Query$getRestaurants$restaurant {
     if (l$description != lOther$description) {
       return false;
     }
+    final l$self_delivery = self_delivery;
+    final lOther$self_delivery = other.self_delivery;
+    if (l$self_delivery != lOther$self_delivery) {
+      return false;
+    }
     final l$open_status = open_status;
     final lOther$open_status = other.open_status;
     if (l$open_status != lOther$open_status) {
@@ -665,6 +686,7 @@ abstract class CopyWith$Query$getRestaurants$restaurant<TRes> {
     bool? approved,
     int? description_id,
     Query$getRestaurants$restaurant$description? description,
+    bool? self_delivery,
     String? open_status,
     dynamic? schedule,
     int? payment_info_id,
@@ -697,6 +719,7 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
     Object? approved = _undefined,
     Object? description_id = _undefined,
     Object? description = _undefined,
+    Object? self_delivery = _undefined,
     Object? open_status = _undefined,
     Object? schedule = _undefined,
     Object? payment_info_id = _undefined,
@@ -731,6 +754,9 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
         description: description == _undefined
             ? _instance.description
             : (description as Query$getRestaurants$restaurant$description?),
+        self_delivery: self_delivery == _undefined || self_delivery == null
+            ? _instance.self_delivery
+            : (self_delivery as bool),
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
@@ -771,6 +797,7 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant<TRes>
     bool? approved,
     int? description_id,
     Query$getRestaurants$restaurant$description? description,
+    bool? self_delivery,
     String? open_status,
     dynamic? schedule,
     int? payment_info_id,
