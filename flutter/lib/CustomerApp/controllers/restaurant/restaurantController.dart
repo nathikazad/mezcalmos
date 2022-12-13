@@ -23,6 +23,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 class RestaurantController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
+  HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
   StreamSubscription? _cartListener;
   String? _subscriptionId;
@@ -33,7 +34,6 @@ class RestaurantController extends GetxController {
   RxnNum baseShippingPrice = RxnNum();
   RxBool isShippingSet = RxBool(false);
   num _orderDistanceInKm = 0;
-  HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
   num get getOrderDistance => _orderDistanceInKm;
 
@@ -63,24 +63,24 @@ class RestaurantController extends GetxController {
       });
     }
     if (Get.find<AuthController>().user?.hasuraId != null) {
-      // _hasuraDb.createSubscription(start: () {
-      //   _cartListener = hsCart
-      //       .listen_on_customer_cart(
-      //           customer_id: Get.find<AuthController>().user!.hasuraId)
-      //       .listen((Cart? event) {
-      //     if (event != null) {
-      //       cart.value = event;
-      //       if (event.restaurant != null)
-      //         associatedRestaurant = event.restaurant;
-      //     }
-      //     cart.refresh();
-      //   });
-      // }, cancel: () {
-      //   if (_subscriptionId != null)
-      //     _hasuraDb.cancelSubscription(_subscriptionId!);
-      //   _cartListener?.cancel();
-      //   _cartListener = null;
-      // });
+      _hasuraDb.createSubscription(start: () {
+        _cartListener = hsCart
+            .listen_on_customer_cart(
+                customer_id: Get.find<AuthController>().user!.hasuraId)
+            .listen((Cart? event) {
+          if (event != null) {
+            cart.value = event;
+            if (event.restaurant != null)
+              associatedRestaurant = event.restaurant;
+          }
+          cart.refresh();
+        });
+      }, cancel: () {
+        if (_subscriptionId != null)
+          _hasuraDb.cancelSubscription(_subscriptionId!);
+        _cartListener?.cancel();
+        _cartListener = null;
+      });
     }
     // check for old special items and remove them
     checkCartPeriod();
@@ -333,7 +333,7 @@ class RestaurantController extends GetxController {
 
   Future<ServerResponse> checkout({String? stripePaymentId}) async {
     final HttpsCallable checkoutRestaurantCart =
-        FirebaseFunctions.instance.httpsCallable("restaurant-checkoutCart");
+        FirebaseFunctions.instance.httpsCallable("restaurant-checkoutCart2");
     try {
       final Map<String, dynamic> payload = <String, dynamic>{
         // "customerId": _authController.user!.hasuraId,

@@ -53,15 +53,23 @@ class HasuraDb {
   Future<void> setupClient() async {
     mezDbgPrint("Inside initializeHasura");
     late String hasuraDbLink;
+    late String hasuraDbSocketLink;
+
     switch (appLaunchMode) {
       case AppLaunchMode.prod:
         hasuraDbLink = hasuraProdLink;
+        hasuraDbSocketLink =
+            hasuraProdLink.replaceAll("https", "wss"); // hasuraSta
+
         break;
       case AppLaunchMode.stage:
-        hasuraDbLink = hasuraDevLink; // hasuraStageLink;
+        hasuraDbLink = hasuraStageLink;
+        hasuraDbSocketLink =
+            hasuraStageLink.replaceAll("https", "wss"); // hasuraStageLink;
         break;
       case AppLaunchMode.dev:
         hasuraDbLink = hasuraDevLink;
+        hasuraDbSocketLink = hasuraStageLink.replaceAll("http", "ws"); //
         break;
     }
     Map<String, String> headers = <String, String>{
@@ -93,7 +101,7 @@ class HasuraDb {
       expirationTime = null;
       cancelJWTExpirationCheckTimer();
     }
-    _wsLink = WebSocketLink("ws://127.0.0.1:8080/v1/graphql",
+    _wsLink = WebSocketLink(hasuraDbSocketLink,
         config: SocketClientConfig(
           autoReconnect: true,
           inactivityTimeout: Duration(seconds: 30),
