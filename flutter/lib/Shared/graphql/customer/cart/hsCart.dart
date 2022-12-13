@@ -153,7 +153,8 @@ extension HasuraCartItem on CartItem {
 /// Returns Item Id
 Future<int?> add_item_to_cart({required CartItem cartItem}) async {
   mezDbgPrint("[JJ] CustomerId ==> ${Get.find<AuthController>().hasuraUserId}");
-  final QueryResult<Mutation$addItemToCart> AddItemResult =
+  mezDbgPrint("🤣 Calling add item  ${cartItem.item.id}");
+  final QueryResult<Mutation$addItemToCart> addItemResult =
       await _hasuraDb.graphQLClient.mutate$addItemToCart(
     Options$Mutation$addItemToCart(
       fetchPolicy: FetchPolicy.noCache,
@@ -163,20 +164,20 @@ Future<int?> add_item_to_cart({required CartItem cartItem}) async {
           customer_id: Get.find<AuthController>().user!.hasuraId,
           note: cartItem.notes,
           quantity: cartItem.quantity,
-          selected_options: cartItem.item.toJson(),
+          selected_options: {},
           restaurant_item_id: cartItem.item.id,
         ),
       ),
     ),
   );
 
-  if (AddItemResult.hasException) {
+  if (addItemResult.hasException) {
     mezDbgPrint(
-        "[[JJ]] graphql::add_item_to_cart::exception :: ${AddItemResult.exception}");
+        "[[JJ]] graphql::add_item_to_cart::exception :: ${addItemResult.exception}");
   } else {
     mezDbgPrint(
-        "[[JJ]] _add_item_result :: success :D Item Id --> ${AddItemResult.parsedData?.insert_restaurant_cart_item_one?.id}");
-    return AddItemResult.parsedData?.insert_restaurant_cart_item_one?.id;
+        "[[JJ]] _add_item_result :: success :D Item Id --> ${addItemResult.parsedData?.insert_restaurant_cart_item_one?.toJson()}");
+    return addItemResult.parsedData?.insert_restaurant_cart_item_one?.id;
   }
   return null;
 }
@@ -191,7 +192,7 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
   )
       .map<Cart?>((QueryResult<Subscription$listen_on_customer_cart> cart) {
     mezDbgPrint(
-        "[[JJ]]  listen_on_customer_cart:::TRIGGERED:: ${cart.toString()} ::");
+        "[[JJ]]  listen_on_customer_cart:::TRIGGERED:: ${cart.parsedData?.customer_by_pk?.cart?.items.length} ::");
 
     final Cart _c = Cart();
     final Subscription$listen_on_customer_cart$customer_by_pk$cart? parsedCart =
@@ -320,7 +321,7 @@ Future<Cart?> update_cart({
                 userInfo: ServiceInfo(
                   hasuraId: restaurantCart!.restaurant!.id,
                   image: restaurantCart.restaurant!.image,
-                  firebaseId: restaurantCart.restaurant!.firebase_id!,
+                  firebaseId: restaurantCart.restaurant!.firebase_id,
                   name: restaurantCart.restaurant!.name,
                   description:
                       (restaurantCart.restaurant!.description?.translations !=

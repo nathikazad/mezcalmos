@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as locModel;
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
 
@@ -87,9 +86,11 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       // dropDownListValue = passedInLocation;
 
     }
-    setState(() {
-      dropDownListValue = listOfSavedLoacations[0];
-    });
+    if (listOfSavedLoacations.isNotEmpty) {
+      setState(() {
+        dropDownListValue = listOfSavedLoacations.first;
+      });
+    }
 
     if (dropDownListValue?.location != null) {
       validateFirstDistance();
@@ -205,8 +206,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
         listOfSavedLoacations.removeWhere(
           (SavedLocation savedLoc) =>
               savedLoc.name == _savedLocation.name ||
-              (_savedLocation.location.address != null &&
-                  savedLoc.location.address == _savedLocation.location.address),
+              (savedLoc.location.address == _savedLocation.location.address),
         );
 
         setState(() {

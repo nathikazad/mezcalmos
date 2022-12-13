@@ -37,6 +37,8 @@ select_permissions:
       columns:
         - customer_id
         - restaurant_id
+      computed_fields:
+        - cost
       filter:
         customer_id:
           _eq: X-Hasura-User-Id

@@ -433,7 +433,6 @@ class Query$getRestaurants$restaurant {
     this.description,
     required this.self_delivery,
     required this.open_status,
-    this.schedule,
     this.payment_info_id,
     required this.$__typename,
   });
@@ -452,7 +451,6 @@ class Query$getRestaurants$restaurant {
     final l$description = json['description'];
     final l$self_delivery = json['self_delivery'];
     final l$open_status = json['open_status'];
-    final l$schedule = json['schedule'];
     final l$payment_info_id = json['payment_info_id'];
     final l$$__typename = json['__typename'];
     return Query$getRestaurants$restaurant(
@@ -472,7 +470,6 @@ class Query$getRestaurants$restaurant {
               (l$description as Map<String, dynamic>)),
       self_delivery: (l$self_delivery as bool),
       open_status: (l$open_status as String),
-      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       payment_info_id: (l$payment_info_id as int?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -503,8 +500,6 @@ class Query$getRestaurants$restaurant {
   final bool self_delivery;
 
   final String open_status;
-
-  final dynamic? schedule;
 
   final int? payment_info_id;
 
@@ -538,8 +533,6 @@ class Query$getRestaurants$restaurant {
     _resultData['self_delivery'] = l$self_delivery;
     final l$open_status = open_status;
     _resultData['open_status'] = l$open_status;
-    final l$schedule = schedule;
-    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$payment_info_id = payment_info_id;
     _resultData['payment_info_id'] = l$payment_info_id;
     final l$$__typename = $__typename;
@@ -562,7 +555,6 @@ class Query$getRestaurants$restaurant {
     final l$description = description;
     final l$self_delivery = self_delivery;
     final l$open_status = open_status;
-    final l$schedule = schedule;
     final l$payment_info_id = payment_info_id;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -579,7 +571,6 @@ class Query$getRestaurants$restaurant {
       l$description,
       l$self_delivery,
       l$open_status,
-      l$schedule,
       l$payment_info_id,
       l$$__typename,
     ]);
@@ -659,11 +650,6 @@ class Query$getRestaurants$restaurant {
     if (l$open_status != lOther$open_status) {
       return false;
     }
-    final l$schedule = schedule;
-    final lOther$schedule = other.schedule;
-    if (l$schedule != lOther$schedule) {
-      return false;
-    }
     final l$payment_info_id = payment_info_id;
     final lOther$payment_info_id = other.payment_info_id;
     if (l$payment_info_id != lOther$payment_info_id) {
@@ -710,7 +696,6 @@ abstract class CopyWith$Query$getRestaurants$restaurant<TRes> {
     Query$getRestaurants$restaurant$description? description,
     bool? self_delivery,
     String? open_status,
-    dynamic? schedule,
     int? payment_info_id,
     String? $__typename,
   });
@@ -744,7 +729,6 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
     Object? description = _undefined,
     Object? self_delivery = _undefined,
     Object? open_status = _undefined,
-    Object? schedule = _undefined,
     Object? payment_info_id = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -786,9 +770,6 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
-        schedule: schedule == _undefined
-            ? _instance.schedule
-            : (schedule as dynamic?),
         payment_info_id: payment_info_id == _undefined
             ? _instance.payment_info_id
             : (payment_info_id as int?),
@@ -826,7 +807,6 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant<TRes>
     Query$getRestaurants$restaurant$description? description,
     bool? self_delivery,
     String? open_status,
-    dynamic? schedule,
     int? payment_info_id,
     String? $__typename,
   }) =>
@@ -4259,7 +4239,6 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     this.description,
     required this.approved,
     required this.open_status,
-    this.schedule,
   });
 
   factory Mutation$updateRestaurantInfo$update_restaurant_by_pk.fromJson(
@@ -4276,7 +4255,6 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     final l$description = json['description'];
     final l$approved = json['approved'];
     final l$open_status = json['open_status'];
-    final l$schedule = json['schedule'];
     return Mutation$updateRestaurantInfo$update_restaurant_by_pk(
       id: (l$id as int),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -4293,7 +4271,6 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
               .fromJson((l$description as Map<String, dynamic>)),
       approved: (l$approved as bool),
       open_status: (l$open_status as String),
-      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
     );
   }
 
@@ -4322,8 +4299,6 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
 
   final String open_status;
 
-  final dynamic? schedule;
-
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$id = id;
@@ -4350,8 +4325,6 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     _resultData['approved'] = l$approved;
     final l$open_status = open_status;
     _resultData['open_status'] = l$open_status;
-    final l$schedule = schedule;
-    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     return _resultData;
   }
 
@@ -4369,7 +4342,6 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     final l$description = description;
     final l$approved = approved;
     final l$open_status = open_status;
-    final l$schedule = schedule;
     return Object.hashAll([
       l$id,
       l$$__typename,
@@ -4383,7 +4355,6 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
       l$description,
       l$approved,
       l$open_status,
-      l$schedule,
     ]);
   }
 
@@ -4456,11 +4427,6 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     if (l$open_status != lOther$open_status) {
       return false;
     }
-    final l$schedule = schedule;
-    final lOther$schedule = other.schedule;
-    if (l$schedule != lOther$schedule) {
-      return false;
-    }
     return true;
   }
 }
@@ -4501,7 +4467,6 @@ abstract class CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk<
         description,
     bool? approved,
     String? open_status,
-    dynamic? schedule,
   });
   CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description<
       TRes> get description;
@@ -4535,7 +4500,6 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk<TRes>
     Object? description = _undefined,
     Object? approved = _undefined,
     Object? open_status = _undefined,
-    Object? schedule = _undefined,
   }) =>
       _then(Mutation$updateRestaurantInfo$update_restaurant_by_pk(
         id: id == _undefined || id == null ? _instance.id : (id as int),
@@ -4573,9 +4537,6 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk<TRes>
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
-        schedule: schedule == _undefined
-            ? _instance.schedule
-            : (schedule as dynamic?),
       ));
   CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description<
       TRes> get description {
@@ -4611,7 +4572,6 @@ class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk<
         description,
     bool? approved,
     String? open_status,
-    dynamic? schedule,
   }) =>
       _res;
   CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description<

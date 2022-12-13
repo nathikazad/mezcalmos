@@ -63,24 +63,24 @@ class RestaurantController extends GetxController {
       });
     }
     if (Get.find<AuthController>().user?.hasuraId != null) {
-      _hasuraDb.createSubscription(start: () {
-        _cartListener = hsCart
-            .listen_on_customer_cart(
-                customer_id: Get.find<AuthController>().user!.hasuraId)
-            .listen((Cart? event) {
-          if (event != null) {
-            cart.value = event;
-            if (event.restaurant != null)
-              associatedRestaurant = event.restaurant;
-          }
-          cart.refresh();
-        });
-      }, cancel: () {
-        if (_subscriptionId != null)
-          _hasuraDb.cancelSubscription(_subscriptionId!);
-        _cartListener?.cancel();
-        _cartListener = null;
-      });
+      // _hasuraDb.createSubscription(start: () {
+      //   _cartListener = hsCart
+      //       .listen_on_customer_cart(
+      //           customer_id: Get.find<AuthController>().user!.hasuraId)
+      //       .listen((Cart? event) {
+      //     if (event != null) {
+      //       cart.value = event;
+      //       if (event.restaurant != null)
+      //         associatedRestaurant = event.restaurant;
+      //     }
+      //     cart.refresh();
+      //   });
+      // }, cancel: () {
+      //   if (_subscriptionId != null)
+      //     _hasuraDb.cancelSubscription(_subscriptionId!);
+      //   _cartListener?.cancel();
+      //   _cartListener = null;
+      // });
     }
     // check for old special items and remove them
     checkCartPeriod();
@@ -235,8 +235,9 @@ class RestaurantController extends GetxController {
         items: cart.value.cartItems,
       );
       if (_cart != null) {
-        mezDbgPrint("[cc] - saveCart::update_cart -> Success!");
         cart.value = _cart;
+        mezDbgPrint(
+            "😛 Cart items after calling save cart ======>${_cart.cartItems.length}");
       }
     }
     cart.refresh();

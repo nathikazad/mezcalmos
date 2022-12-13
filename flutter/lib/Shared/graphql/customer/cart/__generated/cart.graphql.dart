@@ -1402,6 +1402,13 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'self_delivery'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'schedule'),
                     alias: null,
                     arguments: [],
@@ -2161,6 +2168,7 @@ class Query$getCustomerCart$customer_by_pk$cart$restaurant {
     required this.location_gps,
     required this.location_text,
     required this.name,
+    required this.self_delivery,
     this.schedule,
     this.description,
     required this.approved,
@@ -2178,6 +2186,7 @@ class Query$getCustomerCart$customer_by_pk$cart$restaurant {
     final l$location_gps = json['location_gps'];
     final l$location_text = json['location_text'];
     final l$name = json['name'];
+    final l$self_delivery = json['self_delivery'];
     final l$schedule = json['schedule'];
     final l$description = json['description'];
     final l$approved = json['approved'];
@@ -2192,6 +2201,7 @@ class Query$getCustomerCart$customer_by_pk$cart$restaurant {
       location_gps: geographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
       name: (l$name as String),
+      self_delivery: (l$self_delivery as bool),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       description: l$description == null
           ? null
@@ -2218,6 +2228,8 @@ class Query$getCustomerCart$customer_by_pk$cart$restaurant {
   final String location_text;
 
   final String name;
+
+  final bool self_delivery;
 
   final dynamic? schedule;
 
@@ -2248,6 +2260,8 @@ class Query$getCustomerCart$customer_by_pk$cart$restaurant {
     _resultData['location_text'] = l$location_text;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$self_delivery = self_delivery;
+    _resultData['self_delivery'] = l$self_delivery;
     final l$schedule = schedule;
     _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$description = description;
@@ -2271,6 +2285,7 @@ class Query$getCustomerCart$customer_by_pk$cart$restaurant {
     final l$location_gps = location_gps;
     final l$location_text = location_text;
     final l$name = name;
+    final l$self_delivery = self_delivery;
     final l$schedule = schedule;
     final l$description = description;
     final l$approved = approved;
@@ -2285,6 +2300,7 @@ class Query$getCustomerCart$customer_by_pk$cart$restaurant {
       l$location_gps,
       l$location_text,
       l$name,
+      l$self_delivery,
       l$schedule,
       l$description,
       l$approved,
@@ -2340,6 +2356,11 @@ class Query$getCustomerCart$customer_by_pk$cart$restaurant {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$self_delivery = self_delivery;
+    final lOther$self_delivery = other.self_delivery;
+    if (l$self_delivery != lOther$self_delivery) {
       return false;
     }
     final l$schedule = schedule;
@@ -2402,6 +2423,7 @@ abstract class CopyWith$Query$getCustomerCart$customer_by_pk$cart$restaurant<
     Geography? location_gps,
     String? location_text,
     String? name,
+    bool? self_delivery,
     dynamic? schedule,
     Query$getCustomerCart$customer_by_pk$cart$restaurant$description?
         description,
@@ -2437,6 +2459,7 @@ class _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$restaurant<TRes>
     Object? location_gps = _undefined,
     Object? location_text = _undefined,
     Object? name = _undefined,
+    Object? self_delivery = _undefined,
     Object? schedule = _undefined,
     Object? description = _undefined,
     Object? approved = _undefined,
@@ -2466,6 +2489,9 @@ class _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$restaurant<TRes>
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        self_delivery: self_delivery == _undefined || self_delivery == null
+            ? _instance.self_delivery
+            : (self_delivery as bool),
         schedule: schedule == _undefined
             ? _instance.schedule
             : (schedule as dynamic?),
@@ -2512,6 +2538,7 @@ class _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$restaurant<
     Geography? location_gps,
     String? location_text,
     String? name,
+    bool? self_delivery,
     dynamic? schedule,
     Query$getCustomerCart$customer_by_pk$cart$restaurant$description?
         description,
