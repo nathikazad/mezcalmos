@@ -9,8 +9,7 @@ query getRestaurants {
     firebase_id
     approved
     description_id
-  
-   
+    schedule
     description {
       translations {
         language_id
@@ -64,11 +63,13 @@ query getRestaurantStatus($id: Int!) {
     open_status
   }
 }
+
 mutation updateRestaurantInfo($id: Int!, $data: restaurant_set_input!) {
   update_restaurant_by_pk(_set: $data, pk_columns: { id: $id }) {
     id
   }
 }
+
 mutation switchRestaurantSelfDelivery($restauarntId: Int!,$value : Boolean) {
   update_restaurant_by_pk(pk_columns: {id: $restauarntId}, _set: {self_delivery: $value}) {
     id
@@ -85,7 +86,7 @@ mutation updateRestaurantInfo($id: Int!, $data: restaurant_set_input!) {
     location_gps
     location_text
     name
-
+    schedule
     description {
       translations {
         language_id

@@ -250,7 +250,7 @@ Widget cancelBtn(TaxiOrder order, BuildContext context) {
                 position: SnackPosition.TOP);
           }
         });
-        MezRouter.back();
+        MezRouter.popDialog();
       },
       child: Container(
         height: 33,

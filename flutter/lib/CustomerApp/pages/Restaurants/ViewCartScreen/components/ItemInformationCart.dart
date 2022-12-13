@@ -141,7 +141,7 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
               MezRouter.untill(
                   (Route route) => route.settings.name == kHomeRoute);
             } else {
-              MezRouter.back(closeOverlays: true);
+              MezRouter.popDialog(closeOverlays: true);
             }
           });
         },

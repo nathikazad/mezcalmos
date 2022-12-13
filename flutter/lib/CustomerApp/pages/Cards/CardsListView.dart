@@ -109,7 +109,7 @@ class _SavedCardsListViewState extends State<SavedCardsListView> {
                       MezSnackbar("Error", response.errorMessage ?? "error");
                     }
                     if (response.success) {
-                      MezRouter.back(closeOverlays: true);
+                      MezRouter.popDialog(closeOverlays: true);
                     }
                   });
                 });

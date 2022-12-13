@@ -43,7 +43,6 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                           await restaurantController.cancelOrder(
                         widget.order.orderId,
                       );
-
                       if (resp.success) {
                         MezRouter.untill(
                           (Route<dynamic> route) =>

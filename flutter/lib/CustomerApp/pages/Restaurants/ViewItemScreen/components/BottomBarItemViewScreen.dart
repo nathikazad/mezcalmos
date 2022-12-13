@@ -161,11 +161,11 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                                 secondaryClickTitle: _i18n()["leftBtn"],
                                 description: _i18n()["subtitle"],
                                 secondaryCallBack: () async {
-                                  MezRouter.back<void>();
+                                  MezRouter.popDialog<void>();
                                   await MezRouter.toNamed<void>(kCartRoute);
                                 },
                                 primaryCallBack: () async {
-                                  MezRouter.back<void>();
+                                  MezRouter.popDialog<void>();
                                   await restaurantCartController
                                       .addItem(widget.cartItem.value!);
                                   await MezRouter.offNamed<void>(kCartRoute);
@@ -236,7 +236,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
       secondaryClickTitle: _i18n()["leftBtn"],
       description: _i18n()["specialSubtitle"],
       secondaryCallBack: () async {
-        MezRouter.back<void>();
+        MezRouter.popDialog<void>();
         await MezRouter.toNamed<void>(kCartRoute);
       },
       primaryCallBack: () async {

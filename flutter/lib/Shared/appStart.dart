@@ -231,7 +231,10 @@ class _StartingPointState extends State<StartingPoint> {
       AppLifeCycleController(),
       permanent: true,
     );
-    Get.put(HasuraDb(_launchMode), permanent: true);
+
+    Future.microtask(() {
+      Get.put(HasuraDb(_launchMode), permanent: true);
+    });
   }
 
   Future<void> setGlobalVariables() async {

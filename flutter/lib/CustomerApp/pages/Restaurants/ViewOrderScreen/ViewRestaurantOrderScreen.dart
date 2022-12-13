@@ -187,9 +187,11 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
             label: "${_i18n()["writeReview"]}",
             withGradient: true,
             onClick: () async {
-              await showReviewDialog(context,
-                  orderId: order.value!.orderId,
-                  orderType: OrderType.Restaurant);
+              await showReviewDialog(
+                context,
+                orderId: order.value!.orderId,
+                orderType: OrderType.Restaurant,
+              );
             },
             borderRadius: 0,
           );

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OperatorsView/Controllers/OperatorsViewController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -42,7 +43,7 @@ class RestaurantOperatorCard extends StatelessWidget {
                   final bool result = await viewController.removeOp(
                       opId: op.info.hasuraId.toString());
                   if (result) {
-                    Get.back();
+                    MezRouter.popDialog();
                   }
                 },
                     title: "Remove operator",
