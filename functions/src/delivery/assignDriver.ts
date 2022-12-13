@@ -1,5 +1,5 @@
 import { OrderType } from "../shared/models/Generic/Order";
-import { ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { OperatorType, ServerResponseStatus } from "../shared/models/Generic/Generic";
 // import { checkDeliveryAdmin } from "../shared/helper/authorizer";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
@@ -21,7 +21,9 @@ export interface AssignDriverDetails {
   orderType: OrderType,
  // orderId: number,
   deliveryDriverType: DeliveryDriverType,
-  changeDriver?: boolean
+  changeDriver?: boolean,
+  operatorType: OperatorType,
+  deliveryCompanyId: number
 }
 
 export async function assignDriver(userId: number, assignDriverDetails: AssignDriverDetails) {
@@ -71,11 +73,11 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
     // if (returnVal != null) return returnVal;
     deleteDeliveryChatMessages(deliveryOrder);
   }
-
+  
   await assignDeliveryDriver(assignDriverDetails);
 
   setDeliveryChatInfo(deliveryOrder, deliveryDriver);
-  
+    
   if(deliveryDriver.notificationInfo) {
 
     let notification: Notification = {

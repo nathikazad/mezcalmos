@@ -3,10 +3,9 @@ import { PaymentType } from "./shared/models/Generic/Order";
 import { AppType, Location } from "./shared/models/Generic/Generic";
 import { checkout, CheckoutRequest } from "./restaurant/checkoutCart";
 import * as firebase from "firebase-admin";
-// import { ChangeDeliveryStatusDetails, finishDelivery } from "./delivery/restaurantStatusChange";
-// import { DeliveryDriverType } from "./shared/models/Services/Delivery/DeliveryOrder";
-// import { assignDriver, AssignDriverDetails } from "./delivery/assignDriver";
-// import { AuthorizeDetails, authorizeOperator } from "./restaurant/authorizeOperator";
+// import { AssignDriverDetails, assignDriver } from "./delivery/assignDriver";
+// import { AssignCompanyDetails, assignDeliveryCompany } from "./restaurant/assignDeliveryCompany";
+// import { OperatorType } from "./shared/models/Generic/Generic";
 // import { OrderType } from "./shared/models/Generic/Order";
 // import { DeliveryDriverType } from "./shared/models/Services/Delivery/DeliveryOrder";
 // import { createNewRestaurant } from "./restaurant/createNewRestaurant";
@@ -100,12 +99,14 @@ checkout(3, ch).then((resp) => {
 // authorizeOperator(4, authorizeDetails);
 
 // let assignDriverDetails: AssignDriverDetails = {
-//   deliveryId: 22,
-//   deliveryDriverId: 1,
+//   deliveryId: 1,
+//   deliveryDriverId: 20,
 //   orderType: OrderType.Restaurant,
-//   orderId: 14,
+//   orderId: 1,
 //   deliveryDriverType: DeliveryDriverType.DeliveryDriver,
-//   changeDriver: true,
+//   changeDriver: false,
+//   operatorType: OperatorType.Restaurant,
+//   deliveryCompanyId: 1
 // }
 
 // assignDriver(1, assignDriverDetails);
@@ -120,3 +121,9 @@ checkout(3, ch).then((resp) => {
 // startDelivery(6, changeDeliveryStatusDetails)
 // deliveryDriverAtDropoff(6, changeDeliveryStatusDetails)
 // finishDelivery(6, changeDeliveryStatusDetails)
+
+// let assignCompanyDetails: AssignCompanyDetails = {
+//   deliveryCompanyId: 1,
+//   restaurantOrderId: 1
+// }
+// assignDeliveryCompany(1, assignCompanyDetails)

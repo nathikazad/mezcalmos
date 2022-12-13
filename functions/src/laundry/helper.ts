@@ -36,7 +36,7 @@ export async function finishOrder(
 }
 
 let statusArrayInSeq: Array<LaundryOrderStatus> =
-  [LaundryOrderStatus.OrderReceived,
+  [LaundryOrderStatus.OrderReceieved,
   LaundryOrderStatus.OtwPickupFromCustomer,
   LaundryOrderStatus.PickedUpFromCustomer,
   LaundryOrderStatus.AtLaundry,

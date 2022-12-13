@@ -1,5 +1,5 @@
 import { ServiceProviderType } from "../Services/Service";
-import { AppType, GPS, Location, NotificationInfo } from "./Generic";
+import { AppType, Location, NotificationInfo } from "./Generic";
 import { PaymentType } from "./Order";
 import { UserInfo } from "./User";
 
@@ -31,7 +31,7 @@ export interface Delivery {
     tripPolyline?: string;
     deliveryCost: number;
     packageCost?: number;
-    currentGps?: GPS;
+    currentGps?: [number, number];
     tripDistance?: number;
     tripDuration?: number;
     orderTime: string;

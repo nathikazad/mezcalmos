@@ -36,6 +36,5 @@ export async function deleteDeliveryChatMessages(deliveryOrder: DeliveryOrder/*,
       id: true,
     }]
   });
-  console.log("Hi");
 
 }

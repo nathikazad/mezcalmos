@@ -1,6 +1,6 @@
 import { ServiceProviderStripeInfo } from "../../../utilities/stripe/model";
 import { AuthorizationStatus, Language } from "../Generic/Generic";
-import { OrderType, PaymentType } from "../Generic/Order";
+import {  PaymentType } from "../Generic/Order";
 import { UserInfo } from "../Generic/User";
 
 export interface State {

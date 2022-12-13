@@ -18,6 +18,7 @@ import { Cart } from "../shared/models/Services/Restaurant/Cart";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { ParticipantType } from "../shared/models/Generic/Chat";
+import { AssignCompanyDetails, assignDeliveryCompany } from "./assignDeliveryCompany";
 
 export interface CheckoutRequest {
   customerAppType: AppType,
@@ -30,6 +31,7 @@ export interface CheckoutRequest {
   tripDistance: number,
   tripDuration: number,
   tripPolyline: string,
+  selfDelivery: boolean
 }
 
 export async function checkout(customerId: number, checkoutRequest: CheckoutRequest): Promise<ServerResponse> {
@@ -86,6 +88,14 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     notifyAdmins(mezAdmins, orderResponse.restaurantOrder.orderId!, restaurant);
 
     notifyOperators(orderResponse.restaurantOrder.orderId!, restaurant);
+
+    if(!(checkoutRequest.selfDelivery)) {
+      let assignDetails: AssignCompanyDetails = {
+        deliveryCompanyId: 1,
+        restaurantOrderId: orderResponse.restaurantOrder.orderId!
+      }
+      await assignDeliveryCompany(0, assignDetails)
+    }
 
     return <ServerResponse> {
       status: ServerResponseStatus.Success,

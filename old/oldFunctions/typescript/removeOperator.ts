@@ -1,23 +1,16 @@
 import * as functions from "firebase-functions";
 import {
-    ServerResponse,
   ServerResponseStatus,
 } from "../shared/models/Generic/Generic";
-import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
+import { checkDeliveryAdmin } from "../shared/helper/authorizer";
 import { OrderType } from "../shared/models/Generic/Order";
 
 import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
 import * as operatorNodes from "../shared/databaseNodes/operators/operator";
 export = functions.https.onCall(async (data, context) => {
-    let response: ServerResponse | undefined = await isSignedIn(context.auth);
-    if (response != undefined) {
-        return {
-            ok: false,
-            error: response,
-        };
-    }
+    
 
-    response = await checkDeliveryAdmin(context.auth!.uid);
+    let response = await checkDeliveryAdmin(context.auth!.uid);
     if (response != undefined) {
         return {
             ok: false,

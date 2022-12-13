@@ -1,7 +1,7 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { AppType, Language } from "../../models/Generic/Generic";
-import { DeliveryDriverType, DeliveryDriver } from "../../models/Services/Delivery/DeliveryOrder";
+import { DeliveryDriverType, DeliveryDriver, DeliveryCompanyType } from "../../models/Services/Delivery/DeliveryOrder";
 
 export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriverType: DeliveryDriverType): Promise<DeliveryDriver> {
   
@@ -66,7 +66,7 @@ export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriver
     return {
       id: deliveryDriverId,
       userId: response.delivery_driver_by_pk.user_id,
-      deliveryCompanyType: response.delivery_driver_by_pk.delivery_company_type,
+      deliveryCompanyType: response.delivery_driver_by_pk.delivery_company_type as DeliveryCompanyType,
       deliveryCompanyId: response.delivery_driver_by_pk.delivery_company_id,
       status: response.delivery_driver_by_pk.status,
       online: response.delivery_driver_by_pk.online,

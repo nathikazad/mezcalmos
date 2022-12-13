@@ -1,4 +1,4 @@
-import * as functions from "firebase-functions";
+// import * as functions from "firebase-functions";
 import {
   ServerResponseStatus,
 } from "../../shared/models/Generic/Generic";
@@ -6,12 +6,12 @@ import {
 // import * as firebase from "firebase-admin";
 import { generateDeepLink, linkRecipientType, providerType } from "./deeplink";
 import { generateQr } from "./qr";
-import { getRestaurant } from "../../shared/graphql/restaurant/getRestaurant";
-import { Restaurant } from "../../shared/models/Services/Restaurant/Restaurant";
+// import { getRestaurant } from "../../shared/graphql/restaurant/getRestaurant";
+// import { Restaurant } from "../../shared/models/Services/Restaurant/Restaurant";
 import {
   insertServiceLink,
-  setOperatorDeepLink,
-  setOperatorQrImageLink,
+  // setOperatorDeepLink,
+  // setOperatorQrImageLink,
   updateDriverLink,
   updateOperatorLink,
 } from "../../shared/graphql/restaurant/setLinks";

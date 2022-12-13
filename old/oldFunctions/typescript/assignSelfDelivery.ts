@@ -1,31 +1,31 @@
 import * as functions from "firebase-functions";
 
-import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
-import * as customerNodes from "../shared/databaseNodes/customer";
-import * as laundryNodes from "../shared/databaseNodes/services/laundry";
-import * as rootNodes from "../shared/databaseNodes/root";
+import * as restaurantNodes from "../../../functions/src/shared/databaseNodes/services/restaurant";
+import * as customerNodes from "../../../functions/src/shared/databaseNodes/customer";
+import * as laundryNodes from "../../../functions/src/shared/databaseNodes/services/laundry";
+import * as rootNodes from "../../../functions/src/shared/databaseNodes/root";
 import {
   BackgroundNotification,
   Notification,
   NotificationAction,
   NotificationType,
-} from "../shared/models/Notification";
-import { pushNotification } from "../utilities/senders/notifyUser";
-import { checkRestaurantOperator } from "../restaurant/helper";
-import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
+} from "../../../functions/src/shared/models/Notification";
+import { pushNotification } from "../../../functions/src/utilities/senders/notifyUser";
+import { checkRestaurantOperator } from "../../../functions/src/restaurant/helper";
+import * as deliveryAdminNodes from "../../../functions/src/shared/databaseNodes/deliveryAdmin";
 
 import {
   Language,
   ServerResponse,
   ServerResponseStatus,
-} from "../shared/models/Generic/Generic";
-import { isSignedIn } from "../shared/helper/authorizer";
-import { OrderType } from "../shared/models/Generic/Order";
-import { DeliveryMode } from "../shared/models/Services/Restaurant/RestaurantOrder";
-import { ForegroundNotification } from "../shared/models/Notification";
-import { orderUrl } from "../utilities/senders/appRoutes";
-import { ParticipantType } from "../shared/models/Generic/Chat";
-import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
+} from "../../../functions/src/shared/models/Generic/Generic";
+import { isSignedIn } from "../../../functions/src/shared/helper/authorizer";
+import { OrderType } from "../../../functions/src/shared/models/Generic/Order";
+import { DeliveryMode } from "../../../functions/src/shared/models/Services/Restaurant/RestaurantOrder";
+import { ForegroundNotification } from "../../../functions/src/shared/models/Notification";
+import { orderUrl } from "../../../functions/src/utilities/senders/appRoutes";
+import { ParticipantType } from "../../../functions/src/shared/models/Generic/Chat";
+import { DeliveryAdmin } from "../../../functions/src/shared/models/DeliveryAdmin";
 
 export const changeDeliveryMode = functions.https.onCall(
   async (data, context) => {
