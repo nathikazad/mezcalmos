@@ -18,6 +18,7 @@ query getRestaurants {
       }
     }
     open_status
+    schedule
     payment_info_id
   }
 }
@@ -92,6 +93,7 @@ mutation updateRestaurantInfo($id: Int!, $data: restaurant_set_input!) {
     }
     approved
     open_status
+    schedule
   }
 }
 query getRestaurantLang($id: Int!) {
@@ -108,6 +110,7 @@ subscription GetRestaurants {
     open_status
     approved
     image
+    schedule
     description {
       translations {
         language_id

@@ -65,7 +65,8 @@ Future<List<Restaurant>> fetch_restaurants() async {
         //   data.description!.translations[1].language_id.toLanguageType():
         //       data.description!.translations[1].value,
         // },
-        schedule: Schedule(openHours: {}),
+        schedule:
+            data.schedule != null ? Schedule.fromData(data.schedule) : null,
         paymentInfo: PaymentInfo(),
         restaurantState:
             ServiceState(data.open_status.toServiceStatus(), data.approved),
@@ -246,7 +247,7 @@ Future<Restaurant> update_restaurant_info(
               : null,
           name: data.name,
           location: Location.fromHasura(data.location_gps, data.location_text)),
-      schedule: Schedule(openHours: {}),
+      schedule: data.schedule != null ? Schedule.fromData(data.schedule) : null,
       paymentInfo: PaymentInfo(),
       restaurantState:
           ServiceState(data.open_status.toServiceStatus(), data.approved),

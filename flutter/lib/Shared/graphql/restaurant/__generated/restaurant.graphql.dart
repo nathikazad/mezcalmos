@@ -284,6 +284,13 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'schedule'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'payment_info_id'),
             alias: null,
             arguments: [],
@@ -410,6 +417,7 @@ class Query$getRestaurants$restaurant {
     this.description_id,
     this.description,
     required this.open_status,
+    this.schedule,
     this.payment_info_id,
     required this.$__typename,
   });
@@ -426,6 +434,7 @@ class Query$getRestaurants$restaurant {
     final l$description_id = json['description_id'];
     final l$description = json['description'];
     final l$open_status = json['open_status'];
+    final l$schedule = json['schedule'];
     final l$payment_info_id = json['payment_info_id'];
     final l$$__typename = json['__typename'];
     return Query$getRestaurants$restaurant(
@@ -443,6 +452,7 @@ class Query$getRestaurants$restaurant {
           : Query$getRestaurants$restaurant$description.fromJson(
               (l$description as Map<String, dynamic>)),
       open_status: (l$open_status as String),
+      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       payment_info_id: (l$payment_info_id as int?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -469,6 +479,8 @@ class Query$getRestaurants$restaurant {
   final Query$getRestaurants$restaurant$description? description;
 
   final String open_status;
+
+  final dynamic? schedule;
 
   final int? payment_info_id;
 
@@ -498,6 +510,8 @@ class Query$getRestaurants$restaurant {
     _resultData['description'] = l$description?.toJson();
     final l$open_status = open_status;
     _resultData['open_status'] = l$open_status;
+    final l$schedule = schedule;
+    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$payment_info_id = payment_info_id;
     _resultData['payment_info_id'] = l$payment_info_id;
     final l$$__typename = $__typename;
@@ -518,6 +532,7 @@ class Query$getRestaurants$restaurant {
     final l$description_id = description_id;
     final l$description = description;
     final l$open_status = open_status;
+    final l$schedule = schedule;
     final l$payment_info_id = payment_info_id;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -532,6 +547,7 @@ class Query$getRestaurants$restaurant {
       l$description_id,
       l$description,
       l$open_status,
+      l$schedule,
       l$payment_info_id,
       l$$__typename,
     ]);
@@ -601,6 +617,11 @@ class Query$getRestaurants$restaurant {
     if (l$open_status != lOther$open_status) {
       return false;
     }
+    final l$schedule = schedule;
+    final lOther$schedule = other.schedule;
+    if (l$schedule != lOther$schedule) {
+      return false;
+    }
     final l$payment_info_id = payment_info_id;
     final lOther$payment_info_id = other.payment_info_id;
     if (l$payment_info_id != lOther$payment_info_id) {
@@ -645,6 +666,7 @@ abstract class CopyWith$Query$getRestaurants$restaurant<TRes> {
     int? description_id,
     Query$getRestaurants$restaurant$description? description,
     String? open_status,
+    dynamic? schedule,
     int? payment_info_id,
     String? $__typename,
   });
@@ -676,6 +698,7 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
     Object? description_id = _undefined,
     Object? description = _undefined,
     Object? open_status = _undefined,
+    Object? schedule = _undefined,
     Object? payment_info_id = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -711,6 +734,9 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
+        schedule: schedule == _undefined
+            ? _instance.schedule
+            : (schedule as dynamic?),
         payment_info_id: payment_info_id == _undefined
             ? _instance.payment_info_id
             : (payment_info_id as int?),
@@ -746,6 +772,7 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant<TRes>
     int? description_id,
     Query$getRestaurants$restaurant$description? description,
     String? open_status,
+    dynamic? schedule,
     int? payment_info_id,
     String? $__typename,
   }) =>
@@ -4038,6 +4065,13 @@ const documentNodeMutationupdateRestaurantInfo = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'schedule'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -4163,6 +4197,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     this.description,
     required this.approved,
     required this.open_status,
+    this.schedule,
   });
 
   factory Mutation$updateRestaurantInfo$update_restaurant_by_pk.fromJson(
@@ -4178,6 +4213,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     final l$description = json['description'];
     final l$approved = json['approved'];
     final l$open_status = json['open_status'];
+    final l$schedule = json['schedule'];
     return Mutation$updateRestaurantInfo$update_restaurant_by_pk(
       id: (l$id as int),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -4193,6 +4229,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
               .fromJson((l$description as Map<String, dynamic>)),
       approved: (l$approved as bool),
       open_status: (l$open_status as String),
+      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
     );
   }
 
@@ -4219,6 +4256,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
 
   final String open_status;
 
+  final dynamic? schedule;
+
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$id = id;
@@ -4243,6 +4282,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     _resultData['approved'] = l$approved;
     final l$open_status = open_status;
     _resultData['open_status'] = l$open_status;
+    final l$schedule = schedule;
+    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     return _resultData;
   }
 
@@ -4259,6 +4300,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     final l$description = description;
     final l$approved = approved;
     final l$open_status = open_status;
+    final l$schedule = schedule;
     return Object.hashAll([
       l$id,
       l$$__typename,
@@ -4271,6 +4313,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
       l$description,
       l$approved,
       l$open_status,
+      l$schedule,
     ]);
   }
 
@@ -4338,6 +4381,11 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     if (l$open_status != lOther$open_status) {
       return false;
     }
+    final l$schedule = schedule;
+    final lOther$schedule = other.schedule;
+    if (l$schedule != lOther$schedule) {
+      return false;
+    }
     return true;
   }
 }
@@ -4377,6 +4425,7 @@ abstract class CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk<
         description,
     bool? approved,
     String? open_status,
+    dynamic? schedule,
   });
   CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description<
       TRes> get description;
@@ -4409,6 +4458,7 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk<TRes>
     Object? description = _undefined,
     Object? approved = _undefined,
     Object? open_status = _undefined,
+    Object? schedule = _undefined,
   }) =>
       _then(Mutation$updateRestaurantInfo$update_restaurant_by_pk(
         id: id == _undefined || id == null ? _instance.id : (id as int),
@@ -4443,6 +4493,9 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk<TRes>
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
+        schedule: schedule == _undefined
+            ? _instance.schedule
+            : (schedule as dynamic?),
       ));
   CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description<
       TRes> get description {
@@ -4477,6 +4530,7 @@ class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk<
         description,
     bool? approved,
     String? open_status,
+    dynamic? schedule,
   }) =>
       _res;
   CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk$description<
@@ -6182,6 +6236,13 @@ const documentNodeSubscriptionGetRestaurants = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'schedule'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'description'),
             alias: null,
             arguments: [],
@@ -6357,6 +6418,7 @@ class Subscription$GetRestaurants$restaurant {
     required this.open_status,
     required this.approved,
     required this.image,
+    this.schedule,
     this.description,
     this.payment_info,
     required this.$__typename,
@@ -6370,6 +6432,7 @@ class Subscription$GetRestaurants$restaurant {
     final l$open_status = json['open_status'];
     final l$approved = json['approved'];
     final l$image = json['image'];
+    final l$schedule = json['schedule'];
     final l$description = json['description'];
     final l$payment_info = json['payment_info'];
     final l$$__typename = json['__typename'];
@@ -6380,6 +6443,7 @@ class Subscription$GetRestaurants$restaurant {
       open_status: (l$open_status as String),
       approved: (l$approved as bool),
       image: (l$image as String),
+      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       description: l$description == null
           ? null
           : Subscription$GetRestaurants$restaurant$description.fromJson(
@@ -6404,6 +6468,8 @@ class Subscription$GetRestaurants$restaurant {
 
   final String image;
 
+  final dynamic? schedule;
+
   final Subscription$GetRestaurants$restaurant$description? description;
 
   final Subscription$GetRestaurants$restaurant$payment_info? payment_info;
@@ -6424,6 +6490,8 @@ class Subscription$GetRestaurants$restaurant {
     _resultData['approved'] = l$approved;
     final l$image = image;
     _resultData['image'] = l$image;
+    final l$schedule = schedule;
+    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$description = description;
     _resultData['description'] = l$description?.toJson();
     final l$payment_info = payment_info;
@@ -6441,6 +6509,7 @@ class Subscription$GetRestaurants$restaurant {
     final l$open_status = open_status;
     final l$approved = approved;
     final l$image = image;
+    final l$schedule = schedule;
     final l$description = description;
     final l$payment_info = payment_info;
     final l$$__typename = $__typename;
@@ -6451,6 +6520,7 @@ class Subscription$GetRestaurants$restaurant {
       l$open_status,
       l$approved,
       l$image,
+      l$schedule,
       l$description,
       l$payment_info,
       l$$__typename,
@@ -6494,6 +6564,11 @@ class Subscription$GetRestaurants$restaurant {
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
+      return false;
+    }
+    final l$schedule = schedule;
+    final lOther$schedule = other.schedule;
+    if (l$schedule != lOther$schedule) {
       return false;
     }
     final l$description = description;
@@ -6541,6 +6616,7 @@ abstract class CopyWith$Subscription$GetRestaurants$restaurant<TRes> {
     String? open_status,
     bool? approved,
     String? image,
+    dynamic? schedule,
     Subscription$GetRestaurants$restaurant$description? description,
     Subscription$GetRestaurants$restaurant$payment_info? payment_info,
     String? $__typename,
@@ -6571,6 +6647,7 @@ class _CopyWithImpl$Subscription$GetRestaurants$restaurant<TRes>
     Object? open_status = _undefined,
     Object? approved = _undefined,
     Object? image = _undefined,
+    Object? schedule = _undefined,
     Object? description = _undefined,
     Object? payment_info = _undefined,
     Object? $__typename = _undefined,
@@ -6592,6 +6669,9 @@ class _CopyWithImpl$Subscription$GetRestaurants$restaurant<TRes>
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
+        schedule: schedule == _undefined
+            ? _instance.schedule
+            : (schedule as dynamic?),
         description: description == _undefined
             ? _instance.description
             : (description
@@ -6638,6 +6718,7 @@ class _CopyWithStubImpl$Subscription$GetRestaurants$restaurant<TRes>
     String? open_status,
     bool? approved,
     String? image,
+    dynamic? schedule,
     Subscription$GetRestaurants$restaurant$description? description,
     Subscription$GetRestaurants$restaurant$payment_info? payment_info,
     String? $__typename,
