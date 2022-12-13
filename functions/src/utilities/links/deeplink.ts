@@ -29,12 +29,12 @@ enum AppPackageId {
 
 
 export async function generateDeepLink(appName:string, parameters:Record<string, any>): Promise<IDeepLink|null> {
-
+  console.log("[+] generateDeepLink :: called :: params :: ", parameters);
   let result : IDeepLink|undefined = undefined; 
   const firebaseLinks:FirebaseDynamicLinks = new FirebaseDynamicLinks("AIzaSyCOVuUV0qhw0SbNrQMfMVTBDm-5bJVozYg");
   let appPkgName : AppPackageId|undefined;
 
-  switch (appName) {
+  switch (appName.toLowerCase()) {
     case "delivery":
       appPkgName = AppPackageId.Delivery
       break;
@@ -46,8 +46,11 @@ export async function generateDeepLink(appName:string, parameters:Record<string,
     default:
       break;
   }
-
+  console.log("-- AppName ----> ", appName);
+  console.log("-- Pkg ----> ", appPkgName);
   if (!appPkgName || !checkParams(appPkgName , parameters) ) {
+    console.log("[+] appPkgName / checkParams -> Failed!");
+
     return null;
   }
 
@@ -62,21 +65,25 @@ export async function generateDeepLink(appName:string, parameters:Record<string,
       urlQr : undefined
     }
 
+    console.log("[+] result / ", result);
+
     // trying to generate the QR
     // TODO : restaurants/<id>/ is hardcoded now
     let qrUrl : string|null  = await generateQr(`restaurants/${parameters['providerId']}` , shortLink)
+    console.log("[+] qrUrl / ", qrUrl);
+
     if (qrUrl != null) result.urlQr = qrUrl;
 
     return result;
   } catch (error) {
-    console.log(`Error happend while generating the deeplink => \n${error}`);
+    console.log(`[+] Error happend while generating the deeplink => \n${error}`);
     return null;
   }
 };
 
 
 function checkParams(appId: AppPackageId  , params:Record<string, any>) : boolean {
-
+  console.log("params :: ", params );
   switch (appId) {
     case AppPackageId.Customer:
       return params['providerType'] != null && params['providerId'] != null;
