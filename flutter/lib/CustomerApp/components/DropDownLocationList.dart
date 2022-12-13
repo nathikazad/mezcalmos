@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:location/location.dart' as Location;
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as locModel;
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
@@ -14,7 +17,7 @@ import 'package:sizer/sizer.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["components"]["DropDownLocationList"]; //
 
-typedef OnDropDownNewValue = void Function({Location? location});
+typedef OnDropDownNewValue = void Function({locModel.Location? location});
 
 class DropDownLocationList extends StatefulWidget {
   DropDownLocationList({
@@ -28,8 +31,8 @@ class DropDownLocationList extends StatefulWidget {
 
   final OnDropDownNewValue? onValueChangeCallback;
 
-  Location? passedInLocation;
-  Location? serviceProviderLocation;
+  locModel.Location? passedInLocation;
+  locModel.Location? serviceProviderLocation;
   bool checkDistance;
   final Color bgColor;
 
@@ -51,12 +54,11 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     super.initState();
     // default ID: _pick_ , stands for our  Pick From Map
     getSavedLocation();
-    // TODO:544D-HASURA
+    // TODO:544D-HASURA - set _pick_ .
 
     // pickLocationPlaceholder =
     //     SavedLocation(name: _i18n()["pickLocation"], id: "_pick_");
-
-    listOfSavedLoacations.insert(0, pickLocationPlaceholder!);
+    // listOfSavedLoacations.insert(0, pickLocationPlaceholder!);
 
     if (widget.passedInLocation == null) {
       dropDownListValue = listOfSavedLoacations.firstWhereOrNull(
@@ -64,7 +66,18 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
           pickLocationPlaceholder;
     } else {
       // TODO:544D-HASURA
-
+      listOfSavedLoacations.add(
+        SavedLocation(
+          name: "TestLocation",
+          id: 1,
+          location: locModel.Location(
+            "Morocco, Agadir",
+            Location.LocationData.fromMap(
+              {"latitude": 15.9999, "longitude": -97.01992},
+            ),
+          ),
+        ),
+      );
       // final SavedLocation passedInLocation = SavedLocation(
       //   name: widget.passedInLocation!.address,
       //   location: widget.passedInLocation,
@@ -72,8 +85,11 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       // );
 
       // dropDownListValue = passedInLocation;
-      // listOfSavedLoacations.add(passedInLocation);
+
     }
+    setState(() {
+      dropDownListValue = listOfSavedLoacations[0];
+    });
 
     if (dropDownListValue?.location != null) {
       validateFirstDistance();
@@ -83,13 +99,15 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
   }
 
   Future<void> validateFirstDistance() async {
-    if (await _lessThanDistance(dropDownListValue!.location!) == false) {
+    if (await _lessThanDistance(dropDownListValue!.location) == false) {
+      mezDbgPrint("[cc]  _lessThanDistance ==> True");
       showError.value = true;
-    }
+    } else
+      mezDbgPrint("[cc]  _lessThanDistance ==> False");
   }
 
   void getSavedLocation() {
-    customerAuthController.customer.value?.savedLocations.forEach(
+    customerAuthController.customer?.savedLocations.forEach(
       (SavedLocation element) {
         listOfSavedLoacations.add(element);
       },
@@ -155,7 +173,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     return widget.serviceProviderLocation != null && widget.checkDistance;
   }
 
-  Future<bool> _lessThanDistance(Location loc) async {
+  Future<bool> _lessThanDistance(locModel.Location loc) async {
     MapHelper.Route? routeInfo;
     if (widget.serviceProviderLocation != null) {
       routeInfo = await MapHelper.getDurationAndDistance(
@@ -176,20 +194,19 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
 
     // we will route the user back to the Map
     if (newLocation?.id == "_pick_") {
-      final SavedLocation? _savedLocation = await Get.toNamed(
+      final SavedLocation? _savedLocation = await MezRouter.toNamed(
         kPickLocationRoute,
         arguments: true,
       ) as SavedLocation?;
 
       if (_savedLocation != null &&
-          (_savedLocation.location?.isValidLocation() ?? false)) {
+          (_savedLocation.location.isValidLocation())) {
         // in case it's repeated with the same name or same address
         listOfSavedLoacations.removeWhere(
           (SavedLocation savedLoc) =>
               savedLoc.name == _savedLocation.name ||
-              (_savedLocation.location?.address != null &&
-                  savedLoc.location?.address ==
-                      _savedLocation.location?.address),
+              (_savedLocation.location.address != null &&
+                  savedLoc.location.address == _savedLocation.location.address),
         );
 
         setState(() {
@@ -213,7 +230,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
   }
 
   Future<void> _verifyDistanceAndSetLocation(SavedLocation newLocation) async {
-    if (_checkDistance() && await _lessThanDistance(newLocation.location!)) {
+    if (_checkDistance() && await _lessThanDistance(newLocation.location)) {
       widget.onValueChangeCallback?.call(location: newLocation.location);
       setState(() {
         dropDownListValue = newLocation;

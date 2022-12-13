@@ -993,7 +993,7 @@ class Mutation$updateChoiceById$update_restaurant_choice_by_pk {
     final l$$__typename = json['__typename'];
     return Mutation$updateChoiceById$update_restaurant_choice_by_pk(
       id: (l$id as int),
-      cost: MoneyFromJson(l$cost),
+      cost: moneyFromJson(l$cost),
       available: (l$available as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -1012,7 +1012,7 @@ class Mutation$updateChoiceById$update_restaurant_choice_by_pk {
     final l$id = id;
     _resultData['id'] = l$id;
     final l$cost = cost;
-    _resultData['cost'] = MoneyToJson(l$cost);
+    _resultData['cost'] = moneyToJson(l$cost);
     final l$available = available;
     _resultData['available'] = l$available;
     final l$$__typename = $__typename;
@@ -2162,7 +2162,7 @@ class Query$getChoiceById$restaurant_choice_by_pk {
     final l$$__typename = json['__typename'];
     return Query$getChoiceById$restaurant_choice_by_pk(
       available: (l$available as bool),
-      cost: MoneyFromJson(l$cost),
+      cost: moneyFromJson(l$cost),
       id: (l$id as int),
       name: Query$getChoiceById$restaurant_choice_by_pk$name.fromJson(
           (l$name as Map<String, dynamic>)),
@@ -2185,7 +2185,7 @@ class Query$getChoiceById$restaurant_choice_by_pk {
     final l$available = available;
     _resultData['available'] = l$available;
     final l$cost = cost;
-    _resultData['cost'] = MoneyToJson(l$cost);
+    _resultData['cost'] = moneyToJson(l$cost);
     final l$id = id;
     _resultData['id'] = l$id;
     final l$name = name;

@@ -6,6 +6,7 @@ import 'package:mezcalmos/DeliveryAdminApp/controllers/taxiController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["Orders"]["TaxiOrder"]["components"]["taxiOrderBottomCard"];
@@ -149,7 +150,7 @@ class _TaxiOrderButtonsState extends State<TaxiOrderButtons> {
                             setState(() {
                               btnClicked = false;
                             });
-                            Get.back(closeOverlays: true);
+                            MezRouter.back(closeOverlays: true);
                           });
                         }
                       });
@@ -179,7 +180,7 @@ class _TaxiOrderButtonsState extends State<TaxiOrderButtons> {
                           btnClicked = false;
                         });
                       });
-                      Get.back(closeOverlays: true);
+                      MezRouter.back(closeOverlays: true);
                     },
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.redAccent,
@@ -241,7 +242,7 @@ class _TaxiOrderButtonsState extends State<TaxiOrderButtons> {
               const SizedBox(height: 5),
               TextButton(
                   onPressed: () {
-                    Get.back();
+                    MezRouter.back();
                   },
                   child: Container(
                     alignment: Alignment.center,
@@ -251,7 +252,7 @@ class _TaxiOrderButtonsState extends State<TaxiOrderButtons> {
               TextButton(
                 onPressed: () {
                   newTaxiNumber = 0;
-                  Get.back();
+                  MezRouter.back();
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.red,

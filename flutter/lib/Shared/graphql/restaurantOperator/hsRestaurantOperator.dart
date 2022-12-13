@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/restaurantOperator/__generated/restaurantOperator.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
+import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -26,9 +27,9 @@ Future<RestaurantOperatorState?> get_operator_state(
     if (data?.isNotEmpty ?? false) {
       mezDbgPrint("👊👊👊 ${data?.first.status}");
       final RestaurantOperatorState state = RestaurantOperatorState(
-          restaurantId: data!.first.restaurant_id.toString(),
+          restaurantId: data!.first.restaurant_id,
           owner: data.first.owner,
-          operatorState: data.first.status.toOperartorStatus());
+          operatorState: data.first.status.toAgentStatus());
       return state;
     }
   }

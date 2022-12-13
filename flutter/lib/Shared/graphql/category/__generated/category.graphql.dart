@@ -4823,7 +4823,7 @@ class Query$getRestaurantCategories$restaurant_category$items {
           : Query$getRestaurantCategories$restaurant_category$items$description
               .fromJson((l$description as Map<String, dynamic>)),
       item_type: (l$item_type as String),
-      cost: MoneyFromJson(l$cost),
+      cost: moneyFromJson(l$cost),
       available: (l$available as bool),
       position: (l$position as int),
       restaurant_id: (l$restaurant_id as int),
@@ -4876,7 +4876,7 @@ class Query$getRestaurantCategories$restaurant_category$items {
     final l$item_type = item_type;
     _resultData['item_type'] = l$item_type;
     final l$cost = cost;
-    _resultData['cost'] = MoneyToJson(l$cost);
+    _resultData['cost'] = moneyToJson(l$cost);
     final l$available = available;
     _resultData['available'] = l$available;
     final l$position = position;

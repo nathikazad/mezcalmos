@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -40,7 +41,7 @@ class DeepLinkHandler {
         deepLink.queryParameters.containsKey('id') == true) {
       mezDbgPrint("@deepLink@ ===>checking query params");
 
-      final String providerId = deepLink.queryParameters['id']!;
+      final int providerId = int.parse(deepLink.queryParameters['id']!);
       mezDbgPrint("@deepLink@ ===> query has [id]");
 
       final CustomerDeepLinkType? providerType =
@@ -59,18 +60,18 @@ class DeepLinkHandler {
 
   /// This Do the routing magic depending on [providerType] given.
   Future<void> _handleRoutingByType({
-    required String providerId,
+    required int providerId,
     required CustomerDeepLinkType providerType,
   }) async {
     switch (providerType) {
       case CustomerDeepLinkType.Restaurant:
         mezDbgPrint("@deepLink@ ===> handling restaurant routing ! ");
         final Restaurant? _rest = await Get.find<RestaurantsInfoController>()
-            .getRestaurant(providerId);
+            .getRestaurant(providerId as int);
         if (_rest != null) {
           Future<void>.delayed(
             Duration.zero,
-            () => Get.toNamed<void>(
+            () => MezRouter.toNamed<void>(
               getRestaurantRoute(providerId),
               arguments: _rest,
             ),
@@ -81,7 +82,7 @@ class DeepLinkHandler {
         mezDbgPrint("@deepLink@ ===> handling laundry routing ! ");
         Future<void>.delayed(
           Duration.zero,
-          () => Get.toNamed<void>(
+          () => MezRouter.toNamed<void>(
             getLaundryOrderRoute(providerId),
           ),
         );

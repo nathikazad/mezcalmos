@@ -6,6 +6,7 @@ import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["Orders"]["ListOrdersScreen"]["components"]["taxiOrderCard"];
@@ -29,7 +30,9 @@ class TaxiCurrentOrderCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         onTap: () {
           mezDbgPrint("Clickeeed");
-          Get.toNamed(getTaxiOrderRoute(order.orderId,));
+          MezRouter.toNamed(getTaxiOrderRoute(
+            order.orderId,
+          ));
         },
         child: Container(
           margin: EdgeInsets.all(8),

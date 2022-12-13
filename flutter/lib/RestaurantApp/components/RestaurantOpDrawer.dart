@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -46,16 +46,16 @@ class _ROpDrawerState extends State<ROpDrawer> {
 
   @override
   void initState() {
-    Get.put(RestaurantInfoController(), permanent: false);
-    restaurantInfoController = Get.find<RestaurantInfoController>();
-    restaurant.value = restaurantInfoController.restaurant.value;
-    restaurantInfoController
-        .getRestaurant(restaurantOpAuthController.restaurantId!)
-        .listen((Restaurant? event) {
-      if (event != null) {
-        restaurant.value = event;
-      }
-    });
+    // Get.put(RestaurantInfoController(), permanent: false);
+    // restaurantInfoController = Get.find<RestaurantInfoController>();
+    // restaurant.value = restaurantInfoController.restaurant.value;
+    // restaurantInfoController
+    //     .getRestaurant(restaurantOpAuthController.restaurantId!)
+    //     .listen((Restaurant? event) {
+    //   if (event != null) {
+    //     restaurant.value = event;
+    //   }
+    // });
     super.initState();
   }
 
@@ -166,43 +166,11 @@ class _ROpDrawerState extends State<ROpDrawer> {
         SizedBox(
           height: 15,
         ),
+        //
+
         _navigationLink(
             onClick: () {
-              _drawerController.closeMenu();
-              Get.toNamed(getROpEditInfoRoute(
-                  restaurantId: restaurantOpAuthController.restaurantId!));
-            },
-            icon: Icons.person,
-            titleWidget: Text(
-              "${_i18n()["profile"]}",
-              style: Get.textTheme.bodyText1,
-            )),
-        _navigationLink(
-            icon: Icons.flatware_rounded,
-            onClick: () {
-              _drawerController.closeMenu();
-              Get.toNamed(getROpMenuRoute(
-                  restaurantId: restaurantOpAuthController
-                      .operator.value!.state.restaurantId!));
-            },
-            titleWidget: Text(
-              "${_i18n()["menu"] ?? "Menu"}",
-              style: Get.textTheme.bodyText1,
-            )),
-        _navigationLink(
-            onClick: () {
-              _drawerController.closeMenu();
-              // Get.toNamed(getROpReviewsoRoute(
-              //     restaurantId: restaurantOpAuthController.restaurantId!));
-            },
-            icon: Icons.star_rate_rounded,
-            titleWidget: Text(
-              "${_i18n()["reviews"]}",
-              style: Get.textTheme.bodyText1,
-            )),
-        _navigationLink(
-            onClick: () {
-              Get.toNamed(kNotificationsRoute);
+              MezRouter.toNamed(kNotificationsRoute);
             },
             icon: Icons.notifications,
             titleWidget: Text(

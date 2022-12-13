@@ -22,7 +22,7 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
           location_gps: true,
         },
         delivery_id: true,
-        // to_location_address: true,
+        to_location_address: true,
         estimated_food_ready_time: true,
         customer_app_type: true,
         delivery_cost: true,
@@ -49,10 +49,12 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
       "No order with that id found"
     );
   }
+  
   let toLocation: Location = {
     lat: response.restaurant_order_by_pk.to_location_gps.coordinates[1],
     lng: response.restaurant_order_by_pk.to_location_gps.coordinates[0],
   }
+
   let items: OrderItem[] = response.restaurant_order_by_pk.items.map((i) => {
     return {
       orderItemId: i.id,

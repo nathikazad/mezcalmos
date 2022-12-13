@@ -3,14 +3,17 @@ import 'dart:async';
 import 'package:async/async.dart' show StreamGroup;
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
+    as MezNotification;
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -19,19 +22,39 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 class OrderController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
+  AppLifeCycleController _appLifeCycleController =
+      Get.find<AppLifeCycleController>();
   ForegroundNotificationsController _foregroundNotificationsController =
       Get.find<ForegroundNotificationsController>();
 
   RxList<DeliverableOrder> currentOrders = <DeliverableOrder>[].obs;
   RxList<DeliverableOrder> pastOrders = <DeliverableOrder>[].obs;
-  StreamSubscription? _currentOrdersListener;
-  StreamSubscription? _pastOrdersListener;
+  StreamSubscription<DatabaseEvent>? _currentOrdersListener;
+  StreamSubscription<DatabaseEvent>? _pastOrdersListener;
+
+  String? _appLifeCyclePauseCallbackId;
+  String? _appLifeCycleResumeCallbackId;
 
   @override
   void onInit() {
     mezDbgPrint(
         "--------------------> Start listening on past orders  ${deliveryDriversPastOrdersNode(_authController.fireAuthUser!.uid)}");
 
+    listenToOrders();
+    _appLifeCyclePauseCallbackId =
+        _appLifeCycleController.attachCallback(AppLifecycleState.paused, () {
+      _pastOrdersListener?.cancel();
+      _currentOrdersListener?.cancel();
+    });
+
+    _appLifeCycleResumeCallbackId =
+        _appLifeCycleController.attachCallback(AppLifecycleState.resumed, () {
+      listenToOrders();
+    });
+    super.onInit();
+  }
+
+  void listenToOrders() {
     _pastOrdersListener = _databaseHelper.firebaseDatabase
         .ref()
         .child(deliveryDriversPastOrdersNode(_authController.fireAuthUser!.uid))
@@ -93,7 +116,6 @@ class OrderController extends GetxController {
       currentOrders.sort((DeliverableOrder a, DeliverableOrder b) =>
           b.orderTime.toLocal().compareTo(a.orderTime.toLocal()));
     });
-    super.onInit();
   }
 
   DeliverableOrder? getOrder(String orderId) {
@@ -150,8 +172,9 @@ class OrderController extends GetxController {
   bool hasNewMessageNotification(String chatId) {
     return _foregroundNotificationsController
         .notifications()
-        .where((Notification notification) =>
-            notification.notificationType == NotificationType.NewMessage &&
+        .where((MezNotification.Notification notification) =>
+            notification.notificationType ==
+                MezNotification.NotificationType.NewMessage &&
             notification.chatId == chatId)
         .isNotEmpty;
   }
@@ -159,32 +182,34 @@ class OrderController extends GetxController {
   void clearOrderNotifications(String orderId) {
     _foregroundNotificationsController
         .notifications()
-        .where((Notification notification) =>
+        .where((MezNotification.Notification notification) =>
             (notification.notificationType ==
-                    NotificationType.OrderStatusChange ||
-                notification.notificationType == NotificationType.NewOrder) &&
+                    MezNotification.NotificationType.OrderStatusChange ||
+                notification.notificationType ==
+                    MezNotification.NotificationType.NewOrder) &&
             notification.orderId! == orderId)
-        .forEach((Notification notification) {
+        .forEach((MezNotification.Notification notification) {
       _foregroundNotificationsController.removeNotification(notification.id);
     });
   }
 
   void clearNewOrderNotificationsOfPastOrders() {
-    final List<String> currentOrderIds = <String>[];
+    final List<int> currentOrderIds = <int>[];
     currentOrders.forEach((Order order) => currentOrderIds.add(order.orderId));
     _foregroundNotificationsController
         .notifications()
-        .where((Notification notification) =>
-            notification.notificationType == NotificationType.NewOrder &&
+        .where((MezNotification.Notification notification) =>
+            notification.notificationType ==
+                MezNotification.NotificationType.NewOrder &&
             !currentOrderIds.contains(notification.orderId!))
-        .forEach((Notification notification) {
+        .forEach((MezNotification.Notification notification) {
       _foregroundNotificationsController.removeNotification(notification.id);
       mezDbgPrint("Clearing notifs");
     });
   }
 
   Future<ServerResponse> setEstimatedTime(
-      String orderId,
+      int orderId,
       DateTime estimatedTime,
       DeliveryDriverType deliveryDriverType,
       DeliveryAction deliveryAction,
@@ -221,6 +246,13 @@ class OrderController extends GetxController {
     _currentOrdersListener = null;
     _pastOrdersListener?.cancel();
     _pastOrdersListener = null;
+
+    if (_appLifeCyclePauseCallbackId != null)
+      _appLifeCycleController.removeCallbackIdOfState(
+          AppLifecycleState.paused, _appLifeCyclePauseCallbackId);
+    if (_appLifeCycleResumeCallbackId != null)
+      _appLifeCycleController.removeCallbackIdOfState(
+          AppLifecycleState.resumed, _appLifeCycleResumeCallbackId);
     super.onClose();
   }
 }

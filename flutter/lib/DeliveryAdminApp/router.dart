@@ -13,10 +13,10 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/ServicesView/ServicesView.dart'
 import 'package:mezcalmos/LaundryApp/pages/AdminView/LaundryOpAdminView.dart';
 import 'package:mezcalmos/LaundryApp/pages/CategoryView/CategoryView.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/EditInfoView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/CategoryView/CategoryView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/ItemView/ROpItemView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/ROpMenuView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/OptionView/ROpOptionView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/ROpItemView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/ROpMenuView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/ROpOptionView.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 // Routes Keys.
@@ -61,8 +61,8 @@ String getRestaurantOperatorsRoute(String restaurantId) {
   return krOperators.replaceFirst(":restaurantId", restaurantId);
 }
 
-String getRestaurantOrderRoute(String orderId) {
-  return kRestaurantOrderRoute.replaceFirst(":orderId", orderId);
+String getRestaurantOrderRoute(int orderId) {
+  return kRestaurantOrderRoute.replaceFirst(":orderId", "$orderId");
 }
 
 String getLaundryOrderRoute(String orderId) {

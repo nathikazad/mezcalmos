@@ -9,9 +9,12 @@ import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/SavedLocations/components/SavedLocationBody.dart';
 import 'package:mezcalmos/CustomerApp/pages/SavedLocations/components/SavedLocationIsEmpty.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/saved_location/saved_location.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["SavedLocations"]["SavedLocationView"];
@@ -34,7 +37,8 @@ class _SavedLocationViewState extends State<SavedLocationView> {
   List<SavedLocation> savedLocations = <SavedLocation>[];
 
   /// savedLocationsStreamSub
-  StreamSubscription<List<SavedLocation>>? savedLocationsStreamSub;
+  StreamSubscription<List<SavedLocation>?>? savedLocationsStreamSub;
+  String? _subscriptionId;
 
   @override
   void initState() {
@@ -44,30 +48,33 @@ class _SavedLocationViewState extends State<SavedLocationView> {
     mezDbgPrint(savedLocations);
     mezDbgPrint("==============");
     setState(() {
-      savedLocations.assignAll(
-          _customerAuthController.customer.value?.savedLocations ?? []);
+      savedLocations
+          .assignAll(_customerAuthController.customer?.savedLocations ?? []);
     });
     mezDbgPrint("==============");
     mezDbgPrint(savedLocations);
     mezDbgPrint("==============");
     // then start a listener in case there are changes in /savedLocations db node!
-    savedLocationsStreamSub = _customerAuthController.customer
-        .map<List<SavedLocation>>((Customer? customerInstance) {
-      return customerInstance?.savedLocations ?? <SavedLocation>[];
-    }).listen((List<SavedLocation> _savedLocations) {
-      mezDbgPrint("==============");
-      mezDbgPrint(savedLocations);
-      mezDbgPrint("==============");
-      mezDbgPrint("New Data ! $_savedLocations");
-      setState(() {
-        // set the new locations!
-        savedLocations.assignAll(_savedLocations);
+    hasuraDb.createSubscription(start: () {
+      savedLocationsStreamSub = listen_on_customer_locations(
+              customer_id: Get.find<AuthController>().user!.hasuraId)
+          .listen((List<SavedLocation>? event) {
+        setState(() {
+          savedLocations.assignAll(
+              _customerAuthController.customer?.savedLocations ?? []);
+        });
       });
+    }, cancel: () {
+      if (_subscriptionId != null)
+        hasuraDb.cancelSubscription(_subscriptionId!);
+      savedLocationsStreamSub?.cancel();
+      savedLocationsStreamSub = null;
     });
   }
 
   @override
   void dispose() {
+    if (_subscriptionId != null) hasuraDb.cancelSubscription(_subscriptionId!);
     savedLocationsStreamSub?.cancel();
     savedLocationsStreamSub = null;
     super.dispose();
@@ -95,7 +102,7 @@ class _SavedLocationViewState extends State<SavedLocationView> {
           ),
         ),
         function: () {
-          Get.toNamed<void>(kPickLocationRoute, arguments: false);
+          MezRouter.toNamed<void>(kPickLocationRoute, arguments: false);
         },
       ),
       body: savedLocations.length > 0

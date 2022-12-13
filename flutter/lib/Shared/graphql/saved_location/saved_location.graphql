@@ -1,7 +1,18 @@
 
 # Get all customer's saved location using fk.
+query get_customer_locations($customer_id: Int!) {
+  saved_location(where:{customer_id : {_eq: $customer_id}})
+  {
+    id,
+    name,
+    location_gps,
+    location_text,
+    default
+  }
+}
 
-query getCustomerLocations($customer_id: Int!) {
+# listen on all customer's saved locations
+subscription listen_on_saved_locations($customer_id: Int!) {
   saved_location(where:{customer_id : {_eq: $customer_id}})
   {
     id,
@@ -14,8 +25,7 @@ query getCustomerLocations($customer_id: Int!) {
 
 
 # Get a specific saved_location using pk.
-
-query getSavedLocation($location_id: Int!){
+query get_saved_location_by_id($location_id: Int!){
   saved_location_by_pk(id: $location_id)
   {
     id,
@@ -28,8 +38,7 @@ query getSavedLocation($location_id: Int!){
 
 
 # Update Location by pk.
-
-mutation updateSavedLocation($location_id: saved_location_pk_columns_input!, $gps: geography, $name: String!, $default: Boolean!, $address: String!)
+mutation update_saved_location($location_id: saved_location_pk_columns_input!, $gps: geography, $name: String!, $default: Boolean!, $address: String!)
 {
   update_saved_location_by_pk(pk_columns: $location_id, _set :{ location_gps: $gps, location_text: $address, default: $default, name : $name })
   {
@@ -42,7 +51,7 @@ mutation updateSavedLocation($location_id: saved_location_pk_columns_input!, $gp
 }
 
 # delete a specific Location by pk
-mutation deleteSavedLocation($location_id: Int!)
+mutation delete_saved_location($location_id: Int!)
 {
     delete_saved_location_by_pk(id: $location_id)
     {
@@ -52,7 +61,7 @@ mutation deleteSavedLocation($location_id: Int!)
 
 
 # Insert a new Saved_Location
-mutation addSavedLocation($saved_location: saved_location_insert_input!)
+mutation add_saved_location($saved_location: saved_location_insert_input!)
 {
  	  insert_saved_location_one(object:$saved_location)
     {

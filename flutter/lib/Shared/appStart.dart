@@ -21,6 +21,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -206,10 +207,12 @@ class _StartingPointState extends State<StartingPoint> {
       firebaseDb.setPersistenceEnabled(true);
       firebaseDb.setPersistenceCacheSizeBytes(10000000);
       await FirebaseAuth.instance.useEmulator(_host + authPort);
+      mezDbgPrint(
+          "[+] Cloud Functions - dev - endpoint::${_host.replaceAll('http://', '')}:$functionPort");
       FirebaseFunctions.instance
           .useFunctionsEmulator(_host.replaceAll('http://', ''), functionPort);
     } else if (_launchMode == AppLaunchMode.stage) {
-      mezDbgPrint("[+] Entered Staging check ----.");
+      mezDbgPrint("[+] Entered Staging check ----");
       firebaseDb =
           FirebaseDatabase.instanceFor(app: _app, databaseURL: stagingDb);
     } else {
@@ -223,7 +226,15 @@ class _StartingPointState extends State<StartingPoint> {
         firebaseApp: _app,
       ),
     );
-    Get.put(HasuraDb(_launchMode), permanent: true);
+
+    Get.put<AppLifeCycleController>(
+      AppLifeCycleController(),
+      permanent: true,
+    );
+
+    Future.microtask(() {
+      Get.put(HasuraDb(_launchMode), permanent: true);
+    });
   }
 
   Future<void> setGlobalVariables() async {
@@ -266,10 +277,6 @@ class _StartingPointState extends State<StartingPoint> {
     }
     Get.put<AuthController>(
       AuthController(widget.signInCallback, widget.signOutCallback),
-      permanent: true,
-    );
-    Get.put<AppLifeCycleController>(
-      AppLifeCycleController(logs: true),
       permanent: true,
     );
     Get.put<SettingsController>(
@@ -345,10 +352,12 @@ class _StartingPointState extends State<StartingPoint> {
     }
 
     final bool? isPreviewModeEnabled = GetStorage().read<bool?>('previewMode');
+    final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
     return DevicePreview(
       enabled: isPreviewModeEnabled == true ? true : false,
       builder: (BuildContext context) => GetMaterialApp(
+        navigatorObservers: [MezRouter()],
         useInheritedMediaQuery: true,
         locale:
             isPreviewModeEnabled == true ? DevicePreview.locale(context) : null,

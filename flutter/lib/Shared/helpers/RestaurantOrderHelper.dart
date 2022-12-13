@@ -18,11 +18,11 @@ extension RestaurantOrderHelper on RestaurantOrder {
         return '${_i18n()["canceledByCustomer"]}';
       case RestaurantOrderStatus.OrderReceived:
         return '${_i18n()["received"]}';
-      case RestaurantOrderStatus.PreparingOrder:
+      case RestaurantOrderStatus.Preparing:
         return '${_i18n()["preparing"]}';
       case RestaurantOrderStatus.OnTheWay:
         return '${_i18n()["onTheWay"]}';
-      case RestaurantOrderStatus.ReadyForPickup:
+      case RestaurantOrderStatus.Ready:
         return '${_i18n()["readyForPickUp"]}';
       case RestaurantOrderStatus.Delivered:
         return '${_i18n()["delivered"]}';
@@ -58,7 +58,7 @@ extension RestaurantOrderHelper on RestaurantOrder {
             color: primaryBlueColor,
           ),
         );
-      case RestaurantOrderStatus.PreparingOrder:
+      case RestaurantOrderStatus.Preparing:
         return Container(
           height: 50,
           width: 50,
@@ -76,7 +76,7 @@ extension RestaurantOrderHelper on RestaurantOrder {
             fit: BoxFit.cover,
           ),
         );
-      case RestaurantOrderStatus.ReadyForPickup:
+      case RestaurantOrderStatus.Ready:
         return Container(
           // padding: const EdgeInsets.only(right: 10.0),
           child: Icon(

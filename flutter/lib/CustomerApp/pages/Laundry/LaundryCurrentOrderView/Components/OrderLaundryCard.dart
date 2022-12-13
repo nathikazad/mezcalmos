@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class OrderLaundryCard extends StatelessWidget {
   const OrderLaundryCard({Key? key, required this.order}) : super(key: key);
@@ -65,7 +66,7 @@ class OrderLaundryCard extends StatelessWidget {
                 showRedDot: Get.find<OrderController>()
                     .orderHaveNewMessageNotifications(order.orderId),
                 onTap: () {
-                  Get.toNamed<void>(getMessagesRoute(
+                  MezRouter.toNamed<void>(getMessagesRoute(
                       orderId: order.orderId,
                       chatId: order.orderId,
                       orderType: OrderType.Laundry,
@@ -82,7 +83,7 @@ class OrderLaundryCard extends StatelessWidget {
   Widget _messageButton(BuildContext context) {
     return IconButton(
       onPressed: () {
-        Get.toNamed<void>(getMessagesRoute(
+        MezRouter.toNamed<void>(getMessagesRoute(
             orderId: order.orderId,
             chatId: order.orderId,
             orderType: OrderType.Laundry,

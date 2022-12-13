@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -42,9 +43,8 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                           await restaurantController.cancelOrder(
                         widget.order.orderId,
                       );
-
                       if (resp.success) {
-                        Get.until(
+                        MezRouter.untill(
                           (Route<dynamic> route) =>
                               route.settings.name == kHomeRoute,
                         );

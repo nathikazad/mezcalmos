@@ -15,6 +15,7 @@ final HasuraDb hasuraDb = Get.find<HasuraDb>();
 
 Future<List<Category>?> get_restaurant_categories_by_id(int restaurantId,
     {bool withCache = true}) async {
+  mezDbgPrint("[66] get_restaurant_categories_by_id called !");
   final QueryResult<Query$getRestaurantCategories> response = await hasuraDb
       .graphQLClient
       .query$getRestaurantCategories(Options$Query$getRestaurantCategories(
@@ -67,7 +68,7 @@ Future<Category?> get_category_by_id(int id) async {
     final Query$getCategoryInfoById$restaurant_category_by_pk data =
         response.parsedData!.restaurant_category_by_pk!;
     return Category(
-      id: data.id.toString(),
+      id: data.id,
       descriptionId: data.description_id,
       nameId: data.name.id,
       name: toLanguageMap(translations: data.name.translations),
@@ -148,7 +149,7 @@ List<Category> _parseCategories(
   data.forEach((Query$getRestaurantCategories$restaurant_category category) {
     // assigning category
     final Category cat = Category(
-      id: category.id.toString(),
+      id: category.id,
       position: category.position,
       dialog: (category.description?.translations != null)
           ? toLanguageMap(translations: category.description!.translations)
@@ -159,7 +160,7 @@ List<Category> _parseCategories(
     final List<Item> items = category.items
         .map((Query$getRestaurantCategories$restaurant_category$items item) {
       return Item(
-          id: item.id.toString(),
+          id: item.id,
           nameId: item.name.id,
           descriptionId: item.description_id,
           name: toLanguageMap(translations: item.name.translations),

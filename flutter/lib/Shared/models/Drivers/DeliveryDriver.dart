@@ -1,19 +1,22 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
+import 'package:mezcalmos/Shared/models/Utilities/DeliveryCompanyType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class DeliveryDriverState {
-  bool isAuthorized;
-  bool isOnline;
-  String? serviceProviderId;
-  OrderType? serviceProviderType;
+  AgentStatus status;
+
+  bool online;
+  String? deliveryCompanyId;
+
+  DeliveryCompanyType? deliveryCompanyType;
 
   DeliveryDriverState({
-    required this.isAuthorized,
-    required this.isOnline,
-    this.serviceProviderId,
-    this.serviceProviderType,
+    required this.status,
+    required this.online,
+    this.deliveryCompanyId,
+    this.deliveryCompanyType,
   });
 
   factory DeliveryDriverState.fromSnapshot(data) {
@@ -22,20 +25,27 @@ class DeliveryDriverState {
     final bool isOnline = data == null ? false : data['isOnline'] == true;
 
     return DeliveryDriverState(
-      isAuthorized: isAuthorized,
-      isOnline: isOnline,
-      serviceProviderId: data?["serviceProviderId"],
-      serviceProviderType:
-          data?["serviceProviderType"]?.toString().toOrderType(),
+      status: data["status"],
+      online: isOnline,
+      deliveryCompanyId: data?["serviceProviderId"],
+      deliveryCompanyType:
+          data?["serviceProviderType"]?.toString().toDeliveryCompanyType(),
     );
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        "authorizationStatus": isAuthorized,
-        "isOnline": isOnline,
-        "serviceProviderId": serviceProviderId,
-        "serviceProviderType": serviceProviderType?.toFirebaseFormatString(),
+        "isOnline": online,
+        "serviceProviderId": deliveryCompanyId,
+        "serviceProviderType": deliveryCompanyType?.toFirebaseFormatString(),
       };
+
+  bool get isAuthorized {
+    return status == AgentStatus.Authorized;
+  }
+
+  bool get isOnline {
+    return status == AgentStatus.Authorized && online == true;
+  }
 }
 
 // used by delivery admin app
@@ -48,8 +58,8 @@ class DeliveryDriver {
 
   DeliveryDriver({
     required this.deliveryDriverState,
-    required this.driverLocation,
-    required this.lastLocationUpdateTime,
+    this.driverLocation,
+    this.lastLocationUpdateTime,
     required this.deliveryDriverId,
     required this.driverInfo,
   });
@@ -87,13 +97,13 @@ class DeliveryDriver {
   /// Added for Debugging Perposes - Don't delete for now
   Map<String, dynamic> toJson() => <String, dynamic>{
         "authorizationStatus": deliveryDriverState.isAuthorized,
-        "isOnline": deliveryDriverState.isOnline,
+        "isOnline": deliveryDriverState.online,
         "driverLocation": driverLocation?.toJson(),
         "lastLocationUpdateTime":
             lastLocationUpdateTime?.toUtc().toIso8601String(),
       };
   bool get isAssociated {
-    return deliveryDriverState.serviceProviderId != null;
+    return deliveryDriverState.deliveryCompanyId != null;
   }
 
   @override
@@ -138,7 +148,7 @@ class DeliveryDriverUserInfo extends UserInfo {
 
   DeliveryDriverUserInfo({
     required super.hasuraId,
-    required super.firebaseId,
+    super.firebaseId,
     required super.name,
     required super.image,
     this.location,
@@ -179,7 +189,7 @@ class DeliveryDriverUserInfo extends UserInfo {
 
 // ignore: constant_identifier_names
 // this is to distinguish between pick up and drop off driver
-enum DeliveryDriverType { Pickup, DropOff }
+enum DeliveryDriverType { Restaurant, Delivery_driver }
 
 // this is to distinguish between which action the driver is doing
 // for example dropoff driver is picking up order from restaurant

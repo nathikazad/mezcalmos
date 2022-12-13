@@ -8,11 +8,6 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
   : Promise<{ restaurantOrder: RestaurantOrder, deliveryOrder: DeliveryOrder }> {
 
   let chain = getHasura();
-  
-  // try {
-    // if (data.stripePaymentId) {
-    //   order = (await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId, data.stripeFees)) as RestaurantOrder
-    // }
 
   let restaurantOperatorsDetails = restaurant.restaurantOperators!.map((v) => {
     return {
@@ -48,12 +43,12 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
             customer_id: restaurantOrder.customerId,
             dropoff_gps: JSON.stringify({
               "type": "Point",
-              "coordinates": [restaurantOrder.toLocation.lng,restaurantOrder.toLocation.lat],
+              "coordinates": [restaurantOrder.toLocation.lng, restaurantOrder.toLocation.lat ],
             }),
             dropoff_address: restaurantOrder.toLocation.address,
             pickup_gps: JSON.stringify({
               "type": "Point",
-              "coordinates": [restaurantOrder.toLocation.lng,restaurantOrder.toLocation.lat],
+              "coordinates": [restaurant.location.lng, restaurant.location.lat ],
             }),
             pickup_address: restaurant.location.address,
             chat_with_customer: {
@@ -89,7 +84,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
         payment_type: restaurantOrder.paymentType,
         to_location_gps: JSON.stringify({
           "type": "Point",
-          "coordinates": [restaurantOrder.toLocation.lng,restaurantOrder.toLocation.lat],
+          "coordinates": [restaurantOrder.toLocation.lng, restaurantOrder.toLocation.lat ],
         }),
         to_location_address: restaurantOrder.toLocation.address,
         notes: restaurantOrder.notes,

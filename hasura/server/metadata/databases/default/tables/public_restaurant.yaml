@@ -40,6 +40,16 @@ array_relationships:
         table:
           name: restaurant_operator
           schema: public
+  - name: reviews
+    using:
+      manual_configuration:
+        column_mapping:
+          id: to_entity_id
+          service_provider_type: to_entity_type
+        insertion_order: null
+        remote_table:
+          name: review
+          schema: public
 computed_fields:
   - name: specials
     definition:
@@ -78,6 +88,7 @@ select_permissions:
         - open_status
         - payment_info_id
         - schedule
+        - self_delivery
       filter: {}
   - role: mez_admin
     permission:
@@ -118,6 +129,7 @@ select_permissions:
         - open_status
         - payment_info_id
         - schedule
+        - self_delivery
         - service_provider_type
       filter:
         restaurant_operators:
@@ -148,8 +160,10 @@ update_permissions:
   - role: restaurant_operator
     permission:
       columns:
+        - approved
         - description_id
         - image
+        - language_id
         - location_gps
         - location_text
         - name
@@ -161,5 +175,3 @@ update_permissions:
           user_id:
             _eq: X-Hasura-User-Id
       check: null
-      set:
-        location_gps: ""

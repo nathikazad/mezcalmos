@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["Orders"]["TaxiOrder"]["TaxiOrderView"];
@@ -52,7 +53,7 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
       if (order.value == null) {
         // ignore: inference_failure_on_function_invocation
         Future.delayed(Duration.zero, () {
-          Get.back();
+          MezRouter.back();
           MezSnackbar("Error", "Order does not exist");
         });
       }

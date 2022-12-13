@@ -1,42 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/components/ROpEditInfoWidgets.dart';
+import 'package:mezcalmos/RestaurantApp/pages/DashboardView/components/ROpScheduleWidgets.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
+import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpScheduleController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpEditInfoView']['ROpEditInfoView'];
 
-class ROpSchedulePage extends StatelessWidget {
-  const ROpSchedulePage(
-      {Key? key, required this.editInfoController, required this.viewWidgets})
-      : super(key: key);
+class ROpSchedulePage extends StatefulWidget {
+  const ROpSchedulePage({
+    Key? key,
+    required this.editInfoController,
+  }) : super(key: key);
   final ROpEditInfoController editInfoController;
-  final ROpEditInfoWidgets viewWidgets;
+
+  @override
+  State<ROpSchedulePage> createState() => _ROpSchedulePageState();
+}
+
+class _ROpSchedulePageState extends State<ROpSchedulePage> {
+  late ROpScheduleWidgets viewWidgets;
+  late ROpScheduleController viewController;
+  @override
+  void initState() {
+    viewController =
+        ROpScheduleController(editInfoController: widget.editInfoController);
+    viewWidgets =
+        ROpScheduleWidgets(viewController: viewController, context: context);
+    viewController.init();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    return Obx(() {
+      if (viewController.oldSchedule.value != null) {
+        return _buidSchedule();
+      } else {
+        return Container(
+          alignment: Alignment.center,
+          child: MezLogoAnimation(
+            centered: true,
+          ),
+        );
+      }
+    });
+  }
+
+  Widget _buidSchedule() {
     return Column(
       children: [
         Expanded(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
-            child: Obx(
-              () => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    child: viewWidgets.editWorkingHoursComponent(),
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                ],
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  child: viewWidgets.editWorkingHoursComponent(),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+              ],
             ),
           ),
         ),
@@ -46,7 +78,7 @@ class ROpSchedulePage extends StatelessWidget {
           withGradient: true,
           height: 70,
           onClick: () async {
-            await editInfoController.updateLaundryInfo().then((value) =>
+            await viewController.updateSchedule().then((bool value) =>
                 Get.snackbar('${_i18n()["saved"]}', '${_i18n()["savedText"]}',
                     backgroundColor: Colors.black,
                     colorText: Colors.white,

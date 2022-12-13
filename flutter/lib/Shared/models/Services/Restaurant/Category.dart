@@ -4,7 +4,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class Category {
   LanguageMap? name;
-  String? id;
+  int? id;
   int? descriptionId;
   int? nameId;
   LanguageMap? dialog;
@@ -26,7 +26,7 @@ class Category {
     this.dialog,
   });
 
-  factory Category.fromData(String categoryId, categoryData) {
+  factory Category.fromData(int categoryId, categoryData) {
     final Category category = Category(
       id: categoryId,
       position: categoryData["position"] ?? 0,

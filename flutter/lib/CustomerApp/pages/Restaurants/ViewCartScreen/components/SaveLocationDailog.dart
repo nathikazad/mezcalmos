@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/PickLocationView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
@@ -67,7 +68,7 @@ Future<String?> savedLocationDailog({
               const SizedBox(height: 15),
               TextButton(
                 onPressed: () {
-                  Get.back(result: txtController.text);
+                  MezRouter.popDialog(result: txtController.text);
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -84,7 +85,7 @@ Future<String?> savedLocationDailog({
                   comingFromCart)
                 TextButton(
                   onPressed: () {
-                    Get.back();
+                    MezRouter.back();
                   },
                   style: TextButton.styleFrom(
                       backgroundColor: Colors.black,
@@ -132,7 +133,7 @@ InkWell skipButton(
       ),
     ),
     onTap: () {
-      Get.back(result: txtController.text);
+      MezRouter.back(result: txtController.text);
     },
   );
 }

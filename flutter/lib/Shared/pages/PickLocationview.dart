@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 enum PickLocationMode { AddNewLocation, EditLocation, NonLoggedInPick }
 
@@ -29,12 +30,9 @@ class PickLocationView extends StatefulWidget {
 class _PickLocationViewState extends State<PickLocationView> {
   final LocationPickerController locationPickerController =
       LocationPickerController();
-  // Location? locationPickerController.location;
 
   bool showScreenLoading = false;
   LatLng? currentLatLng;
-
-  LanguageController _lang = Get.find<LanguageController>();
 
   @override
   void initState() {
@@ -87,32 +85,9 @@ class _PickLocationViewState extends State<PickLocationView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: showScreenLoading == false
-            ? Container(
-                height: 50,
-                child: TextButton(
-                  style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
-                  onPressed: () async => await onPickButtonClick(context),
-                  child: Center(
-                      child: Text(_i18n()["pickLocation"],
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline2!
-                              .copyWith(color: Colors.white, fontSize: 12.sp))),
-                ),
-              )
-            : Container(
-                height: 50,
-                child: TextButton(
-                    style: TextButton.styleFrom(
-                        backgroundColor: Colors.grey.shade400),
-                    onPressed: null,
-                    child: Center(
-                        child: Center(
-                      child: CircularProgressIndicator(
-                          strokeWidth: 1, color: Colors.black),
-                    ))),
-              ),
+        bottomNavigationBar: Obx(
+          () => pickButton(),
+        ),
         resizeToAvoidBottomInset: false,
         appBar: mezcalmosAppBar(
           AppBarLeftButtonType.Back,
@@ -156,24 +131,58 @@ class _PickLocationViewState extends State<PickLocationView> {
 
   Future<void> onPickButtonClick(BuildContext context) async {
     String? _result;
-    final LatLng _pickedLoc = await locationPickerController.getMapCenter();
-
-    await locationPickerController.moveToNewLatLng(
-        _pickedLoc.latitude, _pickedLoc.longitude);
-    //  locationPickerController.setLocation(_pickedLoc);
-    await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
-    setState(() {
-      // showScreenLoading = true;
-    });
-    if (widget.pickLocationMode == PickLocationMode.NonLoggedInPick) {
-      Get.back<Location>(result: locationPickerController.location.value);
-    } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
-      Get.back<Location>(result: locationPickerController.location.value);
-      mezDbgPrint(locationPickerController.location.value!.address);
+    final LatLng? _pickedLoc = await locationPickerController.getMapCenter();
+    if (_pickedLoc != null) {
+      await locationPickerController.moveToNewLatLng(
+          _pickedLoc.latitude, _pickedLoc.longitude);
+      //  locationPickerController.setLocation(_pickedLoc);
+      await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
+      setState(() {
+        // showScreenLoading = true;
+      });
+      if (widget.pickLocationMode == PickLocationMode.NonLoggedInPick) {
+        MezRouter.back<Location>(
+            result: locationPickerController.location.value);
+      } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
+        MezRouter.back<Location>(
+            result: locationPickerController.location.value);
+        mezDbgPrint(locationPickerController.location.value!.address);
+      }
     }
   }
 
   // ------------------------------------------- WIDGETS -------------------------------------------
+  Widget pickButton() {
+    return showScreenLoading == false && locationPickerController.isMapReady
+        ? Container(
+            height: 50,
+            child: TextButton(
+              style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
+              onPressed: () async => onPickButtonClick(context),
+              child: Center(
+                  child: Text(_i18n()["pickLocation"],
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline2!
+                          .copyWith(color: Colors.white, fontSize: 12.sp))),
+            ),
+          )
+        : Container(
+            height: 50,
+            child: TextButton(
+              style:
+                  TextButton.styleFrom(backgroundColor: Colors.grey.shade400),
+              onPressed: null,
+              child: Center(
+                child: Center(
+                  child: CircularProgressIndicator(
+                      strokeWidth: 1, color: Colors.black),
+                ),
+              ),
+            ),
+          );
+  }
+
   Container mezPickLocationViewBody() {
     return Container(
       child: Column(
@@ -193,7 +202,6 @@ class _PickLocationViewState extends State<PickLocationView> {
             child: LocationSearchComponent(
                 hintPadding: EdgeInsets.only(left: 10),
                 suffixPadding: EdgeInsets.only(right: 10),
-                useBorders: false,
                 showSearchIcon: true,
                 text: locationPickerController.location.value?.address,
                 onClear: () {},

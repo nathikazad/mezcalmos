@@ -1,18 +1,19 @@
 import 'package:get/get.dart'; // getX
-import 'package:mezcalmos/RestaurantApp/pages/CategoryView/CategoryView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/ROpCreateRestaurantView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/CurrentOrdersList/ROpCurrentOrders.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/ROpDashboardView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/ItemView/ROpItemView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/ROpMenuView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/OptionView/ROpOptionView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/OrderView/ROpOrderView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/PastOrdresList/ROpPastOrdersList.dart';
-import 'package:mezcalmos/RestaurantApp/pages/ROpChoiceView/ROpChoiceView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/ROpPickDriverView/ROpPickDriverView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/ROpSelfDeliveryView/ROpSelfDeliveryView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/ROpTabsViewView/ROpTabsViewView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/ROpChoiceView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/ROpItemView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/ROpMenuView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/ROpOptionView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/ROpCurrentOrders.dart';
+import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/ROpPastOrdersList.dart';
 import 'package:mezcalmos/RestaurantApp/pages/RestaurantWrapper.dart';
+import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/ROpOrderView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/ROpPickDriverView/ROpPickDriverView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/ROpSelfDeliveryView/ROpSelfDeliveryView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/TabsView/ROpTabsView.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 // const String kCurrentOrdersListRoute = '/currentOrders';
@@ -35,7 +36,7 @@ const String kOrderView = '/orderView/:orderId';
 const String kOptionView = "/optionView/:restaurantId/:itemId/:optionId";
 const String kChoiceView = "/Choice/:restaurantId:/:optionId/:choiceId";
 const String kSelfDeliveryView = '/selfDelivery/:orderId';
-const String kPickDriver = '/pickDriver/:orderId';
+const String kPickDriver = '/pickDriver/:serviceProviderId/:orderId';
 
 String getROpEditInfoRoute({required String restaurantId}) {
   return kDashboardView.replaceFirst(":restaurantId", restaurantId);
@@ -58,6 +59,15 @@ String getROpSelfDelivery({required String orderId}) {
   return kSelfDeliveryView.replaceFirst(":orderId", orderId);
 }
 
+String getROpPickDriverRoute(
+    {required int serviceProviderId, required int orderId}) {
+  String route =
+      kPickDriver.replaceFirst(":serviceProviderId", "$serviceProviderId");
+  route = route.replaceFirst(":orderId", "$orderId");
+  mezDbgPrint("Final route =========>>>>>$route");
+  return route;
+}
+
 // String getROpReviewsoRoute({required String restaurantId}) {
 //   return kReviewsView.replaceFirst(":restaurantId", restaurantId);
 // }
@@ -74,22 +84,22 @@ String getROpOptionRoute(
   return route;
 }
 
-String getROpAddItemRoute({required String restaurantId}) {
-  return kAddItemView.replaceFirst(":restaurantId", restaurantId);
+String getROpAddItemRoute({required int restaurantId}) {
+  return kAddItemView.replaceFirst(":restaurantId", "$restaurantId");
 }
 
-String getROpMenuRoute({required String restaurantId}) {
-  return kMenuView.replaceFirst(":restaurantId", restaurantId);
+String getROpMenuRoute({required int restaurantId}) {
+  return kMenuView.replaceFirst(":restaurantId", "$restaurantId");
 }
 
-String getROpCategoryRoute({required String restaurantId}) {
-  return kCategoryView.replaceFirst(":restaurantId", restaurantId);
+String getROpCategoryRoute({required int restaurantId}) {
+  return kCategoryView.replaceFirst(":restaurantId", "$restaurantId");
 }
 
 String getCategoryEditRoute(
-    {required String categoryId, required String restaurantId}) {
-  String route = kEditCategoryScreen.replaceFirst(":categoryId", categoryId);
-  route = route.replaceFirst(":restaurantId", restaurantId);
+    {required int categoryId, required int restaurantId}) {
+  String route = kEditCategoryScreen.replaceFirst(":categoryId", "$categoryId");
+  route = route.replaceFirst(":restaurantId", "$restaurantId");
   return route;
 }
 
@@ -98,19 +108,19 @@ String getROpOrderRoute(String orderId) {
 }
 
 String getEditItemRoute(
-    {required String itemId, String? categoryId, required String restaurntID}) {
-  String route = kEditItemView.replaceFirst(":restaurantId", restaurntID);
+    {required int itemId, int? categoryId, required int restaurntID}) {
+  String route = kEditItemView.replaceFirst(":restaurantId", "$restaurntID");
 
-  route = route.replaceFirst(":itemId", itemId);
+  route = route.replaceFirst(":itemId", "$itemId");
 
   if (categoryId != null) {
-    route = route.replaceFirst(":categoryId", categoryId);
+    route = route.replaceFirst(":categoryId", "$categoryId");
   }
   return route;
 }
 
-String getEditOptionRoute({required String itemId}) {
-  final String route = kOptionView.replaceFirst(":itemId", itemId);
+String getEditOptionRoute({required int itemId}) {
+  final String route = kOptionView.replaceFirst(":itemId", "$itemId");
   return route;
 }
 

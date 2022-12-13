@@ -48,7 +48,7 @@ class ViewTaxiOrderController {
   /// offersBtnClicked
   RxBool offersBtnClicked = false.obs;
 
-  Future<bool> init(String orderId, {Function? orderCancelledCallback}) {
+  Future<bool> init(int orderId, {Function? orderCancelledCallback}) {
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as TaxiOrder?;
     if (order.value != null) {

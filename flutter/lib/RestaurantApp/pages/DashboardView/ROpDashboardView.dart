@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/components/ROpEditInfoWidgets.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpDashboardPage.dart';
+import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpDeliveryCost.dart';
+import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpDriversPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpInfoPage.dart';
+import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpOperatorsPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpPaymentsPage.dart';
+import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpReviewsPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpSchedulePage.dart';
-import 'package:mezcalmos/RestaurantApp/pages/ROpOperatorsView/ROpOperatorsView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/ROpTabsViewView/controllers/ROpTabsViewViewController.dart';
-import 'package:mezcalmos/RestaurantApp/pages/ReviewsView/ROpReviewsView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/TabsView/controllers/ROpTabsViewViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -25,7 +26,7 @@ class ROpDashboardView extends StatefulWidget {
       this.canGoBack = true,
       this.tabsViewViewController})
       : super(key: key);
-  final String? restID;
+  final int? restID;
   final bool canGoBack;
   final ROpTabsViewViewController? tabsViewViewController;
   @override
@@ -38,21 +39,17 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
   AnimatedSliderController animatedSliderController =
       AnimatedSliderController();
   ROpEditInfoController editInfoController = ROpEditInfoController();
-  late ROpEditInfoWidgets viewWidgets;
-  String? restaurantID;
+
+  int? restaurantID;
   PageController _pageController = PageController(initialPage: 0);
 
   @override
   void initState() {
-    restaurantID =
-        restaurantID = widget.restID ?? Get.arguments["restaurantId"];
+    restaurantID = widget.restID ?? int.parse(Get.parameters["restaurantId"]!);
     if (restaurantID != null) {
       editInfoController.init(
           restaurantId: restaurantID!,
           tabsViewViewController: widget.tabsViewViewController);
-
-      viewWidgets = ROpEditInfoWidgets(
-          editInfoController: editInfoController, context: context);
     } else
       Get.back();
 
@@ -68,34 +65,7 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
       child: Obx(() {
         if (editInfoController.restaurant.value != null) {
           return Scaffold(
-            //  backgroundColor: Colors.white,
-
-            appBar: (editInfoController.showStripe.isTrue)
-                ? null
-                : PreferredSize(
-                    preferredSize: Size.fromHeight(kToolbarHeight),
-                    child: Obx(
-                      () => LaundryAppAppBar(
-                        leftBtnType: AppBarLeftButtonType.Back,
-                        canGoBack: widget.canGoBack ||
-                            editInfoController.cuurentPage.value != 0,
-                        onClick: () {
-                          if (_pageController.page != 0) {
-                            _pageController.animateToPage(0,
-                                duration: Duration(milliseconds: 1),
-                                curve: Curves.easeIn);
-                            editInfoController.cuurentPage.value = 0;
-                            editInfoController
-                                .tabsViewViewController?.showTabs.value = true;
-                          } else {
-                            Get.back();
-                          }
-                        },
-                        title: editInfoController.getPageTitle(),
-                        showOrders: true,
-                      ),
-                    ),
-                  ),
+            appBar: _getAppBar(),
             body: PageView(
               physics: NeverScrollableScrollPhysics(),
               controller: _pageController,
@@ -108,19 +78,23 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
                 ROpInfoPage(editInfoController: editInfoController),
                 //
                 ROpSchedulePage(
-                    editInfoController: editInfoController,
-                    viewWidgets: viewWidgets),
+                  editInfoController: editInfoController,
+                ),
                 //
                 ROpPaymentPage(
                   editInfoController: editInfoController,
                 ),
-                //
-                ROpReviewsView(restId: widget.restID!),
-                //
-                ROpReviewsView(restId: widget.restID!),
-                //
-                ROpOperatorsView(restaurantId: int.parse(widget.restID!))
-                // ROpAcceptedPayments(viewController: editInfoController)
+                ROpReviewsView(restId: restaurantID!),
+
+                ROpOperatorsView(restaurantId: restaurantID!),
+                if (editInfoController.restaurant.value!.selfDelivery)
+                  ROpDriversView(
+                    restID: restaurantID!,
+                  ),
+                if (editInfoController.restaurant.value!.selfDelivery)
+                  ROpDeliveryCost(
+                    editInfoController: editInfoController,
+                  ),
               ],
             ),
             // bottomNavigationBar: _editInfoSaveButton(),
@@ -135,6 +109,30 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
           );
         }
       }),
+    );
+  }
+
+  PreferredSize _getAppBar() {
+    return PreferredSize(
+      preferredSize: Size.fromHeight(kToolbarHeight),
+      child: Obx(
+        () => LaundryAppAppBar(
+          leftBtnType: AppBarLeftButtonType.Back,
+          canGoBack:
+              widget.canGoBack || editInfoController.cuurentPage.value != 0,
+          onClick: () {
+            if (_pageController.page != 0) {
+              _pageController.animateToPage(0,
+                  duration: Duration(milliseconds: 1), curve: Curves.easeIn);
+              editInfoController.cuurentPage.value = 0;
+              editInfoController.tabsViewViewController?.showTabs.value = true;
+            } else {
+              Get.back();
+            }
+          },
+          title: editInfoController.getPageTitle(),
+        ),
+      ),
     );
   }
 }

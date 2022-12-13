@@ -1,0 +1,41 @@
+
+# get delivery drivers list associated to a service provider 
+query getDriversByServiceId($serviceId: Int!) {
+  delivery_driver(where: {delivery_company_id: {_eq: $serviceId}}) {
+    app_version
+    current_location
+    delivery_driver_type
+    delivery_company_type
+    delivery_company_id
+    id
+    online
+    status
+    user {
+        id
+      image
+      name
+      firebase_id
+      language_id
+    }
+  }
+}
+# edit a delivery driver row
+mutation updateDeliveryDriverById($driverId: Int!,$driverData : delivery_driver_set_input) {
+  update_delivery_driver_by_pk(pk_columns: {id: $driverId}, _set: $driverData) {
+    id
+  }
+}
+
+# delete delivery driver
+mutation deleteDriverById($driverId: Int!) {
+  delete_delivery_driver_by_pk(id: $driverId) {
+    id
+    user {
+      name
+      image
+    }
+  }
+}
+
+
+

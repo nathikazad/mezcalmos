@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
     ["OrderView"]["Components"]["OrderEstimatedTimeComponent"];
@@ -200,7 +201,7 @@ class _OrderEstimatedTimeComponentState
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () {
-        Get.back(closeOverlays: true);
+        MezRouter.back(closeOverlays: true);
       },
       child: Ink(
         height: 50,
@@ -237,7 +238,8 @@ class _OrderEstimatedTimeComponentState
                       ),
                       textButtonTheme: TextButtonThemeData(
                         style: TextButton.styleFrom(
-                          primary: primaryBlueColor, // button text color
+                          foregroundColor:
+                              primaryBlueColor, // button text color
                         ),
                       ),
                     ),
@@ -327,12 +329,12 @@ class _OrderEstimatedTimeComponentState
     isClicked.value = true;
     if (value.difference(widget.order.orderTime).inMinutes > 30) {
       orderController
-          .setEstimatedLaundryReadyTime(widget.order.orderId, value)
+          .setEstimatedLaundryReadyTime(widget.order.orderId.toString(), value)
           .whenComplete(() {
         isClicked.value = false;
       }).then((ServerResponse value) {
         if (value.success) {
-          Get.back(closeOverlays: true);
+          MezRouter.back(closeOverlays: true);
         }
       });
     } else {

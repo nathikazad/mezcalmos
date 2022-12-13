@@ -5,11 +5,14 @@ import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/DialogRequiredSignIn.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
@@ -23,11 +26,13 @@ class BottomBarItemViewScreen extends StatefulWidget {
     required this.cartItem,
     required this.mode,
     this.currentRestaurantId,
+    required this.restaurant,
   }) : super(key: key);
 
   final Rxn<CartItem> cartItem;
   final ViewItemScreenMode mode;
-  final String? currentRestaurantId;
+  final Restaurant restaurant;
+  final int? currentRestaurantId;
 
   @override
   _BottomBarItemViewScreenState createState() =>
@@ -109,28 +114,39 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                           .canAddSpecial(item: widget.cartItem.value!) ==
                       false)
                   ? () async {
+                      mezDbgPrint("[cc] Exec :: _addSpecialItemCallBack ");
                       await _addSpecialItemCallBack();
                     }
                   : () async {
+                      mezDbgPrint("[cc] Exec :: other ");
+
                       if (auth.fireAuthUser != null) {
                         if (ViewItemScreenMode.AddItemMode == widget.mode) {
+                          mezDbgPrint("[cc] Exec :: AddItemMode ");
+
                           if (restaurantCartController
                                   .associatedRestaurant?.info.hasuraId
                                   .toString() !=
                               null) {
-                            if (restaurantCartController
-                                    .associatedRestaurant?.info.hasuraId
-                                    .toString() ==
-                                widget.currentRestaurantId) {
-                              mezDbgPrint(
-                                  "the first id is ${restaurantCartController.associatedRestaurant?.info.hasuraId.toString()} and the scond is ${widget.currentRestaurantId}");
-                              await restaurantCartController
-                                  .addItem(widget.cartItem.value!);
-                              await Get.offNamed<void>(kCartRoute);
-                            } else {
-                              mezDbgPrint(
-                                  "not true ${restaurantCartController.associatedRestaurant?.info.hasuraId.toString()} and the other is ${widget.currentRestaurantId}");
+                            mezDbgPrint("[cc] Exec :: AddItemMode :: if 1 ");
 
+                            if (restaurantCartController
+                                    .associatedRestaurant?.info.hasuraId ==
+                                widget.currentRestaurantId) {
+                              final Cart? _c = await getCustomerCart(
+                                customerId: auth.user!.hasuraId,
+                              );
+                              if (_c == null) {
+                                await create_customer_cart(
+                                    restaurant_id: restaurantCartController
+                                        .associatedRestaurant!.info.hasuraId);
+                              }
+                              await add_item_to_cart(
+                                  cartItem: widget.cartItem.value!);
+                              restaurantCartController.cart.value.restaurant =
+                                  widget.restaurant;
+                              await MezRouter.offNamed<void>(kCartRoute);
+                            } else {
                               await showStatusInfoDialog(
                                 context,
                                 bottomRightIcon: Icons.shopping_cart,
@@ -145,14 +161,14 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                                 secondaryClickTitle: _i18n()["leftBtn"],
                                 description: _i18n()["subtitle"],
                                 secondaryCallBack: () async {
-                                  Get.back<void>();
-                                  await Get.toNamed<void>(kCartRoute);
+                                  MezRouter.popDialog<void>();
+                                  await MezRouter.toNamed<void>(kCartRoute);
                                 },
                                 primaryCallBack: () async {
-                                  Get.back<void>();
+                                  MezRouter.popDialog<void>();
                                   await restaurantCartController
                                       .addItem(widget.cartItem.value!);
-                                  await Get.offNamed<void>(kCartRoute);
+                                  await MezRouter.offNamed<void>(kCartRoute);
                                 },
                               );
                             }
@@ -165,18 +181,30 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                                         .canAddSpecial(
                                             item: widget.cartItem.value!) ==
                                     false) {
-                              mezDbgPrint("Error");
                               MezSnackbar("Error", "Special time error");
                             } else {
-                              await restaurantCartController
-                                  .addItem(widget.cartItem.value!);
-                              await Get.offNamed<void>(kCartRoute);
+                              restaurantCartController.associatedRestaurant =
+                                  widget.restaurant;
+                              final Cart? _c = await getCustomerCart(
+                                customerId: auth.user!.hasuraId,
+                              );
+                              if (_c == null) {
+                                await create_customer_cart(
+                                    restaurant_id: restaurantCartController
+                                        .associatedRestaurant!.info.hasuraId);
+                              }
+                              final int? item_id = await add_item_to_cart(
+                                cartItem: widget.cartItem.value!,
+                              );
+                              widget.cartItem.value?.idInCart = item_id;
+                              widget.cartItem.refresh();
+                              await MezRouter.offNamed<void>(kCartRoute);
                             }
                           }
                         } else {
                           await restaurantCartController
                               .addItem(widget.cartItem.value!);
-                          Get.back<void>();
+                          MezRouter.back<void>();
                         }
                       } else {
                         dialogRequiredSignIn();
@@ -208,8 +236,8 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
       secondaryClickTitle: _i18n()["leftBtn"],
       description: _i18n()["specialSubtitle"],
       secondaryCallBack: () async {
-        Get.back<void>();
-        await Get.toNamed<void>(kCartRoute);
+        MezRouter.popDialog<void>();
+        await MezRouter.toNamed<void>(kCartRoute);
       },
       primaryCallBack: () async {
         mezDbgPrint("OVERIDDDING CART WITH NEW SPECIAL");
@@ -218,7 +246,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
         mezDbgPrint(
             "Clearing cart =============================>>>>>${restaurantCartController.cart.value.cartItems}");
         await restaurantCartController.addItem(widget.cartItem.value!);
-        await Get.offNamed<void>(kCartRoute);
+        await MezRouter.offNamed<void>(kCartRoute);
       },
     );
   }

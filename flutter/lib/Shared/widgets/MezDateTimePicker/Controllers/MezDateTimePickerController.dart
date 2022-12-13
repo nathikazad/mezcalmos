@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class MezDateTimePickerController {
   // main variables //
@@ -232,6 +233,6 @@ class MezDateTimePickerController {
       minutes.value!,
     );
 
-    Get.back(result: date);
+    MezRouter.back(result: date);
   }
 }

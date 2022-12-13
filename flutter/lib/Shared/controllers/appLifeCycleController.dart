@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
 class AppLifeCycleController extends GetxController
     with WidgetsBindingObserver {
-  final bool logs;
   Map<AppLifecycleState, Map<String, VoidCallback>> callbacks =
       <AppLifecycleState, Map<String, VoidCallback>>{
     AppLifecycleState.detached: <String, VoidCallback>{},
@@ -16,12 +16,10 @@ class AppLifeCycleController extends GetxController
     AppLifecycleState.resumed: <String, VoidCallback>{},
   };
 
-  AppLifeCycleController({this.logs = false});
+  AppLifeCycleController();
 
   Rx<AppLifecycleState> _appState = AppLifecycleState.resumed.obs;
   AppLifecycleState get appState => _appState.value;
-  StreamController<bool> _appResumedStreamController = StreamController<bool>();
-  Stream<bool> get getAppResumedStream => _appResumedStreamController.stream;
   String attachCallback(AppLifecycleState onState, VoidCallback f) {
     final String callbackId = getRandomString(8);
     callbacks[onState]?[callbackId] = f;
@@ -56,8 +54,8 @@ class AppLifeCycleController extends GetxController
 
   @override
   void dispose() {
+    cleanAllCallbacks();
     WidgetsBinding.instance.removeObserver(this);
-    _appResumedStreamController.close();
     super.dispose();
   }
 
@@ -67,10 +65,6 @@ class AppLifeCycleController extends GetxController
     callbacks[state]!.forEach((String callbackId, VoidCallback function) {
       function();
     });
-
-    if (state == AppLifecycleState.resumed) {
-      _appResumedStreamController.add(true);
-    }
 
     mezDbgPrint("[+] AppLifeCycleController :: AppStateChanged :: $state");
   }

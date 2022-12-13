@@ -4,8 +4,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 enum ButtonColorType { ButtonLightColor, ButtonDarkColor }
+
 LinearGradient gradientLightColor = LinearGradient(
   begin: Alignment(0.1689453125, 0),
   end: Alignment(1, 1),
@@ -72,9 +74,9 @@ class ActionIconsComponents {
           if (function != null) {
             mezDbgPrint("notification screen called");
             function();
-            Get.toNamed(kNotificationsRoute);
+            MezRouter.toNamed(kNotificationsRoute);
           }
-          Get.toNamed(kNotificationsRoute);
+          MezRouter.toNamed(kNotificationsRoute);
         },
       ),
     );
@@ -136,9 +138,9 @@ class ActionIconsComponents {
           mezDbgPrint("ActionIconsComponent: orders icon clicked");
           if (function != null) {
             function();
-            Get.toNamed(kOrdersRoute);
+            MezRouter.toNamed(kOrdersRoute);
           }
-          Get.toNamed(kOrdersRoute);
+          MezRouter.toNamed(kOrdersRoute);
         },
       ),
     );

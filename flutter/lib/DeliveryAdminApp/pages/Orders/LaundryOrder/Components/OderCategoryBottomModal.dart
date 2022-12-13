@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
@@ -145,7 +146,7 @@ class _OrderCategoryBottomModalState extends State<OrderCategoryBottomModal> {
           ),
           TextButton(
               onPressed: () {
-                Get.back();
+                MezRouter.back();
               },
               style: TextButton.styleFrom(backgroundColor: Colors.red),
               child: Container(
@@ -228,7 +229,7 @@ class _OrderCategoryBottomModalState extends State<OrderCategoryBottomModal> {
         .then((ServerResponse value) {
       mezDbgPrint("Done");
 
-      Get.back();
+      MezRouter.back();
       // disposeBottomSheet();
     }).whenComplete(() => isClicked.value = false);
   }

@@ -80,6 +80,12 @@ object_relationships:
   - name: service_provider_review_by_driver
     using:
       foreign_key_constraint_on: service_provider_review_by_driver_id
+computed_fields:
+  - name: notification_token
+    definition:
+      function:
+        name: delivery_notification_token
+        schema: public
 select_permissions:
   - role: customer
     permission:

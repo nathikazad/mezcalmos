@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/widgets/OrderInfoCard/OrderInfoCard.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 // class TaxiOrderCardSubWidgets implements OrderCardSubWidgets {
 //   final TaxiOrder order;
@@ -43,7 +44,7 @@ OrderCardSubWidgets buildTaxiOrderCardWidgets(TaxiOrder order) {
   // upon Card Tap
   final void Function() onTap = () => Future.delayed(
         Duration.zero,
-        () => Get.toNamed<void>(
+        () => MezRouter.toNamed<void>(
           order.status != TaxiOrdersStatus.Scheduled && !order.isPastOrder()
               ? getIncomingOrderRoute(order.orderId)
               : getTaxiOrderRoute(order.orderId),
@@ -85,7 +86,6 @@ OrderCardSubWidgets buildTaxiOrderCardWidgets(TaxiOrder order) {
         SizedBox(height: 14)
       ],
     );
-
 
   // setting secondary header
   // setting other parts!

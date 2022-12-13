@@ -36,6 +36,9 @@ export interface CheckoutRequest {
 
 export async function checkout(customerId: number, checkoutRequest: CheckoutRequest): Promise<ServerResponse> {
 
+  console.log("\n\n[+] CustomerId ==> \n\n", customerId);
+  console.log("\n\n[+] checkoutRequest ==> \n\n", checkoutRequest);
+  console.log("\n\n[+] restaurantId ==> \n\n", checkoutRequest.restaurantId);
   let restaurantPromise = getRestaurant(checkoutRequest.restaurantId);
   let customerCartPromise = getCart(customerId);
   let customerPromise = getCustomer(customerId);
@@ -63,6 +66,13 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
   // let chain = getHasura();
   // let response = await getCheckoutDetails()
 
+  if (!cart.to) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: "Shipping address can't be null!"
+    }
+  }
+
   try {
     // if (data.stripePaymentId) {
     //   order = (await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId, data.stripeFees)) as RestaurantOrder
@@ -70,9 +80,9 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
 
     let orderResponse = await createRestaurantOrder(restaurantOrder, restaurant);
     
-    // clear user cart
+    // clear user cart 
     clearCart(customerId);
-
+    console.log(customer);
     setOrderChatInfo(restaurantOrder, restaurant, orderResponse.deliveryOrder, customer);
 
     notifyAdmins(mezAdmins, orderResponse.restaurantOrder.orderId!, restaurant);
@@ -88,7 +98,8 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     }
 
     return <ServerResponse> {
-      status: ServerResponseStatus.Success
+      status: ServerResponseStatus.Success,
+      orderId: orderResponse.restaurantOrder.orderId
     }
   } catch (e) {
     functions.logger.error(e);

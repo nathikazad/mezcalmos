@@ -1,43 +1,79 @@
-
+import { RestaurantOrderType } from './shared/models/Services/Restaurant/RestaurantOrder';
+import { PaymentType } from "./shared/models/Generic/Order";
+import { AppType, Location } from "./shared/models/Generic/Generic";
+import { checkout, CheckoutRequest } from "./restaurant/checkoutCart";
 import * as firebase from "firebase-admin";
 // import { AssignDriverDetails, assignDriver } from "./delivery/assignDriver";
 // import { AssignCompanyDetails, assignDeliveryCompany } from "./restaurant/assignDeliveryCompany";
 // import { OperatorType } from "./shared/models/Generic/Generic";
 // import { OrderType } from "./shared/models/Generic/Order";
 // import { DeliveryDriverType } from "./shared/models/Services/Delivery/DeliveryOrder";
-// import { CheckoutRequest, checkout } from "./restaurant/checkoutCart";
-// import { AppType, Location } from "./shared/models/Generic/Generic";
-// import { PaymentType } from "./shared/models/Generic/Order";
-// import { RestaurantOrderType } from "./shared/models/Services/Restaurant/RestaurantOrder";
+// import { createNewRestaurant } from "./restaurant/createNewRestaurant";
+// import { readyForPickupOrder } from "./restaurant/adminStatusChanges"
+// import { cancelOrderFromCustomer } from "./restaurant/cancelOrderFromCustomer";
+import { AuthorizeDetails, authorizeOperator } from "./restaurant/authorizeOperator";
+import { prepareOrder } from "./restaurant/adminStatusChanges"
+import { cancelOrderFromCustomer } from "./restaurant/cancelOrderFromCustomer";
+import { Restaurant } from './shared/models/Services/Restaurant/Restaurant';
+import { getRestaurant } from './shared/graphql/restaurant/getRestaurant';
+
 firebase.initializeApp({
   databaseURL: "http://localhost:9000/?ns=mezcalmos-31f1c-default-rtdb"
 });
 process.env.FUNCTIONS_EMULATOR = "true"
-// const location: Location = {
-//   lat: 44,
-//   lng: 23,
-//   address: "qweul",
-// }
+const location: Location = {
+  lat: 23,
+  lng : 44,
+  address: "Morocco, Agadir 77",
+}
 
-// const checkoutRequest: CheckoutRequest = {
+// let checkoutRequest: CheckoutRequest = {
 //   customerAppType: AppType.CustomerMobile,
 //   customerLocation: location,
 //   deliveryCost: 15,
 //   paymentType: PaymentType.Cash,
-//   notes: "",
+//   notes: "My notes",
 //   restaurantId: 1,
 //   restaurantOrderType: RestaurantOrderType.Delivery,
 //   tripDistance: 0,
 //   tripDuration: 0,
 //   tripPolyline: "",
-// }
-// checkout(4411, checkoutRequest);
 
+
+// }
+
+let ch : CheckoutRequest = {
+
+    restaurantOrderType: RestaurantOrderType.Pickup,
+     tripDistance: 0, // this is null
+      customerLocation: {
+        address: 'Test _ Location ',
+        lat: 15.872451864887513,
+        lng: -97.0771243663329
+      },
+      customerAppType: AppType.CustomerMobile,
+      notes: '',
+      paymentType: PaymentType.Cash,
+      restaurantId: 1,
+      tripDuration: 0, // null
+      deliveryCost: 20,
+      tripPolyline: '' // null
+}
+
+
+// getRestaurant(checkoutRequest.restaurantId).then((restaurant: Restaurant) = {
+//    console.log(restaurant);
+// });
+console.log("Calling make order ====================>>>>>>>>>>>>>>>>>",ch);
+checkout(3, ch).then((resp) => {
+  console.log(resp);
+});
 // let statusDetails = {
-//   orderId: 14,
+  
+//   orderId: 16,
 //   fromRestaurantOperator: true
 // }
-// readyForPickupOrder(2, statusDetails)
+// prepareOrder(2, statusDetails)
 
 // cancelOrderFromCustomer(1, { orderId: 16 })
 
@@ -49,6 +85,9 @@ process.env.FUNCTIONS_EMULATOR = "true"
 //   restaurantOperatorNotificationToken: "aaa",
 //   firebaseId: "5"
 // }
+
+// });
+
 // createNewRestaurant(4, restaurantDetails);
 
 // let authorizeDetails: AuthorizeDetails = {

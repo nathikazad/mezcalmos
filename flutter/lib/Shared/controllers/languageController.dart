@@ -1,10 +1,11 @@
 import 'dart:convert';
-import 'dart:io' show Platform;
+//import 'dart:io' show Platform;
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 
@@ -12,6 +13,7 @@ class LanguageController extends GetxController {
   // default is english
   RxBool isLamgInitialized = false.obs;
   Rx<LanguageType> _userLanguageKey = sDefaultLanguage.obs;
+  Rx<bool> controllerHasInitialized = false.obs;
 
   // jsonStrings will have:
   // {en : {}, es : {}}  <- so we avoid loading up each one onchanging lang
@@ -20,9 +22,9 @@ class LanguageController extends GetxController {
 
   LanguageController() {
     final LanguageType? lang =
-        Platform.localeName.substring(0, 2).toLanguageType();
+        Get.deviceLocale?.languageCode.substring(0, 2).toLanguageType();
 
-    // mezDbgPrint("\n\n\n\n\nUSER LANGUAGE [[ $lang ]]\n\n\n\n\n");
+    mezDbgPrint("\n\n\n\n\nUSER LANGUAGE [[ $lang ]]\n\n\n\n\n");
     if (lang == LanguageType.EN)
       _userLanguageKey.value = LanguageType
           .EN; // to avoid diffrent other languages diffrent than en and es
@@ -85,6 +87,11 @@ class LanguageController extends GetxController {
     // }
   }
 
+  ///this function [changeLangForWeb] used only for web
+  void changeLangForWeb(LanguageType? language) {
+    _userLanguageKey.value = language ?? LanguageType.EN;
+  }
+
   void setLanguage(LanguageType language) {
     _userLanguageKey.value = language;
   }
@@ -101,6 +108,18 @@ class LanguageController extends GetxController {
       };
     }).then((_) {
       isLamgInitialized.value = true;
+      if (_jsonStrings[
+                      LanguageType.EN.toFirebaseFormatString()]
+                  .toString() !=
+              "" &&
+          _jsonStrings[LanguageType.EN.toFirebaseFormatString()] != null &&
+          _jsonStrings[LanguageType.ES.toFirebaseFormatString()].toString() !=
+              "" &&
+          _jsonStrings[LanguageType.ES.toFirebaseFormatString()] != null) {
+        controllerHasInitialized.value = true;
+      } else {
+        controllerHasInitialized.value = false;
+      }
     });
   }
 

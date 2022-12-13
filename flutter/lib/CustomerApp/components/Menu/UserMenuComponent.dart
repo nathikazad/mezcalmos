@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.d
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class UserMenu extends StatefulWidget {
   const UserMenu({
@@ -94,19 +95,19 @@ class _UserMenuState extends State<UserMenu> {
       onSelected: (Object? value) {
         switch (value) {
           case 0:
-            Get.toNamed<void>(kOrdersRoute);
+            MezRouter.toNamed<void>(kOrdersRoute);
             break;
           case 1:
-            Get.toNamed<void>(kNotificationsRoute);
+            MezRouter.toNamed<void>(kNotificationsRoute);
             break;
           case 2:
-            Get.toNamed<void>(kSavedLocations);
+            MezRouter.toNamed<void>(kSavedLocations);
             break;
           case 3:
-            Get.toNamed<void>(kUserProfile);
+            MezRouter.toNamed<void>(kUserProfile);
             break;
           // case 5:
-          //   Get.toNamed<void>(kInAppReview);
+          //   MezRouter.toNamed<void>(kInAppReview);
           // final InAppReview _inAppReview = InAppReview.instance;
           // _inAppReview.requestReview();
           // break;

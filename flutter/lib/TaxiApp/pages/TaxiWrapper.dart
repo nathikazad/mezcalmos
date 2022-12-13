@@ -11,7 +11,8 @@ import 'package:mezcalmos/Shared/firebaseNodes/taxiNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/TaxiDriver.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Notification.dart' as MezNotification;
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
+    as MezNotification;
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -21,6 +22,7 @@ import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/notificationHandler.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class TaxiWrapper extends StatefulWidget {
   const TaxiWrapper({Key? key}) : super(key: key);
@@ -82,7 +84,7 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
   //       .listen((locationPermission) {
   //     if (locationPermission == false &&
   //         Get.currentRoute != kLocationPermissionPage) {
-  //       Get.toNamed(kLocationPermissionPage);
+  //       MezRouter.toNamed(kLocationPermissionPage);
   //     }
   //   });
   // }
@@ -97,14 +99,14 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
       mezDbgPrint("TaxiWrapper::handleState ${state.toJson().toString()}");
       if (!state.isAuthorized) {
         mezDbgPrint("TaxiWrapper::handleState going to unauthorized");
-        Get.toNamed<void>(kUnauthorizedRoute);
+        MezRouter.toNamed<void>(kUnauthorizedRoute);
       } else if (state.currentOrder != null) {
         mezDbgPrint("TaxiWrapper::handleState going to current order");
-        Get.toNamed<void>(getTaxiOrderRoute(state.currentOrder!));
+        MezRouter.toNamed<void>(getTaxiOrderRoute(state.currentOrder!));
       } else if (state.inOrderNegotation != null) {
         await handleInNegotationMode(state.inOrderNegotation!);
       } else {
-        Get.toNamed(kIncomingOrdersListRoute);
+        MezRouter.toNamed(kIncomingOrdersListRoute);
       }
     } else {
       mezDbgPrint("TaxiWrapper::handleState state is null, ERROR");
@@ -131,7 +133,7 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
         negotiation.customerId,
         newStatus: CounterOfferStatus.Expired,
       );
-      Get.toNamed(kIncomingOrdersListRoute);
+      MezRouter.toNamed(kIncomingOrdersListRoute);
     } else {
       mezDbgPrint("handleInNegotationMode - else !");
 
@@ -144,11 +146,11 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
           negotiation.customerId,
           newStatus: CounterOfferStatus.Expired,
         );
-        Get.toNamed(kIncomingOrdersListRoute);
+        MezRouter.toNamed(kIncomingOrdersListRoute);
       } else {
         mezDbgPrint("handleInNegotationMode - else - else !");
-        Get.toNamed(kIncomingOrdersListRoute);
-        Get.toNamed(getIncomingOrderRoute(negotiation.orderId));
+        MezRouter.toNamed(kIncomingOrdersListRoute);
+        MezRouter.toNamed(getIncomingOrderRoute(negotiation.orderId));
       }
     }
   }

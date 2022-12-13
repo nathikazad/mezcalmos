@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/widgets/OrderInfoCard/OrderInfoCard.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class CustomerOrderCard extends StatelessWidget {
   const CustomerOrderCard({Key? key, required this.order}) : super(key: key);
@@ -211,15 +212,15 @@ class CustomerOrderCard extends StatelessWidget {
   void handleRouting() {
     switch (order.orderType) {
       case OrderType.Restaurant:
-        Get.toNamed(getRestaurantOrderRoute(order.orderId));
+        MezRouter.toNamed(getRestaurantOrderRoute(order.orderId));
 
         break;
       case OrderType.Laundry:
-        Get.toNamed(getLaundryOrderRoute(order.orderId));
+        MezRouter.toNamed(getLaundryOrderRoute(order.orderId));
 
         break;
       case OrderType.Taxi:
-        Get.toNamed(getTaxiOrderRoute(order.orderId));
+        MezRouter.toNamed(getTaxiOrderRoute(order.orderId));
 
         break;
       default:

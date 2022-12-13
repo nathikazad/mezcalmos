@@ -1,8 +1,9 @@
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
 
 class RestaurantOperatorState {
-  final String? restaurantId;
-  final OperatorStatus operatorState;
+  final int? restaurantId;
+  final AgentStatus operatorState;
   final bool owner;
   const RestaurantOperatorState(
       {required this.restaurantId,
@@ -10,11 +11,11 @@ class RestaurantOperatorState {
       required this.owner});
 
   factory RestaurantOperatorState.fromSnapshot(data) {
-    final String restaurantId = data['restaurantId'] ?? null;
+    final int restaurantId = data['restaurantId'] ?? null;
     return RestaurantOperatorState(
         restaurantId: restaurantId,
         owner: false,
-        operatorState: OperatorStatus.Awaiting_approval);
+        operatorState: AgentStatus.Awaiting_approval);
   }
 
   Map<String, dynamic> toJson() => {
@@ -61,28 +62,12 @@ class RestaurantOperator {
         "info": info.toFirebaseFormatJson(),
       };
   bool get isAuthorized {
-    return state.operatorState == OperatorStatus.Authorized &&
+    return state.operatorState == AgentStatus.Authorized &&
         state.restaurantId != null;
   }
 
   bool get isWaiting {
-    return state.operatorState == OperatorStatus.Awaiting_approval &&
+    return state.operatorState == AgentStatus.Awaiting_approval &&
         state.restaurantId != null;
-  }
-}
-
-enum OperatorStatus { Awaiting_approval, Authorized, Banned }
-
-extension ParseOperatorStateToString on OperatorStatus {
-  String toFirebaseFormatString() {
-    final String str = toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
-}
-
-extension ParseStringToOperatorState on String {
-  OperatorStatus toOperartorStatus() {
-    return OperatorStatus.values.firstWhere(
-        (OperatorStatus e) => e.toFirebaseFormatString().toLowerCase() == this);
   }
 }

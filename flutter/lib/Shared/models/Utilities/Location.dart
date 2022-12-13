@@ -64,4 +64,14 @@ class Location {
 
   @override
   int get hashCode => address.hashCode;
+
+  Map<String, dynamic> toGpsJson() {
+    return {
+      "address": address,
+      "gps": {
+        "type": "",
+        "coordinates": [latitude, longitude]
+      }
+    };
+  }
 }

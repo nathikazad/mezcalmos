@@ -5,6 +5,7 @@ import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfo
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class ROpEditLocationCard extends StatelessWidget {
   ROpEditLocationCard({
@@ -21,7 +22,7 @@ class ROpEditLocationCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
           onTap: () async {
-            final Location newLoc = await Get.toNamed(kPickLocationEdit,
+            final Location newLoc = await MezRouter.toNamed(kPickLocationEdit,
                     arguments: LatLng(
                         editInfoController.newLocation.value!.latitude,
                         editInfoController.newLocation.value!.longitude))

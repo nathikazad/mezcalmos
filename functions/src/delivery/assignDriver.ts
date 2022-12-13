@@ -16,10 +16,10 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { deleteDeliveryChatMessages } from "../shared/graphql/chat/deleteChatMessages";
 
 export interface AssignDriverDetails {
-  deliveryId: number,
+  deliveryOrderId: number,
   deliveryDriverId: number,
   orderType: OrderType,
-  orderId: number,
+ // orderId: number,
   deliveryDriverType: DeliveryDriverType,
   changeDriver?: boolean,
   operatorType: OperatorType,
@@ -33,7 +33,7 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
   // if (response != undefined) {
   //   return response;
   // }
-  let deliveryOrderPromise = getDeliveryOrder(assignDriverDetails.deliveryId);
+  let deliveryOrderPromise = getDeliveryOrder(assignDriverDetails.deliveryOrderId);
   let deliveryDriverPromise = getDeliveryDriver(assignDriverDetails.deliveryDriverId, assignDriverDetails.deliveryDriverType);
   let promiseResponse = await Promise.all([deliveryOrderPromise, deliveryDriverPromise]);
   let deliveryOrder: DeliveryOrder = promiseResponse[0];
@@ -86,11 +86,11 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
         notificationType: NotificationType.NewOrder,
         orderType: assignDriverDetails.orderType,
         notificationAction: NotificationAction.ShowPopUp,
-        orderId: assignDriverDetails.orderId,
+        orderId: assignDriverDetails.deliveryOrderId,
         deliveryDriverType: assignDriverDetails.deliveryDriverType
       },
       background: deliveryNewOrderMessage,
-      linkUrl: orderUrl(assignDriverDetails.orderType, assignDriverDetails.orderId)
+      linkUrl: orderUrl(assignDriverDetails.orderType, assignDriverDetails.deliveryOrderId)
     }
     let participantType: ParticipantType = deliveryDriver.deliveryDriverType == DeliveryDriverType.DeliveryDriver
       ? ParticipantType.DeliveryDriver

@@ -106,7 +106,7 @@ class RestaurantsInfoController extends GetxController {
     });
   }
 
-  Future<Item> getItem(String restaurantId, String itemId) {
+  Future<Item> getItem(int restaurantId, int itemId) {
     return _databaseHelper.firebaseDatabase
         .ref()
         .child('restaurants/info/$restaurantId/menu/$itemId')

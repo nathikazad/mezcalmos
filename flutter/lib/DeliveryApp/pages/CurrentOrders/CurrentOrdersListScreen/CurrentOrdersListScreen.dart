@@ -32,7 +32,6 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
   void initState() {
     Get.find<SideMenuDrawerController>().pastOrdersRoute = kPastOrdersView;
     orderController.clearNewOrderNotificationsOfPastOrders();
-    
 
     super.initState();
   }
@@ -67,10 +66,10 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                       _deliveryAuthController.turnOff();
                     },
                     initialSwitcherValue:
-                        _deliveryAuthController.deliveryDriverState?.isOnline ??
+                        _deliveryAuthController.deliveryDriverState?.online ??
                             false,
                   ),
-                  if (_deliveryAuthController.deliveryDriverState?.isOnline !=
+                  if (_deliveryAuthController.deliveryDriverState?.online !=
                           true &&
                       orderController.currentOrders.isEmpty)
                     Container(

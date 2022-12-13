@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.d
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
+import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -36,86 +37,30 @@ class OrderController extends GetxController {
         "--------------------> OrderController Initialized ! and the user uid is ${_authController.fireAuthUser?.uid} ");
     if (_authController.fireAuthUser?.uid != null) {
       getShippingPrice().then((num value) => shippingCost.value = value);
-      _pastOrdersListener?.cancel();
-      _pastOrdersListener = _databaseHelper.firebaseDatabase
-          .ref()
-          .child(customerPastOrders(_authController.fireAuthUser!.uid))
-          .onValue
-          .listen(
-        // ignore: avoid_annotating_with_dynamic
-        (dynamic event) async {
-          final List<Order> orders = <Order>[];
-          if (event.snapshot.value != null) {
-            for (String orderId in event.snapshot.value.keys) {
-              final dynamic orderData = event.snapshot.value[orderId];
-              try {
-                if (orderData["orderType"] ==
-                    OrderType.Restaurant.toFirebaseFormatString()) {
-                  orders.add(RestaurantOrder.fromData(
-                    orderId,
-                    orderData,
-                  ));
-                }
-
-                if (orderData["orderType"] ==
-                    OrderType.Taxi.toFirebaseFormatString()) {
-                  orders.add(TaxiOrder.fromData(orderId, orderData));
-                }
-                if (orderData["orderType"] ==
-                    OrderType.Laundry.toFirebaseFormatString()) {
-                  orders.add(LaundryOrder.fromData(
-                    orderId,
-                    orderData,
-                  ));
-                }
-              } catch (e) {
-                mezDbgPrint(
-                    "past order error $orderId ==============" + e.toString());
-              }
-            }
-          }
-          pastOrders.value = orders;
-        },
-      );
-
-      _currentOrdersListener?.cancel();
-
-      _currentOrdersListener = _databaseHelper.firebaseDatabase
-          .ref()
-          .child(customerInProcessOrders(_authController.fireAuthUser!.uid))
-          .onValue
-          // ignore: avoid_annotating_with_dynamic
-          .listen((dynamic event) async {
-        final List<Order> orders = <Order>[];
-
-        if (event.snapshot.value != null) {
-          // mezDbgPrint("my data : ${event.snapshot.value.toString()}");
-          for (String orderId in event.snapshot.value.keys) {
-            final dynamic orderData = event.snapshot.value[orderId];
-            // if restaurant order
-            if (orderData["orderType"] ==
-                OrderType.Restaurant.toFirebaseFormatString()) {
-              orders.add(RestaurantOrder.fromData(orderId, orderData));
-            }
-            // if Taxi order
-            if (orderData["orderType"] ==
-                OrderType.Taxi.toFirebaseFormatString()) {
-              orders.add(TaxiOrder.fromData(orderId, orderData));
-            }
-            if (orderData["orderType"] ==
-                OrderType.Laundry.toFirebaseFormatString()) {
-              orders.add(LaundryOrder.fromData(
-                orderId,
-                orderData,
-              ));
-            }
-          }
-        }
-        currentOrders.value = orders;
-      });
+      fetchCustomerOrders();
     } else {
       mezDbgPrint("User is not signed it to init order controller");
     }
+  }
+
+  void fetchCustomerOrders() {
+    get_customer_orders(customer_id: _authController.user!.hasuraId)
+        .then((List<RestaurantOrder> value) {
+      final List<Order> _currentOrders = <Order>[];
+      final List<Order> _pastOrders = <Order>[];
+
+      if (value.isNotEmpty) {
+        value.forEach((RestaurantOrder order) {
+          if (order.inProcess()) {
+            _currentOrders.add(order);
+          } else {
+            _pastOrders.add(order);
+          }
+        });
+      }
+      currentOrders.value = _currentOrders;
+      pastOrders.value = _pastOrders;
+    });
   }
 
   Order? hasOrderOfType({required OrderType typeToCheck}) {
@@ -127,8 +72,7 @@ class OrderController extends GetxController {
     }
   }
 
-  String? getServiceProviderId(
-      {required String orderId, required bool isPast}) {
+  int? getServiceProviderId({required int orderId, required bool isPast}) {
     if (isPast) {
       return pastOrders
           .firstWhere((Order element) => element.orderId == orderId)
@@ -139,7 +83,7 @@ class OrderController extends GetxController {
           .serviceProviderId;
   }
 
-  bool hasNewMessageNotification(String chatId) {
+  bool hasNewMessageNotification(int chatId) {
     return _fbNotificationsController
         .notifications()
         .where((Notification notification) =>
@@ -148,7 +92,7 @@ class OrderController extends GetxController {
         .isNotEmpty;
   }
 
-  bool hasNewAdminMessageNotification(String orderId) {
+  bool hasNewAdminMessageNotification(int orderId) {
     return _fbNotificationsController
         .notifications()
         .where(
@@ -158,7 +102,7 @@ class OrderController extends GetxController {
         .isNotEmpty;
   }
 
-  Order? getOrder(String orderId) {
+  Order? getOrder(int orderId) {
     try {
       return currentOrders.firstWhere((Order order) {
         return order.orderId == orderId;
@@ -174,14 +118,14 @@ class OrderController extends GetxController {
     }
   }
 
-  Stream<Order?> getOrderStream(String orderId) {
+  Stream<Order?> getOrderStream(int orderId) {
     return StreamGroup.merge(<Stream<Order?>>[
       _getInProcessOrderStream(orderId),
       _getPastOrderStream(orderId)
     ]);
   }
 
-  Stream<Order?> _getInProcessOrderStream(String orderId) {
+  Stream<Order?> _getInProcessOrderStream(int orderId) {
     return currentOrders.stream.map<Order?>((_) {
       try {
         return currentOrders.firstWhere(
@@ -195,7 +139,7 @@ class OrderController extends GetxController {
     });
   }
 
-  Stream<Order?> _getPastOrderStream(String orderId) {
+  Stream<Order?> _getPastOrderStream(int orderId) {
     return pastOrders.stream.map<Order?>((_) {
       try {
         return pastOrders.firstWhere(
@@ -219,8 +163,8 @@ class OrderController extends GetxController {
   }
 
   Future<ServerResponse> addReview({
-    required String orderId,
-    required String serviceId,
+    required int orderId,
+    required int serviceId,
     required String comment,
     required OrderType orderType,
     required num rate,
@@ -245,7 +189,7 @@ class OrderController extends GetxController {
     }
   }
 
-  bool orderHaveNewMessageNotifications(String chatId) {
+  bool orderHaveNewMessageNotifications(int chatId) {
     return _fbNotificationsController
         .notifications()
         .where((Notification notification) =>
@@ -254,7 +198,7 @@ class OrderController extends GetxController {
         .isNotEmpty;
   }
 
-  void clearOrderNotifications(String orderId) {
+  void clearOrderNotifications(int orderId) {
     _fbNotificationsController
         .notifications()
         .where((Notification notification) =>

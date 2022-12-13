@@ -16,8 +16,8 @@ import 'package:mezcalmos/Shared/models/Utilities/SelfDeliveryDetails.dart';
 //ignore_for_file:constant_identifier_names
 enum RestaurantOrderStatus {
   OrderReceived,
-  PreparingOrder,
-  ReadyForPickup,
+  Preparing,
+  Ready,
   OnTheWay,
   Delivered,
   CancelledByAdmin,
@@ -33,8 +33,13 @@ extension ParseRestaurantOrderStatusToString on RestaurantOrderStatus {
 
 extension ParseStringToRestaurantOrderStatus on String {
   RestaurantOrderStatus toRestaurantOrderStatus() {
+    mezDbgPrint(this);
     return RestaurantOrderStatus.values.firstWhere(
-        (RestaurantOrderStatus e) => e.toFirebaseFormatString() == this);
+      (RestaurantOrderStatus e) {
+        mezDbgPrint("ENUM :: $e ||| STR :: $this");
+        return e.toFirebaseFormatString() == this;
+      },
+    );
   }
 }
 
@@ -57,7 +62,6 @@ class RestaurantOrder extends DeliverableOrder {
       super.orderType = OrderType.Restaurant,
       required this.status,
       required this.quantity,
-      this.selfDeliveryDetails,
       required super.serviceProviderId,
       required super.paymentType,
       required super.orderTime,
@@ -65,11 +69,10 @@ class RestaurantOrder extends DeliverableOrder {
       required ServiceInfo restaurant,
       required super.customer,
       required super.to,
-      required this.deliveryMode,
       this.estimatedFoodReadyTime,
       super.dropoffDriver,
       this.deliveryTime,
-      String? dropOffDriverChatId,
+      int? dropOffDriverChatId,
       required this.itemsCost,
       required this.shippingCost,
       super.customerDropOffDriverChatId,
@@ -83,7 +86,10 @@ class RestaurantOrder extends DeliverableOrder {
       super.totalCost,
       super.refundAmount,
       super.costToCustomer,
-      super.dropOffShippingCost})
+      super.dropOffShippingCost,
+      required super.chatId,
+      required this.deliveryMode,
+      this.selfDeliveryDetails})
       : super(
             serviceProvider: restaurant,
             serviceProviderDropOffDriverChatId: dropOffDriverChatId);
@@ -99,6 +105,7 @@ class RestaurantOrder extends DeliverableOrder {
     }
     final RestaurantOrder restaurantOrder = RestaurantOrder(
         orderId: id,
+        chatId: 1,
         status: data["status"].toString().toRestaurantOrderStatus(),
         quantity: data["quantity"],
         serviceProviderId: data["serviceProviderId"],
@@ -124,7 +131,15 @@ class RestaurantOrder extends DeliverableOrder {
         deliveryTime: (data["deliveryTime"] != null)
             ? DateTime.tryParse(data["deliveryTime"])
             : null,
-        to: Location.fromFirebaseData(data['to']),
+        to: data['to'] == null
+            ? Location.fromFirebaseData(
+                {
+                  "address": "---------",
+                  "lat": 15.871937999999997,
+                  "lng": -97.091954
+                },
+              )
+            : Location.fromFirebaseData(data['to']),
         restaurant: ServiceInfo.fromData(data["restaurant"]),
         // TODO:544D-HASURA
         customer: UserInfo(
@@ -149,13 +164,13 @@ class RestaurantOrder extends DeliverableOrder {
         costToCustomer: data['costToCustomer'],
         notifiedAdmin: data['notified']?['admin'] ?? false,
         notifiedOperator: data['notified']?['operator'] ?? false);
-    if (data["review"] != null) {
-      restaurantOrder.review = Review.fromMap(null, data["review"]);
-      // data["reviews"]?.forEach((key, review) {
-      //   mezDbgPrint("ADD REVIEW ON ORDER===============");
-      //   restaurantOrder.reviews.add(Review.fromMap(key, review));
-      // });
-    }
+    // if (data["review"] != null) {
+    //   restaurantOrder.review = Review.fromMap(null, data["review"]);
+    //   // data["reviews"]?.forEach((key, review) {
+    //   //   mezDbgPrint("ADD REVIEW ON ORDER===============");
+    //   //   restaurantOrder.reviews.add(Review.fromMap(key, review));
+    //   // });
+    // }
     if (data["routeInformation"] != null) {
       restaurantOrder.routeInformation = RouteInformation(
         polyline: data["routeInformation"]["polyline"],
@@ -179,7 +194,7 @@ class RestaurantOrder extends DeliverableOrder {
     return restaurantOrder;
   }
 
-  String get restaurantId => serviceProviderId!;
+  int get restaurantId => serviceProviderId!;
 
   @override
   String toString() {
@@ -213,8 +228,8 @@ class RestaurantOrder extends DeliverableOrder {
   @override
   bool inProcess() {
     return status == RestaurantOrderStatus.OrderReceived ||
-        status == RestaurantOrderStatus.PreparingOrder ||
-        status == RestaurantOrderStatus.ReadyForPickup ||
+        status == RestaurantOrderStatus.Preparing ||
+        status == RestaurantOrderStatus.Ready ||
         status == RestaurantOrderStatus.OnTheWay;
   }
 
@@ -223,7 +238,7 @@ class RestaurantOrder extends DeliverableOrder {
   }
 
   bool inSelfDelivery() {
-    return (status == RestaurantOrderStatus.ReadyForPickup ||
+    return (status == RestaurantOrderStatus.Ready ||
             status == RestaurantOrderStatus.OnTheWay) &&
         (deliveryMode == DeliveryMode.SelfDeliveryByDriver ||
             deliveryMode == DeliveryMode.SelfDeliveryByRestaurant);
@@ -282,8 +297,8 @@ class RestaurantOrder extends DeliverableOrder {
 class RestaurantOrderItem {
   num costPerOne;
   num totalCost;
-  String idInCart;
-  String idInRestaurant;
+  int idInCart;
+  int idInRestaurant;
   LanguageMap name;
   String? image;
   int quantity;

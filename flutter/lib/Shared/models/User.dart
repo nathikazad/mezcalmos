@@ -58,6 +58,21 @@ class UserInfo {
         "language":
             language?.toString() ?? LanguageType.EN.toFirebaseFormatString(),
       };
+
+  // UserInfo copyWith({
+  //   String? firebaseId,
+  //   int? hasuraId,
+  //   String? name,
+  //   String? image,
+  //   LanguageType? language,
+  // }) {
+  //   return UserInfo(
+  //       hasuraId: hasuraId ?? this.hasuraId,
+  //       name: name ?? _name,
+  //       firebaseId: firebaseId ?? this.firebaseId,
+  //       image: image ?? _image,
+  //       language: language ?? this.language);
+  // }
 }
 
 class MainUserInfo {
@@ -123,10 +138,12 @@ class MainUserInfo {
 class ServiceInfo extends UserInfo {
   Location location;
   int? descriptionId;
+  LanguageMap? description;
 
   ServiceInfo({
     required this.location,
     super.firebaseId,
+    this.description,
     required super.hasuraId,
     required super.image,
     this.descriptionId,
@@ -152,4 +169,17 @@ class ServiceInfo extends UserInfo {
         "image": image,
         "location": location.toFirebaseFormattedJson(),
       };
+  @override
+  ServiceInfo copyWith({
+    Location? location,
+    String? name,
+    String? image,
+  }) {
+    return ServiceInfo(
+      location: location ?? this.location,
+      hasuraId: hasuraId,
+      image: image ?? this.image,
+      name: name ?? this.name,
+    );
+  }
 }

@@ -11,6 +11,8 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -19,6 +21,7 @@ import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class ViewCartScreen extends StatefulWidget {
   @override
@@ -51,19 +54,36 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   @override
   void initState() {
     super.initState();
-    mezDbgPrint(
-        "Cart items =====================>>>${_restaurantController.cart.value.cartItems}");
-    if (Get.find<CustomerAuthController>().customer.value?.savedCards == null)
+
+    if (Get.find<CustomerAuthController>().customer?.savedCards == null)
       savedCardChoice =
-          Get.find<CustomerAuthController>().customer.value!.savedCards.first;
-    orderToLocation = Get.find<CustomerAuthController>()
-        .customer
-        .value!
-        .defaultLocation
-        ?.location;
+          Get.find<CustomerAuthController>().customer!.savedCards.first;
+    orderToLocation =
+        Get.find<CustomerAuthController>().customer!.defaultLocation?.location;
     if (orderToLocation != null) {
       _restaurantController.cart.value.toLocation = orderToLocation;
     }
+
+    // getCustomerCart(
+    //   customerId: Get.find<AuthController>().user!.hasuraId,
+    // ).then((value) {
+    //   if (value != null) {
+    //     mezDbgPrint("Got cart! ===> ${value.restaurant?.info}");
+    //     _restaurantController.cart.value = value;
+    //     mezDbgPrint(
+    //         "Cart items =====================>>>${_restaurantController.cart.value.cartItems}");
+    //     if (Get.find<CustomerAuthController>().customer?.savedCards == null)
+    //       savedCardChoice =
+    //           Get.find<CustomerAuthController>().customer!.savedCards.first;
+    //     orderToLocation = Get.find<CustomerAuthController>()
+    //         .customer!
+    //         .defaultLocation
+    //         ?.location;
+    //     if (orderToLocation != null) {
+    //       _restaurantController.cart.value.toLocation = orderToLocation;
+    //     }
+    //   }
+    // });
 
     _restaurantController
         .updateShippingPrice()
@@ -71,13 +91,10 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
     // check if cart empty
     // if yes redirect to home page
-
     if (_restaurantController.cart.value.cartPeriod != null) {
       _restaurantController.cart.value.deliveryTime =
           _restaurantController.cart.value.cartPeriod?.start;
     }
-    mezDbgPrint(
-        "item is special ===== ${_restaurantController.cart.value.cartItems.first.isSpecial}");
   }
 
   @override
@@ -121,16 +138,25 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                       false)
                   ? '${_i18n()["scheduleOrder"]}'
                   : '${_i18n()["orderNow"]}',
-              enabled: _restaurantController.canOrder,
+              enabled: _restaurantController.canOrder &&
+                  !viewCartController.clickedCheckout.value,
               withGradient: true,
               borderRadius: 0,
-              onClick: () async {
-                if (_restaurantController.canOrder) {
-                  await checkoutActionButton();
-                } else {
-                  _restaurantController.cart.refresh();
-                }
-              },
+              onClick: viewCartController.clickedCheckout.value
+                  ? null
+                  : () async {
+                      if (_restaurantController.canOrder &&
+                          !viewCartController.clickedCheckout.value) {
+                        viewCartController.clickedCheckout.value = true;
+                        // final bool _isCheckoutFailed =
+                        await checkoutActionButton();
+                        // if (_isCheckoutFailed) {
+                        //   viewCartController.clickedCheckout.value = false;
+                        // }
+                      } else {
+                        _restaurantController.cart.refresh();
+                      }
+                    },
             );
           } else
             return SizedBox();
@@ -200,16 +226,22 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     _restaurantController.cart.value.notes = _textEditingController.text;
     try {
       // if (_restaurantController.getOrderDistance <= 10) {
+      // if (true) {
       final String? stripePaymentId =
           await acceptPaymentByCardChoice(viewCartController.getCardChoice);
 
       final ServerResponse _serverResponse = await _restaurantController
           .checkout(stripePaymentId: stripePaymentId);
 
+      mezDbgPrint("datatatatataat => ${_serverResponse.data}");
+
       if (_serverResponse.success) {
         _restaurantController.clearCart();
         popEverythingAndNavigateTo(
-            getRestaurantOrderRoute(_serverResponse.data["orderId"]));
+          getRestaurantOrderRoute(
+            _serverResponse.data["orderId"],
+          ),
+        );
       } else {
         print(_serverResponse);
         if (_serverResponse.errorCode == "serverError") {
@@ -222,6 +254,18 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           // do something
         }
       }
+      // } else {
+      //   print(_serverResponse);
+      //   if (_serverResponse.errorCode == "serverError") {
+      //     // do something
+      //   } else if (_serverResponse.errorCode == "inMoreThanThreeOrders") {
+      //     // do something
+      //   } else if (_serverResponse.errorCode == "restaurantClosed") {
+      //     // do something
+      //   } else {
+      //     // do something
+      //   }
+      // }
       // } else {
       //   MezSnackbar(
       //     '${_i18n()["ops"]}',

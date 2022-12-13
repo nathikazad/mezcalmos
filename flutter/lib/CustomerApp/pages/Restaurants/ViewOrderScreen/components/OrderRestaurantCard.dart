@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['CustomerApp']["pages"]
@@ -90,11 +93,16 @@ class OrderRestaurantCard extends StatelessWidget {
                       showRedDot: Get.find<OrderController>()
                           .orderHaveNewMessageNotifications(order.orderId),
                       onTap: () {
-                        Get.toNamed<void>(
+                        mezDbgPrint("[log] PUSHING TO => ${getMessagesRoute(
+                          chatId: order.orderId,
+                          orderId: order.orderId,
+                          recipientType: ParticipantType.Restaurant,
+                        )}");
+                        MezRouter.toNamed<void>(
                           getMessagesRoute(
-                            chatId: order.orderId,
-                            orderId: order.orderId,
-                            recipientType: ParticipantType.Restaurant,
+                            chatId: order.chatId,
+                            // orderId: order.orderId,
+                            // recipientType: ParticipantType.Restaurant,
                           ),
                         );
                       }),

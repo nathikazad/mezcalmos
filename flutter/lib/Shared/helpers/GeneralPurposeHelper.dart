@@ -5,12 +5,11 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart' show NumberFormat;
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
@@ -273,7 +272,7 @@ Future<void> showConfirmationDialog(
                 GestureDetector(
                   onTap: () {
                     onNoClick?.call();
-                    Get.back<void>(closeOverlays: true);
+                    MezRouter.back<void>(closeOverlays: true);
                   },
                   child: Container(
                     width: double.infinity,
@@ -385,7 +384,7 @@ Future<void> showStatusInfoDialog(
               SizedBox(height: 18),
               GestureDetector(
                 onTap: (primaryCallBack == null)
-                    ? () => Get.back<void>(closeOverlays: true)
+                    ? () => MezRouter.back<void>(closeOverlays: true)
                     : primaryCallBack,
                 child: Container(
                   height: 44,
@@ -443,10 +442,10 @@ Future<void> showStatusInfoDialog(
 
 Future<void> showReviewDialog(
   BuildContext context, {
-  required String orderId,
+  required int orderId,
   required OrderType orderType,
 }) async {
-  final String? serviceId =
+  final int? serviceId =
       Get.find<OrderController>().getOrder(orderId)?.serviceProviderId;
   final OrderType? orderType =
       Get.find<OrderController>().getOrder(orderId)?.orderType;
@@ -533,36 +532,37 @@ Future<void> showReviewDialog(
                 textColor: primaryBlueColor,
                 backgroundColor: secondaryLightBlueColor,
                 onClick: () async {
-                  final Review review = Review(
-                      comment: controller.text,
-                      rating: rating,
-                      orderId: orderId,
-                      orderType: orderType!,
-                      serviceProviderId: serviceId!);
-                  // mezDbgPrint(review.toString());
-                  final ServerResponse response =
-                      await Get.find<OrderController>().addReview(
-                          orderId: review.orderId,
-                          serviceId: serviceId,
-                          comment: review.comment,
-                          orderType: orderType,
-                          rate: review.rating);
-                  if (response.success) {
-                    Get.snackbar('${_i18n()["review"]["successTitle"]}',
-                        "${_i18n()["review"]["successSubtitle"]}",
-                        backgroundColor: Colors.black, colorText: Colors.white);
-                    Get.back(closeOverlays: true);
-                  } else {
-                    mezDbgPrint(response);
-                    Get.snackbar("Error", response.errorMessage ?? "error",
-                        backgroundColor: Colors.black, colorText: Colors.white);
-                  }
+                  // TODO @nathikazad do it men
+                  // final Review review = Review(
+                  //     comment: controller.text,
+                  //     rating: rating,
+                  //     orderId: orderId,
+                  //     orderType: orderType!,
+                  //     serviceProviderId: serviceId!);
+                  // // mezDbgPrint(review.toString());
+                  // final ServerResponse response =
+                  //     await Get.find<OrderController>().addReview(
+                  //         orderId: review.orderId,
+                  //         serviceId: serviceId,
+                  //         comment: review.comment,
+                  //         orderType: orderType,
+                  //         rate: review.rating);
+                  // if (response.success) {
+                  //   Get.snackbar('${_i18n()["review"]["successTitle"]}',
+                  //       "${_i18n()["review"]["successSubtitle"]}",
+                  //       backgroundColor: Colors.black, colorText: Colors.white);
+                  //   Get.back(closeOverlays: true);
+                  // } else {
+                  //   mezDbgPrint(response);
+                  //   Get.snackbar("Error", response.errorMessage ?? "error",
+                  //       backgroundColor: Colors.black, colorText: Colors.white);
+                  // }
                 },
               ),
               SizedBox(height: 12),
               InkWell(
                 onTap: () {
-                  Get.back(closeOverlays: true);
+                  MezRouter.back(closeOverlays: true);
                 },
                 child: Ink(
                   padding: const EdgeInsets.symmetric(vertical: 5),

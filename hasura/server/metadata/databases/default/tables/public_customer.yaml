@@ -34,6 +34,17 @@ computed_fields:
         name: customer_notification_token
         schema: public
 select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - user_id
+        - app_version
+      computed_fields:
+        - notification_token
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      limit: 1
   - role: restaurant_operator
     permission:
       columns:

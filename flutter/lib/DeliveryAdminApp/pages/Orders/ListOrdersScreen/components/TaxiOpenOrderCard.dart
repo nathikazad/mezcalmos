@@ -7,6 +7,7 @@ import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["Orders"]["ListOrdersScreen"]["components"]["taxiOrderCard"];
@@ -21,7 +22,7 @@ class TaxiOpenOrderCard extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: () {
-          Get.toNamed(getTaxiOrderRoute(order.orderId));
+          MezRouter.toNamed(getTaxiOrderRoute(order.orderId));
         },
         borderRadius: BorderRadius.circular(10),
         child: Container(

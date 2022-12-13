@@ -52,7 +52,7 @@ class RestaurantCard extends StatelessWidget {
                         style: txt.headline3,
                       ),
                       const SizedBox(height: 10),
-                      if (restaurant.description?[userLanguage] != null)
+                      if (restaurant.info.description?[userLanguage] != null)
                         Text(
                           // TODO:544D-HASURA
 
@@ -62,8 +62,8 @@ class RestaurantCard extends StatelessWidget {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
-                      if (restaurant.description != null &&
-                          restaurant.description!.length > 1)
+                      if (restaurant.info.description != null &&
+                          restaurant.info.description!.length > 1)
                         const Spacer(),
                       Container(
                         //  alignment: Alignment.bottomLeft,

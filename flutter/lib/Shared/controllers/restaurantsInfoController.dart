@@ -59,18 +59,20 @@ class RestaurantsInfoController extends GetxController {
     return snapshot.value as dynamic;
   }
 
-  Future<Restaurant?> getRestaurant(String restaurantId) async {
-    return _databaseHelper.firebaseDatabase
-        .ref()
-        .child(serviceProviderInfos(
-            orderType: OrderType.Restaurant, providerId: restaurantId))
-        .once()
-        .then<Restaurant?>((DatabaseEvent event) {
-      if (event.snapshot.value != null) {
-        return Restaurant.fromRestaurantData(
-            restaurantId: restaurantId, restaurantData: event.snapshot.value);
-      }
-      return null;
-    });
+  Future<Restaurant?> getRestaurant(int restaurantId) async {
+    return get_restaurant_by_id(id: restaurantId);
+
+    // return _databaseHelper.firebaseDatabase
+    //     .ref()
+    //     .child(serviceProviderInfos(
+    //         orderType: OrderType.Restaurant, providerId: restaurantId))
+    //     .once()
+    //     .then<Restaurant?>((DatabaseEvent event) {
+    //   if (event.snapshot.value != null) {
+    //     return Restaurant.fromRestaurantData(
+    //         restaurantId: restaurantId, restaurantData: event.snapshot.value);
+    //   }
+    //   return null;
+    // });
   }
 }

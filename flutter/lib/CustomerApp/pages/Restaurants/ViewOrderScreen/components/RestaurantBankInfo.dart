@@ -15,7 +15,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 
 class RestaurantBankInfoCard extends StatefulWidget {
   const RestaurantBankInfoCard({super.key, required this.restaurantId});
-  final String restaurantId;
+  final int restaurantId;
 
   @override
   State<RestaurantBankInfoCard> createState() => _RestaurantBankInfoCardState();
@@ -31,7 +31,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
 
   Future<void> _getRest() async {
     restaurant.value = await Get.find<RestaurantsInfoController>()
-        .getRestaurant(widget.restaurantId);
+        .getRestaurant(widget.restaurantId as int);
   }
 
   @override

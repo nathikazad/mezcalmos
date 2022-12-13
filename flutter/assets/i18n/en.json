@@ -216,7 +216,7 @@
                     "ViewCartScreen": {
                         "ops": "Oops",
                         "restaurantClosed": "Restuarnt is closed now",
-                        "distanceError": "Distance between you and restaurat is more than 10km !",
+                        "distanceError": "Distance between you and restaurat is more than 15km!",
                         "myCart": "My Cart",
                         "notAvailable": "This restaurant is closed",
                         "orderNow": "ORDER NOW",
@@ -2013,6 +2013,7 @@
                     }
                 },
                 "currentOrders": "Current orders",
+                "pastButton": "View past orders",
                 "pastOrders": "Past orders",
                 "incomingOrders": "Incoming orders",
                 "offlineTitle": "You are offline",

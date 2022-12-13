@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -33,12 +34,13 @@ class _SavedCardsListViewState extends State<SavedCardsListView> {
   RxList<CreditCard> cards = RxList([]);
   @override
   void initState() {
-    cards.value = controller.customer.value!.savedCards;
-    cardsStream = controller.customer.stream.listen((Customer? event) {
-      if (event != null) {
-        cards.value = event.savedCards;
-      }
-    });
+    cards.value = controller.customer!.savedCards;
+    // TODO: hasura-ch
+    // cardsStream = controller.customer?.listen((Customer? event) {
+    //   if (event != null) {
+    //     cards.value = event.savedCards;
+    //   }
+    // });
     super.initState();
   }
 
@@ -46,7 +48,7 @@ class _SavedCardsListViewState extends State<SavedCardsListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          title: '${_i18n()["cards"]}', onClick: Get.back),
+          title: '${_i18n()["cards"]}', onClick: MezRouter.back),
       body: Obx(
         () => SingleChildScrollView(
             padding: const EdgeInsets.all(12),
@@ -107,7 +109,7 @@ class _SavedCardsListViewState extends State<SavedCardsListView> {
                       MezSnackbar("Error", response.errorMessage ?? "error");
                     }
                     if (response.success) {
-                      Get.back(closeOverlays: true);
+                      MezRouter.popDialog(closeOverlays: true);
                     }
                   });
                 });

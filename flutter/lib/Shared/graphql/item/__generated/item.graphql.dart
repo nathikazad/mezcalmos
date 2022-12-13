@@ -582,7 +582,7 @@ class Mutation$addItem$insert_restaurant_item_one {
           ? null
           : Mutation$addItem$insert_restaurant_item_one$description.fromJson(
               (l$description as Map<String, dynamic>)),
-      cost: MoneyFromJson(l$cost),
+      cost: moneyFromJson(l$cost),
       position: (l$position as int),
       category_id: (l$category_id as int?),
       item_type: (l$item_type as String),
@@ -627,7 +627,7 @@ class Mutation$addItem$insert_restaurant_item_one {
     final l$description = description;
     _resultData['description'] = l$description?.toJson();
     final l$cost = cost;
-    _resultData['cost'] = MoneyToJson(l$cost);
+    _resultData['cost'] = moneyToJson(l$cost);
     final l$position = position;
     _resultData['position'] = l$position;
     final l$category_id = category_id;
@@ -3486,7 +3486,7 @@ class Query$getItemById$restaurant_item_by_pk {
           ? null
           : Query$getItemById$restaurant_item_by_pk$description.fromJson(
               (l$description as Map<String, dynamic>)),
-      cost: MoneyFromJson(l$cost),
+      cost: moneyFromJson(l$cost),
       position: (l$position as int),
       category_id: (l$category_id as int?),
       item_type: (l$item_type as String),
@@ -3537,7 +3537,7 @@ class Query$getItemById$restaurant_item_by_pk {
     final l$description = description;
     _resultData['description'] = l$description?.toJson();
     final l$cost = cost;
-    _resultData['cost'] = MoneyToJson(l$cost);
+    _resultData['cost'] = moneyToJson(l$cost);
     final l$position = position;
     _resultData['position'] = l$position;
     final l$category_id = category_id;
@@ -4731,7 +4731,7 @@ class Query$getItemById$restaurant_item_by_pk$options$item_options {
     return Query$getItemById$restaurant_item_by_pk$options$item_options(
       id: (l$id as int),
       free_choice: (l$free_choice as int),
-      cost_per_extra: MoneyFromJson(l$cost_per_extra),
+      cost_per_extra: moneyFromJson(l$cost_per_extra),
       option_type: (l$option_type as String),
       position: (l$position as int),
       maximum_choice: (l$maximum_choice as int),
@@ -4776,7 +4776,7 @@ class Query$getItemById$restaurant_item_by_pk$options$item_options {
     final l$free_choice = free_choice;
     _resultData['free_choice'] = l$free_choice;
     final l$cost_per_extra = cost_per_extra;
-    _resultData['cost_per_extra'] = MoneyToJson(l$cost_per_extra);
+    _resultData['cost_per_extra'] = moneyToJson(l$cost_per_extra);
     final l$option_type = option_type;
     _resultData['option_type'] = l$option_type;
     final l$position = position;
@@ -5611,7 +5611,7 @@ class Query$getItemById$restaurant_item_by_pk$options$item_options$choices$optio
     final l$$__typename = json['__typename'];
     return Query$getItemById$restaurant_item_by_pk$options$item_options$choices$option_choices(
       available: (l$available as bool),
-      cost: MoneyFromJson(l$cost),
+      cost: moneyFromJson(l$cost),
       id: (l$id as int),
       name:
           Query$getItemById$restaurant_item_by_pk$options$item_options$choices$option_choices$name
@@ -5636,7 +5636,7 @@ class Query$getItemById$restaurant_item_by_pk$options$item_options$choices$optio
     final l$available = available;
     _resultData['available'] = l$available;
     final l$cost = cost;
-    _resultData['cost'] = MoneyToJson(l$cost);
+    _resultData['cost'] = moneyToJson(l$cost);
     final l$id = id;
     _resultData['id'] = l$id;
     final l$name = name;

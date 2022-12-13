@@ -26,6 +26,7 @@ import { getAuthUsingOTP, sendOTPForLogin } from "./utilities/otpAuth";
 // import { setEstimatedTime } from "./delivery/setEstimatedTime";
 import * as userChanges from './utilities/userChanges'
 import { generateDriverLink,generateOperatorLink } from "./utilities/links/generate";
+import { assignDriver } from "./delivery/assignDriver";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -95,18 +96,18 @@ export const restaurant = {
 //   setEstimatedLaundryReadyTime: authenticatedCall((userId, data) => laundryStatusChange.setEstimatedLaundryReadyTime(userId, data)),
 // }
 
-// export const delivery = {
-//   assignDriver: authenticatedCall((userId, data) => assignDriver(userId, data)),
-//   restaurantStartDelivery: authenticatedCall((userId, data) => restaurantDelivery.startDelivery(userId, data)),
-//   restaurantFinishDelivery: authenticatedCall((userId, data) => restaurantDelivery.finishDelivery(userId, data)),
-//   laundryStartPickupFromCustomer: authenticatedCall((userId, data) => laundryDelivery.startPickupFromCustomer(userId, data)),
-//   laundryPickedUpFromCustomer: authenticatedCall((userId, data) => laundryDelivery.pickedUpFromCustomer(userId, data)),
-//   laundryAtFacility: authenticatedCall((userId, data) => laundryDelivery.atFacility(userId, data)),
-//   laundryStartPickupFromLaundry: authenticatedCall((userId, data) => laundryDelivery.startPickupFromLaundry(userId, data)),
-//   laundryPickedUpFromLaundry: authenticatedCall((userId, data) => laundryDelivery.pickedUpFromLaundry(userId, data)),
-//   laundryFinishDropoff: authenticatedCall((userId, data) => laundryDelivery.finishDropoff(userId, data)),
-//   setEstimatedTime: authenticatedCall((userId, data) => setEstimatedTime(userId, data)),
-// }
+export const delivery = {
+  assignDriver: authenticatedCall((userId, data) => assignDriver(userId, data)),
+  // restaurantStartDelivery: authenticatedCall((userId, data) => restaurantDelivery.startDelivery(userId, data)),
+  // restaurantFinishDelivery: authenticatedCall((userId, data) => restaurantDelivery.finishDelivery(userId, data)),
+  // laundryStartPickupFromCustomer: authenticatedCall((userId, data) => laundryDelivery.startPickupFromCustomer(userId, data)),
+  // laundryPickedUpFromCustomer: authenticatedCall((userId, data) => laundryDelivery.pickedUpFromCustomer(userId, data)),
+  // laundryAtFacility: authenticatedCall((userId, data) => laundryDelivery.atFacility(userId, data)),
+  // laundryStartPickupFromLaundry: authenticatedCall((userId, data) => laundryDelivery.startPickupFromLaundry(userId, data)),
+  // laundryPickedUpFromLaundry: authenticatedCall((userId, data) => laundryDelivery.pickedUpFromLaundry(userId, data)),
+  // laundryFinishDropoff: authenticatedCall((userId, data) => laundryDelivery.finishDropoff(userId, data)),
+  // setEstimatedTime: authenticatedCall((userId, data) => setEstimatedTime(userId, data)),
+}
 
 // function adminOnlyCall(func:AuthenticatedFunction) {
 //   return functions.https.onCall(async (data, context) => {
@@ -130,6 +131,7 @@ export const restaurant = {
 type AuthenticatedFunction = (userId:number, data:any) => any;
 function authenticatedCall(func:AuthenticatedFunction) {
   return functions.https.onCall(async (data, context) =>  {
+    console.log("[+] authenticatedCall :: ", data);
     if (!context.auth?.uid) {
       throw new HttpsError(
         "unauthenticated",

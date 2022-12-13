@@ -245,8 +245,10 @@ subscription get_restaurant_orders($restaurantId: Int!) {
   }
 }
 
-subscription listen_restaurant_min_orders($restaurantId: Int!) {
-  restaurant_order(where: { restaurant_id: { _eq: $restaurantId } }) {
+subscription listen_restaurant_current_orders($restaurantId: Int!) {
+  restaurant_order(
+    where: { restaurant_id: { _eq: $restaurantId }, in_process: { _eq: true } }
+  ) {
     id
     order_time
     status
@@ -260,8 +262,28 @@ subscription listen_restaurant_min_orders($restaurantId: Int!) {
     }
   }
 }
-query get_restaurant_min_orders($restaurantId: Int!) {
-  restaurant_order(where: { restaurant_id: { _eq: $restaurantId } }) {
+query get_restaurant_current_orders($restaurantId: Int!) {
+  restaurant_order(
+    where: { restaurant_id: { _eq: $restaurantId }, in_process: { _eq: true } }
+  ) {
+    id
+    order_time
+    status
+
+    total_cost
+    to_location_address
+    customer {
+      user {
+        name
+        image
+      }
+    }
+  }
+}
+query get_restaurant_past_orders($restaurantId: Int!) {
+  restaurant_order(
+    where: { restaurant_id: { _eq: $restaurantId }, in_process: { _eq: false } }
+  ) {
     id
     order_time
     status

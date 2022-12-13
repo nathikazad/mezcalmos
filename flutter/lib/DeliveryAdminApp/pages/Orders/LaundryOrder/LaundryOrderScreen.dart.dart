@@ -25,6 +25,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ['pages']['Orders']["LaundryOrder"]["LaundryOrderScreen"];
@@ -94,7 +95,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
       if (order.value == null) {
         // ignore: inference_failure_on_function_invocation
         Future<void>.delayed(Duration.zero, () {
-          Get.back<void>();
+          MezRouter.back<void>();
           MezSnackbar("Error", "Order does not exist");
         });
       } else {
@@ -137,7 +138,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
     return Obx(
       () => Scaffold(
           appBar: deliveryAdminAppBar(AppBarLeftButtonType.Back,
-              function: Get.back, withOrder: true),
+              function: MezRouter.back, withOrder: true),
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(8.0),

@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
@@ -31,7 +32,7 @@ extension ParseStringToRestaurantsView on String {
 
 class Restaurant extends Service {
   static String kNoCategoryNode = "noCategory";
-  LanguageMap? description;
+
   List<Item> currentSpecials = <Item>[];
   List<Item> pastSpecials = <Item>[];
   List<RestaurantOperator> operators = [];
@@ -42,14 +43,17 @@ class Restaurant extends Service {
   List<Category> _categories = <Category>[];
   List<Item> itemsWithoutCategory = <Item>[];
   RestaurantsView restaurantsView;
+  PaymentInfo? paymentInfo;
+  Schedule? schedule;
+  DeliveryCost? deliveryCost;
   Restaurant(
       {required ServiceInfo userInfo,
-      required this.description,
       this.restaurantsView = RestaurantsView.Rows,
-      required Schedule schedule,
-      required PaymentInfo paymentInfo,
+      required this.schedule,
+      required this.paymentInfo,
       required ServiceState restaurantState,
       required LanguageType primaryLanguage,
+      this.deliveryCost,
       this.rate,
       this.serviceLink,
       this.selfDelivery = false,
@@ -108,7 +112,6 @@ class Restaurant extends Service {
     primaryLanguage.toOpLang();
     final Restaurant restaurant = Restaurant(
         userInfo: ServiceInfo.fromData(restaurantData["info"]),
-        description: description ?? null,
         schedule: schedule,
         restaurantState: restaurantState,
         restaurantsView: restaurantsView,
@@ -116,11 +119,11 @@ class Restaurant extends Service {
         secondaryLanguage: secondaryLanguage,
         rate: rate,
         paymentInfo: paymentInfo);
-    if (restaurantData["details"]["reviews"] != null) {
-      restaurantData["details"]["reviews"]?.forEach((key, review) {
-        restaurant.reviews.add(Review.fromMap(key, review));
-      });
-    }
+    // if (restaurantData["details"]["reviews"] != null) {
+    //   restaurantData["details"]["reviews"]?.forEach((key, review) {
+    //     restaurant.reviews.add(Review.fromMap(key, review));
+    //   });
+    // }
     if (restaurantData['menu'] != null) {
       if (restaurantData["menu"]?["specials"] != null ||
           restaurantData["menu"]?["daily"] != null) {
@@ -146,8 +149,14 @@ class Restaurant extends Service {
     restaurant._categories
         .sort((Category a, Category b) => a.position.compareTo(b.position));
     restaurant.reviews
-        .sort((Review a, Review b) => b.reviewTime!.compareTo(a.reviewTime!));
+        .sort((Review a, Review b) => b.reviewTime.compareTo(a.reviewTime));
     return restaurant;
+  }
+
+  void setCategories(List<Category> cats) {
+    _categories = cats;
+    _categories
+        .sort((Category a, Category b) => a.position.compareTo(b.position));
   }
 
   List<Category> get getAvailableCategories {
@@ -176,7 +185,7 @@ class Restaurant extends Service {
 
   Category? get getNoCategory {
     if (itemsWithoutCategory.isNotEmpty) {
-      final Category noCategory = Category(id: 'noCategory');
+      final Category noCategory = Category();
       noCategory.items = itemsWithoutCategory;
       return noCategory;
     } else {
@@ -205,12 +214,15 @@ class Restaurant extends Service {
     required String id,
   }) {
     Item? returnVal;
-
+    mezDbgPrint("Restaurant cats::len ==> ${_categories.length}");
     currentSpecials.forEach((Item item) {
+      mezDbgPrint("[66][currentSpecials]  => Item ${item.id}");
       if (item.id == id) returnVal = item;
     });
     if (returnVal == null) {
       pastSpecials.forEach((Item item) {
+        mezDbgPrint("[66][pastSpecials]  => Item ${item.id}");
+
         if (item.id == id) returnVal = item;
       });
     }
@@ -218,11 +230,17 @@ class Restaurant extends Service {
     if (returnVal == null) {
       _categories.forEach((Category category) {
         category.items.forEach((Item item) {
+          mezDbgPrint(
+              "[66][_categories] |_ [category.items]  => Item ${item.id}");
+
           if (item.id == id) returnVal = item;
         });
       });
       if (returnVal == null) {
         getAvItemsWithoutCategories?.forEach((Item element) {
+          mezDbgPrint(
+              "[66][getAvItemsWithoutCategories]  => Item ${element.id}");
+
           if (element.id == id) {
             returnVal = element;
           }
@@ -235,6 +253,10 @@ class Restaurant extends Service {
 
   bool get showReviews {
     return rate != null && reviews.isNotEmpty;
+  }
+
+  bool get hasSchedule {
+    return schedule != null && schedule!.openHours.isNotEmpty;
   }
 
   bool acceptPayment(PaymentType p) {
@@ -258,7 +280,7 @@ class Restaurant extends Service {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      "description": description?.toFirebaseFormat(),
+      // "description": description?.toFirebaseFormat(),
       "info": info.toJson(),
       "categories": jsonEncode(_categories),
       "itemsWithoutCategory": jsonEncode(itemsWithoutCategory),
@@ -284,6 +306,25 @@ class Restaurant extends Service {
   }
 
   bool isOpen() {
-    return state.isOpen && (schedule?.isOpen() ?? false);
+// TODO:544D-HASURA
+    return true;
+    // return state.isOpen && (schedule?.isOpen() ?? true);
+  }
+
+  Restaurant copyWith({
+    ServiceInfo? userInfo,
+    ServiceState? state,
+    bool? selfDelivery,
+    PaymentInfo? paymentInfo,
+    LanguageType? primaryLanguage,
+    Schedule? schedule,
+  }) {
+    return Restaurant(
+        userInfo: userInfo ?? info,
+        selfDelivery: selfDelivery ?? this.selfDelivery,
+        schedule: schedule ?? this.schedule,
+        paymentInfo: paymentInfo ?? this.paymentInfo,
+        restaurantState: state ?? this.state,
+        primaryLanguage: primaryLanguage ?? this.primaryLanguage);
   }
 }

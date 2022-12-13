@@ -4,20 +4,20 @@ import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 
-class Variables$Query$getCustomerLocations {
-  factory Variables$Query$getCustomerLocations({required int customer_id}) =>
-      Variables$Query$getCustomerLocations._({
+class Variables$Query$get_customer_locations {
+  factory Variables$Query$get_customer_locations({required int customer_id}) =>
+      Variables$Query$get_customer_locations._({
         r'customer_id': customer_id,
       });
 
-  Variables$Query$getCustomerLocations._(this._$data);
+  Variables$Query$get_customer_locations._(this._$data);
 
-  factory Variables$Query$getCustomerLocations.fromJson(
+  factory Variables$Query$get_customer_locations.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
     final l$customer_id = data['customer_id'];
     result$data['customer_id'] = (l$customer_id as int);
-    return Variables$Query$getCustomerLocations._(result$data);
+    return Variables$Query$get_customer_locations._(result$data);
   }
 
   Map<String, dynamic> _$data;
@@ -30,9 +30,9 @@ class Variables$Query$getCustomerLocations {
     return result$data;
   }
 
-  CopyWith$Variables$Query$getCustomerLocations<
-          Variables$Query$getCustomerLocations>
-      get copyWith => CopyWith$Variables$Query$getCustomerLocations(
+  CopyWith$Variables$Query$get_customer_locations<
+          Variables$Query$get_customer_locations>
+      get copyWith => CopyWith$Variables$Query$get_customer_locations(
             this,
             (i) => i,
           );
@@ -41,7 +41,7 @@ class Variables$Query$getCustomerLocations {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Variables$Query$getCustomerLocations) ||
+    if (!(other is Variables$Query$get_customer_locations) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -60,67 +60,67 @@ class Variables$Query$getCustomerLocations {
   }
 }
 
-abstract class CopyWith$Variables$Query$getCustomerLocations<TRes> {
-  factory CopyWith$Variables$Query$getCustomerLocations(
-    Variables$Query$getCustomerLocations instance,
-    TRes Function(Variables$Query$getCustomerLocations) then,
-  ) = _CopyWithImpl$Variables$Query$getCustomerLocations;
+abstract class CopyWith$Variables$Query$get_customer_locations<TRes> {
+  factory CopyWith$Variables$Query$get_customer_locations(
+    Variables$Query$get_customer_locations instance,
+    TRes Function(Variables$Query$get_customer_locations) then,
+  ) = _CopyWithImpl$Variables$Query$get_customer_locations;
 
-  factory CopyWith$Variables$Query$getCustomerLocations.stub(TRes res) =
-      _CopyWithStubImpl$Variables$Query$getCustomerLocations;
+  factory CopyWith$Variables$Query$get_customer_locations.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$get_customer_locations;
 
   TRes call({int? customer_id});
 }
 
-class _CopyWithImpl$Variables$Query$getCustomerLocations<TRes>
-    implements CopyWith$Variables$Query$getCustomerLocations<TRes> {
-  _CopyWithImpl$Variables$Query$getCustomerLocations(
+class _CopyWithImpl$Variables$Query$get_customer_locations<TRes>
+    implements CopyWith$Variables$Query$get_customer_locations<TRes> {
+  _CopyWithImpl$Variables$Query$get_customer_locations(
     this._instance,
     this._then,
   );
 
-  final Variables$Query$getCustomerLocations _instance;
+  final Variables$Query$get_customer_locations _instance;
 
-  final TRes Function(Variables$Query$getCustomerLocations) _then;
+  final TRes Function(Variables$Query$get_customer_locations) _then;
 
   static const _undefined = {};
 
   TRes call({Object? customer_id = _undefined}) =>
-      _then(Variables$Query$getCustomerLocations._({
+      _then(Variables$Query$get_customer_locations._({
         ..._instance._$data,
         if (customer_id != _undefined && customer_id != null)
           'customer_id': (customer_id as int),
       }));
 }
 
-class _CopyWithStubImpl$Variables$Query$getCustomerLocations<TRes>
-    implements CopyWith$Variables$Query$getCustomerLocations<TRes> {
-  _CopyWithStubImpl$Variables$Query$getCustomerLocations(this._res);
+class _CopyWithStubImpl$Variables$Query$get_customer_locations<TRes>
+    implements CopyWith$Variables$Query$get_customer_locations<TRes> {
+  _CopyWithStubImpl$Variables$Query$get_customer_locations(this._res);
 
   TRes _res;
 
   call({int? customer_id}) => _res;
 }
 
-class Query$getCustomerLocations {
-  Query$getCustomerLocations({
+class Query$get_customer_locations {
+  Query$get_customer_locations({
     required this.saved_location,
     required this.$__typename,
   });
 
-  factory Query$getCustomerLocations.fromJson(Map<String, dynamic> json) {
+  factory Query$get_customer_locations.fromJson(Map<String, dynamic> json) {
     final l$saved_location = json['saved_location'];
     final l$$__typename = json['__typename'];
-    return Query$getCustomerLocations(
+    return Query$get_customer_locations(
       saved_location: (l$saved_location as List<dynamic>)
-          .map((e) => Query$getCustomerLocations$saved_location.fromJson(
+          .map((e) => Query$get_customer_locations$saved_location.fromJson(
               (e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<Query$getCustomerLocations$saved_location> saved_location;
+  final List<Query$get_customer_locations$saved_location> saved_location;
 
   final String $__typename;
 
@@ -149,7 +149,7 @@ class Query$getCustomerLocations {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$getCustomerLocations) ||
+    if (!(other is Query$get_customer_locations) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -174,46 +174,46 @@ class Query$getCustomerLocations {
   }
 }
 
-extension UtilityExtension$Query$getCustomerLocations
-    on Query$getCustomerLocations {
-  CopyWith$Query$getCustomerLocations<Query$getCustomerLocations>
-      get copyWith => CopyWith$Query$getCustomerLocations(
+extension UtilityExtension$Query$get_customer_locations
+    on Query$get_customer_locations {
+  CopyWith$Query$get_customer_locations<Query$get_customer_locations>
+      get copyWith => CopyWith$Query$get_customer_locations(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$getCustomerLocations<TRes> {
-  factory CopyWith$Query$getCustomerLocations(
-    Query$getCustomerLocations instance,
-    TRes Function(Query$getCustomerLocations) then,
-  ) = _CopyWithImpl$Query$getCustomerLocations;
+abstract class CopyWith$Query$get_customer_locations<TRes> {
+  factory CopyWith$Query$get_customer_locations(
+    Query$get_customer_locations instance,
+    TRes Function(Query$get_customer_locations) then,
+  ) = _CopyWithImpl$Query$get_customer_locations;
 
-  factory CopyWith$Query$getCustomerLocations.stub(TRes res) =
-      _CopyWithStubImpl$Query$getCustomerLocations;
+  factory CopyWith$Query$get_customer_locations.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_customer_locations;
 
   TRes call({
-    List<Query$getCustomerLocations$saved_location>? saved_location,
+    List<Query$get_customer_locations$saved_location>? saved_location,
     String? $__typename,
   });
   TRes saved_location(
-      Iterable<Query$getCustomerLocations$saved_location> Function(
+      Iterable<Query$get_customer_locations$saved_location> Function(
               Iterable<
-                  CopyWith$Query$getCustomerLocations$saved_location<
-                      Query$getCustomerLocations$saved_location>>)
+                  CopyWith$Query$get_customer_locations$saved_location<
+                      Query$get_customer_locations$saved_location>>)
           _fn);
 }
 
-class _CopyWithImpl$Query$getCustomerLocations<TRes>
-    implements CopyWith$Query$getCustomerLocations<TRes> {
-  _CopyWithImpl$Query$getCustomerLocations(
+class _CopyWithImpl$Query$get_customer_locations<TRes>
+    implements CopyWith$Query$get_customer_locations<TRes> {
+  _CopyWithImpl$Query$get_customer_locations(
     this._instance,
     this._then,
   );
 
-  final Query$getCustomerLocations _instance;
+  final Query$get_customer_locations _instance;
 
-  final TRes Function(Query$getCustomerLocations) _then;
+  final TRes Function(Query$get_customer_locations) _then;
 
   static const _undefined = {};
 
@@ -221,47 +221,47 @@ class _CopyWithImpl$Query$getCustomerLocations<TRes>
     Object? saved_location = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$getCustomerLocations(
+      _then(Query$get_customer_locations(
         saved_location: saved_location == _undefined || saved_location == null
             ? _instance.saved_location
             : (saved_location
-                as List<Query$getCustomerLocations$saved_location>),
+                as List<Query$get_customer_locations$saved_location>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes saved_location(
-          Iterable<Query$getCustomerLocations$saved_location> Function(
+          Iterable<Query$get_customer_locations$saved_location> Function(
                   Iterable<
-                      CopyWith$Query$getCustomerLocations$saved_location<
-                          Query$getCustomerLocations$saved_location>>)
+                      CopyWith$Query$get_customer_locations$saved_location<
+                          Query$get_customer_locations$saved_location>>)
               _fn) =>
       call(
           saved_location: _fn(_instance.saved_location
-              .map((e) => CopyWith$Query$getCustomerLocations$saved_location(
+              .map((e) => CopyWith$Query$get_customer_locations$saved_location(
                     e,
                     (i) => i,
                   ))).toList());
 }
 
-class _CopyWithStubImpl$Query$getCustomerLocations<TRes>
-    implements CopyWith$Query$getCustomerLocations<TRes> {
-  _CopyWithStubImpl$Query$getCustomerLocations(this._res);
+class _CopyWithStubImpl$Query$get_customer_locations<TRes>
+    implements CopyWith$Query$get_customer_locations<TRes> {
+  _CopyWithStubImpl$Query$get_customer_locations(this._res);
 
   TRes _res;
 
   call({
-    List<Query$getCustomerLocations$saved_location>? saved_location,
+    List<Query$get_customer_locations$saved_location>? saved_location,
     String? $__typename,
   }) =>
       _res;
   saved_location(_fn) => _res;
 }
 
-const documentNodeQuerygetCustomerLocations = DocumentNode(definitions: [
+const documentNodeQueryget_customer_locations = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.query,
-    name: NameNode(value: 'getCustomerLocations'),
+    name: NameNode(value: 'get_customer_locations'),
     variableDefinitions: [
       VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'customer_id')),
@@ -344,15 +344,15 @@ const documentNodeQuerygetCustomerLocations = DocumentNode(definitions: [
     ]),
   ),
 ]);
-Query$getCustomerLocations _parserFn$Query$getCustomerLocations(
+Query$get_customer_locations _parserFn$Query$get_customer_locations(
         Map<String, dynamic> data) =>
-    Query$getCustomerLocations.fromJson(data);
+    Query$get_customer_locations.fromJson(data);
 
-class Options$Query$getCustomerLocations
-    extends graphql.QueryOptions<Query$getCustomerLocations> {
-  Options$Query$getCustomerLocations({
+class Options$Query$get_customer_locations
+    extends graphql.QueryOptions<Query$get_customer_locations> {
+  Options$Query$get_customer_locations({
     String? operationName,
-    required Variables$Query$getCustomerLocations variables,
+    required Variables$Query$get_customer_locations variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -368,16 +368,16 @@ class Options$Query$getCustomerLocations
           optimisticResult: optimisticResult,
           pollInterval: pollInterval,
           context: context,
-          document: documentNodeQuerygetCustomerLocations,
-          parserFn: _parserFn$Query$getCustomerLocations,
+          document: documentNodeQueryget_customer_locations,
+          parserFn: _parserFn$Query$get_customer_locations,
         );
 }
 
-class WatchOptions$Query$getCustomerLocations
-    extends graphql.WatchQueryOptions<Query$getCustomerLocations> {
-  WatchOptions$Query$getCustomerLocations({
+class WatchOptions$Query$get_customer_locations
+    extends graphql.WatchQueryOptions<Query$get_customer_locations> {
+  WatchOptions$Query$get_customer_locations({
     String? operationName,
-    required Variables$Query$getCustomerLocations variables,
+    required Variables$Query$get_customer_locations variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -395,68 +395,71 @@ class WatchOptions$Query$getCustomerLocations
           cacheRereadPolicy: cacheRereadPolicy,
           optimisticResult: optimisticResult,
           context: context,
-          document: documentNodeQuerygetCustomerLocations,
+          document: documentNodeQueryget_customer_locations,
           pollInterval: pollInterval,
           eagerlyFetchResults: eagerlyFetchResults,
           carryForwardDataOnException: carryForwardDataOnException,
           fetchResults: fetchResults,
-          parserFn: _parserFn$Query$getCustomerLocations,
+          parserFn: _parserFn$Query$get_customer_locations,
         );
 }
 
-class FetchMoreOptions$Query$getCustomerLocations
+class FetchMoreOptions$Query$get_customer_locations
     extends graphql.FetchMoreOptions {
-  FetchMoreOptions$Query$getCustomerLocations({
+  FetchMoreOptions$Query$get_customer_locations({
     required graphql.UpdateQuery updateQuery,
-    required Variables$Query$getCustomerLocations variables,
+    required Variables$Query$get_customer_locations variables,
   }) : super(
           updateQuery: updateQuery,
           variables: variables.toJson(),
-          document: documentNodeQuerygetCustomerLocations,
+          document: documentNodeQueryget_customer_locations,
         );
 }
 
-extension ClientExtension$Query$getCustomerLocations on graphql.GraphQLClient {
-  Future<graphql.QueryResult<Query$getCustomerLocations>>
-      query$getCustomerLocations(
-              Options$Query$getCustomerLocations options) async =>
+extension ClientExtension$Query$get_customer_locations
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$get_customer_locations>>
+      query$get_customer_locations(
+              Options$Query$get_customer_locations options) async =>
           await this.query(options);
-  graphql.ObservableQuery<Query$getCustomerLocations>
-      watchQuery$getCustomerLocations(
-              WatchOptions$Query$getCustomerLocations options) =>
+  graphql.ObservableQuery<Query$get_customer_locations>
+      watchQuery$get_customer_locations(
+              WatchOptions$Query$get_customer_locations options) =>
           this.watchQuery(options);
-  void writeQuery$getCustomerLocations({
-    required Query$getCustomerLocations data,
-    required Variables$Query$getCustomerLocations variables,
+  void writeQuery$get_customer_locations({
+    required Query$get_customer_locations data,
+    required Variables$Query$get_customer_locations variables,
     bool broadcast = true,
   }) =>
       this.writeQuery(
         graphql.Request(
           operation: graphql.Operation(
-              document: documentNodeQuerygetCustomerLocations),
+              document: documentNodeQueryget_customer_locations),
           variables: variables.toJson(),
         ),
         data: data.toJson(),
         broadcast: broadcast,
       );
-  Query$getCustomerLocations? readQuery$getCustomerLocations({
-    required Variables$Query$getCustomerLocations variables,
+  Query$get_customer_locations? readQuery$get_customer_locations({
+    required Variables$Query$get_customer_locations variables,
     bool optimistic = true,
   }) {
     final result = this.readQuery(
       graphql.Request(
-        operation:
-            graphql.Operation(document: documentNodeQuerygetCustomerLocations),
+        operation: graphql.Operation(
+            document: documentNodeQueryget_customer_locations),
         variables: variables.toJson(),
       ),
       optimistic: optimistic,
     );
-    return result == null ? null : Query$getCustomerLocations.fromJson(result);
+    return result == null
+        ? null
+        : Query$get_customer_locations.fromJson(result);
   }
 }
 
-class Query$getCustomerLocations$saved_location {
-  Query$getCustomerLocations$saved_location({
+class Query$get_customer_locations$saved_location {
+  Query$get_customer_locations$saved_location({
     required this.id,
     required this.name,
     required this.location_gps,
@@ -465,7 +468,7 @@ class Query$getCustomerLocations$saved_location {
     required this.$__typename,
   });
 
-  factory Query$getCustomerLocations$saved_location.fromJson(
+  factory Query$get_customer_locations$saved_location.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
@@ -473,10 +476,10 @@ class Query$getCustomerLocations$saved_location {
     final l$location_text = json['location_text'];
     final l$$default = json['default'];
     final l$$__typename = json['__typename'];
-    return Query$getCustomerLocations$saved_location(
+    return Query$get_customer_locations$saved_location(
       id: (l$id as int),
       name: (l$name as String),
-      location_gps: GeographyFromJson(l$location_gps),
+      location_gps: geographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
       $default: (l$$default as bool),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -502,7 +505,7 @@ class Query$getCustomerLocations$saved_location {
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location_gps = location_gps;
-    _resultData['location_gps'] = GeographyToJson(l$location_gps);
+    _resultData['location_gps'] = geographyToJson(l$location_gps);
     final l$location_text = location_text;
     _resultData['location_text'] = l$location_text;
     final l$$default = $default;
@@ -535,7 +538,7 @@ class Query$getCustomerLocations$saved_location {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$getCustomerLocations$saved_location) ||
+    if (!(other is Query$get_customer_locations$saved_location) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -573,24 +576,24 @@ class Query$getCustomerLocations$saved_location {
   }
 }
 
-extension UtilityExtension$Query$getCustomerLocations$saved_location
-    on Query$getCustomerLocations$saved_location {
-  CopyWith$Query$getCustomerLocations$saved_location<
-          Query$getCustomerLocations$saved_location>
-      get copyWith => CopyWith$Query$getCustomerLocations$saved_location(
+extension UtilityExtension$Query$get_customer_locations$saved_location
+    on Query$get_customer_locations$saved_location {
+  CopyWith$Query$get_customer_locations$saved_location<
+          Query$get_customer_locations$saved_location>
+      get copyWith => CopyWith$Query$get_customer_locations$saved_location(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$getCustomerLocations$saved_location<TRes> {
-  factory CopyWith$Query$getCustomerLocations$saved_location(
-    Query$getCustomerLocations$saved_location instance,
-    TRes Function(Query$getCustomerLocations$saved_location) then,
-  ) = _CopyWithImpl$Query$getCustomerLocations$saved_location;
+abstract class CopyWith$Query$get_customer_locations$saved_location<TRes> {
+  factory CopyWith$Query$get_customer_locations$saved_location(
+    Query$get_customer_locations$saved_location instance,
+    TRes Function(Query$get_customer_locations$saved_location) then,
+  ) = _CopyWithImpl$Query$get_customer_locations$saved_location;
 
-  factory CopyWith$Query$getCustomerLocations$saved_location.stub(TRes res) =
-      _CopyWithStubImpl$Query$getCustomerLocations$saved_location;
+  factory CopyWith$Query$get_customer_locations$saved_location.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_customer_locations$saved_location;
 
   TRes call({
     int? id,
@@ -602,16 +605,16 @@ abstract class CopyWith$Query$getCustomerLocations$saved_location<TRes> {
   });
 }
 
-class _CopyWithImpl$Query$getCustomerLocations$saved_location<TRes>
-    implements CopyWith$Query$getCustomerLocations$saved_location<TRes> {
-  _CopyWithImpl$Query$getCustomerLocations$saved_location(
+class _CopyWithImpl$Query$get_customer_locations$saved_location<TRes>
+    implements CopyWith$Query$get_customer_locations$saved_location<TRes> {
+  _CopyWithImpl$Query$get_customer_locations$saved_location(
     this._instance,
     this._then,
   );
 
-  final Query$getCustomerLocations$saved_location _instance;
+  final Query$get_customer_locations$saved_location _instance;
 
-  final TRes Function(Query$getCustomerLocations$saved_location) _then;
+  final TRes Function(Query$get_customer_locations$saved_location) _then;
 
   static const _undefined = {};
 
@@ -623,7 +626,7 @@ class _CopyWithImpl$Query$getCustomerLocations$saved_location<TRes>
     Object? $default = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$getCustomerLocations$saved_location(
+      _then(Query$get_customer_locations$saved_location(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
@@ -643,9 +646,9 @@ class _CopyWithImpl$Query$getCustomerLocations$saved_location<TRes>
       ));
 }
 
-class _CopyWithStubImpl$Query$getCustomerLocations$saved_location<TRes>
-    implements CopyWith$Query$getCustomerLocations$saved_location<TRes> {
-  _CopyWithStubImpl$Query$getCustomerLocations$saved_location(this._res);
+class _CopyWithStubImpl$Query$get_customer_locations$saved_location<TRes>
+    implements CopyWith$Query$get_customer_locations$saved_location<TRes> {
+  _CopyWithStubImpl$Query$get_customer_locations$saved_location(this._res);
 
   TRes _res;
 
@@ -660,19 +663,664 @@ class _CopyWithStubImpl$Query$getCustomerLocations$saved_location<TRes>
       _res;
 }
 
-class Variables$Query$getSavedLocation {
-  factory Variables$Query$getSavedLocation({required int location_id}) =>
-      Variables$Query$getSavedLocation._({
+class Variables$Subscription$listen_on_saved_locations {
+  factory Variables$Subscription$listen_on_saved_locations(
+          {required int customer_id}) =>
+      Variables$Subscription$listen_on_saved_locations._({
+        r'customer_id': customer_id,
+      });
+
+  Variables$Subscription$listen_on_saved_locations._(this._$data);
+
+  factory Variables$Subscription$listen_on_saved_locations.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$customer_id = data['customer_id'];
+    result$data['customer_id'] = (l$customer_id as int);
+    return Variables$Subscription$listen_on_saved_locations._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get customer_id => (_$data['customer_id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$customer_id = customer_id;
+    result$data['customer_id'] = l$customer_id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Subscription$listen_on_saved_locations<
+          Variables$Subscription$listen_on_saved_locations>
+      get copyWith => CopyWith$Variables$Subscription$listen_on_saved_locations(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Subscription$listen_on_saved_locations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$customer_id = customer_id;
+    final lOther$customer_id = other.customer_id;
+    if (l$customer_id != lOther$customer_id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$customer_id = customer_id;
+    return Object.hashAll([l$customer_id]);
+  }
+}
+
+abstract class CopyWith$Variables$Subscription$listen_on_saved_locations<TRes> {
+  factory CopyWith$Variables$Subscription$listen_on_saved_locations(
+    Variables$Subscription$listen_on_saved_locations instance,
+    TRes Function(Variables$Subscription$listen_on_saved_locations) then,
+  ) = _CopyWithImpl$Variables$Subscription$listen_on_saved_locations;
+
+  factory CopyWith$Variables$Subscription$listen_on_saved_locations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Subscription$listen_on_saved_locations;
+
+  TRes call({int? customer_id});
+}
+
+class _CopyWithImpl$Variables$Subscription$listen_on_saved_locations<TRes>
+    implements CopyWith$Variables$Subscription$listen_on_saved_locations<TRes> {
+  _CopyWithImpl$Variables$Subscription$listen_on_saved_locations(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Subscription$listen_on_saved_locations _instance;
+
+  final TRes Function(Variables$Subscription$listen_on_saved_locations) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? customer_id = _undefined}) =>
+      _then(Variables$Subscription$listen_on_saved_locations._({
+        ..._instance._$data,
+        if (customer_id != _undefined && customer_id != null)
+          'customer_id': (customer_id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Subscription$listen_on_saved_locations<TRes>
+    implements CopyWith$Variables$Subscription$listen_on_saved_locations<TRes> {
+  _CopyWithStubImpl$Variables$Subscription$listen_on_saved_locations(this._res);
+
+  TRes _res;
+
+  call({int? customer_id}) => _res;
+}
+
+class Subscription$listen_on_saved_locations {
+  Subscription$listen_on_saved_locations({
+    required this.saved_location,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_saved_locations.fromJson(
+      Map<String, dynamic> json) {
+    final l$saved_location = json['saved_location'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_saved_locations(
+      saved_location: (l$saved_location as List<dynamic>)
+          .map((e) =>
+              Subscription$listen_on_saved_locations$saved_location.fromJson(
+                  (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Subscription$listen_on_saved_locations$saved_location>
+      saved_location;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$saved_location = saved_location;
+    _resultData['saved_location'] =
+        l$saved_location.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$saved_location = saved_location;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$saved_location.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Subscription$listen_on_saved_locations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$saved_location = saved_location;
+    final lOther$saved_location = other.saved_location;
+    if (l$saved_location.length != lOther$saved_location.length) {
+      return false;
+    }
+    for (int i = 0; i < l$saved_location.length; i++) {
+      final l$saved_location$entry = l$saved_location[i];
+      final lOther$saved_location$entry = lOther$saved_location[i];
+      if (l$saved_location$entry != lOther$saved_location$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_saved_locations
+    on Subscription$listen_on_saved_locations {
+  CopyWith$Subscription$listen_on_saved_locations<
+          Subscription$listen_on_saved_locations>
+      get copyWith => CopyWith$Subscription$listen_on_saved_locations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_saved_locations<TRes> {
+  factory CopyWith$Subscription$listen_on_saved_locations(
+    Subscription$listen_on_saved_locations instance,
+    TRes Function(Subscription$listen_on_saved_locations) then,
+  ) = _CopyWithImpl$Subscription$listen_on_saved_locations;
+
+  factory CopyWith$Subscription$listen_on_saved_locations.stub(TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_saved_locations;
+
+  TRes call({
+    List<Subscription$listen_on_saved_locations$saved_location>? saved_location,
+    String? $__typename,
+  });
+  TRes saved_location(
+      Iterable<Subscription$listen_on_saved_locations$saved_location> Function(
+              Iterable<
+                  CopyWith$Subscription$listen_on_saved_locations$saved_location<
+                      Subscription$listen_on_saved_locations$saved_location>>)
+          _fn);
+}
+
+class _CopyWithImpl$Subscription$listen_on_saved_locations<TRes>
+    implements CopyWith$Subscription$listen_on_saved_locations<TRes> {
+  _CopyWithImpl$Subscription$listen_on_saved_locations(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_saved_locations _instance;
+
+  final TRes Function(Subscription$listen_on_saved_locations) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? saved_location = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$listen_on_saved_locations(
+        saved_location: saved_location == _undefined || saved_location == null
+            ? _instance.saved_location
+            : (saved_location
+                as List<Subscription$listen_on_saved_locations$saved_location>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes saved_location(
+          Iterable<Subscription$listen_on_saved_locations$saved_location> Function(
+                  Iterable<
+                      CopyWith$Subscription$listen_on_saved_locations$saved_location<
+                          Subscription$listen_on_saved_locations$saved_location>>)
+              _fn) =>
+      call(
+          saved_location: _fn(_instance.saved_location.map((e) =>
+              CopyWith$Subscription$listen_on_saved_locations$saved_location(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_saved_locations<TRes>
+    implements CopyWith$Subscription$listen_on_saved_locations<TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_saved_locations(this._res);
+
+  TRes _res;
+
+  call({
+    List<Subscription$listen_on_saved_locations$saved_location>? saved_location,
+    String? $__typename,
+  }) =>
+      _res;
+  saved_location(_fn) => _res;
+}
+
+const documentNodeSubscriptionlisten_on_saved_locations =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.subscription,
+    name: NameNode(value: 'listen_on_saved_locations'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'customer_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'saved_location'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'customer_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'customer_id')),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'location_gps'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'location_text'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'default'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Subscription$listen_on_saved_locations
+    _parserFn$Subscription$listen_on_saved_locations(
+            Map<String, dynamic> data) =>
+        Subscription$listen_on_saved_locations.fromJson(data);
+
+class Options$Subscription$listen_on_saved_locations extends graphql
+    .SubscriptionOptions<Subscription$listen_on_saved_locations> {
+  Options$Subscription$listen_on_saved_locations({
+    String? operationName,
+    required Variables$Subscription$listen_on_saved_locations variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeSubscriptionlisten_on_saved_locations,
+          parserFn: _parserFn$Subscription$listen_on_saved_locations,
+        );
+}
+
+class WatchOptions$Subscription$listen_on_saved_locations
+    extends graphql.WatchQueryOptions<Subscription$listen_on_saved_locations> {
+  WatchOptions$Subscription$listen_on_saved_locations({
+    String? operationName,
+    required Variables$Subscription$listen_on_saved_locations variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeSubscriptionlisten_on_saved_locations,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Subscription$listen_on_saved_locations,
+        );
+}
+
+class FetchMoreOptions$Subscription$listen_on_saved_locations
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Subscription$listen_on_saved_locations({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Subscription$listen_on_saved_locations variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeSubscriptionlisten_on_saved_locations,
+        );
+}
+
+extension ClientExtension$Subscription$listen_on_saved_locations
+    on graphql.GraphQLClient {
+  Stream<graphql.QueryResult<Subscription$listen_on_saved_locations>>
+      subscribe$listen_on_saved_locations(
+              Options$Subscription$listen_on_saved_locations options) =>
+          this.subscribe(options);
+  graphql.ObservableQuery<Subscription$listen_on_saved_locations>
+      watchSubscription$listen_on_saved_locations(
+              WatchOptions$Subscription$listen_on_saved_locations options) =>
+          this.watchQuery(options);
+}
+
+class Subscription$listen_on_saved_locations$saved_location {
+  Subscription$listen_on_saved_locations$saved_location({
+    required this.id,
+    required this.name,
+    required this.location_gps,
+    required this.location_text,
+    required this.$default,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_saved_locations$saved_location.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$location_gps = json['location_gps'];
+    final l$location_text = json['location_text'];
+    final l$$default = json['default'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_saved_locations$saved_location(
+      id: (l$id as int),
+      name: (l$name as String),
+      location_gps: geographyFromJson(l$location_gps),
+      location_text: (l$location_text as String),
+      $default: (l$$default as bool),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String name;
+
+  final Geography location_gps;
+
+  final String location_text;
+
+  final bool $default;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$location_gps = location_gps;
+    _resultData['location_gps'] = geographyToJson(l$location_gps);
+    final l$location_text = location_text;
+    _resultData['location_text'] = l$location_text;
+    final l$$default = $default;
+    _resultData['default'] = l$$default;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$name = name;
+    final l$location_gps = location_gps;
+    final l$location_text = location_text;
+    final l$$default = $default;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$name,
+      l$location_gps,
+      l$location_text,
+      l$$default,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Subscription$listen_on_saved_locations$saved_location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$location_gps = location_gps;
+    final lOther$location_gps = other.location_gps;
+    if (l$location_gps != lOther$location_gps) {
+      return false;
+    }
+    final l$location_text = location_text;
+    final lOther$location_text = other.location_text;
+    if (l$location_text != lOther$location_text) {
+      return false;
+    }
+    final l$$default = $default;
+    final lOther$$default = other.$default;
+    if (l$$default != lOther$$default) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_saved_locations$saved_location
+    on Subscription$listen_on_saved_locations$saved_location {
+  CopyWith$Subscription$listen_on_saved_locations$saved_location<
+          Subscription$listen_on_saved_locations$saved_location>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_saved_locations$saved_location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_saved_locations$saved_location<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_saved_locations$saved_location(
+    Subscription$listen_on_saved_locations$saved_location instance,
+    TRes Function(Subscription$listen_on_saved_locations$saved_location) then,
+  ) = _CopyWithImpl$Subscription$listen_on_saved_locations$saved_location;
+
+  factory CopyWith$Subscription$listen_on_saved_locations$saved_location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_saved_locations$saved_location;
+
+  TRes call({
+    int? id,
+    String? name,
+    Geography? location_gps,
+    String? location_text,
+    bool? $default,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_on_saved_locations$saved_location<TRes>
+    implements
+        CopyWith$Subscription$listen_on_saved_locations$saved_location<TRes> {
+  _CopyWithImpl$Subscription$listen_on_saved_locations$saved_location(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_saved_locations$saved_location _instance;
+
+  final TRes Function(Subscription$listen_on_saved_locations$saved_location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? location_gps = _undefined,
+    Object? location_text = _undefined,
+    Object? $default = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$listen_on_saved_locations$saved_location(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        location_gps: location_gps == _undefined || location_gps == null
+            ? _instance.location_gps
+            : (location_gps as Geography),
+        location_text: location_text == _undefined || location_text == null
+            ? _instance.location_text
+            : (location_text as String),
+        $default: $default == _undefined || $default == null
+            ? _instance.$default
+            : ($default as bool),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_saved_locations$saved_location<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_saved_locations$saved_location<TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_saved_locations$saved_location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? name,
+    Geography? location_gps,
+    String? location_text,
+    bool? $default,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$get_saved_location_by_id {
+  factory Variables$Query$get_saved_location_by_id(
+          {required int location_id}) =>
+      Variables$Query$get_saved_location_by_id._({
         r'location_id': location_id,
       });
 
-  Variables$Query$getSavedLocation._(this._$data);
+  Variables$Query$get_saved_location_by_id._(this._$data);
 
-  factory Variables$Query$getSavedLocation.fromJson(Map<String, dynamic> data) {
+  factory Variables$Query$get_saved_location_by_id.fromJson(
+      Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
     final l$location_id = data['location_id'];
     result$data['location_id'] = (l$location_id as int);
-    return Variables$Query$getSavedLocation._(result$data);
+    return Variables$Query$get_saved_location_by_id._(result$data);
   }
 
   Map<String, dynamic> _$data;
@@ -685,8 +1333,9 @@ class Variables$Query$getSavedLocation {
     return result$data;
   }
 
-  CopyWith$Variables$Query$getSavedLocation<Variables$Query$getSavedLocation>
-      get copyWith => CopyWith$Variables$Query$getSavedLocation(
+  CopyWith$Variables$Query$get_saved_location_by_id<
+          Variables$Query$get_saved_location_by_id>
+      get copyWith => CopyWith$Variables$Query$get_saved_location_by_id(
             this,
             (i) => i,
           );
@@ -695,7 +1344,7 @@ class Variables$Query$getSavedLocation {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Variables$Query$getSavedLocation) ||
+    if (!(other is Variables$Query$get_saved_location_by_id) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -714,67 +1363,68 @@ class Variables$Query$getSavedLocation {
   }
 }
 
-abstract class CopyWith$Variables$Query$getSavedLocation<TRes> {
-  factory CopyWith$Variables$Query$getSavedLocation(
-    Variables$Query$getSavedLocation instance,
-    TRes Function(Variables$Query$getSavedLocation) then,
-  ) = _CopyWithImpl$Variables$Query$getSavedLocation;
+abstract class CopyWith$Variables$Query$get_saved_location_by_id<TRes> {
+  factory CopyWith$Variables$Query$get_saved_location_by_id(
+    Variables$Query$get_saved_location_by_id instance,
+    TRes Function(Variables$Query$get_saved_location_by_id) then,
+  ) = _CopyWithImpl$Variables$Query$get_saved_location_by_id;
 
-  factory CopyWith$Variables$Query$getSavedLocation.stub(TRes res) =
-      _CopyWithStubImpl$Variables$Query$getSavedLocation;
+  factory CopyWith$Variables$Query$get_saved_location_by_id.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$get_saved_location_by_id;
 
   TRes call({int? location_id});
 }
 
-class _CopyWithImpl$Variables$Query$getSavedLocation<TRes>
-    implements CopyWith$Variables$Query$getSavedLocation<TRes> {
-  _CopyWithImpl$Variables$Query$getSavedLocation(
+class _CopyWithImpl$Variables$Query$get_saved_location_by_id<TRes>
+    implements CopyWith$Variables$Query$get_saved_location_by_id<TRes> {
+  _CopyWithImpl$Variables$Query$get_saved_location_by_id(
     this._instance,
     this._then,
   );
 
-  final Variables$Query$getSavedLocation _instance;
+  final Variables$Query$get_saved_location_by_id _instance;
 
-  final TRes Function(Variables$Query$getSavedLocation) _then;
+  final TRes Function(Variables$Query$get_saved_location_by_id) _then;
 
   static const _undefined = {};
 
   TRes call({Object? location_id = _undefined}) =>
-      _then(Variables$Query$getSavedLocation._({
+      _then(Variables$Query$get_saved_location_by_id._({
         ..._instance._$data,
         if (location_id != _undefined && location_id != null)
           'location_id': (location_id as int),
       }));
 }
 
-class _CopyWithStubImpl$Variables$Query$getSavedLocation<TRes>
-    implements CopyWith$Variables$Query$getSavedLocation<TRes> {
-  _CopyWithStubImpl$Variables$Query$getSavedLocation(this._res);
+class _CopyWithStubImpl$Variables$Query$get_saved_location_by_id<TRes>
+    implements CopyWith$Variables$Query$get_saved_location_by_id<TRes> {
+  _CopyWithStubImpl$Variables$Query$get_saved_location_by_id(this._res);
 
   TRes _res;
 
   call({int? location_id}) => _res;
 }
 
-class Query$getSavedLocation {
-  Query$getSavedLocation({
+class Query$get_saved_location_by_id {
+  Query$get_saved_location_by_id({
     this.saved_location_by_pk,
     required this.$__typename,
   });
 
-  factory Query$getSavedLocation.fromJson(Map<String, dynamic> json) {
+  factory Query$get_saved_location_by_id.fromJson(Map<String, dynamic> json) {
     final l$saved_location_by_pk = json['saved_location_by_pk'];
     final l$$__typename = json['__typename'];
-    return Query$getSavedLocation(
+    return Query$get_saved_location_by_id(
       saved_location_by_pk: l$saved_location_by_pk == null
           ? null
-          : Query$getSavedLocation$saved_location_by_pk.fromJson(
+          : Query$get_saved_location_by_id$saved_location_by_pk.fromJson(
               (l$saved_location_by_pk as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Query$getSavedLocation$saved_location_by_pk? saved_location_by_pk;
+  final Query$get_saved_location_by_id$saved_location_by_pk?
+      saved_location_by_pk;
 
   final String $__typename;
 
@@ -802,7 +1452,7 @@ class Query$getSavedLocation {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$getSavedLocation) ||
+    if (!(other is Query$get_saved_location_by_id) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -820,41 +1470,42 @@ class Query$getSavedLocation {
   }
 }
 
-extension UtilityExtension$Query$getSavedLocation on Query$getSavedLocation {
-  CopyWith$Query$getSavedLocation<Query$getSavedLocation> get copyWith =>
-      CopyWith$Query$getSavedLocation(
-        this,
-        (i) => i,
-      );
+extension UtilityExtension$Query$get_saved_location_by_id
+    on Query$get_saved_location_by_id {
+  CopyWith$Query$get_saved_location_by_id<Query$get_saved_location_by_id>
+      get copyWith => CopyWith$Query$get_saved_location_by_id(
+            this,
+            (i) => i,
+          );
 }
 
-abstract class CopyWith$Query$getSavedLocation<TRes> {
-  factory CopyWith$Query$getSavedLocation(
-    Query$getSavedLocation instance,
-    TRes Function(Query$getSavedLocation) then,
-  ) = _CopyWithImpl$Query$getSavedLocation;
+abstract class CopyWith$Query$get_saved_location_by_id<TRes> {
+  factory CopyWith$Query$get_saved_location_by_id(
+    Query$get_saved_location_by_id instance,
+    TRes Function(Query$get_saved_location_by_id) then,
+  ) = _CopyWithImpl$Query$get_saved_location_by_id;
 
-  factory CopyWith$Query$getSavedLocation.stub(TRes res) =
-      _CopyWithStubImpl$Query$getSavedLocation;
+  factory CopyWith$Query$get_saved_location_by_id.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_saved_location_by_id;
 
   TRes call({
-    Query$getSavedLocation$saved_location_by_pk? saved_location_by_pk,
+    Query$get_saved_location_by_id$saved_location_by_pk? saved_location_by_pk,
     String? $__typename,
   });
-  CopyWith$Query$getSavedLocation$saved_location_by_pk<TRes>
+  CopyWith$Query$get_saved_location_by_id$saved_location_by_pk<TRes>
       get saved_location_by_pk;
 }
 
-class _CopyWithImpl$Query$getSavedLocation<TRes>
-    implements CopyWith$Query$getSavedLocation<TRes> {
-  _CopyWithImpl$Query$getSavedLocation(
+class _CopyWithImpl$Query$get_saved_location_by_id<TRes>
+    implements CopyWith$Query$get_saved_location_by_id<TRes> {
+  _CopyWithImpl$Query$get_saved_location_by_id(
     this._instance,
     this._then,
   );
 
-  final Query$getSavedLocation _instance;
+  final Query$get_saved_location_by_id _instance;
 
-  final TRes Function(Query$getSavedLocation) _then;
+  final TRes Function(Query$get_saved_location_by_id) _then;
 
   static const _undefined = {};
 
@@ -862,46 +1513,47 @@ class _CopyWithImpl$Query$getSavedLocation<TRes>
     Object? saved_location_by_pk = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$getSavedLocation(
+      _then(Query$get_saved_location_by_id(
         saved_location_by_pk: saved_location_by_pk == _undefined
             ? _instance.saved_location_by_pk
             : (saved_location_by_pk
-                as Query$getSavedLocation$saved_location_by_pk?),
+                as Query$get_saved_location_by_id$saved_location_by_pk?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$getSavedLocation$saved_location_by_pk<TRes>
+  CopyWith$Query$get_saved_location_by_id$saved_location_by_pk<TRes>
       get saved_location_by_pk {
     final local$saved_location_by_pk = _instance.saved_location_by_pk;
     return local$saved_location_by_pk == null
-        ? CopyWith$Query$getSavedLocation$saved_location_by_pk.stub(
+        ? CopyWith$Query$get_saved_location_by_id$saved_location_by_pk.stub(
             _then(_instance))
-        : CopyWith$Query$getSavedLocation$saved_location_by_pk(
+        : CopyWith$Query$get_saved_location_by_id$saved_location_by_pk(
             local$saved_location_by_pk, (e) => call(saved_location_by_pk: e));
   }
 }
 
-class _CopyWithStubImpl$Query$getSavedLocation<TRes>
-    implements CopyWith$Query$getSavedLocation<TRes> {
-  _CopyWithStubImpl$Query$getSavedLocation(this._res);
+class _CopyWithStubImpl$Query$get_saved_location_by_id<TRes>
+    implements CopyWith$Query$get_saved_location_by_id<TRes> {
+  _CopyWithStubImpl$Query$get_saved_location_by_id(this._res);
 
   TRes _res;
 
   call({
-    Query$getSavedLocation$saved_location_by_pk? saved_location_by_pk,
+    Query$get_saved_location_by_id$saved_location_by_pk? saved_location_by_pk,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$getSavedLocation$saved_location_by_pk<TRes>
+  CopyWith$Query$get_saved_location_by_id$saved_location_by_pk<TRes>
       get saved_location_by_pk =>
-          CopyWith$Query$getSavedLocation$saved_location_by_pk.stub(_res);
+          CopyWith$Query$get_saved_location_by_id$saved_location_by_pk.stub(
+              _res);
 }
 
-const documentNodeQuerygetSavedLocation = DocumentNode(definitions: [
+const documentNodeQueryget_saved_location_by_id = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.query,
-    name: NameNode(value: 'getSavedLocation'),
+    name: NameNode(value: 'get_saved_location_by_id'),
     variableDefinitions: [
       VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'location_id')),
@@ -974,15 +1626,15 @@ const documentNodeQuerygetSavedLocation = DocumentNode(definitions: [
     ]),
   ),
 ]);
-Query$getSavedLocation _parserFn$Query$getSavedLocation(
+Query$get_saved_location_by_id _parserFn$Query$get_saved_location_by_id(
         Map<String, dynamic> data) =>
-    Query$getSavedLocation.fromJson(data);
+    Query$get_saved_location_by_id.fromJson(data);
 
-class Options$Query$getSavedLocation
-    extends graphql.QueryOptions<Query$getSavedLocation> {
-  Options$Query$getSavedLocation({
+class Options$Query$get_saved_location_by_id
+    extends graphql.QueryOptions<Query$get_saved_location_by_id> {
+  Options$Query$get_saved_location_by_id({
     String? operationName,
-    required Variables$Query$getSavedLocation variables,
+    required Variables$Query$get_saved_location_by_id variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -998,16 +1650,16 @@ class Options$Query$getSavedLocation
           optimisticResult: optimisticResult,
           pollInterval: pollInterval,
           context: context,
-          document: documentNodeQuerygetSavedLocation,
-          parserFn: _parserFn$Query$getSavedLocation,
+          document: documentNodeQueryget_saved_location_by_id,
+          parserFn: _parserFn$Query$get_saved_location_by_id,
         );
 }
 
-class WatchOptions$Query$getSavedLocation
-    extends graphql.WatchQueryOptions<Query$getSavedLocation> {
-  WatchOptions$Query$getSavedLocation({
+class WatchOptions$Query$get_saved_location_by_id
+    extends graphql.WatchQueryOptions<Query$get_saved_location_by_id> {
+  WatchOptions$Query$get_saved_location_by_id({
     String? operationName,
-    required Variables$Query$getSavedLocation variables,
+    required Variables$Query$get_saved_location_by_id variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -1025,65 +1677,71 @@ class WatchOptions$Query$getSavedLocation
           cacheRereadPolicy: cacheRereadPolicy,
           optimisticResult: optimisticResult,
           context: context,
-          document: documentNodeQuerygetSavedLocation,
+          document: documentNodeQueryget_saved_location_by_id,
           pollInterval: pollInterval,
           eagerlyFetchResults: eagerlyFetchResults,
           carryForwardDataOnException: carryForwardDataOnException,
           fetchResults: fetchResults,
-          parserFn: _parserFn$Query$getSavedLocation,
+          parserFn: _parserFn$Query$get_saved_location_by_id,
         );
 }
 
-class FetchMoreOptions$Query$getSavedLocation extends graphql.FetchMoreOptions {
-  FetchMoreOptions$Query$getSavedLocation({
+class FetchMoreOptions$Query$get_saved_location_by_id
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$get_saved_location_by_id({
     required graphql.UpdateQuery updateQuery,
-    required Variables$Query$getSavedLocation variables,
+    required Variables$Query$get_saved_location_by_id variables,
   }) : super(
           updateQuery: updateQuery,
           variables: variables.toJson(),
-          document: documentNodeQuerygetSavedLocation,
+          document: documentNodeQueryget_saved_location_by_id,
         );
 }
 
-extension ClientExtension$Query$getSavedLocation on graphql.GraphQLClient {
-  Future<graphql.QueryResult<Query$getSavedLocation>> query$getSavedLocation(
-          Options$Query$getSavedLocation options) async =>
-      await this.query(options);
-  graphql.ObservableQuery<Query$getSavedLocation> watchQuery$getSavedLocation(
-          WatchOptions$Query$getSavedLocation options) =>
-      this.watchQuery(options);
-  void writeQuery$getSavedLocation({
-    required Query$getSavedLocation data,
-    required Variables$Query$getSavedLocation variables,
+extension ClientExtension$Query$get_saved_location_by_id
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$get_saved_location_by_id>>
+      query$get_saved_location_by_id(
+              Options$Query$get_saved_location_by_id options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$get_saved_location_by_id>
+      watchQuery$get_saved_location_by_id(
+              WatchOptions$Query$get_saved_location_by_id options) =>
+          this.watchQuery(options);
+  void writeQuery$get_saved_location_by_id({
+    required Query$get_saved_location_by_id data,
+    required Variables$Query$get_saved_location_by_id variables,
     bool broadcast = true,
   }) =>
       this.writeQuery(
         graphql.Request(
-          operation:
-              graphql.Operation(document: documentNodeQuerygetSavedLocation),
+          operation: graphql.Operation(
+              document: documentNodeQueryget_saved_location_by_id),
           variables: variables.toJson(),
         ),
         data: data.toJson(),
         broadcast: broadcast,
       );
-  Query$getSavedLocation? readQuery$getSavedLocation({
-    required Variables$Query$getSavedLocation variables,
+  Query$get_saved_location_by_id? readQuery$get_saved_location_by_id({
+    required Variables$Query$get_saved_location_by_id variables,
     bool optimistic = true,
   }) {
     final result = this.readQuery(
       graphql.Request(
-        operation:
-            graphql.Operation(document: documentNodeQuerygetSavedLocation),
+        operation: graphql.Operation(
+            document: documentNodeQueryget_saved_location_by_id),
         variables: variables.toJson(),
       ),
       optimistic: optimistic,
     );
-    return result == null ? null : Query$getSavedLocation.fromJson(result);
+    return result == null
+        ? null
+        : Query$get_saved_location_by_id.fromJson(result);
   }
 }
 
-class Query$getSavedLocation$saved_location_by_pk {
-  Query$getSavedLocation$saved_location_by_pk({
+class Query$get_saved_location_by_id$saved_location_by_pk {
+  Query$get_saved_location_by_id$saved_location_by_pk({
     required this.id,
     required this.name,
     required this.location_gps,
@@ -1092,7 +1750,7 @@ class Query$getSavedLocation$saved_location_by_pk {
     required this.$__typename,
   });
 
-  factory Query$getSavedLocation$saved_location_by_pk.fromJson(
+  factory Query$get_saved_location_by_id$saved_location_by_pk.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
@@ -1100,10 +1758,10 @@ class Query$getSavedLocation$saved_location_by_pk {
     final l$location_text = json['location_text'];
     final l$$default = json['default'];
     final l$$__typename = json['__typename'];
-    return Query$getSavedLocation$saved_location_by_pk(
+    return Query$get_saved_location_by_id$saved_location_by_pk(
       id: (l$id as int),
       name: (l$name as String),
-      location_gps: GeographyFromJson(l$location_gps),
+      location_gps: geographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
       $default: (l$$default as bool),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -1129,7 +1787,7 @@ class Query$getSavedLocation$saved_location_by_pk {
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location_gps = location_gps;
-    _resultData['location_gps'] = GeographyToJson(l$location_gps);
+    _resultData['location_gps'] = geographyToJson(l$location_gps);
     final l$location_text = location_text;
     _resultData['location_text'] = l$location_text;
     final l$$default = $default;
@@ -1162,7 +1820,7 @@ class Query$getSavedLocation$saved_location_by_pk {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$getSavedLocation$saved_location_by_pk) ||
+    if (!(other is Query$get_saved_location_by_id$saved_location_by_pk) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1200,24 +1858,27 @@ class Query$getSavedLocation$saved_location_by_pk {
   }
 }
 
-extension UtilityExtension$Query$getSavedLocation$saved_location_by_pk
-    on Query$getSavedLocation$saved_location_by_pk {
-  CopyWith$Query$getSavedLocation$saved_location_by_pk<
-          Query$getSavedLocation$saved_location_by_pk>
-      get copyWith => CopyWith$Query$getSavedLocation$saved_location_by_pk(
+extension UtilityExtension$Query$get_saved_location_by_id$saved_location_by_pk
+    on Query$get_saved_location_by_id$saved_location_by_pk {
+  CopyWith$Query$get_saved_location_by_id$saved_location_by_pk<
+          Query$get_saved_location_by_id$saved_location_by_pk>
+      get copyWith =>
+          CopyWith$Query$get_saved_location_by_id$saved_location_by_pk(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$getSavedLocation$saved_location_by_pk<TRes> {
-  factory CopyWith$Query$getSavedLocation$saved_location_by_pk(
-    Query$getSavedLocation$saved_location_by_pk instance,
-    TRes Function(Query$getSavedLocation$saved_location_by_pk) then,
-  ) = _CopyWithImpl$Query$getSavedLocation$saved_location_by_pk;
+abstract class CopyWith$Query$get_saved_location_by_id$saved_location_by_pk<
+    TRes> {
+  factory CopyWith$Query$get_saved_location_by_id$saved_location_by_pk(
+    Query$get_saved_location_by_id$saved_location_by_pk instance,
+    TRes Function(Query$get_saved_location_by_id$saved_location_by_pk) then,
+  ) = _CopyWithImpl$Query$get_saved_location_by_id$saved_location_by_pk;
 
-  factory CopyWith$Query$getSavedLocation$saved_location_by_pk.stub(TRes res) =
-      _CopyWithStubImpl$Query$getSavedLocation$saved_location_by_pk;
+  factory CopyWith$Query$get_saved_location_by_id$saved_location_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_saved_location_by_id$saved_location_by_pk;
 
   TRes call({
     int? id,
@@ -1229,16 +1890,18 @@ abstract class CopyWith$Query$getSavedLocation$saved_location_by_pk<TRes> {
   });
 }
 
-class _CopyWithImpl$Query$getSavedLocation$saved_location_by_pk<TRes>
-    implements CopyWith$Query$getSavedLocation$saved_location_by_pk<TRes> {
-  _CopyWithImpl$Query$getSavedLocation$saved_location_by_pk(
+class _CopyWithImpl$Query$get_saved_location_by_id$saved_location_by_pk<TRes>
+    implements
+        CopyWith$Query$get_saved_location_by_id$saved_location_by_pk<TRes> {
+  _CopyWithImpl$Query$get_saved_location_by_id$saved_location_by_pk(
     this._instance,
     this._then,
   );
 
-  final Query$getSavedLocation$saved_location_by_pk _instance;
+  final Query$get_saved_location_by_id$saved_location_by_pk _instance;
 
-  final TRes Function(Query$getSavedLocation$saved_location_by_pk) _then;
+  final TRes Function(Query$get_saved_location_by_id$saved_location_by_pk)
+      _then;
 
   static const _undefined = {};
 
@@ -1250,7 +1913,7 @@ class _CopyWithImpl$Query$getSavedLocation$saved_location_by_pk<TRes>
     Object? $default = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$getSavedLocation$saved_location_by_pk(
+      _then(Query$get_saved_location_by_id$saved_location_by_pk(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
@@ -1270,9 +1933,12 @@ class _CopyWithImpl$Query$getSavedLocation$saved_location_by_pk<TRes>
       ));
 }
 
-class _CopyWithStubImpl$Query$getSavedLocation$saved_location_by_pk<TRes>
-    implements CopyWith$Query$getSavedLocation$saved_location_by_pk<TRes> {
-  _CopyWithStubImpl$Query$getSavedLocation$saved_location_by_pk(this._res);
+class _CopyWithStubImpl$Query$get_saved_location_by_id$saved_location_by_pk<
+        TRes>
+    implements
+        CopyWith$Query$get_saved_location_by_id$saved_location_by_pk<TRes> {
+  _CopyWithStubImpl$Query$get_saved_location_by_id$saved_location_by_pk(
+      this._res);
 
   TRes _res;
 
@@ -1287,15 +1953,15 @@ class _CopyWithStubImpl$Query$getSavedLocation$saved_location_by_pk<TRes>
       _res;
 }
 
-class Variables$Mutation$updateSavedLocation {
-  factory Variables$Mutation$updateSavedLocation({
+class Variables$Mutation$update_saved_location {
+  factory Variables$Mutation$update_saved_location({
     required Input$saved_location_pk_columns_input location_id,
     Geography? gps,
     required String name,
     required bool $default,
     required String address,
   }) =>
-      Variables$Mutation$updateSavedLocation._({
+      Variables$Mutation$update_saved_location._({
         r'location_id': location_id,
         if (gps != null) r'gps': gps,
         r'name': name,
@@ -1303,9 +1969,9 @@ class Variables$Mutation$updateSavedLocation {
         r'address': address,
       });
 
-  Variables$Mutation$updateSavedLocation._(this._$data);
+  Variables$Mutation$update_saved_location._(this._$data);
 
-  factory Variables$Mutation$updateSavedLocation.fromJson(
+  factory Variables$Mutation$update_saved_location.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
     final l$location_id = data['location_id'];
@@ -1313,7 +1979,7 @@ class Variables$Mutation$updateSavedLocation {
         (l$location_id as Map<String, dynamic>));
     if (data.containsKey('gps')) {
       final l$gps = data['gps'];
-      result$data['gps'] = l$gps == null ? null : GeographyFromJson(l$gps);
+      result$data['gps'] = l$gps == null ? null : geographyFromJson(l$gps);
     }
     final l$name = data['name'];
     result$data['name'] = (l$name as String);
@@ -1321,7 +1987,7 @@ class Variables$Mutation$updateSavedLocation {
     result$data['default'] = (l$$default as bool);
     final l$address = data['address'];
     result$data['address'] = (l$address as String);
-    return Variables$Mutation$updateSavedLocation._(result$data);
+    return Variables$Mutation$update_saved_location._(result$data);
   }
 
   Map<String, dynamic> _$data;
@@ -1338,7 +2004,7 @@ class Variables$Mutation$updateSavedLocation {
     result$data['location_id'] = l$location_id.toJson();
     if (_$data.containsKey('gps')) {
       final l$gps = gps;
-      result$data['gps'] = l$gps == null ? null : GeographyToJson(l$gps);
+      result$data['gps'] = l$gps == null ? null : geographyToJson(l$gps);
     }
     final l$name = name;
     result$data['name'] = l$name;
@@ -1349,9 +2015,9 @@ class Variables$Mutation$updateSavedLocation {
     return result$data;
   }
 
-  CopyWith$Variables$Mutation$updateSavedLocation<
-          Variables$Mutation$updateSavedLocation>
-      get copyWith => CopyWith$Variables$Mutation$updateSavedLocation(
+  CopyWith$Variables$Mutation$update_saved_location<
+          Variables$Mutation$update_saved_location>
+      get copyWith => CopyWith$Variables$Mutation$update_saved_location(
             this,
             (i) => i,
           );
@@ -1360,7 +2026,7 @@ class Variables$Mutation$updateSavedLocation {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Variables$Mutation$updateSavedLocation) ||
+    if (!(other is Variables$Mutation$update_saved_location) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1412,14 +2078,14 @@ class Variables$Mutation$updateSavedLocation {
   }
 }
 
-abstract class CopyWith$Variables$Mutation$updateSavedLocation<TRes> {
-  factory CopyWith$Variables$Mutation$updateSavedLocation(
-    Variables$Mutation$updateSavedLocation instance,
-    TRes Function(Variables$Mutation$updateSavedLocation) then,
-  ) = _CopyWithImpl$Variables$Mutation$updateSavedLocation;
+abstract class CopyWith$Variables$Mutation$update_saved_location<TRes> {
+  factory CopyWith$Variables$Mutation$update_saved_location(
+    Variables$Mutation$update_saved_location instance,
+    TRes Function(Variables$Mutation$update_saved_location) then,
+  ) = _CopyWithImpl$Variables$Mutation$update_saved_location;
 
-  factory CopyWith$Variables$Mutation$updateSavedLocation.stub(TRes res) =
-      _CopyWithStubImpl$Variables$Mutation$updateSavedLocation;
+  factory CopyWith$Variables$Mutation$update_saved_location.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$update_saved_location;
 
   TRes call({
     Input$saved_location_pk_columns_input? location_id,
@@ -1430,16 +2096,16 @@ abstract class CopyWith$Variables$Mutation$updateSavedLocation<TRes> {
   });
 }
 
-class _CopyWithImpl$Variables$Mutation$updateSavedLocation<TRes>
-    implements CopyWith$Variables$Mutation$updateSavedLocation<TRes> {
-  _CopyWithImpl$Variables$Mutation$updateSavedLocation(
+class _CopyWithImpl$Variables$Mutation$update_saved_location<TRes>
+    implements CopyWith$Variables$Mutation$update_saved_location<TRes> {
+  _CopyWithImpl$Variables$Mutation$update_saved_location(
     this._instance,
     this._then,
   );
 
-  final Variables$Mutation$updateSavedLocation _instance;
+  final Variables$Mutation$update_saved_location _instance;
 
-  final TRes Function(Variables$Mutation$updateSavedLocation) _then;
+  final TRes Function(Variables$Mutation$update_saved_location) _then;
 
   static const _undefined = {};
 
@@ -1450,7 +2116,7 @@ class _CopyWithImpl$Variables$Mutation$updateSavedLocation<TRes>
     Object? $default = _undefined,
     Object? address = _undefined,
   }) =>
-      _then(Variables$Mutation$updateSavedLocation._({
+      _then(Variables$Mutation$update_saved_location._({
         ..._instance._$data,
         if (location_id != _undefined && location_id != null)
           'location_id': (location_id as Input$saved_location_pk_columns_input),
@@ -1463,9 +2129,9 @@ class _CopyWithImpl$Variables$Mutation$updateSavedLocation<TRes>
       }));
 }
 
-class _CopyWithStubImpl$Variables$Mutation$updateSavedLocation<TRes>
-    implements CopyWith$Variables$Mutation$updateSavedLocation<TRes> {
-  _CopyWithStubImpl$Variables$Mutation$updateSavedLocation(this._res);
+class _CopyWithStubImpl$Variables$Mutation$update_saved_location<TRes>
+    implements CopyWith$Variables$Mutation$update_saved_location<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$update_saved_location(this._res);
 
   TRes _res;
 
@@ -1479,25 +2145,25 @@ class _CopyWithStubImpl$Variables$Mutation$updateSavedLocation<TRes>
       _res;
 }
 
-class Mutation$updateSavedLocation {
-  Mutation$updateSavedLocation({
+class Mutation$update_saved_location {
+  Mutation$update_saved_location({
     this.update_saved_location_by_pk,
     required this.$__typename,
   });
 
-  factory Mutation$updateSavedLocation.fromJson(Map<String, dynamic> json) {
+  factory Mutation$update_saved_location.fromJson(Map<String, dynamic> json) {
     final l$update_saved_location_by_pk = json['update_saved_location_by_pk'];
     final l$$__typename = json['__typename'];
-    return Mutation$updateSavedLocation(
+    return Mutation$update_saved_location(
       update_saved_location_by_pk: l$update_saved_location_by_pk == null
           ? null
-          : Mutation$updateSavedLocation$update_saved_location_by_pk.fromJson(
+          : Mutation$update_saved_location$update_saved_location_by_pk.fromJson(
               (l$update_saved_location_by_pk as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Mutation$updateSavedLocation$update_saved_location_by_pk?
+  final Mutation$update_saved_location$update_saved_location_by_pk?
       update_saved_location_by_pk;
 
   final String $__typename;
@@ -1527,7 +2193,7 @@ class Mutation$updateSavedLocation {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Mutation$updateSavedLocation) ||
+    if (!(other is Mutation$update_saved_location) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1546,43 +2212,43 @@ class Mutation$updateSavedLocation {
   }
 }
 
-extension UtilityExtension$Mutation$updateSavedLocation
-    on Mutation$updateSavedLocation {
-  CopyWith$Mutation$updateSavedLocation<Mutation$updateSavedLocation>
-      get copyWith => CopyWith$Mutation$updateSavedLocation(
+extension UtilityExtension$Mutation$update_saved_location
+    on Mutation$update_saved_location {
+  CopyWith$Mutation$update_saved_location<Mutation$update_saved_location>
+      get copyWith => CopyWith$Mutation$update_saved_location(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$updateSavedLocation<TRes> {
-  factory CopyWith$Mutation$updateSavedLocation(
-    Mutation$updateSavedLocation instance,
-    TRes Function(Mutation$updateSavedLocation) then,
-  ) = _CopyWithImpl$Mutation$updateSavedLocation;
+abstract class CopyWith$Mutation$update_saved_location<TRes> {
+  factory CopyWith$Mutation$update_saved_location(
+    Mutation$update_saved_location instance,
+    TRes Function(Mutation$update_saved_location) then,
+  ) = _CopyWithImpl$Mutation$update_saved_location;
 
-  factory CopyWith$Mutation$updateSavedLocation.stub(TRes res) =
-      _CopyWithStubImpl$Mutation$updateSavedLocation;
+  factory CopyWith$Mutation$update_saved_location.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$update_saved_location;
 
   TRes call({
-    Mutation$updateSavedLocation$update_saved_location_by_pk?
+    Mutation$update_saved_location$update_saved_location_by_pk?
         update_saved_location_by_pk,
     String? $__typename,
   });
-  CopyWith$Mutation$updateSavedLocation$update_saved_location_by_pk<TRes>
+  CopyWith$Mutation$update_saved_location$update_saved_location_by_pk<TRes>
       get update_saved_location_by_pk;
 }
 
-class _CopyWithImpl$Mutation$updateSavedLocation<TRes>
-    implements CopyWith$Mutation$updateSavedLocation<TRes> {
-  _CopyWithImpl$Mutation$updateSavedLocation(
+class _CopyWithImpl$Mutation$update_saved_location<TRes>
+    implements CopyWith$Mutation$update_saved_location<TRes> {
+  _CopyWithImpl$Mutation$update_saved_location(
     this._instance,
     this._then,
   );
 
-  final Mutation$updateSavedLocation _instance;
+  final Mutation$update_saved_location _instance;
 
-  final TRes Function(Mutation$updateSavedLocation) _then;
+  final TRes Function(Mutation$update_saved_location) _then;
 
   static const _undefined = {};
 
@@ -1590,50 +2256,50 @@ class _CopyWithImpl$Mutation$updateSavedLocation<TRes>
     Object? update_saved_location_by_pk = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Mutation$updateSavedLocation(
+      _then(Mutation$update_saved_location(
         update_saved_location_by_pk: update_saved_location_by_pk == _undefined
             ? _instance.update_saved_location_by_pk
             : (update_saved_location_by_pk
-                as Mutation$updateSavedLocation$update_saved_location_by_pk?),
+                as Mutation$update_saved_location$update_saved_location_by_pk?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Mutation$updateSavedLocation$update_saved_location_by_pk<TRes>
+  CopyWith$Mutation$update_saved_location$update_saved_location_by_pk<TRes>
       get update_saved_location_by_pk {
     final local$update_saved_location_by_pk =
         _instance.update_saved_location_by_pk;
     return local$update_saved_location_by_pk == null
-        ? CopyWith$Mutation$updateSavedLocation$update_saved_location_by_pk
+        ? CopyWith$Mutation$update_saved_location$update_saved_location_by_pk
             .stub(_then(_instance))
-        : CopyWith$Mutation$updateSavedLocation$update_saved_location_by_pk(
+        : CopyWith$Mutation$update_saved_location$update_saved_location_by_pk(
             local$update_saved_location_by_pk,
             (e) => call(update_saved_location_by_pk: e));
   }
 }
 
-class _CopyWithStubImpl$Mutation$updateSavedLocation<TRes>
-    implements CopyWith$Mutation$updateSavedLocation<TRes> {
-  _CopyWithStubImpl$Mutation$updateSavedLocation(this._res);
+class _CopyWithStubImpl$Mutation$update_saved_location<TRes>
+    implements CopyWith$Mutation$update_saved_location<TRes> {
+  _CopyWithStubImpl$Mutation$update_saved_location(this._res);
 
   TRes _res;
 
   call({
-    Mutation$updateSavedLocation$update_saved_location_by_pk?
+    Mutation$update_saved_location$update_saved_location_by_pk?
         update_saved_location_by_pk,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Mutation$updateSavedLocation$update_saved_location_by_pk<TRes>
+  CopyWith$Mutation$update_saved_location$update_saved_location_by_pk<TRes>
       get update_saved_location_by_pk =>
-          CopyWith$Mutation$updateSavedLocation$update_saved_location_by_pk
+          CopyWith$Mutation$update_saved_location$update_saved_location_by_pk
               .stub(_res);
 }
 
-const documentNodeMutationupdateSavedLocation = DocumentNode(definitions: [
+const documentNodeMutationupdate_saved_location = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.mutation,
-    name: NameNode(value: 'updateSavedLocation'),
+    name: NameNode(value: 'update_saved_location'),
     variableDefinitions: [
       VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'location_id')),
@@ -1763,27 +2429,27 @@ const documentNodeMutationupdateSavedLocation = DocumentNode(definitions: [
     ]),
   ),
 ]);
-Mutation$updateSavedLocation _parserFn$Mutation$updateSavedLocation(
+Mutation$update_saved_location _parserFn$Mutation$update_saved_location(
         Map<String, dynamic> data) =>
-    Mutation$updateSavedLocation.fromJson(data);
-typedef OnMutationCompleted$Mutation$updateSavedLocation = FutureOr<void>
+    Mutation$update_saved_location.fromJson(data);
+typedef OnMutationCompleted$Mutation$update_saved_location = FutureOr<void>
     Function(
   dynamic,
-  Mutation$updateSavedLocation?,
+  Mutation$update_saved_location?,
 );
 
-class Options$Mutation$updateSavedLocation
-    extends graphql.MutationOptions<Mutation$updateSavedLocation> {
-  Options$Mutation$updateSavedLocation({
+class Options$Mutation$update_saved_location
+    extends graphql.MutationOptions<Mutation$update_saved_location> {
+  Options$Mutation$update_saved_location({
     String? operationName,
-    required Variables$Mutation$updateSavedLocation variables,
+    required Variables$Mutation$update_saved_location variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
     Object? optimisticResult,
     graphql.Context? context,
-    OnMutationCompleted$Mutation$updateSavedLocation? onCompleted,
-    graphql.OnMutationUpdate<Mutation$updateSavedLocation>? update,
+    OnMutationCompleted$Mutation$update_saved_location? onCompleted,
+    graphql.OnMutationUpdate<Mutation$update_saved_location>? update,
     graphql.OnError? onError,
   })  : onCompletedWithParsed = onCompleted,
         super(
@@ -1800,15 +2466,16 @@ class Options$Mutation$updateSavedLocation
                     data,
                     data == null
                         ? null
-                        : _parserFn$Mutation$updateSavedLocation(data),
+                        : _parserFn$Mutation$update_saved_location(data),
                   ),
           update: update,
           onError: onError,
-          document: documentNodeMutationupdateSavedLocation,
-          parserFn: _parserFn$Mutation$updateSavedLocation,
+          document: documentNodeMutationupdate_saved_location,
+          parserFn: _parserFn$Mutation$update_saved_location,
         );
 
-  final OnMutationCompleted$Mutation$updateSavedLocation? onCompletedWithParsed;
+  final OnMutationCompleted$Mutation$update_saved_location?
+      onCompletedWithParsed;
 
   @override
   List<Object?> get properties => [
@@ -1819,11 +2486,11 @@ class Options$Mutation$updateSavedLocation
       ];
 }
 
-class WatchOptions$Mutation$updateSavedLocation
-    extends graphql.WatchQueryOptions<Mutation$updateSavedLocation> {
-  WatchOptions$Mutation$updateSavedLocation({
+class WatchOptions$Mutation$update_saved_location
+    extends graphql.WatchQueryOptions<Mutation$update_saved_location> {
+  WatchOptions$Mutation$update_saved_location({
     String? operationName,
-    required Variables$Mutation$updateSavedLocation variables,
+    required Variables$Mutation$update_saved_location variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -1841,29 +2508,29 @@ class WatchOptions$Mutation$updateSavedLocation
           cacheRereadPolicy: cacheRereadPolicy,
           optimisticResult: optimisticResult,
           context: context,
-          document: documentNodeMutationupdateSavedLocation,
+          document: documentNodeMutationupdate_saved_location,
           pollInterval: pollInterval,
           eagerlyFetchResults: eagerlyFetchResults,
           carryForwardDataOnException: carryForwardDataOnException,
           fetchResults: fetchResults,
-          parserFn: _parserFn$Mutation$updateSavedLocation,
+          parserFn: _parserFn$Mutation$update_saved_location,
         );
 }
 
-extension ClientExtension$Mutation$updateSavedLocation
+extension ClientExtension$Mutation$update_saved_location
     on graphql.GraphQLClient {
-  Future<graphql.QueryResult<Mutation$updateSavedLocation>>
-      mutate$updateSavedLocation(
-              Options$Mutation$updateSavedLocation options) async =>
+  Future<graphql.QueryResult<Mutation$update_saved_location>>
+      mutate$update_saved_location(
+              Options$Mutation$update_saved_location options) async =>
           await this.mutate(options);
-  graphql.ObservableQuery<Mutation$updateSavedLocation>
-      watchMutation$updateSavedLocation(
-              WatchOptions$Mutation$updateSavedLocation options) =>
+  graphql.ObservableQuery<Mutation$update_saved_location>
+      watchMutation$update_saved_location(
+              WatchOptions$Mutation$update_saved_location options) =>
           this.watchMutation(options);
 }
 
-class Mutation$updateSavedLocation$update_saved_location_by_pk {
-  Mutation$updateSavedLocation$update_saved_location_by_pk({
+class Mutation$update_saved_location$update_saved_location_by_pk {
+  Mutation$update_saved_location$update_saved_location_by_pk({
     required this.id,
     required this.name,
     required this.location_gps,
@@ -1872,7 +2539,7 @@ class Mutation$updateSavedLocation$update_saved_location_by_pk {
     required this.$__typename,
   });
 
-  factory Mutation$updateSavedLocation$update_saved_location_by_pk.fromJson(
+  factory Mutation$update_saved_location$update_saved_location_by_pk.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
@@ -1880,10 +2547,10 @@ class Mutation$updateSavedLocation$update_saved_location_by_pk {
     final l$location_text = json['location_text'];
     final l$$default = json['default'];
     final l$$__typename = json['__typename'];
-    return Mutation$updateSavedLocation$update_saved_location_by_pk(
+    return Mutation$update_saved_location$update_saved_location_by_pk(
       id: (l$id as int),
       name: (l$name as String),
-      location_gps: GeographyFromJson(l$location_gps),
+      location_gps: geographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
       $default: (l$$default as bool),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -1909,7 +2576,7 @@ class Mutation$updateSavedLocation$update_saved_location_by_pk {
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location_gps = location_gps;
-    _resultData['location_gps'] = GeographyToJson(l$location_gps);
+    _resultData['location_gps'] = geographyToJson(l$location_gps);
     final l$location_text = location_text;
     _resultData['location_text'] = l$location_text;
     final l$$default = $default;
@@ -1942,7 +2609,8 @@ class Mutation$updateSavedLocation$update_saved_location_by_pk {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Mutation$updateSavedLocation$update_saved_location_by_pk) ||
+    if (!(other
+            is Mutation$update_saved_location$update_saved_location_by_pk) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1980,28 +2648,28 @@ class Mutation$updateSavedLocation$update_saved_location_by_pk {
   }
 }
 
-extension UtilityExtension$Mutation$updateSavedLocation$update_saved_location_by_pk
-    on Mutation$updateSavedLocation$update_saved_location_by_pk {
-  CopyWith$Mutation$updateSavedLocation$update_saved_location_by_pk<
-          Mutation$updateSavedLocation$update_saved_location_by_pk>
+extension UtilityExtension$Mutation$update_saved_location$update_saved_location_by_pk
+    on Mutation$update_saved_location$update_saved_location_by_pk {
+  CopyWith$Mutation$update_saved_location$update_saved_location_by_pk<
+          Mutation$update_saved_location$update_saved_location_by_pk>
       get copyWith =>
-          CopyWith$Mutation$updateSavedLocation$update_saved_location_by_pk(
+          CopyWith$Mutation$update_saved_location$update_saved_location_by_pk(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$updateSavedLocation$update_saved_location_by_pk<
+abstract class CopyWith$Mutation$update_saved_location$update_saved_location_by_pk<
     TRes> {
-  factory CopyWith$Mutation$updateSavedLocation$update_saved_location_by_pk(
-    Mutation$updateSavedLocation$update_saved_location_by_pk instance,
-    TRes Function(Mutation$updateSavedLocation$update_saved_location_by_pk)
+  factory CopyWith$Mutation$update_saved_location$update_saved_location_by_pk(
+    Mutation$update_saved_location$update_saved_location_by_pk instance,
+    TRes Function(Mutation$update_saved_location$update_saved_location_by_pk)
         then,
-  ) = _CopyWithImpl$Mutation$updateSavedLocation$update_saved_location_by_pk;
+  ) = _CopyWithImpl$Mutation$update_saved_location$update_saved_location_by_pk;
 
-  factory CopyWith$Mutation$updateSavedLocation$update_saved_location_by_pk.stub(
+  factory CopyWith$Mutation$update_saved_location$update_saved_location_by_pk.stub(
           TRes res) =
-      _CopyWithStubImpl$Mutation$updateSavedLocation$update_saved_location_by_pk;
+      _CopyWithStubImpl$Mutation$update_saved_location$update_saved_location_by_pk;
 
   TRes call({
     int? id,
@@ -2013,20 +2681,20 @@ abstract class CopyWith$Mutation$updateSavedLocation$update_saved_location_by_pk
   });
 }
 
-class _CopyWithImpl$Mutation$updateSavedLocation$update_saved_location_by_pk<
+class _CopyWithImpl$Mutation$update_saved_location$update_saved_location_by_pk<
         TRes>
     implements
-        CopyWith$Mutation$updateSavedLocation$update_saved_location_by_pk<
+        CopyWith$Mutation$update_saved_location$update_saved_location_by_pk<
             TRes> {
-  _CopyWithImpl$Mutation$updateSavedLocation$update_saved_location_by_pk(
+  _CopyWithImpl$Mutation$update_saved_location$update_saved_location_by_pk(
     this._instance,
     this._then,
   );
 
-  final Mutation$updateSavedLocation$update_saved_location_by_pk _instance;
+  final Mutation$update_saved_location$update_saved_location_by_pk _instance;
 
-  final TRes Function(Mutation$updateSavedLocation$update_saved_location_by_pk)
-      _then;
+  final TRes Function(
+      Mutation$update_saved_location$update_saved_location_by_pk) _then;
 
   static const _undefined = {};
 
@@ -2038,7 +2706,7 @@ class _CopyWithImpl$Mutation$updateSavedLocation$update_saved_location_by_pk<
     Object? $default = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Mutation$updateSavedLocation$update_saved_location_by_pk(
+      _then(Mutation$update_saved_location$update_saved_location_by_pk(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
@@ -2058,12 +2726,12 @@ class _CopyWithImpl$Mutation$updateSavedLocation$update_saved_location_by_pk<
       ));
 }
 
-class _CopyWithStubImpl$Mutation$updateSavedLocation$update_saved_location_by_pk<
+class _CopyWithStubImpl$Mutation$update_saved_location$update_saved_location_by_pk<
         TRes>
     implements
-        CopyWith$Mutation$updateSavedLocation$update_saved_location_by_pk<
+        CopyWith$Mutation$update_saved_location$update_saved_location_by_pk<
             TRes> {
-  _CopyWithStubImpl$Mutation$updateSavedLocation$update_saved_location_by_pk(
+  _CopyWithStubImpl$Mutation$update_saved_location$update_saved_location_by_pk(
       this._res);
 
   TRes _res;
@@ -2079,20 +2747,21 @@ class _CopyWithStubImpl$Mutation$updateSavedLocation$update_saved_location_by_pk
       _res;
 }
 
-class Variables$Mutation$deleteSavedLocation {
-  factory Variables$Mutation$deleteSavedLocation({required int location_id}) =>
-      Variables$Mutation$deleteSavedLocation._({
+class Variables$Mutation$delete_saved_location {
+  factory Variables$Mutation$delete_saved_location(
+          {required int location_id}) =>
+      Variables$Mutation$delete_saved_location._({
         r'location_id': location_id,
       });
 
-  Variables$Mutation$deleteSavedLocation._(this._$data);
+  Variables$Mutation$delete_saved_location._(this._$data);
 
-  factory Variables$Mutation$deleteSavedLocation.fromJson(
+  factory Variables$Mutation$delete_saved_location.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
     final l$location_id = data['location_id'];
     result$data['location_id'] = (l$location_id as int);
-    return Variables$Mutation$deleteSavedLocation._(result$data);
+    return Variables$Mutation$delete_saved_location._(result$data);
   }
 
   Map<String, dynamic> _$data;
@@ -2105,9 +2774,9 @@ class Variables$Mutation$deleteSavedLocation {
     return result$data;
   }
 
-  CopyWith$Variables$Mutation$deleteSavedLocation<
-          Variables$Mutation$deleteSavedLocation>
-      get copyWith => CopyWith$Variables$Mutation$deleteSavedLocation(
+  CopyWith$Variables$Mutation$delete_saved_location<
+          Variables$Mutation$delete_saved_location>
+      get copyWith => CopyWith$Variables$Mutation$delete_saved_location(
             this,
             (i) => i,
           );
@@ -2116,7 +2785,7 @@ class Variables$Mutation$deleteSavedLocation {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Variables$Mutation$deleteSavedLocation) ||
+    if (!(other is Variables$Mutation$delete_saved_location) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -2135,67 +2804,67 @@ class Variables$Mutation$deleteSavedLocation {
   }
 }
 
-abstract class CopyWith$Variables$Mutation$deleteSavedLocation<TRes> {
-  factory CopyWith$Variables$Mutation$deleteSavedLocation(
-    Variables$Mutation$deleteSavedLocation instance,
-    TRes Function(Variables$Mutation$deleteSavedLocation) then,
-  ) = _CopyWithImpl$Variables$Mutation$deleteSavedLocation;
+abstract class CopyWith$Variables$Mutation$delete_saved_location<TRes> {
+  factory CopyWith$Variables$Mutation$delete_saved_location(
+    Variables$Mutation$delete_saved_location instance,
+    TRes Function(Variables$Mutation$delete_saved_location) then,
+  ) = _CopyWithImpl$Variables$Mutation$delete_saved_location;
 
-  factory CopyWith$Variables$Mutation$deleteSavedLocation.stub(TRes res) =
-      _CopyWithStubImpl$Variables$Mutation$deleteSavedLocation;
+  factory CopyWith$Variables$Mutation$delete_saved_location.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$delete_saved_location;
 
   TRes call({int? location_id});
 }
 
-class _CopyWithImpl$Variables$Mutation$deleteSavedLocation<TRes>
-    implements CopyWith$Variables$Mutation$deleteSavedLocation<TRes> {
-  _CopyWithImpl$Variables$Mutation$deleteSavedLocation(
+class _CopyWithImpl$Variables$Mutation$delete_saved_location<TRes>
+    implements CopyWith$Variables$Mutation$delete_saved_location<TRes> {
+  _CopyWithImpl$Variables$Mutation$delete_saved_location(
     this._instance,
     this._then,
   );
 
-  final Variables$Mutation$deleteSavedLocation _instance;
+  final Variables$Mutation$delete_saved_location _instance;
 
-  final TRes Function(Variables$Mutation$deleteSavedLocation) _then;
+  final TRes Function(Variables$Mutation$delete_saved_location) _then;
 
   static const _undefined = {};
 
   TRes call({Object? location_id = _undefined}) =>
-      _then(Variables$Mutation$deleteSavedLocation._({
+      _then(Variables$Mutation$delete_saved_location._({
         ..._instance._$data,
         if (location_id != _undefined && location_id != null)
           'location_id': (location_id as int),
       }));
 }
 
-class _CopyWithStubImpl$Variables$Mutation$deleteSavedLocation<TRes>
-    implements CopyWith$Variables$Mutation$deleteSavedLocation<TRes> {
-  _CopyWithStubImpl$Variables$Mutation$deleteSavedLocation(this._res);
+class _CopyWithStubImpl$Variables$Mutation$delete_saved_location<TRes>
+    implements CopyWith$Variables$Mutation$delete_saved_location<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$delete_saved_location(this._res);
 
   TRes _res;
 
   call({int? location_id}) => _res;
 }
 
-class Mutation$deleteSavedLocation {
-  Mutation$deleteSavedLocation({
+class Mutation$delete_saved_location {
+  Mutation$delete_saved_location({
     this.delete_saved_location_by_pk,
     required this.$__typename,
   });
 
-  factory Mutation$deleteSavedLocation.fromJson(Map<String, dynamic> json) {
+  factory Mutation$delete_saved_location.fromJson(Map<String, dynamic> json) {
     final l$delete_saved_location_by_pk = json['delete_saved_location_by_pk'];
     final l$$__typename = json['__typename'];
-    return Mutation$deleteSavedLocation(
+    return Mutation$delete_saved_location(
       delete_saved_location_by_pk: l$delete_saved_location_by_pk == null
           ? null
-          : Mutation$deleteSavedLocation$delete_saved_location_by_pk.fromJson(
+          : Mutation$delete_saved_location$delete_saved_location_by_pk.fromJson(
               (l$delete_saved_location_by_pk as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Mutation$deleteSavedLocation$delete_saved_location_by_pk?
+  final Mutation$delete_saved_location$delete_saved_location_by_pk?
       delete_saved_location_by_pk;
 
   final String $__typename;
@@ -2225,7 +2894,7 @@ class Mutation$deleteSavedLocation {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Mutation$deleteSavedLocation) ||
+    if (!(other is Mutation$delete_saved_location) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -2244,43 +2913,43 @@ class Mutation$deleteSavedLocation {
   }
 }
 
-extension UtilityExtension$Mutation$deleteSavedLocation
-    on Mutation$deleteSavedLocation {
-  CopyWith$Mutation$deleteSavedLocation<Mutation$deleteSavedLocation>
-      get copyWith => CopyWith$Mutation$deleteSavedLocation(
+extension UtilityExtension$Mutation$delete_saved_location
+    on Mutation$delete_saved_location {
+  CopyWith$Mutation$delete_saved_location<Mutation$delete_saved_location>
+      get copyWith => CopyWith$Mutation$delete_saved_location(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$deleteSavedLocation<TRes> {
-  factory CopyWith$Mutation$deleteSavedLocation(
-    Mutation$deleteSavedLocation instance,
-    TRes Function(Mutation$deleteSavedLocation) then,
-  ) = _CopyWithImpl$Mutation$deleteSavedLocation;
+abstract class CopyWith$Mutation$delete_saved_location<TRes> {
+  factory CopyWith$Mutation$delete_saved_location(
+    Mutation$delete_saved_location instance,
+    TRes Function(Mutation$delete_saved_location) then,
+  ) = _CopyWithImpl$Mutation$delete_saved_location;
 
-  factory CopyWith$Mutation$deleteSavedLocation.stub(TRes res) =
-      _CopyWithStubImpl$Mutation$deleteSavedLocation;
+  factory CopyWith$Mutation$delete_saved_location.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$delete_saved_location;
 
   TRes call({
-    Mutation$deleteSavedLocation$delete_saved_location_by_pk?
+    Mutation$delete_saved_location$delete_saved_location_by_pk?
         delete_saved_location_by_pk,
     String? $__typename,
   });
-  CopyWith$Mutation$deleteSavedLocation$delete_saved_location_by_pk<TRes>
+  CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk<TRes>
       get delete_saved_location_by_pk;
 }
 
-class _CopyWithImpl$Mutation$deleteSavedLocation<TRes>
-    implements CopyWith$Mutation$deleteSavedLocation<TRes> {
-  _CopyWithImpl$Mutation$deleteSavedLocation(
+class _CopyWithImpl$Mutation$delete_saved_location<TRes>
+    implements CopyWith$Mutation$delete_saved_location<TRes> {
+  _CopyWithImpl$Mutation$delete_saved_location(
     this._instance,
     this._then,
   );
 
-  final Mutation$deleteSavedLocation _instance;
+  final Mutation$delete_saved_location _instance;
 
-  final TRes Function(Mutation$deleteSavedLocation) _then;
+  final TRes Function(Mutation$delete_saved_location) _then;
 
   static const _undefined = {};
 
@@ -2288,50 +2957,50 @@ class _CopyWithImpl$Mutation$deleteSavedLocation<TRes>
     Object? delete_saved_location_by_pk = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Mutation$deleteSavedLocation(
+      _then(Mutation$delete_saved_location(
         delete_saved_location_by_pk: delete_saved_location_by_pk == _undefined
             ? _instance.delete_saved_location_by_pk
             : (delete_saved_location_by_pk
-                as Mutation$deleteSavedLocation$delete_saved_location_by_pk?),
+                as Mutation$delete_saved_location$delete_saved_location_by_pk?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Mutation$deleteSavedLocation$delete_saved_location_by_pk<TRes>
+  CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk<TRes>
       get delete_saved_location_by_pk {
     final local$delete_saved_location_by_pk =
         _instance.delete_saved_location_by_pk;
     return local$delete_saved_location_by_pk == null
-        ? CopyWith$Mutation$deleteSavedLocation$delete_saved_location_by_pk
+        ? CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk
             .stub(_then(_instance))
-        : CopyWith$Mutation$deleteSavedLocation$delete_saved_location_by_pk(
+        : CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk(
             local$delete_saved_location_by_pk,
             (e) => call(delete_saved_location_by_pk: e));
   }
 }
 
-class _CopyWithStubImpl$Mutation$deleteSavedLocation<TRes>
-    implements CopyWith$Mutation$deleteSavedLocation<TRes> {
-  _CopyWithStubImpl$Mutation$deleteSavedLocation(this._res);
+class _CopyWithStubImpl$Mutation$delete_saved_location<TRes>
+    implements CopyWith$Mutation$delete_saved_location<TRes> {
+  _CopyWithStubImpl$Mutation$delete_saved_location(this._res);
 
   TRes _res;
 
   call({
-    Mutation$deleteSavedLocation$delete_saved_location_by_pk?
+    Mutation$delete_saved_location$delete_saved_location_by_pk?
         delete_saved_location_by_pk,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Mutation$deleteSavedLocation$delete_saved_location_by_pk<TRes>
+  CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk<TRes>
       get delete_saved_location_by_pk =>
-          CopyWith$Mutation$deleteSavedLocation$delete_saved_location_by_pk
+          CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk
               .stub(_res);
 }
 
-const documentNodeMutationdeleteSavedLocation = DocumentNode(definitions: [
+const documentNodeMutationdelete_saved_location = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.mutation,
-    name: NameNode(value: 'deleteSavedLocation'),
+    name: NameNode(value: 'delete_saved_location'),
     variableDefinitions: [
       VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'location_id')),
@@ -2376,27 +3045,27 @@ const documentNodeMutationdeleteSavedLocation = DocumentNode(definitions: [
     ]),
   ),
 ]);
-Mutation$deleteSavedLocation _parserFn$Mutation$deleteSavedLocation(
+Mutation$delete_saved_location _parserFn$Mutation$delete_saved_location(
         Map<String, dynamic> data) =>
-    Mutation$deleteSavedLocation.fromJson(data);
-typedef OnMutationCompleted$Mutation$deleteSavedLocation = FutureOr<void>
+    Mutation$delete_saved_location.fromJson(data);
+typedef OnMutationCompleted$Mutation$delete_saved_location = FutureOr<void>
     Function(
   dynamic,
-  Mutation$deleteSavedLocation?,
+  Mutation$delete_saved_location?,
 );
 
-class Options$Mutation$deleteSavedLocation
-    extends graphql.MutationOptions<Mutation$deleteSavedLocation> {
-  Options$Mutation$deleteSavedLocation({
+class Options$Mutation$delete_saved_location
+    extends graphql.MutationOptions<Mutation$delete_saved_location> {
+  Options$Mutation$delete_saved_location({
     String? operationName,
-    required Variables$Mutation$deleteSavedLocation variables,
+    required Variables$Mutation$delete_saved_location variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
     Object? optimisticResult,
     graphql.Context? context,
-    OnMutationCompleted$Mutation$deleteSavedLocation? onCompleted,
-    graphql.OnMutationUpdate<Mutation$deleteSavedLocation>? update,
+    OnMutationCompleted$Mutation$delete_saved_location? onCompleted,
+    graphql.OnMutationUpdate<Mutation$delete_saved_location>? update,
     graphql.OnError? onError,
   })  : onCompletedWithParsed = onCompleted,
         super(
@@ -2413,15 +3082,16 @@ class Options$Mutation$deleteSavedLocation
                     data,
                     data == null
                         ? null
-                        : _parserFn$Mutation$deleteSavedLocation(data),
+                        : _parserFn$Mutation$delete_saved_location(data),
                   ),
           update: update,
           onError: onError,
-          document: documentNodeMutationdeleteSavedLocation,
-          parserFn: _parserFn$Mutation$deleteSavedLocation,
+          document: documentNodeMutationdelete_saved_location,
+          parserFn: _parserFn$Mutation$delete_saved_location,
         );
 
-  final OnMutationCompleted$Mutation$deleteSavedLocation? onCompletedWithParsed;
+  final OnMutationCompleted$Mutation$delete_saved_location?
+      onCompletedWithParsed;
 
   @override
   List<Object?> get properties => [
@@ -2432,11 +3102,11 @@ class Options$Mutation$deleteSavedLocation
       ];
 }
 
-class WatchOptions$Mutation$deleteSavedLocation
-    extends graphql.WatchQueryOptions<Mutation$deleteSavedLocation> {
-  WatchOptions$Mutation$deleteSavedLocation({
+class WatchOptions$Mutation$delete_saved_location
+    extends graphql.WatchQueryOptions<Mutation$delete_saved_location> {
+  WatchOptions$Mutation$delete_saved_location({
     String? operationName,
-    required Variables$Mutation$deleteSavedLocation variables,
+    required Variables$Mutation$delete_saved_location variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -2454,38 +3124,38 @@ class WatchOptions$Mutation$deleteSavedLocation
           cacheRereadPolicy: cacheRereadPolicy,
           optimisticResult: optimisticResult,
           context: context,
-          document: documentNodeMutationdeleteSavedLocation,
+          document: documentNodeMutationdelete_saved_location,
           pollInterval: pollInterval,
           eagerlyFetchResults: eagerlyFetchResults,
           carryForwardDataOnException: carryForwardDataOnException,
           fetchResults: fetchResults,
-          parserFn: _parserFn$Mutation$deleteSavedLocation,
+          parserFn: _parserFn$Mutation$delete_saved_location,
         );
 }
 
-extension ClientExtension$Mutation$deleteSavedLocation
+extension ClientExtension$Mutation$delete_saved_location
     on graphql.GraphQLClient {
-  Future<graphql.QueryResult<Mutation$deleteSavedLocation>>
-      mutate$deleteSavedLocation(
-              Options$Mutation$deleteSavedLocation options) async =>
+  Future<graphql.QueryResult<Mutation$delete_saved_location>>
+      mutate$delete_saved_location(
+              Options$Mutation$delete_saved_location options) async =>
           await this.mutate(options);
-  graphql.ObservableQuery<Mutation$deleteSavedLocation>
-      watchMutation$deleteSavedLocation(
-              WatchOptions$Mutation$deleteSavedLocation options) =>
+  graphql.ObservableQuery<Mutation$delete_saved_location>
+      watchMutation$delete_saved_location(
+              WatchOptions$Mutation$delete_saved_location options) =>
           this.watchMutation(options);
 }
 
-class Mutation$deleteSavedLocation$delete_saved_location_by_pk {
-  Mutation$deleteSavedLocation$delete_saved_location_by_pk({
+class Mutation$delete_saved_location$delete_saved_location_by_pk {
+  Mutation$delete_saved_location$delete_saved_location_by_pk({
     required this.name,
     required this.$__typename,
   });
 
-  factory Mutation$deleteSavedLocation$delete_saved_location_by_pk.fromJson(
+  factory Mutation$delete_saved_location$delete_saved_location_by_pk.fromJson(
       Map<String, dynamic> json) {
     final l$name = json['name'];
     final l$$__typename = json['__typename'];
-    return Mutation$deleteSavedLocation$delete_saved_location_by_pk(
+    return Mutation$delete_saved_location$delete_saved_location_by_pk(
       name: (l$name as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -2519,7 +3189,8 @@ class Mutation$deleteSavedLocation$delete_saved_location_by_pk {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Mutation$deleteSavedLocation$delete_saved_location_by_pk) ||
+    if (!(other
+            is Mutation$delete_saved_location$delete_saved_location_by_pk) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -2537,28 +3208,28 @@ class Mutation$deleteSavedLocation$delete_saved_location_by_pk {
   }
 }
 
-extension UtilityExtension$Mutation$deleteSavedLocation$delete_saved_location_by_pk
-    on Mutation$deleteSavedLocation$delete_saved_location_by_pk {
-  CopyWith$Mutation$deleteSavedLocation$delete_saved_location_by_pk<
-          Mutation$deleteSavedLocation$delete_saved_location_by_pk>
+extension UtilityExtension$Mutation$delete_saved_location$delete_saved_location_by_pk
+    on Mutation$delete_saved_location$delete_saved_location_by_pk {
+  CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk<
+          Mutation$delete_saved_location$delete_saved_location_by_pk>
       get copyWith =>
-          CopyWith$Mutation$deleteSavedLocation$delete_saved_location_by_pk(
+          CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$deleteSavedLocation$delete_saved_location_by_pk<
+abstract class CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk<
     TRes> {
-  factory CopyWith$Mutation$deleteSavedLocation$delete_saved_location_by_pk(
-    Mutation$deleteSavedLocation$delete_saved_location_by_pk instance,
-    TRes Function(Mutation$deleteSavedLocation$delete_saved_location_by_pk)
+  factory CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk(
+    Mutation$delete_saved_location$delete_saved_location_by_pk instance,
+    TRes Function(Mutation$delete_saved_location$delete_saved_location_by_pk)
         then,
-  ) = _CopyWithImpl$Mutation$deleteSavedLocation$delete_saved_location_by_pk;
+  ) = _CopyWithImpl$Mutation$delete_saved_location$delete_saved_location_by_pk;
 
-  factory CopyWith$Mutation$deleteSavedLocation$delete_saved_location_by_pk.stub(
+  factory CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk.stub(
           TRes res) =
-      _CopyWithStubImpl$Mutation$deleteSavedLocation$delete_saved_location_by_pk;
+      _CopyWithStubImpl$Mutation$delete_saved_location$delete_saved_location_by_pk;
 
   TRes call({
     String? name,
@@ -2566,20 +3237,20 @@ abstract class CopyWith$Mutation$deleteSavedLocation$delete_saved_location_by_pk
   });
 }
 
-class _CopyWithImpl$Mutation$deleteSavedLocation$delete_saved_location_by_pk<
+class _CopyWithImpl$Mutation$delete_saved_location$delete_saved_location_by_pk<
         TRes>
     implements
-        CopyWith$Mutation$deleteSavedLocation$delete_saved_location_by_pk<
+        CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk<
             TRes> {
-  _CopyWithImpl$Mutation$deleteSavedLocation$delete_saved_location_by_pk(
+  _CopyWithImpl$Mutation$delete_saved_location$delete_saved_location_by_pk(
     this._instance,
     this._then,
   );
 
-  final Mutation$deleteSavedLocation$delete_saved_location_by_pk _instance;
+  final Mutation$delete_saved_location$delete_saved_location_by_pk _instance;
 
-  final TRes Function(Mutation$deleteSavedLocation$delete_saved_location_by_pk)
-      _then;
+  final TRes Function(
+      Mutation$delete_saved_location$delete_saved_location_by_pk) _then;
 
   static const _undefined = {};
 
@@ -2587,7 +3258,7 @@ class _CopyWithImpl$Mutation$deleteSavedLocation$delete_saved_location_by_pk<
     Object? name = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Mutation$deleteSavedLocation$delete_saved_location_by_pk(
+      _then(Mutation$delete_saved_location$delete_saved_location_by_pk(
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -2597,12 +3268,12 @@ class _CopyWithImpl$Mutation$deleteSavedLocation$delete_saved_location_by_pk<
       ));
 }
 
-class _CopyWithStubImpl$Mutation$deleteSavedLocation$delete_saved_location_by_pk<
+class _CopyWithStubImpl$Mutation$delete_saved_location$delete_saved_location_by_pk<
         TRes>
     implements
-        CopyWith$Mutation$deleteSavedLocation$delete_saved_location_by_pk<
+        CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk<
             TRes> {
-  _CopyWithStubImpl$Mutation$deleteSavedLocation$delete_saved_location_by_pk(
+  _CopyWithStubImpl$Mutation$delete_saved_location$delete_saved_location_by_pk(
       this._res);
 
   TRes _res;
@@ -2614,22 +3285,22 @@ class _CopyWithStubImpl$Mutation$deleteSavedLocation$delete_saved_location_by_pk
       _res;
 }
 
-class Variables$Mutation$addSavedLocation {
-  factory Variables$Mutation$addSavedLocation(
+class Variables$Mutation$add_saved_location {
+  factory Variables$Mutation$add_saved_location(
           {required Input$saved_location_insert_input saved_location}) =>
-      Variables$Mutation$addSavedLocation._({
+      Variables$Mutation$add_saved_location._({
         r'saved_location': saved_location,
       });
 
-  Variables$Mutation$addSavedLocation._(this._$data);
+  Variables$Mutation$add_saved_location._(this._$data);
 
-  factory Variables$Mutation$addSavedLocation.fromJson(
+  factory Variables$Mutation$add_saved_location.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
     final l$saved_location = data['saved_location'];
     result$data['saved_location'] = Input$saved_location_insert_input.fromJson(
         (l$saved_location as Map<String, dynamic>));
-    return Variables$Mutation$addSavedLocation._(result$data);
+    return Variables$Mutation$add_saved_location._(result$data);
   }
 
   Map<String, dynamic> _$data;
@@ -2643,9 +3314,9 @@ class Variables$Mutation$addSavedLocation {
     return result$data;
   }
 
-  CopyWith$Variables$Mutation$addSavedLocation<
-          Variables$Mutation$addSavedLocation>
-      get copyWith => CopyWith$Variables$Mutation$addSavedLocation(
+  CopyWith$Variables$Mutation$add_saved_location<
+          Variables$Mutation$add_saved_location>
+      get copyWith => CopyWith$Variables$Mutation$add_saved_location(
             this,
             (i) => i,
           );
@@ -2654,7 +3325,7 @@ class Variables$Mutation$addSavedLocation {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Variables$Mutation$addSavedLocation) ||
+    if (!(other is Variables$Mutation$add_saved_location) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -2673,33 +3344,33 @@ class Variables$Mutation$addSavedLocation {
   }
 }
 
-abstract class CopyWith$Variables$Mutation$addSavedLocation<TRes> {
-  factory CopyWith$Variables$Mutation$addSavedLocation(
-    Variables$Mutation$addSavedLocation instance,
-    TRes Function(Variables$Mutation$addSavedLocation) then,
-  ) = _CopyWithImpl$Variables$Mutation$addSavedLocation;
+abstract class CopyWith$Variables$Mutation$add_saved_location<TRes> {
+  factory CopyWith$Variables$Mutation$add_saved_location(
+    Variables$Mutation$add_saved_location instance,
+    TRes Function(Variables$Mutation$add_saved_location) then,
+  ) = _CopyWithImpl$Variables$Mutation$add_saved_location;
 
-  factory CopyWith$Variables$Mutation$addSavedLocation.stub(TRes res) =
-      _CopyWithStubImpl$Variables$Mutation$addSavedLocation;
+  factory CopyWith$Variables$Mutation$add_saved_location.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$add_saved_location;
 
   TRes call({Input$saved_location_insert_input? saved_location});
 }
 
-class _CopyWithImpl$Variables$Mutation$addSavedLocation<TRes>
-    implements CopyWith$Variables$Mutation$addSavedLocation<TRes> {
-  _CopyWithImpl$Variables$Mutation$addSavedLocation(
+class _CopyWithImpl$Variables$Mutation$add_saved_location<TRes>
+    implements CopyWith$Variables$Mutation$add_saved_location<TRes> {
+  _CopyWithImpl$Variables$Mutation$add_saved_location(
     this._instance,
     this._then,
   );
 
-  final Variables$Mutation$addSavedLocation _instance;
+  final Variables$Mutation$add_saved_location _instance;
 
-  final TRes Function(Variables$Mutation$addSavedLocation) _then;
+  final TRes Function(Variables$Mutation$add_saved_location) _then;
 
   static const _undefined = {};
 
   TRes call({Object? saved_location = _undefined}) =>
-      _then(Variables$Mutation$addSavedLocation._({
+      _then(Variables$Mutation$add_saved_location._({
         ..._instance._$data,
         if (saved_location != _undefined && saved_location != null)
           'saved_location':
@@ -2707,34 +3378,34 @@ class _CopyWithImpl$Variables$Mutation$addSavedLocation<TRes>
       }));
 }
 
-class _CopyWithStubImpl$Variables$Mutation$addSavedLocation<TRes>
-    implements CopyWith$Variables$Mutation$addSavedLocation<TRes> {
-  _CopyWithStubImpl$Variables$Mutation$addSavedLocation(this._res);
+class _CopyWithStubImpl$Variables$Mutation$add_saved_location<TRes>
+    implements CopyWith$Variables$Mutation$add_saved_location<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$add_saved_location(this._res);
 
   TRes _res;
 
   call({Input$saved_location_insert_input? saved_location}) => _res;
 }
 
-class Mutation$addSavedLocation {
-  Mutation$addSavedLocation({
+class Mutation$add_saved_location {
+  Mutation$add_saved_location({
     this.insert_saved_location_one,
     required this.$__typename,
   });
 
-  factory Mutation$addSavedLocation.fromJson(Map<String, dynamic> json) {
+  factory Mutation$add_saved_location.fromJson(Map<String, dynamic> json) {
     final l$insert_saved_location_one = json['insert_saved_location_one'];
     final l$$__typename = json['__typename'];
-    return Mutation$addSavedLocation(
+    return Mutation$add_saved_location(
       insert_saved_location_one: l$insert_saved_location_one == null
           ? null
-          : Mutation$addSavedLocation$insert_saved_location_one.fromJson(
+          : Mutation$add_saved_location$insert_saved_location_one.fromJson(
               (l$insert_saved_location_one as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Mutation$addSavedLocation$insert_saved_location_one?
+  final Mutation$add_saved_location$insert_saved_location_one?
       insert_saved_location_one;
 
   final String $__typename;
@@ -2764,7 +3435,7 @@ class Mutation$addSavedLocation {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Mutation$addSavedLocation) ||
+    if (!(other is Mutation$add_saved_location) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -2782,43 +3453,43 @@ class Mutation$addSavedLocation {
   }
 }
 
-extension UtilityExtension$Mutation$addSavedLocation
-    on Mutation$addSavedLocation {
-  CopyWith$Mutation$addSavedLocation<Mutation$addSavedLocation> get copyWith =>
-      CopyWith$Mutation$addSavedLocation(
-        this,
-        (i) => i,
-      );
+extension UtilityExtension$Mutation$add_saved_location
+    on Mutation$add_saved_location {
+  CopyWith$Mutation$add_saved_location<Mutation$add_saved_location>
+      get copyWith => CopyWith$Mutation$add_saved_location(
+            this,
+            (i) => i,
+          );
 }
 
-abstract class CopyWith$Mutation$addSavedLocation<TRes> {
-  factory CopyWith$Mutation$addSavedLocation(
-    Mutation$addSavedLocation instance,
-    TRes Function(Mutation$addSavedLocation) then,
-  ) = _CopyWithImpl$Mutation$addSavedLocation;
+abstract class CopyWith$Mutation$add_saved_location<TRes> {
+  factory CopyWith$Mutation$add_saved_location(
+    Mutation$add_saved_location instance,
+    TRes Function(Mutation$add_saved_location) then,
+  ) = _CopyWithImpl$Mutation$add_saved_location;
 
-  factory CopyWith$Mutation$addSavedLocation.stub(TRes res) =
-      _CopyWithStubImpl$Mutation$addSavedLocation;
+  factory CopyWith$Mutation$add_saved_location.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$add_saved_location;
 
   TRes call({
-    Mutation$addSavedLocation$insert_saved_location_one?
+    Mutation$add_saved_location$insert_saved_location_one?
         insert_saved_location_one,
     String? $__typename,
   });
-  CopyWith$Mutation$addSavedLocation$insert_saved_location_one<TRes>
+  CopyWith$Mutation$add_saved_location$insert_saved_location_one<TRes>
       get insert_saved_location_one;
 }
 
-class _CopyWithImpl$Mutation$addSavedLocation<TRes>
-    implements CopyWith$Mutation$addSavedLocation<TRes> {
-  _CopyWithImpl$Mutation$addSavedLocation(
+class _CopyWithImpl$Mutation$add_saved_location<TRes>
+    implements CopyWith$Mutation$add_saved_location<TRes> {
+  _CopyWithImpl$Mutation$add_saved_location(
     this._instance,
     this._then,
   );
 
-  final Mutation$addSavedLocation _instance;
+  final Mutation$add_saved_location _instance;
 
-  final TRes Function(Mutation$addSavedLocation) _then;
+  final TRes Function(Mutation$add_saved_location) _then;
 
   static const _undefined = {};
 
@@ -2826,49 +3497,49 @@ class _CopyWithImpl$Mutation$addSavedLocation<TRes>
     Object? insert_saved_location_one = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Mutation$addSavedLocation(
+      _then(Mutation$add_saved_location(
         insert_saved_location_one: insert_saved_location_one == _undefined
             ? _instance.insert_saved_location_one
             : (insert_saved_location_one
-                as Mutation$addSavedLocation$insert_saved_location_one?),
+                as Mutation$add_saved_location$insert_saved_location_one?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Mutation$addSavedLocation$insert_saved_location_one<TRes>
+  CopyWith$Mutation$add_saved_location$insert_saved_location_one<TRes>
       get insert_saved_location_one {
     final local$insert_saved_location_one = _instance.insert_saved_location_one;
     return local$insert_saved_location_one == null
-        ? CopyWith$Mutation$addSavedLocation$insert_saved_location_one.stub(
+        ? CopyWith$Mutation$add_saved_location$insert_saved_location_one.stub(
             _then(_instance))
-        : CopyWith$Mutation$addSavedLocation$insert_saved_location_one(
+        : CopyWith$Mutation$add_saved_location$insert_saved_location_one(
             local$insert_saved_location_one,
             (e) => call(insert_saved_location_one: e));
   }
 }
 
-class _CopyWithStubImpl$Mutation$addSavedLocation<TRes>
-    implements CopyWith$Mutation$addSavedLocation<TRes> {
-  _CopyWithStubImpl$Mutation$addSavedLocation(this._res);
+class _CopyWithStubImpl$Mutation$add_saved_location<TRes>
+    implements CopyWith$Mutation$add_saved_location<TRes> {
+  _CopyWithStubImpl$Mutation$add_saved_location(this._res);
 
   TRes _res;
 
   call({
-    Mutation$addSavedLocation$insert_saved_location_one?
+    Mutation$add_saved_location$insert_saved_location_one?
         insert_saved_location_one,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Mutation$addSavedLocation$insert_saved_location_one<TRes>
+  CopyWith$Mutation$add_saved_location$insert_saved_location_one<TRes>
       get insert_saved_location_one =>
-          CopyWith$Mutation$addSavedLocation$insert_saved_location_one.stub(
+          CopyWith$Mutation$add_saved_location$insert_saved_location_one.stub(
               _res);
 }
 
-const documentNodeMutationaddSavedLocation = DocumentNode(definitions: [
+const documentNodeMutationadd_saved_location = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.mutation,
-    name: NameNode(value: 'addSavedLocation'),
+    name: NameNode(value: 'add_saved_location'),
     variableDefinitions: [
       VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'saved_location')),
@@ -2913,26 +3584,27 @@ const documentNodeMutationaddSavedLocation = DocumentNode(definitions: [
     ]),
   ),
 ]);
-Mutation$addSavedLocation _parserFn$Mutation$addSavedLocation(
+Mutation$add_saved_location _parserFn$Mutation$add_saved_location(
         Map<String, dynamic> data) =>
-    Mutation$addSavedLocation.fromJson(data);
-typedef OnMutationCompleted$Mutation$addSavedLocation = FutureOr<void> Function(
+    Mutation$add_saved_location.fromJson(data);
+typedef OnMutationCompleted$Mutation$add_saved_location = FutureOr<void>
+    Function(
   dynamic,
-  Mutation$addSavedLocation?,
+  Mutation$add_saved_location?,
 );
 
-class Options$Mutation$addSavedLocation
-    extends graphql.MutationOptions<Mutation$addSavedLocation> {
-  Options$Mutation$addSavedLocation({
+class Options$Mutation$add_saved_location
+    extends graphql.MutationOptions<Mutation$add_saved_location> {
+  Options$Mutation$add_saved_location({
     String? operationName,
-    required Variables$Mutation$addSavedLocation variables,
+    required Variables$Mutation$add_saved_location variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
     Object? optimisticResult,
     graphql.Context? context,
-    OnMutationCompleted$Mutation$addSavedLocation? onCompleted,
-    graphql.OnMutationUpdate<Mutation$addSavedLocation>? update,
+    OnMutationCompleted$Mutation$add_saved_location? onCompleted,
+    graphql.OnMutationUpdate<Mutation$add_saved_location>? update,
     graphql.OnError? onError,
   })  : onCompletedWithParsed = onCompleted,
         super(
@@ -2949,15 +3621,15 @@ class Options$Mutation$addSavedLocation
                     data,
                     data == null
                         ? null
-                        : _parserFn$Mutation$addSavedLocation(data),
+                        : _parserFn$Mutation$add_saved_location(data),
                   ),
           update: update,
           onError: onError,
-          document: documentNodeMutationaddSavedLocation,
-          parserFn: _parserFn$Mutation$addSavedLocation,
+          document: documentNodeMutationadd_saved_location,
+          parserFn: _parserFn$Mutation$add_saved_location,
         );
 
-  final OnMutationCompleted$Mutation$addSavedLocation? onCompletedWithParsed;
+  final OnMutationCompleted$Mutation$add_saved_location? onCompletedWithParsed;
 
   @override
   List<Object?> get properties => [
@@ -2968,11 +3640,11 @@ class Options$Mutation$addSavedLocation
       ];
 }
 
-class WatchOptions$Mutation$addSavedLocation
-    extends graphql.WatchQueryOptions<Mutation$addSavedLocation> {
-  WatchOptions$Mutation$addSavedLocation({
+class WatchOptions$Mutation$add_saved_location
+    extends graphql.WatchQueryOptions<Mutation$add_saved_location> {
+  WatchOptions$Mutation$add_saved_location({
     String? operationName,
-    required Variables$Mutation$addSavedLocation variables,
+    required Variables$Mutation$add_saved_location variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -2990,37 +3662,37 @@ class WatchOptions$Mutation$addSavedLocation
           cacheRereadPolicy: cacheRereadPolicy,
           optimisticResult: optimisticResult,
           context: context,
-          document: documentNodeMutationaddSavedLocation,
+          document: documentNodeMutationadd_saved_location,
           pollInterval: pollInterval,
           eagerlyFetchResults: eagerlyFetchResults,
           carryForwardDataOnException: carryForwardDataOnException,
           fetchResults: fetchResults,
-          parserFn: _parserFn$Mutation$addSavedLocation,
+          parserFn: _parserFn$Mutation$add_saved_location,
         );
 }
 
-extension ClientExtension$Mutation$addSavedLocation on graphql.GraphQLClient {
-  Future<graphql.QueryResult<Mutation$addSavedLocation>>
-      mutate$addSavedLocation(
-              Options$Mutation$addSavedLocation options) async =>
+extension ClientExtension$Mutation$add_saved_location on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$add_saved_location>>
+      mutate$add_saved_location(
+              Options$Mutation$add_saved_location options) async =>
           await this.mutate(options);
-  graphql.ObservableQuery<Mutation$addSavedLocation>
-      watchMutation$addSavedLocation(
-              WatchOptions$Mutation$addSavedLocation options) =>
+  graphql.ObservableQuery<Mutation$add_saved_location>
+      watchMutation$add_saved_location(
+              WatchOptions$Mutation$add_saved_location options) =>
           this.watchMutation(options);
 }
 
-class Mutation$addSavedLocation$insert_saved_location_one {
-  Mutation$addSavedLocation$insert_saved_location_one({
+class Mutation$add_saved_location$insert_saved_location_one {
+  Mutation$add_saved_location$insert_saved_location_one({
     required this.id,
     required this.$__typename,
   });
 
-  factory Mutation$addSavedLocation$insert_saved_location_one.fromJson(
+  factory Mutation$add_saved_location$insert_saved_location_one.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$$__typename = json['__typename'];
-    return Mutation$addSavedLocation$insert_saved_location_one(
+    return Mutation$add_saved_location$insert_saved_location_one(
       id: (l$id as int),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -3054,7 +3726,7 @@ class Mutation$addSavedLocation$insert_saved_location_one {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Mutation$addSavedLocation$insert_saved_location_one) ||
+    if (!(other is Mutation$add_saved_location$insert_saved_location_one) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -3072,27 +3744,27 @@ class Mutation$addSavedLocation$insert_saved_location_one {
   }
 }
 
-extension UtilityExtension$Mutation$addSavedLocation$insert_saved_location_one
-    on Mutation$addSavedLocation$insert_saved_location_one {
-  CopyWith$Mutation$addSavedLocation$insert_saved_location_one<
-          Mutation$addSavedLocation$insert_saved_location_one>
+extension UtilityExtension$Mutation$add_saved_location$insert_saved_location_one
+    on Mutation$add_saved_location$insert_saved_location_one {
+  CopyWith$Mutation$add_saved_location$insert_saved_location_one<
+          Mutation$add_saved_location$insert_saved_location_one>
       get copyWith =>
-          CopyWith$Mutation$addSavedLocation$insert_saved_location_one(
+          CopyWith$Mutation$add_saved_location$insert_saved_location_one(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$addSavedLocation$insert_saved_location_one<
+abstract class CopyWith$Mutation$add_saved_location$insert_saved_location_one<
     TRes> {
-  factory CopyWith$Mutation$addSavedLocation$insert_saved_location_one(
-    Mutation$addSavedLocation$insert_saved_location_one instance,
-    TRes Function(Mutation$addSavedLocation$insert_saved_location_one) then,
-  ) = _CopyWithImpl$Mutation$addSavedLocation$insert_saved_location_one;
+  factory CopyWith$Mutation$add_saved_location$insert_saved_location_one(
+    Mutation$add_saved_location$insert_saved_location_one instance,
+    TRes Function(Mutation$add_saved_location$insert_saved_location_one) then,
+  ) = _CopyWithImpl$Mutation$add_saved_location$insert_saved_location_one;
 
-  factory CopyWith$Mutation$addSavedLocation$insert_saved_location_one.stub(
+  factory CopyWith$Mutation$add_saved_location$insert_saved_location_one.stub(
           TRes res) =
-      _CopyWithStubImpl$Mutation$addSavedLocation$insert_saved_location_one;
+      _CopyWithStubImpl$Mutation$add_saved_location$insert_saved_location_one;
 
   TRes call({
     int? id,
@@ -3100,17 +3772,17 @@ abstract class CopyWith$Mutation$addSavedLocation$insert_saved_location_one<
   });
 }
 
-class _CopyWithImpl$Mutation$addSavedLocation$insert_saved_location_one<TRes>
+class _CopyWithImpl$Mutation$add_saved_location$insert_saved_location_one<TRes>
     implements
-        CopyWith$Mutation$addSavedLocation$insert_saved_location_one<TRes> {
-  _CopyWithImpl$Mutation$addSavedLocation$insert_saved_location_one(
+        CopyWith$Mutation$add_saved_location$insert_saved_location_one<TRes> {
+  _CopyWithImpl$Mutation$add_saved_location$insert_saved_location_one(
     this._instance,
     this._then,
   );
 
-  final Mutation$addSavedLocation$insert_saved_location_one _instance;
+  final Mutation$add_saved_location$insert_saved_location_one _instance;
 
-  final TRes Function(Mutation$addSavedLocation$insert_saved_location_one)
+  final TRes Function(Mutation$add_saved_location$insert_saved_location_one)
       _then;
 
   static const _undefined = {};
@@ -3119,7 +3791,7 @@ class _CopyWithImpl$Mutation$addSavedLocation$insert_saved_location_one<TRes>
     Object? id = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Mutation$addSavedLocation$insert_saved_location_one(
+      _then(Mutation$add_saved_location$insert_saved_location_one(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
@@ -3127,11 +3799,11 @@ class _CopyWithImpl$Mutation$addSavedLocation$insert_saved_location_one<TRes>
       ));
 }
 
-class _CopyWithStubImpl$Mutation$addSavedLocation$insert_saved_location_one<
+class _CopyWithStubImpl$Mutation$add_saved_location$insert_saved_location_one<
         TRes>
     implements
-        CopyWith$Mutation$addSavedLocation$insert_saved_location_one<TRes> {
-  _CopyWithStubImpl$Mutation$addSavedLocation$insert_saved_location_one(
+        CopyWith$Mutation$add_saved_location$insert_saved_location_one<TRes> {
+  _CopyWithStubImpl$Mutation$add_saved_location$insert_saved_location_one(
       this._res);
 
   TRes _res;

@@ -39,6 +39,8 @@ export const processSignUp = functions.auth.user().onCreate(async user => {
 
 export async function addHasuraClaim(uid: string | undefined) {
   try {
+    console.log("[+] User Id ===> ",uid);
+    functions.logger.info("[+] User Id ===> ",uid);
     if (!uid) {
       throw new HttpsError(
         "unauthenticated",

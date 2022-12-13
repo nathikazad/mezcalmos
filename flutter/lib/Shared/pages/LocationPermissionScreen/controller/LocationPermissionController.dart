@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 typedef void OnLocationPermissionChange(LocationPermissionsStatus? status);
 typedef String? LangValueRefGetter();
@@ -40,7 +41,7 @@ class LocationPermissionController {
         .listen((LocationPermissionsStatus? statusEvent) async {
       if (statusEvent == LocationPermissionsStatus.Ok) {
         dispose();
-        Future<void>.delayed(Duration.zero, () => Get.back<void>());
+        Future<void>.delayed(Duration.zero, () => MezRouter.back<void>());
       }
 
       onLocationPermissionsStatusChange(statusEvent);

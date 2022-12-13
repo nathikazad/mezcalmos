@@ -2239,7 +2239,7 @@ class Query$getOptionById$restaurant_option_by_pk {
     return Query$getOptionById$restaurant_option_by_pk(
       id: (l$id as int),
       free_choice: (l$free_choice as int),
-      cost_per_extra: MoneyFromJson(l$cost_per_extra),
+      cost_per_extra: moneyFromJson(l$cost_per_extra),
       option_type: (l$option_type as String),
       position: (l$position as int),
       maximum_choice: (l$maximum_choice as int),
@@ -2282,7 +2282,7 @@ class Query$getOptionById$restaurant_option_by_pk {
     final l$free_choice = free_choice;
     _resultData['free_choice'] = l$free_choice;
     final l$cost_per_extra = cost_per_extra;
-    _resultData['cost_per_extra'] = MoneyToJson(l$cost_per_extra);
+    _resultData['cost_per_extra'] = moneyToJson(l$cost_per_extra);
     final l$option_type = option_type;
     _resultData['option_type'] = l$option_type;
     final l$position = position;
@@ -3065,7 +3065,7 @@ class Query$getOptionById$restaurant_option_by_pk$choices$option_choices {
     final l$$__typename = json['__typename'];
     return Query$getOptionById$restaurant_option_by_pk$choices$option_choices(
       available: (l$available as bool),
-      cost: MoneyFromJson(l$cost),
+      cost: moneyFromJson(l$cost),
       id: (l$id as int),
       name:
           Query$getOptionById$restaurant_option_by_pk$choices$option_choices$name
@@ -3090,7 +3090,7 @@ class Query$getOptionById$restaurant_option_by_pk$choices$option_choices {
     final l$available = available;
     _resultData['available'] = l$available;
     final l$cost = cost;
-    _resultData['cost'] = MoneyToJson(l$cost);
+    _resultData['cost'] = moneyToJson(l$cost);
     final l$id = id;
     _resultData['id'] = l$id;
     final l$name = name;

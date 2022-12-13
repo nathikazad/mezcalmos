@@ -5,19 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
-import 'package:mezcalmos/RestaurantApp/pages/ROpTabsViewView/controllers/ROpTabsViewViewController.dart';
+import 'package:mezcalmos/RestaurantApp/pages/TabsView/controllers/ROpTabsViewViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
+import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -25,19 +21,18 @@ dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
 
 //
 class ROpEditInfoController {
-  // RestaurantInfoController restaurantInfoController =
-  //     Get.find<RestaurantInfoController>();
+  // instances //
 
-  RestaurantInfoController? restaurantInfoController;
-
-  StreamSubscription? restListner;
-
-  Rxn<Restaurant> restaurant = Rxn<Restaurant>();
+  imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
+  ROpTabsViewViewController? tabsViewViewController;
+  // TEXT INPUTS //
   TextEditingController restaurantNameTxt = TextEditingController();
   TextEditingController prRestaurantDescTxt = TextEditingController();
   TextEditingController scRestaurantDescTxt = TextEditingController();
-  final TextEditingController bankName = TextEditingController();
-  final TextEditingController bankNumber = TextEditingController();
+
+  // OBS //
+
+  Rxn<Restaurant> restaurant = Rxn<Restaurant>();
   final Rxn<String> newImageUrl = Rxn();
   final Rxn<Location> newLocation = Rxn();
 
@@ -49,116 +44,68 @@ class ROpEditInfoController {
 
   final RxBool imageLoading = RxBool(false);
   final RxBool isAvailable = RxBool(false);
-  final RxBool btnClicked = RxBool(false);
-  final Rxn<Schedule> newSchedule = Rxn();
-  final Rxn<Schedule> schedulePreview = Rxn();
-  final Rxn<Schedule> oldSchedule = Rxn();
-  final RxBool showStripe = RxBool(false);
-  String? stripeUrl;
-  final RxBool showSetupStripe = RxBool(false);
-  final RxBool setupClicked = RxBool(false);
-  final RxBool showStripeReqs = RxBool(false);
-  RxString currentUrl = RxString("");
-  RxDouble cuurentPage = RxDouble(0);
 
-  imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
-  ROpTabsViewViewController? tabsViewViewController;
+  RxDouble cuurentPage = RxDouble(0);
+// LATE VARS
   late int restaurantId;
+// INIT //
+
   Future<void> init({
-    required String restaurantId,
+    required int restaurantId,
     ROpTabsViewViewController? tabsViewViewController,
   }) async {
-    this.restaurantId = int.parse(restaurantId);
+    this.restaurantId = restaurantId;
     mezDbgPrint("INIT EDIT PROFILE VIEW =======>$restaurantId");
     this.tabsViewViewController = tabsViewViewController;
-    restaurant.value = await get_restaurant_by_id(id: this.restaurantId);
+    await fetchRestaurant();
     _updateResTInfo();
+  }
+
+  Future<void> fetchRestaurant() async {
+    restaurant.value =
+        await get_restaurant_by_id(id: restaurantId, withCache: false);
   }
 
   void _updateResTInfo() {
     if (restaurant.value != null) {
-      _settingSchedules();
       isAvailable.value = restaurant.value!.state.available;
       restaurantNameTxt.text = restaurant.value?.info.name ?? '';
-      bankName.text = restaurant.value!.paymentInfo?.bankInfo?.bankName ?? "";
-      bankNumber.text =
-          restaurant.value!.paymentInfo?.bankInfo?.accountNumber.toString() ??
-              "";
 
       newLocation.value = restaurant.value!.info.location;
-      newImageUrl.value = restaurant.value?.info.image ?? '';
+      newImageUrl.value = restaurant.value?.info.image;
       primaryLang.value = restaurant.value!.primaryLanguage;
       secondaryLang.value = restaurant.value!.secondaryLanguage;
       editablePrLang.value = restaurant.value!.primaryLanguage;
       editableScLang.value = restaurant.value!.secondaryLanguage;
-      mezDbgPrint(
-          "UPDATing DESCCCCC =========>>>PR lang : ${primaryLang.value}");
-      mezDbgPrint(
-          "UPDATing DESCCCCC =========>>>DESC : ${restaurant.value?.description}");
-      mezDbgPrint(
-          "UPDATing DESCCCCC =========>>>SC lang : ${secondaryLang.value}");
-      mezDbgPrint(
-          "UPDATing DESCCCCC =========>>>DESC : ${restaurant.value?.description}");
 
       prRestaurantDescTxt.text =
-          restaurant.value?.description?[primaryLang] ?? '';
+          restaurant.value?.info.description?[primaryLang] ?? '';
       scRestaurantDescTxt.text =
-          restaurant.value?.description?[secondaryLang] ?? '';
+          restaurant.value?.info.description?[secondaryLang] ?? '';
     }
   }
 
-  void _settingSchedules() {
-    mezDbgPrint(
-        "Restaurant schedule ===================> ${restaurant.value!.schedule!.toFirebaseFormattedJson()}");
-    oldSchedule.value = Schedule.clone(restaurant.value!.schedule!);
-    newSchedule.value = Schedule.clone(restaurant.value!.schedule!);
-    schedulePreview.value = Schedule.clone(newSchedule.value!);
-  }
-
-  Future<void> updateLaundryInfo() async {
-    btnClicked.value = true;
-    if (restaurantNameTxt.text != '' &&
-        restaurantNameTxt.text != restaurant.value?.info.name) {
-      mezDbgPrint("Updating restuarnt name .....=>${restaurantNameTxt.text}");
-
-      await restaurantInfoController!.setRestaurantName(restaurantNameTxt.text);
-      mezDbgPrint("Restuarnt name done ....=>${restaurantNameTxt.text}");
-    }
+  Future<void> updateRestaurantInfo() async {
     if (_updatePrDesc() || _updateScDesc()) {
       mezDbgPrint(
           "Updating restuarnt primary description .....=>${restaurantNameTxt.text}");
-
-      await restaurantInfoController!.setRestaurantDesc(_contructDesc());
-      mezDbgPrint("Restuarnt name done ....=>${restaurantNameTxt.text}");
-    }
-    if (newImageFile.value != null) {
-      await restaurantInfoController!
-          .uploadImgToDb(imageFile: newImageFile.value!)
-          .then((String value) {
-        restaurantInfoController!.setRestaurantImage(value);
+      _contructDesc().forEach((LanguageType key, String value) async {
+        await update_translation(
+            langType: key,
+            value: value,
+            translationId: restaurant.value!.info.descriptionId!);
       });
     }
-    if (newLocation.value != null &&
-        newLocation.value?.address != restaurant.value?.info.location.address) {
-      await restaurantInfoController!.setLocation(newLocation.value!);
-    }
-    if (editablePrLang.value != null &&
-        editablePrLang.value != primaryLang.value) {
-      mezDbgPrint("SEEETTING PRIMARY LANG =======>${editablePrLang.value}");
-      await restaurantInfoController!.setPrimaryLanguage(editablePrLang.value!);
-      mezDbgPrint("SEEETTING SECOND LANG =======>${editableScLang.value}");
-      await restaurantInfoController!
-          .setSecondaryLanguage(editablePrLang.value?.toOpLang());
-    }
-
-    if (newSchedule.value != null && newSchedule.value != oldSchedule.value) {
-      await restaurantInfoController!.setSchedule(newSchedule.value!);
-    }
-    if (isAvailable.value != restaurant.value!.state.available) {
-      await restaurantInfoController!.setAvailabilty(isAvailable.value);
-    }
-
-    btnClicked.value = false;
+    await update_restaurant_info(
+        id: restaurantId,
+        restaurant: restaurant.value!.copyWith(
+          primaryLanguage: primaryLang.value,
+          userInfo: restaurant.value!.info.copyWith(
+            name: restaurantNameTxt.text,
+            location: newLocation.value,
+            image: newImageUrl.value,
+          ),
+        ));
   }
 
   void switchAv(bool value) {
@@ -177,135 +124,16 @@ class ROpEditInfoController {
   }
 
   Future<void> switchSelfDelivery(bool v) async {
-    await restaurantInfoController!.switchSelfDelivery(v);
-  }
-
-  // stripe and payments methods //
-  void checkStripe() {
-    if (restaurant.value!.paymentInfo?.stripe != null &&
-        restaurant.value!.paymentInfo?.acceptedPayments[PaymentType.Card] ==
-            true) {
-      updateServiceProvider(
-              restaurant.value!.info.hasuraId.toString(), OrderType.Restaurant)
-          .then((ServerResponse value) {
-        _checkStripeDetails();
-      });
-    }
-  }
-
-  void handleCardCheckBoxClick(bool v) {
-    restaurantInfoController!.setCardPayment(v);
-  }
-
-  void handleStripeUrlChanges(String url) {
-    if (url == "https://example.com/return") {
-      _returnUrlHandler();
-    } else if (url == "https://example.com/reauth") {
-      _reauthUrlHandler();
-    }
-  }
-
-  void _reauthUrlHandler() {
-    onboardServiceProvider(
-            restaurant.value!.info.hasuraId.toString(), OrderType.Restaurant)
-        .then((ServerResponse value) {
-      if (value.success) {
-        stripeUrl = value.data["url"];
-        showStripe.value = true;
+    try {
+      final bool? res =
+          await switch_restaurant_self_delivery(id: restaurantId, value: v);
+      if (res == true) {
+        await fetchRestaurant();
       }
-    });
-  }
-
-  void _returnUrlHandler() {
-    showStripe.value = false;
-    updateServiceProvider(
-            restaurant.value!.info.hasuraId.toString(), OrderType.Restaurant)
-        .then((ServerResponse value) {
-      _checkStripeDetails();
-    });
-  }
-
-  void _checkStripeDetails() {
-    if (restaurant.value!.paymentInfo?.stripe?.detailsSubmitted == false) {
-      showSetupStripe.value = true;
-    } else if (restaurant.value!.paymentInfo?.stripe?.chargesEnabled == false ||
-        restaurant.value!.paymentInfo?.stripe?.payoutsEnabled == false) {
-      showStripeReqs.value = true;
+    } on Exception catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
     }
-  }
-
-  Future<void> switchChargeFees(bool v) async {
-    await restaurantInfoController!.switchFeesOption(v);
-  }
-
-  void showPaymentSetup() {
-    setupClicked.value = true;
-    onboardServiceProvider(
-            restaurant.value!.info.hasuraId.toString(), OrderType.Restaurant)
-        .then((ServerResponse value) {
-      if (value.success) {
-        stripeUrl = value.data["url"];
-        showStripe.value = true;
-      } else {
-        Get.snackbar("Error", value.errorMessage ?? "Error");
-      }
-    }).whenComplete(() => setupClicked.value = false);
-  }
-
-  void closePaymentSetup() {
-    stripeUrl = null;
-    showStripe.value = false;
-  }
-
-  bool get showSetupBtn {
-    return (restaurant.value!.paymentInfo?.acceptedPayments[PaymentType.Card] ==
-                true &&
-            restaurant.value!.paymentInfo?.stripe == null) ||
-        (restaurant.value!.paymentInfo?.acceptedPayments[PaymentType.Card] ==
-                true &&
-            (restaurant.value!.paymentInfo?.detailsSubmitted == false ||
-                restaurant.value!.paymentInfo?.chargesEnabled == false));
-  }
-
-  bool getChargeFessOnCustomer() {
-    return restaurant.value!.paymentInfo?.stripe?.chargeFeesOnCustomer ?? true;
-  }
-
-  bool get showFeesOption {
-    return (restaurant.value!.paymentInfo?.acceptedPayments[PaymentType.Card] ==
-            true &&
-        restaurant.value!.paymentInfo?.stripe != null);
-  }
-
-  bool get showStatusIcon {
-    return (restaurant.value!.paymentInfo?.stripe?.requirements.isNotEmpty ==
-        true);
-  }
-
-  bool get getAvailable {
-    return restaurant.value!.state.available;
-  }
-
-  bool get isBankTrue {
-    return restaurant
-            .value!.paymentInfo?.acceptedPayments[PaymentType.BankTransfer] ==
-        true;
-  }
-
-  // Bank //
-  Future pushBankInfos(
-      {required String bankName, required num bankNumber}) async {
-    mezDbgPrint("Value =================>$isBankTrue");
-
-    await restaurantInfoController!.pushBankInfo(bankName, bankNumber);
-  }
-
-  Future removeBank() async {
-    mezDbgPrint("Value =================>$isBankTrue");
-    bankName.clear();
-    bankNumber.clear();
-
-    await restaurantInfoController!.removeBank();
   }
 
   bool validateSecondaryLanguUpdate(LanguageType value) {
@@ -322,6 +150,9 @@ class ROpEditInfoController {
   }
 
   //
+  bool get getAvailable {
+    return restaurant.value!.state.available;
+  }
 
   Future<void> editImage(context) async {
     final imPicker.ImageSource? _from = await imagePickerChoiceDialog(context);
@@ -348,23 +179,23 @@ class ROpEditInfoController {
   bool _updatePrDesc() {
     return (prRestaurantDescTxt.text != '' &&
         prRestaurantDescTxt.text !=
-            restaurant.value?.description?[primaryLang]);
+            restaurant.value?.info.description?[primaryLang]);
   }
 
   bool _updateScDesc() {
     return (scRestaurantDescTxt.text != '' &&
         scRestaurantDescTxt.text !=
-            restaurant.value?.description?[secondaryLang]);
+            restaurant.value?.info.description?[secondaryLang]);
   }
 
   LanguageMap _contructDesc() {
     return {
       primaryLang.value!: _updatePrDesc()
           ? prRestaurantDescTxt.text
-          : restaurant.value!.description![primaryLang]!,
+          : restaurant.value!.info.description![primaryLang]!,
       secondaryLang.value!: _updateScDesc()
           ? scRestaurantDescTxt.text
-          : restaurant.value!.description![secondaryLang]!,
+          : restaurant.value!.info.description![secondaryLang]!,
     };
   }
 
@@ -383,9 +214,13 @@ class ROpEditInfoController {
         return '${_i18n()["payments"]}';
         break;
       case 4:
-        return '${_i18n()["reviews"]}';
-      case 6:
+        return 'Reviews';
+      case 5:
         return 'Operators';
+      case 6:
+        return 'Drivers';
+      case 7:
+        return 'Delivery Cost';
         break;
       default:
         return "";
@@ -399,8 +234,7 @@ class ROpEditInfoController {
     secondaryLang.close();
     restaurant.close();
     restaurantNameTxt.clear();
-    restListner?.cancel();
-    restaurantInfoController!.dispose();
+
     Get.delete<RestaurantInfoController>();
   }
 }
