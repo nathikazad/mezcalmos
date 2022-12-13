@@ -3,18 +3,18 @@ import {
   AuthorizationStatus,
   ServerResponse,
   ServerResponseStatus,
-} from "../shared/models/Generic/Generic";
+} from "../../functions/src/shared/models/Generic/Generic";
 import * as firebase from "firebase-admin";
 import { UserRecord } from "firebase-functions/v1/auth";
-import {  isSignedIn } from "../shared/helper/authorizer";
-import { UserInfo } from "../shared/models/Generic/User";
-import { userInfoNode } from "../shared/databaseNodes/root";
-import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
+import {  isSignedIn } from "../../functions/src/shared/helper/authorizer";
+import { UserInfo } from "../../functions/src/shared/models/Generic/User";
+import { userInfoNode } from "../../functions/src/shared/databaseNodes/root";
+import * as deliveryDriverNodes from "../../functions/src/shared/databaseNodes/deliveryDriver";
 
-import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
-import * as laundryNodes from "../shared/databaseNodes/services/laundry";
-import { State } from "../shared/models/Drivers/DeliveryDriver";
-import { OrderType } from "../shared/models/Generic/Order";
+import * as restaurantNodes from "../../functions/src/shared/databaseNodes/services/restaurant";
+import * as laundryNodes from "../../functions/src/shared/databaseNodes/services/laundry";
+import { State } from "../../functions/src/shared/models/Drivers/DeliveryDriver";
+import { OrderType } from "../../functions/src/shared/models/Generic/Order";
 export = functions.https.onCall(async (data, context) => {
   let response: ServerResponse | undefined = await isSignedIn(context.auth);
   if (response != undefined) {

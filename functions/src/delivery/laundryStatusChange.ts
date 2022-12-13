@@ -11,7 +11,7 @@ import { finishOrder } from "../laundry/helper";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import * as laundryNodes from "../shared/databaseNodes/services/laundry";
 let statusArrayInSeq: Array<LaundryOrderStatus> =
-  [LaundryOrderStatus.OrderReceived,
+  [LaundryOrderStatus.OrderReceieved,
     LaundryOrderStatus.OtwPickupFromCustomer,
     LaundryOrderStatus.PickedUpFromCustomer,
   LaundryOrderStatus.AtLaundry,

@@ -26,13 +26,6 @@ array_relationships:
         remote_table:
           name: delivery_driver
           schema: public
-  - name: items
-    using:
-      foreign_key_constraint_on:
-        column: restaurant_id
-        table:
-          name: restaurant_item
-          schema: public
   - name: orders
     using:
       foreign_key_constraint_on:

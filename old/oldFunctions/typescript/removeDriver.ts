@@ -1,22 +1,14 @@
 import * as functions from "firebase-functions";
 import {
-  ServerResponse,
   ServerResponseStatus,
 } from "../shared/models/Generic/Generic";
 
-import { isSignedIn } from "../shared/helper/authorizer";
+// import { isSignedIn } from "../shared/helper/authorizer";
 import { UserInfo } from "../shared/models/Generic/User";
 import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
 
 import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
 export = functions.https.onCall(async (data, context) => {
-  let response: ServerResponse | undefined = await isSignedIn(context.auth);
-  if (response != undefined) {
-    return {
-      ok: false,
-      error: response,
-    };
-  }
 
   if (!data.driverId || !data.restaurantId) {
     return {
@@ -36,12 +28,12 @@ export = functions.https.onCall(async (data, context) => {
     };
 
   // remove
-  await deliveryDriverNodes.info(dvInfo.id).remove();
+  await deliveryDriverNodes.info(dvInfo.id.toString()).remove();
 
   // add to restaurant nodes
   await restaurantNodes
     .restaurantDrivers(data.restaurantId)
-    .child(dvInfo.id)
+    .child(dvInfo.id.toString())
     .remove();
   return { status: ServerResponseStatus.Success };
 });

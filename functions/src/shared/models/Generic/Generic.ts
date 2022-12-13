@@ -79,3 +79,8 @@ export enum AuthorizationStatus {
   Authorized = "authorized",
   Unauthorized = "unauthorized"
 }
+
+export enum OperatorType {
+  Delivery,
+  Restaurant,
+}

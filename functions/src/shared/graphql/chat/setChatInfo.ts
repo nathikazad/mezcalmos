@@ -61,6 +61,11 @@ export async function setOrderChatInfo(restaurantOrder: RestaurantOrder, restaur
             chatImage: customer.image,
             parentLink: `/Orders/${restaurantOrder.deliveryId}`
           },
+          RestaurantApp: {
+            chatTitle: customer.name ?? "Customer",
+            chatImage: customer.image,
+            parentLink: `/Orders/${restaurantOrder.deliveryId}`
+          },
           CustomerApp: {
             parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`
           }

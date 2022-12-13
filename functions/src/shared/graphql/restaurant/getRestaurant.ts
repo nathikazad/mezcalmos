@@ -22,8 +22,8 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
       location_gps: true,
       location_text: true,
       open_status: true,
-      operator_deep_link: true,
-      operator_qr_image_link:true,
+      // operator_deep_link: true,
+      // operator_qr_image_link:true,
      
       approved: true
     }],

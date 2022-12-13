@@ -42,7 +42,7 @@ export interface DeliveryOrder {
 export interface DeliveryDriver {
     id?: number,
     userId: number,
-    deliveryCompanyType?: string,
+    deliveryCompanyType?: DeliveryCompanyType,
     deliveryCompanyId?: number,
     status?: string,
     appVersion?: string,
@@ -52,8 +52,30 @@ export interface DeliveryDriver {
     notificationInfo?: NotificationInfo,
     deliveryDriverType: DeliveryDriverType
 }
+export enum DeliveryCompanyType {
+    DeliveryCompany = "delivery_company",
+    Restaurant = "restaurant"
+}
+
+export interface DeliveryOperator {
+    id?: number,
+    userId: number,
+    deliveryCompanyId: number,
+    status: DeliveryOperatorStatus,
+    owner: boolean,
+    appVersion: string,
+    currentGPS: Location,
+    // deliveryDriverType:,
+    notificationInfo?: NotificationInfo,
+    user?: UserInfo
+}
 
 export enum DelivererStatus {
+    AwaitingApproval = "awaiting_approval",
+    Authorized = "authorized",
+    Banned = "banned"
+}
+export enum DeliveryOperatorStatus {
     AwaitingApproval = "awaiting_approval",
     Authorized = "authorized",
     Banned = "banned"
@@ -76,8 +98,8 @@ export enum ServiceProviderType {
 }
 
 export enum DeliveryDriverType {
-    RestaurantOperator = "restaurantOperator",
-    DeliveryDriver = "deliveryDriver"
+    RestaurantOperator = "restaurant_operator",
+    DeliveryDriver = "delivery_driver"
 }
 
 export interface NewDeliveryOrderNotification extends OrderNotification {

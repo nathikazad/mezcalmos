@@ -2,7 +2,7 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { AppType, Language } from "../../models/Generic/Generic";
 import { PaymentType } from "../../models/Generic/Order";
-import { DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus } from "../../models/Services/Delivery/DeliveryOrder";
+import { DeliveryCompanyType, DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus } from "../../models/Services/Delivery/DeliveryOrder";
 
 export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrder> {
   let chain = getHasura();
@@ -83,13 +83,13 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
   ) {
     delivery.deliveryDriver = {
       id: response.delivery_order_by_pk.delivery_driver.id,
-      deliveryCompanyType: response.delivery_order_by_pk.delivery_driver.delivery_company_type,
+      deliveryCompanyType: response.delivery_order_by_pk.delivery_driver.delivery_company_type as DeliveryCompanyType,
       deliveryCompanyId: response.delivery_order_by_pk.delivery_driver.delivery_company_id,
       status: response.delivery_order_by_pk.delivery_driver.status,
       userId: response.delivery_order_by_pk.delivery_driver.user.id,
       user: {
         id: response.delivery_order_by_pk.delivery_driver.user.id,
-        firebaseId: response.delivery_order_by_pk.delivery_cost.user.firebase_id,
+        firebaseId: response.delivery_order_by_pk.delivery_driver.user.firebase_id,
         language: response.delivery_order_by_pk.delivery_driver.user.language_id as Language
       },
       notificationInfo: (response.delivery_order_by_pk.delivery_driver.notification_token) ? {

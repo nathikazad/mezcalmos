@@ -1,27 +1,21 @@
-// import { RestaurantOrderType } from './shared/models/Services/Restaurant/RestaurantOrder';
-// import { PaymentType } from "./shared/models/Generic/Order";
-// import { Location } from "./shared/models/Generic/Generic";
-// import { checkout, CheckoutRequest } from "./restaurant/checkoutCart";
+
 import * as firebase from "firebase-admin";
-// import { ChangeDeliveryStatusDetails, finishDelivery } from "./delivery/restaurantStatusChange";
-// import { DeliveryDriverType } from "./shared/models/Services/Delivery/DeliveryOrder";
-// import { assignDriver, AssignDriverDetails } from "./delivery/assignDriver";
-// import { AuthorizeDetails, authorizeOperator } from "./restaurant/authorizeOperator";
+// import { AssignDriverDetails, assignDriver } from "./delivery/assignDriver";
+// import { AssignCompanyDetails, assignDeliveryCompany } from "./restaurant/assignDeliveryCompany";
+// import { OperatorType } from "./shared/models/Generic/Generic";
 // import { OrderType } from "./shared/models/Generic/Order";
 // import { DeliveryDriverType } from "./shared/models/Services/Delivery/DeliveryOrder";
-// import { createNewRestaurant } from "./restaurant/createNewRestaurant";
-// import { readyForPickupOrder } from "./restaurant/adminStatusChanges"
-// import { cancelOrderFromCustomer } from "./restaurant/cancelOrderFromCustomer";
-
+// import { CheckoutRequest, checkout } from "./restaurant/checkoutCart";
+// import { AppType, Location } from "./shared/models/Generic/Generic";
+// import { PaymentType } from "./shared/models/Generic/Order";
+// import { RestaurantOrderType } from "./shared/models/Services/Restaurant/RestaurantOrder";
 firebase.initializeApp({
   databaseURL: "http://localhost:9000/?ns=mezcalmos-31f1c-default-rtdb"
 });
 process.env.FUNCTIONS_EMULATOR = "true"
 // const location: Location = {
-//   gps: {
-//     type: "Point",
-//     coordinates: [23, 44]
-//   },
+//   lat: 44,
+//   lng: 23,
 //   address: "qweul",
 // }
 
@@ -37,7 +31,7 @@ process.env.FUNCTIONS_EMULATOR = "true"
 //   tripDuration: 0,
 //   tripPolyline: "",
 // }
-// checkout(1, checkoutRequest);
+// checkout(4411, checkoutRequest);
 
 // let statusDetails = {
 //   orderId: 14,
@@ -66,12 +60,14 @@ process.env.FUNCTIONS_EMULATOR = "true"
 // authorizeOperator(4, authorizeDetails);
 
 // let assignDriverDetails: AssignDriverDetails = {
-//   deliveryId: 22,
-//   deliveryDriverId: 1,
+//   deliveryId: 1,
+//   deliveryDriverId: 20,
 //   orderType: OrderType.Restaurant,
-//   orderId: 14,
+//   orderId: 1,
 //   deliveryDriverType: DeliveryDriverType.DeliveryDriver,
-//   changeDriver: true,
+//   changeDriver: false,
+//   operatorType: OperatorType.Restaurant,
+//   deliveryCompanyId: 1
 // }
 
 // assignDriver(1, assignDriverDetails);
@@ -86,3 +82,9 @@ process.env.FUNCTIONS_EMULATOR = "true"
 // startDelivery(6, changeDeliveryStatusDetails)
 // deliveryDriverAtDropoff(6, changeDeliveryStatusDetails)
 // finishDelivery(6, changeDeliveryStatusDetails)
+
+// let assignCompanyDetails: AssignCompanyDetails = {
+//   deliveryCompanyId: 1,
+//   restaurantOrderId: 1
+// }
+// assignDeliveryCompany(1, assignCompanyDetails)
