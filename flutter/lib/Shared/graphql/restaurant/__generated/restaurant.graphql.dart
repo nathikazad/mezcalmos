@@ -429,9 +429,18 @@ class Query$getRestaurants$restaurant {
     this.firebase_id,
     required this.approved,
     this.description_id,
+<<<<<<< HEAD
     this.schedule,
     this.description,
     required this.self_delivery,
+=======
+<<<<<<< HEAD
+=======
+    this.schedule,
+    required this.self_delivery,
+>>>>>>> 2c432900 (Hasuragen changes)
+    this.description,
+>>>>>>> 6f06438c (Hasuragen changes)
     required this.open_status,
     this.payment_info_id,
     required this.$__typename,
@@ -447,9 +456,18 @@ class Query$getRestaurants$restaurant {
     final l$firebase_id = json['firebase_id'];
     final l$approved = json['approved'];
     final l$description_id = json['description_id'];
+<<<<<<< HEAD
     final l$schedule = json['schedule'];
     final l$description = json['description'];
     final l$self_delivery = json['self_delivery'];
+=======
+<<<<<<< HEAD
+=======
+    final l$schedule = json['schedule'];
+    final l$self_delivery = json['self_delivery'];
+>>>>>>> 2c432900 (Hasuragen changes)
+    final l$description = json['description'];
+>>>>>>> 6f06438c (Hasuragen changes)
     final l$open_status = json['open_status'];
     final l$payment_info_id = json['payment_info_id'];
     final l$$__typename = json['__typename'];
@@ -463,7 +481,15 @@ class Query$getRestaurants$restaurant {
       firebase_id: (l$firebase_id as String?),
       approved: (l$approved as bool),
       description_id: (l$description_id as int?),
+<<<<<<< HEAD
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
+=======
+<<<<<<< HEAD
+=======
+      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
+      self_delivery: (l$self_delivery as bool),
+>>>>>>> 2c432900 (Hasuragen changes)
+>>>>>>> 6f06438c (Hasuragen changes)
       description: l$description == null
           ? null
           : Query$getRestaurants$restaurant$description.fromJson(
@@ -493,14 +519,27 @@ class Query$getRestaurants$restaurant {
 
   final int? description_id;
 
+<<<<<<< HEAD
   final dynamic? schedule;
 
+=======
+<<<<<<< HEAD
+=======
+  final dynamic? schedule;
+
+  final bool self_delivery;
+
+>>>>>>> 2c432900 (Hasuragen changes)
+>>>>>>> 6f06438c (Hasuragen changes)
   final Query$getRestaurants$restaurant$description? description;
 
   final bool self_delivery;
 
+<<<<<<< HEAD
   final String open_status;
 
+=======
+>>>>>>> 6f06438c (Hasuragen changes)
   final int? payment_info_id;
 
   final String $__typename;
@@ -525,12 +564,24 @@ class Query$getRestaurants$restaurant {
     _resultData['approved'] = l$approved;
     final l$description_id = description_id;
     _resultData['description_id'] = l$description_id;
+<<<<<<< HEAD
     final l$schedule = schedule;
     _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$description = description;
     _resultData['description'] = l$description?.toJson();
     final l$self_delivery = self_delivery;
     _resultData['self_delivery'] = l$self_delivery;
+=======
+<<<<<<< HEAD
+=======
+    final l$schedule = schedule;
+    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
+    final l$self_delivery = self_delivery;
+    _resultData['self_delivery'] = l$self_delivery;
+>>>>>>> 2c432900 (Hasuragen changes)
+    final l$description = description;
+    _resultData['description'] = l$description?.toJson();
+>>>>>>> 6f06438c (Hasuragen changes)
     final l$open_status = open_status;
     _resultData['open_status'] = l$open_status;
     final l$payment_info_id = payment_info_id;
@@ -551,9 +602,18 @@ class Query$getRestaurants$restaurant {
     final l$firebase_id = firebase_id;
     final l$approved = approved;
     final l$description_id = description_id;
+<<<<<<< HEAD
     final l$schedule = schedule;
     final l$description = description;
     final l$self_delivery = self_delivery;
+=======
+<<<<<<< HEAD
+=======
+    final l$schedule = schedule;
+    final l$self_delivery = self_delivery;
+>>>>>>> 2c432900 (Hasuragen changes)
+    final l$description = description;
+>>>>>>> 6f06438c (Hasuragen changes)
     final l$open_status = open_status;
     final l$payment_info_id = payment_info_id;
     final l$$__typename = $__typename;
@@ -567,9 +627,18 @@ class Query$getRestaurants$restaurant {
       l$firebase_id,
       l$approved,
       l$description_id,
+<<<<<<< HEAD
       l$schedule,
       l$description,
       l$self_delivery,
+=======
+<<<<<<< HEAD
+=======
+      l$schedule,
+      l$self_delivery,
+>>>>>>> 2c432900 (Hasuragen changes)
+      l$description,
+>>>>>>> 6f06438c (Hasuragen changes)
       l$open_status,
       l$payment_info_id,
       l$$__typename,
@@ -630,11 +699,25 @@ class Query$getRestaurants$restaurant {
     if (l$description_id != lOther$description_id) {
       return false;
     }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6f06438c (Hasuragen changes)
     final l$schedule = schedule;
     final lOther$schedule = other.schedule;
     if (l$schedule != lOther$schedule) {
       return false;
     }
+<<<<<<< HEAD
+=======
+    final l$self_delivery = self_delivery;
+    final lOther$self_delivery = other.self_delivery;
+    if (l$self_delivery != lOther$self_delivery) {
+      return false;
+    }
+>>>>>>> 2c432900 (Hasuragen changes)
+>>>>>>> 6f06438c (Hasuragen changes)
     final l$description = description;
     final lOther$description = other.description;
     if (l$description != lOther$description) {
@@ -692,9 +775,18 @@ abstract class CopyWith$Query$getRestaurants$restaurant<TRes> {
     String? firebase_id,
     bool? approved,
     int? description_id,
+<<<<<<< HEAD
     dynamic? schedule,
     Query$getRestaurants$restaurant$description? description,
     bool? self_delivery,
+=======
+<<<<<<< HEAD
+=======
+    dynamic? schedule,
+    bool? self_delivery,
+>>>>>>> 2c432900 (Hasuragen changes)
+    Query$getRestaurants$restaurant$description? description,
+>>>>>>> 6f06438c (Hasuragen changes)
     String? open_status,
     int? payment_info_id,
     String? $__typename,
@@ -725,9 +817,18 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
     Object? firebase_id = _undefined,
     Object? approved = _undefined,
     Object? description_id = _undefined,
+<<<<<<< HEAD
     Object? schedule = _undefined,
     Object? description = _undefined,
     Object? self_delivery = _undefined,
+=======
+<<<<<<< HEAD
+=======
+    Object? schedule = _undefined,
+    Object? self_delivery = _undefined,
+>>>>>>> 2c432900 (Hasuragen changes)
+    Object? description = _undefined,
+>>>>>>> 6f06438c (Hasuragen changes)
     Object? open_status = _undefined,
     Object? payment_info_id = _undefined,
     Object? $__typename = _undefined,
@@ -758,6 +859,7 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
         description_id: description_id == _undefined
             ? _instance.description_id
             : (description_id as int?),
+<<<<<<< HEAD
         schedule: schedule == _undefined
             ? _instance.schedule
             : (schedule as dynamic?),
@@ -767,6 +869,20 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
         self_delivery: self_delivery == _undefined || self_delivery == null
             ? _instance.self_delivery
             : (self_delivery as bool),
+=======
+<<<<<<< HEAD
+=======
+        schedule: schedule == _undefined
+            ? _instance.schedule
+            : (schedule as dynamic?),
+        self_delivery: self_delivery == _undefined || self_delivery == null
+            ? _instance.self_delivery
+            : (self_delivery as bool),
+>>>>>>> 2c432900 (Hasuragen changes)
+        description: description == _undefined
+            ? _instance.description
+            : (description as Query$getRestaurants$restaurant$description?),
+>>>>>>> 6f06438c (Hasuragen changes)
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
@@ -803,9 +919,18 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant<TRes>
     String? firebase_id,
     bool? approved,
     int? description_id,
+<<<<<<< HEAD
     dynamic? schedule,
     Query$getRestaurants$restaurant$description? description,
     bool? self_delivery,
+=======
+<<<<<<< HEAD
+=======
+    dynamic? schedule,
+    bool? self_delivery,
+>>>>>>> 2c432900 (Hasuragen changes)
+    Query$getRestaurants$restaurant$description? description,
+>>>>>>> 6f06438c (Hasuragen changes)
     String? open_status,
     int? payment_info_id,
     String? $__typename,
