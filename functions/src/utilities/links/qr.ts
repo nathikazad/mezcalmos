@@ -1,7 +1,8 @@
 import axios from "axios";
+import { storage } from "firebase-admin";
 
-
-export async function generateQr(qrData:string): Promise<string|null>  {
+export async function generateQr(path:string, qrData:string): Promise<string|null>  {
+    Storage
     try {
         const { data } = await axios.post(
             'https://api.qrcode-monkey.com/qr/custom',
@@ -53,9 +54,39 @@ export async function generateQr(qrData:string): Promise<string|null>  {
         let imgUrl : string | null | undefined = data['imageUrl']
         if (!imgUrl)
             return null
-        return (data['imageUrl'] as string).replace('//', 'https://');
+        else 
+            return await uploadRestaurantQrImg(path, (data['imageUrl'] as string).replace('//', 'https://'));
     } catch (error) {
         console.log(`Error Happend when generating the QR code:\n${error}`);
         return null;
     }
 };
+
+
+async function uploadRestaurantQrImg(path:string , qrExternalUrl: string): Promise<string|null> {
+
+    const res : string | undefined = await axios
+    .get(qrExternalUrl, {
+      responseType: 'arraybuffer'
+    })
+    .then(response => {
+        
+        // const b64 = Buffer.from(response.data, 'binary').toString('base64');
+        const b64 = Buffer.from(response.data, 'binary');
+        const bucket = storage().bucket('gs://mezcalmos-staging.appspot.com')
+        // const imageByteArray = new Uint8Array(b64);
+        const file = bucket.file(`${path}/qr.png`);
+        return file.save(b64)
+        .then(() => {
+            return file.baseUrl;
+        })
+        .catch((err: any) => {
+            console.log(`Unable to upload encoded file ${err}`)
+            return undefined
+        })
+    })
+    .catch(() => undefined);
+    
+    return !res ? null : res;
+  }
+ 
