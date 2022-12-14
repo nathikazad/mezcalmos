@@ -1915,6 +1915,8 @@ type delivery_driver {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String!
+
+  """Just for relationship"""
   delivery_driver_type: String!
   id: Int!
   notification_info_id: Int
@@ -2039,11 +2041,6 @@ enum delivery_driver_constraint {
   deliverer_user_id_delivery_company_type_delivery_company_id_key
 
   """
-  unique or primary key constraint on columns "delivery_company_type", "delivery_company_id"
-  """
-  delivery_company_index
-
-  """
   unique or primary key constraint on columns "id"
   """
   driver_pkey
@@ -2070,6 +2067,8 @@ input delivery_driver_insert_input {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String
+
+  """Just for relationship"""
   delivery_driver_type: String
   id: Int
   notification_info_id: Int
@@ -2089,6 +2088,8 @@ type delivery_driver_max_fields {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String
+
+  """Just for relationship"""
   delivery_driver_type: String
   id: Int
   notification_info_id: Int
@@ -2107,6 +2108,8 @@ input delivery_driver_max_order_by {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: order_by
+
+  """Just for relationship"""
   delivery_driver_type: order_by
   id: order_by
   notification_info_id: order_by
@@ -2123,6 +2126,8 @@ type delivery_driver_min_fields {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String
+
+  """Just for relationship"""
   delivery_driver_type: String
   id: Int
   notification_info_id: Int
@@ -2141,6 +2146,8 @@ input delivery_driver_min_order_by {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: order_by
+
+  """Just for relationship"""
   delivery_driver_type: order_by
   id: order_by
   notification_info_id: order_by
@@ -2248,6 +2255,8 @@ input delivery_driver_set_input {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String
+
+  """Just for relationship"""
   delivery_driver_type: String
   id: Int
   notification_info_id: Int
@@ -2331,6 +2340,8 @@ input delivery_driver_stream_cursor_value_input {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String
+
+  """Just for relationship"""
   delivery_driver_type: String
   id: Int
   notification_info_id: Int
@@ -2466,8 +2477,16 @@ type delivery_operator {
   delivery_company_id: Int!
   delivery_driver_type: String!
   id: Int!
+
+  """
+  A computed field, executes function "deliop_notification_token"
+  """
+  notification_token: String
   owner: Boolean!
   status: String!
+
+  """An object relationship"""
+  user: user!
   user_id: Int!
 }
 
@@ -2551,8 +2570,10 @@ input delivery_operator_bool_exp {
   delivery_company_id: Int_comparison_exp
   delivery_driver_type: String_comparison_exp
   id: Int_comparison_exp
+  notification_token: String_comparison_exp
   owner: Boolean_comparison_exp
   status: String_comparison_exp
+  user: user_bool_exp
   user_id: Int_comparison_exp
 }
 
@@ -2586,6 +2607,7 @@ input delivery_operator_insert_input {
   id: Int
   owner: Boolean
   status: String
+  user: user_obj_rel_insert_input
   user_id: Int
 }
 
@@ -2670,8 +2692,10 @@ input delivery_operator_order_by {
   delivery_company_id: order_by
   delivery_driver_type: order_by
   id: order_by
+  notification_token: order_by
   owner: order_by
   status: order_by
+  user: user_order_by
   user_id: order_by
 }
 
@@ -2904,9 +2928,6 @@ type delivery_order {
   actual_arrival_at_pickup_time: timestamptz
   actual_delivered_time: timestamptz
   actual_package_ready_time: timestamptz
-
-  """An object relationship"""
-  app_type: topology_app_type
   cancellation_time: timestamptz
 
   """An object relationship"""
@@ -3106,7 +3127,6 @@ input delivery_order_bool_exp {
   actual_arrival_at_pickup_time: timestamptz_comparison_exp
   actual_delivered_time: timestamptz_comparison_exp
   actual_package_ready_time: timestamptz_comparison_exp
-  app_type: topology_app_type_bool_exp
   cancellation_time: timestamptz_comparison_exp
   chat_with_customer: chat_bool_exp
   chat_with_customer_id: Int_comparison_exp
@@ -3196,7 +3216,6 @@ input delivery_order_insert_input {
   actual_arrival_at_pickup_time: timestamptz
   actual_delivered_time: timestamptz
   actual_package_ready_time: timestamptz
-  app_type: topology_app_type_obj_rel_insert_input
   cancellation_time: timestamptz
   chat_with_customer: chat_obj_rel_insert_input
   chat_with_customer_id: Int
@@ -3482,7 +3501,6 @@ input delivery_order_order_by {
   actual_arrival_at_pickup_time: order_by
   actual_delivered_time: order_by
   actual_package_ready_time: order_by
-  app_type: topology_app_type_order_by
   cancellation_time: order_by
   chat_with_customer: chat_order_by
   chat_with_customer_id: order_by
@@ -12575,14 +12593,9 @@ enum restaurant_operator_constraint {
   restaurant_operator_pkey
 
   """
-  unique or primary key constraint on columns "restaurant_id"
+  unique or primary key constraint on columns "restaurant_id", "user_id"
   """
-  restaurant_operator_restaurant_id_key
-
-  """
-  unique or primary key constraint on columns "user_id"
-  """
-  restaurant_operator_user_id_key
+  restaurant_operator_user_id_restaurant_id_key
 }
 
 """
@@ -19822,16 +19835,6 @@ type topology_app_type_mutation_response {
 }
 
 """
-input type for inserting object relation for remote table "topology.app_type"
-"""
-input topology_app_type_obj_rel_insert_input {
-  data: topology_app_type_insert_input!
-
-  """upsert condition"""
-  on_conflict: topology_app_type_on_conflict
-}
-
-"""
 on_conflict condition type for table "topology.app_type"
 """
 input topology_app_type_on_conflict {
@@ -20669,6 +20672,7 @@ type translation_variance_fields {
 columns and relationships of "user"
 """
 type user {
+  big_image: String
   deleted: Boolean!
   email: String
   firebase_id: String!
@@ -20716,6 +20720,7 @@ input user_bool_exp {
   _and: [user_bool_exp!]
   _not: user_bool_exp
   _or: [user_bool_exp!]
+  big_image: String_comparison_exp
   deleted: Boolean_comparison_exp
   email: String_comparison_exp
   firebase_id: String_comparison_exp
@@ -20747,6 +20752,7 @@ input user_inc_input {
 input type for inserting data into table "user"
 """
 input user_insert_input {
+  big_image: String
   deleted: Boolean
   email: String
   firebase_id: String
@@ -20759,6 +20765,7 @@ input user_insert_input {
 
 """aggregate max on columns"""
 type user_max_fields {
+  big_image: String
   email: String
   firebase_id: String
   id: Int
@@ -20770,6 +20777,7 @@ type user_max_fields {
 
 """aggregate min on columns"""
 type user_min_fields {
+  big_image: String
   email: String
   firebase_id: String
   id: Int
@@ -20811,6 +20819,7 @@ input user_on_conflict {
 
 """Ordering options when selecting data from "user"."""
 input user_order_by {
+  big_image: order_by
   deleted: order_by
   email: order_by
   firebase_id: order_by
@@ -20830,6 +20839,9 @@ input user_pk_columns_input {
 select columns of table "user"
 """
 enum user_select_column {
+  """column name"""
+  big_image
+
   """column name"""
   deleted
 
@@ -20859,6 +20871,7 @@ enum user_select_column {
 input type for updating data in table "user"
 """
 input user_set_input {
+  big_image: String
   deleted: Boolean
   email: String
   firebase_id: String
@@ -20897,6 +20910,7 @@ input user_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input user_stream_cursor_value_input {
+  big_image: String
   deleted: Boolean
   email: String
   firebase_id: String
@@ -20916,6 +20930,9 @@ type user_sum_fields {
 update columns of table "user"
 """
 enum user_update_column {
+  """column name"""
+  big_image
+
   """column name"""
   deleted
 
