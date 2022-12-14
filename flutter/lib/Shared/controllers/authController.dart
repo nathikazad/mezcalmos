@@ -13,9 +13,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']
     ['controllers']['authController'];
@@ -72,7 +69,7 @@ class AuthController extends GetxController {
         mezDbgPrint('AuthController: User is currently signed in!');
 
         fireAuth.IdTokenResult? tokenResult = await user.getIdTokenResult();
-        mezDbgPrint(tokenResult);
+        mezDbgPrint(tokenResult.claims);
 
         if (tokenResult.claims?['https://hasura.io/jwt/claims'] == null) {
           mezDbgPrint("No token, calling addHasuraClaims");
@@ -80,6 +77,8 @@ class AuthController extends GetxController {
               .httpsCallable('user-addHasuraClaim')
               .call();
           tokenResult = await user.getIdTokenResult();
+          mezDbgPrint("After recalling");
+          mezDbgPrint(tokenResult.claims);
         }
         _hasuraUserId.value = int.parse(tokenResult
             .claims!['https://hasura.io/jwt/claims']['x-hasura-user-id']);

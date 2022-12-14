@@ -9,12 +9,14 @@ import 'package:jaguar_jwt/jaguar_jwt.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart' show mezDbgPrint;
 
 class HasuraDb {
-  late GraphQLClient graphQLClient;
+  late GraphQLClient _graphQLClient;
+  GraphQLClient get graphQLClient => _graphQLClient;
 
   WebSocketLink? _wsLink;
   AppLaunchMode appLaunchMode;
@@ -72,6 +74,8 @@ class HasuraDb {
         hasuraDbSocketLink = hasuraStageLink.replaceAll("http", "ws"); //
         break;
     }
+    mezDbgPrint(
+        "🥶🥶🥶 Hasura DB Links 🥶🥶🥶 \n hasuraDbLink : $hasuraDbLink \n hasuraDbSocketLink : $hasuraDbSocketLink ");
     Map<String, String> headers = <String, String>{
       "x-hasura-admin-secret": "myadminsecretkey"
     };
@@ -115,7 +119,7 @@ class HasuraDb {
     _link = Link.split(
         (Request request) => request.isSubscription, _wsLink!, _link);
 
-    graphQLClient = GraphQLClient(
+    _graphQLClient = GraphQLClient(
       cache: GraphQLCache(),
       link: _link,
     );
@@ -177,6 +181,10 @@ class HasuraDb {
 
   String createSubscription(
       {required Function start, required Function cancel}) {
+    if (Get.find<AuthController>().isUserSignedIn == false) {
+      mezDbgPrint(
+          "🚨🚨🚨🚨🚨 Subscription called While SIGNED OUT 🚨🚨🚨🚨🚨 ");
+    }
     final String subscriptionId = getRandomString(10);
     hasuraSubscriptions[subscriptionId] = HasuraSubscription(start, cancel);
     start();

@@ -174,12 +174,14 @@ class ServiceInfo extends UserInfo {
     Location? location,
     String? name,
     String? image,
+    int? descId,
   }) {
     return ServiceInfo(
       location: location ?? this.location,
       hasuraId: hasuraId,
       image: image ?? this.image,
       name: name ?? this.name,
+      descriptionId: descId ?? descriptionId,
     );
   }
 }

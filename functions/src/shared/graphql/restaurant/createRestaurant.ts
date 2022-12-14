@@ -15,6 +15,7 @@ export async function createRestaurant(
     insert_restaurant_one: [{
       object: {
         name: restaurant.name,
+        
       
         image: restaurant.image,
         location_gps: JSON.stringify({
