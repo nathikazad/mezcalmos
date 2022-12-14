@@ -39,8 +39,8 @@ export const processSignUp = functions.auth.user().onCreate(async user => {
 
 export async function addHasuraClaim(uid: string | undefined) {
   try {
-    console.log("[+] User Id ===> ",uid);
-    functions.logger.info("[+] User Id ===> ",uid);
+    console.log("[+] User Id ===> ", uid);
+    functions.logger.info("[+] User Id ===> ", uid);
     if (!uid) {
       throw new HttpsError(
         "unauthenticated",
@@ -57,7 +57,10 @@ export async function addHasuraClaim(uid: string | undefined) {
           }
         }
       }, {
-        id: true
+        id: true,
+        customer: {
+          user_id: true
+        }
       }]
     })
     let hasuraUserId;
@@ -71,13 +74,27 @@ export async function addHasuraClaim(uid: string | undefined) {
               image: authUser.photoURL,
               firebase_id: uid,
               email: authUser.email,
-              phone: authUser.phoneNumber
+              phone: authUser.phoneNumber,
+              customer: {
+                data: {
+                }
+              }
             }
           }, {
             id: true
           }
         ]
       })
+      chain.mutation({
+        insert_restaurant_cart_one: [
+          {
+            object: {
+              customer_id: secondResponse.insert_user_one?.id
+            }
+          }, {
+            customer_id:true
+          }
+        ]});
       hasuraUserId = secondResponse.insert_user_one?.id
     } else {
       hasuraUserId = response.user[0].id
@@ -85,8 +102,8 @@ export async function addHasuraClaim(uid: string | undefined) {
     const customClaims = {
       "https://hasura.io/jwt/claims": {
         "x-hasura-default-role": "anonymous",
-        "x-hasura-allowed-roles": ["anonymous","restaurant_operator","customer","mez_admin","deliverer", "delivery_operator"], // add admin role for admin users
-      "x-hasura-user-id": hasuraUserId?.toString()
+        "x-hasura-allowed-roles": ["anonymous", "restaurant_operator", "customer", "mez_admin", "deliverer", "delivery_operator"], // add admin role for admin users
+        "x-hasura-user-id": hasuraUserId?.toString()
       }
     };
     await firebase.auth().setCustomUserClaims(uid, customClaims)

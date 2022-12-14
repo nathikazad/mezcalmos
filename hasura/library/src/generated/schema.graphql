@@ -778,7 +778,7 @@ enum cursor_ordering {
 columns and relationships of "customer"
 """
 type customer {
-  app_version: String!
+  app_version: String
 
   """An object relationship"""
   cart: restaurant_cart
@@ -20671,6 +20671,9 @@ columns and relationships of "user"
 """
 type user {
   big_image: String
+
+  """An object relationship"""
+  customer: customer
   deleted: Boolean!
   email: String
   firebase_id: String!
@@ -20719,6 +20722,7 @@ input user_bool_exp {
   _not: user_bool_exp
   _or: [user_bool_exp!]
   big_image: String_comparison_exp
+  customer: customer_bool_exp
   deleted: Boolean_comparison_exp
   email: String_comparison_exp
   firebase_id: String_comparison_exp
@@ -20751,6 +20755,7 @@ input type for inserting data into table "user"
 """
 input user_insert_input {
   big_image: String
+  customer: customer_obj_rel_insert_input
   deleted: Boolean
   email: String
   firebase_id: String
@@ -20818,6 +20823,7 @@ input user_on_conflict {
 """Ordering options when selecting data from "user"."""
 input user_order_by {
   big_image: order_by
+  customer: customer_order_by
   deleted: order_by
   email: order_by
   firebase_id: order_by

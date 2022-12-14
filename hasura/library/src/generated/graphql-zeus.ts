@@ -11789,6 +11789,8 @@ count?: [{	columns?:ValueTypes["translation_value_select_column"][],	distinct?:b
 	/** columns and relationships of "user" */
 ["user"]: AliasType<{
 	big_image?:true,
+	/** An object relationship */
+	customer?:ValueTypes["customer"],
 	deleted?:true,
 	email?:true,
 	firebase_id?:true,
@@ -11831,6 +11833,7 @@ count?: [{	columns?:ValueTypes["user_select_column"][],	distinct?:boolean},true]
 	_not?:ValueTypes["user_bool_exp"],
 	_or?:ValueTypes["user_bool_exp"][],
 	big_image?:ValueTypes["String_comparison_exp"],
+	customer?:ValueTypes["customer_bool_exp"],
 	deleted?:ValueTypes["Boolean_comparison_exp"],
 	email?:ValueTypes["String_comparison_exp"],
 	firebase_id?:ValueTypes["String_comparison_exp"],
@@ -11849,6 +11852,7 @@ count?: [{	columns?:ValueTypes["user_select_column"][],	distinct?:boolean},true]
 	/** input type for inserting data into table "user" */
 ["user_insert_input"]: {
 	big_image?:string,
+	customer?:ValueTypes["customer_obj_rel_insert_input"],
 	deleted?:boolean,
 	email?:string,
 	firebase_id?:string,
@@ -11905,6 +11909,7 @@ count?: [{	columns?:ValueTypes["user_select_column"][],	distinct?:boolean},true]
 	/** Ordering options when selecting data from "user". */
 ["user_order_by"]: {
 	big_image?:ValueTypes["order_by"],
+	customer?:ValueTypes["customer_order_by"],
 	deleted?:ValueTypes["order_by"],
 	email?:ValueTypes["order_by"],
 	firebase_id?:ValueTypes["order_by"],
@@ -22906,6 +22911,8 @@ the end). throws an error if top level container is not an array */
 ["user"]: {
 		__typename?: "user";
 			big_image?:string,
+			/** An object relationship */
+	customer?:PartialObjects["customer"],
 			deleted?:boolean,
 			email?:string,
 			firebase_id?:string,
@@ -22947,6 +22954,7 @@ the end). throws an error if top level container is not an array */
 	_not?:PartialObjects["user_bool_exp"],
 	_or?:PartialObjects["user_bool_exp"][],
 	big_image?:PartialObjects["String_comparison_exp"],
+	customer?:PartialObjects["customer_bool_exp"],
 	deleted?:PartialObjects["Boolean_comparison_exp"],
 	email?:PartialObjects["String_comparison_exp"],
 	firebase_id?:PartialObjects["String_comparison_exp"],
@@ -22965,6 +22973,7 @@ the end). throws an error if top level container is not an array */
 	/** input type for inserting data into table "user" */
 ["user_insert_input"]: {
 	big_image?:string,
+	customer?:PartialObjects["customer_obj_rel_insert_input"],
 	deleted?:boolean,
 	email?:string,
 	firebase_id?:string,
@@ -23021,6 +23030,7 @@ the end). throws an error if top level container is not an array */
 	/** Ordering options when selecting data from "user". */
 ["user_order_by"]: {
 	big_image?:PartialObjects["order_by"],
+	customer?:PartialObjects["customer_order_by"],
 	deleted?:PartialObjects["order_by"],
 	email?:PartialObjects["order_by"],
 	firebase_id?:PartialObjects["order_by"],
@@ -23724,7 +23734,7 @@ export enum cursor_ordering {
 /** columns and relationships of "customer" */
 export type customer = {
 	__typename?: "customer",
-	app_version:string,
+	app_version?:string,
 	/** An object relationship */
 	cart?:restaurant_cart,
 	/** An array relationship */
@@ -35780,6 +35790,8 @@ export type translation_variance_fields = {
 export type user = {
 	__typename?: "user",
 	big_image?:string,
+	/** An object relationship */
+	customer?:customer,
 	deleted:boolean,
 	email?:string,
 	firebase_id:string,
@@ -35825,6 +35837,7 @@ export type user_bool_exp = {
 	_not?:user_bool_exp,
 	_or?:user_bool_exp[],
 	big_image?:String_comparison_exp,
+	customer?:customer_bool_exp,
 	deleted?:Boolean_comparison_exp,
 	email?:String_comparison_exp,
 	firebase_id?:String_comparison_exp,
@@ -35848,6 +35861,7 @@ export type user_inc_input = {
 /** input type for inserting data into table "user" */
 export type user_insert_input = {
 		big_image?:string,
+	customer?:customer_obj_rel_insert_input,
 	deleted?:boolean,
 	email?:string,
 	firebase_id?:string,
@@ -35910,6 +35924,7 @@ export type user_on_conflict = {
 /** Ordering options when selecting data from "user". */
 export type user_order_by = {
 		big_image?:order_by,
+	customer?:customer_order_by,
 	deleted?:order_by,
 	email?:order_by,
 	firebase_id?:order_by,
@@ -68786,6 +68801,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		customer:{
+			type:"customer_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		deleted:{
 			type:"Boolean_comparison_exp",
 			array:false,
@@ -68847,6 +68868,12 @@ export const AllTypesProps: Record<string,any> = {
 	user_insert_input:{
 		big_image:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer:{
+			type:"customer_obj_rel_insert_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -68937,6 +68964,12 @@ export const AllTypesProps: Record<string,any> = {
 	user_order_by:{
 		big_image:{
 			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer:{
+			type:"customer_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -72816,6 +72849,7 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	user:{
 		big_image:"String",
+		customer:"customer",
 		deleted:"Boolean",
 		email:"String",
 		firebase_id:"String",
