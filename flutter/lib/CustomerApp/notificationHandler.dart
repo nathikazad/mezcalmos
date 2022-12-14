@@ -100,7 +100,8 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
   return Notification(
     id: key,
     icon: Material.Icons.flatware,
-    linkUrl: getRestaurantOrderRoute(value['orderId']),
+    // todo fix this
+    linkUrl: "getRestaurantOrderRoute(int.parse(value['orderId']))",
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],
     imgUrl: dynamicFields["imgUrl"],

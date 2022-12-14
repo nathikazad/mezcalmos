@@ -5,3 +5,8 @@ mutation updateTranslationValue($arguments: translation_value_pk_columns_input!,
     translation_id
   }
 }
+mutation insertTranslationValue($data :  translation_insert_input!){
+  insert_translation_one(object:$data) {
+    id
+  }
+}

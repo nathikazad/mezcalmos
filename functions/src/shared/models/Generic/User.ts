@@ -12,7 +12,7 @@ export interface UserInfo {
 }
 
 export interface CustomerInfo extends UserInfo {
-  appVersion: string,
+  appVersion?: string,
   notificationInfo?: NotificationInfo
 }
 

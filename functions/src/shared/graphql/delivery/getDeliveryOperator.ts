@@ -1,6 +1,6 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
-import { AppType, Language } from "../../models/Generic/Generic";
+import { AppType, Language, NotificationInfo } from "../../models/Generic/Generic";
 import { DeliveryOperator, DeliveryOperatorStatus } from "../../models/Services/Delivery/DeliveryOrder";
 
 export async function getDeliveryOperators(deliveryCompanyId: number): Promise<DeliveryOperator[]> {
@@ -35,7 +35,7 @@ export async function getDeliveryOperators(deliveryCompanyId: number): Promise<D
       }
     
     return response.delivery_operator.map((d) => {
-        return {
+        return <DeliveryOperator>{
             id: d.id,
             userId: d.user_id,
             deliveryCompanyId: deliveryCompanyId,
@@ -46,7 +46,7 @@ export async function getDeliveryOperators(deliveryCompanyId: number): Promise<D
                 lat: d.current_gps.coordinates[1],
                 lng: d.current_gps.coordinates[0]
             },
-            notificationInfo: (d.notification_token) ? {
+            notificationInfo: (d.notification_token) ? <NotificationInfo>{
                 AppTypeId: AppType.DeliveryAdmin,
                 token: d.notification_token
             }: undefined,

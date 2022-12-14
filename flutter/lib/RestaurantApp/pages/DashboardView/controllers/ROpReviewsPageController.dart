@@ -43,8 +43,9 @@ class ROpReviewsViewController {
           [];
       _rating.value = await get_restaurant_review_average(
           restaurantId: restaurantId, withCache: false);
-    } on Exception catch (e) {
+    } on Exception catch (e, stk) {
       mezDbgPrint("Errors $e");
+      mezDbgPrint("Errors $stk");
       // TODO
     }
     hasLoded.value = true;

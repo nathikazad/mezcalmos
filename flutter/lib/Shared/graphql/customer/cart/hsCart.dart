@@ -304,9 +304,9 @@ Future<Cart?> update_cart({
       ),
     ),
   );
-  if (_cart.hasException) {
-    mezDbgPrint(
-        "[66] called :: update_cart :: exception :: ${_cart.hasException}");
+  if (_cart.parsedData?.update_restaurant_cart?.returning == null) {
+    throw Exception(
+        "[66] called :: update_cart :: exception :: ${_cart.exception}");
   } else {
     mezDbgPrint(
         "[66] called :: update_cart :: cus_id ($customer_id) :: rest_id($restaurant_id) :: item(${items.length}) SUCESS  !");

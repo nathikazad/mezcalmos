@@ -23,7 +23,6 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 class RestaurantController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
-  HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
   StreamSubscription? _cartListener;
   String? _subscriptionId;
@@ -63,6 +62,7 @@ class RestaurantController extends GetxController {
       });
     }
     if (Get.find<AuthController>().user?.hasuraId != null) {
+      final HasuraDb _hasuraDb = Get.find<HasuraDb>();
       _hasuraDb.createSubscription(start: () {
         _cartListener = hsCart
             .listen_on_customer_cart(
@@ -420,7 +420,8 @@ class RestaurantController extends GetxController {
   @override
   void onClose() {
     print("[+] RestaurantCartController::onClose ---------> Was invoked !");
-    if (_subscriptionId != null) _hasuraDb.cancelSubscription(_subscriptionId!);
+    if (_subscriptionId != null)
+      Get.find<HasuraDb>().cancelSubscription(_subscriptionId!);
     _cartListener?.cancel();
     _cartListener = null;
     super.onClose();

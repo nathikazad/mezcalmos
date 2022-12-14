@@ -25,7 +25,7 @@ import { getAuthUsingOTP, sendOTPForLogin } from "./utilities/otpAuth";
 // import { assignDriver } from "./delivery/assignDriver";
 // import { setEstimatedTime } from "./delivery/setEstimatedTime";
 import * as userChanges from './utilities/userChanges'
-import { generateDriverLink,generateOperatorLink } from "./utilities/links/generate";
+// import { generateDriverLink,generateOperatorLink } from "./utilities/links/generate";
 import { assignDriver } from "./delivery/assignDriver";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
@@ -61,12 +61,14 @@ export const stripe = {
 
 export const restaurant = {
   createRestaurant: authenticatedCall((userId, data) => createNewRestaurant(userId, data)),
-  genOperatorLink: authenticatedCall((userId, data) => generateOperatorLink(userId,data )),
-  genDriverLink: authenticatedCall((userId, data) => generateDriverLink(userId,data )),
+  // genOperatorLink: authenticatedCall((userId, data) => generateOperatorLink(userId,data )),
+  // genDriverLink: authenticatedCall((userId, data) => generateDriverLink(userId,data )),
   checkoutCart2: authenticatedCall((userId, data) => checkout(userId, data)),
   // addReview: authenticatedCall((userId, data) => addReview(userId, data)),
   prepareOrder: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),
+  prepareOrder2: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),
   readyForOrderPickup: authenticatedCall((userId, data) => restaurantStatusChange.readyForPickupOrder(userId, data)),
+  readyForOrderPickup2: authenticatedCall((userId, data) => restaurantStatusChange.readyForPickupOrder(userId, data)),
   cancelOrderFromAdmin: authenticatedCall((userId, data) => restaurantStatusChange.cancelOrder(userId, data)),
   cancelOrderFromCustomer: authenticatedCall((userId, data) => cancelOrderFromCustomer(userId, data)),
   // setEstimatedFoodReadyTime: authenticatedCall((userId, data) => restaurantStatusChange.setEstimatedFoodReadyTime(userId, data)),
@@ -148,6 +150,7 @@ function authenticatedCall(func:AuthenticatedFunction) {
       await userChanges.addHasuraClaim(context.auth?.uid);
       firebaseUser = await firebase.auth().getUser(context.auth!.uid)
     }
-    return func(parseInt(firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"]), data);
+    
+    return await func(parseInt(firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"]), data);
   });
 }
