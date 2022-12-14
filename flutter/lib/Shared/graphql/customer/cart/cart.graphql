@@ -80,6 +80,7 @@ query getCustomerCart($customer_id: Int!) {
     		open_status 
       }
       items {
+        id
         restaurant_item {
           id
           item_type
@@ -185,10 +186,15 @@ subscription listen_on_customer_cart($customer_id: Int!) {
 # Remove all items from Cart by customerId.
 mutation clearCart($customer_id : Int!)
 {
-  delete_restaurant_cart(where : {customer_id: {_eq:  $customer_id }})
+  delete_restaurant_cart_item(where : {customer_id: {_eq:  $customer_id }})
   {
     affected_rows
-  }
+  },
+  
+	update_restaurant_cart(where : {customer_id: {_eq:  $customer_id }} , _set: {restaurant_id : null})
+  {
+    affected_rows
+  },
 }
 
 
