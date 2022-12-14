@@ -1,7 +1,7 @@
 import axios from "axios";
+import { storage } from "firebase-admin";
 
-
-export async function generateQr(qrData:string): Promise<string|null>  {
+export async function generateQr(path:string, qrData:string): Promise<string|null>  {
     try {
         const { data } = await axios.post(
             'https://api.qrcode-monkey.com/qr/custom',
@@ -53,9 +53,58 @@ export async function generateQr(qrData:string): Promise<string|null>  {
         let imgUrl : string | null | undefined = data['imageUrl']
         if (!imgUrl)
             return null
-        return (data['imageUrl'] as string).replace('//', 'https://');
+        else 
+            return await uploadRestaurantQrImg(path, (data['imageUrl'] as string).replace('//', 'https://'));
     } catch (error) {
         console.log(`Error Happend when generating the QR code:\n${error}`);
         return null;
     }
 };
+
+
+async function uploadRestaurantQrImg(path:string , qrExternalUrl: string): Promise<string|null> {
+    console.log("[+] uploadRestaurantQrImg :: called  :: path ::", path);
+    const response  = await axios
+    .get(qrExternalUrl, {
+      responseType: 'arraybuffer'
+    });
+    if (response.status == 200) {
+
+        console.log("[+] get :: ", qrExternalUrl, " :: Called!");
+        
+        // const b64 = Buffer.from(response.data, 'binary').toString('base64');
+        const b64 = Buffer.from(response.data, 'binary');
+        console.log("[+] b64 :: ", b64);
+
+        const bucket = storage().bucket('gs://mezcalmos-staging.appspot.com/')
+        // const imageByteArray = new Uint8Array(b64);
+        const file = bucket.file(`${path}/qr.png`);
+
+        console.log("[+] BEFORE file.save :: file.baseUrl :: ", file.publicUrl());
+        await file.save(b64 , {
+            public : true,
+        });
+        console.log("[+] file.save :: file.name :: ", file.name);
+        return file.publicUrl();
+        // file.name
+        // .then(() => {
+        // console.log("[+] file.save :: then :: ", file.baseUrl);
+
+        //     return file.baseUrl;
+        // })
+        // .catch((err: any) => {
+        //     console.log(`Unable to upload encoded file ${err}`)
+        //     return undefined
+        // })
+    }
+    // .then(response => {
+        
+    // })
+    // .catch((err: any) => {
+    //     console.log("[+] get :: ", qrExternalUrl, " :: EXCEPTION! :: ", err);
+    //     return undefined
+    // });
+    
+    return null;
+  }
+ 

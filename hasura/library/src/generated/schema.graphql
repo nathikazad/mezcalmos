@@ -1960,6 +1960,11 @@ enum delivery_driver_constraint {
   deliverer_user_id_delivery_company_type_delivery_company_id_key
 
   """
+  unique or primary key constraint on columns "delivery_company_type", "delivery_company_id"
+  """
+  delivery_company_index
+
+  """
   unique or primary key constraint on columns "id"
   """
   driver_pkey
@@ -2396,16 +2401,8 @@ type delivery_operator {
   delivery_company_id: Int!
   delivery_driver_type: String!
   id: Int!
-
-  """
-  A computed field, executes function "deliop_notification_token"
-  """
-  notification_token: String
   owner: Boolean!
   status: String!
-
-  """An object relationship"""
-  user: user!
   user_id: Int!
 }
 
@@ -2489,10 +2486,8 @@ input delivery_operator_bool_exp {
   delivery_company_id: Int_comparison_exp
   delivery_driver_type: String_comparison_exp
   id: Int_comparison_exp
-  notification_token: String_comparison_exp
   owner: Boolean_comparison_exp
   status: String_comparison_exp
-  user: user_bool_exp
   user_id: Int_comparison_exp
 }
 
@@ -2526,7 +2521,6 @@ input delivery_operator_insert_input {
   id: Int
   owner: Boolean
   status: String
-  user: user_obj_rel_insert_input
   user_id: Int
 }
 
@@ -2611,10 +2605,8 @@ input delivery_operator_order_by {
   delivery_company_id: order_by
   delivery_driver_type: order_by
   id: order_by
-  notification_token: order_by
   owner: order_by
   status: order_by
-  user: user_order_by
   user_id: order_by
 }
 
@@ -12563,9 +12555,14 @@ enum restaurant_operator_constraint {
   restaurant_operator_pkey
 
   """
-  unique or primary key constraint on columns "restaurant_id", "user_id"
+  unique or primary key constraint on columns "restaurant_id"
   """
-  restaurant_operator_user_id_restaurant_id_key
+  restaurant_operator_restaurant_id_key
+
+  """
+  unique or primary key constraint on columns "user_id"
+  """
+  restaurant_operator_user_id_key
 }
 
 """
@@ -16807,6 +16804,11 @@ input saved_location_variance_order_by {
 columns and relationships of "service_link"
 """
 type service_link {
+<<<<<<< HEAD
+  customer_deep_link: String
+  customer_qr_image_link: String
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
   driver_deep_link: String
   driver_qr_image_link: String
   id: Int!
@@ -16857,6 +16859,11 @@ input service_link_bool_exp {
   _and: [service_link_bool_exp!]
   _not: service_link_bool_exp
   _or: [service_link_bool_exp!]
+<<<<<<< HEAD
+  customer_deep_link: String_comparison_exp
+  customer_qr_image_link: String_comparison_exp
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
   driver_deep_link: String_comparison_exp
   driver_qr_image_link: String_comparison_exp
   id: Int_comparison_exp
@@ -16894,6 +16901,11 @@ input service_link_inc_input {
 input type for inserting data into table "service_link"
 """
 input service_link_insert_input {
+<<<<<<< HEAD
+  customer_deep_link: String
+  customer_qr_image_link: String
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
   driver_deep_link: String
   driver_qr_image_link: String
   id: Int
@@ -16906,6 +16918,11 @@ input service_link_insert_input {
 
 """aggregate max on columns"""
 type service_link_max_fields {
+<<<<<<< HEAD
+  customer_deep_link: String
+  customer_qr_image_link: String
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
   driver_deep_link: String
   driver_qr_image_link: String
   id: Int
@@ -16917,6 +16934,11 @@ type service_link_max_fields {
 
 """aggregate min on columns"""
 type service_link_min_fields {
+<<<<<<< HEAD
+  customer_deep_link: String
+  customer_qr_image_link: String
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
   driver_deep_link: String
   driver_qr_image_link: String
   id: Int
@@ -16948,6 +16970,11 @@ input service_link_on_conflict {
 
 """Ordering options when selecting data from "service_link"."""
 input service_link_order_by {
+<<<<<<< HEAD
+  customer_deep_link: order_by
+  customer_qr_image_link: order_by
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
   driver_deep_link: order_by
   driver_qr_image_link: order_by
   id: order_by
@@ -16968,6 +16995,15 @@ select columns of table "service_link"
 """
 enum service_link_select_column {
   """column name"""
+<<<<<<< HEAD
+  customer_deep_link
+
+  """column name"""
+  customer_qr_image_link
+
+  """column name"""
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
   driver_deep_link
 
   """column name"""
@@ -16993,6 +17029,11 @@ enum service_link_select_column {
 input type for updating data in table "service_link"
 """
 input service_link_set_input {
+<<<<<<< HEAD
+  customer_deep_link: String
+  customer_qr_image_link: String
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
   driver_deep_link: String
   driver_qr_image_link: String
   id: Int
@@ -17033,6 +17074,11 @@ input service_link_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input service_link_stream_cursor_value_input {
+<<<<<<< HEAD
+  customer_deep_link: String
+  customer_qr_image_link: String
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
   driver_deep_link: String
   driver_qr_image_link: String
   id: Int
@@ -17053,6 +17099,15 @@ update columns of table "service_link"
 """
 enum service_link_update_column {
   """column name"""
+<<<<<<< HEAD
+  customer_deep_link
+
+  """column name"""
+  customer_qr_image_link
+
+  """column name"""
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
   driver_deep_link
 
   """column name"""
@@ -20670,7 +20725,6 @@ type translation_variance_fields {
 columns and relationships of "user"
 """
 type user {
-  big_image: String
   deleted: Boolean!
   email: String
   firebase_id: String!
@@ -20718,7 +20772,6 @@ input user_bool_exp {
   _and: [user_bool_exp!]
   _not: user_bool_exp
   _or: [user_bool_exp!]
-  big_image: String_comparison_exp
   deleted: Boolean_comparison_exp
   email: String_comparison_exp
   firebase_id: String_comparison_exp
@@ -20750,7 +20803,6 @@ input user_inc_input {
 input type for inserting data into table "user"
 """
 input user_insert_input {
-  big_image: String
   deleted: Boolean
   email: String
   firebase_id: String
@@ -20763,7 +20815,6 @@ input user_insert_input {
 
 """aggregate max on columns"""
 type user_max_fields {
-  big_image: String
   email: String
   firebase_id: String
   id: Int
@@ -20775,7 +20826,6 @@ type user_max_fields {
 
 """aggregate min on columns"""
 type user_min_fields {
-  big_image: String
   email: String
   firebase_id: String
   id: Int
@@ -20817,7 +20867,6 @@ input user_on_conflict {
 
 """Ordering options when selecting data from "user"."""
 input user_order_by {
-  big_image: order_by
   deleted: order_by
   email: order_by
   firebase_id: order_by
@@ -20837,9 +20886,6 @@ input user_pk_columns_input {
 select columns of table "user"
 """
 enum user_select_column {
-  """column name"""
-  big_image
-
   """column name"""
   deleted
 
@@ -20869,7 +20915,6 @@ enum user_select_column {
 input type for updating data in table "user"
 """
 input user_set_input {
-  big_image: String
   deleted: Boolean
   email: String
   firebase_id: String
@@ -20908,7 +20953,6 @@ input user_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input user_stream_cursor_value_input {
-  big_image: String
   deleted: Boolean
   email: String
   firebase_id: String
@@ -20928,9 +20972,6 @@ type user_sum_fields {
 update columns of table "user"
 """
 enum user_update_column {
-  """column name"""
-  big_image
-
   """column name"""
   deleted
 

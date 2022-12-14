@@ -1,5 +1,6 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
+import { generateDeepLink, IDeepLink } from "../../../utilities/links/deeplink";
 import { AppType } from "../../models/Generic/Generic";
 import { OperatorStatus, Restaurant } from "../../models/Services/Restaurant/Restaurant";
 
@@ -35,6 +36,7 @@ export async function createRestaurant(
         }
       }
     }, {
+      service_provider_type : true,
       id: true
     }],
   });
@@ -46,6 +48,30 @@ export async function createRestaurant(
       "restaurant creation error"
     );
   }
+  
+  
+  // Generating 3 links/Qr
+  let customerLinks : IDeepLink|null = await generateDeepLink("Customer", {"providerType":"restaurant", "providerId": response.insert_restaurant_one.id, "deepLinkType": "publicLink"})
+  let deliveryLinks : IDeepLink|null = await generateDeepLink("Delivery", {"providerType":"restaurant", "providerId": response.insert_restaurant_one.id, "deepLinkType": "addDriver"})
+  let restaurantOpLinks : IDeepLink|null = await generateDeepLink("Restaurant", {"restaurantId": response.insert_restaurant_one.id, "deepLinkType": "addRestaurantOperator"})
+
+  chain.mutation({
+    insert_service_link_one: [{
+      object: {
+        service_provider_id : response.insert_restaurant_one.id,
+        service_provider_type : response.insert_restaurant_one.service_provider_type,
+        customer_deep_link : customerLinks?.url,
+        customer_qr_image_link : customerLinks?.urlQr,
+        driver_deep_link : deliveryLinks?.url,
+        driver_qr_image_link : deliveryLinks?.urlQr,
+        operator_deep_link : restaurantOpLinks?.url,
+        operator_qr_image_link : restaurantOpLinks?.urlQr      
+      }
+    }, {
+      id: true
+    }]
+  });
+
   if(restaurantOperatorNotificationToken) {
      chain.mutation({
       insert_notification_info_one: [{

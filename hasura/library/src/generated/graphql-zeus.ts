@@ -1590,12 +1590,8 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	delivery_company_id?:true,
 	delivery_driver_type?:true,
 	id?:true,
-	/** A computed field, executes function "deliop_notification_token" */
-	notification_token?:true,
 	owner?:true,
 	status?:true,
-	/** An object relationship */
-	user?:ValueTypes["user"],
 	user_id?:true,
 		__typename?: true
 }>;
@@ -1663,10 +1659,8 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 	delivery_company_id?:ValueTypes["Int_comparison_exp"],
 	delivery_driver_type?:ValueTypes["String_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
-	notification_token?:ValueTypes["String_comparison_exp"],
 	owner?:ValueTypes["Boolean_comparison_exp"],
 	status?:ValueTypes["String_comparison_exp"],
-	user?:ValueTypes["user_bool_exp"],
 	user_id?:ValueTypes["Int_comparison_exp"]
 };
 	/** unique or primary key constraints on table "delivery_operator" */
@@ -1686,7 +1680,6 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 	id?:number,
 	owner?:boolean,
 	status?:string,
-	user?:ValueTypes["user_obj_rel_insert_input"],
 	user_id?:number
 };
 	/** aggregate max on columns */
@@ -1754,10 +1747,8 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 	delivery_company_id?:ValueTypes["order_by"],
 	delivery_driver_type?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
-	notification_token?:ValueTypes["order_by"],
 	owner?:ValueTypes["order_by"],
 	status?:ValueTypes["order_by"],
-	user?:ValueTypes["user_order_by"],
 	user_id?:ValueTypes["order_by"]
 };
 	/** primary key columns input for table: delivery_operator */
@@ -9940,6 +9931,11 @@ count?: [{	columns?:ValueTypes["saved_location_select_column"][],	distinct?:bool
 };
 	/** columns and relationships of "service_link" */
 ["service_link"]: AliasType<{
+<<<<<<< HEAD
+	customer_deep_link?:true,
+	customer_qr_image_link?:true,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:true,
 	driver_qr_image_link?:true,
 	id?:true,
@@ -9983,6 +9979,11 @@ count?: [{	columns?:ValueTypes["service_link_select_column"][],	distinct?:boolea
 	_and?:ValueTypes["service_link_bool_exp"][],
 	_not?:ValueTypes["service_link_bool_exp"],
 	_or?:ValueTypes["service_link_bool_exp"][],
+<<<<<<< HEAD
+	customer_deep_link?:ValueTypes["String_comparison_exp"],
+	customer_qr_image_link?:ValueTypes["String_comparison_exp"],
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:ValueTypes["String_comparison_exp"],
 	driver_qr_image_link?:ValueTypes["String_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
@@ -10001,6 +10002,11 @@ count?: [{	columns?:ValueTypes["service_link_select_column"][],	distinct?:boolea
 };
 	/** input type for inserting data into table "service_link" */
 ["service_link_insert_input"]: {
+<<<<<<< HEAD
+	customer_deep_link?:string,
+	customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:string,
 	driver_qr_image_link?:string,
 	id?:number,
@@ -10012,6 +10018,11 @@ count?: [{	columns?:ValueTypes["service_link_select_column"][],	distinct?:boolea
 };
 	/** aggregate max on columns */
 ["service_link_max_fields"]: AliasType<{
+<<<<<<< HEAD
+	customer_deep_link?:true,
+	customer_qr_image_link?:true,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:true,
 	driver_qr_image_link?:true,
 	id?:true,
@@ -10023,6 +10034,11 @@ count?: [{	columns?:ValueTypes["service_link_select_column"][],	distinct?:boolea
 }>;
 	/** aggregate min on columns */
 ["service_link_min_fields"]: AliasType<{
+<<<<<<< HEAD
+	customer_deep_link?:true,
+	customer_qr_image_link?:true,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:true,
 	driver_qr_image_link?:true,
 	id?:true,
@@ -10048,6 +10064,11 @@ count?: [{	columns?:ValueTypes["service_link_select_column"][],	distinct?:boolea
 };
 	/** Ordering options when selecting data from "service_link". */
 ["service_link_order_by"]: {
+<<<<<<< HEAD
+	customer_deep_link?:ValueTypes["order_by"],
+	customer_qr_image_link?:ValueTypes["order_by"],
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:ValueTypes["order_by"],
 	driver_qr_image_link?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -10065,6 +10086,11 @@ count?: [{	columns?:ValueTypes["service_link_select_column"][],	distinct?:boolea
 ["service_link_select_column"]:service_link_select_column;
 	/** input type for updating data in table "service_link" */
 ["service_link_set_input"]: {
+<<<<<<< HEAD
+	customer_deep_link?:string,
+	customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:string,
 	driver_qr_image_link?:string,
 	id?:number,
@@ -10100,6 +10126,11 @@ count?: [{	columns?:ValueTypes["service_link_select_column"][],	distinct?:boolea
 };
 	/** Initial value of the column from where the streaming should start */
 ["service_link_stream_cursor_value_input"]: {
+<<<<<<< HEAD
+	customer_deep_link?:string,
+	customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:string,
 	driver_qr_image_link?:string,
 	id?:number,
@@ -11788,7 +11819,6 @@ count?: [{	columns?:ValueTypes["translation_value_select_column"][],	distinct?:b
 }>;
 	/** columns and relationships of "user" */
 ["user"]: AliasType<{
-	big_image?:true,
 	deleted?:true,
 	email?:true,
 	firebase_id?:true,
@@ -11830,7 +11860,6 @@ count?: [{	columns?:ValueTypes["user_select_column"][],	distinct?:boolean},true]
 	_and?:ValueTypes["user_bool_exp"][],
 	_not?:ValueTypes["user_bool_exp"],
 	_or?:ValueTypes["user_bool_exp"][],
-	big_image?:ValueTypes["String_comparison_exp"],
 	deleted?:ValueTypes["Boolean_comparison_exp"],
 	email?:ValueTypes["String_comparison_exp"],
 	firebase_id?:ValueTypes["String_comparison_exp"],
@@ -11848,7 +11877,6 @@ count?: [{	columns?:ValueTypes["user_select_column"][],	distinct?:boolean},true]
 };
 	/** input type for inserting data into table "user" */
 ["user_insert_input"]: {
-	big_image?:string,
 	deleted?:boolean,
 	email?:string,
 	firebase_id?:string,
@@ -11860,7 +11888,6 @@ count?: [{	columns?:ValueTypes["user_select_column"][],	distinct?:boolean},true]
 };
 	/** aggregate max on columns */
 ["user_max_fields"]: AliasType<{
-	big_image?:true,
 	email?:true,
 	firebase_id?:true,
 	id?:true,
@@ -11872,7 +11899,6 @@ count?: [{	columns?:ValueTypes["user_select_column"][],	distinct?:boolean},true]
 }>;
 	/** aggregate min on columns */
 ["user_min_fields"]: AliasType<{
-	big_image?:true,
 	email?:true,
 	firebase_id?:true,
 	id?:true,
@@ -11904,7 +11930,6 @@ count?: [{	columns?:ValueTypes["user_select_column"][],	distinct?:boolean},true]
 };
 	/** Ordering options when selecting data from "user". */
 ["user_order_by"]: {
-	big_image?:ValueTypes["order_by"],
 	deleted?:ValueTypes["order_by"],
 	email?:ValueTypes["order_by"],
 	firebase_id?:ValueTypes["order_by"],
@@ -11922,7 +11947,6 @@ count?: [{	columns?:ValueTypes["user_select_column"][],	distinct?:boolean},true]
 ["user_select_column"]:user_select_column;
 	/** input type for updating data in table "user" */
 ["user_set_input"]: {
-	big_image?:string,
 	deleted?:boolean,
 	email?:string,
 	firebase_id?:string,
@@ -11956,7 +11980,6 @@ count?: [{	columns?:ValueTypes["user_select_column"][],	distinct?:boolean},true]
 };
 	/** Initial value of the column from where the streaming should start */
 ["user_stream_cursor_value_input"]: {
-	big_image?:string,
 	deleted?:boolean,
 	email?:string,
 	firebase_id?:string,
@@ -13164,8 +13187,12 @@ the end). throws an error if top level container is not an array */
 			delivery_company_id?:number,
 			/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
+<<<<<<< HEAD
+			delivery_driver_type?:string,
+=======
 			/** Just for relationship */
 	delivery_driver_type?:string,
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 			id?:number,
 			notification_info_id?:number,
 			/** A computed field, executes function "driver_notification_token" */
@@ -13290,8 +13317,12 @@ the end). throws an error if top level container is not an array */
 			delivery_company_id?:number,
 			/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
+<<<<<<< HEAD
+			delivery_driver_type?:string,
+=======
 			/** Just for relationship */
 	delivery_driver_type?:string,
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 			id?:number,
 			notification_info_id?:number,
 			/** awaiting_approval, authorized, banned */
@@ -13319,8 +13350,12 @@ the end). throws an error if top level container is not an array */
 			delivery_company_id?:number,
 			/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
+<<<<<<< HEAD
+			delivery_driver_type?:string,
+=======
 			/** Just for relationship */
 	delivery_driver_type?:string,
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 			id?:number,
 			notification_info_id?:number,
 			/** awaiting_approval, authorized, banned */
@@ -13545,12 +13580,8 @@ the end). throws an error if top level container is not an array */
 			delivery_company_id?:number,
 			delivery_driver_type?:string,
 			id?:number,
-			/** A computed field, executes function "deliop_notification_token" */
-	notification_token?:string,
 			owner?:boolean,
 			status?:string,
-			/** An object relationship */
-	user?:PartialObjects["user"],
 			user_id?:number
 	},
 	/** aggregated selection of "delivery_operator" */
@@ -13617,10 +13648,8 @@ the end). throws an error if top level container is not an array */
 	delivery_company_id?:PartialObjects["Int_comparison_exp"],
 	delivery_driver_type?:PartialObjects["String_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
-	notification_token?:PartialObjects["String_comparison_exp"],
 	owner?:PartialObjects["Boolean_comparison_exp"],
 	status?:PartialObjects["String_comparison_exp"],
-	user?:PartialObjects["user_bool_exp"],
 	user_id?:PartialObjects["Int_comparison_exp"]
 },
 	/** unique or primary key constraints on table "delivery_operator" */
@@ -13640,7 +13669,6 @@ the end). throws an error if top level container is not an array */
 	id?:number,
 	owner?:boolean,
 	status?:string,
-	user?:PartialObjects["user_obj_rel_insert_input"],
 	user_id?:number
 },
 	/** aggregate max on columns */
@@ -13708,10 +13736,8 @@ the end). throws an error if top level container is not an array */
 	delivery_company_id?:PartialObjects["order_by"],
 	delivery_driver_type?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
-	notification_token?:PartialObjects["order_by"],
 	owner?:PartialObjects["order_by"],
 	status?:PartialObjects["order_by"],
-	user?:PartialObjects["user_order_by"],
 	user_id?:PartialObjects["order_by"]
 },
 	/** primary key columns input for table: delivery_operator */
@@ -21375,6 +21401,11 @@ the end). throws an error if top level container is not an array */
 	/** columns and relationships of "service_link" */
 ["service_link"]: {
 		__typename?: "service_link";
+<<<<<<< HEAD
+			customer_deep_link?:string,
+			customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 			driver_deep_link?:string,
 			driver_qr_image_link?:string,
 			id?:number,
@@ -21417,6 +21448,11 @@ the end). throws an error if top level container is not an array */
 	_and?:PartialObjects["service_link_bool_exp"][],
 	_not?:PartialObjects["service_link_bool_exp"],
 	_or?:PartialObjects["service_link_bool_exp"][],
+<<<<<<< HEAD
+	customer_deep_link?:PartialObjects["String_comparison_exp"],
+	customer_qr_image_link?:PartialObjects["String_comparison_exp"],
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:PartialObjects["String_comparison_exp"],
 	driver_qr_image_link?:PartialObjects["String_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
@@ -21435,6 +21471,11 @@ the end). throws an error if top level container is not an array */
 },
 	/** input type for inserting data into table "service_link" */
 ["service_link_insert_input"]: {
+<<<<<<< HEAD
+	customer_deep_link?:string,
+	customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:string,
 	driver_qr_image_link?:string,
 	id?:number,
@@ -21447,6 +21488,11 @@ the end). throws an error if top level container is not an array */
 	/** aggregate max on columns */
 ["service_link_max_fields"]: {
 		__typename?: "service_link_max_fields";
+<<<<<<< HEAD
+			customer_deep_link?:string,
+			customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 			driver_deep_link?:string,
 			driver_qr_image_link?:string,
 			id?:number,
@@ -21458,6 +21504,11 @@ the end). throws an error if top level container is not an array */
 	/** aggregate min on columns */
 ["service_link_min_fields"]: {
 		__typename?: "service_link_min_fields";
+<<<<<<< HEAD
+			customer_deep_link?:string,
+			customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 			driver_deep_link?:string,
 			driver_qr_image_link?:string,
 			id?:number,
@@ -21482,6 +21533,11 @@ the end). throws an error if top level container is not an array */
 },
 	/** Ordering options when selecting data from "service_link". */
 ["service_link_order_by"]: {
+<<<<<<< HEAD
+	customer_deep_link?:PartialObjects["order_by"],
+	customer_qr_image_link?:PartialObjects["order_by"],
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:PartialObjects["order_by"],
 	driver_qr_image_link?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -21499,6 +21555,11 @@ the end). throws an error if top level container is not an array */
 ["service_link_select_column"]:service_link_select_column,
 	/** input type for updating data in table "service_link" */
 ["service_link_set_input"]: {
+<<<<<<< HEAD
+	customer_deep_link?:string,
+	customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:string,
 	driver_qr_image_link?:string,
 	id?:number,
@@ -21534,6 +21595,11 @@ the end). throws an error if top level container is not an array */
 },
 	/** Initial value of the column from where the streaming should start */
 ["service_link_stream_cursor_value_input"]: {
+<<<<<<< HEAD
+	customer_deep_link?:string,
+	customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:string,
 	driver_qr_image_link?:string,
 	id?:number,
@@ -22905,7 +22971,6 @@ the end). throws an error if top level container is not an array */
 	/** columns and relationships of "user" */
 ["user"]: {
 		__typename?: "user";
-			big_image?:string,
 			deleted?:boolean,
 			email?:string,
 			firebase_id?:string,
@@ -22946,7 +23011,6 @@ the end). throws an error if top level container is not an array */
 	_and?:PartialObjects["user_bool_exp"][],
 	_not?:PartialObjects["user_bool_exp"],
 	_or?:PartialObjects["user_bool_exp"][],
-	big_image?:PartialObjects["String_comparison_exp"],
 	deleted?:PartialObjects["Boolean_comparison_exp"],
 	email?:PartialObjects["String_comparison_exp"],
 	firebase_id?:PartialObjects["String_comparison_exp"],
@@ -22964,7 +23028,6 @@ the end). throws an error if top level container is not an array */
 },
 	/** input type for inserting data into table "user" */
 ["user_insert_input"]: {
-	big_image?:string,
 	deleted?:boolean,
 	email?:string,
 	firebase_id?:string,
@@ -22977,7 +23040,6 @@ the end). throws an error if top level container is not an array */
 	/** aggregate max on columns */
 ["user_max_fields"]: {
 		__typename?: "user_max_fields";
-			big_image?:string,
 			email?:string,
 			firebase_id?:string,
 			id?:number,
@@ -22989,7 +23051,6 @@ the end). throws an error if top level container is not an array */
 	/** aggregate min on columns */
 ["user_min_fields"]: {
 		__typename?: "user_min_fields";
-			big_image?:string,
 			email?:string,
 			firebase_id?:string,
 			id?:number,
@@ -23020,7 +23081,6 @@ the end). throws an error if top level container is not an array */
 },
 	/** Ordering options when selecting data from "user". */
 ["user_order_by"]: {
-	big_image?:PartialObjects["order_by"],
 	deleted?:PartialObjects["order_by"],
 	email?:PartialObjects["order_by"],
 	firebase_id?:PartialObjects["order_by"],
@@ -23038,7 +23098,6 @@ the end). throws an error if top level container is not an array */
 ["user_select_column"]:user_select_column,
 	/** input type for updating data in table "user" */
 ["user_set_input"]: {
-	big_image?:string,
 	deleted?:boolean,
 	email?:string,
 	firebase_id?:string,
@@ -23072,7 +23131,6 @@ the end). throws an error if top level container is not an array */
 },
 	/** Initial value of the column from where the streaming should start */
 ["user_stream_cursor_value_input"]: {
-	big_image?:string,
 	deleted?:boolean,
 	email?:string,
 	firebase_id?:string,
@@ -24615,6 +24673,7 @@ export type delivery_driver_bool_exp = {
 /** unique or primary key constraints on table "delivery_driver" */
 export enum delivery_driver_constraint {
 	deliverer_user_id_delivery_company_type_delivery_company_id_key = "deliverer_user_id_delivery_company_type_delivery_company_id_key",
+	delivery_company_index = "delivery_company_index",
 	driver_pkey = "driver_pkey"
 }
 
@@ -24959,12 +25018,8 @@ export type delivery_operator = {
 	delivery_company_id:number,
 	delivery_driver_type:string,
 	id:number,
-	/** A computed field, executes function "deliop_notification_token" */
-	notification_token?:string,
 	owner:boolean,
 	status:string,
-	/** An object relationship */
-	user:user,
 	user_id:number
 }
 
@@ -25038,10 +25093,8 @@ export type delivery_operator_bool_exp = {
 	delivery_company_id?:Int_comparison_exp,
 	delivery_driver_type?:String_comparison_exp,
 	id?:Int_comparison_exp,
-	notification_token?:String_comparison_exp,
 	owner?:Boolean_comparison_exp,
 	status?:String_comparison_exp,
-	user?:user_bool_exp,
 	user_id?:Int_comparison_exp
 }
 
@@ -25066,7 +25119,6 @@ export type delivery_operator_insert_input = {
 	id?:number,
 	owner?:boolean,
 	status?:string,
-	user?:user_obj_rel_insert_input,
 	user_id?:number
 }
 
@@ -25142,10 +25194,8 @@ export type delivery_operator_order_by = {
 	delivery_company_id?:order_by,
 	delivery_driver_type?:order_by,
 	id?:order_by,
-	notification_token?:order_by,
 	owner?:order_by,
 	status?:order_by,
-	user?:user_order_by,
 	user_id?:order_by
 }
 
@@ -30582,7 +30632,8 @@ export type restaurant_operator_bool_exp = {
 /** unique or primary key constraints on table "restaurant_operator" */
 export enum restaurant_operator_constraint {
 	restaurant_operator_pkey = "restaurant_operator_pkey",
-	restaurant_operator_user_id_restaurant_id_key = "restaurant_operator_user_id_restaurant_id_key"
+	restaurant_operator_restaurant_id_key = "restaurant_operator_restaurant_id_key",
+	restaurant_operator_user_id_key = "restaurant_operator_user_id_key"
 }
 
 /** input type for incrementing numeric columns in table "restaurant_operator" */
@@ -33967,6 +34018,11 @@ export type saved_location_variance_order_by = {
 /** columns and relationships of "service_link" */
 export type service_link = {
 	__typename?: "service_link",
+<<<<<<< HEAD
+	customer_deep_link?:string,
+	customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:string,
 	driver_qr_image_link?:string,
 	id:number,
@@ -34013,6 +34069,11 @@ export type service_link_bool_exp = {
 		_and?:service_link_bool_exp[],
 	_not?:service_link_bool_exp,
 	_or?:service_link_bool_exp[],
+<<<<<<< HEAD
+	customer_deep_link?:String_comparison_exp,
+	customer_qr_image_link?:String_comparison_exp,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:String_comparison_exp,
 	driver_qr_image_link?:String_comparison_exp,
 	id?:Int_comparison_exp,
@@ -34037,7 +34098,13 @@ export type service_link_inc_input = {
 
 /** input type for inserting data into table "service_link" */
 export type service_link_insert_input = {
+<<<<<<< HEAD
+		customer_deep_link?:string,
+	customer_qr_image_link?:string,
+	driver_deep_link?:string,
+=======
 		driver_deep_link?:string,
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_qr_image_link?:string,
 	id?:number,
 	operator_deep_link?:string,
@@ -34050,6 +34117,11 @@ export type service_link_insert_input = {
 /** aggregate max on columns */
 export type service_link_max_fields = {
 	__typename?: "service_link_max_fields",
+<<<<<<< HEAD
+	customer_deep_link?:string,
+	customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:string,
 	driver_qr_image_link?:string,
 	id?:number,
@@ -34062,6 +34134,11 @@ export type service_link_max_fields = {
 /** aggregate min on columns */
 export type service_link_min_fields = {
 	__typename?: "service_link_min_fields",
+<<<<<<< HEAD
+	customer_deep_link?:string,
+	customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:string,
 	driver_qr_image_link?:string,
 	id?:number,
@@ -34089,7 +34166,13 @@ export type service_link_on_conflict = {
 
 /** Ordering options when selecting data from "service_link". */
 export type service_link_order_by = {
+<<<<<<< HEAD
+		customer_deep_link?:order_by,
+	customer_qr_image_link?:order_by,
+	driver_deep_link?:order_by,
+=======
 		driver_deep_link?:order_by,
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_qr_image_link?:order_by,
 	id?:order_by,
 	operator_deep_link?:order_by,
@@ -34106,6 +34189,11 @@ export type service_link_pk_columns_input = {
 
 /** select columns of table "service_link" */
 export enum service_link_select_column {
+<<<<<<< HEAD
+	customer_deep_link = "customer_deep_link",
+	customer_qr_image_link = "customer_qr_image_link",
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link = "driver_deep_link",
 	driver_qr_image_link = "driver_qr_image_link",
 	id = "id",
@@ -34117,7 +34205,13 @@ export enum service_link_select_column {
 
 /** input type for updating data in table "service_link" */
 export type service_link_set_input = {
+<<<<<<< HEAD
+		customer_deep_link?:string,
+	customer_qr_image_link?:string,
+	driver_deep_link?:string,
+=======
 		driver_deep_link?:string,
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_qr_image_link?:string,
 	id?:number,
 	operator_deep_link?:string,
@@ -34157,7 +34251,13 @@ export type service_link_stream_cursor_input = {
 
 /** Initial value of the column from where the streaming should start */
 export type service_link_stream_cursor_value_input = {
+<<<<<<< HEAD
+		customer_deep_link?:string,
+	customer_qr_image_link?:string,
+	driver_deep_link?:string,
+=======
 		driver_deep_link?:string,
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_qr_image_link?:string,
 	id?:number,
 	operator_deep_link?:string,
@@ -34175,6 +34275,11 @@ export type service_link_sum_fields = {
 
 /** update columns of table "service_link" */
 export enum service_link_update_column {
+<<<<<<< HEAD
+	customer_deep_link = "customer_deep_link",
+	customer_qr_image_link = "customer_qr_image_link",
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link = "driver_deep_link",
 	driver_qr_image_link = "driver_qr_image_link",
 	id = "id",
@@ -35779,7 +35884,6 @@ export type translation_variance_fields = {
 /** columns and relationships of "user" */
 export type user = {
 	__typename?: "user",
-	big_image?:string,
 	deleted:boolean,
 	email?:string,
 	firebase_id:string,
@@ -35824,7 +35928,6 @@ export type user_bool_exp = {
 		_and?:user_bool_exp[],
 	_not?:user_bool_exp,
 	_or?:user_bool_exp[],
-	big_image?:String_comparison_exp,
 	deleted?:Boolean_comparison_exp,
 	email?:String_comparison_exp,
 	firebase_id?:String_comparison_exp,
@@ -35847,8 +35950,7 @@ export type user_inc_input = {
 
 /** input type for inserting data into table "user" */
 export type user_insert_input = {
-		big_image?:string,
-	deleted?:boolean,
+		deleted?:boolean,
 	email?:string,
 	firebase_id?:string,
 	id?:number,
@@ -35861,7 +35963,6 @@ export type user_insert_input = {
 /** aggregate max on columns */
 export type user_max_fields = {
 	__typename?: "user_max_fields",
-	big_image?:string,
 	email?:string,
 	firebase_id?:string,
 	id?:number,
@@ -35874,7 +35975,6 @@ export type user_max_fields = {
 /** aggregate min on columns */
 export type user_min_fields = {
 	__typename?: "user_min_fields",
-	big_image?:string,
 	email?:string,
 	firebase_id?:string,
 	id?:number,
@@ -35909,8 +36009,7 @@ export type user_on_conflict = {
 
 /** Ordering options when selecting data from "user". */
 export type user_order_by = {
-		big_image?:order_by,
-	deleted?:order_by,
+		deleted?:order_by,
 	email?:order_by,
 	firebase_id?:order_by,
 	id?:order_by,
@@ -35927,7 +36026,6 @@ export type user_pk_columns_input = {
 
 /** select columns of table "user" */
 export enum user_select_column {
-	big_image = "big_image",
 	deleted = "deleted",
 	email = "email",
 	firebase_id = "firebase_id",
@@ -35940,8 +36038,7 @@ export enum user_select_column {
 
 /** input type for updating data in table "user" */
 export type user_set_input = {
-		big_image?:string,
-	deleted?:boolean,
+		deleted?:boolean,
 	email?:string,
 	firebase_id?:string,
 	id?:number,
@@ -35979,8 +36076,7 @@ export type user_stream_cursor_input = {
 
 /** Initial value of the column from where the streaming should start */
 export type user_stream_cursor_value_input = {
-		big_image?:string,
-	deleted?:boolean,
+		deleted?:boolean,
 	email?:string,
 	firebase_id?:string,
 	id?:number,
@@ -35998,7 +36094,6 @@ export type user_sum_fields = {
 
 /** update columns of table "user" */
 export enum user_update_column {
-	big_image = "big_image",
 	deleted = "deleted",
 	email = "email",
 	firebase_id = "firebase_id",
@@ -39572,12 +39667,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		notification_token:{
-			type:"String_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		owner:{
 			type:"Boolean_comparison_exp",
 			array:false,
@@ -39586,12 +39675,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		status:{
 			type:"String_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		user:{
-			type:"user_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -39663,12 +39746,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		status:{
 			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		user:{
-			type:"user_obj_rel_insert_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -39821,12 +39898,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		notification_token:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		owner:{
 			type:"order_by",
 			array:false,
@@ -39835,12 +39906,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		status:{
 			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		user:{
-			type:"user_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -63306,6 +63371,21 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:true
 		},
+<<<<<<< HEAD
+		customer_deep_link:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_qr_image_link:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 		driver_deep_link:{
 			type:"String_comparison_exp",
 			array:false,
@@ -63371,6 +63451,21 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	service_link_insert_input:{
+<<<<<<< HEAD
+		customer_deep_link:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_qr_image_link:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 		driver_deep_link:{
 			type:"String",
 			array:false,
@@ -63441,6 +63536,21 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	service_link_order_by:{
+<<<<<<< HEAD
+		customer_deep_link:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_qr_image_link:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 		driver_deep_link:{
 			type:"order_by",
 			array:false,
@@ -63500,6 +63610,21 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	service_link_select_column: "enum",
 	service_link_set_input:{
+<<<<<<< HEAD
+		customer_deep_link:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_qr_image_link:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 		driver_deep_link:{
 			type:"String",
 			array:false,
@@ -63558,6 +63683,21 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	service_link_stream_cursor_value_input:{
+<<<<<<< HEAD
+		customer_deep_link:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_qr_image_link:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 		driver_deep_link:{
 			type:"String",
 			array:false,
@@ -68780,12 +68920,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:true
 		},
-		big_image:{
-			type:"String_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		deleted:{
 			type:"Boolean_comparison_exp",
 			array:false,
@@ -68845,12 +68979,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	user_insert_input:{
-		big_image:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		deleted:{
 			type:"Boolean",
 			array:false,
@@ -68935,12 +69063,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	user_order_by:{
-		big_image:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		deleted:{
 			type:"order_by",
 			array:false,
@@ -69000,12 +69122,6 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	user_select_column: "enum",
 	user_set_input:{
-		big_image:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		deleted:{
 			type:"Boolean",
 			array:false,
@@ -69070,12 +69186,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	user_stream_cursor_value_input:{
-		big_image:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		deleted:{
 			type:"Boolean",
 			array:false,
@@ -69666,10 +69776,8 @@ export const ReturnTypes: Record<string,any> = {
 		delivery_company_id:"Int",
 		delivery_driver_type:"String",
 		id:"Int",
-		notification_token:"String",
 		owner:"Boolean",
 		status:"String",
-		user:"user",
 		user_id:"Int"
 	},
 	delivery_operator_aggregate:{
@@ -72282,6 +72390,11 @@ export const ReturnTypes: Record<string,any> = {
 		id:"Float"
 	},
 	service_link:{
+<<<<<<< HEAD
+		customer_deep_link:"String",
+		customer_qr_image_link:"String",
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 		driver_deep_link:"String",
 		driver_qr_image_link:"String",
 		id:"Int",
@@ -72313,6 +72426,11 @@ export const ReturnTypes: Record<string,any> = {
 		service_provider_id:"Float"
 	},
 	service_link_max_fields:{
+<<<<<<< HEAD
+		customer_deep_link:"String",
+		customer_qr_image_link:"String",
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 		driver_deep_link:"String",
 		driver_qr_image_link:"String",
 		id:"Int",
@@ -72322,6 +72440,11 @@ export const ReturnTypes: Record<string,any> = {
 		service_provider_type:"String"
 	},
 	service_link_min_fields:{
+<<<<<<< HEAD
+		customer_deep_link:"String",
+		customer_qr_image_link:"String",
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 		driver_deep_link:"String",
 		driver_qr_image_link:"String",
 		id:"Int",
@@ -72815,7 +72938,6 @@ export const ReturnTypes: Record<string,any> = {
 		service_provider_id:"Float"
 	},
 	user:{
-		big_image:"String",
 		deleted:"Boolean",
 		email:"String",
 		firebase_id:"String",
@@ -72846,7 +72968,6 @@ export const ReturnTypes: Record<string,any> = {
 		id:"Float"
 	},
 	user_max_fields:{
-		big_image:"String",
 		email:"String",
 		firebase_id:"String",
 		id:"Int",
@@ -72856,7 +72977,6 @@ export const ReturnTypes: Record<string,any> = {
 		phone:"String"
 	},
 	user_min_fields:{
-		big_image:"String",
 		email:"String",
 		firebase_id:"String",
 		id:"Int",
