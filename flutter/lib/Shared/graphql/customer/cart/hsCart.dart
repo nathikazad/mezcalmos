@@ -196,6 +196,46 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
     final Subscription$listen_on_customer_cart$customer_by_pk$cart? parsedCart =
         cart.parsedData?.customer_by_pk?.cart;
     if (cart.parsedData?.customer_by_pk?.cart != null) {
+      final Subscription$listen_on_customer_cart$customer_by_pk$cart$restaurant?
+          _res = cart.parsedData?.customer_by_pk?.cart?.restaurant;
+      if (cart.parsedData?.customer_by_pk?.cart?.restaurant != null) {
+        mezDbgPrint("[UUUU] ===> Got the restaurant which is not null :D !");
+        _c.restaurant = Restaurant(
+          userInfo: ServiceInfo(
+            hasuraId: _res!.id,
+            image: _res.image,
+            firebaseId: _res.firebase_id,
+            name: _res.name,
+            description: (_res.description?.translations != null)
+                ? {
+                    _res.description!.translations.first.language_id
+                            .toLanguageType():
+                        _res.description!.translations.first.value,
+                    _res.description!.translations[1].language_id
+                            .toLanguageType():
+                        _res.description!.translations[1].value,
+                  }
+                : null,
+            descriptionId: _res.description_id,
+            //   descriptionId: data.d,
+            location: Location.fromHasura(
+              _res.location_gps,
+              _res.location_text,
+            ),
+          ),
+          schedule:
+              _res.schedule != null ? Schedule.fromData(_res.schedule) : null,
+          paymentInfo: PaymentInfo(),
+          restaurantState: ServiceState(
+            _res.open_status.toServiceStatus(),
+            _res.approved,
+          ),
+          primaryLanguage: _res.language_id.toString().toLanguageType(),
+          secondaryLanguage:
+              _res.language_id.toString().toLanguageType().toOpLang(),
+        );
+      }
+
       parsedCart!.items.forEach(
           (Subscription$listen_on_customer_cart$customer_by_pk$cart$items
               cartitem) {

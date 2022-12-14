@@ -11,6 +11,7 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -82,9 +83,9 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     //   }
     // });
 
-    _restaurantController
-        .updateShippingPrice()
-        .then((bool value) => _restaurantController.cart.refresh());
+    // _restaurantController
+    //     .updateShippingPrice()
+    //     .then((bool value) => _restaurantController.cart.refresh());
 
     // check if cart empty
     // if yes redirect to home page
@@ -113,9 +114,12 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           return SingleChildScrollView(
             child: ViewCartBody(
               viewCartController: viewCartController,
-              setLocationCallBack: ({Location? location}) {
+              setLocationCallBack: ({Location? location}) async {
                 if (location != null && location.isValidLocation()) {
+                  mezDbgPrint(
+                      "[UUUU] => RESTAURANT INFO ==> ${_restaurantController.cart.value.restaurant?.info.hasuraId}");
                   _restaurantController.cart.value.toLocation = location;
+                  // ignore: unawaited_futures
                   _restaurantController.updateShippingPrice().then(
                       (bool value) => _restaurantController.cart.refresh());
                 }

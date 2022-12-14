@@ -350,7 +350,7 @@ class RestaurantController extends GetxController {
                 },
               ),
             ).toFirebaseFormattedJson(),
-        "deliveryCost": cart.value.shippingCost,
+        "deliveryCost": cart.value.shippingCost ?? 0,
         "paymentType": cart.value.paymentType.toFirebaseFormatString(),
         "notes": cart.value.notes,
         "restaurantId": cart.value.restaurant!.info.hasuraId,
