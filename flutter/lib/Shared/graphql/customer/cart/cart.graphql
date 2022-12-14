@@ -1,10 +1,16 @@
 # Add Item to cart and return total cart price.
 
 mutation addItemToCart($item: restaurant_cart_item_insert_input!) {
-  insert_restaurant_cart_item_one(object: $item ){
+  insert_restaurant_cart_item_one(object: $item) {
     id
+    cost_per_one
+    customer_id
+    note
+    quantity
+    restaurant_item_id
   }
 }
+
 
 
 # Remove Item from Cart

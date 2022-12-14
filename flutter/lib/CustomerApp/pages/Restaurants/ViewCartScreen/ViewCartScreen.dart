@@ -60,6 +60,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     if (orderToLocation != null) {
       _restaurantController.cart.value.toLocation = orderToLocation;
     }
+    _restaurantController.fetchCart();
 
     // getCustomerCart(
     //   customerId: Get.find<AuthController>().user!.hasuraId,
@@ -82,9 +83,9 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     //   }
     // });
 
-    _restaurantController
-        .updateShippingPrice()
-        .then((bool value) => _restaurantController.cart.refresh());
+    // _restaurantController
+    //     .updateShippingPrice()
+    //     .then((bool value) => _restaurantController.cart.refresh());
 
     // check if cart empty
     // if yes redirect to home page

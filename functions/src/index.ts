@@ -61,8 +61,7 @@ export const stripe = {
 
 export const restaurant = {
   createRestaurant: authenticatedCallByMontassare((userId, data) => createNewRestaurant(userId, data)),
-  // genOperatorLink: authenticatedCall((userId, data) => generateOperatorLink(userId,data )),
-  // genDriverLink: authenticatedCall((userId, data) => generateDriverLink(userId,data )),
+  
   checkoutCart2: authenticatedCallByMontassare((userId, data) => checkout(userId, data)),
   // addReview: authenticatedCall((userId, data) => addReview(userId, data)),
   prepareOrder: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),

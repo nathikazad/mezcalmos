@@ -151,8 +151,7 @@ extension HasuraCartItem on CartItem {
 }
 
 /// Returns Item Id
-Future<int?> add_item_to_cart({required CartItem cartItem}) async {
-  mezDbgPrint("[JJ] CustomerId ==> ${Get.find<AuthController>().hasuraUserId}");
+Future<int> add_item_to_cart({required CartItem cartItem}) async {
   mezDbgPrint("🤣 Calling add item  ${cartItem.item.id}");
   final QueryResult<Mutation$addItemToCart> addItemResult =
       await _hasuraDb.graphQLClient.mutate$addItemToCart(
@@ -171,15 +170,14 @@ Future<int?> add_item_to_cart({required CartItem cartItem}) async {
     ),
   );
 
-  if (addItemResult.hasException) {
-    mezDbgPrint(
-        "[[JJ]] graphql::add_item_to_cart::exception :: ${addItemResult.exception}");
+  if (addItemResult.parsedData?.insert_restaurant_cart_item_one?.id == null) {
+    throw Exception(
+        "🚨 graphql::add_item_to_cart::exception :: ${addItemResult.exception}");
   } else {
     mezDbgPrint(
-        "[[JJ]] _add_item_result :: success :D Item Id --> ${addItemResult.parsedData?.insert_restaurant_cart_item_one?.toJson()}");
-    return addItemResult.parsedData?.insert_restaurant_cart_item_one?.id;
+        "✅ _add_item_result :: success :D Item Id --> ${addItemResult.parsedData?.insert_restaurant_cart_item_one?.toJson()}");
+    return addItemResult.parsedData!.insert_restaurant_cart_item_one!.id;
   }
-  return null;
 }
 
 Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
@@ -290,20 +288,16 @@ Future<Cart?> update_cart({
   required int restaurant_id,
   required List<CartItem> items,
 }) async {
+  mezDbgPrint("Cart items ======================>>>>> ${items.length}");
   Cart? retCart = null;
   final QueryResult<Mutation$updateCart> _cart =
       await _hasuraDb.graphQLClient.mutate$updateCart(
     Options$Mutation$updateCart(
       fetchPolicy: FetchPolicy.noCache,
       variables: Variables$Mutation$updateCart(
-        customer_id: customer_id,
-        restaurant_id: restaurant_id,
-        items: items
-            .map<Input$restaurant_cart_item_insert_input>((CartItem _item) {
-          mezDbgPrint("[66] loop::item :: ${_item.item.name}");
-          return _item.toHasuraInputCartItem();
-        }).toList(),
-      ),
+          customer_id: customer_id,
+          restaurant_id: restaurant_id,
+          items: _covertItems(items)),
     ),
   );
   if (_cart.parsedData?.update_restaurant_cart?.returning == null) {
@@ -386,4 +380,13 @@ Future<Cart?> update_cart({
     });
   }
   return retCart;
+}
+
+List<Input$restaurant_cart_item_insert_input> _covertItems(
+    List<CartItem> cartITems) {
+  final List<Input$restaurant_cart_item_insert_input> data = [];
+  cartITems
+      .where((CartItem element) => element.idInCart == null)
+      .map((CartItem e) => e.toHasuraInputCartItem());
+  return data;
 }

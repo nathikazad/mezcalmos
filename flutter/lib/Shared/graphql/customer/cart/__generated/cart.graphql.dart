@@ -292,6 +292,41 @@ const documentNodeMutationaddItemToCart = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'cost_per_one'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'customer_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'note'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'quantity'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'restaurant_item_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -402,20 +437,45 @@ extension ClientExtension$Mutation$addItemToCart on graphql.GraphQLClient {
 class Mutation$addItemToCart$insert_restaurant_cart_item_one {
   Mutation$addItemToCart$insert_restaurant_cart_item_one({
     required this.id,
+    required this.cost_per_one,
+    required this.customer_id,
+    this.note,
+    required this.quantity,
+    required this.restaurant_item_id,
     required this.$__typename,
   });
 
   factory Mutation$addItemToCart$insert_restaurant_cart_item_one.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
+    final l$cost_per_one = json['cost_per_one'];
+    final l$customer_id = json['customer_id'];
+    final l$note = json['note'];
+    final l$quantity = json['quantity'];
+    final l$restaurant_item_id = json['restaurant_item_id'];
     final l$$__typename = json['__typename'];
     return Mutation$addItemToCart$insert_restaurant_cart_item_one(
       id: (l$id as int),
+      cost_per_one: moneyFromJson(l$cost_per_one),
+      customer_id: (l$customer_id as int),
+      note: (l$note as String?),
+      quantity: (l$quantity as int),
+      restaurant_item_id: (l$restaurant_item_id as int),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final int id;
+
+  final double cost_per_one;
+
+  final int customer_id;
+
+  final String? note;
+
+  final int quantity;
+
+  final int restaurant_item_id;
 
   final String $__typename;
 
@@ -423,6 +483,16 @@ class Mutation$addItemToCart$insert_restaurant_cart_item_one {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$cost_per_one = cost_per_one;
+    _resultData['cost_per_one'] = moneyToJson(l$cost_per_one);
+    final l$customer_id = customer_id;
+    _resultData['customer_id'] = l$customer_id;
+    final l$note = note;
+    _resultData['note'] = l$note;
+    final l$quantity = quantity;
+    _resultData['quantity'] = l$quantity;
+    final l$restaurant_item_id = restaurant_item_id;
+    _resultData['restaurant_item_id'] = l$restaurant_item_id;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -431,9 +501,19 @@ class Mutation$addItemToCart$insert_restaurant_cart_item_one {
   @override
   int get hashCode {
     final l$id = id;
+    final l$cost_per_one = cost_per_one;
+    final l$customer_id = customer_id;
+    final l$note = note;
+    final l$quantity = quantity;
+    final l$restaurant_item_id = restaurant_item_id;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
+      l$cost_per_one,
+      l$customer_id,
+      l$note,
+      l$quantity,
+      l$restaurant_item_id,
       l$$__typename,
     ]);
   }
@@ -450,6 +530,31 @@ class Mutation$addItemToCart$insert_restaurant_cart_item_one {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$cost_per_one = cost_per_one;
+    final lOther$cost_per_one = other.cost_per_one;
+    if (l$cost_per_one != lOther$cost_per_one) {
+      return false;
+    }
+    final l$customer_id = customer_id;
+    final lOther$customer_id = other.customer_id;
+    if (l$customer_id != lOther$customer_id) {
+      return false;
+    }
+    final l$note = note;
+    final lOther$note = other.note;
+    if (l$note != lOther$note) {
+      return false;
+    }
+    final l$quantity = quantity;
+    final lOther$quantity = other.quantity;
+    if (l$quantity != lOther$quantity) {
+      return false;
+    }
+    final l$restaurant_item_id = restaurant_item_id;
+    final lOther$restaurant_item_id = other.restaurant_item_id;
+    if (l$restaurant_item_id != lOther$restaurant_item_id) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -485,6 +590,11 @@ abstract class CopyWith$Mutation$addItemToCart$insert_restaurant_cart_item_one<
 
   TRes call({
     int? id,
+    double? cost_per_one,
+    int? customer_id,
+    String? note,
+    int? quantity,
+    int? restaurant_item_id,
     String? $__typename,
   });
 }
@@ -506,10 +616,29 @@ class _CopyWithImpl$Mutation$addItemToCart$insert_restaurant_cart_item_one<TRes>
 
   TRes call({
     Object? id = _undefined,
+    Object? cost_per_one = _undefined,
+    Object? customer_id = _undefined,
+    Object? note = _undefined,
+    Object? quantity = _undefined,
+    Object? restaurant_item_id = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$addItemToCart$insert_restaurant_cart_item_one(
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        cost_per_one: cost_per_one == _undefined || cost_per_one == null
+            ? _instance.cost_per_one
+            : (cost_per_one as double),
+        customer_id: customer_id == _undefined || customer_id == null
+            ? _instance.customer_id
+            : (customer_id as int),
+        note: note == _undefined ? _instance.note : (note as String?),
+        quantity: quantity == _undefined || quantity == null
+            ? _instance.quantity
+            : (quantity as int),
+        restaurant_item_id:
+            restaurant_item_id == _undefined || restaurant_item_id == null
+                ? _instance.restaurant_item_id
+                : (restaurant_item_id as int),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -527,6 +656,11 @@ class _CopyWithStubImpl$Mutation$addItemToCart$insert_restaurant_cart_item_one<
 
   call({
     int? id,
+    double? cost_per_one,
+    int? customer_id,
+    String? note,
+    int? quantity,
+    int? restaurant_item_id,
     String? $__typename,
   }) =>
       _res;

@@ -38,6 +38,8 @@ class RestaurantController extends GetxController {
 
   @override
   Future<void> onInit() async {
+    mezDbgPrint(
+        "Before saving first cart 🇹🇳🇹🇳🇹🇳🇹🇳 ${cart.value.cartItems}");
     super.onInit();
 
     mezDbgPrint(
@@ -49,17 +51,7 @@ class RestaurantController extends GetxController {
       minShiipingPrice.value = await getMinShippingPrice();
       perKmPrice.value = await getPerKmShippingPrice();
       // ignore: unawaited_futures
-      hsCart
-          .getCustomerCart(
-        customerId: Get.find<AuthController>().user!.hasuraId,
-      )
-          .then((Cart? value) {
-        mezDbgPrint(
-            "[cc] Cart Controller ===> ${value?.toFirebaseFormattedJson()}");
-        cart.value = value ?? Cart();
-        associatedRestaurant = value?.restaurant;
-        cart.refresh();
-      });
+      fetchCart();
     }
     if (Get.find<AuthController>().user?.hasuraId != null) {
       final HasuraDb _hasuraDb = Get.find<HasuraDb>();
@@ -68,6 +60,8 @@ class RestaurantController extends GetxController {
             .listen_on_customer_cart(
                 customer_id: Get.find<AuthController>().user!.hasuraId)
             .listen((Cart? event) {
+          mezDbgPrint(
+              "Cart event stream from front 😍😍😍😍 ${event?.toFirebaseFormattedJson()}");
           if (event != null) {
             cart.value = event;
             if (event.restaurant != null)
@@ -84,6 +78,20 @@ class RestaurantController extends GetxController {
     }
     // check for old special items and remove them
     checkCartPeriod();
+  }
+
+  void fetchCart() {
+    hsCart
+        .getCustomerCart(
+      customerId: Get.find<AuthController>().user!.hasuraId,
+    )
+        .then((Cart? value) {
+      mezDbgPrint(
+          "[cc] Cart Controller Fetching cart  ===> ${value?.toFirebaseFormattedJson()}");
+      cart.value = value ?? Cart();
+      associatedRestaurant = value?.restaurant;
+      cart.refresh();
+    });
   }
 
   Future<Restaurant?> getAssociatedRestaurant(int restaurantId) async {
@@ -140,6 +148,7 @@ class RestaurantController extends GetxController {
   Future<bool> updateShippingPrice() async {
     isShippingSet.value = false;
     final LocModel.Location? loc = cart.value.toLocation;
+
     mezDbgPrint(
         "[tt] Called updateShippingPrice :: to _ loc _ address :: ${loc?.address} ");
     minShiipingPrice.value =
@@ -180,13 +189,13 @@ class RestaurantController extends GetxController {
 
           mezDbgPrint(
               "SHIPPPPPING COOOOST =========>>>>>>>>>>>${cart.value.shippingCost}");
-          await saveCart();
+          // await saveCart();
           isShippingSet.value = true;
 
           return true;
         } else {
           cart.value.shippingCost = null;
-          await saveCart();
+          // await saveCart();
           isShippingSet.value = true;
 
           return true;
@@ -199,7 +208,7 @@ class RestaurantController extends GetxController {
       }
     } else {
       cart.value.shippingCost = null;
-      await saveCart();
+      //   await saveCart();
       isShippingSet.value = true;
 
       return true;
@@ -229,16 +238,16 @@ class RestaurantController extends GetxController {
 
   Future<void> saveCart() async {
     if (_authController.user?.hasuraId != null) {
-      final Cart? _cart = await hsCart.update_cart(
-        customer_id: _authController.user!.hasuraId,
-        restaurant_id: associatedRestaurant!.info.hasuraId,
-        items: cart.value.cartItems,
-      );
-      if (_cart != null) {
-        cart.value = _cart;
-        mezDbgPrint(
-            "😛 Cart items after calling save cart ======>${_cart.cartItems.length}");
-      }
+      mezDbgPrint(
+          "😛 Cart items after calling save cart ======>${cart.value.cartItems.length}");
+    }
+    final Cart? _cart = await hsCart.update_cart(
+      customer_id: _authController.user!.hasuraId,
+      restaurant_id: associatedRestaurant!.info.hasuraId,
+      items: cart.value.cartItems,
+    );
+    if (_cart != null) {
+      cart.value = _cart;
     }
     cart.refresh();
   }
