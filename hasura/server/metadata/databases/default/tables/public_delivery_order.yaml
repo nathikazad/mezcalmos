@@ -2,6 +2,9 @@ table:
   name: delivery_order
   schema: public
 object_relationships:
+  - name: app_type
+    using:
+      foreign_key_constraint_on: delivery_driver_type
   - name: chat_with_customer
     using:
       foreign_key_constraint_on: chat_with_customer_id
