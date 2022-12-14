@@ -1834,6 +1834,8 @@ type delivery_driver {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String!
+
+  """Just for relationship"""
   delivery_driver_type: String!
   id: Int!
   notification_info_id: Int
@@ -1989,6 +1991,8 @@ input delivery_driver_insert_input {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String
+
+  """Just for relationship"""
   delivery_driver_type: String
   id: Int
   notification_info_id: Int
@@ -2008,6 +2012,8 @@ type delivery_driver_max_fields {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String
+
+  """Just for relationship"""
   delivery_driver_type: String
   id: Int
   notification_info_id: Int
@@ -2026,6 +2032,8 @@ input delivery_driver_max_order_by {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: order_by
+
+  """Just for relationship"""
   delivery_driver_type: order_by
   id: order_by
   notification_info_id: order_by
@@ -2042,6 +2050,8 @@ type delivery_driver_min_fields {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String
+
+  """Just for relationship"""
   delivery_driver_type: String
   id: Int
   notification_info_id: Int
@@ -2060,6 +2070,8 @@ input delivery_driver_min_order_by {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: order_by
+
+  """Just for relationship"""
   delivery_driver_type: order_by
   id: order_by
   notification_info_id: order_by
@@ -2167,6 +2179,8 @@ input delivery_driver_set_input {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String
+
+  """Just for relationship"""
   delivery_driver_type: String
   id: Int
   notification_info_id: Int
@@ -2250,6 +2264,8 @@ input delivery_driver_stream_cursor_value_input {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String
+
+  """Just for relationship"""
   delivery_driver_type: String
   id: Int
   notification_info_id: Int
@@ -2823,9 +2839,6 @@ type delivery_order {
   actual_arrival_at_pickup_time: timestamptz
   actual_delivered_time: timestamptz
   actual_package_ready_time: timestamptz
-
-  """An object relationship"""
-  app_type: topology_app_type
   cancellation_time: timestamptz
 
   """An object relationship"""
@@ -3027,7 +3040,6 @@ input delivery_order_bool_exp {
   actual_arrival_at_pickup_time: timestamptz_comparison_exp
   actual_delivered_time: timestamptz_comparison_exp
   actual_package_ready_time: timestamptz_comparison_exp
-  app_type: topology_app_type_bool_exp
   cancellation_time: timestamptz_comparison_exp
   chat_with_customer: chat_bool_exp
   chat_with_customer_id: Int_comparison_exp
@@ -3117,7 +3129,6 @@ input delivery_order_insert_input {
   actual_arrival_at_pickup_time: timestamptz
   actual_delivered_time: timestamptz
   actual_package_ready_time: timestamptz
-  app_type: topology_app_type_obj_rel_insert_input
   cancellation_time: timestamptz
   chat_with_customer: chat_obj_rel_insert_input
   chat_with_customer_id: Int
@@ -3413,7 +3424,6 @@ input delivery_order_order_by {
   actual_arrival_at_pickup_time: order_by
   actual_delivered_time: order_by
   actual_package_ready_time: order_by
-  app_type: topology_app_type_order_by
   cancellation_time: order_by
   chat_with_customer: chat_order_by
   chat_with_customer_id: order_by
@@ -16794,8 +16804,11 @@ input saved_location_variance_order_by {
 columns and relationships of "service_link"
 """
 type service_link {
+<<<<<<< HEAD
   customer_deep_link: String
   customer_qr_image_link: String
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
   driver_deep_link: String
   driver_qr_image_link: String
   id: Int!
@@ -16846,8 +16859,11 @@ input service_link_bool_exp {
   _and: [service_link_bool_exp!]
   _not: service_link_bool_exp
   _or: [service_link_bool_exp!]
+<<<<<<< HEAD
   customer_deep_link: String_comparison_exp
   customer_qr_image_link: String_comparison_exp
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
   driver_deep_link: String_comparison_exp
   driver_qr_image_link: String_comparison_exp
   id: Int_comparison_exp
@@ -16885,8 +16901,11 @@ input service_link_inc_input {
 input type for inserting data into table "service_link"
 """
 input service_link_insert_input {
+<<<<<<< HEAD
   customer_deep_link: String
   customer_qr_image_link: String
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
   driver_deep_link: String
   driver_qr_image_link: String
   id: Int
@@ -16899,8 +16918,11 @@ input service_link_insert_input {
 
 """aggregate max on columns"""
 type service_link_max_fields {
+<<<<<<< HEAD
   customer_deep_link: String
   customer_qr_image_link: String
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
   driver_deep_link: String
   driver_qr_image_link: String
   id: Int
@@ -16912,8 +16934,11 @@ type service_link_max_fields {
 
 """aggregate min on columns"""
 type service_link_min_fields {
+<<<<<<< HEAD
   customer_deep_link: String
   customer_qr_image_link: String
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
   driver_deep_link: String
   driver_qr_image_link: String
   id: Int
@@ -16945,8 +16970,11 @@ input service_link_on_conflict {
 
 """Ordering options when selecting data from "service_link"."""
 input service_link_order_by {
+<<<<<<< HEAD
   customer_deep_link: order_by
   customer_qr_image_link: order_by
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
   driver_deep_link: order_by
   driver_qr_image_link: order_by
   id: order_by
@@ -16967,12 +16995,15 @@ select columns of table "service_link"
 """
 enum service_link_select_column {
   """column name"""
+<<<<<<< HEAD
   customer_deep_link
 
   """column name"""
   customer_qr_image_link
 
   """column name"""
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
   driver_deep_link
 
   """column name"""
@@ -16998,8 +17029,11 @@ enum service_link_select_column {
 input type for updating data in table "service_link"
 """
 input service_link_set_input {
+<<<<<<< HEAD
   customer_deep_link: String
   customer_qr_image_link: String
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
   driver_deep_link: String
   driver_qr_image_link: String
   id: Int
@@ -17040,8 +17074,11 @@ input service_link_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input service_link_stream_cursor_value_input {
+<<<<<<< HEAD
   customer_deep_link: String
   customer_qr_image_link: String
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
   driver_deep_link: String
   driver_qr_image_link: String
   id: Int
@@ -17062,12 +17099,15 @@ update columns of table "service_link"
 """
 enum service_link_update_column {
   """column name"""
+<<<<<<< HEAD
   customer_deep_link
 
   """column name"""
   customer_qr_image_link
 
   """column name"""
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
   driver_deep_link
 
   """column name"""
@@ -19845,16 +19885,6 @@ type topology_app_type_mutation_response {
 
   """data from the rows affected by the mutation"""
   returning: [topology_app_type!]!
-}
-
-"""
-input type for inserting object relation for remote table "topology.app_type"
-"""
-input topology_app_type_obj_rel_insert_input {
-  data: topology_app_type_insert_input!
-
-  """upsert condition"""
-  on_conflict: topology_app_type_on_conflict
 }
 
 """

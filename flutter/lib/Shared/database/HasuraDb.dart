@@ -13,7 +13,7 @@ import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart' show mezDbgPrint;
 
-class HasuraDb {
+class HasuraDb extends GetxController {
   late GraphQLClient graphQLClient;
 
   WebSocketLink? _wsLink;

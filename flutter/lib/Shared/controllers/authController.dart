@@ -71,15 +71,17 @@ class AuthController extends GetxController {
       } else {
         mezDbgPrint('AuthController: User is currently signed in!');
 
-        fireAuth.IdTokenResult? tokenResult = await user.getIdTokenResult();
+        fireAuth.IdTokenResult? tokenResult = await user.getIdTokenResult(true);
         mezDbgPrint(tokenResult);
 
         if (tokenResult.claims?['https://hasura.io/jwt/claims'] == null) {
           mezDbgPrint("No token, calling addHasuraClaims");
+
           await FirebaseFunctions.instance
               .httpsCallable('user-addHasuraClaim')
               .call();
-          tokenResult = await user.getIdTokenResult();
+
+          tokenResult = await user.getIdTokenResult(true);
         }
         _hasuraUserId.value = int.parse(tokenResult
             .claims!['https://hasura.io/jwt/claims']['x-hasura-user-id']);

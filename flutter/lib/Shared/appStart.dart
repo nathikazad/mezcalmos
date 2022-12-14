@@ -232,9 +232,7 @@ class _StartingPointState extends State<StartingPoint> {
       permanent: true,
     );
 
-    Future.microtask(() {
-      Get.put(HasuraDb(_launchMode), permanent: true);
-    });
+    Get.put(HasuraDb(_launchMode), permanent: true);
   }
 
   Future<void> setGlobalVariables() async {

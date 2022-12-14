@@ -89,28 +89,28 @@ export async function setOperatorDeepLink(
   console.log("setting deep link to ", restaurantId);
   console.log("\n deep link : ", operatorDeepLink);
 
-  let chain = getHasura();
+  // let chain = getHasura();
 
-  let response = await chain.mutation({
-    update_restaurant_by_pk: [
-      {
-        pk_columns: { id: restaurantId },
-        _set: {
-          operator_deep_link: operatorDeepLink,
-        },
-      },
-      {
-        id: true,
-        operator_deep_link: true,
-        operator_qr_image_link: true,
-      },
-    ],
-  });
-  console.log("response set operator links: ", response);
+  // let response = await chain.mutation({
+  //   update_restaurant_by_pk: [
+  //     {
+  //       pk_columns: { id: restaurantId },
+  //       _set: {
+  //         operator_deep_link: operatorDeepLink,
+  //       },
+  //     },
+  //     {
+  //       id: true,
+  //       operator_deep_link: true,
+  //       operator_qr_image_link: true,
+  //     },
+  //   ],
+  // });
+  // console.log("response set operator links: ", response);
 
-  if (response.update_restaurant_by_pk == null) {
-    throw new HttpsError("internal", "restaurant creation error");
-  }
+  // if (response.update_restaurant_by_pk == null) {
+  //   throw new HttpsError("internal", "restaurant creation error");
+  // }
 }
 export async function setOperatorQrImageLink(
   operatorQrImageLink: string,
@@ -118,25 +118,25 @@ export async function setOperatorQrImageLink(
 ) {
   console.log("setting qr image link to ", restaurantId);
   console.log("\n qr link : ", operatorQrImageLink);
-  let chain = getHasura();
+  // let chain = getHasura();
 
-  let response = await chain.mutation({
-    update_restaurant_by_pk: [
-      {
-        pk_columns: { id: restaurantId },
-        _set: {
-          operator_qr_image_link: operatorQrImageLink,
-        },
-      },
-      {
-        id: true,
-        operator_deep_link: true,
-        operator_qr_image_link: true,
-      },
-    ],
-  });
-  console.log("response set operator links: ", response);
-  if (response.update_restaurant_by_pk == null) {
-    throw new HttpsError("internal", "restaurant creation error");
-  }
+  // let response = await chain.mutation({
+  //   update_restaurant_by_pk: [
+  //     {
+  //       pk_columns: { id: restaurantId },
+  //       _set: {
+  //         operator_qr_image_link: operatorQrImageLink,
+  //       },
+  //     },
+  //     {
+  //       id: true,
+  //       operator_deep_link: true,
+  //       operator_qr_image_link: true,
+  //     },
+  //   ],
+  // });
+  // console.log("response set operator links: ", response);
+  // if (response.update_restaurant_by_pk == null) {
+  //   throw new HttpsError("internal", "restaurant creation error");
+  // }
 }

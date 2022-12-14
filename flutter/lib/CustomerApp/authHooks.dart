@@ -22,7 +22,6 @@ class AuthHooks {
     await Get.delete<TaxiController>(force: true);
     await Get.delete<RestaurantController>(force: true);
     await Get.delete<BackgroundNotificationsController>(force: true);
-    await Get.delete<HasuraDb>(force: true);
     await Get.delete<MessageController>(force: true);
     await Get.delete<ForegroundNotificationsController>(force: true);
     mezDbgPrint(

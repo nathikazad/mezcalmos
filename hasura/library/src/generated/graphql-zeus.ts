@@ -1209,6 +1209,7 @@ count?: [{	columns?:ValueTypes["delivery_cost_select_column"][],	distinct?:boole
 	delivery_company_id?:true,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:true,
+	/** Just for relationship */
 	delivery_driver_type?:true,
 	id?:true,
 	notification_info_id?:true,
@@ -1317,6 +1318,7 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	delivery_company_id?:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
+	/** Just for relationship */
 	delivery_driver_type?:string,
 	id?:number,
 	notification_info_id?:number,
@@ -1333,6 +1335,7 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	delivery_company_id?:true,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:true,
+	/** Just for relationship */
 	delivery_driver_type?:true,
 	id?:true,
 	notification_info_id?:true,
@@ -1347,6 +1350,7 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	delivery_company_id?:ValueTypes["order_by"],
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:ValueTypes["order_by"],
+	/** Just for relationship */
 	delivery_driver_type?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	notification_info_id?:ValueTypes["order_by"],
@@ -1360,6 +1364,7 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	delivery_company_id?:true,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:true,
+	/** Just for relationship */
 	delivery_driver_type?:true,
 	id?:true,
 	notification_info_id?:true,
@@ -1374,6 +1379,7 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	delivery_company_id?:ValueTypes["order_by"],
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:ValueTypes["order_by"],
+	/** Just for relationship */
 	delivery_driver_type?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	notification_info_id?:ValueTypes["order_by"],
@@ -1431,6 +1437,7 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	delivery_company_id?:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
+	/** Just for relationship */
 	delivery_driver_type?:string,
 	id?:number,
 	notification_info_id?:number,
@@ -1498,6 +1505,7 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	delivery_company_id?:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
+	/** Just for relationship */
 	delivery_driver_type?:string,
 	id?:number,
 	notification_info_id?:number,
@@ -1884,8 +1892,6 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 	actual_arrival_at_pickup_time?:true,
 	actual_delivered_time?:true,
 	actual_package_ready_time?:true,
-	/** An object relationship */
-	app_type?:ValueTypes["topology_app_type"],
 	cancellation_time?:true,
 	/** An object relationship */
 	chat_with_customer?:ValueTypes["chat"],
@@ -2044,7 +2050,6 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	actual_arrival_at_pickup_time?:ValueTypes["timestamptz_comparison_exp"],
 	actual_delivered_time?:ValueTypes["timestamptz_comparison_exp"],
 	actual_package_ready_time?:ValueTypes["timestamptz_comparison_exp"],
-	app_type?:ValueTypes["topology_app_type_bool_exp"],
 	cancellation_time?:ValueTypes["timestamptz_comparison_exp"],
 	chat_with_customer?:ValueTypes["chat_bool_exp"],
 	chat_with_customer_id?:ValueTypes["Int_comparison_exp"],
@@ -2118,7 +2123,6 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	actual_arrival_at_pickup_time?:ValueTypes["timestamptz"],
 	actual_delivered_time?:ValueTypes["timestamptz"],
 	actual_package_ready_time?:ValueTypes["timestamptz"],
-	app_type?:ValueTypes["topology_app_type_obj_rel_insert_input"],
 	cancellation_time?:ValueTypes["timestamptz"],
 	chat_with_customer?:ValueTypes["chat_obj_rel_insert_input"],
 	chat_with_customer_id?:number,
@@ -2362,7 +2366,6 @@ cancelledByServiceProvider */
 	actual_arrival_at_pickup_time?:ValueTypes["order_by"],
 	actual_delivered_time?:ValueTypes["order_by"],
 	actual_package_ready_time?:ValueTypes["order_by"],
-	app_type?:ValueTypes["topology_app_type_order_by"],
 	cancellation_time?:ValueTypes["order_by"],
 	chat_with_customer?:ValueTypes["chat_order_by"],
 	chat_with_customer_id?:ValueTypes["order_by"],
@@ -9928,8 +9931,11 @@ count?: [{	columns?:ValueTypes["saved_location_select_column"][],	distinct?:bool
 };
 	/** columns and relationships of "service_link" */
 ["service_link"]: AliasType<{
+<<<<<<< HEAD
 	customer_deep_link?:true,
 	customer_qr_image_link?:true,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:true,
 	driver_qr_image_link?:true,
 	id?:true,
@@ -9973,8 +9979,11 @@ count?: [{	columns?:ValueTypes["service_link_select_column"][],	distinct?:boolea
 	_and?:ValueTypes["service_link_bool_exp"][],
 	_not?:ValueTypes["service_link_bool_exp"],
 	_or?:ValueTypes["service_link_bool_exp"][],
+<<<<<<< HEAD
 	customer_deep_link?:ValueTypes["String_comparison_exp"],
 	customer_qr_image_link?:ValueTypes["String_comparison_exp"],
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:ValueTypes["String_comparison_exp"],
 	driver_qr_image_link?:ValueTypes["String_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
@@ -9993,8 +10002,11 @@ count?: [{	columns?:ValueTypes["service_link_select_column"][],	distinct?:boolea
 };
 	/** input type for inserting data into table "service_link" */
 ["service_link_insert_input"]: {
+<<<<<<< HEAD
 	customer_deep_link?:string,
 	customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:string,
 	driver_qr_image_link?:string,
 	id?:number,
@@ -10006,8 +10018,11 @@ count?: [{	columns?:ValueTypes["service_link_select_column"][],	distinct?:boolea
 };
 	/** aggregate max on columns */
 ["service_link_max_fields"]: AliasType<{
+<<<<<<< HEAD
 	customer_deep_link?:true,
 	customer_qr_image_link?:true,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:true,
 	driver_qr_image_link?:true,
 	id?:true,
@@ -10019,8 +10034,11 @@ count?: [{	columns?:ValueTypes["service_link_select_column"][],	distinct?:boolea
 }>;
 	/** aggregate min on columns */
 ["service_link_min_fields"]: AliasType<{
+<<<<<<< HEAD
 	customer_deep_link?:true,
 	customer_qr_image_link?:true,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:true,
 	driver_qr_image_link?:true,
 	id?:true,
@@ -10046,8 +10064,11 @@ count?: [{	columns?:ValueTypes["service_link_select_column"][],	distinct?:boolea
 };
 	/** Ordering options when selecting data from "service_link". */
 ["service_link_order_by"]: {
+<<<<<<< HEAD
 	customer_deep_link?:ValueTypes["order_by"],
 	customer_qr_image_link?:ValueTypes["order_by"],
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:ValueTypes["order_by"],
 	driver_qr_image_link?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -10065,8 +10086,11 @@ count?: [{	columns?:ValueTypes["service_link_select_column"][],	distinct?:boolea
 ["service_link_select_column"]:service_link_select_column;
 	/** input type for updating data in table "service_link" */
 ["service_link_set_input"]: {
+<<<<<<< HEAD
 	customer_deep_link?:string,
 	customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:string,
 	driver_qr_image_link?:string,
 	id?:number,
@@ -10102,8 +10126,11 @@ count?: [{	columns?:ValueTypes["service_link_select_column"][],	distinct?:boolea
 };
 	/** Initial value of the column from where the streaming should start */
 ["service_link_stream_cursor_value_input"]: {
+<<<<<<< HEAD
 	customer_deep_link?:string,
 	customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:string,
 	driver_qr_image_link?:string,
 	id?:number,
@@ -11232,12 +11259,6 @@ count?: [{	columns?:ValueTypes["topology_app_type_select_column"][],	distinct?:b
 	returning?:ValueTypes["topology_app_type"],
 		__typename?: true
 }>;
-	/** input type for inserting object relation for remote table "topology.app_type" */
-["topology_app_type_obj_rel_insert_input"]: {
-	data:ValueTypes["topology_app_type_insert_input"],
-	/** upsert condition */
-	on_conflict?:ValueTypes["topology_app_type_on_conflict"]
-};
 	/** on_conflict condition type for table "topology.app_type" */
 ["topology_app_type_on_conflict"]: {
 	constraint:ValueTypes["topology_app_type_constraint"],
@@ -13166,7 +13187,12 @@ the end). throws an error if top level container is not an array */
 			delivery_company_id?:number,
 			/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
+<<<<<<< HEAD
 			delivery_driver_type?:string,
+=======
+			/** Just for relationship */
+	delivery_driver_type?:string,
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 			id?:number,
 			notification_info_id?:number,
 			/** A computed field, executes function "driver_notification_token" */
@@ -13273,6 +13299,7 @@ the end). throws an error if top level container is not an array */
 	delivery_company_id?:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
+	/** Just for relationship */
 	delivery_driver_type?:string,
 	id?:number,
 	notification_info_id?:number,
@@ -13290,7 +13317,12 @@ the end). throws an error if top level container is not an array */
 			delivery_company_id?:number,
 			/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
+<<<<<<< HEAD
 			delivery_driver_type?:string,
+=======
+			/** Just for relationship */
+	delivery_driver_type?:string,
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 			id?:number,
 			notification_info_id?:number,
 			/** awaiting_approval, authorized, banned */
@@ -13303,6 +13335,7 @@ the end). throws an error if top level container is not an array */
 	delivery_company_id?:PartialObjects["order_by"],
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:PartialObjects["order_by"],
+	/** Just for relationship */
 	delivery_driver_type?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	notification_info_id?:PartialObjects["order_by"],
@@ -13317,7 +13350,12 @@ the end). throws an error if top level container is not an array */
 			delivery_company_id?:number,
 			/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
+<<<<<<< HEAD
 			delivery_driver_type?:string,
+=======
+			/** Just for relationship */
+	delivery_driver_type?:string,
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 			id?:number,
 			notification_info_id?:number,
 			/** awaiting_approval, authorized, banned */
@@ -13330,6 +13368,7 @@ the end). throws an error if top level container is not an array */
 	delivery_company_id?:PartialObjects["order_by"],
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:PartialObjects["order_by"],
+	/** Just for relationship */
 	delivery_driver_type?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	notification_info_id?:PartialObjects["order_by"],
@@ -13387,6 +13426,7 @@ the end). throws an error if top level container is not an array */
 	delivery_company_id?:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
+	/** Just for relationship */
 	delivery_driver_type?:string,
 	id?:number,
 	notification_info_id?:number,
@@ -13454,6 +13494,7 @@ the end). throws an error if top level container is not an array */
 	delivery_company_id?:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
+	/** Just for relationship */
 	delivery_driver_type?:string,
 	id?:number,
 	notification_info_id?:number,
@@ -13841,8 +13882,6 @@ the end). throws an error if top level container is not an array */
 			actual_arrival_at_pickup_time?:PartialObjects["timestamptz"],
 			actual_delivered_time?:PartialObjects["timestamptz"],
 			actual_package_ready_time?:PartialObjects["timestamptz"],
-			/** An object relationship */
-	app_type?:PartialObjects["topology_app_type"],
 			cancellation_time?:PartialObjects["timestamptz"],
 			/** An object relationship */
 	chat_with_customer?:PartialObjects["chat"],
@@ -14000,7 +14039,6 @@ cancelledByServiceProvider */
 	actual_arrival_at_pickup_time?:PartialObjects["timestamptz_comparison_exp"],
 	actual_delivered_time?:PartialObjects["timestamptz_comparison_exp"],
 	actual_package_ready_time?:PartialObjects["timestamptz_comparison_exp"],
-	app_type?:PartialObjects["topology_app_type_bool_exp"],
 	cancellation_time?:PartialObjects["timestamptz_comparison_exp"],
 	chat_with_customer?:PartialObjects["chat_bool_exp"],
 	chat_with_customer_id?:PartialObjects["Int_comparison_exp"],
@@ -14074,7 +14112,6 @@ cancelledByServiceProvider */
 	actual_arrival_at_pickup_time?:PartialObjects["timestamptz"],
 	actual_delivered_time?:PartialObjects["timestamptz"],
 	actual_package_ready_time?:PartialObjects["timestamptz"],
-	app_type?:PartialObjects["topology_app_type_obj_rel_insert_input"],
 	cancellation_time?:PartialObjects["timestamptz"],
 	chat_with_customer?:PartialObjects["chat_obj_rel_insert_input"],
 	chat_with_customer_id?:number,
@@ -14318,7 +14355,6 @@ cancelledByServiceProvider */
 	actual_arrival_at_pickup_time?:PartialObjects["order_by"],
 	actual_delivered_time?:PartialObjects["order_by"],
 	actual_package_ready_time?:PartialObjects["order_by"],
-	app_type?:PartialObjects["topology_app_type_order_by"],
 	cancellation_time?:PartialObjects["order_by"],
 	chat_with_customer?:PartialObjects["chat_order_by"],
 	chat_with_customer_id?:PartialObjects["order_by"],
@@ -21365,8 +21401,11 @@ the end). throws an error if top level container is not an array */
 	/** columns and relationships of "service_link" */
 ["service_link"]: {
 		__typename?: "service_link";
+<<<<<<< HEAD
 			customer_deep_link?:string,
 			customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 			driver_deep_link?:string,
 			driver_qr_image_link?:string,
 			id?:number,
@@ -21409,8 +21448,11 @@ the end). throws an error if top level container is not an array */
 	_and?:PartialObjects["service_link_bool_exp"][],
 	_not?:PartialObjects["service_link_bool_exp"],
 	_or?:PartialObjects["service_link_bool_exp"][],
+<<<<<<< HEAD
 	customer_deep_link?:PartialObjects["String_comparison_exp"],
 	customer_qr_image_link?:PartialObjects["String_comparison_exp"],
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:PartialObjects["String_comparison_exp"],
 	driver_qr_image_link?:PartialObjects["String_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
@@ -21429,8 +21471,11 @@ the end). throws an error if top level container is not an array */
 },
 	/** input type for inserting data into table "service_link" */
 ["service_link_insert_input"]: {
+<<<<<<< HEAD
 	customer_deep_link?:string,
 	customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:string,
 	driver_qr_image_link?:string,
 	id?:number,
@@ -21443,8 +21488,11 @@ the end). throws an error if top level container is not an array */
 	/** aggregate max on columns */
 ["service_link_max_fields"]: {
 		__typename?: "service_link_max_fields";
+<<<<<<< HEAD
 			customer_deep_link?:string,
 			customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 			driver_deep_link?:string,
 			driver_qr_image_link?:string,
 			id?:number,
@@ -21456,8 +21504,11 @@ the end). throws an error if top level container is not an array */
 	/** aggregate min on columns */
 ["service_link_min_fields"]: {
 		__typename?: "service_link_min_fields";
+<<<<<<< HEAD
 			customer_deep_link?:string,
 			customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 			driver_deep_link?:string,
 			driver_qr_image_link?:string,
 			id?:number,
@@ -21482,8 +21533,11 @@ the end). throws an error if top level container is not an array */
 },
 	/** Ordering options when selecting data from "service_link". */
 ["service_link_order_by"]: {
+<<<<<<< HEAD
 	customer_deep_link?:PartialObjects["order_by"],
 	customer_qr_image_link?:PartialObjects["order_by"],
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:PartialObjects["order_by"],
 	driver_qr_image_link?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -21501,8 +21555,11 @@ the end). throws an error if top level container is not an array */
 ["service_link_select_column"]:service_link_select_column,
 	/** input type for updating data in table "service_link" */
 ["service_link_set_input"]: {
+<<<<<<< HEAD
 	customer_deep_link?:string,
 	customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:string,
 	driver_qr_image_link?:string,
 	id?:number,
@@ -21538,8 +21595,11 @@ the end). throws an error if top level container is not an array */
 },
 	/** Initial value of the column from where the streaming should start */
 ["service_link_stream_cursor_value_input"]: {
+<<<<<<< HEAD
 	customer_deep_link?:string,
 	customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:string,
 	driver_qr_image_link?:string,
 	id?:number,
@@ -22358,12 +22418,6 @@ the end). throws an error if top level container is not an array */
 			/** data from the rows affected by the mutation */
 	returning?:PartialObjects["topology_app_type"][]
 	},
-	/** input type for inserting object relation for remote table "topology.app_type" */
-["topology_app_type_obj_rel_insert_input"]: {
-	data:PartialObjects["topology_app_type_insert_input"],
-	/** upsert condition */
-	on_conflict?:PartialObjects["topology_app_type_on_conflict"]
-},
 	/** on_conflict condition type for table "topology.app_type" */
 ["topology_app_type_on_conflict"]: {
 	constraint:PartialObjects["topology_app_type_constraint"],
@@ -24517,6 +24571,7 @@ export type delivery_driver = {
 	delivery_company_id:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type:string,
+	/** Just for relationship */
 	delivery_driver_type:string,
 	id:number,
 	notification_info_id?:number,
@@ -24638,6 +24693,7 @@ export type delivery_driver_insert_input = {
 	delivery_company_id?:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
+	/** Just for relationship */
 	delivery_driver_type?:string,
 	id?:number,
 	notification_info_id?:number,
@@ -24656,6 +24712,7 @@ export type delivery_driver_max_fields = {
 	delivery_company_id?:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
+	/** Just for relationship */
 	delivery_driver_type?:string,
 	id?:number,
 	notification_info_id?:number,
@@ -24670,6 +24727,7 @@ export type delivery_driver_max_order_by = {
 	delivery_company_id?:order_by,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:order_by,
+	/** Just for relationship */
 	delivery_driver_type?:order_by,
 	id?:order_by,
 	notification_info_id?:order_by,
@@ -24685,6 +24743,7 @@ export type delivery_driver_min_fields = {
 	delivery_company_id?:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
+	/** Just for relationship */
 	delivery_driver_type?:string,
 	id?:number,
 	notification_info_id?:number,
@@ -24699,6 +24758,7 @@ export type delivery_driver_min_order_by = {
 	delivery_company_id?:order_by,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:order_by,
+	/** Just for relationship */
 	delivery_driver_type?:order_by,
 	id?:order_by,
 	notification_info_id?:order_by,
@@ -24774,6 +24834,7 @@ export type delivery_driver_set_input = {
 	delivery_company_id?:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
+	/** Just for relationship */
 	delivery_driver_type?:string,
 	id?:number,
 	notification_info_id?:number,
@@ -24849,6 +24910,7 @@ export type delivery_driver_stream_cursor_value_input = {
 	delivery_company_id?:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
+	/** Just for relationship */
 	delivery_driver_type?:string,
 	id?:number,
 	notification_info_id?:number,
@@ -25318,8 +25380,6 @@ export type delivery_order = {
 	actual_arrival_at_pickup_time?:timestamptz,
 	actual_delivered_time?:timestamptz,
 	actual_package_ready_time?:timestamptz,
-	/** An object relationship */
-	app_type?:topology_app_type,
 	cancellation_time?:timestamptz,
 	/** An object relationship */
 	chat_with_customer:chat,
@@ -25484,7 +25544,6 @@ export type delivery_order_bool_exp = {
 	actual_arrival_at_pickup_time?:timestamptz_comparison_exp,
 	actual_delivered_time?:timestamptz_comparison_exp,
 	actual_package_ready_time?:timestamptz_comparison_exp,
-	app_type?:topology_app_type_bool_exp,
 	cancellation_time?:timestamptz_comparison_exp,
 	chat_with_customer?:chat_bool_exp,
 	chat_with_customer_id?:Int_comparison_exp,
@@ -25563,7 +25622,6 @@ export type delivery_order_insert_input = {
 	actual_arrival_at_pickup_time?:timestamptz,
 	actual_delivered_time?:timestamptz,
 	actual_package_ready_time?:timestamptz,
-	app_type?:topology_app_type_obj_rel_insert_input,
 	cancellation_time?:timestamptz,
 	chat_with_customer?:chat_obj_rel_insert_input,
 	chat_with_customer_id?:number,
@@ -25815,7 +25873,6 @@ export type delivery_order_order_by = {
 	actual_arrival_at_pickup_time?:order_by,
 	actual_delivered_time?:order_by,
 	actual_package_ready_time?:order_by,
-	app_type?:topology_app_type_order_by,
 	cancellation_time?:order_by,
 	chat_with_customer?:chat_order_by,
 	chat_with_customer_id?:order_by,
@@ -33961,8 +34018,11 @@ export type saved_location_variance_order_by = {
 /** columns and relationships of "service_link" */
 export type service_link = {
 	__typename?: "service_link",
+<<<<<<< HEAD
 	customer_deep_link?:string,
 	customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:string,
 	driver_qr_image_link?:string,
 	id:number,
@@ -34009,8 +34069,11 @@ export type service_link_bool_exp = {
 		_and?:service_link_bool_exp[],
 	_not?:service_link_bool_exp,
 	_or?:service_link_bool_exp[],
+<<<<<<< HEAD
 	customer_deep_link?:String_comparison_exp,
 	customer_qr_image_link?:String_comparison_exp,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:String_comparison_exp,
 	driver_qr_image_link?:String_comparison_exp,
 	id?:Int_comparison_exp,
@@ -34035,9 +34098,13 @@ export type service_link_inc_input = {
 
 /** input type for inserting data into table "service_link" */
 export type service_link_insert_input = {
+<<<<<<< HEAD
 		customer_deep_link?:string,
 	customer_qr_image_link?:string,
 	driver_deep_link?:string,
+=======
+		driver_deep_link?:string,
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_qr_image_link?:string,
 	id?:number,
 	operator_deep_link?:string,
@@ -34050,8 +34117,11 @@ export type service_link_insert_input = {
 /** aggregate max on columns */
 export type service_link_max_fields = {
 	__typename?: "service_link_max_fields",
+<<<<<<< HEAD
 	customer_deep_link?:string,
 	customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:string,
 	driver_qr_image_link?:string,
 	id?:number,
@@ -34064,8 +34134,11 @@ export type service_link_max_fields = {
 /** aggregate min on columns */
 export type service_link_min_fields = {
 	__typename?: "service_link_min_fields",
+<<<<<<< HEAD
 	customer_deep_link?:string,
 	customer_qr_image_link?:string,
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link?:string,
 	driver_qr_image_link?:string,
 	id?:number,
@@ -34093,9 +34166,13 @@ export type service_link_on_conflict = {
 
 /** Ordering options when selecting data from "service_link". */
 export type service_link_order_by = {
+<<<<<<< HEAD
 		customer_deep_link?:order_by,
 	customer_qr_image_link?:order_by,
 	driver_deep_link?:order_by,
+=======
+		driver_deep_link?:order_by,
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_qr_image_link?:order_by,
 	id?:order_by,
 	operator_deep_link?:order_by,
@@ -34112,8 +34189,11 @@ export type service_link_pk_columns_input = {
 
 /** select columns of table "service_link" */
 export enum service_link_select_column {
+<<<<<<< HEAD
 	customer_deep_link = "customer_deep_link",
 	customer_qr_image_link = "customer_qr_image_link",
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link = "driver_deep_link",
 	driver_qr_image_link = "driver_qr_image_link",
 	id = "id",
@@ -34125,9 +34205,13 @@ export enum service_link_select_column {
 
 /** input type for updating data in table "service_link" */
 export type service_link_set_input = {
+<<<<<<< HEAD
 		customer_deep_link?:string,
 	customer_qr_image_link?:string,
 	driver_deep_link?:string,
+=======
+		driver_deep_link?:string,
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_qr_image_link?:string,
 	id?:number,
 	operator_deep_link?:string,
@@ -34167,9 +34251,13 @@ export type service_link_stream_cursor_input = {
 
 /** Initial value of the column from where the streaming should start */
 export type service_link_stream_cursor_value_input = {
+<<<<<<< HEAD
 		customer_deep_link?:string,
 	customer_qr_image_link?:string,
 	driver_deep_link?:string,
+=======
+		driver_deep_link?:string,
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_qr_image_link?:string,
 	id?:number,
 	operator_deep_link?:string,
@@ -34187,8 +34275,11 @@ export type service_link_sum_fields = {
 
 /** update columns of table "service_link" */
 export enum service_link_update_column {
+<<<<<<< HEAD
 	customer_deep_link = "customer_deep_link",
 	customer_qr_image_link = "customer_qr_image_link",
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 	driver_deep_link = "driver_deep_link",
 	driver_qr_image_link = "driver_qr_image_link",
 	id = "id",
@@ -35113,13 +35204,6 @@ export type topology_app_type_mutation_response = {
 	affected_rows:number,
 	/** data from the rows affected by the mutation */
 	returning:topology_app_type[]
-}
-
-/** input type for inserting object relation for remote table "topology.app_type" */
-export type topology_app_type_obj_rel_insert_input = {
-		data:topology_app_type_insert_input,
-	/** upsert condition */
-	on_conflict?:topology_app_type_on_conflict
 }
 
 /** on_conflict condition type for table "topology.app_type" */
@@ -40350,12 +40434,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		app_type:{
-			type:"topology_app_type_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		cancellation_time:{
 			type:"timestamptz_comparison_exp",
 			array:false,
@@ -40735,12 +40813,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		actual_package_ready_time:{
 			type:"timestamptz",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		app_type:{
-			type:"topology_app_type_obj_rel_insert_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -41435,12 +41507,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		actual_package_ready_time:{
 			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		app_type:{
-			type:"topology_app_type_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -63305,6 +63371,7 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:true
 		},
+<<<<<<< HEAD
 		customer_deep_link:{
 			type:"String_comparison_exp",
 			array:false,
@@ -63317,6 +63384,8 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 		driver_deep_link:{
 			type:"String_comparison_exp",
 			array:false,
@@ -63382,6 +63451,7 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	service_link_insert_input:{
+<<<<<<< HEAD
 		customer_deep_link:{
 			type:"String",
 			array:false,
@@ -63394,6 +63464,8 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 		driver_deep_link:{
 			type:"String",
 			array:false,
@@ -63464,6 +63536,7 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	service_link_order_by:{
+<<<<<<< HEAD
 		customer_deep_link:{
 			type:"order_by",
 			array:false,
@@ -63476,6 +63549,8 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 		driver_deep_link:{
 			type:"order_by",
 			array:false,
@@ -63535,6 +63610,7 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	service_link_select_column: "enum",
 	service_link_set_input:{
+<<<<<<< HEAD
 		customer_deep_link:{
 			type:"String",
 			array:false,
@@ -63547,6 +63623,8 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 		driver_deep_link:{
 			type:"String",
 			array:false,
@@ -63605,6 +63683,7 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	service_link_stream_cursor_value_input:{
+<<<<<<< HEAD
 		customer_deep_link:{
 			type:"String",
 			array:false,
@@ -63617,6 +63696,8 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 		driver_deep_link:{
 			type:"String",
 			array:false,
@@ -67811,20 +67892,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
-	topology_app_type_obj_rel_insert_input:{
-		data:{
-			type:"topology_app_type_insert_input",
-			array:false,
-			arrayRequired:false,
-			required:true
-		},
-		on_conflict:{
-			type:"topology_app_type_on_conflict",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
 	topology_app_type_on_conflict:{
 		constraint:{
 			type:"topology_app_type_constraint",
@@ -69795,7 +69862,6 @@ export const ReturnTypes: Record<string,any> = {
 		actual_arrival_at_pickup_time:"timestamptz",
 		actual_delivered_time:"timestamptz",
 		actual_package_ready_time:"timestamptz",
-		app_type:"topology_app_type",
 		cancellation_time:"timestamptz",
 		chat_with_customer:"chat",
 		chat_with_customer_id:"Int",
@@ -72324,8 +72390,11 @@ export const ReturnTypes: Record<string,any> = {
 		id:"Float"
 	},
 	service_link:{
+<<<<<<< HEAD
 		customer_deep_link:"String",
 		customer_qr_image_link:"String",
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 		driver_deep_link:"String",
 		driver_qr_image_link:"String",
 		id:"Int",
@@ -72357,8 +72426,11 @@ export const ReturnTypes: Record<string,any> = {
 		service_provider_id:"Float"
 	},
 	service_link_max_fields:{
+<<<<<<< HEAD
 		customer_deep_link:"String",
 		customer_qr_image_link:"String",
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 		driver_deep_link:"String",
 		driver_qr_image_link:"String",
 		id:"Int",
@@ -72368,8 +72440,11 @@ export const ReturnTypes: Record<string,any> = {
 		service_provider_type:"String"
 	},
 	service_link_min_fields:{
+<<<<<<< HEAD
 		customer_deep_link:"String",
 		customer_qr_image_link:"String",
+=======
+>>>>>>> 85af2dc22b57d071d09a0f89fd3d44e376f8ec4a
 		driver_deep_link:"String",
 		driver_qr_image_link:"String",
 		id:"Int",
