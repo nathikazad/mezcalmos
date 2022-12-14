@@ -90,6 +90,7 @@ Future<Cart?> getCustomerCart({required int customerId}) async {
       cart.addItem(
         CartItem(
           Item(
+              id: cartitem.restaurant_item.id,
               name: {
                 cartitem.restaurant_item.name.translations.first.language_id
                         .toLanguageType():

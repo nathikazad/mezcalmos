@@ -2477,16 +2477,8 @@ type delivery_operator {
   delivery_company_id: Int!
   delivery_driver_type: String!
   id: Int!
-
-  """
-  A computed field, executes function "deliop_notification_token"
-  """
-  notification_token: String
   owner: Boolean!
   status: String!
-
-  """An object relationship"""
-  user: user!
   user_id: Int!
 }
 
@@ -2570,10 +2562,8 @@ input delivery_operator_bool_exp {
   delivery_company_id: Int_comparison_exp
   delivery_driver_type: String_comparison_exp
   id: Int_comparison_exp
-  notification_token: String_comparison_exp
   owner: Boolean_comparison_exp
   status: String_comparison_exp
-  user: user_bool_exp
   user_id: Int_comparison_exp
 }
 
@@ -2607,7 +2597,6 @@ input delivery_operator_insert_input {
   id: Int
   owner: Boolean
   status: String
-  user: user_obj_rel_insert_input
   user_id: Int
 }
 
@@ -2692,10 +2681,8 @@ input delivery_operator_order_by {
   delivery_company_id: order_by
   delivery_driver_type: order_by
   id: order_by
-  notification_token: order_by
   owner: order_by
   status: order_by
-  user: user_order_by
   user_id: order_by
 }
 
@@ -20673,15 +20660,6 @@ columns and relationships of "user"
 """
 type user {
   big_image: String
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-
-  """An object relationship"""
-  customer: customer
->>>>>>> ff8a50b2cf6bf3029c6e93ad2478b81b4faded9e
->>>>>>> 5ba7f741feb7b590017cd7905e81b80a35048543
   deleted: Boolean!
   email: String
   firebase_id: String!
@@ -20730,13 +20708,6 @@ input user_bool_exp {
   _not: user_bool_exp
   _or: [user_bool_exp!]
   big_image: String_comparison_exp
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-  customer: customer_bool_exp
->>>>>>> ff8a50b2cf6bf3029c6e93ad2478b81b4faded9e
->>>>>>> 5ba7f741feb7b590017cd7905e81b80a35048543
   deleted: Boolean_comparison_exp
   email: String_comparison_exp
   firebase_id: String_comparison_exp
@@ -20769,13 +20740,6 @@ input type for inserting data into table "user"
 """
 input user_insert_input {
   big_image: String
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-  customer: customer_obj_rel_insert_input
->>>>>>> ff8a50b2cf6bf3029c6e93ad2478b81b4faded9e
->>>>>>> 5ba7f741feb7b590017cd7905e81b80a35048543
   deleted: Boolean
   email: String
   firebase_id: String
@@ -21004,3 +20968,4 @@ type user_var_samp_fields {
 type user_variance_fields {
   id: Float
 }
+

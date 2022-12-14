@@ -3131,6 +3131,13 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
                     directives: [],
                     selectionSet: SelectionSetNode(selections: [
                       FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
                         name: NameNode(value: 'item_type'),
                         alias: null,
                         arguments: [],
@@ -4758,6 +4765,7 @@ class _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items<TRes>
 
 class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item {
   Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item({
+    required this.id,
     required this.item_type,
     required this.name,
     this.description,
@@ -4774,6 +4782,7 @@ class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item {
 
   factory Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$item_type = json['item_type'];
     final l$name = json['name'];
     final l$description = json['description'];
@@ -4787,6 +4796,7 @@ class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item {
     final l$cost = json['cost'];
     final l$$__typename = json['__typename'];
     return Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item(
+      id: (l$id as int),
       item_type: (l$item_type as String),
       name: Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$name
           .fromJson((l$name as Map<String, dynamic>)),
@@ -4805,6 +4815,8 @@ class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final int id;
 
   final String item_type;
 
@@ -4834,6 +4846,8 @@ class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$item_type = item_type;
     _resultData['item_type'] = l$item_type;
     final l$name = name;
@@ -4863,6 +4877,7 @@ class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item {
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$item_type = item_type;
     final l$name = name;
     final l$description = description;
@@ -4876,6 +4891,7 @@ class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item {
     final l$cost = cost;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$item_type,
       l$name,
       l$description,
@@ -4899,6 +4915,11 @@ class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item {
     if (!(other
             is Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$item_type = item_type;
@@ -4990,6 +5011,7 @@ abstract class CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaura
       _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item;
 
   TRes call({
+    int? id,
     String? item_type,
     Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$name? name,
     Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$description?
@@ -5029,6 +5051,7 @@ class _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_i
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? item_type = _undefined,
     Object? name = _undefined,
     Object? description = _undefined,
@@ -5043,6 +5066,7 @@ class _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_i
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         item_type: item_type == _undefined || item_type == null
             ? _instance.item_type
             : (item_type as String),
@@ -5111,6 +5135,7 @@ class _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaura
   TRes _res;
 
   call({
+    int? id,
     String? item_type,
     Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$name? name,
     Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$description?

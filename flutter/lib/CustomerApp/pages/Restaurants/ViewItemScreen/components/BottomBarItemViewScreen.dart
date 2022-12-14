@@ -153,9 +153,10 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                                   restaurant_id: widget.currentRestaurantId!,
                                 );
                               }
+                              await restaurantCartController.fetchCart();
                               final CartItem? _itemCheck =
                                   restaurantCartController.cart.value.cartItems
-                                      .firstWhereOrNull((element) =>
+                                      .firstWhereOrNull((CartItem element) =>
                                           element.item.id ==
                                           widget.cartItem.value?.item.id);
                               if (_itemCheck != null) {
@@ -219,10 +220,10 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                               //       restaurant_id: restaurantCartController
                               //           .associatedRestaurant!.info.hasuraId);
                               // }
-                              final int? item_id = await add_item_to_cart(
+                              final int? itemId = await add_item_to_cart(
                                 cartItem: widget.cartItem.value!,
                               );
-                              widget.cartItem.value?.idInCart = item_id;
+                              widget.cartItem.value?.idInCart = itemId;
                               widget.cartItem.refresh();
                               await MezRouter.offNamed<void>(kCartRoute);
                             }

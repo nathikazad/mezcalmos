@@ -80,18 +80,13 @@ class RestaurantController extends GetxController {
     checkCartPeriod();
   }
 
-  void fetchCart() {
-    hsCart
-        .getCustomerCart(
+  Future<void> fetchCart() async {
+    final Cart? value = await hsCart.getCustomerCart(
       customerId: Get.find<AuthController>().user!.hasuraId,
-    )
-        .then((Cart? value) {
-      mezDbgPrint(
-          "[cc] Cart Controller Fetching cart  ===> ${value?.toFirebaseFormattedJson()}");
-      cart.value = value ?? Cart();
-      associatedRestaurant = value?.restaurant;
-      cart.refresh();
-    });
+    );
+    cart.value = value ?? Cart();
+    associatedRestaurant = value?.restaurant;
+    cart.refresh();
   }
 
   Future<Restaurant?> getAssociatedRestaurant(int restaurantId) async {

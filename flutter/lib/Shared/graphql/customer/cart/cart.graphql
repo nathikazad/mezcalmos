@@ -81,6 +81,7 @@ query getCustomerCart($customer_id: Int!) {
       }
       items {
         restaurant_item {
+          id
           item_type
           name {
             translations {
