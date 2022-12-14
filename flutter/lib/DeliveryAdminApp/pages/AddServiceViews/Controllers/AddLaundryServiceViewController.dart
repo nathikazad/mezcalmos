@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 enum ServiceContact { Phone, Email }
 
-enum ServiceType { Laundry, Restaurant }
+// enum ServiceProviderType { Laundry, Restaurant }
 
 class AddServiceViewController {
   // instances //
@@ -26,10 +27,10 @@ class AddServiceViewController {
   final TextEditingController name = TextEditingController();
 
   Rx<ServiceContact> serviceContact = Rx(ServiceContact.Email);
-  Rx<ServiceType> serviceType = Rx(ServiceType.Laundry);
+  Rx<ServiceProviderType> serviceType = Rx(ServiceProviderType.Laundry);
 
   // init //
-  void init({required ServiceType serviceType}) {
+  void init({required ServiceProviderType serviceType}) {
     phoneCountry.text = "+52";
     this.serviceType.value = serviceType;
   }
@@ -91,7 +92,7 @@ class AddServiceViewController {
   }
 
   Future<void> saveService() async {
-    if (serviceType == ServiceType.Laundry) {
+    if (serviceType == ServiceProviderType.Laundry) {
       await _createLaundry();
     } else {
       await _createRestaurant();

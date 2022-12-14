@@ -220,6 +220,7 @@ Future<Restaurant> update_restaurant_info(
                     restaurant.info.location.position.latitude!,
                     restaurant.info.location.position.longitude!,
                   ),
+                  description_id: restaurant.info.descriptionId,
                   location_text: restaurant.info.location.address,
                   open_status:
                       restaurant.state.status.toFirebaseFormatString()))));
@@ -266,7 +267,7 @@ Future<bool?> switch_restaurant_self_delivery(
     ),
   );
   if (response.parsedData?.update_restaurant_by_pk == null) {
-    throw Exception("🚨🚨🚨 Hasura mutation exception =>${response.exception}");
+    throw Exception("🚨🚨🚨 Hasura mut exception =>${response.exception}");
   } else {
     return true;
   }
@@ -283,13 +284,15 @@ Future<double?> get_restaurant_review_average(
           restaurantId: restaurantId),
     ),
   );
-  final double? data = response
-      .parsedData?.restaurant_by_pk!.reviews_aggregate.aggregate?.avg!.rating;
+  final Query$get_restaurant_review_average$restaurant_by_pk$reviews_aggregate$aggregate$avg?
+      data =
+      response.parsedData?.restaurant_by_pk!.reviews_aggregate.aggregate?.avg;
 
   if (data == null) {
-    throw Exception("🚨🚨🚨 Hasura mutation exception =>${response.exception}");
+    throw Exception(
+        "🚨🚨🚨 get_restaurant_review_average Hasura querry exception =>${response.exception}");
   } else {
-    return data;
+    return data.rating;
   }
 }
 

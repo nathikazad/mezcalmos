@@ -59,15 +59,6 @@ class ROpCreateRestuarantViewController {
       "name": restaurantName.text,
       "image": restaurantImage.value,
       "location": restaurantLocation.value?.toFirebaseFormattedJson(),
-      "schedule": {
-        "friday": {"from": "8:00", "isOpen": true, "to": "20:00"},
-        "monday": {"from": "8:00", "isOpen": true, "to": "20:00"},
-        "saturday": {"from": "8:00", "isOpen": true, "to": "19:00"},
-        "sunday": {"from": "8:00", "isOpen": true, "to": "16:00"},
-        "thursday": {"from": "8:00", "isOpen": true, "to": "20:00"},
-        "tuesday": {"from": "8:00", "isOpen": true, "to": "20:00"},
-        "wednesday": {"from": "8:00", "isOpen": true, "to": "20:00"}
-      },
     };
   }
 
@@ -84,8 +75,8 @@ class ROpCreateRestuarantViewController {
       mezDbgPrint("Response : ${response.data}");
 
       return ServerResponse.fromJson(response.data);
-    } catch (e) {
-      mezDbgPrint("Errrooooooooor =======> $e");
+    } catch (e, stk) {
+      mezDbgPrint("Errrooooooooor =======> $e,$stk");
       return ServerResponse(ResponseStatus.Error,
           errorMessage: "Server Error", errorCode: "serverError");
     }

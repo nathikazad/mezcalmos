@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
@@ -14,6 +15,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -48,6 +50,8 @@ class ROpEditInfoController {
   RxDouble cuurentPage = RxDouble(0);
 // LATE VARS
   late int restaurantId;
+
+  int? newDescId;
 // INIT //
 
   Future<void> init({
@@ -86,25 +90,30 @@ class ROpEditInfoController {
   }
 
   Future<void> updateRestaurantInfo() async {
-    if (_updatePrDesc() || _updateScDesc()) {
-      mezDbgPrint(
-          "Updating restuarnt primary description .....=>${restaurantNameTxt.text}");
-      _contructDesc().forEach((LanguageType key, String value) async {
-        await update_translation(
-            langType: key,
-            value: value,
-            translationId: restaurant.value!.info.descriptionId!);
-      });
+    if (!fd.mapEquals(restaurant.value!.info.description, _contructDesc())) {
+      if (restaurant.value!.info.descriptionId != null) {
+        _contructDesc().forEach((LanguageType key, String value) {
+          update_translation(
+              langType: key,
+              value: value,
+              translationId: restaurant.value!.info.descriptionId!);
+        });
+      } else {
+        newDescId = await insert_translation(
+            translation: _contructDesc(),
+            serviceType: ServiceProviderType.Restaurant,
+            serviceId: restaurantId);
+      }
     }
     await update_restaurant_info(
         id: restaurantId,
         restaurant: restaurant.value!.copyWith(
           primaryLanguage: primaryLang.value,
           userInfo: restaurant.value!.info.copyWith(
-            name: restaurantNameTxt.text,
-            location: newLocation.value,
-            image: newImageUrl.value,
-          ),
+              name: restaurantNameTxt.text,
+              location: newLocation.value,
+              image: newImageUrl.value,
+              descId: newDescId),
         ));
   }
 
@@ -190,12 +199,8 @@ class ROpEditInfoController {
 
   LanguageMap _contructDesc() {
     return {
-      primaryLang.value!: _updatePrDesc()
-          ? prRestaurantDescTxt.text
-          : restaurant.value!.info.description![primaryLang]!,
-      secondaryLang.value!: _updateScDesc()
-          ? scRestaurantDescTxt.text
-          : restaurant.value!.info.description![secondaryLang]!,
+      primaryLang.value!: prRestaurantDescTxt.text,
+      secondaryLang.value!: scRestaurantDescTxt.text
     };
   }
 

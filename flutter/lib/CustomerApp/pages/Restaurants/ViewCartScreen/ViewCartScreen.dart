@@ -11,8 +11,6 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
-import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -21,7 +19,6 @@ import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class ViewCartScreen extends StatefulWidget {
   @override
@@ -57,9 +54,9 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
     if (Get.find<CustomerAuthController>().customer?.savedCards == null)
       savedCardChoice =
-          Get.find<CustomerAuthController>().customer!.savedCards.first;
+          Get.find<CustomerAuthController>().customer?.savedCards.first;
     orderToLocation =
-        Get.find<CustomerAuthController>().customer!.defaultLocation?.location;
+        Get.find<CustomerAuthController>().customer?.defaultLocation?.location;
     if (orderToLocation != null) {
       _restaurantController.cart.value.toLocation = orderToLocation;
     }
