@@ -1207,6 +1207,1508 @@ class _CopyWithStubImpl$Mutation$removeItemFromCart$delete_restaurant_cart_item_
       _res;
 }
 
+class Variables$Mutation$set_cart_restaurant_id {
+  factory Variables$Mutation$set_cart_restaurant_id({
+    required int restaurant_id,
+    required int customer_id,
+  }) =>
+      Variables$Mutation$set_cart_restaurant_id._({
+        r'restaurant_id': restaurant_id,
+        r'customer_id': customer_id,
+      });
+
+  Variables$Mutation$set_cart_restaurant_id._(this._$data);
+
+  factory Variables$Mutation$set_cart_restaurant_id.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$restaurant_id = data['restaurant_id'];
+    result$data['restaurant_id'] = (l$restaurant_id as int);
+    final l$customer_id = data['customer_id'];
+    result$data['customer_id'] = (l$customer_id as int);
+    return Variables$Mutation$set_cart_restaurant_id._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get restaurant_id => (_$data['restaurant_id'] as int);
+  int get customer_id => (_$data['customer_id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$restaurant_id = restaurant_id;
+    result$data['restaurant_id'] = l$restaurant_id;
+    final l$customer_id = customer_id;
+    result$data['customer_id'] = l$customer_id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$set_cart_restaurant_id<
+          Variables$Mutation$set_cart_restaurant_id>
+      get copyWith => CopyWith$Variables$Mutation$set_cart_restaurant_id(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$set_cart_restaurant_id) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$restaurant_id = restaurant_id;
+    final lOther$restaurant_id = other.restaurant_id;
+    if (l$restaurant_id != lOther$restaurant_id) {
+      return false;
+    }
+    final l$customer_id = customer_id;
+    final lOther$customer_id = other.customer_id;
+    if (l$customer_id != lOther$customer_id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$restaurant_id = restaurant_id;
+    final l$customer_id = customer_id;
+    return Object.hashAll([
+      l$restaurant_id,
+      l$customer_id,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$set_cart_restaurant_id<TRes> {
+  factory CopyWith$Variables$Mutation$set_cart_restaurant_id(
+    Variables$Mutation$set_cart_restaurant_id instance,
+    TRes Function(Variables$Mutation$set_cart_restaurant_id) then,
+  ) = _CopyWithImpl$Variables$Mutation$set_cart_restaurant_id;
+
+  factory CopyWith$Variables$Mutation$set_cart_restaurant_id.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$set_cart_restaurant_id;
+
+  TRes call({
+    int? restaurant_id,
+    int? customer_id,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$set_cart_restaurant_id<TRes>
+    implements CopyWith$Variables$Mutation$set_cart_restaurant_id<TRes> {
+  _CopyWithImpl$Variables$Mutation$set_cart_restaurant_id(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$set_cart_restaurant_id _instance;
+
+  final TRes Function(Variables$Mutation$set_cart_restaurant_id) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? restaurant_id = _undefined,
+    Object? customer_id = _undefined,
+  }) =>
+      _then(Variables$Mutation$set_cart_restaurant_id._({
+        ..._instance._$data,
+        if (restaurant_id != _undefined && restaurant_id != null)
+          'restaurant_id': (restaurant_id as int),
+        if (customer_id != _undefined && customer_id != null)
+          'customer_id': (customer_id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$set_cart_restaurant_id<TRes>
+    implements CopyWith$Variables$Mutation$set_cart_restaurant_id<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$set_cart_restaurant_id(this._res);
+
+  TRes _res;
+
+  call({
+    int? restaurant_id,
+    int? customer_id,
+  }) =>
+      _res;
+}
+
+class Mutation$set_cart_restaurant_id {
+  Mutation$set_cart_restaurant_id({
+    this.update_restaurant_cart_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$set_cart_restaurant_id.fromJson(Map<String, dynamic> json) {
+    final l$update_restaurant_cart_by_pk = json['update_restaurant_cart_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$set_cart_restaurant_id(
+      update_restaurant_cart_by_pk: l$update_restaurant_cart_by_pk == null
+          ? null
+          : Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk
+              .fromJson(
+                  (l$update_restaurant_cart_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk?
+      update_restaurant_cart_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_restaurant_cart_by_pk = update_restaurant_cart_by_pk;
+    _resultData['update_restaurant_cart_by_pk'] =
+        l$update_restaurant_cart_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_restaurant_cart_by_pk = update_restaurant_cart_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_restaurant_cart_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$set_cart_restaurant_id) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_restaurant_cart_by_pk = update_restaurant_cart_by_pk;
+    final lOther$update_restaurant_cart_by_pk =
+        other.update_restaurant_cart_by_pk;
+    if (l$update_restaurant_cart_by_pk != lOther$update_restaurant_cart_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$set_cart_restaurant_id
+    on Mutation$set_cart_restaurant_id {
+  CopyWith$Mutation$set_cart_restaurant_id<Mutation$set_cart_restaurant_id>
+      get copyWith => CopyWith$Mutation$set_cart_restaurant_id(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$set_cart_restaurant_id<TRes> {
+  factory CopyWith$Mutation$set_cart_restaurant_id(
+    Mutation$set_cart_restaurant_id instance,
+    TRes Function(Mutation$set_cart_restaurant_id) then,
+  ) = _CopyWithImpl$Mutation$set_cart_restaurant_id;
+
+  factory CopyWith$Mutation$set_cart_restaurant_id.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$set_cart_restaurant_id;
+
+  TRes call({
+    Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk?
+        update_restaurant_cart_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk<TRes>
+      get update_restaurant_cart_by_pk;
+}
+
+class _CopyWithImpl$Mutation$set_cart_restaurant_id<TRes>
+    implements CopyWith$Mutation$set_cart_restaurant_id<TRes> {
+  _CopyWithImpl$Mutation$set_cart_restaurant_id(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$set_cart_restaurant_id _instance;
+
+  final TRes Function(Mutation$set_cart_restaurant_id) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_restaurant_cart_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$set_cart_restaurant_id(
+        update_restaurant_cart_by_pk: update_restaurant_cart_by_pk == _undefined
+            ? _instance.update_restaurant_cart_by_pk
+            : (update_restaurant_cart_by_pk
+                as Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk<TRes>
+      get update_restaurant_cart_by_pk {
+    final local$update_restaurant_cart_by_pk =
+        _instance.update_restaurant_cart_by_pk;
+    return local$update_restaurant_cart_by_pk == null
+        ? CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk(
+            local$update_restaurant_cart_by_pk,
+            (e) => call(update_restaurant_cart_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$set_cart_restaurant_id<TRes>
+    implements CopyWith$Mutation$set_cart_restaurant_id<TRes> {
+  _CopyWithStubImpl$Mutation$set_cart_restaurant_id(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk?
+        update_restaurant_cart_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk<TRes>
+      get update_restaurant_cart_by_pk =>
+          CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationset_cart_restaurant_id = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'set_cart_restaurant_id'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'restaurant_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'customer_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_restaurant_cart_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'customer_id'),
+                value: VariableNode(name: NameNode(value: 'customer_id')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'restaurant_id'),
+                value: VariableNode(name: NameNode(value: 'restaurant_id')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'restaurant'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'firebase_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'language_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'description_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'location_gps'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'location_text'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'self_delivery'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'schedule'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'description'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'translations'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'language_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'value'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'approved'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'open_status'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$set_cart_restaurant_id _parserFn$Mutation$set_cart_restaurant_id(
+        Map<String, dynamic> data) =>
+    Mutation$set_cart_restaurant_id.fromJson(data);
+typedef OnMutationCompleted$Mutation$set_cart_restaurant_id = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$set_cart_restaurant_id?,
+);
+
+class Options$Mutation$set_cart_restaurant_id
+    extends graphql.MutationOptions<Mutation$set_cart_restaurant_id> {
+  Options$Mutation$set_cart_restaurant_id({
+    String? operationName,
+    required Variables$Mutation$set_cart_restaurant_id variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$set_cart_restaurant_id? onCompleted,
+    graphql.OnMutationUpdate<Mutation$set_cart_restaurant_id>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$set_cart_restaurant_id(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationset_cart_restaurant_id,
+          parserFn: _parserFn$Mutation$set_cart_restaurant_id,
+        );
+
+  final OnMutationCompleted$Mutation$set_cart_restaurant_id?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$set_cart_restaurant_id
+    extends graphql.WatchQueryOptions<Mutation$set_cart_restaurant_id> {
+  WatchOptions$Mutation$set_cart_restaurant_id({
+    String? operationName,
+    required Variables$Mutation$set_cart_restaurant_id variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationset_cart_restaurant_id,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$set_cart_restaurant_id,
+        );
+}
+
+extension ClientExtension$Mutation$set_cart_restaurant_id
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$set_cart_restaurant_id>>
+      mutate$set_cart_restaurant_id(
+              Options$Mutation$set_cart_restaurant_id options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$set_cart_restaurant_id>
+      watchMutation$set_cart_restaurant_id(
+              WatchOptions$Mutation$set_cart_restaurant_id options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk {
+  Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk({
+    this.restaurant,
+    required this.$__typename,
+  });
+
+  factory Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$restaurant = json['restaurant'];
+    final l$$__typename = json['__typename'];
+    return Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk(
+      restaurant: l$restaurant == null
+          ? null
+          : Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant
+              .fromJson((l$restaurant as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant?
+      restaurant;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$restaurant = restaurant;
+    _resultData['restaurant'] = l$restaurant?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$restaurant = restaurant;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$restaurant,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$restaurant = restaurant;
+    final lOther$restaurant = other.restaurant;
+    if (l$restaurant != lOther$restaurant) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk
+    on Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk {
+  CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk<
+          Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk(
+    Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk instance,
+    TRes Function(Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk;
+
+  factory CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk;
+
+  TRes call({
+    Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant?
+        restaurant,
+    String? $__typename,
+  });
+  CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant<
+      TRes> get restaurant;
+}
+
+class _CopyWithImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk _instance;
+
+  final TRes Function(
+      Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? restaurant = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk(
+        restaurant: restaurant == _undefined
+            ? _instance.restaurant
+            : (restaurant
+                as Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant<
+      TRes> get restaurant {
+    final local$restaurant = _instance.restaurant;
+    return local$restaurant == null
+        ? CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant
+            .stub(_then(_instance))
+        : CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant(
+            local$restaurant, (e) => call(restaurant: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant?
+        restaurant,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant<
+          TRes>
+      get restaurant =>
+          CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant
+              .stub(_res);
+}
+
+class Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant {
+  Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant({
+    required this.id,
+    this.firebase_id,
+    required this.image,
+    required this.language_id,
+    this.description_id,
+    required this.location_gps,
+    required this.location_text,
+    required this.name,
+    required this.self_delivery,
+    this.schedule,
+    this.description,
+    required this.approved,
+    required this.open_status,
+    required this.$__typename,
+  });
+
+  factory Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$firebase_id = json['firebase_id'];
+    final l$image = json['image'];
+    final l$language_id = json['language_id'];
+    final l$description_id = json['description_id'];
+    final l$location_gps = json['location_gps'];
+    final l$location_text = json['location_text'];
+    final l$name = json['name'];
+    final l$self_delivery = json['self_delivery'];
+    final l$schedule = json['schedule'];
+    final l$description = json['description'];
+    final l$approved = json['approved'];
+    final l$open_status = json['open_status'];
+    final l$$__typename = json['__typename'];
+    return Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant(
+      id: (l$id as int),
+      firebase_id: (l$firebase_id as String?),
+      image: (l$image as String),
+      language_id: (l$language_id as String),
+      description_id: (l$description_id as int?),
+      location_gps: geographyFromJson(l$location_gps),
+      location_text: (l$location_text as String),
+      name: (l$name as String),
+      self_delivery: (l$self_delivery as bool),
+      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
+      description: l$description == null
+          ? null
+          : Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description
+              .fromJson((l$description as Map<String, dynamic>)),
+      approved: (l$approved as bool),
+      open_status: (l$open_status as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String? firebase_id;
+
+  final String image;
+
+  final String language_id;
+
+  final int? description_id;
+
+  final Geography location_gps;
+
+  final String location_text;
+
+  final String name;
+
+  final bool self_delivery;
+
+  final dynamic? schedule;
+
+  final Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description?
+      description;
+
+  final bool approved;
+
+  final String open_status;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$firebase_id = firebase_id;
+    _resultData['firebase_id'] = l$firebase_id;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$description_id = description_id;
+    _resultData['description_id'] = l$description_id;
+    final l$location_gps = location_gps;
+    _resultData['location_gps'] = geographyToJson(l$location_gps);
+    final l$location_text = location_text;
+    _resultData['location_text'] = l$location_text;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$self_delivery = self_delivery;
+    _resultData['self_delivery'] = l$self_delivery;
+    final l$schedule = schedule;
+    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
+    final l$description = description;
+    _resultData['description'] = l$description?.toJson();
+    final l$approved = approved;
+    _resultData['approved'] = l$approved;
+    final l$open_status = open_status;
+    _resultData['open_status'] = l$open_status;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$firebase_id = firebase_id;
+    final l$image = image;
+    final l$language_id = language_id;
+    final l$description_id = description_id;
+    final l$location_gps = location_gps;
+    final l$location_text = location_text;
+    final l$name = name;
+    final l$self_delivery = self_delivery;
+    final l$schedule = schedule;
+    final l$description = description;
+    final l$approved = approved;
+    final l$open_status = open_status;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$firebase_id,
+      l$image,
+      l$language_id,
+      l$description_id,
+      l$location_gps,
+      l$location_text,
+      l$name,
+      l$self_delivery,
+      l$schedule,
+      l$description,
+      l$approved,
+      l$open_status,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$firebase_id = firebase_id;
+    final lOther$firebase_id = other.firebase_id;
+    if (l$firebase_id != lOther$firebase_id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$description_id = description_id;
+    final lOther$description_id = other.description_id;
+    if (l$description_id != lOther$description_id) {
+      return false;
+    }
+    final l$location_gps = location_gps;
+    final lOther$location_gps = other.location_gps;
+    if (l$location_gps != lOther$location_gps) {
+      return false;
+    }
+    final l$location_text = location_text;
+    final lOther$location_text = other.location_text;
+    if (l$location_text != lOther$location_text) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$self_delivery = self_delivery;
+    final lOther$self_delivery = other.self_delivery;
+    if (l$self_delivery != lOther$self_delivery) {
+      return false;
+    }
+    final l$schedule = schedule;
+    final lOther$schedule = other.schedule;
+    if (l$schedule != lOther$schedule) {
+      return false;
+    }
+    final l$description = description;
+    final lOther$description = other.description;
+    if (l$description != lOther$description) {
+      return false;
+    }
+    final l$approved = approved;
+    final lOther$approved = other.approved;
+    if (l$approved != lOther$approved) {
+      return false;
+    }
+    final l$open_status = open_status;
+    final lOther$open_status = other.open_status;
+    if (l$open_status != lOther$open_status) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant
+    on Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant {
+  CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant<
+          Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant>
+      get copyWith =>
+          CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant<
+    TRes> {
+  factory CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant(
+    Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant
+        instance,
+    TRes Function(
+            Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant)
+        then,
+  ) = _CopyWithImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant;
+
+  factory CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant;
+
+  TRes call({
+    int? id,
+    String? firebase_id,
+    String? image,
+    String? language_id,
+    int? description_id,
+    Geography? location_gps,
+    String? location_text,
+    String? name,
+    bool? self_delivery,
+    dynamic? schedule,
+    Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description?
+        description,
+    bool? approved,
+    String? open_status,
+    String? $__typename,
+  });
+  CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description<
+      TRes> get description;
+}
+
+class _CopyWithImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant<
+        TRes>
+    implements
+        CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant<
+            TRes> {
+  _CopyWithImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant
+      _instance;
+
+  final TRes Function(
+          Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? firebase_id = _undefined,
+    Object? image = _undefined,
+    Object? language_id = _undefined,
+    Object? description_id = _undefined,
+    Object? location_gps = _undefined,
+    Object? location_text = _undefined,
+    Object? name = _undefined,
+    Object? self_delivery = _undefined,
+    Object? schedule = _undefined,
+    Object? description = _undefined,
+    Object? approved = _undefined,
+    Object? open_status = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        firebase_id: firebase_id == _undefined
+            ? _instance.firebase_id
+            : (firebase_id as String?),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        description_id: description_id == _undefined
+            ? _instance.description_id
+            : (description_id as int?),
+        location_gps: location_gps == _undefined || location_gps == null
+            ? _instance.location_gps
+            : (location_gps as Geography),
+        location_text: location_text == _undefined || location_text == null
+            ? _instance.location_text
+            : (location_text as String),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        self_delivery: self_delivery == _undefined || self_delivery == null
+            ? _instance.self_delivery
+            : (self_delivery as bool),
+        schedule: schedule == _undefined
+            ? _instance.schedule
+            : (schedule as dynamic?),
+        description: description == _undefined
+            ? _instance.description
+            : (description
+                as Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description?),
+        approved: approved == _undefined || approved == null
+            ? _instance.approved
+            : (approved as bool),
+        open_status: open_status == _undefined || open_status == null
+            ? _instance.open_status
+            : (open_status as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description<
+      TRes> get description {
+    final local$description = _instance.description;
+    return local$description == null
+        ? CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description
+            .stub(_then(_instance))
+        : CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description(
+            local$description, (e) => call(description: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant<
+        TRes>
+    implements
+        CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant<
+            TRes> {
+  _CopyWithStubImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? firebase_id,
+    String? image,
+    String? language_id,
+    int? description_id,
+    Geography? location_gps,
+    String? location_text,
+    String? name,
+    bool? self_delivery,
+    dynamic? schedule,
+    Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description?
+        description,
+    bool? approved,
+    String? open_status,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description<
+          TRes>
+      get description =>
+          CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description
+              .stub(_res);
+}
+
+class Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description {
+  Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description
+    on Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description {
+  CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description<
+          Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description>
+      get copyWith =>
+          CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description<
+    TRes> {
+  factory CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description(
+    Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description
+        instance,
+    TRes Function(
+            Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description)
+        then,
+  ) = _CopyWithImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description;
+
+  factory CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description;
+
+  TRes call({
+    List<Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations> Function(
+              Iterable<
+                  CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations<
+                      Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description<
+        TRes>
+    implements
+        CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description<
+            TRes> {
+  _CopyWithImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description
+      _instance;
+
+  final TRes Function(
+          Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations> Function(
+                  Iterable<
+                      CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations<
+                          Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description<
+        TRes>
+    implements
+        CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description<
+            TRes> {
+  _CopyWithStubImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations {
+  Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations
+    on Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations {
+  CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations<
+          Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations>
+      get copyWith =>
+          CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations<
+    TRes> {
+  factory CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations(
+    Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations
+        instance,
+    TRes Function(
+            Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations)
+        then,
+  ) = _CopyWithImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations;
+
+  factory CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations<
+        TRes>
+    implements
+        CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations<
+            TRes> {
+  _CopyWithImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations
+      _instance;
+
+  final TRes Function(
+          Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations<
+        TRes>
+    implements
+        CopyWith$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations<
+            TRes> {
+  _CopyWithStubImpl$Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk$restaurant$description$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Query$getCustomerCart {
   factory Variables$Query$getCustomerCart({required int customer_id}) =>
       Variables$Query$getCustomerCart._({

@@ -87,7 +87,6 @@ Future<Cart?> getCustomerCart({required int customerId}) async {
             : null);
     CartData.items
         .forEach((Query$getCustomerCart$customer_by_pk$cart$items cartitem) {
-      mezDbgPrint("Item !");
       cart.addItem(
         CartItem(
           Item(
@@ -110,12 +109,11 @@ Future<Cart?> getCustomerCart({required int customerId}) async {
     });
     return cart;
   }
-
   return null;
 }
 
-Future<void> create_customer_cart({required int restaurant_id}) async {
-  mezDbgPrint("[cc] Called :: create_customer_cart!");
+Future<void> create_customer_cart({int? restaurant_id}) async {
+  mezDbgPrint("[JJ] Called :: create_customer_cart!");
   final QueryResult<Mutation$create_customer_cart> InsertCartResponse =
       await _hasuraDb.graphQLClient.mutate$create_customer_cart(
     Options$Mutation$create_customer_cart(
@@ -389,4 +387,76 @@ List<Input$restaurant_cart_item_insert_input> _covertItems(
       .where((CartItem element) => element.idInCart == null)
       .map((CartItem e) => e.toHasuraInputCartItem());
   return data;
+}
+
+Future<Restaurant?> set_cart_restaurant_id({
+  required int restaurant_id,
+  required int customer_id,
+}) async {
+  Restaurant? _res = null;
+  final QueryResult<Mutation$set_cart_restaurant_id> _cart =
+      await _hasuraDb.graphQLClient.mutate$set_cart_restaurant_id(
+    Options$Mutation$set_cart_restaurant_id(
+      fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Mutation$set_cart_restaurant_id(
+        customer_id: customer_id,
+        restaurant_id: restaurant_id,
+      ),
+    ),
+  );
+  if (_cart.hasException) {
+    mezDbgPrint(
+        "[66] called :: set_cart_restaurant_id :: exception :: ${_cart.hasException}");
+  } else {
+    mezDbgPrint(
+        "[66] called :: set_cart_restaurant_id :: cus_id ($customer_id) :: rest_id($restaurant_id) SUCESS  !");
+
+    final Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk?
+        restaurant = _cart.parsedData?.update_restaurant_cart_by_pk;
+    _res = restaurant != null
+        ? Restaurant(
+            userInfo: ServiceInfo(
+              hasuraId: restaurant.restaurant!.id,
+              image: restaurant.restaurant!.image,
+              firebaseId: restaurant.restaurant!.firebase_id,
+              name: restaurant.restaurant!.name,
+              description:
+                  (restaurant.restaurant!.description?.translations != null)
+                      ? {
+                          restaurant.restaurant!.description!.translations.first
+                                  .language_id
+                                  .toLanguageType():
+                              restaurant.restaurant!.description!.translations
+                                  .first.value,
+                          restaurant.restaurant!.description!.translations[1]
+                                  .language_id
+                                  .toLanguageType():
+                              restaurant.restaurant!.description!
+                                  .translations[1].value,
+                        }
+                      : null,
+              descriptionId: restaurant.restaurant!.description_id,
+              //   descriptionId: data.d,
+              location: Location.fromHasura(
+                restaurant.restaurant!.location_gps,
+                restaurant.restaurant!.location_text,
+              ),
+            ),
+            schedule: restaurant.restaurant?.schedule != null
+                ? Schedule.fromData(restaurant.restaurant?.schedule)
+                : null,
+            paymentInfo: PaymentInfo(),
+            restaurantState: ServiceState(
+              restaurant.restaurant!.open_status.toServiceStatus(),
+              restaurant.restaurant!.approved,
+            ),
+            primaryLanguage:
+                restaurant.restaurant!.language_id.toString().toLanguageType(),
+            secondaryLanguage: restaurant.restaurant!.language_id
+                .toString()
+                .toLanguageType()
+                .toOpLang())
+        : null;
+  }
+  return _res;
 }

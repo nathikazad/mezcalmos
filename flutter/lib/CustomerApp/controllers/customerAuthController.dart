@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.d
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
+import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
 import 'package:mezcalmos/Shared/graphql/saved_location/saved_location.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -30,23 +31,48 @@ class CustomerAuthController extends GetxController {
     super.onInit();
 
     if (_authController.fireAuthUser?.uid != null) {
-      _customer.value =
-          await get_customer(user_id: _authController.hasuraUserId!);
-      final String _appVersion = GetStorage().read(getxAppVersion);
-      print("[+] Customer currently using App v$_appVersion");
-      await set_customer_app_version(
-          version: _appVersion, customer_id: _authController.hasuraUserId!);
-      // setting device notification
-      final String? deviceNotificationToken =
-          await _notificationsController.getToken();
-      if (deviceNotificationToken != null)
-        await set_notification_token(
-          token: deviceNotificationToken,
-          customer_id: _authController.hasuraUserId!,
-        );
+      // ignore: unawaited_futures
+      get_customer(user_id: _authController.hasuraUserId!)
+          .then((Customer? value) {
+        mezDbgPrint("[]9090] : get_customer::CUSTOMER : $value ");
+        _setCustomerInfos(value);
+      });
     } else {
       mezDbgPrint("User is not signed it to init customer auth controller");
     }
+  }
+
+  Future<void> _setCustomerInfos(Customer? customer) async {
+    final String _appVersion = GetStorage().read(getxAppVersion);
+    mezDbgPrint("[]9090] : setting customr ! ");
+
+    Customer? _cus = customer;
+
+    if (_cus == null) {
+      _cus = await set_customer_info(
+          app_version: _appVersion, user_id: _authController.hasuraUserId!);
+      mezDbgPrint("[]9090] : setting customr :: result :: $_cus! ");
+    }
+    _customer.value = _cus;
+    _customer.refresh();
+    print("[+] Customer currently using App v$_appVersion");
+    await set_customer_app_version(
+        version: _appVersion, customer_id: _authController.hasuraUserId!);
+    // setting device notification
+    final String? deviceNotificationToken =
+        await _notificationsController.getToken();
+    if (deviceNotificationToken != null)
+      await set_notification_token(
+        token: deviceNotificationToken,
+        customer_id: _authController.hasuraUserId!,
+      );
+    // ignore: always_specify_types, unawaited_futures
+    getCustomerCart(customerId: _authController.hasuraUserId!).then((value) {
+      mezDbgPrint("[JJ] -CART-LEN-  ${value?.cartItems.length}");
+      if (value == null) {
+        create_customer_cart();
+      }
+    });
   }
 
   void saveNewLocation(SavedLocation savedLocation) {

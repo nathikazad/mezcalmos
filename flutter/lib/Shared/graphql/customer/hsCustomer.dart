@@ -64,7 +64,31 @@ Future<Customer?> get_customer({required int user_id}) async {
   return null;
 }
 
-Future set_customer_app_version(
+Future<Customer?> set_customer_info(
+    {required String app_version, required int user_id}) async {
+  final QueryResult<Mutation$set_customer_info> _res =
+      await _graphClient.mutate$set_customer_info(
+    Options$Mutation$set_customer_info(
+      fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Mutation$set_customer_info(
+        user_id: user_id,
+        app_version: app_version,
+      ),
+    ),
+  );
+
+  if (_res.hasException) {
+    mezDbgPrint(
+        "[tt] Called :: set_customer_info :: exception :: ${_res.exception}");
+    return null;
+  } else {
+    mezDbgPrint("[tt] Called :: set_customer_info :: SUCCESS");
+
+    return Customer(appVersion: app_version);
+  }
+}
+
+Future<void> set_customer_app_version(
     {required String version, required int customer_id}) async {
   final QueryResult<Mutation$set_customer_app_version> _res =
       await _graphClient.mutate$set_customer_app_version(

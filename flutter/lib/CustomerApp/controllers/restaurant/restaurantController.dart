@@ -237,18 +237,18 @@ class RestaurantController extends GetxController {
   }
 
   Future<void> saveCart() async {
-    if (_authController.user?.hasuraId != null) {
-      mezDbgPrint(
-          "😛 Cart items after calling save cart ======>${cart.value.cartItems.length}");
-    }
-    final Cart? _cart = await hsCart.update_cart(
-      customer_id: _authController.user!.hasuraId,
-      restaurant_id: associatedRestaurant!.info.hasuraId,
-      items: cart.value.cartItems,
-    );
-    if (_cart != null) {
-      cart.value = _cart;
-    }
+    // if (_authController.user?.hasuraId != null) {
+    //   // final Cart? _cart = await hsCart.update_cart(
+    //   //   customer_id: _authController.user!.hasuraId,
+    //   //   restaurant_id: associatedRestaurant!.info.hasuraId,
+    //   //   items: cart.value.cartItems,
+    //   // );
+    //   if (_cart != null) {
+    //     cart.value = _cart;
+    //     mezDbgPrint(
+    //         "😛 Cart items after calling save cart ======>${_cart.cartItems.length}");
+    //   }
+    // }
     cart.refresh();
   }
 
@@ -344,6 +344,7 @@ class RestaurantController extends GetxController {
     final HttpsCallable checkoutRestaurantCart =
         FirebaseFunctions.instance.httpsCallable("restaurant-checkoutCart2");
     try {
+      mezDbgPrint("[+] ===> ${cart.value.restaurant?.info}");
       final Map<String, dynamic> payload = <String, dynamic>{
         // "customerId": _authController.user!.hasuraId,
         // "checkoutRequest": <String, dynamic>{
@@ -358,15 +359,17 @@ class RestaurantController extends GetxController {
                 },
               ),
             ).toFirebaseFormattedJson(),
-        "deliveryCost": 20,
+        "deliveryCost": cart.value.shippingCost,
         "paymentType": cart.value.paymentType.toFirebaseFormatString(),
         "notes": cart.value.notes,
         "restaurantId": cart.value.restaurant!.info.hasuraId,
         "restaurantOrderType": "pickup",
-        "tripDistance":
+        "tripDistance": cart.value.getRouteInfo?.distance.distanceInMeters ??
             0, // cart.value.getRouteInfo?.distance.distanceInMeters,
-        "tripDuration": 0, // cart.value.getRouteInfo?.duration.seconds,
-        "tripPolyline": '' //cart.value.getRouteInfo?.polyline,
+        "tripDuration": cart.value.getRouteInfo?.duration.seconds ??
+            0, // cart.value.getRouteInfo?.duration.seconds,
+        "tripPolyline": cart.value.getRouteInfo?.polyline ??
+            '' //cart.value.getRouteInfo?.polyline,
         // }
       };
 
