@@ -35,6 +35,7 @@ export interface CheckoutRequest {
 }
 
 export async function checkout(customerId: number, checkoutRequest: CheckoutRequest): Promise<ServerResponse> {
+  try {
 
   console.log("\n\n[+] CustomerId ==> \n\n", customerId);
   console.log("\n\n[+] checkoutRequest ==> \n\n", checkoutRequest);
@@ -64,7 +65,6 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
   }
 
 
-  try {
     // if (data.stripePaymentId) {
     //   order = (await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId, data.stripeFees)) as RestaurantOrder
     // }

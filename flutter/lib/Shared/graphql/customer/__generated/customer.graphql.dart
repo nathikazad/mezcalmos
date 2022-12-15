@@ -452,7 +452,7 @@ extension ClientExtension$Mutation$set_customer_app_version
 
 class Mutation$set_customer_app_version$update_customer_by_pk {
   Mutation$set_customer_app_version$update_customer_by_pk({
-    this.app_version,
+    required this.app_version,
     required this.$__typename,
   });
 
@@ -461,12 +461,12 @@ class Mutation$set_customer_app_version$update_customer_by_pk {
     final l$app_version = json['app_version'];
     final l$$__typename = json['__typename'];
     return Mutation$set_customer_app_version$update_customer_by_pk(
-      app_version: (l$app_version as String?),
+      app_version: (l$app_version as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final String? app_version;
+  final String app_version;
 
   final String $__typename;
 
@@ -561,9 +561,9 @@ class _CopyWithImpl$Mutation$set_customer_app_version$update_customer_by_pk<
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$set_customer_app_version$update_customer_by_pk(
-        app_version: app_version == _undefined
+        app_version: app_version == _undefined || app_version == null
             ? _instance.app_version
-            : (app_version as String?),
+            : (app_version as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -1902,7 +1902,7 @@ extension ClientExtension$Query$get_customer_info on graphql.GraphQLClient {
 
 class Query$get_customer_info$customer {
   Query$get_customer_info$customer({
-    this.app_version,
+    required this.app_version,
     this.notification_token,
     required this.user,
     required this.saved_locations,
@@ -1916,7 +1916,7 @@ class Query$get_customer_info$customer {
     final l$saved_locations = json['saved_locations'];
     final l$$__typename = json['__typename'];
     return Query$get_customer_info$customer(
-      app_version: (l$app_version as String?),
+      app_version: (l$app_version as String),
       notification_token: (l$notification_token as String?),
       user: Query$get_customer_info$customer$user.fromJson(
           (l$user as Map<String, dynamic>)),
@@ -1928,7 +1928,7 @@ class Query$get_customer_info$customer {
     );
   }
 
-  final String? app_version;
+  final String app_version;
 
   final String? notification_token;
 
@@ -2070,9 +2070,9 @@ class _CopyWithImpl$Query$get_customer_info$customer<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_customer_info$customer(
-        app_version: app_version == _undefined
+        app_version: app_version == _undefined || app_version == null
             ? _instance.app_version
-            : (app_version as String?),
+            : (app_version as String),
         notification_token: notification_token == _undefined
             ? _instance.notification_token
             : (notification_token as String?),
@@ -2545,6 +2545,569 @@ class _CopyWithStubImpl$Query$get_customer_info$customer$saved_locations<TRes>
     Geography? location_gps,
     String? location_text,
     bool? $default,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$set_customer_info {
+  factory Variables$Mutation$set_customer_info({
+    required int user_id,
+    required String app_version,
+  }) =>
+      Variables$Mutation$set_customer_info._({
+        r'user_id': user_id,
+        r'app_version': app_version,
+      });
+
+  Variables$Mutation$set_customer_info._(this._$data);
+
+  factory Variables$Mutation$set_customer_info.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$user_id = data['user_id'];
+    result$data['user_id'] = (l$user_id as int);
+    final l$app_version = data['app_version'];
+    result$data['app_version'] = (l$app_version as String);
+    return Variables$Mutation$set_customer_info._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get user_id => (_$data['user_id'] as int);
+  String get app_version => (_$data['app_version'] as String);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$user_id = user_id;
+    result$data['user_id'] = l$user_id;
+    final l$app_version = app_version;
+    result$data['app_version'] = l$app_version;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$set_customer_info<
+          Variables$Mutation$set_customer_info>
+      get copyWith => CopyWith$Variables$Mutation$set_customer_info(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$set_customer_info) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$user_id = user_id;
+    final lOther$user_id = other.user_id;
+    if (l$user_id != lOther$user_id) {
+      return false;
+    }
+    final l$app_version = app_version;
+    final lOther$app_version = other.app_version;
+    if (l$app_version != lOther$app_version) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$user_id = user_id;
+    final l$app_version = app_version;
+    return Object.hashAll([
+      l$user_id,
+      l$app_version,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$set_customer_info<TRes> {
+  factory CopyWith$Variables$Mutation$set_customer_info(
+    Variables$Mutation$set_customer_info instance,
+    TRes Function(Variables$Mutation$set_customer_info) then,
+  ) = _CopyWithImpl$Variables$Mutation$set_customer_info;
+
+  factory CopyWith$Variables$Mutation$set_customer_info.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$set_customer_info;
+
+  TRes call({
+    int? user_id,
+    String? app_version,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$set_customer_info<TRes>
+    implements CopyWith$Variables$Mutation$set_customer_info<TRes> {
+  _CopyWithImpl$Variables$Mutation$set_customer_info(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$set_customer_info _instance;
+
+  final TRes Function(Variables$Mutation$set_customer_info) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? user_id = _undefined,
+    Object? app_version = _undefined,
+  }) =>
+      _then(Variables$Mutation$set_customer_info._({
+        ..._instance._$data,
+        if (user_id != _undefined && user_id != null)
+          'user_id': (user_id as int),
+        if (app_version != _undefined && app_version != null)
+          'app_version': (app_version as String),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$set_customer_info<TRes>
+    implements CopyWith$Variables$Mutation$set_customer_info<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$set_customer_info(this._res);
+
+  TRes _res;
+
+  call({
+    int? user_id,
+    String? app_version,
+  }) =>
+      _res;
+}
+
+class Mutation$set_customer_info {
+  Mutation$set_customer_info({
+    this.insert_customer_one,
+    required this.$__typename,
+  });
+
+  factory Mutation$set_customer_info.fromJson(Map<String, dynamic> json) {
+    final l$insert_customer_one = json['insert_customer_one'];
+    final l$$__typename = json['__typename'];
+    return Mutation$set_customer_info(
+      insert_customer_one: l$insert_customer_one == null
+          ? null
+          : Mutation$set_customer_info$insert_customer_one.fromJson(
+              (l$insert_customer_one as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$set_customer_info$insert_customer_one? insert_customer_one;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$insert_customer_one = insert_customer_one;
+    _resultData['insert_customer_one'] = l$insert_customer_one?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$insert_customer_one = insert_customer_one;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$insert_customer_one,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$set_customer_info) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$insert_customer_one = insert_customer_one;
+    final lOther$insert_customer_one = other.insert_customer_one;
+    if (l$insert_customer_one != lOther$insert_customer_one) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$set_customer_info
+    on Mutation$set_customer_info {
+  CopyWith$Mutation$set_customer_info<Mutation$set_customer_info>
+      get copyWith => CopyWith$Mutation$set_customer_info(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$set_customer_info<TRes> {
+  factory CopyWith$Mutation$set_customer_info(
+    Mutation$set_customer_info instance,
+    TRes Function(Mutation$set_customer_info) then,
+  ) = _CopyWithImpl$Mutation$set_customer_info;
+
+  factory CopyWith$Mutation$set_customer_info.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$set_customer_info;
+
+  TRes call({
+    Mutation$set_customer_info$insert_customer_one? insert_customer_one,
+    String? $__typename,
+  });
+  CopyWith$Mutation$set_customer_info$insert_customer_one<TRes>
+      get insert_customer_one;
+}
+
+class _CopyWithImpl$Mutation$set_customer_info<TRes>
+    implements CopyWith$Mutation$set_customer_info<TRes> {
+  _CopyWithImpl$Mutation$set_customer_info(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$set_customer_info _instance;
+
+  final TRes Function(Mutation$set_customer_info) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? insert_customer_one = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$set_customer_info(
+        insert_customer_one: insert_customer_one == _undefined
+            ? _instance.insert_customer_one
+            : (insert_customer_one
+                as Mutation$set_customer_info$insert_customer_one?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$set_customer_info$insert_customer_one<TRes>
+      get insert_customer_one {
+    final local$insert_customer_one = _instance.insert_customer_one;
+    return local$insert_customer_one == null
+        ? CopyWith$Mutation$set_customer_info$insert_customer_one.stub(
+            _then(_instance))
+        : CopyWith$Mutation$set_customer_info$insert_customer_one(
+            local$insert_customer_one, (e) => call(insert_customer_one: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$set_customer_info<TRes>
+    implements CopyWith$Mutation$set_customer_info<TRes> {
+  _CopyWithStubImpl$Mutation$set_customer_info(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$set_customer_info$insert_customer_one? insert_customer_one,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$set_customer_info$insert_customer_one<TRes>
+      get insert_customer_one =>
+          CopyWith$Mutation$set_customer_info$insert_customer_one.stub(_res);
+}
+
+const documentNodeMutationset_customer_info = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'set_customer_info'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'user_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'app_version')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'insert_customer_one'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'object'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'user_id'),
+                value: VariableNode(name: NameNode(value: 'user_id')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'app_version'),
+                value: VariableNode(name: NameNode(value: 'app_version')),
+              ),
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'user_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$set_customer_info _parserFn$Mutation$set_customer_info(
+        Map<String, dynamic> data) =>
+    Mutation$set_customer_info.fromJson(data);
+typedef OnMutationCompleted$Mutation$set_customer_info = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$set_customer_info?,
+);
+
+class Options$Mutation$set_customer_info
+    extends graphql.MutationOptions<Mutation$set_customer_info> {
+  Options$Mutation$set_customer_info({
+    String? operationName,
+    required Variables$Mutation$set_customer_info variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$set_customer_info? onCompleted,
+    graphql.OnMutationUpdate<Mutation$set_customer_info>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$set_customer_info(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationset_customer_info,
+          parserFn: _parserFn$Mutation$set_customer_info,
+        );
+
+  final OnMutationCompleted$Mutation$set_customer_info? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$set_customer_info
+    extends graphql.WatchQueryOptions<Mutation$set_customer_info> {
+  WatchOptions$Mutation$set_customer_info({
+    String? operationName,
+    required Variables$Mutation$set_customer_info variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationset_customer_info,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$set_customer_info,
+        );
+}
+
+extension ClientExtension$Mutation$set_customer_info on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$set_customer_info>>
+      mutate$set_customer_info(
+              Options$Mutation$set_customer_info options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$set_customer_info>
+      watchMutation$set_customer_info(
+              WatchOptions$Mutation$set_customer_info options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$set_customer_info$insert_customer_one {
+  Mutation$set_customer_info$insert_customer_one({
+    required this.user_id,
+    required this.$__typename,
+  });
+
+  factory Mutation$set_customer_info$insert_customer_one.fromJson(
+      Map<String, dynamic> json) {
+    final l$user_id = json['user_id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$set_customer_info$insert_customer_one(
+      user_id: (l$user_id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int user_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$user_id = user_id;
+    _resultData['user_id'] = l$user_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$user_id = user_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$user_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$set_customer_info$insert_customer_one) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$user_id = user_id;
+    final lOther$user_id = other.user_id;
+    if (l$user_id != lOther$user_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$set_customer_info$insert_customer_one
+    on Mutation$set_customer_info$insert_customer_one {
+  CopyWith$Mutation$set_customer_info$insert_customer_one<
+          Mutation$set_customer_info$insert_customer_one>
+      get copyWith => CopyWith$Mutation$set_customer_info$insert_customer_one(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$set_customer_info$insert_customer_one<TRes> {
+  factory CopyWith$Mutation$set_customer_info$insert_customer_one(
+    Mutation$set_customer_info$insert_customer_one instance,
+    TRes Function(Mutation$set_customer_info$insert_customer_one) then,
+  ) = _CopyWithImpl$Mutation$set_customer_info$insert_customer_one;
+
+  factory CopyWith$Mutation$set_customer_info$insert_customer_one.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$set_customer_info$insert_customer_one;
+
+  TRes call({
+    int? user_id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$set_customer_info$insert_customer_one<TRes>
+    implements CopyWith$Mutation$set_customer_info$insert_customer_one<TRes> {
+  _CopyWithImpl$Mutation$set_customer_info$insert_customer_one(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$set_customer_info$insert_customer_one _instance;
+
+  final TRes Function(Mutation$set_customer_info$insert_customer_one) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? user_id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$set_customer_info$insert_customer_one(
+        user_id: user_id == _undefined || user_id == null
+            ? _instance.user_id
+            : (user_id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$set_customer_info$insert_customer_one<TRes>
+    implements CopyWith$Mutation$set_customer_info$insert_customer_one<TRes> {
+  _CopyWithStubImpl$Mutation$set_customer_info$insert_customer_one(this._res);
+
+  TRes _res;
+
+  call({
+    int? user_id,
     String? $__typename,
   }) =>
       _res;

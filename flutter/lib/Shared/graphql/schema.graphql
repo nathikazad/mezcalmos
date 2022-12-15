@@ -859,7 +859,7 @@ enum cursor_ordering {
 columns and relationships of "customer"
 """
 type customer {
-  app_version: String
+  app_version: String!
 
   """An object relationship"""
   cart: restaurant_cart
@@ -2477,8 +2477,16 @@ type delivery_operator {
   delivery_company_id: Int!
   delivery_driver_type: String!
   id: Int!
+
+  """
+  A computed field, executes function "deliop_notification_token"
+  """
+  notification_token: String
   owner: Boolean!
   status: String!
+
+  """An object relationship"""
+  user: user!
   user_id: Int!
 }
 
@@ -2562,8 +2570,10 @@ input delivery_operator_bool_exp {
   delivery_company_id: Int_comparison_exp
   delivery_driver_type: String_comparison_exp
   id: Int_comparison_exp
+  notification_token: String_comparison_exp
   owner: Boolean_comparison_exp
   status: String_comparison_exp
+  user: user_bool_exp
   user_id: Int_comparison_exp
 }
 
@@ -2597,6 +2607,7 @@ input delivery_operator_insert_input {
   id: Int
   owner: Boolean
   status: String
+  user: user_obj_rel_insert_input
   user_id: Int
 }
 
@@ -2681,8 +2692,10 @@ input delivery_operator_order_by {
   delivery_company_id: order_by
   delivery_driver_type: order_by
   id: order_by
+  notification_token: order_by
   owner: order_by
   status: order_by
+  user: user_order_by
   user_id: order_by
 }
 
@@ -9736,11 +9749,6 @@ input restaurant_cart_item_bool_exp {
 unique or primary key constraints on table "restaurant_cart_item"
 """
 enum restaurant_cart_item_constraint {
-  """
-  unique or primary key constraint on columns "restaurant_item_id", "customer_id"
-  """
-  restaurant_cart_item_customer_id_restaurant_item_id_key
-
   """
   unique or primary key constraint on columns "id"
   """
@@ -20665,9 +20673,6 @@ columns and relationships of "user"
 """
 type user {
   big_image: String
-
-  """An object relationship"""
-  customer: customer
   deleted: Boolean!
   email: String
   firebase_id: String!
@@ -20716,7 +20721,6 @@ input user_bool_exp {
   _not: user_bool_exp
   _or: [user_bool_exp!]
   big_image: String_comparison_exp
-  customer: customer_bool_exp
   deleted: Boolean_comparison_exp
   email: String_comparison_exp
   firebase_id: String_comparison_exp
@@ -20749,7 +20753,6 @@ input type for inserting data into table "user"
 """
 input user_insert_input {
   big_image: String
-  customer: customer_obj_rel_insert_input
   deleted: Boolean
   email: String
   firebase_id: String
@@ -20817,7 +20820,6 @@ input user_on_conflict {
 """Ordering options when selecting data from "user"."""
 input user_order_by {
   big_image: order_by
-  customer: customer_order_by
   deleted: order_by
   email: order_by
   firebase_id: order_by
