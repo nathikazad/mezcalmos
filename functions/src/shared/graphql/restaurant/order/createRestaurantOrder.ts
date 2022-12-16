@@ -19,6 +19,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
   let response = await chain.mutation({
     insert_restaurant_order_one: [{
       object: {
+        scheduled_time: restaurantOrder.scheduledTime,
         customer_id: restaurantOrder.customerId,
         restaurant_id: restaurantOrder.restaurantId,
         customer_app_type: restaurantOrder.customerAppType,

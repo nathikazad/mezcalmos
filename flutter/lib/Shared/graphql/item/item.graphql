@@ -58,6 +58,7 @@ query getItemById($id: Int!) {
         value
       }
     }
+    image
     cost
     position
     category_id

@@ -33,7 +33,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
   void initState() {
     if (controller.cart.value.cartPeriod != null) {
       controller.cart.value.deliveryTime = controller.cart.value.getStartTime();
-      controller.saveCart();
+      //  controller.saveCart();
     }
     super.initState();
   }

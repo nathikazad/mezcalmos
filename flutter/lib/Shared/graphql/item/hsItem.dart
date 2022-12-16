@@ -25,12 +25,13 @@ Future<bool> update_item_by_id(
       variables: Variables$Mutation$upadateItem(
         id: itemId,
         itemData: Input$restaurant_item_set_input(
+          image: item.image,
           category_id: item.categoryId,
           cost: item.cost.toDouble(),
           available: item.available,
           position: item.position,
-          special_period_end: item.startsAt?.toUtc().toString(),
-          special_period_start: item.endsAt?.toUtc().toString(),
+          special_period_start: item.startsAt?.toUtc().toString(),
+          special_period_end: item.endsAt?.toUtc().toString(),
         ),
       ),
     ),
@@ -63,9 +64,10 @@ Future<int?> add_one_item(
             ]),
       ),
     ),
-    special_period_end: item.endsAt.toString(),
-    special_period_start: item.startsAt.toString(),
+    special_period_end: item.endsAt?.toUtc().toString(),
+    special_period_start: item.startsAt?.toString(),
     item_type: item.itemType.toFirebaseFormatString(),
+    image: item.image,
     description: Input$translation_obj_rel_insert_input(
       data: Input$translation_insert_input(
         service_provider_id: restaurantId,
@@ -135,6 +137,7 @@ Future<Item?> get_one_item_by_id(int itemId, {bool withCache = true}) async {
         name: toLanguageMap(translations: data.name.translations),
         id: data.id,
         nameId: data.name.id,
+        image: data.image,
         descriptionId: data.description?.id,
         categoryId: data.category_id,
         startsAt: (data.special_period_start != null)

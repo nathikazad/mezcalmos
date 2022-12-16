@@ -1,14 +1,8 @@
-import 'dart:math';
-
-import 'package:collection/collection.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
-import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
@@ -17,6 +11,7 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
@@ -154,6 +149,7 @@ class Cart {
       item.quantity += quantity;
       return item;
     }
+    return null;
   }
 
   void deleteItem(int itemId) {
@@ -185,6 +181,7 @@ class Cart {
         }
       }
     });
+    mezDbgPrint("success cart period =>>$periodOfTime");
 
     return periodOfTime;
   }
@@ -219,6 +216,7 @@ class Cart {
     final CartItem? citem = cartItems
         .firstWhereOrNull((CartItem element) => element.isSpecial == true);
     if (citem != null) {
+      mezDbgPrint("error period =>${citem.item.getPeriod}");
       return PeriodOfTime(start: citem.item.startsAt!, end: citem.item.endsAt!);
     }
     return null;
@@ -366,7 +364,7 @@ class CartItem {
   }
 
   bool get isSpecial {
-    return item.isSpecial;
+    return item.itemType == ItemType.Special;
   }
 
   @override

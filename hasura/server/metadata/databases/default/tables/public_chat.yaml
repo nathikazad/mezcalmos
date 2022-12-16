@@ -37,7 +37,6 @@ select_permissions:
     permission:
       columns:
         - chat_info
-        - creation_time
         - id
         - messages
       filter:

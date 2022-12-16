@@ -3,6 +3,7 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
   restaurant_order_by_pk(id: $order_id) {
     id
     notes
+    scheduled_time
     restaurant {
       id
       firebase_id
@@ -84,6 +85,7 @@ query get_restaurant_order_by_id($order_id: Int!) {
   restaurant_order_by_pk(id: $order_id) {
     id
     notes
+    scheduled_time
     restaurant {
       id
       firebase_id
