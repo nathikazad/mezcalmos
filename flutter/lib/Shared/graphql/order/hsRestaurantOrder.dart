@@ -82,7 +82,8 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
       res.items = items;
       return res;
     } else {
-      throw Exception("🚨🚨🚨🚨 listen_on_restaurant_order_by_id exception ");
+      throw Exception(
+          "🚨🚨🚨🚨 listen_on_restaurant_order_by_id exception ${event.exception}");
     }
   });
 }

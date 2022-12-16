@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/components/ROpCreateImagePicker.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/controllers/ROpCreateRestuarantViewController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
@@ -42,7 +43,7 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
                 context,
                 primaryClickTitle: "OK",
                 primaryCallBack: () {
-                  Get.toNamed(kWrapperRoute);
+                  MezRouter.toNamed(kWrapperRoute);
                 },
                 status: "Your restaurantis under review",
                 description:
@@ -138,7 +139,8 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
               onTap: () async {
                 // ignore: prefer_final_locals
                 Location? currentLoc =
-                    await Get.toNamed(kPickLocationWithoutAuth) as Location?;
+                    await MezRouter.toNamed(kPickLocationWithoutAuth)
+                        as Location?;
                 if (currentLoc != null) {
                   viewController.restaurantLocation.value = currentLoc;
                 }

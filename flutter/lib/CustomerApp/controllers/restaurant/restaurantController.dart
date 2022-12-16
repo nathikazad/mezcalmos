@@ -65,7 +65,9 @@ class RestaurantController extends GetxController {
           if (event != null) {
             cart.value = event;
             if (event.restaurant != null)
-              associatedRestaurant = event.restaurant;
+              cart.value.restaurant = event.restaurant;
+
+            associatedRestaurant = event.restaurant;
           }
           cart.refresh();
         });
@@ -85,6 +87,7 @@ class RestaurantController extends GetxController {
       customerId: Get.find<AuthController>().user!.hasuraId,
     );
     cart.value = value ?? Cart();
+    cart.value.restaurant = value?.restaurant;
     associatedRestaurant = value?.restaurant;
     cart.refresh();
   }

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/components/ROpChoiceAv.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/controllers/ROpChoiceViewController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -37,7 +38,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
           optionId: optionId!,
           restaurantId: restaurantId!);
     } else {
-      Get.back();
+      MezRouter.back();
     }
     super.initState();
   }
@@ -118,7 +119,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                             .deleteChoice()
                             .then((bool? hasBennDeleted) {
                           if (hasBennDeleted == true) {
-                            Get.back(result: true);
+                            MezRouter.back(result: true);
                           }
                         });
                       },
@@ -176,7 +177,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
     return mezcalmosAppBar(
       AppBarLeftButtonType.Back,
       onClick: () {
-        Get.back(result: viewController.needToFetch.value);
+        MezRouter.back(result: viewController.needToFetch.value);
       },
       tabBar: TabBar(controller: tabController, tabs: [
         Tab(

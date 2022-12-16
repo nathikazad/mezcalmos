@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -198,7 +199,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () {
-        Get.back(closeOverlays: true);
+        MezRouter.popDialog(closeOverlays: true);
       },
       child: Ink(
         height: 50,
@@ -358,7 +359,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
       //   isClicked.value = false;
       // }).then((ServerResponse value) {
       //   if (value.success) {
-      //     Get.back(closeOverlays: true);
+      //     MezRouter.popDialog(closeOverlays: true);
       //   }
       // }).onError((Object? error, StackTrace stackTrace) {
       //   mezDbgPrint("Error seeting time =====>$error");

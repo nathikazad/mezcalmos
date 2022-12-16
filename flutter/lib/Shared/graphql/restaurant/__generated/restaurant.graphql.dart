@@ -3667,6 +3667,532 @@ class _CopyWithStubImpl$Query$getRestaurantStatus$restaurant_by_pk<TRes>
       _res;
 }
 
+class Variables$Query$getRestaurantSchedule {
+  factory Variables$Query$getRestaurantSchedule({required int id}) =>
+      Variables$Query$getRestaurantSchedule._({
+        r'id': id,
+      });
+
+  Variables$Query$getRestaurantSchedule._(this._$data);
+
+  factory Variables$Query$getRestaurantSchedule.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    return Variables$Query$getRestaurantSchedule._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getRestaurantSchedule<
+          Variables$Query$getRestaurantSchedule>
+      get copyWith => CopyWith$Variables$Query$getRestaurantSchedule(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getRestaurantSchedule) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    return Object.hashAll([l$id]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getRestaurantSchedule<TRes> {
+  factory CopyWith$Variables$Query$getRestaurantSchedule(
+    Variables$Query$getRestaurantSchedule instance,
+    TRes Function(Variables$Query$getRestaurantSchedule) then,
+  ) = _CopyWithImpl$Variables$Query$getRestaurantSchedule;
+
+  factory CopyWith$Variables$Query$getRestaurantSchedule.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getRestaurantSchedule;
+
+  TRes call({int? id});
+}
+
+class _CopyWithImpl$Variables$Query$getRestaurantSchedule<TRes>
+    implements CopyWith$Variables$Query$getRestaurantSchedule<TRes> {
+  _CopyWithImpl$Variables$Query$getRestaurantSchedule(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getRestaurantSchedule _instance;
+
+  final TRes Function(Variables$Query$getRestaurantSchedule) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? id = _undefined}) =>
+      _then(Variables$Query$getRestaurantSchedule._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getRestaurantSchedule<TRes>
+    implements CopyWith$Variables$Query$getRestaurantSchedule<TRes> {
+  _CopyWithStubImpl$Variables$Query$getRestaurantSchedule(this._res);
+
+  TRes _res;
+
+  call({int? id}) => _res;
+}
+
+class Query$getRestaurantSchedule {
+  Query$getRestaurantSchedule({
+    this.restaurant_by_pk,
+    required this.$__typename,
+  });
+
+  factory Query$getRestaurantSchedule.fromJson(Map<String, dynamic> json) {
+    final l$restaurant_by_pk = json['restaurant_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Query$getRestaurantSchedule(
+      restaurant_by_pk: l$restaurant_by_pk == null
+          ? null
+          : Query$getRestaurantSchedule$restaurant_by_pk.fromJson(
+              (l$restaurant_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getRestaurantSchedule$restaurant_by_pk? restaurant_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$restaurant_by_pk = restaurant_by_pk;
+    _resultData['restaurant_by_pk'] = l$restaurant_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$restaurant_by_pk = restaurant_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$restaurant_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getRestaurantSchedule) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$restaurant_by_pk = restaurant_by_pk;
+    final lOther$restaurant_by_pk = other.restaurant_by_pk;
+    if (l$restaurant_by_pk != lOther$restaurant_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getRestaurantSchedule
+    on Query$getRestaurantSchedule {
+  CopyWith$Query$getRestaurantSchedule<Query$getRestaurantSchedule>
+      get copyWith => CopyWith$Query$getRestaurantSchedule(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getRestaurantSchedule<TRes> {
+  factory CopyWith$Query$getRestaurantSchedule(
+    Query$getRestaurantSchedule instance,
+    TRes Function(Query$getRestaurantSchedule) then,
+  ) = _CopyWithImpl$Query$getRestaurantSchedule;
+
+  factory CopyWith$Query$getRestaurantSchedule.stub(TRes res) =
+      _CopyWithStubImpl$Query$getRestaurantSchedule;
+
+  TRes call({
+    Query$getRestaurantSchedule$restaurant_by_pk? restaurant_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Query$getRestaurantSchedule$restaurant_by_pk<TRes>
+      get restaurant_by_pk;
+}
+
+class _CopyWithImpl$Query$getRestaurantSchedule<TRes>
+    implements CopyWith$Query$getRestaurantSchedule<TRes> {
+  _CopyWithImpl$Query$getRestaurantSchedule(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getRestaurantSchedule _instance;
+
+  final TRes Function(Query$getRestaurantSchedule) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? restaurant_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getRestaurantSchedule(
+        restaurant_by_pk: restaurant_by_pk == _undefined
+            ? _instance.restaurant_by_pk
+            : (restaurant_by_pk
+                as Query$getRestaurantSchedule$restaurant_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getRestaurantSchedule$restaurant_by_pk<TRes>
+      get restaurant_by_pk {
+    final local$restaurant_by_pk = _instance.restaurant_by_pk;
+    return local$restaurant_by_pk == null
+        ? CopyWith$Query$getRestaurantSchedule$restaurant_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Query$getRestaurantSchedule$restaurant_by_pk(
+            local$restaurant_by_pk, (e) => call(restaurant_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getRestaurantSchedule<TRes>
+    implements CopyWith$Query$getRestaurantSchedule<TRes> {
+  _CopyWithStubImpl$Query$getRestaurantSchedule(this._res);
+
+  TRes _res;
+
+  call({
+    Query$getRestaurantSchedule$restaurant_by_pk? restaurant_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getRestaurantSchedule$restaurant_by_pk<TRes>
+      get restaurant_by_pk =>
+          CopyWith$Query$getRestaurantSchedule$restaurant_by_pk.stub(_res);
+}
+
+const documentNodeQuerygetRestaurantSchedule = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getRestaurantSchedule'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'restaurant_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'id')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'schedule'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getRestaurantSchedule _parserFn$Query$getRestaurantSchedule(
+        Map<String, dynamic> data) =>
+    Query$getRestaurantSchedule.fromJson(data);
+
+class Options$Query$getRestaurantSchedule
+    extends graphql.QueryOptions<Query$getRestaurantSchedule> {
+  Options$Query$getRestaurantSchedule({
+    String? operationName,
+    required Variables$Query$getRestaurantSchedule variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetRestaurantSchedule,
+          parserFn: _parserFn$Query$getRestaurantSchedule,
+        );
+}
+
+class WatchOptions$Query$getRestaurantSchedule
+    extends graphql.WatchQueryOptions<Query$getRestaurantSchedule> {
+  WatchOptions$Query$getRestaurantSchedule({
+    String? operationName,
+    required Variables$Query$getRestaurantSchedule variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetRestaurantSchedule,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getRestaurantSchedule,
+        );
+}
+
+class FetchMoreOptions$Query$getRestaurantSchedule
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getRestaurantSchedule({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getRestaurantSchedule variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetRestaurantSchedule,
+        );
+}
+
+extension ClientExtension$Query$getRestaurantSchedule on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getRestaurantSchedule>>
+      query$getRestaurantSchedule(
+              Options$Query$getRestaurantSchedule options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$getRestaurantSchedule>
+      watchQuery$getRestaurantSchedule(
+              WatchOptions$Query$getRestaurantSchedule options) =>
+          this.watchQuery(options);
+  void writeQuery$getRestaurantSchedule({
+    required Query$getRestaurantSchedule data,
+    required Variables$Query$getRestaurantSchedule variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQuerygetRestaurantSchedule),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getRestaurantSchedule? readQuery$getRestaurantSchedule({
+    required Variables$Query$getRestaurantSchedule variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQuerygetRestaurantSchedule),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$getRestaurantSchedule.fromJson(result);
+  }
+}
+
+class Query$getRestaurantSchedule$restaurant_by_pk {
+  Query$getRestaurantSchedule$restaurant_by_pk({
+    this.schedule,
+    required this.$__typename,
+  });
+
+  factory Query$getRestaurantSchedule$restaurant_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$schedule = json['schedule'];
+    final l$$__typename = json['__typename'];
+    return Query$getRestaurantSchedule$restaurant_by_pk(
+      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic? schedule;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$schedule = schedule;
+    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$schedule = schedule;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$schedule,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getRestaurantSchedule$restaurant_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$schedule = schedule;
+    final lOther$schedule = other.schedule;
+    if (l$schedule != lOther$schedule) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getRestaurantSchedule$restaurant_by_pk
+    on Query$getRestaurantSchedule$restaurant_by_pk {
+  CopyWith$Query$getRestaurantSchedule$restaurant_by_pk<
+          Query$getRestaurantSchedule$restaurant_by_pk>
+      get copyWith => CopyWith$Query$getRestaurantSchedule$restaurant_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getRestaurantSchedule$restaurant_by_pk<TRes> {
+  factory CopyWith$Query$getRestaurantSchedule$restaurant_by_pk(
+    Query$getRestaurantSchedule$restaurant_by_pk instance,
+    TRes Function(Query$getRestaurantSchedule$restaurant_by_pk) then,
+  ) = _CopyWithImpl$Query$getRestaurantSchedule$restaurant_by_pk;
+
+  factory CopyWith$Query$getRestaurantSchedule$restaurant_by_pk.stub(TRes res) =
+      _CopyWithStubImpl$Query$getRestaurantSchedule$restaurant_by_pk;
+
+  TRes call({
+    dynamic? schedule,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getRestaurantSchedule$restaurant_by_pk<TRes>
+    implements CopyWith$Query$getRestaurantSchedule$restaurant_by_pk<TRes> {
+  _CopyWithImpl$Query$getRestaurantSchedule$restaurant_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getRestaurantSchedule$restaurant_by_pk _instance;
+
+  final TRes Function(Query$getRestaurantSchedule$restaurant_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? schedule = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getRestaurantSchedule$restaurant_by_pk(
+        schedule: schedule == _undefined
+            ? _instance.schedule
+            : (schedule as dynamic?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getRestaurantSchedule$restaurant_by_pk<TRes>
+    implements CopyWith$Query$getRestaurantSchedule$restaurant_by_pk<TRes> {
+  _CopyWithStubImpl$Query$getRestaurantSchedule$restaurant_by_pk(this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? schedule,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Mutation$updateRestaurantInfo {
   factory Variables$Mutation$updateRestaurantInfo({
     required int id,

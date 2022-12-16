@@ -54,11 +54,14 @@ Future<bool> delete_category(int categoryId) async {
   }
 }
 
-Future<Category?> get_category_by_id(int id) async {
+Future<Category?> get_category_by_id(
+    {required int categoryId, bool withCache = true}) async {
   final QueryResult<Query$getCategoryInfoById> response = await hasuraDb
       .graphQLClient
       .query$getCategoryInfoById(Options$Query$getCategoryInfoById(
-          variables: Variables$Query$getCategoryInfoById(id: id)));
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+          variables: Variables$Query$getCategoryInfoById(id: categoryId)));
   if (response.hasException) {
     mezDbgPrint(
         "🚨🚨🚨 Hasura get category by id querry exception =>${response.exception}");

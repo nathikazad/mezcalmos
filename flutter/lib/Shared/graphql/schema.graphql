@@ -859,7 +859,7 @@ enum cursor_ordering {
 columns and relationships of "customer"
 """
 type customer {
-  app_version: String!
+  app_version: String
 
   """An object relationship"""
   cart: restaurant_cart

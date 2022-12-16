@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/graphql/item/option/choice/hsChoice.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
@@ -142,7 +143,7 @@ class ROpChoiceViewController {
     if (int.tryParse(choice.value!.id) != null) {
       final bool result =
           await delete_choice_by_id(choiceId: int.parse(choice.value!.id));
-      result ? Get.back() : null;
+      result ? MezRouter.back() : null;
       return result;
     }
     return null;
