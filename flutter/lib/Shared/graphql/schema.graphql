@@ -14119,6 +14119,7 @@ type restaurant_order {
   """An object relationship"""
   review: review
   review_id: Int
+  scheduled_time: timestamptz
 
   """
   orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
@@ -14249,6 +14250,7 @@ input restaurant_order_bool_exp {
   restaurant_id: Int_comparison_exp
   review: review_bool_exp
   review_id: Int_comparison_exp
+  scheduled_time: timestamptz_comparison_exp
   status: String_comparison_exp
   stripe_payment_id: Int_comparison_exp
   tax: money_comparison_exp
@@ -14346,6 +14348,7 @@ input restaurant_order_insert_input {
   restaurant_id: Int
   review: review_obj_rel_insert_input
   review_id: Int
+  scheduled_time: timestamptz
 
   """
   orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
@@ -14885,6 +14888,7 @@ type restaurant_order_max_fields {
   refund_amount: money
   restaurant_id: Int
   review_id: Int
+  scheduled_time: timestamptz
 
   """
   orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
@@ -14916,6 +14920,7 @@ input restaurant_order_max_order_by {
   refund_amount: order_by
   restaurant_id: order_by
   review_id: order_by
+  scheduled_time: order_by
 
   """
   orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
@@ -14945,6 +14950,7 @@ type restaurant_order_min_fields {
   refund_amount: money
   restaurant_id: Int
   review_id: Int
+  scheduled_time: timestamptz
 
   """
   orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
@@ -14976,6 +14982,7 @@ input restaurant_order_min_order_by {
   refund_amount: order_by
   restaurant_id: order_by
   review_id: order_by
+  scheduled_time: order_by
 
   """
   orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
@@ -15043,6 +15050,7 @@ input restaurant_order_order_by {
   restaurant_id: order_by
   review: review_order_by
   review_id: order_by
+  scheduled_time: order_by
   status: order_by
   stripe_payment_id: order_by
   tax: order_by
@@ -15397,6 +15405,9 @@ enum restaurant_order_select_column {
   review_id
 
   """column name"""
+  scheduled_time
+
+  """column name"""
   status
 
   """column name"""
@@ -15433,6 +15444,7 @@ input restaurant_order_set_input {
   refund_amount: money
   restaurant_id: Int
   review_id: Int
+  scheduled_time: timestamptz
 
   """
   orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
@@ -15564,6 +15576,7 @@ input restaurant_order_stream_cursor_value_input {
   refund_amount: money
   restaurant_id: Int
   review_id: Int
+  scheduled_time: timestamptz
 
   """
   orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
@@ -15659,6 +15672,9 @@ enum restaurant_order_update_column {
 
   """column name"""
   review_id
+
+  """column name"""
+  scheduled_time
 
   """column name"""
   status
