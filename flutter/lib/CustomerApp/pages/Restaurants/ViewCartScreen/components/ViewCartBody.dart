@@ -61,7 +61,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
             (controller.cart.value.quantity() >= 1)
                 ? Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: const <Widget>[
+                    children: <Widget>[
                       CartBuilder(),
                       SizedBox(height: 10),
                       CartItemsBuilder()

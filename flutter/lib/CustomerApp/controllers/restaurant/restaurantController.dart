@@ -5,7 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
@@ -19,7 +19,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class RestaurantController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
-  AuthController _authController = Get.find<AuthController>();
+  FirbaseAuthController _authController = Get.find<FirbaseAuthController>();
 
   StreamSubscription<dynamic>? _cartListener;
   Restaurant? associatedRestaurant;
@@ -157,6 +157,9 @@ class RestaurantController extends GetxController {
     baseShippingPrice.value =
         baseShippingPrice.value ?? await getShippingPrice();
     if (loc != null) {
+      mezDbgPrint("====-==-==- cus loc : ${loc.isValidLocation()}");
+      mezDbgPrint(
+          "====-==-==- rest loc : ${cart.value.restaurant!.info.location.isValidLocation()}");
       final MapHelper.Route? routeInfo = await MapHelper.getDurationAndDistance(
         cart.value.restaurant!.info.location,
         loc,
@@ -167,41 +170,41 @@ class RestaurantController extends GetxController {
             "ORDER DISTANCE VARIABLEEEE ========>>>>>>>$_orderDistanceInKm");
         mezDbgPrint(
             "place :::: $loc distance from controller :::::::===> ${(routeInfo.distance.distanceInMeters / 1000)}");
-        if ((routeInfo.distance.distanceInMeters / 1000) <= 10) {
-          final num shippingCost =
-              perKmPrice.value! * (routeInfo.distance.distanceInMeters / 1000);
-          if (shippingCost < minShiipingPrice.value!) {
-            mezDbgPrint(
-                "LESS THAN MINIMUM COST ===================== $shippingCost << ${minShiipingPrice.value}");
-            cart.value.shippingCost = minShiipingPrice.value!.ceil();
-          } else {
-            cart.value.shippingCost = shippingCost.ceil();
-          }
-          cart.value.setRouteInformation = MapHelper.RouteInformation(
-            polyline: routeInfo.encodedPolyLine,
-            distance: routeInfo.distance,
-            duration: routeInfo.duration,
-          );
-
+        // if ((routeInfo.distance.distanceInMeters / 1000) <= 100000) {
+        final num shippingCost =
+            perKmPrice.value! * (routeInfo.distance.distanceInMeters / 1000);
+        if (shippingCost < minShiipingPrice.value!) {
           mezDbgPrint(
-              "SHIPPPPPING COOOOST =========>>>>>>>>>>>${cart.value.shippingCost}");
-          await saveCart();
-          isShippingSet.value = true;
-
-          return true;
+              "LESS THAN MINIMUM COST ===================== $shippingCost << ${minShiipingPrice.value}");
+          cart.value.shippingCost = minShiipingPrice.value!.ceil();
         } else {
-          cart.value.shippingCost = null;
-          await saveCart();
-          isShippingSet.value = true;
-
-          return true;
+          cart.value.shippingCost = shippingCost.ceil();
         }
+        cart.value.setRouteInformation = MapHelper.RouteInformation(
+          polyline: routeInfo.encodedPolyLine,
+          distance: routeInfo.distance,
+          duration: routeInfo.duration,
+        );
+
+        mezDbgPrint(
+            "SHIPPPPPING COOOOST =========>>>>>>>>>>>${cart.value.shippingCost}");
+        await saveCart();
+        isShippingSet.value = true;
+
+        return true;
       } else {
         cart.value.shippingCost = null;
         await saveCart();
-        isShippingSet.value = false;
-        return false;
+        isShippingSet.value = true;
+
+        return true;
       }
+      // } else {
+      //   cart.value.shippingCost = null;
+      //   await saveCart();
+      //   isShippingSet.value = false;
+      //   return false;
+      // }
     } else {
       cart.value.shippingCost = null;
       await saveCart();

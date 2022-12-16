@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -16,6 +16,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
 class UserProfileWidgetsClass {
   // Singleton
   final UserProfileController userProfileController;
+
   UserProfileWidgetsClass({required this.userProfileController});
 
   /// this holds the Main body parts.
@@ -66,11 +67,11 @@ class UserProfileWidgetsClass {
               height: 137,
               width: 137,
               decoration: BoxDecoration(
-                color: Get.find<AuthController>().isUserImgSet()
+                color: Get.find<FirbaseAuthController>().isUserImgSet()
                     ? Color.fromRGBO(255, 255, 255, 1)
                     : Color.fromRGBO(217, 217, 217, 1),
                 shape: BoxShape.circle,
-                image: Get.find<AuthController>().isUserImgSet() ||
+                image: Get.find<FirbaseAuthController>().isUserImgSet() ||
                         userProfileController.userImgBytes.value != null
                     ? DecorationImage(
                         fit: BoxFit.cover,
@@ -82,7 +83,7 @@ class UserProfileWidgetsClass {
               ),
               child: userProfileController.stateMode.value ==
                           UserProfileMode.Edit &&
-                      !Get.find<AuthController>().isUserImgSet()
+                      !Get.find<FirbaseAuthController>().isUserImgSet()
                   ? browsImageButton(isImageBeingUploaded: isImageBeingUploaded)
                   : SizedBox(),
             ),
@@ -196,10 +197,11 @@ class UserProfileWidgetsClass {
       return Column(
         children: [
           Text(
-            Get.find<AuthController>().user?.name ?? "-",
+            Get.find<FirbaseAuthController>().user?.name ?? "-",
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w700,
+              color: Colors.black,
               fontFamily: 'Montserrat',
             ),
           ),
@@ -222,7 +224,7 @@ class UserProfileWidgetsClass {
       return Column(
         children: [
           Text(
-            Get.find<AuthController>().user?.name ?? "-",
+            Get.find<FirbaseAuthController>().user?.name ?? "-",
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w700,
@@ -269,13 +271,13 @@ class UserProfileWidgetsClass {
             ),
             child: TextField(
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(14),
-                fillColor: Colors.grey.shade200,
-                border: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                hintText: _i18n()["UserProfileWidgets"]['namePlaceHolder'],
-              ),
+                  contentPadding: EdgeInsets.all(14),
+                  fillColor: Colors.grey.shade200,
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  hintText: _i18n()["UserProfileWidgets"]['namePlaceHolder'],
+                  hintStyle: TextStyle(fontSize: 18)),
               enabled: !isImageBeingUploaded,
               style: TextStyle(
                 color: Color.fromARGB(255, 0, 0, 0),

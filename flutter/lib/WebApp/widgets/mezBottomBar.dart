@@ -4,7 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/WebApp/values/constants.dart';
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -17,6 +19,18 @@ class MezBottomBar extends StatefulWidget {
 }
 
 class _MezBottomBarState extends State<MezBottomBar> {
+  @override
+  void initState() {
+    // ever(Get.find<LanguageController>().controllerHasInitialized, (bool val) {
+    //   if (val) {
+    //     /// do something
+    //   } else {
+    //     /// do something
+    //   }
+    // });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final lang = Get.find<LanguageController>();
@@ -40,7 +54,8 @@ class _MezBottomBarState extends State<MezBottomBar> {
                 var str = xPath.split('?');
                 QR.navigator.replaceAll(
                     "${str[0]}?lang=${(lang.userLanguageKey == LanguageType.EN) ? "en" : "es"}");
-                print("this is a test the current path is xPath $xPath");
+                mezDbgPrint(
+                    "this is a test the current path is xPath $xPath ${lang.controllerHasInitialized}");
               },
               child: Obx(
                 () => RichText(
@@ -69,37 +84,34 @@ class _MezBottomBarState extends State<MezBottomBar> {
             Spacer(),
             IconButton(
               onPressed: () async {
-                await launchUrl(Uri.parse(
-                    "https://www.linkedin.com/company/mezcalmos/about/"));
+                await launchUrl(Uri.parse(linkedInUrl));
               },
               icon: Container(
                 height: 20,
                 width: 20,
-                child: SvgPicture.asset("assets/images/web/linkedin.svg",
+                child: SvgPicture.asset(linkedInSvg,
                     color: Colors.white, semanticsLabel: 'A red up arrow'),
               ),
             ),
             IconButton(
               onPressed: () async {
-                await launchUrl(
-                    Uri.parse("https://web.facebook.com/mezcalmos"));
+                await launchUrl(Uri.parse(facbookUrl));
               },
               icon: Container(
                 height: 20,
                 width: 20,
-                child: SvgPicture.asset("assets/images/web/facebook-f.svg",
+                child: SvgPicture.asset(facebookSvg,
                     color: Colors.white, semanticsLabel: 'A red up arrow'),
               ),
             ),
             IconButton(
               onPressed: () async {
-                await launchUrl(
-                    Uri.parse("https://www.instagram.com/mezcalmos/"));
+                await launchUrl(Uri.parse(instagramUrl));
               },
               icon: Container(
                 height: 20,
                 width: 20,
-                child: SvgPicture.asset("assets/images/web/instagram.svg",
+                child: SvgPicture.asset(instagramSvg,
                     color: Colors.white, semanticsLabel: 'A red up arrow'),
               ),
             )

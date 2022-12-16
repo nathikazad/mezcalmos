@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
 //
@@ -15,12 +15,18 @@ dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ["RestaurantOrderDriverCard"];
 
 class RestaurantOrderDriverCard extends StatelessWidget {
-  const RestaurantOrderDriverCard({Key? key, required this.order})
+  RestaurantOrderDriverCard(
+      {Key? key,
+      required this.order,
+      this.isWebVersion,
+      this.navigateToChatScreenCallbac})
       : super(key: key);
   final RestaurantOrder order;
-
+  bool? isWebVersion = false;
+  Function? navigateToChatScreenCallbac;
   @override
   Widget build(BuildContext context) {
+    final txt = Theme.of(context).textTheme;
     if (order.dropoffDriver != null && order.inProcess()) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,7 +67,9 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                   fit: FlexFit.tight,
                   child: Text(
                     order.dropoffDriver!.name,
-                    style: Get.textTheme.bodyText1,
+                    style: txt.bodyText1!.copyWith(
+                        fontSize: (isWebVersion == true) ? 16 : null,
+                        fontWeight: FontWeight.w700),
                   ),
                 ),
                 if (order.customerDropOffDriverChatId != null)

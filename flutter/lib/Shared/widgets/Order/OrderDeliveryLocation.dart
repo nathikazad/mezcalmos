@@ -9,19 +9,26 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
 //
 
 class OrderDeliveryLocation extends StatelessWidget {
-  const OrderDeliveryLocation({super.key, required this.order, this.margin});
+  OrderDeliveryLocation(
+      {super.key, required this.order, this.margin, this.isWebVersion});
   final Order order;
   final EdgeInsets? margin;
+  bool? isWebVersion = false;
 
   @override
   Widget build(BuildContext context) {
+    final txt = Theme.of(context).textTheme;
     return Container(
       margin: margin,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${_i18n()["title"]} : ',
+            '${_i18n()["title"]}  ',
+            style: isWebVersion == true
+                ? txt.bodyText1!
+                    .copyWith(fontSize: 14, fontWeight: FontWeight.w500)
+                : null,
           ),
           const SizedBox(
             height: 10,
@@ -44,7 +51,9 @@ class OrderDeliveryLocation extends StatelessWidget {
                     fit: FlexFit.tight,
                     child: Text(
                       order.to.address,
-                      style: Get.textTheme.bodyText1,
+                      style: txt.bodyText1!.copyWith(
+                          fontSize: isWebVersion == true ? 16 : null,
+                          color: Colors.grey),
                       maxLines: 1,
                     ),
                   ),

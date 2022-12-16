@@ -51,7 +51,7 @@ class _ViewRestaurantScreenFroDesktopState
     scrollController = AutoScrollController();
     // TODO: implement initState
     print("the id of this item is ${QR.params['id'].toString()}");
-    getRestaurantItemsValue();
+    _getRestaurantItemsValue();
 
     super.initState();
   }
@@ -66,7 +66,7 @@ class _ViewRestaurantScreenFroDesktopState
   @override
   void didChangeDependencies() {
     if (mounted) {
-      getRestaurantItemsValue();
+      _getRestaurantItemsValue();
       // Future.delayed(Duration(seconds: 3)).then((value) {
       //   var x = (stickyKey.currentContext!.findRenderObject() as RenderBox)
       //       .size
@@ -87,7 +87,7 @@ class _ViewRestaurantScreenFroDesktopState
     return data;
   }
 
-  getRestaurantItemsValue() async {
+  Future<void> _getRestaurantItemsValue() async {
     String? rstaurantID = QR.params['id'].toString();
     var restaurnatValue =
         await Get.find<RestaurantsInfoController>().getRestaurant(rstaurantID);
@@ -113,7 +113,7 @@ class _ViewRestaurantScreenFroDesktopState
           listW = restaurant.value!.getCategories.map((e) => Container(
               width: 200,
               child: Text(
-                '${e.name![lang.userLanguageKey]}',
+                '${e.name?[lang.userLanguageKey] ?? ""}',
                 style: GoogleFonts.montserrat(
                   fontWeight: FontWeight.w500,
                   fontSize: 13,

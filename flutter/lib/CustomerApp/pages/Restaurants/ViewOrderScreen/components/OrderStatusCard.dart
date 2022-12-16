@@ -10,14 +10,17 @@ dynamic _i18n() =>
         ["Restaurants"]["ViewOrderScreen"]["components"]["OrderStatusCard"];
 
 class OrderStatusCard extends StatelessWidget {
-  const OrderStatusCard({
-    Key? key,
-    required this.ordersStates,
-    required this.order,
-  }) : super(key: key);
+  OrderStatusCard(
+      {Key? key,
+      required this.ordersStates,
+      required this.order,
+      this.isWebversion})
+      : super(key: key);
 
   final RestaurantOrder order;
   final RestaurantOrderStatus ordersStates;
+
+  bool? isWebversion = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class OrderStatusCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            order.orderStatusImage(),
+            order.orderStatusImage(isWebVersion: isWebversion!),
             _orderStatusText(context),
             Spacer(
               flex: 1,
@@ -53,7 +56,7 @@ class OrderStatusCard extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .headline3
-                  ?.copyWith(fontSize: 14.sp),
+                  ?.copyWith(fontSize: isWebversion == true ? 17 : 14.sp),
               textAlign: TextAlign.center,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,

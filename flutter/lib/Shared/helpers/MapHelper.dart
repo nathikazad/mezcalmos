@@ -198,30 +198,40 @@ Future<Route?> getDurationAndDistance(
   //units=metric => this is so we can get distances in km , cuz default is miles !
   /// Note : distance.text is in [KM] while distance.value is in [M]!
   final String url =
+      //     "https://maps.googleapis.com/maps/api/directions/json?units=metric&region=ma&destination=37.4219983%2C-122.084&origin=15.86240521224228%2C-97.07082180277403&key=AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY";
       "https://maps.googleapis.com/maps/api/directions/json?units=metric&region=mx&destination=${to.latitude}%2C${to.longitude}&origin=${from.latitude}%2C${from.longitude}&key=$placesApikey";
 
   mezDbgPrint("URL [LOCATION] ===> $url");
-  final http.Response resp = await http.get(Uri.parse(url));
-  final Map<String, dynamic> respJson = json.decode(resp.body);
+  http.Response? resp;
+  try {
+    resp = await http.get(Uri.parse(url));
+  } catch (e) {
+    mezDbgPrint("[cc]=============== Error ${e.toString()}");
+  }
 
-  if (respJson["status"] == "OK") {
-    final RideDistance distance =
-        RideDistance.fromJson(respJson["routes"]?[0]?["legs"]?[0]?["distance"]);
-    final RideDuration duration =
-        RideDuration.fromJson(respJson["routes"]?[0]?["legs"]?[0]?["duration"]);
-    final String encodedPolyLine =
-        respJson["routes"]?[0]?["overview_polyline"]?['points'];
+  if (resp != null) {
+    mezDbgPrint("[cc]=============== resp.body ${resp.body}");
+    final Map<String, dynamic> respJson = json.decode(resp.body);
 
-    mezDbgPrint(encodedPolyLine);
+    if (respJson["status"] == "OK") {
+      final RideDistance distance = RideDistance.fromJson(
+          respJson["routes"]?[0]?["legs"]?[0]?["distance"]);
+      final RideDuration duration = RideDuration.fromJson(
+          respJson["routes"]?[0]?["legs"]?[0]?["duration"]);
+      final String encodedPolyLine =
+          respJson["routes"]?[0]?["overview_polyline"]?['points'];
 
-    final List<PointLatLng> polylinePoints =
-        PolylinePoints().decodePolyline(encodedPolyLine);
-    return Route(
-      duration: duration,
-      distance: distance,
-      polylineList: polylinePoints,
-      encodedPolyLine: encodedPolyLine,
-    );
+      mezDbgPrint(encodedPolyLine);
+
+      final List<PointLatLng> polylinePoints =
+          PolylinePoints().decodePolyline(encodedPolyLine);
+      return Route(
+        duration: duration,
+        distance: distance,
+        polylineList: polylinePoints,
+        encodedPolyLine: encodedPolyLine,
+      );
+    }
   } else {
     MezSnackbar('${_i18n()["error"]}', '${_i18n()["noRoute"]}');
     return null;

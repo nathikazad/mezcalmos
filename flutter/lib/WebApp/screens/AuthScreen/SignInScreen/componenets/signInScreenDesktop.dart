@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/WebApp/controllers/authWebController.dart';
 import 'package:mezcalmos/WebApp/routes/AuthRoutes.dart';
 import 'package:mezcalmos/WebApp/screens/AuthScreen/components/MezButtonWidget.dart';
 import 'package:mezcalmos/WebApp/widgets/MezSnackbar.dart';
@@ -22,7 +22,7 @@ class SigninScreenDesktop extends StatefulWidget {
 }
 
 class _SigninScreenDesktopState extends State<SigninScreenDesktop> {
-  AuthController controller = Get.find<AuthController>();
+  FirbaseAuthController controller = Get.find<FirbaseAuthController>();
   final TextEditingController _prefixTextFieldController =
       TextEditingController();
   final TextEditingController _numberTextFieldController =

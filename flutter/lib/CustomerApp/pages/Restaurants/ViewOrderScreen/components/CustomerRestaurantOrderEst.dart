@@ -11,9 +11,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["CustomerRestaurantOrderEst"];
 
 class CustomerRestaurantOrderEst extends StatelessWidget {
-  const CustomerRestaurantOrderEst({Key? key, required this.order})
+  CustomerRestaurantOrderEst({Key? key, required this.order, this.isWebVersion})
       : super(key: key);
   final RestaurantOrder order;
+
+  bool? isWebVersion = false;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,8 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
             padding: const EdgeInsets.only(left: 3),
             child: Text(
               '${_i18n()["estTimes"]}',
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyText1!
+                  .copyWith(fontSize: (isWebVersion == true) ? 16 : null),
             ),
           ),
           SizedBox(
@@ -104,12 +107,14 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
                 children: [
                   Text(
                     "${_i18n()["delivery"]}",
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyText1!
+                        .copyWith(fontSize: (isWebVersion == true) ? 14 : null),
                     maxLines: 2,
                   ),
                   Text(
                     _getDeliveryTime()!,
-                    style: Get.textTheme.bodyText2,
+                    style: Get.textTheme.bodyText2!
+                        .copyWith(fontSize: (isWebVersion == true) ? 14 : null),
                     maxLines: 2,
                   ),
                 ],
@@ -174,12 +179,14 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
                 children: [
                   Text(
                     "${_i18n()["foodReady"]}",
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyText1!
+                        .copyWith(fontSize: (isWebVersion == true) ? 14 : null),
                     maxLines: 1,
                   ),
                   Text(
                     _getFoodReadyTime()!.inCaps,
-                    style: Get.textTheme.bodyText2,
+                    style: Get.textTheme.bodyText2!
+                        .copyWith(fontSize: (isWebVersion == true) ? 14 : null),
                     maxLines: 2,
                   ),
                 ],

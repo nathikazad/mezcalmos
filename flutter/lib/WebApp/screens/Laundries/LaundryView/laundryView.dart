@@ -58,12 +58,7 @@ class _LaundryViewState extends State<LaundryView> {
         builder: (context, snapShot) {
           if (snapShot.hasData && snapShot.data == true && laundry != null) {
             return Scaffold(
-                appBar: InstallAppBarComponent(
-                  automaticallyGetBack: (MezCalmosResizer.isMobile(context) ||
-                          MezCalmosResizer.isSmallDesktop(context))
-                      ? false
-                      : true,
-                ),
+                appBar: InstallAppBarComponent(),
                 bottomNavigationBar: MezBottomBar(),
                 body: getResponciveWidget(context, laundry!));
           } else {

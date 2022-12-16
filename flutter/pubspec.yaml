@@ -22,6 +22,7 @@ dependencies:
   firebase_database: ^9.0.15
   firebase_auth: ^3.3.19
   firebase_storage: ^10.2.9
+  firebase_messaging: ^12.0.1
   cloud_functions: ^3.2.16
   location: ^4.2.0
   shimmer: ^2.0.0
@@ -49,12 +50,14 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   ionicons: ^0.2.1
   store_redirect: ^2.0.1
+  grouped_list: ^5.1.1
   qlevar_router: ^1.6.3
   rect_getter: ^1.1.0
   scroll_to_index: ^3.0.1
   google_maps_flutter_web: ^0.4.0+2
   sticky_headers: ^0.3.0+2
   flutter_svg: ^1.1.5
+  another_flushbar: ^1.12.29
 
 
 

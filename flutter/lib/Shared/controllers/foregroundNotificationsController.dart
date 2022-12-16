@@ -7,17 +7,20 @@ import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 typedef shouldSaveNotification = bool Function(Notification notification);
 
 class ForegroundNotificationsController extends GetxController {
+  ForegroundNotificationsController({this.isWebVersion});
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
 
   RxList<Notification> notifications = RxList<Notification>();
 
   StreamSubscription? _notificationNodeAddListener;
   StreamSubscription? _notificationNodeRemoveListener;
+  bool? isWebVersion = false;
+
   StreamController<Notification> _displayNotificationsStreamController =
       StreamController<Notification>.broadcast();
   late String _notificationNode;
@@ -38,6 +41,7 @@ class ForegroundNotificationsController extends GetxController {
       String notificationNode,
       // ignore: avoid_annotating_with_dynamic
       Notification Function(String key, dynamic value) notificationHandler) {
+    var x = <Notification>[];
     // mezDbgPrint(
     //     "ForegroundNotificationsController:startListeningForNotifications");
     // mezDbgPrint(notificationNode);
@@ -49,12 +53,25 @@ class ForegroundNotificationsController extends GetxController {
         .onChildAddedWitchCatch()
         .then((Stream<DatabaseEvent> stream) {
       _notificationNodeAddListener = stream.listen((event) {
+        mezDbgPrint("[cc] ===== . inside stream   ${event.snapshot.value}");
         try {
-          final Notification _notification =
-              notificationHandler(event.snapshot.key!, event.snapshot.value);
-          final bool alreadyOnLinkPage = isCurrentRoute(_notification.linkUrl);
+          Notification? _notification;
+          try {
+            _notification =
+                notificationHandler(event.snapshot.key!, event.snapshot.value);
+            mezDbgPrint("this is a test inside the stream  ${_notification}");
+            final bool alreadyOnLinkPage =
+                isCurrentRoute(_notification.linkUrl, isWebVersion!);
+            mezDbgPrint("[cc] the notifications length is ${x.length}");
+            x.add(_notification);
+            mezDbgPrint("[cc] the notifications length is ${x.length}");
 
-          switch (_notification.notificationAction) {
+            notifications.value.add(_notification);
+          } catch (e) {
+            mezDbgPrint("[cc] ERORR in Notification ${e.toString()}");
+          }
+
+          switch (_notification!.notificationAction) {
             case NotificationAction.ShowPopUp:
               if (Get.find<AppLifeCycleController>().appState ==
                   material.AppLifecycleState.resumed) {
@@ -65,17 +82,17 @@ class ForegroundNotificationsController extends GetxController {
               _displayNotificationsStreamController.add(_notification);
               break;
             case NotificationAction.ShowSnackbarOnlyIfNotOnPage:
-              if (!alreadyOnLinkPage) {
-                _displayNotificationsStreamController.add(_notification);
-              }
+              // if (!alreadyOnLinkPage) {
+              //   _displayNotificationsStreamController.add(_notification);
+              // }
               break;
           }
 
-          if (!alreadyOnLinkPage) {
-            notifications.add(_notification);
-          } else {
-            removeNotification(_notification.id);
-          }
+          // if (!alreadyOnLinkPage) {
+          // if (true) {
+          // } else {
+          //   removeNotification(_notification.id);
+          // }
         } on StateError {
           mezDbgPrint("Invalid notification");
         }
@@ -102,6 +119,7 @@ class ForegroundNotificationsController extends GetxController {
             .toList();
       });
     });
+    mezDbgPrint("[cc] the notifications length is ${x.length}");
   }
 
   void removeNotification(String notificationId) {
@@ -137,4 +155,12 @@ class ForegroundNotificationsController extends GetxController {
     _notificationNodeRemoveListener?.cancel();
     super.onClose();
   }
+}
+
+bool routeMatch(String routeA, String routeB) {
+  return routeA.split("?")[0] == routeB.split("?")[0];
+}
+
+bool isCurrentRoute(String route, bool isWebVersion) {
+  return routeMatch(route, isWebVersion ? QR.currentPath : Get.currentRoute);
 }

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/ViewCartScreen.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
@@ -17,6 +16,8 @@ enum PickerChoice {
   NewCard,
   BankTransfer
 }
+
+enum CardChoice { SavedCard, GooglePay, ApplePay }
 
 typedef PaymentOption = Map<PickerChoice, CreditCard?>;
 

@@ -1,9 +1,13 @@
 // Usefull when trying to make Sizes adptable!
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'dart:html' as html;
+import 'package:google_fonts/google_fonts.dart';
+import 'package:image/image.dart' as image;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,11 +16,13 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../WebApp/screens/AuthScreen/components/MezButtonWidget.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['Shared']['helpers']['ImageHelper'];
@@ -62,9 +68,60 @@ Image showDefaultOrUserImg({Uint8List? memoryImg}) {
         assetInCaseFailed: aDefaultDbUserImgAsset);
   }
   return mLoadImage(
-      url: Get.find<AuthController>().user!.bigImage ??
-          Get.find<AuthController>().user!.image,
+      url: Get.find<FirbaseAuthController>().user!.bigImage ??
+          Get.find<FirbaseAuthController>().user!.image,
       assetInCaseFailed: aDefaultDbUserImgAsset);
+}
+
+Future<imPicker.ImageSource?> pickImageChoiceDialogForWeb(
+    BuildContext context) {
+  return showDialog<imPicker.ImageSource?>(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      // title: const Text('AlertDialog Title'),
+      content: Container(
+        width: 100.sp,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            MezButton(
+              backColor: Colors.white,
+              content: Container(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  "Upload photo",
+                  style: GoogleFonts.montserrat(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500),
+                ),
+              ),
+              onPress: () {
+                Navigator.pop(context, imPicker.ImageSource.gallery);
+              },
+            ),
+            Divider(),
+            MezButton(
+              backColor: Colors.white,
+              content: Container(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  "Cancel",
+                  style: GoogleFonts.montserrat(
+                      color: Colors.red,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500),
+                ),
+              ),
+              onPress: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }
 
 Future<imPicker.ImageSource?> imagePickerChoiceDialog(
@@ -265,40 +322,95 @@ Image mLoadImage({
 // BitmapLoading stuff -------------------
 
 Future<BitmapDescriptor> bitmapDescriptorLoader(asset, num width, num height,
-    {bool isBytes = false}) async {
+    {bool isBytes = false, String? urlStr}) async {
+  mezDbgPrint(
+      "[cc] this function ($width , $height) called bitmapDescriptorLoader  :: Asset => ${asset.runtimeType}  | isByte ==> $isBytes");
   return BitmapDescriptor.fromBytes(
-      await getBytesFromCanvas(width, height, asset, isBytes: isBytes));
+    asset,
+    size: Size(
+      width.toDouble() / 2,
+      height.toDouble() / 2,
+    ),
+    // await getBytesFromCanvas(width, height, asset, isBytes: isBytes),
+  );
   // return await getBytesFromCanvas(width, height, asset, isBytes: isBytes);
 }
 
-Future<Uint8List> getBytesFromCanvas(num width, num height, urlAsset,
-    {bool isBytes = false}) async {
-  final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
-  final ui.Canvas canvas = ui.Canvas(pictureRecorder);
-  late final ByteData datai;
+// Future<Uint8List> getBytesFromCanvas(num width, num height, urlAsset,
+//     {bool isBytes = false, String? urlStr}) async {
+//   // try {
+//   mezDbgPrint("[cc]  1");
+//   final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
+//   mezDbgPrint("[cc]  2");
 
-  if (!isBytes) datai = await rootBundle.load(urlAsset);
-  final ui.Image imaged =
-      await loadImage(!isBytes ? new Uint8List.view(datai.buffer) : urlAsset);
-  canvas.drawImageRect(
-    imaged,
-    ui.Rect.fromLTRB(
-        0.0, 0.0, imaged.width.toDouble(), imaged.height.toDouble()),
-    ui.Rect.fromLTRB(0.0, 0.0, width.toDouble(), height.toDouble()),
-    new ui.Paint(),
-  );
+//   final ui.Canvas canvas = ui.Canvas(pictureRecorder);
+//   mezDbgPrint("[cc]  3");
 
-  final ui.Image img = await pictureRecorder
-      .endRecording()
-      .toImage(width.toInt(), height.toInt());
-  final ByteData? data = await img.toByteData(format: ui.ImageByteFormat.png);
-  return data!.buffer.asUint8List();
-}
+//   late final ByteData datai;
+
+//   if (!isBytes) {
+//     mezDbgPrint("[cc]  4");
+//     datai = await rootBundle.load(urlAsset);
+//   }
+//   mezDbgPrint("[cc]  5 ${urlAsset.runtimeType}");
+//   // mezDbgPrint("[cc]  5-1 :: datai.buffer :: ${datai.buffer}");
+//   mezDbgPrint("[cc]  5-2 :: urlAsset :: ${urlAsset}");
+
+//   final ui.Image imaged = await loadImage(urlAsset);
+//   mezDbgPrint("[cc]  6 imaged  ${imaged.height} \\ ${imaged.height}");
+
+//   var x = canvas.drawImageRect(
+//     imaged,
+//     ui.Rect.fromLTRB(
+//         0.0, 0.0, imaged.width.toDouble(), imaged.height.toDouble()),
+//     ui.Rect.fromLTRB(0.0, 0.0, width.toDouble(), height.toDouble()),
+//     ui.Paint(),
+//   );
+//   mezDbgPrint("[cc]  7 ${imaged.height} \\ ${imaged.height}");
+
+//   final ui.Image img = await pictureRecorder
+//       .endRecording()
+//       .toImage(width.toInt(), height.toInt());
+//   mezDbgPrint("[cc]  8 image");
+
+//   // final ui.Image img = await pictureRecorder
+//   //     .endRecording()
+//   //     .toImage(width.toInt(), height.toInt());
+//   // final ByteData? data = await img.toByteData(format: ui.ImageByteFormat.png);
+//   image.Image baseSizeImage = image.decodeImage(urlAsset.buffer.asUint8List())!;
+//   image.Image resizeImage = image.copyResize(baseSizeImage,
+//       height: height.toInt(), width: width.toInt());
+//   ui.Codec codec =
+//       await ui.instantiateImageCodec(resizeImage.data.buffer.asUint8List());
+//   codec.getNextFrame().then((value) {
+//     mezDbgPrint("[cc]================= this is atest ${value.image}");
+//   });
+//   // var t = img as html.File;
+
+//   // BlobImage image1 = new BlobImage(t);
+
+//   // var data = await data1.toByteData(format: ui.ImageByteFormat.png);
+//   final bytes = html.File(urlAsset, urlStr!);
+//   final reader = html.FileReader();
+//   // reader.readAsArrayBuffer(image1 as html.File);
+//   final data2 = await reader.onLoad.first;
+//   mezDbgPrint("[cc]  9  data ${data2}");
+
+//   // return data!.buffer.asUint8List();
+//   return reader.result as Uint8List;
+//   // } catch (e, s) {
+//   //   mezDbgPrint(
+//   //       "[cc] -- getBytesFromCanvas::exception:: ${e.runtimeType}\nStackTrace $s");
+//   // }
+//   return urlAsset;
+// }
 
 Future<ui.Image> loadImage(Uint8List img) async {
   final Completer<ui.Image> completer = new Completer();
+
   ui.decodeImageFromList(img, (ui.Image img) {
-    return completer.complete(img);
+    mezDbgPrint("[cc] COMPLEEEEETER DONE! $img");
+    completer.complete(img);
   });
   return completer.future;
 }

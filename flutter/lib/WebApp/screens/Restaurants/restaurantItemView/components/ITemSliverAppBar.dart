@@ -1,13 +1,14 @@
+import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-
-import 'package:qlevar_router/qlevar_router.dart';
-
+import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
@@ -24,11 +25,11 @@ class ItemSliverAppBar extends StatelessWidget {
       elevation: 0.4,
       expandedHeight: (item.image != null) ? 220 : 0,
       automaticallyImplyLeading: false,
-      // titleSpacing: 12,
-
+      titleSpacing: 12,
+      leadingWidth: 35,
       leading: _BackButtonAppBar(),
       actions: <Widget>[
-        //getAppbarIconsButton(),
+        getAppbarIconsButton(),
       ],
       pinned: true,
       floating: false,
@@ -36,16 +37,17 @@ class ItemSliverAppBar extends StatelessWidget {
         titlePadding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         centerTitle: true,
         title: Container(
-          width: 70.w,
+          width: 55.w,
+          padding: const EdgeInsets.only(bottom: 4),
           child: Text(
             " ${item.name[userLanguage]!} ",
             textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.headline3!.copyWith(
-                fontSize: 13.sp,
-                color: Colors.white,
-                fontWeight: FontWeight.w600),
+            style: Theme.of(context)
+                .textTheme
+                .headline3!
+                .copyWith(fontSize: 13.sp, color: Colors.white),
           ),
         ),
         background: (item.image != null)
@@ -94,26 +96,50 @@ class ItemSliverAppBar extends StatelessWidget {
   }
 
   Widget _BackButtonAppBar() {
-    return Transform.scale(
-      scale: 0.6,
+    return Container(
+      margin: EdgeInsets.only(left: 5),
+      child: FittedBox(
+        fit: BoxFit.fitWidth,
+        child: InkWell(
+          onTap: () {
+            Get.back();
+          },
+          child: Ink(
+            width: 25,
+            height: 25,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8), color: Colors.white),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Icon(
+                Icons.arrow_back_ios_new,
+                color: primaryBlueColor,
+                size: 15,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _ordersAppBarIcon() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 3, right: 12),
       child: InkWell(
+        customBorder: CircleBorder(),
         onTap: () {
-          QR.back();
+          // Get.toNamed(kOrdersRoute);
         },
         child: Ink(
+          padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.9),
-                  spreadRadius: 0,
-                  blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
-                ),
-              ],
-              color: Colors.white),
+            shape: BoxShape.circle,
+            color: Colors.white,
+          ),
           child: Icon(
-            Icons.arrow_back_ios_new,
+            Icons.watch_later,
+            size: 20,
             color: primaryBlueColor,
           ),
         ),
@@ -121,76 +147,78 @@ class ItemSliverAppBar extends StatelessWidget {
     );
   }
 
-  // Widget _noUserButton() {
-  //   return Padding(
-  //     padding: const EdgeInsets.only(left: 3, right: 16),
-  //     child: InkWell(
-  //       customBorder: CircleBorder(),
-  //       onTap: () {
-  //         Get.toNamed(kSignInRouteOptional);
-  //       },
-  //       child: Ink(
-  //         padding: const EdgeInsets.all(7),
-  //         decoration: BoxDecoration(
-  //           shape: BoxShape.circle,
-  //           color: Colors.white,
-  //         ),
-  //         child: Icon(
-  //           Icons.person,
-  //           size: 20,
-  //           color: primaryBlueColor,
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+  Widget _noUserButton() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 3, right: 16),
+      child: InkWell(
+        customBorder: CircleBorder(),
+        onTap: () {
+          Get.toNamed(kSignInRouteOptional);
+        },
+        child: Ink(
+          padding: const EdgeInsets.all(7),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+          ),
+          child: Icon(
+            Icons.person,
+            size: 20,
+            color: primaryBlueColor,
+          ),
+        ),
+      ),
+    );
+  }
 
-  // Widget _notificationAppBarIcon() {
-  //   return Obx(() {
-  //     if (Get.find<ForegroundNotificationsController>().notifications.length >
-  //         0) {
-  //       return Padding(
-  //         padding: const EdgeInsets.only(left: 3, right: 7),
-  //         child: InkWell(
-  //           customBorder: CircleBorder(),
-  //           onTap: () {
-  //             Get.toNamed(kNotificationsRoute);
-  //           },
-  //           child: Badge(
-  //             badgeColor: Colors.red,
-  //             showBadge: true,
-  //             position: BadgePosition.topEnd(top: 0, end: 0),
-  //             child: Ink(
-  //               padding: const EdgeInsets.all(5),
-  //               decoration: BoxDecoration(
-  //                 shape: BoxShape.circle,
-  //                 color: Colors.white,
-  //               ),
-  //               child: Icon(
-  //                 Icons.notifications,
-  //                 color: primaryBlueColor,
-  //                 size: 20,
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       );
-  //     } else {
-  //       return Container();
-  //     }
-  //   });
-  // }
+  Widget _notificationAppBarIcon() {
+    return Obx(() {
+      if (Get.find<ForegroundNotificationsController>().notifications.length >
+          0) {
+        return Padding(
+          padding: const EdgeInsets.only(left: 3, right: 7),
+          child: InkWell(
+            customBorder: CircleBorder(),
+            onTap: () {
+              Get.toNamed(kNotificationsRoute);
+            },
+            child: Badge(
+              badgeColor: Colors.red,
+              showBadge: true,
+              position: BadgePosition.topEnd(top: 0, end: 0),
+              child: Ink(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+                child: Icon(
+                  Icons.notifications,
+                  color: primaryBlueColor,
+                  size: 20,
+                ),
+              ),
+            ),
+          ),
+        );
+      } else {
+        return Container();
+      }
+    });
+  }
 
-  // Widget getAppbarIconsButton() {
-  //   return Obx(() {
-  //     return Row(
-  //       children: [
-  //         if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
-  //         if (Get.find<AuthController>().isUserSignedIn)
-  //           _notificationAppBarIcon(),
-  //         if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
-  //       ],
-  //     );
-  //   });
-  // }
+  Widget getAppbarIconsButton() {
+    return Obx(() {
+      return Row(
+        children: [
+          if (!Get.find<FirbaseAuthController>().isUserSignedIn)
+            _noUserButton(),
+          if (Get.find<FirbaseAuthController>().isUserSignedIn)
+            _notificationAppBarIcon(),
+          if (Get.find<FirbaseAuthController>().isUserSignedIn)
+            _ordersAppBarIcon(),
+        ],
+      );
+    });
+  }
 }

@@ -16,7 +16,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart' as sharedRoute;
+import 'package:mezcalmos/Shared/routes/sharedRouter.dart' as sharedRoute;
 import 'package:sizer/sizer.dart';
 
 class LaundryOrderRequestView extends StatefulWidget {

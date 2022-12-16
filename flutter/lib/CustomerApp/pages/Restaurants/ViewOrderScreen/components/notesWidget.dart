@@ -6,7 +6,9 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewOrderScreen"]["components"]["notesWidget"];
 
-Widget notesWidget(Rxn<RestaurantOrder> order) {
+Widget notesWidget(Rxn<RestaurantOrder> order, BuildContext context,
+    {bool? isWebVersion = false}) {
+  final txt = Theme.of(context).textTheme;
   return Card(
     margin: const EdgeInsets.only(top: 20),
     child: Container(
@@ -17,14 +19,16 @@ Widget notesWidget(Rxn<RestaurantOrder> order) {
         children: <Widget>[
           Text(
             _i18n()['notes'],
-            style: Get.textTheme.bodyText1,
+            style: txt.bodyText1!
+                .copyWith(fontSize: (isWebVersion = true) ? 14 : null),
             textAlign: TextAlign.left,
           ),
           const SizedBox(height: 10),
           Container(
             child: Text(
               order.value!.notes!,
-              style: Get.textTheme.subtitle2,
+              style: txt.subtitle2!
+                  .copyWith(fontSize: (isWebVersion = true) ? 13 : null),
             ),
           ),
         ],

@@ -6,7 +6,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
@@ -20,7 +20,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 class MessageController extends GetxController {
   Rxn<Chat> chat = Rxn();
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
-  AuthController _authController = Get.find<AuthController>();
+  FirbaseAuthController _authController = Get.find<FirbaseAuthController>();
   SettingsController _settingsController = Get.find<SettingsController>();
   StreamSubscription? chatListener;
   late AppType appType;

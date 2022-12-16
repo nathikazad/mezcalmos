@@ -9,12 +9,11 @@ dynamic _i18n() =>
         ["Restaurants"]["ViewOrderScreen"]["components"]["OrdersItemsCard"];
 
 class OrderItemsCard extends StatelessWidget {
-  const OrderItemsCard({
-    Key? key,
-    required this.order,
-  }) : super(key: key);
+  OrderItemsCard({Key? key, required this.order, this.isWebVersion})
+      : super(key: key);
 
   final RestaurantOrder order;
+  bool? isWebVersion = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +28,12 @@ class OrderItemsCard extends StatelessWidget {
           padding: const EdgeInsets.only(left: 3),
           child: Text(
             '${_i18n()["orderItems"]}',
-            style: txt.bodyText1,
+            style: txt.bodyText1!
+                .copyWith(fontSize: (isWebVersion == true) ? 16 : null),
           ),
         ),
         SizedBox(
-          height: 10,
+          height: (isWebVersion == true) ? 10 : 15,
         ),
         Column(
           children: List.generate(
@@ -41,6 +41,7 @@ class OrderItemsCard extends StatelessWidget {
               (int index) => OrderItemsItemCard(
                     item: order.items[index],
                     order: order,
+                    isWebVersion: isWebVersion,
                   )),
         )
       ],

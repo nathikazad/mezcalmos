@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/components/RestaurantGridItemCard.dart';
@@ -201,7 +202,11 @@ class _ViewRestaurantScreenFroMobileState
     final List<Category> data = restaurant.getCategories;
     if (restaurant.getItemsWithoutCategory != null &&
         restaurant.getItemsWithoutCategory!.isNotEmpty) {
-      data.add(restaurant.getNoCategory!);
+      try {
+        data.add(restaurant.getNoCategory!);
+      } catch (e) {
+        mezDbgPrint("this is a problem ${e.toString()}");
+      }
     }
     return data;
   }

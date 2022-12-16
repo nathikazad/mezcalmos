@@ -50,16 +50,15 @@ class _SignInScreenState extends State<SignInScreen> {
             }
 
             return Scaffold(
-              appBar: InstallAppBarComponent(
-                automaticallyGetBack: true,
-              ),
+              appBar: InstallAppBarComponent(),
               bottomNavigationBar: const MezBottomBar(),
               body: Scaffold(
                 appBar: (MezCalmosResizer.isMobile(context) ||
                         MezCalmosResizer.isSmallMobile(context))
                     ? null
                     : WebAppBarComponent(
-                        type: WebAppBarType.Normal,
+                        type: WebAppBarType.Normal.obs,
+                        automaticallyGetBack: true,
                       ),
                 body: LayoutBuilder(
                   builder: (context, constarints) {

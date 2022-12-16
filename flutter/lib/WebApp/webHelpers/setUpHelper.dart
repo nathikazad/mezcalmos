@@ -1,54 +1,120 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
+import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/WebApp/authHooks.dart';
-import 'package:mezcalmos/WebApp/controllers/authWebController.dart';
+import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
+import 'package:mezcalmos/WebApp/screens/Restaurants/resturentListView/controller/ListRestaurantController.dart';
 
 Function signInCallback = AuthHooks.onSignInHook;
 Function signOutCallback = AuthHooks.onSignOutHook;
 
-Future<void> putControllers() async {
+Future<bool> putControllers() async {
+  Completer<List<bool>> x = Completer<List<bool>>();
+  List<bool> areAllIntilized = [];
+
   if (!Get.isRegistered<LanguageController>()) {
     await Get.put<LanguageController>(LanguageController())
         .isLamgInitialized
         .stream
-        .first;
+        .first
+        .then((value) {
+      mezDbgPrint("]]]]]]]]]] the langController is intailized ]]]]]]]]]]]]");
+
+      areAllIntilized.add(value);
+    });
   }
 
-  if (!Get.isRegistered<AuthController>()) {
-    Get.put<AuthController>(
-      AuthController(signInCallback, signOutCallback),
+  if (!Get.isRegistered<FirbaseAuthController>()) {
+    await Get.put<FirbaseAuthController>(
+      FirbaseAuthController(signInCallback, signOutCallback),
       permanent: true,
     );
+    mezDbgPrint("]]]]]]]]]] the authController is intailized ]]]]]]]]]]]]");
+    areAllIntilized.add(true);
+  }
+  if (!Get.isRegistered<RestaurantController>()) {
+    await Get.put(RestaurantController(), permanent: true);
+    mezDbgPrint(
+        "]]]]]]]]]] the RestaurantController is intailized ]]]]]]]]]]]]");
+    areAllIntilized.add(true);
   }
 
   if (!Get.isRegistered<RestaurantsInfoController>()) {
-    Get.put<RestaurantsInfoController>(
+    await Get.put<RestaurantsInfoController>(
       RestaurantsInfoController(),
       permanent: true,
     );
+    mezDbgPrint(
+        "]]]]]]]]]] the RestaurantsInfoController is intailized ]]]]]]]]]]]]");
+    areAllIntilized.add(true);
   }
-  // if (!Get.isRegistered<AppLifeCycleController>()) {
-  //   Get.put<AppLifeCycleController>(
-  //     AppLifeCycleController(logs: true),
-  //     permanent: true,
-  //   );
-  // }
+  if (!Get.isRegistered<AppLifeCycleController>()) {
+    await Get.put<AppLifeCycleController>(
+      AppLifeCycleController(logs: true),
+      permanent: true,
+    );
+    mezDbgPrint(
+        "]]]]]]]]]] the AppLifeCycleController is intailized ]]]]]]]]]]]]");
+    areAllIntilized.add(true);
+  }
   if (!Get.isRegistered<LaundryController>()) {
-    Get.put<LaundryController>(
+    await Get.put<LaundryController>(
       LaundryController(),
       permanent: true,
     );
+    mezDbgPrint("]]]]]]]]]] the LaundryController is intailized ]]]]]]]]]]]]");
+    areAllIntilized.add(true);
   }
+
+  if (!Get.isRegistered<MezWebSideBarController>()) {
+    await Get.put<MezWebSideBarController>(
+      MezWebSideBarController(),
+      permanent: true,
+    );
+    mezDbgPrint(
+        "]]]]]]]]]] the MezWebSideBarController is intailized ]]]]]]]]]]]]");
+    areAllIntilized.add(true);
+  }
+  if (Get.find<FirbaseAuthController>().isUserSignedIn) {
+    await AuthHooks.onSignInHook().then((value) {
+      mezDbgPrint(
+          "]]]]]]]]]] the MezWebSideBarController is intailized ]]]]]]]]]]]]");
+      areAllIntilized.add(true);
+    });
+  }
+  if (!Get.isRegistered<ListRestaurantsController>()) {
+    await Get.put<ListRestaurantsController>(
+      ListRestaurantsController(),
+    );
+    areAllIntilized.add(true);
+  }
+
+  x.complete(areAllIntilized);
+  var isItailized = false;
+  await x.future.then((values) {
+    isItailized = !values.contains(false);
+    mezDbgPrint(
+        "]]]]]]]]]] inside the setup function ${isItailized} ]]]]]]]]]]]]");
+  });
+  return Future<bool>.delayed(Duration(seconds: 3)).then((value) async {
+    return isItailized;
+  });
 }
 
 Future<bool> setupFirebase(
@@ -108,7 +174,7 @@ Future<bool> setupFirebase(
       throw Exception("Invalid Launch Mode");
     }
 
-    Get.put(
+    await Get.put(
         FirebaseDb(
           dbUrl: _host + dbRoot,
           firebaseDatabase: firebaseDb,
@@ -116,14 +182,10 @@ Future<bool> setupFirebase(
         ),
         permanent: true);
   }
-
-  putControllers();
-  return Future.delayed(Duration(
-    milliseconds: 500,
-  )).then((value) {
-    if (func != null) {
-      func();
-    }
-    return true;
+  //func?.call();
+  //final bool isItailized =
+  return await putControllers().then((value) {
+    return value;
   });
+  // return isItailized;
 }

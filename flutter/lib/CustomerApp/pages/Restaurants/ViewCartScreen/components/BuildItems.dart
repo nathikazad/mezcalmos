@@ -6,7 +6,7 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantControlle
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/Components/itemChosenChoices.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/ItemInformationCart.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
+// import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -18,7 +18,8 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewCartScreen"]["components"]["BuildItems"];
 
 class CartItemsBuilder extends StatelessWidget {
-  const CartItemsBuilder({Key? key}) : super(key: key);
+  CartItemsBuilder({Key? key, this.isWebVersion}) : super(key: key);
+  bool? isWebVersion = false;
 
   /// RestaurantController
   static final RestaurantController _restaurantController =
@@ -40,6 +41,7 @@ class CartItemsBuilder extends StatelessWidget {
             child: MyExpansionPanelComponent(
               child: Flexible(
                   child: ItemInformationCart(
+                isWebVersion: isWebVersion,
                 item: cartItem,
                 showImage: _restaurantController.showItemsImages,
                 imageUrl: cartItem.item.image,
@@ -66,7 +68,7 @@ class CartItemsBuilder extends StatelessWidget {
               onEdit: () {
                 mezDbgPrint(
                     " the data inside the expansion ${cartItem.toFirebaseFunctionFormattedJson()}");
-                Get.toNamed(editCartItemRoute("${cartItem.idInCart}"));
+                //   Get.toNamed(editCartItemRoute("${cartItem.idInCart}"));
               },
             ),
           ));

@@ -33,12 +33,13 @@ class RestaurantsInfoController extends GetxController {
     // ignore: avoid_annotating_with_dynamic
     (snapshot.value as dynamic)
         ?.forEach((dynamic restaurantId, dynamic restaurantData) {
+      //restaurantId.toString() != "GVTnpkENslMDiYRENOvKVINtt133"
       if (restaurantData["state"]["available"] == true) {
         try {
           restaurants.add(Restaurant.fromRestaurantData(
               restaurantId: restaurantId, restaurantData: restaurantData));
         } catch (e, stc) {
-          mezDbgPrint("Restaurant add error");
+          mezDbgPrint("Restaurant add error ${restaurantId}");
           mezDbgPrint("Restaurant add error $stc");
         }
       }

@@ -4,14 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/components/itemSliverAppBar.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreenInfo/components/restaurantInfoTabForDesktop.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreenInfo/components/restaurantInfoTabForMobile.dart';
 import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
+import 'package:mezcalmos/WebApp/screens/components/webAppBarComponent.dart';
+import 'package:mezcalmos/WebApp/widgets/SideWebBarWidget/SideWebBarWidget.dart';
 import 'package:mezcalmos/WebApp/widgets/mezBottomBar.dart';
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 import 'package:mezcalmos/WebApp/widgets/mezLoaderWidget.dart';
@@ -32,6 +36,9 @@ class ViewRestaurantsScrennInfo extends StatefulWidget {
 
 class _ViewRestaurantsScrennInfoState extends State<ViewRestaurantsScrennInfo> {
   Restaurant? restaurant;
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
+  final FirbaseAuthController _authcontroller =
+      Get.find<FirbaseAuthController>();
 
   @override
   void didChangeDependencies() {
@@ -67,31 +74,45 @@ class _ViewRestaurantsScrennInfoState extends State<ViewRestaurantsScrennInfo> {
             final LanguageController Lcontroller =
                 Get.find<LanguageController>();
 
+            final MezWebSideBarController drawerController =
+                Get.find<MezWebSideBarController>();
+
             return Scaffold(
-              appBar: InstallAppBarComponent(
-                automaticallyGetBack: (MezCalmosResizer.isMobile(context) ||
-                        MezCalmosResizer.isSmallMobile(context))
-                    ? false
-                    : true,
-              ),
+              key: drawerController.drawerKey,
+              drawer: drawerController.frontDrawerContent,
+              endDrawer: drawerController.endDrawerContent,
+              appBar: InstallAppBarComponent(),
               bottomNavigationBar: MezBottomBar(),
               body: LayoutBuilder(builder: ((context, constraints) {
                 return (restaurant != null)
-                    ? CustomScrollView(
-                        slivers: [
-                          ItemSliverAppBar(
-                            urlImg: "${restaurant!.info.image}",
-                          ),
-                          SliverToBoxAdapter(
-                              child: ((MezCalmosResizer.isMobile(context) ||
-                                      (MezCalmosResizer.isSmallMobile(context)))
-                                  ? RestaurantInfoTabForMobile(
-                                      restaurant: restaurant!,
-                                    )
-                                  : RestaurantsInfoTapForDesktop(
-                                      restaurant: restaurant,
-                                    )))
-                        ],
+                    ? Scaffold(
+                        appBar: WebAppBarComponent(
+                          automaticallyGetBack:
+                              (MezCalmosResizer.isMobile(context) ||
+                                      MezCalmosResizer.isSmallMobile(context))
+                                  ? false
+                                  : true,
+                          type: _authcontroller.fireAuthUser?.uid != null
+                              ? WebAppBarType.WithCartActionButton.obs
+                              : WebAppBarType.WithSignInActionButton.obs,
+                        ),
+                        body: CustomScrollView(
+                          slivers: [
+                            ItemSliverAppBar(
+                              urlImg: "${restaurant!.info.image}",
+                            ),
+                            SliverToBoxAdapter(
+                                child: ((MezCalmosResizer.isMobile(context) ||
+                                        (MezCalmosResizer.isSmallMobile(
+                                            context)))
+                                    ? RestaurantInfoTabForMobile(
+                                        restaurant: restaurant!,
+                                      )
+                                    : RestaurantsInfoTapForDesktop(
+                                        restaurant: restaurant,
+                                      )))
+                          ],
+                        ),
                       )
                     : const Scaffold(
                         body: Center(

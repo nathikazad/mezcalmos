@@ -173,10 +173,10 @@ class UnfoundPageFor extends StatelessWidget {
             ),
             InkWell(
               onTap: (() async {
-                // js.context.callMethod('open', ['https://www.mezcalmos.com/']);
-                // html.window.open('https://www.mezcalmos.com/', "");
-                js.context.callMethod(
-                    'open', ['https://www.mezcalmos.com/', '_self']);
+                // js.context.callMethod(
+                //     'open', ['https://www.mezcalmos.com/', '_self']);
+
+                QR.to("/restaurants");
               }),
               child: Container(
                 padding: EdgeInsets.symmetric(

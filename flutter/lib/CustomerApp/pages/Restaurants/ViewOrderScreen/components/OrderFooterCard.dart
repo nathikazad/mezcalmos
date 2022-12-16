@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() =>
@@ -14,9 +14,17 @@ dynamic _i18n() =>
         ["Restaurants"]["ViewOrderScreen"]["components"]["OrderFooterCard"];
 
 class OrderFooterCard extends StatefulWidget {
-  const OrderFooterCard({Key? key, required this.order}) : super(key: key);
+  OrderFooterCard(
+      {Key? key,
+      required this.order,
+      this.isWebVersion,
+      this.navigationCallback})
+      : super(key: key);
 
   final RestaurantOrder order;
+
+  bool? isWebVersion = false;
+  Function? navigationCallback;
 
   @override
   State<OrderFooterCard> createState() => _OrderFooterCardState();
@@ -44,23 +52,29 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                       );
 
                       if (resp.success) {
-                        Get.until(
-                          (Route<dynamic> route) =>
-                              route.settings.name == kHomeRoute,
-                        );
-                        MezSnackbar(
-                          _i18n()["titleSuccess"],
-                          _i18n()["orderCancelSuccess"],
-                          position: SnackPosition.TOP,
-                        );
+                        if (widget.isWebVersion == true) {
+                          Navigator.of(context).pop();
+                          widget.navigationCallback?.call();
+                        } else {
+                          Get.until(
+                            (Route<dynamic> route) =>
+                                route.settings.name == kHomeRoute,
+                          );
+                        }
+
+                        MezSnackbar(_i18n()["titleSuccess"],
+                            _i18n()["orderCancelSuccess"],
+                            position: SnackPosition.TOP,
+                            context:
+                                (widget.isWebVersion == true) ? context : null);
                       } else {
-                        MezSnackbar(
-                          _i18n()["titleFailed"],
-                          _i18n()["orderCancelFailed"],
-                          position: SnackPosition.TOP,
-                        );
+                        MezSnackbar(_i18n()["titleFailed"],
+                            _i18n()["orderCancelFailed"],
+                            position: SnackPosition.TOP,
+                            context:
+                                (widget.isWebVersion == true) ? context : null);
                       }
-                    });
+                    }, isWebVersion: widget.isWebVersion);
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: Color(0xFFF9D8D6),
@@ -69,8 +83,9 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                     alignment: Alignment.center,
                     child: Text(
                       '${_i18n()["cancelOrder"]}',
-                      style:
-                          Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+                      style: Get.textTheme.bodyText1?.copyWith(
+                          color: Colors.red,
+                          fontSize: (widget.isWebVersion == true) ? 15 : null),
                     ),
                   ),
                 ),

@@ -5,13 +5,15 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class ItemChosenChoiceComponent extends StatelessWidget {
-  ItemChosenChoiceComponent({
-    Key? key,
-    required this.optionName,
-    required this.choices,
-  }) : super(key: key);
+  ItemChosenChoiceComponent(
+      {Key? key,
+      required this.optionName,
+      required this.choices,
+      this.isWebVersion})
+      : super(key: key);
   final LanguageMap optionName;
   final List<Choice> choices;
+  bool? isWebVersion = false;
   LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
 
   @override
@@ -27,7 +29,8 @@ class ItemChosenChoiceComponent extends StatelessWidget {
         ),
         Text(
           optionName[userLanguage] ?? "OptionName",
-          style: Get.textTheme.bodyText1,
+          style: Get.textTheme.bodyText1!
+              .copyWith(fontSize: (isWebVersion == true) ? 14 : null),
         ),
         SizedBox(
           height: 5,
@@ -44,15 +47,17 @@ class ItemChosenChoiceComponent extends StatelessWidget {
                           flex: 3,
                           child: Text(
                             choices[index].name[userLanguage] ?? "choiceName",
-                            style: Get.theme.textTheme.bodyText2,
+                            style: Get.theme.textTheme.bodyText2!.copyWith(
+                                fontSize: (isWebVersion == true) ? 14 : null),
                             maxLines: 2,
                           ),
                         ),
                         if (choices[index].cost > 0)
                           Text(
                             "\$${choices[index].cost}",
-                            style: Get.theme.textTheme.bodyText2!
-                                .copyWith(color: Get.theme.primaryColorLight),
+                            style: Get.theme.textTheme.bodyText2!.copyWith(
+                                color: Get.theme.primaryColorLight,
+                                fontSize: (isWebVersion == true) ? 14 : null),
                           ),
                       ],
                     ),

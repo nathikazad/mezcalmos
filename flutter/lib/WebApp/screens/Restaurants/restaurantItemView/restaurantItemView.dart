@@ -2,13 +2,22 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
+import 'package:mezcalmos/WebApp/screens/Restaurants/restaurantItemView/components/RestaurantItemViewForMobile.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/restaurantItemView/components/restauarntItemViewForDesktop.dart';
-import 'package:mezcalmos/WebApp/screens/Restaurants/restaurantItemView/components/restaurantItemViewForMobile.dart';
 import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
+import 'package:mezcalmos/WebApp/screens/components/webAppBarComponent.dart';
+import 'package:mezcalmos/WebApp/widgets/SideWebBarWidget/SideWebBarWidget.dart';
+import 'package:mezcalmos/WebApp/widgets/endWebSideBar.dart';
 import 'package:mezcalmos/WebApp/widgets/mezBottomBar.dart';
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 import 'package:mezcalmos/WebApp/widgets/mezLoaderWidget.dart';
@@ -19,6 +28,8 @@ import 'package:qlevar_router/qlevar_router.dart';
 
 import '../../../../Shared/controllers/restaurantsInfoController.dart';
 
+enum ViewItemScreenMode { AddItemMode, EditItemMode }
+
 class RestaurantItemView extends StatefulWidget {
   const RestaurantItemView({Key? key}) : super(key: key);
 
@@ -27,7 +38,11 @@ class RestaurantItemView extends StatefulWidget {
 }
 
 class _RestaurantItemViewState extends State<RestaurantItemView> {
-  Item? item;
+  Rxn<CartItem> cartItem = Rxn<CartItem>();
+  late ViewItemScreenMode mode;
+  Restaurant? currentRestaurant;
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
+  ViewDrawerType viewType = ViewDrawerType.myOrder;
 
   @override
   void didChangeDependencies() {
@@ -37,22 +52,57 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
 
   void _getRestaurant() async {
     setupFirebase(launchMode: typeMode.toLaunchMode()).then((value) {
-      Get.find<RestaurantsInfoController>()
-          .getRestaurant(QR.params['id'].toString())
-          .then((value) {
-        if (value != null) {
-          setState(() {
-            item = value.findItemById(id: QR.params['itemId'].toString());
-            if (item != null) {
-              print("this is another test ${item?.toJson()}");
-            } else {
-              QR.to("/404");
-            }
+      Get.put<ForegroundNotificationsController>(
+          ForegroundNotificationsController(),
+          permanent: true);
+      // RestaurantController restaurantCartController =
+      //     Get.find<RestaurantController>();
+      mode = QR.params['mode'] == "add" || QR.params['mode'] == null
+          ? ViewItemScreenMode.AddItemMode
+          : ViewItemScreenMode.EditItemMode;
+      mezDbgPrint("===========> this is the mode ${mode} <=============");
+      if (mode == ViewItemScreenMode.AddItemMode) {
+        Get.find<RestaurantsInfoController>()
+            .getRestaurant(QR.params['id'].toString())
+            .then((value) {
+          if (value != null) {
+            setState(() {
+              currentRestaurant = value;
+              var item = value.findItemById(id: QR.params['itemId'].toString());
+
+              cartItem.value = CartItem(item!, QR.params['id'].toString());
+
+              if (item != null) {
+                print("this is another test ${item.toJson()}");
+              } else {
+                QR.to("/404");
+              }
+            });
+          } else {
+            QR.to("/404");
+          }
+        });
+      } else {
+        try {
+          cartItem.value = CartItem.clone(Get.find<RestaurantController>()
+              .cart
+              .value
+              .cartItems
+              .firstWhere((CartItem item) {
+            return item.idInCart == QR.params["cartItemId"];
+          }));
+          Get.find<RestaurantsInfoController>()
+              .getRestaurant(cartItem.value!.restaurantId)
+              .then((Restaurant? value) {
+            setState(() {
+              currentRestaurant = value;
+            });
           });
-        } else {
+        } catch (e) {
           QR.to("/404");
         }
-      });
+      }
+      cartItem.refresh();
       var xLang = QR.params["lang"].toString().contains("es")
           ? LanguageType.ES
           : LanguageType.EN;
@@ -74,25 +124,53 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
           if (snapShot.hasData && snapShot.data == true) {
             final LanguageController Lcontroller =
                 Get.find<LanguageController>();
-            return (item != null)
+            final FirbaseAuthController _authcontroller =
+                Get.find<FirbaseAuthController>();
+
+            final MezWebSideBarController drawerController =
+                Get.find<MezWebSideBarController>();
+
+            return (cartItem != null)
                 ? Scaffold(
-                    appBar: InstallAppBarComponent(
-                      automaticallyGetBack:
-                          (MezCalmosResizer.isMobile(context) ||
-                                  MezCalmosResizer.isSmallMobile(context))
-                              ? false
-                              : true,
-                    ),
+                    key: drawerController.drawerKey,
+                    drawer: drawerController.frontDrawerContent,
+                    endDrawer: drawerController.endDrawerContent,
+                    appBar: InstallAppBarComponent(),
                     bottomNavigationBar: MezBottomBar(),
                     body: LayoutBuilder(builder: (context, constraints) {
                       if (MezCalmosResizer.isMobile(context) ||
                           MezCalmosResizer.isSmallMobile(context)) {
                         return RestaurantItemViewForMobile(
-                          item: item!,
+                          cartItem: cartItem,
+                          currentRestaurant: currentRestaurant.obs,
+                          viewItemScreenMode: mode,
                         );
                       } else {
-                        return RestaurantItemViewForDesktop(
-                          item: item!,
+                        return Scaffold(
+                          appBar: WebAppBarComponent(
+                            automaticallyGetBack:
+                                (MezCalmosResizer.isMobile(context) ||
+                                        MezCalmosResizer.isSmallMobile(context))
+                                    ? false
+                                    : true,
+                            type: _authcontroller.fireAuthUser?.uid != null
+                                ? WebAppBarType.WithCartActionButton.obs
+                                : WebAppBarType.WithSignInActionButton.obs,
+                            leadingFunction:
+                                _authcontroller.fireAuthUser?.uid != null
+                                    ? () {
+                                        _key.currentState!.openDrawer();
+                                      }
+                                    : null,
+                          ),
+                          body: RestaurantItemViewForDesktop(
+                            viewItemScreenMode: mode,
+                            cartItem: cartItem,
+                            currentRestaurant: currentRestaurant.obs,
+                            openOrdresDrawer: () {
+                              _key.currentState!.openEndDrawer();
+                            },
+                          ),
                         );
                       }
                     }),

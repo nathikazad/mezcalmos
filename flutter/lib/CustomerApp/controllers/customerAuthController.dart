@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
@@ -18,9 +18,11 @@ class CustomerAuthController extends GetxController {
   Rxn<Customer> _customer = Rxn<Customer>();
 
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
-  AuthController _authController = Get.find<AuthController>();
-  BackgroundNotificationsController _notificationsController =
-      Get.find<BackgroundNotificationsController>();
+  FirbaseAuthController _authController = Get.find<FirbaseAuthController>();
+
+  VoidCallback? signInCallback;
+
+  CustomerAuthController({this.signInCallback});
 
   bool _checkedAppVersion = false;
   Rxn<Customer> customer = Rxn();
@@ -37,8 +39,7 @@ class CustomerAuthController extends GetxController {
       _customer.value = customer.value;
       mezDbgPrint(
           "User from CustomerAuthController >> ${_authController.fireAuthUser?.uid}");
-      mezDbgPrint(
-          "CustomerAuthController  Messaging Token>> ${await _notificationsController.getToken()}");
+
       await _customerNodeListener?.cancel();
       _customerNodeListener = _databaseHelper.firebaseDatabase
           .ref()
@@ -68,19 +69,8 @@ class CustomerAuthController extends GetxController {
               .set(userInfo.toFirebaseFormatJson());
         }
       });
-      //
-
-      final String? deviceNotificationToken =
-          await _notificationsController.getToken();
-      if (deviceNotificationToken != null)
-        await _databaseHelper.firebaseDatabase
-            .ref()
-            .child(
-              customerNotificationInfoNode(_authController.fireAuthUser!.uid),
-            )
-            .set(<String, String>{
-          'deviceNotificationToken': deviceNotificationToken
-        });
+      // this function will check if ther is some background notification
+      signInCallback?.call();
     } else {
       mezDbgPrint("User is not signed it to init customer auth controller");
     }

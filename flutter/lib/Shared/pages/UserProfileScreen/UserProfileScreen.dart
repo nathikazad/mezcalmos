@@ -5,7 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
-import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
@@ -20,16 +20,22 @@ dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["UserProfileScreen"]["UserProfileScreen"];
 
 class UserProfile extends StatefulWidget {
-  final AuthController authController = Get.find<AuthController>();
+  final FirbaseAuthController authController =
+      Get.find<FirbaseAuthController>();
   // this is just to controll incase we want to make a push to this route with a pre-defined mode.
   final UserProfileMode pageInitMode;
   // UserProfileController
   final UserProfileController userProfileController = UserProfileController();
   late final UserProfileWidgetsClass userProfileWidgets;
+  bool? isWebVersion = false;
 
   // Constructor!
-  UserProfile({Key? key, this.pageInitMode = UserProfileMode.Show})
+  UserProfile(
+      {Key? key, this.pageInitMode = UserProfileMode.Show, this.isWebVersion})
       : super(key: key) {
+    userProfileController.isWebVersion = isWebVersion;
+    mezDbgPrint(
+        "========= the version is ${isWebVersion == true ? "web" : "mobile"}");
     userProfileController.setUserProfileMode(pageInitMode);
     userProfileWidgets =
         UserProfileWidgetsClass(userProfileController: userProfileController);
@@ -43,7 +49,7 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile>
     with TickerProviderStateMixin {
-  AuthController _authController = Get.find<AuthController>();
+  FirbaseAuthController _authController = Get.find<FirbaseAuthController>();
   RxBool isUploadingImg = false.obs;
   RxBool clickedSave = false.obs;
   late AnimationController animationController;
@@ -76,8 +82,10 @@ class _UserProfileState extends State<UserProfile>
           resizeToAvoidBottomInset: true,
 
           backgroundColor: Colors.white,
-          appBar: widget.userProfileWidgets
-              .getRightAppBar(isImageBeingUploaded: isUploadingImg.value),
+          appBar: widget.isWebVersion == true
+              ? null
+              : widget.userProfileWidgets
+                  .getRightAppBar(isImageBeingUploaded: isUploadingImg.value),
           body: SingleChildScrollView(
             physics: ClampingScrollPhysics(),
             child: Stack(
@@ -276,7 +284,10 @@ class _UserProfileState extends State<UserProfile>
   ///
   /// And once the user actually selects something , it start uploading the compressed version first along with the original one.
   Future<void> onBrowsImageClick() async {
-    final imPicker.ImageSource? _from = await imagePickerChoiceDialog(context);
+    final imPicker.ImageSource? _from =
+        widget.userProfileController.isWebVersion == true
+            ? await pickImageChoiceDialogForWeb(context)
+            : await imagePickerChoiceDialog(context);
     if (_from != null) {
       widget.userProfileController.reset();
       final imPicker.XFile? _res = await imagePicker(

@@ -6,20 +6,21 @@ import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewCartScreen"]["components"]["BuildItems"];
 
 class ItemInformationCart extends StatefulWidget {
-  const ItemInformationCart(
+  ItemInformationCart(
       {Key? key,
       this.imageUrl,
       required this.itemName,
       required this.restaurantName,
       required this.showImage,
       required this.itemsPrice,
+      this.isWebVersion,
       required this.item})
       : super(key: key);
 
@@ -30,6 +31,8 @@ class ItemInformationCart extends StatefulWidget {
   final String itemsPrice;
   final String? imageUrl;
   final CartItem item;
+
+  bool? isWebVersion = false;
 
   @override
   _ItemInformationCartState createState() => _ItemInformationCartState();
@@ -101,12 +104,14 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
                   "${widget.itemName}",
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: txt.headline3,
+                  style: txt.headline3!.copyWith(
+                      fontSize: (widget.isWebVersion == true) ? 15 : null),
                 ),
                 SizedBox(
                   height: 3,
                 ),
-                _incrementItemComponent(widget.item)
+                _incrementItemComponent(widget.item,
+                    isWebVersion: widget.isWebVersion)
               ],
             ),
           ),
@@ -115,10 +120,12 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
     );
   }
 
-  Widget _incrementItemComponent(CartItem cartItem) {
+  Widget _incrementItemComponent(CartItem cartItem,
+      {bool? isWebVersion = false}) {
     return IncrementalComponent(
         minVal: 1,
         size: 14,
+        isWeb: isWebVersion,
         minusIconColor: primaryBlueColor,
         btnColors: secondaryLightBlueColor,
         onMinValueBtnColor: secondaryLightBlueColor,

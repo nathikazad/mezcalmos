@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as GeoLoc;
-import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
+// import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/ButtonComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
@@ -16,11 +16,11 @@ import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/pages/PickLocationview.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 import 'package:sizer/sizer.dart';
-
-enum PickLocationMode { AddNewLocation, EditLocation, NonLoggedInPick }
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["PickLocationScreen"]["PickLocationView"];
@@ -28,15 +28,19 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 class PickLocationView extends StatefulWidget {
   final PickLocationMode? pickLocationMode;
 
-  const PickLocationView(this.pickLocationMode);
+  final String? imageMarkerPath;
+  bool? isWebVerssion = false;
+
+  PickLocationView(
+      this.pickLocationMode, this.imageMarkerPath, this.isWebVerssion);
 
   @override
   _PickLocationViewState createState() => _PickLocationViewState();
 }
 
 class _PickLocationViewState extends State<PickLocationView> {
-  final LocationPickerController locationPickerController =
-      LocationPickerController();
+  late LocationPickerController locationPickerController;
+  //
 
   // Location? locationPickerController.location;
   SavedLocation? savedLocation;
@@ -45,6 +49,8 @@ class _PickLocationViewState extends State<PickLocationView> {
 
   @override
   void initState() {
+    locationPickerController =
+        LocationPickerController(imageMarkerPath: widget.imageMarkerPath);
     if (widget.pickLocationMode == PickLocationMode.AddNewLocation) {
       GeoLoc.Location()
           .getLocation()
@@ -159,20 +165,22 @@ class _PickLocationViewState extends State<PickLocationView> {
                   )
                 : Text(
                     _i18n()["pickLocation"],
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline2!
-                        .copyWith(color: Colors.white, fontSize: 12.sp),
+                    style: Theme.of(context).textTheme.headline2!.copyWith(
+                        color: Colors.white,
+                        fontSize: MezCalmosResizer.isDesktop(context) ||
+                                MezCalmosResizer.isTablet(context)
+                            ? 16
+                            : 12.sp),
                   ),
           ),
         ),
       ),
       resizeToAvoidBottomInset: false,
-      appBar: CustomerAppBar(
-        autoBack: true,
-        title: _i18n()["pickLocation"],
-      ),
-      body: mezPickLocationViewBody(),
+      // appBar: CustomerAppBar(
+      //   autoBack: true,
+      //   title: _i18n()["pickLocation"],
+      // ),
+      body: mezPickLocationViewBody(context),
     );
   }
 
@@ -223,9 +231,9 @@ class _PickLocationViewState extends State<PickLocationView> {
       });
       if (widget.pickLocationMode == PickLocationMode.AddNewLocation) {
         _result = await savedLocationDailog(
-          context: context,
-          comingFromCart: Get.arguments,
-        );
+            context: context,
+            comingFromCart: Get.arguments,
+            isWebVersion: widget.isWebVerssion);
         if (_result != null && _result != "") {
           await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
           savedLocation = SavedLocation(
@@ -301,7 +309,7 @@ class _PickLocationViewState extends State<PickLocationView> {
   }
 
   // ------------------------------------------- WIDGETS -------------------------------------------
-  Container mezPickLocationViewBody() {
+  Container mezPickLocationViewBody(BuildContext context) {
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -310,7 +318,13 @@ class _PickLocationViewState extends State<PickLocationView> {
           const SizedBox(height: 10),
           Container(
             margin: const EdgeInsets.all(8),
-            child: Text(_i18n()["pickLabele"]),
+            child: Text(
+              _i18n()["pickLabele"],
+              style: MezCalmosResizer.isDesktop(context) ||
+                      MezCalmosResizer.isTablet(context)
+                  ? TextStyle(fontSize: 14)
+                  : null,
+            ),
           ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 8),

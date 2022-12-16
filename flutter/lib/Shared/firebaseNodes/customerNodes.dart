@@ -1,3 +1,5 @@
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+
 String customerNode(String uid) {
   return 'customers/info/$uid/';
 }
@@ -43,6 +45,7 @@ String savedLocationNode(String uid, String locationId) {
 }
 
 String customerNotificationsNode(String uid) {
+  mezDbgPrint("[cc] the user uid is === ${uid}");
   return 'notifications/customer/$uid';
 }
 

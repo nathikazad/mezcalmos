@@ -155,15 +155,14 @@ Future<TimeOfDay?> getTimePicker(
       });
 }
 
-Future<void> showConfirmationDialog(
-  BuildContext context, {
-  required Future<dynamic> Function() onYesClick,
-  void Function()? onNoClick,
-  String? title,
-  String? helperText,
-  String? primaryButtonText,
-  String? secondaryButtonText,
-}) async {
+Future<void> showConfirmationDialog(BuildContext context,
+    {required Future<dynamic> Function() onYesClick,
+    void Function()? onNoClick,
+    String? title,
+    String? helperText,
+    String? primaryButtonText,
+    String? secondaryButtonText,
+    bool? isWebVersion = false}) async {
   final RxBool _clickedYes = false.obs;
   return showDialog(
       context: context,
@@ -273,7 +272,11 @@ Future<void> showConfirmationDialog(
                 GestureDetector(
                   onTap: () {
                     onNoClick?.call();
-                    Get.back<void>(closeOverlays: true);
+                    if (isWebVersion == true) {
+                      Navigator.of(context).pop();
+                    } else {
+                      Get.back<void>(closeOverlays: true);
+                    }
                   },
                   child: Container(
                     width: double.infinity,

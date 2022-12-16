@@ -8,14 +8,18 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/MezMarker.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
+import 'package:mezcalmos/WebApp/values/constants.dart';
 import 'package:sizer/sizer.dart';
+
+const String defaultUserImgUrl =
+    "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d";
 
 class MGoogleMapController {
   RxSet<Polyline> polylines = <Polyline>{}.obs;
@@ -28,17 +32,23 @@ class MGoogleMapController {
   Function? onMapTap;
   bool get isMapReady => controller.value != null;
 
+  String? markerImagePath;
+  bool? isWebVersion;
+
   // this is used when we don't want to re-render the map periodically.
   RxBool periodicRerendering = false.obs;
   RxBool recenterButtonEnabled = false.obs;
   late RxBool myLocationButtonEnabled;
 
-  MGoogleMapController({
-    bool myLocationButtonEnabled = false,
-    bool enableMezSmartPointer = true,
-  }) {
+  MGoogleMapController(
+      {bool myLocationButtonEnabled = false,
+      bool enableMezSmartPointer = true,
+      String imagePath = aPurpleLocationCircle,
+      bool? isWeb = false}) {
     this.myLocationButtonEnabled = RxBool(myLocationButtonEnabled);
     this.enableMezSmartPointer = enableMezSmartPointer;
+    this.markerImagePath = imagePath;
+    this.isWebVersion = isWeb ?? false;
   }
 
   /// Instead of going over the cropping rounded process everytime we update Taxi Markers,
@@ -54,6 +64,7 @@ class MGoogleMapController {
   }
 
   void _addOrUpdateMarker(MezMarker marker) {
+    print("[66] ========== inside _addOrUpdateMarker ========");
     markers.removeWhere(
       (Marker _marker) => _marker.markerId.value == marker.markerId.value,
     );
@@ -80,8 +91,12 @@ class MGoogleMapController {
   /// gets Called whenever a zoom Change happens in [MGoogleMap]
   void onZoomChange(double newZoomValue) {}
 
-  Future<void> addOrUpdateCircleMarker(LatLng? latLng,
-      {String markerId = "default", bool fitWithinBounds = true}) async {
+  Future<void> addOrUpdateCircleMarker(
+    LatLng? latLng, {
+    String markerId = "default",
+    bool fitWithinBounds = true,
+  }) async {
+    mezDbgPrint("============ markerImagePath ${markerImagePath}=============");
     if (latLng != null) {
       markers
           .removeWhere((Marker _marker) => _marker.markerId.value == markerId);
@@ -91,7 +106,7 @@ class MGoogleMapController {
           markerId: MarkerId(markerId),
           icon: await BitmapDescriptor.fromAssetImage(
             ImageConfiguration(),
-            aPurpleLocationCircle,
+            markerImagePath!,
           ),
           flat: true,
           position: latLng,
@@ -121,8 +136,10 @@ class MGoogleMapController {
       bool fitWithinBounds = true,
       required LatLng? latLng,
       String? customImgHttpUrl}) async {
+    mezDbgPrint("this function has been addOrUpdateUserMarker");
     // Inside function to get ImgBytes
     Future<Uint8List?> _fetchImgBytes(String uImg) async {
+      mezDbgPrint("[cc] this function has been called _fetchImgBytes ");
       Uint8List? _imgBytes;
 
       await http
@@ -131,23 +148,41 @@ class MGoogleMapController {
           .then((http.Response response) {
         _imgBytes = response.bodyBytes;
       }).catchError((_) async {
-        _imgBytes =
-            (await rootBundle.load(aDefaultAvatar)).buffer.asUint8List();
+        mezDbgPrint("[cc] fetching image bytes Failed ==> $_");
+        // if (isWebVersion == true) {
+        //   _imgBytes = (await NetworkAssetBundle(Uri.parse(defaultUserImgUrl))
+        //           .load(defaultUserImgUrl))
+        //       .buffer
+        //       .asUint8List();
+        // } else {
+        _imgBytes = (await rootBundle.load(isWebVersion == false
+                ? aDefaultAvatar
+                : "assets/images/web/noUserImage.jpg"))
+            .buffer
+            .asUint8List();
+        mezDbgPrint("something wrong happned _imgBytes ${_imgBytes}");
+        // }
       });
+      return _imgBytes;
     }
 
     // Inside function to get Bitmapdescriptor
     Future<BitmapDescriptor?> _buildBitmap(String? uImg) async {
       BitmapDescriptor? bitMap;
       if (uImg == null) {
+        mezDbgPrint("[cc]  _buildBitmap called :: inside if!");
         bitMap = await bitmapDescriptorLoader(
             (await cropRonded(
                 (await rootBundle.load(aDefaultAvatar)).buffer.asUint8List())),
             _calculateMarkersSize(),
             _calculateMarkersSize(),
-            isBytes: true);
+            isBytes: true,
+            urlStr: customImgHttpUrl);
       } else {
+        mezDbgPrint("[cc]  _buildBitmap called :: inside else!");
+
         await _fetchImgBytes(uImg).then((Uint8List? _imgBytes) async {
+          // mezDbgPrint("this happen after execute _fetchImgBytes  ${_imgBytes}");
           if (_imgBytes != null) {
             bitMap = await bitmapDescriptorLoader(
               (await cropRonded(_imgBytes)),
@@ -162,24 +197,37 @@ class MGoogleMapController {
     }
 
     if (latLng != null) {
-      final String? uImg = Get.find<AuthController>().user?.image ??
-          Get.find<AuthController>().user?.bigImage;
-      final String mId =
-          (markerId ?? Get.find<AuthController>().user?.id ?? 'ANONYMOUS');
+      mezDbgPrint("[cc]  latLng != null!");
 
-      await _buildBitmap(uImg).then((BitmapDescriptor? icon) {
+      final String? uImg = Get.find<FirbaseAuthController>().user?.image ??
+          Get.find<FirbaseAuthController>().user?.bigImage;
+      final String mId = (markerId ??
+          Get.find<FirbaseAuthController>().user?.id ??
+          'ANONYMOUS');
+
+      try {
+        BitmapDescriptor icon =
+            await _buildBitmap(uImg) ?? BitmapDescriptor.defaultMarker;
         if (icon != null) {
-          // default userId is authenticated's
-          _addOrUpdateMarker(
-            MezMarker(
-              fitWithinBounds: fitWithinBounds,
-              markerId: MarkerId(mId),
-              icon: icon,
-              position: latLng,
-            ),
+          mezDbgPrint(
+              "[cc] we called the _buildBitmap funtion and Icon ${icon}");
+
+          var x = MezMarker(
+            fitWithinBounds: fitWithinBounds,
+            markerId: MarkerId(mId),
+            icon: icon,
+            //icon: BitmapDescriptor.defaultMarker,
+            position: latLng,
           );
+          // default userId is authenticated's
+          mezDbgPrint("[cc] this is the resulat of _buildBitmap  marker  ");
+          _addOrUpdateMarker(x);
+        } else {
+          mezDbgPrint("[cc]  latLng === null! :(");
         }
-      });
+      } catch (e) {
+        mezDbgPrint("[cc] ERROR WHEN CALLING _buildBitmap ${e}");
+      }
     }
   }
 
@@ -210,7 +258,12 @@ class MGoogleMapController {
             _calculateMarkersSize(),
             _calculateMarkersSize(),
             isBytes: true,
-          ),
+          ).then((value) {
+            mezDbgPrint("[cc] @@@@@@@@@ .  ${value} @@@@@@@@@@");
+            return value;
+          }).catchError((e) {
+            mezDbgPrint("[cc] something bad happen e || ${e.toString()}");
+          }),
           flat: true,
           position: latLng,
         ),
@@ -224,12 +277,16 @@ class MGoogleMapController {
       {String markerId = "dest",
       required LatLng? latLng,
       bool fitWithinBounds = true}) async {
+    mezDbgPrint(
+        "this is the marker should show to user ${markerImagePath == aPurpleLocationCircle ? purple_destination_marker_asset : markerForWeb} ");
     if (latLng != null) {
       final BitmapDescriptor icon = await bitmapDescriptorLoader(
-          (await cropRonded(
-              (await rootBundle.load(purple_destination_marker_asset))
-                  .buffer
-                  .asUint8List())),
+          (await cropRonded((await rootBundle.load(
+                  markerImagePath == aPurpleLocationCircle
+                      ? purple_destination_marker_asset
+                      : markerForWeb))
+              .buffer
+              .asUint8List())),
           _calculateMarkersSize(),
           _calculateMarkersSize(),
           isBytes: true);
@@ -265,7 +322,8 @@ class MGoogleMapController {
   }
 
   void removerAuthenticatedUserMarker() {
-    final String _mId = (Get.find<AuthController>().user?.id ?? 'ANONYMOUS');
+    final String _mId =
+        (Get.find<FirbaseAuthController>().user?.id ?? 'ANONYMOUS');
     markers.removeWhere((Marker _marker) => _marker.markerId.value == _mId);
   }
 

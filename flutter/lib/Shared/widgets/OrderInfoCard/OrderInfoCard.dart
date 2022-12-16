@@ -5,8 +5,12 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 class OrderInfosCard extends StatelessWidget {
   final OrderCardSubWidgets orderCardSubWidgets;
   final Order order;
-  const OrderInfosCard(
-      {required this.orderCardSubWidgets, required this.order, Key? key})
+  bool? isWebversion = false;
+  OrderInfosCard(
+      {required this.orderCardSubWidgets,
+      required this.order,
+      this.isWebversion,
+      Key? key})
       : super(key: key);
 
   @override
@@ -104,7 +108,8 @@ class OrderInfosCard extends StatelessWidget {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: AssetImage(money_asset),
+                              image: AssetImage(
+                                  "assets/images/${(isWebversion == true) ? "web" : "shared"}/money.png"),
                             ),
                           ),
                         ),

@@ -5,7 +5,7 @@ import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScree
 import 'package:mezcalmos/DeliveryApp/pages/DeliveryWrapper.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/OrderDetailsScreen.dart';
 import 'package:mezcalmos/DeliveryApp/pages/PastOrders/PastOrdersView.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 
 const String kCurrentOrdersListRoute = '/orders';
 const String kLaundryOrderView = '/laundryOrders/:orderId';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/WebApp/controllers/authWebController.dart';
 import 'package:mezcalmos/WebApp/routes/AuthRoutes.dart';
 import 'package:mezcalmos/WebApp/widgets/MezSnackbar.dart';
 
@@ -21,7 +21,7 @@ class SigninScreenMobile extends StatefulWidget {
 }
 
 class _SigninScreenMobileState extends State<SigninScreenMobile> {
-  AuthController controller = Get.find<AuthController>();
+  FirbaseAuthController controller = Get.find<FirbaseAuthController>();
 
   TextEditingController _prefixTextFieldController = TextEditingController();
   TextEditingController _numberTextFieldController = TextEditingController();

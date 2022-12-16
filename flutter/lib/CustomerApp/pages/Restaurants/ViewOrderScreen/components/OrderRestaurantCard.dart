@@ -5,12 +5,21 @@ import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
 class OrderRestaurantCard extends StatelessWidget {
-  const OrderRestaurantCard({Key? key, required this.order}) : super(key: key);
+  OrderRestaurantCard(
+      {Key? key,
+      required this.order,
+      this.isWebVersion,
+      this.textStyle,
+      this.navigateMsgCallback})
+      : super(key: key);
   final RestaurantOrder order;
+  bool? isWebVersion = false;
+  Function? navigateMsgCallback;
+  TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +36,7 @@ class OrderRestaurantCard extends StatelessWidget {
                 CircleAvatar(
                   backgroundImage:
                       CachedNetworkImageProvider(order.restaurant.image),
-                  radius: 25,
+                  radius: isWebVersion == true ? 35 : 25,
                 ),
                 SizedBox(
                   width: 5,
@@ -40,7 +49,11 @@ class OrderRestaurantCard extends StatelessWidget {
                       children: [
                         Text(
                           order.restaurant.name,
-                          style: Get.textTheme.bodyText1,
+                          style: Get.textTheme.bodyText1!.copyWith(
+                              fontSize: (isWebVersion == true) ? 16 : null,
+                              fontWeight: (isWebVersion == true)
+                                  ? FontWeight.w700
+                                  : null),
                         ),
                         SizedBox(
                           height: 5,
@@ -60,7 +73,12 @@ class OrderRestaurantCard extends StatelessWidget {
                               fit: FlexFit.tight,
                               child: Text(
                                 order.restaurant.location.address,
-                                style: Get.textTheme.bodyText2,
+                                style: Get.textTheme.bodyText2!.copyWith(
+                                    fontSize:
+                                        (isWebVersion == true) ? 14 : null,
+                                    color: (isWebVersion == true)
+                                        ? Color.fromRGBO(73, 73, 73, 1)
+                                        : null),
                                 overflow: TextOverflow.visible,
                                 maxLines: 1,
                               ),
@@ -74,13 +92,17 @@ class OrderRestaurantCard extends StatelessWidget {
                       showRedDot: Get.find<OrderController>()
                           .orderHaveNewMessageNotifications(order.orderId),
                       onTap: () {
-                        Get.toNamed<void>(
-                          getMessagesRoute(
-                            chatId: order.orderId,
-                            orderId: order.orderId,
-                            recipientType: ParticipantType.Restaurant,
-                          ),
-                        );
+                        if (navigateMsgCallback == null) {
+                          Get.toNamed<void>(
+                            getMessagesRoute(
+                              chatId: order.orderId,
+                              orderId: order.orderId,
+                              recipientType: ParticipantType.Restaurant,
+                            ),
+                          );
+                        } else {
+                          navigateMsgCallback!.call();
+                        }
                       }),
                 )
               ],

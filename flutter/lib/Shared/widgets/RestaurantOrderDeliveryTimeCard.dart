@@ -11,11 +11,12 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
 //
 
 class RestaurantOrderDeliveryTimeCard extends StatelessWidget {
-  const RestaurantOrderDeliveryTimeCard(
-      {Key? key, required this.order, this.margin})
+  RestaurantOrderDeliveryTimeCard(
+      {Key? key, required this.order, this.margin, this.isWebVersion})
       : super(key: key);
   final RestaurantOrder order;
   final EdgeInsets? margin;
+  bool? isWebVersion = false;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,13 @@ class RestaurantOrderDeliveryTimeCard extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          Text('${_i18n()["dvTime"]} :'),
+          Text(
+            '${_i18n()["dvTime"]} :',
+            style: isWebVersion == true
+                ? Get.textTheme.bodyText1!
+                    .copyWith(fontSize: 14, fontWeight: FontWeight.w500)
+                : null,
+          ),
           SizedBox(
             height: 10,
           ),
@@ -49,7 +56,8 @@ class RestaurantOrderDeliveryTimeCard extends StatelessWidget {
                     Flexible(
                       child: Text(
                         "${DateFormat.MMMEd(userLangCode).format(order.deliveryTime!).replaceAll(".", "")}, ${DateFormat("hh:mm a").format(order.deliveryTime!.toLocal())}",
-                        style: Get.textTheme.bodyText1,
+                        style: Get.textTheme.bodyText1!.copyWith(
+                            fontSize: isWebVersion == true ? 16 : null),
                       ),
                     ),
                   ],

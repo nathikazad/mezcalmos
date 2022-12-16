@@ -14,14 +14,13 @@ dynamic _i18n() =>
         ["Restaurants"]["ViewOrderScreen"]["components"]["OrdersItemsCard"];
 
 class OrderItemsItemCard extends StatefulWidget {
-  const OrderItemsItemCard({
-    Key? key,
-    required this.item,
-    required this.order,
-  }) : super(key: key);
+  OrderItemsItemCard(
+      {Key? key, required this.item, required this.order, this.isWebVersion})
+      : super(key: key);
 
   final RestaurantOrderItem item;
   final RestaurantOrder order;
+  bool? isWebVersion = false;
 
   @override
   State<OrderItemsItemCard> createState() => _OrderItemsItemCardState();
@@ -41,13 +40,14 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: (widget.item.chosenChoices.isEmpty && widget.item.notes == null)
             ? _itemHeader(userLanguage, txt)
-            : _itemExpandableComponent(context, userLanguage, txt),
+            : _itemExpandableComponent(
+                context, userLanguage, txt, widget.isWebVersion),
       ),
     );
   }
 
-  Widget _itemExpandableComponent(
-      BuildContext context, LanguageType userLanguage, TextTheme txt) {
+  Widget _itemExpandableComponent(BuildContext context,
+      LanguageType userLanguage, TextTheme txt, bool? isWebVersion) {
     return Theme(
       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
       child: ExpansionTile(
@@ -94,7 +94,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                   Container(
                     child: Text(
                       "${_i18n()["itemNotes"]}",
-                      style: Get.textTheme.bodyText1,
+                      style: txt.bodyText1!.copyWith(),
                     ),
                   ),
                   SizedBox(
@@ -164,6 +164,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                             color: widget.item.unavailable
                                 ? Colors.black.withOpacity(0.5)
                                 : Colors.black,
+                            fontSize: widget.isWebVersion == true ? 16 : null,
                             decoration: (widget.item.unavailable)
                                 ? TextDecoration.lineThrough
                                 : null),
@@ -181,10 +182,12 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                                   color: widget.item.unavailable
                                       ? Colors.black.withOpacity(0.5)
                                       : Colors.black,
+                                  fontSize:
+                                      widget.isWebVersion == true ? 16 : null,
                                   decoration: (widget.item.unavailable)
                                       ? TextDecoration.lineThrough
                                       : null)),
-                          if (widget.item.unavailable) _itemunav(),
+                          if (widget.item.unavailable) _itemunav(context),
                         ],
                       ),
                     ],
@@ -197,7 +200,8 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
     );
   }
 
-  Row _itemunav() {
+  Row _itemunav(BuildContext context) {
+    final txt = Theme.of(context).textTheme;
     return Row(
       children: [
         Container(
@@ -213,7 +217,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
         ),
         Text(
           '${_i18n()["itemUnav"]}',
-          style: Get.textTheme.bodyText2?.copyWith(
+          style: txt.bodyText2?.copyWith(
               fontWeight: FontWeight.w600,
               fontSize: 11.sp,
               color: widget.item.unavailable ? Colors.red : Colors.white),
@@ -309,6 +313,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
       viewWidgets.add(ItemChosenChoiceComponent(
         choices: value,
         optionName: optionNames[key]!,
+        isWebVersion: widget.isWebVersion,
       ));
     });
     return viewWidgets;

@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/components/webAppExpensionPanelComponent.dart';
 import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
+import 'package:mezcalmos/WebApp/values/constants.dart';
 
 class ItemOptionCard extends StatefulWidget {
   const ItemOptionCard(
       {Key? key,
       required this.option,
-      // required this.cartItem,
+      required this.cartItem,
       this.isRunningOnWeb = false})
       : super(key: key);
   final Option option;
   final bool isRunningOnWeb;
-  // final Rxn<CartItem> cartItem;
+  final Rxn<CartItem> cartItem;
 
   @override
   State<ItemOptionCard> createState() => _ItemOptionCardState();
@@ -158,7 +161,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
     required Choice choice,
   }) {
     return Container(
-      height: 15,
+      // height: widget.option.optionType == OptionType.ChooseMany ? null :,
       margin: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
@@ -189,83 +192,82 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
               ),
             ],
           ),
-          // SizedBox(
-          //   width: 10,
-          // ),
-
-          // if (widget.option.optionType == OptionType.ChooseMany)
-          // _selectCircle(
-          //     value: widget.cartItem.value!.chosenChoices[optionId]
-          //             ?.contains(choice) ??
-          //         false,
-          //     onTap: (bool? v) {
-          //       handleChoiceCheckBox(choice);
-          //     }),
-          // if (widget.option.optionType == OptionType.ChooseOne)
-          // _radioCircle(
-          //     value: widget.cartItem.value!.chosenChoices[optionId]
-          //             ?.contains(choice) ??
-          //         false,
-          //     onTap: (bool? v) {
-          //       handleChoiceCheckBox(choice);
-          //     }),
+          Spacer(),
+          if (widget.option.optionType == OptionType.ChooseMany)
+            _selectCircle(
+                value: widget.cartItem.value!.chosenChoices[optionId]
+                        ?.contains(choice) ??
+                    false,
+                onTap: (bool? v) {
+                  handleChoiceCheckBox(choice);
+                }),
+          if (widget.option.optionType == OptionType.ChooseOne)
+            _radioCircle(
+                value: widget.cartItem.value!.chosenChoices[optionId]
+                        ?.contains(choice) ??
+                    false,
+                onTap: (bool? v) {
+                  handleChoiceCheckBox(choice);
+                }),
         ],
       ),
     );
   }
 
-  // Widget _selectCircle(
-  //     {bool value = false, required void Function(bool?) onTap}) {
-  //   return InkWell(
-  //     customBorder: CircleBorder(),
-  //     onTap: () {
-  //       onTap.call(null);
-  //     },
-  //     child: Container(
-  //         alignment: Alignment.center,
-  //         // padding: const EdgeInsets.all(5),
-  //         child: (value)
-  //             ? Icon(
-  //                 Icons.check,
-  //                 size: 22,
-  //                 color: Colors.white,
-  //               )
-  //             : Icon(
-  //                 Icons.add,
-  //                 color: primaryBlueColor,
-  //                 size: 22,
-  //               ),
-  //         decoration: BoxDecoration(
-  //           shape: BoxShape.circle,
-  //           color: value ? primaryBlueColor : SecondaryLightBlueColor,
-  //         )),
-  //   );
-  // }
+  Widget _selectCircle(
+      {bool value = false, required void Function(bool?) onTap}) {
+    return InkWell(
+      customBorder: CircleBorder(),
+      onTap: () {
+        onTap.call(null);
+      },
+      child: Container(
+          alignment: Alignment.center,
+          // padding: const EdgeInsets.all(5),
+          child: (value)
+              ? Icon(
+                  Icons.check,
+                  size: 22,
+                  color: Colors.white,
+                )
+              : Icon(
+                  Icons.add,
+                  color: primaryBlueColor,
+                  size: 22,
+                ),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: value ? primaryBlueColor : SecondaryLightBlueColor,
+          )),
+    );
+  }
 
-  // Widget _radioCircle(
-  //     {bool value = false, required void Function(bool?) onTap}) {
-  //   return InkWell(
-  //     customBorder: CircleBorder(),
-  //     onTap: () {
-  //       onTap.call(null);
-  //     },
-  //     child: Ink(
-  //         child: (value)
-  //             ? Icon(
-  //                 Icons.radio_button_checked,
-  //                 size: 25,
-  //                 color: primaryBlueColor,
-  //               )
-  //             : Icon(
-  //                 Icons.circle_outlined,
-  //                 color: primaryBlueColor,
-  //                 size: 25,
-  //               ),
-  //         decoration: BoxDecoration(
-  //           shape: BoxShape.circle,
-  //         )),
-  //   );
-  // }
+  Widget _radioCircle(
+      {bool value = false, required void Function(bool?) onTap}) {
+    return InkWell(
+      customBorder: CircleBorder(),
+      onTap: () {
+        onTap.call(null);
+      },
+      child: Ink(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: (value)
+              ? Icon(
+                  Icons.radio_button_checked,
+                  color: primaryBlueColor,
+                )
+              : Icon(
+                  Icons.circle_outlined,
+                  color: primaryBlueColor,
+                ),
+        ),
+      ),
+    );
+  }
 
 // FUNCTIONS //
   // void assignMinimumChoices() {
@@ -275,42 +277,42 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
   //           .sublist(0, (widget.option.minimumChoice as int)));
   // }
 
-  // void handleChoiceCheckBox(Choice choice) {
-  //   if (widget.cartItem.value!.chosenChoices[optionId]!.contains(choice)) {
-  //     removeChoice(choice);
-  //   } else if (widget.cartItem.value!.chosenChoices[optionId]!.length <
-  //       widget.option.maximumChoice) {
-  //     addNewChoice(choice);
-  //   } else if (widget.cartItem.value!.chosenChoices[optionId]!.length ==
-  //       widget.option.maximumChoice) {
-  //     addLastChoice(choice);
-  //   }
-  //   widget.cartItem.refresh();
-  // }
+  void handleChoiceCheckBox(Choice choice) {
+    if (widget.cartItem.value!.chosenChoices[optionId]!.contains(choice)) {
+      removeChoice(choice);
+    } else if (widget.cartItem.value!.chosenChoices[optionId]!.length <
+        widget.option.maximumChoice) {
+      addNewChoice(choice);
+    } else if (widget.cartItem.value!.chosenChoices[optionId]!.length ==
+        widget.option.maximumChoice) {
+      addLastChoice(choice);
+    }
+    widget.cartItem.refresh();
+  }
 
-  // void addLastChoice(Choice choice) {
-  //   mezDbgPrint("Adding for last timee ========>");
-  //   widget.cartItem.value!.chosenChoices[optionId]!.removeLast();
-  //   widget.cartItem.value!.setNewChoices(
-  //       optionId: optionId,
-  //       newChoices: widget.cartItem.value!.chosenChoices[optionId]! + [choice]);
-  // }
+  void addLastChoice(Choice choice) {
+    mezDbgPrint("Adding for last timee ========>");
+    widget.cartItem.value!.chosenChoices[optionId]!.removeLast();
+    widget.cartItem.value!.setNewChoices(
+        optionId: optionId,
+        newChoices: widget.cartItem.value!.chosenChoices[optionId]! + [choice]);
+  }
 
-  // void addNewChoice(Choice choice) {
-  //   mezDbgPrint("Adding for first time ========>");
-  //   widget.cartItem.value!.setNewChoices(
-  //       optionId: optionId,
-  //       newChoices: widget.cartItem.value!.chosenChoices[optionId]! + [choice]);
-  // }
+  void addNewChoice(Choice choice) {
+    mezDbgPrint("Adding for first time ========>");
+    widget.cartItem.value!.setNewChoices(
+        optionId: optionId,
+        newChoices: widget.cartItem.value!.chosenChoices[optionId]! + [choice]);
+  }
 
-  // void removeChoice(Choice choice) {
-  //   if (widget.cartItem.value!.chosenChoices[optionId]!.length >
-  //       widget.option.minimumChoice) {
-  //     final List<Choice> newChoices =
-  //         widget.cartItem.value!.chosenChoices[optionId]!.toList();
-  //     newChoices.remove(choice);
-  //     widget.cartItem.value!
-  //         .setNewChoices(optionId: optionId, newChoices: newChoices);
-  //   }
-  // }
+  void removeChoice(Choice choice) {
+    if (widget.cartItem.value!.chosenChoices[optionId]!.length >
+        widget.option.minimumChoice) {
+      final List<Choice> newChoices =
+          widget.cartItem.value!.chosenChoices[optionId]!.toList();
+      newChoices.remove(choice);
+      widget.cartItem.value!
+          .setNewChoices(optionId: optionId, newChoices: newChoices);
+    }
+  }
 }

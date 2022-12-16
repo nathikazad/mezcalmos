@@ -3,14 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/WebApp/controllers/authWebController.dart';
 import 'package:mezcalmos/WebApp/screens/AuthScreen/components/MezButtonWidget.dart';
 import 'package:mezcalmos/WebApp/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/src/services/text_formatter.dart';
 
@@ -50,7 +51,7 @@ class _VerificationScreenDesktopState extends State<VerificationScreenDesktop> {
   }
 
   TextEditingController _otpCodeTextController = TextEditingController();
-  AuthController controller = Get.find<AuthController>();
+  FirbaseAuthController controller = Get.find<FirbaseAuthController>();
   String otpCode = '';
 
   @override
@@ -256,11 +257,18 @@ class _VerificationScreenDesktopState extends State<VerificationScreenDesktop> {
                                             Get.arguments ??
                                                 "+" + widget.passedPhone,
                                             otpCode);
+
                                     switch (_resp?.success) {
                                       case null:
                                         clickedSignInOtp.value = false;
                                         break;
-
+                                      case true:
+                                        MezSnackbarForWeb(
+                                            "Notice ~",
+                                            "you successfully sign in",
+                                            context);
+                                        QR.to("/restaurants");
+                                        break;
                                       case false:
                                         MezSnackbarForWeb("Oops ..",
                                             _i18n()['wrongOTPCode'], context);

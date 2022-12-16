@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -12,12 +13,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
     ["OrderSummaryCard"];
 
 class OrderSummaryCard extends StatelessWidget {
-  const OrderSummaryCard({
-    Key? key,
-    required this.order,
-    this.margin,
-  }) : super(key: key);
+  OrderSummaryCard(
+      {Key? key, required this.order, this.margin, this.isWebVersion})
+      : super(key: key);
   final Order order;
+  bool? isWebVersion = false;
 
   final EdgeInsets? margin;
 
@@ -33,7 +33,8 @@ class OrderSummaryCard extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               '${_i18n()["orderSummary"]}',
-              style: txt.bodyText1,
+              style: txt.bodyText1!
+                  .copyWith(fontSize: (isWebVersion = true) ? 16 : null),
             ),
           ),
           Container(
@@ -48,10 +49,13 @@ class OrderSummaryCard extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         '${_i18n()["orderCost"]}',
-                        style: txt.bodyText2,
+                        style: txt.bodyText2!.copyWith(
+                            fontSize: (isWebVersion == true) ? 14 : null,
+                            fontWeight: FontWeight.w600),
                       ),
                       Text(_getOrderCost(),
                           style: txt.bodyText2?.copyWith(
+                              fontSize: (isWebVersion == true) ? 14 : null,
                               fontStyle:
                                   (order.orderType == OrderType.Laundry &&
                                           (order as LaundryOrder)
@@ -72,11 +76,13 @@ class OrderSummaryCard extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           '${_i18n()["stripeFees"]}',
-                          style: txt.bodyText2,
+                          style: txt.bodyText2!.copyWith(
+                              fontSize: (isWebVersion == true) ? 14 : null),
                         ),
                         Text(
                             order.stripePaymentInfo!.stripeFees.toPriceString(),
-                            style: txt.bodyText2),
+                            style: txt.bodyText2!.copyWith(
+                                fontSize: (isWebVersion == true) ? 14 : null)),
                       ],
                     ),
                   ),
@@ -87,10 +93,15 @@ class OrderSummaryCard extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         '${_i18n()["deliveryCost"]}',
-                        style: txt.bodyText2,
+                        style: txt.bodyText2!.copyWith(
+                            fontSize: (isWebVersion == true) ? 14 : null),
                       ),
                       Flexible(
                           child: ShippingCostComponent(
+                        textStyle: isWebVersion == true
+                            ? GoogleFonts.montserrat(fontSize: 14)
+                            : null,
+                        isWebVersion: isWebVersion,
                         shippingCost: _getShippingCost(),
                       ))
                     ],
@@ -104,11 +115,13 @@ class OrderSummaryCard extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           '${_i18n()["refundAmount"]}',
-                          style: txt.bodyText2,
+                          style: txt.bodyText2!.copyWith(
+                              fontSize: (isWebVersion == true) ? 14 : null),
                         ),
                         Text(
                           order.refundAmount!.toPriceString(),
-                          style: txt.bodyText2,
+                          style: txt.bodyText2!.copyWith(
+                              fontSize: (isWebVersion == true) ? 14 : null),
                         ),
                       ],
                     ),
@@ -118,12 +131,14 @@ class OrderSummaryCard extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       '${_i18n()["totalCost"]}',
-                      style: txt.bodyText1,
+                      style: txt.bodyText1!
+                          .copyWith(fontSize: isWebVersion == true ? 16 : null),
                     ),
                     Text(
                       order.costToCustomer?.toPriceString() ??
                           order.cost.toPriceString(),
-                      style: txt.bodyText1!.copyWith(fontSize: 14.sp),
+                      style: txt.bodyText1!.copyWith(
+                          fontSize: isWebVersion == true ? 16 : 14.sp),
                     ),
                   ],
                 ),

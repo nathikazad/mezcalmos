@@ -64,9 +64,7 @@ class _LaundryListViewState extends State<LaundryListView> {
               if (snapShot.hasData && snapShot.data == true) {
                 final LanguageController lang = Get.find<LanguageController>();
                 return Scaffold(
-                  appBar: InstallAppBarComponent(
-                    automaticallyGetBack: false,
-                  ),
+                  appBar: InstallAppBarComponent(),
                   bottomNavigationBar: MezBottomBar(),
                   body: LayoutBuilder(builder: ((context, constraints) {
                     return Scaffold(

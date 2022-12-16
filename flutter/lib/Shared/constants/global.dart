@@ -114,7 +114,8 @@ enum AppType {
   DeliveryAdminApp,
   DeliveryApp,
   LaundryApp,
-  RestaurantApp
+  RestaurantApp,
+  WebApp
 }
 
 extension ParseOrderTypeToString on AppType {

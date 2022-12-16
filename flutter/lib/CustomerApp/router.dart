@@ -15,7 +15,8 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/Cus
 import 'package:mezcalmos/CustomerApp/pages/SavedLocations/SavedLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/RequestTaxiScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/ViewTaxiOrderScreen.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/pages/PickLocationview.dart' as pickloaction;
+import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 // import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/ViewRestaurantScreen.dart';
 
 // Routes Keys.
@@ -126,15 +127,18 @@ class XRouter {
         ),
         GetPage(
           name: kPickLocationRoute,
-          page: () => PickLocationView(PickLocationMode.AddNewLocation),
+          page: () => PickLocationView(
+              pickloaction.PickLocationMode.AddNewLocation, null, null),
         ),
         GetPage(
           name: kPickLocationEditRoute,
-          page: () => PickLocationView(PickLocationMode.EditLocation),
+          page: () => PickLocationView(
+              pickloaction.PickLocationMode.EditLocation, null, null),
         ),
         GetPage(
           name: kPickLocationNotAuth,
-          page: () => PickLocationView(PickLocationMode.NonLoggedInPick),
+          page: () => PickLocationView(
+              pickloaction.PickLocationMode.NonLoggedInPick, null, null),
         ),
         // Taxis Routes
         GetPage(

@@ -3,13 +3,15 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
-import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 // ignore: constant_identifier_names
 enum UserProfileMode { Edit, Show }
 
 class UserProfileController {
-  final AuthController _authController = Get.find<AuthController>();
+  final FirbaseAuthController _authController =
+      Get.find<FirbaseAuthController>();
   TextEditingController textEditingController = TextEditingController();
   // Picker object.
   final imPicker.ImagePicker picker = imPicker.ImagePicker();
@@ -21,6 +23,12 @@ class UserProfileController {
   Rxn<String> userName = Rxn<String>();
   Rxn<String> errorReport = Rxn<String>();
   DateTime? userCreationTime;
+
+  bool? isWebVersion;
+  UserProfileController({this.isWebVersion = false}) {
+    mezDbgPrint(
+        "========= the version is ${isWebVersion == true ? "web" : "mobile"}");
+  }
 
   // bool didUserChangedInfos() {
   //   return userName.value != _authController.user?.name &&

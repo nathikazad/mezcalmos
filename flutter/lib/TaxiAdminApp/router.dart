@@ -1,6 +1,6 @@
 import 'package:get/get.dart'; // getX
 
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Wrapper.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Driver/RankingsPage.dart';
 

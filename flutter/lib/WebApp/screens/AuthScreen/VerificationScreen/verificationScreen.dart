@@ -60,19 +60,19 @@ class _VerificationScreenState extends State<VerificationScreen> {
             }
 
             return Scaffold(
-              appBar: InstallAppBarComponent(
-                automaticallyGetBack: MezCalmosResizer.isMobile(context) ||
-                        MezCalmosResizer.isSmallMobile(context)
-                    ? false
-                    : true,
-              ),
+              appBar: InstallAppBarComponent(),
               bottomNavigationBar: const MezBottomBar(),
               body: Scaffold(
                 appBar: (MezCalmosResizer.isMobile(context) ||
                         MezCalmosResizer.isSmallMobile(context))
                     ? null
                     : WebAppBarComponent(
-                        type: WebAppBarType.Normal,
+                        automaticallyGetBack:
+                            MezCalmosResizer.isMobile(context) ||
+                                    MezCalmosResizer.isSmallMobile(context)
+                                ? false
+                                : true,
+                        type: WebAppBarType.Normal.obs,
                       ),
                 body: LayoutBuilder(
                   builder: (context, constarints) {

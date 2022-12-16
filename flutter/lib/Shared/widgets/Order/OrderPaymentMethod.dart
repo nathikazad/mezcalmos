@@ -11,11 +11,15 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
 //
 
 class OrderPaymentMethod extends StatelessWidget {
-  const OrderPaymentMethod({super.key, required this.order, this.margin});
+  OrderPaymentMethod(
+      {super.key, required this.order, this.margin, this.isWebVersion});
   final Order order;
   final EdgeInsets? margin;
+
+  bool? isWebVersion = false;
   @override
   Widget build(BuildContext context) {
+    final txt = Theme.of(context).textTheme;
     return Container(
       margin: margin,
       child: Column(
@@ -23,7 +27,8 @@ class OrderPaymentMethod extends StatelessWidget {
         children: [
           Text(
             '${_i18n()["paymentMethod"]}',
-            style: Get.textTheme.bodyText1,
+            style: txt.bodyText1!
+                .copyWith(fontSize: (isWebVersion == true) ? 16 : null),
           ),
           const SizedBox(
             height: 10,
@@ -47,7 +52,8 @@ class OrderPaymentMethod extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(horizontal: 5),
                       child: Text(
                         "${order.stripePaymentInfo!.brand!.toName()}",
-                        style: Get.textTheme.bodyText1,
+                        style: txt.bodyText1!.copyWith(
+                            fontSize: (isWebVersion == true) ? 16 : null),
                       ),
                     ),
                   Flexible(
@@ -55,8 +61,10 @@ class OrderPaymentMethod extends StatelessWidget {
                     child: Text(
                       _getTitle(),
                       style: (order.stripePaymentInfo != null)
-                          ? Get.textTheme.bodyText2
-                          : Get.textTheme.bodyText1,
+                          ? txt.bodyText2!.copyWith(
+                              fontSize: (isWebVersion == true) ? 14 : null)
+                          : txt.bodyText1!.copyWith(
+                              fontSize: (isWebVersion == true) ? 16 : null),
                     ),
                   ),
                 ],

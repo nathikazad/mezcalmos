@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Common/PickLocationView.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/pages/PickLocationview.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
         ["Restaurants"]["ViewCartScreen"]["components"]["SaveLocationDailog"];
 
-Future<String?> savedLocationDailog({
-  required BuildContext context,
-  bool? comingFromCart = false,
-  String? nameVal,
-  PickLocationMode mode = PickLocationMode.AddNewLocation,
-}) async {
+Future<String?> savedLocationDailog(
+    {required BuildContext context,
+    bool? comingFromCart = false,
+    String? nameVal,
+    PickLocationMode mode = PickLocationMode.AddNewLocation,
+    bool? isWebVersion = false}) async {
   /// TextEditingController
   final TextEditingController txtController = TextEditingController();
 
@@ -36,7 +37,12 @@ Future<String?> savedLocationDailog({
                       ? '${_i18n()["addLocationDialogTitle"]}'
                       : '${_i18n()["editLocationDialogTitle"]}',
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: (isWebVersion == true)
+                      ? GoogleFonts.montserrat(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black)
+                      : Theme.of(context).textTheme.bodyText1,
                 ),
               ),
               const SizedBox(height: 15),
@@ -67,7 +73,11 @@ Future<String?> savedLocationDailog({
               const SizedBox(height: 15),
               TextButton(
                 onPressed: () {
-                  Get.back(result: txtController.text);
+                  if (isWebVersion = true) {
+                    Navigator.of(context).pop(txtController.text);
+                  } else {
+                    Get.back(result: txtController.text);
+                  }
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -75,6 +85,12 @@ Future<String?> savedLocationDailog({
                     nameVal != null
                         ? _i18n()["editLocationDialogButton"]
                         : _i18n()["addLocationDialogButton"],
+                    style: (isWebVersion == true)
+                        ? GoogleFonts.montserrat(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black)
+                        : null,
                   ),
                 ),
               ),
@@ -84,7 +100,11 @@ Future<String?> savedLocationDailog({
                   comingFromCart)
                 TextButton(
                   onPressed: () {
-                    Get.back();
+                    if (isWebVersion = true) {
+                      Navigator.of(context).pop();
+                    } else {
+                      Get.back();
+                    }
                   },
                   style: TextButton.styleFrom(
                       backgroundColor: Colors.black,
@@ -93,6 +113,12 @@ Future<String?> savedLocationDailog({
                     alignment: Alignment.center,
                     child: Text(
                       _i18n()["addLocationDialogSkip"],
+                      style: (isWebVersion == true)
+                          ? GoogleFonts.montserrat(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            )
+                          : null,
                     ),
                   ),
                 ),

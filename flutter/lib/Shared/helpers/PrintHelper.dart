@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
@@ -32,7 +32,7 @@ void mezcalmosLogger(String text, {bool isError = false}) =>
     mezDbgPrint("[MZL][ GETX ] $text");
 
 void logCrashes({required String crashInfos}) {
-  final MainUserInfo? user = Get.find<AuthController>().user;
+  final MainUserInfo? user = Get.find<FirbaseAuthController>().user;
   if (user != null && getAppLaunchMode() == AppLaunchMode.prod) {
     Get.find<FirebaseDb>()
         .firebaseDatabase

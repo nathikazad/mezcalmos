@@ -15,6 +15,7 @@ class IncrementalComponent extends StatefulWidget {
   final int minVal;
   final Function? onChangedToZero;
   final MainAxisAlignment alignment;
+  final bool? isWeb;
   IncrementalComponent(
       {Key? key,
       required this.incrementCallback,
@@ -28,6 +29,7 @@ class IncrementalComponent extends StatefulWidget {
       this.onChangedToZero,
       this.size = 16,
       this.maxVal = 100,
+      this.isWeb = false,
       this.minVal = 0})
       : super(key: key);
 
@@ -47,12 +49,12 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(32)),
                     color: (widget.value > widget.minVal)
-                        ? secondaryLightBlueColor
+                        ? widget.btnColors
                         : widget.onMinValueBtnColor ?? Colors.grey),
                 child: Icon(
                   Icons.remove,
                   color: (widget.value > widget.minVal)
-                      ? primaryBlueColor
+                      ? Colors.white
                       : widget.minusIconColor,
                   size: widget.size,
                 )),
@@ -70,7 +72,10 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
           padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(),
           child: Text("${widget.value}",
-              style: Theme.of(context).textTheme.headline3),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline3!
+                  .copyWith(fontSize: widget.isWeb! ? 18 : null)),
         ),
         SizedBox(
           width: 5,

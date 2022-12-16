@@ -302,10 +302,10 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
           fillColor: Colors.white,
           prefixIcon: Icon(
             Icons.search,
-            color: Colors.grey.shade300,
+            color: Colors.grey,
           ),
           hintStyle: TextStyle(
-            color: Colors.grey.shade300,
+            color: Colors.grey,
           ),
           hintText: "${_i18n()["search"]}"),
     );

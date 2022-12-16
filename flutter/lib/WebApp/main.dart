@@ -54,6 +54,7 @@ class _MyAppState extends State<MyApp> {
     //   getPages: AppRoutes.getRoutes,
     // );
     return MaterialApp.router(
+      scaffoldMessengerKey: snackbarKey,
       // Add the [QRouteInformationParser]
       routeInformationParser: QRouteInformationParser(),
       // Add the [QRouterDelegate] with your routes
@@ -67,4 +68,16 @@ class _MyAppState extends State<MyApp> {
       theme: WebAppTheme.lightTheme,
     );
   }
+}
+
+Future doSomething() async {
+  await Future.delayed(Duration(seconds: 5)).then((value) {
+    print("print 11111 delayed finished");
+  });
+  await Future.microtask(() {
+//    Future.delayed(Duration(seconds: 5)).then((value) {
+    print("print 11111 micro finished");
+
+//     });
+  });
 }

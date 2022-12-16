@@ -17,10 +17,9 @@ const Color primaryColor = Color.fromRGBO(103, 121, 254, 1);
 
 class InstallAppBarComponent extends StatefulWidget
     implements PreferredSizeWidget {
-  InstallAppBarComponent({Key? key, this.automaticallyGetBack = true})
-      : super(key: key);
-
-  final bool? automaticallyGetBack;
+  InstallAppBarComponent({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<InstallAppBarComponent> createState() => _InstallAppBarComponentState();
@@ -40,7 +39,7 @@ class _InstallAppBarComponentState extends State<InstallAppBarComponent> {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       return Container(
-        child: _buildWidget(context, widget.automaticallyGetBack!),
+        child: _buildWidget(context),
       );
     });
   }
@@ -95,7 +94,7 @@ double getText2Size(BuildContext context) {
 }
 
 // desktop Widget
-Widget _buildWidget(BuildContext context, bool automaticallyGetBack) {
+Widget _buildWidget(BuildContext context) {
   dynamic _i18n() => Get.find<LanguageController>().strings["WebApp"]["screens"]
       ["components"]["InstallAppBarComponent"]["install"];
   //mezDbgPrint("this is a test ${_i18n()["title"].toString()} hhh");
@@ -107,15 +106,15 @@ Widget _buildWidget(BuildContext context, bool automaticallyGetBack) {
         horizontal: MezCalmosResizer.getWepPageHorizontalPadding(context)),
     child: Row(
       children: [
-        if (automaticallyGetBack)
-          Row(
-            children: [
-              _BackButtonAppBar(),
-              SizedBox(
-                width: Get.width * 0.05,
-              ),
-            ],
-          ),
+        // if (automaticallyGetBack)
+        //   Row(
+        //     children: [
+        //       _BackButtonAppBar(),
+        //       SizedBox(
+        //         width: Get.width * 0.05,
+        //       ),
+        //     ],
+        //   ),
         InkWell(
           onTap: () {
             _launchURL(context);

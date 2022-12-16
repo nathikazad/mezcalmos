@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/components/viewRestaurantScreenFroDesktop.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/components/viewRestaurantScreenFroMobile.dart';
+import 'package:mezcalmos/WebApp/screens/components/WebAppBarComponent.dart';
 import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
+import 'package:mezcalmos/WebApp/widgets/SideWebBarWidget/SideWebBarWidget.dart';
 import 'package:mezcalmos/WebApp/widgets/mezBottomBar.dart';
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 import 'package:mezcalmos/WebApp/widgets/mezLoaderWidget.dart';
@@ -29,21 +34,25 @@ class _RestaurantsItemsViewState extends State<RestaurantsItemsView> {
   @override
   void initState() {
     Get.put<LanguageController>(LanguageController());
+
     super.initState();
   }
 
   final List<bool> _selectedFruits = <bool>[true, false, false];
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
+    //  return Scaffold();
     return FutureBuilder<bool>(
         future: setupFirebase(launchMode: typeMode.toLaunchMode()),
         builder: (context, snapShot) {
           if (snapShot.hasData && snapShot.data == true) {
             final LanguageController Lcontroller =
                 Get.find<LanguageController>();
+            final FirbaseAuthController _authcontroller =
+                Get.find<FirbaseAuthController>();
             var xLang = QR.params["lang"].toString().contains("es")
                 ? LanguageType.ES
                 : LanguageType.EN;
@@ -53,14 +62,14 @@ class _RestaurantsItemsViewState extends State<RestaurantsItemsView> {
                 Lcontroller.changeLangForWeb(xLang);
               });
             }
+            final MezWebSideBarController drawerController =
+                Get.find<MezWebSideBarController>();
 
             return Scaffold(
-              appBar: InstallAppBarComponent(
-                automaticallyGetBack: (MezCalmosResizer.isMobile(context) ||
-                        MezCalmosResizer.isSmallMobile(context))
-                    ? false
-                    : true,
-              ),
+              key: drawerController.drawerKey,
+              drawer: drawerController.frontDrawerContent,
+              endDrawer: drawerController.endDrawerContent,
+              appBar: InstallAppBarComponent(),
               bottomNavigationBar: MezBottomBar(),
               body: LayoutBuilder(
                 builder: (context, constraints) {
@@ -68,7 +77,20 @@ class _RestaurantsItemsViewState extends State<RestaurantsItemsView> {
                       MezCalmosResizer.isSmallMobile(context)) {
                     return ViewRestaurantScreenFroMobile();
                   } else {
-                    return ViewRestaurantScreenFroDesktop();
+                    return Obx(
+                      () => Scaffold(
+                          appBar: WebAppBarComponent(
+                            automaticallyGetBack:
+                                (MezCalmosResizer.isMobile(context) ||
+                                        MezCalmosResizer.isSmallMobile(context))
+                                    ? false
+                                    : true,
+                            type: _authcontroller.fireAuthUser?.uid != null
+                                ? WebAppBarType.WithCartActionButton.obs
+                                : WebAppBarType.WithSignInActionButton.obs,
+                          ),
+                          body: ViewRestaurantScreenFroDesktop()),
+                    );
                   }
                 },
               ),

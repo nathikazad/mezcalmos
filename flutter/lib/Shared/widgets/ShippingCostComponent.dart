@@ -11,17 +11,20 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
 //
 
 class ShippingCostComponent extends StatelessWidget {
-  const ShippingCostComponent(
+  ShippingCostComponent(
       {Key? key,
       required this.shippingCost,
       this.textStyle,
       this.defaultShippingCost = 50,
+      this.isWebVersion,
       this.alignment = MainAxisAlignment.end})
       : super(key: key);
   final num shippingCost;
   final num defaultShippingCost;
   final MainAxisAlignment alignment;
   final TextStyle? textStyle;
+
+  bool? isWebVersion = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +36,9 @@ class ShippingCostComponent extends StatelessWidget {
                 Flexible(
                   child: Text(
                     defaultShippingCost.toPriceString(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        ?.copyWith(decoration: TextDecoration.lineThrough),
+                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                        decoration: TextDecoration.lineThrough,
+                        fontSize: isWebVersion == true ? 14 : null),
                   ),
                 ),
                 SizedBox(
@@ -45,15 +47,17 @@ class ShippingCostComponent extends StatelessWidget {
                 Flexible(
                   child: Text(
                     "${_i18n()["free"]}",
-                    style: Get.textTheme.bodyText1
-                        ?.copyWith(color: primaryBlueColor, fontSize: 11.sp),
+                    style: Get.textTheme.bodyText1?.copyWith(
+                        color: primaryBlueColor,
+                        fontSize: isWebVersion == true ? 14 : 11.sp),
                   ),
                 )
               ],
             )
           : Text(
               shippingCost.toPriceString(),
-              style: textStyle,
+              style: textStyle ??
+                  TextStyle(fontSize: isWebVersion == true ? 14 : 11.sp),
             ),
     );
   }

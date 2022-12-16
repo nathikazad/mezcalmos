@@ -50,7 +50,10 @@ class _RestaurantsInfoTapForDesktopState
           SizedBox(
             height: 20,
           ),
-          if (widget.restaurant!.description![lang.userLanguageKey] != null)
+          if (widget.restaurant!.description![lang.userLanguageKey] != null &&
+              widget.restaurant!.description![lang.userLanguageKey]
+                  .toString()
+                  .isNotEmpty)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

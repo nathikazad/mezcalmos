@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
+// import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -23,6 +24,8 @@ class DropDownLocationList extends StatefulWidget {
     this.checkDistance = false,
     this.serviceProviderLocation,
     this.bgColor = Colors.transparent,
+    this.isWebVersion,
+    this.webRedrectionCallback,
     Key? key,
   }) : super(key: key);
 
@@ -32,6 +35,8 @@ class DropDownLocationList extends StatefulWidget {
   Location? serviceProviderLocation;
   bool checkDistance;
   final Color bgColor;
+  bool? isWebVersion = false;
+  Future<SavedLocation?> Function()? webRedrectionCallback;
 
   @override
   _DropDownLocationListState createState() => _DropDownLocationListState();
@@ -125,7 +130,12 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
             icon: Icon(Icons.expand_more),
             hint: Text(
               '${_i18n()["chooseLoc"]}',
-              style: Get.textTheme.bodyText1,
+              style: (widget.isWebVersion == true)
+                  ? GoogleFonts.montserrat(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                    )
+                  : Get.textTheme.bodyText1,
             ),
             items: listOfSavedLoacations
                 .map<DropdownMenuItem<SavedLocation>>(
@@ -133,6 +143,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
                 .toList(),
             onChanged: (SavedLocation? v) async {
               await locationChangedHandler(v!);
+              setState(() {});
             },
           )),
         ),
@@ -171,27 +182,35 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
         "Changed value over to ====> ${newLocation?.name} | Old one was : ${dropDownListValue?.name}");
 
     // we will route the user back to the Map
+
+    late SavedLocation? _savedLocation;
     if (newLocation?.id == "_pick_") {
-      final SavedLocation? _savedLocation = await Get.toNamed(
-        kPickLocationRoute,
-        arguments: true,
-      ) as SavedLocation?;
+      if (widget.isWebVersion == true) {
+        _savedLocation = await widget.webRedrectionCallback?.call();
+        mezDbgPrint("this will return form me a saved location ");
+      } else {
+        _savedLocation = await Get.toNamed(
+          // kPickLocationRoute,
+          "",
+          arguments: true,
+        ) as SavedLocation?;
+      }
 
       if (_savedLocation != null &&
           (_savedLocation.location?.isValidLocation() ?? false)) {
         // in case it's repeated with the same name or same address
         listOfSavedLoacations.removeWhere(
           (SavedLocation savedLoc) =>
-              savedLoc.name == _savedLocation.name ||
+              savedLoc.name == _savedLocation!.name ||
               (_savedLocation.location?.address != null &&
                   savedLoc.location?.address ==
                       _savedLocation.location?.address),
         );
 
         setState(() {
-          listOfSavedLoacations.add(_savedLocation);
-          // dropDownListValue =
-          //     listOfSavedLoacations[listOfSavedLoacations.length - 1];
+          listOfSavedLoacations.add(_savedLocation!);
+          dropDownListValue =
+              listOfSavedLoacations[listOfSavedLoacations.length - 1];
         });
         await _verifyDistanceAndSetLocation(_savedLocation);
       } else {
@@ -206,11 +225,17 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
         await _verifyDistanceAndSetLocation(newLocation);
       }
     }
+    setState(() {});
   }
 
   Future<void> _verifyDistanceAndSetLocation(SavedLocation newLocation) async {
-    if (_checkDistance() && await _lessThanDistance(newLocation.location!)) {
+    mezDbgPrint("this before the check ");
+    //TODO: please uncommemt the check and remove true
+    if (
+        // _checkDistance() && await _lessThanDistance(newLocation.location!)
+        true) {
       widget.onValueChangeCallback?.call(location: newLocation.location);
+      mezDbgPrint("this after the check 1");
       setState(() {
         dropDownListValue = newLocation;
         widget.passedInLocation = dropDownListValue!.location;
@@ -225,6 +250,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       });
       widget.onValueChangeCallback?.call(location: newLocation.location);
     } else {
+      mezDbgPrint("this after the check 2");
       widget.onValueChangeCallback?.call(location: newLocation.location);
       setState(() {
         dropDownListValue = newLocation;
@@ -246,7 +272,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
         children: <Widget>[
           Icon(
             Icons.fmd_good,
-            //  size: 18,
+            size: (widget.isWebVersion == true) ? 16 : null,
             color: Colors.black,
           ),
           const SizedBox(width: 15),
@@ -256,7 +282,8 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
               child: Text(
                 e.name,
                 overflow: TextOverflow.ellipsis,
-                style: Get.textTheme.bodyText2,
+                style: Get.textTheme.bodyText2!.copyWith(
+                    fontSize: (widget.isWebVersion == true) ? 12 : null),
               ),
             ),
           ),
@@ -278,7 +305,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
                     // margin: const EdgeInsets.only(top: 3),
                     child: Icon(
                       Icons.fmd_good,
-                      //    size: 18,
+                      size: (widget.isWebVersion == true) ? 16 : null,
                       color: Colors.black,
                     ),
                   ),
@@ -290,7 +317,8 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
                       item.name,
                       overflow: TextOverflow.ellipsis,
                       style: Get.textTheme.bodyText2?.copyWith(
-                          fontSize: 12.sp, fontWeight: FontWeight.w600),
+                          fontSize: (widget.isWebVersion == true) ? 12 : 12.sp,
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
                 ],
@@ -317,8 +345,9 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
           Flexible(
             child: Text(
               '${_i18n()["distanceError"]}',
-              style: Get.textTheme.bodyText1
-                  ?.copyWith(color: Colors.red, fontSize: 10.sp),
+              style: Get.textTheme.bodyText1?.copyWith(
+                  color: Colors.red,
+                  fontSize: widget.isWebVersion == true ? 14 : 10.sp),
             ),
           ),
         ],

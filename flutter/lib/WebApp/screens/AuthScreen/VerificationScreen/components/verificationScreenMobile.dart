@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/WebApp/controllers/authWebController.dart';
 import 'package:mezcalmos/WebApp/widgets/MezSnackbar.dart';
 
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -15,7 +16,7 @@ import 'package:sizer/sizer.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["AuthScreens"]["SMS"]["OtpConfirmationScreen"];
 
-class VerificationScreenMobile extends GetView<AuthController> {
+class VerificationScreenMobile extends GetView<FirbaseAuthController> {
   VerificationScreenMobile({super.key, required this.passedPhone});
   final String passedPhone;
   RxBool clickedSignInOtp = false.obs;
@@ -234,17 +235,24 @@ class VerificationScreenMobile extends GetView<AuthController> {
           onPressed: canConfirmOtp.value
               ? () async {
                   clickedSignInOtp.value = true;
-                  print(
+                  mezDbgPrint(
                       "${Get.arguments ?? _phonePassed} -------------- $otpCode ");
                   final ServerResponse? _resp = await controller.signInUsingOTP(
-                      Get.arguments ?? _phonePassed, otpCode);
+                      Get.arguments ?? "+" + _phonePassed.trim(), otpCode);
+
                   switch (_resp?.success) {
                     case null:
                       clickedSignInOtp.value = false;
                       break;
-
+                    case true:
+                      MezSnackbarForWeb(
+                          "Notice ~", "you successfully sign in", context);
+                      QR.to("/restaurants");
+                      break;
                     case false:
-                      MezSnackbar("Oops ..", _i18n()['wrongOTPCode']);
+                      MezSnackbarForWeb(
+                          "Oops ..", _i18n()['wrongOTPCode'], context);
+
                       clickedSignInOtp.value = false;
                       break;
                   }

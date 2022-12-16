@@ -9,7 +9,6 @@ import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-// import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -21,15 +20,14 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-// import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']
     ['controllers']['authController'];
 
-class AuthController extends GetxController {
+class FirbaseAuthController extends GetxController {
   fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
-  Function _onSignOutCallback;
-  Function _onSignInCallback;
+  Function onSignOutCallback;
+  Function onSignInCallback;
 
   Rxn<MainUserInfo> _user = Rxn<MainUserInfo>();
   MainUserInfo? get user => _user.value;
@@ -54,7 +52,7 @@ class AuthController extends GetxController {
   FirebaseDb _databaseHelper =
       Get.find<FirebaseDb>(); // Already Injected in main function
 
-  AuthController(this._onSignInCallback, this._onSignOutCallback);
+  FirbaseAuthController(this.onSignInCallback, this.onSignOutCallback);
   String? _previousUserValue = "init";
 
   bool preserveNavigationStackAfterSignIn = false;
@@ -78,7 +76,7 @@ class AuthController extends GetxController {
       _fireAuthUser.value = user;
 
       if (user == null) {
-        await _onSignOutCallback();
+        await onSignOutCallback();
         _authStateStreamController.add(null);
         _userInfoStreamController.add(null);
 
@@ -88,7 +86,7 @@ class AuthController extends GetxController {
         _user.value = null;
       } else {
         mezDbgPrint('AuthController: User is currently signed in!');
-        _onSignInCallback();
+        onSignInCallback();
         _authStateStreamController.add(user);
         await GetStorage().write(getxUserId, user.uid);
         await _userNodeListener?.cancel();
@@ -356,6 +354,12 @@ class AuthController extends GetxController {
     return serverResponse;
   }
 
+  // flutter_facebook_auth Package causes a conflict with GetStorage !
+  @override
+  Future signInWithFacebook() async {}
+  @override
+  Future signInWithApple() async {}
+
   @override
   void dispose() {
     _userNodeListener?.cancel();
@@ -365,7 +369,7 @@ class AuthController extends GetxController {
   }
 }
 
-String generateNonce([int length = 32]) {
+String ggenerateNonce([int length = 32]) {
   final String charset =
       '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
   final Random random = Random.secure();

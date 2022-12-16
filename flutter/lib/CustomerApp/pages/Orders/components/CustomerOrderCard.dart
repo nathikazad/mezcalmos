@@ -1,39 +1,57 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
+// import 'package:mezcalmos/CustomerApp/pages/Orders/components/routeHandler.dart';
+// import 'package:mezcalmos/CustomerApp/pages/Orders/components/routeHandler.dart';
+
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/LaundryOrderHelper.dart';
+// import 'package:mezcalmos/Shared/helpers/LaundryOrderHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/RestaurantOrderHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TaxiOrderHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+// import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/widgets/OrderInfoCard/OrderInfoCard.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 
 class CustomerOrderCard extends StatelessWidget {
-  const CustomerOrderCard({Key? key, required this.order}) : super(key: key);
+  CustomerOrderCard({Key? key, required this.order, this.isWebVersion})
+      : super(key: key);
   final Order order;
+  bool? isWebVersion = false;
 
   @override
   Widget build(BuildContext context) {
     return OrderInfosCard(
+      isWebversion: isWebVersion,
       order: order,
       orderCardSubWidgets: OrderCardSubWidgets(
-          onCardTap: handleRouting,
+          onCardTap: () {
+            if (isWebVersion == true) {
+              mezDbgPrint("this is a test ${order.orderId}");
+              QR.navigator.replaceAll("/orders/${order.orderId}");
+              // QR.toName("orders/${order.orderId}");
+            } else {
+              //handleRouting(order);
+            }
+          },
           primaryBodyContent: _getRightBody(),
           cardTitle: _getServiceProvider()?.name ?? "",
           cardStatus: _getOrderStatus(),
+          // cardTime: Text(
+          //   order.orderTime.getOrderTime().inCaps,
+          //   maxLines: 1,
+          // ),
           cardTime: Text(
-            order.orderTime.getOrderTime().inCaps,
-            maxLines: 1,
+            "    ",
           ),
           rightImage: _rightImage()),
     );
@@ -71,7 +89,10 @@ class CustomerOrderCard extends StatelessWidget {
               SizedBox(
                 width: 5,
               ),
-              Text(order.cost.toPriceString()),
+              Text(
+                order.cost.toPriceString(),
+                style: TextStyle(fontSize: isWebVersion == true ? 14 : null),
+              ),
               SizedBox(
                 width: 15,
               ),
@@ -84,48 +105,52 @@ class CustomerOrderCard extends StatelessWidget {
                       flex: 6,
                       fit: FlexFit.tight,
                       child: ShippingCostComponent(
+                        isWebVersion: isWebVersion,
                         shippingCost: (order as RestaurantOrder).shippingCost,
                         alignment: MainAxisAlignment.start,
                       ),
                     )
                   : Text(
-                      (order as RestaurantOrder).shippingCost.toPriceString())
+                      (order as RestaurantOrder).shippingCost.toPriceString(),
+                      style:
+                          TextStyle(fontSize: isWebVersion == true ? 14 : null),
+                    )
             ],
           ),
         );
 
-      case OrderType.Laundry:
-        return Container(
-          child: Row(
-            children: [
-              Icon(Icons.local_laundry_service),
-              SizedBox(
-                width: 5,
-              ),
-              Text((order as LaundryOrder)
-                      .costsByType
-                      ?.weighedCost
-                      .toPriceString() ??
-                  "_"),
-              SizedBox(
-                width: 15,
-              ),
-              Icon(Icons.delivery_dining),
-              SizedBox(
-                width: 5,
-              ),
-              (order as LaundryOrder).shippingCost == 0
-                  ? Flexible(
-                      flex: 6,
-                      child: ShippingCostComponent(
-                        shippingCost: (order as LaundryOrder).shippingCost,
-                        alignment: MainAxisAlignment.start,
-                      ),
-                    )
-                  : Text((order as LaundryOrder).shippingCost.toPriceString())
-            ],
-          ),
-        );
+      // case OrderType.Laundry:
+      //   return Container(
+      //     child: Row(
+      //       children: [
+      //         Icon(Icons.local_laundry_service),
+      //         SizedBox(
+      //           width: 5,
+      //         ),
+      //         Text((order as LaundryOrder)
+      //                 .costsByType
+      //                 ?.weighedCost
+      //                 .toPriceString() ??
+      //             "_"),
+      //         SizedBox(
+      //           width: 15,
+      //         ),
+      //         Icon(Icons.delivery_dining),
+      //         SizedBox(
+      //           width: 5,
+      //         ),
+      //         (order as LaundryOrder).shippingCost == 0
+      //             ? Flexible(
+      //                 flex: 6,
+      //                 child: ShippingCostComponent(
+      //                   shippingCost: (order as LaundryOrder).shippingCost,
+      //                   alignment: MainAxisAlignment.start,
+      //                 ),
+      //               )
+      //             : Text((order as LaundryOrder).shippingCost.toPriceString())
+      //       ],
+      //     ),
+      //   );
       case OrderType.Taxi:
         return Container(
           child: Row(
@@ -164,8 +189,8 @@ class CustomerOrderCard extends StatelessWidget {
     switch (order.orderType) {
       case OrderType.Restaurant:
         return (order as RestaurantOrder).restaurant;
-      case OrderType.Laundry:
-        return (order as LaundryOrder).laundry;
+      // case OrderType.Laundry:
+      //   return (order as LaundryOrder).laundry;
       case OrderType.Taxi:
         return (order as TaxiOrder).driver;
 
@@ -208,24 +233,6 @@ class CustomerOrderCard extends StatelessWidget {
     }
   }
 
-  void handleRouting() {
-    switch (order.orderType) {
-      case OrderType.Restaurant:
-        Get.toNamed(getRestaurantOrderRoute(order.orderId));
-
-        break;
-      case OrderType.Laundry:
-        Get.toNamed(getLaundryOrderRoute(order.orderId));
-
-        break;
-      case OrderType.Taxi:
-        Get.toNamed(getTaxiOrderRoute(order.orderId));
-
-        break;
-      default:
-    }
-  }
-
   Widget _getOrderStatus() {
     switch (order.orderType) {
       case OrderType.Restaurant:
@@ -239,26 +246,26 @@ class CustomerOrderCard extends StatelessWidget {
           child: Text(
             (order as RestaurantOrder).getOrderStatus(),
             style: Get.textTheme.bodyText1?.copyWith(
-                fontSize: 10.sp,
+                fontSize: (isWebVersion == true) ? 15 : 10.sp,
                 color: (order.isCanceled()) ? Colors.red : primaryBlueColor),
           ),
         );
 
-      case OrderType.Laundry:
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: (order.isCanceled())
-                  ? Colors.red.withOpacity(0.2)
-                  : secondaryLightBlueColor),
-          child: Text(
-            (order as LaundryOrder).orderStatusTitleForCustomer(),
-            style: Get.textTheme.bodyText1?.copyWith(
-                fontSize: 10.sp,
-                color: (order.isCanceled()) ? Colors.red : primaryBlueColor),
-          ),
-        );
+      // case OrderType.Laundry:
+      //   return Container(
+      //     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+      //     decoration: BoxDecoration(
+      //         borderRadius: BorderRadius.circular(12),
+      //         color: (order.isCanceled())
+      //             ? Colors.red.withOpacity(0.2)
+      //             : secondaryLightBlueColor),
+      //     child: Text(
+      //       (order as LaundryOrder).orderStatusTitleForCustomer(),
+      //       style: Get.textTheme.bodyText1?.copyWith(
+      //           fontSize: 10.sp,
+      //           color: (order.isCanceled()) ? Colors.red : primaryBlueColor),
+      //     ),
+      //   );
       case OrderType.Taxi:
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),

@@ -890,7 +890,7 @@ class Config:
         # TODO : Implement that using class:Builder
         _ = self.__get_arg_value__('--build=')
         if _:
-            if str(_).lower() not in ['apk' , 'appbundle' , 'ios']:
+            if str(_).lower() not in ['apk' , 'appbundle' , 'ios','web']:
                 PRINTLN(f'[!] --build={_} : Error Platform unsupported yet!')
                 exit(DW_EXIT_REASONS.PLATFORM_NOT_SUPPORTED_YET)
 

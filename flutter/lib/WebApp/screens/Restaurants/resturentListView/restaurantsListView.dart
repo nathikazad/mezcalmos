@@ -3,10 +3,12 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/resturentListView/components/RestaurantShimmerGrid.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/resturentListView/components/RestaurantShimmerList.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/resturentListView/components/restaurantCardForDesktopAndTablet.dart';
@@ -14,6 +16,7 @@ import 'package:mezcalmos/WebApp/screens/Restaurants/resturentListView/component
 import 'package:mezcalmos/WebApp/screens/Restaurants/resturentListView/controller/ListRestaurantController.dart';
 import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
 import 'package:mezcalmos/WebApp/screens/components/webAppBarComponent.dart';
+import 'package:mezcalmos/WebApp/widgets/SideWebBarWidget/SideWebBarWidget.dart';
 import 'package:mezcalmos/WebApp/widgets/mezBottomBar.dart';
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 import 'package:mezcalmos/WebApp/widgets/mezLoaderWidget.dart';
@@ -22,6 +25,8 @@ import 'package:mezcalmos/WebApp/webHelpers/StringHelper.dart';
 import 'package:mezcalmos/WebApp/webHelpers/setUpHelper.dart';
 
 import 'package:qlevar_router/qlevar_router.dart';
+
+import '../../../widgets/mezOverly.dart';
 
 class RestaurantsListView extends StatefulWidget {
   RestaurantsListView({Key? key}) : super(key: key);
@@ -36,12 +41,22 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
   void initState() {
     print("the current lang is ${QR.params["lang"]} ");
     Get.put<LanguageController>(LanguageController());
+    mezDbgPrint(
+        "]]]]]]]]]] inIt  resturants list 🍔 test 🧪  and time 📅 ${DateTime.now().toString()}");
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      mezDbgPrint(
+          "]]]]]]]]]] build done resturants list 🍔 test 🧪  and time 📅 ${DateTime.now().toString()} and duration ${_.inMilliseconds}");
+    });
 
     super.initState();
   }
 
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
+    mezDbgPrint("this is just called list of restaurants 🔥");
+    mezDbgPrint(
+        "]]]]]]]]]] build  resturants list 🍔 test 🧪  and time 📅 ${DateTime.now().toString()}");
     // return Scaffold(
     //   appBar: InstallAppBarComponent(),
     //   body: ,
@@ -54,10 +69,16 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
             }),
         builder: (context, snapShot) {
           if (snapShot.hasData && snapShot.data == true) {
+            final FirbaseAuthController _authcontroller =
+                Get.find<FirbaseAuthController>();
             final LanguageController Lcontroller =
                 Get.find<LanguageController>();
+            final MezWebSideBarController drawerController =
+                Get.find<MezWebSideBarController>();
             //  MezPrint();
-
+            mezDbgPrint(_authcontroller.fireAuthUser?.uid != null
+                ? WebAppBarType.WithCartActionButton.toString()
+                : WebAppBarType.WithSignInActionButton.toString());
             var xLang = QR.params["lang"].toString().contains("es")
                 ? LanguageType.ES
                 : LanguageType.EN;
@@ -69,51 +90,65 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
             }
             ListRestaurantsController viewController =
                 ListRestaurantsController();
+
             return Scaffold(
-                appBar: InstallAppBarComponent(
-                  automaticallyGetBack: false,
-                ),
+                key: drawerController.drawerKey,
+                appBar: InstallAppBarComponent(),
+                drawer: drawerController.frontDrawerContent,
+                endDrawer: drawerController.endDrawerContent,
                 bottomNavigationBar: MezBottomBar(),
                 body: LayoutBuilder(
                   builder: (context, constraints) {
-                    return Scaffold(
-                      appBar: (MezCalmosResizer.isMobile(context) ||
-                              MezCalmosResizer.isSmallMobile(context))
-                          ? null
-                          : WebAppBarComponent(),
-                      body: Scaffold(
-                        //appBar: ,
-                        appBar: AppBar(
-                          leading: null,
-                          automaticallyImplyLeading: false,
-                          title: Obx(
-                            () => Text(
-                              Lcontroller.strings["CustomerApp"]["pages"]
-                                      ["Restaurants"]["ListRestaurantsScreen"]
-                                  ["ListRestaurantScreen"]["restaurants"],
-                              style: GoogleFonts.montserrat(
-                                  textStyle: TextStyle(
-                                fontWeight: (MezCalmosResizer.isMobile(
-                                            context) ||
-                                        MezCalmosResizer.isSmallMobile(context))
-                                    ? FontWeight.w500
-                                    : FontWeight.w600,
-                                fontSize: 17,
-                                color: Colors.black,
-                              )),
-                            ),
-                          ),
-                          centerTitle: true,
+                    return Obx(
+                      () => Scaffold(
+                        appBar: WebAppBarComponent(
+                          automaticallyGetBack: false,
+                          type: _authcontroller.fireAuthUser?.uid != null
+                              ? WebAppBarType.WithCartActionButton.obs
+                              : WebAppBarType.WithSignInActionButton.obs,
+                          leadingFunction:
+                              _authcontroller.fireAuthUser?.uid != null
+                                  ? () {
+                                      _key.currentState!.openDrawer();
+                                    }
+                                  : null,
                         ),
-                        body: SingleChildScrollView(
-                          controller: controller,
-                          child: Column(
-                            children: [
-                              _searchInput(context),
-                              _sortingSwitcher(context),
-                              _restaurantList(context)
-                              //  buildListOFCardsForDesktopAndTablet(context)
-                            ],
+                        body: Scaffold(
+                          //appBar: ,
+                          appBar: AppBar(
+                            leading: null,
+                            automaticallyImplyLeading: false,
+                            title: Obx(
+                              () => Text(
+                                Lcontroller.strings["CustomerApp"]["pages"]
+                                        ["Restaurants"]["ListRestaurantsScreen"]
+                                    ["ListRestaurantScreen"]["restaurants"],
+                                style: GoogleFonts.montserrat(
+                                    textStyle: TextStyle(
+                                  fontWeight:
+                                      (MezCalmosResizer.isMobile(context) ||
+                                              MezCalmosResizer.isSmallMobile(
+                                                  context))
+                                          ? FontWeight.w500
+                                          : FontWeight.w600,
+                                  fontSize: 17,
+                                  color: Colors.black,
+                                )),
+                              ),
+                            ),
+                            centerTitle: true,
+                          ),
+
+                          body: SingleChildScrollView(
+                            controller: controller,
+                            child: Column(
+                              children: [
+                                _searchInput(context),
+                                _sortingSwitcher(context),
+                                _restaurantList(context)
+                                //  buildListOFCardsForDesktopAndTablet(context)
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -151,23 +186,32 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
             padding: EdgeInsets.symmetric(
               horizontal: MezCalmosResizer.getWepPageHorizontalPadding(context),
             ),
-            child: Column(
-              children:
-                  List.generate(10, (int index) => RestaurantShimmerCard()),
-            ),
+            child: Container(
+                child: Center(
+              child: MezLoaderWidget(),
+            )),
+            // child: Column(
+            //   children:
+            //       List.generate(10, (int index) => RestaurantShimmerCard()),
+            // ),
           );
         } else {
           return Padding(
             padding: EdgeInsets.symmetric(
                 horizontal:
                     MezCalmosResizer.getWepPageHorizontalPadding(context)),
-            child: GridView.count(
-              shrinkWrap: true,
-              crossAxisCount: MezCalmosResizer.isSmallTablet(context) ? 2 : 3,
-              childAspectRatio: x,
-              children:
-                  List.generate(10, (int index) => RestaurantShimmerGrid()),
-            ),
+
+            child: Container(
+                child: Center(
+              child: MezLoaderWidget(),
+            )),
+            // child: GridView.count(
+            //   shrinkWrap: true,
+            //   crossAxisCount: MezCalmosResizer.isSmallTablet(context) ? 2 : 3,
+            //   childAspectRatio: x,
+            //   children:
+            //       List.generate(10, (int index) => RestaurantShimmerGrid()),
+            // ),
           );
         }
       } else {
@@ -291,11 +335,10 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
                   : EdgeInsets.only(top: 10.0),
               prefixIcon: Icon(
                 Icons.search,
-                color: Colors.grey.shade300,
+                color: Colors.black,
               ),
               hintStyle: GoogleFonts.montserrat(
-                  textStyle:
-                      TextStyle(color: Colors.grey.shade300, fontSize: 13)),
+                  textStyle: TextStyle(color: Colors.black, fontSize: 13)),
               hintText: lang.strings["CustomerApp"]["pages"]["Restaurants"]
                   ["ListRestaurantsScreen"]["ListRestaurantScreen"]["search"],
             )),

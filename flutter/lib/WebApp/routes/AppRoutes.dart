@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/WebApp/routes/AuthRoutes.dart';
 import 'package:mezcalmos/WebApp/routes/LaundryRoutes.dart';
+import 'package:mezcalmos/WebApp/routes/MessagesScreen.dart';
+import 'package:mezcalmos/WebApp/routes/OrdersRoutes.dart';
 import 'package:mezcalmos/WebApp/routes/RestaurantRouts.dart';
+import 'package:mezcalmos/WebApp/routes/deferred_loader.dart';
+import 'package:mezcalmos/WebApp/routes/notifsRoutes.dart';
+import 'package:mezcalmos/WebApp/routes/userProfileRoute.dart';
+import 'package:mezcalmos/WebApp/screens/cartScreen/CartViewScreen.dart';
+import 'package:mezcalmos/WebApp/screens/test.dart' deferred as test;
+import 'package:mezcalmos/WebApp/screens/test2.dart' deferred as test2;
 import 'package:mezcalmos/WebApp/screens/unFoundPage.dart';
 import 'package:mezcalmos/WebApp/values/constants.dart';
 import 'package:mezcalmos/WebApp/webHelpers/setUpHelper.dart';
@@ -28,7 +37,11 @@ class AppRoutes {
       path: '/404',
       builder: () => UnfoundPageScreen(),
     );
-    QR.settings.initPage = const Material(child: MezLoaderWidget());
+    // QR.settings.initPage = const Material(child: MezLoaderWidget());
+    QR.settings.initPage = const Material(
+        child: Center(
+      child: Text("please wait we are loading .."),
+    ));
 
     // add observers to the app
     // this observer will be called when the user navigates to new route
@@ -39,6 +52,7 @@ class AppRoutes {
     // this observer will be called when the popped out from a route
     QR.observer.onPop.add((path, route) async {
       print('Observer: popping out from $path');
+      mezDbgPrint("Observer: popping out from $path and route is $route");
     });
 
     // create initial route that will be used when the app is started
@@ -57,6 +71,38 @@ class AppRoutes {
 
     // routes for auths
     AuthRoutes().routes,
+    // user profile routes
+    UserProfileRoute().routes,
+    OrdersRoutes().routes,
+    MessagesRoutes().routes,
+    NotificationsRoutes().routes,
+    QRoute(
+      path: "/cart",
+      name: "cart",
+      //middleware: [DefferedLoader(messagingScreen.loadLibrary)],
+      builder: () => CartViewScreen(),
+      // children: [
+      //   QRoute(
+      //     path: "/:orderId",
+      //     name: orderById,
+      //     middleware: [DefferedLoader(orderViewScreen.loadLibrary)],
+      //     builder: () => orderViewScreen.OrderViewScreen(),
+      // )
+      // ]
+    ),
+    QRoute(
+        path: "/test",
+        name: "test",
+        middleware: [DefferedLoader(test.loadLibrary)],
+        builder: () => test.Test1(),
+        children: [
+          QRoute(
+            path: "/test2",
+            name: "test2",
+            middleware: [DefferedLoader(test2.loadLibrary)],
+            builder: () => test2.Test2(),
+          )
+        ])
   ];
 }
 

@@ -33,7 +33,7 @@ extension RestaurantOrderHelper on RestaurantOrder {
   }
   // order status image/icon
 
-  Widget orderStatusImage() {
+  Widget orderStatusImage({bool isWebVersion = false}) {
     switch (status) {
       case RestaurantOrderStatus.CancelledByAdmin:
 
@@ -44,7 +44,7 @@ extension RestaurantOrderHelper on RestaurantOrder {
               BoxDecoration(color: Color(0xFFF9D8D6), shape: BoxShape.circle),
           child: Icon(
             Icons.close,
-            size: 25,
+            size: isWebVersion == true ? 35 : 25,
             color: Colors.red,
           ),
         );
@@ -60,19 +60,20 @@ extension RestaurantOrderHelper on RestaurantOrder {
         );
       case RestaurantOrderStatus.PreparingOrder:
         return Container(
-          height: 50,
-          width: 50,
+          height: isWebVersion == true ? 70 : 50,
+          width: isWebVersion == true ? 70 : 50,
           child: RiveAnimation.asset(
-            "assets/animation/cooking.riv",
+            ///flutter/assets/images/web/scooterWashingMachine.riv
+            "assets/${isWebVersion == true ? "images/web" : "animation"}/cooking.riv",
             fit: BoxFit.cover,
           ),
         );
       case RestaurantOrderStatus.OnTheWay:
         return Container(
-          height: 50,
-          width: 50,
+          height: isWebVersion == true ? 70 : 50,
+          width: isWebVersion == true ? 70 : 50,
           child: RiveAnimation.asset(
-            "assets/animation/scooterWashingMachine.riv",
+            "assets/${isWebVersion == true ? "images/web" : " "}/scooterWashingMachine.riv",
             fit: BoxFit.cover,
           ),
         );
@@ -81,7 +82,7 @@ extension RestaurantOrderHelper on RestaurantOrder {
           // padding: const EdgeInsets.only(right: 10.0),
           child: Icon(
             Icons.check_circle,
-            size: 40,
+            size: isWebVersion == true ? 50 : 40,
             color: primaryBlueColor,
           ),
         );
@@ -93,7 +94,7 @@ extension RestaurantOrderHelper on RestaurantOrder {
               color: secondaryLightBlueColor, shape: BoxShape.circle),
           child: Icon(
             Icons.check,
-            size: 25,
+            size: isWebVersion == true ? 35 : 25,
             color: primaryBlueColor,
           ),
         );

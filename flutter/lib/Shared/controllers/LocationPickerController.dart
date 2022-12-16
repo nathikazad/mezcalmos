@@ -6,20 +6,22 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as GeoLoc;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["components"]["LocationPicker"];
+const String kSignInRouteOptional = '/sign_in/optional';
 
 class LocationPickerController extends MGoogleMapController {
+  String? imageMarkerPath = aLocationPicker;
+
   /// _showFakeMarker
   RxBool _showFakeMarker = true.obs;
 
@@ -32,7 +34,8 @@ class LocationPickerController extends MGoogleMapController {
   /// blackScreenBottomTextMargin
   RxDouble blackScreenBottomTextMargin = 0.0.obs;
 
-  LocationPickerController({bool myLocationButtonEnabled = true})
+  LocationPickerController(
+      {this.imageMarkerPath, bool myLocationButtonEnabled = true})
       : super(myLocationButtonEnabled: myLocationButtonEnabled);
 
   void showOrHideBlackScreen(bool value) {
@@ -132,7 +135,7 @@ class LocationPickerState extends State<LocationPicker> {
         width: 20,
         child: ClipRect(
           child: Image.asset(
-            aLocationPicker,
+            widget.locationPickerMapController.imageMarkerPath!,
             fit: BoxFit.cover,
           ),
         ),
@@ -149,14 +152,14 @@ class LocationPickerState extends State<LocationPicker> {
           // onPress: showGrayedOutButton
         );
       case BottomButtomToShow.Confirm:
-        if (Get.find<AuthController>().fireAuthUser != null) {
+        if (Get.find<FirbaseAuthController>().fireAuthUser != null) {
           return buildBottomButton(_i18n()['confirm'].toString().capitalize,
               notifier: widget.notifyParentOfConfirm);
         } else {
           return buildBottomButton(_i18n()["signInToMakeOrder"],
               notifier: (_) async {
-            Get.find<AuthController>().preserveNavigationStackAfterSignIn =
-                true;
+            Get.find<FirbaseAuthController>()
+                .preserveNavigationStackAfterSignIn = true;
             await Get.toNamed<void>(kSignInRouteOptional);
 
             // call back in case User was signedOut and he signedIn before confirming his Order Successfully!
