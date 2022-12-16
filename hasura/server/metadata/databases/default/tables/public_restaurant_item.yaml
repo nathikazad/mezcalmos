@@ -76,15 +76,16 @@ select_permissions:
         - archived
         - available
         - category_id
+        - cost
         - description_id
         - id
+        - image
+        - item_type
         - name_id
         - position
         - restaurant_id
-        - cost
         - special_period_end
         - special_period_start
-        - item_type
       filter: {}
   - role: customer
     permission:
@@ -92,15 +93,16 @@ select_permissions:
         - archived
         - available
         - category_id
+        - cost
         - description_id
         - id
+        - image
+        - item_type
         - name_id
         - position
         - restaurant_id
-        - cost
         - special_period_end
         - special_period_start
-        - item_type
       filter: {}
   - role: delivery_driver
     permission:
@@ -108,15 +110,16 @@ select_permissions:
         - archived
         - available
         - category_id
+        - cost
         - description_id
         - id
+        - image
+        - item_type
         - name_id
         - position
         - restaurant_id
-        - cost
         - special_period_end
         - special_period_start
-        - item_type
       filter: {}
   - role: mez_admin
     permission:
@@ -124,15 +127,16 @@ select_permissions:
         - archived
         - available
         - category_id
+        - cost
         - description_id
         - id
+        - image
+        - item_type
         - name_id
         - position
         - restaurant_id
-        - cost
         - special_period_end
         - special_period_start
-        - item_type
       filter: {}
   - role: restaurant_operator
     permission:
@@ -140,15 +144,16 @@ select_permissions:
         - archived
         - available
         - category_id
+        - cost
         - description_id
         - id
+        - image
+        - item_type
         - name_id
         - position
         - restaurant_id
-        - cost
         - special_period_end
         - special_period_start
-        - item_type
       filter: {}
 update_permissions:
   - role: mez_admin
@@ -159,6 +164,7 @@ update_permissions:
         - category_id
         - cost
         - description_id
+        - image
         - name_id
         - position
         - special_period_end
@@ -180,6 +186,7 @@ update_permissions:
         - category_id
         - cost
         - description_id
+        - image
         - name_id
         - position
         - restaurant_id

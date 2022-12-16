@@ -43,6 +43,9 @@ select_permissions:
   - role: restaurant_operator
     permission:
       columns:
+        - app_type_id
+        - chat_id
+        - id
         - participant_id
       filter:
         chat:
