@@ -140,7 +140,9 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
     result,
     Map<String, String>? parameters,
   }) {
-    _navigationStack.removeLast();
+    if (_navigationStack.isNotEmpty) {
+      _navigationStack.removeLast();
+    }
     final dynamic globalResult = Get.offAndToNamed<Q>(page,
             arguments: arguments, parameters: parameters, result: result)
         ?.then((value) {
@@ -174,7 +176,9 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
     bool preventDuplicates = true,
     Map<String, String>? parameters,
   }) {
-    _navigationStack.removeLast();
+    if (_navigationStack.isNotEmpty) {
+      _navigationStack.removeLast();
+    }
     final dynamic globalResult = Get.offNamed<Q>(
       page,
       arguments: arguments,
@@ -229,7 +233,9 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
               if (res) {
                 return true;
               } else {
-                _navigationStack.removeLast();
+                if (_navigationStack.isNotEmpty) {
+                  _navigationStack.removeLast();
+                }
                 return false;
               }
             }
@@ -326,7 +332,9 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
     if (previousRoute is PageRoute && route is PageRoute && _rCurrent != null) {
       if (_rCurrent.name == route.settings.name) {
         mezDbgPrint("[+] MissMatch on NavStack :: resolving ... done!");
-        _navigationStack.removeLast();
+        if (_navigationStack.isNotEmpty) {
+          _navigationStack.removeLast();
+        }
         printRoutes();
       }
     }
