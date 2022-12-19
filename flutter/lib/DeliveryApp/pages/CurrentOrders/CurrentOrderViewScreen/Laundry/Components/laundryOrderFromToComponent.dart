@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/AnimatedOrderInfoCard.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -12,11 +12,9 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
         ["pages"]["CurrentOrders"]["CurrentOrderViewScreen"]["Components"]
@@ -159,7 +157,7 @@ class _LaundryOrderFromToComponentState
   String _getOrderStatus() {
     switch (widget.order.status) {
       case LaundryOrderStatus.OrderReceived:
-        return "${_i18n()["orderStatus"]["readyForPickup"]}";
+        return "${_i18n()["orderStatus"]["Ready"]}";
       case LaundryOrderStatus.OtwPickupFromCustomer:
         return "${_i18n()["orderStatus"]["pickupOtw"]}";
       case LaundryOrderStatus.PickedUpFromCustomer:
@@ -358,30 +356,30 @@ class _LaundryOrderFromToComponentState
           );
 
           // ignore: unawaited_futures
-          Get.find<OrderController>()
-              .setEstimatedTime(
-            widget.order.orderId,
-            newDt,
-            DeliveryDriverType.Pickup,
-            deliveryAction,
-            OrderType.Laundry,
-          )
-              .then((ServerResponse _resp) {
-            mezDbgPrint("resp::success ===> ${_resp.data}");
+          // Get.find<OrderController>()
+          //     .setEstimatedTime(
+          //   widget.order.orderId,
+          //   newDt,
+          //   DeliveryDriverType.,
+          //   deliveryAction,
+          //   OrderType.Laundry,
+          // )
+          //     .then((ServerResponse _resp) {
+          //   mezDbgPrint("resp::success ===> ${_resp.data}");
 
-            if (_resp.success) {
-              if (deliveryAction == DeliveryAction.Pickup)
-                widget.order.estimatedPickupFromCustomerTime = newDt;
-              else
-                widget.order.estimatedDropoffAtServiceProviderTime = newDt;
-            }
-            setState(() {});
-          }).whenComplete(() {
-            _controllLoadingAnimation(
-              shouldStartAnimation: false,
-              action: deliveryAction,
-            );
-          });
+          //   if (_resp.success) {
+          //     if (deliveryAction == DeliveryAction.Pickup)
+          //       widget.order.estimatedPickupFromCustomerTime = newDt;
+          //     else
+          //       widget.order.estimatedDropoffAtServiceProviderTime = newDt;
+          //   }
+          //   setState(() {});
+          // }).whenComplete(() {
+          //   _controllLoadingAnimation(
+          //     shouldStartAnimation: false,
+          //     action: deliveryAction,
+          //   );
+          // });
         },
       );
     } else if (widget.order.getCurrentPhase() == LaundryOrderPhase.Dropoff) {
@@ -434,30 +432,30 @@ class _LaundryOrderFromToComponentState
             action: deliveryAction,
           );
           // ignore: unawaited_futures
-          Get.find<OrderController>()
-              .setEstimatedTime(
-            widget.order.orderId,
-            newDt,
-            DeliveryDriverType.DropOff,
-            deliveryAction,
-            OrderType.Laundry,
-          )
-              .then((ServerResponse _resp) {
-            mezDbgPrint("resp::success ===> ${_resp.data}");
+          // Get.find<OrderController>()
+          //     .setEstimatedTime(
+          //   widget.order.orderId,
+          //   newDt,
+          //   DeliveryDriverType.DropOff,
+          //   deliveryAction,
+          //   OrderType.Laundry,
+          // )
+          //     .then((ServerResponse _resp) {
+          //   mezDbgPrint("resp::success ===> ${_resp.data}");
 
-            if (_resp.success) {
-              if (deliveryAction == DeliveryAction.Pickup)
-                widget.order.estimatedPickupFromServiceProviderTime = newDt;
-              else
-                widget.order.estimatedDropoffAtCustomerTime = newDt;
-              setState(() {});
-            }
-          }).whenComplete(() {
-            _controllLoadingAnimation(
-              shouldStartAnimation: false,
-              action: deliveryAction,
-            );
-          });
+          //   if (_resp.success) {
+          //     if (deliveryAction == DeliveryAction.Pickup)
+          //       widget.order.estimatedPickupFromServiceProviderTime = newDt;
+          //     else
+          //       widget.order.estimatedDropoffAtCustomerTime = newDt;
+          //     setState(() {});
+          //   }
+          // }).whenComplete(() {
+          //   _controllLoadingAnimation(
+          //     shouldStartAnimation: false,
+          //     action: deliveryAction,
+          //   );
+          // });
         },
       );
     } else

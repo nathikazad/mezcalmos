@@ -9,6 +9,7 @@ import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/components/RestaurantOrderFromToComponent.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/mapInitHelper.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
@@ -20,7 +21,6 @@ import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -89,7 +89,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
     // Restaurant Marker
     mapController.addOrUpdateUserMarker(
       latLng: order.value?.restaurant.location.toLatLng(),
-      markerId: order.value?.restaurantId,
+      markerId: order.value?.restaurantId.toString(),
       customImgHttpUrl: order.value?.restaurant.image,
     );
     if (order.value != null)
@@ -230,8 +230,8 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
   /// this handles Restaurant Order.
   void handleRestaurantOrder(RestaurantOrder order) {
     switch (order.status) {
-      case RestaurantOrderStatus.ReadyForPickup:
-        // only update once upon ReadyForPickUp
+      case RestaurantOrderStatus.Ready:
+        // only update once upon Ready
         if (orderStatusSnapshot != order.status) {
           // ignoring customer's marker (destination)
           mapController.addOrUpdatePurpleDestinationMarker(
@@ -253,7 +253,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
           // ignoring Restaurant's marker
           mapController.addOrUpdateUserMarker(
             latLng: order.restaurant.location.toLatLng(),
-            markerId: order.restaurantId,
+            markerId: order.restaurantId.toString(),
             customImgHttpUrl: order.restaurant.image,
             fitWithinBounds: false,
           );

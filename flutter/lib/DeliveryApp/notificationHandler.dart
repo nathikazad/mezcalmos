@@ -54,7 +54,7 @@ Notification deliveryDriverNotificationHandler(String key, value) {
   }
 }
 
-String getLinkUrl(OrderType orderType, String orderId) {
+String getLinkUrl(OrderType orderType, int orderId) {
   switch (orderType) {
     case OrderType.Laundry:
       return getLaundryOrderRoute(orderId);
@@ -95,17 +95,17 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
 Map<String, dynamic>? getRestaurantOrderStatusFields(
     RestaurantOrderStatus restaurantOrderStatus) {
   switch (restaurantOrderStatus) {
-    case RestaurantOrderStatus.PreparingOrder:
+    case RestaurantOrderStatus.Preparing:
       return <String, dynamic>{
-        "title": "${_i18n()["preparingOrderTitle"]}",
-        "body": "${_i18n()["preparingOrderBody"]}",
+        "title": "${_i18n()["PreparingTitle"]}",
+        "body": "${_i18n()["PreparingBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
       };
-    case RestaurantOrderStatus.ReadyForPickup:
+    case RestaurantOrderStatus.Ready:
       return <String, dynamic>{
-        "title": "${_i18n()["readyForPickupTitle"]}",
-        "body": "${_i18n()["readyForPickupBody"]}",
+        "title": "${_i18n()["ReadyTitle"]}",
+        "body": "${_i18n()["ReadyBody"]}",
         "imgUrl": aDeliveryIcon,
       };
     case RestaurantOrderStatus.CancelledByAdmin:

@@ -20,8 +20,8 @@ String getRestaurantOrderRoute(int orderId) {
   return kRestaurantOrderView.replaceFirst(":orderId", orderId.toString());
 }
 
-String getOrderDetailsRoute(String orderId) {
-  return kOrderDetailsView.replaceFirst(":orderId", orderId);
+String getOrderDetailsRoute(int orderId) {
+  return kOrderDetailsView.replaceFirst(":orderId", "$orderId");
 }
 
 // GetX based Router (For navigating)
