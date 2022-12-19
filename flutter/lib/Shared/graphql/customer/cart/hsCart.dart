@@ -90,6 +90,14 @@ Future<Cart?> getCustomerCart({required int customerId}) async {
       cart.addItem(
         CartItem(
           Item(
+              startsAt: (cartitem.restaurant_item.special_period_start != null)
+                  ? DateTime.tryParse(
+                      cartitem.restaurant_item.special_period_start!)
+                  : null,
+              endsAt: (cartitem.restaurant_item.special_period_end != null)
+                  ? DateTime.tryParse(
+                      cartitem.restaurant_item.special_period_end!)
+                  : null,
               id: cartitem.restaurant_item.id,
               name: {
                 cartitem.restaurant_item.name.translations.first.language_id
@@ -241,6 +249,15 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
         _c.addItem(
           CartItem(
             Item(
+                startsAt:
+                    (cartitem.restaurant_item.special_period_start != null)
+                        ? DateTime.tryParse(
+                            cartitem.restaurant_item.special_period_start!)
+                        : null,
+                endsAt: (cartitem.restaurant_item.special_period_end != null)
+                    ? DateTime.tryParse(
+                        cartitem.restaurant_item.special_period_end!)
+                    : null,
                 name: {
                   cartitem.restaurant_item.name.translations.first.language_id
                           .toLanguageType():

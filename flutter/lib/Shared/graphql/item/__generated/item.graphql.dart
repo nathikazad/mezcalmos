@@ -3041,6 +3041,13 @@ const documentNodeQuerygetItemById = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
+            name: NameNode(value: 'image'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'cost'),
             alias: null,
             arguments: [],
@@ -3451,6 +3458,7 @@ class Query$getItemById$restaurant_item_by_pk {
     required this.id,
     required this.name,
     this.description,
+    this.image,
     required this.cost,
     required this.position,
     this.category_id,
@@ -3468,6 +3476,7 @@ class Query$getItemById$restaurant_item_by_pk {
     final l$id = json['id'];
     final l$name = json['name'];
     final l$description = json['description'];
+    final l$image = json['image'];
     final l$cost = json['cost'];
     final l$position = json['position'];
     final l$category_id = json['category_id'];
@@ -3486,6 +3495,7 @@ class Query$getItemById$restaurant_item_by_pk {
           ? null
           : Query$getItemById$restaurant_item_by_pk$description.fromJson(
               (l$description as Map<String, dynamic>)),
+      image: (l$image as String?),
       cost: moneyFromJson(l$cost),
       position: (l$position as int),
       category_id: (l$category_id as int?),
@@ -3507,6 +3517,8 @@ class Query$getItemById$restaurant_item_by_pk {
   final Query$getItemById$restaurant_item_by_pk$name name;
 
   final Query$getItemById$restaurant_item_by_pk$description? description;
+
+  final String? image;
 
   final double cost;
 
@@ -3536,6 +3548,8 @@ class Query$getItemById$restaurant_item_by_pk {
     _resultData['name'] = l$name.toJson();
     final l$description = description;
     _resultData['description'] = l$description?.toJson();
+    final l$image = image;
+    _resultData['image'] = l$image;
     final l$cost = cost;
     _resultData['cost'] = moneyToJson(l$cost);
     final l$position = position;
@@ -3564,6 +3578,7 @@ class Query$getItemById$restaurant_item_by_pk {
     final l$id = id;
     final l$name = name;
     final l$description = description;
+    final l$image = image;
     final l$cost = cost;
     final l$position = position;
     final l$category_id = category_id;
@@ -3578,6 +3593,7 @@ class Query$getItemById$restaurant_item_by_pk {
       l$id,
       l$name,
       l$description,
+      l$image,
       l$cost,
       l$position,
       l$category_id,
@@ -3613,6 +3629,11 @@ class Query$getItemById$restaurant_item_by_pk {
     final l$description = description;
     final lOther$description = other.description;
     if (l$description != lOther$description) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
       return false;
     }
     final l$cost = cost;
@@ -3699,6 +3720,7 @@ abstract class CopyWith$Query$getItemById$restaurant_item_by_pk<TRes> {
     int? id,
     Query$getItemById$restaurant_item_by_pk$name? name,
     Query$getItemById$restaurant_item_by_pk$description? description,
+    String? image,
     double? cost,
     int? position,
     int? category_id,
@@ -3738,6 +3760,7 @@ class _CopyWithImpl$Query$getItemById$restaurant_item_by_pk<TRes>
     Object? id = _undefined,
     Object? name = _undefined,
     Object? description = _undefined,
+    Object? image = _undefined,
     Object? cost = _undefined,
     Object? position = _undefined,
     Object? category_id = _undefined,
@@ -3758,6 +3781,7 @@ class _CopyWithImpl$Query$getItemById$restaurant_item_by_pk<TRes>
             ? _instance.description
             : (description
                 as Query$getItemById$restaurant_item_by_pk$description?),
+        image: image == _undefined ? _instance.image : (image as String?),
         cost: cost == _undefined || cost == null
             ? _instance.cost
             : (cost as double),
@@ -3830,6 +3854,7 @@ class _CopyWithStubImpl$Query$getItemById$restaurant_item_by_pk<TRes>
     int? id,
     Query$getItemById$restaurant_item_by_pk$name? name,
     Query$getItemById$restaurant_item_by_pk$description? description,
+    String? image,
     double? cost,
     int? position,
     int? category_id,

@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
@@ -164,7 +165,14 @@ class ROpItemViewController {
         newImageUrl.value = value;
       });
     }
-
+    const String _tmpLmode =
+        String.fromEnvironment('LMODE', defaultValue: "prod");
+    final AppLaunchMode mode = _tmpLmode.toLaunchMode();
+    if (mode == AppLaunchMode.dev || mode == AppLaunchMode.stage) {
+      mezDbgPrint("Settign default image");
+      newImageUrl.value =
+          "https://s.inyourpocket.com/gallery/helsinki/2019/11/shutterstock-1306257490.jpg";
+    }
     if (editMode.isFalse) {
       final int? newItemId = await add_one_item(
           item: _contructItem(),

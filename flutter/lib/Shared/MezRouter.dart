@@ -118,7 +118,9 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
       if (res) {
         return true;
       } else {
-        _navigationStack.removeLast();
+        if (_navigationStack.isNotEmpty) {
+          _navigationStack.removeLast();
+        }
         return false;
       }
     }, id: id);
@@ -273,7 +275,9 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
         if (res) {
           return true;
         } else {
-          _navigationStack.removeLast();
+          if (_navigationStack.isNotEmpty) {
+            _navigationStack.removeLast();
+          }
           return false;
         }
       },

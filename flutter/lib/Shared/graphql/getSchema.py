@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 
 import os
-output = os.popen('npm list -g graphqurl').read()
-if 'graphqurl' not in output:
-  print('graphqurl not installed')
-  os.system('npm install -g graphqurl')
-else:
-  print('graphqurl installed')
-if os.path.exists("schema.graphql"): 
-  os.remove("schema.graphql")
-if os.path.exists("schema.graphql.dart"):
-  os.remove("schema.graphql.dart")
-os.system('gq http://localhost:8080/v1/graphql -H "X-Hasura-Admin-Secret: myadminsecretkey" --introspect > schema.graphql')
+# output = os.popen('npm list -g graphqurl').read()
+# if 'graphqurl' not in output:
+#   print('graphqurl not installed')
+#   os.system('npm install -g graphqurl')
+# else:
+#   print('graphqurl installed')
+# if os.path.exists("schema.graphql"): 
+#   os.remove("schema.graphql")
+# if os.path.exists("schema.graphql.dart"):
+#   os.remove("schema.graphql.dart")
+# os.system('gq http://localhost:8080/v1/graphql -H "X-Hasura-Admin-Secret: myadminsecretkey" --introspect > schema.graphql')
 os.system('flutter pub run build_runner build --delete-conflicting-outputs')
 
 

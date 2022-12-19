@@ -1,3 +1,5 @@
+// ignore_for_file: unawaited_futures
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
@@ -11,7 +13,6 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -239,6 +240,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
       if (_serverResponse.success) {
         _restaurantController.clearCart();
+
         popEverythingAndNavigateTo(
           getRestaurantOrderRoute(
             _serverResponse.data["orderId"],
@@ -274,6 +276,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       //     '${_i18n()["distanceError"]}',
       //   );
       // }
+      mezDbgPrint("success funish checkout");
     } catch (e, s) {
       mezDbgPrint(
         "Error happened during generating order's routeInfos / Stripe payment ===> #$e\n\nStackTrace ==> #$s",

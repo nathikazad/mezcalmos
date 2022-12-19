@@ -181,7 +181,6 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
   }
 
   Future<void> _pickDeliveryTime(BuildContext context) async {
-    mezDbgPrint("success ${controller.cart.value.restaurant?.toJson()}");
     if (controller.cart.value.restaurant?.schedule != null) {
       await showModalBottomSheet<DateTime>(
           context: context,

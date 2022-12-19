@@ -19,7 +19,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
   let response = await chain.mutation({
     insert_restaurant_order_one: [{
       object: {
-        scheduled_time: restaurantOrder.scheduledTime,
+       
         customer_id: restaurantOrder.customerId,
         restaurant_id: restaurantOrder.restaurantId,
         customer_app_type: restaurantOrder.customerAppType,
@@ -76,6 +76,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
             status: DeliveryOrderStatus.OrderReceived,
             service_provider_id: restaurantOrder.restaurantId,
             service_provider_type: "restaurant",
+            scheduled_time: restaurantOrder.scheduledTime,
             // trip_distance: deliveryDetails.tripDistance,
             // trip_duration: deliveryDetails.tripDuration,
             // trip_polyline: deliveryDetails.tripPolyline,

@@ -39,7 +39,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
           RestaurantOrderItem(
             costPerOne: item.cost_per_one,
             idInCart: item.id,
-            idInRestaurant: item.restaurant_item.category_id!,
+            idInRestaurant: item.restaurant_item.id,
             name: toLanguageMap(
                 translations: item.restaurant_item.name.translations),
             image: '',
@@ -125,6 +125,9 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
       serviceProviderId: orderData.restaurant.id,
       paymentType: orderData.payment_type.toPaymentType(),
       orderTime: DateTime.parse(orderData.order_time),
+      deliveryTime: (orderData.scheduled_time != null)
+          ? DateTime.tryParse(orderData.scheduled_time!)
+          : null,
       cost: orderData.delivery_cost,
       restaurant: ServiceInfo(
         location: Location(

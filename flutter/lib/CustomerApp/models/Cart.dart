@@ -215,8 +215,8 @@ class Cart {
   PeriodOfTime? get firstItemPeriod {
     final CartItem? citem = cartItems
         .firstWhereOrNull((CartItem element) => element.isSpecial == true);
-    if (citem != null) {
-      mezDbgPrint("error period =>${citem.item.getPeriod}");
+    if (citem?.item != null) {
+      mezDbgPrint("error period =>${citem!.item.getPeriod}");
       return PeriodOfTime(start: citem.item.startsAt!, end: citem.item.endsAt!);
     }
     return null;
@@ -364,7 +364,9 @@ class CartItem {
   }
 
   bool get isSpecial {
-    return item.itemType == ItemType.Special;
+    return item.itemType == ItemType.Special &&
+        item.startsAt != null &&
+        item.endsAt != null;
   }
 
   @override
