@@ -137,31 +137,34 @@ class MezSideMenu extends GetWidget<AuthController> {
               SizedBox(
                 height: 5,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    height: 15,
-                    width: 15,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: AssetImage(languageController.oppositFlag),
+              Obx(
+                () => Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      height: 15,
+                      width: 15,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage(languageController.oppositFlag),
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    languageController.oppositToLang,
-                  ),
-                ],
+                    const SizedBox(width: 10),
+                    Text(
+                      languageController.oppositToLang,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
           icon: Icons.g_translate_outlined,
           onClick: () {
-            languageController.changeUserLanguage();
-            _drawerController.closeMenu();
+            languageController.changeUserLanguage().then(
+                  (_) => _drawerController.closeMenu(),
+                );
           },
         ),
         Obx(

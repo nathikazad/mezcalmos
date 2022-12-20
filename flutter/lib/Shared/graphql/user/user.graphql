@@ -46,3 +46,13 @@ mutation changeUserName($id: user_pk_columns_input!, $name: String!) {
   	name
   }
 }
+
+
+# $language = en | es
+mutation changeUserLanguage($id: user_pk_columns_input!, $language: String!)
+{
+  update_user_by_pk(pk_columns:$id , _set : {language_id : $language})
+  {
+  	language_id
+  }
+}

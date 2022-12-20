@@ -204,18 +204,21 @@ class OrderController extends GetxController {
         .isNotEmpty;
   }
 
-  void clearOrderNotifications(int orderId) {
-    _fbNotificationsController
-        .notifications()
-        .where((Notification notification) =>
-            (notification.notificationType ==
-                    NotificationType.OrderStatusChange ||
-                notification.notificationType ==
-                    NotificationType.NewCounterOffer) &&
-            notification.orderId == orderId)
-        .forEach((Notification notification) {
-      _fbNotificationsController.removeNotification(notification.id);
-    });
+  void clearOrderNotifications(int? orderId) {
+    // mezDbgPrint("oooo id ==> $orderId");
+    // _fbNotificationsController
+    //     .notifications()
+    //     .where((Notification notification) {
+    //   mezDbgPrint("oooo2 id ==> ${notification.orderId}");
+
+    //   return (notification.notificationType ==
+    //               NotificationType.OrderStatusChange ||
+    //           notification.notificationType ==
+    //               NotificationType.NewCounterOffer) &&
+    //       notification.orderId == orderId;
+    // }).forEach((Notification notification) {
+    //   _fbNotificationsController.removeNotification(notification.id);
+    // });
   }
 
   @override

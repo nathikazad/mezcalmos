@@ -66,25 +66,33 @@ class LanguageController extends GetxController {
       ? mexicoFlagAsset
       : usaFlagAsset;
 
-  void changeUserLanguage([LanguageType? language]) {
+  Future<void> changeUserLanguage({LanguageType? language = null}) async {
     // TODO: fix this
     if (language == null) {
-      _userLanguageKey.value = oppositLangKey;
-      // if (Get.find<AuthController>().user?.language == LanguageType.ES) {
-      //   language = LanguageType.EN;
-      // } else {
-      //   language = LanguageType.ES;
-      // }
+      if (Get.find<AuthController>().user?.language == LanguageType.ES) {
+        language = LanguageType.EN;
+      } else {
+        language = LanguageType.ES;
+      }
       if (Get.find<AuthController>().user != null) {
+        Get.find<AuthController>().user!.language = language;
+
+        mezDbgPrint(
+            "[=] INSIDE (if (Get.find<AuthController>().user != null)) ==> language $language");
         // we need that because in case user clicked change lang from SideMenu , we really don't
         // need to execute that one because there is no user SIgnedIn yet!
         // we have to make some kind of queue that will handle stuff once the user SignedIn.
-        Get.find<AuthController>().changeLanguage(_userLanguageKey.value);
+        await Get.find<AuthController>().changeLanguage(language);
+        _userLanguageKey.value = language;
       } else {
+        mezDbgPrint("[=] INSIDE (else)");
+
         // welse so we can still update the user language locally but not in db!
         _userLanguageKey.value = oppositLangKey;
       }
     } else if (Get.find<AuthController>().user == null) {
+      mezDbgPrint("[=] INSIDE (else if)");
+
       _userLanguageKey.value = language;
     }
   }

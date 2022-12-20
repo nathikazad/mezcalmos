@@ -143,14 +143,13 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
     if (_navigationStack.isNotEmpty) {
       _navigationStack.removeLast();
     }
+    _navigationStack.add(
+      MRoute(name: page, args: arguments, params: parameters),
+    );
     final dynamic globalResult = Get.offAndToNamed<Q>(page,
             arguments: arguments, parameters: parameters, result: result)
         ?.then((value) {
       return value;
-    }).whenComplete(() {
-      _navigationStack.add(
-        MRoute(name: page, args: arguments, params: parameters),
-      );
     });
     printRoutes();
 
@@ -179,6 +178,9 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
     if (_navigationStack.isNotEmpty) {
       _navigationStack.removeLast();
     }
+    _navigationStack.add(
+      MRoute(name: page, args: arguments, params: parameters),
+    );
     final dynamic globalResult = Get.offNamed<Q>(
       page,
       arguments: arguments,
@@ -186,10 +188,6 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
       preventDuplicates: preventDuplicates,
     )?.then((value) {
       return value;
-    }).whenComplete(() {
-      _navigationStack.add(
-        MRoute(name: page, args: arguments, params: parameters),
-      );
     });
     printRoutes();
 
@@ -278,9 +276,14 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
       page,
       (Route<dynamic> route) {
         final bool res = predicate.call(route);
+        mezDbgPrint("[mezrouter] PREDICATE ==> $res");
+
         if (res) {
+          printRoutes();
           return true;
         } else {
+          printRoutes();
+
           if (_navigationStack.isNotEmpty) {
             _navigationStack.removeLast();
           }

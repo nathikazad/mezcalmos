@@ -299,16 +299,21 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
 }
 
 Notification newMessageNotification(String key, value) {
-  mezDbgPrint("New message notif ==========>>>>>>>>$value");
+  // mezDbgPrint("New message notif ==========>>>>>>>>$value");
+  value.forEach((kkey, vv) {
+    mezDbgPrint("$kkey : $vv}");
+  });
   return Notification(
       id: key,
       linkUrl: value["linkUrl"] ??
           getMessagesRoute(
-              chatId: value["chatId"],
-              orderId: value["orderId"],
-              recipientType: value["sender"]["particpantType"]
-                  .toString()
-                  .toParticipantType()),
+            chatId: int.parse(value["chatId"]),
+            orderId:
+                value["orderId"] != null ? int.parse(value["orderId"]) : null,
+            recipientType: value["sender"]["particpantType"]
+                .toString()
+                .toParticipantType(),
+          ),
       // just for backwards compatibility, future make it just value['orderId']
       body: value['message'],
       imgUrl: value['sender']['image'],
