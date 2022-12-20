@@ -14,6 +14,7 @@ final HasuraDb _db = Get.find<HasuraDb>();
 Future<UserInfo> get_user_by_hasura_id({required int hasuraId}) async {
   final QueryResult<Query$getUserById> response = await _db.graphQLClient
       .query$getUserById(Options$Query$getUserById(
+          fetchPolicy: FetchPolicy.noCache,
           variables: Variables$Query$getUserById(id: hasuraId)));
   if (response.hasException || response.parsedData?.user_by_pk == null) {
     mezDbgPrint("Get user by id $hasuraId erros ${response.exception}");
@@ -21,11 +22,12 @@ Future<UserInfo> get_user_by_hasura_id({required int hasuraId}) async {
   } else {
     final Query$getUserById$user_by_pk data = response.parsedData!.user_by_pk!;
     return UserInfo(
-        hasuraId: hasuraId,
-        firebaseId: data.firebase_id,
-        name: data.name,
-        language: data.language_id.toLanguageType(),
-        image: data.image);
+      hasuraId: hasuraId,
+      firebaseId: data.firebase_id,
+      name: data.name,
+      language: data.language_id.toLanguageType(),
+      image: data.image,
+    );
   }
 }
 
@@ -94,22 +96,22 @@ Future<void> change_user_img({
         ),
       ),
     );
-  }
-  // QueryResult<Mutation$changeUserImg> _res =
-  //     await _db.graphQLClient.mutate$changeUserImg(
-  //   Options$Mutation$changeUserImg(
-  //     variables: Variables$Mutation$changeUserImg(
-  //       id: Input$user_pk_columns_input(id: userId),
-  //       img: img,
-  //     ),
-  //   ),
-  // );
-
-  if (_res.hasException) {
-    mezDbgPrint(
-        "[ERROR] CALLED :: change_user_img :: EXCEPTION :: ${_res.exception}");
   } else {
-    mezDbgPrint("[SUCCESS] CALLED :: change_user_img :: DATA :: ${_res.data}");
+    await _db.graphQLClient.mutate$changeUserBigImg(
+      Options$Mutation$changeUserBigImg(
+        variables: Variables$Mutation$changeUserBigImg(
+          id: Input$user_pk_columns_input(id: userId),
+          img: img,
+        ),
+      ),
+    );
+  }
+
+  if (_res?.hasException != false) {
+    mezDbgPrint(
+        "[ERROR] CALLED :: change_user_img :: EXCEPTION || NULL :: ${_res?.exception}");
+  } else {
+    mezDbgPrint("[SUCCESS] CALLED :: change_user_img :: DATA :: ${_res!.data}");
 
     // Get.find<LanguageController>().setLanguage(language);
   }

@@ -145,8 +145,10 @@ class AuthController extends GetxController {
   /// This Functions takes a File (Image) and an optional [isCompressed]
   ///
   /// And Upload it to firebaseStorage with at users/[uid]/avatar/[uid].[isCompressed ? 'cmpressed' : 'original'].[extension]
-  Future<String> uploadUserImgToFbStorage(
-      {required File imageFile, bool isCompressed = false}) async {
+  Future<String> uploadUserImgToFbStorage({
+    required File imageFile,
+    bool isCompressed = false,
+  }) async {
     String _uploadedImgUrl;
     final List<String> splitted = imageFile.path.split('.');
     final String imgPath =
@@ -179,6 +181,11 @@ class AuthController extends GetxController {
       //     .child(userInfoNode(fireAuthUser!.uid))
       //     .child('bigImage')
       //     .set(originalImageUrl);
+      await change_user_img(
+        userId: user!.hasuraId,
+        img: originalImageUrl,
+        isBigImg: true,
+      );
     }
   }
 

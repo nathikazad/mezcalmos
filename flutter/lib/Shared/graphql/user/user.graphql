@@ -32,7 +32,7 @@ query getUserById($id: Int!) {
 
 # Update the user big_image using pk.
 
-mutation changeUserImg($id: user_pk_columns_input!, $img: String!) {
+mutation changeUserBigImg($id: user_pk_columns_input!, $img: String!) {
   update_user_by_pk(pk_columns:$id , _set : {big_image : $img})
   {
   	big_image
