@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpDriversPageController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -101,7 +102,7 @@ class _ROpListDriverCardState extends State<ROpListDriverCard> {
                           final bool result = await widget.viewController
                               .removeDriver(
                                   int.parse(widget.driver.deliveryDriverId));
-                          if (result) Get.back();
+                          if (result) MezRouter.back();
                         });
                       },
                       icon: Icons.delete_outline,

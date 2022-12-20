@@ -29,11 +29,12 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   /// Shortcut to [MezRouter.toNamed]
   static Future<Q?>? toNamed<Q>(
     String page, {
-    dynamic arguments,
+    arguments,
     // int? id, later on for nested routes
     bool preventDuplicates = true,
     Map<String, String>? parameters,
   }) {
+    mezDbgPrint("Trynig to go to ======>>>>>>>$page");
     try {
       bool _shouldRoute = false;
 
@@ -69,6 +70,7 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
       mezDbgPrint("Error => $e");
       mezDbgPrint("Stack => $s");
     }
+    return null;
   }
 
   /// USE THIS ONLY FOR ACTUAL VIEW THAT ARE ON STACK!
@@ -79,7 +81,7 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
     bool canPop = true,
     int? id,
   }) {
-    _navigationStack.removeLast();
+    //   _navigationStack.removeLast();
     Get.back<T>(
       result: result,
       closeOverlays: closeOverlays,
@@ -116,7 +118,9 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
       if (res) {
         return true;
       } else {
-        _navigationStack.removeLast();
+        if (_navigationStack.isNotEmpty) {
+          _navigationStack.removeLast();
+        }
         return false;
       }
     }, id: id);
@@ -132,8 +136,8 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   /// The offNamed() pop a page, and goes to the next. The offAndToNamed() goes to the next page, and removes the previous one. The route transition animation is different.
   static Future<Q?>? offAndToNamed<Q>(
     String page, {
-    dynamic arguments,
-    dynamic result,
+    arguments,
+    result,
     Map<String, String>? parameters,
   }) {
     if (_navigationStack.isNotEmpty) {
@@ -167,7 +171,7 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   /// Note: Always put a slash on the route ('/page1'), to avoid unnexpected errors
   static Future<Q?>? offNamed<Q>(
     String page, {
-    dynamic arguments,
+    arguments,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
   }) {
@@ -213,7 +217,7 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   static Future<Q?>? offAllNamed<Q>(
     String newRouteName, {
     RoutePredicate? predicate,
-    dynamic arguments,
+    arguments,
     int? id,
     Map<String, String>? parameters,
   }) {
@@ -227,7 +231,9 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
               if (res) {
                 return true;
               } else {
-                _navigationStack.removeLast();
+                if (_navigationStack.isNotEmpty) {
+                  _navigationStack.removeLast();
+                }
                 return false;
               }
             }
@@ -263,7 +269,7 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
     String page,
     bool Function(Route<dynamic>) predicate, {
     int? id,
-    dynamic arguments,
+    arguments,
     Map<String, String>? parameters,
   }) {
     final dynamic globalResult = Get.offNamedUntil<Q>(
@@ -329,7 +335,9 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
     if (previousRoute is PageRoute && route is PageRoute && _rCurrent != null) {
       if (_rCurrent.name == route.settings.name) {
         mezDbgPrint("[+] MissMatch on NavStack :: resolving ... done!");
-        _navigationStack.removeLast();
+        if (_navigationStack.isNotEmpty) {
+          _navigationStack.removeLast();
+        }
         printRoutes();
       }
     }

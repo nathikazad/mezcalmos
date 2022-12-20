@@ -58,6 +58,7 @@ query getItemById($id: Int!) {
         value
       }
     }
+    image
     cost
     position
     category_id
@@ -96,6 +97,36 @@ query getItemById($id: Int!) {
             }
           }
         }
+      }
+    }
+  }
+}
+query getRestaurantItemsWithoutCat($restaurantId: Int) {
+  restaurant_item(where: {restaurant_id: {_eq: $restaurantId}, category_id: {_is_null: true}}) {
+    id
+    available
+    cost
+    item_type
+    name {
+      translations {
+        language_id
+        value
+      }
+    }
+  }
+}
+query getRestaurantSpecialItems($restaurantId: Int) {
+  restaurant_item(where: {restaurant_id: {_eq: $restaurantId}, item_type: {_eq: "special"}}) {
+    id
+    available
+    cost
+    item_type
+    special_period_end
+    special_period_start
+    name {
+      translations {
+        language_id
+        value
       }
     }
   }

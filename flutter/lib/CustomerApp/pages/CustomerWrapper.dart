@@ -12,6 +12,7 @@ import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/deepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
@@ -21,15 +22,12 @@ import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class CustomerWrapper extends StatefulWidget {
   @override
@@ -110,7 +108,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         _orderController != null &&
         DateTime.now().difference(appClosedTime!) > Duration(seconds: 10) &&
         !isCurrentRoute(kLocationPermissionPage)) {
-      navigateToOrdersIfNecessary(_orderController!.currentOrders);
+      _navigateToOrdersIfNecessary();
     }
   }
 
@@ -184,7 +182,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             customerNotificationsNode(userId!), customerNotificationHandler);
     if (isCurrentRoute(kHomeRoute)) {
       Future.microtask(() {
-        navigateToOrdersIfNecessary(_orderController!.currentOrders);
+        _navigateToOrdersIfNecessary();
       });
     }
     appLifeCycleController.attachCallback(
@@ -331,8 +329,10 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   }
 
   // when app resumes check if there are current orders and if yes navigate to orders page
-  void navigateToOrdersIfNecessary(List<Order> currentOrders) {
-    if (currentOrders.length == 1) {
+  Future<void> _navigateToOrdersIfNecessary() async {
+    await _orderController?.fetchCustomerOrders();
+    final List<Order>? currentOrders = _orderController?.currentOrders.value;
+    if (currentOrders != null && currentOrders.length == 1) {
       // Restaurant
       if (currentOrders[0].orderType == OrderType.Restaurant) {
         popEverythingAndNavigateTo(
@@ -344,7 +344,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         popEverythingAndNavigateTo(
             getLaundryOrderRoute(currentOrders[0].orderId));
       }
-    } else if (currentOrders.length > 1) {
+    } else if (currentOrders != null && currentOrders.length > 1) {
       popEverythingAndNavigateTo(kOrdersRoute);
     }
   }

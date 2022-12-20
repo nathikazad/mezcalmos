@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class ROpItemOptionCard extends StatefulWidget {
   const ROpItemOptionCard(
@@ -143,19 +143,19 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
                   style: Get.textTheme.bodyText1,
                 ),
               ),
-              Switch(
-                value: option.choices[index].available,
-                onChanged: (bool v) {
-                  widget.viewController.switchChoiceAv(
-                      choiceId: option.choices[index].id,
-                      optionId: option.id,
-                      value: v);
-                  widget.viewController.itemOptions.refresh();
-                },
-                activeColor: primaryBlueColor,
-                activeTrackColor: secondaryLightBlueColor,
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              )
+              // Switch(
+              //   value: option.choices[index].available,
+              //   onChanged: (bool v) {
+              //     widget.viewController.switchChoiceAv(
+              //         choiceId: option.choices[index].id,
+              //         optionId: option.id,
+              //         value: v);
+              //     widget.viewController.itemOptions.refresh();
+              //   },
+              //   activeColor: primaryBlueColor,
+              //   activeTrackColor: secondaryLightBlueColor,
+              //   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              // )
             ],
           ),
         );

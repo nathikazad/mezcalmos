@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/components/ROpDriverCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpDriversPageController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -136,7 +137,7 @@ class _ROpDriversViewState extends State<ROpDriversView> {
                                   .serviceLink.value!.operatorDeepLink
                                   .toString()))
                           .whenComplete(() {
-                        Get.back();
+                        MezRouter.back();
                         _copiedSnackBar();
                       });
                     },
@@ -151,7 +152,7 @@ class _ROpDriversViewState extends State<ROpDriversView> {
                     backgroundColor: Color(0xFFE3FFE4),
                     onClick: () async {
                       // final bool result = await viewController.addDriver();
-                      // if (result) Get.back();
+                      // if (result) MezRouter.back();
                     },
                   ),
                   if (MediaQuery.of(ctx).viewInsets.bottom == 0)

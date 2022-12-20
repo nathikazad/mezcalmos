@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
+import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
@@ -15,8 +17,12 @@ class ROpMenuViewController {
 
   // state variables
   RxBool reOrderMode = RxBool(false);
+  RxBool fetching = RxBool(false);
   //main categories //
   RxList<Category> mainCategories = RxList<Category>([]);
+  RxList<Item> currentSpec = RxList<Item>([]);
+  RxList<Item> pastSpec = RxList<Item>([]);
+  Rx<Category> noCategory = Rx<Category>(Category());
 // rO stands for Reordable categories //
   RxList<Category> rOcategories = RxList<Category>([]);
   late int restaurnatId;
@@ -33,12 +39,38 @@ class ROpMenuViewController {
   }
 
   Future<void> fetchCategories() async {
+    fetching.value = true;
+    noCategory.value.items =
+        await get_restaurant_items_without_cat(restaurnatId, withCache: false);
     final List<Category>? _categories =
         await get_restaurant_categories_by_id(restaurnatId, withCache: false);
     if (_categories != null) {
       mainCategories.clear();
       mainCategories.value.addAll(_categories);
     }
+    fetching.value = false;
+  }
+
+  Future<void> fetchSpecials() async {
+    mezDbgPrint("Fetching specials again ==========>>>🚀🚀🚀🚀🚀🚀");
+    final List<Item> spc =
+        await get_restaurant_special_items(restaurnatId, withCache: false);
+    mezDbgPrint("Fetching specials==========>>>🚀🚀🚀🚀🚀🚀 ${spc.length}");
+
+    currentSpec.value = spc
+        .where((Item element) =>
+            (element.endsAt!.toLocal().isAfter(DateTime.now().toLocal()) ||
+                element.endsAt!
+                    .toLocal()
+                    .isAtSameMomentAs(DateTime.now().toLocal())))
+        .toList();
+    pastSpec.value = spc
+        .where((Item element) =>
+            !(element.endsAt!.toLocal().isAfter(DateTime.now().toLocal()) ||
+                element.endsAt!
+                    .toLocal()
+                    .isAtSameMomentAs(DateTime.now().toLocal())))
+        .toList();
   }
 
   // IMPORTANT //

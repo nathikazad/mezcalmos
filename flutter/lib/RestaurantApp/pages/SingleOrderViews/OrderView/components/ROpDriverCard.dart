@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
@@ -98,7 +99,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                       widget.order.selfDelivery)
                     MezIconButton(
                       onTap: () {
-                        // Get.toNamed(getROpPickDriverRoute(
+                        // MezRouter.toNamed(getROpPickDriverRoute(
                         //     orderId: widget.order.orderId));
                       },
                       icon: Icons.edit,
@@ -109,7 +110,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                   //   Obx(
                   //     () => MessageButton(
                   //       onTap: () {
-                  //         Get.toNamed(getMessagesRoute(
+                  //         MezRouter.toNamed(getMessagesRoute(
                   //             chatId: widget
                   //                 .order.serviceProviderDropOffDriverChatId!,
                   //             recipientType: ParticipantType.DeliveryDriver,
@@ -188,7 +189,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                 (widget.order.dropoffDriver != null))
               MezIconButton(
                 onTap: () async {
-                  // final bool? forwardToMezCalmos = await Get.toNamed(
+                  // final bool? forwardToMezCalmos = await MezRouter.toNamed(
                   //         getROpPickDriverRoute(orderId: widget.order.orderId))
                   //     as bool?;
                   // if (forwardToMezCalmos != null &&
@@ -247,7 +248,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
           if (showSet.isTrue) {
             return InkWell(
                 onTap: () async {
-                  final bool? forwardToMezCalmos = await Get.toNamed(
+                  final bool? forwardToMezCalmos = await MezRouter.toNamed(
                       getROpPickDriverRoute(
                           serviceProviderId: widget.order.restaurantId,
                           orderId: widget.order.orderId)) as bool?;

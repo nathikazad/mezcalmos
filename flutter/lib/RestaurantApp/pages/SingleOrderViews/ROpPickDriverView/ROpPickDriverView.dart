@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/ROpPickDriverView/components/ROpDriverSelectCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/ROpPickDriverView/controllers/ROpPickDriverViewController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -38,10 +39,10 @@ class _ROpPickDriverViewState extends State<ROpPickDriverView> {
         viewController.init(
             serviceProviderId: serviceProvderId!, orderId: orderID!);
       } else {
-        Get.back();
+        MezRouter.back();
       }
     } else {
-      Get.back();
+      MezRouter.back();
     }
 
     super.initState();
@@ -57,7 +58,7 @@ class _ROpPickDriverViewState extends State<ROpPickDriverView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-            onClick: Get.back, title: '${_i18n()["pick"]}'),
+            onClick: MezRouter.back, title: '${_i18n()["pick"]}'),
         body: Obx(() {
           if (viewController.screenLoading.isFalse) {
             return SingleChildScrollView(
@@ -98,7 +99,7 @@ class _ROpPickDriverViewState extends State<ROpPickDriverView> {
                                       viewController
                                           .drivers[index].deliveryDriverId);
                                   if (result) {
-                                    Get.back();
+                                    MezRouter.back();
                                     viewController.screenLoading.value = false;
                                   }
                                 },

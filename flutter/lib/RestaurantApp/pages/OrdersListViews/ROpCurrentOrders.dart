@@ -6,6 +6,7 @@ import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dar
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/components/ROpOrderCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/controllers/ROpCurrentOrdersController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
@@ -143,7 +144,7 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
                   borderRadius: 35,
                   label: '${_i18n()["pastButton"]}'.inCaps,
                   onClick: () async {
-                    await Get.toNamed(kPastOrdersListView);
+                    await MezRouter.toNamed(kPastOrdersListView);
                   },
                 ),
               ),

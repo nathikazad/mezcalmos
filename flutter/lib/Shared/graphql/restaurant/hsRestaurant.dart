@@ -200,6 +200,24 @@ Future<LanguageType?> get_restaurant_priamry_lang(int restaurantId) async {
   return null;
 }
 
+Future<Schedule?> get_restaurant_schedule(
+    {required int restaurantId, bool withCache = true}) async {
+  final QueryResult<Query$getRestaurantSchedule> response = await _db
+      .graphQLClient
+      .query$getRestaurantSchedule(Options$Query$getRestaurantSchedule(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+          variables: Variables$Query$getRestaurantSchedule(id: restaurantId)));
+  if (response.parsedData?.restaurant_by_pk == null) {
+    throw Exception(
+        "🚨🚨🚨 restuarnt schedule  query errors : ${response.exception}");
+  } else if (response.parsedData?.restaurant_by_pk?.schedule != null) {
+    mezDbgPrint("✅✅✅ restuarnt schedule lang query success");
+    return Schedule.fromData(response.parsedData!.restaurant_by_pk!.schedule!);
+  }
+  return null;
+}
+
 // Mutations //
 
 Future<Restaurant> update_restaurant_info(

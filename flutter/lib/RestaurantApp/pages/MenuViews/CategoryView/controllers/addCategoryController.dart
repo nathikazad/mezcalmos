@@ -71,7 +71,8 @@ class AddCategoryController {
     editMode.value = true;
     editableCategoryId = categoryId;
 
-    category.value = await get_category_by_id(int.parse(categoryId));
+    category.value = await get_category_by_id(
+        categoryId: int.parse(categoryId), withCache: false);
     if (category.value != null) {
       primaryCategoryNameController.text = category.value!.name![primaryLang]!;
       secondaryCategoryNameController.text =
@@ -89,35 +90,59 @@ class AddCategoryController {
     return newCategory;
   }
 
-  Future<void> saveCategory() async {
+  Future<bool> saveCategory() async {
     if (editMode.value == true) {
-      if (!fd.mapEquals(_contructName(), category.value!.name)) {
-        mezDbgPrint("Name changed ✅");
-        _contructName().forEach((LanguageType key, String value) {
-          update_translation(
-              langType: key,
-              value: value,
-              translationId: category.value!.nameId!);
-        });
-      }
-      if (!fd.mapEquals(_contructDescription(), category.value!.dialog)) {
-        mezDbgPrint("Name changed ✅");
-        _contructDescription()?.forEach((LanguageType key, String value) {
-          update_translation(
-              langType: key,
-              value: value,
-              translationId: category.value!.descriptionId!);
-        });
+      try {
+        await _updateName();
+        await _updateDescription();
+        return true;
+      } on Exception catch (e, stk) {
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
+        return false;
       }
       // await restaurantInfoController.editCategory(
       //     category: constructCategory(), categoryId: editableCategoryId!);
     } else {
-      final String? newCatId = await add_category(
-          category: constructCategory(), restaurantId: restaurantId);
-      mezDbgPrint("New category inserted id : $newCatId");
+      try {
+        final String? newCatId = await add_category(
+            category: constructCategory(), restaurantId: restaurantId);
+        return true;
+      } on Exception catch (e, stk) {
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
+        return false;
+      }
+
       // await restaurantInfoController.addCategory(
       //   category: constructCategory(),
       // );
+    }
+  }
+
+  Future<void> _updateName() async {
+    if (!fd.mapEquals(_contructName(), category.value!.name)) {
+      mezDbgPrint("Name changed ✅");
+
+      await Future.forEach(_contructName().entries,
+          (MapEntry<LanguageType, String> element) async {
+        await update_translation(
+            langType: element.key,
+            translationId: category.value!.descriptionId!,
+            value: element.value);
+      });
+    }
+  }
+
+  Future<void> _updateDescription() async {
+    if (!fd.mapEquals(_contructDescription(), category.value!.dialog)) {
+      await Future.forEach(_contructDescription()!.entries,
+          (MapEntry<LanguageType, String> element) async {
+        await update_translation(
+            langType: element.key,
+            translationId: category.value!.descriptionId!,
+            value: element.value);
+      });
     }
   }
 

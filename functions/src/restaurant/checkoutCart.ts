@@ -19,7 +19,6 @@ import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { AssignCompanyDetails, assignDeliveryCompany } from "./assignDeliveryCompany";
-import { delivery } from "..";
 
 export interface CheckoutRequest {
   customerAppType: AppType,
@@ -40,6 +39,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
   try {
 
   console.log("\n\n[+] CustomerId ==> \n\n", customerId);
+  console.log("\n\n[+] CustomerId ==> \n\n", checkoutRequest.scheduledTime);
   console.log("\n\n[+] checkoutRequest ==> \n\n", checkoutRequest);
   console.log("\n\n[+] restaurantId ==> \n\n", checkoutRequest.restaurantId);
   let restaurantPromise = getRestaurant(checkoutRequest.restaurantId);

@@ -159,6 +159,24 @@ class Restaurant extends Service {
         .sort((Category a, Category b) => a.position.compareTo(b.position));
   }
 
+  void setSpecials(List<Item> items) {
+    mezDbgPrint("Setting Specials 🥺🥺🥺🥺🥺===>${items.length}");
+    currentSpecials = items
+        .where((Item element) =>
+            (element.endsAt!.toLocal().isAfter(DateTime.now().toLocal()) ||
+                element.endsAt!
+                    .toLocal()
+                    .isAtSameMomentAs(DateTime.now().toLocal())))
+        .toList();
+    pastSpecials = items
+        .where((Item element) =>
+            !(element.endsAt!.toLocal().isAfter(DateTime.now().toLocal()) ||
+                element.endsAt!
+                    .toLocal()
+                    .isAtSameMomentAs(DateTime.now().toLocal())))
+        .toList();
+  }
+
   List<Category> get getAvailableCategories {
     List<Category> categories = _categories
         .where((Category category) => category.id != kNoCategoryNode)

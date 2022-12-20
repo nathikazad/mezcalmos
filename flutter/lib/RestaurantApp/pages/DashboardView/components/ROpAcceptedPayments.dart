@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpPaymentsPageController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpEditInfoView']['components']['ROpAcceptedPayments'];
@@ -319,7 +317,7 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
                         backgroundColor: offRedColor,
                         textColor: Colors.red,
                         onClick: () async {
-                          Get.back();
+                          MezRouter.back();
                         },
                       )),
                       SizedBox(
@@ -334,7 +332,8 @@ class _ROpAcceptedPaymentsState extends State<ROpAcceptedPayments> {
                                   bankName: widget.viewController.bankName.text,
                                   bankNumber: num.parse(
                                       widget.viewController.bankNumber.text))
-                              .then((value) => Get.back(closeOverlays: true));
+                              .then((value) =>
+                                  MezRouter.popDialog(closeOverlays: true));
                         },
                       )),
                     ],

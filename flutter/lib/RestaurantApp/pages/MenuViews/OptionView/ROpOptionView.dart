@@ -4,6 +4,7 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/components/RO
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/components/ROpOptionTypeSelector.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/controllers/ROpOptionViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -14,7 +15,6 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpOptionView"];
@@ -50,7 +50,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
       _viewController.init(
           optionId: optionId, restaurantId: restaurantId!, itemID: itemId!);
     } else {
-      Get.back();
+      MezRouter.back();
     }
     super.initState();
   }
@@ -228,7 +228,8 @@ class _ROpOptionViewState extends State<ROpOptionView>
                       ),
                     ),
                     MezAddButton(onClick: () async {
-                      final bool? refetch = await Get.toNamed(getROpChoiceRoute(
+                      final bool? refetch =
+                          await MezRouter.toNamed(getROpChoiceRoute(
                         choiceId: null,
                         optionId: _viewController.editableOption.value!.id,
                         restaurantId: restaurantId!,
@@ -337,7 +338,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
   Future<void> _handleSecondTab() async {
     if (_viewController.firstTabValid == true &&
         _scFormKey.currentState?.validate() == true) {
-      //  Get.back(result: _viewController.saveOption());
+      //  MezRouter.back(result: _viewController.saveOption());
     } else if (_scFormKey.currentState?.validate() == true &&
         _prFormKey.currentState?.validate() != true) {
       _viewController.secondTabValid = true;
@@ -350,7 +351,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
         (_scFormKey.currentState?.validate() == true ||
             _viewController.secondTabValid)) {
       await _viewController.saveOption();
-      // Get.back(result: _viewController.saveOption());
+      // MezRouter.back(result: _viewController.saveOption());
     } else if (_prFormKey.currentState?.validate() == true &&
         _scFormKey.currentState?.validate() != true) {
       _viewController.firstTabValid = true;

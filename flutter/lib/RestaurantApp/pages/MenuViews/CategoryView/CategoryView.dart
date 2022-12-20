@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
+import 'package:mezcalmos/RestaurantApp/components/ROpAppBar.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/controllers/addCategoryController.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['CategoryView'];
@@ -73,37 +73,29 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
   }
 
   Widget _addCategoryFooterButton() {
-    return Container(
-      height: 60,
-      child: InkWell(
-          onTap: () {
-            if (_formKey.currentState?.validate() ?? false) {
-              if (shouldSave) {
-                _viewController.saveCategory().then((value) {
-                  MezRouter.back(result: true);
-                });
-              } else {
-                MezRouter.back(result: _viewController.constructCategory());
+    return MezButton(
+        withGradient: true,
+        borderRadius: 0,
+        height: 70,
+        onClick: () async {
+          if (_formKey.currentState?.validate() ?? false) {
+            if (shouldSave) {
+              final bool hasSaved = await _viewController.saveCategory();
+              if (hasSaved) {
+                MezRouter.back(result: true);
               }
+            } else {
+              MezRouter.back(result: _viewController.constructCategory());
             }
-          },
-          child: Ink(
-            decoration: BoxDecoration(gradient: bluePurpleGradient),
-            padding: const EdgeInsets.all(8),
-            child: Center(
-              child: Text(
-                (_viewController.editMode.value)
-                    ? "${_i18n()["editCategory"]}"
-                    : "${_i18n()["addCategory"]}",
-                style: Get.textTheme.bodyText1?.copyWith(color: Colors.white),
-              ),
-            ),
-          )),
-    );
+          }
+        },
+        label: (_viewController.editMode.isFalse)
+            ? "${_i18n()["addCategory"]}"
+            : "${_i18n()["editCategory"]}");
   }
 
   PreferredSizeWidget _addCategoryAppBar() {
-    return LaundryAppAppBar(
+    return ROpAppBar(
       leftBtnType: AppBarLeftButtonType.Back,
       onClick: MezRouter.back,
       title: (_viewController.editMode.value)

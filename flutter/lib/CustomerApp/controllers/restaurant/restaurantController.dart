@@ -65,7 +65,9 @@ class RestaurantController extends GetxController {
           if (event != null) {
             cart.value = event;
             if (event.restaurant != null)
-              associatedRestaurant = event.restaurant;
+              cart.value.restaurant = event.restaurant;
+
+            associatedRestaurant = event.restaurant;
           }
           cart.refresh();
         });
@@ -85,6 +87,7 @@ class RestaurantController extends GetxController {
       customerId: Get.find<AuthController>().user!.hasuraId,
     );
     cart.value = value ?? Cart();
+    cart.value.restaurant = value?.restaurant;
     associatedRestaurant = value?.restaurant;
     cart.refresh();
   }
@@ -336,10 +339,12 @@ class RestaurantController extends GetxController {
   }
 
   Future<ServerResponse> checkout({String? stripePaymentId}) async {
+    mezDbgPrint("[+]Delivery time ===> ${cart.value.deliveryTime}");
     final HttpsCallable checkoutRestaurantCart =
-        FirebaseFunctions.instance.httpsCallable("restaurant-checkoutCart2");
+        FirebaseFunctions.instance.httpsCallable("restaurant2-checkoutCart");
+
     try {
-      mezDbgPrint("[+] ===> ${cart.value.restaurant?.info}");
+      mezDbgPrint("[+]Delivery time ===> ${cart.value.deliveryTime}");
       final Map<String, dynamic> payload = <String, dynamic>{
         // "customerId": _authController.user!.hasuraId,
         // "checkoutRequest": <String, dynamic>{
@@ -355,6 +360,8 @@ class RestaurantController extends GetxController {
               ),
             ).toFirebaseFormattedJson(),
         "deliveryCost": cart.value.shippingCost ?? 0,
+        "scheduledTime": cart.value.deliveryTime?.toUtc().toString(),
+
         "paymentType": cart.value.paymentType.toFirebaseFormatString(),
         "notes": cart.value.notes,
         "restaurantId": cart.value.restaurant!.info.hasuraId,
@@ -382,7 +389,7 @@ class RestaurantController extends GetxController {
 
   Future<ServerResponse> cancelOrder(int orderId) async {
     final HttpsCallable cancelOrder = FirebaseFunctions.instance
-        .httpsCallable('restaurant-cancelOrderFromCustomer');
+        .httpsCallable('restaurant2-cancelOrderFromCustomer');
     try {
       final HttpsCallableResult<dynamic> response =
           await cancelOrder.call(<String, dynamic>{"orderId": orderId});

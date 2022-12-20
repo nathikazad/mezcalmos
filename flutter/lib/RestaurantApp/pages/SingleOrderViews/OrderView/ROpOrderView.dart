@@ -10,6 +10,7 @@ import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/compone
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/components/ROpOrderStatusCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/components/ROpRefundBtn.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/controller/ROpOrderViewController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -22,7 +23,6 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpOrderView'];
@@ -104,7 +104,7 @@ class _ROpOrderViewState extends State<ROpOrderView> {
                         showConfirmationDialog(context, onYesClick: () async {
                           await viewController
                               .cancelOrder()
-                              .then((ServerResponse value) => Get.back());
+                              .then((ServerResponse value) => MezRouter.back());
                         });
                       },
                       child: Container(

@@ -3,6 +3,7 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
   restaurant_order_by_pk(id: $order_id) {
     id
     notes
+    scheduled_time
     restaurant {
       id
       firebase_id
@@ -14,6 +15,7 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     }
     items {
       restaurant_item {
+        id
         item_type
         name {
           translations {
@@ -84,6 +86,7 @@ query get_restaurant_order_by_id($order_id: Int!) {
   restaurant_order_by_pk(id: $order_id) {
     id
     notes
+    scheduled_time
     restaurant {
       id
       firebase_id
@@ -163,87 +166,87 @@ query get_restaurant_order_by_id($order_id: Int!) {
   }
 }
 
-# Get restaurant orders
-subscription get_restaurant_orders($restaurantId: Int!) {
-  restaurant_order(where: { restaurant_id: { _eq: $restaurantId } }) {
-    id
-    restaurant {
-      id
-      firebase_id
-      image
-      language_id
-      location_gps
-      location_text
-      name
-    }
-    items {
-      restaurant_item {
-        item_type
-        name {
-          translations {
-            language_id
-            value
-          }
-        }
-        description {
-          translations {
-            language_id
-            value
-          }
-        }
-        position
-        category_id
-        available
-        restaurant_id
-        special_period_end
-        special_period_start
-        archived
-        cost
-      }
-      cost_per_one
-      id
-      notes
-      quantity
-    }
-    payment_type
-    customer {
-      user {
-        id
-        name
-        image
-      }
-    }
-    to_location_gps
-    to_location_address
-    estimated_food_ready_time
-    actual_food_ready_time
-    stripe_payment_id
-    refund_amount
-    delivery_id
-    status
-    total_cost
-    items_cost
-    review_id
-    order_type
-    order_time
-    firebase_id
-    customer_app_type
-    notes
-    tax
-    chat_id
-    delivery_cost
-    delivery {
-      actual_delivered_time
-      actual_package_ready_time
-      actual_arrival_at_pickup_time
-      actual_arrival_at_dropoff_time
-      cancellation_time
-      current_gps
+# # Get restaurant orders
+# subscription get_restaurant_orders($restaurantId: Int!) {
+#   restaurant_order(where: { restaurant_id: { _eq: $restaurantId } }) {
+#     id
+#     restaurant {
+#       id
+#       firebase_id
+#       image
+#       language_id
+#       location_gps
+#       location_text
+#       name
+#     }
+#     items {
+#       restaurant_item {
+#         item_type
+#         name {
+#           translations {
+#             language_id
+#             value
+#           }
+#         }
+#         description {
+#           translations {
+#             language_id
+#             value
+#           }
+#         }
+#         position
+#         category_id
+#         available
+#         restaurant_id
+#         special_period_end
+#         special_period_start
+#         archived
+#         cost
+#       }
+#       cost_per_one
+#       id
+#       notes
+#       quantity
+#     }
+#     payment_type
+#     customer {
+#       user {
+#         id
+#         name
+#         image
+#       }
+#     }
+#     to_location_gps
+#     to_location_address
+#     estimated_food_ready_time
+#     actual_food_ready_time
+#     stripe_payment_id
+#     refund_amount
+#     delivery_id
+#     status
+#     total_cost
+#     items_cost
+#     review_id
+#     order_type
+#     order_time
+#     firebase_id
+#     customer_app_type
+#     notes
+#     tax
+#     chat_id
+#     delivery_cost
+#     delivery {
+#       actual_delivered_time
+#       actual_package_ready_time
+#       actual_arrival_at_pickup_time
+#       actual_arrival_at_dropoff_time
+#       cancellation_time
+#       current_gps
 
-      delivery_cost
-    }
-  }
-}
+#       delivery_cost
+#     }
+#   }
+# }
 
 subscription listen_restaurant_current_orders($restaurantId: Int!) {
   restaurant_order(

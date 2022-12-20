@@ -92,3 +92,4 @@ query getRestaurantCategories($id: Int) {
     }
   }
 }
+
