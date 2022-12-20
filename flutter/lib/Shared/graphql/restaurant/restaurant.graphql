@@ -67,6 +67,11 @@ query getRestaurantSchedule($id: Int!) {
     schedule
   }
 }
+query getRestaurantAprroved($id: Int!) {
+  restaurant_by_pk(id: $id) {
+    approved
+  }
+}
 
 mutation updateRestaurantInfo($id: Int!, $data: restaurant_set_input!) {
   update_restaurant_by_pk(_set: $data, pk_columns: { id: $id }) {
@@ -81,6 +86,14 @@ mutation switchRestaurantSelfDelivery($restauarntId: Int!, $value: Boolean) {
   ) {
     id
     self_delivery
+  }
+}
+mutation switchRestaurantAvailability($restauarntId: Int!, $value: String) {
+  update_restaurant_by_pk(
+    pk_columns: { id: $restauarntId }
+    _set: { open_status: $value }
+  ) {
+    open_status
   }
 }
 

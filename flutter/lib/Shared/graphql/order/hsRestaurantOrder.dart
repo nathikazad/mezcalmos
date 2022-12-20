@@ -42,7 +42,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
             idInRestaurant: item.restaurant_item.id,
             name: toLanguageMap(
                 translations: item.restaurant_item.name.translations),
-            image: '',
+            image: item.restaurant_item.image,
             quantity: item.quantity,
             totalCost: item.cost_per_one,
           ),
@@ -51,7 +51,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
       final RestaurantOrder res = RestaurantOrder(
         chatId: orderData.chat_id,
         orderId: orderData.id,
-        notes: orderData.notes.toString(),
+        notes: orderData.notes,
         status: orderData.status.toRestaurantOrderStatus(),
         quantity: 1,
         serviceProviderId: orderData.restaurant.id,
@@ -106,13 +106,12 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
         RestaurantOrderItem(
           costPerOne: item.cost_per_one,
           idInCart: item.id,
-          //  idInRestaurant: item.restaurant_item.category_id!,
           name: toLanguageMap(
               translations: item.restaurant_item.name.translations),
-          image: null,
+          image: item.restaurant_item.image,
           quantity: item.quantity,
           totalCost: item.cost_per_one,
-          idInRestaurant: item.restaurant_item.category_id!,
+          idInRestaurant: item.restaurant_item.id,
         ),
       );
     });
@@ -155,178 +154,6 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     return res;
   }
   return null;
-}
-
-// Stream<List<RestaurantOrder>?> listen_on_orders_by_restaurant_id(
-//     {required int restaurantId}) async* {
-//   yield* _hasuraDb.graphQLClient
-//       .watchSubscription$get_restaurant_orders(
-//         WatchOptions$Subscription$get_restaurant_orders(
-//           fetchPolicy: FetchPolicy.noCache,
-//           variables: Variables$Subscription$get_restaurant_orders(
-//               restaurantId: restaurantId),
-//         ),
-//       )
-//       .stream
-//       .asyncMap<List<RestaurantOrder>?>(
-//           (QueryResult<Subscription$get_restaurant_orders> event) {
-//     final List<Subscription$get_restaurant_orders$restaurant_order>?
-//         ordersData = event.parsedData?.restaurant_order;
-//     if (ordersData != null) {
-//       final List<RestaurantOrder> orders = ordersData
-//           .map((Subscription$get_restaurant_orders$restaurant_order orderData) {
-//         num _itemsCost = 0;
-//         final List<RestaurantOrderItem> items = [];
-//         orderData.items.forEach(
-//             (Subscription$get_restaurant_orders$restaurant_order$items item) {
-//           _itemsCost += (item.cost_per_one * item.quantity);
-//           // items.add(
-//           //   RestaurantOrderItem(
-//           //     costPerOne: item.cost_per_one,
-//           //     idInCart: item.id,
-//           //     idInRestaurant: item.restaurant_item.category_id!,
-//           //     name: item.restaurant_item.name,
-//           //   ),
-//           // );
-//         });
-//         final RestaurantOrder res = RestaurantOrder(
-//           chatId: orderData.chat_id,
-//           orderId: orderData.id,
-//           status: orderData.status.toRestaurantOrderStatus(),
-//           quantity: 1,
-//           serviceProviderId: orderData.restaurant.id,
-//           paymentType: orderData.payment_type.toPaymentType(),
-//           orderTime: DateTime.parse(orderData.order_time),
-//           cost: orderData.delivery_cost,
-//           restaurant: ServiceInfo(
-//             location: Location(
-//               orderData.restaurant.location_text,
-//               orderData.restaurant.location_gps.toLocationData(),
-//             ),
-//             firebaseId: orderData.restaurant.firebase_id!,
-//             hasuraId: orderData.restaurant.id,
-//             image: orderData.restaurant.image,
-//             name: orderData.restaurant.name,
-//           ),
-//           customer: UserInfo(
-//               hasuraId: orderData.customer.user.id,
-//               image: orderData.customer.user.image,
-//               name: orderData.customer.user.name),
-//           to: Location(orderData.to_location_address!,
-//               orderData.to_location_gps!.toLocationData()),
-//           itemsCost: _itemsCost,
-//           shippingCost: orderData.delivery_cost,
-//           deliveryMode: DeliveryMode.ForwardedToMezCalmos,
-//         );
-
-//         res.items = items;
-//         return res;
-//         // return RestaurantOrder(
-//         //     orderId: orderId,
-//         //     status: status,
-//         //     quantity: quantity,
-//         //     serviceProviderId: serviceProviderId,
-//         //     paymentType: paymentType,
-//         //     orderTime: orderTime,
-//         //     cost: cost,
-//         //     restaurant: restaurant,
-//         //     customer: customer,
-//         //     to: to,
-//         //     deliveryMode: deliveryMode,
-//         //     itemsCost: itemsCost,
-//         //     shippingCost: shippingCost);
-//       }).toList();
-//       return orders;
-//     }
-//     return null;
-//   });
-// }
-
-Future<List<RestaurantOrder>?> get_restaurant_orders_by_restaurant_id(
-    {required int restaurantId}) async {
-  final QueryResult<Query$querry_restaurant_orders_by_restaurant_id>
-      queryResult = await _hasuraDb.graphQLClient
-          .query$querry_restaurant_orders_by_restaurant_id(
-    Options$Query$querry_restaurant_orders_by_restaurant_id(
-      fetchPolicy: FetchPolicy.networkOnly,
-      variables: Variables$Query$querry_restaurant_orders_by_restaurant_id(
-        restaurantId: restaurantId,
-      ),
-    ),
-  );
-  if (queryResult.parsedData?.restaurant_order != null) {
-    final List<Query$querry_restaurant_orders_by_restaurant_id$restaurant_order>
-        ordersData = queryResult.parsedData!.restaurant_order;
-    final List<RestaurantOrder> orders = ordersData.map(
-        (Query$querry_restaurant_orders_by_restaurant_id$restaurant_order
-            orderData) {
-      num _itemsCost = 0;
-      final List<RestaurantOrderItem> items = [];
-      orderData.items.forEach(
-          (Query$querry_restaurant_orders_by_restaurant_id$restaurant_order$items
-              item) {
-        _itemsCost += (item.cost_per_one * item.quantity);
-        // items.add(
-        //   RestaurantOrderItem(
-        //     costPerOne: item.cost_per_one,
-        //     idInCart: item.id,
-        //     idInRestaurant: item.restaurant_item.category_id!,
-        //     name: item.restaurant_item.name,
-        //   ),
-        // );
-      });
-      final RestaurantOrder res = RestaurantOrder(
-        chatId: orderData.chat_id,
-        orderId: orderData.id,
-        status: orderData.status.toRestaurantOrderStatus(),
-        quantity: 1,
-        serviceProviderId: orderData.restaurant.id,
-        paymentType: orderData.payment_type.toPaymentType(),
-        orderTime: DateTime.parse(orderData.order_time),
-        cost: orderData.delivery_cost,
-        restaurant: ServiceInfo(
-          location: Location(
-            orderData.restaurant.location_text,
-            orderData.restaurant.location_gps.toLocationData(),
-          ),
-          firebaseId: orderData.restaurant.firebase_id,
-          hasuraId: orderData.restaurant.id,
-          image: orderData.restaurant.image,
-          name: orderData.restaurant.name,
-        ),
-        customer: UserInfo(
-            hasuraId: orderData.customer.user.id,
-            image: orderData.customer.user.image,
-            name: orderData.customer.user.name),
-        to: Location(orderData.to_location_address!,
-            orderData.to_location_gps!.toLocationData()),
-        itemsCost: _itemsCost,
-        shippingCost: orderData.delivery_cost,
-        deliveryMode: DeliveryMode.ForwardedToMezCalmos,
-      );
-
-      res.items = items;
-      return res;
-      // return RestaurantOrder(
-      //     orderId: orderId,
-      //     status: status,
-      //     quantity: quantity,
-      //     serviceProviderId: serviceProviderId,
-      //     paymentType: paymentType,
-      //     orderTime: orderTime,
-      //     cost: cost,
-      //     restaurant: restaurant,
-      //     customer: customer,
-      //     to: to,
-      //     deliveryMode: deliveryMode,
-      //     itemsCost: itemsCost,
-      //     shippingCost: shippingCost);
-    }).toList();
-    return orders;
-  } else {
-    throw Exception(
-        "🚨🚨 Exception can't get orders 🚨🚨\n ${queryResult.exception}");
-  }
 }
 
 Stream<List<MinimalRestaurantOrder>?> listen_on_current_restaurant_orders(

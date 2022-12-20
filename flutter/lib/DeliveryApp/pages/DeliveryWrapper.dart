@@ -6,9 +6,9 @@ import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/deepLinkHandler.dart';
 import 'package:mezcalmos/DeliveryApp/notificationHandler.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
-import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
@@ -16,11 +16,9 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
-import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class DeliveryWrapper extends StatefulWidget {
   @override
@@ -29,6 +27,8 @@ class DeliveryWrapper extends StatefulWidget {
 
 class _DeliveryWrapperState extends State<DeliveryWrapper> {
   final DeepLinkHandler _deepLinkHandler = DeepLinkHandler();
+  DeliveryAuthController _deliveryAuthController =
+      Get.find<DeliveryAuthController>();
 
   StreamSubscription<MezNotification.Notification>?
       _notificationsStreamListener;
@@ -36,30 +36,33 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
   @override
   void initState() {
     mezDbgPrint("DeliveryWrapper::init state");
-    Future.microtask(() {
-      mezDbgPrint("DeliveryWrapper::microtask handleState first time");
-      DeliveryDriverState? deliveryDriverState =
-          Get.find<DeliveryAuthController>().deliveryDriverState;
-      mezDbgPrint("deliveryDriverState = $deliveryDriverState");
-      if (deliveryDriverState != null) {
-        mezDbgPrint("inside if  = $deliveryDriverState");
+    Future.microtask(() async {
+      await _deliveryAuthController.setupDeliveryDriver();
+      mezDbgPrint(
+          " success DeliveryWrapper::microtask handleState ${_deliveryAuthController.driver?.toJson()}");
+      handleState(_deliveryAuthController.driverState);
+      // DeliveryDriverState? deliveryDriverState =
+      //     Get.find<DeliveryAuthController>().deliveryDriverState;
+      // mezDbgPrint("deliveryDriverState = $deliveryDriverState");
+      // if (deliveryDriverState != null) {
+      //   mezDbgPrint("inside if  = $deliveryDriverState");
 
-        handleState(deliveryDriverState);
-      } else {
-        mezDbgPrint("inside else  = $deliveryDriverState");
-        mezDbgPrint("${Get.find<DeliveryAuthController>().stateStream.first}");
+      //   handleState(deliveryDriverState);
+      // } else {
+      //   mezDbgPrint("inside else  = $deliveryDriverState");
+      //   mezDbgPrint("${Get.find<DeliveryAuthController>().stateStream.first}");
 
-        Get.find<DeliveryAuthController>()
-            .stateStream
-            .first
-            .then((_deliveryDriverState) {
-          mezDbgPrint("inside else -> then  = $_deliveryDriverState");
-          handleState(_deliveryDriverState);
-        });
-      }
+      //   Get.find<DeliveryAuthController>()
+      //       .stateStream
+      //       .first
+      //       .then((_deliveryDriverState) {
+      //     mezDbgPrint("inside else -> then  = $_deliveryDriverState");
+      //     handleState(_deliveryDriverState);
+      //   });
+      // }
     });
 
-    String userId = Get.find<AuthController>().fireAuthUser!.uid;
+    final String userId = Get.find<AuthController>().fireAuthUser!.uid;
     _notificationsStreamListener = initializeShowNotificationsListener();
     // listenForLocationPermissions();
     Get.find<ForegroundNotificationsController>()
@@ -93,13 +96,13 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
       mezDbgPrint("DeliveryWrapper::handleState ${state.toJson().toString()}");
       if (!state.isAuthorized) {
         mezDbgPrint("DeliveryWrapper::handleState going to unauthorized");
-        MezRouter.toNamed(kUnauthorizedRoute);
+        MezRouter.toNamed(kDriverUnAuth);
         // } else if (state.currentOrder != null) {
         //   mezDbgPrint("DeliveryWrapper::handleState going to current order");
         //   MezRouter.toNamed(kCurrentOrderRoute);
       } else {
         mezDbgPrint("DeliveryWrapper::handleState going to incoming orders");
-        MezRouter.toNamed(kCurrentOrdersListRoute);
+        MezRouter.toNamed(kDriverUnAuth);
       }
     } else {
       mezDbgPrint("DeliveryWrapper::handleState state is null, ERROR");

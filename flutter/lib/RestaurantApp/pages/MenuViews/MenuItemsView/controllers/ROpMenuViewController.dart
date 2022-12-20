@@ -40,10 +40,14 @@ class ROpMenuViewController {
 
   Future<void> fetchCategories() async {
     fetching.value = true;
-    noCategory.value.items =
+    final List<Item> itemsWithNoCat =
         await get_restaurant_items_without_cat(restaurnatId, withCache: false);
+
     final List<Category>? _categories =
         await get_restaurant_categories_by_id(restaurnatId, withCache: false);
+    noCategory.value.items.clear();
+    noCategory.value.items = itemsWithNoCat;
+    noCategory.refresh();
     if (_categories != null) {
       mainCategories.clear();
       mainCategories.value.addAll(_categories);

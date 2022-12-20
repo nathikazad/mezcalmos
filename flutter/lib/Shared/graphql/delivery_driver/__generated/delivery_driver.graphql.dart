@@ -4,6 +4,1030 @@ import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 
+class Variables$Query$getDriversByUserId {
+  factory Variables$Query$getDriversByUserId({required int userId}) =>
+      Variables$Query$getDriversByUserId._({
+        r'userId': userId,
+      });
+
+  Variables$Query$getDriversByUserId._(this._$data);
+
+  factory Variables$Query$getDriversByUserId.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$userId = data['userId'];
+    result$data['userId'] = (l$userId as int);
+    return Variables$Query$getDriversByUserId._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get userId => (_$data['userId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$userId = userId;
+    result$data['userId'] = l$userId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getDriversByUserId<
+          Variables$Query$getDriversByUserId>
+      get copyWith => CopyWith$Variables$Query$getDriversByUserId(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getDriversByUserId) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$userId = userId;
+    final lOther$userId = other.userId;
+    if (l$userId != lOther$userId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$userId = userId;
+    return Object.hashAll([l$userId]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getDriversByUserId<TRes> {
+  factory CopyWith$Variables$Query$getDriversByUserId(
+    Variables$Query$getDriversByUserId instance,
+    TRes Function(Variables$Query$getDriversByUserId) then,
+  ) = _CopyWithImpl$Variables$Query$getDriversByUserId;
+
+  factory CopyWith$Variables$Query$getDriversByUserId.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getDriversByUserId;
+
+  TRes call({int? userId});
+}
+
+class _CopyWithImpl$Variables$Query$getDriversByUserId<TRes>
+    implements CopyWith$Variables$Query$getDriversByUserId<TRes> {
+  _CopyWithImpl$Variables$Query$getDriversByUserId(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getDriversByUserId _instance;
+
+  final TRes Function(Variables$Query$getDriversByUserId) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? userId = _undefined}) =>
+      _then(Variables$Query$getDriversByUserId._({
+        ..._instance._$data,
+        if (userId != _undefined && userId != null) 'userId': (userId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getDriversByUserId<TRes>
+    implements CopyWith$Variables$Query$getDriversByUserId<TRes> {
+  _CopyWithStubImpl$Variables$Query$getDriversByUserId(this._res);
+
+  TRes _res;
+
+  call({int? userId}) => _res;
+}
+
+class Query$getDriversByUserId {
+  Query$getDriversByUserId({
+    required this.delivery_driver,
+    required this.$__typename,
+  });
+
+  factory Query$getDriversByUserId.fromJson(Map<String, dynamic> json) {
+    final l$delivery_driver = json['delivery_driver'];
+    final l$$__typename = json['__typename'];
+    return Query$getDriversByUserId(
+      delivery_driver: (l$delivery_driver as List<dynamic>)
+          .map((e) => Query$getDriversByUserId$delivery_driver.fromJson(
+              (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$getDriversByUserId$delivery_driver> delivery_driver;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_driver = delivery_driver;
+    _resultData['delivery_driver'] =
+        l$delivery_driver.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_driver = delivery_driver;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$delivery_driver.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getDriversByUserId) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_driver = delivery_driver;
+    final lOther$delivery_driver = other.delivery_driver;
+    if (l$delivery_driver.length != lOther$delivery_driver.length) {
+      return false;
+    }
+    for (int i = 0; i < l$delivery_driver.length; i++) {
+      final l$delivery_driver$entry = l$delivery_driver[i];
+      final lOther$delivery_driver$entry = lOther$delivery_driver[i];
+      if (l$delivery_driver$entry != lOther$delivery_driver$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getDriversByUserId
+    on Query$getDriversByUserId {
+  CopyWith$Query$getDriversByUserId<Query$getDriversByUserId> get copyWith =>
+      CopyWith$Query$getDriversByUserId(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$getDriversByUserId<TRes> {
+  factory CopyWith$Query$getDriversByUserId(
+    Query$getDriversByUserId instance,
+    TRes Function(Query$getDriversByUserId) then,
+  ) = _CopyWithImpl$Query$getDriversByUserId;
+
+  factory CopyWith$Query$getDriversByUserId.stub(TRes res) =
+      _CopyWithStubImpl$Query$getDriversByUserId;
+
+  TRes call({
+    List<Query$getDriversByUserId$delivery_driver>? delivery_driver,
+    String? $__typename,
+  });
+  TRes delivery_driver(
+      Iterable<Query$getDriversByUserId$delivery_driver> Function(
+              Iterable<
+                  CopyWith$Query$getDriversByUserId$delivery_driver<
+                      Query$getDriversByUserId$delivery_driver>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getDriversByUserId<TRes>
+    implements CopyWith$Query$getDriversByUserId<TRes> {
+  _CopyWithImpl$Query$getDriversByUserId(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getDriversByUserId _instance;
+
+  final TRes Function(Query$getDriversByUserId) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_driver = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getDriversByUserId(
+        delivery_driver:
+            delivery_driver == _undefined || delivery_driver == null
+                ? _instance.delivery_driver
+                : (delivery_driver
+                    as List<Query$getDriversByUserId$delivery_driver>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes delivery_driver(
+          Iterable<Query$getDriversByUserId$delivery_driver> Function(
+                  Iterable<
+                      CopyWith$Query$getDriversByUserId$delivery_driver<
+                          Query$getDriversByUserId$delivery_driver>>)
+              _fn) =>
+      call(
+          delivery_driver: _fn(_instance.delivery_driver
+              .map((e) => CopyWith$Query$getDriversByUserId$delivery_driver(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getDriversByUserId<TRes>
+    implements CopyWith$Query$getDriversByUserId<TRes> {
+  _CopyWithStubImpl$Query$getDriversByUserId(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getDriversByUserId$delivery_driver>? delivery_driver,
+    String? $__typename,
+  }) =>
+      _res;
+  delivery_driver(_fn) => _res;
+}
+
+const documentNodeQuerygetDriversByUserId = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getDriversByUserId'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'userId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delivery_driver'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'user_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'userId')),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'app_version'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'current_location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'delivery_driver_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'delivery_company_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'delivery_company_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'online'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'status'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'user'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'firebase_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'language_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getDriversByUserId _parserFn$Query$getDriversByUserId(
+        Map<String, dynamic> data) =>
+    Query$getDriversByUserId.fromJson(data);
+
+class Options$Query$getDriversByUserId
+    extends graphql.QueryOptions<Query$getDriversByUserId> {
+  Options$Query$getDriversByUserId({
+    String? operationName,
+    required Variables$Query$getDriversByUserId variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetDriversByUserId,
+          parserFn: _parserFn$Query$getDriversByUserId,
+        );
+}
+
+class WatchOptions$Query$getDriversByUserId
+    extends graphql.WatchQueryOptions<Query$getDriversByUserId> {
+  WatchOptions$Query$getDriversByUserId({
+    String? operationName,
+    required Variables$Query$getDriversByUserId variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetDriversByUserId,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getDriversByUserId,
+        );
+}
+
+class FetchMoreOptions$Query$getDriversByUserId
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getDriversByUserId({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getDriversByUserId variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetDriversByUserId,
+        );
+}
+
+extension ClientExtension$Query$getDriversByUserId on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getDriversByUserId>>
+      query$getDriversByUserId(
+              Options$Query$getDriversByUserId options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$getDriversByUserId>
+      watchQuery$getDriversByUserId(
+              WatchOptions$Query$getDriversByUserId options) =>
+          this.watchQuery(options);
+  void writeQuery$getDriversByUserId({
+    required Query$getDriversByUserId data,
+    required Variables$Query$getDriversByUserId variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQuerygetDriversByUserId),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getDriversByUserId? readQuery$getDriversByUserId({
+    required Variables$Query$getDriversByUserId variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQuerygetDriversByUserId),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$getDriversByUserId.fromJson(result);
+  }
+}
+
+class Query$getDriversByUserId$delivery_driver {
+  Query$getDriversByUserId$delivery_driver({
+    this.app_version,
+    this.current_location,
+    required this.delivery_driver_type,
+    required this.delivery_company_type,
+    required this.delivery_company_id,
+    required this.id,
+    required this.online,
+    required this.status,
+    required this.user,
+    required this.$__typename,
+  });
+
+  factory Query$getDriversByUserId$delivery_driver.fromJson(
+      Map<String, dynamic> json) {
+    final l$app_version = json['app_version'];
+    final l$current_location = json['current_location'];
+    final l$delivery_driver_type = json['delivery_driver_type'];
+    final l$delivery_company_type = json['delivery_company_type'];
+    final l$delivery_company_id = json['delivery_company_id'];
+    final l$id = json['id'];
+    final l$online = json['online'];
+    final l$status = json['status'];
+    final l$user = json['user'];
+    final l$$__typename = json['__typename'];
+    return Query$getDriversByUserId$delivery_driver(
+      app_version: (l$app_version as String?),
+      current_location: l$current_location == null
+          ? null
+          : geographyFromJson(l$current_location),
+      delivery_driver_type: (l$delivery_driver_type as String),
+      delivery_company_type: (l$delivery_company_type as String),
+      delivery_company_id: (l$delivery_company_id as int),
+      id: (l$id as int),
+      online: (l$online as bool),
+      status: (l$status as String),
+      user: Query$getDriversByUserId$delivery_driver$user.fromJson(
+          (l$user as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? app_version;
+
+  final Geography? current_location;
+
+  final String delivery_driver_type;
+
+  final String delivery_company_type;
+
+  final int delivery_company_id;
+
+  final int id;
+
+  final bool online;
+
+  final String status;
+
+  final Query$getDriversByUserId$delivery_driver$user user;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$app_version = app_version;
+    _resultData['app_version'] = l$app_version;
+    final l$current_location = current_location;
+    _resultData['current_location'] =
+        l$current_location == null ? null : geographyToJson(l$current_location);
+    final l$delivery_driver_type = delivery_driver_type;
+    _resultData['delivery_driver_type'] = l$delivery_driver_type;
+    final l$delivery_company_type = delivery_company_type;
+    _resultData['delivery_company_type'] = l$delivery_company_type;
+    final l$delivery_company_id = delivery_company_id;
+    _resultData['delivery_company_id'] = l$delivery_company_id;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$online = online;
+    _resultData['online'] = l$online;
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$user = user;
+    _resultData['user'] = l$user.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$app_version = app_version;
+    final l$current_location = current_location;
+    final l$delivery_driver_type = delivery_driver_type;
+    final l$delivery_company_type = delivery_company_type;
+    final l$delivery_company_id = delivery_company_id;
+    final l$id = id;
+    final l$online = online;
+    final l$status = status;
+    final l$user = user;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$app_version,
+      l$current_location,
+      l$delivery_driver_type,
+      l$delivery_company_type,
+      l$delivery_company_id,
+      l$id,
+      l$online,
+      l$status,
+      l$user,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getDriversByUserId$delivery_driver) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$app_version = app_version;
+    final lOther$app_version = other.app_version;
+    if (l$app_version != lOther$app_version) {
+      return false;
+    }
+    final l$current_location = current_location;
+    final lOther$current_location = other.current_location;
+    if (l$current_location != lOther$current_location) {
+      return false;
+    }
+    final l$delivery_driver_type = delivery_driver_type;
+    final lOther$delivery_driver_type = other.delivery_driver_type;
+    if (l$delivery_driver_type != lOther$delivery_driver_type) {
+      return false;
+    }
+    final l$delivery_company_type = delivery_company_type;
+    final lOther$delivery_company_type = other.delivery_company_type;
+    if (l$delivery_company_type != lOther$delivery_company_type) {
+      return false;
+    }
+    final l$delivery_company_id = delivery_company_id;
+    final lOther$delivery_company_id = other.delivery_company_id;
+    if (l$delivery_company_id != lOther$delivery_company_id) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$online = online;
+    final lOther$online = other.online;
+    if (l$online != lOther$online) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$user = user;
+    final lOther$user = other.user;
+    if (l$user != lOther$user) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getDriversByUserId$delivery_driver
+    on Query$getDriversByUserId$delivery_driver {
+  CopyWith$Query$getDriversByUserId$delivery_driver<
+          Query$getDriversByUserId$delivery_driver>
+      get copyWith => CopyWith$Query$getDriversByUserId$delivery_driver(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getDriversByUserId$delivery_driver<TRes> {
+  factory CopyWith$Query$getDriversByUserId$delivery_driver(
+    Query$getDriversByUserId$delivery_driver instance,
+    TRes Function(Query$getDriversByUserId$delivery_driver) then,
+  ) = _CopyWithImpl$Query$getDriversByUserId$delivery_driver;
+
+  factory CopyWith$Query$getDriversByUserId$delivery_driver.stub(TRes res) =
+      _CopyWithStubImpl$Query$getDriversByUserId$delivery_driver;
+
+  TRes call({
+    String? app_version,
+    Geography? current_location,
+    String? delivery_driver_type,
+    String? delivery_company_type,
+    int? delivery_company_id,
+    int? id,
+    bool? online,
+    String? status,
+    Query$getDriversByUserId$delivery_driver$user? user,
+    String? $__typename,
+  });
+  CopyWith$Query$getDriversByUserId$delivery_driver$user<TRes> get user;
+}
+
+class _CopyWithImpl$Query$getDriversByUserId$delivery_driver<TRes>
+    implements CopyWith$Query$getDriversByUserId$delivery_driver<TRes> {
+  _CopyWithImpl$Query$getDriversByUserId$delivery_driver(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getDriversByUserId$delivery_driver _instance;
+
+  final TRes Function(Query$getDriversByUserId$delivery_driver) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? app_version = _undefined,
+    Object? current_location = _undefined,
+    Object? delivery_driver_type = _undefined,
+    Object? delivery_company_type = _undefined,
+    Object? delivery_company_id = _undefined,
+    Object? id = _undefined,
+    Object? online = _undefined,
+    Object? status = _undefined,
+    Object? user = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getDriversByUserId$delivery_driver(
+        app_version: app_version == _undefined
+            ? _instance.app_version
+            : (app_version as String?),
+        current_location: current_location == _undefined
+            ? _instance.current_location
+            : (current_location as Geography?),
+        delivery_driver_type:
+            delivery_driver_type == _undefined || delivery_driver_type == null
+                ? _instance.delivery_driver_type
+                : (delivery_driver_type as String),
+        delivery_company_type:
+            delivery_company_type == _undefined || delivery_company_type == null
+                ? _instance.delivery_company_type
+                : (delivery_company_type as String),
+        delivery_company_id:
+            delivery_company_id == _undefined || delivery_company_id == null
+                ? _instance.delivery_company_id
+                : (delivery_company_id as int),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        online: online == _undefined || online == null
+            ? _instance.online
+            : (online as bool),
+        status: status == _undefined || status == null
+            ? _instance.status
+            : (status as String),
+        user: user == _undefined || user == null
+            ? _instance.user
+            : (user as Query$getDriversByUserId$delivery_driver$user),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getDriversByUserId$delivery_driver$user<TRes> get user {
+    final local$user = _instance.user;
+    return CopyWith$Query$getDriversByUserId$delivery_driver$user(
+        local$user, (e) => call(user: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getDriversByUserId$delivery_driver<TRes>
+    implements CopyWith$Query$getDriversByUserId$delivery_driver<TRes> {
+  _CopyWithStubImpl$Query$getDriversByUserId$delivery_driver(this._res);
+
+  TRes _res;
+
+  call({
+    String? app_version,
+    Geography? current_location,
+    String? delivery_driver_type,
+    String? delivery_company_type,
+    int? delivery_company_id,
+    int? id,
+    bool? online,
+    String? status,
+    Query$getDriversByUserId$delivery_driver$user? user,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getDriversByUserId$delivery_driver$user<TRes> get user =>
+      CopyWith$Query$getDriversByUserId$delivery_driver$user.stub(_res);
+}
+
+class Query$getDriversByUserId$delivery_driver$user {
+  Query$getDriversByUserId$delivery_driver$user({
+    required this.id,
+    this.image,
+    this.name,
+    required this.firebase_id,
+    required this.language_id,
+    required this.$__typename,
+  });
+
+  factory Query$getDriversByUserId$delivery_driver$user.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$firebase_id = json['firebase_id'];
+    final l$language_id = json['language_id'];
+    final l$$__typename = json['__typename'];
+    return Query$getDriversByUserId$delivery_driver$user(
+      id: (l$id as int),
+      image: (l$image as String?),
+      name: (l$name as String?),
+      firebase_id: (l$firebase_id as String),
+      language_id: (l$language_id as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String? image;
+
+  final String? name;
+
+  final String firebase_id;
+
+  final String language_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$firebase_id = firebase_id;
+    _resultData['firebase_id'] = l$firebase_id;
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$image = image;
+    final l$name = name;
+    final l$firebase_id = firebase_id;
+    final l$language_id = language_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$image,
+      l$name,
+      l$firebase_id,
+      l$language_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getDriversByUserId$delivery_driver$user) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$firebase_id = firebase_id;
+    final lOther$firebase_id = other.firebase_id;
+    if (l$firebase_id != lOther$firebase_id) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getDriversByUserId$delivery_driver$user
+    on Query$getDriversByUserId$delivery_driver$user {
+  CopyWith$Query$getDriversByUserId$delivery_driver$user<
+          Query$getDriversByUserId$delivery_driver$user>
+      get copyWith => CopyWith$Query$getDriversByUserId$delivery_driver$user(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getDriversByUserId$delivery_driver$user<TRes> {
+  factory CopyWith$Query$getDriversByUserId$delivery_driver$user(
+    Query$getDriversByUserId$delivery_driver$user instance,
+    TRes Function(Query$getDriversByUserId$delivery_driver$user) then,
+  ) = _CopyWithImpl$Query$getDriversByUserId$delivery_driver$user;
+
+  factory CopyWith$Query$getDriversByUserId$delivery_driver$user.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getDriversByUserId$delivery_driver$user;
+
+  TRes call({
+    int? id,
+    String? image,
+    String? name,
+    String? firebase_id,
+    String? language_id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getDriversByUserId$delivery_driver$user<TRes>
+    implements CopyWith$Query$getDriversByUserId$delivery_driver$user<TRes> {
+  _CopyWithImpl$Query$getDriversByUserId$delivery_driver$user(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getDriversByUserId$delivery_driver$user _instance;
+
+  final TRes Function(Query$getDriversByUserId$delivery_driver$user) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? firebase_id = _undefined,
+    Object? language_id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getDriversByUserId$delivery_driver$user(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        image: image == _undefined ? _instance.image : (image as String?),
+        name: name == _undefined ? _instance.name : (name as String?),
+        firebase_id: firebase_id == _undefined || firebase_id == null
+            ? _instance.firebase_id
+            : (firebase_id as String),
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getDriversByUserId$delivery_driver$user<TRes>
+    implements CopyWith$Query$getDriversByUserId$delivery_driver$user<TRes> {
+  _CopyWithStubImpl$Query$getDriversByUserId$delivery_driver$user(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? image,
+    String? name,
+    String? firebase_id,
+    String? language_id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Query$getDriversByServiceId {
   factory Variables$Query$getDriversByServiceId({required int serviceId}) =>
       Variables$Query$getDriversByServiceId._({

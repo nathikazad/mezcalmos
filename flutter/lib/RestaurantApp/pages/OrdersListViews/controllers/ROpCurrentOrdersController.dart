@@ -22,12 +22,14 @@ class ROpCurrentOrdersController {
   late int restaurantId;
   // Rxn<Restaurant> restaurant = Rxn();
   Rxn<ServiceStatus> _serviceStatus = Rxn();
+  RxBool _isApproved = RxBool(false);
 // streams
   StreamSubscription? currentOrdersListener;
   String? subscriptionId;
 
 // getters
   bool get isOpen => _serviceStatus == ServiceStatus.Open;
+  bool get isAproved => _isApproved.value;
 
   Future<void> init() async {
     restaurantId = opAuthController.restaurantId!;
@@ -65,6 +67,8 @@ class ROpCurrentOrdersController {
   Future<void> _fetchServiceStatus(int restaurantId) async {
     _serviceStatus.value =
         await get_restaurant_status(restaurantId: restaurantId);
+    _isApproved.value =
+        await get_restaurant_approved(restaurantId: restaurantId) ?? false;
   }
 
   Future<void> turnOffOrders() async {

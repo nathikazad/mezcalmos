@@ -165,6 +165,7 @@ List<Category> _parseCategories(
       return Item(
           id: item.id,
           nameId: item.name.id,
+          image: item.image,
           descriptionId: item.description_id,
           name: toLanguageMap(translations: item.name.translations),
           itemType: item.item_type.toItemType(),

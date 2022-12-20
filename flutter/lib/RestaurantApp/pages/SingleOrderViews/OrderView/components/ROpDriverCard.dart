@@ -245,7 +245,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
           ),
         ),
         Obx(() {
-          if (showSet.isTrue) {
+          if (showSet.isTrue && widget.order.inProcess()) {
             return InkWell(
                 onTap: () async {
                   final bool? forwardToMezCalmos = await MezRouter.toNamed(

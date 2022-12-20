@@ -66,11 +66,9 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                       _deliveryAuthController.turnOff();
                     },
                     initialSwitcherValue:
-                        _deliveryAuthController.deliveryDriverState?.online ??
-                            false,
+                        _deliveryAuthController.driverState?.online ?? false,
                   ),
-                  if (_deliveryAuthController.deliveryDriverState?.online !=
-                          true &&
+                  if (_deliveryAuthController.driverState?.online != true &&
                       orderController.currentOrders.isEmpty)
                     Container(
                       height: 60.h,

@@ -106,6 +106,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
                                     restaurantId: restaurantID!)) as bool?;
                             if (newItemAdded == true) {
                               await viewController.fetchCategories();
+                              // await viewController.fetchCategories();
                             }
                           },
                           title: '${_i18n()["addItem"]}',
@@ -264,12 +265,14 @@ class _ROpMenuViewState extends State<ROpMenuView>
             SizedBox(
               height: 5,
             ),
-            Column(
-              children: List.generate(
-                  viewController.noCategory.value.items.length,
-                  (int index) => ROpItemCard(
-                      viewController: viewController,
-                      item: viewController.noCategory.value.items[index])),
+            Obx(
+              () => Column(
+                children: List.generate(
+                    viewController.noCategory.value.items.length,
+                    (int index) => ROpItemCard(
+                        viewController: viewController,
+                        item: viewController.noCategory.value.items[index])),
+              ),
             ),
           ],
         ),

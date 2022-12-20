@@ -12,11 +12,11 @@ import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
-    as MezNotification;
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
+    as MezNotification;
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class OrderController extends GetxController {
@@ -37,20 +37,20 @@ class OrderController extends GetxController {
 
   @override
   void onInit() {
-    mezDbgPrint(
-        "--------------------> Start listening on past orders  ${deliveryDriversPastOrdersNode(_authController.fireAuthUser!.uid)}");
+    // mezDbgPrint(
+    //     "--------------------> Start listening on past orders  ${deliveryDriversPastOrdersNode(_authController.fireAuthUser!.uid)}");
 
-    listenToOrders();
-    _appLifeCyclePauseCallbackId =
-        _appLifeCycleController.attachCallback(AppLifecycleState.paused, () {
-      _pastOrdersListener?.cancel();
-      _currentOrdersListener?.cancel();
-    });
+    // listenToOrders();
+    // _appLifeCyclePauseCallbackId =
+    //     _appLifeCycleController.attachCallback(AppLifecycleState.paused, () {
+    //   _pastOrdersListener?.cancel();
+    //   _currentOrdersListener?.cancel();
+    // });
 
-    _appLifeCycleResumeCallbackId =
-        _appLifeCycleController.attachCallback(AppLifecycleState.resumed, () {
-      listenToOrders();
-    });
+    // _appLifeCycleResumeCallbackId =
+    //     _appLifeCycleController.attachCallback(AppLifecycleState.resumed, () {
+    //   listenToOrders();
+    // });
     super.onInit();
   }
 

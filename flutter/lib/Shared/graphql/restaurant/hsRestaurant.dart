@@ -408,6 +408,22 @@ Future<ServiceStatus?> get_restaurant_status(
   }
 }
 
+Future<bool?> get_restaurant_approved({required int restaurantId}) async {
+  final QueryResult<Query$getRestaurantAprroved> response =
+      await _db.graphQLClient.query$getRestaurantAprroved(
+    Options$Query$getRestaurantAprroved(
+      fetchPolicy: FetchPolicy.networkOnly,
+      variables: Variables$Query$getRestaurantAprroved(id: restaurantId),
+    ),
+  );
+  if (response.parsedData?.restaurant_by_pk == null) {
+    throw Exception(
+        "🚨🚨🚨 Getting restaurant $restaurantId status exception \n ${response.exception}");
+  } else {
+    return response.parsedData!.restaurant_by_pk!.approved;
+  }
+}
+
 Future<ServiceStatus> update_restaurant_status(
     {required int id, required ServiceStatus status}) async {
   final QueryResult<Mutation$updateRestaurantInfo> response =
