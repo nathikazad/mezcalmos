@@ -95,7 +95,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     super.initState();
     mezDbgPrint("[=] ViewRestaurantOrderScreeen params :: ${Get.parameters}");
     final int orderId = int.parse(Get.parameters['orderId']!);
-
+    mezDbgPrint("+orderId ==> $orderId");
     if (Get.parameters['orderId'] == null) MezRouter.back();
     // orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);

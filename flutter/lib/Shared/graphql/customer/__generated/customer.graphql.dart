@@ -452,7 +452,7 @@ extension ClientExtension$Mutation$set_customer_app_version
 
 class Mutation$set_customer_app_version$update_customer_by_pk {
   Mutation$set_customer_app_version$update_customer_by_pk({
-    this.app_version,
+    required this.app_version,
     required this.$__typename,
   });
 
@@ -461,12 +461,12 @@ class Mutation$set_customer_app_version$update_customer_by_pk {
     final l$app_version = json['app_version'];
     final l$$__typename = json['__typename'];
     return Mutation$set_customer_app_version$update_customer_by_pk(
-      app_version: (l$app_version as String?),
+      app_version: (l$app_version as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final String? app_version;
+  final String app_version;
 
   final String $__typename;
 
@@ -561,9 +561,9 @@ class _CopyWithImpl$Mutation$set_customer_app_version$update_customer_by_pk<
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$set_customer_app_version$update_customer_by_pk(
-        app_version: app_version == _undefined
+        app_version: app_version == _undefined || app_version == null
             ? _instance.app_version
-            : (app_version as String?),
+            : (app_version as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -1902,7 +1902,7 @@ extension ClientExtension$Query$get_customer_info on graphql.GraphQLClient {
 
 class Query$get_customer_info$customer {
   Query$get_customer_info$customer({
-    this.app_version,
+    required this.app_version,
     this.notification_token,
     required this.user,
     required this.saved_locations,
@@ -1916,7 +1916,7 @@ class Query$get_customer_info$customer {
     final l$saved_locations = json['saved_locations'];
     final l$$__typename = json['__typename'];
     return Query$get_customer_info$customer(
-      app_version: (l$app_version as String?),
+      app_version: (l$app_version as String),
       notification_token: (l$notification_token as String?),
       user: Query$get_customer_info$customer$user.fromJson(
           (l$user as Map<String, dynamic>)),
@@ -1928,7 +1928,7 @@ class Query$get_customer_info$customer {
     );
   }
 
-  final String? app_version;
+  final String app_version;
 
   final String? notification_token;
 
@@ -2070,9 +2070,9 @@ class _CopyWithImpl$Query$get_customer_info$customer<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_customer_info$customer(
-        app_version: app_version == _undefined
+        app_version: app_version == _undefined || app_version == null
             ? _instance.app_version
-            : (app_version as String?),
+            : (app_version as String),
         notification_token: notification_token == _undefined
             ? _instance.notification_token
             : (notification_token as String?),

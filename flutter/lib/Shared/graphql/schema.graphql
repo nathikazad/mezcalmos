@@ -859,7 +859,7 @@ enum cursor_ordering {
 columns and relationships of "customer"
 """
 type customer {
-  app_version: String
+  app_version: String!
 
   """An object relationship"""
   cart: restaurant_cart
@@ -9750,11 +9750,6 @@ unique or primary key constraints on table "restaurant_cart_item"
 """
 enum restaurant_cart_item_constraint {
   """
-  unique or primary key constraint on columns "restaurant_item_id", "customer_id"
-  """
-  restaurant_cart_item_customer_id_restaurant_item_id_key
-
-  """
   unique or primary key constraint on columns "id"
   """
   restaurant_cart_pkey
@@ -11335,7 +11330,6 @@ type restaurant_item {
   description: translation
   description_id: Int
   id: Int!
-  image: String
 
   """daily, special"""
   item_type: String!
@@ -11479,7 +11473,6 @@ input restaurant_item_bool_exp {
   description: translation_bool_exp
   description_id: Int_comparison_exp
   id: Int_comparison_exp
-  image: String_comparison_exp
   item_type: String_comparison_exp
   name: translation_bool_exp
   name_id: Int_comparison_exp
@@ -11526,7 +11519,6 @@ input restaurant_item_insert_input {
   description: translation_obj_rel_insert_input
   description_id: Int
   id: Int
-  image: String
 
   """daily, special"""
   item_type: String
@@ -11546,7 +11538,6 @@ type restaurant_item_max_fields {
   cost: money
   description_id: Int
   id: Int
-  image: String
 
   """daily, special"""
   item_type: String
@@ -11565,7 +11556,6 @@ input restaurant_item_max_order_by {
   cost: order_by
   description_id: order_by
   id: order_by
-  image: order_by
 
   """daily, special"""
   item_type: order_by
@@ -11582,7 +11572,6 @@ type restaurant_item_min_fields {
   cost: money
   description_id: Int
   id: Int
-  image: String
 
   """daily, special"""
   item_type: String
@@ -11601,7 +11590,6 @@ input restaurant_item_min_order_by {
   cost: order_by
   description_id: order_by
   id: order_by
-  image: order_by
 
   """daily, special"""
   item_type: order_by
@@ -12094,7 +12082,6 @@ input restaurant_item_order_by {
   description: translation_order_by
   description_id: order_by
   id: order_by
-  image: order_by
   item_type: order_by
   name: translation_order_by
   name_id: order_by
@@ -12134,9 +12121,6 @@ enum restaurant_item_select_column {
   id
 
   """column name"""
-  image
-
-  """column name"""
   item_type
 
   """column name"""
@@ -12165,7 +12149,6 @@ input restaurant_item_set_input {
   cost: money
   description_id: Int
   id: Int
-  image: String
 
   """daily, special"""
   item_type: String
@@ -12267,7 +12250,6 @@ input restaurant_item_stream_cursor_value_input {
   cost: money
   description_id: Int
   id: Int
-  image: String
 
   """daily, special"""
   item_type: String
@@ -12323,9 +12305,6 @@ enum restaurant_item_update_column {
 
   """column name"""
   id
-
-  """column name"""
-  image
 
   """column name"""
   item_type
@@ -14061,11 +14040,6 @@ type restaurant_order {
   firebase_id: String
   id: Int!
 
-  """
-  A computed field, executes function "in_process"
-  """
-  in_process: Boolean
-
   """An array relationship"""
   items(
     """distinct select on columns"""
@@ -14119,7 +14093,6 @@ type restaurant_order {
   """An object relationship"""
   review: review
   review_id: Int
-  scheduled_time: timestamptz
 
   """
   orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
@@ -14238,7 +14211,6 @@ input restaurant_order_bool_exp {
   estimated_food_ready_time: timestamptz_comparison_exp
   firebase_id: String_comparison_exp
   id: Int_comparison_exp
-  in_process: Boolean_comparison_exp
   items: restaurant_order_item_bool_exp
   items_cost: money_comparison_exp
   notes: String_comparison_exp
@@ -14250,7 +14222,6 @@ input restaurant_order_bool_exp {
   restaurant_id: Int_comparison_exp
   review: review_bool_exp
   review_id: Int_comparison_exp
-  scheduled_time: timestamptz_comparison_exp
   status: String_comparison_exp
   stripe_payment_id: Int_comparison_exp
   tax: money_comparison_exp
@@ -14348,7 +14319,6 @@ input restaurant_order_insert_input {
   restaurant_id: Int
   review: review_obj_rel_insert_input
   review_id: Int
-  scheduled_time: timestamptz
 
   """
   orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
@@ -14888,7 +14858,6 @@ type restaurant_order_max_fields {
   refund_amount: money
   restaurant_id: Int
   review_id: Int
-  scheduled_time: timestamptz
 
   """
   orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
@@ -14920,7 +14889,6 @@ input restaurant_order_max_order_by {
   refund_amount: order_by
   restaurant_id: order_by
   review_id: order_by
-  scheduled_time: order_by
 
   """
   orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
@@ -14950,7 +14918,6 @@ type restaurant_order_min_fields {
   refund_amount: money
   restaurant_id: Int
   review_id: Int
-  scheduled_time: timestamptz
 
   """
   orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
@@ -14982,7 +14949,6 @@ input restaurant_order_min_order_by {
   refund_amount: order_by
   restaurant_id: order_by
   review_id: order_by
-  scheduled_time: order_by
 
   """
   orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
@@ -15038,7 +15004,6 @@ input restaurant_order_order_by {
   estimated_food_ready_time: order_by
   firebase_id: order_by
   id: order_by
-  in_process: order_by
   items_aggregate: restaurant_order_item_aggregate_order_by
   items_cost: order_by
   notes: order_by
@@ -15050,7 +15015,6 @@ input restaurant_order_order_by {
   restaurant_id: order_by
   review: review_order_by
   review_id: order_by
-  scheduled_time: order_by
   status: order_by
   stripe_payment_id: order_by
   tax: order_by
@@ -15405,9 +15369,6 @@ enum restaurant_order_select_column {
   review_id
 
   """column name"""
-  scheduled_time
-
-  """column name"""
   status
 
   """column name"""
@@ -15444,7 +15405,6 @@ input restaurant_order_set_input {
   refund_amount: money
   restaurant_id: Int
   review_id: Int
-  scheduled_time: timestamptz
 
   """
   orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
@@ -15576,7 +15536,6 @@ input restaurant_order_stream_cursor_value_input {
   refund_amount: money
   restaurant_id: Int
   review_id: Int
-  scheduled_time: timestamptz
 
   """
   orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant
@@ -15672,9 +15631,6 @@ enum restaurant_order_update_column {
 
   """column name"""
   review_id
-
-  """column name"""
-  scheduled_time
 
   """column name"""
   status
@@ -20717,9 +20673,6 @@ columns and relationships of "user"
 """
 type user {
   big_image: String
-
-  """An object relationship"""
-  customer: customer
   deleted: Boolean!
   email: String
   firebase_id: String!
@@ -20768,7 +20721,6 @@ input user_bool_exp {
   _not: user_bool_exp
   _or: [user_bool_exp!]
   big_image: String_comparison_exp
-  customer: customer_bool_exp
   deleted: Boolean_comparison_exp
   email: String_comparison_exp
   firebase_id: String_comparison_exp
@@ -20801,7 +20753,6 @@ input type for inserting data into table "user"
 """
 input user_insert_input {
   big_image: String
-  customer: customer_obj_rel_insert_input
   deleted: Boolean
   email: String
   firebase_id: String
@@ -20869,7 +20820,6 @@ input user_on_conflict {
 """Ordering options when selecting data from "user"."""
 input user_order_by {
   big_image: order_by
-  customer: customer_order_by
   deleted: order_by
   email: order_by
   firebase_id: order_by

@@ -205,9 +205,9 @@ class AuthController extends GetxController {
     await _auth.signOut();
   }
 
-  void changeLanguage(LanguageType newLanguage) {
+  Future<void> changeLanguage(LanguageType newLanguage) async {
     if (isUserSignedIn) {
-      // TODO: set hasura language
+      await change_user_language(userId: user!.hasuraId, language: newLanguage);
     }
   }
 

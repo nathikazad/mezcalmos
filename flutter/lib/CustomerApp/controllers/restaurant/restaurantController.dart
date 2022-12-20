@@ -326,10 +326,10 @@ class RestaurantController extends GetxController {
             true);
   }
 
-  void clearCart() {
+  Future<void> clearCart() async {
     cart.value = Cart();
     if (Get.find<AuthController>().user?.hasuraId != null) {
-      hsCart.clear_customer_cart(
+      await hsCart.clear_customer_cart(
           customer_id: Get.find<AuthController>().user!.hasuraId);
     }
     Get.appUpdate();

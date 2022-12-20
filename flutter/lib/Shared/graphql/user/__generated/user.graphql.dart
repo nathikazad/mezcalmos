@@ -2501,3 +2501,568 @@ class _CopyWithStubImpl$Mutation$changeUserName$update_user_by_pk<TRes>
   }) =>
       _res;
 }
+
+class Variables$Mutation$changeUserLanguage {
+  factory Variables$Mutation$changeUserLanguage({
+    required Input$user_pk_columns_input id,
+    required String language,
+  }) =>
+      Variables$Mutation$changeUserLanguage._({
+        r'id': id,
+        r'language': language,
+      });
+
+  Variables$Mutation$changeUserLanguage._(this._$data);
+
+  factory Variables$Mutation$changeUserLanguage.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] =
+        Input$user_pk_columns_input.fromJson((l$id as Map<String, dynamic>));
+    final l$language = data['language'];
+    result$data['language'] = (l$language as String);
+    return Variables$Mutation$changeUserLanguage._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  Input$user_pk_columns_input get id =>
+      (_$data['id'] as Input$user_pk_columns_input);
+  String get language => (_$data['language'] as String);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id.toJson();
+    final l$language = language;
+    result$data['language'] = l$language;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$changeUserLanguage<
+          Variables$Mutation$changeUserLanguage>
+      get copyWith => CopyWith$Variables$Mutation$changeUserLanguage(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$changeUserLanguage) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$language = language;
+    final lOther$language = other.language;
+    if (l$language != lOther$language) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$language = language;
+    return Object.hashAll([
+      l$id,
+      l$language,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$changeUserLanguage<TRes> {
+  factory CopyWith$Variables$Mutation$changeUserLanguage(
+    Variables$Mutation$changeUserLanguage instance,
+    TRes Function(Variables$Mutation$changeUserLanguage) then,
+  ) = _CopyWithImpl$Variables$Mutation$changeUserLanguage;
+
+  factory CopyWith$Variables$Mutation$changeUserLanguage.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$changeUserLanguage;
+
+  TRes call({
+    Input$user_pk_columns_input? id,
+    String? language,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$changeUserLanguage<TRes>
+    implements CopyWith$Variables$Mutation$changeUserLanguage<TRes> {
+  _CopyWithImpl$Variables$Mutation$changeUserLanguage(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$changeUserLanguage _instance;
+
+  final TRes Function(Variables$Mutation$changeUserLanguage) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? language = _undefined,
+  }) =>
+      _then(Variables$Mutation$changeUserLanguage._({
+        ..._instance._$data,
+        if (id != _undefined && id != null)
+          'id': (id as Input$user_pk_columns_input),
+        if (language != _undefined && language != null)
+          'language': (language as String),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$changeUserLanguage<TRes>
+    implements CopyWith$Variables$Mutation$changeUserLanguage<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$changeUserLanguage(this._res);
+
+  TRes _res;
+
+  call({
+    Input$user_pk_columns_input? id,
+    String? language,
+  }) =>
+      _res;
+}
+
+class Mutation$changeUserLanguage {
+  Mutation$changeUserLanguage({
+    this.update_user_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$changeUserLanguage.fromJson(Map<String, dynamic> json) {
+    final l$update_user_by_pk = json['update_user_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$changeUserLanguage(
+      update_user_by_pk: l$update_user_by_pk == null
+          ? null
+          : Mutation$changeUserLanguage$update_user_by_pk.fromJson(
+              (l$update_user_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$changeUserLanguage$update_user_by_pk? update_user_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_user_by_pk = update_user_by_pk;
+    _resultData['update_user_by_pk'] = l$update_user_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_user_by_pk = update_user_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_user_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$changeUserLanguage) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_user_by_pk = update_user_by_pk;
+    final lOther$update_user_by_pk = other.update_user_by_pk;
+    if (l$update_user_by_pk != lOther$update_user_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$changeUserLanguage
+    on Mutation$changeUserLanguage {
+  CopyWith$Mutation$changeUserLanguage<Mutation$changeUserLanguage>
+      get copyWith => CopyWith$Mutation$changeUserLanguage(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$changeUserLanguage<TRes> {
+  factory CopyWith$Mutation$changeUserLanguage(
+    Mutation$changeUserLanguage instance,
+    TRes Function(Mutation$changeUserLanguage) then,
+  ) = _CopyWithImpl$Mutation$changeUserLanguage;
+
+  factory CopyWith$Mutation$changeUserLanguage.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$changeUserLanguage;
+
+  TRes call({
+    Mutation$changeUserLanguage$update_user_by_pk? update_user_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$changeUserLanguage$update_user_by_pk<TRes>
+      get update_user_by_pk;
+}
+
+class _CopyWithImpl$Mutation$changeUserLanguage<TRes>
+    implements CopyWith$Mutation$changeUserLanguage<TRes> {
+  _CopyWithImpl$Mutation$changeUserLanguage(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$changeUserLanguage _instance;
+
+  final TRes Function(Mutation$changeUserLanguage) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_user_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$changeUserLanguage(
+        update_user_by_pk: update_user_by_pk == _undefined
+            ? _instance.update_user_by_pk
+            : (update_user_by_pk
+                as Mutation$changeUserLanguage$update_user_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$changeUserLanguage$update_user_by_pk<TRes>
+      get update_user_by_pk {
+    final local$update_user_by_pk = _instance.update_user_by_pk;
+    return local$update_user_by_pk == null
+        ? CopyWith$Mutation$changeUserLanguage$update_user_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Mutation$changeUserLanguage$update_user_by_pk(
+            local$update_user_by_pk, (e) => call(update_user_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$changeUserLanguage<TRes>
+    implements CopyWith$Mutation$changeUserLanguage<TRes> {
+  _CopyWithStubImpl$Mutation$changeUserLanguage(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$changeUserLanguage$update_user_by_pk? update_user_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$changeUserLanguage$update_user_by_pk<TRes>
+      get update_user_by_pk =>
+          CopyWith$Mutation$changeUserLanguage$update_user_by_pk.stub(_res);
+}
+
+const documentNodeMutationchangeUserLanguage = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'changeUserLanguage'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'user_pk_columns_input'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'language')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_user_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: VariableNode(name: NameNode(value: 'id')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'language_id'),
+                value: VariableNode(name: NameNode(value: 'language')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'language_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$changeUserLanguage _parserFn$Mutation$changeUserLanguage(
+        Map<String, dynamic> data) =>
+    Mutation$changeUserLanguage.fromJson(data);
+typedef OnMutationCompleted$Mutation$changeUserLanguage = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$changeUserLanguage?,
+);
+
+class Options$Mutation$changeUserLanguage
+    extends graphql.MutationOptions<Mutation$changeUserLanguage> {
+  Options$Mutation$changeUserLanguage({
+    String? operationName,
+    required Variables$Mutation$changeUserLanguage variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$changeUserLanguage? onCompleted,
+    graphql.OnMutationUpdate<Mutation$changeUserLanguage>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$changeUserLanguage(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationchangeUserLanguage,
+          parserFn: _parserFn$Mutation$changeUserLanguage,
+        );
+
+  final OnMutationCompleted$Mutation$changeUserLanguage? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$changeUserLanguage
+    extends graphql.WatchQueryOptions<Mutation$changeUserLanguage> {
+  WatchOptions$Mutation$changeUserLanguage({
+    String? operationName,
+    required Variables$Mutation$changeUserLanguage variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationchangeUserLanguage,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$changeUserLanguage,
+        );
+}
+
+extension ClientExtension$Mutation$changeUserLanguage on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$changeUserLanguage>>
+      mutate$changeUserLanguage(
+              Options$Mutation$changeUserLanguage options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$changeUserLanguage>
+      watchMutation$changeUserLanguage(
+              WatchOptions$Mutation$changeUserLanguage options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$changeUserLanguage$update_user_by_pk {
+  Mutation$changeUserLanguage$update_user_by_pk({
+    required this.language_id,
+    required this.$__typename,
+  });
+
+  factory Mutation$changeUserLanguage$update_user_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$changeUserLanguage$update_user_by_pk(
+      language_id: (l$language_id as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$changeUserLanguage$update_user_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$changeUserLanguage$update_user_by_pk
+    on Mutation$changeUserLanguage$update_user_by_pk {
+  CopyWith$Mutation$changeUserLanguage$update_user_by_pk<
+          Mutation$changeUserLanguage$update_user_by_pk>
+      get copyWith => CopyWith$Mutation$changeUserLanguage$update_user_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$changeUserLanguage$update_user_by_pk<TRes> {
+  factory CopyWith$Mutation$changeUserLanguage$update_user_by_pk(
+    Mutation$changeUserLanguage$update_user_by_pk instance,
+    TRes Function(Mutation$changeUserLanguage$update_user_by_pk) then,
+  ) = _CopyWithImpl$Mutation$changeUserLanguage$update_user_by_pk;
+
+  factory CopyWith$Mutation$changeUserLanguage$update_user_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$changeUserLanguage$update_user_by_pk;
+
+  TRes call({
+    String? language_id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$changeUserLanguage$update_user_by_pk<TRes>
+    implements CopyWith$Mutation$changeUserLanguage$update_user_by_pk<TRes> {
+  _CopyWithImpl$Mutation$changeUserLanguage$update_user_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$changeUserLanguage$update_user_by_pk _instance;
+
+  final TRes Function(Mutation$changeUserLanguage$update_user_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$changeUserLanguage$update_user_by_pk(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$changeUserLanguage$update_user_by_pk<TRes>
+    implements CopyWith$Mutation$changeUserLanguage$update_user_by_pk<TRes> {
+  _CopyWithStubImpl$Mutation$changeUserLanguage$update_user_by_pk(this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? $__typename,
+  }) =>
+      _res;
+}

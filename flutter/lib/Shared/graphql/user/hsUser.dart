@@ -2,7 +2,9 @@
 
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/user/__generated/user.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -24,5 +26,30 @@ Future<UserInfo> get_user_by_hasura_id({required int hasuraId}) async {
         name: data.name,
         language: data.language_id.toLanguageType(),
         image: data.image);
+  }
+}
+
+Future<void> change_user_language({
+  required int userId,
+  required LanguageType language,
+}) async {
+  QueryResult<Mutation$changeUserLanguage> _res =
+      await _db.graphQLClient.mutate$changeUserLanguage(
+    Options$Mutation$changeUserLanguage(
+      variables: Variables$Mutation$changeUserLanguage(
+        id: Input$user_pk_columns_input(id: userId),
+        language: language.toFirebaseFormatString(),
+      ),
+    ),
+  );
+
+  if (_res.hasException) {
+    mezDbgPrint(
+        "[ERROR] CALLED :: change_user_language :: EXCEPTION :: ${_res.exception}");
+  } else {
+    mezDbgPrint(
+        "[SUCCESS] CALLED :: change_user_language :: DATA :: ${_res.data}");
+
+    // Get.find<LanguageController>().setLanguage(language);
   }
 }

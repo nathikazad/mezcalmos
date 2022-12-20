@@ -59,6 +59,9 @@ class _SavedLocationViewState extends State<SavedLocationView> {
       savedLocationsStreamSub = listen_on_customer_locations(
               customer_id: Get.find<AuthController>().user!.hasuraId)
           .listen((List<SavedLocation>? event) {
+        mezDbgPrint("GOT S/LOCATIONS ===> ${event?.length}");
+        _customerAuthController.customer?.savedLocations.clear();
+        _customerAuthController.customer?.savedLocations.addAll(event ?? []);
         setState(() {
           savedLocations.assignAll(
               _customerAuthController.customer?.savedLocations ?? []);

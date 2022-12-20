@@ -13,8 +13,8 @@ class FloatingCartComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => _authController.isUserSignedIn &&
-              Get.find<RestaurantController>().cart.value.cartItems.length > 0
+      () => Get.find<RestaurantController>().cart.value.cartItems.length > 0 &&
+              _authController.isUserSignedIn
           ? FloatingActionButton(
               onPressed: () {
                 MezRouter.toNamed(kCartRoute);
