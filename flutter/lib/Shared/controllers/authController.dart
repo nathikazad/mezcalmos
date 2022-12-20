@@ -190,6 +190,7 @@ class AuthController extends GetxController {
       //     .child(userInfoNode(fireAuthUser!.uid))
       //     .child('name')
       //     .set(name);
+      await change_username(userId: user!.hasuraId, name: name);
     }
     if (compressedImageUrl != null && compressedImageUrl.isURL) {
       // TODO: set hasura compressed_image
@@ -198,6 +199,7 @@ class AuthController extends GetxController {
       //     .child(userInfoNode(fireAuthUser!.uid))
       //     .child('image')
       //     .set(compressedImageUrl);
+      await change_user_img(userId: user!.hasuraId, img: compressedImageUrl);
     }
   }
 

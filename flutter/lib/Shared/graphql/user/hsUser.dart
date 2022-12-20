@@ -53,3 +53,64 @@ Future<void> change_user_language({
     // Get.find<LanguageController>().setLanguage(language);
   }
 }
+
+Future<void> change_username({
+  required int userId,
+  required String name,
+}) async {
+  QueryResult<Mutation$changeUserName> _res =
+      await _db.graphQLClient.mutate$changeUserName(
+    Options$Mutation$changeUserName(
+      variables: Variables$Mutation$changeUserName(
+        id: Input$user_pk_columns_input(id: userId),
+        name: name,
+      ),
+    ),
+  );
+
+  if (_res.hasException) {
+    mezDbgPrint(
+        "[ERROR] CALLED :: change_username :: EXCEPTION :: ${_res.exception}");
+  } else {
+    mezDbgPrint("[SUCCESS] CALLED :: change_username :: DATA :: ${_res.data}");
+
+    // Get.find<LanguageController>().setLanguage(language);
+  }
+}
+
+Future<void> change_user_img({
+  required int userId,
+  required String img,
+  bool isBigImg = false,
+}) async {
+  QueryResult? _res;
+
+  if (!isBigImg) {
+    _res = await _db.graphQLClient.mutate$changeUserImg(
+      Options$Mutation$changeUserImg(
+        variables: Variables$Mutation$changeUserImg(
+          id: Input$user_pk_columns_input(id: userId),
+          img: img,
+        ),
+      ),
+    );
+  }
+  // QueryResult<Mutation$changeUserImg> _res =
+  //     await _db.graphQLClient.mutate$changeUserImg(
+  //   Options$Mutation$changeUserImg(
+  //     variables: Variables$Mutation$changeUserImg(
+  //       id: Input$user_pk_columns_input(id: userId),
+  //       img: img,
+  //     ),
+  //   ),
+  // );
+
+  if (_res.hasException) {
+    mezDbgPrint(
+        "[ERROR] CALLED :: change_user_img :: EXCEPTION :: ${_res.exception}");
+  } else {
+    mezDbgPrint("[SUCCESS] CALLED :: change_user_img :: DATA :: ${_res.data}");
+
+    // Get.find<LanguageController>().setLanguage(language);
+  }
+}
