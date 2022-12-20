@@ -179,11 +179,11 @@ Future<List<Item>> get_restaurant_items_without_cat(int restaurantId,
   } else {
     return response.parsedData!.restaurant_item
         .map((Query$getRestaurantItemsWithoutCat$restaurant_item item) {
-      mezDbgPrint("ITEM TYPE ===>${item.item_type}");
       return Item(
           name: toLanguageMap(translations: item.name.translations),
           itemType: item.item_type.toItemType(),
           id: item.id,
+          image: item.image,
           available: item.available,
           cost: item.cost);
     }).toList();
@@ -208,6 +208,7 @@ Future<List<Item>> get_restaurant_special_items(int restaurantId,
             name: toLanguageMap(translations: item.name.translations),
             itemType: item.item_type.toItemType(),
             id: item.id,
+            image: item.image,
             available: item.available,
             startsAt: (item.special_period_start != null)
                 ? DateTime.tryParse(item.special_period_start!)

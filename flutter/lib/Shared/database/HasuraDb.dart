@@ -179,7 +179,7 @@ class HasuraDb {
       case AppType.DeliveryAdminApp:
         return "mez_admin";
       case AppType.DeliveryApp:
-        return "deliverer";
+        return "delivery_driver";
       case AppType.RestaurantApp:
         return "restaurant_operator";
 

@@ -53,6 +53,54 @@ Future<List<DeliveryDriver>?> get_drivers_by_service_provider_id(
   }
 }
 
+Future<DeliveryDriver?> get_driver_by_user_id(
+    {required int userId, bool withCache = true}) async {
+  final QueryResult<Query$getDriversByUserId> response = await _db.graphQLClient
+      .query$getDriversByUserId(Options$Query$getDriversByUserId(
+          variables: Variables$Query$getDriversByUserId(userId: userId)));
+
+  if (response.parsedData?.delivery_driver == null) {
+    throw Exception(
+        " 🚨🚨 Getting driver by user id $userId exceptions 🚨🚨 \n ${response.exception}");
+  } else {
+    mezDbgPrint(
+        "Getting driver query ✅✅ ===>${response.parsedData?.delivery_driver}");
+    final List<Query$getDriversByUserId$delivery_driver> data =
+        response.parsedData!.delivery_driver;
+    if (data.isNotEmpty) {
+      return DeliveryDriver(
+          deliveryDriverState: DeliveryDriverState(
+              status: data.first.status.toAgentStatus(),
+              online: data.first.online,
+              deliveryCompanyId: data.first.delivery_company_id.toString(),
+              deliveryCompanyType:
+                  data.first.delivery_company_type.toDeliveryCompanyType()),
+          deliveryDriverId: data.first.id.toString(),
+          driverInfo: DeliveryDriverUserInfo(
+              hasuraId: data.first.id,
+              image: data.first.user.image,
+              language: data.first.user.language_id.toString().toLanguageType(),
+              name: data.first.user.name));
+    }
+  }
+  return null;
+}
+
+// Future<int?> insert_driver(
+//     {required DeliveryDriver driver, required int userId}) async {
+//   final QueryResult<Mutation$insertDriver> response =
+//       await _db.graphQLClient.mutate$insertDriver(
+//     Options$Mutation$insertDriver(
+//       variables: Variables$Mutation$insertDriver(
+//         driver: Input$delivery_driver_insert_input(
+//           user_id: userId,
+//         ),
+//       ),
+//     ),
+//   );
+//   return null;
+// }
+
 /// fetch all drivers associtaed with specefic service provider
 ///
 /// by using the service provider id

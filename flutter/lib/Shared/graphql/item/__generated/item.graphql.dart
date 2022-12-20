@@ -440,6 +440,13 @@ const documentNodeMutationaddItem = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'image'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -557,6 +564,7 @@ class Mutation$addItem$insert_restaurant_item_one {
     required this.restaurant_id,
     this.special_period_end,
     this.special_period_start,
+    this.image,
     required this.$__typename,
   });
 
@@ -573,6 +581,7 @@ class Mutation$addItem$insert_restaurant_item_one {
     final l$restaurant_id = json['restaurant_id'];
     final l$special_period_end = json['special_period_end'];
     final l$special_period_start = json['special_period_start'];
+    final l$image = json['image'];
     final l$$__typename = json['__typename'];
     return Mutation$addItem$insert_restaurant_item_one(
       id: (l$id as int),
@@ -590,6 +599,7 @@ class Mutation$addItem$insert_restaurant_item_one {
       restaurant_id: (l$restaurant_id as int),
       special_period_end: (l$special_period_end as String?),
       special_period_start: (l$special_period_start as String?),
+      image: (l$image as String?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -615,6 +625,8 @@ class Mutation$addItem$insert_restaurant_item_one {
   final String? special_period_end;
 
   final String? special_period_start;
+
+  final String? image;
 
   final String $__typename;
 
@@ -642,6 +654,8 @@ class Mutation$addItem$insert_restaurant_item_one {
     _resultData['special_period_end'] = l$special_period_end;
     final l$special_period_start = special_period_start;
     _resultData['special_period_start'] = l$special_period_start;
+    final l$image = image;
+    _resultData['image'] = l$image;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -660,6 +674,7 @@ class Mutation$addItem$insert_restaurant_item_one {
     final l$restaurant_id = restaurant_id;
     final l$special_period_end = special_period_end;
     final l$special_period_start = special_period_start;
+    final l$image = image;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
@@ -673,6 +688,7 @@ class Mutation$addItem$insert_restaurant_item_one {
       l$restaurant_id,
       l$special_period_end,
       l$special_period_start,
+      l$image,
       l$$__typename,
     ]);
   }
@@ -741,6 +757,11 @@ class Mutation$addItem$insert_restaurant_item_one {
     if (l$special_period_start != lOther$special_period_start) {
       return false;
     }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -781,6 +802,7 @@ abstract class CopyWith$Mutation$addItem$insert_restaurant_item_one<TRes> {
     int? restaurant_id,
     String? special_period_end,
     String? special_period_start,
+    String? image,
     String? $__typename,
   });
   CopyWith$Mutation$addItem$insert_restaurant_item_one$name<TRes> get name;
@@ -813,6 +835,7 @@ class _CopyWithImpl$Mutation$addItem$insert_restaurant_item_one<TRes>
     Object? restaurant_id = _undefined,
     Object? special_period_end = _undefined,
     Object? special_period_start = _undefined,
+    Object? image = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$addItem$insert_restaurant_item_one(
@@ -848,6 +871,7 @@ class _CopyWithImpl$Mutation$addItem$insert_restaurant_item_one<TRes>
         special_period_start: special_period_start == _undefined
             ? _instance.special_period_start
             : (special_period_start as String?),
+        image: image == _undefined ? _instance.image : (image as String?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -887,6 +911,7 @@ class _CopyWithStubImpl$Mutation$addItem$insert_restaurant_item_one<TRes>
     int? restaurant_id,
     String? special_period_end,
     String? special_period_start,
+    String? image,
     String? $__typename,
   }) =>
       _res;
@@ -2939,6 +2964,13 @@ const documentNodeQuerygetItemById = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'image'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'name'),
             alias: null,
             arguments: [],
@@ -3456,9 +3488,9 @@ extension ClientExtension$Query$getItemById on graphql.GraphQLClient {
 class Query$getItemById$restaurant_item_by_pk {
   Query$getItemById$restaurant_item_by_pk({
     required this.id,
+    this.image,
     required this.name,
     this.description,
-    this.image,
     required this.cost,
     required this.position,
     this.category_id,
@@ -3474,9 +3506,9 @@ class Query$getItemById$restaurant_item_by_pk {
   factory Query$getItemById$restaurant_item_by_pk.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
+    final l$image = json['image'];
     final l$name = json['name'];
     final l$description = json['description'];
-    final l$image = json['image'];
     final l$cost = json['cost'];
     final l$position = json['position'];
     final l$category_id = json['category_id'];
@@ -3489,13 +3521,13 @@ class Query$getItemById$restaurant_item_by_pk {
     final l$$__typename = json['__typename'];
     return Query$getItemById$restaurant_item_by_pk(
       id: (l$id as int),
+      image: (l$image as String?),
       name: Query$getItemById$restaurant_item_by_pk$name.fromJson(
           (l$name as Map<String, dynamic>)),
       description: l$description == null
           ? null
           : Query$getItemById$restaurant_item_by_pk$description.fromJson(
               (l$description as Map<String, dynamic>)),
-      image: (l$image as String?),
       cost: moneyFromJson(l$cost),
       position: (l$position as int),
       category_id: (l$category_id as int?),
@@ -3514,11 +3546,11 @@ class Query$getItemById$restaurant_item_by_pk {
 
   final int id;
 
+  final String? image;
+
   final Query$getItemById$restaurant_item_by_pk$name name;
 
   final Query$getItemById$restaurant_item_by_pk$description? description;
-
-  final String? image;
 
   final double cost;
 
@@ -3544,12 +3576,12 @@ class Query$getItemById$restaurant_item_by_pk {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$image = image;
+    _resultData['image'] = l$image;
     final l$name = name;
     _resultData['name'] = l$name.toJson();
     final l$description = description;
     _resultData['description'] = l$description?.toJson();
-    final l$image = image;
-    _resultData['image'] = l$image;
     final l$cost = cost;
     _resultData['cost'] = moneyToJson(l$cost);
     final l$position = position;
@@ -3576,9 +3608,9 @@ class Query$getItemById$restaurant_item_by_pk {
   @override
   int get hashCode {
     final l$id = id;
+    final l$image = image;
     final l$name = name;
     final l$description = description;
-    final l$image = image;
     final l$cost = cost;
     final l$position = position;
     final l$category_id = category_id;
@@ -3591,9 +3623,9 @@ class Query$getItemById$restaurant_item_by_pk {
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
+      l$image,
       l$name,
       l$description,
-      l$image,
       l$cost,
       l$position,
       l$category_id,
@@ -3621,6 +3653,11 @@ class Query$getItemById$restaurant_item_by_pk {
     if (l$id != lOther$id) {
       return false;
     }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
@@ -3629,11 +3666,6 @@ class Query$getItemById$restaurant_item_by_pk {
     final l$description = description;
     final lOther$description = other.description;
     if (l$description != lOther$description) {
-      return false;
-    }
-    final l$image = image;
-    final lOther$image = other.image;
-    if (l$image != lOther$image) {
       return false;
     }
     final l$cost = cost;
@@ -3718,9 +3750,9 @@ abstract class CopyWith$Query$getItemById$restaurant_item_by_pk<TRes> {
 
   TRes call({
     int? id,
+    String? image,
     Query$getItemById$restaurant_item_by_pk$name? name,
     Query$getItemById$restaurant_item_by_pk$description? description,
-    String? image,
     double? cost,
     int? position,
     int? category_id,
@@ -3758,9 +3790,9 @@ class _CopyWithImpl$Query$getItemById$restaurant_item_by_pk<TRes>
 
   TRes call({
     Object? id = _undefined,
+    Object? image = _undefined,
     Object? name = _undefined,
     Object? description = _undefined,
-    Object? image = _undefined,
     Object? cost = _undefined,
     Object? position = _undefined,
     Object? category_id = _undefined,
@@ -3774,6 +3806,7 @@ class _CopyWithImpl$Query$getItemById$restaurant_item_by_pk<TRes>
   }) =>
       _then(Query$getItemById$restaurant_item_by_pk(
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        image: image == _undefined ? _instance.image : (image as String?),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as Query$getItemById$restaurant_item_by_pk$name),
@@ -3781,7 +3814,6 @@ class _CopyWithImpl$Query$getItemById$restaurant_item_by_pk<TRes>
             ? _instance.description
             : (description
                 as Query$getItemById$restaurant_item_by_pk$description?),
-        image: image == _undefined ? _instance.image : (image as String?),
         cost: cost == _undefined || cost == null
             ? _instance.cost
             : (cost as double),
@@ -3852,9 +3884,9 @@ class _CopyWithStubImpl$Query$getItemById$restaurant_item_by_pk<TRes>
 
   call({
     int? id,
+    String? image,
     Query$getItemById$restaurant_item_by_pk$name? name,
     Query$getItemById$restaurant_item_by_pk$description? description,
-    String? image,
     double? cost,
     int? position,
     int? category_id,
@@ -6527,6 +6559,13 @@ const documentNodeQuerygetRestaurantItemsWithoutCat =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'image'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'available'),
             alias: null,
             arguments: [],
@@ -6723,6 +6762,7 @@ extension ClientExtension$Query$getRestaurantItemsWithoutCat
 class Query$getRestaurantItemsWithoutCat$restaurant_item {
   Query$getRestaurantItemsWithoutCat$restaurant_item({
     required this.id,
+    this.image,
     required this.available,
     required this.cost,
     required this.item_type,
@@ -6733,6 +6773,7 @@ class Query$getRestaurantItemsWithoutCat$restaurant_item {
   factory Query$getRestaurantItemsWithoutCat$restaurant_item.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
+    final l$image = json['image'];
     final l$available = json['available'];
     final l$cost = json['cost'];
     final l$item_type = json['item_type'];
@@ -6740,6 +6781,7 @@ class Query$getRestaurantItemsWithoutCat$restaurant_item {
     final l$$__typename = json['__typename'];
     return Query$getRestaurantItemsWithoutCat$restaurant_item(
       id: (l$id as int),
+      image: (l$image as String?),
       available: (l$available as bool),
       cost: moneyFromJson(l$cost),
       item_type: (l$item_type as String),
@@ -6750,6 +6792,8 @@ class Query$getRestaurantItemsWithoutCat$restaurant_item {
   }
 
   final int id;
+
+  final String? image;
 
   final bool available;
 
@@ -6765,6 +6809,8 @@ class Query$getRestaurantItemsWithoutCat$restaurant_item {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$image = image;
+    _resultData['image'] = l$image;
     final l$available = available;
     _resultData['available'] = l$available;
     final l$cost = cost;
@@ -6781,6 +6827,7 @@ class Query$getRestaurantItemsWithoutCat$restaurant_item {
   @override
   int get hashCode {
     final l$id = id;
+    final l$image = image;
     final l$available = available;
     final l$cost = cost;
     final l$item_type = item_type;
@@ -6788,6 +6835,7 @@ class Query$getRestaurantItemsWithoutCat$restaurant_item {
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
+      l$image,
       l$available,
       l$cost,
       l$item_type,
@@ -6808,6 +6856,11 @@ class Query$getRestaurantItemsWithoutCat$restaurant_item {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
       return false;
     }
     final l$available = available;
@@ -6863,6 +6916,7 @@ abstract class CopyWith$Query$getRestaurantItemsWithoutCat$restaurant_item<
 
   TRes call({
     int? id,
+    String? image,
     bool? available,
     double? cost,
     String? item_type,
@@ -6889,6 +6943,7 @@ class _CopyWithImpl$Query$getRestaurantItemsWithoutCat$restaurant_item<TRes>
 
   TRes call({
     Object? id = _undefined,
+    Object? image = _undefined,
     Object? available = _undefined,
     Object? cost = _undefined,
     Object? item_type = _undefined,
@@ -6897,6 +6952,7 @@ class _CopyWithImpl$Query$getRestaurantItemsWithoutCat$restaurant_item<TRes>
   }) =>
       _then(Query$getRestaurantItemsWithoutCat$restaurant_item(
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        image: image == _undefined ? _instance.image : (image as String?),
         available: available == _undefined || available == null
             ? _instance.available
             : (available as bool),
@@ -6931,6 +6987,7 @@ class _CopyWithStubImpl$Query$getRestaurantItemsWithoutCat$restaurant_item<TRes>
 
   call({
     int? id,
+    String? image,
     bool? available,
     double? cost,
     String? item_type,
@@ -7602,6 +7659,13 @@ const documentNodeQuerygetRestaurantSpecialItems = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'image'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'available'),
             alias: null,
             arguments: [],
@@ -7812,6 +7876,7 @@ extension ClientExtension$Query$getRestaurantSpecialItems
 class Query$getRestaurantSpecialItems$restaurant_item {
   Query$getRestaurantSpecialItems$restaurant_item({
     required this.id,
+    this.image,
     required this.available,
     required this.cost,
     required this.item_type,
@@ -7824,6 +7889,7 @@ class Query$getRestaurantSpecialItems$restaurant_item {
   factory Query$getRestaurantSpecialItems$restaurant_item.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
+    final l$image = json['image'];
     final l$available = json['available'];
     final l$cost = json['cost'];
     final l$item_type = json['item_type'];
@@ -7833,6 +7899,7 @@ class Query$getRestaurantSpecialItems$restaurant_item {
     final l$$__typename = json['__typename'];
     return Query$getRestaurantSpecialItems$restaurant_item(
       id: (l$id as int),
+      image: (l$image as String?),
       available: (l$available as bool),
       cost: moneyFromJson(l$cost),
       item_type: (l$item_type as String),
@@ -7845,6 +7912,8 @@ class Query$getRestaurantSpecialItems$restaurant_item {
   }
 
   final int id;
+
+  final String? image;
 
   final bool available;
 
@@ -7864,6 +7933,8 @@ class Query$getRestaurantSpecialItems$restaurant_item {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$image = image;
+    _resultData['image'] = l$image;
     final l$available = available;
     _resultData['available'] = l$available;
     final l$cost = cost;
@@ -7884,6 +7955,7 @@ class Query$getRestaurantSpecialItems$restaurant_item {
   @override
   int get hashCode {
     final l$id = id;
+    final l$image = image;
     final l$available = available;
     final l$cost = cost;
     final l$item_type = item_type;
@@ -7893,6 +7965,7 @@ class Query$getRestaurantSpecialItems$restaurant_item {
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
+      l$image,
       l$available,
       l$cost,
       l$item_type,
@@ -7915,6 +7988,11 @@ class Query$getRestaurantSpecialItems$restaurant_item {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
       return false;
     }
     final l$available = available;
@@ -7978,6 +8056,7 @@ abstract class CopyWith$Query$getRestaurantSpecialItems$restaurant_item<TRes> {
 
   TRes call({
     int? id,
+    String? image,
     bool? available,
     double? cost,
     String? item_type,
@@ -8004,6 +8083,7 @@ class _CopyWithImpl$Query$getRestaurantSpecialItems$restaurant_item<TRes>
 
   TRes call({
     Object? id = _undefined,
+    Object? image = _undefined,
     Object? available = _undefined,
     Object? cost = _undefined,
     Object? item_type = _undefined,
@@ -8014,6 +8094,7 @@ class _CopyWithImpl$Query$getRestaurantSpecialItems$restaurant_item<TRes>
   }) =>
       _then(Query$getRestaurantSpecialItems$restaurant_item(
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        image: image == _undefined ? _instance.image : (image as String?),
         available: available == _undefined || available == null
             ? _instance.available
             : (available as bool),
@@ -8051,6 +8132,7 @@ class _CopyWithStubImpl$Query$getRestaurantSpecialItems$restaurant_item<TRes>
 
   call({
     int? id,
+    String? image,
     bool? available,
     double? cost,
     String? item_type,

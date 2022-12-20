@@ -277,10 +277,10 @@ class ROpDashboardPage extends StatelessWidget {
                   title: '${_i18n()["openTitle"]}',
                   subtitle: '${_i18n()["openSubtitle"]}',
                   onTurnedOn: () {
-                    viewController.switchAv(true);
+                    viewController.turnOnOrders();
                   },
                   onTurnedOff: () {
-                    viewController.switchAv(false);
+                    viewController.turnOffOrders();
                   },
                   initialSwitcherValue: viewController.isAvailable.value),
               _divider(),

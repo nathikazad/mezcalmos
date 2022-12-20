@@ -25,6 +25,7 @@ mutation addItem($item: restaurant_item_insert_input!) {
     restaurant_id
     special_period_end
     special_period_start
+    image
   }
 }
 mutation deleteItem($itemId: Int!) {
@@ -44,6 +45,7 @@ mutation upadateItem($id: Int!,$itemData: restaurant_item_set_input!) {
 query getItemById($id: Int!) {
   restaurant_item_by_pk(id: $id) {
     id
+    image
     name {
       translations {
         language_id
@@ -104,6 +106,7 @@ query getItemById($id: Int!) {
 query getRestaurantItemsWithoutCat($restaurantId: Int) {
   restaurant_item(where: {restaurant_id: {_eq: $restaurantId}, category_id: {_is_null: true}}) {
     id
+    image
     available
     cost
     item_type
@@ -118,6 +121,7 @@ query getRestaurantItemsWithoutCat($restaurantId: Int) {
 query getRestaurantSpecialItems($restaurantId: Int) {
   restaurant_item(where: {restaurant_id: {_eq: $restaurantId}, item_type: {_eq: "special"}}) {
     id
+    image
     available
     cost
     item_type

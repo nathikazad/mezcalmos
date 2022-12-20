@@ -90,7 +90,7 @@ class _ROpOrderViewState extends State<ROpOrderView> {
                   order: viewController.order.value!,
                   margin: const EdgeInsets.only(bottom: 20),
                 ),
-                ROpOrderNote(order: viewController.order.value!),
+                ROpOrderNote(orderNote: viewController.order.value!.notes),
 
                 ROpRefundButton(
                   order: viewController.order.value!,

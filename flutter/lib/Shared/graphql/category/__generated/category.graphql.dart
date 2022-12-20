@@ -3572,6 +3572,13 @@ const documentNodeQuerygetRestaurantCategories = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'cost'),
                 alias: null,
                 arguments: [],
@@ -4785,6 +4792,7 @@ class Query$getRestaurantCategories$restaurant_category$items {
     required this.name,
     this.description,
     required this.item_type,
+    this.image,
     required this.cost,
     required this.available,
     required this.position,
@@ -4803,6 +4811,7 @@ class Query$getRestaurantCategories$restaurant_category$items {
     final l$name = json['name'];
     final l$description = json['description'];
     final l$item_type = json['item_type'];
+    final l$image = json['image'];
     final l$cost = json['cost'];
     final l$available = json['available'];
     final l$position = json['position'];
@@ -4823,6 +4832,7 @@ class Query$getRestaurantCategories$restaurant_category$items {
           : Query$getRestaurantCategories$restaurant_category$items$description
               .fromJson((l$description as Map<String, dynamic>)),
       item_type: (l$item_type as String),
+      image: (l$image as String?),
       cost: moneyFromJson(l$cost),
       available: (l$available as bool),
       position: (l$position as int),
@@ -4844,6 +4854,8 @@ class Query$getRestaurantCategories$restaurant_category$items {
       description;
 
   final String item_type;
+
+  final String? image;
 
   final double cost;
 
@@ -4875,6 +4887,8 @@ class Query$getRestaurantCategories$restaurant_category$items {
     _resultData['description'] = l$description?.toJson();
     final l$item_type = item_type;
     _resultData['item_type'] = l$item_type;
+    final l$image = image;
+    _resultData['image'] = l$image;
     final l$cost = cost;
     _resultData['cost'] = moneyToJson(l$cost);
     final l$available = available;
@@ -4904,6 +4918,7 @@ class Query$getRestaurantCategories$restaurant_category$items {
     final l$name = name;
     final l$description = description;
     final l$item_type = item_type;
+    final l$image = image;
     final l$cost = cost;
     final l$available = available;
     final l$position = position;
@@ -4919,6 +4934,7 @@ class Query$getRestaurantCategories$restaurant_category$items {
       l$name,
       l$description,
       l$item_type,
+      l$image,
       l$cost,
       l$available,
       l$position,
@@ -4959,6 +4975,11 @@ class Query$getRestaurantCategories$restaurant_category$items {
     final l$item_type = item_type;
     final lOther$item_type = other.item_type;
     if (l$item_type != lOther$item_type) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
       return false;
     }
     final l$cost = cost;
@@ -5043,6 +5064,7 @@ abstract class CopyWith$Query$getRestaurantCategories$restaurant_category$items<
     Query$getRestaurantCategories$restaurant_category$items$description?
         description,
     String? item_type,
+    String? image,
     double? cost,
     bool? available,
     int? position,
@@ -5081,6 +5103,7 @@ class _CopyWithImpl$Query$getRestaurantCategories$restaurant_category$items<
     Object? name = _undefined,
     Object? description = _undefined,
     Object? item_type = _undefined,
+    Object? image = _undefined,
     Object? cost = _undefined,
     Object? available = _undefined,
     Object? position = _undefined,
@@ -5105,6 +5128,7 @@ class _CopyWithImpl$Query$getRestaurantCategories$restaurant_category$items<
         item_type: item_type == _undefined || item_type == null
             ? _instance.item_type
             : (item_type as String),
+        image: image == _undefined ? _instance.image : (image as String?),
         cost: cost == _undefined || cost == null
             ? _instance.cost
             : (cost as double),
@@ -5169,6 +5193,7 @@ class _CopyWithStubImpl$Query$getRestaurantCategories$restaurant_category$items<
     Query$getRestaurantCategories$restaurant_category$items$description?
         description,
     String? item_type,
+    String? image,
     double? cost,
     bool? available,
     int? position,

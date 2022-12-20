@@ -14,7 +14,7 @@ Future<UserInfo> get_user_by_hasura_id({required int hasuraId}) async {
       .query$getUserById(Options$Query$getUserById(
           variables: Variables$Query$getUserById(id: hasuraId)));
   if (response.hasException || response.parsedData?.user_by_pk == null) {
-    mezDbgPrint("Get user by is erros ${response.exception}");
+    mezDbgPrint("Get user by id $hasuraId erros ${response.exception}");
     throw Exception("getv user id exception ${response.exception}");
   } else {
     final Query$getUserById$user_by_pk data = response.parsedData!.user_by_pk!;
