@@ -27,6 +27,7 @@ class ROpWaitingForApproval extends StatelessWidget {
             ),
           ),
           Container(
+            margin: const EdgeInsets.only(top: 25),
             alignment: Alignment.center,
             child: Text(
               "YOUR REQUEST IS BEING PROCESSED",
