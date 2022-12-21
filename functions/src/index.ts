@@ -66,16 +66,16 @@ export const stripe = {
 
 
 
-export const restaurant = {
+export const restaurant2 = {
   createRestaurant: authenticatedCall((userId, data) => createNewRestaurant(userId, data)),
   // genOperatorLink: authenticatedCall((userId, data) => generateOperatorLink(userId,data )),
   // genDriverLink: authenticatedCall((userId, data) => generateDriverLink(userId,data )),
-  checkoutCart2: authenticatedCall((userId, data) => checkout(userId, data)),
+  checkoutCart: authenticatedCall((userId, data) => checkout(userId, data)),
   // addReview: authenticatedCall((userId, data) => addReview(userId, data)),
   prepareOrder: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),
-  prepareOrder2: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),
+  // prepareOrder2: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),
   readyForOrderPickup: authenticatedCall((userId, data) => restaurantStatusChange.readyForPickupOrder(userId, data)),
-  readyForOrderPickup2: authenticatedCall((userId, data) => restaurantStatusChange.readyForPickupOrder(userId, data)),
+  // readyForOrderPickup2: authenticatedCall((userId, data) => restaurantStatusChange.readyForPickupOrder(userId, data)),
   cancelOrderFromAdmin: authenticatedCall((userId, data) => restaurantStatusChange.cancelOrder(userId, data)),
   cancelOrderFromCustomer: authenticatedCall((userId, data) => cancelOrderFromCustomer(userId, data)),
   addRestaurantOperator: authenticatedCall((userId, data) => addRestaurantOperator(userId, data)),
@@ -109,7 +109,7 @@ export const restaurant = {
 //   setEstimatedLaundryReadyTime: authenticatedCall((userId, data) => laundryStatusChange.setEstimatedLaundryReadyTime(userId, data)),
 // }
 
-export const delivery = {
+export const delivery2 = {
   assignDriver: authenticatedCall((userId, data) => assignDriver(userId, data)),
   addDeliveryOperator: authenticatedCall((userId, data) => addDeliveryOperator(userId, data)),
   authorizeDeliveryOperator: authenticatedCall((userId, data) => authorizeDeliveryOperator(userId, data)),
