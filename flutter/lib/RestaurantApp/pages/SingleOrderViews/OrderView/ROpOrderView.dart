@@ -8,7 +8,6 @@ import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/compone
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/components/ROpOrderItems.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/components/ROpOrderNote.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/components/ROpOrderStatusCard.dart';
-import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/components/ROpRefundBtn.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/controller/ROpOrderViewController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -92,9 +91,9 @@ class _ROpOrderViewState extends State<ROpOrderView> {
                 ),
                 ROpOrderNote(orderNote: viewController.order.value!.notes),
 
-                ROpRefundButton(
-                  order: viewController.order.value!,
-                ),
+                // ROpRefundButton(
+                //   order: viewController.order.value!,
+                // ),
                 if (viewController.order.value!.inProcess())
                   TextButton(
                       style: TextButton.styleFrom(

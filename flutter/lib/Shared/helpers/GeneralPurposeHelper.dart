@@ -71,6 +71,20 @@ extension DateTimeCopy on DateTime {
   }
 }
 
+SnackbarController showSuccessSnackBar(
+    {required String tilte,
+    required String subtitle,
+    Color? iconColor = Colors.green}) {
+  return Get.snackbar(tilte, subtitle,
+      backgroundColor: Colors.black,
+      colorText: Colors.white,
+      shouldIconPulse: false,
+      icon: Icon(
+        Icons.check_circle,
+        color: Colors.green,
+      ));
+}
+
 Future<DateTime?> getDatePicker(
   BuildContext context, {
   required DateTime initialDate,

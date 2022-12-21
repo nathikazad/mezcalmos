@@ -52,6 +52,9 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
         chatId: orderData.chat_id,
         orderId: orderData.id,
         notes: orderData.notes,
+        estimatedFoodReadyTime: (orderData.estimated_food_ready_time != null)
+            ? DateTime.tryParse(orderData.estimated_food_ready_time!)
+            : null,
         status: orderData.status.toRestaurantOrderStatus(),
         quantity: 1,
         serviceProviderId: orderData.restaurant.id,
@@ -96,64 +99,68 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
       variables: Variables$Query$get_restaurant_order_by_id(order_id: orderId),
     ),
   );
-  final Query$get_restaurant_order_by_id$restaurant_order_by_pk? orderData =
-      response.parsedData?.restaurant_order_by_pk;
-  if (orderData != null) {
-    final List<RestaurantOrderItem> items = [];
-    orderData.items.forEach(
-        (Query$get_restaurant_order_by_id$restaurant_order_by_pk$items item) {
-      items.add(
-        RestaurantOrderItem(
-          costPerOne: item.cost_per_one,
-          idInCart: item.id,
-          name: toLanguageMap(
-              translations: item.restaurant_item.name.translations),
-          image: item.restaurant_item.image,
-          quantity: item.quantity,
-          totalCost: item.cost_per_one,
-          idInRestaurant: item.restaurant_item.id,
-        ),
-      );
-    });
-    final RestaurantOrder res = RestaurantOrder(
-      chatId: orderData.chat_id,
-      orderId: orderData.id,
-      notes: orderData.notes,
-      status: orderData.status.toRestaurantOrderStatus(),
-      quantity: 1,
-      serviceProviderId: orderData.restaurant.id,
-      paymentType: orderData.payment_type.toPaymentType(),
-      orderTime: DateTime.parse(orderData.order_time),
-      deliveryTime: (orderData.scheduled_time != null)
-          ? DateTime.tryParse(orderData.scheduled_time!)
-          : null,
-      cost: orderData.delivery_cost,
-      restaurant: ServiceInfo(
-        location: Location(
-          orderData.restaurant.location_text,
-          orderData.restaurant.location_gps.toLocationData(),
-        ),
-        firebaseId: orderData.restaurant.firebase_id,
-        hasuraId: orderData.restaurant.id,
-        image: orderData.restaurant.image,
-        name: orderData.restaurant.name,
-      ),
-      customer: UserInfo(
-          hasuraId: orderData.customer.user.id,
-          image: orderData.customer.user.image,
-          name: orderData.customer.user.name),
-      to: Location(orderData.to_location_address!,
-          orderData.to_location_gps!.toLocationData()),
-      totalCost: orderData.total_cost,
-      itemsCost: orderData.items_cost ?? 0,
-      shippingCost: orderData.delivery_cost,
-      deliveryMode: DeliveryMode.ForwardedToMezCalmos,
-    );
-
-    res.items = items;
-    return res;
+  if (response.parsedData?.restaurant_order_by_pk == null) {
+    throw Exception(
+        "🚨🚨 Get restaurant order $orderId exceptions ${response.exception}");
   }
-  return null;
+  final Query$get_restaurant_order_by_id$restaurant_order_by_pk orderData =
+      response.parsedData!.restaurant_order_by_pk!;
+  final List<RestaurantOrderItem> items = [];
+  orderData.items.forEach(
+      (Query$get_restaurant_order_by_id$restaurant_order_by_pk$items item) {
+    items.add(
+      RestaurantOrderItem(
+        costPerOne: item.cost_per_one,
+        idInCart: item.id,
+        name:
+            toLanguageMap(translations: item.restaurant_item.name.translations),
+        image: item.restaurant_item.image,
+        quantity: item.quantity,
+        totalCost: item.cost_per_one,
+        idInRestaurant: item.restaurant_item.id,
+      ),
+    );
+  });
+  final RestaurantOrder res = RestaurantOrder(
+    chatId: orderData.chat_id,
+    orderId: orderData.id,
+    notes: orderData.notes,
+    status: orderData.status.toRestaurantOrderStatus(),
+    quantity: 1,
+    estimatedFoodReadyTime: (orderData.estimated_food_ready_time != null)
+        ? DateTime.tryParse(orderData.estimated_food_ready_time!)
+        : null,
+    serviceProviderId: orderData.restaurant.id,
+    paymentType: orderData.payment_type.toPaymentType(),
+    orderTime: DateTime.parse(orderData.order_time),
+    deliveryTime: (orderData.scheduled_time != null)
+        ? DateTime.tryParse(orderData.scheduled_time!)
+        : null,
+    cost: orderData.delivery_cost,
+    restaurant: ServiceInfo(
+      location: Location(
+        orderData.restaurant.location_text,
+        orderData.restaurant.location_gps.toLocationData(),
+      ),
+      firebaseId: orderData.restaurant.firebase_id,
+      hasuraId: orderData.restaurant.id,
+      image: orderData.restaurant.image,
+      name: orderData.restaurant.name,
+    ),
+    customer: UserInfo(
+        hasuraId: orderData.customer.user.id,
+        image: orderData.customer.user.image,
+        name: orderData.customer.user.name),
+    to: Location(orderData.to_location_address!,
+        orderData.to_location_gps!.toLocationData()),
+    totalCost: orderData.total_cost,
+    itemsCost: orderData.items_cost ?? 0,
+    shippingCost: orderData.delivery_cost,
+    deliveryMode: DeliveryMode.ForwardedToMezCalmos,
+  );
+
+  res.items = items;
+  return res;
 }
 
 Stream<List<MinimalRestaurantOrder>?> listen_on_current_restaurant_orders(

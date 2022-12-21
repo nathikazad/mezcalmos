@@ -15020,3 +15020,619 @@ class _CopyWithStubImpl$Query$querry_restaurant_orders_by_restaurant_id$restaura
   }) =>
       _res;
 }
+
+class Variables$Mutation$setRestaurantOrderEstFoodReadyTime {
+  factory Variables$Mutation$setRestaurantOrderEstFoodReadyTime({
+    required int orderId,
+    required String time,
+  }) =>
+      Variables$Mutation$setRestaurantOrderEstFoodReadyTime._({
+        r'orderId': orderId,
+        r'time': time,
+      });
+
+  Variables$Mutation$setRestaurantOrderEstFoodReadyTime._(this._$data);
+
+  factory Variables$Mutation$setRestaurantOrderEstFoodReadyTime.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$orderId = data['orderId'];
+    result$data['orderId'] = (l$orderId as int);
+    final l$time = data['time'];
+    result$data['time'] = (l$time as String);
+    return Variables$Mutation$setRestaurantOrderEstFoodReadyTime._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get orderId => (_$data['orderId'] as int);
+  String get time => (_$data['time'] as String);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$orderId = orderId;
+    result$data['orderId'] = l$orderId;
+    final l$time = time;
+    result$data['time'] = l$time;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$setRestaurantOrderEstFoodReadyTime<
+          Variables$Mutation$setRestaurantOrderEstFoodReadyTime>
+      get copyWith =>
+          CopyWith$Variables$Mutation$setRestaurantOrderEstFoodReadyTime(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$setRestaurantOrderEstFoodReadyTime) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$orderId = orderId;
+    final lOther$orderId = other.orderId;
+    if (l$orderId != lOther$orderId) {
+      return false;
+    }
+    final l$time = time;
+    final lOther$time = other.time;
+    if (l$time != lOther$time) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$orderId = orderId;
+    final l$time = time;
+    return Object.hashAll([
+      l$orderId,
+      l$time,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$setRestaurantOrderEstFoodReadyTime<
+    TRes> {
+  factory CopyWith$Variables$Mutation$setRestaurantOrderEstFoodReadyTime(
+    Variables$Mutation$setRestaurantOrderEstFoodReadyTime instance,
+    TRes Function(Variables$Mutation$setRestaurantOrderEstFoodReadyTime) then,
+  ) = _CopyWithImpl$Variables$Mutation$setRestaurantOrderEstFoodReadyTime;
+
+  factory CopyWith$Variables$Mutation$setRestaurantOrderEstFoodReadyTime.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$setRestaurantOrderEstFoodReadyTime;
+
+  TRes call({
+    int? orderId,
+    String? time,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$setRestaurantOrderEstFoodReadyTime<TRes>
+    implements
+        CopyWith$Variables$Mutation$setRestaurantOrderEstFoodReadyTime<TRes> {
+  _CopyWithImpl$Variables$Mutation$setRestaurantOrderEstFoodReadyTime(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$setRestaurantOrderEstFoodReadyTime _instance;
+
+  final TRes Function(Variables$Mutation$setRestaurantOrderEstFoodReadyTime)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? orderId = _undefined,
+    Object? time = _undefined,
+  }) =>
+      _then(Variables$Mutation$setRestaurantOrderEstFoodReadyTime._({
+        ..._instance._$data,
+        if (orderId != _undefined && orderId != null)
+          'orderId': (orderId as int),
+        if (time != _undefined && time != null) 'time': (time as String),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$setRestaurantOrderEstFoodReadyTime<
+        TRes>
+    implements
+        CopyWith$Variables$Mutation$setRestaurantOrderEstFoodReadyTime<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$setRestaurantOrderEstFoodReadyTime(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? orderId,
+    String? time,
+  }) =>
+      _res;
+}
+
+class Mutation$setRestaurantOrderEstFoodReadyTime {
+  Mutation$setRestaurantOrderEstFoodReadyTime({
+    this.update_restaurant_order_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$setRestaurantOrderEstFoodReadyTime.fromJson(
+      Map<String, dynamic> json) {
+    final l$update_restaurant_order_by_pk =
+        json['update_restaurant_order_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$setRestaurantOrderEstFoodReadyTime(
+      update_restaurant_order_by_pk: l$update_restaurant_order_by_pk == null
+          ? null
+          : Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk
+              .fromJson(
+                  (l$update_restaurant_order_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk?
+      update_restaurant_order_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_restaurant_order_by_pk = update_restaurant_order_by_pk;
+    _resultData['update_restaurant_order_by_pk'] =
+        l$update_restaurant_order_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_restaurant_order_by_pk = update_restaurant_order_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_restaurant_order_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$setRestaurantOrderEstFoodReadyTime) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_restaurant_order_by_pk = update_restaurant_order_by_pk;
+    final lOther$update_restaurant_order_by_pk =
+        other.update_restaurant_order_by_pk;
+    if (l$update_restaurant_order_by_pk !=
+        lOther$update_restaurant_order_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$setRestaurantOrderEstFoodReadyTime
+    on Mutation$setRestaurantOrderEstFoodReadyTime {
+  CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime<
+          Mutation$setRestaurantOrderEstFoodReadyTime>
+      get copyWith => CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime<TRes> {
+  factory CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime(
+    Mutation$setRestaurantOrderEstFoodReadyTime instance,
+    TRes Function(Mutation$setRestaurantOrderEstFoodReadyTime) then,
+  ) = _CopyWithImpl$Mutation$setRestaurantOrderEstFoodReadyTime;
+
+  factory CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$setRestaurantOrderEstFoodReadyTime;
+
+  TRes call({
+    Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk?
+        update_restaurant_order_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk<
+      TRes> get update_restaurant_order_by_pk;
+}
+
+class _CopyWithImpl$Mutation$setRestaurantOrderEstFoodReadyTime<TRes>
+    implements CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime<TRes> {
+  _CopyWithImpl$Mutation$setRestaurantOrderEstFoodReadyTime(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$setRestaurantOrderEstFoodReadyTime _instance;
+
+  final TRes Function(Mutation$setRestaurantOrderEstFoodReadyTime) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_restaurant_order_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$setRestaurantOrderEstFoodReadyTime(
+        update_restaurant_order_by_pk: update_restaurant_order_by_pk ==
+                _undefined
+            ? _instance.update_restaurant_order_by_pk
+            : (update_restaurant_order_by_pk
+                as Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk<
+      TRes> get update_restaurant_order_by_pk {
+    final local$update_restaurant_order_by_pk =
+        _instance.update_restaurant_order_by_pk;
+    return local$update_restaurant_order_by_pk == null
+        ? CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk(
+            local$update_restaurant_order_by_pk,
+            (e) => call(update_restaurant_order_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$setRestaurantOrderEstFoodReadyTime<TRes>
+    implements CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime<TRes> {
+  _CopyWithStubImpl$Mutation$setRestaurantOrderEstFoodReadyTime(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk?
+        update_restaurant_order_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk<
+          TRes>
+      get update_restaurant_order_by_pk =>
+          CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationsetRestaurantOrderEstFoodReadyTime =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'setRestaurantOrderEstFoodReadyTime'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'orderId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'time')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'timestamptz'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_restaurant_order_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'orderId')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'estimated_food_ready_time'),
+                value: VariableNode(name: NameNode(value: 'time')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'estimated_food_ready_time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$setRestaurantOrderEstFoodReadyTime
+    _parserFn$Mutation$setRestaurantOrderEstFoodReadyTime(
+            Map<String, dynamic> data) =>
+        Mutation$setRestaurantOrderEstFoodReadyTime.fromJson(data);
+typedef OnMutationCompleted$Mutation$setRestaurantOrderEstFoodReadyTime
+    = FutureOr<void> Function(
+  dynamic,
+  Mutation$setRestaurantOrderEstFoodReadyTime?,
+);
+
+class Options$Mutation$setRestaurantOrderEstFoodReadyTime extends graphql
+    .MutationOptions<Mutation$setRestaurantOrderEstFoodReadyTime> {
+  Options$Mutation$setRestaurantOrderEstFoodReadyTime({
+    String? operationName,
+    required Variables$Mutation$setRestaurantOrderEstFoodReadyTime variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$setRestaurantOrderEstFoodReadyTime?
+        onCompleted,
+    graphql.OnMutationUpdate<Mutation$setRestaurantOrderEstFoodReadyTime>?
+        update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$setRestaurantOrderEstFoodReadyTime(
+                            data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationsetRestaurantOrderEstFoodReadyTime,
+          parserFn: _parserFn$Mutation$setRestaurantOrderEstFoodReadyTime,
+        );
+
+  final OnMutationCompleted$Mutation$setRestaurantOrderEstFoodReadyTime?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$setRestaurantOrderEstFoodReadyTime extends graphql
+    .WatchQueryOptions<Mutation$setRestaurantOrderEstFoodReadyTime> {
+  WatchOptions$Mutation$setRestaurantOrderEstFoodReadyTime({
+    String? operationName,
+    required Variables$Mutation$setRestaurantOrderEstFoodReadyTime variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationsetRestaurantOrderEstFoodReadyTime,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$setRestaurantOrderEstFoodReadyTime,
+        );
+}
+
+extension ClientExtension$Mutation$setRestaurantOrderEstFoodReadyTime
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$setRestaurantOrderEstFoodReadyTime>>
+      mutate$setRestaurantOrderEstFoodReadyTime(
+              Options$Mutation$setRestaurantOrderEstFoodReadyTime
+                  options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$setRestaurantOrderEstFoodReadyTime>
+      watchMutation$setRestaurantOrderEstFoodReadyTime(
+              WatchOptions$Mutation$setRestaurantOrderEstFoodReadyTime
+                  options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk {
+  Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk({
+    this.estimated_food_ready_time,
+    required this.$__typename,
+  });
+
+  factory Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$estimated_food_ready_time = json['estimated_food_ready_time'];
+    final l$$__typename = json['__typename'];
+    return Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk(
+      estimated_food_ready_time: (l$estimated_food_ready_time as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? estimated_food_ready_time;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$estimated_food_ready_time = estimated_food_ready_time;
+    _resultData['estimated_food_ready_time'] = l$estimated_food_ready_time;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$estimated_food_ready_time = estimated_food_ready_time;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$estimated_food_ready_time,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$estimated_food_ready_time = estimated_food_ready_time;
+    final lOther$estimated_food_ready_time = other.estimated_food_ready_time;
+    if (l$estimated_food_ready_time != lOther$estimated_food_ready_time) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk
+    on Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk {
+  CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk<
+          Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk(
+    Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk
+        instance,
+    TRes Function(
+            Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk;
+
+  factory CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk;
+
+  TRes call({
+    String? estimated_food_ready_time,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk
+      _instance;
+
+  final TRes Function(
+          Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? estimated_food_ready_time = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk(
+        estimated_food_ready_time: estimated_food_ready_time == _undefined
+            ? _instance.estimated_food_ready_time
+            : (estimated_food_ready_time as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? estimated_food_ready_time,
+    String? $__typename,
+  }) =>
+      _res;
+}

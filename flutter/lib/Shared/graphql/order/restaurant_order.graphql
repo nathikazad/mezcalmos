@@ -303,3 +303,8 @@ query querry_restaurant_orders_by_restaurant_id($restaurantId: Int!) {
     }
   }
 }
+mutation setRestaurantOrderEstFoodReadyTime($orderId: Int!, $time: timestamptz!) {
+  update_restaurant_order_by_pk(pk_columns: {id: $orderId}, _set: {estimated_food_ready_time: $time}) {
+    estimated_food_ready_time
+  }
+}
