@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
@@ -48,6 +49,8 @@ Future<void> signOut() async {
     mezDbgPrint("AuthController: Sign out function");
     mezDbgPrint("AuthController: Sign out callbacks finished");
     await fireAuth.FirebaseAuth.instance.signOut();
+    Get.find<AuthController>().user = null;
+    Get.appUpdate();
     mezDbgPrint("AuthController: Sign out finished");
   } catch (e) {
     Get.snackbar("Failed to Sign you out!", e.toString(),
