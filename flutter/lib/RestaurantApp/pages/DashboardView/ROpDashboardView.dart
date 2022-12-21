@@ -115,7 +115,9 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
 
   PreferredSize _getAppBar() {
     return PreferredSize(
-      preferredSize: Size.fromHeight(kToolbarHeight),
+      preferredSize: (editInfoController.isApproved.isTrue)
+          ? Size.fromHeight(kToolbarHeight)
+          : Size.fromHeight(kToolbarHeight * 2),
       child: Obx(
         () => ROpAppBar(
           leftBtnType: AppBarLeftButtonType.Back,
@@ -132,6 +134,20 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
             }
           },
           title: editInfoController.getPageTitle(),
+          bottom: (editInfoController.isApproved.isFalse)
+              ? PreferredSize(
+                  preferredSize: Size(double.infinity, kToolbarHeight),
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    color: Colors.amber.shade200,
+                    child: Text(
+                      "Your restaurant is under review, you’ll be notifiedonce it’s approved.",
+                      style: Get.textTheme.bodyText1
+                          ?.copyWith(color: Colors.amber.shade700),
+                    ),
+                  ),
+                )
+              : null,
         ),
       ),
     );

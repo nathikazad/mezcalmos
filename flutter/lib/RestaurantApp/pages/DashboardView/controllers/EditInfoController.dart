@@ -47,6 +47,7 @@ class ROpEditInfoController {
 
   final RxBool imageLoading = RxBool(false);
   final RxBool isAvailable = RxBool(false);
+  final RxBool isApproved = RxBool(true);
 
   RxDouble cuurentPage = RxDouble(0);
 // LATE VARS
@@ -71,6 +72,8 @@ class ROpEditInfoController {
         await get_restaurant_by_id(id: restaurantId, withCache: false);
     _serviceStatus.value =
         await get_restaurant_status(restaurantId: restaurantId);
+    isApproved.value =
+        await get_restaurant_approved(restaurantId: restaurantId) ?? false;
   }
 
   void _updateResTInfo() {

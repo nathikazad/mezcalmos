@@ -27,6 +27,7 @@ class AuthController extends GetxController {
 
   UserInfo? _userInfo;
   UserInfo? get user => _userInfo;
+  set user(UserInfo? _u) => _userInfo = _u;
 
   StreamController<fireAuth.User?> _authStateStreamController =
       StreamController<fireAuth.User?>.broadcast();
@@ -112,11 +113,6 @@ class AuthController extends GetxController {
   bool isUserImgSet() {
     return user?.isImageSet ?? false;
   }
-
-  /// only use this for test purposes
-  ///
-  /// set a default image just for test purposes
-  Future<void> _setTestImage() async {}
 
   DateTime? getUserCreationDate() {
     return fireAuth.FirebaseAuth.instance.currentUser!.metadata.creationTime;

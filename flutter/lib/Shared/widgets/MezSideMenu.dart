@@ -61,13 +61,14 @@ class MezSideMenu extends GetWidget<AuthController> {
                 ),
               ),
               Container(
-                  alignment: Alignment.center,
-                  child: Text(
-                    version +
-                        (lmd != AppLaunchMode.prod
-                            ? " ${lmd.toShortString()}"
-                            : ""),
-                  ))
+                alignment: Alignment.center,
+                child: Text(
+                  version +
+                      (lmd != AppLaunchMode.prod
+                          ? " ${lmd.toShortString()}"
+                          : ""),
+                ),
+              )
             ],
           ),
         ),

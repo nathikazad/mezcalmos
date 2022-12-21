@@ -55,9 +55,18 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     getSavedLocation();
     // TODO:544D-HASURA - set _pick_ .
 
-    // pickLocationPlaceholder =
-    //     SavedLocation(name: _i18n()["pickLocation"], id: "_pick_");
-    // listOfSavedLoacations.insert(0, pickLocationPlaceholder!);
+    pickLocationPlaceholder = SavedLocation(
+      name: _i18n()["pickLocation"],
+      id: -1,
+      location: locModel.Location(
+        "",
+        Location.LocationData.fromMap({"latitude": 0.0, "longitude": 0.0}),
+      ),
+    );
+    listOfSavedLoacations.insert(
+      0,
+      pickLocationPlaceholder!,
+    );
 
     if (widget.passedInLocation == null) {
       dropDownListValue = listOfSavedLoacations.firstWhereOrNull(
@@ -194,7 +203,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
         "Changed value over to ====> ${newLocation?.name} | Old one was : ${dropDownListValue?.name}");
 
     // we will route the user back to the Map
-    if (newLocation?.id == "_pick_") {
+    if (newLocation?.id == -1) {
       final SavedLocation? _savedLocation = await MezRouter.toNamed(
         kPickLocationRoute,
         arguments: true,
