@@ -27,6 +27,7 @@ class AuthController extends GetxController {
 
   UserInfo? _userInfo;
   UserInfo? get user => _userInfo;
+  set user(UserInfo? _u) => _userInfo = _u;
 
   StreamController<fireAuth.User?> _authStateStreamController =
       StreamController<fireAuth.User?>.broadcast();
@@ -113,11 +114,6 @@ class AuthController extends GetxController {
     return user?.isImageSet ?? false;
   }
 
-  /// only use this for test purposes
-  ///
-  /// set a default image just for test purposes
-  Future<void> _setTestImage() async {}
-
   DateTime? getUserCreationDate() {
     return fireAuth.FirebaseAuth.instance.currentUser!.metadata.creationTime;
   }
@@ -145,8 +141,10 @@ class AuthController extends GetxController {
   /// This Functions takes a File (Image) and an optional [isCompressed]
   ///
   /// And Upload it to firebaseStorage with at users/[uid]/avatar/[uid].[isCompressed ? 'cmpressed' : 'original'].[extension]
-  Future<String> uploadUserImgToFbStorage(
-      {required File imageFile, bool isCompressed = false}) async {
+  Future<String> uploadUserImgToFbStorage({
+    required File imageFile,
+    bool isCompressed = false,
+  }) async {
     String _uploadedImgUrl;
     final List<String> splitted = imageFile.path.split('.');
     final String imgPath =
@@ -179,6 +177,11 @@ class AuthController extends GetxController {
       //     .child(userInfoNode(fireAuthUser!.uid))
       //     .child('bigImage')
       //     .set(originalImageUrl);
+      await change_user_img(
+        userId: user!.hasuraId,
+        img: originalImageUrl,
+        isBigImg: true,
+      );
     }
   }
 
@@ -190,6 +193,7 @@ class AuthController extends GetxController {
       //     .child(userInfoNode(fireAuthUser!.uid))
       //     .child('name')
       //     .set(name);
+      await change_username(userId: user!.hasuraId, name: name);
     }
     if (compressedImageUrl != null && compressedImageUrl.isURL) {
       // TODO: set hasura compressed_image
@@ -198,6 +202,7 @@ class AuthController extends GetxController {
       //     .child(userInfoNode(fireAuthUser!.uid))
       //     .child('image')
       //     .set(compressedImageUrl);
+      await change_user_img(userId: user!.hasuraId, img: compressedImageUrl);
     }
   }
 

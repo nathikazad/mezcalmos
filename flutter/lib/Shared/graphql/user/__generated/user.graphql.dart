@@ -1394,6 +1394,568 @@ class _CopyWithStubImpl$Query$getUserById$user_by_pk<TRes>
       _res;
 }
 
+class Variables$Mutation$changeUserBigImg {
+  factory Variables$Mutation$changeUserBigImg({
+    required Input$user_pk_columns_input id,
+    required String img,
+  }) =>
+      Variables$Mutation$changeUserBigImg._({
+        r'id': id,
+        r'img': img,
+      });
+
+  Variables$Mutation$changeUserBigImg._(this._$data);
+
+  factory Variables$Mutation$changeUserBigImg.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] =
+        Input$user_pk_columns_input.fromJson((l$id as Map<String, dynamic>));
+    final l$img = data['img'];
+    result$data['img'] = (l$img as String);
+    return Variables$Mutation$changeUserBigImg._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  Input$user_pk_columns_input get id =>
+      (_$data['id'] as Input$user_pk_columns_input);
+  String get img => (_$data['img'] as String);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id.toJson();
+    final l$img = img;
+    result$data['img'] = l$img;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$changeUserBigImg<
+          Variables$Mutation$changeUserBigImg>
+      get copyWith => CopyWith$Variables$Mutation$changeUserBigImg(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$changeUserBigImg) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$img = img;
+    final lOther$img = other.img;
+    if (l$img != lOther$img) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$img = img;
+    return Object.hashAll([
+      l$id,
+      l$img,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$changeUserBigImg<TRes> {
+  factory CopyWith$Variables$Mutation$changeUserBigImg(
+    Variables$Mutation$changeUserBigImg instance,
+    TRes Function(Variables$Mutation$changeUserBigImg) then,
+  ) = _CopyWithImpl$Variables$Mutation$changeUserBigImg;
+
+  factory CopyWith$Variables$Mutation$changeUserBigImg.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$changeUserBigImg;
+
+  TRes call({
+    Input$user_pk_columns_input? id,
+    String? img,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$changeUserBigImg<TRes>
+    implements CopyWith$Variables$Mutation$changeUserBigImg<TRes> {
+  _CopyWithImpl$Variables$Mutation$changeUserBigImg(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$changeUserBigImg _instance;
+
+  final TRes Function(Variables$Mutation$changeUserBigImg) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? img = _undefined,
+  }) =>
+      _then(Variables$Mutation$changeUserBigImg._({
+        ..._instance._$data,
+        if (id != _undefined && id != null)
+          'id': (id as Input$user_pk_columns_input),
+        if (img != _undefined && img != null) 'img': (img as String),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$changeUserBigImg<TRes>
+    implements CopyWith$Variables$Mutation$changeUserBigImg<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$changeUserBigImg(this._res);
+
+  TRes _res;
+
+  call({
+    Input$user_pk_columns_input? id,
+    String? img,
+  }) =>
+      _res;
+}
+
+class Mutation$changeUserBigImg {
+  Mutation$changeUserBigImg({
+    this.update_user_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$changeUserBigImg.fromJson(Map<String, dynamic> json) {
+    final l$update_user_by_pk = json['update_user_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$changeUserBigImg(
+      update_user_by_pk: l$update_user_by_pk == null
+          ? null
+          : Mutation$changeUserBigImg$update_user_by_pk.fromJson(
+              (l$update_user_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$changeUserBigImg$update_user_by_pk? update_user_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_user_by_pk = update_user_by_pk;
+    _resultData['update_user_by_pk'] = l$update_user_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_user_by_pk = update_user_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_user_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$changeUserBigImg) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_user_by_pk = update_user_by_pk;
+    final lOther$update_user_by_pk = other.update_user_by_pk;
+    if (l$update_user_by_pk != lOther$update_user_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$changeUserBigImg
+    on Mutation$changeUserBigImg {
+  CopyWith$Mutation$changeUserBigImg<Mutation$changeUserBigImg> get copyWith =>
+      CopyWith$Mutation$changeUserBigImg(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Mutation$changeUserBigImg<TRes> {
+  factory CopyWith$Mutation$changeUserBigImg(
+    Mutation$changeUserBigImg instance,
+    TRes Function(Mutation$changeUserBigImg) then,
+  ) = _CopyWithImpl$Mutation$changeUserBigImg;
+
+  factory CopyWith$Mutation$changeUserBigImg.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$changeUserBigImg;
+
+  TRes call({
+    Mutation$changeUserBigImg$update_user_by_pk? update_user_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$changeUserBigImg$update_user_by_pk<TRes>
+      get update_user_by_pk;
+}
+
+class _CopyWithImpl$Mutation$changeUserBigImg<TRes>
+    implements CopyWith$Mutation$changeUserBigImg<TRes> {
+  _CopyWithImpl$Mutation$changeUserBigImg(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$changeUserBigImg _instance;
+
+  final TRes Function(Mutation$changeUserBigImg) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_user_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$changeUserBigImg(
+        update_user_by_pk: update_user_by_pk == _undefined
+            ? _instance.update_user_by_pk
+            : (update_user_by_pk
+                as Mutation$changeUserBigImg$update_user_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$changeUserBigImg$update_user_by_pk<TRes>
+      get update_user_by_pk {
+    final local$update_user_by_pk = _instance.update_user_by_pk;
+    return local$update_user_by_pk == null
+        ? CopyWith$Mutation$changeUserBigImg$update_user_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Mutation$changeUserBigImg$update_user_by_pk(
+            local$update_user_by_pk, (e) => call(update_user_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$changeUserBigImg<TRes>
+    implements CopyWith$Mutation$changeUserBigImg<TRes> {
+  _CopyWithStubImpl$Mutation$changeUserBigImg(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$changeUserBigImg$update_user_by_pk? update_user_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$changeUserBigImg$update_user_by_pk<TRes>
+      get update_user_by_pk =>
+          CopyWith$Mutation$changeUserBigImg$update_user_by_pk.stub(_res);
+}
+
+const documentNodeMutationchangeUserBigImg = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'changeUserBigImg'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'user_pk_columns_input'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'img')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_user_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: VariableNode(name: NameNode(value: 'id')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'big_image'),
+                value: VariableNode(name: NameNode(value: 'img')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'big_image'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$changeUserBigImg _parserFn$Mutation$changeUserBigImg(
+        Map<String, dynamic> data) =>
+    Mutation$changeUserBigImg.fromJson(data);
+typedef OnMutationCompleted$Mutation$changeUserBigImg = FutureOr<void> Function(
+  dynamic,
+  Mutation$changeUserBigImg?,
+);
+
+class Options$Mutation$changeUserBigImg
+    extends graphql.MutationOptions<Mutation$changeUserBigImg> {
+  Options$Mutation$changeUserBigImg({
+    String? operationName,
+    required Variables$Mutation$changeUserBigImg variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$changeUserBigImg? onCompleted,
+    graphql.OnMutationUpdate<Mutation$changeUserBigImg>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$changeUserBigImg(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationchangeUserBigImg,
+          parserFn: _parserFn$Mutation$changeUserBigImg,
+        );
+
+  final OnMutationCompleted$Mutation$changeUserBigImg? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$changeUserBigImg
+    extends graphql.WatchQueryOptions<Mutation$changeUserBigImg> {
+  WatchOptions$Mutation$changeUserBigImg({
+    String? operationName,
+    required Variables$Mutation$changeUserBigImg variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationchangeUserBigImg,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$changeUserBigImg,
+        );
+}
+
+extension ClientExtension$Mutation$changeUserBigImg on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$changeUserBigImg>>
+      mutate$changeUserBigImg(
+              Options$Mutation$changeUserBigImg options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$changeUserBigImg>
+      watchMutation$changeUserBigImg(
+              WatchOptions$Mutation$changeUserBigImg options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$changeUserBigImg$update_user_by_pk {
+  Mutation$changeUserBigImg$update_user_by_pk({
+    this.big_image,
+    required this.$__typename,
+  });
+
+  factory Mutation$changeUserBigImg$update_user_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$big_image = json['big_image'];
+    final l$$__typename = json['__typename'];
+    return Mutation$changeUserBigImg$update_user_by_pk(
+      big_image: (l$big_image as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? big_image;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$big_image = big_image;
+    _resultData['big_image'] = l$big_image;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$big_image = big_image;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$big_image,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$changeUserBigImg$update_user_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$big_image = big_image;
+    final lOther$big_image = other.big_image;
+    if (l$big_image != lOther$big_image) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$changeUserBigImg$update_user_by_pk
+    on Mutation$changeUserBigImg$update_user_by_pk {
+  CopyWith$Mutation$changeUserBigImg$update_user_by_pk<
+          Mutation$changeUserBigImg$update_user_by_pk>
+      get copyWith => CopyWith$Mutation$changeUserBigImg$update_user_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$changeUserBigImg$update_user_by_pk<TRes> {
+  factory CopyWith$Mutation$changeUserBigImg$update_user_by_pk(
+    Mutation$changeUserBigImg$update_user_by_pk instance,
+    TRes Function(Mutation$changeUserBigImg$update_user_by_pk) then,
+  ) = _CopyWithImpl$Mutation$changeUserBigImg$update_user_by_pk;
+
+  factory CopyWith$Mutation$changeUserBigImg$update_user_by_pk.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$changeUserBigImg$update_user_by_pk;
+
+  TRes call({
+    String? big_image,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$changeUserBigImg$update_user_by_pk<TRes>
+    implements CopyWith$Mutation$changeUserBigImg$update_user_by_pk<TRes> {
+  _CopyWithImpl$Mutation$changeUserBigImg$update_user_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$changeUserBigImg$update_user_by_pk _instance;
+
+  final TRes Function(Mutation$changeUserBigImg$update_user_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? big_image = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$changeUserBigImg$update_user_by_pk(
+        big_image: big_image == _undefined
+            ? _instance.big_image
+            : (big_image as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$changeUserBigImg$update_user_by_pk<TRes>
+    implements CopyWith$Mutation$changeUserBigImg$update_user_by_pk<TRes> {
+  _CopyWithStubImpl$Mutation$changeUserBigImg$update_user_by_pk(this._res);
+
+  TRes _res;
+
+  call({
+    String? big_image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Mutation$changeUserImg {
   factory Variables$Mutation$changeUserImg({
     required Input$user_pk_columns_input id,
