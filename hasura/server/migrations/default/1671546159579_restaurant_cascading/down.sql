@@ -1,0 +1,34 @@
+
+ALTER TABLE "public"."restaurant" ALTER COLUMN "schedule" drop default;
+
+alter table "public"."restaurant_option_choice_map" drop constraint "restaurant_option_choice_map_choice_id_fkey";
+
+alter table "public"."restaurant_option_choice_map" drop constraint "restaurant_option_choice_map_option_id_fkey",
+  add constraint "restaurant_option_choice_map_option_id_fkey"
+  foreign key ("option_id")
+  references "public"."restaurant_option"
+  ("id") on update restrict on delete cascade;
+
+alter table "public"."restaurant_item" drop constraint "restaurant_item_category_id_fkey",
+  add constraint "restaurant_item_category_id_fkey"
+  foreign key ("category_id")
+  references "public"."restaurant_category"
+  ("id") on update restrict on delete cascade;
+
+alter table "public"."restaurant_item_option_map" drop constraint "restaurant_item_option_map_restaurant_id_fkey",
+  add constraint "restaurant_item_option_map_restaurant_id_fkey"
+  foreign key ("restaurant_id")
+  references "public"."restaurant"
+  ("id") on update restrict on delete restrict;
+
+alter table "public"."restaurant_item_option_map" drop constraint "restaurant_item_option_map_item_id_fkey",
+  add constraint "restaurant_item_option_map_item_id_fkey"
+  foreign key ("item_id")
+  references "public"."restaurant_item"
+  ("id") on update restrict on delete cascade;
+
+alter table "public"."restaurant_cart_item" drop constraint "restaurant_cart_item_restaurant_item_id_fkey",
+  add constraint "restaurant_cart_restaurant_item_id_fkey"
+  foreign key ("restaurant_item_id")
+  references "public"."restaurant_item"
+  ("id") on update restrict on delete restrict;
