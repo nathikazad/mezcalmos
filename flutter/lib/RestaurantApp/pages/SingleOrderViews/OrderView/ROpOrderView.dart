@@ -8,8 +8,8 @@ import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/compone
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/components/ROpOrderItems.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/components/ROpOrderNote.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/components/ROpOrderStatusCard.dart';
-import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/components/ROpRefundBtn.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/controller/ROpOrderViewController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -22,7 +22,6 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpOrderView'];
@@ -90,11 +89,11 @@ class _ROpOrderViewState extends State<ROpOrderView> {
                   order: viewController.order.value!,
                   margin: const EdgeInsets.only(bottom: 20),
                 ),
-                ROpOrderNote(order: viewController.order.value!),
+                ROpOrderNote(orderNote: viewController.order.value!.notes),
 
-                ROpRefundButton(
-                  order: viewController.order.value!,
-                ),
+                // ROpRefundButton(
+                //   order: viewController.order.value!,
+                // ),
                 if (viewController.order.value!.inProcess())
                   TextButton(
                       style: TextButton.styleFrom(
@@ -104,7 +103,7 @@ class _ROpOrderViewState extends State<ROpOrderView> {
                         showConfirmationDialog(context, onYesClick: () async {
                           await viewController
                               .cancelOrder()
-                              .then((ServerResponse value) => Get.back());
+                              .then((ServerResponse value) => MezRouter.back());
                         });
                       },
                       child: Container(

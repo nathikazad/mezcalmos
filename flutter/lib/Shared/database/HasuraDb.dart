@@ -12,7 +12,8 @@ import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart' show mezDbgPrint;
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart'
+    show logLongString, logToken, mezDbgPrint;
 
 class HasuraDb {
   late GraphQLClient _graphQLClient;
@@ -88,8 +89,16 @@ class HasuraDb {
         fireAuth.FirebaseAuth.instance.currentUser!,
         appLaunchMode == AppLaunchMode.dev,
       );
-      mezDbgPrint("ROLE ${_getRoleBasedOnApp()}");
-      mezDbgPrint("TOKEN $hasuraAuthToken");
+      logToken(hasuraAuthToken);
+      //  stdout.write("[MZL]  TOKKEN : $hasuraAuthToken");
+      // hasuraAuthToken.characters.forEach((String c) {
+      //   std(c);
+      // });
+      //   print("[MZL] ✅ TOKKEN ✅: $hasuraAuthToken");
+      // print("[MZL] …..")
+      // mezDbgPrint("ROLE ${_getRoleBasedOnApp()}");
+      // mezDbgPrint("✅ TOKKEN ✅: \n $hasuraAuthToken");
+
       headers = <String, String>{
         'Authorization': 'Bearer $hasuraAuthToken',
         'x-hasura-role': _getRoleBasedOnApp()
@@ -170,7 +179,7 @@ class HasuraDb {
       case AppType.DeliveryAdminApp:
         return "mez_admin";
       case AppType.DeliveryApp:
-        return "deliverer";
+        return "delivery_driver";
       case AppType.RestaurantApp:
         return "restaurant_operator";
 

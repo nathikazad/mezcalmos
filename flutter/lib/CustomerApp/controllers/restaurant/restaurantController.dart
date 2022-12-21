@@ -38,6 +38,8 @@ class RestaurantController extends GetxController {
 
   @override
   Future<void> onInit() async {
+    mezDbgPrint(
+        "Before saving first cart 🇹🇳🇹🇳🇹🇳🇹🇳 ${cart.value.cartItems}");
     super.onInit();
 
     mezDbgPrint(
@@ -49,17 +51,7 @@ class RestaurantController extends GetxController {
       minShiipingPrice.value = await getMinShippingPrice();
       perKmPrice.value = await getPerKmShippingPrice();
       // ignore: unawaited_futures
-      hsCart
-          .getCustomerCart(
-        customerId: Get.find<AuthController>().user!.hasuraId,
-      )
-          .then((Cart? value) {
-        mezDbgPrint(
-            "[cc] Cart Controller ===> ${value?.toFirebaseFormattedJson()}");
-        cart.value = value ?? Cart();
-        associatedRestaurant = value?.restaurant;
-        cart.refresh();
-      });
+      fetchCart();
     }
     if (Get.find<AuthController>().user?.hasuraId != null) {
       final HasuraDb _hasuraDb = Get.find<HasuraDb>();
@@ -68,10 +60,14 @@ class RestaurantController extends GetxController {
             .listen_on_customer_cart(
                 customer_id: Get.find<AuthController>().user!.hasuraId)
             .listen((Cart? event) {
+          mezDbgPrint(
+              "Cart event stream from front 😍😍😍😍 ${event?.toFirebaseFormattedJson()}");
           if (event != null) {
             cart.value = event;
             if (event.restaurant != null)
-              associatedRestaurant = event.restaurant;
+              cart.value.restaurant = event.restaurant;
+
+            associatedRestaurant = event.restaurant;
           }
           cart.refresh();
         });
@@ -84,6 +80,16 @@ class RestaurantController extends GetxController {
     }
     // check for old special items and remove them
     checkCartPeriod();
+  }
+
+  Future<void> fetchCart() async {
+    final Cart? value = await hsCart.getCustomerCart(
+      customerId: Get.find<AuthController>().user!.hasuraId,
+    );
+    cart.value = value ?? Cart();
+    cart.value.restaurant = value?.restaurant;
+    associatedRestaurant = value?.restaurant;
+    cart.refresh();
   }
 
   Future<Restaurant?> getAssociatedRestaurant(int restaurantId) async {
@@ -140,6 +146,7 @@ class RestaurantController extends GetxController {
   Future<bool> updateShippingPrice() async {
     isShippingSet.value = false;
     final LocModel.Location? loc = cart.value.toLocation;
+
     mezDbgPrint(
         "[tt] Called updateShippingPrice :: to _ loc _ address :: ${loc?.address} ");
     minShiipingPrice.value =
@@ -180,13 +187,13 @@ class RestaurantController extends GetxController {
 
           mezDbgPrint(
               "SHIPPPPPING COOOOST =========>>>>>>>>>>>${cart.value.shippingCost}");
-          await saveCart();
+          // await saveCart();
           isShippingSet.value = true;
 
           return true;
         } else {
           cart.value.shippingCost = null;
-          await saveCart();
+          // await saveCart();
           isShippingSet.value = true;
 
           return true;
@@ -199,7 +206,7 @@ class RestaurantController extends GetxController {
       }
     } else {
       cart.value.shippingCost = null;
-      await saveCart();
+      //   await saveCart();
       isShippingSet.value = true;
 
       return true;
@@ -228,18 +235,18 @@ class RestaurantController extends GetxController {
   }
 
   Future<void> saveCart() async {
-    if (_authController.user?.hasuraId != null) {
-      final Cart? _cart = await hsCart.update_cart(
-        customer_id: _authController.user!.hasuraId,
-        restaurant_id: associatedRestaurant!.info.hasuraId,
-        items: cart.value.cartItems,
-      );
-      if (_cart != null) {
-        cart.value = _cart;
-        mezDbgPrint(
-            "😛 Cart items after calling save cart ======>${_cart.cartItems.length}");
-      }
-    }
+    // if (_authController.user?.hasuraId != null) {
+    //   // final Cart? _cart = await hsCart.update_cart(
+    //   //   customer_id: _authController.user!.hasuraId,
+    //   //   restaurant_id: associatedRestaurant!.info.hasuraId,
+    //   //   items: cart.value.cartItems,
+    //   // );
+    //   if (_cart != null) {
+    //     cart.value = _cart;
+    //     mezDbgPrint(
+    //         "😛 Cart items after calling save cart ======>${_cart.cartItems.length}");
+    //   }
+    // }
     cart.refresh();
   }
 
@@ -322,19 +329,22 @@ class RestaurantController extends GetxController {
             true);
   }
 
-  void clearCart() {
+  Future<void> clearCart() async {
     cart.value = Cart();
     if (Get.find<AuthController>().user?.hasuraId != null) {
-      hsCart.clear_customer_cart(
+      await hsCart.clear_customer_cart(
           customer_id: Get.find<AuthController>().user!.hasuraId);
     }
     Get.appUpdate();
   }
 
   Future<ServerResponse> checkout({String? stripePaymentId}) async {
+    mezDbgPrint("[+]Delivery time ===> ${cart.value.deliveryTime}");
     final HttpsCallable checkoutRestaurantCart =
-        FirebaseFunctions.instance.httpsCallable("restaurant-checkoutCart2");
+        FirebaseFunctions.instance.httpsCallable("restaurant2-checkoutCart");
+
     try {
+      mezDbgPrint("[+]Delivery time ===> ${cart.value.deliveryTime}");
       final Map<String, dynamic> payload = <String, dynamic>{
         // "customerId": _authController.user!.hasuraId,
         // "checkoutRequest": <String, dynamic>{
@@ -349,15 +359,19 @@ class RestaurantController extends GetxController {
                 },
               ),
             ).toFirebaseFormattedJson(),
-        "deliveryCost": 20,
+        "deliveryCost": cart.value.shippingCost ?? 0,
+        "scheduledTime": cart.value.deliveryTime?.toUtc().toString(),
+
         "paymentType": cart.value.paymentType.toFirebaseFormatString(),
         "notes": cart.value.notes,
         "restaurantId": cart.value.restaurant!.info.hasuraId,
         "restaurantOrderType": "pickup",
-        "tripDistance":
+        "tripDistance": cart.value.getRouteInfo?.distance.distanceInMeters ??
             0, // cart.value.getRouteInfo?.distance.distanceInMeters,
-        "tripDuration": 0, // cart.value.getRouteInfo?.duration.seconds,
-        "tripPolyline": '' //cart.value.getRouteInfo?.polyline,
+        "tripDuration": cart.value.getRouteInfo?.duration.seconds ??
+            0, // cart.value.getRouteInfo?.duration.seconds,
+        "tripPolyline": cart.value.getRouteInfo?.polyline ??
+            '' //cart.value.getRouteInfo?.polyline,
         // }
       };
 
@@ -375,7 +389,7 @@ class RestaurantController extends GetxController {
 
   Future<ServerResponse> cancelOrder(int orderId) async {
     final HttpsCallable cancelOrder = FirebaseFunctions.instance
-        .httpsCallable('restaurant-cancelOrderFromCustomer');
+        .httpsCallable('restaurant2-cancelOrderFromCustomer');
     try {
       final HttpsCallableResult<dynamic> response =
           await cancelOrder.call(<String, dynamic>{"orderId": orderId});

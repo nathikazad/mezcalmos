@@ -1,3 +1,5 @@
+// ignore_for_file: unawaited_futures
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
@@ -60,6 +62,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     if (orderToLocation != null) {
       _restaurantController.cart.value.toLocation = orderToLocation;
     }
+    _restaurantController.fetchCart();
 
     // getCustomerCart(
     //   customerId: Get.find<AuthController>().user!.hasuraId,
@@ -82,9 +85,9 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     //   }
     // });
 
-    _restaurantController
-        .updateShippingPrice()
-        .then((bool value) => _restaurantController.cart.refresh());
+    // _restaurantController
+    //     .updateShippingPrice()
+    //     .then((bool value) => _restaurantController.cart.refresh());
 
     // check if cart empty
     // if yes redirect to home page
@@ -113,9 +116,12 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           return SingleChildScrollView(
             child: ViewCartBody(
               viewCartController: viewCartController,
-              setLocationCallBack: ({Location? location}) {
+              setLocationCallBack: ({Location? location}) async {
                 if (location != null && location.isValidLocation()) {
+                  mezDbgPrint(
+                      "[UUUU] => RESTAURANT INFO ==> ${_restaurantController.cart.value.restaurant?.info.hasuraId}");
                   _restaurantController.cart.value.toLocation = location;
+                  // ignore: unawaited_futures
                   _restaurantController.updateShippingPrice().then(
                       (bool value) => _restaurantController.cart.refresh());
                 }
@@ -234,6 +240,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
       if (_serverResponse.success) {
         _restaurantController.clearCart();
+
         popEverythingAndNavigateTo(
           getRestaurantOrderRoute(
             _serverResponse.data["orderId"],
@@ -269,6 +276,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       //     '${_i18n()["distanceError"]}',
       //   );
       // }
+      mezDbgPrint("success funish checkout");
     } catch (e, s) {
       mezDbgPrint(
         "Error happened during generating order's routeInfos / Stripe payment ===> #$e\n\nStackTrace ==> #$s",

@@ -67,15 +67,15 @@ export const stripe = {
 
 
 export const restaurant = {
-  createRestaurant: authenticatedCallByMontassare((userId, data) => createNewRestaurant(userId, data)),
+  createRestaurant: authenticatedCall((userId, data) => createNewRestaurant(userId, data)),
   // genOperatorLink: authenticatedCall((userId, data) => generateOperatorLink(userId,data )),
   // genDriverLink: authenticatedCall((userId, data) => generateDriverLink(userId,data )),
-  checkoutCart2: authenticatedCallByMontassare((userId, data) => checkout(userId, data)),
+  checkoutCart2: authenticatedCall((userId, data) => checkout(userId, data)),
   // addReview: authenticatedCall((userId, data) => addReview(userId, data)),
   prepareOrder: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),
-  prepareOrder2: authenticatedCallByMontassare((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),
+  prepareOrder2: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),
   readyForOrderPickup: authenticatedCall((userId, data) => restaurantStatusChange.readyForPickupOrder(userId, data)),
-  readyForOrderPickup2: authenticatedCallByMontassare((userId, data) => restaurantStatusChange.readyForPickupOrder(userId, data)),
+  readyForOrderPickup2: authenticatedCall((userId, data) => restaurantStatusChange.readyForPickupOrder(userId, data)),
   cancelOrderFromAdmin: authenticatedCall((userId, data) => restaurantStatusChange.cancelOrder(userId, data)),
   cancelOrderFromCustomer: authenticatedCall((userId, data) => cancelOrderFromCustomer(userId, data)),
   addRestaurantOperator: authenticatedCall((userId, data) => addRestaurantOperator(userId, data)),
@@ -166,30 +166,6 @@ function authenticatedCall(func:AuthenticatedFunction) {
       firebaseUser = await firebase.auth().getUser(context.auth!.uid)
     }
     
-    return func(parseInt(firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"]), data);
-  });
-}
-//type AuthenticatedFunction = (userId:number, data:any) => any;
-function authenticatedCallByMontassare(func:AuthenticatedFunction) {
-  return functions.https.onCall(async (data, context) =>  {
-    console.log("[+] authenticatedCall :: ", data);
-    if (!context.auth?.uid) {
-      throw new HttpsError(
-        "unauthenticated",
-        "Request was not authenticated.",
-      );
-    }
-    let firebaseUser = await firebase.auth().getUser(context.auth!.uid)
-    if(!firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"]) {
-      throw new HttpsError(
-        "unauthenticated",
-        "Request was not authenticated.",
-      );
-    } else {
-      await userChanges.addHasuraClaim(context.auth?.uid);
-      firebaseUser = await firebase.auth().getUser(context.auth!.uid)
-    }
-   return functions.https.onCall((data, context) => func(parseInt(firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"]), data));
-    
+    return await func(parseInt(firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"]), data);
   });
 }

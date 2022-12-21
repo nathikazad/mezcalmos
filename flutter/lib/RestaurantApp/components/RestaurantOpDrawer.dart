@@ -77,7 +77,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
                     ),
                     // Laundry IMAGE AND NAME
 
-                    _laundryImageAndName(),
+                    _opImageAndName(),
 
                     // Navigation links
                     if (restaurantOpAuthController.operator.value != null &&
@@ -181,10 +181,10 @@ class _ROpDrawerState extends State<ROpDrawer> {
     );
   }
 
-  Widget _laundryImageAndName() {
+  Widget _opImageAndName() {
     return Obx(
       () {
-        if (restaurant.value != null) {
+        if (restaurantOpAuthController.operator.value != null) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -195,16 +195,18 @@ class _ROpDrawerState extends State<ROpDrawer> {
                   children: [
                     CircleAvatar(
                       radius: 45,
-                      backgroundImage: (restaurant.value!.info.image != null)
+                      backgroundImage: (restaurantOpAuthController
+                              .operator.value!.info.image.isURL)
                           ? CachedNetworkImageProvider(
-                              restaurant.value?.info.image ?? "")
+                              restaurantOpAuthController
+                                  .operator.value!.info.image)
                           : AssetImage(aNoImage) as ImageProvider,
                     ),
                     SizedBox(
                       height: 15,
                     ),
                     Text(
-                      restaurant.value!.info.name,
+                      restaurantOpAuthController.operator.value!.info.name,
                       style: Get.textTheme.headline3,
                     ),
                     SizedBox(

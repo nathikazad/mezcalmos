@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpItemView"]["components"]["ROpItemCategorySelector"];
@@ -74,13 +74,13 @@ class _ROpItemCategorySelectorState extends State<ROpItemCategorySelector> {
               }
             }
           },
-          validator: (Category? value) {
-            if (value == null) {
-              return '${_i18n()["errorText"]}';
-            } else {
-              return null;
-            }
-          },
+          // validator: (Category? value) {
+          //   if (value == null) {
+          //     return '${_i18n()["errorText"]}';
+          //   } else {
+          //     return null;
+          //   }
+          // },
           items: widget.viewController.categories
               .map<DropdownMenuItem<Category>>((Category value) {
             return DropdownMenuItem<Category>(

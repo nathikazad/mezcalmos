@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/AnimatedOrderInfoCard.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -16,7 +17,6 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['DeliveryApp']
         ['pages']['CurrentOrders']['CurrentOrderViewScreen']['Components']
@@ -137,11 +137,11 @@ class _RestaurantOrderFromToComponentState
         } else {
           return '${_i18n()["orderStatus"]["waiting"]}';
         }
-      case RestaurantOrderStatus.PreparingOrder:
+      case RestaurantOrderStatus.Preparing:
         return '${_i18n()["orderStatus"]["waiting"]}';
 
-      case RestaurantOrderStatus.ReadyForPickup:
-        return '${_i18n()["orderStatus"]["readyForPickup"]}';
+      case RestaurantOrderStatus.Ready:
+        return '${_i18n()["orderStatus"]["Ready"]}';
       case RestaurantOrderStatus.OnTheWay:
         return '${_i18n()["orderStatus"]["deliveryOtw"]}';
       case RestaurantOrderStatus.Delivered:
@@ -153,14 +153,14 @@ class _RestaurantOrderFromToComponentState
 
   bool isInPickUpPhase() {
     return widget.order.status == RestaurantOrderStatus.OrderReceived ||
-        widget.order.status == RestaurantOrderStatus.ReadyForPickup ||
-        widget.order.status == RestaurantOrderStatus.PreparingOrder;
+        widget.order.status == RestaurantOrderStatus.Ready ||
+        widget.order.status == RestaurantOrderStatus.Preparing;
   }
 
   bool _showFoodReadyTime() {
     return widget.order.estimatedFoodReadyTime != null &&
         (widget.order.status == RestaurantOrderStatus.OrderReceived ||
-            widget.order.status == RestaurantOrderStatus.PreparingOrder);
+            widget.order.status == RestaurantOrderStatus.Preparing);
   }
 
 // @here

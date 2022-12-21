@@ -59,8 +59,17 @@ query getOneRestaurant($id: Int!) {
 }
 query getRestaurantStatus($id: Int!) {
   restaurant_by_pk(id: $id) {
-
     open_status
+  }
+}
+query getRestaurantSchedule($id: Int!) {
+  restaurant_by_pk(id: $id) {
+    schedule
+  }
+}
+query getRestaurantAprroved($id: Int!) {
+  restaurant_by_pk(id: $id) {
+    approved
   }
 }
 
@@ -70,10 +79,21 @@ mutation updateRestaurantInfo($id: Int!, $data: restaurant_set_input!) {
   }
 }
 
-mutation switchRestaurantSelfDelivery($restauarntId: Int!,$value : Boolean) {
-  update_restaurant_by_pk(pk_columns: {id: $restauarntId}, _set: {self_delivery: $value}) {
+mutation switchRestaurantSelfDelivery($restauarntId: Int!, $value: Boolean) {
+  update_restaurant_by_pk(
+    pk_columns: { id: $restauarntId }
+    _set: { self_delivery: $value }
+  ) {
     id
     self_delivery
+  }
+}
+mutation switchRestaurantAvailability($restauarntId: Int!, $value: String) {
+  update_restaurant_by_pk(
+    pk_columns: { id: $restauarntId }
+    _set: { open_status: $value }
+  ) {
+    open_status
   }
 }
 
@@ -127,12 +147,8 @@ subscription GetRestaurants {
   }
 }
 
-
-
-
-query getRestaurantItems($restaurant_id : Int!)
-{
-  restaurant_item(where : {restaurant_id :{_eq: $restaurant_id}}) {
+query getRestaurantItems($restaurant_id: Int!) {
+  restaurant_item(where: { restaurant_id: { _eq: $restaurant_id } }) {
     id
     name {
       translations {
@@ -210,12 +226,11 @@ query getRestaurantOperators($restaurantId: Int!) {
     }
   }
 }
- 
 
-# get average rating 
+# get average rating
 query get_restaurant_review_average($restaurantId: Int!) {
   restaurant_by_pk(id: $restaurantId) {
-    reviews_aggregate(where: {from_entity_type: {_eq: "customer"}}) {
+    reviews_aggregate(where: { from_entity_type: { _eq: "customer" } }) {
       aggregate {
         avg {
           rating
@@ -224,10 +239,10 @@ query get_restaurant_review_average($restaurantId: Int!) {
     }
   }
 }
-# get restaurant reviews 
+# get restaurant reviews
 query get_restaurant_reviews($restaurantId: Int!) {
   restaurant_by_pk(id: $restaurantId) {
-    reviews(where: {from_entity_type: {_eq: "customer"}}) {
+    reviews(where: { from_entity_type: { _eq: "customer" } }) {
       from_entity_id
       from_entity_type
       rating
@@ -239,5 +254,3 @@ query get_restaurant_reviews($restaurantId: Int!) {
     }
   }
 }
-
-

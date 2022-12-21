@@ -5,7 +5,6 @@ import 'package:mezcalmos/DeliveryApp/controllers/restaurantController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/GradientCircularLoading.dart';
 import 'package:sizer/sizer.dart';
 
@@ -46,12 +45,12 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
   Widget _getFooterComponent() {
     switch (widget.order.status) {
       case RestaurantOrderStatus.OrderReceived:
-      case RestaurantOrderStatus.PreparingOrder:
+      case RestaurantOrderStatus.Preparing:
         return _waitingDisabledButton(
             header: "${_i18n()["RestaurantControllButtons"]["notReadyTitle"]}",
             body: "${_i18n()["RestaurantControllButtons"]["notReadyBody"]}");
 
-      case RestaurantOrderStatus.ReadyForPickup:
+      case RestaurantOrderStatus.Ready:
         return _startDeliveryButton();
       case RestaurantOrderStatus.OnTheWay:
         return _confirmDeliveryButton();
@@ -72,13 +71,13 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
               setState(() {
                 clicked = true;
               });
-              await restaurantOrderController
-                  .startRestaurantDelivery(widget.order.orderId)
-                  .then((ServerResponse value) {
-                setState(() {
-                  clicked = false;
-                });
-              });
+              // await restaurantOrderController
+              //     .startRestaurantDelivery(widget.order.orderId)
+              //     .then((ServerResponse value) {
+              //   setState(() {
+              //     clicked = false;
+              //   });
+              // });
             },
             child: Container(
               decoration: BoxDecoration(gradient: bluePurpleGradient),
@@ -262,11 +261,11 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
           setState(() {
             clicked = true;
           });
-          await restaurantOrderController
-              .finishRestaurantDelivery(widget.order.orderId)
-              .then((ServerResponse value) => setState(() {
-                    clicked = false;
-                  }));
+          // await restaurantOrderController
+          //     .finishRestaurantDelivery(widget.order.orderId)
+          //     .then((ServerResponse value) => setState(() {
+          //           clicked = false;
+          //         }));
           // MezRouter.back(closeOverlays: true);
         },
         child: Container(

@@ -33,7 +33,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
   void initState() {
     if (controller.cart.value.cartPeriod != null) {
       controller.cart.value.deliveryTime = controller.cart.value.getStartTime();
-      controller.saveCart();
+      //  controller.saveCart();
     }
     super.initState();
   }
@@ -181,8 +181,6 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
   }
 
   Future<void> _pickDeliveryTime(BuildContext context) async {
-    mezDbgPrint(controller.cart.value.isSpecial);
-    mezDbgPrint(controller.cart.value.cartPeriod.toString());
     if (controller.cart.value.restaurant?.schedule != null) {
       await showModalBottomSheet<DateTime>(
           context: context,

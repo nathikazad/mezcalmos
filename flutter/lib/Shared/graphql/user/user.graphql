@@ -29,6 +29,17 @@ query getUserById($id: Int!) {
   }
 } 
 
+
+# Update the user big_image using pk.
+
+mutation changeUserBigImg($id: user_pk_columns_input!, $img: String!) {
+  update_user_by_pk(pk_columns:$id , _set : {big_image : $img})
+  {
+  	big_image
+  }
+}
+
+
 # Update the user image using pk.
 
 mutation changeUserImg($id: user_pk_columns_input!, $img: String!) {
@@ -44,5 +55,15 @@ mutation changeUserName($id: user_pk_columns_input!, $name: String!) {
   update_user_by_pk(pk_columns:$id , _set : {name : $name})
   {
   	name
+  }
+}
+
+
+# $language = en | es
+mutation changeUserLanguage($id: user_pk_columns_input!, $language: String!)
+{
+  update_user_by_pk(pk_columns:$id , _set : {language_id : $language})
+  {
+  	language_id
   }
 }

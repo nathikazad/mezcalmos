@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -11,13 +10,13 @@ dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
 class ROpOrderNote extends StatelessWidget {
   const ROpOrderNote({
     Key? key,
-    required this.order,
+    required this.orderNote,
   }) : super(key: key);
-  final RestaurantOrder order;
+  final String? orderNote;
 
   @override
   Widget build(BuildContext context) {
-    if (order.notes != null && order.notes!.isNotEmpty) {
+    if (orderNote != null && orderNote!.isNotEmpty) {
       return Card(
         margin: const EdgeInsets.only(bottom: 20),
         child: Container(
@@ -34,7 +33,7 @@ class ROpOrderNote extends StatelessWidget {
               const SizedBox(height: 10),
               Container(
                 child: Text(
-                  order.notes!,
+                  orderNote!,
                   style: Get.textTheme.subtitle2,
                 ),
               ),

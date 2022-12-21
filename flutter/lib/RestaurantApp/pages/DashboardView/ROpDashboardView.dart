@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
+import 'package:mezcalmos/RestaurantApp/components/ROpAppBar.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpDashboardPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpDeliveryCost.dart';
@@ -11,6 +11,7 @@ import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpPaymentsPag
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpReviewsPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpSchedulePage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/TabsView/controllers/ROpTabsViewViewController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -51,7 +52,7 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
           restaurantId: restaurantID!,
           tabsViewViewController: widget.tabsViewViewController);
     } else
-      Get.back();
+      MezRouter.back();
 
     super.initState();
   }
@@ -114,9 +115,11 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
 
   PreferredSize _getAppBar() {
     return PreferredSize(
-      preferredSize: Size.fromHeight(kToolbarHeight),
+      preferredSize: (editInfoController.isApproved.isTrue)
+          ? Size.fromHeight(kToolbarHeight)
+          : Size.fromHeight(kToolbarHeight * 2),
       child: Obx(
-        () => LaundryAppAppBar(
+        () => ROpAppBar(
           leftBtnType: AppBarLeftButtonType.Back,
           canGoBack:
               widget.canGoBack || editInfoController.cuurentPage.value != 0,
@@ -127,10 +130,24 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
               editInfoController.cuurentPage.value = 0;
               editInfoController.tabsViewViewController?.showTabs.value = true;
             } else {
-              Get.back();
+              MezRouter.back();
             }
           },
           title: editInfoController.getPageTitle(),
+          bottom: (editInfoController.isApproved.isFalse)
+              ? PreferredSize(
+                  preferredSize: Size(double.infinity, kToolbarHeight),
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    color: Colors.amber.shade200,
+                    child: Text(
+                      "Your restaurant is under review, you’ll be notifiedonce it’s approved.",
+                      style: Get.textTheme.bodyText1
+                          ?.copyWith(color: Colors.amber.shade700),
+                    ),
+                  ),
+                )
+              : null,
         ),
       ),
     );

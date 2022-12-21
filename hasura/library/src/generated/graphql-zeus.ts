@@ -5837,6 +5837,7 @@ end). throws an error if top level container is not an array */
 	description?:ValueTypes["translation"],
 	description_id?:true,
 	id?:true,
+	image?:true,
 	/** daily, special */
 	item_type?:true,
 	/** An object relationship */
@@ -5937,6 +5938,7 @@ count?: [{	columns?:ValueTypes["restaurant_item_select_column"][],	distinct?:boo
 	description?:ValueTypes["translation_bool_exp"],
 	description_id?:ValueTypes["Int_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
+	image?:ValueTypes["String_comparison_exp"],
 	item_type?:ValueTypes["String_comparison_exp"],
 	name?:ValueTypes["translation_bool_exp"],
 	name_id?:ValueTypes["Int_comparison_exp"],
@@ -5969,6 +5971,7 @@ count?: [{	columns?:ValueTypes["restaurant_item_select_column"][],	distinct?:boo
 	description?:ValueTypes["translation_obj_rel_insert_input"],
 	description_id?:number,
 	id?:number,
+	image?:string,
 	/** daily, special */
 	item_type?:string,
 	name?:ValueTypes["translation_obj_rel_insert_input"],
@@ -5986,6 +5989,7 @@ count?: [{	columns?:ValueTypes["restaurant_item_select_column"][],	distinct?:boo
 	cost?:true,
 	description_id?:true,
 	id?:true,
+	image?:true,
 	/** daily, special */
 	item_type?:true,
 	name_id?:true,
@@ -6001,6 +6005,7 @@ count?: [{	columns?:ValueTypes["restaurant_item_select_column"][],	distinct?:boo
 	cost?:ValueTypes["order_by"],
 	description_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
+	image?:ValueTypes["order_by"],
 	/** daily, special */
 	item_type?:ValueTypes["order_by"],
 	name_id?:ValueTypes["order_by"],
@@ -6015,6 +6020,7 @@ count?: [{	columns?:ValueTypes["restaurant_item_select_column"][],	distinct?:boo
 	cost?:true,
 	description_id?:true,
 	id?:true,
+	image?:true,
 	/** daily, special */
 	item_type?:true,
 	name_id?:true,
@@ -6030,6 +6036,7 @@ count?: [{	columns?:ValueTypes["restaurant_item_select_column"][],	distinct?:boo
 	cost?:ValueTypes["order_by"],
 	description_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
+	image?:ValueTypes["order_by"],
 	/** daily, special */
 	item_type?:ValueTypes["order_by"],
 	name_id?:ValueTypes["order_by"],
@@ -6370,6 +6377,7 @@ count?: [{	columns?:ValueTypes["restaurant_item_option_map_select_column"][],	di
 	description?:ValueTypes["translation_order_by"],
 	description_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
+	image?:ValueTypes["order_by"],
 	item_type?:ValueTypes["order_by"],
 	name?:ValueTypes["translation_order_by"],
 	name_id?:ValueTypes["order_by"],
@@ -6394,6 +6402,7 @@ count?: [{	columns?:ValueTypes["restaurant_item_option_map_select_column"][],	di
 	cost?:ValueTypes["money"],
 	description_id?:number,
 	id?:number,
+	image?:string,
 	/** daily, special */
 	item_type?:string,
 	name_id?:number,
@@ -6480,6 +6489,7 @@ count?: [{	columns?:ValueTypes["restaurant_item_option_map_select_column"][],	di
 	cost?:ValueTypes["money"],
 	description_id?:number,
 	id?:number,
+	image?:string,
 	/** daily, special */
 	item_type?:string,
 	name_id?:number,
@@ -7717,6 +7727,8 @@ All fields are combined with a logical 'AND'. */
 	estimated_food_ready_time?:true,
 	firebase_id?:true,
 	id?:true,
+	/** A computed field, executes function "in_process" */
+	in_process?:true,
 items?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["restaurant_order_item_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -7742,6 +7754,7 @@ items_aggregate?: [{	/** distinct select on columns */
 	/** An object relationship */
 	review?:ValueTypes["review"],
 	review_id?:true,
+	scheduled_time?:true,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:true,
 	stripe_payment_id?:true,
@@ -7838,6 +7851,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_select_column"][],	distinct?:bo
 	estimated_food_ready_time?:ValueTypes["timestamptz_comparison_exp"],
 	firebase_id?:ValueTypes["String_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
+	in_process?:ValueTypes["Boolean_comparison_exp"],
 	items?:ValueTypes["restaurant_order_item_bool_exp"],
 	items_cost?:ValueTypes["money_comparison_exp"],
 	notes?:ValueTypes["String_comparison_exp"],
@@ -7849,6 +7863,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_select_column"][],	distinct?:bo
 	restaurant_id?:ValueTypes["Int_comparison_exp"],
 	review?:ValueTypes["review_bool_exp"],
 	review_id?:ValueTypes["Int_comparison_exp"],
+	scheduled_time?:ValueTypes["timestamptz_comparison_exp"],
 	status?:ValueTypes["String_comparison_exp"],
 	stripe_payment_id?:ValueTypes["Int_comparison_exp"],
 	tax?:ValueTypes["money_comparison_exp"],
@@ -7920,6 +7935,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_select_column"][],	distinct?:bo
 	restaurant_id?:number,
 	review?:ValueTypes["review_obj_rel_insert_input"],
 	review_id?:number,
+	scheduled_time?:ValueTypes["timestamptz"],
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
@@ -8315,6 +8331,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	refund_amount?:true,
 	restaurant_id?:true,
 	review_id?:true,
+	scheduled_time?:true,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:true,
 	stripe_payment_id?:true,
@@ -8341,6 +8358,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	refund_amount?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
 	review_id?:ValueTypes["order_by"],
+	scheduled_time?:ValueTypes["order_by"],
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:ValueTypes["order_by"],
 	stripe_payment_id?:ValueTypes["order_by"],
@@ -8366,6 +8384,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	refund_amount?:true,
 	restaurant_id?:true,
 	review_id?:true,
+	scheduled_time?:true,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:true,
 	stripe_payment_id?:true,
@@ -8392,6 +8411,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	refund_amount?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
 	review_id?:ValueTypes["order_by"],
+	scheduled_time?:ValueTypes["order_by"],
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:ValueTypes["order_by"],
 	stripe_payment_id?:ValueTypes["order_by"],
@@ -8433,6 +8453,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	estimated_food_ready_time?:ValueTypes["order_by"],
 	firebase_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
+	in_process?:ValueTypes["order_by"],
 	items_aggregate?:ValueTypes["restaurant_order_item_aggregate_order_by"],
 	items_cost?:ValueTypes["order_by"],
 	notes?:ValueTypes["order_by"],
@@ -8444,6 +8465,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	restaurant_id?:ValueTypes["order_by"],
 	review?:ValueTypes["review_order_by"],
 	review_id?:ValueTypes["order_by"],
+	scheduled_time?:ValueTypes["order_by"],
 	status?:ValueTypes["order_by"],
 	stripe_payment_id?:ValueTypes["order_by"],
 	tax?:ValueTypes["order_by"],
@@ -8684,6 +8706,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_public_select_column"][],	disti
 	refund_amount?:ValueTypes["money"],
 	restaurant_id?:number,
 	review_id?:number,
+	scheduled_time?:ValueTypes["timestamptz"],
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
@@ -8798,6 +8821,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_public_select_column"][],	disti
 	refund_amount?:ValueTypes["money"],
 	restaurant_id?:number,
 	review_id?:number,
+	scheduled_time?:ValueTypes["timestamptz"],
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
@@ -16948,6 +16972,7 @@ end). throws an error if top level container is not an array */
 	description?:PartialObjects["translation"],
 			description_id?:number,
 			id?:number,
+			image?:string,
 			/** daily, special */
 	item_type?:string,
 			/** An object relationship */
@@ -17039,6 +17064,7 @@ end). throws an error if top level container is not an array */
 	description?:PartialObjects["translation_bool_exp"],
 	description_id?:PartialObjects["Int_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
+	image?:PartialObjects["String_comparison_exp"],
 	item_type?:PartialObjects["String_comparison_exp"],
 	name?:PartialObjects["translation_bool_exp"],
 	name_id?:PartialObjects["Int_comparison_exp"],
@@ -17071,6 +17097,7 @@ end). throws an error if top level container is not an array */
 	description?:PartialObjects["translation_obj_rel_insert_input"],
 	description_id?:number,
 	id?:number,
+	image?:string,
 	/** daily, special */
 	item_type?:string,
 	name?:PartialObjects["translation_obj_rel_insert_input"],
@@ -17089,6 +17116,7 @@ end). throws an error if top level container is not an array */
 			cost?:PartialObjects["money"],
 			description_id?:number,
 			id?:number,
+			image?:string,
 			/** daily, special */
 	item_type?:string,
 			name_id?:number,
@@ -17103,6 +17131,7 @@ end). throws an error if top level container is not an array */
 	cost?:PartialObjects["order_by"],
 	description_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
+	image?:PartialObjects["order_by"],
 	/** daily, special */
 	item_type?:PartialObjects["order_by"],
 	name_id?:PartialObjects["order_by"],
@@ -17118,6 +17147,7 @@ end). throws an error if top level container is not an array */
 			cost?:PartialObjects["money"],
 			description_id?:number,
 			id?:number,
+			image?:string,
 			/** daily, special */
 	item_type?:string,
 			name_id?:number,
@@ -17132,6 +17162,7 @@ end). throws an error if top level container is not an array */
 	cost?:PartialObjects["order_by"],
 	description_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
+	image?:PartialObjects["order_by"],
 	/** daily, special */
 	item_type?:PartialObjects["order_by"],
 	name_id?:PartialObjects["order_by"],
@@ -17464,6 +17495,7 @@ end). throws an error if top level container is not an array */
 	description?:PartialObjects["translation_order_by"],
 	description_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
+	image?:PartialObjects["order_by"],
 	item_type?:PartialObjects["order_by"],
 	name?:PartialObjects["translation_order_by"],
 	name_id?:PartialObjects["order_by"],
@@ -17488,6 +17520,7 @@ end). throws an error if top level container is not an array */
 	cost?:PartialObjects["money"],
 	description_id?:number,
 	id?:number,
+	image?:string,
 	/** daily, special */
 	item_type?:string,
 	name_id?:number,
@@ -17574,6 +17607,7 @@ end). throws an error if top level container is not an array */
 	cost?:PartialObjects["money"],
 	description_id?:number,
 	id?:number,
+	image?:string,
 	/** daily, special */
 	item_type?:string,
 	name_id?:number,
@@ -18788,6 +18822,8 @@ All fields are combined with a logical 'AND'. */
 			estimated_food_ready_time?:PartialObjects["timestamptz"],
 			firebase_id?:string,
 			id?:number,
+			/** A computed field, executes function "in_process" */
+	in_process?:boolean,
 			/** An array relationship */
 	items?:PartialObjects["restaurant_order_item"][],
 			/** An aggregate relationship */
@@ -18805,6 +18841,7 @@ All fields are combined with a logical 'AND'. */
 			/** An object relationship */
 	review?:PartialObjects["review"],
 			review_id?:number,
+			scheduled_time?:PartialObjects["timestamptz"],
 			/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 			stripe_payment_id?:number,
@@ -18900,6 +18937,7 @@ All fields are combined with a logical 'AND'. */
 	estimated_food_ready_time?:PartialObjects["timestamptz_comparison_exp"],
 	firebase_id?:PartialObjects["String_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
+	in_process?:PartialObjects["Boolean_comparison_exp"],
 	items?:PartialObjects["restaurant_order_item_bool_exp"],
 	items_cost?:PartialObjects["money_comparison_exp"],
 	notes?:PartialObjects["String_comparison_exp"],
@@ -18911,6 +18949,7 @@ All fields are combined with a logical 'AND'. */
 	restaurant_id?:PartialObjects["Int_comparison_exp"],
 	review?:PartialObjects["review_bool_exp"],
 	review_id?:PartialObjects["Int_comparison_exp"],
+	scheduled_time?:PartialObjects["timestamptz_comparison_exp"],
 	status?:PartialObjects["String_comparison_exp"],
 	stripe_payment_id?:PartialObjects["Int_comparison_exp"],
 	tax?:PartialObjects["money_comparison_exp"],
@@ -18982,6 +19021,7 @@ All fields are combined with a logical 'AND'. */
 	restaurant_id?:number,
 	review?:PartialObjects["review_obj_rel_insert_input"],
 	review_id?:number,
+	scheduled_time?:PartialObjects["timestamptz"],
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
@@ -19377,6 +19417,7 @@ All fields are combined with a logical 'AND'. */
 			refund_amount?:PartialObjects["money"],
 			restaurant_id?:number,
 			review_id?:number,
+			scheduled_time?:PartialObjects["timestamptz"],
 			/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 			stripe_payment_id?:number,
@@ -19402,6 +19443,7 @@ All fields are combined with a logical 'AND'. */
 	refund_amount?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
 	review_id?:PartialObjects["order_by"],
+	scheduled_time?:PartialObjects["order_by"],
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:PartialObjects["order_by"],
 	stripe_payment_id?:PartialObjects["order_by"],
@@ -19428,6 +19470,7 @@ All fields are combined with a logical 'AND'. */
 			refund_amount?:PartialObjects["money"],
 			restaurant_id?:number,
 			review_id?:number,
+			scheduled_time?:PartialObjects["timestamptz"],
 			/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 			stripe_payment_id?:number,
@@ -19453,6 +19496,7 @@ All fields are combined with a logical 'AND'. */
 	refund_amount?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
 	review_id?:PartialObjects["order_by"],
+	scheduled_time?:PartialObjects["order_by"],
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:PartialObjects["order_by"],
 	stripe_payment_id?:PartialObjects["order_by"],
@@ -19494,6 +19538,7 @@ All fields are combined with a logical 'AND'. */
 	estimated_food_ready_time?:PartialObjects["order_by"],
 	firebase_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
+	in_process?:PartialObjects["order_by"],
 	items_aggregate?:PartialObjects["restaurant_order_item_aggregate_order_by"],
 	items_cost?:PartialObjects["order_by"],
 	notes?:PartialObjects["order_by"],
@@ -19505,6 +19550,7 @@ All fields are combined with a logical 'AND'. */
 	restaurant_id?:PartialObjects["order_by"],
 	review?:PartialObjects["review_order_by"],
 	review_id?:PartialObjects["order_by"],
+	scheduled_time?:PartialObjects["order_by"],
 	status?:PartialObjects["order_by"],
 	stripe_payment_id?:PartialObjects["order_by"],
 	tax?:PartialObjects["order_by"],
@@ -19737,6 +19783,7 @@ All fields are combined with a logical 'AND'. */
 	refund_amount?:PartialObjects["money"],
 	restaurant_id?:number,
 	review_id?:number,
+	scheduled_time?:PartialObjects["timestamptz"],
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
@@ -19851,6 +19898,7 @@ All fields are combined with a logical 'AND'. */
 	refund_amount?:PartialObjects["money"],
 	restaurant_id?:number,
 	review_id?:number,
+	scheduled_time?:PartialObjects["timestamptz"],
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
@@ -28480,6 +28528,7 @@ export type restaurant_item = {
 	description?:translation,
 	description_id?:number,
 	id:number,
+	image?:string,
 	/** daily, special */
 	item_type:string,
 	/** An object relationship */
@@ -28578,6 +28627,7 @@ export type restaurant_item_bool_exp = {
 	description?:translation_bool_exp,
 	description_id?:Int_comparison_exp,
 	id?:Int_comparison_exp,
+	image?:String_comparison_exp,
 	item_type?:String_comparison_exp,
 	name?:translation_bool_exp,
 	name_id?:Int_comparison_exp,
@@ -28615,6 +28665,7 @@ export type restaurant_item_insert_input = {
 	description?:translation_obj_rel_insert_input,
 	description_id?:number,
 	id?:number,
+	image?:string,
 	/** daily, special */
 	item_type?:string,
 	name?:translation_obj_rel_insert_input,
@@ -28634,6 +28685,7 @@ export type restaurant_item_max_fields = {
 	cost?:money,
 	description_id?:number,
 	id?:number,
+	image?:string,
 	/** daily, special */
 	item_type?:string,
 	name_id?:number,
@@ -28649,6 +28701,7 @@ export type restaurant_item_max_order_by = {
 	cost?:order_by,
 	description_id?:order_by,
 	id?:order_by,
+	image?:order_by,
 	/** daily, special */
 	item_type?:order_by,
 	name_id?:order_by,
@@ -28665,6 +28718,7 @@ export type restaurant_item_min_fields = {
 	cost?:money,
 	description_id?:number,
 	id?:number,
+	image?:string,
 	/** daily, special */
 	item_type?:string,
 	name_id?:number,
@@ -28680,6 +28734,7 @@ export type restaurant_item_min_order_by = {
 	cost?:order_by,
 	description_id?:order_by,
 	id?:order_by,
+	image?:order_by,
 	/** daily, special */
 	item_type?:order_by,
 	name_id?:order_by,
@@ -29068,6 +29123,7 @@ export type restaurant_item_order_by = {
 	description?:translation_order_by,
 	description_id?:order_by,
 	id?:order_by,
+	image?:order_by,
 	item_type?:order_by,
 	name?:translation_order_by,
 	name_id?:order_by,
@@ -29092,6 +29148,7 @@ export enum restaurant_item_select_column {
 	cost = "cost",
 	description_id = "description_id",
 	id = "id",
+	image = "image",
 	item_type = "item_type",
 	name_id = "name_id",
 	position = "position",
@@ -29108,6 +29165,7 @@ export type restaurant_item_set_input = {
 	cost?:money,
 	description_id?:number,
 	id?:number,
+	image?:string,
 	/** daily, special */
 	item_type?:string,
 	name_id?:number,
@@ -29202,6 +29260,7 @@ export type restaurant_item_stream_cursor_value_input = {
 	cost?:money,
 	description_id?:number,
 	id?:number,
+	image?:string,
 	/** daily, special */
 	item_type?:string,
 	name_id?:number,
@@ -29242,6 +29301,7 @@ export enum restaurant_item_update_column {
 	cost = "cost",
 	description_id = "description_id",
 	id = "id",
+	image = "image",
 	item_type = "item_type",
 	name_id = "name_id",
 	position = "position",
@@ -30619,6 +30679,8 @@ export type restaurant_order = {
 	estimated_food_ready_time?:timestamptz,
 	firebase_id?:string,
 	id:number,
+	/** A computed field, executes function "in_process" */
+	in_process?:boolean,
 	/** An array relationship */
 	items:restaurant_order_item[],
 	/** An aggregate relationship */
@@ -30636,6 +30698,7 @@ export type restaurant_order = {
 	/** An object relationship */
 	review?:review,
 	review_id?:number,
+	scheduled_time?:timestamptz,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status:string,
 	stripe_payment_id?:number,
@@ -30738,6 +30801,7 @@ export type restaurant_order_bool_exp = {
 	estimated_food_ready_time?:timestamptz_comparison_exp,
 	firebase_id?:String_comparison_exp,
 	id?:Int_comparison_exp,
+	in_process?:Boolean_comparison_exp,
 	items?:restaurant_order_item_bool_exp,
 	items_cost?:money_comparison_exp,
 	notes?:String_comparison_exp,
@@ -30749,6 +30813,7 @@ export type restaurant_order_bool_exp = {
 	restaurant_id?:Int_comparison_exp,
 	review?:review_bool_exp,
 	review_id?:Int_comparison_exp,
+	scheduled_time?:timestamptz_comparison_exp,
 	status?:String_comparison_exp,
 	stripe_payment_id?:Int_comparison_exp,
 	tax?:money_comparison_exp,
@@ -30828,6 +30893,7 @@ export type restaurant_order_insert_input = {
 	restaurant_id?:number,
 	review?:review_obj_rel_insert_input,
 	review_id?:number,
+	scheduled_time?:timestamptz,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
@@ -31285,6 +31351,7 @@ export type restaurant_order_max_fields = {
 	refund_amount?:money,
 	restaurant_id?:number,
 	review_id?:number,
+	scheduled_time?:timestamptz,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
@@ -31311,6 +31378,7 @@ export type restaurant_order_max_order_by = {
 	refund_amount?:order_by,
 	restaurant_id?:order_by,
 	review_id?:order_by,
+	scheduled_time?:order_by,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:order_by,
 	stripe_payment_id?:order_by,
@@ -31338,6 +31406,7 @@ export type restaurant_order_min_fields = {
 	refund_amount?:money,
 	restaurant_id?:number,
 	review_id?:number,
+	scheduled_time?:timestamptz,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
@@ -31364,6 +31433,7 @@ export type restaurant_order_min_order_by = {
 	refund_amount?:order_by,
 	restaurant_id?:order_by,
 	review_id?:order_by,
+	scheduled_time?:order_by,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:order_by,
 	stripe_payment_id?:order_by,
@@ -31409,6 +31479,7 @@ export type restaurant_order_order_by = {
 	estimated_food_ready_time?:order_by,
 	firebase_id?:order_by,
 	id?:order_by,
+	in_process?:order_by,
 	items_aggregate?:restaurant_order_item_aggregate_order_by,
 	items_cost?:order_by,
 	notes?:order_by,
@@ -31420,6 +31491,7 @@ export type restaurant_order_order_by = {
 	restaurant_id?:order_by,
 	review?:review_order_by,
 	review_id?:order_by,
+	scheduled_time?:order_by,
 	status?:order_by,
 	stripe_payment_id?:order_by,
 	tax?:order_by,
@@ -31683,6 +31755,7 @@ export enum restaurant_order_select_column {
 	refund_amount = "refund_amount",
 	restaurant_id = "restaurant_id",
 	review_id = "review_id",
+	scheduled_time = "scheduled_time",
 	status = "status",
 	stripe_payment_id = "stripe_payment_id",
 	tax = "tax",
@@ -31709,6 +31782,7 @@ export type restaurant_order_set_input = {
 	refund_amount?:money,
 	restaurant_id?:number,
 	review_id?:number,
+	scheduled_time?:timestamptz,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
@@ -31831,6 +31905,7 @@ export type restaurant_order_stream_cursor_value_input = {
 	refund_amount?:money,
 	restaurant_id?:number,
 	review_id?:number,
+	scheduled_time?:timestamptz,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
@@ -31887,6 +31962,7 @@ export enum restaurant_order_update_column {
 	refund_amount = "refund_amount",
 	restaurant_id = "restaurant_id",
 	review_id = "review_id",
+	scheduled_time = "scheduled_time",
 	status = "status",
 	stripe_payment_id = "stripe_payment_id",
 	tax = "tax",
@@ -52077,6 +52153,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		image:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		item_type:{
 			type:"String_comparison_exp",
 			array:false,
@@ -52226,6 +52308,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		image:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		item_type:{
 			type:"String",
 			array:false,
@@ -52306,6 +52394,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		image:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		item_type:{
 			type:"order_by",
 			array:false,
@@ -52363,6 +52457,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		image:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -53187,6 +53287,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		image:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		item_type:{
 			type:"order_by",
 			array:false,
@@ -53284,6 +53390,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		id:{
 			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		image:{
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -53504,6 +53616,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		id:{
 			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		image:{
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -56772,6 +56890,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		in_process:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		items:{
 			type:"restaurant_order_item_bool_exp",
 			array:false,
@@ -56834,6 +56958,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		review_id:{
 			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		scheduled_time:{
+			type:"timestamptz_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -57201,6 +57331,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		review_id:{
 			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		scheduled_time:{
+			type:"timestamptz",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -58276,6 +58412,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		scheduled_time:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		status:{
 			type:"order_by",
 			array:false,
@@ -58399,6 +58541,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		review_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		scheduled_time:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -58542,6 +58690,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		in_process:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		items_aggregate:{
 			type:"restaurant_order_item_aggregate_order_by",
 			array:false,
@@ -58603,6 +58757,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		review_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		scheduled_time:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -59150,6 +59310,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		scheduled_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		status:{
 			type:"String",
 			array:false,
@@ -59480,6 +59646,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		review_id:{
 			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		scheduled_time:{
+			type:"timestamptz",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -68670,6 +68842,7 @@ export const ReturnTypes: Record<string,any> = {
 		description:"translation",
 		description_id:"Int",
 		id:"Int",
+		image:"String",
 		item_type:"String",
 		name:"translation",
 		name_id:"Int",
@@ -68712,6 +68885,7 @@ export const ReturnTypes: Record<string,any> = {
 		cost:"money",
 		description_id:"Int",
 		id:"Int",
+		image:"String",
 		item_type:"String",
 		name_id:"Int",
 		position:"Int",
@@ -68724,6 +68898,7 @@ export const ReturnTypes: Record<string,any> = {
 		cost:"money",
 		description_id:"Int",
 		id:"Int",
+		image:"String",
 		item_type:"String",
 		name_id:"Int",
 		position:"Int",
@@ -69250,6 +69425,7 @@ export const ReturnTypes: Record<string,any> = {
 		estimated_food_ready_time:"timestamptz",
 		firebase_id:"String",
 		id:"Int",
+		in_process:"Boolean",
 		items:"restaurant_order_item",
 		items_aggregate:"restaurant_order_item_aggregate",
 		items_cost:"money",
@@ -69262,6 +69438,7 @@ export const ReturnTypes: Record<string,any> = {
 		restaurant_id:"Int",
 		review:"review",
 		review_id:"Int",
+		scheduled_time:"timestamptz",
 		status:"String",
 		stripe_payment_id:"Int",
 		tax:"money",
@@ -69432,6 +69609,7 @@ export const ReturnTypes: Record<string,any> = {
 		refund_amount:"money",
 		restaurant_id:"Int",
 		review_id:"Int",
+		scheduled_time:"timestamptz",
 		status:"String",
 		stripe_payment_id:"Int",
 		tax:"money",
@@ -69455,6 +69633,7 @@ export const ReturnTypes: Record<string,any> = {
 		refund_amount:"money",
 		restaurant_id:"Int",
 		review_id:"Int",
+		scheduled_time:"timestamptz",
 		status:"String",
 		stripe_payment_id:"Int",
 		tax:"money",

@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
+import 'package:mezcalmos/Shared/widgets/MezPeriodPicker/MezPeriodPicker.dart';
 import 'package:sizer/sizer.dart';
 
 //
@@ -87,25 +88,27 @@ class _ROpSpecialItemTimeState extends State<ROpSpecialItemTime> {
                         )),
                     onTap: () {
                       // Todo hasura @m66are
-                      // showModalBottomSheet<PeriodOfTime>(
-                      //     context: context,
-                      //     isScrollControlled: true,
-                      //     builder: (BuildContext ctx) {
-                      //       return MezPeriodPicker(
-                      //         startDate: DateTime.now(),
-                      //         numberOfDaysInterval: 7,
-                      //         periodOfTime: periodTime.value,
-                      //         serviceSchedule: widget
-                      //             .viewController.restaurant.value!.schedule!,
-                      //       );
-                      //     }).then((PeriodOfTime? value) {
-                      //   if (value != null) {
-                      //     periodTime.value = value;
-                      //     widget.viewController.periodOfTime.value = value;
-                      //     widget.viewController.startDay.value = value.start;
-                      //     widget.viewController.endDate.value = value.end;
-                      //   }
-                      // });
+                      if (widget.viewController.schedule.value != null) {
+                        showModalBottomSheet<PeriodOfTime>(
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (BuildContext ctx) {
+                              return MezPeriodPicker(
+                                startDate: DateTime.now(),
+                                numberOfDaysInterval: 7,
+                                periodOfTime: periodTime.value,
+                                serviceSchedule:
+                                    widget.viewController.schedule.value!,
+                              );
+                            }).then((PeriodOfTime? value) {
+                          if (value != null) {
+                            periodTime.value = value;
+                            widget.viewController.periodOfTime.value = value;
+                            widget.viewController.startDay.value = value.start;
+                            widget.viewController.endDate.value = value.end;
+                          }
+                        });
+                      }
                     },
                   ),
                 ),

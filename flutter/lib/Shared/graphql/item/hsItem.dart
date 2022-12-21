@@ -25,12 +25,13 @@ Future<bool> update_item_by_id(
       variables: Variables$Mutation$upadateItem(
         id: itemId,
         itemData: Input$restaurant_item_set_input(
+          image: item.image,
           category_id: item.categoryId,
           cost: item.cost.toDouble(),
           available: item.available,
           position: item.position,
-          special_period_end: item.startsAt?.toUtc().toString(),
-          special_period_start: item.endsAt?.toUtc().toString(),
+          special_period_start: item.startsAt?.toUtc().toString(),
+          special_period_end: item.endsAt?.toUtc().toString(),
         ),
       ),
     ),
@@ -43,6 +44,7 @@ Future<bool> update_item_by_id(
 
 Future<int?> add_one_item(
     {required Item item, required int restaurantId, int? categoryId}) async {
+  mezDbgPrint("Adding this item 🇹🇳 ${item.toJson()}");
   final QueryResult<Mutation$addItem> response =
       await _db.graphQLClient.mutate$addItem(Options$Mutation$addItem(
           variables: Variables$Mutation$addItem(
@@ -62,6 +64,10 @@ Future<int?> add_one_item(
             ]),
       ),
     ),
+    special_period_end: item.endsAt?.toUtc().toString(),
+    special_period_start: item.startsAt?.toString(),
+    item_type: item.itemType.toFirebaseFormatString(),
+    image: item.image,
     description: Input$translation_obj_rel_insert_input(
       data: Input$translation_insert_input(
         service_provider_id: restaurantId,
@@ -131,6 +137,7 @@ Future<Item?> get_one_item_by_id(int itemId, {bool withCache = true}) async {
         name: toLanguageMap(translations: data.name.translations),
         id: data.id,
         nameId: data.name.id,
+        image: data.image,
         descriptionId: data.description?.id,
         categoryId: data.category_id,
         startsAt: (data.special_period_start != null)
@@ -154,6 +161,64 @@ Future<Item?> get_one_item_by_id(int itemId, {bool withCache = true}) async {
     return item;
   }
   return null;
+}
+
+// arrays //
+Future<List<Item>> get_restaurant_items_without_cat(int restaurantId,
+    {bool withCache = true}) async {
+  final QueryResult<Query$getRestaurantItemsWithoutCat> response =
+      await _db.graphQLClient.query$getRestaurantItemsWithoutCat(
+          Options$Query$getRestaurantItemsWithoutCat(
+              fetchPolicy:
+                  withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+              variables: Variables$Query$getRestaurantItemsWithoutCat(
+                  restaurantId: restaurantId)));
+  if (response.parsedData?.restaurant_item == null) {
+    throw Exception(
+        "🚨🚨🚨 Hasura get restaurant items no cat querry exception =>${response.exception}");
+  } else {
+    return response.parsedData!.restaurant_item
+        .map((Query$getRestaurantItemsWithoutCat$restaurant_item item) {
+      return Item(
+          name: toLanguageMap(translations: item.name.translations),
+          itemType: item.item_type.toItemType(),
+          id: item.id,
+          image: item.image,
+          available: item.available,
+          cost: item.cost);
+    }).toList();
+  }
+}
+
+Future<List<Item>> get_restaurant_special_items(int restaurantId,
+    {bool withCache = true}) async {
+  final QueryResult<Query$getRestaurantSpecialItems> response = await _db
+      .graphQLClient
+      .query$getRestaurantSpecialItems(Options$Query$getRestaurantSpecialItems(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+          variables: Variables$Query$getRestaurantSpecialItems(
+              restaurantId: restaurantId)));
+  if (response.parsedData?.restaurant_item == null) {
+    throw Exception(
+        "🚨🚨🚨 Hasura get restaurant special items  querry exception =>${response.exception}");
+  } else {
+    return response.parsedData!.restaurant_item
+        .map((Query$getRestaurantSpecialItems$restaurant_item item) => Item(
+            name: toLanguageMap(translations: item.name.translations),
+            itemType: item.item_type.toItemType(),
+            id: item.id,
+            image: item.image,
+            available: item.available,
+            startsAt: (item.special_period_start != null)
+                ? DateTime.tryParse(item.special_period_start!)
+                : null,
+            endsAt: (item.special_period_end != null)
+                ? DateTime.tryParse(item.special_period_end!)
+                : null,
+            cost: item.cost))
+        .toList();
+  }
 }
 
 // helpers //

@@ -79,7 +79,7 @@ query getRestaurantCategories($id: Int) {
       }
       item_type
      
-
+image
       cost
       available
       position
@@ -92,3 +92,4 @@ query getRestaurantCategories($id: Int) {
     }
   }
 }
+

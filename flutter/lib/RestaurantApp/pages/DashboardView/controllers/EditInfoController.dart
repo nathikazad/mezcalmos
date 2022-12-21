@@ -43,9 +43,11 @@ class ROpEditInfoController {
   final Rxn<LanguageType> editablePrLang = Rxn();
   final Rxn<LanguageType> editableScLang = Rxn();
   final Rxn<File> newImageFile = Rxn();
+  Rxn<ServiceStatus> _serviceStatus = Rxn();
 
   final RxBool imageLoading = RxBool(false);
   final RxBool isAvailable = RxBool(false);
+  final RxBool isApproved = RxBool(true);
 
   RxDouble cuurentPage = RxDouble(0);
 // LATE VARS
@@ -68,6 +70,10 @@ class ROpEditInfoController {
   Future<void> fetchRestaurant() async {
     restaurant.value =
         await get_restaurant_by_id(id: restaurantId, withCache: false);
+    _serviceStatus.value =
+        await get_restaurant_status(restaurantId: restaurantId);
+    isApproved.value =
+        await get_restaurant_approved(restaurantId: restaurantId) ?? false;
   }
 
   void _updateResTInfo() {
@@ -156,6 +162,16 @@ class ROpEditInfoController {
       Get.snackbar("${_i18n()["error"]}", "${_i18n()["selectPrimaryFirst"]}");
       return false;
     }
+  }
+
+  Future<void> turnOffOrders() async {
+    _serviceStatus.value = await update_restaurant_status(
+        id: restaurantId, status: ServiceStatus.Closed_temporarily);
+  }
+
+  Future<void> turnOnOrders() async {
+    _serviceStatus.value = await update_restaurant_status(
+        id: restaurantId, status: ServiceStatus.Open);
   }
 
   //

@@ -9,7 +9,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
-Future<void> update_translation(
+Future<bool> update_translation(
     {required LanguageType langType,
     required String value,
     // required ServiceType serviceType,
@@ -24,13 +24,14 @@ Future<void> update_translation(
                   language_id: langType.toFirebaseFormatString(),
                   translation_id: translationId),
               data: Input$translation_value_set_input(
-                  language_id: langType.toFirebaseFormatString(),
+                  //    language_id: langType.toFirebaseFormatString(),
                   value: value))));
-  if (response.hasException) {
-    mezDbgPrint(
+  if (response.parsedData?.update_translation_value_by_pk == null) {
+    throw Exception(
         "🚨🚨🚨 Hasura translation mutation exception =>${response.exception}");
   } else {
     mezDbgPrint("✅✅✅ Hasura translation mutation success ");
+    return true;
   }
 }
 

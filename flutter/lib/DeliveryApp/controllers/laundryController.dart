@@ -32,29 +32,34 @@ class LaundryOrderController extends GetxController {
   //   });
   // }
 
-  Future<ServerResponse> otwPickupFromCustomer(String orderId) async {
-    return _callLaundryCloudFunction("laundryStartPickupFromCustomer", orderId);
+  Future<ServerResponse> otwPickupFromCustomer(int orderId) async {
+    return _callLaundryCloudFunction(
+        "laundryStartPickupFromCustomer", orderId.toString());
   }
 
-  Future<ServerResponse> pickedUpFromCustomer(String orderId) async {
-    return _callLaundryCloudFunction("laundryPickedUpFromCustomer", orderId);
+  Future<ServerResponse> pickedUpFromCustomer(int orderId) async {
+    return _callLaundryCloudFunction(
+        "laundryPickedUpFromCustomer", orderId.toString());
   }
 
-  Future<ServerResponse> atLaundryOrder(String orderId) async {
-    return _callLaundryCloudFunction("laundryAtFacility", orderId,
+  Future<ServerResponse> atLaundryOrder(int orderId) async {
+    return _callLaundryCloudFunction("laundryAtFacility", orderId.toString(),
         optionalParams: <String, dynamic>{});
   }
 
-  Future<ServerResponse> otwPickupFromLaundry(String orderId) async {
-    return _callLaundryCloudFunction("laundryStartPickupFromLaundry", orderId);
+  Future<ServerResponse> otwPickupFromLaundry(int orderId) async {
+    return _callLaundryCloudFunction(
+        "laundryStartPickupFromLaundry", orderId.toString());
   }
 
-  Future<ServerResponse> pickedUpFromLaundry(String orderId) async {
-    return _callLaundryCloudFunction("laundryPickedUpFromLaundry", orderId);
+  Future<ServerResponse> pickedUpFromLaundry(int orderId) async {
+    return _callLaundryCloudFunction(
+        "laundryPickedUpFromLaundry", orderId.toString());
   }
 
-  Future<ServerResponse> deliveredOrder(String orderId) async {
-    return _callLaundryCloudFunction("laundryFinishDropoff", orderId);
+  Future<ServerResponse> deliveredOrder(int orderId) async {
+    return _callLaundryCloudFunction(
+        "laundryFinishDropoff", orderId.toString());
   }
 
   Future<ServerResponse> _callLaundryCloudFunction(

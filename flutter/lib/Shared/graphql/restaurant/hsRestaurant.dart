@@ -200,6 +200,24 @@ Future<LanguageType?> get_restaurant_priamry_lang(int restaurantId) async {
   return null;
 }
 
+Future<Schedule?> get_restaurant_schedule(
+    {required int restaurantId, bool withCache = true}) async {
+  final QueryResult<Query$getRestaurantSchedule> response = await _db
+      .graphQLClient
+      .query$getRestaurantSchedule(Options$Query$getRestaurantSchedule(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+          variables: Variables$Query$getRestaurantSchedule(id: restaurantId)));
+  if (response.parsedData?.restaurant_by_pk == null) {
+    throw Exception(
+        "🚨🚨🚨 restuarnt schedule  query errors : ${response.exception}");
+  } else if (response.parsedData?.restaurant_by_pk?.schedule != null) {
+    mezDbgPrint("✅✅✅ restuarnt schedule lang query success");
+    return Schedule.fromData(response.parsedData!.restaurant_by_pk!.schedule!);
+  }
+  return null;
+}
+
 // Mutations //
 
 Future<Restaurant> update_restaurant_info(
@@ -387,6 +405,22 @@ Future<ServiceStatus?> get_restaurant_status(
         "🚨🚨🚨 Getting restaurant $restaurantId status exception \n ${response.exception}");
   } else {
     return response.parsedData!.restaurant_by_pk!.open_status.toServiceStatus();
+  }
+}
+
+Future<bool?> get_restaurant_approved({required int restaurantId}) async {
+  final QueryResult<Query$getRestaurantAprroved> response =
+      await _db.graphQLClient.query$getRestaurantAprroved(
+    Options$Query$getRestaurantAprroved(
+      fetchPolicy: FetchPolicy.networkOnly,
+      variables: Variables$Query$getRestaurantAprroved(id: restaurantId),
+    ),
+  );
+  if (response.parsedData?.restaurant_by_pk == null) {
+    throw Exception(
+        "🚨🚨🚨 Getting restaurant $restaurantId status exception \n ${response.exception}");
+  } else {
+    return response.parsedData!.restaurant_by_pk!.approved;
   }
 }
 

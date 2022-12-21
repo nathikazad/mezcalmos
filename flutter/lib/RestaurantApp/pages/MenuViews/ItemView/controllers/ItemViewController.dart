@@ -7,20 +7,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 class ROpItemViewController {
   late RestaurantInfoController _restaurantInfoController;
@@ -68,6 +69,7 @@ class ROpItemViewController {
 
   RxBool needToRefetch = RxBool(false);
   RxBool isInitalized = RxBool(false);
+  Rxn<Schedule> schedule = Rxn();
 
   bool get isEditing => editMode.value && editableItem.value != null;
   late int restaurantId;
@@ -76,27 +78,14 @@ class ROpItemViewController {
       String? categoryId,
       bool? specials,
       required String restaurantId}) async {
-    // Get.put(RestaurantInfoController(), permanent: false);
-    // _restaurantInfoController = Get.find<RestaurantInfoController>();
-    // _restaurantInfoController.init(restId: restaurantId);
-    // restaurant.value =
-    //     await _restaurantInfoController.getRestaurantAsFuture(restaurantId);
-    // mezDbgPrint(
-    //     "RestaurantId ===============================>>> $restaurantId");
-    // mezDbgPrint(
-    //     "Restaurant ===============================>>> ${restaurant.value!.toJson()}");
-    // _restaurantInfoController
-    //     .getRestaurant(restaurantId)
-    //     .listen((Restaurant? event) {
-    //   if (event != null) {
-    //     restaurant.value = event;
-    //   }
-    // });
-    // if (specials != null) {
-    //   specialMode.value = specials;
-    // }
-    // mezDbgPrint("Special mode =============>${specialMode.value}");
     this.restaurantId = int.parse(restaurantId);
+    if (specials != null) {
+      specialMode.value = specials;
+    }
+    if (specialMode.value) {
+      schedule.value = await get_restaurant_schedule(
+          restaurantId: this.restaurantId, withCache: false);
+    }
     prLang.value = await get_restaurant_priamry_lang(4) ?? LanguageType.ES;
     scLang.value = prLang.value.toOpLang();
     await _assignCategories();
@@ -111,6 +100,7 @@ class ROpItemViewController {
   Future<void> _initEditMode(
       {required String itemId, String? categoryId}) async {
     editMode.value = true;
+
     editableItem.value =
         await get_one_item_by_id(int.parse(itemId), withCache: false);
     mezDbgPrint(editableItem.value!.toJson());
@@ -124,8 +114,8 @@ class ROpItemViewController {
     itemPriceController.text = editableItem.value!.cost.toString();
     _assignChoices();
     if (editableItem.value!.categoryId != null) {
-      currentCategory.value =
-          await get_category_by_id(editableItem.value!.categoryId!);
+      currentCategory.value = await get_category_by_id(
+          categoryId: editableItem.value!.categoryId!, withCache: false);
     }
   }
 
@@ -158,17 +148,6 @@ class ROpItemViewController {
     return newItem;
   }
 
-  void switchChoiceAv(
-      {required String choiceId,
-      required String optionId,
-      required bool value}) {
-    itemOptions
-        .firstWhere((Option p0) => p0.id == optionId)
-        .choices
-        .firstWhere((Choice element) => element.id == choiceId)
-        .available = value;
-  }
-
   void switchItemAv(bool v) {
     editableItem.value!.available = v;
     editableItem.refresh();
@@ -186,12 +165,19 @@ class ROpItemViewController {
         newImageUrl.value = value;
       });
     }
-
+    const String _tmpLmode =
+        String.fromEnvironment('LMODE', defaultValue: "prod");
+    final AppLaunchMode mode = _tmpLmode.toLaunchMode();
+    if (mode == AppLaunchMode.dev || mode == AppLaunchMode.stage) {
+      mezDbgPrint("Settign default image");
+      newImageUrl.value =
+          "https://s.inyourpocket.com/gallery/helsinki/2019/11/shutterstock-1306257490.jpg";
+    }
     if (editMode.isFalse) {
       final int? newItemId = await add_one_item(
           item: _contructItem(),
           restaurantId: restaurantId,
-          categoryId: currentCategory.value!.id);
+          categoryId: currentCategory.value?.id);
       if (newItemId != null) {
         mezDbgPrint(
             "👌🏻👌🏻👌🏻 Item added successfuly id : $newItemId 👌🏻👌🏻👌🏻");

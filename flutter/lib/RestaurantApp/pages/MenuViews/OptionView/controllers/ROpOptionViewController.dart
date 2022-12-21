@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/graphql/item/option/hsOption.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
@@ -10,7 +11,6 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 enum FormValid { Valid, PrimaryNotValid, SecondaryNotValid }
 
@@ -201,7 +201,7 @@ class ROpOptionViewController {
     if (int.tryParse(editableOption.value!.id) != null) {
       final bool result = await delete_option_by_id(
           optionId: int.parse(editableOption.value!.id));
-      result ? Get.back() : null;
+      result ? MezRouter.back() : null;
       return result;
     }
     return null;

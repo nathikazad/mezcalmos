@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/TwoCirclesAvatars.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
@@ -13,7 +14,6 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
         ["pages"]["CurrentOrders"]["CurrentOrderViewScreen"]["Components"]
@@ -259,8 +259,8 @@ class AnimatedOrderInfoCard extends StatelessWidget {
             withPadding: false,
             onTap: onServiceMsgClick,
             showRedDot: (_serviceDriverChatId() != null)
-                ? Get.find<OrderController>()
-                    .hasNewMessageNotification(_serviceDriverChatId()!)
+                ? Get.find<OrderController>().hasNewMessageNotification(
+                    _serviceDriverChatId()!.toString())
                 : false,
           ),
         ),
@@ -312,8 +312,8 @@ class AnimatedOrderInfoCard extends StatelessWidget {
             withPadding: false,
             onTap: onCustomerMsgClick,
             showRedDot: (_customerDriverChatId() != null)
-                ? Get.find<OrderController>()
-                    .hasNewMessageNotification(_customerDriverChatId()!)
+                ? Get.find<OrderController>().hasNewMessageNotification(
+                    _customerDriverChatId()!.toString())
                 : false,
           ),
         ),
@@ -321,7 +321,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
     );
   }
 
-  String? _customerDriverChatId() {
+  int? _customerDriverChatId() {
     switch (order.orderType) {
       case OrderType.Laundry:
         return (order as LaundryOrder).getCustomerDriverChatId();
@@ -334,7 +334,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
     return null;
   }
 
-  String? _serviceDriverChatId() {
+  int? _serviceDriverChatId() {
     switch (order.orderType) {
       case OrderType.Laundry:
         return (order as LaundryOrder).getServiceDriverChatId();

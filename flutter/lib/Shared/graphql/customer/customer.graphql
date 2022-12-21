@@ -41,6 +41,14 @@ query get_customer_info($customer_id : Int!) {
 }
 
 
+# Set customer's infos
+mutation set_customer_info($user_id : Int! , $app_version: String!) {
+ insert_customer_one(object : {user_id :$user_id , app_version: $app_version})
+  {
+    user_id
+  }
+}
+
 
 # Get customer's order
 query get_customer_orders($customer_id : Int!) {

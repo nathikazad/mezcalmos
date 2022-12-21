@@ -8,12 +8,12 @@ export async function pushChat(chat?: ChatData): Promise<string> {
   return chatId;
 }
 
-export async function getChat(chatId: string): Promise<ChatObject> {
+export async function getChat(chatId: number): Promise<ChatObject> {
   let chatData: ChatData = (await chatNode(chatId).once('value')).val();
   return new ChatObject(chatData);
 }
 
-export async function setChat(chatId: string, chat: ChatData) {
+export async function setChat(chatId: number, chat: ChatData) {
   return (await chatNode(chatId).set(chat))
 }
 

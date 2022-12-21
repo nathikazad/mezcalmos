@@ -5,9 +5,11 @@ import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/order/mutations/hsRestaurantOrderMutations.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -78,7 +80,7 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
               ),
             ),
             Spacer(),
-            if (_showBtn) _editSetButton(context)
+            _editSetButton(context)
           ],
         ),
       ),
@@ -157,41 +159,52 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
   }
 
   Widget _confirmButton() {
-    return InkWell(
-      borderRadius: BorderRadius.circular(8),
-      onTap: () {
-        mezDbgPrint("Select date =====>>>>>${selectedDate.value}");
-        if (selectedDate.value != null) {
-          _setOrderEstTime(selectedDate.value!);
-        }
+    return MezButton(
+      label: "${_i18n()["confirm"]}",
+      onClick: () async {
+        await _setOrderEstTime(selectedDate.value!);
+
+        MezRouter.popDialog(closeOverlays: true);
+        showSuccessSnackBar(
+            tilte: "Done", subtitle: "Estimated food ready time saved");
       },
-      child: Ink(
-        height: 50,
-        width: double.infinity,
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-            gradient: bluePurpleGradient,
-            borderRadius: BorderRadius.circular(8)),
-        child: Obx(
-          () => Container(
-            padding: const EdgeInsets.all(5),
-            alignment: Alignment.center,
-            child: (isClicked.value)
-                ? Transform.scale(
-                    scale: 0.3,
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                    ),
-                  )
-                : Text(
-                    '${_i18n()["confirm"]}',
-                    style:
-                        Get.textTheme.bodyText1?.copyWith(color: Colors.white),
-                  ),
-          ),
-        ),
-      ),
+      withGradient: true,
     );
+    // return InkWell(
+    //   borderRadius: BorderRadius.circular(8),
+    //   onTap: () async {
+    //     mezDbgPrint("Select date =====>>>>>${selectedDate.value}");
+    //     if (selectedDate.value != null) {
+
+    //     }
+    //   },
+    //   child: Ink(
+    //     height: 50,
+    //     width: double.infinity,
+    //     padding: const EdgeInsets.all(8),
+    //     decoration: BoxDecoration(
+    //         gradient: bluePurpleGradient,
+    //         borderRadius: BorderRadius.circular(8)),
+    //     child: Obx(
+    //       () => Container(
+    //         padding: const EdgeInsets.all(5),
+    //         alignment: Alignment.center,
+    //         child: (isClicked.value)
+    //             ? Transform.scale(
+    //                 scale: 0.3,
+    //                 child: CircularProgressIndicator(
+    //                   color: Colors.white,
+    //                 ),
+    //               )
+    //             : Text(
+    //                 '${_i18n()["confirm"]}',
+    //                 style:
+    //                     Get.textTheme.bodyText1?.copyWith(color: Colors.white),
+    //               ),
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 
   InkWell _cancelButton() {
@@ -332,24 +345,17 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
     );
   }
 
-  void _setOrderEstTime(DateTime value) {
+  Future<void> _setOrderEstTime(DateTime value) async {
     isClicked.value = true;
     if (value.difference(widget.order.orderTime).inMinutes.abs() > 5 &&
         value.difference(DateTime.now().toLocal()).inMinutes.abs() > 5) {
-      // TODO handle @m66are handle set edt time
-
-      // orderController
-      //     .setEstimatedFoodReadyTime(widget.order.orderId.toString(), value)
-      //     .whenComplete(() {
-      //   isClicked.value = false;
-      // }).then((ServerResponse value) {
-      //   if (value.success) {
-      //     Get.back(closeOverlays: true);
-      //   }
-      // }).onError((Object? error, StackTrace stackTrace) {
-      //   mezDbgPrint("Error seeting time =====>$error");
-      //   mezDbgPrint("Error seeting time =====>$stackTrace");
-      // });
+      try {
+        await set_food_est_ready_time(
+            orderId: widget.order.orderId, time: value);
+      } catch (e, stk) {
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
+      }
     } else {
       isClicked.value = false;
       MezSnackbar('${_i18n()["error"]}', '${_i18n()["minTimes"]}',

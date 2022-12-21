@@ -1,14 +1,6 @@
 // Usefull when trying to make Sizes adptable!
 import 'dart:async';
 import 'dart:io';
-import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -33,6 +25,25 @@ void mezDbgPrint(log, {bool showMilliSeconds = false}) {
     }
 
     print("[MZL][$caller][$d] $str\n");
+  });
+}
+
+void logLongString(String s) {
+  if (s.length <= 0) return;
+  const int n = 1000;
+  int startIndex = 0;
+  int endIndex = n;
+  while (startIndex < s.length) {
+    if (endIndex > s.length) endIndex = s.length;
+    mezDbgPrint(s.substring(startIndex, endIndex));
+    startIndex += n;
+    endIndex = startIndex + n;
+  }
+}
+
+void logToken(String s) {
+  s.split(".").forEach((String element) {
+    mezDbgPrint(element);
   });
 }
 

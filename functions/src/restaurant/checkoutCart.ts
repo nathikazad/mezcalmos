@@ -31,12 +31,15 @@ export interface CheckoutRequest {
   tripDistance: number,
   tripDuration: number,
   tripPolyline: string,
-  selfDelivery: boolean
+  selfDelivery: boolean,
+  scheduledTime?: string
 }
 
 export async function checkout(customerId: number, checkoutRequest: CheckoutRequest): Promise<ServerResponse> {
+  try {
 
   console.log("\n\n[+] CustomerId ==> \n\n", customerId);
+  console.log("\n\n[+] CustomerId ==> \n\n", checkoutRequest.scheduledTime);
   console.log("\n\n[+] checkoutRequest ==> \n\n", checkoutRequest);
   console.log("\n\n[+] restaurantId ==> \n\n", checkoutRequest.restaurantId);
   let restaurantPromise = getRestaurant(checkoutRequest.restaurantId);
@@ -61,10 +64,10 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     customerAppType: checkoutRequest.customerAppType,
     items: customerCart.items,
     deliveryCost: checkoutRequest.deliveryCost,
+    scheduledTime: checkoutRequest.scheduledTime
   }
 
 
-  try {
     // if (data.stripePaymentId) {
     //   order = (await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId, data.stripeFees)) as RestaurantOrder
     // }

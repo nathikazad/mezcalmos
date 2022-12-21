@@ -4,12 +4,12 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpReorderIcon.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/controllers/ROpMenuViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpMenuView"]["components"]["ROpCategoryItems"];
@@ -52,7 +52,6 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                       style: Get.textTheme.bodyText1,
                     ),
                   ),
-                  Text(widget.category.id.toString()),
                   (widget.viewController.reOrderMode.isTrue)
                       ? ROpRerorderIcon()
                       : _categoryMenuBtn(context)
@@ -138,12 +137,12 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                     ),
                     InkWell(
                       onTap: () async {
-                        Get.back();
+                        MezRouter.popDialog(closeOverlays: true);
                         final bool? result = await MezRouter.toNamed(
                             getCategoryEditRoute(
                                 categoryId: widget.category.id!,
-                                restaurantId: widget.restaurantId)) as bool;
-                        mezDbgPrint("After edit ......$result");
+                                restaurantId: widget.restaurantId)) as bool?;
+
                         if (result == true) {
                           await widget.viewController.fetchCategories();
                         }

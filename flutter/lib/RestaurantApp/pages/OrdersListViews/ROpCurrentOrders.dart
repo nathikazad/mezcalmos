@@ -4,8 +4,10 @@ import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/constants/assets.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/components/ROpOrderCard.dart';
+import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/components/ROpWaitingForApproval.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/controllers/ROpCurrentOrdersController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
@@ -54,51 +56,44 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
       onWillPop: () async {
         return widget.canGoBack;
       },
-      child: Obx(
-        () {
-          if (viewController.initalized.isTrue) {
-            return Scaffold(
-              appBar: mezcalmosAppBar(
-                AppBarLeftButtonType.Menu,
-                showNotifications: true,
-              ),
-              key: Get.find<SideMenuDrawerController>().getNewKey(),
-              drawer: ROpDrawer(),
-              body: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 8, right: 8, left: 8),
-                    child: TitleWithOnOffSwitcher(
-                      title: "Restaurant status",
-                      onTurnedOn: () {
-                        viewController.turnOnOrders();
-                        // _restaurantOpAuthController.turnOpenOn();
-                      },
-                      onTurnedOff: () {
-                        viewController.turnOffOrders();
-                        //  _restaurantOpAuthController.turnOpenOff();
-                      },
-                      initialSwitcherValue: viewController.isOpen,
-                    ),
-                  ),
-                  Container(
-                      child: (viewController.isOpen)
-                          ? _inProcessOrders()
-                          : _offlineWidget()),
-                ],
-              ),
+      child: Scaffold(
+        appBar: mezcalmosAppBar(
+          AppBarLeftButtonType.Menu,
+          showNotifications: true,
+        ),
+        key: Get.find<SideMenuDrawerController>().getNewKey(),
+        drawer: ROpDrawer(),
+        body: Obx(() {
+          if (viewController.initalized.isFalse) {
+            return MezLogoAnimation(
+              centered: true,
             );
+          } else if (viewController.isAproved == false) {
+            return ROpWaitingForApproval();
           } else {
-            return Container(
-              alignment: Alignment.center,
-              color: Colors.white,
-              child: MezLogoAnimation(
-                centered: true,
-              ),
+            return Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 8, right: 8, left: 8),
+                  child: TitleWithOnOffSwitcher(
+                    title: "Restaurant status",
+                    onTurnedOn: () {
+                      viewController.turnOnOrders();
+                    },
+                    onTurnedOff: () {
+                      viewController.turnOffOrders();
+                    },
+                    initialSwitcherValue: viewController.isOpen,
+                  ),
+                ),
+                Container(
+                    child: (viewController.isOpen)
+                        ? _inProcessOrders()
+                        : _offlineWidget()),
+              ],
             );
           }
-        },
+        }),
       ),
     );
   }
@@ -143,7 +138,7 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
                   borderRadius: 35,
                   label: '${_i18n()["pastButton"]}'.inCaps,
                   onClick: () async {
-                    await Get.toNamed(kPastOrdersListView);
+                    await MezRouter.toNamed(kPastOrdersListView);
                   },
                 ),
               ),

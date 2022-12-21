@@ -32,7 +32,12 @@ class ROpOrderViewController {
 
   // init
   Future<void> init({required int orderId}) async {
-    order.value = await get_restaurant_order_by_id(orderId: orderId);
+    try {
+      order.value = await get_restaurant_order_by_id(orderId: orderId);
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
     if (order.value == null) {
       mezDbgPrint("🚨 Can't get order $orderId 🚨 ROpOrderViewController");
     } else {
@@ -114,12 +119,11 @@ class ROpOrderViewController {
 
   Future<ServerResponse> setReadyForDelivery() async {
     return _callRestaurantCloudFunction(
-        'restaurant-readyForOrderPickup', order.value!.orderId);
+        'readyForOrderPickup', order.value!.orderId);
   }
 
   Future<ServerResponse> prepareOrder() async {
-    return _callRestaurantCloudFunction(
-        'restaurant-prepareOrder', order.value!.orderId);
+    return _callRestaurantCloudFunction('prepareOrder', order.value!.orderId);
   }
 
   Future<ServerResponse> cancelOrder() async {
@@ -132,7 +136,7 @@ class ROpOrderViewController {
       {Map<String, dynamic>? optionalParams}) async {
     mezDbgPrint("calling cloud func");
     final HttpsCallable cloudFunction =
-        FirebaseFunctions.instance.httpsCallable('restaurant-$functionName');
+        FirebaseFunctions.instance.httpsCallable('restaurant2-$functionName');
     try {
       final HttpsCallableResult response = await cloudFunction.call({
         "orderId": orderId,

@@ -7,14 +7,11 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
@@ -43,24 +40,33 @@ class OrderController extends GetxController {
     }
   }
 
-  void fetchCustomerOrders() {
-    get_customer_orders(customer_id: _authController.user!.hasuraId)
-        .then((List<RestaurantOrder> value) {
-      final List<Order> _currentOrders = <Order>[];
-      final List<Order> _pastOrders = <Order>[];
+  Future<void> fetchCustomerOrders() async {
+    final List<RestaurantOrder> _orders = await get_customer_orders(
+            customer_id: _authController.user!.hasuraId) ??
+        [];
+    currentOrders.value = _orders
+        .where((RestaurantOrder element) => element.inProcess())
+        .toList();
+    pastOrders.value = _orders
+        .where((RestaurantOrder element) => !element.inProcess())
+        .toList();
+    // get_customer_orders(customer_id: _authController.user!.hasuraId)
+    //     .then((List<RestaurantOrder> value) {
+    //   final List<Order> _currentOrders = <Order>[];
+    //   final List<Order> _pastOrders = <Order>[];
 
-      if (value.isNotEmpty) {
-        value.forEach((RestaurantOrder order) {
-          if (order.inProcess()) {
-            _currentOrders.add(order);
-          } else {
-            _pastOrders.add(order);
-          }
-        });
-      }
-      currentOrders.value = _currentOrders;
-      pastOrders.value = _pastOrders;
-    });
+    //   if (value.isNotEmpty) {
+    //     value.forEach((RestaurantOrder order) {
+    //       if (order.inProcess()) {
+    //         _currentOrders.add(order);
+    //       } else {
+    //         _pastOrders.add(order);
+    //       }
+    //     });
+    //   }
+    //   currentOrders.value = _currentOrders;
+    //   pastOrders.value = _pastOrders;
+    // });
   }
 
   Order? hasOrderOfType({required OrderType typeToCheck}) {
@@ -198,18 +204,21 @@ class OrderController extends GetxController {
         .isNotEmpty;
   }
 
-  void clearOrderNotifications(int orderId) {
-    _fbNotificationsController
-        .notifications()
-        .where((Notification notification) =>
-            (notification.notificationType ==
-                    NotificationType.OrderStatusChange ||
-                notification.notificationType ==
-                    NotificationType.NewCounterOffer) &&
-            notification.orderId == orderId)
-        .forEach((Notification notification) {
-      _fbNotificationsController.removeNotification(notification.id);
-    });
+  void clearOrderNotifications(int? orderId) {
+    // mezDbgPrint("oooo id ==> $orderId");
+    // _fbNotificationsController
+    //     .notifications()
+    //     .where((Notification notification) {
+    //   mezDbgPrint("oooo2 id ==> ${notification.orderId}");
+
+    //   return (notification.notificationType ==
+    //               NotificationType.OrderStatusChange ||
+    //           notification.notificationType ==
+    //               NotificationType.NewCounterOffer) &&
+    //       notification.orderId == orderId;
+    // }).forEach((Notification notification) {
+    //   _fbNotificationsController.removeNotification(notification.id);
+    // });
   }
 
   @override
