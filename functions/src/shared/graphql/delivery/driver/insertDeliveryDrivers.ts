@@ -1,4 +1,4 @@
-import { getHasura } from "../../../utilities/hasura";
+import { getHasura } from "../../../../utilities/hasura";
 
 export async function insertDeliveryDrivers(data: any) {
     let chain = getHasura();

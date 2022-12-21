@@ -77,12 +77,14 @@ export async function requestLaundry(userId: string, data: any) {
     let chat: ChatObject = buildChatForOrder(orderId, OrderType.Laundry);
     chat.addParticipant({
       ...customerInfo,
-      particpantType: ParticipantType.Customer
+      participantType: ParticipantType.Customer,
+      notificationInfo: null
     });
 
     chat.addParticipant({
       ...laundry.info,
-      particpantType: ParticipantType.Laundry
+      participantType: ParticipantType.Laundry,
+      notificationInfo: null
     });
 
     await chatController.setChat(orderId, chat.chatData);
@@ -90,8 +92,8 @@ export async function requestLaundry(userId: string, data: any) {
 
     deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
       let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-      chatController.addParticipantsToChat(Object.keys(deliveryAdmins), chat, orderId, ParticipantType.DeliveryAdmin)
-      notifyParticipants(Object.keys(deliveryAdmins), orderId, ParticipantType.DeliveryAdmin)
+      chatController.addParticipantsToChat(Object.keys(deliveryAdmins), chat, orderId, ParticipantType.DeliveryOperator)
+      notifyParticipants(Object.keys(deliveryAdmins), orderId, ParticipantType.DeliveryOperator)
     })
 
     laundryNodes.laundryOperators(data.laundryId).once('value').then((snapshot) => {

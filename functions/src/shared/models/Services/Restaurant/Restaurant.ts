@@ -1,7 +1,7 @@
 import { Language, Location, NotificationInfo } from "../../Generic/Generic";
 // import { OrderType } from "../../Generic/Order";
 import { UserInfo } from "../../Generic/User";
-import { ForegroundNotification } from "../../Notification";
+import { ForegroundNotification, NotificationForQueue } from "../../Notification";
 import { ServiceLink } from "../Service";
 
 // export interface ChooseManyOption {
@@ -81,9 +81,33 @@ export enum OperatorStatus {
   Banned = "banned"
 }
 
+export interface NewRestaurantNotificationForQueue extends NotificationForQueue {
+  name: string,
+  image: string,
+  id: number,
+}
+
 export interface NewRestaurantNotification extends ForegroundNotification {
   name: string,
   image: string,
-  id: number
+  id: number,
 }
 
+export interface OperatorApprovedNotificationForQueue extends NotificationForQueue {
+  operatorId: number,
+  approved: boolean
+  restaurantName: string,
+  restaurantId: number
+}
+
+export interface RestaurantOperatorApprovedNotification extends ForegroundNotification {
+  operatorId: number,
+  approved: boolean,
+  restaurantName: string,
+  restaurantId: number
+}
+
+export interface AuthorizeOperatorNotificationForQueue extends NotificationForQueue {
+  newOperatorName: string,
+  restaurantId: number,
+}

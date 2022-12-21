@@ -7,10 +7,10 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { deliveryNewOrderMessage } from "./bgNotificationMessages";
 // import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 import { orderUrl } from "../utilities/senders/appRoutes";
-import { getDeliveryDriver } from "../shared/graphql/delivery/getDeliveryDriver";
+import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
 import { DelivererStatus, DeliveryDriver, DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus, NewDeliveryOrderNotification } from "../shared/models/Services/Delivery/DeliveryOrder";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
-import { assignDeliveryDriver } from "../shared/graphql/delivery/assignDeliverer";
+import { assignDeliveryDriver } from "../shared/graphql/delivery/driver/assignDeliverer";
 import { setDeliveryChatInfo } from "../shared/graphql/chat/setChatInfo";
 import { HttpsError } from "firebase-functions/v1/auth";
 import { deleteDeliveryChatMessages } from "../shared/graphql/chat/deleteChatMessages";

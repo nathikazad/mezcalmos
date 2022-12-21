@@ -7,7 +7,7 @@ import { MezAdmin } from "../shared/models/Generic/User";
 import { NotificationType, NotificationAction, Notification } from "../shared/models/Notification";
 import { restaurantUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
-import { getMezAdmins } from "../shared/graphql/restaurant/mezAdmin/getMezAdmins";
+import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmins";
 
 export interface RestaurantDetails {
   name: string,
