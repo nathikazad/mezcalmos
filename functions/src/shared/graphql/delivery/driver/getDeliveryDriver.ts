@@ -1,7 +1,7 @@
 import { HttpsError } from "firebase-functions/v1/auth";
-import { getHasura } from "../../../utilities/hasura";
-import { AppType, Language } from "../../models/Generic/Generic";
-import { DeliveryDriverType, DeliveryDriver, DeliveryCompanyType } from "../../models/Services/Delivery/DeliveryOrder";
+import { getHasura } from "../../../../utilities/hasura";
+import { AppType, Language } from "../../../models/Generic/Generic";
+import { DeliveryDriverType, DeliveryDriver, DeliveryCompanyType } from "../../../models/Services/Delivery/DeliveryOrder";
 
 export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriverType: DeliveryDriverType): Promise<DeliveryDriver> {
   

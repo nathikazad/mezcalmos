@@ -25,6 +25,8 @@ export async function getUser(userId: number): Promise<UserInfo> {
     }
     let user: UserInfo = {
         id: userId,
+        name: response.user_by_pk.name,
+        image: response.user_by_pk.image,
         language: response.user_by_pk.language_id as Language,
         firebaseId: response.user_by_pk.firebase_id
     }

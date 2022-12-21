@@ -5,7 +5,7 @@ import * as functions from "firebase-functions";
 import * as fs from 'fs';
 // import { startWatchingTaxiOrders } from "./taxiOrdersWatcher";
 import { startWatchingMessageNotificationQueue } from "./messagesNotifier";
-import { startWatchingDeliveryOrders } from "./deliveryOrdersWatcher";
+// import { startWatchingDeliveryOrders } from "./deliveryOrdersWatcher";
 
 enum Environment {
   Emulate = "emulate",
@@ -14,6 +14,7 @@ enum Environment {
 }
 
 let keys: Record<Environment, Keys> = <Record<Environment, Keys>>functions.config()
+
 if (Object.keys(keys).length == 0) {
   if (process.env.MEZC_API_KEYS) {
     keys = <Record<Environment, Keys>>JSON.parse(fs.readFileSync(process.env.MEZC_API_KEYS, 'utf8'));
@@ -28,6 +29,9 @@ if (process.argv.length != 3) {
 }
 
 const env: Environment = <Environment>process.argv[2]
+
+if(env == Environment.Emulate)
+  process.env.FUNCTIONS_EMULATOR = "true"
 
 if (env != Environment.Emulate && env != Environment.Staging && env != Environment.Production) {
   console.log("Invalid environment has to be emulate, staging or production")
@@ -45,17 +49,17 @@ if (!keys[env].serviceAccount && (env == Environment.Staging || env == Environme
 }
 
 let firebaseParams: any = { databaseURL: keys[env].databaseURL };
+// console.log(keys, env, keys[env].serviceAccount)
 if (keys[env].serviceAccount)
   firebaseParams.credential = firebase.credential.cert(require(keys[env].serviceAccount!))
-
+  console.log(firebaseParams)
 firebase.initializeApp(firebaseParams)
 // const hasura = new hasuraClass.Hasura(keys[env].hasura)
 setKeys(keys[env]);
 
-
 startWatchingMessageNotificationQueue(keys[env]);
 // startWatchingTaxiOrders(constructReturnUrl);
-startWatchingDeliveryOrders();
+// startWatchingDeliveryOrders();
 /****************************  Some Helper Functions *************************************/
 // function constructReturnUrl(orderId: string) {
 //   let url;

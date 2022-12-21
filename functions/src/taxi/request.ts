@@ -71,7 +71,7 @@ export async function requestRide(userId: string, data: any) {
 
     deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
       let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-      chatController.addParticipantsToChat(Object.keys(deliveryAdmins), chat, orderId, ParticipantType.DeliveryAdmin)
+      chatController.addParticipantsToChat(Object.keys(deliveryAdmins), chat, orderId, ParticipantType.DeliveryOperator)
       notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId)
     })
     

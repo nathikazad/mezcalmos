@@ -43,7 +43,8 @@ export async function addParticipantsToChat(
     var userInfo: UserInfo = await getUserInfo(userId);
     chat.addParticipant({
       ...userInfo,
-      particpantType: participantType
+      participantType,
+      notificationInfo: null
     });
   }
 
@@ -58,7 +59,8 @@ export async function addParticipantToChat(
 
   chat.addParticipant({
     ...userInfo,
-    particpantType: participantType
+    participantType,
+    notificationInfo: null
   });
 
   await updateChat(chatId, chat.chatData);

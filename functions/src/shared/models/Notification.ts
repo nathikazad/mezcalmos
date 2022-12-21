@@ -1,8 +1,7 @@
 import { fcmNotification } from "../../utilities/senders/fcm";
-import { CallNotificationtType, ParticipantType } from "./Generic/Chat";
+import { CallNotificationtType, Participant, ParticipantType } from "./Generic/Chat";
 import { Language } from "./Generic/Generic";
 import { OrderType } from "./Generic/Order";
-import { UserInfo } from "./Generic/User";
 
 export enum NotificationType {
   NewOrder = "newOrder",
@@ -10,7 +9,12 @@ export enum NotificationType {
   NewMessage = "newMessage",
   NewCounterOffer = "newCounterOffer",
   AssignDriver = "assignDriver",
-  Call = "call"
+  Call = "call",
+  OperatorApproved = "operatorApproved",
+  AuthorizeOperator = "authorizeOperator",
+  NewRestaurant = "newRestaurant",
+  NewDriver = "newDriver",
+  DriverApproved = "driverApproved"
 }
 
 export enum NotificationAction {
@@ -35,11 +39,11 @@ export interface ForegroundNotification {
 export type BackgroundNotification = Record<Language, fcmNotification>
 
 export interface NewMessageNotification extends ForegroundNotification {
-  chatId: string,
-  sender: UserInfo,
+  chatId: number,
+  sender: Participant,
   message: string,
-  orderId: string
-  orderType: string
+  orderId?: string
+  orderType: OrderType
 }
 
 export interface NewCallBackgroundNotification {
@@ -53,8 +57,6 @@ export interface NewCallBackgroundNotification {
   [key: string]: string;
 }
 
-
-
 export interface OrderNotification extends ForegroundNotification {
   orderType: OrderType,
   orderId: number,
@@ -63,4 +65,10 @@ export interface OrderNotification extends ForegroundNotification {
 export interface NotificationForQueue {
   notificationType: NotificationType,
   timestamp: string
+}
+
+export interface AuthorizeOperatorNotification extends ForegroundNotification {
+  newOperatorName: string,
+  newOperatorImage: string,
+  serviceProviderId: number,
 }

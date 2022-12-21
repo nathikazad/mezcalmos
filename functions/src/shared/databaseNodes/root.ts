@@ -12,7 +12,7 @@ export function userInfoNode(userId: string) {
 
 const participantTypeToNodeMap: { [id in ParticipantType]: string } = {
   [ParticipantType.Customer]: "customers",
-  [ParticipantType.DeliveryAdmin]: "deliveryAdmins",
+  [ParticipantType.DeliveryOperator]: "deliveryAdmins",
   [ParticipantType.Taxi]: "taxis",
   [ParticipantType.Restaurant]: "restaurants",
   [ParticipantType.DeliveryDriver]: "deliveryDrivers",

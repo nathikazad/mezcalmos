@@ -93,14 +93,14 @@ export enum CounterOfferStatus {
 
 export interface CounterOfferNotificationForQueue extends NotificationForQueue {
   driver: UserInfo,
-  orderId: string,
-  customerId: string,
+  orderId: number,
+  customerId: number,
   price: number
 }
 
 export interface CounterOfferNotification extends ForegroundNotification {
   driver: UserInfo,
-  orderId: string,
-  customerId: string,
+  orderId: number,
+  customerId: number,
   price: number,
 }

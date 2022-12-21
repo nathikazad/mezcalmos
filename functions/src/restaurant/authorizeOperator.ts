@@ -1,43 +1,73 @@
 import { HttpsError } from "firebase-functions/v1/auth";
-import { createRestaurantOperator } from "../shared/graphql/restaurant/operators/createRestaurantOperator";
-import { getRestaurantOperator } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
-import { AppType, ServerResponseStatus } from "../shared/models/Generic/Generic";
-import { OperatorStatus, RestaurantOperator } from "../shared/models/Services/Restaurant/Restaurant";
+import { deleteRestaurantOperator } from "../shared/graphql/restaurant/operators/deleteOperator";
+import { getRestaurantOperator, getRestaurantOperatorByUserId } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
+import { updateRestaurantOperatorStatusToAuthorized } from "../shared/graphql/restaurant/operators/updateOperatorStatus";
+import { ParticipantType } from "../shared/models/Generic/Chat";
+import { ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+import { RestaurantOperatorApprovedNotification } from "../shared/models/Services/Restaurant/Restaurant";
+import { pushNotification } from "../utilities/senders/notifyUser";
 
 export interface AuthorizeDetails {
-  restaurantOwnerOperatorId: number,
-  newOperatorUserId: number,
-  newOperatorNotificationToken?: string
+  newOperatorId: number,
+  approved: boolean
 }
 
-export async function authorizeOperator(ownerUserId: number, authorizeDetails: AuthorizeDetails) {
-  
-  let restaurantOwner: RestaurantOperator = await getRestaurantOperator(authorizeDetails.restaurantOwnerOperatorId);
+export async function authorizeRestaurantOperator(ownerUserId: number, authorizeDetails: AuthorizeDetails) {
 
-  if(restaurantOwner.userId != ownerUserId) {
+  let operator = await getRestaurantOperator(authorizeDetails.newOperatorId);
+
+  let restaurantOwner = await getRestaurantOperatorByUserId(ownerUserId, operator.restaurantId)
+  if(!(restaurantOwner.owner)) {
     throw new HttpsError(
       "internal",
-      "User id mismatch"
+      "Only owner can add operators"
     );
   }
-  if(restaurantOwner.owner == false) {
-    throw new HttpsError(
-      "internal",
-      "Only owner can add other operators"
+  if(authorizeDetails.approved) {
+    await updateRestaurantOperatorStatusToAuthorized(authorizeDetails.newOperatorId);
+  } else {
+    await deleteRestaurantOperator(authorizeDetails.newOperatorId);
+  }
+
+  let notification: Notification = {
+    foreground: <RestaurantOperatorApprovedNotification>{
+      operatorId: authorizeDetails.newOperatorId,
+      approved: authorizeDetails.approved,
+      time: (new Date()).toISOString(),
+      notificationType: NotificationType.OperatorApproved,
+      notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
+    },
+    background: (authorizeDetails.approved) ? {
+      en: {
+        title:  `Authorized`,
+        body: `You have been approved as an operator`
+      },
+      es: {
+        title: `Authorized`,
+        body: `You have been approved as an operator`
+      }
+    } : {
+      en: {
+        title: `Not approved`,
+        body: `Your request to become an operator has been denied`
+      },
+      es: {
+        title: `Not approved`,
+        body: `Your request to become an operator has been denied`
+      }
+    },
+    linkUrl: `/`
+  }
+  if(operator.user) {
+    pushNotification(
+      operator.user.firebaseId, 
+      notification, 
+      operator.notificationInfo, 
+      ParticipantType.RestaurantOperator,
+      operator.user.language,
     );
   }
-  let newOperator: RestaurantOperator = {
-    userId: authorizeDetails.newOperatorUserId,
-    restaurantId: restaurantOwner.restaurantId,
-    status: OperatorStatus.Authorized,
-  }
-  if(authorizeDetails.newOperatorNotificationToken != undefined) {
-    newOperator.notificationInfo = {
-      AppTypeId: AppType.RestaurantApp,
-      token: authorizeDetails.newOperatorNotificationToken
-    }
-  }
-  createRestaurantOperator(newOperator);
 
   return { status: ServerResponseStatus.Success }
 }

@@ -8,7 +8,7 @@ import * as foreground from "./foreground";
 export async function pushNotification(
   firebaseUserId: string,
   notification: Notification,
-  subscription?: NotificationInfo,
+  subscription?: NotificationInfo | null,
   participantType: ParticipantType = ParticipantType.Customer,
   language: Language = Language.ES,
   fcmThroughApi: boolean = false,

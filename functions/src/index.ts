@@ -27,6 +27,13 @@ import { getAuthUsingOTP, sendOTPForLogin } from "./utilities/otpAuth";
 import * as userChanges from './utilities/userChanges'
 // import { generateDriverLink,generateOperatorLink } from "./utilities/links/generate";
 import { assignDriver } from "./delivery/assignDriver";
+import { addDriver } from "./delivery/addDriver";
+import { DeliveryCompanyType } from "./shared/models/Services/Delivery/DeliveryOrder";
+import { authorizeDriver } from "./delivery/authorizeDriver";
+import { addRestaurantOperator } from "./restaurant/addRestaurantOperator";
+import { addDeliveryOperator } from "./delivery/addDeliveryOperator";
+import { authorizeRestaurantOperator } from "./restaurant/authorizeOperator";
+import { authorizeDeliveryOperator } from "./delivery/authorizeOperator";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -71,6 +78,10 @@ export const restaurant = {
   readyForOrderPickup2: authenticatedCall((userId, data) => restaurantStatusChange.readyForPickupOrder(userId, data)),
   cancelOrderFromAdmin: authenticatedCall((userId, data) => restaurantStatusChange.cancelOrder(userId, data)),
   cancelOrderFromCustomer: authenticatedCall((userId, data) => cancelOrderFromCustomer(userId, data)),
+  addRestaurantOperator: authenticatedCall((userId, data) => addRestaurantOperator(userId, data)),
+  authorizeRestaurantOperator: authenticatedCall((userId, data) => authorizeRestaurantOperator(userId, data)),
+  addRestaurantDriver: authenticatedCall((userId, data) => addDriver(userId, data, DeliveryCompanyType.Restaurant)),
+  authorizeRestaurantDriver: authenticatedCall((userId, data) => authorizeDriver(userId, data, DeliveryCompanyType.Restaurant)),
   // setEstimatedFoodReadyTime: authenticatedCall((userId, data) => restaurantStatusChange.setEstimatedFoodReadyTime(userId, data)),
   // markOrderItemUnavailable: authenticatedCall((userId, data) => restaurantStatusChange.markOrderItemUnavailable(userId, data)),
   // refundCustomerCustomAmount: authenticatedCall((userId, data) => restaurantStatusChange.refundCustomerCustomAmount(userId, data)),
@@ -100,6 +111,10 @@ export const restaurant = {
 
 export const delivery = {
   assignDriver: authenticatedCall((userId, data) => assignDriver(userId, data)),
+  addDeliveryOperator: authenticatedCall((userId, data) => addDeliveryOperator(userId, data)),
+  authorizeDeliveryOperator: authenticatedCall((userId, data) => authorizeDeliveryOperator(userId, data)),
+  addDeliveryDriver: authenticatedCall((userId, data) => addDriver(userId, data, DeliveryCompanyType.DeliveryCompany)),
+  authorizeDeliveryDriver: authenticatedCall((userId, data) => authorizeDriver(userId, data, DeliveryCompanyType.DeliveryCompany)),
   // restaurantStartDelivery: authenticatedCall((userId, data) => restaurantDelivery.startDelivery(userId, data)),
   // restaurantFinishDelivery: authenticatedCall((userId, data) => restaurantDelivery.finishDelivery(userId, data)),
   // laundryStartPickupFromCustomer: authenticatedCall((userId, data) => laundryDelivery.startPickupFromCustomer(userId, data)),

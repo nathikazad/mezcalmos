@@ -1,6 +1,6 @@
 import { getUserInfo } from "../controllers/rootController";
 import { DeliveryAdmin } from "../models/DeliveryAdmin";
-import { ChatObject, ParticipantType } from "../models/Generic/Chat";
+import { ChatObject, Participant, ParticipantType } from "../models/Generic/Chat";
 import { UserInfo } from "../models/Generic/User";
 
 export async function addDeliveryAdminsToChat(
@@ -9,9 +9,11 @@ export async function addDeliveryAdminsToChat(
 ) {
   for (var deliveryAdminId in deliveryAdmins) {
     var userInfo: UserInfo = await getUserInfo(deliveryAdminId);
-    chat.addParticipant({
+    let participant: Participant = {
       ...userInfo,
-      particpantType: ParticipantType.DeliveryAdmin
-    })
+      participantType: ParticipantType.DeliveryOperator,
+      notificationInfo: null
+    }
+    chat.addParticipant(participant)
   }
 }
