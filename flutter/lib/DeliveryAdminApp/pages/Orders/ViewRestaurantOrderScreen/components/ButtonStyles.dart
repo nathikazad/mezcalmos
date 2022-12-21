@@ -181,7 +181,7 @@ class ButtonsStyle {
   }
 
   // this button for ReadyForPickup
-  static Widget readyForPickupButtonWidget(String orderId) {
+  static Widget readyForPickupButtonWidget(int orderId) {
     final RestaurantOrderController controller =
         Get.find<RestaurantOrderController>();
 

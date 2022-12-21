@@ -74,11 +74,11 @@ String getOrderStatus(RestaurantOrderStatus status) {
       return '${_i18n()["canceledByCustomer"]}';
     case RestaurantOrderStatus.OrderReceived:
       return '${_i18n()["received"]}';
-    case RestaurantOrderStatus.PreparingOrder:
+    case RestaurantOrderStatus.Preparing:
       return '${_i18n()["preparing"]}';
     case RestaurantOrderStatus.OnTheWay:
       return '${_i18n()["onTheWay"]}';
-    case RestaurantOrderStatus.ReadyForPickup:
+    case RestaurantOrderStatus.Ready:
       return '${_i18n()["readyForPickUp"]}';
     case RestaurantOrderStatus.Delivered:
       return '${_i18n()["delivered"]}';
@@ -96,11 +96,11 @@ String getOrderHelperText(RestaurantOrderStatus status) {
       return '${_i18n()["helperTextCanceledByCustomer"]}';
     case RestaurantOrderStatus.OrderReceived:
       return '${_i18n()["helperTextReceived"]}';
-    case RestaurantOrderStatus.PreparingOrder:
+    case RestaurantOrderStatus.Preparing:
       return '${_i18n()["helperTextPreparing"]}';
     case RestaurantOrderStatus.OnTheWay:
       return '${_i18n()["helperTextOnTheWay"]}';
-    case RestaurantOrderStatus.ReadyForPickup:
+    case RestaurantOrderStatus.Ready:
       return '${_i18n()["helperTextReadyForPickUp"]}';
     case RestaurantOrderStatus.Delivered:
       return '${_i18n()["helperTextDelivered"]}';

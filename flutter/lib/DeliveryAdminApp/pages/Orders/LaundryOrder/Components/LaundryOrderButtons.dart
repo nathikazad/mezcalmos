@@ -16,7 +16,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
 // the styles of status buttons inside the order screen
 class OrderButtons {
   // this button for cancel order
-  static Widget cancelButtonWidget(String orderId) {
+  static Widget cancelButtonWidget(int orderId) {
     final LaundryOrderController controller =
         Get.find<LaundryOrderController>();
 

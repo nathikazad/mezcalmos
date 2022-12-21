@@ -25,7 +25,7 @@ Widget? changeStatusButton(Rxn<RestaurantOrder> order) {
     case RestaurantOrderStatus.OrderReceived:
       return ButtonsStyle.OrderReceivedButtonWidget(order.value!.orderId);
 
-    case RestaurantOrderStatus.PreparingOrder:
+    case RestaurantOrderStatus.Preparing:
       return ButtonsStyle.preparingOrderButtonWidget(order.value!);
 
     default:

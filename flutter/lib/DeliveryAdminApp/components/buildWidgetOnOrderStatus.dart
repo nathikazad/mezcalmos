@@ -15,7 +15,7 @@ Widget buildWigetOnOrderStatus(
     RestaurantOrderStatus status, DateTime orderTime) {
   Widget? myWidget;
   switch (status) {
-    case RestaurantOrderStatus.PreparingOrder:
+    case RestaurantOrderStatus.Preparing:
       mezDbgPrint("PreparingOrder");
       myWidget = Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -41,7 +41,7 @@ Widget buildWigetOnOrderStatus(
         ],
       );
       break;
-    case RestaurantOrderStatus.ReadyForPickup:
+    case RestaurantOrderStatus.Ready:
       mezDbgPrint("ReadyForPickup");
       myWidget = Row(
         mainAxisAlignment: MainAxisAlignment.center,

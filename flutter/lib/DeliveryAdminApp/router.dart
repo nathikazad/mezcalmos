@@ -53,51 +53,53 @@ const String krEditItemView = '/itemView/:restaurantId/:itemId/:categoryId';
 const String krOptionView = "/optionView/:restaurantId/:itemId";
 
 //
-String getRestaurantRoute(String restaurantId) {
-  return kRestaurantRoute.replaceFirst(":restaurantId", restaurantId);
+String getRestaurantRoute(int restaurantId) {
+  return kRestaurantRoute.replaceFirst(
+      ":restaurantId", restaurantId.toString());
 }
 
-String getRestaurantOperatorsRoute(String restaurantId) {
-  return krOperators.replaceFirst(":restaurantId", restaurantId);
+String getRestaurantOperatorsRoute(int restaurantId) {
+  return krOperators.replaceFirst(":restaurantId", restaurantId.toString());
 }
 
 String getRestaurantOrderRoute(int orderId) {
   return kRestaurantOrderRoute.replaceFirst(":orderId", "$orderId");
 }
 
-String getLaundryOrderRoute(String orderId) {
-  return kLaundryOrderRoute.replaceFirst(":orderId", orderId);
+String getLaundryOrderRoute(int orderId) {
+  return kLaundryOrderRoute.replaceFirst(":orderId", orderId.toString());
 }
 
-String getTaxiOrderRoute(String orderId) {
-  return kTaxiOrderRoute.replaceFirst(":orderId", orderId);
+String getTaxiOrderRoute(int orderId) {
+  return kTaxiOrderRoute.replaceFirst(":orderId", orderId.toString());
 }
 // Restuarnts dashboard //
 
-String getROpEditInfoRoute({required String restaurantId}) {
-  return kRestuarntEditInfoView.replaceFirst(":restaurantId", restaurantId);
+String getROpEditInfoRoute({required int restaurantId}) {
+  return kRestuarntEditInfoView.replaceFirst(
+      ":restaurantId", restaurantId.toString());
 }
 
-String getROpOptionRoute({required String restaurantId}) {
-  return krOptionView.replaceFirst(":restaurantId", restaurantId);
+String getROpOptionRoute({required int restaurantId}) {
+  return krOptionView.replaceFirst(":restaurantId", restaurantId.toString());
 }
 
-String getROpAddItemRoute({required String restaurantId}) {
-  return krAddItemView.replaceFirst(":restaurantId", restaurantId);
+String getROpAddItemRoute({required int restaurantId}) {
+  return krAddItemView.replaceFirst(":restaurantId", restaurantId.toString());
 }
 
-String getROpMenuRoute({required String restaurantId}) {
-  return krMenuView.replaceFirst(":restaurantId", restaurantId);
+String getROpMenuRoute({required int restaurantId}) {
+  return krMenuView.replaceFirst(":restaurantId", restaurantId.toString());
 }
 
-String getROpCategoryRoute({required String restaurantId}) {
-  return krCategoryView.replaceFirst(":restaurantId", restaurantId);
+String getROpCategoryRoute({required int restaurantId}) {
+  return krCategoryView.replaceFirst(":restaurantId", restaurantId.toString());
 }
 
 String getCategoryEditRoute(
-    {required String categoryId, required String restaurantId}) {
+    {required String categoryId, required int restaurantId}) {
   String route = krEditCategoryScreen.replaceFirst(":categoryId", categoryId);
-  route = route.replaceFirst(":restaurantId", restaurantId);
+  route = route.replaceFirst(":restaurantId", restaurantId.toString());
   return route;
 }
 

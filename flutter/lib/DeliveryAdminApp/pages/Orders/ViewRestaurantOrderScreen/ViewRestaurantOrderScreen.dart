@@ -171,7 +171,8 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                             deliveryDriverId: deliveryDriver.deliveryDriverId,
                             orderId: order.value!.orderId,
                             orderType: OrderType.Restaurant,
-                            deliveryDriverType: DeliveryDriverType.DropOff,
+                            deliveryDriverType:
+                                DeliveryDriverType.Delivery_driver,
                             changeDriver: changeDriver,
                           );
                         },
@@ -222,7 +223,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
     // restaurant ad customer's location are fixed (fit in bound at start)
     mapController.addOrUpdateUserMarker(
       latLng: order.value?.restaurant.location.toLatLng(),
-      markerId: order.value?.restaurantId,
+      markerId: order.value?.restaurantId.toString(),
       customImgHttpUrl: order.value?.restaurant.image,
       fitWithinBounds: true,
     );
@@ -241,13 +242,13 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
 
   void updateMapIfDeliveryPhase(RestaurantOrderStatus status) {
     switch (status) {
-      case RestaurantOrderStatus.ReadyForPickup:
+      case RestaurantOrderStatus.Ready:
         if (_statusSnapshot != status) {
           _statusSnapshot = status;
           // we ignore the marker within bounds
           mapController.addOrUpdateUserMarker(
             latLng: order.value?.restaurant.location.toLatLng(),
-            markerId: order.value?.restaurantId,
+            markerId: order.value?.restaurantId.toString(),
             customImgHttpUrl: order.value?.restaurant.image,
             fitWithinBounds: true,
           );
@@ -271,7 +272,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
           // we ignore the restaurant's marker within bounds
           mapController.addOrUpdateUserMarker(
             latLng: order.value?.restaurant.location.toLatLng(),
-            markerId: order.value?.restaurantId,
+            markerId: order.value?.restaurantId.toString(),
             customImgHttpUrl: order.value?.restaurant.image,
             fitWithinBounds: false,
           );

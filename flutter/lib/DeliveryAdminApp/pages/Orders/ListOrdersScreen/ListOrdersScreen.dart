@@ -33,11 +33,11 @@ class ListOrdersScreen extends StatefulWidget {
 class _ListOrdersScreen extends State<ListOrdersScreen> {
   RxList<Order> inProcessOrders = RxList<Order>.empty();
   RxList<Order> pastOrders = RxList<Order>.empty();
-  RxList<Order> laundryInProcessOrders = RxList<Order>.empty();
-  RxList<Order> laundryPastOrders = RxList<Order>.empty();
-  RxList<Order> taxiInProcessOrders = RxList<Order>.empty();
-  RxList<Order> taxiOpenOrders = RxList<Order>.empty();
-  RxList<Order> taxiPastOrders = RxList<Order>.empty();
+  // RxList<Order> laundryInProcessOrders = RxList<Order>.empty();
+  // RxList<Order> laundryPastOrders = RxList<Order>.empty();
+  // RxList<Order> taxiInProcessOrders = RxList<Order>.empty();
+  // RxList<Order> taxiOpenOrders = RxList<Order>.empty();
+  // RxList<Order> taxiPastOrders = RxList<Order>.empty();
 
   /// RestaurantOrderController
   final RestaurantOrderController controller =
@@ -54,8 +54,8 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
       ["pages"]["Orders"]["ListOrdersScreen"]["ListOrdersScreen"];
 
   StreamSubscription? _ordersListener;
-  StreamSubscription? _laundryOrdersListener;
-  StreamSubscription? _taxiOrdersListener;
+  // StreamSubscription? _laundryOrdersListener;
+  // StreamSubscription? _taxiOrdersListener;
 
   // ScrollController _ordersListViewController = ScrollController();
   // int fetchedOrders = 1;
@@ -111,34 +111,34 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
     });
 
     /// taxiInProcessOrders
-    taxiInProcessOrders.value = taxiCurrentFetchByRange();
-    taxiOrderController.inProcessOrders.stream.listen((_) {
-      taxiInProcessOrders.value = taxiCurrentFetchByRange();
-    });
+    // taxiInProcessOrders.value = taxiCurrentFetchByRange();
+    // taxiOrderController.inProcessOrders.stream.listen((_) {
+    //   taxiInProcessOrders.value = taxiCurrentFetchByRange();
+    // });
 
-    /// taxiOpenOrders
-    taxiOpenOrders.value = taxiOpenFetchByRange();
-    taxiOrderController.openOrders.stream.listen((_) {
-      taxiOpenOrders.value = taxiOpenFetchByRange();
-    });
+    // /// taxiOpenOrders
+    // taxiOpenOrders.value = taxiOpenFetchByRange();
+    // taxiOrderController.openOrders.stream.listen((_) {
+    //   taxiOpenOrders.value = taxiOpenFetchByRange();
+    // });
 
-    /// taxiPastOrders
-    taxiPastOrders.value = taxiFetchPastByRange();
-    taxiOrderController.pastOrders.stream.listen((_) {
-      taxiPastOrders.value = taxiFetchPastByRange();
-    });
+    // /// taxiPastOrders
+    // taxiPastOrders.value = taxiFetchPastByRange();
+    // taxiOrderController.pastOrders.stream.listen((_) {
+    //   taxiPastOrders.value = taxiFetchPastByRange();
+    // });
 
-    /// laundryInProcessOrders
-    laundryInProcessOrders.value = laundryFetchByRange();
-    laundryOrderController.inProcessOrders.stream.listen((_) {
-      laundryInProcessOrders.value = laundryFetchByRange();
-    });
+    // /// laundryInProcessOrders
+    // laundryInProcessOrders.value = laundryFetchByRange();
+    // laundryOrderController.inProcessOrders.stream.listen((_) {
+    //   laundryInProcessOrders.value = laundryFetchByRange();
+    // });
 
-    /// laundryPastOrders
-    laundryPastOrders.value = laundryFetchPastByRange();
-    laundryOrderController.pastOrders.stream.listen((_) {
-      laundryPastOrders.value = laundryFetchPastByRange();
-    });
+    // /// laundryPastOrders
+    // laundryPastOrders.value = laundryFetchPastByRange();
+    // laundryOrderController.pastOrders.stream.listen((_) {
+    //   laundryPastOrders.value = laundryFetchPastByRange();
+    // });
 
     super.initState();
   }
@@ -147,10 +147,10 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
   void dispose() {
     _ordersListener?.cancel();
     _ordersListener = null;
-    _laundryOrdersListener?.cancel();
-    _laundryOrdersListener = null;
-    _taxiOrdersListener?.cancel();
-    _taxiOrdersListener = null;
+    // _laundryOrdersListener?.cancel();
+    // _laundryOrdersListener = null;
+    // _taxiOrdersListener?.cancel();
+    // _taxiOrdersListener = null;
     // _ordersListViewController.dispose();
     super.dispose();
   }
@@ -244,17 +244,17 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                   ),
                 ),
                 const SizedBox(width: 5),
-                if (laundryInProcessOrders.isNotEmpty)
-                  CircleAvatar(
-                    radius: 8,
-                    child: Text(
-                      '${laundryInProcessOrders.length}',
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1!
-                          .copyWith(color: Colors.white),
-                    ),
-                  ),
+                // if (laundryInProcessOrders.isNotEmpty)
+                //   CircleAvatar(
+                //     radius: 8,
+                //     child: Text(
+                //       '${laundryInProcessOrders.length}',
+                //       style: Theme.of(context)
+                //           .textTheme
+                //           .subtitle1!
+                //           .copyWith(color: Colors.white),
+                //     ),
+                //   ),
               ],
             ),
           ),
@@ -274,16 +274,16 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                   ),
                 ),
                 const SizedBox(width: 5),
-                if (taxiOpenOrders.isNotEmpty)
-                  CircleAvatar(
-                    radius: 8,
-                    child: Text(
-                      '${taxiOpenOrders.length}',
-                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                            color: Colors.white,
-                          ),
-                    ),
-                  )
+                // if (taxiOpenOrders.isNotEmpty)
+                //   CircleAvatar(
+                //     radius: 8,
+                //     child: Text(
+                //       '${taxiOpenOrders.length}',
+                //       style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                //             color: Colors.white,
+                //           ),
+                //     ),
+                //   )
               ],
             ),
           ),

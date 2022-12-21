@@ -24,31 +24,33 @@ class RestaurantOrderController extends GetxController {
       Get.find<AppLifeCycleController>();
   RxList<RestaurantOrder> inProcessOrders = <RestaurantOrder>[].obs;
   RxList<RestaurantOrder> pastOrders = <RestaurantOrder>[].obs;
-  StreamSubscription<DatabaseEvent>? _currentOrdersListener;
-  StreamSubscription<DatabaseEvent>? _pastOrdersListener;
+  StreamSubscription<DatabaseEvent>? _ordersListener;
+  // StreamSubscription<DatabaseEvent>? _pastOrdersListener;
 
   String? _appLifeCyclePauseCallbackId;
   String? _appLifeCycleResumeCallbackId;
 
+// listen_on_delivery_orders
   @override
   void onInit() {
     mezDbgPrint(
         "--------------------> RestaurantsOrderController Initialized !");
     listenToOrders();
-    _appLifeCyclePauseCallbackId =
-        _appLifeCycleController.attachCallback(AppLifecycleState.paused, () {
-      mezDbgPrint("[_] _appLifeCyclePauseCallbackId ==> triggering!");
-      _pastOrdersListener?.pause();
-      _currentOrdersListener?.pause();
-    });
 
-    _appLifeCycleResumeCallbackId =
-        _appLifeCycleController.attachCallback(AppLifecycleState.resumed, () {
-      mezDbgPrint("[_] appLifeCycleResumeCallbackId ==> triggering!");
-      _pastOrdersListener?.resume();
-      _currentOrdersListener?.resume();
-      // listenToOrders();
-    });
+    // _appLifeCyclePauseCallbackId =
+    //     _appLifeCycleController.attachCallback(AppLifecycleState.paused, () {
+    //   mezDbgPrint("[_] _appLifeCyclePauseCallbackId ==> triggering!");
+    //   _pastOrdersListener?.pause();
+    //   _currentOrdersListener?.pause();
+    // });
+
+    // _appLifeCycleResumeCallbackId =
+    //     _appLifeCycleController.attachCallback(AppLifecycleState.resumed, () {
+    //   mezDbgPrint("[_] appLifeCycleResumeCallbackId ==> triggering!");
+    //   _pastOrdersListener?.resume();
+    //   _currentOrdersListener?.resume();
+    //   // listenToOrders();
+    // });
     super.onInit();
   }
 
@@ -162,7 +164,7 @@ class RestaurantOrderController extends GetxController {
     });
   }
 
-  bool orderHaveNewMessageNotifications(String chatId) {
+  bool orderHaveNewMessageNotifications(int chatId) {
     return _fbNotificationsController
         .notifications()
         .where((MezNotification.Notification notification) =>

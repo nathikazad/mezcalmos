@@ -50,9 +50,9 @@ class DeliveryDriverController extends GetxController {
 
   Future<ServerResponse> assignDeliveryDriver({
     required String deliveryDriverId,
-    required String orderId,
+    required int orderId,
     required OrderType orderType,
-    DeliveryDriverType deliveryDriverType = DeliveryDriverType.DropOff,
+    DeliveryDriverType deliveryDriverType = DeliveryDriverType.Delivery_driver,
     bool changeDriver = false,
   }) async {
     final HttpsCallable dropOrderFunction =

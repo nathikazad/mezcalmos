@@ -72,10 +72,11 @@ class DaRestaurantCard extends StatelessWidget {
                               textStyle: Get.textTheme.bodyText1,
                               padding: const EdgeInsets.all(3)),
                           onPressed: () {
-                            MezRouter.toNamed(getROpEditInfoRoute(
-                                restaurantId: restaurant.info.hasuraId
-                                    .toString()
-                                    .toString()));
+                            MezRouter.toNamed(
+                              getROpEditInfoRoute(
+                                restaurantId: restaurant.info.hasuraId,
+                              ),
+                            );
                           },
                           icon: Icon(Icons.person),
                           label: Text('${_i18n()["editProfile"]}'),
@@ -84,10 +85,11 @@ class DaRestaurantCard extends StatelessWidget {
                       Flexible(
                         child: TextButton.icon(
                           onPressed: () {
-                            MezRouter.toNamed(getROpMenuRoute(
-                                restaurantId: restaurant.info.hasuraId
-                                    .toString()
-                                    .toString()));
+                            MezRouter.toNamed(
+                              getROpMenuRoute(
+                                restaurantId: restaurant.info.hasuraId,
+                              ),
+                            );
                           },
                           style: TextButton.styleFrom(
                               foregroundColor: primaryBlueColor,
@@ -101,8 +103,11 @@ class DaRestaurantCard extends StatelessWidget {
                       Flexible(
                         child: TextButton.icon(
                           onPressed: () {
-                            Get.toNamed(getRestaurantOperatorsRoute(
-                                restaurant.info.hasuraId.toString()));
+                            Get.toNamed(
+                              getRestaurantOperatorsRoute(
+                                restaurant.info.hasuraId,
+                              ),
+                            );
                           },
                           style: TextButton.styleFrom(
                               foregroundColor: primaryBlueColor,

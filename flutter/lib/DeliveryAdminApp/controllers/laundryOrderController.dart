@@ -121,7 +121,7 @@ class LaundryOrderController extends GetxController {
   }
 
   Future<ServerResponse> setOrderWeight(
-      String orderId, LaundryOrderCosts laundryOrderCosts) async {
+      int orderId, LaundryOrderCosts laundryOrderCosts) async {
     return _callLaundryCloudFunction("setWeight", orderId, optionalParams: {
       "fromLaundryOperator": false,
       "costsByType": laundryOrderCosts.toFirebasFormat()
@@ -129,7 +129,7 @@ class LaundryOrderController extends GetxController {
   }
 
   Future<ServerResponse> setEstimatedLaundryReadyTime(
-      String orderId, DateTime estimatedTime) async {
+      int orderId, DateTime estimatedTime) async {
     mezDbgPrint("inside clod set delivery time $estimatedTime");
     return _callLaundryCloudFunction("setEstimatedLaundryReadyTime", orderId,
         optionalParams: {
@@ -183,7 +183,7 @@ class LaundryOrderController extends GetxController {
     });
   }
 
-  bool orderHaveNewMessageNotifications(String chatId) {
+  bool orderHaveNewMessageNotifications(int chatId) {
     return _fbNotificationsController
         .notifications()
         .where((MezNotification.Notification notification) =>
@@ -226,12 +226,12 @@ class LaundryOrderController extends GetxController {
     });
   }
 
-  Future<ServerResponse> cancelOrder(String orderId) async {
+  Future<ServerResponse> cancelOrder(int orderId) async {
     mezDbgPrint('CAnceling oooooooooooooooooooooooorrrrderrrr');
     return _callLaundryCloudFunction("cancelFromAdmin", orderId);
   }
 
-  Future<ServerResponse> readyForDeliveryOrder(String orderId) async {
+  Future<ServerResponse> readyForDeliveryOrder(int orderId) async {
     return _callLaundryCloudFunction("readyForDeliveryOrder", orderId);
   }
 
@@ -241,7 +241,7 @@ class LaundryOrderController extends GetxController {
   // }
 
   Future<ServerResponse> _callLaundryCloudFunction(
-      String functionName, String orderId,
+      String functionName, int orderId,
       {Map<String, dynamic>? optionalParams}) async {
     final HttpsCallable dropOrderFunction =
         FirebaseFunctions.instance.httpsCallable('laundry-$functionName');

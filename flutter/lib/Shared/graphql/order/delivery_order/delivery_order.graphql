@@ -1,0 +1,37 @@
+
+# Query all delivery Orders on database
+
+subscription get_orders {
+  delivery_order {
+    id
+    restaurant {
+      id
+      firebase_id
+      image
+      language_id
+      location_gps
+      location_text
+      name
+    }
+    payment_type
+    stripe_payment_id
+    status
+    order_time
+    customer {
+      user {
+        id
+        name
+        image
+      }
+    }
+    chat_with_service_provider_id,
+    chat_with_customer_id,
+    delivery_cost,
+    actual_delivered_time
+    actual_package_ready_time
+    actual_arrival_at_pickup_time
+    actual_arrival_at_dropoff_time
+    cancellation_time
+    current_gps,
+  }
+}

@@ -119,7 +119,7 @@ class TaxiOrderController extends GetxController {
     ]);
   }
 
-  bool orderHaveNewMessageNotifications(String orderId) {
+  bool orderHaveNewMessageNotifications(int orderId) {
     return _fbNotificationsController
         .notifications()
         .where((Notification notification) =>
@@ -167,13 +167,13 @@ class TaxiOrderController extends GetxController {
     });
   }
 
-  Future<ServerResponse> forwardToLocalCompany(String orderId) async {
+  Future<ServerResponse> forwardToLocalCompany(int orderId) async {
     mezDbgPrint('Function called');
     return _callTaxiCloudFunction("forwardToLocalCompany", orderId);
   }
 
   Future<ServerResponse> submitForwardResult(
-      {required String orderId,
+      {required int orderId,
       required bool forwardSuccessful,
       String? taxiNumber}) async {
     return _callTaxiCloudFunction("submitForwardResult", orderId,
@@ -184,7 +184,7 @@ class TaxiOrderController extends GetxController {
   }
 
   Future<ServerResponse> _callTaxiCloudFunction(
-      String functionName, String orderId,
+      String functionName, int orderId,
       {Map<String, dynamic>? optionalParams}) async {
     mezDbgPrint('Function called');
     final HttpsCallable dropOrderFunction =

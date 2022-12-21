@@ -64,7 +64,7 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
                           MezRouter.toNamed(
                             getMessagesRoute(
                                 orderType: OrderType.Restaurant,
-                                chatId: widget.order.value?.orderId ?? '',
+                                chatId: widget.order.value!.orderId,
                                 orderId: widget.order.value!.orderId,
                                 recipientType: ParticipantType.Customer),
                           );

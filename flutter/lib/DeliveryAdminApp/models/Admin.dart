@@ -1,7 +1,10 @@
 class Admin {
-  bool authorized = false;
+  bool authorized = true;
+  String? appVersion;
   dynamic notificationInfo;
   dynamic data;
+
+  Admin({required this.notificationInfo, this.appVersion});
   Admin.fromSnapshot(dynamic data) {
     this.data = data;
     if (data != null) {

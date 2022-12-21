@@ -350,9 +350,9 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
 
   DeliveryDriverType getRightDeliveryDriverType() {
     if (order.value!.getCurrentPhase() == LaundryOrderPhase.Pickup) {
-      return DeliveryDriverType.Pickup;
+      return DeliveryDriverType.Delivery_driver;
     } else {
-      return DeliveryDriverType.DropOff;
+      return DeliveryDriverType.Delivery_driver;
     }
   }
 
