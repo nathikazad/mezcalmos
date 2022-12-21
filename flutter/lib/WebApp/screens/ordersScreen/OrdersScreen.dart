@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/screens/ordersScreen/orderViewScreen/components/OnGoingOrderList.dart';
 
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
@@ -57,6 +58,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
                 await Get.put(OrderController(), permanent: true);
               }),
           builder: (context, snapShot) {
+            final MezWebSideBarController drawerController =
+                Get.find<MezWebSideBarController>();
+            drawerController.drawerKey = _key;
             if (Get.isRegistered<OrderController>()) {
               Get.put(OrderController(), permanent: true);
             }
@@ -66,9 +70,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
                 permanent: true,
               );
               return Scaffold(
-                key: _key,
+                key: drawerController.drawerKey,
                 appBar: InstallAppBarComponent(),
-                drawer: SideWebBar(),
+                drawer: drawerController.endDrawerContent,
                 bottomNavigationBar: MezBottomBar(),
                 body: LayoutBuilder(builder: (context, constraints) {
                   return Scaffold(
@@ -78,9 +82,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         : WebAppBarComponent(
                             automaticallyGetBack: false,
                             type: WebAppBarType.WithCartActionButton.obs,
-                            leadingFunction: () {
-                              _key.currentState!.openDrawer();
-                            },
+                            // leadingFunction: () {
+                            //   _key.currentState!.openDrawer();
+                            // },
                           ),
                     body: OrdersScreeForDesktop(),
                   );

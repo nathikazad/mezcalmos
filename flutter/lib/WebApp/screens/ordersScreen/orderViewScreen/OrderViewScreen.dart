@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
 import 'package:mezcalmos/WebApp/screens/components/webAppBarComponent.dart';
 import 'package:mezcalmos/WebApp/screens/ordersScreen/orderViewScreen/components/OrderViewScreenForDesktop.dart';
@@ -44,11 +45,11 @@ class _OrderViewScreenState extends State<OrderViewScreen> {
         future: setupFirebase(
             launchMode: typeMode.toLaunchMode(),
             func: () async {
-              if (Get.find<FirbaseAuthController>().fireAuthUser?.uid != null) {
-                await Get.put<ForegroundNotificationsController>(
-                    ForegroundNotificationsController(),
-                    permanent: true);
-              }
+              // if (Get.find<FirbaseAuthController>().fireAuthUser?.uid != null) {
+              //   await Get.put<ForegroundNotificationsController>(
+              //       ForegroundNotificationsController(),
+              //       permanent: true);
+              // }
             }),
         builder: (context, snapShot) {
           if (snapShot.hasData && snapShot.data == true) {
@@ -56,12 +57,15 @@ class _OrderViewScreenState extends State<OrderViewScreen> {
                 Get.find<LanguageController>();
             final FirbaseAuthController _authcontroller =
                 Get.find<FirbaseAuthController>();
-
+            final MezWebSideBarController drawerController =
+                Get.find<MezWebSideBarController>();
+            drawerController.drawerKey = _key;
             return Material(
               child: LayoutBuilder(builder: ((context, constraints) {
                 return Scaffold(
-                    key: _key,
-                    drawer: SideWebBar(),
+                    key: drawerController.drawerKey,
+                    drawer: drawerController.frontDrawerContent,
+                    endDrawer: drawerController.endDrawerContent,
                     appBar: InstallAppBarComponent(),
                     bottomNavigationBar: MezBottomBar(),
                     body: Scaffold(
@@ -74,18 +78,12 @@ class _OrderViewScreenState extends State<OrderViewScreen> {
                         type: _authcontroller.fireAuthUser?.uid != null
                             ? WebAppBarType.WithCartActionButton.obs
                             : WebAppBarType.WithSignInActionButton.obs,
-                        leadingFunction:
-                            _authcontroller.fireAuthUser?.uid != null
-                                ? () {
-                                    _key.currentState!.openDrawer();
-                                  }
-                                : null,
                       ),
                       // body: Scaffold(),
                       body: (MezCalmosResizer.isMobile(context) ||
                               MezCalmosResizer.isSmallMobile(context))
-                          ? OrderViewScreenFordesktop()
-                          : OrderViewScreenForMobile(),
+                          ? OrderViewScreenForMobile()
+                          : OrderViewScreenFordesktop(),
                     ));
               })),
             );

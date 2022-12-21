@@ -75,6 +75,7 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
                 Get.find<LanguageController>();
             final MezWebSideBarController drawerController =
                 Get.find<MezWebSideBarController>();
+            drawerController.drawerKey = _key;
             //  MezPrint();
             mezDbgPrint(_authcontroller.fireAuthUser?.uid != null
                 ? WebAppBarType.WithCartActionButton.toString()
@@ -90,6 +91,13 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
             }
             ListRestaurantsController viewController =
                 ListRestaurantsController();
+
+            // return Scaffold(
+            //   appBar: InstallAppBarComponent(),
+            //   drawer: drawerController.frontDrawerContent,
+            //   endDrawer: drawerController.endDrawerContent,
+            //   //bottomNavigationBar: MezBottomBar(),
+            // );
 
             return Scaffold(
                 key: drawerController.drawerKey,
@@ -228,6 +236,7 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
                 crossAxisCount: MezCalmosResizer.isSmallTablet(context) ? 2 : 3,
                 childAspectRatio: x,
               ),
+              //itemCount: viewController.filteredRestaurants.length,
               itemCount: viewController.filteredRestaurants.length,
               itemBuilder: (BuildContext context, int index) {
                 return RestaurantCardForDesktopAndTablet(

@@ -132,6 +132,7 @@ class _RestaurantItemViewForMobileState
 
   @override
   Widget build(BuildContext context) {
+    // return Scaffold();
     return Obx(
       () => Scaffold(
         resizeToAvoidBottomInset: true,

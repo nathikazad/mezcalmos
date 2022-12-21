@@ -101,6 +101,7 @@ class SideWebBar extends StatelessWidget {
               ),
               title: "Profile",
               onTap: () {
+                Navigator.of(context).pop();
                 QR.to("/profile");
               },
             ),
@@ -111,7 +112,7 @@ class SideWebBar extends StatelessWidget {
               ),
               title: "Orders",
               onTap: () {
-                mezDbgPrint("this is a test");
+                Navigator.of(context).pop();
                 QR.navigator.replaceAll("/orders");
               },
             ),
@@ -134,9 +135,8 @@ class SideWebBar extends StatelessWidget {
               ),
               title: "Log Out",
               onTap: () {
-                QR.to("/cart");
-                // Navigator.of(context).pop();
-                // Get.find<FirbaseAuthController>().signOut();
+                Navigator.of(context).pop();
+                Get.find<FirbaseAuthController>().signOut();
               },
             )
           ],

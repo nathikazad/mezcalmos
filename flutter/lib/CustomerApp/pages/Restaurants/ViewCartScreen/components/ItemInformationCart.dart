@@ -132,9 +132,11 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
         alignment: MainAxisAlignment.start,
         incrementCallback: () {
           _restaurantController.incrementItem(cartItem.idInCart!, 1);
+          setState(() {});
         },
         onChangedToZero: () async {
           await showConfirmationDialog(context,
+              isWebVersion: isWebVersion,
               title: _i18n()["deleteItem"],
               primaryButtonText: _i18n()["deleteBtn"],
               helperText: _i18n()["deleteItemConfirm"], onYesClick: () async {
@@ -150,6 +152,7 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
         value: cartItem.quantity,
         decrementCallback: () {
           _restaurantController.incrementItem(cartItem.idInCart!, -1);
+          setState(() {});
         });
   }
 }

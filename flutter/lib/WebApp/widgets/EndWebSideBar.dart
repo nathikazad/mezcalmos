@@ -33,7 +33,8 @@ import '../../Shared/models/Utilities/ServerResponse.dart';
 enum ViewDrawerType { myOrder, pickLocationView }
 
 class EndWebSideBar extends StatefulWidget {
-  EndWebSideBar({Key? key}) : super(key: key);
+  EndWebSideBar({Key? key, this.isMobileScreen = false}) : super(key: key);
+  bool? isMobileScreen;
 
   @override
   State<EndWebSideBar> createState() => _EndWebSideBarState();
@@ -51,7 +52,7 @@ class _EndWebSideBarState extends State<EndWebSideBar> {
       permanent: true,
     );
     return Container(
-        width: 350,
+        width: widget.isMobileScreen == true ? Get.width : 350,
         height: Get.height,
         color: Colors.white,
         child: Obx(
@@ -65,7 +66,11 @@ class _EndWebSideBarState extends State<EndWebSideBar> {
                           onPressed: () {
                             if (viewType.value == ViewDrawerType.myOrder) {
                               mezDbgPrint("this is myOrders");
-                              Navigator.of(context).pop();
+                              if (widget.isMobileScreen == true) {
+                                QR.back();
+                              } else {
+                                Navigator.of(context).pop();
+                              }
                             } else {
                               mezDbgPrint("this is pickloaction");
                               viewType.value = ViewDrawerType.myOrder;
@@ -85,8 +90,12 @@ class _EndWebSideBarState extends State<EndWebSideBar> {
                   appBar: AppBar(
                     leading: IconButton(
                         onPressed: () {
-                          Get.find<MezWebSideBarController>()
-                              .closeWebEndDrawer();
+                          if (widget.isMobileScreen == true) {
+                            QR.back();
+                          } else {
+                            Get.find<MezWebSideBarController>()
+                                .closeWebEndDrawer();
+                          }
                         },
                         icon: Icon(Icons.close)),
                   ),

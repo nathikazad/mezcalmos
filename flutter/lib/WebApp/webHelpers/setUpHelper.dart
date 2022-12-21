@@ -112,9 +112,32 @@ Future<bool> putControllers() async {
     mezDbgPrint(
         "]]]]]]]]]] inside the setup function ${isItailized} ]]]]]]]]]]]]");
   });
-  return Future<bool>.delayed(Duration(seconds: 3)).then((value) async {
-    return isItailized;
+  return await waitWhile(
+          () => Get.find<LanguageController>().isLamgInitialized.value,
+          Duration(microseconds: 500))
+      .then((value) {
+    mezDbgPrint("🔴🔴🔴🔴🔴🔴🔴🔴 the value is $value");
+    return value;
   });
+  // return Future<bool>.delayed(Duration(seconds: 3)).then((value) async {
+  //   return isItailized;
+  // });
+}
+
+Future<bool> waitWhile(bool test(), [Duration pollInterval = Duration.zero]) {
+  var completer = new Completer<bool>();
+  check() {
+    if (test()) {
+      mezDbgPrint("the test is complate 😃😃😃😃😃😃😃 ${test()}");
+      completer.complete(true);
+    } else {
+      mezDbgPrint("the test is not complate 😃😃😃😃😃😃😃 ${test()}");
+      new Timer(pollInterval, check);
+    }
+  }
+
+  check();
+  return completer.future;
 }
 
 Future<bool> setupFirebase(

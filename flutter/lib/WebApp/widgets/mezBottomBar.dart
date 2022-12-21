@@ -89,32 +89,33 @@ class _MezBottomBarState extends State<MezBottomBar> {
               icon: Container(
                 height: 20,
                 width: 20,
-                child: SvgPicture.asset(linkedInSvg,
-                    color: Colors.white, semanticsLabel: 'A red up arrow'),
+                child: Icon(Icons.home),
+                // child: SvgPicture.asset(linkedInSvg,
+                //     color: Colors.white, semanticsLabel: 'A red up arrow'),
               ),
             ),
-            IconButton(
-              onPressed: () async {
-                await launchUrl(Uri.parse(facbookUrl));
-              },
-              icon: Container(
-                height: 20,
-                width: 20,
-                child: SvgPicture.asset(facebookSvg,
-                    color: Colors.white, semanticsLabel: 'A red up arrow'),
-              ),
-            ),
-            IconButton(
-              onPressed: () async {
-                await launchUrl(Uri.parse(instagramUrl));
-              },
-              icon: Container(
-                height: 20,
-                width: 20,
-                child: SvgPicture.asset(instagramSvg,
-                    color: Colors.white, semanticsLabel: 'A red up arrow'),
-              ),
-            )
+            // IconButton(
+            //   onPressed: () async {
+            //     await launchUrl(Uri.parse(facbookUrl));
+            //   },
+            //   icon: Container(
+            //     height: 20,
+            //     width: 20,
+            //     child: SvgPicture.asset(facebookSvg,
+            //         color: Colors.white, semanticsLabel: 'A red up arrow'),
+            //   ),
+            // ),
+            // IconButton(
+            //   onPressed: () async {
+            //     await launchUrl(Uri.parse(instagramUrl));
+            //   },
+            //   icon: Container(
+            //     height: 20,
+            //     width: 20,
+            //     child: SvgPicture.asset(instagramSvg,
+            //         color: Colors.white, semanticsLabel: 'A red up arrow'),
+            //   ),
+            // )
           ],
         ),
       ),

@@ -64,6 +64,37 @@ class _RestaurantsItemsViewState extends State<RestaurantsItemsView> {
             }
             final MezWebSideBarController drawerController =
                 Get.find<MezWebSideBarController>();
+            drawerController.drawerKey = _key;
+            return Scaffold(
+              appBar: InstallAppBarComponent(),
+              bottomNavigationBar: MezBottomBar(),
+              key: drawerController.drawerKey,
+              drawer: drawerController.frontDrawerContent,
+              endDrawer: drawerController.endDrawerContent,
+              body: LayoutBuilder(
+                builder: (context, constraints) {
+                  if (MezCalmosResizer.isMobile(context) ||
+                      MezCalmosResizer.isSmallMobile(context)) {
+                    return ViewRestaurantScreenFroMobile();
+                  } else {
+                    return Obx(
+                      () => Scaffold(
+                          appBar: WebAppBarComponent(
+                            automaticallyGetBack:
+                                (MezCalmosResizer.isMobile(context) ||
+                                        MezCalmosResizer.isSmallMobile(context))
+                                    ? false
+                                    : true,
+                            type: _authcontroller.fireAuthUser?.uid != null
+                                ? WebAppBarType.WithCartActionButton.obs
+                                : WebAppBarType.WithSignInActionButton.obs,
+                          ),
+                          body: ViewRestaurantScreenFroDesktop()),
+                    );
+                  }
+                },
+              ),
+            );
 
             return Scaffold(
               key: drawerController.drawerKey,

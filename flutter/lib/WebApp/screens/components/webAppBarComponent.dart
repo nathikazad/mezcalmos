@@ -150,6 +150,14 @@ class _AppbarWidgetForMobileState extends State<AppbarWidgetForMobile> {
                               size: 30,
                             )),
                       ),
+                    SizedBox(
+                      width:
+                          Get.find<FirbaseAuthController>().fireAuthUser?.uid !=
+                                  null
+                              ? null
+                              : MezCalmosResizer.getWepPageHorizontalPadding(
+                                  context),
+                    ),
                     Image.asset(
                       logo,
                       height: 25,
@@ -241,6 +249,7 @@ class _AppbarWidgetForMobileState extends State<AppbarWidgetForMobile> {
                 borderRadius: BorderRadius.circular(100),
                 onTap: () {
                   mezDbgPrint("this one has been clicked ");
+                  QR.to("/cart");
                 },
                 child: Container(
                   decoration: BoxDecoration(

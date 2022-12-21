@@ -117,6 +117,9 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                   : () async {
                       if (auth.fireAuthUser != null) {
                         if (ViewItemScreenMode.AddItemMode == widget.mode) {
+                          mezDbgPrint(
+                              "the first id is ${restaurantCartController.associatedRestaurant?.info.id} and the scond is ${widget.currentRestaurantId}");
+
                           if (restaurantCartController
                                   .associatedRestaurant?.info.id !=
                               null) {
@@ -147,14 +150,15 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                                 secondaryClickTitle: _i18n()["leftBtn"],
                                 description: _i18n()["subtitle"],
                                 secondaryCallBack: () async {
-                                  Get.back<void>();
+                                  //   Get.back<void>();
                                   // await Get.toNamed<void>(kCartRoute);
+                                  widget.navigationCallback?.call();
                                 },
                                 primaryCallBack: () async {
-                                  Get.back<void>();
+                                  // Get.back<void>();
                                   await restaurantCartController
                                       .addItem(widget.cartItem.value!);
-                                  //  await Get.offNamed<void>(kCartRoute);
+                                  widget.navigationCallback?.call();
                                 },
                               );
                             }

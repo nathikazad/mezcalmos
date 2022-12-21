@@ -3,9 +3,16 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/WebApp/widgets/EndWebSideBar.dart';
 import 'package:mezcalmos/WebApp/widgets/SideWebBarWidget/SideWebBarWidget.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class MezWebSideBarController extends GetxController {
-  final GlobalKey<ScaffoldState> drawerKey = GlobalKey();
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+  }
+
+  GlobalKey<ScaffoldState> drawerKey = GlobalKey(debugLabel: QR.currentPath);
 
   final Widget frontDrawerContent = SideWebBar();
   final Widget endDrawerContent = EndWebSideBar();

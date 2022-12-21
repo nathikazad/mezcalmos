@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 
@@ -18,7 +19,10 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewCartScreen"]["components"]["BuildItems"];
 
 class CartItemsBuilder extends StatelessWidget {
-  CartItemsBuilder({Key? key, this.isWebVersion}) : super(key: key);
+  CartItemsBuilder({
+    Key? key,
+    this.isWebVersion,
+  }) : super(key: key);
   bool? isWebVersion = false;
 
   /// RestaurantController
@@ -40,16 +44,19 @@ class CartItemsBuilder extends StatelessWidget {
             margin: const EdgeInsets.all(5),
             child: MyExpansionPanelComponent(
               child: Flexible(
-                  child: ItemInformationCart(
-                isWebVersion: isWebVersion,
-                item: cartItem,
-                showImage: _restaurantController.showItemsImages,
-                imageUrl: cartItem.item.image,
-                itemName: cartItem.item.name[userLanguage]![0].toUpperCase() +
-                    cartItem.item.name[userLanguage]!.substring(1),
-                restaurantName:
-                    _restaurantController.associatedRestaurant?.info.name ?? "",
-                itemsPrice: cartItem.totalCost().toStringAsFixed(0),
+                  child: Obx(
+                () => ItemInformationCart(
+                  isWebVersion: isWebVersion,
+                  item: cartItem,
+                  showImage: _restaurantController.showItemsImages,
+                  imageUrl: cartItem.item.image,
+                  itemName: cartItem.item.name[userLanguage]![0].toUpperCase() +
+                      cartItem.item.name[userLanguage]!.substring(1),
+                  restaurantName:
+                      _restaurantController.associatedRestaurant?.info.name ??
+                          "",
+                  itemsPrice: cartItem.totalCost().toStringAsFixed(0),
+                ),
               )),
               children: [
                 Container(
@@ -68,7 +75,11 @@ class CartItemsBuilder extends StatelessWidget {
               onEdit: () {
                 mezDbgPrint(
                     " the data inside the expansion ${cartItem.toFirebaseFunctionFormattedJson()}");
-                //   Get.toNamed(editCartItemRoute("${cartItem.idInCart}"));
+
+                QR.to(
+                    "/restaurants/${cartItem.restaurantId}/${cartItem.item.id}?mode=edit");
+
+                //Get.toNamed(editCartItemRoute("${cartItem.idInCart}"));
               },
             ),
           ));

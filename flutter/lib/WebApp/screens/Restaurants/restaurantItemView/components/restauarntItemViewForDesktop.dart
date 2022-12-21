@@ -8,12 +8,14 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/component
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/ButtonStyles.dart';
 import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
 import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/restaurantItemView/components/ItemOptionCard.dart';
 import 'package:mezcalmos/WebApp/screens/restaurants/restaurantItemView/components/itemNotesComponentWidget.dart';
+import 'package:mezcalmos/WebApp/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/WebApp/widgets/WidgetWithBackButton.dart';
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 import 'package:mezcalmos/WebApp/widgets/mezLoaderWidget.dart';
@@ -25,12 +27,14 @@ import 'package:mezcalmos/WebApp/screens/Restaurants/restaurantItemView/restaura
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewRestaurantScreen"];
+dynamic _i182n() => Get.find<LanguageController>().strings["CustomerApp"]
+        ["pages"]["Restaurants"]["ViewItemScreen"]["components"]
+    ["BottomBarItemViewScreen"];
 
 class RestaurantItemViewForDesktop extends StatefulWidget {
   RestaurantItemViewForDesktop(
       {Key? key,
       required this.cartItem,
-      required this.openOrdresDrawer,
       required this.currentRestaurant,
       required this.viewItemScreenMode,
       this.isSpecial = false,
@@ -40,7 +44,6 @@ class RestaurantItemViewForDesktop extends StatefulWidget {
   final Rx<Restaurant?> currentRestaurant;
   final bool? showViewRestaurant;
   final bool? isSpecial;
-  final Function openOrdresDrawer;
 
   final ViewItemScreenMode viewItemScreenMode;
 
@@ -51,11 +54,12 @@ class RestaurantItemViewForDesktop extends StatefulWidget {
 
 class _RestaurantItemViewForDesktopState
     extends State<RestaurantItemViewForDesktop> {
+  RestaurantController restaurantCartController =
+      Get.find<RestaurantController>();
+  FirbaseAuthController auth = Get.find<FirbaseAuthController>();
+
   @override
   void initState() {
-    // ever(widget.cartItem, (val) {
-    //   mezDbgPrint("this is the cart values ${widget.cartItem.toJson()}");
-    // });
     super.initState();
   }
 
@@ -71,9 +75,38 @@ class _RestaurantItemViewForDesktopState
     return Colors.red;
   }
 
+  Future<void> _addSpecialItemCallBack() async {
+    await showStatusInfoDialog(
+      context,
+      bottomRightIcon: Icons.shopping_cart,
+      btnRightIconBgColor: secondaryLightBlueColor,
+      primaryImageUrl:
+          restaurantCartController.cart.value.getFirstSpecialItem?.item.image,
+      btnRightIconColor: primaryBlueColor,
+      status: restaurantCartController.associatedRestaurant?.info.name ?? "",
+      primaryClickTitle: _i18n()["rightBtn"],
+      secondaryClickTitle: _i18n()["leftBtn"],
+      description: _i18n()["specialSubtitle"],
+      secondaryCallBack: () async {
+        Get.back<void>();
+        // await Get.toNamed<void>(kCartRoute);
+      },
+      primaryCallBack: () async {
+        mezDbgPrint("OVERIDDDING CART WITH NEW SPECIAL");
+        restaurantCartController.clearCart();
+        await restaurantCartController.saveCart();
+        mezDbgPrint(
+            "Clearing cart =============================>>>>>${restaurantCartController.cart.value.cartItems}");
+        await restaurantCartController.addItem(widget.cartItem.value!);
+        // await Get.offNamed<void>(kCartRoute);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final LanguageController lang = Get.find<LanguageController>();
+
     return Scaffold(
       body: Obx(
         () => (widget.cartItem.value != null)
@@ -130,22 +163,152 @@ class _RestaurantItemViewForDesktopState
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(5))),
-                                  onPressed: () async {
-                                    if (Get.find<FirbaseAuthController>()
-                                            .fireAuthUser !=
-                                        null) {
-                                      await Get.find<RestaurantController>()
-                                          .addItem(widget.cartItem.value!);
-                                      Get.find<MezWebSideBarController>()
-                                          .openWebEndDrawer();
-                                    } else {
-                                      dialogRequiredSignIn(
-                                          context: context,
-                                          navigationCallback: () {
-                                            QR.toName("signIn");
-                                          });
-                                    }
-                                  },
+                                  onPressed: (restaurantCartController
+                                              .cart.value
+                                              .canAddSpecial(
+                                                  item:
+                                                      widget.cartItem.value!) ==
+                                          false)
+                                      ? () async {
+                                          await _addSpecialItemCallBack();
+                                        }
+                                      : () async {
+                                          if (auth.fireAuthUser != null) {
+                                            if (ViewItemScreenMode
+                                                    .AddItemMode ==
+                                                widget.viewItemScreenMode) {
+                                              mezDbgPrint(
+                                                  "the first id is ${restaurantCartController.associatedRestaurant?.info.id} and the scond is ${widget.currentRestaurant.value?.info.id}");
+
+                                              if (restaurantCartController
+                                                      .associatedRestaurant
+                                                      ?.info
+                                                      .id !=
+                                                  null) {
+                                                if (restaurantCartController
+                                                        .associatedRestaurant
+                                                        ?.info
+                                                        .id ==
+                                                    widget.currentRestaurant
+                                                        .value!.info.id) {
+                                                  mezDbgPrint(
+                                                      "the first id is ${restaurantCartController.associatedRestaurant?.info.id} and the scond is ${widget.currentRestaurant.value?.info.id}");
+                                                  await restaurantCartController
+                                                      .addItem(widget
+                                                          .cartItem.value!);
+
+                                                  Get.find<
+                                                          MezWebSideBarController>()
+                                                      .openWebEndDrawer();
+                                                } else {
+                                                  mezDbgPrint(
+                                                      "not true ${restaurantCartController.associatedRestaurant?.info.id} and the other is ${widget.currentRestaurant.value?.info.id}");
+
+                                                  await showStatusInfoDialog(
+                                                    context,
+                                                    bottomRightIcon:
+                                                        Icons.shopping_cart,
+                                                    btnRightIconBgColor:
+                                                        secondaryLightBlueColor,
+                                                    primaryImageUrl:
+                                                        restaurantCartController
+                                                            .associatedRestaurant
+                                                            ?.info
+                                                            .image,
+                                                    btnRightIconColor:
+                                                        primaryBlueColor,
+                                                    status: restaurantCartController
+                                                            .associatedRestaurant
+                                                            ?.info
+                                                            .name ??
+                                                        "",
+                                                    primaryClickTitle:
+                                                        _i182n()["rightBtn"],
+                                                    secondaryClickTitle:
+                                                        _i182n()["leftBtn"],
+                                                    description:
+                                                        _i182n()["subtitle"],
+                                                    secondaryCallBack:
+                                                        () async {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                      // await Get.toNamed<void>(kCartRoute);
+                                                      Get.find<
+                                                              MezWebSideBarController>()
+                                                          .openWebEndDrawer();
+                                                    },
+                                                    primaryCallBack: () async {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                      await restaurantCartController
+                                                          .addItem(widget
+                                                              .cartItem.value!);
+                                                      Get.find<
+                                                              MezWebSideBarController>()
+                                                          .openWebEndDrawer();
+                                                    },
+                                                  );
+                                                }
+                                              } else {
+                                                if (restaurantCartController
+                                                            .cart.value
+                                                            .canAddSpecial(
+                                                                item: widget
+                                                                    .cartItem
+                                                                    .value!) !=
+                                                        null &&
+                                                    restaurantCartController
+                                                            .cart.value
+                                                            .canAddSpecial(
+                                                                item: widget
+                                                                    .cartItem
+                                                                    .value!) ==
+                                                        false) {
+                                                  mezDbgPrint("Error");
+                                                  MezSnackbar("Error",
+                                                      "Special time error");
+                                                } else {
+                                                  await restaurantCartController
+                                                      .addItem(widget
+                                                          .cartItem.value!);
+                                                  Get.find<
+                                                          MezWebSideBarController>()
+                                                      .openWebEndDrawer();
+                                                  //await Get.offNamed<void>(kCartRoute);
+                                                }
+                                              }
+                                            } else {
+                                              await restaurantCartController
+                                                  .addItem(
+                                                      widget.cartItem.value!);
+                                            }
+                                          } else {
+                                            mezDbgPrint(
+                                                "show dailog Required SignIn");
+                                            dialogRequiredSignIn(
+                                                context: context,
+                                                navigationCallback: () {
+                                                  QR.toName(
+                                                      "signIn?type=restaurants&id=${QR.params["id"].toString()}&itemId=${QR.params["itemId"].toString()}");
+                                                });
+                                          }
+                                        },
+                                  // onPressed: () async {
+                                  //   if (Get.find<FirbaseAuthController>()
+                                  //           .fireAuthUser !=
+                                  //       null) {
+                                  //     await Get.find<RestaurantController>()
+                                  //         .addItem(widget.cartItem.value!);
+
+                                  //   } else {
+                                  //     dialogRequiredSignIn(
+                                  //         context: context,
+                                  //         navigationCallback: () {
+                                  //           QR.to(
+                                  //               "signIn?type=restaurants&id=${QR.params["id"].toString()}&itemId=${QR.params["itemId"].toString()}");
+                                  //         });
+                                  //   }
+                                  // },
                                   child: Text(
                                     " Add item ",
                                     style: GoogleFonts.montserrat(

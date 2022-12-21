@@ -41,23 +41,33 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
   Rxn<CartItem> cartItem = Rxn<CartItem>();
   late ViewItemScreenMode mode;
   Restaurant? currentRestaurant;
-  final GlobalKey<ScaffoldState> _key = GlobalKey();
+
   ViewDrawerType viewType = ViewDrawerType.myOrder;
 
   @override
-  void didChangeDependencies() {
+  void initState() {
+    mezDbgPrint(
+        "===========> this is the mode ${QR.params['mode'].toString()} <=============");
     _getRestaurant();
-    super.didChangeDependencies();
+    super.initState();
   }
 
+  // @override
+  // void didChangeDependencies() {
+  //   _getRestaurant();
+  //   super.didChangeDependencies();
+  // }
+
   void _getRestaurant() async {
+    mezDbgPrint(
+        "===========> this is the mode ${QR.params['mode'].toString()} <=============");
     setupFirebase(launchMode: typeMode.toLaunchMode()).then((value) {
       Get.put<ForegroundNotificationsController>(
           ForegroundNotificationsController(),
           permanent: true);
       // RestaurantController restaurantCartController =
       //     Get.find<RestaurantController>();
-      mode = QR.params['mode'] == "add" || QR.params['mode'] == null
+      mode = QR.params['mode'].toString() == "add" || QR.params['mode'] == null
           ? ViewItemScreenMode.AddItemMode
           : ViewItemScreenMode.EditItemMode;
       mezDbgPrint("===========> this is the mode ${mode} <=============");
@@ -75,14 +85,15 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
               if (item != null) {
                 print("this is another test ${item.toJson()}");
               } else {
-                QR.to("/404");
+                // QR.to("/404");
               }
             });
           } else {
-            QR.to("/404");
+            //QR.to("/404");
           }
         });
       } else {
+        mezDbgPrint("===========> this is the mode ${mode} <=============");
         try {
           cartItem.value = CartItem.clone(Get.find<RestaurantController>()
               .cart
@@ -91,6 +102,7 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
               .firstWhere((CartItem item) {
             return item.idInCart == QR.params["cartItemId"];
           }));
+
           Get.find<RestaurantsInfoController>()
               .getRestaurant(cartItem.value!.restaurantId)
               .then((Restaurant? value) {
@@ -99,6 +111,7 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
             });
           });
         } catch (e) {
+          mezDbgPrint("this is a problem here happen e ${e.toString()}");
           QR.to("/404");
         }
       }
@@ -118,9 +131,11 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
   @override
   Widget build(BuildContext context) {
     print("the restaurant id is ${QR.params['itemId'].toString()}");
+    // s=re
     return FutureBuilder<bool>(
         future: setupFirebase(launchMode: typeMode.toLaunchMode()),
         builder: (context, snapShot) {
+          final GlobalKey<ScaffoldState> _key = GlobalKey();
           if (snapShot.hasData && snapShot.data == true) {
             final LanguageController Lcontroller =
                 Get.find<LanguageController>();
@@ -129,6 +144,7 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
 
             final MezWebSideBarController drawerController =
                 Get.find<MezWebSideBarController>();
+            drawerController.drawerKey = _key;
 
             return (cartItem != null)
                 ? Scaffold(
@@ -156,20 +172,11 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
                             type: _authcontroller.fireAuthUser?.uid != null
                                 ? WebAppBarType.WithCartActionButton.obs
                                 : WebAppBarType.WithSignInActionButton.obs,
-                            leadingFunction:
-                                _authcontroller.fireAuthUser?.uid != null
-                                    ? () {
-                                        _key.currentState!.openDrawer();
-                                      }
-                                    : null,
                           ),
                           body: RestaurantItemViewForDesktop(
                             viewItemScreenMode: mode,
                             cartItem: cartItem,
                             currentRestaurant: currentRestaurant.obs,
-                            openOrdresDrawer: () {
-                              _key.currentState!.openEndDrawer();
-                            },
                           ),
                         );
                       }

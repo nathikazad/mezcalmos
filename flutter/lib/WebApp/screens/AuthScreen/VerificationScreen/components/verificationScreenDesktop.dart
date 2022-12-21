@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/WebApp/screens/AuthScreen/components/MezButtonWidget.dart';
 import 'package:mezcalmos/WebApp/widgets/MezSnackbar.dart';
@@ -50,12 +51,23 @@ class _VerificationScreenDesktopState extends State<VerificationScreenDesktop> {
     );
   }
 
+  String? getNabigationPath() {
+    if (QR.params["type"].toString() == "restaurants") {
+      mezDbgPrint(
+          "/${QR.params["type"].toString()}/${QR.params["id"].toString()}/${QR.params["itemId"].toString()} 😀");
+      return "/${QR.params["type"].toString()}/${QR.params["id"].toString()}/${QR.params["itemId"].toString()}";
+    } else {
+      return "restaurants";
+    }
+  }
+
   TextEditingController _otpCodeTextController = TextEditingController();
   FirbaseAuthController controller = Get.find<FirbaseAuthController>();
   String otpCode = '';
 
   @override
   Widget build(BuildContext context) {
+    getNabigationPath();
     final txt = Theme.of(context).textTheme;
     return Container(
         height: Get.height - (kToolbarHeight * 3),
@@ -249,6 +261,8 @@ class _VerificationScreenDesktopState extends State<VerificationScreenDesktop> {
                             ),
                             onPress: canConfirmOtp.value
                                 ? () async {
+                                    mezDbgPrint(
+                                        "the route is ${getNabigationPath.toString()} ");
                                     clickedSignInOtp.value = true;
                                     print(
                                         "${Get.arguments ?? widget.passedPhone} -------------- $otpCode ");
@@ -267,11 +281,17 @@ class _VerificationScreenDesktopState extends State<VerificationScreenDesktop> {
                                             "Notice ~",
                                             "you successfully sign in",
                                             context);
-                                        QR.to("/restaurants");
+                                        var pathRoute =
+                                            getNabigationPath() != null
+                                                ? getNabigationPath()
+                                                : "/restaurants";
+
+                                        mezDbgPrint("$pathRoute");
+                                        QR.to("$pathRoute");
                                         break;
                                       case false:
                                         MezSnackbarForWeb("Oops ..",
-                                            _i18n()['wrongOTPCode'], context);
+                                            _i18n()['wrongOTPCode '], context);
 
                                         clickedSignInOtp.value = false;
                                         break;

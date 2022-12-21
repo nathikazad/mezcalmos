@@ -23,13 +23,13 @@ StreamSubscription<notifs.Notification> initializeShowNotificationsListener(
   return Get.find<ForegroundNotificationsController>()
       .displayNotificationsStream
       .listen((notifs.Notification notification) {
-    // mezDbgPrint("Notification Displayer: ${notification.toJson()}");
-    // mezDbgPrint("Notif::title ====> ${notification.title}");
-    // mezDbgPrint("Notif::body ====> ${notification.body}");
-    // mezDbgPrint("Notif:: before the check }}}");
+    mezDbgPrint("👋👋👋👋Notification Displayer: ${notification.toJson()}");
+    mezDbgPrint("👋👋👋👋Notif::title ====> ${notification.title}");
+    mezDbgPrint("👋👋👋👋Notif::body ====> ${notification.body}");
+    mezDbgPrint("👋👋👋👋Notif:: before the check }}}");
     if (DateTime.now().difference(notification.timestamp) <
         Duration(minutes: 1)) {
-      //  mezDbgPrint("Notif:: after the check }}}");
+      mezDbgPrint("👋👋👋👋Notif:: after the check }}}");
       _displayNotification(notification, isWebversion: isWebVersion);
     }
   });
@@ -38,7 +38,7 @@ StreamSubscription<notifs.Notification> initializeShowNotificationsListener(
 Future<void> _displayNotification(notifs.Notification notification,
     {bool? isWebversion = false}) async {
   //await Get.find<SettingsController>().playNotificationSound();
-  //mezDbgPrint("Notifs" + notification.imgUrl);
+  mezDbgPrint("👋👋👋👋Notifs" + notification.imgUrl);
   if (notification.notificationAction == notifs.NotificationAction.ShowPopUp) {
     await decideWhichButtonDialogToUse(notification);
   } else {
@@ -51,7 +51,7 @@ Future<void> _displayNotification(notifs.Notification notification,
         String oredrId = notification.linkUrl.split("/").last;
         await QR.to("/oredrs/$oredrId");
       }
-    });
+    }, isWebVersion: isWebversion);
   }
 }
 

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/WebApp/routes/AuthRoutes.dart';
 import 'package:mezcalmos/WebApp/screens/AuthScreen/components/MezButtonWidget.dart';
@@ -225,6 +226,9 @@ class _SigninScreenDesktopState extends State<SigninScreenDesktop> {
                                   ServerResponse response =
                                       await controller.sendOTPForLogin(phone);
                                   print("++++++++++++ response >>> $response");
+                                  String xParams =
+                                      QR.currentPath.split("?").last;
+                                  mezDbgPrint(" xParams $xParams");
 
                                   if (response.success) {
                                     // change this and make it as native snackbar
@@ -232,9 +236,10 @@ class _SigninScreenDesktopState extends State<SigninScreenDesktop> {
                                     MezSnackbarForWeb("Notice ~",
                                         "OTP Sent code to : $phone", context);
                                     // change this route to QR route for confirmation
+
                                     QR.to("signIn/" +
                                         AuthRoutes.verificationScreen +
-                                        "?phone=$phone");
+                                        "?phone=$phone&$xParams");
                                     // Get.toNamed(kOtpConfirmRoute, arguments: phone);
                                   } else {
                                     MezSnackbarForWeb(

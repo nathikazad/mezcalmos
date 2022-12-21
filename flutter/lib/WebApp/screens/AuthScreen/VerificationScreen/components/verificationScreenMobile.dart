@@ -226,6 +226,12 @@ class VerificationScreenMobile extends GetView<FirbaseAuthController> {
     );
   }
 
+  String? getNabigationPath() {
+    if (QR.params["type"].toString() == "restaurants") {
+      return "/${QR.params["type"].toString()}/${QR.params["id"].toString()}/${QR.params["itemId"].toString()}";
+    }
+  }
+
   Widget confirmButton(
       String _phonePassed, String otpCode, BuildContext context) {
     return Container(
@@ -247,7 +253,11 @@ class VerificationScreenMobile extends GetView<FirbaseAuthController> {
                     case true:
                       MezSnackbarForWeb(
                           "Notice ~", "you successfully sign in", context);
-                      QR.to("/restaurants");
+                      var pathRoute = getNabigationPath != null
+                          ? getNabigationPath
+                          : "/restaurants";
+
+                      QR.to("$pathRoute");
                       break;
                     case false:
                       MezSnackbarForWeb(

@@ -79,30 +79,8 @@ class AppRoutes {
     QRoute(
       path: "/cart",
       name: "cart",
-      //middleware: [DefferedLoader(messagingScreen.loadLibrary)],
       builder: () => CartViewScreen(),
-      // children: [
-      //   QRoute(
-      //     path: "/:orderId",
-      //     name: orderById,
-      //     middleware: [DefferedLoader(orderViewScreen.loadLibrary)],
-      //     builder: () => orderViewScreen.OrderViewScreen(),
-      // )
-      // ]
     ),
-    QRoute(
-        path: "/test",
-        name: "test",
-        middleware: [DefferedLoader(test.loadLibrary)],
-        builder: () => test.Test1(),
-        children: [
-          QRoute(
-            path: "/test2",
-            name: "test2",
-            middleware: [DefferedLoader(test2.loadLibrary)],
-            builder: () => test2.Test2(),
-          )
-        ])
   ];
 }
 
