@@ -69,4 +69,22 @@ class ROpOperatorsViewController {
           errorMessage: "Server Error", errorCode: "serverError");
     }
   }
+
+  Future<ServerResponse> approveOperator(
+      {required bool approved, required int opId}) async {
+    final HttpsCallable cloudFunction = FirebaseFunctions.instance
+        .httpsCallable('restaurant2-authorizeRestaurantOperator');
+    try {
+      final HttpsCallableResult response = await cloudFunction
+          .call({"newOperatorId": opId, "approved": approved});
+      mezDbgPrint("Response : ${response.data}");
+
+      return ServerResponse(ResponseStatus.Success);
+    } catch (e, stk) {
+      mezDbgPrint("Errrooooooooor =======> $e");
+      mezDbgPrint("Errrooooooooor =======> $stk");
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
+    }
+  }
 }

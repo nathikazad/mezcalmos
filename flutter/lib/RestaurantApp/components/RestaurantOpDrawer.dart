@@ -101,6 +101,19 @@ class _ROpDrawerState extends State<ROpDrawer> {
                       ),
                     ),
                     _languageSwitcher(),
+                    if (restaurantOpAuthController
+                        .operator.value!.isWaitingToBeApprovedByOwner)
+                      _navigationLink(
+                        onClick: () async {
+                          await Get.find<AuthController>().signOut();
+                        },
+                        icon: Icons.alternate_email,
+                        titleWidget: Text(
+                          '${_i18n()["logout"]}',
+                          style: Get.textTheme.bodyText1
+                              ?.copyWith(color: Colors.red),
+                        ),
+                      ),
                   ],
                 ),
               ),

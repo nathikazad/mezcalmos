@@ -9,12 +9,14 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/operatorNodes.dart';
+import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
 import 'package:mezcalmos/Shared/graphql/restaurantOperator/hsRestaurantOperator.dart';
 import 'package:mezcalmos/Shared/graphql/user/hsUser.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
 
 class RestaurantOpAuthController extends GetxController {
   Rxn<RestaurantOperator> operator = Rxn();
@@ -50,6 +52,7 @@ class RestaurantOpAuthController extends GetxController {
     // Todo @m66are remove this restaurant id hard code
 
     setupRestaurantOperator();
+    unawaited(saveNotificationToken());
     super.onInit();
   }
 
@@ -123,15 +126,30 @@ class RestaurantOpAuthController extends GetxController {
   Future<void> saveNotificationToken() async {
     final String? deviceNotificationToken =
         await _notificationsController.getToken();
-    if (deviceNotificationToken != null) {
-      unawaited(_databaseHelper.firebaseDatabase
-          .ref()
-          .child(operatorNotificationInfoNode(
-              operatorType: OperatorType.Restaurant,
-              uid: _authController.fireAuthUser!.uid))
-          .set(<String, String>{
-        'deviceNotificationToken': deviceNotificationToken
-      }));
+    final NotificationInfo? notifInfo =
+        await get_notif_info(userId: operatorId);
+    mezDbgPrint("🫡🫡 saving notification info 🫡🫡");
+    try {
+      if (notifInfo != null &&
+          deviceNotificationToken != null &&
+          notifInfo.token != deviceNotificationToken) {
+        // ignore: unawaited_futures
+        update_notif_info(
+            notificationInfo: NotificationInfo(
+                userId: operatorId,
+                appType: "restaurant",
+                id: notifInfo.id,
+                token: deviceNotificationToken));
+      } else if (deviceNotificationToken != null && notifInfo == null) {
+        // ignore: unawaited_futures
+        insert_notif_info(
+            userId: operatorId,
+            token: deviceNotificationToken,
+            appType: "restaurant");
+      }
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
     }
   }
 

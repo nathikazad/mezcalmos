@@ -25,7 +25,7 @@ Future<RestaurantOperatorState?> get_operator_state(
     final List<Query$getOperatorRestaurantInfo$restaurant_operator>? data =
         response.parsedData?.restaurant_operator;
     if (data?.isNotEmpty ?? false) {
-      mezDbgPrint("👊👊👊 ${data?.first.status}");
+      mezDbgPrint("👊👊👊 ${data?.first.toJson()}");
       final RestaurantOperatorState state = RestaurantOperatorState(
           restaurantId: data!.first.restaurant_id,
           owner: data.first.owner,

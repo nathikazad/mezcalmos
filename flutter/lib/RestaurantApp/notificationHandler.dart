@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' as mat;
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -10,6 +11,7 @@ dynamic _i18n() =>
     Get.find<LanguageController>().strings["LaundryApp"]["notificationHandler"];
 
 Notification restaurantNotificationHandler(String key, value) {
+  mezDbgPrint("🚀🚀 new notification 🚀🚀 ==> $value");
   final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
   switch (notificationType) {
@@ -21,6 +23,19 @@ Notification restaurantNotificationHandler(String key, value) {
           imgUrl:
               'assets/images/shared/notifications/prepareOrderNotificationIcon.png', // needs to be changed
           title: '${_i18n()['newOrderTitle']}',
+          timestamp: DateTime.parse(value['time']),
+          notificationType: NotificationType.NewMessage,
+          notificationAction:
+              (value["notificationAction"] as String).toNotificationAction(),
+          variableParams: value);
+    case NotificationType.OperatorApproved:
+      return Notification(
+          id: key,
+          linkUrl: kWrapperRoute,
+          body: 'You have been approved',
+          imgUrl:
+              'assets/images/shared/notifications/delivered.png', // needs to be changed
+          title: "Congrats !!",
           timestamp: DateTime.parse(value['time']),
           notificationType: NotificationType.NewMessage,
           notificationAction:

@@ -2,12 +2,21 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/RestaurantApp/ROpDeeplinkHandler.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
+import 'package:mezcalmos/RestaurantApp/notificationHandler.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/operatorNodes.dart';
+import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
+    as MezNotification;
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -19,10 +28,13 @@ class RestaurantWrapper extends StatefulWidget {
 
 class _RestaurantWrapperState extends State<RestaurantWrapper> {
   RestaurantOperator? restaurantOperator;
-
+  final ROpDeeplinkHandler rOpDeeplinkHandler = ROpDeeplinkHandler();
+  StreamSubscription<MezNotification.Notification>?
+      _notificationsStreamListener;
   @override
   void initState() {
     mezDbgPrint("RestaurantWrapper::init state");
+    Future.wait([rOpDeeplinkHandler.startDynamicLinkCheckRoutine()]);
     Future<void>.microtask(() async {
       mezDbgPrint("RestaurantWrapper::microtask handleState first time");
       await Get.find<RestaurantOpAuthController>().setupRestaurantOperator();
@@ -31,6 +43,15 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
 
       handleState(restaurantOperator);
     });
+    if (Get.find<AuthController>().isUserSignedIn) {
+      _notificationsStreamListener = initializeShowNotificationsListener();
+      Get.find<ForegroundNotificationsController>()
+          .startListeningForNotificationsFromFirebase(
+              operatorNotificationsNode(
+                  uid: Get.find<AuthController>().fireAuthUser!.uid,
+                  operatorType: OperatorType.Restaurant),
+              restaurantNotificationHandler);
+    }
     super.initState();
   }
 
@@ -38,13 +59,11 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
     mezDbgPrint(operator);
 
     if (operator == null) {
-      // ignore: unawaited_futures, inference_faQilure_on_function_invocation
-
       MezRouter.toNamed(kCreateRestaurant);
+    } else if (operator.isWaitingToBeApprovedByOwner) {
+      MezRouter.toNamed(kOpUnauth);
     } else {
       MezRouter.toNamed(kTabsView);
-      // Get.to(SomethingWentWrongScreen());
-
     }
   }
 

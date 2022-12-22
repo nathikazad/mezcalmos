@@ -1,13 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpOperatorsPageController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 class ROpOperatorCard extends StatelessWidget {
-  const ROpOperatorCard({super.key, required this.operator});
+  const ROpOperatorCard(
+      {super.key, required this.operator, required this.viewController});
   final RestaurantOperator operator;
-
+  final ROpOperatorsViewController viewController;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -54,9 +57,43 @@ class ROpOperatorCard extends StatelessWidget {
                     )),
                 if (operator.state.owner) Text("Owner"),
               ],
-            )
+            ),
 
             // actions row //
+            if (operator.isWaitingToBeApprovedByOwner)
+              Container(
+                margin: const EdgeInsets.only(top: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Flexible(
+                        child: MezButton(
+                      label: "Reject",
+                      backgroundColor: offRedColor,
+                      height: 50,
+                      textColor: Colors.red,
+                      onClick: () async {
+                        await viewController.approveOperator(
+                            opId: operator.info.hasuraId, approved: true);
+                      },
+                    )),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Flexible(
+                        child: MezButton(
+                      label: "Approve",
+                      height: 50,
+                      backgroundColor: primaryBlueColor,
+                      textColor: Colors.white,
+                      onClick: () async {
+                        await viewController.approveOperator(
+                            opId: operator.info.hasuraId, approved: true);
+                      },
+                    )),
+                  ],
+                ),
+              )
           ],
         ),
       ),

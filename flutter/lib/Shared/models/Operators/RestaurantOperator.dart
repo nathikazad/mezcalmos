@@ -62,12 +62,11 @@ class RestaurantOperator {
         "info": info.toFirebaseFormatJson(),
       };
   bool get isAuthorized {
-    return state.operatorState == AgentStatus.Authorized &&
-        state.restaurantId != null;
+    return state.operatorState == AgentStatus.Authorized;
   }
 
-  bool get isWaiting {
+  bool get isWaitingToBeApprovedByOwner {
     return state.operatorState == AgentStatus.Awaiting_approval &&
-        state.restaurantId != null;
+        state.owner == false;
   }
 }

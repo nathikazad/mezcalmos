@@ -56,5 +56,6 @@ export async function addRestaurantOperator(operatorUserId: number, addDriverDet
       );
     }
   })
+  
 
 }

@@ -71,7 +71,7 @@ class ROpCreateRestuarantViewController {
         .httpsCallable('restaurant2-createRestaurant');
     try {
       final HttpsCallableResult response =
-          await cloudFunction.call(_constructRestaurant());
+          await cloudFunction.call({"kkkkk": "jjjjjj"});
       mezDbgPrint("Response : ${response.data}");
 
       return ServerResponse.fromJson(response.data);

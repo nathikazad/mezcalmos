@@ -8,6 +8,7 @@ import { NotificationType, NotificationAction, Notification } from "../shared/mo
 import { restaurantUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmins";
+import { HttpsError } from "firebase-functions/v1/auth";
 
 export interface RestaurantDetails {
   name: string,
@@ -32,6 +33,9 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
     schedule: restaurantDetails.schedule,
     
    
+  }
+  if (restaurantDetails.name == null) {
+    throw new HttpsError();
   }
   if(restaurantDetails.firebaseId != undefined) {
     restaurant.firebaseId = restaurantDetails.firebaseId
