@@ -83,7 +83,6 @@ class HasuraDb {
         hasuraDbLink = hasuraProdLink;
         hasuraDbSocketLink =
             hasuraProdLink.replaceAll("https", "wss"); // hasuraSta
-
         break;
       case AppLaunchMode.stage:
         hasuraDbLink = hasuraStageLink;
@@ -92,7 +91,7 @@ class HasuraDb {
         break;
       case AppLaunchMode.dev:
         hasuraDbLink = hasuraDevLink;
-        hasuraDbSocketLink = hasuraStageLink.replaceAll("http", "ws"); //
+        hasuraDbSocketLink = hasuraDevLink.replaceAll("http", "ws"); //
         break;
     }
     mezDbgPrint(

@@ -4,6 +4,7 @@ import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/DeliveryAdminApp/models/DeliveryOperator.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_operator/__generated/delivery_operator.graphql.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 final HasuraDb _hasuraDb = Get.find<HasuraDb>();
@@ -24,25 +25,27 @@ Future<DeliveryOperator?> get_delivery_operator({required int userId}) async {
         "[+] Called :: get_delivery_operator :: EXCEPTION :: ${_res.exception}");
   } else {
     mezDbgPrint(
-      "[+] Called :: get_delivery_operator :: SUCCESS",
+      "[+] Called :: get_delivery_operator :: SUCCESS :: USER($userId)",
     );
-    Query$get_delivery_operator_by_id$delivery_operator_by_pk? _op =
-        _res.parsedData?.delivery_operator_by_pk;
+    final List<Query$get_delivery_operator_by_id$delivery_operator>? _op =
+        _res.parsedData?.delivery_operator;
 
-    if (_op != null) {
+    mezDbgPrint("[///get//] ${_op?.length}");
+
+    if (_op != null && _op.isNotEmpty) {
       _operator = DeliveryOperator(
-        _op.id,
-        _op.delivery_company_id,
-        _op.app_version,
-        _op.current_gps.toLocationData(),
-        _op.delivery_driver_type,
-        _op.notification_token,
-        _op.owner,
-        _op.status,
+        _op.first.id,
+        _op.first.delivery_company_id,
+        _op.first.app_version,
+        _op.first.current_gps.toLocationData(),
+        _op.first.delivery_driver_type,
+        _op.first.notification_token,
+        _op.first.owner,
+        _op.first.status,
       );
     } else {
       mezDbgPrint(
-        "[+] Called :: get_delivery_operator :: OPERATOR NOT FOUND!",
+        "[+] Called :: get_delivery_operator :: OPERATOR NOT FOUND :: ${_res.data}!",
       );
     }
   }
@@ -69,19 +72,21 @@ Stream<DeliveryOperator?> listen_on_delivery_operator({required int userId}) {
       mezDbgPrint(
         "[+] Called :: listen_on_delivery_operator :: SUCCESS",
       );
-      Subscription$get_delivery_operator_by_id$delivery_operator_by_pk? _op =
-          _res.parsedData?.delivery_operator_by_pk;
+      final List<Subscription$get_delivery_operator_by_id$delivery_operator>?
+          _op = _res.parsedData?.delivery_operator;
 
-      if (_op != null) {
+      mezDbgPrint("[///sub//] ${_op?.length}");
+
+      if (_op != null && _op.isNotEmpty) {
         _operator = DeliveryOperator(
-          _op.id,
-          _op.delivery_company_id,
-          _op.app_version,
-          _op.current_gps.toLocationData(),
-          _op.delivery_driver_type,
-          _op.notification_token,
-          _op.owner,
-          _op.status,
+          _op.first.id,
+          _op.first.delivery_company_id,
+          _op.first.app_version,
+          _op.first.current_gps.toLocationData(),
+          _op.first.delivery_driver_type,
+          _op.first.notification_token,
+          _op.first.owner,
+          _op.first.status,
         );
       } else {
         mezDbgPrint(

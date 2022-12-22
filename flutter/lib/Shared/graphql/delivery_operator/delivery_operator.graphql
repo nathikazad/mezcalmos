@@ -1,7 +1,7 @@
 # Get the delivery Operator by hasura_user_id
-query get_delivery_operator_by_id($user_id : Int!)
+query get_delivery_operator_by_id($user_id : Int!=7)
 {
-  delivery_operator_by_pk(id :$user_id) {
+  delivery_operator(where : {user_id : {_eq : $user_id}} , limit:1) {
     app_version,
     current_gps,
     delivery_company_id,
@@ -15,9 +15,9 @@ query get_delivery_operator_by_id($user_id : Int!)
 
 
 # listen on delivery Operator by hasura_user_id
-subscription get_delivery_operator_by_id($user_id : Int!)
+subscription get_delivery_operator_by_id($user_id : Int!=7)
 {
-  delivery_operator_by_pk(id :$user_id) {
+  delivery_operator(where : {user_id : {_eq : $user_id}} , limit:1) {
     app_version,
     current_gps,
     delivery_company_id,

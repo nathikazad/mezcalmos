@@ -24,6 +24,8 @@ class DeliveryOperatorAuthController extends GetxController {
         .then((DeliveryOperator? op) {
       if (op == null) {
         _startOperatorAuthListener();
+      } else {
+        deliveryOperator = op;
       }
     });
     super.onInit();

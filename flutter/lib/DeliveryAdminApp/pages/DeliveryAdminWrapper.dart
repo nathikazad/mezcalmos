@@ -4,6 +4,8 @@ import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryAdminAuth.dart';
 import 'package:mezcalmos/DeliveryAdminApp/models/DeliveryOperator.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 class DeliveryAdminWrapper extends StatefulWidget {
   const DeliveryAdminWrapper({super.key});
@@ -20,9 +22,13 @@ class _DeliveryAdminWrapperState extends State<DeliveryAdminWrapper> {
     Future<void>.microtask(() {
       final DeliveryOperator? _operator = _adminAuthController.deliveryOperator;
       if (_operator != null) {
+        mezDbgPrint("+ Operator is not null ==> ${_operator.status}");
         handleAuthorization(_operator.status);
       } else {
+        mezDbgPrint("+ Operator is null!");
+
         _adminAuthController.operatorStream.first.then((DeliveryOperator? _op) {
+          mezDbgPrint("+ Operator :: from :: OpStream :: ${_op?.status}!");
           handleAuthorization(_op?.status);
         });
       }
@@ -58,7 +64,7 @@ class _DeliveryAdminWrapperState extends State<DeliveryAdminWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(body: MezLogoAnimation(centered: true));
   }
 }
 

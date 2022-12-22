@@ -103,33 +103,34 @@ class _CopyWithStubImpl$Variables$Query$get_delivery_operator_by_id<TRes>
 
 class Query$get_delivery_operator_by_id {
   Query$get_delivery_operator_by_id({
-    this.delivery_operator_by_pk,
+    required this.delivery_operator,
     required this.$__typename,
   });
 
   factory Query$get_delivery_operator_by_id.fromJson(
       Map<String, dynamic> json) {
-    final l$delivery_operator_by_pk = json['delivery_operator_by_pk'];
+    final l$delivery_operator = json['delivery_operator'];
     final l$$__typename = json['__typename'];
     return Query$get_delivery_operator_by_id(
-      delivery_operator_by_pk: l$delivery_operator_by_pk == null
-          ? null
-          : Query$get_delivery_operator_by_id$delivery_operator_by_pk.fromJson(
-              (l$delivery_operator_by_pk as Map<String, dynamic>)),
+      delivery_operator: (l$delivery_operator as List<dynamic>)
+          .map((e) =>
+              Query$get_delivery_operator_by_id$delivery_operator.fromJson(
+                  (e as Map<String, dynamic>)))
+          .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Query$get_delivery_operator_by_id$delivery_operator_by_pk?
-      delivery_operator_by_pk;
+  final List<Query$get_delivery_operator_by_id$delivery_operator>
+      delivery_operator;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$delivery_operator_by_pk = delivery_operator_by_pk;
-    _resultData['delivery_operator_by_pk'] =
-        l$delivery_operator_by_pk?.toJson();
+    final l$delivery_operator = delivery_operator;
+    _resultData['delivery_operator'] =
+        l$delivery_operator.map((e) => e.toJson()).toList();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -137,10 +138,10 @@ class Query$get_delivery_operator_by_id {
 
   @override
   int get hashCode {
-    final l$delivery_operator_by_pk = delivery_operator_by_pk;
+    final l$delivery_operator = delivery_operator;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$delivery_operator_by_pk,
+      Object.hashAll(l$delivery_operator.map((v) => v)),
       l$$__typename,
     ]);
   }
@@ -154,10 +155,17 @@ class Query$get_delivery_operator_by_id {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$delivery_operator_by_pk = delivery_operator_by_pk;
-    final lOther$delivery_operator_by_pk = other.delivery_operator_by_pk;
-    if (l$delivery_operator_by_pk != lOther$delivery_operator_by_pk) {
+    final l$delivery_operator = delivery_operator;
+    final lOther$delivery_operator = other.delivery_operator;
+    if (l$delivery_operator.length != lOther$delivery_operator.length) {
       return false;
+    }
+    for (int i = 0; i < l$delivery_operator.length; i++) {
+      final l$delivery_operator$entry = l$delivery_operator[i];
+      final lOther$delivery_operator$entry = lOther$delivery_operator[i];
+      if (l$delivery_operator$entry != lOther$delivery_operator$entry) {
+        return false;
+      }
     }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
@@ -187,12 +195,16 @@ abstract class CopyWith$Query$get_delivery_operator_by_id<TRes> {
       _CopyWithStubImpl$Query$get_delivery_operator_by_id;
 
   TRes call({
-    Query$get_delivery_operator_by_id$delivery_operator_by_pk?
-        delivery_operator_by_pk,
+    List<Query$get_delivery_operator_by_id$delivery_operator>?
+        delivery_operator,
     String? $__typename,
   });
-  CopyWith$Query$get_delivery_operator_by_id$delivery_operator_by_pk<TRes>
-      get delivery_operator_by_pk;
+  TRes delivery_operator(
+      Iterable<Query$get_delivery_operator_by_id$delivery_operator> Function(
+              Iterable<
+                  CopyWith$Query$get_delivery_operator_by_id$delivery_operator<
+                      Query$get_delivery_operator_by_id$delivery_operator>>)
+          _fn);
 }
 
 class _CopyWithImpl$Query$get_delivery_operator_by_id<TRes>
@@ -209,28 +221,31 @@ class _CopyWithImpl$Query$get_delivery_operator_by_id<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? delivery_operator_by_pk = _undefined,
+    Object? delivery_operator = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_delivery_operator_by_id(
-        delivery_operator_by_pk: delivery_operator_by_pk == _undefined
-            ? _instance.delivery_operator_by_pk
-            : (delivery_operator_by_pk
-                as Query$get_delivery_operator_by_id$delivery_operator_by_pk?),
+        delivery_operator: delivery_operator == _undefined ||
+                delivery_operator == null
+            ? _instance.delivery_operator
+            : (delivery_operator
+                as List<Query$get_delivery_operator_by_id$delivery_operator>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$get_delivery_operator_by_id$delivery_operator_by_pk<TRes>
-      get delivery_operator_by_pk {
-    final local$delivery_operator_by_pk = _instance.delivery_operator_by_pk;
-    return local$delivery_operator_by_pk == null
-        ? CopyWith$Query$get_delivery_operator_by_id$delivery_operator_by_pk
-            .stub(_then(_instance))
-        : CopyWith$Query$get_delivery_operator_by_id$delivery_operator_by_pk(
-            local$delivery_operator_by_pk,
-            (e) => call(delivery_operator_by_pk: e));
-  }
+  TRes delivery_operator(
+          Iterable<Query$get_delivery_operator_by_id$delivery_operator> Function(
+                  Iterable<
+                      CopyWith$Query$get_delivery_operator_by_id$delivery_operator<
+                          Query$get_delivery_operator_by_id$delivery_operator>>)
+              _fn) =>
+      call(
+          delivery_operator: _fn(_instance.delivery_operator.map((e) =>
+              CopyWith$Query$get_delivery_operator_by_id$delivery_operator(
+                e,
+                (i) => i,
+              ))).toList());
 }
 
 class _CopyWithStubImpl$Query$get_delivery_operator_by_id<TRes>
@@ -240,15 +255,12 @@ class _CopyWithStubImpl$Query$get_delivery_operator_by_id<TRes>
   TRes _res;
 
   call({
-    Query$get_delivery_operator_by_id$delivery_operator_by_pk?
-        delivery_operator_by_pk,
+    List<Query$get_delivery_operator_by_id$delivery_operator>?
+        delivery_operator,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$get_delivery_operator_by_id$delivery_operator_by_pk<TRes>
-      get delivery_operator_by_pk =>
-          CopyWith$Query$get_delivery_operator_by_id$delivery_operator_by_pk
-              .stub(_res);
+  delivery_operator(_fn) => _res;
 }
 
 const documentNodeQueryget_delivery_operator_by_id = DocumentNode(definitions: [
@@ -262,20 +274,34 @@ const documentNodeQueryget_delivery_operator_by_id = DocumentNode(definitions: [
           name: NameNode(value: 'Int'),
           isNonNull: true,
         ),
-        defaultValue: DefaultValueNode(value: null),
+        defaultValue: DefaultValueNode(value: IntValueNode(value: '7')),
         directives: [],
       )
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'delivery_operator_by_pk'),
+        name: NameNode(value: 'delivery_operator'),
         alias: null,
         arguments: [
           ArgumentNode(
-            name: NameNode(value: 'id'),
-            value: VariableNode(name: NameNode(value: 'user_id')),
-          )
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'user_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'user_id')),
+                  )
+                ]),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: IntValueNode(value: '1'),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -462,8 +488,8 @@ extension ClientExtension$Query$get_delivery_operator_by_id
   }
 }
 
-class Query$get_delivery_operator_by_id$delivery_operator_by_pk {
-  Query$get_delivery_operator_by_id$delivery_operator_by_pk({
+class Query$get_delivery_operator_by_id$delivery_operator {
+  Query$get_delivery_operator_by_id$delivery_operator({
     required this.app_version,
     required this.current_gps,
     required this.delivery_company_id,
@@ -475,7 +501,7 @@ class Query$get_delivery_operator_by_id$delivery_operator_by_pk {
     required this.$__typename,
   });
 
-  factory Query$get_delivery_operator_by_id$delivery_operator_by_pk.fromJson(
+  factory Query$get_delivery_operator_by_id$delivery_operator.fromJson(
       Map<String, dynamic> json) {
     final l$app_version = json['app_version'];
     final l$current_gps = json['current_gps'];
@@ -486,7 +512,7 @@ class Query$get_delivery_operator_by_id$delivery_operator_by_pk {
     final l$owner = json['owner'];
     final l$status = json['status'];
     final l$$__typename = json['__typename'];
-    return Query$get_delivery_operator_by_id$delivery_operator_by_pk(
+    return Query$get_delivery_operator_by_id$delivery_operator(
       app_version: (l$app_version as String),
       current_gps: geographyFromJson(l$current_gps),
       delivery_company_id: (l$delivery_company_id as int),
@@ -569,7 +595,7 @@ class Query$get_delivery_operator_by_id$delivery_operator_by_pk {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$get_delivery_operator_by_id$delivery_operator_by_pk) ||
+    if (!(other is Query$get_delivery_operator_by_id$delivery_operator) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -622,28 +648,27 @@ class Query$get_delivery_operator_by_id$delivery_operator_by_pk {
   }
 }
 
-extension UtilityExtension$Query$get_delivery_operator_by_id$delivery_operator_by_pk
-    on Query$get_delivery_operator_by_id$delivery_operator_by_pk {
-  CopyWith$Query$get_delivery_operator_by_id$delivery_operator_by_pk<
-          Query$get_delivery_operator_by_id$delivery_operator_by_pk>
+extension UtilityExtension$Query$get_delivery_operator_by_id$delivery_operator
+    on Query$get_delivery_operator_by_id$delivery_operator {
+  CopyWith$Query$get_delivery_operator_by_id$delivery_operator<
+          Query$get_delivery_operator_by_id$delivery_operator>
       get copyWith =>
-          CopyWith$Query$get_delivery_operator_by_id$delivery_operator_by_pk(
+          CopyWith$Query$get_delivery_operator_by_id$delivery_operator(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_delivery_operator_by_id$delivery_operator_by_pk<
+abstract class CopyWith$Query$get_delivery_operator_by_id$delivery_operator<
     TRes> {
-  factory CopyWith$Query$get_delivery_operator_by_id$delivery_operator_by_pk(
-    Query$get_delivery_operator_by_id$delivery_operator_by_pk instance,
-    TRes Function(Query$get_delivery_operator_by_id$delivery_operator_by_pk)
-        then,
-  ) = _CopyWithImpl$Query$get_delivery_operator_by_id$delivery_operator_by_pk;
+  factory CopyWith$Query$get_delivery_operator_by_id$delivery_operator(
+    Query$get_delivery_operator_by_id$delivery_operator instance,
+    TRes Function(Query$get_delivery_operator_by_id$delivery_operator) then,
+  ) = _CopyWithImpl$Query$get_delivery_operator_by_id$delivery_operator;
 
-  factory CopyWith$Query$get_delivery_operator_by_id$delivery_operator_by_pk.stub(
+  factory CopyWith$Query$get_delivery_operator_by_id$delivery_operator.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_delivery_operator_by_id$delivery_operator_by_pk;
+      _CopyWithStubImpl$Query$get_delivery_operator_by_id$delivery_operator;
 
   TRes call({
     String? app_version,
@@ -658,19 +683,17 @@ abstract class CopyWith$Query$get_delivery_operator_by_id$delivery_operator_by_p
   });
 }
 
-class _CopyWithImpl$Query$get_delivery_operator_by_id$delivery_operator_by_pk<
-        TRes>
+class _CopyWithImpl$Query$get_delivery_operator_by_id$delivery_operator<TRes>
     implements
-        CopyWith$Query$get_delivery_operator_by_id$delivery_operator_by_pk<
-            TRes> {
-  _CopyWithImpl$Query$get_delivery_operator_by_id$delivery_operator_by_pk(
+        CopyWith$Query$get_delivery_operator_by_id$delivery_operator<TRes> {
+  _CopyWithImpl$Query$get_delivery_operator_by_id$delivery_operator(
     this._instance,
     this._then,
   );
 
-  final Query$get_delivery_operator_by_id$delivery_operator_by_pk _instance;
+  final Query$get_delivery_operator_by_id$delivery_operator _instance;
 
-  final TRes Function(Query$get_delivery_operator_by_id$delivery_operator_by_pk)
+  final TRes Function(Query$get_delivery_operator_by_id$delivery_operator)
       _then;
 
   static const _undefined = {};
@@ -686,7 +709,7 @@ class _CopyWithImpl$Query$get_delivery_operator_by_id$delivery_operator_by_pk<
     Object? status = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_delivery_operator_by_id$delivery_operator_by_pk(
+      _then(Query$get_delivery_operator_by_id$delivery_operator(
         app_version: app_version == _undefined || app_version == null
             ? _instance.app_version
             : (app_version as String),
@@ -717,12 +740,11 @@ class _CopyWithImpl$Query$get_delivery_operator_by_id$delivery_operator_by_pk<
       ));
 }
 
-class _CopyWithStubImpl$Query$get_delivery_operator_by_id$delivery_operator_by_pk<
+class _CopyWithStubImpl$Query$get_delivery_operator_by_id$delivery_operator<
         TRes>
     implements
-        CopyWith$Query$get_delivery_operator_by_id$delivery_operator_by_pk<
-            TRes> {
-  _CopyWithStubImpl$Query$get_delivery_operator_by_id$delivery_operator_by_pk(
+        CopyWith$Query$get_delivery_operator_by_id$delivery_operator<TRes> {
+  _CopyWithStubImpl$Query$get_delivery_operator_by_id$delivery_operator(
       this._res);
 
   TRes _res;
@@ -848,33 +870,33 @@ class _CopyWithStubImpl$Variables$Subscription$get_delivery_operator_by_id<TRes>
 
 class Subscription$get_delivery_operator_by_id {
   Subscription$get_delivery_operator_by_id({
-    this.delivery_operator_by_pk,
+    required this.delivery_operator,
     required this.$__typename,
   });
 
   factory Subscription$get_delivery_operator_by_id.fromJson(
       Map<String, dynamic> json) {
-    final l$delivery_operator_by_pk = json['delivery_operator_by_pk'];
+    final l$delivery_operator = json['delivery_operator'];
     final l$$__typename = json['__typename'];
     return Subscription$get_delivery_operator_by_id(
-      delivery_operator_by_pk: l$delivery_operator_by_pk == null
-          ? null
-          : Subscription$get_delivery_operator_by_id$delivery_operator_by_pk
-              .fromJson((l$delivery_operator_by_pk as Map<String, dynamic>)),
+      delivery_operator: (l$delivery_operator as List<dynamic>)
+          .map((e) => Subscription$get_delivery_operator_by_id$delivery_operator
+              .fromJson((e as Map<String, dynamic>)))
+          .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Subscription$get_delivery_operator_by_id$delivery_operator_by_pk?
-      delivery_operator_by_pk;
+  final List<Subscription$get_delivery_operator_by_id$delivery_operator>
+      delivery_operator;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$delivery_operator_by_pk = delivery_operator_by_pk;
-    _resultData['delivery_operator_by_pk'] =
-        l$delivery_operator_by_pk?.toJson();
+    final l$delivery_operator = delivery_operator;
+    _resultData['delivery_operator'] =
+        l$delivery_operator.map((e) => e.toJson()).toList();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -882,10 +904,10 @@ class Subscription$get_delivery_operator_by_id {
 
   @override
   int get hashCode {
-    final l$delivery_operator_by_pk = delivery_operator_by_pk;
+    final l$delivery_operator = delivery_operator;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$delivery_operator_by_pk,
+      Object.hashAll(l$delivery_operator.map((v) => v)),
       l$$__typename,
     ]);
   }
@@ -899,10 +921,17 @@ class Subscription$get_delivery_operator_by_id {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$delivery_operator_by_pk = delivery_operator_by_pk;
-    final lOther$delivery_operator_by_pk = other.delivery_operator_by_pk;
-    if (l$delivery_operator_by_pk != lOther$delivery_operator_by_pk) {
+    final l$delivery_operator = delivery_operator;
+    final lOther$delivery_operator = other.delivery_operator;
+    if (l$delivery_operator.length != lOther$delivery_operator.length) {
       return false;
+    }
+    for (int i = 0; i < l$delivery_operator.length; i++) {
+      final l$delivery_operator$entry = l$delivery_operator[i];
+      final lOther$delivery_operator$entry = lOther$delivery_operator[i];
+      if (l$delivery_operator$entry != lOther$delivery_operator$entry) {
+        return false;
+      }
     }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
@@ -933,12 +962,16 @@ abstract class CopyWith$Subscription$get_delivery_operator_by_id<TRes> {
       _CopyWithStubImpl$Subscription$get_delivery_operator_by_id;
 
   TRes call({
-    Subscription$get_delivery_operator_by_id$delivery_operator_by_pk?
-        delivery_operator_by_pk,
+    List<Subscription$get_delivery_operator_by_id$delivery_operator>?
+        delivery_operator,
     String? $__typename,
   });
-  CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator_by_pk<
-      TRes> get delivery_operator_by_pk;
+  TRes delivery_operator(
+      Iterable<Subscription$get_delivery_operator_by_id$delivery_operator> Function(
+              Iterable<
+                  CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator<
+                      Subscription$get_delivery_operator_by_id$delivery_operator>>)
+          _fn);
 }
 
 class _CopyWithImpl$Subscription$get_delivery_operator_by_id<TRes>
@@ -955,28 +988,31 @@ class _CopyWithImpl$Subscription$get_delivery_operator_by_id<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? delivery_operator_by_pk = _undefined,
+    Object? delivery_operator = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Subscription$get_delivery_operator_by_id(
-        delivery_operator_by_pk: delivery_operator_by_pk == _undefined
-            ? _instance.delivery_operator_by_pk
-            : (delivery_operator_by_pk
-                as Subscription$get_delivery_operator_by_id$delivery_operator_by_pk?),
+        delivery_operator: delivery_operator == _undefined ||
+                delivery_operator == null
+            ? _instance.delivery_operator
+            : (delivery_operator as List<
+                Subscription$get_delivery_operator_by_id$delivery_operator>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator_by_pk<
-      TRes> get delivery_operator_by_pk {
-    final local$delivery_operator_by_pk = _instance.delivery_operator_by_pk;
-    return local$delivery_operator_by_pk == null
-        ? CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator_by_pk
-            .stub(_then(_instance))
-        : CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator_by_pk(
-            local$delivery_operator_by_pk,
-            (e) => call(delivery_operator_by_pk: e));
-  }
+  TRes delivery_operator(
+          Iterable<Subscription$get_delivery_operator_by_id$delivery_operator> Function(
+                  Iterable<
+                      CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator<
+                          Subscription$get_delivery_operator_by_id$delivery_operator>>)
+              _fn) =>
+      call(
+          delivery_operator: _fn(_instance.delivery_operator.map((e) =>
+              CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator(
+                e,
+                (i) => i,
+              ))).toList());
 }
 
 class _CopyWithStubImpl$Subscription$get_delivery_operator_by_id<TRes>
@@ -986,16 +1022,12 @@ class _CopyWithStubImpl$Subscription$get_delivery_operator_by_id<TRes>
   TRes _res;
 
   call({
-    Subscription$get_delivery_operator_by_id$delivery_operator_by_pk?
-        delivery_operator_by_pk,
+    List<Subscription$get_delivery_operator_by_id$delivery_operator>?
+        delivery_operator,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator_by_pk<
-          TRes>
-      get delivery_operator_by_pk =>
-          CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator_by_pk
-              .stub(_res);
+  delivery_operator(_fn) => _res;
 }
 
 const documentNodeSubscriptionget_delivery_operator_by_id =
@@ -1010,20 +1042,34 @@ const documentNodeSubscriptionget_delivery_operator_by_id =
           name: NameNode(value: 'Int'),
           isNonNull: true,
         ),
-        defaultValue: DefaultValueNode(value: null),
+        defaultValue: DefaultValueNode(value: IntValueNode(value: '7')),
         directives: [],
       )
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'delivery_operator_by_pk'),
+        name: NameNode(value: 'delivery_operator'),
         alias: null,
         arguments: [
           ArgumentNode(
-            name: NameNode(value: 'id'),
-            value: VariableNode(name: NameNode(value: 'user_id')),
-          )
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'user_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'user_id')),
+                  )
+                ]),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: IntValueNode(value: '1'),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -1179,8 +1225,8 @@ extension ClientExtension$Subscription$get_delivery_operator_by_id
           this.watchQuery(options);
 }
 
-class Subscription$get_delivery_operator_by_id$delivery_operator_by_pk {
-  Subscription$get_delivery_operator_by_id$delivery_operator_by_pk({
+class Subscription$get_delivery_operator_by_id$delivery_operator {
+  Subscription$get_delivery_operator_by_id$delivery_operator({
     required this.app_version,
     required this.current_gps,
     required this.delivery_company_id,
@@ -1192,7 +1238,7 @@ class Subscription$get_delivery_operator_by_id$delivery_operator_by_pk {
     required this.$__typename,
   });
 
-  factory Subscription$get_delivery_operator_by_id$delivery_operator_by_pk.fromJson(
+  factory Subscription$get_delivery_operator_by_id$delivery_operator.fromJson(
       Map<String, dynamic> json) {
     final l$app_version = json['app_version'];
     final l$current_gps = json['current_gps'];
@@ -1203,7 +1249,7 @@ class Subscription$get_delivery_operator_by_id$delivery_operator_by_pk {
     final l$owner = json['owner'];
     final l$status = json['status'];
     final l$$__typename = json['__typename'];
-    return Subscription$get_delivery_operator_by_id$delivery_operator_by_pk(
+    return Subscription$get_delivery_operator_by_id$delivery_operator(
       app_version: (l$app_version as String),
       current_gps: geographyFromJson(l$current_gps),
       delivery_company_id: (l$delivery_company_id as int),
@@ -1287,7 +1333,7 @@ class Subscription$get_delivery_operator_by_id$delivery_operator_by_pk {
       return true;
     }
     if (!(other
-            is Subscription$get_delivery_operator_by_id$delivery_operator_by_pk) ||
+            is Subscription$get_delivery_operator_by_id$delivery_operator) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1340,29 +1386,28 @@ class Subscription$get_delivery_operator_by_id$delivery_operator_by_pk {
   }
 }
 
-extension UtilityExtension$Subscription$get_delivery_operator_by_id$delivery_operator_by_pk
-    on Subscription$get_delivery_operator_by_id$delivery_operator_by_pk {
-  CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator_by_pk<
-          Subscription$get_delivery_operator_by_id$delivery_operator_by_pk>
+extension UtilityExtension$Subscription$get_delivery_operator_by_id$delivery_operator
+    on Subscription$get_delivery_operator_by_id$delivery_operator {
+  CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator<
+          Subscription$get_delivery_operator_by_id$delivery_operator>
       get copyWith =>
-          CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator_by_pk(
+          CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator_by_pk<
+abstract class CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator<
     TRes> {
-  factory CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator_by_pk(
-    Subscription$get_delivery_operator_by_id$delivery_operator_by_pk instance,
-    TRes Function(
-            Subscription$get_delivery_operator_by_id$delivery_operator_by_pk)
+  factory CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator(
+    Subscription$get_delivery_operator_by_id$delivery_operator instance,
+    TRes Function(Subscription$get_delivery_operator_by_id$delivery_operator)
         then,
-  ) = _CopyWithImpl$Subscription$get_delivery_operator_by_id$delivery_operator_by_pk;
+  ) = _CopyWithImpl$Subscription$get_delivery_operator_by_id$delivery_operator;
 
-  factory CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator_by_pk.stub(
+  factory CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator.stub(
           TRes res) =
-      _CopyWithStubImpl$Subscription$get_delivery_operator_by_id$delivery_operator_by_pk;
+      _CopyWithStubImpl$Subscription$get_delivery_operator_by_id$delivery_operator;
 
   TRes call({
     String? app_version,
@@ -1377,21 +1422,20 @@ abstract class CopyWith$Subscription$get_delivery_operator_by_id$delivery_operat
   });
 }
 
-class _CopyWithImpl$Subscription$get_delivery_operator_by_id$delivery_operator_by_pk<
+class _CopyWithImpl$Subscription$get_delivery_operator_by_id$delivery_operator<
         TRes>
     implements
-        CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator_by_pk<
+        CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator<
             TRes> {
-  _CopyWithImpl$Subscription$get_delivery_operator_by_id$delivery_operator_by_pk(
+  _CopyWithImpl$Subscription$get_delivery_operator_by_id$delivery_operator(
     this._instance,
     this._then,
   );
 
-  final Subscription$get_delivery_operator_by_id$delivery_operator_by_pk
-      _instance;
+  final Subscription$get_delivery_operator_by_id$delivery_operator _instance;
 
   final TRes Function(
-      Subscription$get_delivery_operator_by_id$delivery_operator_by_pk) _then;
+      Subscription$get_delivery_operator_by_id$delivery_operator) _then;
 
   static const _undefined = {};
 
@@ -1406,7 +1450,7 @@ class _CopyWithImpl$Subscription$get_delivery_operator_by_id$delivery_operator_b
     Object? status = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Subscription$get_delivery_operator_by_id$delivery_operator_by_pk(
+      _then(Subscription$get_delivery_operator_by_id$delivery_operator(
         app_version: app_version == _undefined || app_version == null
             ? _instance.app_version
             : (app_version as String),
@@ -1437,12 +1481,12 @@ class _CopyWithImpl$Subscription$get_delivery_operator_by_id$delivery_operator_b
       ));
 }
 
-class _CopyWithStubImpl$Subscription$get_delivery_operator_by_id$delivery_operator_by_pk<
+class _CopyWithStubImpl$Subscription$get_delivery_operator_by_id$delivery_operator<
         TRes>
     implements
-        CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator_by_pk<
+        CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator<
             TRes> {
-  _CopyWithStubImpl$Subscription$get_delivery_operator_by_id$delivery_operator_by_pk(
+  _CopyWithStubImpl$Subscription$get_delivery_operator_by_id$delivery_operator(
       this._res);
 
   TRes _res;
