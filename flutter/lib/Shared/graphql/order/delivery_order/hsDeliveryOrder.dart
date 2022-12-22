@@ -1,109 +1,95 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/DeliveryAdminApp/models/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/order/delivery_order/__generated/delivery_order.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
-import 'package:mezcalmos/Shared/models/Utilities/DeliveryMode.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as locModel;
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
-Stream<List<RestaurantOrder>?> listen_on_delivery_orders(
-    {required int orderId}) {
+Stream<List<DeliveryOrder>> listen_on_delivery_orders() {
   return _hasuraDb.graphQLClient
-      .subscribe$get_orders(
-    Options$Subscription$get_orders(fetchPolicy: FetchPolicy.noCache),
+      .subscribe$listen_on_delivery_orders(
+    Options$Subscription$listen_on_delivery_orders(
+        fetchPolicy: FetchPolicy.noCache),
   )
-      .map<List<RestaurantOrder>>((QueryResult<Subscription$get_orders> event) {
-    List<RestaurantOrder> _o = [];
+      .map<List<DeliveryOrder>>(
+          (QueryResult<Subscription$listen_on_delivery_orders> event) {
+    List<DeliveryOrder> _o = [];
 
-    final List<Subscription$get_orders$delivery_order?>? ordersData =
-        event.parsedData?.delivery_order;
+    final List<Subscription$listen_on_delivery_orders$delivery_order?>?
+        ordersData = event.parsedData?.delivery_order;
     if (ordersData != null) {
       ordersData.forEach((orderData) {
-        _o.add(RestaurantOrder(
-          chatId: orderData!.chat_with_customer_id,
-          orderId: orderData.id,
-          notes: "",
-          status: orderData.status.toRestaurantOrderStatus(),
-          quantity: 1,
-          serviceProviderId: orderData.restaurant!.id,
-          paymentType: orderData.payment_type.toPaymentType(),
-          orderTime: DateTime.parse(orderData.order_time),
-          cost: orderData.delivery_cost,
-          restaurant: ServiceInfo(
-            location: Location(
-              orderData.restaurant!.location_text,
-              orderData.restaurant!.location_gps.toLocationData(),
-            ),
-            firebaseId: orderData.restaurant!.firebase_id,
-            hasuraId: orderData.restaurant!.id,
-            image: orderData.restaurant!.image,
-            name: orderData.restaurant!.name,
-          ),
-          customer: UserInfo(
-              hasuraId: orderData.customer.user.id,
-              image: orderData.customer.user.image,
-              name: orderData.customer.user.name),
-          to: Location("", orderData.current_gps!.toLocationData()),
-          itemsCost: orderData.delivery_cost ?? 0,
-          shippingCost: orderData.delivery_cost,
-          deliveryMode: DeliveryMode.ForwardedToMezCalmos,
-        )
-            // RestaurantOrder(
-            //   customerDropOffDriverChatId: order!.chat_with_customer_id,
-            //   // serviceProviderDropOffDriverChatId:
-            //   //     order.chat_with_service_provider_id,
-            //   orderId: order.id,
-            //   chatId: order.id,
-            //   paymentType: order.payment_type.toPaymentType(),
-            //   orderTime: DateTime.parse(order.order_time),
-            //   cost: order.delivery_cost,
-            //   customer: UserInfo(
-            //     hasuraId: order.customer.user.id,
-            //     image: order.customer.user.image,
-            //     name: order.customer.user.name,
-            //   ),
-            //   to: order.current_gps.toLocationData(),
-            //   orderType: OrderType.Restaurant,
-            // ),
-            );
-      });
-      // final RestaurantOrder res = RestaurantOrder(
-      //   chatId: orderData.chat_id,
-      //   orderId: orderData.id,
-      //   notes: orderData.notes,
-      //   status: orderData.status.toRestaurantOrderStatus(),
-      //   quantity: 1,
-      //   serviceProviderId: orderData.restaurant.id,
-      //   paymentType: orderData.payment_type.toPaymentType(),
-      //   orderTime: DateTime.parse(orderData.order_time),
-      //   cost: orderData.delivery_cost,
-      //   restaurant: ServiceInfo(
-      //     location: Location(
-      //       orderData.restaurant.location_text,
-      //       orderData.restaurant.location_gps.toLocationData(),
-      //     ),
-      //     firebaseId: orderData.restaurant.firebase_id,
-      //     hasuraId: orderData.restaurant.id,
-      //     image: orderData.restaurant.image,
-      //     name: orderData.restaurant.name,
-      //   ),
-      //   customer: UserInfo(
-      //       hasuraId: orderData.customer.user.id,
-      //       image: orderData.customer.user.image,
-      //       name: orderData.customer.user.name),
-      //   to: Location(orderData.to_location_address!,
-      //       orderData.to_location_gps!.toLocationData()),
-      //   itemsCost: orderData.items_cost ?? 0,
-      //   shippingCost: orderData.delivery_cost,
-      //   deliveryMode: DeliveryMode.ForwardedToMezCalmos,
-      // );
+        if (orderData != null)
+          _o.add(
+            DeliveryOrder(
+              id: orderData.id,
+              pickupLocation: locModel.Location(
+                orderData.pickup_address,
+                orderData.pickup_gps.toLocationData(),
+              ),
+              dropoffLocation: locModel.Location(
+                orderData.dropoff_address,
+                orderData.dropoff_gps.toLocationData(),
+              ),
+              deliveryDriverType:
+                  orderData.delivery_driver_type!.toDeliveryDriverType(),
+              chatWithCustomerId: orderData.chat_with_customer_id,
+              paymentType: orderData.payment_type.toPaymentType(),
+              status: orderData.status.toDeliveryOrderStatus(),
+              customerId: orderData.customer_id,
+              deliveryCost: orderData.delivery_cost,
+              packageCost: orderData.package_cost,
+              orderTime: DateTime.parse(orderData.order_time),
+              actualArrivalAtDropoffTime: DateTime.tryParse(
+                  orderData.actual_arrival_at_dropoff_time ?? ""),
+              estimatedArrivalAtDropoffTime: DateTime.tryParse(
+                  orderData.estimated_arrival_at_dropoff_time ?? ""),
+              actualArrivalAtPickupTime: DateTime.tryParse(
+                  orderData.actual_arrival_at_pickup_time ?? ""),
+              estimatedArrivalAtPickupTime: DateTime.tryParse(
+                  orderData.estimated_arrival_at_pickup_time ?? ""),
+              actualPkgReadyTime:
+                  DateTime.tryParse(orderData.actual_package_ready_time ?? ""),
+              actualDeliveredTime:
+                  DateTime.tryParse(orderData.actual_delivered_time ?? ""),
+              cancellationTime:
+                  DateTime.tryParse(orderData.cancellation_time ?? ""),
+              chatWithServiceProviderId:
+                  orderData.chat_with_service_provider_id,
+              currentGps: orderData.current_gps?.toLocationData(),
+              deliveryDriverId: orderData.delivery_driver_id,
+              deliveryServiceType:
+                  orderData.delivery_driver_type?.toDeliveryProviderType(),
+              estimatedPkgReadyTime: DateTime.tryParse(
+                  orderData.estimated_package_ready_time ?? ""),
+              routeInformation: orderData.trip_polyline != null &&
+                      orderData.trip_distance != null &&
+                      orderData.trip_duration != null
+                  ? RouteInformation(
+                      polyline: orderData.trip_polyline!,
+                      distance: RideDistance(
+                        orderData.trip_distance.toString(),
+                        orderData.trip_distance!,
+                      ),
+                      duration: RideDuration(
+                        orderData.trip_duration.toString(),
+                        orderData.trip_duration!,
+                      ),
+                    )
+                  : null,
+              serviceProviderId: orderData.service_provider_id,
+              stripePaymentId: orderData.stripe_payment_id,
 
-      // res.items = items;
+              /// TODO : Review Fields
+            ),
+          );
+      });
       return _o;
     } else {
       throw Exception(

@@ -1,37 +1,37 @@
 
-# Query all delivery Orders on database
-
-subscription get_orders {
+# listen on all delivery Orders on database
+subscription listen_on_delivery_orders {
   delivery_order {
     id
-    restaurant {
-      id
-      firebase_id
-      image
-      language_id
-      location_gps
-      location_text
-      name
-    }
+    pickup_gps
+    pickup_address
+    dropoff_gps
+    dropoff_address
+    delivery_driver_type
+    delivery_driver_id
+    chat_with_service_provider_id
+    chat_with_customer_id
     payment_type
     stripe_payment_id
-    status
-    order_time
-    customer {
-      user {
-        id
-        name
-        image
-      }
-    }
-    chat_with_service_provider_id,
-    chat_with_customer_id,
-    delivery_cost,
-    actual_delivered_time
+    estimated_package_ready_time
     actual_package_ready_time
+    estimated_arrival_at_pickup_time
     actual_arrival_at_pickup_time
+    estimated_arrival_at_dropoff_time
     actual_arrival_at_dropoff_time
+    actual_delivered_time
+    status
+    customer_id
+    service_provider_id
+    trip_polyline
+    trip_duration
+    trip_distance
+    delivery_cost
+    package_cost
+    current_gps
+    order_time
     cancellation_time
-    current_gps,
   }
 }
+
+
