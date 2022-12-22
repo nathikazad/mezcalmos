@@ -2,7 +2,7 @@ import { createRestaurantOperator } from "../shared/graphql/restaurant/operators
 import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators"
 import { getUser } from "../shared/graphql/user/getUser"
 import { ParticipantType } from "../shared/models/Generic/Chat"
-import { NotificationInfo } from "../shared/models/Generic/Generic"
+import { NotificationInfo, ServerResponseStatus } from "../shared/models/Generic/Generic"
 import { UserInfo } from "../shared/models/Generic/User"
 import { AuthorizeOperatorNotification, Notification, NotificationAction, NotificationType } from "../shared/models/Notification"
 import { OperatorStatus, RestaurantOperator } from "../shared/models/Services/Restaurant/Restaurant"
@@ -56,5 +56,5 @@ export async function addRestaurantOperator(operatorUserId: number, addDriverDet
       );
     }
   })
-
+  return { status: ServerResponseStatus.Success }
 }

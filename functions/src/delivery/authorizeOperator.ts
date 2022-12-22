@@ -3,6 +3,7 @@ import { deleteDeliveryOperator } from "../shared/graphql/delivery/operator/dele
 import { getDeliveryOperator, getDeliveryOperatorByUserId } from "../shared/graphql/delivery/operator/getDeliveryOperator";
 import { updateDeliveryOperatorStatusToAuthorized } from "../shared/graphql/delivery/operator/updateOperatorStatus";
 import { ParticipantType } from "../shared/models/Generic/Chat";
+import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { DeliveryOperatorApprovedNotification } from "../shared/models/Services/Delivery/DeliveryOrder";
 import { pushNotification } from "../utilities/senders/notifyUser";
@@ -66,4 +67,5 @@ export async function authorizeDeliveryOperator(ownerUserId: number, authorizeDe
             operator.user.language,
         );
     }
+    return { status: ServerResponseStatus.Success }
 }

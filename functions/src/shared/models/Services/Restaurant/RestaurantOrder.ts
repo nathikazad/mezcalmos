@@ -2,6 +2,7 @@ import { PaymentType } from '../../Generic/Order';
 // import { CustomerInfo, UserInfo } from '../../Generic/User';
 import { OrderNotification } from '../../Notification';
 import { AppType, Language, Location } from '../../Generic/Generic';
+import { Restaurant } from './Restaurant';
 // import { Restaurant } from './Restaurant';
 // import { Delivery } from '../../Generic/Delivery';
 
@@ -30,6 +31,7 @@ export interface RestaurantOrder {
   totalCost?: number;
   chatId?: number;
   scheduledTime?: string;
+  restaurant?: Restaurant;
   // customer?: CustomerInfo;
   // delivery?: Delivery;
 }
@@ -104,7 +106,7 @@ export function orderInProcess(status: RestaurantOrderStatus): boolean {
 }
 
 export interface NewRestaurantOrderNotification extends OrderNotification {
-  restaurant: {
+  restaurant?: {
     name: string,
     image: string,
     id: number

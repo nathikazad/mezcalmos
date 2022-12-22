@@ -2,7 +2,7 @@ import { createDeliveryDriver } from "../shared/graphql/delivery/driver/createDe
 import { getDeliveryOperators } from "../shared/graphql/delivery/operator/getDeliveryOperator";
 import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { NotificationInfo } from "../shared/models/Generic/Generic";
+import { NotificationInfo, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { AuthorizeDriverNotification, DeliveryCompanyType, DeliveryDriver, DeliveryDriverType } from "../shared/models/Services/Delivery/DeliveryOrder";
 import { pushNotification } from "../utilities/senders/notifyUser";
@@ -72,5 +72,5 @@ export async function addDriver(userId: number, addDriverDetails: AddDriverDetai
             }
         })
     }
-
+    return { status: ServerResponseStatus.Success }
 }

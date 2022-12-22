@@ -109,5 +109,6 @@ export interface RestaurantOperatorApprovedNotification extends ForegroundNotifi
 
 export interface AuthorizeOperatorNotificationForQueue extends NotificationForQueue {
   newOperatorName: string,
+  newOperatorImage: string,
   restaurantId: number,
 }

@@ -2,7 +2,7 @@ import { createDeliveryOperator } from "../shared/graphql/delivery/operator/crea
 import { getDeliveryOperators } from "../shared/graphql/delivery/operator/getDeliveryOperator"
 import { getUser } from "../shared/graphql/user/getUser"
 import { ParticipantType } from "../shared/models/Generic/Chat"
-import { NotificationInfo } from "../shared/models/Generic/Generic"
+import { NotificationInfo, ServerResponseStatus } from "../shared/models/Generic/Generic"
 import { UserInfo } from "../shared/models/Generic/User"
 import { AuthorizeOperatorNotification, Notification, NotificationAction, NotificationType } from "../shared/models/Notification"
 import { DeliveryOperator, DeliveryOperatorStatus } from "../shared/models/Services/Delivery/DeliveryOrder"
@@ -57,4 +57,5 @@ export async function addDeliveryOperator(operatorUserId: number, addDriverDetai
       );
     }
   })
+  return { status: ServerResponseStatus.Success }
 }

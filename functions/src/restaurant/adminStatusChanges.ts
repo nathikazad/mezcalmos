@@ -26,17 +26,17 @@ let statusArrayInSeq: Array<RestaurantOrderStatus> =
   RestaurantOrderStatus.Delivered
   ]
 export async function prepareOrder(userId: number, data: any) {
-  let response: ServerResponse = await changeStatus(data, RestaurantOrderStatus.PreparingOrder, userId)
+  let response: ServerResponse = await changeStatus(data.orderId, RestaurantOrderStatus.PreparingOrder, userId)
   return response;
 }
 
 export async function cancelOrder(userId: number, data: any) {
-  let response: ServerResponse = await changeStatus(data, RestaurantOrderStatus.CancelledByAdmin, userId)
+  let response: ServerResponse = await changeStatus(data.orderId, RestaurantOrderStatus.CancelledByAdmin, userId)
   return response;
 }
 
 export async function readyForPickupOrder(userId: number, data: any) {
-  let response: ServerResponse = await changeStatus(data, RestaurantOrderStatus.ReadyForPickup, userId)
+  let response: ServerResponse = await changeStatus(data.orderId, RestaurantOrderStatus.ReadyForPickup, userId)
   return response
 }
 
@@ -44,11 +44,11 @@ function expectedPreviousStatus(status: RestaurantOrderStatus): RestaurantOrderS
   return statusArrayInSeq[statusArrayInSeq.findIndex((element) => element == status) - 1];
 }
 
-async function changeStatus(statusDetails: any, newStatus: RestaurantOrderStatus, userId: number): Promise<ServerResponse> {
+async function changeStatus(orderId: number, newStatus: RestaurantOrderStatus, userId: number): Promise<ServerResponse> {
 
-  await passChecksForRestaurant(statusDetails, userId);
+  await passChecksForRestaurant(orderId, userId);
 
-  let order = await getRestaurantOrder(statusDetails.orderId);
+  let order = await getRestaurantOrder(orderId);
   if(!(order.deliveryId)) {
     throw new HttpsError(
       "internal",
@@ -112,7 +112,7 @@ async function changeStatus(statusDetails: any, newStatus: RestaurantOrderStatus
       orderId: order.orderId
     },
     background: restaurantOrderStatusChangeMessages[newStatus],
-    linkUrl: orderUrl(OrderType.Restaurant, statusDetails.orderId)
+    linkUrl: orderUrl(OrderType.Restaurant, orderId)
   }
 
   pushNotification(

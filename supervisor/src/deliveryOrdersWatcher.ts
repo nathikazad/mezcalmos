@@ -12,6 +12,60 @@
 // import { NotificationInfo } from "../../functions/src/shared/models/Generic/Generic";
 // import * as firebase from "firebase-admin";
 
+import { getDeliveryCompanyOrders } from "../../functions/src/shared/graphql/delivery/getDelivery";
+import { getDeliveryOperators } from "../../functions/src/shared/graphql/delivery/operator/getDeliveryOperator";
+import { ParticipantType } from "../../functions/src/shared/models/Generic/Chat";
+import { Language } from "../../functions/src/shared/models/Generic/Generic";
+import { OrderType } from "../../functions/src/shared/models/Generic/Order";
+import { Notification, NotificationAction, NotificationType } from "../../functions/src/shared/models/Notification";
+import { DeliveryOperator, DeliveryOrder, NewDeliveryOrderNotification } from "../../functions/src/shared/models/Services/Delivery/DeliveryOrder";
+import { pushNotification } from "../../functions/src/utilities/senders/notifyUser";
+
+const checkOrdersInterval: number = 10 //seconds 60
+
+export function startWatchingDeliveryOrders() {
+    setInterval(checkDeliveryOrders, checkOrdersInterval * 1000);
+}
+
+async function checkDeliveryOrders() {
+    console.log("checking inProcess delivery orders")
+    let deliveryOrders: DeliveryOrder[] = await getDeliveryCompanyOrders();
+
+    deliveryOrders.forEach(async(o) => {
+        if((new Date()).getTime() - (new Date(o.orderTime!)).getTime() < 60 * 1000) {
+
+            let operators: DeliveryOperator[] = await getDeliveryOperators(o.serviceProviderId!);
+
+            let notification: Notification = {
+                foreground: <NewDeliveryOrderNotification>{
+                  time: (new Date()).toISOString(),
+                  notificationType: NotificationType.NewOrder,
+                  orderType: OrderType.Restaurant,
+                  orderId: o.deliveryId,
+                  notificationAction: NotificationAction.ShowSnackBarAlways,
+                },
+                background: {
+                  [Language.ES]: {
+                    title: "Nueva Pedido",
+                    body: `Hay una nueva orden de alimento`
+                  },
+                  [Language.EN]: {
+                    title: "New Order",
+                    body: `There is a new restaurant order`
+                  }
+                },
+                linkUrl: `/`
+            }
+            operators.forEach((r) => {
+                if(r.user) {
+                    pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.DeliveryOperator);
+                }
+            });
+        }
+    })
+}
+
+
 // const checkDeliverableOrdersInterval: number = 10 //seconds 60
 // let stopNotifyingLimit: number = 3000 // seconds 600
 
