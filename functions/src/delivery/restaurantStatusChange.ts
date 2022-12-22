@@ -75,96 +75,104 @@ async function changeStatus(
   newStatus: DeliveryOrderStatus, 
   userId: number
 ): Promise<ServerResponse> {
+  try {
+    // let response = await isSignedIn(userId)
+    // if (response != undefined) {
+    //   return response;
+    // }
 
-  // let response = await isSignedIn(userId)
-  // if (response != undefined) {
-  //   return response;
-  // }
+    // if (changeDeliveryStatusDetails.deliveryId == null) {
+    //   return {
+    //     status: ServerResponseStatus.Error,
+    //     errorMessage: `Expected order id`,
+    //     errorCode: "orderIdNotGiven"
+    //   }
+    // }
+    let deliveryOrderPromise = getDeliveryOrder(changeDeliveryStatusDetails.deliveryId);
+    let deliveryDriverPromise = getDeliveryDriver(changeDeliveryStatusDetails.deliveryDriverId, changeDeliveryStatusDetails.deliveryDriverType);
+    let restaurantOrderPromise = getRestaurantOrder(changeDeliveryStatusDetails.restaurantOrderId);
+    let promiseResponse = await Promise.all([deliveryOrderPromise, deliveryDriverPromise, restaurantOrderPromise]);
+    let deliveryOrder: DeliveryOrder = promiseResponse[0];
+    let deliveryDriver: DeliveryDriver = promiseResponse[1];
+    let restaurantOrder: RestaurantOrder = promiseResponse[2];
+    let restaurantOperators: RestaurantOperator[] = await getRestaurantOperators(restaurantOrder.restaurantId);
 
-  // if (changeDeliveryStatusDetails.deliveryId == null) {
-  //   return {
-  //     status: ServerResponseStatus.Error,
-  //     errorMessage: `Expected order id`,
-  //     errorCode: "orderIdNotGiven"
-  //   }
-  // }
-  let deliveryOrderPromise = getDeliveryOrder(changeDeliveryStatusDetails.deliveryId);
-  let deliveryDriverPromise = getDeliveryDriver(changeDeliveryStatusDetails.deliveryDriverId, changeDeliveryStatusDetails.deliveryDriverType);
-  let restaurantOrderPromise = getRestaurantOrder(changeDeliveryStatusDetails.restaurantOrderId);
-  let promiseResponse = await Promise.all([deliveryOrderPromise, deliveryDriverPromise, restaurantOrderPromise]);
-  let deliveryOrder: DeliveryOrder = promiseResponse[0];
-  let deliveryDriver: DeliveryDriver = promiseResponse[1];
-  let restaurantOrder: RestaurantOrder = promiseResponse[2];
-  let restaurantOperators: RestaurantOperator[] = await getRestaurantOperators(restaurantOrder.restaurantId);
+    if(deliveryOrder.status == ( DeliveryOrderStatus.Delivered 
+        || DeliveryOrderStatus.CancelledByCustomer
+        || DeliveryOrderStatus.CancelledByDeliverer
+        || DeliveryOrderStatus.CancelledByServiceProvider
+    )) {
+      throw new HttpsError(
+        "internal",
+        "delivery order is complete or cancelled"
+      );
+    }
+    if(deliveryDriver.userId != userId) {
+      throw new HttpsError(
+        "internal",
+        "invalid delivery driver user id"
+      );
+    }
+    if (restaurantOrder.deliveryId != changeDeliveryStatusDetails.deliveryId) {
+      throw new HttpsError(
+        "internal",
+        "restaurant order and delivery order do not match"
+      );
+    }
+    let customer: CustomerInfo = await getCustomer(restaurantOrder.customerId);
 
-  if(deliveryOrder.status == ( DeliveryOrderStatus.Delivered 
-      || DeliveryOrderStatus.CancelledByCustomer
-      || DeliveryOrderStatus.CancelledByDeliverer
-      || DeliveryOrderStatus.CancelledByServiceProvider
-  )) {
+    checkExpectedStatus(deliveryOrder.status, newStatus);
+    
+    deliveryOrder.status = newStatus;
+    updateDeliveryOrderStatus(deliveryOrder);
+
+    if(deliveryOrder.status == DeliveryOrderStatus.OnTheWayToDropoff) {
+      restaurantOrder.status = RestaurantOrderStatus.OnTheWay;
+      updateOrderStatus(restaurantOrder);
+    }
+    if(deliveryOrder.status == DeliveryOrderStatus.Delivered) {
+      restaurantOrder.status = RestaurantOrderStatus.Delivered;
+      updateOrderStatus(restaurantOrder);
+    }
+    let notification: Notification = {
+      foreground: <DeliveryOrderStatusChangeNotification>{
+        status: newStatus,
+        time: (new Date()).toISOString(),
+        notificationType: NotificationType.OrderStatusChange,
+        orderType: OrderType.Restaurant,
+        notificationAction: NotificationAction.ShowSnackBarAlways,
+        orderId: changeDeliveryStatusDetails.restaurantOrderId
+      },
+      background: deliveryOrderStatusChangeMessages[newStatus],
+      linkUrl: orderUrl(OrderType.Restaurant, changeDeliveryStatusDetails.restaurantOrderId)
+    }
+    pushNotification(
+      customer.firebaseId, 
+      notification, 
+      customer.notificationInfo, 
+      ParticipantType.Customer, 
+      customer.language
+    ).then(() => {
+      restaurantOperators.forEach((r) => {
+        if(r.user) {
+          pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
+        }
+      })
+    });
+    // if (newStatus == RestaurantOrderStatus.Delivered) {
+    //   if (order.paymentType == PaymentType.Card) {
+    //     order = (await capturePayment(order, order.costToCustomer)) as RestaurantOrder
+    //     TODO: capture shipping payment
+    //   }
+    // }
+
+    return { status: ServerResponseStatus.Success }
+  } catch(error) {
+    console.log("error =>", error);
     throw new HttpsError(
-      "internal",
-      "delivery order is complete or cancelled"
+      "unknown",
+      "Request was not authenticated.",
+      error
     );
   }
-  if(deliveryDriver.userId != userId) {
-    throw new HttpsError(
-      "internal",
-      "invalid delivery driver user id"
-    );
-  }
-  if (restaurantOrder.deliveryId != changeDeliveryStatusDetails.deliveryId) {
-    throw new HttpsError(
-      "internal",
-      "restaurant order and delivery order do not match"
-    );
-  }
-  let customer: CustomerInfo = await getCustomer(restaurantOrder.customerId);
-
-  checkExpectedStatus(deliveryOrder.status, newStatus);
-  
-  deliveryOrder.status = newStatus;
-  updateDeliveryOrderStatus(deliveryOrder);
-
-  if(deliveryOrder.status == DeliveryOrderStatus.OnTheWayToDropoff) {
-    restaurantOrder.status = RestaurantOrderStatus.OnTheWay;
-    updateOrderStatus(restaurantOrder);
-  }
-  if(deliveryOrder.status == DeliveryOrderStatus.Delivered) {
-    restaurantOrder.status = RestaurantOrderStatus.Delivered;
-    updateOrderStatus(restaurantOrder);
-  }
-  let notification: Notification = {
-    foreground: <DeliveryOrderStatusChangeNotification>{
-      status: newStatus,
-      time: (new Date()).toISOString(),
-      notificationType: NotificationType.OrderStatusChange,
-      orderType: OrderType.Restaurant,
-      notificationAction: NotificationAction.ShowSnackBarAlways,
-      orderId: changeDeliveryStatusDetails.restaurantOrderId
-    },
-    background: deliveryOrderStatusChangeMessages[newStatus],
-    linkUrl: orderUrl(OrderType.Restaurant, changeDeliveryStatusDetails.restaurantOrderId)
-  }
-  pushNotification(
-    customer.firebaseId, 
-    notification, 
-    customer.notificationInfo, 
-    ParticipantType.Customer, 
-    customer.language
-  ).then(() => {
-    restaurantOperators.forEach((r) => {
-      if(r.user) {
-        pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
-      }
-    })
-  });
-  // if (newStatus == RestaurantOrderStatus.Delivered) {
-  //   if (order.paymentType == PaymentType.Card) {
-  //     order = (await capturePayment(order, order.costToCustomer)) as RestaurantOrder
-  //     TODO: capture shipping payment
-  //   }
-  // }
-
-  return { status: ServerResponseStatus.Success }
 }

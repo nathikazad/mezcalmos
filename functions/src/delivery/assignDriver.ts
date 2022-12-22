@@ -28,83 +28,92 @@ export interface AssignDriverDetails {
 
 export async function assignDriver(userId: number, assignDriverDetails: AssignDriverDetails) {
 
-  //TODO
-  // response = await checkDeliveryAdmin(userId)
-  // if (response != undefined) {
-  //   return response;
-  // }
-  let deliveryOrderPromise = getDeliveryOrder(assignDriverDetails.deliveryOrderId);
-  let deliveryDriverPromise = getDeliveryDriver(assignDriverDetails.deliveryDriverId, assignDriverDetails.deliveryDriverType);
-  let promiseResponse = await Promise.all([deliveryOrderPromise, deliveryDriverPromise]);
-  let deliveryOrder: DeliveryOrder = promiseResponse[0];
-  let deliveryDriver: DeliveryDriver = promiseResponse[1];
-  if(deliveryOrder.status != DeliveryOrderStatus.OrderReceived && 
-    deliveryOrder.status != DeliveryOrderStatus.PackageReady) {
-    throw new HttpsError(
-      "internal",
-      "delivery order is already assigned, complete or cancelled"
-    );
-  }
-  if(deliveryOrder.deliveryDriverId != null) {
-    throw new HttpsError(
-      "internal",
-      "delivery driver already assigned"
-    );
-  }
-  if(deliveryDriver.deliveryDriverType == DeliveryDriverType.DeliveryDriver) {
-    if(deliveryDriver.status != DelivererStatus.Authorized) {
+  try {
+    //TODO
+    // response = await checkDeliveryAdmin(userId)
+    // if (response != undefined) {
+    //   return response;
+    // }
+    let deliveryOrderPromise = getDeliveryOrder(assignDriverDetails.deliveryOrderId);
+    let deliveryDriverPromise = getDeliveryDriver(assignDriverDetails.deliveryDriverId, assignDriverDetails.deliveryDriverType);
+    let promiseResponse = await Promise.all([deliveryOrderPromise, deliveryDriverPromise]);
+    let deliveryOrder: DeliveryOrder = promiseResponse[0];
+    let deliveryDriver: DeliveryDriver = promiseResponse[1];
+    if(deliveryOrder.status != DeliveryOrderStatus.OrderReceived && 
+      deliveryOrder.status != DeliveryOrderStatus.PackageReady) {
       throw new HttpsError(
         "internal",
-        "delivery driver not authorized"
+        "delivery order is already assigned, complete or cancelled"
       );
     }
-    if(deliveryDriver.online != true) {
+    if(deliveryOrder.deliveryDriverId != null) {
       throw new HttpsError(
         "internal",
-        "delivery driver not online"
+        "delivery driver already assigned"
       );
     }
-  }
-  
-
-  //TODO
-  if (assignDriverDetails.changeDriver) {
-    // let returnVal = removeOldDriver(deliveryDriverType, order, orderId);
-    // if (returnVal != null) return returnVal;
-    deleteDeliveryChatMessages(deliveryOrder);
-  }
-  
-  await assignDeliveryDriver(assignDriverDetails);
-
-  setDeliveryChatInfo(deliveryOrder, deliveryDriver);
+    if(deliveryDriver.deliveryDriverType == DeliveryDriverType.DeliveryDriver) {
+      if(deliveryDriver.status != DelivererStatus.Authorized) {
+        throw new HttpsError(
+          "internal",
+          "delivery driver not authorized"
+        );
+      }
+      if(deliveryDriver.online != true) {
+        throw new HttpsError(
+          "internal",
+          "delivery driver not online"
+        );
+      }
+    }
     
-  if(deliveryDriver.notificationInfo) {
 
-    let notification: Notification = {
-      foreground: <NewDeliveryOrderNotification>{
-        time: (new Date()).toISOString(),
-        notificationType: NotificationType.NewOrder,
-        orderType: assignDriverDetails.orderType,
-        notificationAction: NotificationAction.ShowPopUp,
-        orderId: assignDriverDetails.deliveryOrderId,
-        deliveryDriverType: assignDriverDetails.deliveryDriverType
-      },
-      background: deliveryNewOrderMessage,
-      linkUrl: orderUrl(assignDriverDetails.orderType, assignDriverDetails.deliveryOrderId)
+    //TODO
+    if (assignDriverDetails.changeDriver) {
+      // let returnVal = removeOldDriver(deliveryDriverType, order, orderId);
+      // if (returnVal != null) return returnVal;
+      deleteDeliveryChatMessages(deliveryOrder);
     }
-    let participantType: ParticipantType = deliveryDriver.deliveryDriverType == DeliveryDriverType.DeliveryDriver
-      ? ParticipantType.DeliveryDriver
-      : ParticipantType.RestaurantOperator;
+    
+    await assignDeliveryDriver(assignDriverDetails);
 
-    pushNotification(
-      deliveryDriver.user?.firebaseId!, 
-      notification, 
-      deliveryDriver.notificationInfo, 
-      participantType
+    setDeliveryChatInfo(deliveryOrder, deliveryDriver);
+      
+    if(deliveryDriver.notificationInfo) {
+
+      let notification: Notification = {
+        foreground: <NewDeliveryOrderNotification>{
+          time: (new Date()).toISOString(),
+          notificationType: NotificationType.NewOrder,
+          orderType: assignDriverDetails.orderType,
+          notificationAction: NotificationAction.ShowPopUp,
+          orderId: assignDriverDetails.deliveryOrderId,
+          deliveryDriverType: assignDriverDetails.deliveryDriverType
+        },
+        background: deliveryNewOrderMessage,
+        linkUrl: orderUrl(assignDriverDetails.orderType, assignDriverDetails.deliveryOrderId)
+      }
+      let participantType: ParticipantType = deliveryDriver.deliveryDriverType == DeliveryDriverType.DeliveryDriver
+        ? ParticipantType.DeliveryDriver
+        : ParticipantType.RestaurantOperator;
+
+      pushNotification(
+        deliveryDriver.user?.firebaseId!, 
+        notification, 
+        deliveryDriver.notificationInfo, 
+        participantType
+      );
+    }
+    return {
+      status: ServerResponseStatus.Success,
+    }
+  } catch(error) {
+    console.log("error =>", error);
+    throw new HttpsError(
+      "unknown",
+      "Request was not authenticated.",
+      error
     );
-  }
-  return {
-    status: ServerResponseStatus.Success,
   }
 };
 

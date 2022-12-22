@@ -14,7 +14,7 @@ export interface AuthorizeDetails {
 }
 
 export async function authorizeDeliveryOperator(ownerUserId: number, authorizeDetails: AuthorizeDetails) {
-    
+  try {
     let deliveryOperator = await getDeliveryOperatorByUserId(ownerUserId);
     if(!(deliveryOperator.owner)) {
         throw new HttpsError(
@@ -68,4 +68,12 @@ export async function authorizeDeliveryOperator(ownerUserId: number, authorizeDe
         );
     }
     return { status: ServerResponseStatus.Success }
+  } catch(error) {
+    console.log("error =>", error);
+    throw new HttpsError(
+      "unknown",
+      "Request was not authenticated.",
+      error
+    );
+  }
 }

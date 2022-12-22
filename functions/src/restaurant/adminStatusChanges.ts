@@ -45,95 +45,103 @@ function expectedPreviousStatus(status: RestaurantOrderStatus): RestaurantOrderS
 }
 
 async function changeStatus(orderId: number, newStatus: RestaurantOrderStatus, userId: number): Promise<ServerResponse> {
+  try {
+    await passChecksForRestaurant(orderId, userId);
 
-  await passChecksForRestaurant(orderId, userId);
-
-  let order = await getRestaurantOrder(orderId);
-  if(!(order.deliveryId)) {
-    throw new HttpsError(
-      "internal",
-      "No delivery id"
-    );
-  }
-  let customerPromise = getCustomer(order.customerId);
-  let deliveryPromise = getDeliveryOrder(order.deliveryId);
-  let response = await Promise.all([customerPromise, deliveryPromise]);
-  let customer: CustomerInfo = response[0];
-  let deliveryOrder: DeliveryOrder = response[1];
-
-  // let order: RestaurantOrder = validationPass.order;
-
-  // if (order == null) {
-  //   return {
-  //     status: ServerResponseStatus.Error,
-  //     errorMessage: `Order does not exist`,
-  //     errorCode: "orderDontExist"
-  //   }
-  // }
-
-  if (newStatus == RestaurantOrderStatus.CancelledByAdmin) {
-    if (!orderInProcess(order.status)) {
+    let order = await getRestaurantOrder(orderId);
+    if(!(order.deliveryId)) {
       throw new HttpsError(
         "internal",
-        "Order cannot be cancelled because it is not in process"
+        "No delivery id"
       );
     }
-  } else if (expectedPreviousStatus(newStatus) != order.status) {
+    let customerPromise = getCustomer(order.customerId);
+    let deliveryPromise = getDeliveryOrder(order.deliveryId);
+    let response = await Promise.all([customerPromise, deliveryPromise]);
+    let customer: CustomerInfo = response[0];
+    let deliveryOrder: DeliveryOrder = response[1];
+
+    // let order: RestaurantOrder = validationPass.order;
+
+    // if (order == null) {
+    //   return {
+    //     status: ServerResponseStatus.Error,
+    //     errorMessage: `Order does not exist`,
+    //     errorCode: "orderDontExist"
+    //   }
+    // }
+
+    if (newStatus == RestaurantOrderStatus.CancelledByAdmin) {
+      if (!orderInProcess(order.status)) {
+        throw new HttpsError(
+          "internal",
+          "Order cannot be cancelled because it is not in process"
+        );
+      }
+    } else if (expectedPreviousStatus(newStatus) != order.status) {
+      throw new HttpsError(
+        "internal", 
+        `Status is not ${expectedPreviousStatus(newStatus)} but ${order.status}`,
+      );
+    }
+
+    order.status = newStatus;
+
+    if (newStatus == RestaurantOrderStatus.CancelledByAdmin) {
+      // if (order.payment_type == PaymentType.Card) {
+      //   order = (await capturePayment(order, 0)) as RestaurantOrder
+        // TODO: cancel or capture shipping payment depending on status
+      // }
+      order.refundAmount = order.totalCost;
+      // order.costToCustomer = order.totalCost - order.refundAmount;
+    } 
+    updateOrderStatus(order);
+    if(order.status == RestaurantOrderStatus.ReadyForPickup && deliveryOrder.status != DeliveryOrderStatus.AtPickup) {
+      deliveryOrder.status = DeliveryOrderStatus.PackageReady;
+      updateDeliveryOrderStatus(deliveryOrder);
+    }
+      
+    let notification: Notification = {
+      foreground: <RestaurantOrderStatusChangeNotification>{
+        status: newStatus,
+        time: (new Date()).toISOString(),
+        notificationType: NotificationType.OrderStatusChange,
+        orderType: OrderType.Restaurant,
+        notificationAction: newStatus != RestaurantOrderStatus.CancelledByAdmin
+          ? NotificationAction.ShowSnackBarAlways : NotificationAction.ShowPopUp,
+        orderId: order.orderId
+      },
+      background: restaurantOrderStatusChangeMessages[newStatus],
+      linkUrl: orderUrl(OrderType.Restaurant, orderId)
+    }
+
+    pushNotification(
+      customer.firebaseId, 
+      notification, 
+      customer.notificationInfo,
+      ParticipantType.Customer, 
+      customer.language
+    ).then(() => {
+      if (deliveryOrder.deliveryDriver && deliveryOrder.deliveryDriver.user?.firebaseId) {
+        notification.linkUrl = orderUrl(OrderType.Restaurant, order.orderId!);
+        pushNotification(deliveryOrder.deliveryDriver.user?.firebaseId, 
+          notification, 
+          deliveryOrder.deliveryDriver.notificationInfo,
+          ParticipantType.DeliveryDriver,
+          deliveryOrder.deliveryDriver.user?.language,
+        );
+      }
+    });
+
+    return { status: ServerResponseStatus.Success }
+  } catch(error) {
+    console.log("error =>", error);
     throw new HttpsError(
-      "internal", 
-      `Status is not ${expectedPreviousStatus(newStatus)} but ${order.status}`,
+      "unknown",
+      "Request was not authenticated.",
+      error
     );
   }
-
-  order.status = newStatus;
-
-  if (newStatus == RestaurantOrderStatus.CancelledByAdmin) {
-    // if (order.payment_type == PaymentType.Card) {
-    //   order = (await capturePayment(order, 0)) as RestaurantOrder
-      // TODO: cancel or capture shipping payment depending on status
-    // }
-    order.refundAmount = order.totalCost;
-    // order.costToCustomer = order.totalCost - order.refundAmount;
-  } 
-  updateOrderStatus(order);
-  if(order.status == RestaurantOrderStatus.ReadyForPickup && deliveryOrder.status != DeliveryOrderStatus.AtPickup) {
-    deliveryOrder.status = DeliveryOrderStatus.PackageReady;
-    updateDeliveryOrderStatus(deliveryOrder);
-  }
-    
-  let notification: Notification = {
-    foreground: <RestaurantOrderStatusChangeNotification>{
-      status: newStatus,
-      time: (new Date()).toISOString(),
-      notificationType: NotificationType.OrderStatusChange,
-      orderType: OrderType.Restaurant,
-      notificationAction: newStatus != RestaurantOrderStatus.CancelledByAdmin
-        ? NotificationAction.ShowSnackBarAlways : NotificationAction.ShowPopUp,
-      orderId: order.orderId
-    },
-    background: restaurantOrderStatusChangeMessages[newStatus],
-    linkUrl: orderUrl(OrderType.Restaurant, orderId)
-  }
-
-  pushNotification(
-    customer.firebaseId, 
-    notification, 
-    customer.notificationInfo,
-    ParticipantType.Customer, 
-    customer.language
-  ).then(() => {
-    if (deliveryOrder.deliveryDriver && deliveryOrder.deliveryDriver.user?.firebaseId) {
-      notification.linkUrl = orderUrl(OrderType.Restaurant, order.orderId!);
-      pushNotification(deliveryOrder.deliveryDriver.user?.firebaseId, 
-        notification, 
-        deliveryOrder.deliveryDriver.notificationInfo,
-        ParticipantType.DeliveryDriver,
-        deliveryOrder.deliveryDriver.user?.language,
-      );
-    }
-  });
-
-  return { status: ServerResponseStatus.Success }
 }
 // export async function setEstimatedFoodReadyTime(userId: number, data: any): Promise<ServerResponse> {
 

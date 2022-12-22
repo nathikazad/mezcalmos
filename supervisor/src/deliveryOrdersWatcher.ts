@@ -20,6 +20,7 @@ import { OrderType } from "../../functions/src/shared/models/Generic/Order";
 import { Notification, NotificationAction, NotificationType } from "../../functions/src/shared/models/Notification";
 import { DeliveryOperator, DeliveryOrder, NewDeliveryOrderNotification } from "../../functions/src/shared/models/Services/Delivery/DeliveryOrder";
 import { pushNotification } from "../../functions/src/utilities/senders/notifyUser";
+import * as firebase from "firebase-admin";
 
 const checkOrdersInterval: number = 10 //seconds 60
 
@@ -56,8 +57,11 @@ async function checkDeliveryOrders() {
                 },
                 linkUrl: `/`
             }
+            let snap = await firebase.database().ref(`/orders/delivery/${o.deliveryId}`).once("value");
+            let readOperators = snap.val();
+            console.log(readOperators)
             operators.forEach((r) => {
-                if(r.user) {
+                if(!(readOperators && readOperators[r.id!]) && r.user) {
                     pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.DeliveryOperator);
                 }
             });
