@@ -35,6 +35,7 @@ const String tTestRestaurantOpValue = "restaurantop@mezcalmos.com";
 const String tTestCustomerValue = "customer@mezcalmos.com";
 const String tTestDeliveryDriverValue = "deliverydriver@mezcalmos.com";
 const String tTestAdminValue = "mezAdmin@mezcalmos.com";
+const String tTestDeliveryOpValue = "deliveryop@mezcalmos.com";
 const String tEmailTestPassword = "password";
 
 // ----------------- Costants Numbers ----------------- //

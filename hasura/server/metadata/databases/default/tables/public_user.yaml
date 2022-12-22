@@ -42,6 +42,22 @@ select_permissions:
         - name
         - phone
       filter: {}
+  - role: delivery_operator
+    permission:
+      columns:
+        - id
+        - firebase_id
+        - name
+        - image
+        - language_id
+        - deleted
+        - email
+        - phone
+        - big_image
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      limit: 1
   - role: mez_admin
     permission:
       columns:

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:sizer/sizer.dart';
 
-class DeliveryDAdminTheme {
+class DeliveryAdminTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       //---------------------------------------------------- COLORS ------------------------------------------------------------------------//

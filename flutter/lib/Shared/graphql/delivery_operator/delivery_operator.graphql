@@ -1,0 +1,30 @@
+# Get the delivery Operator by hasura_user_id
+query get_delivery_operator_by_id($user_id : Int!)
+{
+  delivery_operator_by_pk(id :$user_id) {
+    app_version,
+    current_gps,
+    delivery_company_id,
+    delivery_driver_type,
+    id,
+    notification_token,
+    owner,
+    status
+  }
+}
+
+
+# listen on delivery Operator by hasura_user_id
+subscription get_delivery_operator_by_id($user_id : Int!)
+{
+  delivery_operator_by_pk(id :$user_id) {
+    app_version,
+    current_gps,
+    delivery_company_id,
+    delivery_driver_type,
+    id,
+    notification_token,
+    owner,
+    status
+  }
+}
