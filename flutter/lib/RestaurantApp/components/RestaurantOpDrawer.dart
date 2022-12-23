@@ -76,8 +76,8 @@ class _ROpDrawerState extends State<ROpDrawer> {
                       height: 50,
                     ),
                     // Laundry IMAGE AND NAME
-
-                    _opImageAndName(),
+                    if (restaurantOpAuthController.operator.value != null)
+                      _opImageAndName(),
 
                     // Navigation links
                     if (restaurantOpAuthController.operator.value != null &&
@@ -102,7 +102,8 @@ class _ROpDrawerState extends State<ROpDrawer> {
                     ),
                     _languageSwitcher(),
                     if (restaurantOpAuthController
-                        .operator.value!.isWaitingToBeApprovedByOwner)
+                            .operator.value?.isWaitingToBeApprovedByOwner ==
+                        true)
                       _navigationLink(
                         onClick: () async {
                           await Get.find<AuthController>().signOut();

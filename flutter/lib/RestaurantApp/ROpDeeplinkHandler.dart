@@ -52,17 +52,13 @@ class ROpDeeplinkHandler {
   }) async {
     mezDbgPrint(
         " 🔗🔗🔗🔗 @deepLink@ ===> handling operator   =====>>> provider id : $providerId");
-    Future<void>.delayed(
-      Duration.zero,
-      () async {
-        await addOperator(providerId);
 
-        //    if (res.success) {
-        // ignore: unawaited_futures
-        MezRouter.toNamed(kTabsView);
-        //  }
-      },
-    );
+    await addOperator(providerId);
+    // await Get.find<RestaurantOpAuthController>().setupRestaurantOperator();
+    //    if (res.success) {
+    // ignore: unawaited_futures
+    MezRouter.toNamed(kOpUnauth);
+    //  }
   }
 
   /// This cancel itself and start once again listening if the app was opened using a deep Link.
@@ -88,10 +84,10 @@ class ROpDeeplinkHandler {
           await FirebaseDynamicLinks.instanceFor(
         app: Get.find<FirebaseDb>().firebaseApp,
       ).getInitialLink();
-      final Uri? deepLink = data?.link;
-      if (deepLink != null) {
-        await _checkQueryValidityAndHandleRouting(deepLink);
-      }
+      // final Uri? deepLink = data?.link;
+      //  if (deepLink != null) {
+      await _checkQueryValidityAndHandleRouting(testUri);
+      //   }
       _startOnLinkListener();
     } catch (e) {
       mezDbgPrint("Exception ==> ${e.toString()}");

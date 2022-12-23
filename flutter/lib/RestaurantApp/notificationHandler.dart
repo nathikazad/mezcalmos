@@ -18,7 +18,7 @@ Notification restaurantNotificationHandler(String key, value) {
     case NotificationType.NewOrder:
       return Notification(
           id: key,
-          linkUrl: getROpOrderRoute(value["orderId"]),
+          linkUrl: getROpOrderRoute(value["orderId"].toString()),
           body: '${_i18n()['newOrderBody']}',
           imgUrl:
               'assets/images/shared/notifications/prepareOrderNotificationIcon.png', // needs to be changed
@@ -32,10 +32,14 @@ Notification restaurantNotificationHandler(String key, value) {
       return Notification(
           id: key,
           linkUrl: kWrapperRoute,
-          body: 'You have been approved',
-          imgUrl:
-              'assets/images/shared/notifications/delivered.png', // needs to be changed
-          title: "Congrats !!",
+          body: (value["approved"] == true)
+              ? 'You have been approved'
+              : "You have been rejected",
+          imgUrl: (value["approved"] == true)
+              ? 'assets/images/shared/notifications/delivered.png'
+              : 'assets/images/shared/notifications/cancel.png', // needs to be changed
+          title:
+              (value["approved"] == true) ? "Congrats !!" : "Unfortunately !",
           timestamp: DateTime.parse(value['time']),
           notificationType: NotificationType.NewMessage,
           notificationAction:
@@ -69,7 +73,7 @@ Notification _laundryOpOrderChangesNotifier(String key, value) {
 
   return Notification(
       id: key,
-      linkUrl: getROpOrderRoute(value["orderId"]),
+      linkUrl: getROpOrderRoute(value["orderId"].toString()),
       icon: mat.Icons.flatware,
       secondaryIcon: mat.Icons.close,
       body: dynamicFields["body"],
@@ -92,7 +96,7 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
       id: key,
       icon: mat.Icons.flatware,
       secondaryIcon: mat.Icons.close,
-      linkUrl: getROpOrderRoute(value["orderId"]),
+      linkUrl: getROpOrderRoute(value["orderId"].toString()),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -167,7 +171,7 @@ Notification newMessageNotification(String key, value) {
       id: key,
       linkUrl: getMessagesRoute(
           chatId: value['chatId'],
-          orderLink: getROpOrderRoute(value['orderId'])),
+          orderLink: getROpOrderRoute(value['orderId'].toString())),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],

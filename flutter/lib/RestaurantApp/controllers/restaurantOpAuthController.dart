@@ -10,8 +10,7 @@ import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.d
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/operatorNodes.dart';
 import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
-import 'package:mezcalmos/Shared/graphql/restaurantOperator/hsRestaurantOperator.dart';
-import 'package:mezcalmos/Shared/graphql/user/hsUser.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant_operator/hsRestaurantOperator.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
@@ -20,14 +19,15 @@ import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
 
 class RestaurantOpAuthController extends GetxController {
   Rxn<RestaurantOperator> operator = Rxn();
-  final int operatorId = Get.find<AuthController>().hasuraUserId!;
+  final int operatorUserId = Get.find<AuthController>().hasuraUserId!;
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
   // RestaurantInfoController _restaurantInfoController =
   //     Get.find<RestaurantInfoController>();
   BackgroundNotificationsController _notificationsController =
       Get.find<BackgroundNotificationsController>();
-  int? restaurantId;
+  RxnInt _restaurantId = RxnInt();
+  int? get restaurantId => _restaurantId.value;
 
   RestaurantOperatorState? get restaurantOperatorState => operator.value?.state;
   Stream<RestaurantOperator?> get operatorInfoStream => operator.stream;
@@ -57,16 +57,13 @@ class RestaurantOpAuthController extends GetxController {
   }
 
   Future<void> setupRestaurantOperator() async {
-    final RestaurantOperatorState? operatorState =
-        await get_operator_state(operatorId: operatorId, withCache: false);
-    final UserInfo operatorInfo =
-        await get_user_by_hasura_id(hasuraId: operatorId);
-    if (operatorState != null) {
-      restaurantId = operatorState.restaurantId;
-      operator.value = RestaurantOperator(
-          state: operatorState,
-          info: operatorInfo,
-          operatorId: operatorId.toString());
+    // final RestaurantOperatorState? operatorState =
+    //     await get_operator_state(operatorId: operatorUserId, withCache: false);
+    // final UserInfo operatorInfo =
+    //     await get_user_by_hasura_id(hasuraId: operatorUserId);
+    operator.value = await get_restaurant_operator(userId: operatorUserId);
+    if (operator.value != null) {
+      _restaurantId.value = operator.value!.state.restaurantId;
     }
 
     mezDbgPrint("👑👑 Restaurant Operator :: ${operator.value?.toJson()}");
@@ -127,7 +124,7 @@ class RestaurantOpAuthController extends GetxController {
     final String? deviceNotificationToken =
         await _notificationsController.getToken();
     final NotificationInfo? notifInfo =
-        await get_notif_info(userId: operatorId);
+        await get_notif_info(userId: operatorUserId);
     mezDbgPrint("🫡🫡 saving notification info 🫡🫡");
     try {
       if (notifInfo != null &&
@@ -136,14 +133,14 @@ class RestaurantOpAuthController extends GetxController {
         // ignore: unawaited_futures
         update_notif_info(
             notificationInfo: NotificationInfo(
-                userId: operatorId,
+                userId: operatorUserId,
                 appType: "restaurant",
                 id: notifInfo.id,
                 token: deviceNotificationToken));
       } else if (deviceNotificationToken != null && notifInfo == null) {
         // ignore: unawaited_futures
         insert_notif_info(
-            userId: operatorId,
+            userId: operatorUserId,
             token: deviceNotificationToken,
             appType: "restaurant");
       }

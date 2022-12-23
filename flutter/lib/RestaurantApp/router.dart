@@ -129,6 +129,7 @@ String getEditOptionRoute({required int itemId}) {
 // GetX based Router (For navigating)
 class XRouter {
   static dynamic mainRoutes = [
+        GetPage(name: kHomeRoute, page: () => RestaurantWrapper()),
         GetPage(name: kDashboardView, page: () => ROpDashboardView()),
         GetPage(name: kMenuView, page: () => ROpMenuView()),
         GetPage(

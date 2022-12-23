@@ -135,6 +135,7 @@ class ROpItemViewController {
       startsAt: specialMode.value ? periodOfTime.value?.start : null,
       endsAt: specialMode.value ? periodOfTime.value?.end : null,
       available: editableItem.value?.available ?? false,
+      categoryId: currentCategory.value?.id,
       name: {
         prLang.value: prItemNameController.text,
         scLang.value: scItemNameController.text,

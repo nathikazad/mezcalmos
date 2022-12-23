@@ -19,7 +19,7 @@ class ROpWaitingForApproval extends StatelessWidget {
         children: [
           Container(
             alignment: Alignment.center,
-            height: 40.h,
+            height: 35.h,
             width: double.infinity,
             child: Image.asset(
               aRequestWaiting,

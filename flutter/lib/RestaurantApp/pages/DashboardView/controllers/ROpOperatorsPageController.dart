@@ -78,7 +78,7 @@ class ROpOperatorsViewController {
       final HttpsCallableResult response = await cloudFunction
           .call({"newOperatorId": opId, "approved": approved});
       mezDbgPrint("Response : ${response.data}");
-
+      await fetchOperators();
       return ServerResponse(ResponseStatus.Success);
     } catch (e, stk) {
       mezDbgPrint("Errrooooooooor =======> $e");

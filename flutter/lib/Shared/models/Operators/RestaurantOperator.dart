@@ -28,7 +28,7 @@ class RestaurantOperatorState {
 class RestaurantOperator {
   final RestaurantOperatorState state;
   final UserInfo info;
-  final String operatorId;
+  final int operatorId;
 
   const RestaurantOperator({
     required this.state,
@@ -37,7 +37,7 @@ class RestaurantOperator {
   });
 
   factory RestaurantOperator.fromData(
-      String restaurantOperatorId, restaurantOperatorData) {
+      int restaurantOperatorId, restaurantOperatorData) {
     final RestaurantOperatorState restaurantOperatorState =
         RestaurantOperatorState.fromSnapshot(restaurantOperatorData['state']);
 
