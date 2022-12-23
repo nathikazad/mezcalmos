@@ -14,6 +14,7 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
       name
     }
     items {
+      in_json
       restaurant_item {
         id
         image
@@ -98,6 +99,7 @@ query get_restaurant_order_by_id($order_id: Int!) {
       name
     }
     items {
+      in_json
       restaurant_item {
         item_type
         name {

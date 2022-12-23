@@ -243,8 +243,8 @@ class CartItem {
 
   String? notes;
   //optionId and list of choices for that option
-  Map<String, List<Choice>> chosenChoices = <String, List<Choice>>{};
-
+  Map<int, List<Choice>> chosenChoices = <int, List<Choice>>{};
+  //  selected_options = Map<Int, List<int>>
   CartItem(this.item, this.restaurantId,
       {this.idInCart, this.quantity = 1, this.notes}) {
     item.options.forEach((Option option) {
@@ -293,6 +293,26 @@ class CartItem {
     return cartItem;
   }
 
+  //{ 2 : {choices : [] , optionName: {en: ... , es: ...}}}
+  Map<String, Map<String, dynamic>> selectedOptionsToJson() {
+    final Map<String, Map<String, dynamic>> json = {};
+
+    chosenChoices.forEach((int optionId, List<Choice> choices) {
+      final List<Map<String, dynamic>> data = [];
+      choices.forEach((Choice choice) {
+        data.add(choice.toJson());
+      });
+      json[optionId.toString()] = <String, dynamic>{
+        "choices": data,
+        "optionName": item.findOption(optionId)?.name.toFirebaseFormat()
+      };
+      // json["chosenChoices"][optionId]["optionName"] =
+      //     item.findOption(optionId)?.name.toFirebaseFormat();
+      // json["chosenChoices"][optionId]["choices"] = data;
+    });
+    return json;
+  }
+
   Map<String, dynamic> toFirebaseFunctionFormattedJson() {
     final Map<String, dynamic> json = <String, dynamic>{
       "id": item.id,
@@ -301,21 +321,24 @@ class CartItem {
       "costPerOne": costPerOne(),
       "name": item.name.toFirebaseFormat(),
       "image": item.image,
-      "chosenChoices": {},
+      // "chosenChoices": {},
+      "chosenChoices": selectedOptionsToJson(),
       "notes": notes,
     };
 
-    chosenChoices.forEach((String optionId, List<Choice> choices) {
-      final List data = [];
-      choices.forEach((Choice choice) {
-        data.add(choice.toJson());
-      });
+    // {"optionId" : [{choice1} , {choic2} , {} ,{} ] }
 
-      json["chosenChoices"][optionId] = <String, dynamic>{};
-      json["chosenChoices"][optionId]["optionName"] =
-          item.findOption(optionId)?.name.toFirebaseFormat();
-      json["chosenChoices"][optionId]["choices"] = data;
-    });
+    // chosenChoices.forEach((String optionId, List<Choice> choices) {
+    //   final List data = [];
+    //   choices.forEach((Choice choice) {
+    //     data.add(choice.toJson());
+    //   });
+
+    //   json["chosenChoices"][optionId] = <String, dynamic>{};
+    //   json["chosenChoices"][optionId]["optionName"] =
+    //       item.findOption(optionId)?.name.toFirebaseFormat();
+    //   json["chosenChoices"][optionId]["choices"] = data;
+    // });
 
     return json;
   }
@@ -328,21 +351,21 @@ class CartItem {
       quantity: cartItem.quantity,
       notes: cartItem.notes,
     );
-    cartItem.chosenChoices.forEach((String optionId, List<Choice> choices) {
+    cartItem.chosenChoices.forEach((int optionId, List<Choice> choices) {
       newCartItem.chosenChoices[optionId] = <Choice>[...choices]; // hard copy
     });
     return newCartItem;
   }
 
   void setNewChoices(
-      {required String optionId, required List<Choice> newChoices}) {
+      {required int optionId, required List<Choice> newChoices}) {
     chosenChoices[optionId] = newChoices;
   }
 
   num costPerOne() {
     num costPerOne = item.cost;
     // if(chosenChoices.length > item.options
-    chosenChoices.forEach((String optionId, List<Choice> choices) {
+    chosenChoices.forEach((int optionId, List<Choice> choices) {
       final Option? option = item.findOption(optionId);
       if (option != null) {
         if (choices.length > option.freeChoice) {

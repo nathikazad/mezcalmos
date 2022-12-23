@@ -275,9 +275,13 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
           SizedBox(
             height: 10,
           ),
-          Text("${item.description![userLanguage]?.inCaps}",
-              textAlign: TextAlign.left,
-              style: Get.textTheme.bodyText2!.copyWith(fontSize: 12.sp)),
+          Text(
+            "${item.description![userLanguage]?.inCaps}",
+            textAlign: TextAlign.left,
+            style: Get.textTheme.bodyText2!.copyWith(
+              fontSize: 12.sp,
+            ),
+          ),
         ],
       ),
     );

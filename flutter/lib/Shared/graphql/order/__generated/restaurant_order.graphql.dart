@@ -385,6 +385,13 @@ const documentNodeSubscriptionlisten_on_restaurant_order_by_id =
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
+                name: NameNode(value: 'in_json'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'restaurant_item'),
                 alias: null,
                 arguments: [],
@@ -1960,6 +1967,7 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
 
 class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items {
   Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items({
+    required this.in_json,
     required this.restaurant_item,
     required this.cost_per_one,
     required this.id,
@@ -1970,6 +1978,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items
 
   factory Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items.fromJson(
       Map<String, dynamic> json) {
+    final l$in_json = json['in_json'];
     final l$restaurant_item = json['restaurant_item'];
     final l$cost_per_one = json['cost_per_one'];
     final l$id = json['id'];
@@ -1977,6 +1986,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items
     final l$quantity = json['quantity'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items(
+      in_json: mapFromJson(l$in_json),
       restaurant_item:
           Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items$restaurant_item
               .fromJson((l$restaurant_item as Map<String, dynamic>)),
@@ -1987,6 +1997,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final dynamic in_json;
 
   final Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items$restaurant_item
       restaurant_item;
@@ -2003,6 +2015,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$in_json = in_json;
+    _resultData['in_json'] = mapToJson(l$in_json);
     final l$restaurant_item = restaurant_item;
     _resultData['restaurant_item'] = l$restaurant_item.toJson();
     final l$cost_per_one = cost_per_one;
@@ -2020,6 +2034,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items
 
   @override
   int get hashCode {
+    final l$in_json = in_json;
     final l$restaurant_item = restaurant_item;
     final l$cost_per_one = cost_per_one;
     final l$id = id;
@@ -2027,6 +2042,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items
     final l$quantity = quantity;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$in_json,
       l$restaurant_item,
       l$cost_per_one,
       l$id,
@@ -2044,6 +2060,11 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items
     if (!(other
             is Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$in_json = in_json;
+    final lOther$in_json = other.in_json;
+    if (l$in_json != lOther$in_json) {
       return false;
     }
     final l$restaurant_item = restaurant_item;
@@ -2106,6 +2127,7 @@ abstract class CopyWith$Subscription$listen_on_restaurant_order_by_id$restaurant
       _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items;
 
   TRes call({
+    dynamic? in_json,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items$restaurant_item?
         restaurant_item,
     double? cost_per_one,
@@ -2138,6 +2160,7 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
   static const _undefined = {};
 
   TRes call({
+    Object? in_json = _undefined,
     Object? restaurant_item = _undefined,
     Object? cost_per_one = _undefined,
     Object? id = _undefined,
@@ -2147,6 +2170,9 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
   }) =>
       _then(
           Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items(
+        in_json: in_json == _undefined || in_json == null
+            ? _instance.in_json
+            : (in_json as dynamic),
         restaurant_item: restaurant_item == _undefined ||
                 restaurant_item == null
             ? _instance.restaurant_item
@@ -2183,6 +2209,7 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
   TRes _res;
 
   call({
+    dynamic? in_json,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items$restaurant_item?
         restaurant_item,
     double? cost_per_one,
@@ -4303,6 +4330,13 @@ const documentNodeQueryget_restaurant_order_by_id = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
+                name: NameNode(value: 'in_json'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'restaurant_item'),
                 alias: null,
                 arguments: [],
@@ -5888,6 +5922,7 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
 
 class Query$get_restaurant_order_by_id$restaurant_order_by_pk$items {
   Query$get_restaurant_order_by_id$restaurant_order_by_pk$items({
+    required this.in_json,
     required this.restaurant_item,
     required this.cost_per_one,
     required this.id,
@@ -5898,6 +5933,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$items {
 
   factory Query$get_restaurant_order_by_id$restaurant_order_by_pk$items.fromJson(
       Map<String, dynamic> json) {
+    final l$in_json = json['in_json'];
     final l$restaurant_item = json['restaurant_item'];
     final l$cost_per_one = json['cost_per_one'];
     final l$id = json['id'];
@@ -5905,6 +5941,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$items {
     final l$quantity = json['quantity'];
     final l$$__typename = json['__typename'];
     return Query$get_restaurant_order_by_id$restaurant_order_by_pk$items(
+      in_json: mapFromJson(l$in_json),
       restaurant_item:
           Query$get_restaurant_order_by_id$restaurant_order_by_pk$items$restaurant_item
               .fromJson((l$restaurant_item as Map<String, dynamic>)),
@@ -5915,6 +5952,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$items {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final dynamic in_json;
 
   final Query$get_restaurant_order_by_id$restaurant_order_by_pk$items$restaurant_item
       restaurant_item;
@@ -5931,6 +5970,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$items {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$in_json = in_json;
+    _resultData['in_json'] = mapToJson(l$in_json);
     final l$restaurant_item = restaurant_item;
     _resultData['restaurant_item'] = l$restaurant_item.toJson();
     final l$cost_per_one = cost_per_one;
@@ -5948,6 +5989,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$items {
 
   @override
   int get hashCode {
+    final l$in_json = in_json;
     final l$restaurant_item = restaurant_item;
     final l$cost_per_one = cost_per_one;
     final l$id = id;
@@ -5955,6 +5997,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$items {
     final l$quantity = quantity;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$in_json,
       l$restaurant_item,
       l$cost_per_one,
       l$id,
@@ -5972,6 +6015,11 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$items {
     if (!(other
             is Query$get_restaurant_order_by_id$restaurant_order_by_pk$items) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$in_json = in_json;
+    final lOther$in_json = other.in_json;
+    if (l$in_json != lOther$in_json) {
       return false;
     }
     final l$restaurant_item = restaurant_item;
@@ -6032,6 +6080,7 @@ abstract class CopyWith$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
       _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$items;
 
   TRes call({
+    dynamic? in_json,
     Query$get_restaurant_order_by_id$restaurant_order_by_pk$items$restaurant_item?
         restaurant_item,
     double? cost_per_one,
@@ -6062,6 +6111,7 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$item
   static const _undefined = {};
 
   TRes call({
+    Object? in_json = _undefined,
     Object? restaurant_item = _undefined,
     Object? cost_per_one = _undefined,
     Object? id = _undefined,
@@ -6070,6 +6120,9 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$item
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_restaurant_order_by_id$restaurant_order_by_pk$items(
+        in_json: in_json == _undefined || in_json == null
+            ? _instance.in_json
+            : (in_json as dynamic),
         restaurant_item: restaurant_item == _undefined ||
                 restaurant_item == null
             ? _instance.restaurant_item
@@ -6106,6 +6159,7 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
   TRes _res;
 
   call({
+    dynamic? in_json,
     Query$get_restaurant_order_by_id$restaurant_order_by_pk$items$restaurant_item?
         restaurant_item,
     double? cost_per_one,

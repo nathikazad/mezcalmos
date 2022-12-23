@@ -19,6 +19,7 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 
 class RestaurantController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -68,6 +69,8 @@ class RestaurantController extends GetxController {
               cart.value.restaurant = event.restaurant;
 
             associatedRestaurant = event.restaurant;
+          } else {
+            create_customer_cart();
           }
           cart.refresh();
         });

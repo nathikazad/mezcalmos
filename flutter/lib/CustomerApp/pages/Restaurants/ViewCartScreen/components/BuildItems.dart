@@ -108,7 +108,7 @@ class CartItemsBuilder extends StatelessWidget {
 
   List<Widget> buildChoices(CartItem cartItem) {
     final List<Widget> viewWidgets = [];
-    cartItem.chosenChoices.forEach((String key, List<Choice> value) {
+    cartItem.chosenChoices.forEach((int key, List<Choice> value) {
       viewWidgets.add(ItemChosenChoiceComponent(
           choices: value,
           optionName:
