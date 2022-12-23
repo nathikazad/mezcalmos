@@ -67,6 +67,9 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     scheduledTime: checkoutRequest.scheduledTime
   }
 
+  console.log("+ Items[0].SelectedOptions ==> " ,customerCart.items[0].selectedOptions);
+  console.log("+ Items ==> " , customerCart.items);
+
 
     // if (data.stripePaymentId) {
     //   order = (await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId, data.stripeFees)) as RestaurantOrder

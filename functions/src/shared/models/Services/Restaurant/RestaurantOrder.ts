@@ -36,7 +36,8 @@ export interface RestaurantOrder {
 export interface OrderItem {
   orderItemId?: number;
   itemId: number;
-  name?: Record<Language, string>;
+  name: any;
+  image?:string;
   selectedOptions?: Array<SelectedOption>;
   reviewId?: number;
   notes?: string;
