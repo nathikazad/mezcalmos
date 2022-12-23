@@ -14,7 +14,7 @@ class Review {
 
   DateTime reviewTime;
   Review({
-    required this.id,
+    this.id,
     required this.comment,
     required this.rating,
     required this.toEntityId,

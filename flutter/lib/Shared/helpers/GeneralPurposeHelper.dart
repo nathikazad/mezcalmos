@@ -4,12 +4,15 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart' show NumberFormat;
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
@@ -454,18 +457,16 @@ Future<void> showStatusInfoDialog(
       });
 }
 
-Future<void> showReviewDialog(
+Future<int?> showReviewDialog(
   BuildContext context, {
   required int orderId,
+  required int serviceProviderId,
+  required ServiceProviderType serviceProviderType,
   required OrderType orderType,
 }) async {
-  final int? serviceId =
-      Get.find<OrderController>().getOrder(orderId)?.serviceProviderId;
-  final OrderType? orderType =
-      Get.find<OrderController>().getOrder(orderId)?.orderType;
   final TextEditingController controller = TextEditingController();
   num rating = 3;
-  return await showDialog(
+  return await showDialog<int?>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext ctx) {
@@ -546,31 +547,25 @@ Future<void> showReviewDialog(
                 textColor: primaryBlueColor,
                 backgroundColor: secondaryLightBlueColor,
                 onClick: () async {
-                  // TODO @nathikazad do it men
-                  // final Review review = Review(
-                  //     comment: controller.text,
-                  //     rating: rating,
-                  //     orderId: orderId,
-                  //     orderType: orderType!,
-                  //     serviceProviderId: serviceId!);
-                  // // mezDbgPrint(review.toString());
-                  // final ServerResponse response =
-                  //     await Get.find<OrderController>().addReview(
-                  //         orderId: review.orderId,
-                  //         serviceId: serviceId,
-                  //         comment: review.comment,
-                  //         orderType: orderType,
-                  //         rate: review.rating);
-                  // if (response.success) {
-                  //   Get.snackbar('${_i18n()["review"]["successTitle"]}',
-                  //       "${_i18n()["review"]["successSubtitle"]}",
-                  //       backgroundColor: Colors.black, colorText: Colors.white);
-                  //   Get.back(closeOverlays: true);
-                  // } else {
-                  //   mezDbgPrint(response);
-                  //   Get.snackbar("Error", response.errorMessage ?? "error",
-                  //       backgroundColor: Colors.black, colorText: Colors.white);
-                  // }
+                  final Review review = Review(
+                      comment: controller.text,
+                      rating: rating,
+                      toEntityId: serviceProviderId,
+                      toEntityType: serviceProviderType,
+                      fromEntityId: Get.find<AuthController>().hasuraUserId!,
+                      fromEntityType: ServiceProviderType.Customer,
+                      reviewTime: DateTime.now().toUtc());
+
+                  final int? reviewId = await insert_review(review: review);
+                  if (reviewId != null) {
+                    Get.snackbar('${_i18n()["review"]["successTitle"]}',
+                        "${_i18n()["review"]["successSubtitle"]}",
+                        backgroundColor: Colors.black, colorText: Colors.white);
+                  } else {
+                    Get.snackbar("Error", "error",
+                        backgroundColor: Colors.black, colorText: Colors.white);
+                  }
+                  MezRouter.popDialog(result: reviewId, closeOverlays: true);
                 },
               ),
               SizedBox(height: 12),
