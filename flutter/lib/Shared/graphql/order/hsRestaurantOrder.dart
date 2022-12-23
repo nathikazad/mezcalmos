@@ -14,6 +14,8 @@ import 'package:mezcalmos/Shared/models/Utilities/DeliveryMode.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
@@ -184,6 +186,23 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     paymentType: orderData.payment_type.toPaymentType(),
     orderTime: DateTime.parse(orderData.order_time),
     cost: orderData.delivery_cost,
+    review: (orderData.review != null)
+        ? Review(
+            comment: orderData.review!.note,
+            rating: orderData.review!.rating,
+            toEntityId: orderData.review!.to_entity_id,
+            customer: UserInfo(
+              name: orderData.review?.customer?.user.name,
+              image: orderData.review?.customer?.user.image,
+              hasuraId: orderData.review!.customer!.user.id,
+            ),
+            toEntityType:
+                orderData.review!.to_entity_type.toServiceProviderType(),
+            fromEntityId: orderData.review!.from_entity_id,
+            fromEntityType:
+                orderData.review!.from_entity_type.toServiceProviderType(),
+            reviewTime: DateTime.parse(orderData.review!.created_at))
+        : null,
     restaurant: ServiceInfo(
       location: Location(
         orderData.restaurant.location_text,

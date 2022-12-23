@@ -55,6 +55,23 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     delivery_id
     status
     review_id
+        review {
+      created_at
+      from_entity_id
+      from_entity_type
+      id
+      note
+      rating
+      to_entity_id
+      to_entity_type
+      customer {
+        user {
+           id
+          image
+          name
+        }
+      }
+    }
     order_type
     order_time
     firebase_id
@@ -140,6 +157,23 @@ query get_restaurant_order_by_id($order_id: Int!) {
     delivery_id
     status
     review_id
+        review {
+      created_at
+      from_entity_id
+      from_entity_type
+      id
+      note
+      rating
+      to_entity_id
+      to_entity_type
+      customer {
+        user {
+          id
+          image
+          name
+        }
+      }
+    }
     order_type
     order_time
     firebase_id
@@ -224,89 +258,23 @@ query get_restaurant_past_orders($restaurantId: Int!) {
   }
 }
 
-query querry_restaurant_orders_by_restaurant_id($restaurantId: Int!) {
-  restaurant_order(where: { restaurant_id: { _eq: $restaurantId } }) {
-    id
-    restaurant {
-      id
-      firebase_id
-      image
-      language_id
-      location_gps
-      location_text
-      name
-    }
-    items {
-      restaurant_item {
-        item_type
-        image
-        name {
-          translations {
-            language_id
-            value
-          }
-        }
-        description {
-          translations {
-            language_id
-            value
-          }
-        }
-        position
-        category_id
-        available
-        restaurant_id
-        special_period_end
-        special_period_start
-        archived
-        cost
-      }
-      cost_per_one
-      id
-      notes
-      quantity
-    }
-    payment_type
-    to_location_gps
-    to_location_address
-    estimated_food_ready_time
-    actual_food_ready_time
-    stripe_payment_id
-    refund_amount
-    delivery_id
-    status
-    review_id
-    order_type
-    order_time
-    firebase_id
-    customer_app_type
-    customer {
-      user {
-        id
-        name
-        image
-      }
-    }
-    notes
-    tax
-    total_cost
-    items_cost
-    chat_id
-    delivery_cost
-    delivery {
-      actual_delivered_time
-      actual_package_ready_time
-      actual_arrival_at_pickup_time
-      actual_arrival_at_dropoff_time
-      cancellation_time
-      current_gps
-
-      delivery_cost
-    }
-  }
-}
 mutation setRestaurantOrderEstFoodReadyTime($orderId: Int!, $time: timestamptz!) {
   update_restaurant_order_by_pk(pk_columns: {id: $orderId}, _set: {estimated_food_ready_time: $time}) {
     estimated_food_ready_time
+  }
+}
+mutation assignRestaurantOrderReview($orderId: Int!, $reviewId: Int!) {
+  update_restaurant_order_by_pk(pk_columns: {id: $orderId}, _set: {review_id: $reviewId}) {
+    review_id
+    review {
+      created_at
+      from_entity_id
+      from_entity_type
+      id
+      note
+      rating
+      to_entity_id
+      to_entity_type
+    }
   }
 }
