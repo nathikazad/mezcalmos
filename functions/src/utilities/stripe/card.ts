@@ -38,6 +38,7 @@ export const addCard =
     const mezCustomerId: string = context.auth!.uid;
     let stripeOptions = { apiVersion: <any>'2020-08-27' };
     const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
+    // @hasura customer.stripe.id
     const stripeCustomerId: string = await getCustomerId(mezCustomerId, stripe);
 
     const paymentMethod: Stripe.PaymentMethod = await stripe.paymentMethods.attach(
@@ -46,6 +47,7 @@ export const addCard =
       stripeOptions
     );
 
+    // @hasura customer.stripe.cards[id].info
     let cardRef = await customerNodes.stripeCardsNode(mezCustomerId).push(<CustomerCard>{
       id: paymentMethod.id,
       last4: paymentMethod.card?.last4,
@@ -75,6 +77,7 @@ export const chargeCard =
         errorCode: "incorrectParams"
       }
     }
+    // @hasura restaurant.stripe && restaurant.paymentInfo
     let serviceProviderPaymentInfo: PaymentInfo = (await serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).once('value')).val()
     if (!serviceProviderPaymentInfo || serviceProviderPaymentInfo.acceptedPayments[PaymentType.Card] == false || serviceProviderPaymentInfo.stripe.id == null || serviceProviderPaymentInfo.stripe.status != StripeStatus.IsWorking) {
       return {
@@ -85,6 +88,7 @@ export const chargeCard =
     }
 
     const mezCustomerId: string = context.auth!.uid;
+    // @hasura customer.stripe
     let customerStripe: CustomerStripe = (await customerNodes.stripeNode(mezCustomerId).once('value')).val();
 
     if (customerStripe == null || customerStripe.cards == null || customerStripe.cards[data.cardId] == null) {
@@ -191,20 +195,24 @@ export const removeCard =
 
 
 async function getCustomerId(customerId: string, stripe: Stripe) {
+  // @hasura customer.stripe.id
   let stripeCustomerId: string = (await customerNodes.stripeIdNode(customerId).once('value')).val();
   if (stripeCustomerId == null) {
+    // @hasura user.name
     let userInfo: UserInfo = (await userInfoNode(customerId).once('value')).val()
     const customer: Stripe.Customer = await stripe.customers.create({
       name: userInfo.name,
       metadata: { customerId: customerId },
     })
     stripeCustomerId = customer.id;
+    // @hasura customer.stripe.id
     customerNodes.stripeIdNode(customerId).set(stripeCustomerId);
   }
   return stripeCustomerId;
 }
 
 export async function getCardIdFromServiceAccount(customerId: string, cardId: string, serviceProviderId: string, orderType: OrderType, mezCustomerId: string, stripe: Stripe, stripeOptions: any) {
+  // @hasura customer.cards[cardId][serviceProviders][restaurant(serviceProviderType)][restaurantId]
   let stripeCardIdWithServiceProvider: string = (await customerNodes.stripeClonedCardsNode(customerId, cardId, serviceProviderId, orderType).once('value')).val();
   if (stripeCardIdWithServiceProvider == null) {
     let customerStripe: CustomerStripe = (await customerNodes.stripeNode(mezCustomerId).once('value')).val();
@@ -220,6 +228,7 @@ export async function getCardIdFromServiceAccount(customerId: string, cardId: st
     );
 
     stripeCardIdWithServiceProvider = paymentMethod.id;
+    // @hasura customer.cards[cardId][serviceProviders][restaurant(serviceProviderType)][restaurantId]
     customerNodes.stripeClonedCardsNode(customerId, cardId, serviceProviderId, orderType).set(stripeCardIdWithServiceProvider);
   }
   return stripeCardIdWithServiceProvider;

@@ -12,6 +12,7 @@ import * as customerNodes from '../../shared/databaseNodes/customer';
 import { userInfoNode } from '../../shared/databaseNodes/root';
 import { UserInfo } from '../../shared/models/Generic/User';
 import { getUserInfo } from '../../shared/controllers/rootController';
+
 let keys: Keys = getKeys();
 
 
@@ -66,7 +67,7 @@ export const updateServiceProvider =
     const stripeOptions = { apiVersion: <any>'2020-08-27' };
     const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
 
-
+    // @hasura restaurant.stripe.id
     let stripeAccount: string = (await serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).child('stripe/id').once('value')).val()
     const account: Stripe.Account = await stripe.accounts.retrieve(stripeAccount, stripeOptions);
     if (!stripeAccount)
@@ -77,6 +78,7 @@ export const updateServiceProvider =
       }
 
     let isWorking: boolean = account.details_submitted && account.charges_enabled
+    // @hasura restaurant.stripe
     await serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).child('stripe').update(<ServiceProviderStripeInfo>{
       status: isWorking ? StripeStatus.IsWorking : StripeStatus.InProcess,
       detailsSubmitted: account.details_submitted,
@@ -96,22 +98,27 @@ export const updateServiceProvider =
 
 
 export async function getCustomerIdFromServiceAccount(customerId: string, serviceProviderId: string, orderType: OrderType, stripe: Stripe, stripeOptions: any) {
+  // @hasura customer.stripe.serviceProviders[serviceProviderType][serviceProviderId]
   let stripeCustomerId: string = (await customerNodes.stripeIdsWithServiceProviderNode(customerId, serviceProviderId, orderType).once('value')).val();
   if (stripeCustomerId == null) {
+    // @hasura customer.name
     let userInfo: UserInfo = (await userInfoNode(customerId).once('value')).val()
     const customer: Stripe.Customer = await stripe.customers.create({
       name: userInfo.name,
       metadata: { customerId: customerId },
     }, stripeOptions)
     stripeCustomerId = customer.id;
+    // @hasura customer.stripe.serviceProviders[serviceProviderType][serviceProviderId]
     customerNodes.stripeIdsWithServiceProviderNode(customerId, serviceProviderId, orderType).set(stripeCustomerId);
   }
   return stripeCustomerId;
 }
 
 export async function getServiceProviderStripeId(serviceProviderId: string, orderType: OrderType, userId: string, stripe: Stripe, stripeOptions: any) {
+  // @hasura restaurant.stripe.id
   let serviceProviderStripeId: string = (await serviceProviderNodes.serviceProviderStripeId(orderType, serviceProviderId).once('value')).val();
   if (serviceProviderStripeId == null) {
+    // @hasura restaurant.restaurant_operator(owner) name,email,phonenumber
     let serviceProviderInfo: UserInfo = (await serviceProviderNodes.serviceProviderInfo(orderType, serviceProviderId).once('value')).val().info;
     let userInfo: UserInfo = await getUserInfo(userId);
     const account = await stripe.accounts.create({
@@ -138,6 +145,7 @@ export async function getServiceProviderStripeId(serviceProviderId: string, orde
       }
     });
     // add name, link, descriptor, long name, short name, address, id
+    // @hasura restaurant.stripe
     serviceProviderNodes.serviceProviderPaymentInfo(orderType, serviceProviderId).child('stripe').set(<ServiceProviderStripeInfo>{
       id: account.id,
       status: StripeStatus.InProcess,
@@ -149,6 +157,7 @@ export async function getServiceProviderStripeId(serviceProviderId: string, orde
       requirements: []
     });
     serviceProviderStripeId = account.id;
+    // @hasura restaurant.acceptedPayments json
     serviceProviderNodes.serviceProviderPaymentInfo(orderType as OrderType, serviceProviderId).child(`acceptedPayments`).set({
       [PaymentType.Card]: true,
       [PaymentType.Cash]: true
