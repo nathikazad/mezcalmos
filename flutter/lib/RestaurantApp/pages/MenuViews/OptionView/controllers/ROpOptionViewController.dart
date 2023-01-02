@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +9,6 @@ import 'package:mezcalmos/Shared/graphql/item/option/hsOption.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -122,7 +123,7 @@ class ROpOptionViewController {
   Future<void> _updateOption() async {
     await _updateName();
     final bool result = await update_option_by_id(
-        optionId: int.parse(editableOption.value!.id),
+        optionId: editableOption.value!.id,
         option: (optionType.value == OptionType.Custom)
             ? _constructCustomOption()
             : _contructOption());
@@ -170,7 +171,7 @@ class ROpOptionViewController {
 
   Option _contructNormalOption() {
     final Option newOption = Option(
-      id: editMode.value ? editableOption.value!.id : getRandomString(8),
+      id: editMode.value ? editableOption.value!.id : Random().nextInt(15),
       optionType: optionType.value,
       name: {
         primaryLang.value: prOptionName.text,
@@ -182,7 +183,7 @@ class ROpOptionViewController {
 
   Option _constructCustomOption() {
     final Option newOption = Option(
-      id: editMode.value ? editableOption.value!.id : getRandomString(8),
+      id: editMode.value ? editableOption.value!.id : Random().nextInt(15),
       optionType: optionType.value,
       maximumChoice: max.value!,
       minimumChoice: min.value!,
@@ -198,20 +199,16 @@ class ROpOptionViewController {
   }
 
   Future<bool?> deleteOption() async {
-    if (int.tryParse(editableOption.value!.id) != null) {
-      final bool result = await delete_option_by_id(
-          optionId: int.parse(editableOption.value!.id));
-      result ? MezRouter.back() : null;
-      return result;
-    }
-    return null;
+    final bool result =
+        await delete_option_by_id(optionId: editableOption.value!.id);
+    result ? MezRouter.back() : null;
+    return result;
   }
 
   Future<void> fetchOption() async {
     if (isEditing) {
-      final Option? newOp = await get_option_by_id(
-          int.parse(editableOption.value!.id),
-          withCache: false);
+      final Option? newOp =
+          await get_option_by_id(editableOption.value!.id, withCache: false);
       if (newOp != null) {
         editableOption.value = newOp.copyWith();
         editableOption.value!.choices = newOp.choices;

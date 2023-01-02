@@ -47,9 +47,9 @@ String getROpEditInfoRoute({required String restaurantId}) {
 String getROpChoiceRoute(
     {required String? choiceId,
     required String restaurantId,
-    required String optionId}) {
+    required int optionId}) {
   String route = kChoiceView.replaceFirst(":restaurantId", restaurantId);
-  route = route.replaceFirst(":optionId", optionId);
+  route = route.replaceFirst(":optionId", "$optionId");
   if (choiceId != null) {
     route = route.replaceFirst(":choiceId", choiceId);
   }
@@ -76,12 +76,12 @@ String getROpPickDriverRoute(
 
 String getROpOptionRoute(
     {required String restaurantId,
-    required String? optionId,
+    required int? optionId,
     required String itemID}) {
   String route = kOptionView.replaceFirst(":restaurantId", restaurantId);
   route = route.replaceFirst(":itemId", itemID);
   if (optionId != null) {
-    route = route.replaceFirst(":optionId", optionId);
+    route = route.replaceFirst(":optionId", "$optionId");
   }
   return route;
 }

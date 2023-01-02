@@ -17,7 +17,7 @@ class ROpOptionChoiceCard extends StatelessWidget {
       required this.optionId,
       required this.restaurantId});
   final Choice choice;
-  final String optionId;
+  final int optionId;
   final String restaurantId;
   final ROpOptionViewController viewController;
   @override
