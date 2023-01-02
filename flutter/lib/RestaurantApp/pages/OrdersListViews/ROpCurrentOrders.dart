@@ -118,56 +118,53 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
   }
 
   Widget _inProcessOrders() {
-    return Column(
-      children: [
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                  fit: FlexFit.tight,
-                  child: Text('${_i18n()["currentOrders"]}'.inCaps,
-                      style: Get.textTheme.bodyText1)),
-              Flexible(
-                child: MezButton(
-                  backgroundColor: secondaryLightBlueColor,
-                  textColor: primaryBlueColor,
-                  height: 32,
-                  //  width: 35.w,
-                  borderRadius: 35,
-                  label: '${_i18n()["pastButton"]}'.inCaps,
-                  onClick: () async {
-                    await MezRouter.toNamed(kPastOrdersListView);
-                  },
+    return Expanded(
+      child: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                    fit: FlexFit.tight,
+                    child: Text('${_i18n()["currentOrders"]}'.inCaps,
+                        style: Get.textTheme.bodyText1)),
+                Flexible(
+                  child: MezButton(
+                    backgroundColor: secondaryLightBlueColor,
+                    textColor: primaryBlueColor,
+                    height: 32,
+                    //  width: 35.w,
+                    borderRadius: 35,
+                    label: '${_i18n()["pastButton"]}'.inCaps,
+                    onClick: () async {
+                      await MezRouter.toNamed(kPastOrdersListView);
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Container(
-            alignment: Alignment.center,
-            child: (viewController.currentOrders.value.isNotEmpty)
-                ? Scrollbar(
-                    child: SingleChildScrollView(
-                      padding: EdgeInsets.all(8),
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: viewController.currentOrders.length,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (_, int index) {
-                          return ROpOrderCard(
-                            order: viewController.currentOrders[index],
-                          );
-                        },
-                      ),
+          viewController.currentOrders.isNotEmpty
+              ? Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: List.generate(
+                          viewController.currentOrders.length, (int index) {
+                        return ROpOrderCard(
+                          order: viewController.currentOrders[index],
+                        );
+                      }),
                     ),
-                  )
-                : Container(
-                    margin: EdgeInsets.only(top: 10.h),
-                    alignment: Alignment.center,
-                    child: Center(child: NoOrdersComponent()))),
-      ],
+                  ),
+                )
+              : Container(
+                  margin: EdgeInsets.only(top: 10.h),
+                  alignment: Alignment.center,
+                  child: Center(child: NoOrdersComponent())),
+        ],
+      ),
     );
   }
 }

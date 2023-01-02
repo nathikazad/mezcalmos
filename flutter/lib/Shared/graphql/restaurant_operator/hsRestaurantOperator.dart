@@ -56,7 +56,7 @@ Future<RestaurantOperator?> get_restaurant_operator(
             hasuraId: data.user_id,
             firebaseId: data.user.firebase_id,
             image: data.user.image,
-            name: data.user.image),
+            name: data.user.name),
         operatorId: data.id);
   }
   return null;

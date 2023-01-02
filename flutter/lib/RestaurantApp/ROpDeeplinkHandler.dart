@@ -84,10 +84,10 @@ class ROpDeeplinkHandler {
           await FirebaseDynamicLinks.instanceFor(
         app: Get.find<FirebaseDb>().firebaseApp,
       ).getInitialLink();
-      // final Uri? deepLink = data?.link;
-      //  if (deepLink != null) {
-      await _checkQueryValidityAndHandleRouting(testUri);
-      //   }
+      final Uri? deepLink = data?.link;
+      if (deepLink != null) {
+        await _checkQueryValidityAndHandleRouting(deepLink);
+      }
       _startOnLinkListener();
     } catch (e) {
       mezDbgPrint("Exception ==> ${e.toString()}");

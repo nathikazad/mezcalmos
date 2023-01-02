@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
@@ -9,12 +10,11 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpPastOrdersList']["components"]["ROpOrderCard"];
 
-class ROpOrderCard extends StatelessWidget {
+class ROpOrderCard extends StatefulWidget {
   const ROpOrderCard({
     Key? key,
     required this.order,
@@ -23,14 +23,19 @@ class ROpOrderCard extends StatelessWidget {
   final MinimalRestaurantOrder order;
 
   @override
+  State<ROpOrderCard> createState() => _ROpOrderCardState();
+}
+
+class _ROpOrderCardState extends State<ROpOrderCard> {
+  bool showImage = true;
+  @override
   Widget build(BuildContext context) {
-    final TextTheme textTheme = Theme.of(context).textTheme;
     return Card(
       margin: const EdgeInsets.only(bottom: 10),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          MezRouter.toNamed(getROpOrderRoute(order.id.toString()));
+          MezRouter.toNamed(getROpOrderRoute(widget.order.id.toString()));
         },
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -47,16 +52,16 @@ class ROpOrderCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          order.customerName.inCaps,
+                          widget.order.customerName.inCaps,
                           style: Get.textTheme.bodyText1,
                         ),
                         SizedBox(
                           height: 5,
                         ),
-                        if (order.toAdress != null)
+                        if (widget.order.toAdress != null)
                           Text(
-                            order.toAdress!.inCaps,
-                            style: textTheme.bodyText2,
+                            widget.order.toAdress!.inCaps,
+                            style: Get.textTheme.bodyText2,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -66,13 +71,19 @@ class ROpOrderCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(order.orderTime.toDayAmPm()),
-                      if (order.customerImage != null &&
-                          order.customerImage!.isURL)
+                      Text(widget.order.orderTime.toDayAmPm()),
+                      if (widget.order.customerImage != null &&
+                          widget.order.customerImage!.isURL &&
+                          showImage)
                         CircleAvatar(
                           radius: 25,
-                          backgroundImage:
-                              CachedNetworkImageProvider(order.customerImage!),
+                          backgroundImage: CachedNetworkImageProvider(
+                              widget.order.customerImage!),
+                          onBackgroundImageError: (Object e, StackTrace? stk) {
+                            setState(() {
+                              showImage = false;
+                            });
+                          },
                         ),
                     ],
                   )
@@ -90,7 +101,7 @@ class ROpOrderCard extends StatelessWidget {
                     fit: BoxFit.contain,
                   ),
                   Text(
-                    " \$${order.totalCost}",
+                    " \$${widget.order.totalCost}",
                     style: Get.textTheme.bodyText1,
                   ),
                   Spacer(),
@@ -105,7 +116,7 @@ class ROpOrderCard extends StatelessWidget {
   }
 
   Widget getOrderWidget() {
-    switch (order.status) {
+    switch (widget.order.status) {
       case RestaurantOrderStatus.CancelledByAdmin:
       case RestaurantOrderStatus.CancelledByCustomer:
         return Container(

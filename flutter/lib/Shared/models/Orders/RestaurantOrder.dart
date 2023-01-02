@@ -36,7 +36,6 @@ extension ParseStringToRestaurantOrderStatus on String {
     mezDbgPrint(this);
     return RestaurantOrderStatus.values.firstWhere(
       (RestaurantOrderStatus e) {
-        mezDbgPrint("ENUM :: $e ||| STR :: $this");
         return e.toFirebaseFormatString() == this;
       },
     );
