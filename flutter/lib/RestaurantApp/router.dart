@@ -35,7 +35,7 @@ const String kEditCategoryScreen = '/categoryScreen/:categoryId/:restaurantId';
 const String kAddItemView = '/itemView/:restaurantId';
 
 const String kEditItemView = '/itemView/:restaurantId/:itemId/:categoryId';
-const String kOrderView = '/orderView/:orderId';
+const String kOrderView = '/restaurantOrders/:orderId';
 const String kOptionView = "/optionView/:restaurantId/:itemId/:optionId";
 const String kChoiceView = "/Choice/:restaurantId:/:optionId/:choiceId";
 const String kSelfDeliveryView = '/selfDelivery/:orderId';

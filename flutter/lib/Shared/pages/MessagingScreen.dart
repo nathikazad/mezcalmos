@@ -195,56 +195,28 @@ class _MessagingScreenState extends State<MessagingScreen> {
           },
         ),
         actions: <Widget>[
-          if (!MezRouter.isRouteInStack(
-              controller.chat.value!.chatInfo.parentlink))
-            InkWell(
-              child: Container(
-                width: 60,
-                padding: EdgeInsets.all(5),
-                margin: EdgeInsets.symmetric(horizontal: 7, vertical: 12),
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(225, 228, 255, 1),
-                  borderRadius: BorderRadius.circular(14.9),
-                ),
-                child: Center(
-                  child: Text(
-                    "order",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w600,
-                      color: Color.fromRGBO(103, 121, 254, 1),
-                    ),
-                  ),
-                ),
-              ),
-              onTap: () => MezRouter.toNamed<void>(
-                controller.chat.value!.chatInfo.parentlink,
-              ),
-            ),
           // Obx(
           //   () =>
           Container(
             child: controller.isUserAuthorizedToCall() &&
                     // isReciepientNotAdmin() &&
-                    sagora != null &&
-                    false
+                    sagora != null
                 ? InkWell(
                     // onTap: () async => _onCallPress(),
                     child: Container(
                       width: 30,
                       height: 30,
                       padding: EdgeInsets.all(5),
-                      margin: EdgeInsets.only(right: 7),
+                      margin: EdgeInsets.only(right: 12),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Color.fromRGBO(103, 121, 254, 1),
+                        color: secondaryLightBlueColor,
                       ),
                       child: Center(
                         child: FittedBox(
                           child: Icon(
                             Icons.call,
-                            color: Colors.white,
+                            color: primaryBlueColor,
                           ),
                         ),
                       ),
@@ -264,11 +236,37 @@ class _MessagingScreenState extends State<MessagingScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10.1),
+                        padding: EdgeInsets.only(top: 10.1),
                         child: Center(
                           child: Text(formattedDate),
                         ),
                       ),
+                      Obx(() {
+                        if (MezRouter.isRouteInStack(
+                            controller.chat.value?.chatInfo.parentlink)) {
+                          return SizedBox();
+                        } else {
+                          return Center(
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(10),
+                              onTap: () => MezRouter.toNamed<void>(
+                                controller.chat.value!.chatInfo.parentlink,
+                              ),
+                              child: Ink(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 6),
+                                  child: Text(
+                                    "View order details",
+                                    style: Get.textTheme.bodyText1
+                                        ?.copyWith(color: primaryBlueColor),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                      }),
                       Expanded(
                         child: Obx(
                           () => ListView(
