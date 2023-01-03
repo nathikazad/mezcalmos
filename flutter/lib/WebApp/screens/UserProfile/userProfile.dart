@@ -25,6 +25,8 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
+  final MezWebSideBarController mezWebSideBarController =
+      MezWebSideBarController();
   @override
   void initState() {
     mezDbgPrint("🧑‍🦲 init of the Profile screen ");
@@ -39,37 +41,24 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   Widget checkWebAppTypeVersionAndBuild(BuildContext context) {
-    if (MezCalmosResizer.isMobile(context) ||
-        MezCalmosResizer.isSmallMobile(context)) {
-      mezDbgPrint("i'm here");
-      return BodyWidget(context);
-    } else {
-      mezDbgPrint("this should't be happen ");
-      return Scaffold(
-        body: FutureBuilder<bool>(
-          future: setupFirebase(
-            launchMode: typeMode.toLaunchMode(),
-          ),
-          builder: (context, snapshot) {
-            if (snapshot.hasData && snapshot.data == true) {
-              return BodyWidget(context);
-            } else {
-              return const Scaffold(
-                  body: Center(
-                child: MezLoaderWidget(),
-              ));
-            }
-          },
-        ),
-      );
-    }
+    return Scaffold(
+      body: FutureBuilder<bool>(
+        future: setupFirebase(launchMode: typeMode.toLaunchMode(), func: () {}),
+        builder: (context, snapshot) {
+          if (snapshot.hasData && snapshot.data == true) {
+            return BodyWidget(context);
+          } else {
+            return const Scaffold(
+                body: Center(
+              child: MezLoaderWidget(),
+            ));
+          }
+        },
+      ),
+    );
   }
 
   Widget BodyWidget(BuildContext context) {
-    final MezWebSideBarController drawerController =
-        Get.find<MezWebSideBarController>();
-
-    drawerController.drawerKey = GlobalKey();
     // return Scaffold(
     //   body: UserProfileForDesktop(
     //     userProfileController: userProfileController,
@@ -77,7 +66,7 @@ class _UserProfileState extends State<UserProfile> {
     // );
 
     return Scaffold(
-        // key: drawerController.drawerKey,
+        key: mezWebSideBarController.drawerKey,
         // drawer: drawerController.frontDrawerContent,
         appBar: InstallAppBarComponent(),
         bottomNavigationBar: MezBottomBar(),
@@ -87,6 +76,7 @@ class _UserProfileState extends State<UserProfile> {
             Scaffold(
           backgroundColor: Colors.white,
           appBar: WebAppBarComponent(
+            mezWebSideBarController: mezWebSideBarController,
             automaticallyGetBack: true,
             type: WebAppBarType.DontShowMenu.obs,
           ),

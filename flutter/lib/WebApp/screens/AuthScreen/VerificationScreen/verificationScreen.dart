@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/screens/authScreen/verificationScreen/components/VerificationScreenDesktop.dart';
 import 'package:mezcalmos/WebApp/screens/authScreen/verificationScreen/components/VerificationScreenMobile.dart';
 import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
@@ -29,6 +30,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
   late String phone;
 
   TextEditingController _otpCodeTextController = TextEditingController();
+  final MezWebSideBarController mezWebSideBarController =
+      MezWebSideBarController();
   String otpCode = '';
 
   @override
@@ -73,7 +76,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                 ? false
                                 : true,
                         type: WebAppBarType.Normal.obs,
-                      ),
+                        mezWebSideBarController: mezWebSideBarController),
                 body: LayoutBuilder(
                   builder: (context, constarints) {
                     if (MezCalmosResizer.isMobile(context) ||

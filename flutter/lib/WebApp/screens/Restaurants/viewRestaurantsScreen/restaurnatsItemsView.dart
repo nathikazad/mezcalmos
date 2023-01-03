@@ -39,8 +39,8 @@ class _RestaurantsItemsViewState extends State<RestaurantsItemsView> {
   }
 
   final List<bool> _selectedFruits = <bool>[true, false, false];
-  final GlobalKey<ScaffoldState> _key = GlobalKey();
-
+  final MezWebSideBarController mezWebSideBarController =
+      MezWebSideBarController();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -62,15 +62,13 @@ class _RestaurantsItemsViewState extends State<RestaurantsItemsView> {
                 Lcontroller.changeLangForWeb(xLang);
               });
             }
-            final MezWebSideBarController drawerController =
-                Get.find<MezWebSideBarController>();
-            drawerController.drawerKey = _key;
+
             return Scaffold(
               appBar: InstallAppBarComponent(),
               bottomNavigationBar: MezBottomBar(),
-              key: drawerController.getNewKey(),
-              drawer: drawerController.frontDrawerContent,
-              endDrawer: drawerController.endDrawerContent,
+              key: mezWebSideBarController.drawerKey,
+              drawer: mezWebSideBarController.frontDrawerContent,
+              endDrawer: mezWebSideBarController.endDrawerContent,
               body: LayoutBuilder(
                 builder: (context, constraints) {
                   if (MezCalmosResizer.isMobile(context) ||
@@ -80,6 +78,7 @@ class _RestaurantsItemsViewState extends State<RestaurantsItemsView> {
                     return Obx(
                       () => Scaffold(
                           appBar: WebAppBarComponent(
+                            mezWebSideBarController: mezWebSideBarController,
                             automaticallyGetBack:
                                 (MezCalmosResizer.isMobile(context) ||
                                         MezCalmosResizer.isSmallMobile(context))

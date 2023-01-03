@@ -27,6 +27,7 @@ class WebAppBarComponent extends StatelessWidget
   WebAppBarComponent(
       {Key? key,
       required this.type,
+      required this.mezWebSideBarController,
       this.automaticallyGetBack = false,
       this.notifsRouteCallback,
       this.leadingFunction})
@@ -36,7 +37,7 @@ class WebAppBarComponent extends StatelessWidget
   Function? leadingFunction;
   final bool? automaticallyGetBack;
   Function? notifsRouteCallback;
-
+  final MezWebSideBarController mezWebSideBarController;
   @override
   Widget build(BuildContext context) {
     mezDbgPrint("this is the type of appBar $type");
@@ -48,6 +49,7 @@ class WebAppBarComponent extends StatelessWidget
           MezCalmosResizer.isSmallTablet(context)) {
         return AppBarWedgetForDesktop(
           type: type,
+          mezWebSideBarController: mezWebSideBarController,
           automaticallyGetBack: automaticallyGetBack,
           leadingFunction: leadingFunction,
           notifsRouteCallback: notifsRouteCallback,
@@ -55,6 +57,7 @@ class WebAppBarComponent extends StatelessWidget
       } else {
         return AppbarWidgetForMobile(
           type: type,
+          mezWebSideBarController: mezWebSideBarController,
           automaticallyGetBack: automaticallyGetBack,
           leadingFunction: leadingFunction,
           notifsRouteCallback: notifsRouteCallback,
@@ -72,13 +75,14 @@ class AppbarWidgetForMobile extends StatefulWidget {
   AppbarWidgetForMobile(
       {Key? key,
       required this.type,
+      required this.mezWebSideBarController,
       this.automaticallyGetBack,
       this.leadingFunction,
       this.notifsRouteCallback})
       : super(key: key);
 
   final Rx<WebAppBarType> type;
-
+  final MezWebSideBarController mezWebSideBarController;
   Function? leadingFunction;
   final bool? automaticallyGetBack;
   Function? notifsRouteCallback;
@@ -150,8 +154,7 @@ class _AppbarWidgetForMobileState extends State<AppbarWidgetForMobile> {
                         padding: const EdgeInsets.only(right: 15, bottom: 5),
                         child: IconButton(
                             onPressed: () {
-                              Get.find<MezWebSideBarController>()
-                                  .openWebDrawer();
+                              widget.mezWebSideBarController.openWebDrawer();
                               mezDbgPrint(
                                   "😆😆😆😆😆😆😆😆😆😆 this is a test for the drawre");
                             },
@@ -315,11 +318,13 @@ class AppBarWedgetForDesktop extends StatefulWidget {
       required this.type,
       this.automaticallyGetBack,
       this.notifsRouteCallback,
-      this.leadingFunction})
+      this.leadingFunction,
+      required this.mezWebSideBarController})
       : super(key: key);
   final Rx<WebAppBarType> type;
   Function? leadingFunction;
   final bool? automaticallyGetBack;
+  final MezWebSideBarController mezWebSideBarController;
   Function? notifsRouteCallback;
 
   @override
@@ -328,8 +333,6 @@ class AppBarWedgetForDesktop extends StatefulWidget {
 
 class _AppBarWedgetForDesktopState extends State<AppBarWedgetForDesktop>
     with OverlayStateMixin {
-  final MezWebSideBarController drawerController =
-      Get.find<MezWebSideBarController>();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -393,7 +396,7 @@ class _AppBarWedgetForDesktopState extends State<AppBarWedgetForDesktop>
                               //  widget.leadingFunction!.call();
                               // Scaffold.of(context).openDrawer();
 
-                              drawerController.openWebDrawer();
+                              widget.mezWebSideBarController.openWebDrawer();
                               mezDbgPrint(
                                   "😆😆😆😆😆😆😆😆😆😆 this is a test for the drawre");
                             },
@@ -497,7 +500,7 @@ class _AppBarWedgetForDesktopState extends State<AppBarWedgetForDesktop>
               ),
               ActionButton(
                 func: () {
-                  drawerController.openWebEndDrawer();
+                  widget.mezWebSideBarController.openWebEndDrawer();
                 },
                 titleWidget: Row(
                   mainAxisSize: MainAxisSize.min,

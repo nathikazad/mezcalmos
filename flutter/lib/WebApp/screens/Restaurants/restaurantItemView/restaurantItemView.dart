@@ -42,6 +42,8 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
   late ViewItemScreenMode mode;
   Restaurant? currentRestaurant;
 
+  MezWebSideBarController mezWebSideBarController = MezWebSideBarController();
+
   ViewDrawerType viewType = ViewDrawerType.myOrder;
 
   @override
@@ -155,27 +157,25 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
             final FirbaseAuthController _authcontroller =
                 Get.find<FirbaseAuthController>();
 
-            final MezWebSideBarController drawerController =
-                Get.find<MezWebSideBarController>();
-
             return (cartItem != null)
                 ? Scaffold(
-                    key: drawerController.getNewKey(),
-                    drawer: drawerController.frontDrawerContent,
-                    endDrawer: drawerController.endDrawerContent,
+                    key: mezWebSideBarController.drawerKey,
+                    drawer: mezWebSideBarController.frontDrawerContent,
+                    endDrawer: mezWebSideBarController.endDrawerContent,
                     appBar: InstallAppBarComponent(),
                     bottomNavigationBar: MezBottomBar(),
                     body: LayoutBuilder(builder: (context, constraints) {
                       if (MezCalmosResizer.isMobile(context) ||
                           MezCalmosResizer.isSmallMobile(context)) {
                         return RestaurantItemViewForMobile(
-                          cartItem: cartItem,
-                          currentRestaurant: currentRestaurant.obs,
-                          viewItemScreenMode: mode,
-                        );
+                            cartItem: cartItem,
+                            currentRestaurant: currentRestaurant.obs,
+                            viewItemScreenMode: mode,
+                            mezWebSideBarController: mezWebSideBarController);
                       } else {
                         return Scaffold(
                           appBar: WebAppBarComponent(
+                            mezWebSideBarController: mezWebSideBarController,
                             automaticallyGetBack:
                                 (MezCalmosResizer.isMobile(context) ||
                                         MezCalmosResizer.isSmallMobile(context))
@@ -186,10 +186,10 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
                                 : WebAppBarType.WithSignInActionButton.obs,
                           ),
                           body: RestaurantItemViewForDesktop(
-                            viewItemScreenMode: mode,
-                            cartItem: cartItem,
-                            currentRestaurant: currentRestaurant.obs,
-                          ),
+                              viewItemScreenMode: mode,
+                              cartItem: cartItem,
+                              currentRestaurant: currentRestaurant.obs,
+                              mezWebSideBarController: mezWebSideBarController),
                         );
                       }
                     }),

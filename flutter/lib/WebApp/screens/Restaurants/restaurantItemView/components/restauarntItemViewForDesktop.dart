@@ -37,6 +37,7 @@ class RestaurantItemViewForDesktop extends StatefulWidget {
       required this.cartItem,
       required this.currentRestaurant,
       required this.viewItemScreenMode,
+      required this.mezWebSideBarController,
       this.isSpecial = false,
       this.showViewRestaurant = false})
       : super(key: key);
@@ -44,6 +45,8 @@ class RestaurantItemViewForDesktop extends StatefulWidget {
   final Rx<Restaurant?> currentRestaurant;
   final bool? showViewRestaurant;
   final bool? isSpecial;
+
+  final MezWebSideBarController mezWebSideBarController;
 
   final ViewItemScreenMode viewItemScreenMode;
 
@@ -200,8 +203,7 @@ class _RestaurantItemViewForDesktopState
                                                   mezDbgPrint(
                                                       "🛒🛒🛒🛒🛒🛒🛒🛒🛒 ${restaurantCartController.cart.value.toFirebaseFormattedJson()}");
 
-                                                  Get.find<
-                                                          MezWebSideBarController>()
+                                                  widget.mezWebSideBarController
                                                       .openWebEndDrawer();
                                                 } else {
                                                   mezDbgPrint(
@@ -236,8 +238,8 @@ class _RestaurantItemViewForDesktopState
                                                       Navigator.of(context)
                                                           .pop();
                                                       // await Get.toNamed<void>(kCartRoute);
-                                                      Get.find<
-                                                              MezWebSideBarController>()
+                                                      widget
+                                                          .mezWebSideBarController
                                                           .openWebEndDrawer();
                                                     },
                                                     primaryCallBack: () async {
@@ -246,8 +248,9 @@ class _RestaurantItemViewForDesktopState
                                                       await restaurantCartController
                                                           .addItem(widget
                                                               .cartItem.value!);
-                                                      Get.find<
-                                                              MezWebSideBarController>()
+
+                                                      widget
+                                                          .mezWebSideBarController
                                                           .openWebEndDrawer();
                                                     },
                                                   );
@@ -274,8 +277,7 @@ class _RestaurantItemViewForDesktopState
                                                   await restaurantCartController
                                                       .addItem(widget
                                                           .cartItem.value!);
-                                                  Get.find<
-                                                          MezWebSideBarController>()
+                                                  widget.mezWebSideBarController
                                                       .openWebEndDrawer();
                                                   //await Get.offNamed<void>(kCartRoute);
                                                 }
@@ -284,8 +286,7 @@ class _RestaurantItemViewForDesktopState
                                               await restaurantCartController
                                                   .addItem(
                                                       widget.cartItem.value!);
-                                              Get.find<
-                                                      MezWebSideBarController>()
+                                              widget.mezWebSideBarController
                                                   .openWebEndDrawer();
                                             }
                                           } else {

@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/restaurantItemView/components/ITemSliverAppBar.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/restaurantItemView/components/RestaurantItemViewForMobile.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/restaurantItemView/restaurantItemView.dart';
@@ -34,6 +35,7 @@ class RestaurantItemViewForMobile extends StatefulWidget {
       required this.viewItemScreenMode,
       required this.cartItem,
       required this.currentRestaurant,
+      required this.mezWebSideBarController,
       this.showViewRestaurant = false,
       this.isSpecial = false})
       : super(key: key);
@@ -42,6 +44,7 @@ class RestaurantItemViewForMobile extends StatefulWidget {
   final Rx<Restaurant?> currentRestaurant;
   final bool? showViewRestaurant;
   final bool? isSpecial;
+  final MezWebSideBarController mezWebSideBarController;
 
   @override
   _RestaurantItemViewForMobileState createState() =>

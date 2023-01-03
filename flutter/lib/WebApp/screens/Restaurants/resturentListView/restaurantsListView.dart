@@ -37,6 +37,8 @@ class RestaurantsListView extends StatefulWidget {
 
 class _RestaurantsListViewState extends State<RestaurantsListView> {
   final ScrollController controller = ScrollController();
+  final MezWebSideBarController mezWebSideBarController =
+      MezWebSideBarController();
   @override
   void initState() {
     print("the current lang is ${QR.params["lang"]} ");
@@ -73,8 +75,6 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
                 Get.find<FirbaseAuthController>();
             final LanguageController Lcontroller =
                 Get.find<LanguageController>();
-            final MezWebSideBarController drawerController =
-                Get.find<MezWebSideBarController>();
 
             //  MezPrint();
             mezDbgPrint(_authcontroller.fireAuthUser?.uid != null
@@ -100,16 +100,17 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
             // );
 
             return Scaffold(
-                key: drawerController.getNewKey(),
+                key: mezWebSideBarController.drawerKey,
                 appBar: InstallAppBarComponent(),
-                drawer: drawerController.frontDrawerContent,
-                endDrawer: drawerController.endDrawerContent,
+                drawer: mezWebSideBarController.frontDrawerContent,
+                endDrawer: mezWebSideBarController.endDrawerContent,
                 bottomNavigationBar: MezBottomBar(),
                 body: LayoutBuilder(
                   builder: (context, constraints) {
                     return Obx(
                       () => Scaffold(
                         appBar: WebAppBarComponent(
+                          mezWebSideBarController: mezWebSideBarController,
                           automaticallyGetBack: false,
                           type: _authcontroller.fireAuthUser?.uid != null
                               ? WebAppBarType.WithCartActionButton.obs

@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/screens/AuthScreen/SignInScreen/componenets/signInScreenDesktop.dart';
 import 'package:mezcalmos/WebApp/screens/AuthScreen/SignInScreen/componenets/signInScreenMobile.dart';
 import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
@@ -28,6 +29,8 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  final MezWebSideBarController mezWebSideBarController =
+      MezWebSideBarController();
   @override
   Widget build(BuildContext context) {
     mezDbgPrint("this called again ");
@@ -61,7 +64,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     : WebAppBarComponent(
                         type: WebAppBarType.Normal.obs,
                         automaticallyGetBack: true,
-                      ),
+                        mezWebSideBarController: mezWebSideBarController),
                 body: LayoutBuilder(
                   builder: (context, constarints) {
                     if (MezCalmosResizer.isMobile(context) ||

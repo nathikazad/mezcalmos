@@ -12,9 +12,12 @@ import 'package:mezcalmos/WebApp/widgets/mezBottomBar.dart';
 import 'package:mezcalmos/WebApp/widgets/mezLoaderWidget.dart';
 
 class NotificationScreenForMobile extends StatelessWidget {
-  const NotificationScreenForMobile({
+  NotificationScreenForMobile({
     Key? key,
   }) : super(key: key);
+
+  final MezWebSideBarController mezWebSideBarController =
+      MezWebSideBarController();
 
   @override
   Widget build(BuildContext context) {
@@ -25,17 +28,17 @@ class NotificationScreenForMobile extends StatelessWidget {
         builder: (context, snapShot) {
           final FirbaseAuthController _authcontroller =
               Get.find<FirbaseAuthController>();
-          final MezWebSideBarController drawerController =
-              Get.find<MezWebSideBarController>();
+
           if (snapShot.hasData && snapShot.data == true) {
             return Obx(
               () => Scaffold(
                 appBar: InstallAppBarComponent(),
                 bottomNavigationBar: MezBottomBar(),
                 body: Scaffold(
-                    key: drawerController.getNewKey(),
-                    drawer: drawerController.frontDrawerContent,
+                    key: mezWebSideBarController.drawerKey,
+                    drawer: mezWebSideBarController.frontDrawerContent,
                     appBar: WebAppBarComponent(
+                      mezWebSideBarController: mezWebSideBarController,
                       type: _authcontroller.fireAuthUser?.uid != null
                           ? WebAppBarType.WithCartActionButton.obs
                           : WebAppBarType.WithSignInActionButton.obs,

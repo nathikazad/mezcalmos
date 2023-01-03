@@ -217,8 +217,7 @@ class FirbaseAuthController extends GetxController {
       //     )
       //     // metadata: SettableMetadata()
       //     );
-      String fileResult = await pikedFile.readAsString();
-      mezDbgPrint("inside the uploade function ${fileResult}");
+
       await firebase_storage.FirebaseStorage.instance.ref(imgPath).putData(
             uint8list,
             // SettableMetadata(

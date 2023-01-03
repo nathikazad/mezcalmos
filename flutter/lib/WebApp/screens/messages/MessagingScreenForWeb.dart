@@ -140,6 +140,9 @@ class _MessagingViewState extends State<MessagingView> {
   ScrollController _listViewScrollController = new ScrollController();
   RxList<Widget> chatLines = <Widget>[].obs;
 
+  final MezWebSideBarController mezWebSideBarController =
+      MezWebSideBarController();
+
   RxString _typedMsg = "".obs;
 
   void scrollDown({Duration? mezChatScrollDuration}) {
@@ -190,15 +193,14 @@ class _MessagingViewState extends State<MessagingView> {
             ),
             builder: (context, snapshot) {
               if (snapshot.hasData && snapshot.data == true) {
-                final MezWebSideBarController drawerController =
-                    Get.find<MezWebSideBarController>();
                 return LayoutBuilder(
                   builder: (context, constarints) => Scaffold(
-                      key: drawerController.getNewKey(),
-                      drawer: drawerController.frontDrawerContent,
+                      key: mezWebSideBarController.drawerKey,
+                      drawer: mezWebSideBarController.frontDrawerContent,
                       appBar: InstallAppBarComponent(),
                       body: Scaffold(
                         appBar: WebAppBarComponent(
+                          mezWebSideBarController: mezWebSideBarController,
                           automaticallyGetBack: false,
                           type: WebAppBarType.Normal.obs,
                         ),

@@ -36,10 +36,10 @@ class ViewRestaurantsScrennInfo extends StatefulWidget {
 
 class _ViewRestaurantsScrennInfoState extends State<ViewRestaurantsScrennInfo> {
   Restaurant? restaurant;
-  final GlobalKey<ScaffoldState> _key = GlobalKey();
   final FirbaseAuthController _authcontroller =
       Get.find<FirbaseAuthController>();
-
+  final MezWebSideBarController mezWebSideBarController =
+      MezWebSideBarController();
   @override
   void didChangeDependencies() {
     _getRestaurant();
@@ -74,19 +74,17 @@ class _ViewRestaurantsScrennInfoState extends State<ViewRestaurantsScrennInfo> {
             final LanguageController Lcontroller =
                 Get.find<LanguageController>();
 
-            final MezWebSideBarController drawerController =
-                Get.find<MezWebSideBarController>();
-
             return Scaffold(
-              key: drawerController.getNewKey(),
-              drawer: drawerController.frontDrawerContent,
-              endDrawer: drawerController.endDrawerContent,
+              key: mezWebSideBarController.drawerKey,
+              drawer: mezWebSideBarController.frontDrawerContent,
+              endDrawer: mezWebSideBarController.endDrawerContent,
               appBar: InstallAppBarComponent(),
               bottomNavigationBar: MezBottomBar(),
               body: LayoutBuilder(builder: ((context, constraints) {
                 return (restaurant != null)
                     ? Scaffold(
                         appBar: WebAppBarComponent(
+                          mezWebSideBarController: mezWebSideBarController,
                           automaticallyGetBack:
                               (MezCalmosResizer.isMobile(context) ||
                                       MezCalmosResizer.isSmallMobile(context))

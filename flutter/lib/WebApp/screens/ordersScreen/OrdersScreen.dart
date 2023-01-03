@@ -27,7 +27,8 @@ class OrdersScreen extends StatefulWidget {
 
 class _OrdersScreenState extends State<OrdersScreen> {
   /// GEt OrderController
-  final GlobalKey<ScaffoldState> _key = GlobalKey();
+  final MezWebSideBarController mezWebSideBarController =
+      MezWebSideBarController();
   @override
   void initState() {
     super.initState();
@@ -61,19 +62,15 @@ class _OrdersScreenState extends State<OrdersScreen> {
               }),
           builder: (context, snapShot) {
             if (snapShot.hasData && snapShot.data == true) {
-              final MezWebSideBarController drawerController =
-                  Get.find<MezWebSideBarController>();
-              drawerController.drawerKey = _key;
-
               Get.put<AppLifeCycleController>(
                 AppLifeCycleController(logs: true),
                 permanent: true,
               );
               return Scaffold(
-                key: _key,
+                key: mezWebSideBarController.drawerKey,
                 appBar: InstallAppBarComponent(),
-                endDrawer: drawerController.endDrawerContent,
-                drawer: drawerController.frontDrawerContent,
+                endDrawer: mezWebSideBarController.endDrawerContent,
+                drawer: mezWebSideBarController.frontDrawerContent,
                 bottomNavigationBar: MezBottomBar(),
                 body: LayoutBuilder(builder: (context, constraints) {
                   return Scaffold(
@@ -81,6 +78,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                             MezCalmosResizer.isSmallMobile(context))
                         ? null
                         : WebAppBarComponent(
+                            mezWebSideBarController: mezWebSideBarController,
                             automaticallyGetBack: true,
                             type: WebAppBarType.WithCartActionButton.obs,
                             // leadingFunction: () {

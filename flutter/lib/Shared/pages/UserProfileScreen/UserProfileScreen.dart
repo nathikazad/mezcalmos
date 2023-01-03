@@ -377,32 +377,38 @@ class _UserProfileState extends State<UserProfile>
     if (strResult == "yes") {
       try {
         mezDbgPrint("this is a test for web ");
-        MediaInfo? mediaData = await ImagePickerWeb.getImageInfo;
+        // MediaInfo? mediaData = await ImagePickerWeb.getImageInfo;
+
+        var mediaData = await imagePicker(
+            picker: widget.userProfileController.picker,
+            source: imPicker.ImageSource.gallery);
         mezDbgPrint(
-            "🖼️🖼️🖼️🖼️🖼️🖼️🖼️ this is the current path of image ${mediaData?.fileName}");
-        String? mimeType = mime(Path.basename(mediaData!.fileName!));
+            "🖼️🖼️🖼️🖼️🖼️🖼️🖼️ this is the current path of image ${mediaData?.path}");
+        String? mimeType = mime(Path.basename(mediaData!.path));
         mezDbgPrint(
-            "🖼️🖼️🖼️🖼️🖼️🖼️🖼️ check if the path is correcte ${Path.basename(mediaData.fileName!)}");
+            "🖼️🖼️🖼️🖼️🖼️🖼️🖼️ check if the path is correcte ${Path.basename(mediaData.path)}");
         mezDbgPrint(
             "🖼️🖼️🖼️🖼️🖼️🖼️🖼️ this after we used the mimeType  ${mimeType}");
 
-        imPicker.XFile xFile = imPicker.XFile.fromData(mediaData.data!,
-            path: Path.basename(mediaData.fileName!));
+        imPicker.XFile xFile = imPicker.XFile.fromData(
+            await mediaData.readAsBytes(),
+            path: Path.basename(mediaData.path));
         widget.userProfileController.userImg.value = xFile;
-        widget.userProfileController.userImgBytes.value = mediaData.data!;
+        widget.userProfileController.userImgBytes.value =
+            await mediaData.readAsBytes();
 
         final Uint8List _compressedVersion = await compressImageBytesForWeb(
-            mediaData.data!, mediaData.fileName!);
+            await mediaData.readAsBytes(), mediaData.path);
 
         // Get the actual File compressed
         html.File compressedFile = await writeFileFromBytesAndReturnItForWeb(
             filePath: widget.userProfileController.userImg.value!.path,
             imgBytes: _compressedVersion,
-            mimeType: Path.basename(mediaData.fileName!));
+            mimeType: Path.basename(mediaData.path));
 
         mezDbgPrint("compressed file  compressedFile ${compressedFile}");
         // generating a temp image from the Fiel , so we can resolve image provider.
-        final Image img = Image.memory(mediaData.data!);
+        final Image img = Image.memory(await mediaData.readAsBytes());
         // resolving ImagePrivider (We will use this late to reduce the height and width of the image to the same percenteage )
         img.image
             .resolve(new ImageConfiguration())
@@ -414,7 +420,7 @@ class _UserProfileState extends State<UserProfile>
               await _authController.uploadUserImgToFbStorageForWeb(
                   pikedFile: widget.userProfileController.userImg.value!,
                   file: compressedFile,
-                  uint8list: mediaData.data!);
+                  uint8list: await mediaData.readAsBytes());
           // we set our original FirebaseStorage Url in our controller.
           widget.userProfileController.originalImgUrl = _originalUrl;
           // Setting Original Image aka (bigImage)

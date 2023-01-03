@@ -48,9 +48,7 @@ class AppRoutes {
 
     // this observer will be called when the popped out from a route
     QR.observer.onPop.add((path, route) async {
-      ;
-      print(
-          'Observer: popping out from $path ${Get.find<MezWebSideBarController>().drawerKey.toString()}');
+      print('Observer: popping out from $path ');
       mezDbgPrint("Observer: popping out from $path and route is $route");
     });
 

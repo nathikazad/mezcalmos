@@ -1,46 +1,5 @@
 {
   "projects": {
-    "default": "mezcalmos-31f1c"
-  },
-  "targets": {
-    "mezcalmos-31f1c": {
-      "hosting": {
-        "taxis": [
-          "taxis-5b8a1"
-        ],
-        "customers": [
-          "mezcalmos-31f1c"
-        ],
-        "deliveries": [
-          "deliveries-3f1da"
-        ],
-        "admin": [
-          "admins-51885"
-        ]
-      },
-      "database": {
-        "main": [
-          "mezcalmos-31f1c-default-rtdb"
-        ]
-      }
-    },
-    "mezcalmos-staging": {
-      "hosting": {
-        "customers": [
-          "mezcalmos-staging"
-        ],
-        "taxis": [
-          "meztaxi-staging"
-        ],
-        "admin": [
-          "meztaxi-staging-admin"
-        ]
-      },
-      "database": {
-        "main": [
-          "mezcalmos-staging-default-rtdb"
-        ]
-      }
-    }
+    "default": "mezcalmos-staging"
   }
 }

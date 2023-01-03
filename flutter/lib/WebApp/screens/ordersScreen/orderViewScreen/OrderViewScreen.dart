@@ -37,8 +37,8 @@ class OrderViewScreen extends StatefulWidget {
 }
 
 class _OrderViewScreenState extends State<OrderViewScreen> {
-  final GlobalKey<ScaffoldState> _key = GlobalKey();
-
+  final MezWebSideBarController mezWebSideBarController =
+      MezWebSideBarController();
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(
@@ -57,19 +57,18 @@ class _OrderViewScreenState extends State<OrderViewScreen> {
                 Get.find<LanguageController>();
             final FirbaseAuthController _authcontroller =
                 Get.find<FirbaseAuthController>();
-            final MezWebSideBarController drawerController =
-                Get.find<MezWebSideBarController>();
 
             return Material(
               child: LayoutBuilder(builder: ((context, constraints) {
                 return Scaffold(
-                    key: drawerController.getNewKey(),
-                    drawer: drawerController.frontDrawerContent,
-                    endDrawer: drawerController.endDrawerContent,
+                    key: mezWebSideBarController.drawerKey,
+                    drawer: mezWebSideBarController.frontDrawerContent,
+                    endDrawer: mezWebSideBarController.endDrawerContent,
                     appBar: InstallAppBarComponent(),
                     bottomNavigationBar: MezBottomBar(),
                     body: Scaffold(
                       appBar: WebAppBarComponent(
+                        mezWebSideBarController: mezWebSideBarController,
                         automaticallyGetBack:
                             (MezCalmosResizer.isMobile(context) ||
                                     MezCalmosResizer.isSmallMobile(context))
