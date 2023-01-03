@@ -14,7 +14,9 @@ export async function getUser(userId: number): Promise<UserInfo> {
             firebase_id: true,
             language_id: true,
             image: true,
-            deleted: true
+            deleted: true,
+            email: true,
+            phone: true,
         }]
     });
     if(response.user_by_pk == null) {
@@ -28,7 +30,9 @@ export async function getUser(userId: number): Promise<UserInfo> {
         name: response.user_by_pk.name,
         image: response.user_by_pk.image,
         language: response.user_by_pk.language_id as Language,
-        firebaseId: response.user_by_pk.firebase_id
+        firebaseId: response.user_by_pk.firebase_id,
+        email: response.user_by_pk.email,
+        phoneNumber: response.user_by_pk.phone
     }
     return user;
 }

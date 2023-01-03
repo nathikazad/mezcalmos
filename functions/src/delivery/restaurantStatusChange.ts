@@ -14,7 +14,7 @@ import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDeli
 import { getRestaurantOrder } from "../shared/graphql/restaurant/order/getRestaurantOrder";
 import { deliveryOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { CustomerInfo } from "../shared/models/Generic/User";
-import { getCustomer } from "../shared/graphql/restaurant/customer/getCustomer";
+import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { updateOrderStatus } from "../shared/graphql/restaurant/order/updateOrder";
 import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { RestaurantOperator } from "../shared/models/Services/Restaurant/Restaurant";

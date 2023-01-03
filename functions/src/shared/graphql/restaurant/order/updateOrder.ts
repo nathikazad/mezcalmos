@@ -1,5 +1,6 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
+import { OrderStripeInfo } from "../../../../utilities/stripe/model";
 import { RestaurantOrder } from "../../../models/Services/Restaurant/RestaurantOrder";
 
 export async function updateOrderStatus(order: RestaurantOrder) {
@@ -43,4 +44,26 @@ export async function setEstFoodReadyTime(orderId: number, estimatedFoodReadyTim
       }
     }, { }]
   });
+}
+export async function updateRestaurantOrderStripe(orderId: number, orderStripePaymentInfo: OrderStripeInfo) {
+  let chain = getHasura();
+  
+  let response = await chain.mutation({
+    update_restaurant_order_by_pk: [{
+      pk_columns: {
+        id: orderId
+      }, 
+      _set: {
+        stripe_info: JSON.stringify(orderStripePaymentInfo)
+      }
+    }, { 
+      stripe_info: [{}, true]
+    }]
+  });
+  if(!(response.update_restaurant_order_by_pk)) {
+    throw new HttpsError(
+      "internal",
+      "error in updating order"
+    );
+  }
 }

@@ -11,7 +11,7 @@ import { orderUrl } from "../utilities/senders/appRoutes";
 import { getRestaurantOrder } from "../shared/graphql/restaurant/order/getRestaurantOrder";
 import { updateOrderStatus } from "../shared/graphql/restaurant/order/updateOrder";
 import { OrderType } from "../shared/models/Generic/Order";
-import { getCustomer } from "../shared/graphql/restaurant/customer/getCustomer";
+import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Services/Delivery/DeliveryOrder";
 import { CustomerInfo } from "../shared/models/Generic/User";
