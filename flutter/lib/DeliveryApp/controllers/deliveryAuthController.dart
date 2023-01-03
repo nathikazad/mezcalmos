@@ -10,10 +10,12 @@ import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.d
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
+import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class DeliveryAuthController extends GetxController {
@@ -54,6 +56,9 @@ class DeliveryAuthController extends GetxController {
     mezDbgPrint("DeliveryAuthController: handle state change user value");
     _driver.value = await get_driver_by_user_id(
         userId: _authController.hasuraUserId!, withCache: false);
+    if (driver?.driverInfo.hasuraId != null) {
+      unawaited(saveNotificationToken());
+    }
 
     // mezDbgPrint(user);
     // // mezDbgPrint(_authController.fireAuthUser);
@@ -118,18 +123,33 @@ class DeliveryAuthController extends GetxController {
   }
 
   Future<void> saveNotificationToken() async {
-    mezDbgPrint(
-        "DeliveryAuthController  Messaging Token>> ${await _notificationsController.getToken()}");
     final String? deviceNotificationToken =
         await _notificationsController.getToken();
-    if (deviceNotificationToken != null)
-      await _databaseHelper.firebaseDatabase
-          .ref()
-          .child(
-              '${deliveryDriverAuthNode(_authController.fireAuthUser?.uid ?? '')}/notificationInfo/')
-          .set(<String, String>{
-        'deviceNotificationToken': deviceNotificationToken
-      });
+    final NotificationInfo? notifInfo =
+        await get_notif_info(userId: driver!.driverInfo.hasuraId);
+    mezDbgPrint("🫡🫡 saving notification info 🫡🫡");
+    try {
+      if (notifInfo != null &&
+          deviceNotificationToken != null &&
+          notifInfo.token != deviceNotificationToken) {
+        // ignore: unawaited_futures
+        update_notif_info(
+            notificationInfo: NotificationInfo(
+                userId: driver!.driverInfo.hasuraId,
+                appType: "delivery",
+                id: notifInfo.id,
+                token: deviceNotificationToken));
+      } else if (deviceNotificationToken != null && notifInfo == null) {
+        // ignore: unawaited_futures
+        insert_notif_info(
+            userId: driver!.driverInfo.hasuraId,
+            token: deviceNotificationToken,
+            appType: "delivery");
+      }
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
   }
 
   void saveAppVersionIfNecessary() {
