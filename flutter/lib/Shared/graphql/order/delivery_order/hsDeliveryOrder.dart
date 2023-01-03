@@ -5,6 +5,8 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/order/delivery_order/__generated/delivery_order.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as locModel;
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
@@ -21,6 +23,10 @@ Stream<List<DeliveryOrder>> listen_on_delivery_orders() {
           (QueryResult<Subscription$listen_on_delivery_orders> event) {
     List<DeliveryOrder> _o = [];
 
+    if (event.hasException) {
+      mezDbgPrint(
+          "[AAA] listen_on_delivery_orders :: FAILED WITH EXCEPTION ===> ${event.exception}");
+    }
     final List<Subscription$listen_on_delivery_orders$delivery_order?>?
         ordersData = event.parsedData?.delivery_order;
     if (ordersData != null) {
@@ -38,7 +44,8 @@ Stream<List<DeliveryOrder>> listen_on_delivery_orders() {
                 orderData.dropoff_gps.toLocationData(),
               ),
               deliveryDriverType:
-                  orderData.delivery_driver_type!.toDeliveryDriverType(),
+                  orderData.delivery_driver_type?.toDeliveryDriverType() ??
+                      DeliveryDriverType.Delivery_driver,
               chatWithCustomerId: orderData.chat_with_customer_id,
               paymentType: orderData.payment_type.toPaymentType(),
               status: orderData.status.toDeliveryOrderStatus(),
@@ -85,8 +92,15 @@ Stream<List<DeliveryOrder>> listen_on_delivery_orders() {
                   : null,
               serviceProviderId: orderData.service_provider_id,
               stripePaymentId: orderData.stripe_payment_id,
-
-              /// TODO : Review Fields
+              moreInfo: DeliveryOrderInfo(
+                customerImage: orderData.customer.user.image,
+                customerName: orderData.customer.user.name,
+                serviceProviderAddress: orderData.restaurant?.location_text,
+                serviceProviderImage: orderData.restaurant?.image,
+                serviceProviderName: orderData.restaurant?.name,
+                deliveryDriverImage: orderData.delivery_driver?.user.image,
+                deliveryDriverName: orderData.delivery_driver?.user.name,
+              ),
             ),
           );
       });

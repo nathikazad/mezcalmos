@@ -209,9 +209,9 @@ extension ParseDeliveryActionToString on DeliveryAction {
   }
 }
 
-extension ParseStringToDeliveryDriverType on String {
-  DeliveryDriverType toDeliveryDriverType() {
-    return DeliveryDriverType.values.firstWhere((DeliveryDriverType e) =>
-        e.toFirebaseFormatString().toLowerCase() == toLowerCase());
-  }
-}
+// extension ParseStringToDeliveryDriverType on String {
+//   DeliveryDriverType toDeliveryDriverType() {
+//     return DeliveryDriverType.values.firstWhere((DeliveryDriverType e) =>
+//         e.toFirebaseFormatString().toLowerCase() == toLowerCase());
+//   }
+// }

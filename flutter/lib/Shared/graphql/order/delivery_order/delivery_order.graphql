@@ -1,7 +1,6 @@
-
-# listen on all delivery Orders on database
+# For Delivery operator.
 subscription listen_on_delivery_orders {
-  delivery_order {
+  delivery_order{
     id
     pickup_gps
     pickup_address
@@ -22,6 +21,23 @@ subscription listen_on_delivery_orders {
     actual_delivered_time
     status
     customer_id
+    customer {
+      user {
+        name,
+        image
+      }
+    }
+    restaurant {
+      name,
+      image,
+      location_text,
+    }
+    delivery_driver {
+      user {
+        name,
+        image
+      }
+    }
     service_provider_id
     trip_polyline
     trip_duration
@@ -33,5 +49,4 @@ subscription listen_on_delivery_orders {
     cancellation_time
   }
 }
-
 

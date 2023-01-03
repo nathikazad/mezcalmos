@@ -17,6 +17,7 @@ class OrderController extends GetxController {
     _hasuraDb.createSubscription(start: () {
       _deliveryOrdersStreamSub =
           listen_on_delivery_orders().listen((List<DeliveryOrder> event) {
+        mezDbgPrint("[AAA] GOT LIST OF ORDERS ====>  ${event.length}");
         if (event.isNotEmpty) {
           orders.clear();
           orders.value = event;
@@ -29,6 +30,17 @@ class OrderController extends GetxController {
       _deliveryOrdersStreamSub = null;
     });
     super.onInit();
+  }
+
+  List<DeliveryOrder> get pastOrders =>
+      orders.where((p0) => !p0.isInProcess).toList();
+
+  List<DeliveryOrder> get currentOrders =>
+      orders.where((p0) => p0.isInProcess).toList();
+
+  DeliveryOrder? getOrder(int orderId) {
+    return (<DeliveryOrder>[...pastOrders, ...currentOrders])
+        .firstWhereOrNull((DeliveryOrder _order) => _order.id == orderId);
   }
 
   @override

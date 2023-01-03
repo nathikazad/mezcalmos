@@ -41,6 +41,26 @@ enum DeliveryOrderStatus {
 
 enum DeliveryServiceType { restaurant, deliveryCompany }
 
+class DeliveryOrderInfo {
+  final String? serviceProviderName;
+  final String? serviceProviderAddress;
+  final String? serviceProviderImage;
+  final String? customerName;
+  final String? customerImage;
+  final String? deliveryDriverName;
+  final String? deliveryDriverImage;
+
+  DeliveryOrderInfo({
+    this.serviceProviderName,
+    this.serviceProviderAddress,
+    this.serviceProviderImage,
+    this.customerName,
+    this.customerImage,
+    this.deliveryDriverName,
+    this.deliveryDriverImage,
+  });
+}
+
 class DeliveryOrder {
   final int id;
   final locModel.Location pickupLocation;
@@ -72,6 +92,7 @@ class DeliveryOrder {
   final LocationData? currentGps;
   final DateTime orderTime;
   final DateTime? cancellationTime;
+  final DeliveryOrderInfo moreInfo;
 
   DeliveryOrder({
     required this.id,
@@ -104,7 +125,15 @@ class DeliveryOrder {
     required this.orderTime,
     this.cancellationTime,
     this.currentGps,
+    required this.moreInfo,
   });
 
+  bool get isInProcess => <DeliveryOrderStatus>[
+        DeliveryOrderStatus.atDropoff,
+        DeliveryOrderStatus.atPickup,
+        DeliveryOrderStatus.onTheWayToDropoff,
+        DeliveryOrderStatus.orderReceived,
+        DeliveryOrderStatus.packageReady
+      ].contains(status);
   num get totalCost => packageCost + deliveryCost;
 }

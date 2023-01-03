@@ -27,16 +27,20 @@ class DeliveryOrderCard extends StatelessWidget {
     required this.order,
     this.showLeftIcon = true,
     this.isPastOrder = false,
+    this.onCardClick,
   }) : super(key: key);
   final DeliveryOrder order;
   final bool isPastOrder;
   final bool showLeftIcon;
+  final Function? onCardClick;
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return OrderInfosCard(
       orderCardSubWidgets: OrderCardSubWidgets(
-          onCardTap: () {},
+          onCardTap: () {
+            onCardClick?.call();
+          },
           cardTitle: _getOrderTitle(),
           primaryBodyContent: Text(order.dropoffLocation.address),
           cardStatus: _getOrderWidget(),
