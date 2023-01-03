@@ -12,20 +12,17 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 // Extends GetView<MessagingController> after Nathik implements the controller
 import 'package:intl/intl.dart' as intl;
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
@@ -113,7 +110,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
         return singleChatComponent(
           message: message.message,
           time: intl.DateFormat('hh:mm a').format(message.timestamp.toLocal()),
-          isMe: message.userId == _authController.user!.firebaseId,
+          isMe: message.userId == _authController.user!.hasuraId,
           userImage: controller.chat.value?.chatInfo.chatImg,
         );
       },
@@ -198,7 +195,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
           },
         ),
         actions: <Widget>[
-          if (controller.chat.value?.chatInfo.parentlink != null)
+          if (!MezRouter.isRouteInStack(
+              controller.chat.value!.chatInfo.parentlink))
             InkWell(
               child: Container(
                 width: 60,
@@ -229,7 +227,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
           Container(
             child: controller.isUserAuthorizedToCall() &&
                     // isReciepientNotAdmin() &&
-                    sagora != null
+                    sagora != null &&
+                    false
                 ? InkWell(
                     // onTap: () async => _onCallPress(),
                     child: Container(
@@ -275,7 +274,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                           () => ListView(
                             shrinkWrap: true,
                             controller: _listViewScrollController,
-                            children: List<Widget>.from(chatLines.reversed),
+                            children: List<Widget>.from(chatLines),
                           ),
                         ),
                       ),
@@ -402,9 +401,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                   radius: 23,
                   backgroundColor: Colors.grey.shade200,
                   backgroundImage: mLoadImage(
-                          url: !isMe
-                              ? userImage
-                              : _authController.fireAuthUser?.photoURL,
+                          url: !isMe ? userImage : _authController.user?.image,
                           assetInCaseFailed: aDefaultAvatar)
                       .image,
                 ),

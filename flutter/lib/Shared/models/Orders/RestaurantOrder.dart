@@ -55,6 +55,7 @@ class RestaurantOrder extends DeliverableOrder {
   Review? review;
   DeliveryMode deliveryMode;
   SelfDeliveryDetails? selfDeliveryDetails;
+  int? deliveryOrderId;
 
   RestaurantOrder(
       {required super.orderId,
@@ -71,6 +72,7 @@ class RestaurantOrder extends DeliverableOrder {
       this.estimatedFoodReadyTime,
       super.dropoffDriver,
       this.deliveryTime,
+      this.deliveryOrderId,
       this.review,
       int? dropOffDriverChatId,
       required this.itemsCost,

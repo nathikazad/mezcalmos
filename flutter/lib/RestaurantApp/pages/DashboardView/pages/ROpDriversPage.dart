@@ -8,8 +8,7 @@ import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpDrive
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
@@ -17,9 +16,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpDriversView'];
 
 class ROpDriversView extends StatefulWidget {
-  const ROpDriversView({super.key, required this.restID});
-  final int restID;
-
+  const ROpDriversView({
+    super.key,
+    this.asRoute = false,
+  });
+  final bool asRoute;
   @override
   State<ROpDriversView> createState() => _ROpDriversViewState();
 }
@@ -28,13 +29,17 @@ class _ROpDriversViewState extends State<ROpDriversView> {
   ROpDriversViewController viewController = ROpDriversViewController();
   @override
   void initState() {
-    viewController.init(restaurantID: widget.restID);
+    viewController.init();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: (widget.asRoute)
+          ? mezcalmosAppBar(AppBarLeftButtonType.Back,
+              onClick: MezRouter.back, title: "Drivers")
+          : null,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Container(
@@ -49,15 +54,6 @@ class _ROpDriversViewState extends State<ROpDriversView> {
                     await viewController.fetchServiceLinks();
                     if (viewController.hasLinks) {
                       await _addDriverSheet();
-                    } else {
-                      final ServerResponse res =
-                          await viewController.generateLinks();
-                      if (res.success) {
-                        //  await viewController.fetchOperators();
-                        await _addDriverSheet();
-                      } else {
-                        mezDbgPrint("👋 ERROR ${res.errorMessage}");
-                      }
                     }
                   }),
               SizedBox(

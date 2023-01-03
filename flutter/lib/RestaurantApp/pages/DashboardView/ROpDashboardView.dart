@@ -89,9 +89,7 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
 
                 ROpOperatorsView(restaurantId: restaurantID!),
                 if (editInfoController.restaurant.value!.selfDelivery)
-                  ROpDriversView(
-                    restID: restaurantID!,
-                  ),
+                  ROpDriversView(),
                 if (editInfoController.restaurant.value!.selfDelivery)
                   ROpDeliveryCost(
                     editInfoController: editInfoController,

@@ -42,9 +42,9 @@ Future<List<DeliveryDriver>?> get_drivers_by_service_provider_id(
               deliveryCompanyId: driverData.delivery_company_id.toString(),
               deliveryCompanyType:
                   driverData.delivery_company_type.toDeliveryCompanyType()),
-          deliveryDriverId: driverData.id.toString(),
+          deliveryDriverId: driverData.id,
           driverInfo: DeliveryDriverUserInfo(
-              hasuraId: driverData.id,
+              hasuraId: driverData.user.id,
               image: driverData.user.image,
               language: driverData.user.language_id.toString().toLanguageType(),
               name: driverData.user.name));
@@ -57,6 +57,8 @@ Future<DeliveryDriver?> get_driver_by_user_id(
     {required int userId, bool withCache = true}) async {
   final QueryResult<Query$getDriversByUserId> response = await _db.graphQLClient
       .query$getDriversByUserId(Options$Query$getDriversByUserId(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
           variables: Variables$Query$getDriversByUserId(userId: userId)));
 
   if (response.parsedData?.delivery_driver == null) {
@@ -75,9 +77,9 @@ Future<DeliveryDriver?> get_driver_by_user_id(
               deliveryCompanyId: data.first.delivery_company_id.toString(),
               deliveryCompanyType:
                   data.first.delivery_company_type.toDeliveryCompanyType()),
-          deliveryDriverId: data.first.id.toString(),
+          deliveryDriverId: data.first.id,
           driverInfo: DeliveryDriverUserInfo(
-              hasuraId: data.first.id,
+              hasuraId: data.first.user.id,
               image: data.first.user.image,
               language: data.first.user.language_id.toString().toLanguageType(),
               name: data.first.user.name));
@@ -146,4 +148,20 @@ Future<bool?> delete_delivery_driver_by_id(
         "Deleting driver mutation ✅✅ ===>${response.parsedData?.delete_delivery_driver_by_pk}");
     return true;
   }
+}
+
+Stream<AgentStatus> listen_driver_status({required int driverId}) {
+  return _db.graphQLClient
+      .subscribe$driverStatusStream(Options$Subscription$driverStatusStream(
+          variables:
+              Variables$Subscription$driverStatusStream(userId: driverId)))
+      .map((QueryResult<Subscription$driverStatusStream> event) {
+    if (event.parsedData?.delivery_driver == null ||
+        event.parsedData!.delivery_driver.isEmpty) {
+      throw Exception(
+          "🚨🚨 Stream on operator status exceptions =>${event.exception}");
+    } else {
+      return event.parsedData!.delivery_driver.first.status.toAgentStatus();
+    }
+  });
 }

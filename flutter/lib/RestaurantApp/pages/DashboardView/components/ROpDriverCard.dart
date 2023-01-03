@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpDriversPageController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -24,6 +23,8 @@ class ROpListDriverCard extends StatefulWidget {
 }
 
 class _ROpListDriverCardState extends State<ROpListDriverCard> {
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -99,10 +100,9 @@ class _ROpListDriverCardState extends State<ROpListDriverCard> {
                             helperText: '${_i18n()["rmText"]}',
                             primaryButtonText: '${_i18n()["rmBtn"]}',
                             onYesClick: () async {
-                          final bool result = await widget.viewController
-                              .removeDriver(
-                                  int.parse(widget.driver.deliveryDriverId));
-                          if (result) MezRouter.back();
+                          // final bool result = await widget.viewController
+                          //     .removeDriver(widget.driver.deliveryDriverId);
+                          //  if (result) MezRouter.back();
                         });
                       },
                       icon: Icons.delete_outline,
@@ -114,33 +114,52 @@ class _ROpListDriverCardState extends State<ROpListDriverCard> {
                 if (!widget.driver.deliveryDriverState.isAuthorized)
                   Container(
                     margin: const EdgeInsets.only(top: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Flexible(
-                            child: MezButton(
-                          label: "Reject",
-                          backgroundColor: offRedColor,
-                          height: 50,
-                          textColor: Colors.red,
-                          onClick: () async {},
-                        )),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Flexible(
-                            child: MezButton(
-                          label: "Approve",
-                          height: 50,
-                          backgroundColor: primaryBlueColor,
-                          textColor: Colors.white,
-                          onClick: () async {
-                            await widget.viewController
-                                .approveDriver(driver: widget.driver);
-                          },
-                        )),
-                      ],
-                    ),
+                    child: (isLoading)
+                        ? LinearProgressIndicator()
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Flexible(
+                                  child: MezButton(
+                                label: "Approve",
+                                height: 50,
+                                backgroundColor: primaryBlueColor,
+                                textColor: Colors.white,
+                                onClick: () async {
+                                  setState(() {
+                                    isLoading = true;
+                                  });
+                                  await widget.viewController.approveDriver(
+                                      approved: true,
+                                      driverId: widget.driver.deliveryDriverId);
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                },
+                              )),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Flexible(
+                                  child: MezButton(
+                                label: "Reject",
+                                backgroundColor: offRedColor,
+                                height: 50,
+                                textColor: Colors.red,
+                                onClick: () async {
+                                  setState(() {
+                                    isLoading = true;
+                                  });
+                                  await widget.viewController.approveDriver(
+                                      approved: false,
+                                      driverId: widget.driver.deliveryDriverId);
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                },
+                              )),
+                            ],
+                          ),
                   )
               ],
             )));

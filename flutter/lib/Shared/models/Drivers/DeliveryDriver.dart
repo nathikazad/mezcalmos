@@ -54,7 +54,7 @@ class DeliveryDriver {
   DeliveryDriverUserInfo driverInfo;
   LatLng? driverLocation;
   DateTime? lastLocationUpdateTime;
-  String deliveryDriverId;
+  int deliveryDriverId;
 
   DeliveryDriver({
     required this.deliveryDriverState,
@@ -86,7 +86,7 @@ class DeliveryDriver {
             : DateTime.parse(deliveryDriverData['location']['lastUpdateTime']);
 
     return DeliveryDriver(
-      deliveryDriverId: deliveryDriverId,
+      deliveryDriverId: int.parse(deliveryDriverId),
       deliveryDriverState: deliveryDriverState,
       driverLocation: driverLocation,
       lastLocationUpdateTime: lastLocationUpdateTime,

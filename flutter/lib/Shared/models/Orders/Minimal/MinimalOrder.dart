@@ -1,16 +1,15 @@
-import 'dart:convert';
-
+import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
-class MinimalRestaurantOrder {
+class MinimalOrder {
   int id;
   String? toAdress;
   DateTime orderTime;
   String customerName;
   String? customerImage;
-  RestaurantOrderStatus status;
+  MinimalOrderStatus status;
   double totalCost;
-  MinimalRestaurantOrder({
+  MinimalOrder({
     required this.id,
     required this.toAdress,
     required this.orderTime,
@@ -20,16 +19,16 @@ class MinimalRestaurantOrder {
     required this.totalCost,
   });
 
-  MinimalRestaurantOrder copyWith({
+  MinimalOrder copyWith({
     int? id,
     String? toAdress,
     DateTime? orderTime,
     String? customerName,
     String? customerImage,
-    RestaurantOrderStatus? status,
+    MinimalOrderStatus? status,
     num? totalCost,
   }) {
-    return MinimalRestaurantOrder(
+    return MinimalOrder(
         id: id ?? this.id,
         toAdress: toAdress ?? this.toAdress,
         orderTime: orderTime ?? this.orderTime,
@@ -51,24 +50,6 @@ class MinimalRestaurantOrder {
     };
   }
 
-  // ignore: avoid_annotating_with_dynamic
-  factory MinimalRestaurantOrder.fromMap(dynamic map) {
-    return MinimalRestaurantOrder(
-      id: map['id']?.toInt() ?? 0,
-      toAdress: map['toAdress'] ?? '',
-      orderTime: DateTime.fromMillisecondsSinceEpoch(map['orderTime']),
-      customerName: map['customerName'] ?? '',
-      customerImage: map['customerImage'] ?? '',
-      status: map["status"].toString().toRestaurantOrderStatus(),
-      totalCost: map['totalCost'] ?? 0,
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory MinimalRestaurantOrder.fromJson(String source) =>
-      MinimalRestaurantOrder.fromMap(json.decode(source));
-
   @override
   String toString() {
     return 'MinimalRestaurantOrder(id: $id, toAdress: $toAdress, orderTime: $orderTime, customerName: $customerName, customerImage: $customerImage, status: $status, totalCost: $totalCost)';
@@ -78,7 +59,7 @@ class MinimalRestaurantOrder {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is MinimalRestaurantOrder &&
+    return other is MinimalOrder &&
         other.id == id &&
         other.toAdress == toAdress &&
         other.orderTime == orderTime &&

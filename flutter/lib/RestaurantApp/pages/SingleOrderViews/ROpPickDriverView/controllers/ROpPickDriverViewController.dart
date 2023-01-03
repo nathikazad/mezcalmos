@@ -35,12 +35,11 @@ class ROpPickDriverController {
     screenLoading.value = true;
 
     final HttpsCallable cloudFunction =
-        FirebaseFunctions.instance.httpsCallable('delivery-assignDriver');
+        FirebaseFunctions.instance.httpsCallable('delivery2-assignDriver');
     try {
       final HttpsCallableResult response = await cloudFunction.call({
-        "orderId": orderId,
         "orderType": OrderType.Restaurant.toFirebaseFormatString(),
-        "deliveryOrderId": orderId,
+        "deliveryOrderId": order.value!.deliveryOrderId,
         "deliveryDriverId": driverId,
         "deliveryDriverType":
             DeliveryDriverType.Delivery_driver.toFirebaseFormatString(),

@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/order/__generated/restaurant_order.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalRestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -50,30 +50,32 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
         idInRestaurant: item.restaurant_item.id,
       );
       mezDbgPrint("[544D] item.in_json ===> ${item.in_json}");
-      (item.in_json['selected_options'] as Map<String, dynamic>)
-          .forEach((key, value) {
-        final List<Choice> choices = [];
-        _restauItem.optionNames[key] = {
-          LanguageType.EN: value['optionName']['en'],
-          LanguageType.ES: value['optionName']['en']
-        };
+      if (item.in_json['selected_options'] != null) {
+        (item.in_json['selected_options'] as Map<String, dynamic>)
+            .forEach((String key, value) {
+          final List<Choice> choices = [];
+          _restauItem.optionNames[key] = {
+            LanguageType.EN: value['optionName']['en'],
+            LanguageType.ES: value['optionName']['en']
+          };
 
-        ((value['choices'] ?? []) as List).forEach((element) {
-          choices.add(
-            Choice(
-              id: element['id'],
-              name: {
-                LanguageType.EN: element['name']['en'],
-                LanguageType.ES: element['name']['es']
-              },
-              cost: element['cost'],
-            ),
-          );
+          ((value['choices'] ?? []) as List).forEach((element) {
+            choices.add(
+              Choice(
+                id: element['id'],
+                name: {
+                  LanguageType.EN: element['name']['en'],
+                  LanguageType.ES: element['name']['es']
+                },
+                cost: element['cost'],
+              ),
+            );
+          });
+
+          mezDbgPrint("[544D] Parsed Choices ===> ${choices.length}");
+          _restauItem.chosenChoices[key] = choices;
         });
-
-        mezDbgPrint("[544D] Parsed Choices ===> ${choices.length}");
-        _restauItem.chosenChoices[key] = choices;
-      });
+      }
       items.add(_restauItem);
     });
 
@@ -86,6 +88,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
           : null,
       status: orderData.status.toRestaurantOrderStatus(),
       quantity: 1,
+      deliveryOrderId: orderData.delivery_id,
       serviceProviderId: orderData.restaurant.id,
       paymentType: orderData.payment_type.toPaymentType(),
       orderTime: DateTime.parse(orderData.order_time),
@@ -128,10 +131,11 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     throw Exception(
         "[544D] 🚨🚨 Get restaurant order $orderId exceptions ${response.exception}");
   }
-  mezDbgPrint("[544D] get_restaurant_order_by_id::SUCCESS ");
+
   final Query$get_restaurant_order_by_id$restaurant_order_by_pk orderData =
       response.parsedData!.restaurant_order_by_pk!;
-
+  mezDbgPrint(
+      "[544D] get_restaurant_order_by_id::SUCCESS ====>${orderData.delivery_id}");
   final List<RestaurantOrderItem> items = [];
 
   orderData.items.forEach(
@@ -145,31 +149,33 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
       totalCost: item.cost_per_one,
       idInRestaurant: item.restaurant_item.id,
     );
-    mezDbgPrint("[544D] item.in_json ===> ${item.in_json}");
-    (item.in_json['selected_options'] as Map<String, dynamic>)
-        .forEach((key, value) {
-      final List<Choice> choices = [];
-      _restauItem.optionNames[key] = {
-        LanguageType.EN: value['optionName']['en'],
-        LanguageType.ES: value['optionName']['en']
-      };
+    if (item.in_json['selected_options'] != null) {
+      mezDbgPrint("[544D] item.in_json ===> ${item.in_json}");
+      (item.in_json['selected_options'] as Map<String, dynamic>)
+          .forEach((String key, value) {
+        final List<Choice> choices = [];
+        _restauItem.optionNames[key] = {
+          LanguageType.EN: value['optionName']['en'],
+          LanguageType.ES: value['optionName']['en']
+        };
 
-      ((value['choices'] ?? []) as List).forEach((element) {
-        choices.add(
-          Choice(
-            id: element['id'],
-            name: {
-              LanguageType.EN: element['name']['en'],
-              LanguageType.ES: element['name']['es']
-            },
-            cost: element['cost'],
-          ),
-        );
+        ((value['choices'] ?? []) as List).forEach((element) {
+          choices.add(
+            Choice(
+              id: element['id'],
+              name: {
+                LanguageType.EN: element['name']['en'],
+                LanguageType.ES: element['name']['es']
+              },
+              cost: element['cost'],
+            ),
+          );
+        });
+
+        mezDbgPrint("[544D] Parsed Choices ===> ${choices.length}");
+        _restauItem.chosenChoices[key] = choices;
       });
-
-      mezDbgPrint("[544D] Parsed Choices ===> ${choices.length}");
-      _restauItem.chosenChoices[key] = choices;
-    });
+    }
     items.add(_restauItem);
   });
 
@@ -213,6 +219,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
       image: orderData.restaurant.image,
       name: orderData.restaurant.name,
     ),
+    deliveryOrderId: orderData.delivery_id,
     customer: UserInfo(
         hasuraId: orderData.customer.user.id,
         image: orderData.customer.user.image,
@@ -294,7 +301,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
   // return res;
 }
 
-Stream<List<MinimalRestaurantOrder>?> listen_on_current_restaurant_orders(
+Stream<List<MinimalOrder>?> listen_on_current_restaurant_orders(
     {required int restaurantId}) {
   return _hasuraDb.graphQLClient
       .subscribe$listen_restaurant_current_orders(
@@ -304,21 +311,23 @@ Stream<List<MinimalRestaurantOrder>?> listen_on_current_restaurant_orders(
           restaurantId: restaurantId),
     ),
   )
-      .map<List<MinimalRestaurantOrder>?>(
+      .map<List<MinimalOrder>?>(
           (QueryResult<Subscription$listen_restaurant_current_orders> event) {
     final List<Subscription$listen_restaurant_current_orders$restaurant_order>?
         ordersData = event.parsedData?.restaurant_order;
     if (ordersData != null) {
-      final List<MinimalRestaurantOrder> orders = ordersData.map(
+      final List<MinimalOrder> orders = ordersData.map(
           (Subscription$listen_restaurant_current_orders$restaurant_order
               orderData) {
-        return MinimalRestaurantOrder(
+        return MinimalOrder(
             id: orderData.id,
             toAdress: orderData.to_location_address,
             orderTime: DateTime.parse(orderData.order_time),
             customerName: orderData.customer.user.name!,
             customerImage: orderData.customer.user.image,
-            status: orderData.status.toRestaurantOrderStatus(),
+            status: orderData.status
+                .toRestaurantOrderStatus()
+                .toMinimalOrderStatus(),
             totalCost: orderData.total_cost!);
       }).toList();
       return orders;
@@ -327,7 +336,7 @@ Stream<List<MinimalRestaurantOrder>?> listen_on_current_restaurant_orders(
   });
 }
 
-Future<List<MinimalRestaurantOrder>?> get_current_restaurant_orders(
+Future<List<MinimalOrder>?> get_current_restaurant_orders(
     {required int restaurantId}) async {
   final QueryResult<Query$get_restaurant_current_orders> queryResult =
       await _hasuraDb.graphQLClient.query$get_restaurant_current_orders(
@@ -341,15 +350,16 @@ Future<List<MinimalRestaurantOrder>?> get_current_restaurant_orders(
     final List<Query$get_restaurant_current_orders$restaurant_order>
         ordersData = queryResult.parsedData!.restaurant_order;
 
-    final List<MinimalRestaurantOrder> orders = ordersData
+    final List<MinimalOrder> orders = ordersData
         .map((Query$get_restaurant_current_orders$restaurant_order orderData) {
-      return MinimalRestaurantOrder(
+      return MinimalOrder(
           id: orderData.id,
           toAdress: orderData.to_location_address,
           orderTime: DateTime.parse(orderData.order_time),
           customerName: orderData.customer.user.name!,
           customerImage: orderData.customer.user.image,
-          status: orderData.status.toRestaurantOrderStatus(),
+          status:
+              orderData.status.toRestaurantOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.total_cost!);
     }).toList();
     return orders;
@@ -359,7 +369,7 @@ Future<List<MinimalRestaurantOrder>?> get_current_restaurant_orders(
   }
 }
 
-Future<List<MinimalRestaurantOrder>?> get_past_restaurant_orders(
+Future<List<MinimalOrder>?> get_past_restaurant_orders(
     {required int restaurantId}) async {
   final QueryResult<Query$get_restaurant_past_orders> queryResult =
       await _hasuraDb.graphQLClient.query$get_restaurant_past_orders(
@@ -373,15 +383,16 @@ Future<List<MinimalRestaurantOrder>?> get_past_restaurant_orders(
     final List<Query$get_restaurant_past_orders$restaurant_order> ordersData =
         queryResult.parsedData!.restaurant_order;
 
-    final List<MinimalRestaurantOrder> orders = ordersData
+    final List<MinimalOrder> orders = ordersData
         .map((Query$get_restaurant_past_orders$restaurant_order orderData) {
-      return MinimalRestaurantOrder(
+      return MinimalOrder(
           id: orderData.id,
           toAdress: orderData.to_location_address,
           orderTime: DateTime.parse(orderData.order_time),
           customerName: orderData.customer.user.name!,
           customerImage: orderData.customer.user.image,
-          status: orderData.status.toRestaurantOrderStatus(),
+          status:
+              orderData.status.toRestaurantOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.total_cost!);
     }).toList();
     return orders;

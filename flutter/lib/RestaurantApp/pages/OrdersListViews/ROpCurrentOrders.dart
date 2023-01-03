@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/constants/assets.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
-import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/components/ROpOrderCard.dart';
+import 'package:mezcalmos/Shared/widgets/Order/ROpOrderCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/components/ROpWaitingForApproval.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/controllers/ROpCurrentOrdersController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
@@ -152,8 +152,13 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
                     child: Column(
                       children: List.generate(
                           viewController.currentOrders.length, (int index) {
-                        return ROpOrderCard(
+                        return MinimalOrderCard(
                           order: viewController.currentOrders[index],
+                          onTap: () {
+                            MezRouter.toNamed(getROpOrderRoute(viewController
+                                .currentOrders[index].id
+                                .toString()));
+                          },
                         );
                       }),
                     ),

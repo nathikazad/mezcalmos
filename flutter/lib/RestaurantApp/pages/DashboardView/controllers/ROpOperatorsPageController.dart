@@ -51,24 +51,7 @@ class ROpOperatorsViewController {
         [];
   }
 
-  Future<ServerResponse> generateLinks() async {
-    final HttpsCallable cloudFunction =
-        FirebaseFunctions.instance.httpsCallable('restaurant-genOperatorLink');
-    try {
-      final HttpsCallableResult response = await cloudFunction.call({
-        "providerId": restaurantId,
-        "providerType": OrderType.Restaurant.toFirebaseFormatString()
-      });
-      mezDbgPrint("Response : ${response.data}");
 
-      return ServerResponse.fromJson(response.data);
-    } catch (e, stk) {
-      mezDbgPrint("Errrooooooooor =======> $e");
-      mezDbgPrint("Errrooooooooor =======> $stk");
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
-    }
-  }
 
   Future<ServerResponse> approveOperator(
       {required bool approved, required int opId}) async {

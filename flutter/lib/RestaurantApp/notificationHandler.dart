@@ -43,6 +43,8 @@ Notification restaurantNotificationHandler(String key, value) {
           notificationAction:
               (value["notificationAction"] as String).toNotificationAction(),
           variableParams: value);
+    case NotificationType.NewDriver:
+      return newDriverNotification(key, value);
     case NotificationType.NewMessage:
       return newMessageNotification(key, value);
     case NotificationType.OrderStatusChange:
@@ -175,6 +177,20 @@ Notification newMessageNotification(String key, value) {
       title: value['sender']['name'],
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.NewMessage,
+      notificationAction:
+          (value["notificationAction"] as String).toNotificationAction(),
+      variableParams: value);
+}
+
+Notification newDriverNotification(String key, value) {
+  return Notification(
+      id: key,
+      linkUrl: kDriversList,
+      body: "${value["newDriverName"]} has request join your drivers",
+      imgUrl: value['newDriverImage'],
+      title: "New driver request",
+      timestamp: DateTime.parse(value['time']),
+      notificationType: NotificationType.NewDriver,
       notificationAction:
           (value["notificationAction"] as String).toNotificationAction(),
       variableParams: value);

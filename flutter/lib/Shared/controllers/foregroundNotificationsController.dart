@@ -49,9 +49,14 @@ class ForegroundNotificationsController extends GetxController {
         .onChildAddedWitchCatch()
         .then((Stream<DatabaseEvent> stream) {
       _notificationNodeAddListener = stream.listen((DatabaseEvent event) {
+        mezDbgPrint(
+            "New notif from controller 🥰🥰🥰🥰🥰\n cuurent route => ${Get.currentRoute} \n ===>${event.snapshot.value}");
+
         try {
           final Notification _notification =
               notificationHandler(event.snapshot.key!, event.snapshot.value);
+          mezDbgPrint(
+              "New notif from controller 🥰🥰🥰🥰🥰 ===>${_notification.toJson()}");
 
           final bool alreadyOnLinkPage = isCurrentRoute(_notification.linkUrl);
 
@@ -66,19 +71,21 @@ class ForegroundNotificationsController extends GetxController {
               _displayNotificationsStreamController.add(_notification);
               break;
             case NotificationAction.ShowSnackbarOnlyIfNotOnPage:
-              if (!alreadyOnLinkPage) {
-                _displayNotificationsStreamController.add(_notification);
-              }
+              //   if (!alreadyOnLinkPage) {
+              _displayNotificationsStreamController.add(_notification);
+              //  }
               break;
           }
 
-          if (!alreadyOnLinkPage) {
-            notifications.add(_notification);
-          } else {
-            removeNotification(_notification.id);
-          }
-        } on StateError {
+          // if (!alreadyOnLinkPage) {
+          notifications.add(_notification);
+          // } else {
+          //   removeNotification(_notification.id);
+          // }
+        } catch (e, stk) {
           mezDbgPrint("Invalid notification");
+          mezDbgPrint(e);
+          mezDbgPrint(stk);
         }
       });
     });

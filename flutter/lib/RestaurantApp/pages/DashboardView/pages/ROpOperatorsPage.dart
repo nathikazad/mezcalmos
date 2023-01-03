@@ -7,8 +7,6 @@ import 'package:mezcalmos/RestaurantApp/pages/DashboardView/components/ROpOperat
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpOperatorsPageController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
@@ -43,13 +41,7 @@ class _ROpOperatorsViewState extends State<ROpOperatorsView> {
               if (viewController.hasLinks) {
                 await _addDriverSheet();
               } else {
-                final ServerResponse res = await viewController.generateLinks();
-                if (res.success) {
-                  //  await viewController.fetchOperators();
-                  await _addDriverSheet();
-                } else {
-                  mezDbgPrint("👋 ERROR ${res.errorMessage}");
-                }
+                await _addDriverSheet();
               }
             },
             title: "Add operator",

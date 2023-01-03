@@ -3,8 +3,9 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/constants/assets.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverOrderCard.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/controllers/DriverCurrentOrdersController.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
+import 'package:mezcalmos/Shared/widgets/Order/ROpOrderCard.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -25,6 +26,8 @@ class CurrentOrdersListScreen extends StatefulWidget {
 
 class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
   OrderController orderController = Get.find<OrderController>();
+  DriverCurrentOrdersController viewController =
+      DriverCurrentOrdersController();
   DeliveryAuthController _deliveryAuthController =
       Get.find<DeliveryAuthController>();
 
@@ -32,6 +35,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
   void initState() {
     Get.find<SideMenuDrawerController>().pastOrdersRoute = kPastOrdersView;
     orderController.clearNewOrderNotificationsOfPastOrders();
+    viewController.init();
 
     super.initState();
   }
@@ -98,7 +102,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
   }
 
   Widget _incomingOrdersList() {
-    if (orderController.currentOrders.isNotEmpty) {
+    if (viewController.currentOrders.isNotEmpty) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -112,10 +116,10 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
           SizedBox(height: 5),
           Column(
             children: List.generate(
-                orderController.currentOrders.length,
-                (int index) => DriverOrderCard(
-                      order: orderController.currentOrders[index],
-                      showLeftIcon: false,
+                viewController.currentOrders.length,
+                (int index) => MinimalOrderCard(
+                      order: viewController.currentOrders[index],
+                      onTap: () {},
                     )).reversed.toList(),
           ),
         ],

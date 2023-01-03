@@ -64,3 +64,8 @@ mutation deleteDriverById($driverId: Int!) {
 
 
 
+subscription driverStatusStream($userId: Int!) {
+  delivery_driver(where: {user_id: {_eq: $userId}}) {
+    status
+  }
+}

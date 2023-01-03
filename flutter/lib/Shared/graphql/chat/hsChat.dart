@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/chat/__generated/hsChat.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -62,7 +64,8 @@ Future<HasuraChat?> get_chat_info({required int chat_id}) async {
     ),
   );
 
-  mezDbgPrint("[666] ${_chat.parsedData?.chat_by_pk}");
+  mezDbgPrint(
+      "[666] ${Get.find<SettingsController>().appType.toNormalString()} ");
   mezDbgPrint("[666] ${_chat.data}");
   if (_chat.hasException || _chat.parsedData?.chat_by_pk == null) {
     mezDbgPrint("[+] called get_chat_info :: Exception :: ${_chat.exception}");
@@ -71,11 +74,14 @@ Future<HasuraChat?> get_chat_info({required int chat_id}) async {
     mezDbgPrint("Messages ===> ${_chat.parsedData!.chat_by_pk!.messages}");
     final HasuraChat RetChat = HasuraChat(
       chatInfo: HasuraChatInfo(
-        chatTite: _chat.parsedData!.chat_by_pk!.chat_info!['CustomerApp']
+        chatTite: _chat.parsedData!.chat_by_pk!.chat_info![
+                '${Get.find<SettingsController>().appType.toNormalString()}']
             ['chatTitle'],
-        chatImg: _chat.parsedData!.chat_by_pk!.chat_info!['CustomerApp']
+        chatImg: _chat.parsedData!.chat_by_pk!.chat_info![
+                '${Get.find<SettingsController>().appType.toNormalString()}']
             ['chatImage'],
-        parentlink: _chat.parsedData!.chat_by_pk!.chat_info!['CustomerApp']
+        parentlink: _chat.parsedData!.chat_by_pk!.chat_info![
+                '${Get.find<SettingsController>().appType.toNormalString()}']
             ['parentLink'],
       ),
       creationTime:

@@ -1,32 +1,31 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalRestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpPastOrdersList']["components"]["ROpOrderCard"];
 
-class ROpOrderCard extends StatefulWidget {
-  const ROpOrderCard({
+class MinimalOrderCard extends StatefulWidget {
+  const MinimalOrderCard({
     Key? key,
     required this.order,
+    required this.onTap,
   }) : super(key: key);
 
-  final MinimalRestaurantOrder order;
-
+  final MinimalOrder order;
+  final Function()? onTap;
   @override
-  State<ROpOrderCard> createState() => _ROpOrderCardState();
+  State<MinimalOrderCard> createState() => _MinimalOrderCardState();
 }
 
-class _ROpOrderCardState extends State<ROpOrderCard> {
+class _MinimalOrderCardState extends State<MinimalOrderCard> {
   bool showImage = true;
   @override
   Widget build(BuildContext context) {
@@ -34,9 +33,7 @@ class _ROpOrderCardState extends State<ROpOrderCard> {
       margin: const EdgeInsets.only(bottom: 10),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
-        onTap: () {
-          MezRouter.toNamed(getROpOrderRoute(widget.order.id.toString()));
-        },
+        onTap: widget.onTap,
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: Column(
@@ -117,8 +114,7 @@ class _ROpOrderCardState extends State<ROpOrderCard> {
 
   Widget getOrderWidget() {
     switch (widget.order.status) {
-      case RestaurantOrderStatus.CancelledByAdmin:
-      case RestaurantOrderStatus.CancelledByCustomer:
+      case MinimalOrderStatus.Cancelled:
         return Container(
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
@@ -131,7 +127,7 @@ class _ROpOrderCardState extends State<ROpOrderCard> {
           ),
         );
 
-      case RestaurantOrderStatus.Delivered:
+      case MinimalOrderStatus.Delivered:
         return Container(
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(

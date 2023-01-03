@@ -1,15 +1,13 @@
 import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceLink.dart';
 
@@ -34,8 +32,8 @@ class ROpDriversViewController {
   // late variables //
 
   late int restaurantId;
-  Future<void> init({required int restaurantID}) async {
-    restaurantId = restaurantID;
+  Future<void> init() async {
+    restaurantId = Get.find<RestaurantOpAuthController>().restaurantId!;
     await fetchDrivers();
     await fetchServiceLinks();
 
@@ -82,44 +80,22 @@ class ROpDriversViewController {
     }
   }
 
-  Future<void> approveDriver({required DeliveryDriver driver}) async {
+  Future<ServerResponse> approveDriver(
+      {required bool approved, required int driverId}) async {
+    mezDbgPrint("Driver id =======>>>>$driverId");
+    final HttpsCallable cloudFunction = FirebaseFunctions.instance
+        .httpsCallable('restaurant2-authorizeRestaurantDriver');
     try {
-      final bool? result = await update_driver_status_by_id(
-          driverId: int.parse(driver.deliveryDriverId),
-          agentStatus: AgentStatus.Authorized);
-      if (result == true) {
-        await fetchDrivers();
-        Get.snackbar('Approved',
-            '${driver.driverInfo.name} have been successfuly approved',
-            backgroundColor: Colors.black,
-            colorText: Colors.white,
-            shouldIconPulse: false,
-            icon: Icon(
-              Icons.check_circle,
-              color: Colors.green,
-            ));
-      }
-    } on Exception catch (e, stk) {
-      mezDbgPrint(e);
-      mezDbgPrint(stk);
-    }
-  }
-
-  Future<bool> removeDriver(int deliveryDriverId) async {
-    final bool? res =
-        await delete_delivery_driver_by_id(driverId: deliveryDriverId);
-    if (res != null && res == true) {
+      final HttpsCallableResult response = await cloudFunction
+          .call({"deliveryDriverId": driverId, "approved": approved});
+      mezDbgPrint("Response : ${response.data}");
       await fetchDrivers();
-      Get.snackbar('Deleted', 'Driver has been added successfuly',
-          backgroundColor: Colors.black,
-          colorText: Colors.white,
-          shouldIconPulse: false,
-          icon: Icon(
-            Icons.delete,
-            color: primaryBlueColor,
-          ));
-      return res;
+      return ServerResponse(ResponseStatus.Success);
+    } catch (e, stk) {
+      mezDbgPrint("Errrooooooooor =======> $e");
+      mezDbgPrint("Errrooooooooor =======> $stk");
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
     }
-    return false;
   }
 }

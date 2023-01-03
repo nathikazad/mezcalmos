@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -68,9 +67,7 @@ class ROpOrderCustomer extends StatelessWidget {
                   MessageButton(
                       showRedDot: false,
                       onTap: () {
-                        mezDbgPrint("CHAAAAAT ID ===>${order.chatId}");
                         MezRouter.toNamed(getMessagesRoute(
-                            //  orderId: order.orderId,
                             chatId: order.chatId,
                             recipientType: ParticipantType.Customer));
                       }),

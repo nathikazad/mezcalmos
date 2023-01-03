@@ -192,6 +192,7 @@ query get_restaurant_order_by_id($order_id: Int!) {
     }
     delivery_cost
     delivery {
+      id
       actual_delivered_time
       actual_package_ready_time
       actual_arrival_at_pickup_time

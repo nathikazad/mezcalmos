@@ -3398,3 +3398,525 @@ class _CopyWithStubImpl$Mutation$deleteDriverById$delete_delivery_driver_by_pk$u
   }) =>
       _res;
 }
+
+class Variables$Subscription$driverStatusStream {
+  factory Variables$Subscription$driverStatusStream({required int userId}) =>
+      Variables$Subscription$driverStatusStream._({
+        r'userId': userId,
+      });
+
+  Variables$Subscription$driverStatusStream._(this._$data);
+
+  factory Variables$Subscription$driverStatusStream.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$userId = data['userId'];
+    result$data['userId'] = (l$userId as int);
+    return Variables$Subscription$driverStatusStream._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get userId => (_$data['userId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$userId = userId;
+    result$data['userId'] = l$userId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Subscription$driverStatusStream<
+          Variables$Subscription$driverStatusStream>
+      get copyWith => CopyWith$Variables$Subscription$driverStatusStream(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Subscription$driverStatusStream) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$userId = userId;
+    final lOther$userId = other.userId;
+    if (l$userId != lOther$userId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$userId = userId;
+    return Object.hashAll([l$userId]);
+  }
+}
+
+abstract class CopyWith$Variables$Subscription$driverStatusStream<TRes> {
+  factory CopyWith$Variables$Subscription$driverStatusStream(
+    Variables$Subscription$driverStatusStream instance,
+    TRes Function(Variables$Subscription$driverStatusStream) then,
+  ) = _CopyWithImpl$Variables$Subscription$driverStatusStream;
+
+  factory CopyWith$Variables$Subscription$driverStatusStream.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Subscription$driverStatusStream;
+
+  TRes call({int? userId});
+}
+
+class _CopyWithImpl$Variables$Subscription$driverStatusStream<TRes>
+    implements CopyWith$Variables$Subscription$driverStatusStream<TRes> {
+  _CopyWithImpl$Variables$Subscription$driverStatusStream(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Subscription$driverStatusStream _instance;
+
+  final TRes Function(Variables$Subscription$driverStatusStream) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? userId = _undefined}) =>
+      _then(Variables$Subscription$driverStatusStream._({
+        ..._instance._$data,
+        if (userId != _undefined && userId != null) 'userId': (userId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Subscription$driverStatusStream<TRes>
+    implements CopyWith$Variables$Subscription$driverStatusStream<TRes> {
+  _CopyWithStubImpl$Variables$Subscription$driverStatusStream(this._res);
+
+  TRes _res;
+
+  call({int? userId}) => _res;
+}
+
+class Subscription$driverStatusStream {
+  Subscription$driverStatusStream({
+    required this.delivery_driver,
+    required this.$__typename,
+  });
+
+  factory Subscription$driverStatusStream.fromJson(Map<String, dynamic> json) {
+    final l$delivery_driver = json['delivery_driver'];
+    final l$$__typename = json['__typename'];
+    return Subscription$driverStatusStream(
+      delivery_driver: (l$delivery_driver as List<dynamic>)
+          .map((e) => Subscription$driverStatusStream$delivery_driver.fromJson(
+              (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Subscription$driverStatusStream$delivery_driver> delivery_driver;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_driver = delivery_driver;
+    _resultData['delivery_driver'] =
+        l$delivery_driver.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_driver = delivery_driver;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$delivery_driver.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Subscription$driverStatusStream) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_driver = delivery_driver;
+    final lOther$delivery_driver = other.delivery_driver;
+    if (l$delivery_driver.length != lOther$delivery_driver.length) {
+      return false;
+    }
+    for (int i = 0; i < l$delivery_driver.length; i++) {
+      final l$delivery_driver$entry = l$delivery_driver[i];
+      final lOther$delivery_driver$entry = lOther$delivery_driver[i];
+      if (l$delivery_driver$entry != lOther$delivery_driver$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$driverStatusStream
+    on Subscription$driverStatusStream {
+  CopyWith$Subscription$driverStatusStream<Subscription$driverStatusStream>
+      get copyWith => CopyWith$Subscription$driverStatusStream(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$driverStatusStream<TRes> {
+  factory CopyWith$Subscription$driverStatusStream(
+    Subscription$driverStatusStream instance,
+    TRes Function(Subscription$driverStatusStream) then,
+  ) = _CopyWithImpl$Subscription$driverStatusStream;
+
+  factory CopyWith$Subscription$driverStatusStream.stub(TRes res) =
+      _CopyWithStubImpl$Subscription$driverStatusStream;
+
+  TRes call({
+    List<Subscription$driverStatusStream$delivery_driver>? delivery_driver,
+    String? $__typename,
+  });
+  TRes delivery_driver(
+      Iterable<Subscription$driverStatusStream$delivery_driver> Function(
+              Iterable<
+                  CopyWith$Subscription$driverStatusStream$delivery_driver<
+                      Subscription$driverStatusStream$delivery_driver>>)
+          _fn);
+}
+
+class _CopyWithImpl$Subscription$driverStatusStream<TRes>
+    implements CopyWith$Subscription$driverStatusStream<TRes> {
+  _CopyWithImpl$Subscription$driverStatusStream(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$driverStatusStream _instance;
+
+  final TRes Function(Subscription$driverStatusStream) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_driver = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$driverStatusStream(
+        delivery_driver:
+            delivery_driver == _undefined || delivery_driver == null
+                ? _instance.delivery_driver
+                : (delivery_driver
+                    as List<Subscription$driverStatusStream$delivery_driver>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes delivery_driver(
+          Iterable<Subscription$driverStatusStream$delivery_driver> Function(
+                  Iterable<
+                      CopyWith$Subscription$driverStatusStream$delivery_driver<
+                          Subscription$driverStatusStream$delivery_driver>>)
+              _fn) =>
+      call(
+          delivery_driver: _fn(_instance.delivery_driver.map(
+              (e) => CopyWith$Subscription$driverStatusStream$delivery_driver(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Subscription$driverStatusStream<TRes>
+    implements CopyWith$Subscription$driverStatusStream<TRes> {
+  _CopyWithStubImpl$Subscription$driverStatusStream(this._res);
+
+  TRes _res;
+
+  call({
+    List<Subscription$driverStatusStream$delivery_driver>? delivery_driver,
+    String? $__typename,
+  }) =>
+      _res;
+  delivery_driver(_fn) => _res;
+}
+
+const documentNodeSubscriptiondriverStatusStream = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.subscription,
+    name: NameNode(value: 'driverStatusStream'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'userId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delivery_driver'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'user_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'userId')),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'status'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Subscription$driverStatusStream _parserFn$Subscription$driverStatusStream(
+        Map<String, dynamic> data) =>
+    Subscription$driverStatusStream.fromJson(data);
+
+class Options$Subscription$driverStatusStream
+    extends graphql.SubscriptionOptions<Subscription$driverStatusStream> {
+  Options$Subscription$driverStatusStream({
+    String? operationName,
+    required Variables$Subscription$driverStatusStream variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeSubscriptiondriverStatusStream,
+          parserFn: _parserFn$Subscription$driverStatusStream,
+        );
+}
+
+class WatchOptions$Subscription$driverStatusStream
+    extends graphql.WatchQueryOptions<Subscription$driverStatusStream> {
+  WatchOptions$Subscription$driverStatusStream({
+    String? operationName,
+    required Variables$Subscription$driverStatusStream variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeSubscriptiondriverStatusStream,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Subscription$driverStatusStream,
+        );
+}
+
+class FetchMoreOptions$Subscription$driverStatusStream
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Subscription$driverStatusStream({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Subscription$driverStatusStream variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeSubscriptiondriverStatusStream,
+        );
+}
+
+extension ClientExtension$Subscription$driverStatusStream
+    on graphql.GraphQLClient {
+  Stream<graphql.QueryResult<Subscription$driverStatusStream>>
+      subscribe$driverStatusStream(
+              Options$Subscription$driverStatusStream options) =>
+          this.subscribe(options);
+  graphql.ObservableQuery<Subscription$driverStatusStream>
+      watchSubscription$driverStatusStream(
+              WatchOptions$Subscription$driverStatusStream options) =>
+          this.watchQuery(options);
+}
+
+class Subscription$driverStatusStream$delivery_driver {
+  Subscription$driverStatusStream$delivery_driver({
+    required this.status,
+    required this.$__typename,
+  });
+
+  factory Subscription$driverStatusStream$delivery_driver.fromJson(
+      Map<String, dynamic> json) {
+    final l$status = json['status'];
+    final l$$__typename = json['__typename'];
+    return Subscription$driverStatusStream$delivery_driver(
+      status: (l$status as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String status;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$status = status;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$status,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Subscription$driverStatusStream$delivery_driver) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$driverStatusStream$delivery_driver
+    on Subscription$driverStatusStream$delivery_driver {
+  CopyWith$Subscription$driverStatusStream$delivery_driver<
+          Subscription$driverStatusStream$delivery_driver>
+      get copyWith => CopyWith$Subscription$driverStatusStream$delivery_driver(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$driverStatusStream$delivery_driver<TRes> {
+  factory CopyWith$Subscription$driverStatusStream$delivery_driver(
+    Subscription$driverStatusStream$delivery_driver instance,
+    TRes Function(Subscription$driverStatusStream$delivery_driver) then,
+  ) = _CopyWithImpl$Subscription$driverStatusStream$delivery_driver;
+
+  factory CopyWith$Subscription$driverStatusStream$delivery_driver.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$driverStatusStream$delivery_driver;
+
+  TRes call({
+    String? status,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$driverStatusStream$delivery_driver<TRes>
+    implements CopyWith$Subscription$driverStatusStream$delivery_driver<TRes> {
+  _CopyWithImpl$Subscription$driverStatusStream$delivery_driver(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$driverStatusStream$delivery_driver _instance;
+
+  final TRes Function(Subscription$driverStatusStream$delivery_driver) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? status = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$driverStatusStream$delivery_driver(
+        status: status == _undefined || status == null
+            ? _instance.status
+            : (status as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$driverStatusStream$delivery_driver<TRes>
+    implements CopyWith$Subscription$driverStatusStream$delivery_driver<TRes> {
+  _CopyWithStubImpl$Subscription$driverStatusStream$delivery_driver(this._res);
+
+  TRes _res;
+
+  call({
+    String? status,
+    String? $__typename,
+  }) =>
+      _res;
+}

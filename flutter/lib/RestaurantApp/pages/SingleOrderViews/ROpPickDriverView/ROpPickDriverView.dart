@@ -129,9 +129,9 @@ class _ROpPickDriverViewState extends State<ROpPickDriverView> {
         }));
   }
 
-  Future<bool> _assignCallback(String driverId) async {
+  Future<bool> _assignCallback(int driverId) async {
     final ServerResponse result = await viewController.assignDriver(
-      driverId: int.parse(driverId),
+      driverId: driverId,
     );
     return result.success;
     // return true;

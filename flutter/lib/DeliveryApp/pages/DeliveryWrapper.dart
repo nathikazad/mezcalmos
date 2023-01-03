@@ -13,7 +13,6 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -26,7 +25,7 @@ class DeliveryWrapper extends StatefulWidget {
 }
 
 class _DeliveryWrapperState extends State<DeliveryWrapper> {
-  final DeepLinkHandler _deepLinkHandler = DeepLinkHandler();
+  final DeliveryDeepLinkHandler _deepLinkHandler = DeliveryDeepLinkHandler();
   DeliveryAuthController _deliveryAuthController =
       Get.find<DeliveryAuthController>();
 
@@ -36,30 +35,10 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
   @override
   void initState() {
     mezDbgPrint("DeliveryWrapper::init state");
-    Future.microtask(() async {
-      await _deliveryAuthController.setupDeliveryDriver();
-      mezDbgPrint(
-          " success DeliveryWrapper::microtask handleState ${_deliveryAuthController.driver?.toJson()}");
-      handleState(_deliveryAuthController.driverState);
-      // DeliveryDriverState? deliveryDriverState =
-      //     Get.find<DeliveryAuthController>().deliveryDriverState;
-      // mezDbgPrint("deliveryDriverState = $deliveryDriverState");
-      // if (deliveryDriverState != null) {
-      //   mezDbgPrint("inside if  = $deliveryDriverState");
-
-      //   handleState(deliveryDriverState);
-      // } else {
-      //   mezDbgPrint("inside else  = $deliveryDriverState");
-      //   mezDbgPrint("${Get.find<DeliveryAuthController>().stateStream.first}");
-
-      //   Get.find<DeliveryAuthController>()
-      //       .stateStream
-      //       .first
-      //       .then((_deliveryDriverState) {
-      //     mezDbgPrint("inside else -> then  = $_deliveryDriverState");
-      //     handleState(_deliveryDriverState);
-      //   });
-      // }
+    Future(() async {
+      await _deepLinkHandler.startDynamicLinkCheckRoutine();
+      // ignore: unawaited_futures
+      _deliveryAuthController.setupDeliveryDriver().then((_) => handleState());
     });
 
     final String userId = Get.find<AuthController>().fireAuthUser!.uid;
@@ -70,42 +49,17 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
             deliveryDriverNotificationsNode(userId),
             deliveryDriverNotificationHandler);
     super.initState();
-    Future.wait([_deepLinkHandler.startDynamicLinkCheckRoutine()]);
   }
 
-  // void listenForLocationPermissions() {
-  //   _locationStreamSub?.cancel();
-  //   _locationStreamSub = Get.find<LocationController>().locationPermissionStream
-  //       // .distinct()
-  //       .listen((locationPermission) {
-  //     if (locationPermission == false &&
-  //         Get.currentRoute != kLocationPermissionPage) {
-  //       MezRouter.toNamed(kLocationPermissionPage,
-  //           arguments: {"withBackground": true});
-  //     }
-  //   });
-  // }
+  void handleState() {
+    if (_deliveryAuthController.driver != null &&
+        _deliveryAuthController.driver!.deliveryDriverState.isAuthorized) {
+      mezDbgPrint("DeliveryWrapper::handleState going to unauthorized");
 
-  void handleState(DeliveryDriverState? state) {
-    mezDbgPrint(state);
-    if (state != null) {
-      // mezDbgPrint("Current order ====> ${state.currentOrder}");
-      // mezDbgPrint("isAuthorized ====> ${state.isAuthorized}");
-      // mezDbgPrint("isLooking ====> ${state.isLooking}");
-
-      mezDbgPrint("DeliveryWrapper::handleState ${state.toJson().toString()}");
-      if (!state.isAuthorized) {
-        mezDbgPrint("DeliveryWrapper::handleState going to unauthorized");
-        MezRouter.toNamed(kDriverUnAuth);
-        // } else if (state.currentOrder != null) {
-        //   mezDbgPrint("DeliveryWrapper::handleState going to current order");
-        //   MezRouter.toNamed(kCurrentOrderRoute);
-      } else {
-        mezDbgPrint("DeliveryWrapper::handleState going to incoming orders");
-        MezRouter.toNamed(kDriverUnAuth);
-      }
+      MezRouter.toNamed(kCurrentOrdersListRoute);
     } else {
-      mezDbgPrint("DeliveryWrapper::handleState state is null, ERROR");
+      MezRouter.toNamed(kDriverUnAuth);
+      mezDbgPrint("DeliveryWrapper::handleState going to incoming orders");
     }
   }
 

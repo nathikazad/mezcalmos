@@ -230,9 +230,9 @@ class HasuraDb {
   }
 
   void cancelAllSubscriptions() {
-    hasuraSubscriptions.forEach(
-        (String subscriptionId, HasuraSubscription hasuraSubscription) {
-      cancelSubscription(subscriptionId);
+    final List<String> keysToRemove = hasuraSubscriptions.keys.toList();
+    keysToRemove.forEach((String subId) {
+      cancelSubscription(subId);
     });
   }
 }
