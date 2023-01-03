@@ -92,16 +92,29 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
             //QR.to("/404");
           }
         });
-      } else {
-        mezDbgPrint("===========> this is the mode ${mode} <=============");
+      } else if (QR.params['mode'].toString() == "edit") {
+        mezDbgPrint(
+            "👋===========> this is the mode ${mode}  and the id is ${QR.params['idInCart'].toString()}<=============");
+        Get.find<RestaurantController>()
+            .cart
+            .value
+            .cartItems
+            .forEach((element) {
+          mezDbgPrint("this is the id of the item ${element.idInCart}");
+        });
         try {
-          cartItem.value = CartItem.clone(Get.find<RestaurantController>()
+          CartItem? x = Get.find<RestaurantController>()
               .cart
               .value
               .cartItems
               .firstWhere((CartItem item) {
-            return item.idInCart == QR.params["cartItemId"];
-          }));
+            return item.idInCart == "${QR.params['idInCart'].toString()}";
+          });
+          mezDbgPrint(
+              "🛒🛒🛒🛒🛒🛒🛒🛒 x value is ${x.toFirebaseFunctionFormattedJson()}");
+          mezDbgPrint(
+              "the lengeth of this shit is ${Get.find<RestaurantController>().cart.value.cartItems.length}");
+          cartItem.value = CartItem.clone(x);
 
           Get.find<RestaurantsInfoController>()
               .getRestaurant(cartItem.value!.restaurantId)
@@ -112,7 +125,7 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
           });
         } catch (e) {
           mezDbgPrint("this is a problem here happen e ${e.toString()}");
-          QR.to("/404");
+          //QR.to("/404");
         }
       }
       cartItem.refresh();
@@ -144,11 +157,10 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
 
             final MezWebSideBarController drawerController =
                 Get.find<MezWebSideBarController>();
-            drawerController.drawerKey = _key;
 
             return (cartItem != null)
                 ? Scaffold(
-                    key: drawerController.drawerKey,
+                    key: drawerController.getNewKey(),
                     drawer: drawerController.frontDrawerContent,
                     endDrawer: drawerController.endDrawerContent,
                     appBar: InstallAppBarComponent(),

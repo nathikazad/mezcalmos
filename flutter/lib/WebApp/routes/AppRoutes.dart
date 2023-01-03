@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/routes/AuthRoutes.dart';
 import 'package:mezcalmos/WebApp/routes/LaundryRoutes.dart';
 import 'package:mezcalmos/WebApp/routes/MessagesScreen.dart';
@@ -37,11 +38,7 @@ class AppRoutes {
       path: '/404',
       builder: () => UnfoundPageScreen(),
     );
-    // QR.settings.initPage = const Material(child: MezLoaderWidget());
-    QR.settings.initPage = const Material(
-        child: Center(
-      child: Text("please wait we are loading .."),
-    ));
+    QR.settings.initPage = const Material(child: MezLoaderWidget());
 
     // add observers to the app
     // this observer will be called when the user navigates to new route
@@ -51,7 +48,9 @@ class AppRoutes {
 
     // this observer will be called when the popped out from a route
     QR.observer.onPop.add((path, route) async {
-      print('Observer: popping out from $path');
+      ;
+      print(
+          'Observer: popping out from $path ${Get.find<MezWebSideBarController>().drawerKey.toString()}');
       mezDbgPrint("Observer: popping out from $path and route is $route");
     });
 

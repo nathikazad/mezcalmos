@@ -15,7 +15,12 @@ import 'package:mezcalmos/WebApp/widgets/mezOverly.dart';
 
 import 'package:qlevar_router/qlevar_router.dart';
 
-enum WebAppBarType { Normal, WithSignInActionButton, WithCartActionButton }
+enum WebAppBarType {
+  Normal,
+  WithSignInActionButton,
+  WithCartActionButton,
+  DontShowMenu
+}
 
 class WebAppBarComponent extends StatelessWidget
     implements PreferredSizeWidget {
@@ -95,16 +100,15 @@ class _AppbarWidgetForMobileState extends State<AppbarWidgetForMobile> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-              width: MezCalmosResizer.getWepPageHorizontalPadding(context) - 10,
+
               // padding: EdgeInsets.all(10),
               child: widget.automaticallyGetBack == true
                   ? Container(
-                      height: 40,
-                      width: 40,
+                      // margin: const EdgeInsets.only(top: 5),
                       decoration: BoxDecoration(
                           //border: Border.all(width: 1, color: Colors.grey),
                           borderRadius: BorderRadius.circular(100)),
-                      child: Center(
+                      child: Container(
                         child: TextButton(
                           style: TextButton.styleFrom(
                             shape: RoundedRectangleBorder(
@@ -115,11 +119,14 @@ class _AppbarWidgetForMobileState extends State<AppbarWidgetForMobile> {
                           onPressed: () {
                             QR.back();
                           },
-                          child: Padding(
-                              padding: const EdgeInsets.only(top: 5),
-                              child: Icon(
-                                Icons.arrow_back,
-                                color: Color.fromRGBO(103, 121, 254, 1),
+                          child: Container(
+                              width: 40,
+                              height: kToolbarHeight - 10,
+                              child: Center(
+                                child: Icon(
+                                  Icons.arrow_back,
+                                  color: Color.fromRGBO(103, 121, 254, 1),
+                                ),
                               )),
                         ),
                       ),
@@ -137,13 +144,16 @@ class _AppbarWidgetForMobileState extends State<AppbarWidgetForMobile> {
                 Row(
                   children: [
                     if (Get.find<FirbaseAuthController>().fireAuthUser?.uid !=
-                        null)
+                            null &&
+                        widget.type.value != WebAppBarType.DontShowMenu)
                       Padding(
                         padding: const EdgeInsets.only(right: 15, bottom: 5),
                         child: IconButton(
                             onPressed: () {
                               Get.find<MezWebSideBarController>()
                                   .openWebDrawer();
+                              mezDbgPrint(
+                                  "😆😆😆😆😆😆😆😆😆😆 this is a test for the drawre");
                             },
                             icon: Icon(
                               Icons.menu,
@@ -350,8 +360,8 @@ class _AppBarWedgetForDesktopState extends State<AppBarWedgetForDesktop>
                             backgroundColor: Colors.white,
                           ),
                           onPressed: () {
-                            //  QR.back();
-                            Navigator.of(context).pop();
+                            QR.back();
+                            // Navigator.of(context).pop();
                           },
                           child: Padding(
                               padding: const EdgeInsets.only(top: 5),
@@ -381,7 +391,11 @@ class _AppBarWedgetForDesktopState extends State<AppBarWedgetForDesktop>
                         child: IconButton(
                             onPressed: () {
                               //  widget.leadingFunction!.call();
+                              // Scaffold.of(context).openDrawer();
+
                               drawerController.openWebDrawer();
+                              mezDbgPrint(
+                                  "😆😆😆😆😆😆😆😆😆😆 this is a test for the drawre");
                             },
                             icon: Icon(
                               Icons.menu,

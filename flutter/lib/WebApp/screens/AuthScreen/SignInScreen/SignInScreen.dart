@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/WebApp/screens/AuthScreen/SignInScreen/componenets/signInScreenDesktop.dart';
 import 'package:mezcalmos/WebApp/screens/AuthScreen/SignInScreen/componenets/signInScreenMobile.dart';
@@ -29,6 +30,7 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
+    mezDbgPrint("this called again ");
     final txt = Theme.of(context).textTheme;
     return FutureBuilder<bool>(
         future: setupFirebase(

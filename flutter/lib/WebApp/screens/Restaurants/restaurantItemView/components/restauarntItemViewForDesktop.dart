@@ -197,6 +197,9 @@ class _RestaurantItemViewForDesktopState
                                                       .addItem(widget
                                                           .cartItem.value!);
 
+                                                  mezDbgPrint(
+                                                      "🛒🛒🛒🛒🛒🛒🛒🛒🛒 ${restaurantCartController.cart.value.toFirebaseFormattedJson()}");
+
                                                   Get.find<
                                                           MezWebSideBarController>()
                                                       .openWebEndDrawer();
@@ -281,6 +284,9 @@ class _RestaurantItemViewForDesktopState
                                               await restaurantCartController
                                                   .addItem(
                                                       widget.cartItem.value!);
+                                              Get.find<
+                                                      MezWebSideBarController>()
+                                                  .openWebEndDrawer();
                                             }
                                           } else {
                                             mezDbgPrint(
@@ -288,8 +294,8 @@ class _RestaurantItemViewForDesktopState
                                             dialogRequiredSignIn(
                                                 context: context,
                                                 navigationCallback: () {
-                                                  QR.toName(
-                                                      "signIn?type=restaurants&id=${QR.params["id"].toString()}&itemId=${QR.params["itemId"].toString()}");
+                                                  QR.to(
+                                                      "/signIn?type=restaurants&id=${QR.params["id"].toString()}&itemId=${QR.params["itemId"].toString()}");
                                                 });
                                           }
                                         },
@@ -310,7 +316,10 @@ class _RestaurantItemViewForDesktopState
                                   //   }
                                   // },
                                   child: Text(
-                                    " Add item ",
+                                    widget.viewItemScreenMode ==
+                                            ViewItemScreenMode.AddItemMode
+                                        ? " Add item "
+                                        : "Edit item",
                                     style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.w700,
                                         color: Colors.white,

@@ -10,21 +10,21 @@ import 'package:mezcalmos/WebApp/webHelpers/webNotificationHelper.dart';
 
 import '../Shared/helpers/NotificationsHelper.dart';
 
-var NotifListener = initializeShowNotificationsListener(
-  isWebVersion: true,
-);
-
 class AuthHooks {
   static Future<void> onSignOutHook() async {
     print("[+] WebApp::AuthHooks::onSignOutHook -> Callback Executed.");
     await Get.delete<CustomerAuthController>(force: true);
     await Get.delete<OrderController>(force: true);
     await Get.delete<RestaurantController>(force: true);
+
     await Get.delete<ForegroundNotificationsController>(force: true);
-    NotifListener.cancel();
+    // NotifListener.cancel();
   }
 
   static Future<void> onSignInHook() async {
+    var NotifListener = initializeShowNotificationsListener(
+      isWebVersion: true,
+    );
     print("[+] WebApp::AuthHooks::onSignInHook -> Callback Executed.");
 
     if (!Get.isRegistered<CustomerAuthController>()) {
@@ -52,6 +52,6 @@ class AuthHooks {
       await Get.put<MessageWebController>(MessageWebController(),
           permanent: true);
     }
-    NotifListener.resume();
+    // NotifListener.resume();
   }
 }

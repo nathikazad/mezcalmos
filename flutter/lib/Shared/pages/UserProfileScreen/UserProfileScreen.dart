@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'dart:io' as io;
+import 'dart:html' as html;
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:path/path.dart' as Path;
 import 'package:image_picker/image_picker.dart' as imPicker;
+import 'package:image_picker_web/image_picker_web.dart';
 import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -14,6 +17,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileWidgets.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mime_type/mime_type.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
@@ -25,18 +29,21 @@ class UserProfile extends StatefulWidget {
   // this is just to controll incase we want to make a push to this route with a pre-defined mode.
   final UserProfileMode pageInitMode;
   // UserProfileController
-  final UserProfileController userProfileController = UserProfileController();
+  final UserProfileController userProfileController;
   late final UserProfileWidgetsClass userProfileWidgets;
   bool? isWebVersion = false;
 
   // Constructor!
   UserProfile(
-      {Key? key, this.pageInitMode = UserProfileMode.Show, this.isWebVersion})
+      {Key? key,
+      required this.userProfileController,
+      this.pageInitMode = UserProfileMode.Show,
+      this.isWebVersion})
       : super(key: key) {
     userProfileController.isWebVersion = isWebVersion;
     mezDbgPrint(
         "========= the version is ${isWebVersion == true ? "web" : "mobile"}");
-    userProfileController.setUserProfileMode(pageInitMode);
+    //userProfileController.setUserProfileMode(pageInitMode);
     userProfileWidgets =
         UserProfileWidgetsClass(userProfileController: userProfileController);
   }
@@ -56,7 +63,9 @@ class _UserProfileState extends State<UserProfile>
 
   @override
   void initState() {
-    widget.userProfileController.initSetup();
+    if (widget.userProfileController == false) {
+      widget.userProfileController.initSetup();
+    }
     animationController =
         AnimationController(duration: new Duration(seconds: 2), vsync: this);
     animationController.repeat();
@@ -65,7 +74,7 @@ class _UserProfileState extends State<UserProfile>
 
   @override
   void dispose() {
-    widget.userProfileController.disposeController();
+    //widget.userProfileController.disposeController();
     animationController.dispose();
     super.dispose();
   }
@@ -284,73 +293,160 @@ class _UserProfileState extends State<UserProfile>
   ///
   /// And once the user actually selects something , it start uploading the compressed version first along with the original one.
   Future<void> onBrowsImageClick() async {
-    final imPicker.ImageSource? _from =
-        widget.userProfileController.isWebVersion == true
-            ? await pickImageChoiceDialogForWeb(context)
-            : await imagePickerChoiceDialog(context);
-    if (_from != null) {
-      widget.userProfileController.reset();
-      final imPicker.XFile? _res = await imagePicker(
-          picker: widget.userProfileController.picker, source: _from);
+    mezDbgPrint("the function onBrowsImageClick invoked  shared");
+    if (widget.userProfileController.isWebVersion == true) {
+      onBrowsImageClickForWeb();
+    } else {
+      // Image? fromPicker = await imPicker.ImagePickerWeb.getImageAsWidget();
+      // to do make a new function for web wich will be seprate function
+      final imPicker.ImageSource? _from =
+          await imagePickerChoiceDialog(context);
 
-      try {
-        // this check is needed in case user presses back button without picking any image
-        if (_res != null) {
-          isUploadingImg.value = true;
-          // this holds XFile which holds the original image
-          widget.userProfileController.userImg.value = _res;
-          // this holds userImgBytes of the original
-          widget.userProfileController.userImgBytes.value =
-              await _res.readAsBytes();
-          // this is the bytes of our compressed image .
-          final Uint8List _compressedVersion = await compressImageBytes(
-              widget.userProfileController.userImgBytes.value!);
-          // Get the actual File compressed
-          final io.File compressedFile = await writeFileFromBytesAndReturnIt(
-              filePath: widget.userProfileController.userImg.value!.path,
-              imgBytes: _compressedVersion);
-          // generating a temp image from the Fiel , so we can resolve image provider.
-          final Image img = Image.file(io.File(_res.path));
-          // resolving ImagePrivider (We will use this late to reduce the height and width of the image to the same percenteage )
-          img.image
-              .resolve(new ImageConfiguration())
-              .addListener(ImageStreamListener((ImageInfo info, bool _) async {
-            // ------------------- Original Version -----------------//
-            // put the original file to firebaseStorage
-            final String _originalUrl =
-                await _authController.uploadUserImgToFbStorage(
-                    imageFile: io.File(
-                        widget.userProfileController.userImg.value!.path));
-            // we set our original FirebaseStorage Url in our controller.
-            widget.userProfileController.originalImgUrl = _originalUrl;
-            // Setting Original Image aka (bigImage)
-            await _authController.setOriginalUserImage(
-                widget.userProfileController.originalImgUrl);
-            // ------------------- Compressed Version -----------------//
-            // put the compressed file to firebaseStorage
-            final String _compressedUrl =
-                await _authController.uploadUserImgToFbStorage(
-                    imageFile: compressedFile, isCompressed: true);
-            // we set our _compressed FirebaseStorage Url in our controller.
-            widget.userProfileController.compressedImgUrl = _compressedUrl;
-            // we right away set it in database
-            await _authController.editUserProfile(
-                null, widget.userProfileController.compressedImgUrl);
-            mezDbgPrint("ayono@ayono@ : ClickedSave = false!");
-            mezDbgPrint(
-              "ayono@ayono@ widget.userProfileController.checkIfUserHasAllInfosSet() : ${widget.userProfileController.checkIfUserHasAllInfosSet()}",
-            );
-            // mezDbgPrint(
-            //   "ayono@ayono@ widget.userProfileController.didUserChangedInfos() : ${widget.userProfileController.didUserChangedInfos()}",
-            // );
+      if (_from != null) {
+        widget.userProfileController.reset();
+        final imPicker.XFile? _res = await imagePicker(
+            picker: widget.userProfileController.picker, source: _from);
 
-            // once uploaded we need to remove the temporary compressed version from user's device
-            await compressedFile.delete();
-            // after the uploading of the image is done, we set back this to false.
-            isUploadingImg.value = false;
-          }));
+        try {
+          // this check is needed in case user presses back button without picking any image
+          if (_res != null) {
+            isUploadingImg.value = true;
+            // this holds XFile which holds the original image
+            widget.userProfileController.userImg.value = _res;
+            // this holds userImgBytes of the original
+            widget.userProfileController.userImgBytes.value =
+                await _res.readAsBytes();
+            // this is the bytes of our compressed image .
+            final Uint8List _compressedVersion = await compressImageBytes(
+                widget.userProfileController.userImgBytes.value!);
+
+            // Get the actual File compressed
+            final io.File compressedFile = await writeFileFromBytesAndReturnIt(
+                filePath: widget.userProfileController.userImg.value!.path,
+                imgBytes: _compressedVersion);
+            // generating a temp image from the Fiel , so we can resolve image provider.
+            final Image img = Image.file(io.File(_res.path));
+            // resolving ImagePrivider (We will use this late to reduce the height and width of the image to the same percenteage )
+            img.image.resolve(new ImageConfiguration()).addListener(
+                ImageStreamListener((ImageInfo info, bool _) async {
+              // ------------------- Original Version -----------------//
+              // put the original file to firebaseStorage
+              final String _originalUrl =
+                  await _authController.uploadUserImgToFbStorage(
+                      imageFile: io.File(
+                          widget.userProfileController.userImg.value!.path));
+              // we set our original FirebaseStorage Url in our controller.
+              widget.userProfileController.originalImgUrl = _originalUrl;
+              // Setting Original Image aka (bigImage)
+              await _authController.setOriginalUserImage(
+                  widget.userProfileController.originalImgUrl);
+              // ------------------- Compressed Version -----------------//
+              // put the compressed file to firebaseStorage
+              final String _compressedUrl =
+                  await _authController.uploadUserImgToFbStorage(
+                      imageFile: compressedFile, isCompressed: true);
+              // we set our _compressed FirebaseStorage Url in our controller.
+              widget.userProfileController.compressedImgUrl = _compressedUrl;
+              // we right away set it in database
+              await _authController.editUserProfile(
+                  null, widget.userProfileController.compressedImgUrl);
+              mezDbgPrint("ayono@ayono@ : ClickedSave = false!");
+              mezDbgPrint(
+                "ayono@ayono@ widget.userProfileController.checkIfUserHasAllInfosSet() : ${widget.userProfileController.checkIfUserHasAllInfosSet()}",
+              );
+              // mezDbgPrint(
+              //   "ayono@ayono@ widget.userProfileController.didUserChangedInfos() : ${widget.userProfileController.didUserChangedInfos()}",
+              // );
+
+              // once uploaded we need to remove the temporary compressed version from user's device
+              await compressedFile.delete();
+              // after the uploading of the image is done, we set back this to false.
+              isUploadingImg.value = false;
+            }));
+          }
+        } catch (e) {
+          mezDbgPrint(
+              "[+] MEZEXCEPTION => ERROR HAPPEND WHILE BROWING - SELECTING THE IMAGE !\nMore Details :\n$e ");
         }
-      } catch (e) {
+      }
+    }
+  }
+
+  Future<void> onBrowsImageClickForWeb() async {
+    String? strResult = await pickImageChoiceDialogForWeb(context);
+    if (strResult == "yes") {
+      try {
+        mezDbgPrint("this is a test for web ");
+        MediaInfo? mediaData = await ImagePickerWeb.getImageInfo;
+        mezDbgPrint(
+            "🖼️🖼️🖼️🖼️🖼️🖼️🖼️ this is the current path of image ${mediaData?.fileName}");
+        String? mimeType = mime(Path.basename(mediaData!.fileName!));
+        mezDbgPrint(
+            "🖼️🖼️🖼️🖼️🖼️🖼️🖼️ check if the path is correcte ${Path.basename(mediaData.fileName!)}");
+        mezDbgPrint(
+            "🖼️🖼️🖼️🖼️🖼️🖼️🖼️ this after we used the mimeType  ${mimeType}");
+
+        imPicker.XFile xFile = imPicker.XFile.fromData(mediaData.data!,
+            path: Path.basename(mediaData.fileName!));
+        widget.userProfileController.userImg.value = xFile;
+        widget.userProfileController.userImgBytes.value = mediaData.data!;
+
+        final Uint8List _compressedVersion = await compressImageBytesForWeb(
+            mediaData.data!, mediaData.fileName!);
+
+        // Get the actual File compressed
+        html.File compressedFile = await writeFileFromBytesAndReturnItForWeb(
+            filePath: widget.userProfileController.userImg.value!.path,
+            imgBytes: _compressedVersion,
+            mimeType: Path.basename(mediaData.fileName!));
+
+        mezDbgPrint("compressed file  compressedFile ${compressedFile}");
+        // generating a temp image from the Fiel , so we can resolve image provider.
+        final Image img = Image.memory(mediaData.data!);
+        // resolving ImagePrivider (We will use this late to reduce the height and width of the image to the same percenteage )
+        img.image
+            .resolve(new ImageConfiguration())
+            .addListener(ImageStreamListener((ImageInfo info, bool _) async {
+          mezDbgPrint("inside image streammer  !!!!!!");
+          // ------------------- Original Version -----------------//
+          // put the original file to firebaseStorage
+          final String _originalUrl =
+              await _authController.uploadUserImgToFbStorageForWeb(
+                  pikedFile: widget.userProfileController.userImg.value!,
+                  file: compressedFile,
+                  uint8list: mediaData.data!);
+          // we set our original FirebaseStorage Url in our controller.
+          widget.userProfileController.originalImgUrl = _originalUrl;
+          // Setting Original Image aka (bigImage)
+          await _authController.setOriginalUserImage(
+              widget.userProfileController.originalImgUrl);
+          // ------------------- Compressed Version ----------------- //
+          // put the compressed file to firebaseStorage
+          final String _compressedUrl =
+              await _authController.uploadUserImgToFbStorageForWeb(
+                  pikedFile: widget.userProfileController.userImg.value!,
+                  file: compressedFile,
+                  uint8list: _compressedVersion,
+                  isCompressed: true);
+          // we set our _compressed FirebaseStorage Url in our controller .
+          widget.userProfileController.compressedImgUrl = _compressedUrl;
+          // we right away set it in database
+          await _authController.editUserProfile(
+              null, widget.userProfileController.compressedImgUrl);
+          mezDbgPrint("ayono@ayono@ : ClickedSave = false!");
+          mezDbgPrint(
+            "ayono@ayono@ widget.userProfileController.checkIfUserHasAllInfosSet() : ${widget.userProfileController.checkIfUserHasAllInfosSet()}",
+          );
+          // mezDbgPrint(
+          //   "ayono@ayono@ widget.userProfileController.didUserChangedInfos() : ${widget.userProfileController.didUserChangedInfos()}",
+          // );
+
+          // once uploaded we need to remove the temporary compressed version from user's device
+          //await compressedFile.delete();
+          // after the uploading of the image is done, we set back this to false.
+          isUploadingImg.value = false;
+        }));
+      } on Exception catch (e) {
         mezDbgPrint(
             "[+] MEZEXCEPTION => ERROR HAPPEND WHILE BROWING - SELECTING THE IMAGE !\nMore Details :\n$e ");
       }

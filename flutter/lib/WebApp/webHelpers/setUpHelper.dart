@@ -10,6 +10,7 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantControlle
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
@@ -20,6 +21,8 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/WebApp/authHooks.dart';
 import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/resturentListView/controller/ListRestaurantController.dart';
+
+import '../../CustomerApp/controllers/orderController.dart';
 
 Function signInCallback = AuthHooks.onSignInHook;
 Function signOutCallback = AuthHooks.onSignOutHook;
@@ -87,10 +90,23 @@ Future<bool> putControllers() async {
       MezWebSideBarController(),
       permanent: true,
     );
+    if (!Get.isRegistered<ForegroundNotificationsController>()) {
+      await Get.put<ForegroundNotificationsController>(
+          ForegroundNotificationsController(isWebVersion: true),
+          permanent: true);
+    }
     mezDbgPrint(
         "]]]]]]]]]] the MezWebSideBarController is intailized ]]]]]]]]]]]]");
     areAllIntilized.add(true);
   }
+  // if (!Get.isRegistered<OrderController>()) {
+  //   await Get.put<OrderController>(
+  //     OrderController(),
+  //     permanent: true,
+  //   );
+  //   mezDbgPrint("]]]]]]]]]] the OrderController is intailized ]]]]]]]]]]]]");
+  //   areAllIntilized.add(true);
+  // }
   if (Get.find<FirbaseAuthController>().isUserSignedIn) {
     await AuthHooks.onSignInHook().then((value) {
       mezDbgPrint(
@@ -189,6 +205,7 @@ Future<bool> setupFirebase(
           appId: "1:606383265109:web:a2050a8335ee6e37d8cbdc",
           messagingSenderId: "606383265109",
           projectId: "mezcalmos-staging",
+          storageBucket: "gs://mezcalmos-staging.appspot.com",
         ),
       );
       firebaseDb =
@@ -208,6 +225,7 @@ Future<bool> setupFirebase(
   //func?.call();
   //final bool isItailized =
   return await putControllers().then((value) {
+    func?.call();
     return value;
   });
   // return isItailized;

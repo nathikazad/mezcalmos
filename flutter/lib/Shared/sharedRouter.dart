@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/pages/Notifications/ViewNotifications.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationview.dart';
 import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileScreen.dart';
 import 'package:mezcalmos/Shared/pages/Wrapper.dart';
 
@@ -85,7 +86,10 @@ class SharedRouter {
     GetPage(
         name: kSomethingWentWrongScreen,
         page: () => SomethingWentWrongScreen()),
-    GetPage(name: kUserProfile, page: () => UserProfile()),
+    GetPage(
+        name: kUserProfile,
+        page: () =>
+            UserProfile(userProfileController: UserProfileController())),
     GetPage(name: kAppNeedsUpdate, page: () => AppNeedsUpdateScreen()),
     // GetPage(name: kInAppReview, page: () => InAppReviewPage()),
     GetPage(name: kWrapperRoute, page: () => Wrapper()),

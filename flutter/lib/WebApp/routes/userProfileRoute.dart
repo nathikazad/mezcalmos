@@ -3,6 +3,8 @@ import 'package:mezcalmos/WebApp/screens/UserProfile/userProfile.dart'
     deferred as profile;
 import 'package:qlevar_router/qlevar_router.dart';
 
+import '../../Shared/pages/UserProfileScreen/UserProfileController.dart';
+
 class UserProfileRoute {
   static const String userProfile = "profile";
 

@@ -113,7 +113,7 @@ class SideWebBar extends StatelessWidget {
               title: "Orders",
               onTap: () {
                 Navigator.of(context).pop();
-                QR.navigator.replaceAll("/orders");
+                QR.to("/orders");
               },
             ),
             SideBarListTile(

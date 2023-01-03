@@ -33,7 +33,7 @@ class NotificationScreenForMobile extends StatelessWidget {
                 appBar: InstallAppBarComponent(),
                 bottomNavigationBar: MezBottomBar(),
                 body: Scaffold(
-                    key: drawerController.drawerKey,
+                    key: drawerController.getNewKey(),
                     drawer: drawerController.frontDrawerContent,
                     appBar: WebAppBarComponent(
                       type: _authcontroller.fireAuthUser?.uid != null

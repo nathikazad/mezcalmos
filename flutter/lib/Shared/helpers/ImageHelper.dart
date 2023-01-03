@@ -11,9 +11,10 @@ import 'package:image/image.dart' as image;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
+// import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_compression_flutter/image_compression_flutter.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
@@ -39,10 +40,28 @@ String generateRandomString(int len) {
 ///
 /// and reduce the quality down to [qualityCompressionOfUserImage = 25%].
 Future<Uint8List> compressImageBytes(Uint8List originalImg) async {
-  final Uint8List result = await FlutterImageCompress.compressWithList(
-      originalImg,
-      quality: nQualityCompressionOfUserImage);
-  return result;
+  // final Uint8List result = await FlutterImageCompress.compressWithList(
+  //     originalImg,
+  //     quality: nQualityCompressionOfUserImage);
+  // return result;
+
+  return originalImg;
+}
+
+Future<Uint8List> compressImageBytesForWeb(
+    Uint8List uint8list, String path) async {
+  var config = Configuration(
+    outputType: ImageOutputType.jpg,
+    useJpgPngNativeCompressor: true,
+    quality: nQualityCompressionOfUserImage,
+  );
+  mezDbgPrint("🖼️🖼️🖼️🖼️🖼️🖼️🖼️🖼️ the path is image.path ${path}");
+  final param = ImageFileConfiguration(
+      input: ImageFile(filePath: path, rawBytes: uint8list), config: config);
+  final output = await compressor.compress(param);
+  mezDbgPrint(
+      "🖼️🖼️🖼️🖼️🖼️🖼️🖼️🖼️ the path is image.path ${output.rawBytes}");
+  return output.rawBytes;
 }
 
 Future<File> writeFileFromBytesAndReturnIt(
@@ -59,6 +78,26 @@ Future<File> writeFileFromBytesAndReturnIt(
       .writeAsBytes(imgBytes));
 }
 
+Future<html.File> writeFileFromBytesAndReturnItForWeb(
+    {required String filePath,
+    required Uint8List imgBytes,
+    required dynamic mimeType}) async {
+  // compressed Image
+  final List<String> splittedPath = filePath.split('.');
+  final String pathWithoutExtension =
+      splittedPath.sublist(0, splittedPath.length - 1).join('.');
+  mezDbgPrint("PATH WITHOUT EXTENSION $pathWithoutExtension");
+  mezDbgPrint("PATH WITH EXTENSION $filePath");
+
+  return html.File(
+      imgBytes,
+      '$pathWithoutExtension.${DateTime.now().millisecondsSinceEpoch}.${splittedPath.last}',
+      {'type': mimeType});
+  // return (await File(
+  //         '$pathWithoutExtension.${DateTime.now().millisecondsSinceEpoch}.${splittedPath.last}')
+  //     .writeAsBytes(imgBytes));
+}
+
 /// this is only used for UserProfilePicture whereever we show bigImage [User.bigImage]
 Image showDefaultOrUserImg({Uint8List? memoryImg}) {
   if (memoryImg != null) {
@@ -73,9 +112,8 @@ Image showDefaultOrUserImg({Uint8List? memoryImg}) {
       assetInCaseFailed: aDefaultDbUserImgAsset);
 }
 
-Future<imPicker.ImageSource?> pickImageChoiceDialogForWeb(
-    BuildContext context) {
-  return showDialog<imPicker.ImageSource?>(
+Future<String?> pickImageChoiceDialogForWeb(BuildContext context) {
+  return showDialog<String?>(
     context: context,
     builder: (BuildContext context) => AlertDialog(
       // title: const Text('AlertDialog Title'),
@@ -97,7 +135,7 @@ Future<imPicker.ImageSource?> pickImageChoiceDialogForWeb(
                 ),
               ),
               onPress: () {
-                Navigator.pop(context, imPicker.ImageSource.gallery);
+                Navigator.pop(context, "yes");
               },
             ),
             Divider(),
@@ -114,7 +152,7 @@ Future<imPicker.ImageSource?> pickImageChoiceDialogForWeb(
                 ),
               ),
               onPress: () {
-                Navigator.pop(context);
+                Navigator.pop(context, "no");
               },
             ),
           ],

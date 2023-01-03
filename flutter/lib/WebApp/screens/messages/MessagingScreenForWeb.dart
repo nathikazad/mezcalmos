@@ -194,7 +194,7 @@ class _MessagingViewState extends State<MessagingView> {
                     Get.find<MezWebSideBarController>();
                 return LayoutBuilder(
                   builder: (context, constarints) => Scaffold(
-                      key: drawerController.drawerKey,
+                      key: drawerController.getNewKey(),
                       drawer: drawerController.frontDrawerContent,
                       appBar: InstallAppBarComponent(),
                       body: Scaffold(

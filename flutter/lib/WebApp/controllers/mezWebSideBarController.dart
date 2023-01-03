@@ -12,28 +12,39 @@ class MezWebSideBarController extends GetxController {
     super.onInit();
   }
 
-  GlobalKey<ScaffoldState> drawerKey = GlobalKey(debugLabel: QR.currentPath);
+  GlobalKey<ScaffoldState>? drawerKey = GlobalKey();
+
+  GlobalKey<ScaffoldState>? getNewKey() {
+    drawerKey =
+        new GlobalKey<ScaffoldState>(debugLabel: '___ScaffoldStateKey___');
+
+    return drawerKey;
+  }
 
   final Widget frontDrawerContent = SideWebBar();
   final Widget endDrawerContent = EndWebSideBar();
 
   void openWebDrawer() {
     mezDbgPrint("🚪 ===> the drawer just opend");
-    drawerKey.currentState!.openDrawer();
+    try {
+      drawerKey?.currentState!.openDrawer();
+    } catch (e) {
+      mezDbgPrint('🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺 ${e.toString()}');
+    }
   }
 
   void openWebEndDrawer() {
     mezDbgPrint("🚪 ===> the end  drawer just opend");
-    drawerKey.currentState!.openEndDrawer();
+    drawerKey!.currentState!.openEndDrawer();
   }
 
   void closeWebDrawer() {
     mezDbgPrint("🚪 ===> the drawer just closed");
-    drawerKey.currentState!.closeDrawer();
+    drawerKey?.currentState!.closeDrawer();
   }
 
   void closeWebEndDrawer() {
     mezDbgPrint("🚪 ===> the end drawer just closed");
-    drawerKey.currentState!.closeEndDrawer();
+    drawerKey!.currentState!.closeEndDrawer();
   }
 }

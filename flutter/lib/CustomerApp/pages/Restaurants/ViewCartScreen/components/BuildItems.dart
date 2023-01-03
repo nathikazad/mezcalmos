@@ -67,7 +67,8 @@ class CartItemsBuilder extends StatelessWidget {
                   ),
                 ),
                 if (cartItem.notes != null)
-                  _itemNotesComponent(cartItem, context),
+                  _itemNotesComponent(cartItem, context,
+                      isWebVersion: isWebVersion),
                 SizedBox(
                   height: 10,
                 ),
@@ -77,7 +78,7 @@ class CartItemsBuilder extends StatelessWidget {
                     " the data inside the expansion ${cartItem.toFirebaseFunctionFormattedJson()}");
 
                 QR.to(
-                    "/restaurants/${cartItem.restaurantId}/${cartItem.item.id}?mode=edit");
+                    "/restaurants/${cartItem.restaurantId}/${cartItem.item.id}?mode=edit&idInCart=${cartItem.idInCart}");
 
                 //Get.toNamed(editCartItemRoute("${cartItem.idInCart}"));
               },
@@ -89,7 +90,9 @@ class CartItemsBuilder extends StatelessWidget {
     );
   }
 
-  Container _itemNotesComponent(CartItem cartItem, BuildContext context) {
+  Container _itemNotesComponent(CartItem cartItem, BuildContext context,
+      {bool? isWebVersion = false}) {
+    final txt = Theme.of(context).textTheme;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8),
       alignment: Alignment.centerLeft,
@@ -100,7 +103,9 @@ class CartItemsBuilder extends StatelessWidget {
           Container(
             child: Text(
               "${_i18n()["itemNotes"]}",
-              style: Get.textTheme.bodyText1,
+              style: txt.bodyText1!.copyWith(
+                  fontSize: isWebVersion == true ? 16 : null,
+                  fontWeight: isWebVersion == true ? FontWeight.w700 : null),
             ),
           ),
           SizedBox(
@@ -109,7 +114,9 @@ class CartItemsBuilder extends StatelessWidget {
           Container(
             child: Text(
               cartItem.notes!,
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                  fontSize: isWebVersion == true ? 14 : null,
+                  fontWeight: isWebVersion == true ? FontWeight.w500 : null),
             ),
           ),
         ],

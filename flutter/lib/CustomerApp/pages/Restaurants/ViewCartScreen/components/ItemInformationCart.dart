@@ -143,9 +143,18 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
             _restaurantController.deleteItem(cartItem.idInCart!);
             if (_restaurantController.cart.value.quantity() == 0) {
               _restaurantController.clearCart();
-              Get.until((Route route) => route.settings.name == kHomeRoute);
+              if (isWebVersion == true) {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              } else
+                Get.until((Route route) => route.settings.name == kHomeRoute);
             } else {
-              Get.back(closeOverlays: true);
+              if (isWebVersion == true) {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              } else {
+                Get.back(closeOverlays: true);
+              }
             }
           });
         },

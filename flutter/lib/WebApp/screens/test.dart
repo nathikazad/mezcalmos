@@ -59,10 +59,43 @@ class _Test1State extends State<Test1> {
     mezDbgPrint("this is just called list of restaurants 🔥");
     mezDbgPrint(
         "]]]]]]]]]] Build  resturants list 🍔 test 🧪  and time 📅 ${DateTime.now().toString()}");
-    // return Scaffold(
-    //   appBar: InstallAppBarComponent(),
-    //   body: ,
-    // );
+    return Scaffold(
+      //  appBar: InstallAppBarComponent(),
+      body: FutureBuilder<bool>(
+          future: setupFirebase(
+              launchMode: typeMode.toLaunchMode(),
+              func: () {
+                //  Get.put<ListRestaurantsController>(ListRestaurantsController());
+              }),
+          builder: (context, snapShot) {
+            if (snapShot.hasData && snapShot.data == true) {
+              return Scaffold(
+                  appBar: InstallAppBarComponent(),
+                  body: CustomScrollView(key: centerKey, slivers: [
+                    SliverList(
+                      key: centerKey,
+                      delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _sortingSwitcher(context),
+                            _searchInput(context)
+                          ],
+                        );
+                      }, childCount: 1, semanticIndexOffset: 1),
+                    ),
+                    _restaurantList(context)
+                  ]));
+            } else {
+              return Scaffold(
+                body: Center(
+                  child: MezLoaderWidget(),
+                ),
+              );
+            }
+          }),
+    );
     return FutureBuilder<bool>(
         future: setupFirebase(
             launchMode: typeMode.toLaunchMode(),
@@ -313,9 +346,10 @@ class _Test1State extends State<Test1> {
                   restaurant: viewController.filteredRestaurants[index],
                   shippingPrice: viewController.baseShippingPrice,
                   onClick: () {
-                    QR.to(
-                      "/restaurants/${viewController.filteredRestaurants[index].info.id}${getLangParam()}",
-                    );
+                    QR.toName("test2");
+                    // QR.to(
+                    //   "/restaurants/${viewController.filteredRestaurants[index].info.id}${getLangParam()}",
+                    // );
                   },
                 );
               },

@@ -20,7 +20,8 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 class RestaurantController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   FirbaseAuthController _authController = Get.find<FirbaseAuthController>();
-
+  bool? isWebversion;
+  RestaurantController({this.isWebversion = false});
   StreamSubscription<dynamic>? _cartListener;
   Restaurant? associatedRestaurant;
   Rx<Cart> cart = Cart().obs;

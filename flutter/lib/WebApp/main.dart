@@ -17,6 +17,9 @@ void main() {
   //prod stage
   js.context["my_dart_var"] = typeMode;
   html.document.dispatchEvent(html.CustomEvent("dart_loaded"));
+  String _tmpLmode = typeMode;
+  var _launchMode = _tmpLmode.toLaunchMode();
+  setupFirebase(launchMode: _launchMode);
   runMainGuarded(() => runApp(Sizer(builder: (
         BuildContext context,
         Orientation orientation,
@@ -34,12 +37,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late final AppLaunchMode _launchMode;
+  //late final AppLaunchMode _launchMode;
   @override
   void initState() {
-    String _tmpLmode = typeMode;
-    _launchMode = _tmpLmode.toLaunchMode();
-
     super.initState();
   }
 

@@ -176,6 +176,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                             } else {
                               await restaurantCartController
                                   .addItem(widget.cartItem.value!);
+                              widget.navigationCallback?.call();
                               //await Get.offNamed<void>(kCartRoute);
                             }
                           }
@@ -189,7 +190,8 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                         dialogRequiredSignIn(
                             context: context,
                             navigationCallback: () {
-                              QR.toName("signIn");
+                              QR.to(
+                                  "/signIn?type=restaurants&id=${QR.params["id"].toString()}&itemId=${QR.params["itemId"].toString()}");
                             });
                       }
                     },

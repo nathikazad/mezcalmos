@@ -76,10 +76,9 @@ class _ViewRestaurantsScrennInfoState extends State<ViewRestaurantsScrennInfo> {
 
             final MezWebSideBarController drawerController =
                 Get.find<MezWebSideBarController>();
-            drawerController.drawerKey = _key;
 
             return Scaffold(
-              key: drawerController.drawerKey,
+              key: drawerController.getNewKey(),
               drawer: drawerController.frontDrawerContent,
               endDrawer: drawerController.endDrawerContent,
               appBar: InstallAppBarComponent(),

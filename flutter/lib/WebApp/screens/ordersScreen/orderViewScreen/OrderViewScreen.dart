@@ -59,11 +59,11 @@ class _OrderViewScreenState extends State<OrderViewScreen> {
                 Get.find<FirbaseAuthController>();
             final MezWebSideBarController drawerController =
                 Get.find<MezWebSideBarController>();
-            drawerController.drawerKey = _key;
+
             return Material(
               child: LayoutBuilder(builder: ((context, constraints) {
                 return Scaffold(
-                    key: drawerController.drawerKey,
+                    key: drawerController.getNewKey(),
                     drawer: drawerController.frontDrawerContent,
                     endDrawer: drawerController.endDrawerContent,
                     appBar: InstallAppBarComponent(),

@@ -2,24 +2,29 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-
+import 'dart:html' as html;
+import 'dart:typed_data';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
+import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/WebApp/screens/userProfile/components/UserProfileController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']
     ['controllers']['authController'];
@@ -49,8 +54,8 @@ class FirbaseAuthController extends GetxController {
   Stream<MainUserInfo?> get userInfoStream => _userInfoStreamController.stream;
 
   bool get isUserSignedIn => _fireAuthUser.value != null;
-  FirebaseDb _databaseHelper =
-      Get.find<FirebaseDb>(); // Already Injected in main function
+  FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
+  // Already Injected in main function
 
   FirbaseAuthController(this.onSignInCallback, this.onSignOutCallback);
   String? _previousUserValue = "init";
@@ -180,10 +185,71 @@ class FirbaseAuthController extends GetxController {
     } finally {
       _uploadedImgUrl = await firebase_storage.FirebaseStorage.instance
           .ref(imgPath)
-          .getDownloadURL();
+          .getDownloadURL()
+          .then((value) {
+        mezDbgPrint("ℹ️ℹ️ℹ️ℹ️ℹ️ℹ️ℹ️ the url is value ${value}");
+        return value;
+      });
     }
 
     return _uploadedImgUrl;
+  }
+
+  Future<String> uploadUserImgToFbStorageForWeb({
+    required XFile pikedFile,
+    required html.File file,
+    required Uint8List uint8list,
+    bool isCompressed = false,
+  }) async {
+    String? _uploadedImgUrl;
+
+    mezDbgPrint("::::: log {{{{ ${pikedFile.path}  }}}}}");
+    final List<String> splitted = pikedFile.path.split('.');
+    final String imgPath =
+        "users/${_fireAuthUser.value!.uid}/avatar/${_fireAuthUser.value!.uid}/${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
+    mezDbgPrint("::::: log {{{{ ${imgPath}  }}}}}");
+    try {
+      // await firebase_storage.FirebaseStorage.instance.ref(imgPath).putData(
+      //     await pikedFile.readAsBytes(),
+      //     SettableMetadata(
+      //       cacheControl: "public,max-age=300",
+      //       contentType: "image/jpeg",
+      //     )
+      //     // metadata: SettableMetadata()
+      //     );
+      String fileResult = await pikedFile.readAsString();
+      mezDbgPrint("inside the uploade function ${fileResult}");
+      await firebase_storage.FirebaseStorage.instance.ref(imgPath).putData(
+            uint8list,
+            // SettableMetadata(
+            //   cacheControl: "public,max-age=300",
+            //   contentType: "image/jpeg",
+            // )
+            // metadata: SettableMetadata()
+          );
+
+      _uploadedImgUrl = await firebase_storage.FirebaseStorage.instance
+          .ref(imgPath)
+          .getDownloadURL()
+          .then((value) {
+        mezDbgPrint("ℹ️ℹ️ℹ️ℹ️ℹ️ℹ️ℹ️ the url is value ${value}");
+        return value;
+      });
+    } catch (e, s) {
+      mezDbgPrint(
+          "this an error happen in :::uploadUserImgToFbStorageForWeb:: function ${e.toString()}");
+      return "HAHAHAHAHAAH";
+    }
+
+    //       .catchError((e) {
+
+    //   }).whenComplete(() async {
+
+    // } on firebase_core.FirebaseException catch (e) {
+    //   mezDbgPrint(e.message.toString());
+    // }
+
+    return _uploadedImgUrl!;
   }
 
   /// this is for setting the Original size of the image that was picked by the user,

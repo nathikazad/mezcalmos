@@ -55,24 +55,25 @@ class _OrdersScreenState extends State<OrdersScreen> {
           future: setupFirebase(
               launchMode: typeMode.toLaunchMode(),
               func: () async {
-                await Get.put(OrderController(), permanent: true);
+                if (Get.isRegistered<OrderController>()) {
+                  await Get.put(OrderController(), permanent: true);
+                }
               }),
           builder: (context, snapShot) {
-            final MezWebSideBarController drawerController =
-                Get.find<MezWebSideBarController>();
-            drawerController.drawerKey = _key;
-            if (Get.isRegistered<OrderController>()) {
-              Get.put(OrderController(), permanent: true);
-            }
             if (snapShot.hasData && snapShot.data == true) {
+              final MezWebSideBarController drawerController =
+                  Get.find<MezWebSideBarController>();
+              drawerController.drawerKey = _key;
+
               Get.put<AppLifeCycleController>(
                 AppLifeCycleController(logs: true),
                 permanent: true,
               );
               return Scaffold(
-                key: drawerController.drawerKey,
+                key: _key,
                 appBar: InstallAppBarComponent(),
-                drawer: drawerController.endDrawerContent,
+                endDrawer: drawerController.endDrawerContent,
+                drawer: drawerController.frontDrawerContent,
                 bottomNavigationBar: MezBottomBar(),
                 body: LayoutBuilder(builder: (context, constraints) {
                   return Scaffold(
@@ -80,7 +81,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                             MezCalmosResizer.isSmallMobile(context))
                         ? null
                         : WebAppBarComponent(
-                            automaticallyGetBack: false,
+                            automaticallyGetBack: true,
                             type: WebAppBarType.WithCartActionButton.obs,
                             // leadingFunction: () {
                             //   _key.currentState!.openDrawer();

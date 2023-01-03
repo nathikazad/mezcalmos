@@ -58,6 +58,9 @@ dependencies:
   sticky_headers: ^0.3.0+2
   flutter_svg: ^1.1.5
   another_flushbar: ^1.12.29
+  image_compression_flutter: ^1.0.2
+  image_picker_web: ^3.0.0+1
+  mime_type: ^1.0.0
 
 
 

@@ -25,7 +25,9 @@ class UserProfileController {
   DateTime? userCreationTime;
 
   bool? isWebVersion;
-  UserProfileController({this.isWebVersion = false}) {
+  UserProfileController({
+    this.isWebVersion = false,
+  }) {
     mezDbgPrint(
         "========= the version is ${isWebVersion == true ? "web" : "mobile"}");
   }
@@ -66,9 +68,9 @@ class UserProfileController {
     stateMode.value = _mode;
   }
 
-  void disposeController() {
-    textEditingController.dispose();
-  }
+  // void disposeController() {
+  //   textEditingController.dispose();
+  // }
 
   bool checkIfUserHasAllInfosSet() {
     return _authController.isDisplayNameSet() && _authController.isUserImgSet();

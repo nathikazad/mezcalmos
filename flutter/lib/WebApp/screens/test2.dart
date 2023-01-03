@@ -3,8 +3,10 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/WebApp/screens/components/InstallAppBarComponent.dart';
 import 'package:mezcalmos/WebApp/values/constants.dart';
 import 'package:mezcalmos/WebApp/webHelpers/setUpHelper.dart';
+import 'package:mezcalmos/WebApp/widgets/mezLoaderWidget.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class Test2 extends StatefulWidget {
@@ -40,20 +42,31 @@ class _Test2State extends State<Test2> {
     return FutureBuilder(
         future: setupFirebase(launchMode: typeMode.toLaunchMode(), func: () {}),
         builder: (context, snapShot) {
-          return Scaffold(
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              leading: IconButton(
-                  onPressed: () {
-                    QR.back();
-                    // Navigator.of(context).pop();
-                  },
-                  icon: Icon(Icons.arrow_back)),
-            ),
-            body: Center(
-              child: Text("test tow screen "),
-            ),
-          );
+          if (snapShot.hasData && snapShot.data == true) {
+            return Scaffold(
+              appBar: InstallAppBarComponent(),
+              body: Scaffold(
+                appBar: AppBar(
+                  automaticallyImplyLeading: false,
+                  leading: IconButton(
+                      onPressed: () {
+                        QR.back();
+                        // Navigator.of(context).pop();
+                      },
+                      icon: Icon(Icons.arrow_back)),
+                ),
+                body: Center(
+                  child: Text("test tow screen "),
+                ),
+              ),
+            );
+          } else {
+            return Scaffold(
+              body: Center(
+                child: MezLoaderWidget(),
+              ),
+            );
+          }
         });
   }
 }

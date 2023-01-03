@@ -51,9 +51,9 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
     super.initState();
   }
 
-  final GlobalKey<ScaffoldState> _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> _key = GlobalKey();
     mezDbgPrint("this is just called list of restaurants 🔥");
     mezDbgPrint(
         "]]]]]]]]]] build  resturants list 🍔 test 🧪  and time 📅 ${DateTime.now().toString()}");
@@ -75,7 +75,7 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
                 Get.find<LanguageController>();
             final MezWebSideBarController drawerController =
                 Get.find<MezWebSideBarController>();
-            drawerController.drawerKey = _key;
+
             //  MezPrint();
             mezDbgPrint(_authcontroller.fireAuthUser?.uid != null
                 ? WebAppBarType.WithCartActionButton.toString()
@@ -100,7 +100,7 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
             // );
 
             return Scaffold(
-                key: drawerController.drawerKey,
+                key: drawerController.getNewKey(),
                 appBar: InstallAppBarComponent(),
                 drawer: drawerController.frontDrawerContent,
                 endDrawer: drawerController.endDrawerContent,
