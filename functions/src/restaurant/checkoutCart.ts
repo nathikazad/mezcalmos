@@ -11,7 +11,7 @@ import { clearCart } from "../shared/graphql/restaurant/cart/clearCart";
 import { setOrderChatInfo } from "../shared/graphql/chat/setChatInfo";
 import { getCart } from "../shared/graphql/restaurant/cart/getCart";
 import { getCustomer } from "../shared/graphql/restaurant/customer/getCustomer";
-import { getMezAdmins } from "../shared/graphql/restaurant/mezAdmin/getMezAdmins";
+import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmins";
 import { CustomerInfo, MezAdmin } from "../shared/models/Generic/User";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { Cart } from "../shared/models/Services/Restaurant/Cart";
@@ -66,6 +66,9 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     deliveryCost: checkoutRequest.deliveryCost,
     scheduledTime: checkoutRequest.scheduledTime
   }
+
+  console.log("+ Items[0].SelectedOptions ==> " ,customerCart.items[0].selectedOptions);
+  console.log("+ Items ==> " , customerCart.items);
 
 
     // if (data.stripePaymentId) {

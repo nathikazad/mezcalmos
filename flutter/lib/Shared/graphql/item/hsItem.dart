@@ -227,7 +227,7 @@ List<Option> _convertOption(
   final List<Option> options = optionsData.item_options.map(
       (Query$getItemById$restaurant_item_by_pk$options$item_options oneOption) {
     final Option newOption = Option(
-      id: oneOption.id.toString(),
+      id: oneOption.id,
       nameId: oneOption.name.id,
       name: toLanguageMap(translations: oneOption.name.translations),
       costPerExtra: oneOption.cost_per_extra,

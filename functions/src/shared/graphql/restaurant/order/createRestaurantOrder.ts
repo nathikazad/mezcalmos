@@ -24,7 +24,6 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
         restaurant_id: restaurantOrder.restaurantId,
         customer_app_type: restaurantOrder.customerAppType,
         chat: {
-        
           data: {
             
             chat_participants: {
@@ -93,17 +92,17 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
         status: RestaurantOrderStatus.OrderReceived,
         items: {
           data: restaurantOrder.items!.map((i) => {
+            console.log("+ SelectedOptions of item ", i.itemId , ": ",i.selectedOptions);
+            console.log("+ ItemName ", i.name);
             return {
               cost_per_one: i.costPerOne,
               notes: i.notes,
               quantity: i.quantity,
               restaurant_item_id: i.itemId,
-              in_json: JSON.stringify({
-                // name: i.restaurant_item.name?.translations.reduce((prev:Record<any, any>, current) => {
-                //   prev[current.language_id] = current.value;
-                //   return prev;
-                // }, {}),
+              in_json: 
+               JSON.stringify({
                 name: i.name,
+                image : i.image,
                 selected_options: i.selectedOptions
               }),
             };

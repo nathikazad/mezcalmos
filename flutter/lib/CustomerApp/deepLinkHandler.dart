@@ -67,7 +67,7 @@ class DeepLinkHandler {
       case CustomerDeepLinkType.Restaurant:
         mezDbgPrint("@deepLink@ ===> handling restaurant routing ! ");
         final Restaurant? _rest = await Get.find<RestaurantsInfoController>()
-            .getRestaurant(providerId as int);
+            .getRestaurant(providerId);
         if (_rest != null) {
           Future<void>.delayed(
             Duration.zero,

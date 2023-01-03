@@ -70,7 +70,7 @@ class AuthController extends GetxController {
         mezDbgPrint('AuthController: User is currently signed in!');
 
         fireAuth.IdTokenResult? tokenResult = await user.getIdTokenResult(true);
-        mezDbgPrint(tokenResult);
+        mezDbgPrint(tokenResult.claims);
 
         if (tokenResult.claims?['https://hasura.io/jwt/claims'] == null) {
           mezDbgPrint("No token, calling addHasuraClaims");

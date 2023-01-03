@@ -14,23 +14,26 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/componen
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/RestaurantBankInfo.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/notesWidget.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
+import 'package:mezcalmos/Shared/graphql/order/mutations/hsRestaurantOrderMutations.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
+import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewOrderScreen"]["ViewRestaurantOrderScreen"];
@@ -182,16 +185,23 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         title: order.value?.restaurant.name,
       ),
       bottomNavigationBar: Obx(() {
-        if (showReviewBtn()) {
+        if (showReviewBtn() && order.value != null) {
           return MezButton(
             label: "${_i18n()["writeReview"]}",
             withGradient: true,
             onClick: () async {
-              await showReviewDialog(
+              final int? newReviewId = await showReviewDialog(
                 context,
                 orderId: order.value!.orderId,
                 orderType: OrderType.Restaurant,
+                serviceProviderId: order.value!.restaurantId,
+                serviceProviderType: ServiceProviderType.Restaurant,
               );
+              mezDbgPrint("Reviwww id =====>$newReviewId");
+              if (newReviewId != null) {
+                await insertRestaurantOrderReview(
+                    orderId: order.value!.orderId, reviewId: newReviewId);
+              }
             },
             borderRadius: 0,
           );
@@ -259,6 +269,23 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                               order: order.value!,
                               margin: const EdgeInsets.only(top: 20),
                             ),
+                            if (order.value!.review != null)
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(
+                                    "Review : ",
+                                    style: Get.textTheme.bodyText1,
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  ReviewCard(review: order.value!.review!),
+                                ],
+                              ),
                             order.value?.notes == null ||
                                     order.value!.notes!.length <= 0
                                 ? Container()

@@ -1,5 +1,5 @@
 import { HttpsError } from "firebase-functions/v1/auth";
-import { getDeliveryOperators } from "../shared/graphql/delivery/getDeliveryOperator";
+import { getDeliveryOperators } from "../shared/graphql/delivery/operator/getDeliveryOperator";
 import { updateDeliveryOrderCompany } from "../shared/graphql/delivery/updateDelivery";
 import { getRestaurantOrder } from "../shared/graphql/restaurant/order/getRestaurantOrder"
 import { OrderType } from "../shared/models/Generic/Order";
@@ -42,6 +42,6 @@ export async function assignDeliveryCompany(operatorUserId: number | undefined, 
       }
 
       deliveryOperators.forEach((d) => {
-        pushNotification(d.user?.firebaseId!, notification, d.notificationInfo, ParticipantType.DeliveryAdmin);
+        pushNotification(d.user?.firebaseId!, notification, d.notificationInfo, ParticipantType.DeliveryOperator);
     });
 }

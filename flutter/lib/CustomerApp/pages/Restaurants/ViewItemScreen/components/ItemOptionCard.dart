@@ -30,7 +30,7 @@ class ItemOptionCard extends StatefulWidget {
 
 class _ItemOptionCardState extends State<ItemOptionCard> {
   LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
-  late String optionId;
+  late int optionId;
   @override
   void initState() {
     optionId = widget.option.id;

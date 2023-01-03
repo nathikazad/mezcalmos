@@ -39,6 +39,15 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
           restaurant_item_id: true,
           quantity: true,
           cost_per_one: true,
+          restaurant_item : {
+            name : {
+            translations :  [{} , {
+                language_id : true,
+                value : true
+            }], 
+        } , 
+        image : true,
+        }   
         }],
       }
     ]
@@ -58,6 +67,8 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
   let items: OrderItem[] = response.restaurant_order_by_pk.items.map((i) => {
     return {
       orderItemId: i.id,
+      name: i.restaurant_item.name,
+      image : i.restaurant_item.image,
       itemId: i.restaurant_item_id,
       quantity: i.quantity,
       costPerOne: i.cost_per_one

@@ -8,7 +8,6 @@ import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/compone
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/components/ROpOrderItems.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/components/ROpOrderNote.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/components/ROpOrderStatusCard.dart';
-import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/components/ROpRefundBtn.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/controller/ROpOrderViewController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -22,6 +21,7 @@ import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
+import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -86,15 +86,32 @@ class _ROpOrderViewState extends State<ROpOrderView> {
                     margin: const EdgeInsets.only(bottom: 20),
                     child:
                         OrderPaymentMethod(order: viewController.order.value!)),
+                if (viewController.order.value!.review != null)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "Review : ",
+                        style: Get.textTheme.bodyText1,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      ReviewCard(review: viewController.order.value!.review!),
+                    ],
+                  ),
+                ROpOrderNote(orderNote: viewController.order.value!.notes),
                 OrderSummaryCard(
                   order: viewController.order.value!,
                   margin: const EdgeInsets.only(bottom: 20),
                 ),
-                ROpOrderNote(orderNote: viewController.order.value!.notes),
 
-                ROpRefundButton(
-                  order: viewController.order.value!,
-                ),
+                // ROpRefundButton(
+                //   order: viewController.order.value!,
+                // ),
                 if (viewController.order.value!.inProcess())
                   TextButton(
                       style: TextButton.styleFrom(

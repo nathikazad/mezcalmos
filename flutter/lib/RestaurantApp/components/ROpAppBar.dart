@@ -6,6 +6,7 @@ class ROpAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final bool? autoBack;
   final AppBarLeftButtonType leftBtnType;
+  PreferredSizeWidget? bottom;
   bool showOrders;
   bool canGoBack;
   Function? onClick;
@@ -16,6 +17,7 @@ class ROpAppBar extends StatelessWidget implements PreferredSizeWidget {
       this.autoBack = false,
       this.canGoBack = true,
       this.onClick,
+      this.bottom,
       this.leftBtnType = AppBarLeftButtonType.Back})
       : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key);
@@ -26,6 +28,7 @@ class ROpAppBar extends StatelessWidget implements PreferredSizeWidget {
     return mezcalmosAppBar(leftBtnType,
         title: title,
         showLeftBtn: canGoBack,
+        tabBar: bottom,
         onClick: () => onClick?.call(),
         showNotifications: true,
         ordersRoute: kPastOrdersListView);

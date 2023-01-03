@@ -30,7 +30,7 @@ export async function createRestaurant(
         restaurant_operators: {
           data: [{
             user_id: restaurantOperatorUserId,
-            status: OperatorStatus.AwaitingApproval,
+            status: OperatorStatus.Authorized,
             owner: true,
           }]
         }
@@ -51,9 +51,9 @@ export async function createRestaurant(
   
   
   // Generating 3 links/Qr
+  let restaurantOpLinks : IDeepLink|null = await generateDeepLink("Restaurant", {"providerId": response.insert_restaurant_one.id, "deepLinkType": "addRestaurantOperator"})
   let customerLinks : IDeepLink|null = await generateDeepLink("Customer", {"providerType":"restaurant", "providerId": response.insert_restaurant_one.id, "deepLinkType": "publicLink"})
   let deliveryLinks : IDeepLink|null = await generateDeepLink("Delivery", {"providerType":"restaurant", "providerId": response.insert_restaurant_one.id, "deepLinkType": "addDriver"})
-  let restaurantOpLinks : IDeepLink|null = await generateDeepLink("Restaurant", {"restaurantId": response.insert_restaurant_one.id, "deepLinkType": "addRestaurantOperator"})
 
   chain.mutation({
     insert_service_link_one: [{

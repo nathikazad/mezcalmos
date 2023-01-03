@@ -27,6 +27,13 @@ import { getAuthUsingOTP, sendOTPForLogin } from "./utilities/otpAuth";
 import * as userChanges from './utilities/userChanges'
 // import { generateDriverLink,generateOperatorLink } from "./utilities/links/generate";
 import { assignDriver } from "./delivery/assignDriver";
+import { addDriver } from "./delivery/addDriver";
+import { DeliveryCompanyType } from "./shared/models/Services/Delivery/DeliveryOrder";
+import { authorizeDriver } from "./delivery/authorizeDriver";
+import { addRestaurantOperator } from "./restaurant/addRestaurantOperator";
+import { addDeliveryOperator } from "./delivery/addDeliveryOperator";
+import { authorizeRestaurantOperator } from "./restaurant/authorizeOperator";
+import { authorizeDeliveryOperator } from "./delivery/authorizeOperator";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -59,18 +66,22 @@ export const stripe = {
 
 
 
-export const restaurant = {
+export const restaurant2 = {
   createRestaurant: authenticatedCall((userId, data) => createNewRestaurant(userId, data)),
   // genOperatorLink: authenticatedCall((userId, data) => generateOperatorLink(userId,data )),
   // genDriverLink: authenticatedCall((userId, data) => generateDriverLink(userId,data )),
-  checkoutCart2: authenticatedCall((userId, data) => checkout(userId, data)),
+  checkoutCart: authenticatedCall((userId, data) => checkout(userId, data)),
   // addReview: authenticatedCall((userId, data) => addReview(userId, data)),
   prepareOrder: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),
-  prepareOrder2: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),
+  // prepareOrder2: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),
   readyForOrderPickup: authenticatedCall((userId, data) => restaurantStatusChange.readyForPickupOrder(userId, data)),
-  readyForOrderPickup2: authenticatedCall((userId, data) => restaurantStatusChange.readyForPickupOrder(userId, data)),
+  // readyForOrderPickup2: authenticatedCall((userId, data) => restaurantStatusChange.readyForPickupOrder(userId, data)),
   cancelOrderFromAdmin: authenticatedCall((userId, data) => restaurantStatusChange.cancelOrder(userId, data)),
   cancelOrderFromCustomer: authenticatedCall((userId, data) => cancelOrderFromCustomer(userId, data)),
+  addRestaurantOperator: authenticatedCall((userId, data) => addRestaurantOperator(userId, data)),
+  authorizeRestaurantOperator: authenticatedCall((userId, data) => authorizeRestaurantOperator(userId, data)),
+  addRestaurantDriver: authenticatedCall((userId, data) => addDriver(userId, data, DeliveryCompanyType.Restaurant)),
+  authorizeRestaurantDriver: authenticatedCall((userId, data) => authorizeDriver(userId, data, DeliveryCompanyType.Restaurant)),
   // setEstimatedFoodReadyTime: authenticatedCall((userId, data) => restaurantStatusChange.setEstimatedFoodReadyTime(userId, data)),
   // markOrderItemUnavailable: authenticatedCall((userId, data) => restaurantStatusChange.markOrderItemUnavailable(userId, data)),
   // refundCustomerCustomAmount: authenticatedCall((userId, data) => restaurantStatusChange.refundCustomerCustomAmount(userId, data)),
@@ -98,8 +109,12 @@ export const restaurant = {
 //   setEstimatedLaundryReadyTime: authenticatedCall((userId, data) => laundryStatusChange.setEstimatedLaundryReadyTime(userId, data)),
 // }
 
-export const delivery = {
+export const delivery2 = {
   assignDriver: authenticatedCall((userId, data) => assignDriver(userId, data)),
+  addDeliveryOperator: authenticatedCall((userId, data) => addDeliveryOperator(userId, data)),
+  authorizeDeliveryOperator: authenticatedCall((userId, data) => authorizeDeliveryOperator(userId, data)),
+  addDeliveryDriver: authenticatedCall((userId, data) => addDriver(userId, data, DeliveryCompanyType.DeliveryCompany)),
+  authorizeDeliveryDriver: authenticatedCall((userId, data) => authorizeDriver(userId, data, DeliveryCompanyType.DeliveryCompany)),
   // restaurantStartDelivery: authenticatedCall((userId, data) => restaurantDelivery.startDelivery(userId, data)),
   // restaurantFinishDelivery: authenticatedCall((userId, data) => restaurantDelivery.finishDelivery(userId, data)),
   // laundryStartPickupFromCustomer: authenticatedCall((userId, data) => laundryDelivery.startPickupFromCustomer(userId, data)),
@@ -132,7 +147,8 @@ export const delivery = {
 
 type AuthenticatedFunction = (userId:number, data:any) => any;
 function authenticatedCall(func:AuthenticatedFunction) {
-  return functions.https.onCall(async (data, context) =>  {
+  return functions.https.onCall(async (data, context) => {
+    
     console.log("[+] authenticatedCall :: ", data);
     if (!context.auth?.uid) {
       throw new HttpsError(
@@ -141,16 +157,18 @@ function authenticatedCall(func:AuthenticatedFunction) {
       );
     }
     let firebaseUser = await firebase.auth().getUser(context.auth!.uid)
-    if(!firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"]) {
-      throw new HttpsError(
-        "unauthenticated",
-        "Request was not authenticated.",
-      );
-    } else {
+    console.log("Custom claims",firebaseUser.customClaims)
+    if(firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"] == null) {
+    //   throw new HttpsError(
+    //     "unauthenticated",
+    //     "Request was not authenticated.",
+    //   );
+    // } else {
       await userChanges.addHasuraClaim(context.auth?.uid);
       firebaseUser = await firebase.auth().getUser(context.auth!.uid)
+      
     }
-    
+   
     return await func(parseInt(firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"]), data);
   });
 }

@@ -1,8 +1,8 @@
 import { HttpsError } from "firebase-functions/v1/auth";
-import { AssignDriverDetails } from "../../../delivery/assignDriver";
-import { getHasura } from "../../../utilities/hasura";
-import { OperatorType } from "../../models/Generic/Generic";
-import { DeliveryCompanyType } from "../../models/Services/Delivery/DeliveryOrder";
+import { AssignDriverDetails } from "../../../../delivery/assignDriver";
+import { getHasura } from "../../../../utilities/hasura";
+import { OperatorType } from "../../../models/Generic/Generic";
+import { DeliveryCompanyType } from "../../../models/Services/Delivery/DeliveryOrder";
 
 export async function assignDeliveryDriver(assignDriverDetails: AssignDriverDetails) {
   let chain = getHasura();

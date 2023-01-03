@@ -1,13 +1,15 @@
 import * as firebaseAdmin from "firebase-admin";
 import * as fs from 'fs';
 import { getHasura } from "../../../../functions/src/utilities/hasura";
-import { insertRestaurants } from "../../../../functions/src/shared/graphql/restaurant/insertRestaurants"
+import { insertRestaurants } from "../../../../functions/src/shared/graphql/restaurant/insertRestaurants";
+import { insertRestaurantOrders } from "../../../../functions/src/shared/graphql/restaurant/order/insertRestaurantOrders"
 import { insertRestaurantOperators } from "../../../../functions/src/shared/graphql/restaurant/operators/insertRestaurantOperators"
-import { insertDeliveryDrivers } from "../../../../functions/src/shared/graphql/delivery/insertDeliveryDrivers"
+import { insertDeliveryDrivers } from "../../../../functions/src/shared/graphql/delivery/driver/insertDeliveryDrivers"
+import { insertCustomers } from "../../../../functions/src/shared/graphql/restaurant/customer/insertCustomers"
 
 import { insertUsers } from "../../../../functions/src/shared/graphql/user/insertUsers"
 
-
+process.env.FUNCTIONS_EMULATOR = "true";
 var serviceAccount = require("./../../../../../../../../service_account_production.json");
 
 const firebase = firebaseAdmin.initializeApp({
@@ -16,11 +18,11 @@ const firebase = firebaseAdmin.initializeApp({
 }, "production");
 
 async function saveFile() {
-  let db = (await firebase.database().ref(`/deliveryDrivers/info`).once('value')).val();
+  let db = (await firebase.database().ref(`/customers/info`).once('value')).val();
   console.log("finished downloading, starting write");
 
   let data = JSON.stringify(db, null, "\t");
-  fs.writeFileSync("./../../../../../../data/db-snapshot-delivery-drivers.json", data);
+  fs.writeFileSync("./../../../../../../data/db-snapshot-customers.json", data);
   console.log("Finished");
 }
 async function writeToDB() {
@@ -328,8 +330,102 @@ async function writeToDBDeliDrivers() {
   await insertDeliveryDrivers(array)
 }
 
+async function writeToDBRestoOrders() {
+  let orders = JSON.parse(
+    fs.readFileSync('./../../../../../../data/db-snapshot-restaurant-orders.json').toString()
+  );
+  let array = []
+  for (let orderId in orders) {
+    let order = orders[orderId]
+    if (!order)
+      continue
+
+    let itemArray = [];
+    let orderItems = order.items
+    for(let itemFirebaseId in orderItems) {
+      let orderItem = orderItems[itemFirebaseId];
+      if(!orderItem)
+        continue
+
+      let orderItemObject = {
+        itemName: orderItem.name.en,
+        inJSON: JSON.stringify({
+          name: orderItem.name,
+          selected_options: orderItem.chosenChoices
+        }),
+        notes: orderItem.notes,
+        unavailable: orderItem.unavailable,
+        quantity: orderItem.quantity,
+        costPerOne: orderItem.costPerOne
+      }
+      itemArray.push(orderItemObject)
+    }
+
+    let orderObject = {
+      customerFirebaseId: order.customer.id,
+      restaurantFirebaseId: order.restaurant.id,
+      paymentType: order.PaymentType,
+      toLocationGps: (order.to) ? JSON.stringify({
+        "type": "Point",
+        "coordinates": [order.to.lng, order.to.lat]
+      }) : undefined,
+      toLocationAddress: (order.to) ? order.to.address : undefined,
+      estimatedFoodReadyTime: order.estimatedFoodReadyTime,
+      stripePaymentId: (order.stripePaymentInfo) ? order.stripePaymentInfo.id : undefined,
+      status: order.status,
+      orderTime: order.orderTime,
+      firebaseId: orderId,
+      notes: order.notes,
+      deliveryCost: order.shippingCost,
+      refundAmount: order.refundAmount,
+      items: itemArray,
+      review: (order.review) ? {
+        rating: order.review.rating,
+        note: order.review.comment,
+        createdAt: order.review.reviewTime
+      }: undefined
+    }
+    
+    array.push(orderObject)
+    // break;
+  }
+  await insertRestaurantOrders(array)
+}
+
+async function writeToDBCustomers() {
+  let customers = JSON.parse(
+    fs.readFileSync('./../../../../../../data/db-snapshot-customers.json').toString()
+  );
+  let array = []
+  // let c: Record<string, number> = {}
+  // for (let customerId in customers) {
+  //     c[customerId] = 1;
+  // }
+  // // console.log(c)
+  // for(const key in c) {
+  //   let customerObject = {
+  //     userFirebaseId: key
+  //   }
+  //   array.push(customerObject)
+  // }
+  for (let customerId in customers) {
+    let customer = customers[customerId]
+    if (!customer)
+      continue
+
+    let customerObject = {
+      userFirebaseId: customerId
+    }
+    array.push(customerObject)
+  }
+  await insertCustomers(array)
+}
+
+
   // saveFile()
   // writeToDB()  
   // writeToDBUsers()
   // writeToDBRestoOps()
-writeToDBDeliDrivers()
+// writeToDBDeliDrivers()
+// writeToDBCustomers()
+writeToDBRestoOrders()

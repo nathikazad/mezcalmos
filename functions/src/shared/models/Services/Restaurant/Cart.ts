@@ -15,4 +15,6 @@ export interface CartItem {
   quantity: number;
   costPerOne: number;
   note?: string;
+  name:any;
+  image?:string;
 }

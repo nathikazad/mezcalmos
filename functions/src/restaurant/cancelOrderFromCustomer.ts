@@ -10,7 +10,7 @@ import { restaurantOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
-import { getMezAdmins } from "../shared/graphql/restaurant/mezAdmin/getMezAdmins";
+import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmins";
 import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { RestaurantOperator } from "../shared/models/Services/Restaurant/Restaurant";
 import { MezAdmin } from "../shared/models/Generic/User";

@@ -2,7 +2,7 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class Option {
-  String id;
+  int id;
   OptionType optionType;
   Map<LanguageType, String> name;
   int? nameId;
@@ -30,7 +30,7 @@ class Option {
     List<Choice>? newChoices,
     this.position = 0,
   }) : choices = newChoices ?? <Choice>[];
-  factory Option.fromData(String id, data) {
+  factory Option.fromData(int id, data) {
     final Option option = Option(
         id: id,
         name: convertToLanguageMap(data["name"]),
@@ -142,7 +142,7 @@ class Option {
   }
 
   Option copyWith({
-    String? id,
+    int? id,
     Map<LanguageType, String>? name,
     int? nameId,
     List<Choice>? choices,

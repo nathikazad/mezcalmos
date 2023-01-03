@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
@@ -160,6 +162,10 @@ extension HasuraCartItem on CartItem {
 /// Returns Item Id
 Future<int> add_item_to_cart({required CartItem cartItem}) async {
   mezDbgPrint("🤣 Calling add item  ${cartItem.item.id}");
+  mezDbgPrint(
+      "Encoooodedd ==> ${jsonEncode(cartItem.selectedOptionsToJson().toString())}");
+  mezDbgPrint(
+      "Adding Item :: selected_options ${cartItem.selectedOptionsToJson()}");
   final QueryResult<Mutation$addItemToCart> addItemResult =
       await _hasuraDb.graphQLClient.mutate$addItemToCart(
     Options$Mutation$addItemToCart(
@@ -170,7 +176,7 @@ Future<int> add_item_to_cart({required CartItem cartItem}) async {
           customer_id: Get.find<AuthController>().user!.hasuraId,
           note: cartItem.notes,
           quantity: cartItem.quantity,
-          selected_options: {},
+          selected_options: cartItem.selectedOptionsToJson(),
           restaurant_item_id: cartItem.item.id,
         ),
       ),

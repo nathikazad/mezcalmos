@@ -1,7 +1,0 @@
-query getOperatorRestaurantInfo($operatorId: Int!) {
-  restaurant_operator(where: {user_id: {_eq: $operatorId}}) {
-    restaurant_id
-    status
-    owner
-  }
-}

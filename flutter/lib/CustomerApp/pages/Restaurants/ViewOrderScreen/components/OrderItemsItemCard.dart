@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/Components/itemChosenChoices.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -304,12 +305,17 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
 
   List<Widget> buildChoices(
       Map<String, List<Choice>> choices, Map<String, LanguageMap> optionNames) {
+    mezDbgPrint(optionNames);
     final List<Widget> viewWidgets = [];
     choices.forEach((String key, List<Choice> value) {
-      viewWidgets.add(ItemChosenChoiceComponent(
-        choices: value,
-        optionName: optionNames[key]!,
-      ));
+      mezDbgPrint(
+          "[544DDD] choices.forEach ==> KEY ($key)  |  VALUE (${value.toString()})");
+      viewWidgets.add(
+        ItemChosenChoiceComponent(
+          choices: value,
+          optionName: optionNames[key]!,
+        ),
+      );
     });
     return viewWidgets;
   }

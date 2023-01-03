@@ -8,7 +8,7 @@ import { ParticipantType } from "../shared/models/Generic/Chat";
 // import { capturePayment } from "../utilities/stripe/payment";
 import { DeliveryDriver, DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus, DeliveryOrderStatusChangeNotification } from "../shared/models/Services/Delivery/DeliveryOrder";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
-import { getDeliveryDriver } from "../shared/graphql/delivery/getDeliveryDriver";
+import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
 import { HttpsError } from "firebase-functions/v1/auth";
 import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
 import { getRestaurantOrder } from "../shared/graphql/restaurant/order/getRestaurantOrder";

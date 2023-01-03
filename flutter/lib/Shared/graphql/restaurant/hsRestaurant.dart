@@ -378,7 +378,7 @@ Future<List<RestaurantOperator>?> get_restaurant_operators(
               firebaseId: opData.user.firebase_id,
               name: opData.user.name,
               image: opData.user.image),
-          operatorId: opData.user.id.toString());
+          operatorId: opData.id);
     }).toList();
     return ops;
   } else {

@@ -1,0 +1,20 @@
+mutation insertNotifInfo($notifData : notification_info_insert_input! ) {
+
+  insert_notification_info_one(object : $notifData) {
+    id
+  }
+}
+mutation updateNotifInfo($id: Int!,$notifData : notification_info_set_input!, ) {
+
+  update_notification_info_by_pk(pk_columns : {id : $id},_set :$notifData) {
+    id
+  }
+}
+query getNotifInfoByUserId($userId : Int!) {
+  notification_info(where: {user_id: {_eq: $userId}}) {
+    app_type_id
+    id
+    token
+    user_id
+  }
+}

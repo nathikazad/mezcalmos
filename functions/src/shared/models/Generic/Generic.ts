@@ -1,3 +1,4 @@
+import { ParticipantType } from "./Chat";
 import { UserInfo } from "./User";
 
 export interface Location {
@@ -33,6 +34,15 @@ export enum AppType {
   DeliveryApp = "delivery",
   DeliveryAdmin = "delivery_admin",
   MezAdmin = "mez_admin"
+}
+
+export const AppParticipant: Record<AppType, ParticipantType> = {
+  [AppType.CustomerMobile]: ParticipantType.Customer,
+  [AppType.CustomerWeb]: ParticipantType.Customer,
+  [AppType.DeliveryAdmin]: ParticipantType.DeliveryOperator,
+  [AppType.DeliveryApp]: ParticipantType.DeliveryDriver,
+  [AppType.MezAdmin]: ParticipantType.MezAdmin,
+  [AppType.RestaurantApp]: ParticipantType.RestaurantOperator
 }
 
 // export type NotificationInfo = Record<TokenType, string>;
@@ -81,6 +91,6 @@ export enum AuthorizationStatus {
 }
 
 export enum OperatorType {
-  Delivery,
-  Restaurant,
+  Delivery = "delivery",
+  Restaurant = "restaurant",
 }

@@ -60,18 +60,18 @@ export async function requestRide(userId: string, data: any) {
     );
 
     
-    chat.addParticipant(
-    {
-      ...userInfo,
-      particpantType: ParticipantType.Customer
-    });
+    // chat.addParticipant(
+    // {
+    //   ...userInfo,
+    //   particpantType: ParticipantType.Customer
+    // });
 
-    await chatController.setChat(orderId, chat.chatData);
+    await chatController.setChat(parseInt(orderId), chat.chatData);
 
 
     deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
       let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-      chatController.addParticipantsToChat(Object.keys(deliveryAdmins), chat, orderId, ParticipantType.DeliveryAdmin)
+      chatController.addParticipantsToChat(Object.keys(deliveryAdmins), chat, parseInt(orderId), ParticipantType.DeliveryOperator)
       notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId)
     })
     

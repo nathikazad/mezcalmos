@@ -13,6 +13,7 @@ import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/ROpOrde
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/ROpPickDriverView/ROpPickDriverView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/ROpSelfDeliveryView/ROpSelfDeliveryView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/TabsView/ROpTabsView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/UnauthrizedOpView/UnauthrizedOpView.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
@@ -20,6 +21,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 const String kCreateRestaurant = '/createRestuarant';
 const String kCurrentOrdersListView = '/orders';
 const String kTabsView = '/tabsView';
+const String kOpUnauth = '/unauth';
 // const String kReviewsView = '/reviews/:restaurantId';
 const String kPastOrdersListView = '/pastorders';
 const String kMenuView = '/menu/:restaurantId';
@@ -45,9 +47,9 @@ String getROpEditInfoRoute({required String restaurantId}) {
 String getROpChoiceRoute(
     {required String? choiceId,
     required String restaurantId,
-    required String optionId}) {
+    required int optionId}) {
   String route = kChoiceView.replaceFirst(":restaurantId", restaurantId);
-  route = route.replaceFirst(":optionId", optionId);
+  route = route.replaceFirst(":optionId", "$optionId");
   if (choiceId != null) {
     route = route.replaceFirst(":choiceId", choiceId);
   }
@@ -74,12 +76,12 @@ String getROpPickDriverRoute(
 
 String getROpOptionRoute(
     {required String restaurantId,
-    required String? optionId,
+    required int? optionId,
     required String itemID}) {
   String route = kOptionView.replaceFirst(":restaurantId", restaurantId);
   route = route.replaceFirst(":itemId", itemID);
   if (optionId != null) {
-    route = route.replaceFirst(":optionId", optionId);
+    route = route.replaceFirst(":optionId", "$optionId");
   }
   return route;
 }
@@ -127,6 +129,7 @@ String getEditOptionRoute({required int itemId}) {
 // GetX based Router (For navigating)
 class XRouter {
   static dynamic mainRoutes = [
+        GetPage(name: kHomeRoute, page: () => RestaurantWrapper()),
         GetPage(name: kDashboardView, page: () => ROpDashboardView()),
         GetPage(name: kMenuView, page: () => ROpMenuView()),
         GetPage(
@@ -157,6 +160,7 @@ class XRouter {
         GetPage(name: kTabsView, page: () => ROpTabsViewView()),
         GetPage(name: kPickDriver, page: () => ROpPickDriverView()),
         GetPage(name: kSelfDeliveryView, page: () => ROpSelfDeliveryView()),
+        GetPage(name: kOpUnauth, page: () => ROpUnauthorizedOpView()),
       ] +
       SharedRouter.sharedRoutes;
 }

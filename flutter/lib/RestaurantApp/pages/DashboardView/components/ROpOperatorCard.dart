@@ -1,13 +1,23 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpOperatorsPageController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
-class ROpOperatorCard extends StatelessWidget {
-  const ROpOperatorCard({super.key, required this.operator});
+class ROpOperatorCard extends StatefulWidget {
+  const ROpOperatorCard(
+      {super.key, required this.operator, required this.viewController});
   final RestaurantOperator operator;
+  final ROpOperatorsViewController viewController;
 
+  @override
+  State<ROpOperatorCard> createState() => _ROpOperatorCardState();
+}
+
+class _ROpOperatorCardState extends State<ROpOperatorCard> {
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -23,8 +33,8 @@ class ROpOperatorCard extends StatelessWidget {
                   children: [
                     CircleAvatar(
                         radius: 25,
-                        backgroundImage:
-                            CachedNetworkImageProvider(operator.info.image)),
+                        backgroundImage: CachedNetworkImageProvider(
+                            widget.operator.info.image)),
                     Positioned(
                       right: -30,
                       bottom: 3,
@@ -49,14 +59,68 @@ class ROpOperatorCard extends StatelessWidget {
                 Flexible(
                     fit: FlexFit.tight,
                     child: Text(
-                      operator.info.name,
+                      widget.operator.info.name,
                       style: Get.textTheme.bodyText1,
                     )),
-                if (operator.state.owner) Text("Owner"),
+                if (widget.operator.state.owner) Text("Owner"),
               ],
-            )
+            ),
 
             // actions row //
+            if (widget.operator.isWaitingToBeApprovedByOwner)
+              Container(
+                margin: const EdgeInsets.only(top: 15),
+                child: isLoading
+                    ? LinearProgressIndicator()
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Flexible(
+                              child: MezButton(
+                            label: "Approve",
+                            height: 50,
+                            backgroundColor: primaryBlueColor,
+                            textColor: Colors.white,
+                            onClick: () async {
+                              setState(() {
+                                isLoading = true;
+                              });
+                              // ignore: unawaited_futures
+                              widget.viewController
+                                  .approveOperator(
+                                      opId: widget.operator.operatorId,
+                                      approved: true)
+                                  .whenComplete(() => setState(() {
+                                        isLoading = false;
+                                      }));
+                            },
+                          )),
+                          SizedBox(
+                            width: 12,
+                          ),
+                          Flexible(
+                              child: MezButton(
+                            label: "Reject",
+                            backgroundColor: offRedColor,
+                            height: 50,
+                            textColor: Colors.red,
+                            onClick: () async {
+                              setState(() {
+                                isLoading = true;
+                              });
+                              // ignore: unawaited_futures
+                              widget.viewController
+                                  .approveOperator(
+                                      opId: widget.operator.operatorId,
+                                      approved: false)
+                                  .whenComplete(() => setState(() {
+                                        isLoading = false;
+                                      }));
+                            },
+                          )),
+                        ],
+                      ),
+              )
           ],
         ),
       ),

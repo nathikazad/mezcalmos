@@ -72,6 +72,7 @@ class RestaurantOrder extends DeliverableOrder {
       this.estimatedFoodReadyTime,
       super.dropoffDriver,
       this.deliveryTime,
+      this.review,
       int? dropOffDriverChatId,
       required this.itemsCost,
       required this.shippingCost,
