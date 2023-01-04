@@ -17,7 +17,8 @@ export async function getCustomer(customerId: number): Promise<CustomerInfo> {
                 language_id: true,
                 name : true,
                 image:true
-            }
+            },
+            stripe_info: [{}, true]
         }]
     });
     if(response.customer_by_pk == null) {
@@ -36,6 +37,7 @@ export async function getCustomer(customerId: number): Promise<CustomerInfo> {
             AppTypeId: AppType.CustomerMobile,
             token: response.customer_by_pk.notification_token
         } : undefined,
-        appVersion: response.customer_by_pk.app_version
+        appVersion: response.customer_by_pk.app_version,
+        stripeInfo: JSON.parse(response.customer_by_pk.stripe_info)
     }
 }

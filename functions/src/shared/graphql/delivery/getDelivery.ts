@@ -119,3 +119,48 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
   // }
   return delivery;
 }
+
+export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
+  let chain = getHasura();
+
+  let response = await chain.query({
+    delivery_order: [{
+      where: {
+        service_provider_type: {
+          _eq: DeliveryCompanyType.DeliveryCompany,
+        }
+      }
+    }, {
+      id: true,
+      pickup_gps: true,
+      dropoff_gps: true,
+      chat_with_customer_id: true,
+      payment_type: true,
+      status: true,
+      customer_id: true,
+      delivery_cost: true,
+      order_time: true,
+    }]
+  });
+
+  return response.delivery_order.map((d) => {
+    let delivery: DeliveryOrder = {
+      deliveryId: d.id,
+      pickupLocation: {
+        lat: d.pickup_gps.coordinates[1],
+        lng: d.pickup_gps.coordinates[0],
+      },
+      dropoffLocation: {
+        lat: d.dropoff_gps.coordinates[1],
+        lng: d.dropoff_gps.coordinates[0],
+      },
+      chatWithCustomerId: d.chat_with_customer_id,
+      paymentType: d.payment_type as PaymentType,
+      status: d.status as DeliveryOrderStatus,
+      customerId: d.customer_id,
+      deliveryCost: d.delivery_cost,
+      orderTime: d.order_time,
+    }
+    return delivery;
+  })
+}

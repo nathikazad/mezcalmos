@@ -8,6 +8,7 @@ import { NotificationType, NotificationAction, Notification } from "../shared/mo
 import { restaurantUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmins";
+import { HttpsError } from "firebase-functions/v1/auth";
 
 export interface RestaurantDetails {
   name: string,
@@ -19,31 +20,38 @@ export interface RestaurantDetails {
 }
 
 export async function createNewRestaurant(userId: number, restaurantDetails: RestaurantDetails) {
+  try {
+    let userPromise = getUser(userId);
+    let mezAdminsPromise = getMezAdmins();
+    let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
+    let mezAdmins: MezAdmin[] = promiseResponse[1];
 
-  let userPromise = getUser(userId);
-  let mezAdminsPromise = getMezAdmins();
-  let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
-  let mezAdmins: MezAdmin[] = promiseResponse[1];
-
-  let restaurant: Restaurant = {
-    name: restaurantDetails.name,
-    image: restaurantDetails.image,
-    location: restaurantDetails.location,
-    schedule: restaurantDetails.schedule,
+    let restaurant: Restaurant = {
+      name: restaurantDetails.name,
+      image: restaurantDetails.image,
+      location: restaurantDetails.location,
+      schedule: restaurantDetails.schedule,
+      
     
    
   }
-
-  if(restaurantDetails.firebaseId != undefined) {
     restaurant.firebaseId = restaurantDetails.firebaseId
+
+
+      await createRestaurant(restaurant, userId, restaurantDetails.restaurantOperatorNotificationToken);
+    
+
+    notifyAdmins(mezAdmins, restaurant);
+
+    return { status: ServerResponseStatus.Success };
+  } catch(error) {
+    console.log("error =>", error);
+    throw new HttpsError(
+      "unknown",
+      "Request was not authenticated.",
+      error
+    );
   }
-
-    await createRestaurant(restaurant, userId, restaurantDetails.restaurantOperatorNotificationToken);
-  
-
-  notifyAdmins(mezAdmins, restaurant);
-
-  return { status: ServerResponseStatus.Success };
 };
 
 function notifyAdmins(mezAdmins: MezAdmin[], restaurant: Restaurant) {

@@ -1,75 +1,142 @@
 import Stripe from 'stripe';
-import { ServerResponseStatus, ValidationPass } from '../../shared/models/Generic/Generic';
+import { ServerResponseStatus } from '../../shared/models/Generic/Generic';
 import { getKeys } from '../../shared/keys';
 import { Keys } from '../../shared/models/Generic/Keys';
 import * as serviceProviderNodes from '../../shared/databaseNodes/services/serviceProvider';
 import { OrderType, PaymentType } from '../../shared/models/Generic/Order';
 import { ServiceProviderStripeInfo, StripeStatus } from './model';
-import * as customerNodes from '../../shared/databaseNodes/customer';
-import { userInfoNode } from '../../shared/databaseNodes/root';
-import { UserInfo } from '../../shared/models/Generic/User';
+import { CustomerInfo, UserInfo } from '../../shared/models/Generic/User';
 import { getUserInfo } from '../../shared/controllers/rootController';
+import { OperatorStatus } from '../../shared/models/Services/Restaurant/Restaurant';
+import { HttpsError } from 'firebase-functions/v1/auth';
+import { getRestaurant } from '../../shared/graphql/restaurant/getRestaurant';
+import { updateRestaurantStripe } from '../../shared/graphql/restaurant/updateRestaurant';
+import { updateCustomerStripe } from '../../shared/graphql/user/customer/updateCustomer';
 let keys: Keys = getKeys();
 
-export async function setupServiceProvider(userId: string, data: any) {
-  
-  let validation: ValidationPass = await passChecksForOperator(userId, data);
-  if (!validation.ok)
-    return validation.error;
+export interface SetupDetails {
+  serviceProviderId: number,
+  orderType: OrderType,
+  acceptedPayments?: Record<PaymentType, boolean>
+}
 
-  if (data.serviceProviderId == null || data.orderType == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Expected serviceProviderId and orderType`,
-      errorCode: "incorrectParams"
-    }
+export async function setupServiceProvider(userId: number, setupDetails: SetupDetails) {
+
+  let serviceProvider;
+  let operator;
+
+  if(setupDetails.orderType == OrderType.Restaurant) {
+    serviceProvider = await getRestaurant(setupDetails.serviceProviderId);
+    operator = serviceProvider.restaurantOperators?.filter((o) => o.userId == userId)[0];
+  } else {
+    throw new HttpsError(
+      "internal",
+      "invalid order type"
+    );
+  }
+  if(!operator) {
+    throw new HttpsError(
+      "internal",
+      "No restaurant operator with that user id or restaurant id found"
+    );
+  }
+  if(operator.status != OperatorStatus.Authorized) {
+    throw new HttpsError(
+      "internal",
+      "restaurant operator not authorized"
+    );
   }
   const stripeOptions = { apiVersion: <any>'2020-08-27' };
   const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
 
-  const accountId = await getServiceProviderStripeId(data.serviceProviderId, data.orderType, userId, stripe, stripeOptions);
+  if(!(serviceProvider.stripeInfo)) {
+    let owner;
+    if(setupDetails.orderType == OrderType.Restaurant)
+      owner = serviceProvider.restaurantOperators?.filter((o) => o.owner == true)[0];
+    
+    const account = await stripe.accounts.create({
+      type: 'standard',
+      email: owner?.user?.email ?? operator.user?.email ?? undefined,
+      business_type: 'individual',
+      business_profile: {
+        name: serviceProvider.name,
+        support_email: owner?.user?.email ?? operator.user?.email ?? undefined,
+        support_phone: owner?.user?.phoneNumber ?? operator.user?.phoneNumber ?? undefined,
+        url: `https://mezcalmos.com/?type=${setupDetails.orderType}&id=${setupDetails.serviceProviderId}`
+      },
+      individual: {
+        first_name: operator.user?.name ?? undefined,
+        email: operator.user?.email ?? undefined,
+        phone: operator.user?.phoneNumber ?? undefined,
+      },
+      country: "mx",
+      default_currency: "mxn",
+      metadata: {
+        id: setupDetails.serviceProviderId,
+        type: setupDetails.orderType,
+        user_id: userId
+      }
+    });
+    serviceProvider.stripeInfo = {
+      id: account.id,
+      status: StripeStatus.InProcess,
+      detailsSubmitted: false,
+      payoutsEnabled: false,
+      chargeFeesOnCustomer : null,
+      email: null,
+      chargesEnabled: false,
+      requirements: []
+    }
+    serviceProvider.acceptedPayments = setupDetails.acceptedPayments;
+    if(setupDetails.orderType == OrderType.Restaurant)
+      updateRestaurantStripe(serviceProvider);
+  }
 
   const accountLink = await stripe.accountLinks.create({
-    account: accountId,
+    account: serviceProvider.stripeInfo.id,
     refresh_url: 'https://example.com/reauth',
     return_url: 'https://example.com/return',
     type: 'account_onboarding',
   }, stripeOptions);
-
+  console.log("accountLink: ", accountLink)
   return {
     status: ServerResponseStatus.Success,
     ...accountLink
   }
-};
+}
 
-export async function updateServiceProvider(userId: string, data: any) {
+export interface UpdateDetails {
+  serviceProviderId: number,
+  orderType: OrderType
+}
 
-  let validation: ValidationPass = await passChecksForOperator(userId, data);
-  if (!validation.ok)
-    return validation.error;
-
-  if (data.serviceProviderId == null || data.orderType == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Expected serviceProviderId and orderType`,
-      errorCode: "incorrectParams"
-    }
-  }
-
+export async function updateServiceProvider(userId: number, updateDetails: UpdateDetails) {
+  
   const stripeOptions = { apiVersion: <any>'2020-08-27' };
   const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
 
-  let stripeAccount: string = (await serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).child('stripe/id').once('value')).val()
-  const account: Stripe.Account = await stripe.accounts.retrieve(stripeAccount, stripeOptions);
-  if (!stripeAccount)
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Account has not setup stripe yet`,
-      errorCode: "uncreated"
-    }
+  let serviceProvider;
+  if(updateDetails.orderType == OrderType.Restaurant) {
+    serviceProvider = await getRestaurant(updateDetails.serviceProviderId);
+  } else {
+    throw new HttpsError(
+      "internal",
+      "invalid order type"
+    );
+  }
 
-  let isWorking: boolean = account.details_submitted && account.charges_enabled
-  await serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).child('stripe').update(<ServiceProviderStripeInfo>{
+  let stripeInfo = serviceProvider.stripeInfo;
+  if(!stripeInfo) {
+    throw new HttpsError(
+      "internal",
+      "Account has not setup stripe yet"
+    );
+  }
+  const account: Stripe.Account = await stripe.accounts.retrieve(stripeInfo.id, stripeOptions);
+  let isWorking: boolean = account.details_submitted && account.charges_enabled;
+
+  serviceProvider.stripeInfo = {
+    id: stripeInfo.id,
     status: isWorking ? StripeStatus.IsWorking : StripeStatus.InProcess,
     detailsSubmitted: account.details_submitted,
     payoutsEnabled: account.payouts_enabled,
@@ -77,26 +144,38 @@ export async function updateServiceProvider(userId: string, data: any) {
     email: account.email,
     chargesEnabled: account.charges_enabled,
     requirements: account.requirements?.currently_due
-  });
+  }
+  if(updateDetails.orderType == OrderType.Restaurant)
+    updateRestaurantStripe(serviceProvider);
 
   return {
     status: ServerResponseStatus.Success
   }
-};
+}
 
-
-export async function getCustomerIdFromServiceAccount(customerId: string, serviceProviderId: string, orderType: OrderType, stripe: Stripe, stripeOptions: any) {
-  let stripeCustomerId: string = (await customerNodes.stripeIdsWithServiceProviderNode(customerId, serviceProviderId, orderType).once('value')).val();
-  if (stripeCustomerId == null) {
-    let userInfo: UserInfo = (await userInfoNode(customerId).once('value')).val()
-    const customer: Stripe.Customer = await stripe.customers.create({
-      name: userInfo.name,
-      metadata: { customerId: customerId },
-    }, stripeOptions)
-    stripeCustomerId = customer.id;
-    customerNodes.stripeIdsWithServiceProviderNode(customerId, serviceProviderId, orderType).set(stripeCustomerId);
+export async function verifyCustomerIdForServiceAccount(
+  customerInfo: CustomerInfo, 
+  serviceProviderId: number, 
+  orderType: OrderType, 
+  stripe: Stripe, 
+  stripeOptions: any
+): Promise<CustomerInfo> {
+  // let customerInfo = await getCustomer(customerId);
+  if(!(customerInfo.stripeInfo)) {
+    throw new HttpsError(
+      "internal",
+      "Customer does not have stripe account"
+    );
   }
-  return stripeCustomerId;
+  if(customerInfo.stripeInfo.idsWithServiceProvider[orderType][serviceProviderId] == null) {
+    const customer: Stripe.Customer = await stripe.customers.create({
+      name: customerInfo.name,
+      metadata: { customerId: customerInfo.id },
+    }, stripeOptions)
+    customerInfo.stripeInfo.idsWithServiceProvider[orderType][serviceProviderId] = customer.id;
+    updateCustomerStripe(customerInfo);
+  }
+  return customerInfo;
 }
 
 export async function getServiceProviderStripeId(serviceProviderId: string, orderType: OrderType, userId: string, stripe: Stripe, stripeOptions: any) {
@@ -147,7 +226,7 @@ export async function getServiceProviderStripeId(serviceProviderId: string, orde
   return serviceProviderStripeId;
 }
 
-async function passChecksForOperator(userId: string, data: any): Promise<ValidationPass> {
+// async function passChecksForOperator(userId: string, data: any): Promise<ValidationPass> {
   // let response = isSignedIn(userId);
   // if (response != undefined) {
   //   return {
@@ -156,28 +235,28 @@ async function passChecksForOperator(userId: string, data: any): Promise<Validat
   //   }
   // }
 
-  if (data.serviceProviderId == null || data.orderType == null)
-    return {
-      ok: false,
-      error: {
-        status: ServerResponseStatus.Error,
-        errorMessage: `Expected serviceProviderId and orderType`,
-        errorCode: "incorrectParams"
-      }
-    }
+//   if (data.serviceProviderId == null || data.orderType == null)
+//     return {
+//       ok: false,
+//       error: {
+//         status: ServerResponseStatus.Error,
+//         errorMessage: `Expected serviceProviderId and orderType`,
+//         errorCode: "incorrectParams"
+//       }
+//     }
 
-  let authorized = (await serviceProviderNodes.serviceProviderState(data.orderType, data.serviceProviderId).child("/operators").child(userId).once('value')).val();
-  if (!authorized)
-    return {
-      ok: false,
-      error: {
-        status: ServerResponseStatus.Error,
-        errorMessage: `User not authorized to run this operation`,
-        errorCode: "unauthorized"
-      }
-    }
+//   let authorized = (await serviceProviderNodes.serviceProviderState(data.orderType, data.serviceProviderId).child("/operators").child(userId).once('value')).val();
+//   if (!authorized)
+//     return {
+//       ok: false,
+//       error: {
+//         status: ServerResponseStatus.Error,
+//         errorMessage: `User not authorized to run this operation`,
+//         errorCode: "unauthorized"
+//       }
+//     }
 
-  return {
-    ok: true
-  }
-}
+//   return {
+//     ok: true
+//   }
+// }

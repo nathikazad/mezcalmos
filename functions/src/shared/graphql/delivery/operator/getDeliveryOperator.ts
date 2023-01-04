@@ -33,7 +33,6 @@ export async function getDeliveryOperators(deliveryCompanyId: number): Promise<D
           "No delivery company with that id found or company has no operators"
         );
       }
-    
     return response.delivery_operator.map((d) => {
         return <DeliveryOperator>{
             id: d.id,
@@ -42,10 +41,10 @@ export async function getDeliveryOperators(deliveryCompanyId: number): Promise<D
             status: d.status as DeliveryOperatorStatus,
             owner: d.owner,
             appVersion: d.app_version,
-            currentGPS: {
+            currentGPS: (d.current_gps) ? {
                 lat: d.current_gps.coordinates[1],
                 lng: d.current_gps.coordinates[0]
-            },
+            }: undefined,
             notificationInfo: (d.notification_token) ? <NotificationInfo>{
                 AppTypeId: AppType.DeliveryAdmin,
                 token: d.notification_token

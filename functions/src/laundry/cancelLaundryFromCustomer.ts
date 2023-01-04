@@ -59,7 +59,7 @@ export async function cancelFromCustomer(userId: string, data: any) {
 
   deliveryAdminNodes.deliveryAdmins().once('value', (snapshot) => {
     let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-    laundryNodes.laundryOperators(order.serviceProviderId!).once('value').then((snapshot) => {
+    laundryNodes.laundryOperators(order.serviceProviderId!.toString()).once('value').then((snapshot) => {
       let laundryOperators: Record<string, boolean> = snapshot.val();
       notifyOthersCancelledOrder(deliveryAdmins, parseInt(orderId), order, laundryOperators);
     });

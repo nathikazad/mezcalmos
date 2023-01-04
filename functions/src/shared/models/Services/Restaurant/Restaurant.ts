@@ -1,4 +1,6 @@
+import { ServiceProviderStripeInfo } from "../../../../utilities/stripe/model";
 import { Language, Location, NotificationInfo } from "../../Generic/Generic";
+import { PaymentType } from "../../Generic/Order";
 // import { OrderType } from "../../Generic/Order";
 import { UserInfo } from "../../Generic/User";
 import { ForegroundNotification, NotificationForQueue } from "../../Notification";
@@ -49,7 +51,8 @@ export interface Restaurant {
   schedule?: any;
   paymentInfoId?: number;
   openStatus?: OpenStatus;
- 
+  stripeInfo?: ServiceProviderStripeInfo;
+  acceptedPayments?: Record<PaymentType, boolean>;
   // LanguageId: Language;
   approved?: boolean;
   restaurantOperators?: Array<RestaurantOperator>
@@ -109,5 +112,6 @@ export interface RestaurantOperatorApprovedNotification extends ForegroundNotifi
 
 export interface AuthorizeOperatorNotificationForQueue extends NotificationForQueue {
   newOperatorName: string,
+  newOperatorImage: string,
   restaurantId: number,
 }

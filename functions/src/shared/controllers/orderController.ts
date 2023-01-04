@@ -20,13 +20,13 @@ export function addServiceProviderAndOperatorsToChat(orderId: string, order: Ord
   switch (order.orderType) {
     case OrderType.Laundry:
       addParticipantToChat((order as LaundryOrder).laundry, serviceProviderchat, serviceProviderDriverChatId, ParticipantType.Laundry);
-      laundryNodes.laundryOperators(order.serviceProviderId!).once('value').then((snapshot) => {
+      laundryNodes.laundryOperators(order.serviceProviderId!.toString()).once('value').then((snapshot) => {
         let laundryOperators: Record<string, boolean> = snapshot.val() || {};
         addParticipantsToChat(Object.keys(laundryOperators), serviceProviderchat, serviceProviderDriverChatId, ParticipantType.LaundryOperator)
       })
       break;
     case OrderType.Restaurant:
-      restaurantNodes.restaurantOperators(order.serviceProviderId!).once('value').then((snapshot) => {
+      restaurantNodes.restaurantOperators(order.serviceProviderId!.toString()).once('value').then((snapshot) => {
         let restaurantOperators: Record<string, boolean> = snapshot.val() || {};
         addParticipantsToChat(Object.keys(restaurantOperators), serviceProviderchat, serviceProviderDriverChatId, ParticipantType.RestaurantOperator)
       })

@@ -4,17 +4,22 @@ import { OrderType } from "../../shared/models/Generic/Order";
 
 export interface CustomerStripe {
   id: string,
-  idsWithServiceProvider: Record<OrderType, Record<string, string>>,
+  idsWithServiceProvider: Record<OrderType, Record<number, string>>,
   cards: Record<string, CustomerCard>
 }
-
+export const emptyIdsWithServiceProvider: Record<OrderType, Record<number, string>> = {
+  restaurant: {},
+  laundry: {},
+  taxi: {},
+  water: {}
+}
 export interface CustomerCard {
   id: string,
   last4?: string,
   brand?: string,
-  expMonth?: string,
-  expYear?: string,
-  idsWithServiceProvider: Record<OrderType, Record<string, string>>,
+  expMonth?: number,
+  expYear?: number,
+  idsWithServiceProvider: Record<OrderType, Record<number, string>>,
 }
 
 // **** Order Models ****
@@ -45,13 +50,13 @@ export enum StripeStatus {
 
 // **** Service Provider Models ****
 export interface ServiceProviderStripeInfo {
-  id?: string;
+  id: string;
   status: string;
-  chargeFeesOnCustomer : boolean |null;
+  chargeFeesOnCustomer : boolean | null;
   chargesEnabled: boolean;
   payoutsEnabled: boolean;
   detailsSubmitted: boolean;
-  requirements: Array<string>;
+  requirements?: Array<string> | null;
   email: string | null;
 }
 

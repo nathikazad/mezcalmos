@@ -549,6 +549,8 @@ saved_locations_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["saved_location_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["saved_location_bool_exp"]},ValueTypes["saved_location_aggregate"]],
 	service_provider_type?:true,
+stripe_info?: [{	/** JSON select path */
+	path?:string},true],
 	/** An object relationship */
 	user?:ValueTypes["user"],
 	user_id?:true,
@@ -575,6 +577,10 @@ count?: [{	columns?:ValueTypes["customer_select_column"][],	distinct?:boolean},t
 	variance?:ValueTypes["customer_variance_fields"],
 		__typename?: true
 }>;
+	/** append existing jsonb value of filtered columns with new jsonb value */
+["customer_append_input"]: {
+	stripe_info?:ValueTypes["jsonb"]
+};
 	/** aggregate avg on columns */
 ["customer_avg_fields"]: AliasType<{
 	user_id?:true,
@@ -591,11 +597,25 @@ count?: [{	columns?:ValueTypes["customer_select_column"][],	distinct?:boolean},t
 	notification_token?:ValueTypes["String_comparison_exp"],
 	saved_locations?:ValueTypes["saved_location_bool_exp"],
 	service_provider_type?:ValueTypes["String_comparison_exp"],
+	stripe_info?:ValueTypes["jsonb_comparison_exp"],
 	user?:ValueTypes["user_bool_exp"],
 	user_id?:ValueTypes["Int_comparison_exp"]
 };
 	/** unique or primary key constraints on table "customer" */
 ["customer_constraint"]:customer_constraint;
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+["customer_delete_at_path_input"]: {
+	stripe_info?:string[]
+};
+	/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+["customer_delete_elem_input"]: {
+	stripe_info?:number
+};
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+["customer_delete_key_input"]: {
+	stripe_info?:string
+};
 	/** input type for incrementing numeric columns in table "customer" */
 ["customer_inc_input"]: {
 	user_id?:number
@@ -607,6 +627,7 @@ count?: [{	columns?:ValueTypes["customer_select_column"][],	distinct?:boolean},t
 	deliveries?:ValueTypes["delivery_order_arr_rel_insert_input"],
 	saved_locations?:ValueTypes["saved_location_arr_rel_insert_input"],
 	service_provider_type?:string,
+	stripe_info?:ValueTypes["jsonb"],
 	user?:ValueTypes["user_obj_rel_insert_input"],
 	user_id?:number
 };
@@ -652,6 +673,7 @@ count?: [{	columns?:ValueTypes["customer_select_column"][],	distinct?:boolean},t
 	notification_token?:ValueTypes["order_by"],
 	saved_locations_aggregate?:ValueTypes["saved_location_aggregate_order_by"],
 	service_provider_type?:ValueTypes["order_by"],
+	stripe_info?:ValueTypes["order_by"],
 	user?:ValueTypes["user_order_by"],
 	user_id?:ValueTypes["order_by"]
 };
@@ -659,12 +681,17 @@ count?: [{	columns?:ValueTypes["customer_select_column"][],	distinct?:boolean},t
 ["customer_pk_columns_input"]: {
 	user_id:number
 };
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+["customer_prepend_input"]: {
+	stripe_info?:ValueTypes["jsonb"]
+};
 	/** select columns of table "customer" */
 ["customer_select_column"]:customer_select_column;
 	/** input type for updating data in table "customer" */
 ["customer_set_input"]: {
 	app_version?:string,
 	service_provider_type?:string,
+	stripe_info?:ValueTypes["jsonb"],
 	user_id?:number
 };
 	/** aggregate stddev on columns */
@@ -693,6 +720,7 @@ count?: [{	columns?:ValueTypes["customer_select_column"][],	distinct?:boolean},t
 ["customer_stream_cursor_value_input"]: {
 	app_version?:string,
 	service_provider_type?:string,
+	stripe_info?:ValueTypes["jsonb"],
 	user_id?:number
 };
 	/** aggregate sum on columns */
@@ -703,8 +731,19 @@ count?: [{	columns?:ValueTypes["customer_select_column"][],	distinct?:boolean},t
 	/** update columns of table "customer" */
 ["customer_update_column"]:customer_update_column;
 	["customer_updates"]: {
+	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["customer_append_input"],
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["customer_delete_at_path_input"],
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["customer_delete_elem_input"],
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["customer_delete_key_input"],
 	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["customer_inc_input"],
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["customer_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["customer_set_input"],
 	where:ValueTypes["customer_bool_exp"]
@@ -3530,12 +3569,24 @@ update_chat_participant_by_pk?: [{	/** increments the numeric columns with given
 	_set?:ValueTypes["chat_participant_set_input"],	pk_columns:ValueTypes["chat_participant_pk_columns_input"]},ValueTypes["chat_participant"]],
 update_chat_participant_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["chat_participant_updates"][]},ValueTypes["chat_participant_mutation_response"]],
-update_customer?: [{	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["customer_inc_input"],	/** sets the columns of the filtered rows to the given values */
+update_customer?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["customer_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["customer_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["customer_delete_elem_input"],	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["customer_delete_key_input"],	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["customer_inc_input"],	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["customer_prepend_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["customer_set_input"],	/** filter the rows which have to be updated */
 	where:ValueTypes["customer_bool_exp"]},ValueTypes["customer_mutation_response"]],
-update_customer_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["customer_inc_input"],	/** sets the columns of the filtered rows to the given values */
+update_customer_by_pk?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["customer_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["customer_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["customer_delete_elem_input"],	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["customer_delete_key_input"],	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["customer_inc_input"],	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["customer_prepend_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["customer_set_input"],	pk_columns:ValueTypes["customer_pk_columns_input"]},ValueTypes["customer"]],
 update_customer_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["customer_updates"][]},ValueTypes["customer_mutation_response"]],
@@ -3701,12 +3752,24 @@ update_restaurant_option_choice_map_many?: [{	/** updates to execute, in order *
 	updates:ValueTypes["restaurant_option_choice_map_updates"][]},ValueTypes["restaurant_option_choice_map_mutation_response"]],
 update_restaurant_option_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["restaurant_option_updates"][]},ValueTypes["restaurant_option_mutation_response"]],
-update_restaurant_order?: [{	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["restaurant_order_inc_input"],	/** sets the columns of the filtered rows to the given values */
+update_restaurant_order?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["restaurant_order_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["restaurant_order_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["restaurant_order_delete_elem_input"],	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["restaurant_order_delete_key_input"],	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["restaurant_order_inc_input"],	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["restaurant_order_prepend_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_order_set_input"],	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_order_bool_exp"]},ValueTypes["restaurant_order_mutation_response"]],
-update_restaurant_order_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["restaurant_order_inc_input"],	/** sets the columns of the filtered rows to the given values */
+update_restaurant_order_by_pk?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["restaurant_order_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["restaurant_order_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["restaurant_order_delete_elem_input"],	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["restaurant_order_delete_key_input"],	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["restaurant_order_inc_input"],	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["restaurant_order_prepend_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_order_set_input"],	pk_columns:ValueTypes["restaurant_order_pk_columns_input"]},ValueTypes["restaurant_order"]],
 update_restaurant_order_item?: [{	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["restaurant_order_item_inc_input"],	/** sets the columns of the filtered rows to the given values */
@@ -4428,6 +4491,8 @@ user_by_pk?: [{	id:number},ValueTypes["user"]],
 }>;
 	/** columns and relationships of "restaurant" */
 ["restaurant"]: AliasType<{
+accepted_payments?: [{	/** JSON select path */
+	path?:string},true],
 	approved?:true,
 categories?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["restaurant_category_select_column"][],	/** limit the number of rows returned */
@@ -4502,6 +4567,8 @@ specials?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["restaurant_item_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["restaurant_item_bool_exp"]},ValueTypes["restaurant_item"]],
+stripe_info?: [{	/** JSON select path */
+	path?:string},true],
 		__typename?: true
 }>;
 	/** aggregated selection of "restaurant" */
@@ -4527,7 +4594,9 @@ count?: [{	columns?:ValueTypes["restaurant_select_column"][],	distinct?:boolean}
 }>;
 	/** append existing jsonb value of filtered columns with new jsonb value */
 ["restaurant_append_input"]: {
-	schedule?:ValueTypes["jsonb"]
+	accepted_payments?:ValueTypes["jsonb"],
+	schedule?:ValueTypes["jsonb"],
+	stripe_info?:ValueTypes["jsonb"]
 };
 	/** aggregate avg on columns */
 ["restaurant_avg_fields"]: AliasType<{
@@ -4541,6 +4610,7 @@ count?: [{	columns?:ValueTypes["restaurant_select_column"][],	distinct?:boolean}
 	_and?:ValueTypes["restaurant_bool_exp"][],
 	_not?:ValueTypes["restaurant_bool_exp"],
 	_or?:ValueTypes["restaurant_bool_exp"][],
+	accepted_payments?:ValueTypes["jsonb_comparison_exp"],
 	approved?:ValueTypes["Boolean_comparison_exp"],
 	categories?:ValueTypes["restaurant_category_bool_exp"],
 	delivery_drivers?:ValueTypes["delivery_driver_bool_exp"],
@@ -4561,7 +4631,8 @@ count?: [{	columns?:ValueTypes["restaurant_select_column"][],	distinct?:boolean}
 	schedule?:ValueTypes["jsonb_comparison_exp"],
 	self_delivery?:ValueTypes["Boolean_comparison_exp"],
 	service_provider_type?:ValueTypes["String_comparison_exp"],
-	specials?:ValueTypes["restaurant_item_bool_exp"]
+	specials?:ValueTypes["restaurant_item_bool_exp"],
+	stripe_info?:ValueTypes["jsonb_comparison_exp"]
 };
 	/** columns and relationships of "restaurant_cart" */
 ["restaurant_cart"]: AliasType<{
@@ -5784,16 +5855,22 @@ count?: [{	columns?:ValueTypes["restaurant_choice_select_column"][],	distinct?:b
 ["restaurant_constraint"]:restaurant_constraint;
 	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 ["restaurant_delete_at_path_input"]: {
-	schedule?:string[]
+	accepted_payments?:string[],
+	schedule?:string[],
+	stripe_info?:string[]
 };
 	/** delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array */
 ["restaurant_delete_elem_input"]: {
-	schedule?:number
+	accepted_payments?:number,
+	schedule?:number,
+	stripe_info?:number
 };
 	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
 ["restaurant_delete_key_input"]: {
-	schedule?:string
+	accepted_payments?:string,
+	schedule?:string,
+	stripe_info?:string
 };
 	/** input type for incrementing numeric columns in table "restaurant" */
 ["restaurant_inc_input"]: {
@@ -5803,6 +5880,7 @@ end). throws an error if top level container is not an array */
 };
 	/** input type for inserting data into table "restaurant" */
 ["restaurant_insert_input"]: {
+	accepted_payments?:ValueTypes["jsonb"],
 	approved?:boolean,
 	categories?:ValueTypes["restaurant_category_arr_rel_insert_input"],
 	delivery_drivers?:ValueTypes["delivery_driver_arr_rel_insert_input"],
@@ -5823,7 +5901,8 @@ end). throws an error if top level container is not an array */
 	restaurant_operators?:ValueTypes["restaurant_operator_arr_rel_insert_input"],
 	schedule?:ValueTypes["jsonb"],
 	self_delivery?:boolean,
-	service_provider_type?:string
+	service_provider_type?:string,
+	stripe_info?:ValueTypes["jsonb"]
 };
 	/** columns and relationships of "restaurant_item" */
 ["restaurant_item"]: AliasType<{
@@ -5837,7 +5916,6 @@ end). throws an error if top level container is not an array */
 	description?:ValueTypes["translation"],
 	description_id?:true,
 	id?:true,
-	image?:true,
 	/** daily, special */
 	item_type?:true,
 	/** An object relationship */
@@ -5938,7 +6016,6 @@ count?: [{	columns?:ValueTypes["restaurant_item_select_column"][],	distinct?:boo
 	description?:ValueTypes["translation_bool_exp"],
 	description_id?:ValueTypes["Int_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
-	image?:ValueTypes["String_comparison_exp"],
 	item_type?:ValueTypes["String_comparison_exp"],
 	name?:ValueTypes["translation_bool_exp"],
 	name_id?:ValueTypes["Int_comparison_exp"],
@@ -5971,7 +6048,6 @@ count?: [{	columns?:ValueTypes["restaurant_item_select_column"][],	distinct?:boo
 	description?:ValueTypes["translation_obj_rel_insert_input"],
 	description_id?:number,
 	id?:number,
-	image?:string,
 	/** daily, special */
 	item_type?:string,
 	name?:ValueTypes["translation_obj_rel_insert_input"],
@@ -5989,7 +6065,6 @@ count?: [{	columns?:ValueTypes["restaurant_item_select_column"][],	distinct?:boo
 	cost?:true,
 	description_id?:true,
 	id?:true,
-	image?:true,
 	/** daily, special */
 	item_type?:true,
 	name_id?:true,
@@ -6005,7 +6080,6 @@ count?: [{	columns?:ValueTypes["restaurant_item_select_column"][],	distinct?:boo
 	cost?:ValueTypes["order_by"],
 	description_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
-	image?:ValueTypes["order_by"],
 	/** daily, special */
 	item_type?:ValueTypes["order_by"],
 	name_id?:ValueTypes["order_by"],
@@ -6020,7 +6094,6 @@ count?: [{	columns?:ValueTypes["restaurant_item_select_column"][],	distinct?:boo
 	cost?:true,
 	description_id?:true,
 	id?:true,
-	image?:true,
 	/** daily, special */
 	item_type?:true,
 	name_id?:true,
@@ -6036,7 +6109,6 @@ count?: [{	columns?:ValueTypes["restaurant_item_select_column"][],	distinct?:boo
 	cost?:ValueTypes["order_by"],
 	description_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
-	image?:ValueTypes["order_by"],
 	/** daily, special */
 	item_type?:ValueTypes["order_by"],
 	name_id?:ValueTypes["order_by"],
@@ -6377,7 +6449,6 @@ count?: [{	columns?:ValueTypes["restaurant_item_option_map_select_column"][],	di
 	description?:ValueTypes["translation_order_by"],
 	description_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
-	image?:ValueTypes["order_by"],
 	item_type?:ValueTypes["order_by"],
 	name?:ValueTypes["translation_order_by"],
 	name_id?:ValueTypes["order_by"],
@@ -6402,7 +6473,6 @@ count?: [{	columns?:ValueTypes["restaurant_item_option_map_select_column"][],	di
 	cost?:ValueTypes["money"],
 	description_id?:number,
 	id?:number,
-	image?:string,
 	/** daily, special */
 	item_type?:string,
 	name_id?:number,
@@ -6489,7 +6559,6 @@ count?: [{	columns?:ValueTypes["restaurant_item_option_map_select_column"][],	di
 	cost?:ValueTypes["money"],
 	description_id?:number,
 	id?:number,
-	image?:string,
 	/** daily, special */
 	item_type?:string,
 	name_id?:number,
@@ -7727,8 +7796,6 @@ All fields are combined with a logical 'AND'. */
 	estimated_food_ready_time?:true,
 	firebase_id?:true,
 	id?:true,
-	/** A computed field, executes function "in_process" */
-	in_process?:true,
 items?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["restaurant_order_item_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -7754,9 +7821,10 @@ items_aggregate?: [{	/** distinct select on columns */
 	/** An object relationship */
 	review?:ValueTypes["review"],
 	review_id?:true,
-	scheduled_time?:true,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:true,
+stripe_info?: [{	/** JSON select path */
+	path?:string},true],
 	stripe_payment_id?:true,
 	tax?:true,
 	to_location_address?:true,
@@ -7799,6 +7867,10 @@ count?: [{	columns?:ValueTypes["restaurant_order_select_column"][],	distinct?:bo
 	var_pop?:ValueTypes["restaurant_order_var_pop_order_by"],
 	var_samp?:ValueTypes["restaurant_order_var_samp_order_by"],
 	variance?:ValueTypes["restaurant_order_variance_order_by"]
+};
+	/** append existing jsonb value of filtered columns with new jsonb value */
+["restaurant_order_append_input"]: {
+	stripe_info?:ValueTypes["jsonb"]
 };
 	/** input type for inserting array relation for remote table "restaurant_order" */
 ["restaurant_order_arr_rel_insert_input"]: {
@@ -7851,7 +7923,6 @@ count?: [{	columns?:ValueTypes["restaurant_order_select_column"][],	distinct?:bo
 	estimated_food_ready_time?:ValueTypes["timestamptz_comparison_exp"],
 	firebase_id?:ValueTypes["String_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
-	in_process?:ValueTypes["Boolean_comparison_exp"],
 	items?:ValueTypes["restaurant_order_item_bool_exp"],
 	items_cost?:ValueTypes["money_comparison_exp"],
 	notes?:ValueTypes["String_comparison_exp"],
@@ -7863,8 +7934,8 @@ count?: [{	columns?:ValueTypes["restaurant_order_select_column"][],	distinct?:bo
 	restaurant_id?:ValueTypes["Int_comparison_exp"],
 	review?:ValueTypes["review_bool_exp"],
 	review_id?:ValueTypes["Int_comparison_exp"],
-	scheduled_time?:ValueTypes["timestamptz_comparison_exp"],
 	status?:ValueTypes["String_comparison_exp"],
+	stripe_info?:ValueTypes["jsonb_comparison_exp"],
 	stripe_payment_id?:ValueTypes["Int_comparison_exp"],
 	tax?:ValueTypes["money_comparison_exp"],
 	to_location_address?:ValueTypes["String_comparison_exp"],
@@ -7873,6 +7944,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_select_column"][],	distinct?:bo
 };
 	/** Ordering options when selecting data from "restaurant". */
 ["restaurant_order_by"]: {
+	accepted_payments?:ValueTypes["order_by"],
 	approved?:ValueTypes["order_by"],
 	categories_aggregate?:ValueTypes["restaurant_category_aggregate_order_by"],
 	delivery_drivers_aggregate?:ValueTypes["delivery_driver_aggregate_order_by"],
@@ -7893,10 +7965,24 @@ count?: [{	columns?:ValueTypes["restaurant_order_select_column"][],	distinct?:bo
 	schedule?:ValueTypes["order_by"],
 	self_delivery?:ValueTypes["order_by"],
 	service_provider_type?:ValueTypes["order_by"],
-	specials_aggregate?:ValueTypes["restaurant_item_aggregate_order_by"]
+	specials_aggregate?:ValueTypes["restaurant_item_aggregate_order_by"],
+	stripe_info?:ValueTypes["order_by"]
 };
 	/** unique or primary key constraints on table "restaurant_order" */
 ["restaurant_order_constraint"]:restaurant_order_constraint;
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+["restaurant_order_delete_at_path_input"]: {
+	stripe_info?:string[]
+};
+	/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+["restaurant_order_delete_elem_input"]: {
+	stripe_info?:number
+};
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+["restaurant_order_delete_key_input"]: {
+	stripe_info?:string
+};
 	/** input type for incrementing numeric columns in table "restaurant_order" */
 ["restaurant_order_inc_input"]: {
 	chat_id?:number,
@@ -7935,9 +8021,9 @@ count?: [{	columns?:ValueTypes["restaurant_order_select_column"][],	distinct?:bo
 	restaurant_id?:number,
 	review?:ValueTypes["review_obj_rel_insert_input"],
 	review_id?:number,
-	scheduled_time?:ValueTypes["timestamptz"],
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
+	stripe_info?:ValueTypes["jsonb"],
 	stripe_payment_id?:number,
 	tax?:ValueTypes["money"],
 	to_location_address?:string,
@@ -8331,7 +8417,6 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	refund_amount?:true,
 	restaurant_id?:true,
 	review_id?:true,
-	scheduled_time?:true,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:true,
 	stripe_payment_id?:true,
@@ -8358,7 +8443,6 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	refund_amount?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
 	review_id?:ValueTypes["order_by"],
-	scheduled_time?:ValueTypes["order_by"],
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:ValueTypes["order_by"],
 	stripe_payment_id?:ValueTypes["order_by"],
@@ -8384,7 +8468,6 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	refund_amount?:true,
 	restaurant_id?:true,
 	review_id?:true,
-	scheduled_time?:true,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:true,
 	stripe_payment_id?:true,
@@ -8411,7 +8494,6 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	refund_amount?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
 	review_id?:ValueTypes["order_by"],
-	scheduled_time?:ValueTypes["order_by"],
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:ValueTypes["order_by"],
 	stripe_payment_id?:ValueTypes["order_by"],
@@ -8453,7 +8535,6 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	estimated_food_ready_time?:ValueTypes["order_by"],
 	firebase_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
-	in_process?:ValueTypes["order_by"],
 	items_aggregate?:ValueTypes["restaurant_order_item_aggregate_order_by"],
 	items_cost?:ValueTypes["order_by"],
 	notes?:ValueTypes["order_by"],
@@ -8465,8 +8546,8 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	restaurant_id?:ValueTypes["order_by"],
 	review?:ValueTypes["review_order_by"],
 	review_id?:ValueTypes["order_by"],
-	scheduled_time?:ValueTypes["order_by"],
 	status?:ValueTypes["order_by"],
+	stripe_info?:ValueTypes["order_by"],
 	stripe_payment_id?:ValueTypes["order_by"],
 	tax?:ValueTypes["order_by"],
 	to_location_address?:ValueTypes["order_by"],
@@ -8476,6 +8557,10 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	/** primary key columns input for table: restaurant_order */
 ["restaurant_order_pk_columns_input"]: {
 	id:number
+};
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+["restaurant_order_prepend_input"]: {
+	stripe_info?:ValueTypes["jsonb"]
 };
 	/** columns and relationships of "restaurant_order_public" */
 ["restaurant_order_public"]: AliasType<{
@@ -8706,9 +8791,9 @@ count?: [{	columns?:ValueTypes["restaurant_order_public_select_column"][],	disti
 	refund_amount?:ValueTypes["money"],
 	restaurant_id?:number,
 	review_id?:number,
-	scheduled_time?:ValueTypes["timestamptz"],
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
+	stripe_info?:ValueTypes["jsonb"],
 	stripe_payment_id?:number,
 	tax?:ValueTypes["money"],
 	to_location_address?:string,
@@ -8821,9 +8906,9 @@ count?: [{	columns?:ValueTypes["restaurant_order_public_select_column"][],	disti
 	refund_amount?:ValueTypes["money"],
 	restaurant_id?:number,
 	review_id?:number,
-	scheduled_time?:ValueTypes["timestamptz"],
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
+	stripe_info?:ValueTypes["jsonb"],
 	stripe_payment_id?:number,
 	tax?:ValueTypes["money"],
 	to_location_address?:string,
@@ -8859,8 +8944,19 @@ count?: [{	columns?:ValueTypes["restaurant_order_public_select_column"][],	disti
 	/** update columns of table "restaurant_order" */
 ["restaurant_order_update_column"]:restaurant_order_update_column;
 	["restaurant_order_updates"]: {
+	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["restaurant_order_append_input"],
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["restaurant_order_delete_at_path_input"],
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["restaurant_order_delete_elem_input"],
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["restaurant_order_delete_key_input"],
 	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["restaurant_order_inc_input"],
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["restaurant_order_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_order_set_input"],
 	where:ValueTypes["restaurant_order_bool_exp"]
@@ -8952,12 +9048,15 @@ count?: [{	columns?:ValueTypes["restaurant_order_public_select_column"][],	disti
 };
 	/** prepend existing jsonb value of filtered columns with new jsonb value */
 ["restaurant_prepend_input"]: {
-	schedule?:ValueTypes["jsonb"]
+	accepted_payments?:ValueTypes["jsonb"],
+	schedule?:ValueTypes["jsonb"],
+	stripe_info?:ValueTypes["jsonb"]
 };
 	/** select columns of table "restaurant" */
 ["restaurant_select_column"]:restaurant_select_column;
 	/** input type for updating data in table "restaurant" */
 ["restaurant_set_input"]: {
+	accepted_payments?:ValueTypes["jsonb"],
 	approved?:boolean,
 	description_id?:number,
 	firebase_id?:string,
@@ -8972,7 +9071,8 @@ count?: [{	columns?:ValueTypes["restaurant_order_public_select_column"][],	disti
 	payment_info_id?:number,
 	schedule?:ValueTypes["jsonb"],
 	self_delivery?:boolean,
-	service_provider_type?:string
+	service_provider_type?:string,
+	stripe_info?:ValueTypes["jsonb"]
 };
 	/** aggregate stddev on columns */
 ["restaurant_stddev_fields"]: AliasType<{
@@ -9004,6 +9104,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_public_select_column"][],	disti
 };
 	/** Initial value of the column from where the streaming should start */
 ["restaurant_stream_cursor_value_input"]: {
+	accepted_payments?:ValueTypes["jsonb"],
 	approved?:boolean,
 	description_id?:number,
 	firebase_id?:string,
@@ -9018,7 +9119,8 @@ count?: [{	columns?:ValueTypes["restaurant_order_public_select_column"][],	disti
 	payment_info_id?:number,
 	schedule?:ValueTypes["jsonb"],
 	self_delivery?:boolean,
-	service_provider_type?:string
+	service_provider_type?:string,
+	stripe_info?:ValueTypes["jsonb"]
 };
 	/** aggregate sum on columns */
 ["restaurant_sum_fields"]: AliasType<{
@@ -12144,6 +12246,7 @@ the end). throws an error if top level container is not an array */
 			/** An aggregate relationship */
 	saved_locations_aggregate?:PartialObjects["saved_location_aggregate"],
 			service_provider_type?:string,
+			stripe_info?:PartialObjects["jsonb"],
 			/** An object relationship */
 	user?:PartialObjects["user"],
 			user_id?:number
@@ -12169,6 +12272,10 @@ the end). throws an error if top level container is not an array */
 			var_samp?:PartialObjects["customer_var_samp_fields"],
 			variance?:PartialObjects["customer_variance_fields"]
 	},
+	/** append existing jsonb value of filtered columns with new jsonb value */
+["customer_append_input"]: {
+	stripe_info?:PartialObjects["jsonb"]
+},
 	/** aggregate avg on columns */
 ["customer_avg_fields"]: {
 		__typename?: "customer_avg_fields";
@@ -12185,11 +12292,25 @@ the end). throws an error if top level container is not an array */
 	notification_token?:PartialObjects["String_comparison_exp"],
 	saved_locations?:PartialObjects["saved_location_bool_exp"],
 	service_provider_type?:PartialObjects["String_comparison_exp"],
+	stripe_info?:PartialObjects["jsonb_comparison_exp"],
 	user?:PartialObjects["user_bool_exp"],
 	user_id?:PartialObjects["Int_comparison_exp"]
 },
 	/** unique or primary key constraints on table "customer" */
 ["customer_constraint"]:customer_constraint,
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+["customer_delete_at_path_input"]: {
+	stripe_info?:string[]
+},
+	/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+["customer_delete_elem_input"]: {
+	stripe_info?:number
+},
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+["customer_delete_key_input"]: {
+	stripe_info?:string
+},
 	/** input type for incrementing numeric columns in table "customer" */
 ["customer_inc_input"]: {
 	user_id?:number
@@ -12201,6 +12322,7 @@ the end). throws an error if top level container is not an array */
 	deliveries?:PartialObjects["delivery_order_arr_rel_insert_input"],
 	saved_locations?:PartialObjects["saved_location_arr_rel_insert_input"],
 	service_provider_type?:string,
+	stripe_info?:PartialObjects["jsonb"],
 	user?:PartialObjects["user_obj_rel_insert_input"],
 	user_id?:number
 },
@@ -12246,6 +12368,7 @@ the end). throws an error if top level container is not an array */
 	notification_token?:PartialObjects["order_by"],
 	saved_locations_aggregate?:PartialObjects["saved_location_aggregate_order_by"],
 	service_provider_type?:PartialObjects["order_by"],
+	stripe_info?:PartialObjects["order_by"],
 	user?:PartialObjects["user_order_by"],
 	user_id?:PartialObjects["order_by"]
 },
@@ -12253,12 +12376,17 @@ the end). throws an error if top level container is not an array */
 ["customer_pk_columns_input"]: {
 	user_id:number
 },
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+["customer_prepend_input"]: {
+	stripe_info?:PartialObjects["jsonb"]
+},
 	/** select columns of table "customer" */
 ["customer_select_column"]:customer_select_column,
 	/** input type for updating data in table "customer" */
 ["customer_set_input"]: {
 	app_version?:string,
 	service_provider_type?:string,
+	stripe_info?:PartialObjects["jsonb"],
 	user_id?:number
 },
 	/** aggregate stddev on columns */
@@ -12287,6 +12415,7 @@ the end). throws an error if top level container is not an array */
 ["customer_stream_cursor_value_input"]: {
 	app_version?:string,
 	service_provider_type?:string,
+	stripe_info?:PartialObjects["jsonb"],
 	user_id?:number
 },
 	/** aggregate sum on columns */
@@ -12297,8 +12426,19 @@ the end). throws an error if top level container is not an array */
 	/** update columns of table "customer" */
 ["customer_update_column"]:customer_update_column,
 	["customer_updates"]: {
+	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:PartialObjects["customer_append_input"],
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:PartialObjects["customer_delete_at_path_input"],
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:PartialObjects["customer_delete_elem_input"],
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:PartialObjects["customer_delete_key_input"],
 	/** increments the numeric columns with given value of the filtered values */
 	_inc?:PartialObjects["customer_inc_input"],
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:PartialObjects["customer_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["customer_set_input"],
 	where:PartialObjects["customer_bool_exp"]
@@ -15624,6 +15764,7 @@ cancelledByServiceProvider */
 	/** columns and relationships of "restaurant" */
 ["restaurant"]: {
 		__typename?: "restaurant";
+			accepted_payments?:PartialObjects["jsonb"],
 			approved?:boolean,
 			/** An array relationship */
 	categories?:PartialObjects["restaurant_category"][],
@@ -15660,7 +15801,8 @@ cancelledByServiceProvider */
 			self_delivery?:boolean,
 			service_provider_type?:string,
 			/** A computed field, executes function "special_items" */
-	specials?:PartialObjects["restaurant_item"][]
+	specials?:PartialObjects["restaurant_item"][],
+			stripe_info?:PartialObjects["jsonb"]
 	},
 	/** aggregated selection of "restaurant" */
 ["restaurant_aggregate"]: {
@@ -15685,7 +15827,9 @@ cancelledByServiceProvider */
 	},
 	/** append existing jsonb value of filtered columns with new jsonb value */
 ["restaurant_append_input"]: {
-	schedule?:PartialObjects["jsonb"]
+	accepted_payments?:PartialObjects["jsonb"],
+	schedule?:PartialObjects["jsonb"],
+	stripe_info?:PartialObjects["jsonb"]
 },
 	/** aggregate avg on columns */
 ["restaurant_avg_fields"]: {
@@ -15699,6 +15843,7 @@ cancelledByServiceProvider */
 	_and?:PartialObjects["restaurant_bool_exp"][],
 	_not?:PartialObjects["restaurant_bool_exp"],
 	_or?:PartialObjects["restaurant_bool_exp"][],
+	accepted_payments?:PartialObjects["jsonb_comparison_exp"],
 	approved?:PartialObjects["Boolean_comparison_exp"],
 	categories?:PartialObjects["restaurant_category_bool_exp"],
 	delivery_drivers?:PartialObjects["delivery_driver_bool_exp"],
@@ -15719,7 +15864,8 @@ cancelledByServiceProvider */
 	schedule?:PartialObjects["jsonb_comparison_exp"],
 	self_delivery?:PartialObjects["Boolean_comparison_exp"],
 	service_provider_type?:PartialObjects["String_comparison_exp"],
-	specials?:PartialObjects["restaurant_item_bool_exp"]
+	specials?:PartialObjects["restaurant_item_bool_exp"],
+	stripe_info?:PartialObjects["jsonb_comparison_exp"]
 },
 	/** columns and relationships of "restaurant_cart" */
 ["restaurant_cart"]: {
@@ -16918,16 +17064,22 @@ cancelledByServiceProvider */
 ["restaurant_constraint"]:restaurant_constraint,
 	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 ["restaurant_delete_at_path_input"]: {
-	schedule?:string[]
+	accepted_payments?:string[],
+	schedule?:string[],
+	stripe_info?:string[]
 },
 	/** delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array */
 ["restaurant_delete_elem_input"]: {
-	schedule?:number
+	accepted_payments?:number,
+	schedule?:number,
+	stripe_info?:number
 },
 	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
 ["restaurant_delete_key_input"]: {
-	schedule?:string
+	accepted_payments?:string,
+	schedule?:string,
+	stripe_info?:string
 },
 	/** input type for incrementing numeric columns in table "restaurant" */
 ["restaurant_inc_input"]: {
@@ -16937,6 +17089,7 @@ end). throws an error if top level container is not an array */
 },
 	/** input type for inserting data into table "restaurant" */
 ["restaurant_insert_input"]: {
+	accepted_payments?:PartialObjects["jsonb"],
 	approved?:boolean,
 	categories?:PartialObjects["restaurant_category_arr_rel_insert_input"],
 	delivery_drivers?:PartialObjects["delivery_driver_arr_rel_insert_input"],
@@ -16957,7 +17110,8 @@ end). throws an error if top level container is not an array */
 	restaurant_operators?:PartialObjects["restaurant_operator_arr_rel_insert_input"],
 	schedule?:PartialObjects["jsonb"],
 	self_delivery?:boolean,
-	service_provider_type?:string
+	service_provider_type?:string,
+	stripe_info?:PartialObjects["jsonb"]
 },
 	/** columns and relationships of "restaurant_item" */
 ["restaurant_item"]: {
@@ -16972,7 +17126,6 @@ end). throws an error if top level container is not an array */
 	description?:PartialObjects["translation"],
 			description_id?:number,
 			id?:number,
-			image?:string,
 			/** daily, special */
 	item_type?:string,
 			/** An object relationship */
@@ -17064,7 +17217,6 @@ end). throws an error if top level container is not an array */
 	description?:PartialObjects["translation_bool_exp"],
 	description_id?:PartialObjects["Int_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
-	image?:PartialObjects["String_comparison_exp"],
 	item_type?:PartialObjects["String_comparison_exp"],
 	name?:PartialObjects["translation_bool_exp"],
 	name_id?:PartialObjects["Int_comparison_exp"],
@@ -17097,7 +17249,6 @@ end). throws an error if top level container is not an array */
 	description?:PartialObjects["translation_obj_rel_insert_input"],
 	description_id?:number,
 	id?:number,
-	image?:string,
 	/** daily, special */
 	item_type?:string,
 	name?:PartialObjects["translation_obj_rel_insert_input"],
@@ -17116,7 +17267,6 @@ end). throws an error if top level container is not an array */
 			cost?:PartialObjects["money"],
 			description_id?:number,
 			id?:number,
-			image?:string,
 			/** daily, special */
 	item_type?:string,
 			name_id?:number,
@@ -17131,7 +17281,6 @@ end). throws an error if top level container is not an array */
 	cost?:PartialObjects["order_by"],
 	description_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
-	image?:PartialObjects["order_by"],
 	/** daily, special */
 	item_type?:PartialObjects["order_by"],
 	name_id?:PartialObjects["order_by"],
@@ -17147,7 +17296,6 @@ end). throws an error if top level container is not an array */
 			cost?:PartialObjects["money"],
 			description_id?:number,
 			id?:number,
-			image?:string,
 			/** daily, special */
 	item_type?:string,
 			name_id?:number,
@@ -17162,7 +17310,6 @@ end). throws an error if top level container is not an array */
 	cost?:PartialObjects["order_by"],
 	description_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
-	image?:PartialObjects["order_by"],
 	/** daily, special */
 	item_type?:PartialObjects["order_by"],
 	name_id?:PartialObjects["order_by"],
@@ -17495,7 +17642,6 @@ end). throws an error if top level container is not an array */
 	description?:PartialObjects["translation_order_by"],
 	description_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
-	image?:PartialObjects["order_by"],
 	item_type?:PartialObjects["order_by"],
 	name?:PartialObjects["translation_order_by"],
 	name_id?:PartialObjects["order_by"],
@@ -17520,7 +17666,6 @@ end). throws an error if top level container is not an array */
 	cost?:PartialObjects["money"],
 	description_id?:number,
 	id?:number,
-	image?:string,
 	/** daily, special */
 	item_type?:string,
 	name_id?:number,
@@ -17607,7 +17752,6 @@ end). throws an error if top level container is not an array */
 	cost?:PartialObjects["money"],
 	description_id?:number,
 	id?:number,
-	image?:string,
 	/** daily, special */
 	item_type?:string,
 	name_id?:number,
@@ -18822,8 +18966,6 @@ All fields are combined with a logical 'AND'. */
 			estimated_food_ready_time?:PartialObjects["timestamptz"],
 			firebase_id?:string,
 			id?:number,
-			/** A computed field, executes function "in_process" */
-	in_process?:boolean,
 			/** An array relationship */
 	items?:PartialObjects["restaurant_order_item"][],
 			/** An aggregate relationship */
@@ -18841,9 +18983,9 @@ All fields are combined with a logical 'AND'. */
 			/** An object relationship */
 	review?:PartialObjects["review"],
 			review_id?:number,
-			scheduled_time?:PartialObjects["timestamptz"],
 			/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
+			stripe_info?:PartialObjects["jsonb"],
 			stripe_payment_id?:number,
 			tax?:PartialObjects["money"],
 			to_location_address?:string,
@@ -18885,6 +19027,10 @@ All fields are combined with a logical 'AND'. */
 	var_pop?:PartialObjects["restaurant_order_var_pop_order_by"],
 	var_samp?:PartialObjects["restaurant_order_var_samp_order_by"],
 	variance?:PartialObjects["restaurant_order_variance_order_by"]
+},
+	/** append existing jsonb value of filtered columns with new jsonb value */
+["restaurant_order_append_input"]: {
+	stripe_info?:PartialObjects["jsonb"]
 },
 	/** input type for inserting array relation for remote table "restaurant_order" */
 ["restaurant_order_arr_rel_insert_input"]: {
@@ -18937,7 +19083,6 @@ All fields are combined with a logical 'AND'. */
 	estimated_food_ready_time?:PartialObjects["timestamptz_comparison_exp"],
 	firebase_id?:PartialObjects["String_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
-	in_process?:PartialObjects["Boolean_comparison_exp"],
 	items?:PartialObjects["restaurant_order_item_bool_exp"],
 	items_cost?:PartialObjects["money_comparison_exp"],
 	notes?:PartialObjects["String_comparison_exp"],
@@ -18949,8 +19094,8 @@ All fields are combined with a logical 'AND'. */
 	restaurant_id?:PartialObjects["Int_comparison_exp"],
 	review?:PartialObjects["review_bool_exp"],
 	review_id?:PartialObjects["Int_comparison_exp"],
-	scheduled_time?:PartialObjects["timestamptz_comparison_exp"],
 	status?:PartialObjects["String_comparison_exp"],
+	stripe_info?:PartialObjects["jsonb_comparison_exp"],
 	stripe_payment_id?:PartialObjects["Int_comparison_exp"],
 	tax?:PartialObjects["money_comparison_exp"],
 	to_location_address?:PartialObjects["String_comparison_exp"],
@@ -18959,6 +19104,7 @@ All fields are combined with a logical 'AND'. */
 },
 	/** Ordering options when selecting data from "restaurant". */
 ["restaurant_order_by"]: {
+	accepted_payments?:PartialObjects["order_by"],
 	approved?:PartialObjects["order_by"],
 	categories_aggregate?:PartialObjects["restaurant_category_aggregate_order_by"],
 	delivery_drivers_aggregate?:PartialObjects["delivery_driver_aggregate_order_by"],
@@ -18979,10 +19125,24 @@ All fields are combined with a logical 'AND'. */
 	schedule?:PartialObjects["order_by"],
 	self_delivery?:PartialObjects["order_by"],
 	service_provider_type?:PartialObjects["order_by"],
-	specials_aggregate?:PartialObjects["restaurant_item_aggregate_order_by"]
+	specials_aggregate?:PartialObjects["restaurant_item_aggregate_order_by"],
+	stripe_info?:PartialObjects["order_by"]
 },
 	/** unique or primary key constraints on table "restaurant_order" */
 ["restaurant_order_constraint"]:restaurant_order_constraint,
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+["restaurant_order_delete_at_path_input"]: {
+	stripe_info?:string[]
+},
+	/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+["restaurant_order_delete_elem_input"]: {
+	stripe_info?:number
+},
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+["restaurant_order_delete_key_input"]: {
+	stripe_info?:string
+},
 	/** input type for incrementing numeric columns in table "restaurant_order" */
 ["restaurant_order_inc_input"]: {
 	chat_id?:number,
@@ -19021,9 +19181,9 @@ All fields are combined with a logical 'AND'. */
 	restaurant_id?:number,
 	review?:PartialObjects["review_obj_rel_insert_input"],
 	review_id?:number,
-	scheduled_time?:PartialObjects["timestamptz"],
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
+	stripe_info?:PartialObjects["jsonb"],
 	stripe_payment_id?:number,
 	tax?:PartialObjects["money"],
 	to_location_address?:string,
@@ -19417,7 +19577,6 @@ All fields are combined with a logical 'AND'. */
 			refund_amount?:PartialObjects["money"],
 			restaurant_id?:number,
 			review_id?:number,
-			scheduled_time?:PartialObjects["timestamptz"],
 			/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 			stripe_payment_id?:number,
@@ -19443,7 +19602,6 @@ All fields are combined with a logical 'AND'. */
 	refund_amount?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
 	review_id?:PartialObjects["order_by"],
-	scheduled_time?:PartialObjects["order_by"],
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:PartialObjects["order_by"],
 	stripe_payment_id?:PartialObjects["order_by"],
@@ -19470,7 +19628,6 @@ All fields are combined with a logical 'AND'. */
 			refund_amount?:PartialObjects["money"],
 			restaurant_id?:number,
 			review_id?:number,
-			scheduled_time?:PartialObjects["timestamptz"],
 			/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 			stripe_payment_id?:number,
@@ -19496,7 +19653,6 @@ All fields are combined with a logical 'AND'. */
 	refund_amount?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
 	review_id?:PartialObjects["order_by"],
-	scheduled_time?:PartialObjects["order_by"],
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:PartialObjects["order_by"],
 	stripe_payment_id?:PartialObjects["order_by"],
@@ -19538,7 +19694,6 @@ All fields are combined with a logical 'AND'. */
 	estimated_food_ready_time?:PartialObjects["order_by"],
 	firebase_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
-	in_process?:PartialObjects["order_by"],
 	items_aggregate?:PartialObjects["restaurant_order_item_aggregate_order_by"],
 	items_cost?:PartialObjects["order_by"],
 	notes?:PartialObjects["order_by"],
@@ -19550,8 +19705,8 @@ All fields are combined with a logical 'AND'. */
 	restaurant_id?:PartialObjects["order_by"],
 	review?:PartialObjects["review_order_by"],
 	review_id?:PartialObjects["order_by"],
-	scheduled_time?:PartialObjects["order_by"],
 	status?:PartialObjects["order_by"],
+	stripe_info?:PartialObjects["order_by"],
 	stripe_payment_id?:PartialObjects["order_by"],
 	tax?:PartialObjects["order_by"],
 	to_location_address?:PartialObjects["order_by"],
@@ -19561,6 +19716,10 @@ All fields are combined with a logical 'AND'. */
 	/** primary key columns input for table: restaurant_order */
 ["restaurant_order_pk_columns_input"]: {
 	id:number
+},
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+["restaurant_order_prepend_input"]: {
+	stripe_info?:PartialObjects["jsonb"]
 },
 	/** columns and relationships of "restaurant_order_public" */
 ["restaurant_order_public"]: {
@@ -19783,9 +19942,9 @@ All fields are combined with a logical 'AND'. */
 	refund_amount?:PartialObjects["money"],
 	restaurant_id?:number,
 	review_id?:number,
-	scheduled_time?:PartialObjects["timestamptz"],
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
+	stripe_info?:PartialObjects["jsonb"],
 	stripe_payment_id?:number,
 	tax?:PartialObjects["money"],
 	to_location_address?:string,
@@ -19898,9 +20057,9 @@ All fields are combined with a logical 'AND'. */
 	refund_amount?:PartialObjects["money"],
 	restaurant_id?:number,
 	review_id?:number,
-	scheduled_time?:PartialObjects["timestamptz"],
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
+	stripe_info?:PartialObjects["jsonb"],
 	stripe_payment_id?:number,
 	tax?:PartialObjects["money"],
 	to_location_address?:string,
@@ -19936,8 +20095,19 @@ All fields are combined with a logical 'AND'. */
 	/** update columns of table "restaurant_order" */
 ["restaurant_order_update_column"]:restaurant_order_update_column,
 	["restaurant_order_updates"]: {
+	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:PartialObjects["restaurant_order_append_input"],
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:PartialObjects["restaurant_order_delete_at_path_input"],
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:PartialObjects["restaurant_order_delete_elem_input"],
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:PartialObjects["restaurant_order_delete_key_input"],
 	/** increments the numeric columns with given value of the filtered values */
 	_inc?:PartialObjects["restaurant_order_inc_input"],
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:PartialObjects["restaurant_order_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_order_set_input"],
 	where:PartialObjects["restaurant_order_bool_exp"]
@@ -20029,12 +20199,15 @@ All fields are combined with a logical 'AND'. */
 },
 	/** prepend existing jsonb value of filtered columns with new jsonb value */
 ["restaurant_prepend_input"]: {
-	schedule?:PartialObjects["jsonb"]
+	accepted_payments?:PartialObjects["jsonb"],
+	schedule?:PartialObjects["jsonb"],
+	stripe_info?:PartialObjects["jsonb"]
 },
 	/** select columns of table "restaurant" */
 ["restaurant_select_column"]:restaurant_select_column,
 	/** input type for updating data in table "restaurant" */
 ["restaurant_set_input"]: {
+	accepted_payments?:PartialObjects["jsonb"],
 	approved?:boolean,
 	description_id?:number,
 	firebase_id?:string,
@@ -20049,7 +20222,8 @@ All fields are combined with a logical 'AND'. */
 	payment_info_id?:number,
 	schedule?:PartialObjects["jsonb"],
 	self_delivery?:boolean,
-	service_provider_type?:string
+	service_provider_type?:string,
+	stripe_info?:PartialObjects["jsonb"]
 },
 	/** aggregate stddev on columns */
 ["restaurant_stddev_fields"]: {
@@ -20081,6 +20255,7 @@ All fields are combined with a logical 'AND'. */
 },
 	/** Initial value of the column from where the streaming should start */
 ["restaurant_stream_cursor_value_input"]: {
+	accepted_payments?:PartialObjects["jsonb"],
 	approved?:boolean,
 	description_id?:number,
 	firebase_id?:string,
@@ -20095,7 +20270,8 @@ All fields are combined with a logical 'AND'. */
 	payment_info_id?:number,
 	schedule?:PartialObjects["jsonb"],
 	self_delivery?:boolean,
-	service_provider_type?:string
+	service_provider_type?:string,
+	stripe_info?:PartialObjects["jsonb"]
 },
 	/** aggregate sum on columns */
 ["restaurant_sum_fields"]: {
@@ -23014,6 +23190,7 @@ export type customer = {
 	/** An aggregate relationship */
 	saved_locations_aggregate:saved_location_aggregate,
 	service_provider_type?:string,
+	stripe_info?:jsonb,
 	/** An object relationship */
 	user:user,
 	user_id:number
@@ -23042,6 +23219,11 @@ export type customer_aggregate_fields = {
 	variance?:customer_variance_fields
 }
 
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type customer_append_input = {
+		stripe_info?:jsonb
+}
+
 /** aggregate avg on columns */
 export type customer_avg_fields = {
 	__typename?: "customer_avg_fields",
@@ -23059,6 +23241,7 @@ export type customer_bool_exp = {
 	notification_token?:String_comparison_exp,
 	saved_locations?:saved_location_bool_exp,
 	service_provider_type?:String_comparison_exp,
+	stripe_info?:jsonb_comparison_exp,
 	user?:user_bool_exp,
 	user_id?:Int_comparison_exp
 }
@@ -23067,6 +23250,22 @@ export type customer_bool_exp = {
 export enum customer_constraint {
 	customer_pkey = "customer_pkey",
 	customer_user_id_key = "customer_user_id_key"
+}
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type customer_delete_at_path_input = {
+		stripe_info?:string[]
+}
+
+/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+export type customer_delete_elem_input = {
+		stripe_info?:number
+}
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type customer_delete_key_input = {
+		stripe_info?:string
 }
 
 /** input type for incrementing numeric columns in table "customer" */
@@ -23081,6 +23280,7 @@ export type customer_insert_input = {
 	deliveries?:delivery_order_arr_rel_insert_input,
 	saved_locations?:saved_location_arr_rel_insert_input,
 	service_provider_type?:string,
+	stripe_info?:jsonb,
 	user?:user_obj_rel_insert_input,
 	user_id?:number
 }
@@ -23132,6 +23332,7 @@ export type customer_order_by = {
 	notification_token?:order_by,
 	saved_locations_aggregate?:saved_location_aggregate_order_by,
 	service_provider_type?:order_by,
+	stripe_info?:order_by,
 	user?:user_order_by,
 	user_id?:order_by
 }
@@ -23141,10 +23342,16 @@ export type customer_pk_columns_input = {
 		user_id:number
 }
 
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type customer_prepend_input = {
+		stripe_info?:jsonb
+}
+
 /** select columns of table "customer" */
 export enum customer_select_column {
 	app_version = "app_version",
 	service_provider_type = "service_provider_type",
+	stripe_info = "stripe_info",
 	user_id = "user_id"
 }
 
@@ -23152,6 +23359,7 @@ export enum customer_select_column {
 export type customer_set_input = {
 		app_version?:string,
 	service_provider_type?:string,
+	stripe_info?:jsonb,
 	user_id?:number
 }
 
@@ -23185,6 +23393,7 @@ export type customer_stream_cursor_input = {
 export type customer_stream_cursor_value_input = {
 		app_version?:string,
 	service_provider_type?:string,
+	stripe_info?:jsonb,
 	user_id?:number
 }
 
@@ -23198,12 +23407,24 @@ export type customer_sum_fields = {
 export enum customer_update_column {
 	app_version = "app_version",
 	service_provider_type = "service_provider_type",
+	stripe_info = "stripe_info",
 	user_id = "user_id"
 }
 
 export type customer_updates = {
-		/** increments the numeric columns with given value of the filtered values */
+		/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:customer_append_input,
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:customer_delete_at_path_input,
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:customer_delete_elem_input,
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:customer_delete_key_input,
+	/** increments the numeric columns with given value of the filtered values */
 	_inc?:customer_inc_input,
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:customer_prepend_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:customer_set_input,
 	where:customer_bool_exp
@@ -26961,6 +27182,7 @@ export type query_root = {
 /** columns and relationships of "restaurant" */
 export type restaurant = {
 	__typename?: "restaurant",
+	accepted_payments?:jsonb,
 	approved:boolean,
 	/** An array relationship */
 	categories:restaurant_category[],
@@ -26997,7 +27219,8 @@ export type restaurant = {
 	self_delivery:boolean,
 	service_provider_type:string,
 	/** A computed field, executes function "special_items" */
-	specials?:restaurant_item[]
+	specials?:restaurant_item[],
+	stripe_info?:jsonb
 }
 
 /** aggregated selection of "restaurant" */
@@ -27025,7 +27248,9 @@ export type restaurant_aggregate_fields = {
 
 /** append existing jsonb value of filtered columns with new jsonb value */
 export type restaurant_append_input = {
-		schedule?:jsonb
+		accepted_payments?:jsonb,
+	schedule?:jsonb,
+	stripe_info?:jsonb
 }
 
 /** aggregate avg on columns */
@@ -27041,6 +27266,7 @@ export type restaurant_bool_exp = {
 		_and?:restaurant_bool_exp[],
 	_not?:restaurant_bool_exp,
 	_or?:restaurant_bool_exp[],
+	accepted_payments?:jsonb_comparison_exp,
 	approved?:Boolean_comparison_exp,
 	categories?:restaurant_category_bool_exp,
 	delivery_drivers?:delivery_driver_bool_exp,
@@ -27061,7 +27287,8 @@ export type restaurant_bool_exp = {
 	schedule?:jsonb_comparison_exp,
 	self_delivery?:Boolean_comparison_exp,
 	service_provider_type?:String_comparison_exp,
-	specials?:restaurant_item_bool_exp
+	specials?:restaurant_item_bool_exp,
+	stripe_info?:jsonb_comparison_exp
 }
 
 /** columns and relationships of "restaurant_cart" */
@@ -28469,18 +28696,24 @@ export enum restaurant_constraint {
 
 /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 export type restaurant_delete_at_path_input = {
-		schedule?:string[]
+		accepted_payments?:string[],
+	schedule?:string[],
+	stripe_info?:string[]
 }
 
 /** delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array */
 export type restaurant_delete_elem_input = {
-		schedule?:number
+		accepted_payments?:number,
+	schedule?:number,
+	stripe_info?:number
 }
 
 /** delete key/value pair or string element. key/value pairs are matched based on their key value */
 export type restaurant_delete_key_input = {
-		schedule?:string
+		accepted_payments?:string,
+	schedule?:string,
+	stripe_info?:string
 }
 
 /** input type for incrementing numeric columns in table "restaurant" */
@@ -28492,7 +28725,8 @@ export type restaurant_inc_input = {
 
 /** input type for inserting data into table "restaurant" */
 export type restaurant_insert_input = {
-		approved?:boolean,
+		accepted_payments?:jsonb,
+	approved?:boolean,
 	categories?:restaurant_category_arr_rel_insert_input,
 	delivery_drivers?:delivery_driver_arr_rel_insert_input,
 	description?:translation_obj_rel_insert_input,
@@ -28512,7 +28746,8 @@ export type restaurant_insert_input = {
 	restaurant_operators?:restaurant_operator_arr_rel_insert_input,
 	schedule?:jsonb,
 	self_delivery?:boolean,
-	service_provider_type?:string
+	service_provider_type?:string,
+	stripe_info?:jsonb
 }
 
 /** columns and relationships of "restaurant_item" */
@@ -28528,7 +28763,6 @@ export type restaurant_item = {
 	description?:translation,
 	description_id?:number,
 	id:number,
-	image?:string,
 	/** daily, special */
 	item_type:string,
 	/** An object relationship */
@@ -28627,7 +28861,6 @@ export type restaurant_item_bool_exp = {
 	description?:translation_bool_exp,
 	description_id?:Int_comparison_exp,
 	id?:Int_comparison_exp,
-	image?:String_comparison_exp,
 	item_type?:String_comparison_exp,
 	name?:translation_bool_exp,
 	name_id?:Int_comparison_exp,
@@ -28665,7 +28898,6 @@ export type restaurant_item_insert_input = {
 	description?:translation_obj_rel_insert_input,
 	description_id?:number,
 	id?:number,
-	image?:string,
 	/** daily, special */
 	item_type?:string,
 	name?:translation_obj_rel_insert_input,
@@ -28685,7 +28917,6 @@ export type restaurant_item_max_fields = {
 	cost?:money,
 	description_id?:number,
 	id?:number,
-	image?:string,
 	/** daily, special */
 	item_type?:string,
 	name_id?:number,
@@ -28701,7 +28932,6 @@ export type restaurant_item_max_order_by = {
 	cost?:order_by,
 	description_id?:order_by,
 	id?:order_by,
-	image?:order_by,
 	/** daily, special */
 	item_type?:order_by,
 	name_id?:order_by,
@@ -28718,7 +28948,6 @@ export type restaurant_item_min_fields = {
 	cost?:money,
 	description_id?:number,
 	id?:number,
-	image?:string,
 	/** daily, special */
 	item_type?:string,
 	name_id?:number,
@@ -28734,7 +28963,6 @@ export type restaurant_item_min_order_by = {
 	cost?:order_by,
 	description_id?:order_by,
 	id?:order_by,
-	image?:order_by,
 	/** daily, special */
 	item_type?:order_by,
 	name_id?:order_by,
@@ -29123,7 +29351,6 @@ export type restaurant_item_order_by = {
 	description?:translation_order_by,
 	description_id?:order_by,
 	id?:order_by,
-	image?:order_by,
 	item_type?:order_by,
 	name?:translation_order_by,
 	name_id?:order_by,
@@ -29148,7 +29375,6 @@ export enum restaurant_item_select_column {
 	cost = "cost",
 	description_id = "description_id",
 	id = "id",
-	image = "image",
 	item_type = "item_type",
 	name_id = "name_id",
 	position = "position",
@@ -29165,7 +29391,6 @@ export type restaurant_item_set_input = {
 	cost?:money,
 	description_id?:number,
 	id?:number,
-	image?:string,
 	/** daily, special */
 	item_type?:string,
 	name_id?:number,
@@ -29260,7 +29485,6 @@ export type restaurant_item_stream_cursor_value_input = {
 	cost?:money,
 	description_id?:number,
 	id?:number,
-	image?:string,
 	/** daily, special */
 	item_type?:string,
 	name_id?:number,
@@ -29301,7 +29525,6 @@ export enum restaurant_item_update_column {
 	cost = "cost",
 	description_id = "description_id",
 	id = "id",
-	image = "image",
 	item_type = "item_type",
 	name_id = "name_id",
 	position = "position",
@@ -30679,8 +30902,6 @@ export type restaurant_order = {
 	estimated_food_ready_time?:timestamptz,
 	firebase_id?:string,
 	id:number,
-	/** A computed field, executes function "in_process" */
-	in_process?:boolean,
 	/** An array relationship */
 	items:restaurant_order_item[],
 	/** An aggregate relationship */
@@ -30698,9 +30919,9 @@ export type restaurant_order = {
 	/** An object relationship */
 	review?:review,
 	review_id?:number,
-	scheduled_time?:timestamptz,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status:string,
+	stripe_info?:jsonb,
 	stripe_payment_id?:number,
 	tax:money,
 	to_location_address?:string,
@@ -30745,6 +30966,11 @@ export type restaurant_order_aggregate_order_by = {
 	var_pop?:restaurant_order_var_pop_order_by,
 	var_samp?:restaurant_order_var_samp_order_by,
 	variance?:restaurant_order_variance_order_by
+}
+
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type restaurant_order_append_input = {
+		stripe_info?:jsonb
 }
 
 /** input type for inserting array relation for remote table "restaurant_order" */
@@ -30801,7 +31027,6 @@ export type restaurant_order_bool_exp = {
 	estimated_food_ready_time?:timestamptz_comparison_exp,
 	firebase_id?:String_comparison_exp,
 	id?:Int_comparison_exp,
-	in_process?:Boolean_comparison_exp,
 	items?:restaurant_order_item_bool_exp,
 	items_cost?:money_comparison_exp,
 	notes?:String_comparison_exp,
@@ -30813,8 +31038,8 @@ export type restaurant_order_bool_exp = {
 	restaurant_id?:Int_comparison_exp,
 	review?:review_bool_exp,
 	review_id?:Int_comparison_exp,
-	scheduled_time?:timestamptz_comparison_exp,
 	status?:String_comparison_exp,
+	stripe_info?:jsonb_comparison_exp,
 	stripe_payment_id?:Int_comparison_exp,
 	tax?:money_comparison_exp,
 	to_location_address?:String_comparison_exp,
@@ -30824,7 +31049,8 @@ export type restaurant_order_bool_exp = {
 
 /** Ordering options when selecting data from "restaurant". */
 export type restaurant_order_by = {
-		approved?:order_by,
+		accepted_payments?:order_by,
+	approved?:order_by,
 	categories_aggregate?:restaurant_category_aggregate_order_by,
 	delivery_drivers_aggregate?:delivery_driver_aggregate_order_by,
 	description?:translation_order_by,
@@ -30844,7 +31070,8 @@ export type restaurant_order_by = {
 	schedule?:order_by,
 	self_delivery?:order_by,
 	service_provider_type?:order_by,
-	specials_aggregate?:restaurant_item_aggregate_order_by
+	specials_aggregate?:restaurant_item_aggregate_order_by,
+	stripe_info?:order_by
 }
 
 /** unique or primary key constraints on table "restaurant_order" */
@@ -30852,6 +31079,22 @@ export enum restaurant_order_constraint {
 	restaurant_order_delivery_id_key = "restaurant_order_delivery_id_key",
 	restaurant_order_firebase_id_key = "restaurant_order_firebase_id_key",
 	restaurant_order_pkey = "restaurant_order_pkey"
+}
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type restaurant_order_delete_at_path_input = {
+		stripe_info?:string[]
+}
+
+/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+export type restaurant_order_delete_elem_input = {
+		stripe_info?:number
+}
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type restaurant_order_delete_key_input = {
+		stripe_info?:string
 }
 
 /** input type for incrementing numeric columns in table "restaurant_order" */
@@ -30893,9 +31136,9 @@ export type restaurant_order_insert_input = {
 	restaurant_id?:number,
 	review?:review_obj_rel_insert_input,
 	review_id?:number,
-	scheduled_time?:timestamptz,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
+	stripe_info?:jsonb,
 	stripe_payment_id?:number,
 	tax?:money,
 	to_location_address?:string,
@@ -31351,7 +31594,6 @@ export type restaurant_order_max_fields = {
 	refund_amount?:money,
 	restaurant_id?:number,
 	review_id?:number,
-	scheduled_time?:timestamptz,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
@@ -31378,7 +31620,6 @@ export type restaurant_order_max_order_by = {
 	refund_amount?:order_by,
 	restaurant_id?:order_by,
 	review_id?:order_by,
-	scheduled_time?:order_by,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:order_by,
 	stripe_payment_id?:order_by,
@@ -31406,7 +31647,6 @@ export type restaurant_order_min_fields = {
 	refund_amount?:money,
 	restaurant_id?:number,
 	review_id?:number,
-	scheduled_time?:timestamptz,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
 	stripe_payment_id?:number,
@@ -31433,7 +31673,6 @@ export type restaurant_order_min_order_by = {
 	refund_amount?:order_by,
 	restaurant_id?:order_by,
 	review_id?:order_by,
-	scheduled_time?:order_by,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:order_by,
 	stripe_payment_id?:order_by,
@@ -31479,7 +31718,6 @@ export type restaurant_order_order_by = {
 	estimated_food_ready_time?:order_by,
 	firebase_id?:order_by,
 	id?:order_by,
-	in_process?:order_by,
 	items_aggregate?:restaurant_order_item_aggregate_order_by,
 	items_cost?:order_by,
 	notes?:order_by,
@@ -31491,8 +31729,8 @@ export type restaurant_order_order_by = {
 	restaurant_id?:order_by,
 	review?:review_order_by,
 	review_id?:order_by,
-	scheduled_time?:order_by,
 	status?:order_by,
+	stripe_info?:order_by,
 	stripe_payment_id?:order_by,
 	tax?:order_by,
 	to_location_address?:order_by,
@@ -31503,6 +31741,11 @@ export type restaurant_order_order_by = {
 /** primary key columns input for table: restaurant_order */
 export type restaurant_order_pk_columns_input = {
 		id:number
+}
+
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type restaurant_order_prepend_input = {
+		stripe_info?:jsonb
 }
 
 /** columns and relationships of "restaurant_order_public" */
@@ -31755,8 +31998,8 @@ export enum restaurant_order_select_column {
 	refund_amount = "refund_amount",
 	restaurant_id = "restaurant_id",
 	review_id = "review_id",
-	scheduled_time = "scheduled_time",
 	status = "status",
+	stripe_info = "stripe_info",
 	stripe_payment_id = "stripe_payment_id",
 	tax = "tax",
 	to_location_address = "to_location_address",
@@ -31782,9 +32025,9 @@ export type restaurant_order_set_input = {
 	refund_amount?:money,
 	restaurant_id?:number,
 	review_id?:number,
-	scheduled_time?:timestamptz,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
+	stripe_info?:jsonb,
 	stripe_payment_id?:number,
 	tax?:money,
 	to_location_address?:string,
@@ -31905,9 +32148,9 @@ export type restaurant_order_stream_cursor_value_input = {
 	refund_amount?:money,
 	restaurant_id?:number,
 	review_id?:number,
-	scheduled_time?:timestamptz,
 	/** orderReceived, preparing, ready, onTheWay, delivered, cancelledByCustomer, cancelledByRestaurant */
 	status?:string,
+	stripe_info?:jsonb,
 	stripe_payment_id?:number,
 	tax?:money,
 	to_location_address?:string,
@@ -31962,8 +32205,8 @@ export enum restaurant_order_update_column {
 	refund_amount = "refund_amount",
 	restaurant_id = "restaurant_id",
 	review_id = "review_id",
-	scheduled_time = "scheduled_time",
 	status = "status",
+	stripe_info = "stripe_info",
 	stripe_payment_id = "stripe_payment_id",
 	tax = "tax",
 	to_location_address = "to_location_address",
@@ -31971,8 +32214,19 @@ export enum restaurant_order_update_column {
 }
 
 export type restaurant_order_updates = {
-		/** increments the numeric columns with given value of the filtered values */
+		/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:restaurant_order_append_input,
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:restaurant_order_delete_at_path_input,
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:restaurant_order_delete_elem_input,
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:restaurant_order_delete_key_input,
+	/** increments the numeric columns with given value of the filtered values */
 	_inc?:restaurant_order_inc_input,
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:restaurant_order_prepend_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_order_set_input,
 	where:restaurant_order_bool_exp
@@ -32072,11 +32326,14 @@ export type restaurant_pk_columns_input = {
 
 /** prepend existing jsonb value of filtered columns with new jsonb value */
 export type restaurant_prepend_input = {
-		schedule?:jsonb
+		accepted_payments?:jsonb,
+	schedule?:jsonb,
+	stripe_info?:jsonb
 }
 
 /** select columns of table "restaurant" */
 export enum restaurant_select_column {
+	accepted_payments = "accepted_payments",
 	approved = "approved",
 	description_id = "description_id",
 	firebase_id = "firebase_id",
@@ -32090,12 +32347,14 @@ export enum restaurant_select_column {
 	payment_info_id = "payment_info_id",
 	schedule = "schedule",
 	self_delivery = "self_delivery",
-	service_provider_type = "service_provider_type"
+	service_provider_type = "service_provider_type",
+	stripe_info = "stripe_info"
 }
 
 /** input type for updating data in table "restaurant" */
 export type restaurant_set_input = {
-		approved?:boolean,
+		accepted_payments?:jsonb,
+	approved?:boolean,
 	description_id?:number,
 	firebase_id?:string,
 	id?:number,
@@ -32109,7 +32368,8 @@ export type restaurant_set_input = {
 	payment_info_id?:number,
 	schedule?:jsonb,
 	self_delivery?:boolean,
-	service_provider_type?:string
+	service_provider_type?:string,
+	stripe_info?:jsonb
 }
 
 /** aggregate stddev on columns */
@@ -32146,7 +32406,8 @@ export type restaurant_stream_cursor_input = {
 
 /** Initial value of the column from where the streaming should start */
 export type restaurant_stream_cursor_value_input = {
-		approved?:boolean,
+		accepted_payments?:jsonb,
+	approved?:boolean,
 	description_id?:number,
 	firebase_id?:string,
 	id?:number,
@@ -32160,7 +32421,8 @@ export type restaurant_stream_cursor_value_input = {
 	payment_info_id?:number,
 	schedule?:jsonb,
 	self_delivery?:boolean,
-	service_provider_type?:string
+	service_provider_type?:string,
+	stripe_info?:jsonb
 }
 
 /** aggregate sum on columns */
@@ -32173,6 +32435,7 @@ export type restaurant_sum_fields = {
 
 /** update columns of table "restaurant" */
 export enum restaurant_update_column {
+	accepted_payments = "accepted_payments",
 	approved = "approved",
 	description_id = "description_id",
 	firebase_id = "firebase_id",
@@ -32186,7 +32449,8 @@ export enum restaurant_update_column {
 	payment_info_id = "payment_info_id",
 	schedule = "schedule",
 	self_delivery = "self_delivery",
-	service_provider_type = "service_provider_type"
+	service_provider_type = "service_provider_type",
+	stripe_info = "stripe_info"
 }
 
 export type restaurant_updates = {
@@ -36165,6 +36429,14 @@ export const AllTypesProps: Record<string,any> = {
 				arrayRequired:false,
 				required:false
 			}
+		},
+		stripe_info:{
+			path:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
 		}
 	},
 	customer_aggregate_fields:{
@@ -36181,6 +36453,14 @@ export const AllTypesProps: Record<string,any> = {
 				arrayRequired:false,
 				required:false
 			}
+		}
+	},
+	customer_append_input:{
+		stripe_info:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	customer_bool_exp:{
@@ -36238,6 +36518,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		stripe_info:{
+			type:"jsonb_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		user:{
 			type:"user_bool_exp",
 			array:false,
@@ -36252,6 +36538,30 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	customer_constraint: "enum",
+	customer_delete_at_path_input:{
+		stripe_info:{
+			type:"String",
+			array:true,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	customer_delete_elem_input:{
+		stripe_info:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_delete_key_input:{
+		stripe_info:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
 	customer_inc_input:{
 		user_id:{
 			type:"Int",
@@ -36287,6 +36597,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		service_provider_type:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
+			type:"jsonb",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -36375,6 +36691,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		stripe_info:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		user:{
 			type:"user_order_by",
 			array:false,
@@ -36396,6 +36718,14 @@ export const AllTypesProps: Record<string,any> = {
 			required:true
 		}
 	},
+	customer_prepend_input:{
+		stripe_info:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
 	customer_select_column: "enum",
 	customer_set_input:{
 		app_version:{
@@ -36406,6 +36736,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		service_provider_type:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
+			type:"jsonb",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -36444,6 +36780,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		stripe_info:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		user_id:{
 			type:"Int",
 			array:false,
@@ -36453,8 +36795,38 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	customer_update_column: "enum",
 	customer_updates:{
+		_append:{
+			type:"customer_append_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_at_path:{
+			type:"customer_delete_at_path_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_elem:{
+			type:"customer_delete_elem_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_key:{
+			type:"customer_delete_key_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		_inc:{
 			type:"customer_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_prepend:{
+			type:"customer_prepend_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -44305,8 +44677,38 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		update_customer:{
+			_append:{
+				type:"customer_append_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_at_path:{
+				type:"customer_delete_at_path_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_elem:{
+				type:"customer_delete_elem_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_key:{
+				type:"customer_delete_key_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
 			_inc:{
 				type:"customer_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_prepend:{
+				type:"customer_prepend_input",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -44325,8 +44727,38 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		update_customer_by_pk:{
+			_append:{
+				type:"customer_append_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_at_path:{
+				type:"customer_delete_at_path_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_elem:{
+				type:"customer_delete_elem_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_key:{
+				type:"customer_delete_key_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
 			_inc:{
 				type:"customer_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_prepend:{
+				type:"customer_prepend_input",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -45209,8 +45641,38 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		update_restaurant_order:{
+			_append:{
+				type:"restaurant_order_append_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_at_path:{
+				type:"restaurant_order_delete_at_path_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_elem:{
+				type:"restaurant_order_delete_elem_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_key:{
+				type:"restaurant_order_delete_key_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
 			_inc:{
 				type:"restaurant_order_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_prepend:{
+				type:"restaurant_order_prepend_input",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -45229,8 +45691,38 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		update_restaurant_order_by_pk:{
+			_append:{
+				type:"restaurant_order_append_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_at_path:{
+				type:"restaurant_order_delete_at_path_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_elem:{
+				type:"restaurant_order_delete_elem_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_key:{
+				type:"restaurant_order_delete_key_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
 			_inc:{
 				type:"restaurant_order_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_prepend:{
+				type:"restaurant_order_prepend_input",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -48416,6 +48908,14 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant:{
+		accepted_payments:{
+			path:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
 		categories:{
 			distinct_on:{
 				type:"restaurant_category_select_column",
@@ -48711,6 +49211,14 @@ export const AllTypesProps: Record<string,any> = {
 				arrayRequired:false,
 				required:false
 			}
+		},
+		stripe_info:{
+			path:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
 		}
 	},
 	restaurant_aggregate_fields:{
@@ -48730,7 +49238,19 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_append_input:{
+		accepted_payments:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		schedule:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
 			type:"jsonb",
 			array:false,
 			arrayRequired:false,
@@ -48755,6 +49275,12 @@ export const AllTypesProps: Record<string,any> = {
 			array:true,
 			arrayRequired:false,
 			required:true
+		},
+		accepted_payments:{
+			type:"jsonb_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
 		},
 		approved:{
 			type:"Boolean_comparison_exp",
@@ -48878,6 +49404,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		specials:{
 			type:"restaurant_item_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
+			type:"jsonb_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -51713,7 +52245,19 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	restaurant_constraint: "enum",
 	restaurant_delete_at_path_input:{
+		accepted_payments:{
+			type:"String",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
 		schedule:{
+			type:"String",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		stripe_info:{
 			type:"String",
 			array:true,
 			arrayRequired:false,
@@ -51721,7 +52265,19 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_delete_elem_input:{
+		accepted_payments:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		schedule:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
 			type:"Int",
 			array:false,
 			arrayRequired:false,
@@ -51729,7 +52285,19 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_delete_key_input:{
+		accepted_payments:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		schedule:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
 			type:"String",
 			array:false,
 			arrayRequired:false,
@@ -51757,6 +52325,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_insert_input:{
+		accepted_payments:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		approved:{
 			type:"Boolean",
 			array:false,
@@ -51873,6 +52447,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		service_provider_type:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
+			type:"jsonb",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -52153,12 +52733,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		image:{
-			type:"String_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		item_type:{
 			type:"String_comparison_exp",
 			array:false,
@@ -52308,12 +52882,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		image:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		item_type:{
 			type:"String",
 			array:false,
@@ -52394,12 +52962,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		image:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		item_type:{
 			type:"order_by",
 			array:false,
@@ -52457,12 +53019,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		image:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -53287,12 +53843,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		image:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		item_type:{
 			type:"order_by",
 			array:false,
@@ -53390,12 +53940,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		id:{
 			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		image:{
-			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -53616,12 +54160,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		id:{
 			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		image:{
-			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -56631,6 +57169,14 @@ export const AllTypesProps: Record<string,any> = {
 				arrayRequired:false,
 				required:false
 			}
+		},
+		stripe_info:{
+			path:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
 		}
 	},
 	restaurant_order_aggregate_fields:{
@@ -56712,6 +57258,14 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		variance:{
 			type:"restaurant_order_variance_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	restaurant_order_append_input:{
+		stripe_info:{
+			type:"jsonb",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -56890,12 +57444,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		in_process:{
-			type:"Boolean_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		items:{
 			type:"restaurant_order_item_bool_exp",
 			array:false,
@@ -56962,14 +57510,14 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		scheduled_time:{
-			type:"timestamptz_comparison_exp",
+		status:{
+			type:"String_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
-		status:{
-			type:"String_comparison_exp",
+		stripe_info:{
+			type:"jsonb_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -57006,6 +57554,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_order_by:{
+		accepted_payments:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		approved:{
 			type:"order_by",
 			array:false,
@@ -57131,9 +57685,39 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
+		},
+		stripe_info:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	restaurant_order_constraint: "enum",
+	restaurant_order_delete_at_path_input:{
+		stripe_info:{
+			type:"String",
+			array:true,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	restaurant_order_delete_elem_input:{
+		stripe_info:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	restaurant_order_delete_key_input:{
+		stripe_info:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
 	restaurant_order_inc_input:{
 		chat_id:{
 			type:"Int",
@@ -57335,14 +57919,14 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		scheduled_time:{
-			type:"timestamptz",
+		status:{
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
-		status:{
-			type:"String",
+		stripe_info:{
+			type:"jsonb",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -58412,12 +58996,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		scheduled_time:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		status:{
 			type:"order_by",
 			array:false,
@@ -58541,12 +59119,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		review_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		scheduled_time:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -58690,12 +59262,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		in_process:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		items_aggregate:{
 			type:"restaurant_order_item_aggregate_order_by",
 			array:false,
@@ -58762,13 +59328,13 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		scheduled_time:{
+		status:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
-		status:{
+		stripe_info:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -58811,6 +59377,14 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:true
+		}
+	},
+	restaurant_order_prepend_input:{
+		stripe_info:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	restaurant_order_public:{
@@ -59310,14 +59884,14 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		scheduled_time:{
-			type:"timestamptz",
+		status:{
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
-		status:{
-			type:"String",
+		stripe_info:{
+			type:"jsonb",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -59650,14 +60224,14 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		scheduled_time:{
-			type:"timestamptz",
+		status:{
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
-		status:{
-			type:"String",
+		stripe_info:{
+			type:"jsonb",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -59751,8 +60325,38 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	restaurant_order_update_column: "enum",
 	restaurant_order_updates:{
+		_append:{
+			type:"restaurant_order_append_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_at_path:{
+			type:"restaurant_order_delete_at_path_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_elem:{
+			type:"restaurant_order_delete_elem_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_key:{
+			type:"restaurant_order_delete_key_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		_inc:{
 			type:"restaurant_order_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_prepend:{
+			type:"restaurant_order_prepend_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -59965,7 +60569,19 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_prepend_input:{
+		accepted_payments:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		schedule:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
 			type:"jsonb",
 			array:false,
 			arrayRequired:false,
@@ -59974,6 +60590,12 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	restaurant_select_column: "enum",
 	restaurant_set_input:{
+		accepted_payments:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		approved:{
 			type:"Boolean",
 			array:false,
@@ -60054,6 +60676,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		service_provider_type:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
+			type:"jsonb",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -60074,6 +60702,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_stream_cursor_value_input:{
+		accepted_payments:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		approved:{
 			type:"Boolean",
 			array:false,
@@ -60154,6 +60788,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		service_provider_type:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
+			type:"jsonb",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -67164,6 +67804,7 @@ export const ReturnTypes: Record<string,any> = {
 		saved_locations:"saved_location",
 		saved_locations_aggregate:"saved_location_aggregate",
 		service_provider_type:"String",
+		stripe_info:"jsonb",
 		user:"user",
 		user_id:"Int"
 	},
@@ -68405,6 +69046,7 @@ export const ReturnTypes: Record<string,any> = {
 		user_by_pk:"user"
 	},
 	restaurant:{
+		accepted_payments:"jsonb",
 		approved:"Boolean",
 		categories:"restaurant_category",
 		categories_aggregate:"restaurant_category_aggregate",
@@ -68429,7 +69071,8 @@ export const ReturnTypes: Record<string,any> = {
 		schedule:"jsonb",
 		self_delivery:"Boolean",
 		service_provider_type:"String",
-		specials:"restaurant_item"
+		specials:"restaurant_item",
+		stripe_info:"jsonb"
 	},
 	restaurant_aggregate:{
 		aggregate:"restaurant_aggregate_fields",
@@ -68842,7 +69485,6 @@ export const ReturnTypes: Record<string,any> = {
 		description:"translation",
 		description_id:"Int",
 		id:"Int",
-		image:"String",
 		item_type:"String",
 		name:"translation",
 		name_id:"Int",
@@ -68885,7 +69527,6 @@ export const ReturnTypes: Record<string,any> = {
 		cost:"money",
 		description_id:"Int",
 		id:"Int",
-		image:"String",
 		item_type:"String",
 		name_id:"Int",
 		position:"Int",
@@ -68898,7 +69539,6 @@ export const ReturnTypes: Record<string,any> = {
 		cost:"money",
 		description_id:"Int",
 		id:"Int",
-		image:"String",
 		item_type:"String",
 		name_id:"Int",
 		position:"Int",
@@ -69425,7 +70065,6 @@ export const ReturnTypes: Record<string,any> = {
 		estimated_food_ready_time:"timestamptz",
 		firebase_id:"String",
 		id:"Int",
-		in_process:"Boolean",
 		items:"restaurant_order_item",
 		items_aggregate:"restaurant_order_item_aggregate",
 		items_cost:"money",
@@ -69438,8 +70077,8 @@ export const ReturnTypes: Record<string,any> = {
 		restaurant_id:"Int",
 		review:"review",
 		review_id:"Int",
-		scheduled_time:"timestamptz",
 		status:"String",
+		stripe_info:"jsonb",
 		stripe_payment_id:"Int",
 		tax:"money",
 		to_location_address:"String",
@@ -69609,7 +70248,6 @@ export const ReturnTypes: Record<string,any> = {
 		refund_amount:"money",
 		restaurant_id:"Int",
 		review_id:"Int",
-		scheduled_time:"timestamptz",
 		status:"String",
 		stripe_payment_id:"Int",
 		tax:"money",
@@ -69633,7 +70271,6 @@ export const ReturnTypes: Record<string,any> = {
 		refund_amount:"money",
 		restaurant_id:"Int",
 		review_id:"Int",
-		scheduled_time:"timestamptz",
 		status:"String",
 		stripe_payment_id:"Int",
 		tax:"money",

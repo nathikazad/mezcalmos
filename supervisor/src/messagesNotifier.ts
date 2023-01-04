@@ -3,18 +3,17 @@ import * as chat from "../../functions/src/shared/models/Generic/Chat";
 import * as notifyUser from "../../functions/src/utilities/senders/notifyUser";
 import { chatUrl, orderUrl, restaurantUrl } from "../../functions/src/utilities/senders/appRoutes";
 import * as rootNodes from "../../functions/src/shared/databaseNodes/root";
-import { NewMessageNotification, Notification, NotificationAction, NotificationType, NotificationForQueue, NewCallBackgroundNotification } from "../../functions/src/shared/models/Notification";
+import { NewMessageNotification, Notification, NotificationAction, NotificationType, NotificationForQueue, NewCallBackgroundNotification, AuthorizeOperatorNotification } from "../../functions/src/shared/models/Notification";
 // import { CounterOfferNotificationForQueue } from "../../functions/src/shared/models/Services/Taxi/TaxiOrder";
 import * as fcm from "../../functions/src/utilities/senders/fcm";
 // import * as agora from 'agora-access-token';
 import { Keys } from "../../functions/src/shared/models/Generic/Keys";
 import { 
-  AuthorizeOperatorNotification, 
   AuthorizeOperatorNotificationForQueue, 
   NewRestaurantNotification, 
-  NewRestaurantNotificationForQueue, 
-  OperatorApprovedNotification, 
-  OperatorApprovedNotificationForQueue 
+  NewRestaurantNotificationForQueue,
+  OperatorApprovedNotificationForQueue, 
+  RestaurantOperatorApprovedNotification
 } from "../../functions/src/shared/models/Services/Restaurant/Restaurant";
 import { getRestaurantOperator, getRestaurantOperators } from "../../functions/src/shared/graphql/restaurant/operators/getRestaurantOperators"
 import { getMezAdmins } from "../../functions/src/shared/graphql/user/mezAdmin/getMezAdmins"
@@ -57,7 +56,7 @@ export function startWatchingMessageNotificationQueue(keys: Keys) {
 async function notifyOperatorAboutApproval(notificationForQueue: OperatorApprovedNotificationForQueue) {
 
   let notification: Notification = {
-    foreground: <OperatorApprovedNotification>{
+    foreground: <RestaurantOperatorApprovedNotification>{
       operatorId: notificationForQueue.operatorId,
       approved: notificationForQueue.approved,
       restaurantName: notificationForQueue.restaurantName,
@@ -103,7 +102,8 @@ async function notifyOwnerAuthorizeOperator(notificationForQueue: AuthorizeOpera
   let notification: Notification = {
     foreground: <AuthorizeOperatorNotification>{
       newOperatorName: notificationForQueue.newOperatorName,
-      restaurantId: notificationForQueue.restaurantId,
+      newOperatorImage: notificationForQueue.newOperatorImage,
+      serviceProviderId: notificationForQueue.restaurantId,
       time: notificationForQueue.timestamp,
       notificationType: NotificationType.AuthorizeOperator,
       notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,

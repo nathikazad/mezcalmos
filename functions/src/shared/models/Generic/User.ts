@@ -1,3 +1,4 @@
+import { CustomerStripe } from "../../../utilities/stripe/model";
 import { Language, NotificationInfo } from "./Generic";
 
 export interface UserInfo {
@@ -13,7 +14,8 @@ export interface UserInfo {
 
 export interface CustomerInfo extends UserInfo {
   appVersion?: string,
-  notificationInfo?: NotificationInfo
+  notificationInfo?: NotificationInfo,
+  stripeInfo?: CustomerStripe
 }
 
 export interface MezAdmin {

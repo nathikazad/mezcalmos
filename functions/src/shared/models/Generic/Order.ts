@@ -5,7 +5,7 @@ import { UserInfo } from "./User";
 
 export interface Order {
   orderType: OrderType,
-  serviceProviderId?: string,
+  serviceProviderId?: number,
   cost: number;
   paymentType: PaymentType,
   to: Location,

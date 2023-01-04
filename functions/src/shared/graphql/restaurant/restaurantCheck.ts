@@ -1,10 +1,10 @@
 import { getHasura } from "../../../utilities/hasura"
 
-export async function getRestaurantCheckDetails(data: any, userId: number) {
+export async function getRestaurantCheckDetails(orderId: number, userId: number) {
     let chain = getHasura();
     return await chain.query({
       restaurant_order_by_pk: [
-        { id: data.orderId }, {
+        { id: orderId }, {
           restaurant_id: true,
         }
       ],
