@@ -29,6 +29,7 @@ import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 
@@ -102,7 +103,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
       Timer(Duration(seconds: 5), () {
         if (order.value == null) {
           // ignore: inference_failure_on_function_invocation
-          Get.back();
+          MezRouter.back();
           MezSnackbar("Error", "Order does not exist");
         }
       });
@@ -132,7 +133,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
         child: new Icon(Icons.copy),
       ),
       appBar: deliveryAdminAppBar(AppBarLeftButtonType.Back,
-          withOrder: true, function: Get.back),
+          withOrder: true, function: MezRouter.back),
       // backgroundColor: Colors.white,
       body: Obx(
         () {
@@ -257,7 +258,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
         }
         mapController.addOrUpdateUserMarker(
           latLng: order.value?.dropoffDriver?.location,
-          markerId: order.value?.dropoffDriver?.id,
+          markerId: order.value?.dropoffDriver?.firebaseId,
           customImgHttpUrl: order.value?.dropoffDriver?.image,
           fitWithinBounds: true,
         );
@@ -285,7 +286,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
 
         mapController.addOrUpdateUserMarker(
           latLng: order.value?.dropoffDriver?.location,
-          markerId: order.value?.dropoffDriver?.id,
+          markerId: order.value?.dropoffDriver?.firebaseId,
           customImgHttpUrl: order.value?.dropoffDriver?.image,
           fitWithinBounds: true,
         );

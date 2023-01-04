@@ -1,10 +1,24 @@
-import { Language } from "./Generic";
+import { Language, NotificationInfo } from "./Generic";
 
 export interface UserInfo {
-  id: string;
-  image: string;
+  id: number;
+  image?: string;
+  firebaseId: string;
   name?: string;
-  language?: Language;
+  language: Language;
   email?: string;
   phoneNumber?: string;
+  deleted?: boolean;
+}
+
+export interface CustomerInfo extends UserInfo {
+  appVersion?: string,
+  notificationInfo?: NotificationInfo
+}
+
+export interface MezAdmin {
+  userId: number,
+  version?: string,
+  notificationInfo?: NotificationInfo,
+  user?: UserInfo,
 }

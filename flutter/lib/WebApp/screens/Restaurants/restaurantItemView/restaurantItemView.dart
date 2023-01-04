@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/restaurantItemView/components/RestaurantItemViewForMobile.dart';
@@ -75,14 +75,15 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
       mezDbgPrint("===========> this is the mode ${mode} <=============");
       if (mode == ViewItemScreenMode.AddItemMode) {
         Get.find<RestaurantsInfoController>()
-            .getRestaurant(QR.params['id'].toString())
+            .getRestaurant(int.parse(QR.params['id'].toString()))
             .then((value) {
           if (value != null) {
             setState(() {
               currentRestaurant = value;
               var item = value.findItemById(id: QR.params['itemId'].toString());
 
-              cartItem.value = CartItem(item!, QR.params['id'].toString());
+              cartItem.value =
+                  CartItem(item!, int.parse(QR.params['id'].toString()));
 
               if (item != null) {
                 print("this is another test ${item.toJson()}");
@@ -154,8 +155,7 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
           if (snapShot.hasData && snapShot.data == true) {
             final LanguageController Lcontroller =
                 Get.find<LanguageController>();
-            final FirbaseAuthController _authcontroller =
-                Get.find<FirbaseAuthController>();
+            final AuthController _authcontroller = Get.find<AuthController>();
 
             return (cartItem != null)
                 ? Scaffold(

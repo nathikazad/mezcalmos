@@ -4,7 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/components/RestaurantGridItemCard.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/components/RestaurantListItemComponent.dart';
@@ -56,7 +58,7 @@ class _ViewRestaurantScreenFroMobileState
 
   Future<Restaurant?> getRestaurants() async {
     return await Get.find<RestaurantsInfoController>()
-        .getRestaurant("${QR.params['id'].toString()}")
+        .getRestaurant(int.parse(QR.params['id'].toString()))
         .then((value) {
       if (value != null) {
         restaurant = value;
@@ -250,7 +252,8 @@ class _ViewRestaurantScreenFroMobileState
           SizedBox(
             height: 5,
           ),
-          _buildResturantItems(category.items, restaurant.info.id),
+          _buildResturantItems(
+              category.items, restaurant.info.hasuraId.toString()),
           SizedBox(
             height: 10,
           )

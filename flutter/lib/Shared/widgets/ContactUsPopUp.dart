@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -30,7 +31,7 @@ class ContactUsPopUp extends StatelessWidget {
                 //To handle error and display error message
                 Get.snackbar("Error", "");
               } finally {
-                Get.back();
+                MezRouter.back();
               }
             },
             child: Ink(
@@ -75,7 +76,7 @@ class ContactUsPopUp extends StatelessWidget {
                 //To handle error and display error message
                 Get.snackbar("Error", "");
               } finally {
-                Get.back();
+                MezRouter.back();
               }
             },
             child: Ink(

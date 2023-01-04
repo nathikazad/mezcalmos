@@ -52,26 +52,15 @@ class ForegroundNotificationsController extends GetxController {
         .child(notificationNode)
         .onChildAddedWitchCatch()
         .then((Stream<DatabaseEvent> stream) {
-      _notificationNodeAddListener = stream.listen((event) {
-        mezDbgPrint("[cc] ===== . inside stream   ${event.snapshot.value}");
+      _notificationNodeAddListener = stream.listen((DatabaseEvent event) {
         try {
-          Notification? _notification;
-          try {
-            _notification =
-                notificationHandler(event.snapshot.key!, event.snapshot.value);
-            mezDbgPrint("this is a test inside the stream  ${_notification}");
-            final bool alreadyOnLinkPage =
-                isCurrentRoute(_notification.linkUrl, isWebVersion!);
-            mezDbgPrint("[cc] the notifications length is ${x.length}");
-            x.add(_notification);
-            mezDbgPrint("[cc] the notifications length is ${x.length}");
+          final Notification _notification =
+              notificationHandler(event.snapshot.key!, event.snapshot.value);
 
-            notifications.value.add(_notification);
-          } catch (e) {
-            mezDbgPrint("[cc] ERORR in Notification ${e.toString()}");
-          }
+          final bool alreadyOnLinkPage =
+              isCurrentRoute(_notification.linkUrl, isWebVersion ?? false);
 
-          switch (_notification!.notificationAction) {
+          switch (_notification.notificationAction) {
             case NotificationAction.ShowPopUp:
               if (Get.find<AppLifeCycleController>().appState ==
                   material.AppLifecycleState.resumed) {
@@ -82,17 +71,17 @@ class ForegroundNotificationsController extends GetxController {
               _displayNotificationsStreamController.add(_notification);
               break;
             case NotificationAction.ShowSnackbarOnlyIfNotOnPage:
-              // if (!alreadyOnLinkPage) {
-              //   _displayNotificationsStreamController.add(_notification);
-              // }
+              if (!alreadyOnLinkPage) {
+                _displayNotificationsStreamController.add(_notification);
+              }
               break;
           }
 
-          // if (!alreadyOnLinkPage) {
-          // if (true) {
-          // } else {
-          //   removeNotification(_notification.id);
-          // }
+          if (!alreadyOnLinkPage) {
+            notifications.add(_notification);
+          } else {
+            removeNotification(_notification.id);
+          }
         } on StateError {
           mezDbgPrint("Invalid notification");
         }
@@ -110,8 +99,8 @@ class ForegroundNotificationsController extends GetxController {
         .ref()
         .child(notificationNode)
         .onChildRemovedWitchCatch()
-        .then((value) {
-      _notificationNodeRemoveListener = value.listen((event) {
+        .then((Stream<DatabaseEvent> value) {
+      _notificationNodeRemoveListener = value.listen((DatabaseEvent event) {
         final Notification _notifaction =
             notificationHandler(event.snapshot.key!, event.snapshot.value);
         notifications.value = notifications
@@ -155,6 +144,26 @@ class ForegroundNotificationsController extends GetxController {
     _notificationNodeRemoveListener?.cancel();
     super.onClose();
   }
+
+  void _NotificationHndlerForWeb(
+      {required DatabaseEvent event,
+      required Notification Function(String key, dynamic value)
+          notificationHandler}) {
+    mezDbgPrint("[cc] ===== . inside stream   ${event.snapshot.value}");
+
+    Notification? _notification;
+    try {
+      _notification =
+          notificationHandler(event.snapshot.key!, event.snapshot.value);
+      mezDbgPrint("this is a test inside the stream  ${_notification}");
+      final bool alreadyOnLinkPage =
+          isCurrentRoute(_notification.linkUrl, isWebVersion!);
+
+      notifications.value.add(_notification);
+    } catch (e) {
+      mezDbgPrint("[cc] ERORR in Notification ${e.toString()}");
+    }
+  }
 }
 
 bool routeMatch(String routeA, String routeB) {
@@ -164,3 +173,10 @@ bool routeMatch(String routeA, String routeB) {
 bool isCurrentRoute(String route, bool isWebVersion) {
   return routeMatch(route, isWebVersion ? QR.currentPath : Get.currentRoute);
 }
+
+
+
+//// first make ur code separated and the call the incomming changes 
+///
+///
+//notification handler for web

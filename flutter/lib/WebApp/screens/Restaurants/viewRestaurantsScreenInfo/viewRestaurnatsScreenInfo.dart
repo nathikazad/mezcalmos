@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/components/itemSliverAppBar.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreenInfo/components/restaurantInfoTabForDesktop.dart';
@@ -36,8 +36,7 @@ class ViewRestaurantsScrennInfo extends StatefulWidget {
 
 class _ViewRestaurantsScrennInfoState extends State<ViewRestaurantsScrennInfo> {
   Restaurant? restaurant;
-  final FirbaseAuthController _authcontroller =
-      Get.find<FirbaseAuthController>();
+  final AuthController _authcontroller = Get.find<AuthController>();
   final MezWebSideBarController mezWebSideBarController =
       MezWebSideBarController();
   @override
@@ -49,7 +48,7 @@ class _ViewRestaurantsScrennInfoState extends State<ViewRestaurantsScrennInfo> {
   void _getRestaurant() async {
     setupFirebase(launchMode: typeMode.toLaunchMode()).then((value) {
       Get.find<RestaurantsInfoController>()
-          .getRestaurant(QR.params['id'].toString())
+          .getRestaurant(int.parse(QR.params['id'].toString()))
           .then((value) {
         if (value != null) {
           setState(() {

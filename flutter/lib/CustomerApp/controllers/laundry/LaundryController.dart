@@ -48,7 +48,7 @@ class LaundryController extends GetxController {
     });
   }
 
-  Future<ServerResponse> cancelOrder(String orderId) async {
+  Future<ServerResponse> cancelOrder(int orderId) async {
     final HttpsCallable cancelLaundryFunction =
         FirebaseFunctions.instance.httpsCallable('laundry-cancelFromCustomer');
     try {

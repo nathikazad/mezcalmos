@@ -3,10 +3,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 import 'package:shimmer/shimmer.dart';
@@ -211,12 +211,10 @@ class ItemSliverAppBar extends StatelessWidget {
     return Obx(() {
       return Row(
         children: [
-          if (!Get.find<FirbaseAuthController>().isUserSignedIn)
-            _noUserButton(),
-          if (Get.find<FirbaseAuthController>().isUserSignedIn)
+          if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
+          if (Get.find<AuthController>().isUserSignedIn)
             _notificationAppBarIcon(),
-          if (Get.find<FirbaseAuthController>().isUserSignedIn)
-            _ordersAppBarIcon(),
+          if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
         ],
       );
     });

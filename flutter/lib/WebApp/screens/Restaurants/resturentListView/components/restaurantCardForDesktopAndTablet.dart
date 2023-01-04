@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/components/ShippingCostComponent.dart';
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 
@@ -126,11 +126,11 @@ class _RestaurantCardForDesktopAndTabletState
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        if (widget.restaurant.description != null ||
-                            widget.restaurant.description!.isNotEmpty)
+                        if (widget.restaurant.info.description != null ||
+                            widget.restaurant.info.description!.isNotEmpty)
                           Text(
-                            widget
-                                .restaurant.description![lang.userLanguageKey]!,
+                            widget.restaurant.info
+                                .description![lang.userLanguageKey]!,
                             style: GoogleFonts.montserrat(
                                 textStyle: TextStyle(
                               fontSize: 13,

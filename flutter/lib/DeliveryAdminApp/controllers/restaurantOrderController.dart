@@ -3,29 +3,56 @@ import 'dart:async';
 import 'package:async/async.dart' show StreamGroup;
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
+    as MezNotification;
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class RestaurantOrderController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   ForegroundNotificationsController _fbNotificationsController =
       Get.find<ForegroundNotificationsController>();
+  AppLifeCycleController _appLifeCycleController =
+      Get.find<AppLifeCycleController>();
   RxList<RestaurantOrder> inProcessOrders = <RestaurantOrder>[].obs;
   RxList<RestaurantOrder> pastOrders = <RestaurantOrder>[].obs;
-  StreamSubscription? _currentOrdersListener;
-  StreamSubscription? _pastOrdersListener;
+  StreamSubscription<DatabaseEvent>? _currentOrdersListener;
+  StreamSubscription<DatabaseEvent>? _pastOrdersListener;
+
+  String? _appLifeCyclePauseCallbackId;
+  String? _appLifeCycleResumeCallbackId;
 
   @override
   void onInit() {
     mezDbgPrint(
         "--------------------> RestaurantsOrderController Initialized !");
+    listenToOrders();
+    _appLifeCyclePauseCallbackId =
+        _appLifeCycleController.attachCallback(AppLifecycleState.paused, () {
+      mezDbgPrint("[_] _appLifeCyclePauseCallbackId ==> triggering!");
+      _pastOrdersListener?.pause();
+      _currentOrdersListener?.pause();
+    });
+
+    _appLifeCycleResumeCallbackId =
+        _appLifeCycleController.attachCallback(AppLifecycleState.resumed, () {
+      mezDbgPrint("[_] appLifeCycleResumeCallbackId ==> triggering!");
+      _pastOrdersListener?.resume();
+      _currentOrdersListener?.resume();
+      // listenToOrders();
+    });
+    super.onInit();
+  }
+
+  void listenToOrders() {
     _currentOrdersListener = _databaseHelper.firebaseDatabase
         .ref()
         .child(rootInProcessOrdersNode(orderType: OrderType.Restaurant))
@@ -35,6 +62,10 @@ class RestaurantOrderController extends GetxController {
       if (event.snapshot.value != null) {
         for (var orderId in (event.snapshot.value as dynamic).keys) {
           final dynamic orderData = (event.snapshot.value as dynamic)[orderId];
+          // or make a check here in case order/orderiD already exists in orders then don't add it,
+          // but that will not be supper efficient especially if there is a lot of orders.
+
+          // or clear and re-process all orders.
           orders.add(RestaurantOrder.fromData(orderId, orderData));
         }
       } else {}
@@ -57,8 +88,6 @@ class RestaurantOrderController extends GetxController {
             RestaurantOrder.fromData(event.snapshot.key, event.snapshot.value));
       }
     });
-
-    super.onInit();
   }
 
   @override
@@ -68,6 +97,13 @@ class RestaurantOrderController extends GetxController {
     await _pastOrdersListener?.cancel();
     pastOrders.clear();
     inProcessOrders.clear();
+
+    if (_appLifeCyclePauseCallbackId != null)
+      _appLifeCycleController.removeCallbackIdOfState(
+          AppLifecycleState.paused, _appLifeCyclePauseCallbackId);
+    if (_appLifeCycleResumeCallbackId != null)
+      _appLifeCycleController.removeCallbackIdOfState(
+          AppLifecycleState.resumed, _appLifeCycleResumeCallbackId);
     super.onClose();
   }
 
@@ -129,21 +165,23 @@ class RestaurantOrderController extends GetxController {
   bool orderHaveNewMessageNotifications(String chatId) {
     return _fbNotificationsController
         .notifications()
-        .where((Notification notification) =>
-            notification.notificationType == NotificationType.NewMessage &&
+        .where((MezNotification.Notification notification) =>
+            notification.notificationType ==
+                MezNotification.NotificationType.NewMessage &&
             notification.chatId == chatId)
         .isNotEmpty;
   }
 
   void clearNewOrderNotifications() {
     _fbNotificationsController.notifications.value
-        .forEach((Notification element) {
+        .forEach((MezNotification.Notification element) {
       // mezDbgPrint(element.notificationType.toFirebaseFormatString());
     });
     _fbNotificationsController.notifications.value
-        .where((Notification notification) =>
-            notification.notificationType == NotificationType.NewOrder)
-        .forEach((Notification notification) {
+        .where((MezNotification.Notification notification) =>
+            notification.notificationType ==
+            MezNotification.NotificationType.NewOrder)
+        .forEach((MezNotification.Notification notification) {
       // mezDbgPrint(notification.id);
       _fbNotificationsController.removeNotification(notification.id);
     });
@@ -152,12 +190,13 @@ class RestaurantOrderController extends GetxController {
   void clearOrderNotifications(String orderId) {
     _fbNotificationsController
         .notifications()
-        .where((Notification notification) =>
+        .where((MezNotification.Notification notification) =>
             (notification.notificationType ==
-                    NotificationType.OrderStatusChange ||
-                notification.notificationType == NotificationType.NewOrder) &&
+                    MezNotification.NotificationType.OrderStatusChange ||
+                notification.notificationType ==
+                    MezNotification.NotificationType.NewOrder) &&
             notification.orderId! == orderId)
-        .forEach((Notification notification) {
+        .forEach((MezNotification.Notification notification) {
       _fbNotificationsController.removeNotification(notification.id);
     });
   }
@@ -172,7 +211,7 @@ class RestaurantOrderController extends GetxController {
   }
 
   Future<ServerResponse> setEstimatedFoodReadyTime(
-      String orderId, DateTime estimatedTime) async {
+      int orderId, DateTime estimatedTime) async {
     mezDbgPrint("inside clod set delivery time $estimatedTime");
     return _callRestaurantCloudFunction("setEstimatedFoodReadyTime", orderId,
         optionalParams: {
@@ -181,30 +220,30 @@ class RestaurantOrderController extends GetxController {
         });
   }
 
-  Future<ServerResponse> cancelOrder(String orderId) async {
+  Future<ServerResponse> cancelOrder(int orderId) async {
     return _callRestaurantCloudFunction("cancelOrderFromAdmin", orderId);
   }
 
-  Future<ServerResponse> prepareOrder(String orderId) async {
+  Future<ServerResponse> prepareOrder(int orderId) async {
     return _callRestaurantCloudFunction("prepareOrder", orderId);
   }
 
-  Future<ServerResponse> readyForPickupOrder(String orderId) async {
+  Future<ServerResponse> readyForPickupOrder(int orderId) async {
     return _callRestaurantCloudFunction("readyForOrderPickup", orderId);
   }
 
   // Need to be removed
-  Future<ServerResponse> deliverOrder(String orderId) async {
+  Future<ServerResponse> deliverOrder(int orderId) async {
     return _callRestaurantCloudFunction("deliverOrder", orderId);
   }
 
   // Need to be removed
-  Future<ServerResponse> dropOrder(String orderId) async {
+  Future<ServerResponse> dropOrder(int orderId) async {
     return _callRestaurantCloudFunction("dropOrder", orderId);
   }
 
   Future<ServerResponse> _callRestaurantCloudFunction(
-      String functionName, String orderId,
+      String functionName, int orderId,
       {Map<String, dynamic>? optionalParams}) async {
     final HttpsCallable dropOrderFunction =
         FirebaseFunctions.instance.httpsCallable('restaurant-$functionName');

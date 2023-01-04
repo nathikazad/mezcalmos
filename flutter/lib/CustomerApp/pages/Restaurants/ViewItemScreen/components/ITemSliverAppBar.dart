@@ -7,11 +7,14 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class ItemSliverAppBar extends StatelessWidget {
   const ItemSliverAppBar({Key? key, required this.item}) : super(key: key);
@@ -41,7 +44,7 @@ class ItemSliverAppBar extends StatelessWidget {
           width: 55.w,
           padding: const EdgeInsets.only(bottom: 4),
           child: Text(
-            " ${item.name[userLanguage]!} ",
+            " ${item.name[userLanguage]!} ".inCaps,
             textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -103,7 +106,7 @@ class ItemSliverAppBar extends StatelessWidget {
         fit: BoxFit.fitWidth,
         child: InkWell(
           onTap: () {
-            Get.back();
+            MezRouter.back();
           },
           child: Ink(
             width: 25,
@@ -130,7 +133,7 @@ class ItemSliverAppBar extends StatelessWidget {
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
-          Get.toNamed(kOrdersRoute);
+          MezRouter.toNamed(kOrdersRoute);
         },
         child: Ink(
           padding: const EdgeInsets.all(5),
@@ -154,7 +157,8 @@ class ItemSliverAppBar extends StatelessWidget {
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
-          Get.toNamed(kSignInRouteOptional);
+          const kSignInRouteOptional = "/sign_in/optional";
+          MezRouter.toNamed(kSignInRouteOptional);
         },
         child: Ink(
           padding: const EdgeInsets.all(7),
@@ -181,7 +185,8 @@ class ItemSliverAppBar extends StatelessWidget {
           child: InkWell(
             customBorder: CircleBorder(),
             onTap: () {
-              Get.toNamed(kNotificationsRoute);
+              const String kNotificationsRoute = "/notifications";
+              MezRouter.toNamed(kNotificationsRoute);
             },
             child: Badge(
               badgeColor: Colors.red,
@@ -209,15 +214,13 @@ class ItemSliverAppBar extends StatelessWidget {
   }
 
   Widget getAppbarIconsButton() {
-    return Obx(() {
-      return Row(
-        children: [
-          if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
-          if (Get.find<AuthController>().isUserSignedIn)
-            _notificationAppBarIcon(),
-          if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
-        ],
-      );
-    });
+    return Row(
+      children: [
+        if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
+        if (Get.find<AuthController>().isUserSignedIn)
+          _notificationAppBarIcon(),
+        if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
+      ],
+    );
   }
 }

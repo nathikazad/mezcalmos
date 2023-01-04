@@ -66,12 +66,18 @@ String customerInProcessOrderDriverLocationNode(
   return 'customers/inProcessOrders/$customerId/$orderId/$driverAddress/location';
 }
 
-String customersCounterOfferNode(
-    String orderId, String customerId, String driverId) {
+String customerInProcessOrder({
+  required String orderId,
+  required String customerId,
+}) {
+  return 'customers/inProcessOrders/$customerId/$orderId';
+}
+
+String customersCounterOfferNode(int orderId, int customerId, int driverId) {
   return 'customers/inProcessOrders/$customerId/$orderId/counterOffers/$driverId';
 }
 
 String customerCounterOfferNodeStatus(
-    String orderId, String customerId, String driverId) {
+    int orderId, int customerId, int driverId) {
   return customersCounterOfferNode(orderId, customerId, driverId) + "/status";
 }

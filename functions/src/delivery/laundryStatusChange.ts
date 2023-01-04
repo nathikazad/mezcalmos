@@ -1,18 +1,14 @@
-import * as functions from "firebase-functions";
-import { AuthData } from "firebase-functions/lib/common/providers/https";
 import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
 import { LaundryOrderStatus, LaundryOrder, LaundryOrderStatusChangeNotification } from "../shared/models/Services/Laundry/LaundryOrder";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
-import { isSignedIn } from "../shared/helper/authorizer";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { LaundryOrderStatusChangeMessages } from "../laundry/bgNotificationMessages";
 import { finishOrder } from "../laundry/helper";
 import { orderUrl } from "../utilities/senders/appRoutes";
-import { ParticipantType } from "../shared/models/Generic/Chat";
 import * as laundryNodes from "../shared/databaseNodes/services/laundry";
 let statusArrayInSeq: Array<LaundryOrderStatus> =
   [LaundryOrderStatus.OrderReceieved,
@@ -25,48 +21,42 @@ let statusArrayInSeq: Array<LaundryOrderStatus> =
   LaundryOrderStatus.Delivered
   ]
 
-export const startPickupFromCustomer =
-  functions.https.onCall(async (data, context) => {
-    let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.OtwPickupFromCustomer, context.auth)
-    return response;
-  });
+export async function startPickupFromCustomer(userId: number, data: any) {
+  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.OtwPickupFromCustomer, userId)
+  return response;
+};
 
-
-export const pickedUpFromCustomer = functions.https.onCall(async (data, context) => {
-  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.PickedUpFromCustomer, context.auth)
+export async function pickedUpFromCustomer(userId: number, data: any) {
+  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.PickedUpFromCustomer, userId)
+  return response;
+};
+export async function atFacility(userId: number, data: any) {
+  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.AtLaundry, userId)
   return response
-});
-
-export const atFacility = functions.https.onCall(async (data, context) => {
-  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.AtLaundry, context.auth)
+};
+export async function startPickupFromLaundry(userId: number, data: any) {
+  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.OtwPickupFromLaundry, userId)
   return response
-});
-
-export const startPickupFromLaundry = functions.https.onCall(async (data, context) => {
-  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.OtwPickupFromLaundry, context.auth)
+};
+export async function pickedUpFromLaundry(userId: number, data: any) {
+  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.PickedUpFromLaundry, userId)
   return response
-});
-
-export const pickedUpFromLaundry = functions.https.onCall(async (data, context) => {
-  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.PickedUpFromLaundry, context.auth)
+};
+export async function finishDropoff(userId: number, data: any) {
+  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.Delivered, userId)
   return response
-});
-
-export const finishDropoff = functions.https.onCall(async (data, context) => {
-  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.Delivered, context.auth)
-  return response
-});
+};
 
 function expectedPreviousStatus(status: LaundryOrderStatus): LaundryOrderStatus {
   return statusArrayInSeq[statusArrayInSeq.findIndex((element) => element == status) - 1];
 }
 
-async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: AuthData): Promise<ServerResponse> {
+async function changeStatus(data: any, newStatus: LaundryOrderStatus, userId: number): Promise<ServerResponse> {
 
-  let response = await isSignedIn(auth)
-  if (response != undefined) {
-    return response;
-  }
+  // let response = isSignedIn(userId)
+  // if (response != undefined) {
+  //   return response;
+  // }
 
 
   if (data.orderId == null) {
@@ -78,8 +68,8 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
   }
 
   let orderId: string = data.orderId;
-  let deliveryDriverId: string = auth!.uid;
-  let order: LaundryOrder = (await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).once('value')).val();
+  let deliveryDriverId: number = userId;
+  let order: LaundryOrder = (await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId.toString()).once('value')).val();
   if (order == null) {
     return {
       status: ServerResponseStatus.Error,
@@ -126,26 +116,26 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
       notificationType: NotificationType.OrderStatusChange,
       orderType: OrderType.Laundry,
       notificationAction: NotificationAction.ShowSnackBarAlways,
-      orderId: orderId
+      orderId: parseInt(orderId)
     },
     background: LaundryOrderStatusChangeMessages[newStatus],
-    linkUrl: orderUrl(ParticipantType.Customer, OrderType.Laundry, orderId)
+    linkUrl: orderUrl(OrderType.Laundry, parseInt(orderId))
   }
 
   if (order.status != LaundryOrderStatus.OtwPickupFromLaundry)
-    pushNotification(order.customer.id!, notification);
+    pushNotification(order.customer.firebaseId!, notification);
 
   if (newStatus == LaundryOrderStatus.Delivered) {
     await finishOrder(order, orderId);
   } else {
-    customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
+    customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).update(order);
     rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
-    laundryNodes.inProcessOrders(order.laundry.id, orderId).update(order);
+    laundryNodes.inProcessOrders(order.laundry.firebaseId, orderId).update(order);
     if (newStatus == LaundryOrderStatus.AtLaundry) {
-      await deliveryDriverNodes.pastOrders(deliveryDriverId, orderId).update(order)
-      await deliveryDriverNodes.inProcessOrders(deliveryDriverId, orderId).remove();
+      await deliveryDriverNodes.pastOrders(deliveryDriverId.toString(), orderId).update(order)
+      await deliveryDriverNodes.inProcessOrders(deliveryDriverId.toString(), orderId).remove();
     } else {
-      await deliveryDriverNodes.inProcessOrders(deliveryDriverId, orderId).update(order);
+      await deliveryDriverNodes.inProcessOrders(deliveryDriverId.toString(), orderId).update(order);
     }
   }
   return { status: ServerResponseStatus.Success }

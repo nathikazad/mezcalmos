@@ -14,6 +14,8 @@ import 'package:mezcalmos/Shared/models/Utilities/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 import 'package:mezcalmos/WebApp/values/constants.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['helpers']
     ["NotificationsHelper"];
@@ -73,9 +75,9 @@ Future<void> decideWhichButtonDialogToUse(
       showSmallIcon: notification.secondaryIcon != null,
       bottomRightIcon: notification.secondaryIcon,
       primaryCallBack: () {
-        Get.back(closeOverlays: true);
+        MezRouter.back(closeOverlays: true);
       },
-      secondaryCallBack: () => Get.toNamed(notification.linkUrl),
+      secondaryCallBack: () => MezRouter.toNamed(notification.linkUrl),
     );
 }
 

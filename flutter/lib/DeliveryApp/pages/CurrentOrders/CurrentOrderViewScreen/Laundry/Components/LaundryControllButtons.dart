@@ -4,6 +4,7 @@ import 'package:mezcalmos/DeliveryApp/controllers/laundryController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/widgets/GradientCircularLoading.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
         ["pages"]["CurrentOrders"]["CurrentOrderViewScreen"]["Components"]
@@ -50,7 +51,7 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
               ? null
               : () async {
                   switch (widget.order.status) {
-                    case LaundryOrderStatus.OrderReceieved:
+                    case LaundryOrderStatus.OrderReceived:
                       setState(() {
                         clicked = true;
                       });
@@ -85,7 +86,7 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                           clicked = false;
                         });
                       });
-                      Get.back(closeOverlays: true);
+                      MezRouter.back(closeOverlays: true);
 
                       break;
                     case LaundryOrderStatus.ReadyForDelivery:
@@ -112,7 +113,7 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                           clicked = false;
                         });
                       });
-                      // Get.back(closeOverlays: true);
+                      // MezRouter.back(closeOverlays: true);
                       break;
                     case LaundryOrderStatus.PickedUpFromLaundry:
                       setState(() {
@@ -220,7 +221,7 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
 
   String _getActionButtonText() {
     switch (widget.order.status) {
-      case LaundryOrderStatus.OrderReceieved:
+      case LaundryOrderStatus.OrderReceived:
         return '${_i18n()["pickupOrder"]}';
       case LaundryOrderStatus.OtwPickupFromCustomer:
         return '${_i18n()["confirmPickup"]}';

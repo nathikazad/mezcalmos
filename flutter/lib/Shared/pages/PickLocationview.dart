@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 enum PickLocationMode { AddNewLocation, EditLocation, NonLoggedInPick }
 
@@ -140,9 +141,11 @@ class _PickLocationViewState extends State<PickLocationView> {
         // showScreenLoading = true;
       });
       if (widget.pickLocationMode == PickLocationMode.NonLoggedInPick) {
-        Get.back<Location>(result: locationPickerController.location.value);
+        MezRouter.back<Location>(
+            result: locationPickerController.location.value);
       } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
-        Get.back<Location>(result: locationPickerController.location.value);
+        MezRouter.back<Location>(
+            result: locationPickerController.location.value);
         mezDbgPrint(locationPickerController.location.value!.address);
       }
     }

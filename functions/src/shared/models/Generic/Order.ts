@@ -1,5 +1,5 @@
 import { OrderStripeInfo } from "../../../utilities/stripe/model";
-import { DeliveryDriverType } from "../Drivers/DeliveryDriver";
+import { DeliveryDriverType } from "../Services/Delivery/DeliveryOrder";
 import { Location } from "./Generic";
 import { UserInfo } from "./User";
 
@@ -31,6 +31,7 @@ export enum OrderType {
   Laundry = "laundry",
   Water = "water"
 }
+//TODO
 
 export const pluralizeOrderType = function (orderType: OrderType): string {
   switch (orderType) {

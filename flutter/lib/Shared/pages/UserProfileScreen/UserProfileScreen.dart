@@ -18,14 +18,14 @@ import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.d
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileWidgets.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mime_type/mime_type.dart';
+import "package:mezcalmos/Shared/controllers/authController.dart";
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["UserProfileScreen"]["UserProfileScreen"];
 
 class UserProfile extends StatefulWidget {
-  final FirbaseAuthController authController =
-      Get.find<FirbaseAuthController>();
+  final AuthController authController = Get.find<AuthController>();
   // this is just to controll incase we want to make a push to this route with a pre-defined mode.
   final UserProfileMode pageInitMode;
   // UserProfileController
@@ -56,7 +56,7 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile>
     with TickerProviderStateMixin {
-  FirbaseAuthController _authController = Get.find<FirbaseAuthController>();
+  AuthController _authController = Get.find<AuthController>();
   RxBool isUploadingImg = false.obs;
   RxBool clickedSave = false.obs;
   late AnimationController animationController;
@@ -419,7 +419,6 @@ class _UserProfileState extends State<UserProfile>
           final String _originalUrl =
               await _authController.uploadUserImgToFbStorageForWeb(
                   pikedFile: widget.userProfileController.userImg.value!,
-                  file: compressedFile,
                   uint8list: await mediaData.readAsBytes());
           // we set our original FirebaseStorage Url in our controller.
           widget.userProfileController.originalImgUrl = _originalUrl;
@@ -431,7 +430,6 @@ class _UserProfileState extends State<UserProfile>
           final String _compressedUrl =
               await _authController.uploadUserImgToFbStorageForWeb(
                   pikedFile: widget.userProfileController.userImg.value!,
-                  file: compressedFile,
                   uint8list: _compressedVersion,
                   isCompressed: true);
           // we set our _compressed FirebaseStorage Url in our controller .

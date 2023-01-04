@@ -21,6 +21,7 @@ import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
     ["Orders"]["CurrentOrderScreen"]["CPositionedBottomBar"];
@@ -215,7 +216,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                           Obx(
                             () => MessageButton(
                               onTap: () {
-                                Get.toNamed<void>(
+                                MezRouter.toNamed<void>(
                                   getMessagesRoute(
                                     orderType: OrderType.Taxi,
                                     chatId: order.orderId,
@@ -250,7 +251,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                                                   .cancelTaxi(null)
                                                   .then((_) {
                                                 removeLoadingAnimation();
-                                                Get.offNamedUntil(
+                                                MezRouter.offNamedUntil(
                                                     kIncomingOrdersListRoute,
                                                     ModalRoute.withName(
                                                         kHomeRoute));
@@ -350,7 +351,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
     final ServerResponse serverResponse = await controller.finishRide();
     if (serverResponse.success) {
       mezDbgPrint("CurrentPositionedBottomBar finishRide success");
-      await Get.offNamedUntil(
+      await MezRouter.offNamedUntil(
           kIncomingOrdersListRoute, ModalRoute.withName(kHomeRoute));
     } else {
       // todo: SHOW ERROR MESSAGE

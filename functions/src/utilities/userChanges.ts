@@ -1,39 +1,118 @@
 import * as functions from "firebase-functions";
 import * as firebase from "firebase-admin";
-import { setUserInfo } from "../shared/controllers/rootController";
-import { isSignedIn } from "../shared/helper/authorizer";
-import { ServerResponseStatus } from "../shared/models/Generic/Generic";
-
+// import { setUserInfo } from "../shared/controllers/rootController";
+// import { isSignedIn } from "../shared/helper/authorizer";
+// import { ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { HttpsError } from "firebase-functions/v1/auth";
+import { getHasura } from "./hasura";
 
 // Customer Canceling
 export const processSignUp = functions.auth.user().onCreate(async user => {
-  await setUserInfo(user.uid, {
-    name: user.displayName,
-    id: user.uid,
-    image: user.photoURL ?? 'https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d',
-    email: user.email,
+  let chain = getHasura();
+  await chain.mutation({
+    insert_user_one: [
+      {
+        object: {
+          name: user.displayName,
+          image: user.photoURL,
+          firebase_id: user.uid,
+         
+        
+        }
+      }, {
+        id: true
+      }
+    ]
   })
-  // await hasuraModule.setClaim(user.uid);
+  await addHasuraClaim(user.uid);
 });
- 
 
-export const deleteAccount = functions.https.onCall(async (data , context) => {
-  let response = await isSignedIn(context.auth);
-  if (response != undefined) {
-    return response;
+// export async function deleteAccount(userId: string, data: any) {
+
+//   let response = isSignedIn(userId);
+//   if (response != undefined) {
+//     return response;
+//   }
+//   await firebase.auth().updateUser(userId, { disabled: true });
+//   return { status: ServerResponseStatus.Success }
+// };
+
+
+
+export async function addHasuraClaim(uid: string | undefined) {
+  try {
+    console.log("[+] User Id ===> ", uid);
+    functions.logger.info("[+] User Id ===> ", uid);
+    if (!uid) {
+      throw new HttpsError(
+        "unauthenticated",
+        "Request was not authenticated.",
+      );
+    }
+
+    let chain = getHasura();
+    let response = await chain.query({
+      user: [{
+        where: {
+          firebase_id: {
+            _eq: uid
+          }
+        }
+      }, {
+        id: true,
+        customer: {
+          user_id: true
+        }
+      }]
+    })
+    let hasuraUserId;
+    if (response.user.length == 0) {
+      let authUser = await firebase.auth().getUser(uid);
+      let secondResponse = await chain.mutation({
+        insert_user_one: [
+          {
+            object: {
+              name: authUser.displayName,
+              image: authUser.photoURL,
+              firebase_id: uid,
+              email: authUser.email,
+              phone: authUser.phoneNumber,
+              customer: {
+                data: {
+                }
+              }
+            }
+          }, {
+            id: true
+          }
+        ]
+      })
+      chain.mutation({
+        insert_restaurant_cart_one: [
+          {
+            object: {
+              customer_id: secondResponse.insert_user_one?.id
+            }
+          }, {
+            customer_id:true
+          }
+        ]});
+      hasuraUserId = secondResponse.insert_user_one?.id
+    } else {
+      hasuraUserId = response.user[0].id
+    }
+    const customClaims = {
+      "https://hasura.io/jwt/claims": {
+        "x-hasura-default-role": "anonymous",
+        "x-hasura-allowed-roles": ["anonymous", "restaurant_operator", "customer", "mez_admin", "deliverer", "delivery_operator","delivery_driver"], // add admin role for admin users
+        "x-hasura-user-id": hasuraUserId?.toString()
+      }
+    };
+    await firebase.auth().setCustomUserClaims(uid, customClaims)
+    return { status: "success" }
+  } catch (error) {
+    console
+    return { status: "failure", message: error }
   }
-  await firebase.auth().updateUser(context.auth!.uid!, { disabled: true });
-  return {status: ServerResponseStatus.Success}
-});
- 
+}
 
-export const onNameUpdate = functions.database.ref(
-  '/users/{userId}/info/name').onWrite(async (snap, context) => {
-    await firebase.auth().updateUser(context.params.userId, { displayName: snap.after.val() })
-  })
-
-export const onPhotoUpdate = functions.database.ref(
-  '/users/{userId}/info/image').onWrite(async (snap, context) => {
-    await firebase.auth().updateUser(context.params.userId, { photoURL: snap.after.val() })
-  })
-  

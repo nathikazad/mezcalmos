@@ -27,6 +27,7 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Laundry']['LaundryCurrentOrderView']['LaundryCurrentOrderView'];
@@ -56,13 +57,14 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
       orderId = Get.parameters['orderId']!;
     } else {
       mezDbgPrint("Order id null from the parameters ######");
-      Get.back<void>();
+      MezRouter.back<void>();
     }
-    controller.clearOrderNotifications(orderId);
-    order.value = controller.getOrder(orderId) as LaundryOrder?;
+    controller.clearOrderNotifications(int.tryParse(orderId));
+    order.value = controller.getOrder(int.parse(orderId)) as LaundryOrder?;
 
-    _orderListener =
-        controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
+    _orderListener = controller
+        .getOrderStream(int.parse(orderId))
+        .listen((Order? newOrderEvent) {
       if (newOrderEvent != null) {
         order.value = newOrderEvent as LaundryOrder?;
 
@@ -77,7 +79,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
       if (order.value == null) {
         // ignore: inference_failure_on_function_invocation
         Future<Null>.delayed(Duration.zero, () {
-          Get.back<Null>();
+          MezRouter.back<Null>();
           MezSnackbar("Error", "Order does not exist");
         });
       } else {
@@ -248,7 +250,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
     // restaurant ad customer's location are fixed (fit in bound at start)
     mapController.addOrUpdateUserMarker(
       latLng: order.value?.laundry?.location.toLatLng(),
-      markerId: order.value?.laundry?.id,
+      markerId: order.value?.laundry?.firebaseId,
       customImgHttpUrl: order.value?.laundry?.image,
       fitWithinBounds: true,
     );
@@ -276,7 +278,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           // we ignore the marker within bounds
           mapController.addOrUpdateUserMarker(
             latLng: order.value?.laundry?.location.toLatLng(),
-            markerId: order.value?.laundry?.id,
+            markerId: order.value?.laundry?.firebaseId,
             customImgHttpUrl: order.value?.laundry?.image,
             fitWithinBounds: true,
           );
@@ -307,7 +309,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           // we ignore the restaurant's marker within bounds
           mapController.addOrUpdateUserMarker(
             latLng: order.value?.laundry?.location.toLatLng(),
-            markerId: order.value?.laundry?.id,
+            markerId: order.value?.laundry?.firebaseId,
             customImgHttpUrl: order.value?.laundry?.image,
             fitWithinBounds: true,
           );

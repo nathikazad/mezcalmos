@@ -5,7 +5,7 @@ import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/screens/ordersScreen/orderViewScreen/components/OnGoingOrderList.dart';
 
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
@@ -36,7 +36,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
     //OrderController controller = Get.put(OrderController());
 
     /// GEt AuthController
-    // FirbaseAuthController auth = Get.find<FirbaseAuthController>();
+    // AuthController auth = Get.find<AuthController>();
     //
     // mezDbgPrint(
     //   "ListOrdersScreen: onInit current : ${controller.currentOrders.length} past : ${controller.pastOrders.length}",
@@ -63,7 +63,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
           builder: (context, snapShot) {
             if (snapShot.hasData && snapShot.data == true) {
               Get.put<AppLifeCycleController>(
-                AppLifeCycleController(logs: true),
+                AppLifeCycleController(),
                 permanent: true,
               );
               return Scaffold(

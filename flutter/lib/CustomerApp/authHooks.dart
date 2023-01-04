@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
+import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class AuthHooks {
@@ -28,7 +29,7 @@ class AuthHooks {
     );
   }
 
-  static void onSignInHook() {
+  static void onSignInHook() async {
     mezDbgPrint(
         "[+] CustomerApp::AuthHooks::onSignInHook -> Callback Executed.");
 

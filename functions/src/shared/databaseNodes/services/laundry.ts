@@ -19,3 +19,9 @@ export function laundryOperators(providerId: string, userId?: string) {
     ret = ret.child(userId);
   return ret;
 }
+export function laundryDrivers(providerId: string, userId?: string) {
+  let ret = serviceProviderState(OrderType.Laundry, providerId).child("/drivers");
+  if (userId != null)
+    ret = ret.child(userId);
+  return ret;
+}

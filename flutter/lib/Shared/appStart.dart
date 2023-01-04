@@ -21,12 +21,14 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
@@ -205,11 +207,14 @@ class _StartingPointState extends State<StartingPoint> {
       firebaseDb.setPersistenceEnabled(true);
       firebaseDb.setPersistenceCacheSizeBytes(10000000);
       await FirebaseAuth.instance.useEmulator(_host + authPort);
+      mezDbgPrint(
+          "[+] Cloud Functions - dev - endpoint::${_host.replaceAll('http://', '')}:$functionPort");
       FirebaseFunctions.instance
           .useFunctionsEmulator(_host.replaceAll('http://', ''), functionPort);
     } else if (_launchMode == AppLaunchMode.stage) {
-      mezDbgPrint("[+] Entered Staging check ----.");
-      firebaseDb = FirebaseDatabase(app: _app, databaseURL: stagingDb);
+      mezDbgPrint("[+] Entered Staging check ----");
+      firebaseDb =
+          FirebaseDatabase.instanceFor(app: _app, databaseURL: stagingDb);
     } else {
       throw Exception("Invalid Launch Mode");
     }
@@ -221,6 +226,13 @@ class _StartingPointState extends State<StartingPoint> {
         firebaseApp: _app,
       ),
     );
+
+    Get.put<AppLifeCycleController>(
+      AppLifeCycleController(),
+      permanent: true,
+    );
+
+    Get.put(HasuraDb(_launchMode), permanent: true);
   }
 
   Future<void> setGlobalVariables() async {
@@ -263,10 +275,6 @@ class _StartingPointState extends State<StartingPoint> {
     }
     Get.put<AuthController>(
       AuthController(widget.signInCallback, widget.signOutCallback),
-      permanent: true,
-    );
-    Get.put<AppLifeCycleController>(
-      AppLifeCycleController(logs: true),
       permanent: true,
     );
     Get.put<SettingsController>(
@@ -342,10 +350,12 @@ class _StartingPointState extends State<StartingPoint> {
     }
 
     final bool? isPreviewModeEnabled = GetStorage().read<bool?>('previewMode');
+    final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
     return DevicePreview(
       enabled: isPreviewModeEnabled == true ? true : false,
       builder: (BuildContext context) => GetMaterialApp(
+        navigatorObservers: [MezRouter()],
         useInheritedMediaQuery: true,
         locale:
             isPreviewModeEnabled == true ? DevicePreview.locale(context) : null,

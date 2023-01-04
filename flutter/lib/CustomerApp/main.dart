@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/authHooks.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/CustomerApp/theme.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/appStart.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
@@ -21,7 +22,7 @@ List<SideMenuItem> sideMenuItems = <SideMenuItem>[
   SideMenuItem(
     onClick: () {
       // Get.find<SideMenuDrawerController>().closeMenu();
-      Get.toNamed<void>(kSavedCards);
+      MezRouter.toNamed<void>(kSavedCards);
     },
     icon: Icons.credit_card,
     title: "CustomerApp/main/savedCards",
@@ -30,7 +31,7 @@ List<SideMenuItem> sideMenuItems = <SideMenuItem>[
   SideMenuItem(
     onClick: () {
       // Get.find<SideMenuDrawerController>().closeMenu();
-      Get.toNamed<void>(kSavedLocations);
+      MezRouter.toNamed<void>(kSavedLocations);
     },
     icon: Icons.near_me_outlined,
     title: "CustomerApp/main/savedLocations",

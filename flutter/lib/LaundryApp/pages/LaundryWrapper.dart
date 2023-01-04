@@ -19,6 +19,7 @@ import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class LaundryWrapper extends StatefulWidget {
   @override
@@ -65,9 +66,9 @@ class _LaundryWrapperState extends State<LaundryWrapper> {
     mezDbgPrint(operator);
     if (operator != null && operator.state.laundryId != null) {
       // ignore: unawaited_futures, inference_failure_on_function_invocation
-      Get.toNamed(kCurrentOrdersListView);
+      MezRouter.toNamed(kCurrentOrdersListView);
     } else {
-      Get.toNamed(kUnauthorizedRoute);
+      MezRouter.toNamed(kUnauthorizedRoute);
     }
   }
 

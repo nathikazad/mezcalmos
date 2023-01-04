@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -17,9 +18,11 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     bool autoBack = false,
     VoidCallback? onClick,
     String? title,
+    bool showLeftBtn = true,
     Widget? titleWidget,
     bool showNotifications = false,
     String? ordersRoute,
+    bool showLoadingEffect = false,
     PreferredSizeWidget? tabBar,
     List<Widget> actionIcons = const <Widget>[]}) {
   // GET RIGHT LEADING
@@ -27,7 +30,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     switch (leftBtnType) {
       case AppBarLeftButtonType.Back:
         return _BackButtonAppBar(
-          click: autoBack ? (onClick ?? () => Get.back<void>()) : onClick,
+          click: autoBack ? (onClick ?? () => MezRouter.back<void>()) : onClick,
         );
       case AppBarLeftButtonType.Menu:
         return _MenuButtonAppBar();
@@ -44,7 +47,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
         customBorder: CircleBorder(),
         onTap: () {
           if (ordersRoute != null) {
-            Get.toNamed(ordersRoute);
+            MezRouter.toNamed(ordersRoute);
           }
         },
         child: Ink(
@@ -68,7 +71,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
       elevation: 0,
       bottom: tabBar,
       automaticallyImplyLeading: false,
-      leading: _getRightLeading(),
+      leading: (showLeftBtn) ? _getRightLeading() : null,
       actions: [
         if (showNotifications && Get.find<AuthController>().isUserSignedIn)
           _notificationAppBarIcon(),
@@ -82,25 +85,25 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
         )
       ],
       // titleSpacing: 20,
-      title: FittedBox(
-        fit: BoxFit.fitWidth,
-        child: (title != null)
-            ? Text(
-                title,
-                style: TextStyle(
-                  fontFamily: "Poppins",
-                  fontWeight: FontWeight.w600,
-                  fontSize: 15.sp,
-                  color: Colors.black,
-                ),
-                textAlign: TextAlign.center,
-              )
-            : (titleWidget != null)
-                ? titleWidget
-                : MezcalmosSharedWidgets.fillTitle(
-                    actionLength: 2,
-                    showLogo: (Get.width > 320) ? true : false),
-      ));
+      title: (title != null)
+          ? Text(
+              title,
+              style: TextStyle(
+                fontFamily: "Poppins",
+                fontWeight: FontWeight.w600,
+                fontSize: 15.sp,
+                color: Colors.black,
+              ),
+              textAlign: TextAlign.center,
+            )
+          : (titleWidget != null)
+              ? titleWidget
+              : FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: MezcalmosSharedWidgets.fillTitle(
+                      actionLength: 2,
+                      showLogo: (Get.width > 320) ? true : false),
+                ));
 }
 
 Widget _BackButtonAppBar({required VoidCallback? click}) {
@@ -123,8 +126,11 @@ Widget _BackButtonAppBar({required VoidCallback? click}) {
           gradient: click == null
               ? null
               : LinearGradient(colors: [
-                  Color.fromARGB(255, 97, 127, 255),
-                  Color.fromARGB(255, 198, 90, 252),
+                  primaryBlueColor,
+                  primaryBlueColor,
+
+                  // Color.fromARGB(255, 97, 127, 255),
+                  // Color.fromARGB(255, 198, 90, 252),
                 ], begin: Alignment.topLeft, end: Alignment.bottomRight),
         ),
         child: Icon(
@@ -164,7 +170,7 @@ Widget _MenuButtonAppBar() {
     scale: 0.6,
     child: InkWell(
       onTap: () {
-        //  Get.back();
+        //  MezRouter.back();
         Get.find<SideMenuDrawerController>().openMenu();
       },
       child: Ink(
@@ -193,37 +199,33 @@ Widget _MenuButtonAppBar() {
 }
 
 Widget _notificationAppBarIcon() {
-  return Obx(() {
-    if (Get.find<ForegroundNotificationsController>().notifications.length >
-        0) {
-      return Padding(
-        padding: const EdgeInsets.only(left: 3, right: 3),
-        child: InkWell(
-          customBorder: CircleBorder(),
-          onTap: () {
-            Get.toNamed(kNotificationsRoute);
-          },
-          child: Badge(
-            badgeColor: Colors.red,
-            showBadge: true,
-            position: BadgePosition.topEnd(top: 8, end: 0),
-            child: Ink(
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: secondaryLightBlueColor,
+  return Obx(() =>
+      Get.find<ForegroundNotificationsController>().notifications.isNotEmpty
+          ? Padding(
+              padding: const EdgeInsets.only(left: 3, right: 3),
+              child: InkWell(
+                customBorder: CircleBorder(),
+                onTap: () {
+                  MezRouter.toNamed(kNotificationsRoute);
+                },
+                child: Badge(
+                  badgeColor: Colors.red,
+                  showBadge: true,
+                  position: BadgePosition.topEnd(top: 8, end: 0),
+                  child: Ink(
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: secondaryLightBlueColor,
+                    ),
+                    child: Icon(
+                      Icons.notifications,
+                      color: primaryBlueColor,
+                      size: 20,
+                    ),
+                  ),
+                ),
               ),
-              child: Icon(
-                Icons.notifications,
-                color: primaryBlueColor,
-                size: 20,
-              ),
-            ),
-          ),
-        ),
-      );
-    } else {
-      return Container();
-    }
-  });
+            )
+          : Container());
 }

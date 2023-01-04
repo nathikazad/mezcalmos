@@ -1,9 +1,25 @@
+import { ParticipantType } from "./Chat";
 import { UserInfo } from "./User";
 
 export interface Location {
-  address: string;
-  lat: number;
-  lng: number;
+  lat: number,
+  lng: number,
+  address?: string;
+}
+
+// export interface GPS {
+//   type: string;
+//   coordinates: [number, number];
+// }
+
+
+
+export interface Review {
+  rating: number,
+  fromEntityId: number,
+  fromEntityType: string,
+  toEntityId: number,
+  toEntityType: string
 }
 
 export enum Language {
@@ -11,7 +27,29 @@ export enum Language {
   ES = "es",
 }
 
-export type NotificationInfo = Record<TokenType, string>;
+export enum AppType {
+  CustomerWeb = "customer_web",
+  CustomerMobile = "customer_mobile",
+  RestaurantApp = "restaurant",
+  DeliveryApp = "delivery",
+  DeliveryAdmin = "delivery_admin",
+  MezAdmin = "mez_admin"
+}
+
+export const AppParticipant: Record<AppType, ParticipantType> = {
+  [AppType.CustomerMobile]: ParticipantType.Customer,
+  [AppType.CustomerWeb]: ParticipantType.Customer,
+  [AppType.DeliveryAdmin]: ParticipantType.DeliveryOperator,
+  [AppType.DeliveryApp]: ParticipantType.DeliveryDriver,
+  [AppType.MezAdmin]: ParticipantType.MezAdmin,
+  [AppType.RestaurantApp]: ParticipantType.RestaurantOperator
+}
+
+// export type NotificationInfo = Record<TokenType, string>;
+export interface NotificationInfo {
+  token: string;
+  AppTypeId: AppType;
+}
 
 export enum TokenType {
   DeviceNotificationToken = "deviceNotificationToken",
@@ -50,4 +88,9 @@ export enum AuthorizationStatus {
   InReview = "inReview",
   Authorized = "authorized",
   Unauthorized = "unauthorized"
+}
+
+export enum OperatorType {
+  Delivery = "delivery",
+  Restaurant = "restaurant",
 }

@@ -6,8 +6,9 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class SearchItemCard extends StatelessWidget {
   const SearchItemCard({Key? key, required this.item}) : super(key: key);
@@ -20,8 +21,11 @@ class SearchItemCard extends StatelessWidget {
       child: InkWell(
         onTap: () {
           if (item.restaurant != null && item.id != null) {
-            Get.toNamed(
-              getItemRoute(item.restaurant!.info.id, item.id!),
+            MezRouter.toNamed(
+              getItemRoute(
+                item.restaurant!.info.hasuraId.toString(),
+                item.id!,
+              ),
               arguments: {
                 "mode": ViewItemScreenMode.AddItemMode,
                 "showViewRestaurant": true

@@ -4,8 +4,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
-// import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
@@ -66,23 +65,33 @@ class LanguageController extends GetxController {
       ? mexicoFlagAsset
       : usaFlagAsset;
 
-  void changeUserLanguage([LanguageType? language]) {
+  Future<void> changeUserLanguage({LanguageType? language = null}) async {
+    // TODO: fix this
     if (language == null) {
-      if (Get.find<FirbaseAuthController>().user?.language == LanguageType.ES) {
+      if (Get.find<AuthController>().user?.language == LanguageType.ES) {
         language = LanguageType.EN;
       } else {
         language = LanguageType.ES;
       }
-      if (Get.find<FirbaseAuthController>().user != null) {
+      if (Get.find<AuthController>().user != null) {
+        Get.find<AuthController>().user!.language = language;
+
+        mezDbgPrint(
+            "[=] INSIDE (if (Get.find<AuthController>().user != null)) ==> language $language");
         // we need that because in case user clicked change lang from SideMenu , we really don't
         // need to execute that one because there is no user SIgnedIn yet!
         // we have to make some kind of queue that will handle stuff once the user SignedIn.
-        Get.find<FirbaseAuthController>().changeLanguage(language);
+        await Get.find<AuthController>().changeLanguage(language);
+        _userLanguageKey.value = language;
       } else {
+        mezDbgPrint("[=] INSIDE (else)");
+
         // welse so we can still update the user language locally but not in db!
         _userLanguageKey.value = oppositLangKey;
       }
-    } else if (Get.find<FirbaseAuthController>().user == null) {
+    } else if (Get.find<AuthController>().user == null) {
+      mezDbgPrint("[=] INSIDE (else if)");
+
       _userLanguageKey.value = language;
     }
   }
@@ -100,12 +109,16 @@ class LanguageController extends GetxController {
   void onInit() {
     super.onInit();
     Future<dynamic>.microtask(() async {
-      final String enJson = await rootBundle.loadString(enLang);
-      final String esJson = await rootBundle.loadString(esLang);
-      _jsonStrings = <String, dynamic>{
-        "en": jsonDecode(enJson) as Map<String, dynamic>,
-        "es": jsonDecode(esJson) as Map<String, dynamic>
-      };
+      try {
+        final String enJson = await rootBundle.loadString(enLang);
+        final String esJson = await rootBundle.loadString(esLang);
+        _jsonStrings = <String, dynamic>{
+          "en": jsonDecode(enJson) as Map<String, dynamic>,
+          "es": jsonDecode(esJson) as Map<String, dynamic>
+        };
+      } catch (e) {
+        mezDbgPrint("ERROR:::{{{{{{${e.toString()}}}}}}}");
+      }
     }).then((_) {
       isLamgInitialized.value = true;
       if (_jsonStrings[

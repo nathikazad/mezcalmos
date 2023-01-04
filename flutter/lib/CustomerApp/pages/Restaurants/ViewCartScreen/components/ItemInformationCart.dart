@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -143,18 +147,25 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
             _restaurantController.deleteItem(cartItem.idInCart!);
             if (_restaurantController.cart.value.quantity() == 0) {
               _restaurantController.clearCart();
-              if (isWebVersion == true) {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-              } else
-                Get.until((Route route) => route.settings.name == kHomeRoute);
+
+              ///  this for web  comonted util
+              ///
+              //   if (isWebVersion == true) {
+              //     Navigator.of(context).pop();
+              //     Navigator.of(context).pop();
+              //   } else
+              //     Get.until((Route route) => route.settings.name == kHomeRoute);
+              // } else {
+              //   if (isWebVersion == true) {
+              //     Navigator.of(context).pop();
+              //     Navigator.of(context).pop();
+              //   } else {
+              //     Get.back(closeOverlays: true);
+              //   }
+              _restaurantController.cart.refresh();
+              MezRouter.untill((Route route) => route.settings.name == "/");
             } else {
-              if (isWebVersion == true) {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-              } else {
-                Get.back(closeOverlays: true);
-              }
+              MezRouter.popDialog(closeOverlays: true);
             }
           });
         },

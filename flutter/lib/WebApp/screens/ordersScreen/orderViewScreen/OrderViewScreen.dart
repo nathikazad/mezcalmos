@@ -10,7 +10,7 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantControlle
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -45,7 +45,7 @@ class _OrderViewScreenState extends State<OrderViewScreen> {
         future: setupFirebase(
             launchMode: typeMode.toLaunchMode(),
             func: () async {
-              // if (Get.find<FirbaseAuthController>().fireAuthUser?.uid != null) {
+              // if (Get.find<AuthController>().fireAuthUser?.uid != null) {
               //   await Get.put<ForegroundNotificationsController>(
               //       ForegroundNotificationsController(),
               //       permanent: true);
@@ -55,8 +55,7 @@ class _OrderViewScreenState extends State<OrderViewScreen> {
           if (snapShot.hasData && snapShot.data == true) {
             final LanguageController Lcontroller =
                 Get.find<LanguageController>();
-            final FirbaseAuthController _authcontroller =
-                Get.find<FirbaseAuthController>();
+            final AuthController _authcontroller = Get.find<AuthController>();
 
             return Material(
               child: LayoutBuilder(builder: ((context, constraints) {

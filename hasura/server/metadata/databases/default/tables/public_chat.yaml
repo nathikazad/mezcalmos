@@ -1,0 +1,87 @@
+table:
+  name: chat
+  schema: public
+array_relationships:
+  - name: chat_participants
+    using:
+      foreign_key_constraint_on:
+        column: chat_id
+        table:
+          name: chat_participant
+          schema: public
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - chat_info
+        - creation_time
+        - id
+        - messages
+      filter:
+        chat_participants:
+          user:
+            id:
+              _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - chat_info
+        - id
+        - messages
+      filter:
+        chat_participants:
+          user:
+            id:
+              _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      columns:
+        - chat_info
+        - id
+        - messages
+      filter:
+        chat_participants:
+          user:
+            id:
+              _eq: X-Hasura-User-Id
+update_permissions:
+  - role: customer
+    permission:
+      columns:
+        - messages
+      filter:
+        chat_participants:
+          user:
+            id:
+              _eq: X-Hasura-User-Id
+      check: null
+  - role: delivery_driver
+    permission:
+      columns:
+        - messages
+      filter:
+        chat_participants:
+          user:
+            id:
+              _eq: X-Hasura-User-Id
+      check: null
+  - role: mez_admin
+    permission:
+      columns:
+        - messages
+      filter:
+        chat_participants:
+          user:
+            id:
+              _eq: X-Hasura-User-Id
+      check: null
+  - role: restaurant_operator
+    permission:
+      columns:
+        - messages
+      filter:
+        chat_participants:
+          user:
+            id:
+              _eq: X-Hasura-User-Id
+      check: null

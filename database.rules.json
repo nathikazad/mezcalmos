@@ -44,6 +44,9 @@
                 "$uid": {
                     ".read": "$uid === auth.uid",
                     "$orderId": {
+                        "selfDeliveryDetails": {
+                            ".write": "root.child('restaurants/info/' + data.parent().child('/serviceProviderId').val() + '/state/operators').hasChild(auth.uid)"
+                        },
                         "cost": {
                             ".write": "data.parent().exists() && data.parent().child('/customer/id').val() === auth.uid"
                         },
@@ -71,6 +74,7 @@
                                 ".write": "($driverType == 'dropoffDriver' || $driverType == 'pickupDriver') && data.parent().parent().exists() && data.parent().parent().child('/' + $driverType + '/id').val() === auth.uid"
                             }
                         }
+
                     }
                 }
             }
@@ -125,6 +129,9 @@
             "inProcess": {
                 "$orderType": {
                     "$orderId": {
+                        "selfDeliveryDetails": {
+                            ".write": "root.child('restaurants/info/' + data.parent().child('/serviceProviderId').val() + '/state/operators').hasChild(auth.uid)"
+                        },
                         "notified": {
                             ".write": "root.child('orders/inProcess/' + $orderType +'/' + $orderId).exists()"
                         },
@@ -133,6 +140,9 @@
                                 ".write": "($driverType == 'dropoffDriver' || $driverType == 'pickupDriver') && data.parent().parent().exists() && data.parent().parent().child('/' + $driverType + '/id').val() === auth.uid"
                             }
                         }
+
+
+
                     }
                 }
             },
@@ -240,6 +250,7 @@
                     "info": {
                         ".write": "root.child('restaurants/info/' + $restaurantId + '/state/operators').hasChild(auth.uid)"
                     },
+
                     "state": {
                         "available": {
                             ".write": "root.child('restaurants/info/' + $restaurantId + '/state/operators').hasChild(auth.uid)"
@@ -247,6 +258,8 @@
                         "open": {
                             ".write": "root.child('restaurants/info/' + $restaurantId + '/state/operators').hasChild(auth.uid)"
                         }
+
+
                     }
                 }
             },
@@ -262,6 +275,9 @@
                         "$driverType": {
                             "location": {
                                 ".write": "($driverType == 'dropoffDriver' || $driverType == 'pickupDriver') && data.parent().parent().exists() && data.parent().parent().child('/' + $driverType + '/id').val() === auth.uid"
+                            },
+                            "selfDeliveryDetails": {
+                                ".write": "root.child('restaurants/info/' + $restaurantId + '/state/operators').hasChild(auth.uid)"
                             }
                         }
                     }
@@ -361,7 +377,7 @@
             "$operatorType": {
                 "info": {
                     "$operatorId": {
-                        ".read": "$operatorId === auth.uid",
+                        ".read": "$operatorId === auth.uid || root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
                         ".write": "$operatorId === auth.uid",
                         "state": {
                             ".write": "false"

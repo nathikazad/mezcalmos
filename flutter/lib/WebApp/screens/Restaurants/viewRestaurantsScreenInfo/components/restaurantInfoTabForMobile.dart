@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/WebApp/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/WebApp/widgets/ServiceLocationCard.dart';
@@ -39,7 +39,7 @@ class RestaurantInfoTabForMobile extends StatelessWidget {
           SizedBox(
             height: 25,
           ),
-          if (restaurant.description![userLanguage] != null)
+          if (restaurant.info.description![userLanguage] != null)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -61,7 +61,7 @@ class RestaurantInfoTabForMobile extends StatelessWidget {
                 ),
                 Container(
                   child: Text(
-                    "${restaurant.description![userLanguage]}",
+                    "${restaurant.info.description![userLanguage]}",
                     style: GoogleFonts.nunito(
                         textStyle: TextStyle(
                             fontSize: 14,

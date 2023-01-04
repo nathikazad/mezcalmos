@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
         ["Orders"]["IncomingOrders"]["IncomingViewScreen"]["components"]
@@ -359,7 +360,7 @@ class CurrentTaxiOrderPositionedBottomBar extends StatelessWidget {
               child: Obx(
                 () => MessageButton(
                   onTap: () {
-                    Get.toNamed<void>(
+                    MezRouter.toNamed<void>(
                       getMessagesRoute(
                           orderType: OrderType.Taxi,
                           chatId: order.orderId,

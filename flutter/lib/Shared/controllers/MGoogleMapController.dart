@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -8,10 +9,12 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import "package:mezcalmos/Shared/controllers/authController.dart";
+
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/MezMarker.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
@@ -142,91 +145,52 @@ class MGoogleMapController {
       mezDbgPrint("[cc] this function has been called _fetchImgBytes ");
       Uint8List? _imgBytes;
 
-      await http
-          .get(Uri.parse(customImgHttpUrl ?? uImg))
-          .timeout(Duration(seconds: 7))
-          .then((http.Response response) {
-        _imgBytes = response.bodyBytes;
-      }).catchError((_) async {
-        mezDbgPrint("[cc] fetching image bytes Failed ==> $_");
-        // if (isWebVersion == true) {
-        //   _imgBytes = (await NetworkAssetBundle(Uri.parse(defaultUserImgUrl))
-        //           .load(defaultUserImgUrl))
-        //       .buffer
-        //       .asUint8List();
-        // } else {
-        _imgBytes = (await rootBundle.load(isWebVersion == false
-                ? aDefaultAvatar
-                : "assets/images/web/noUserImage.jpg"))
-            .buffer
-            .asUint8List();
-        mezDbgPrint("something wrong happned _imgBytes ${_imgBytes}");
-        // }
-      });
-      return _imgBytes;
-    }
+      final String? uImg = Get.find<AuthController>().user?.image;
 
-    // Inside function to get Bitmapdescriptor
-    Future<BitmapDescriptor?> _buildBitmap(String? uImg) async {
-      BitmapDescriptor? bitMap;
-      if (uImg == null) {
-        mezDbgPrint("[cc]  _buildBitmap called :: inside if!");
-        bitMap = await bitmapDescriptorLoader(
-            (await cropRonded(
-                (await rootBundle.load(aDefaultAvatar)).buffer.asUint8List())),
-            _calculateMarkersSize(),
-            _calculateMarkersSize(),
-            isBytes: true,
-            urlStr: customImgHttpUrl);
-      } else {
-        mezDbgPrint("[cc]  _buildBitmap called :: inside else!");
-
-        await _fetchImgBytes(uImg).then((Uint8List? _imgBytes) async {
-          // mezDbgPrint("this happen after execute _fetchImgBytes  ${_imgBytes}");
-          if (_imgBytes != null) {
-            bitMap = await bitmapDescriptorLoader(
-              (await cropRonded(_imgBytes)),
+      // Inside function to get Bitmapdescriptor
+      Future<BitmapDescriptor?> _buildBitmap(String? uImg) async {
+        BitmapDescriptor? bitMap;
+        if (uImg == null) {
+          bitMap = await bitmapDescriptorLoader(
+              (await cropRonded((await rootBundle.load(aDefaultAvatar))
+                  .buffer
+                  .asUint8List())),
               _calculateMarkersSize(),
               _calculateMarkersSize(),
-              isBytes: true,
+              isBytes: true);
+        } else {
+          await _fetchImgBytes(uImg).then((Uint8List? _imgBytes) async {
+            if (_imgBytes != null) {
+              bitMap = await bitmapDescriptorLoader(
+                (await cropRonded(_imgBytes)),
+                _calculateMarkersSize(),
+                _calculateMarkersSize(),
+                isBytes: true,
+              );
+            }
+          });
+        }
+        return bitMap;
+      }
+
+      if (latLng != null) {
+        final String mId = (markerId ??
+            fireAuth.FirebaseAuth.instance.currentUser?.uid ??
+            'ANONYMOUS');
+
+        await _buildBitmap(uImg).then((BitmapDescriptor? icon) {
+          if (icon != null) {
+            // default userId is authenticated's
+            _addOrUpdateMarker(
+              MezMarker(
+                fitWithinBounds: fitWithinBounds,
+                markerId: MarkerId(mId),
+                icon: icon,
+                position: latLng,
+              ),
             );
           }
         });
-      }
-      return bitMap;
-    }
-
-    if (latLng != null) {
-      mezDbgPrint("[cc]  latLng != null!");
-
-      final String? uImg = Get.find<FirbaseAuthController>().user?.image ??
-          Get.find<FirbaseAuthController>().user?.bigImage;
-      final String mId = (markerId ??
-          Get.find<FirbaseAuthController>().user?.id ??
-          'ANONYMOUS');
-
-      try {
-        BitmapDescriptor icon =
-            await _buildBitmap(uImg) ?? BitmapDescriptor.defaultMarker;
-        if (icon != null) {
-          mezDbgPrint(
-              "[cc] we called the _buildBitmap funtion and Icon ${icon}");
-
-          var x = MezMarker(
-            fitWithinBounds: fitWithinBounds,
-            markerId: MarkerId(mId),
-            icon: icon,
-            //icon: BitmapDescriptor.defaultMarker,
-            position: latLng,
-          );
-          // default userId is authenticated's
-          mezDbgPrint("[cc] this is the resulat of _buildBitmap  marker  ");
-          _addOrUpdateMarker(x);
-        } else {
-          mezDbgPrint("[cc]  latLng === null! :(");
-        }
-      } catch (e) {
-        mezDbgPrint("[cc] ERROR WHEN CALLING _buildBitmap ${e}");
       }
     }
   }
@@ -323,7 +287,7 @@ class MGoogleMapController {
 
   void removerAuthenticatedUserMarker() {
     final String _mId =
-        (Get.find<FirbaseAuthController>().user?.id ?? 'ANONYMOUS');
+        (fireAuth.FirebaseAuth.instance.currentUser?.uid ?? 'ANONYMOUS');
     markers.removeWhere((Marker _marker) => _marker.markerId.value == _mId);
   }
 
@@ -491,3 +455,54 @@ class MGoogleMapController {
     controller.value?.animateCamera(CameraUpdate.zoomTo(zoomLvl));
   }
 }
+
+
+
+
+//// this place is for store things in case something didn't go well
+///
+///function name addOrUpdateUserMarker
+// await http
+//           .get(Uri.parse(customImgHttpUrl ?? uImg))
+//           .timeout(Duration(seconds: 7))
+//           .then((http.Response response) {
+//         _imgBytes = response.bodyBytes;
+//       }).catchError((_) async {
+//         mezDbgPrint("[cc] fetching image bytes Failed ==> $_");
+//         // if (isWebVersion == true) {
+//         //   _imgBytes = (await NetworkAssetBundle(Uri.parse(defaultUserImgUrl))
+//         //           .load(defaultUserImgUrl))
+//         //       .buffer
+//         //       .asUint8List();
+//         // } else {
+//         _imgBytes = (await rootBundle.load(isWebVersion == false
+//                 ? aDefaultAvatar
+//                 : "assets/images/web/noUserImage.jpg"))
+//             .buffer
+//             .asUint8List();
+//         mezDbgPrint("something wrong happned _imgBytes ${_imgBytes}");
+//         // }
+//       });
+//       return _imgBytes;
+//     }
+
+//     // Inside function to get Bitmapdescriptor
+//     Future<BitmapDescriptor?> _buildBitmap(String? uImg) async {
+//       BitmapDescriptor? bitMap;
+//       if (uImg == null) {
+//         mezDbgPrint("[cc]  _buildBitmap called :: inside if!");
+//         bitMap = await bitmapDescriptorLoader(
+//             (await cropRonded(
+//                 (await rootBundle.load(aDefaultAvatar)).buffer.asUint8List())),
+//             _calculateMarkersSize(),
+//             _calculateMarkersSize(),
+//             isBytes: true,
+//             urlStr: customImgHttpUrl);
+//       } else {
+//         mezDbgPrint("[cc]  _buildBitmap called :: inside else!");
+
+//         await _fetchImgBytes(uImg).then((Uint8List? _imgBytes) async {
+//           // mezDbgPrint("this happen after execute _fetchImgBytes  ${_imgBytes}");
+//           if (_imgBytes != null) {
+//             bitMap = await bitmapDescriptorLoader(
+//               (await cropRonded(_imgBytes)),

@@ -11,7 +11,7 @@ import 'package:mezcalmos/CustomerApp/pages/Common/PickLocationView.dart' as c;
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/Controllers/ViewCartController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/BuildItems.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -48,7 +48,7 @@ class _EndWebSideBarState extends State<EndWebSideBar> {
     mezDbgPrint("inside the End web drawer ====> ${viewType.value}");
 
     Get.put<AppLifeCycleController>(
-      AppLifeCycleController(logs: true),
+      AppLifeCycleController(),
       permanent: true,
     );
     return Container(
@@ -171,14 +171,11 @@ class _ViewCartScreenForWebState extends State<ViewCartScreenForWeb> {
     super.initState();
     mezDbgPrint(
         "Cart items =====================>>>${_restaurantController.cart.value.cartItems}");
-    if (Get.find<CustomerAuthController>().customer.value?.savedCards == null)
+    if (Get.find<CustomerAuthController>().customer?.savedCards == null)
       savedCardChoice =
-          Get.find<CustomerAuthController>().customer.value!.savedCards.first;
-    orderToLocation = Get.find<CustomerAuthController>()
-        .customer
-        .value!
-        .defaultLocation
-        ?.location;
+          Get.find<CustomerAuthController>().customer!.savedCards.first;
+    orderToLocation =
+        Get.find<CustomerAuthController>().customer!.defaultLocation?.location;
     if (orderToLocation != null) {
       _restaurantController.cart.value.toLocation = orderToLocation;
     }
@@ -403,9 +400,10 @@ class _ViewCartScreenForWebState extends State<ViewCartScreenForWeb> {
       switch (choice) {
         case CardChoice.ApplePay:
           final ServerResponse paymentIntentResponse = await getPaymentIntent(
-              customerId: Get.find<FirbaseAuthController>().user!.id,
-              serviceProviderId:
-                  _restaurantController.cart.value.restaurant!.info.id,
+              customerId: Get.find<AuthController>().user!.hasuraId.toString(),
+              serviceProviderId: _restaurantController
+                  .cart.value.restaurant!.info.hasuraId
+                  .toString(),
               orderType: OrderType.Restaurant,
               paymentAmount: _restaurantController.cart.value.totalCost);
           stripePaymentId = extractPaymentIdFromIntent(
@@ -418,9 +416,10 @@ class _ViewCartScreenForWebState extends State<ViewCartScreenForWeb> {
           break;
         case CardChoice.GooglePay:
           final ServerResponse paymentIntentResponse = await getPaymentIntent(
-              customerId: Get.find<FirbaseAuthController>().user!.id,
-              serviceProviderId:
-                  _restaurantController.cart.value.restaurant!.info.id,
+              customerId: Get.find<AuthController>().user!.hasuraId.toString(),
+              serviceProviderId: _restaurantController
+                  .cart.value.restaurant!.info.hasuraId
+                  .toString(),
               orderType: OrderType.Restaurant,
               paymentAmount: _restaurantController.cart.value.totalCost);
           stripePaymentId = extractPaymentIdFromIntent(
@@ -433,8 +432,9 @@ class _ViewCartScreenForWebState extends State<ViewCartScreenForWeb> {
           break;
         case CardChoice.SavedCard:
           stripePaymentId = await acceptPaymentWithSavedCard(
-              serviceProviderId:
-                  _restaurantController.cart.value.restaurant!.info.id,
+              serviceProviderId: _restaurantController
+                  .cart.value.restaurant!.info.hasuraId
+                  .toString(),
               paymentAmount: _restaurantController.cart.value.totalCost,
               card: viewCartController.card.value!);
           break;

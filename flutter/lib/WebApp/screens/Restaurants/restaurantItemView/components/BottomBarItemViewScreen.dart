@@ -4,7 +4,7 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantControlle
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/DialogRequiredSignIn.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -40,7 +40,7 @@ class BottomBarItemViewScreen extends StatefulWidget {
 class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
   RestaurantController restaurantCartController =
       Get.find<RestaurantController>();
-  FirbaseAuthController auth = Get.find<FirbaseAuthController>();
+  AuthController auth = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +71,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const SizedBox(width: 5),
+          Container(width: 5),
           IncrementalComponent(
             btnColors: primaryBlueColor,
             onMinValueBtnColor: Colors.grey.shade300,
@@ -118,23 +118,23 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                       if (auth.fireAuthUser != null) {
                         if (ViewItemScreenMode.AddItemMode == widget.mode) {
                           mezDbgPrint(
-                              "the first id is ${restaurantCartController.associatedRestaurant?.info.id} and the scond is ${widget.currentRestaurantId}");
+                              "the first id is ${restaurantCartController.associatedRestaurant?.info.hasuraId} and the scond is ${widget.currentRestaurantId}");
 
                           if (restaurantCartController
-                                  .associatedRestaurant?.info.id !=
+                                  .associatedRestaurant?.info.hasuraId !=
                               null) {
                             if (restaurantCartController
-                                    .associatedRestaurant?.info.id ==
+                                    .associatedRestaurant?.info.hasuraId ==
                                 widget.currentRestaurantId) {
                               mezDbgPrint(
-                                  "the first id is ${restaurantCartController.associatedRestaurant?.info.id} and the scond is ${widget.currentRestaurantId}");
+                                  "the first id is ${restaurantCartController.associatedRestaurant?.info.hasuraId} and the scond is ${widget.currentRestaurantId}");
                               await restaurantCartController
                                   .addItem(widget.cartItem.value!);
 
                               widget.navigationCallback?.call();
                             } else {
                               mezDbgPrint(
-                                  "not true ${restaurantCartController.associatedRestaurant?.info.id} and the other is ${widget.currentRestaurantId}");
+                                  "not true ${restaurantCartController.associatedRestaurant?.info.hasuraId} and the other is ${widget.currentRestaurantId}");
 
                               await showStatusInfoDialog(
                                 context,

@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
@@ -63,7 +64,7 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
         avgDays.value = event.averageNumberOfDays;
         minCost.value = event.laundryCosts.minimumCost;
       } else {
-        Get.back();
+        MezRouter.back();
       }
     });
   }
@@ -80,7 +81,7 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
     return Scaffold(
       appBar: LaundryAppAppBar(
         leftBtnType: AppBarLeftButtonType.Back,
-        onClick: Get.back,
+        onClick: MezRouter.back,
       ),
       bottomNavigationBar: Obx(() {
         if (laundry.value != null) {
@@ -220,7 +221,7 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
               child: InkWell(
                 borderRadius: BorderRadius.circular(10),
                 onTap: () {
-                  Get.toNamed(getCategoryRoute(
+                  MezRouter.toNamed(getCategoryRoute(
                       laundryId: laundryId!, categoryId: null));
                 },
                 child: Container(

@@ -1,0 +1,124 @@
+# Set app_version of customer
+mutation set_customer_app_version($customer_id:Int!, $version: String!) {
+  update_customer_by_pk(pk_columns : {user_id:$customer_id} , _set: { app_version:$version })
+  {
+     app_version
+  }
+}
+
+mutation set_notif_token($customer_id:Int!, $token: String!) {
+  update_notification_info(where :{user_id : {_eq :$customer_id}} , _set :{token :$token}){
+    returning {
+      token
+    }
+  }
+}
+
+
+# Get customer's infos
+query get_customer_info($customer_id : Int!) {
+  customer(where:{user_id  : {_eq: $customer_id}})
+  {
+    app_version,
+    notification_token,
+    user {
+      id,
+      name,
+      image,
+      email,
+      phone,
+      language_id
+    },
+    saved_locations(where:{customer_id : {_eq: $customer_id}})
+    {
+      id,
+      name,
+      location_gps,
+      location_text,
+      default
+    }
+  }
+}
+
+
+# Set customer's infos
+mutation set_customer_info($user_id : Int! , $app_version: String!) {
+ insert_customer_one(object : {user_id :$user_id , app_version: $app_version})
+  {
+    user_id
+  }
+}
+
+
+# Get customer's order
+query get_customer_orders($customer_id : Int!) {
+  restaurant_order( where : {customer_id : {_eq : $customer_id} }) {
+    id,
+    restaurant {
+      id
+      firebase_id
+      image
+      language_id
+      location_gps
+      location_text
+      name
+    },
+    items {
+      restaurant_item {
+          item_type
+          name {
+            translations {
+              language_id,
+              value
+            }
+          }
+          description {
+            translations {
+              language_id,
+              value
+            }
+          },
+          position,
+          category_id,
+          available,
+          restaurant_id,
+          special_period_end,
+          special_period_start,
+          archived,
+          cost
+        }
+        cost_per_one
+        id
+        notes
+        quantity
+    },
+    payment_type,
+    to_location_gps,
+    to_location_address,
+    estimated_food_ready_time,
+    actual_food_ready_time,
+    stripe_payment_id,
+    refund_amount,
+    delivery_id,
+    status,
+    review_id,
+    order_type,
+    order_time,
+    firebase_id,
+    customer_app_type,
+    notes,
+    tax,
+    chat_id,
+    delivery_cost,
+    delivery {
+      actual_delivered_time,
+      actual_package_ready_time,
+      actual_arrival_at_pickup_time,
+      actual_arrival_at_dropoff_time,
+      cancellation_time,
+      current_gps,
+      #deliverer_id,
+      delivery_cost    
+    }
+	},
+}

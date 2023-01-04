@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
@@ -42,23 +44,24 @@ const String kPickLocationWithoutAuth = "/pick_location/noAuth";
 const String kPickLocationEdit = "/pick_location/edit";
 const String kSomethingWentWrongScreen = "/SomethingWentWrongScreen";
 
-String getMessagesRoute(
-    {required String chatId,
-    String? orderLink,
-    String? orderId,
-    OrderType? orderType,
-    ParticipantType recipientType = ParticipantType.Customer,
-    String? recipientId}) {
-  String mainUrl = kMessagesRoute.replaceFirst(":chatId", chatId);
+String getMessagesRoute({
+  required int chatId,
+  String? orderLink,
+  int? orderId,
+  OrderType? orderType,
+  ParticipantType recipientType = ParticipantType.Customer,
+  String? recipientId,
+}) {
+  String mainUrl = kMessagesRoute.replaceFirst(":chatId", chatId.toString());
 
-  if (recipientId != null)
-    mainUrl += "?recipientId=$recipientId";
-  else
-    mainUrl += "?recipientType=${recipientType.toFirebaseFormattedString()}";
-  if (orderLink != null) mainUrl += "&orderLink=$orderLink";
-  if (orderId != null) mainUrl += "&orderId=$orderId";
-  if (orderType != null)
-    mainUrl += "&orderType=${orderType.toFirebaseFormatString()}";
+  // if (recipientId != null)
+  //   mainUrl += "?recipientId=$recipientId";
+  // else
+  //   mainUrl += "?recipientType=${recipientType.toFirebaseFormattedString()}";
+  // if (orderLink != null) mainUrl += "&orderLink=$orderLink";
+  // if (orderId != null) mainUrl += "&orderId=$orderId";
+  // if (orderType != null)
+  // mainUrl += "&orderType=${orderType.toFirebaseFormatString()}";
   return mainUrl;
 }
 
@@ -67,7 +70,8 @@ void popEverythingAndNavigateTo(route, {args}) {
 }
 
 void popUntilAndNavigateTo(untilRoute, toRoute, {args}) {
-  Get.offNamedUntil(toRoute, (Route<dynamic> route) {
+  MezRouter.offNamedUntil(toRoute, (Route<dynamic> route) {
+    mezDbgPrint("CurrentRoute#${route.settings.name} / untilRoute#$untilRoute");
     return (route.settings.name == untilRoute);
   }, arguments: args);
 }

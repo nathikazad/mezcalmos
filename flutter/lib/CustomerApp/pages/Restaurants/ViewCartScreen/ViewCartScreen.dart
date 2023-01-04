@@ -1,3 +1,5 @@
+// ignore_for_file: unawaited_futures
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
@@ -19,7 +21,6 @@ import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class ViewCartScreen extends StatefulWidget {
   @override
@@ -50,33 +51,48 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   @override
   void initState() {
     super.initState();
-    mezDbgPrint(
-        "Cart items =====================>>>${_restaurantController.cart.value.cartItems}");
-    if (Get.find<CustomerAuthController>().customer.value?.savedCards == null)
+
+    if (Get.find<CustomerAuthController>().customer?.savedCards == null)
       savedCardChoice =
-          Get.find<CustomerAuthController>().customer.value!.savedCards.first;
-    orderToLocation = Get.find<CustomerAuthController>()
-        .customer
-        .value!
-        .defaultLocation
-        ?.location;
+          Get.find<CustomerAuthController>().customer?.savedCards.first;
+    orderToLocation =
+        Get.find<CustomerAuthController>().customer?.defaultLocation?.location;
     if (orderToLocation != null) {
       _restaurantController.cart.value.toLocation = orderToLocation;
     }
+    _restaurantController.fetchCart();
 
-    _restaurantController
-        .updateShippingPrice()
-        .then((bool value) => _restaurantController.cart.refresh());
+    // getCustomerCart(
+    //   customerId: Get.find<AuthController>().user!.hasuraId,
+    // ).then((value) {
+    //   if (value != null) {
+    //     mezDbgPrint("Got cart! ===> ${value.restaurant?.info}");
+    //     _restaurantController.cart.value = value;
+    //     mezDbgPrint(
+    //         "Cart items =====================>>>${_restaurantController.cart.value.cartItems}");
+    //     if (Get.find<CustomerAuthController>().customer?.savedCards == null)
+    //       savedCardChoice =
+    //           Get.find<CustomerAuthController>().customer!.savedCards.first;
+    //     orderToLocation = Get.find<CustomerAuthController>()
+    //         .customer!
+    //         .defaultLocation
+    //         ?.location;
+    //     if (orderToLocation != null) {
+    //       _restaurantController.cart.value.toLocation = orderToLocation;
+    //     }
+    //   }
+    // });
+
+    // _restaurantController
+    //     .updateShippingPrice()
+    //     .then((bool value) => _restaurantController.cart.refresh());
 
     // check if cart empty
     // if yes redirect to home page
-
     if (_restaurantController.cart.value.cartPeriod != null) {
       _restaurantController.cart.value.deliveryTime =
           _restaurantController.cart.value.cartPeriod?.start;
     }
-    mezDbgPrint(
-        "item is special ===== ${_restaurantController.cart.value.cartItems.first.isSpecial}");
   }
 
   @override
@@ -98,13 +114,12 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           return SingleChildScrollView(
             child: ViewCartBody(
               viewCartController: viewCartController,
-              setLocationCallBack: ({Location? location}) {
-                // --
+              setLocationCallBack: ({Location? location}) async {
                 if (location != null && location.isValidLocation()) {
-                  setState(() {
-                    orderToLocation = location;
-                  });
+                  mezDbgPrint(
+                      "[UUUU] => RESTAURANT INFO ==> ${_restaurantController.cart.value.restaurant?.info.hasuraId}");
                   _restaurantController.cart.value.toLocation = location;
+                  // ignore: unawaited_futures
                   _restaurantController.updateShippingPrice().then(
                       (bool value) => _restaurantController.cart.refresh());
                 }
@@ -134,11 +149,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                       if (_restaurantController.canOrder &&
                           !viewCartController.clickedCheckout.value) {
                         viewCartController.clickedCheckout.value = true;
-                        final bool _isCheckoutFailed =
-                            !(await checkoutActionButton());
-                        if (_isCheckoutFailed) {
-                          viewCartController.clickedCheckout.value = false;
-                        }
+                        // final bool _isCheckoutFailed =
+                        await checkoutActionButton();
+                        // if (_isCheckoutFailed) {
+                        //   viewCartController.clickedCheckout.value = false;
+                        // }
                       } else {
                         _restaurantController.cart.refresh();
                       }
@@ -207,47 +222,63 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     }
   }
 
-  /// returns a bool that say weither checkout was a success or not.
-  Future<bool> checkoutActionButton() async {
+  Future<void> checkoutActionButton() async {
     _restaurantController.cart.value.toLocation = orderToLocation;
     _restaurantController.cart.value.notes = _textEditingController.text;
     try {
-      if (_restaurantController.getOrderDistance <= 10) {
-        final String? stripePaymentId =
-            await acceptPaymentByCardChoice(viewCartController.getCardChoice);
+      // if (_restaurantController.getOrderDistance <= 10) {
+      // if (true) {
+      final String? stripePaymentId =
+          await acceptPaymentByCardChoice(viewCartController.getCardChoice);
 
-        final ServerResponse _serverResponse = await _restaurantController
-            .checkout(stripePaymentId: stripePaymentId);
+      final ServerResponse _serverResponse = await _restaurantController
+          .checkout(stripePaymentId: stripePaymentId);
 
-        if (_serverResponse.success) {
-          _restaurantController.clearCart();
-          popEverythingAndNavigateTo(
-              getRestaurantOrderRoute(_serverResponse.data["orderId"]));
-          return true;
-        } else {
-          print(_serverResponse);
-          if (_serverResponse.errorCode == "serverError") {
-            // do something
-          } else if (_serverResponse.errorCode == "inMoreThanThreeOrders") {
-            // do something
-          } else if (_serverResponse.errorCode == "restaurantClosed") {
-            // do something
-          } else {
-            // do something
-          }
-        }
-      } else {
-        MezSnackbar(
-          '${_i18n()["ops"]}',
-          '${_i18n()["distanceError"]}',
+      mezDbgPrint("datatatatataat => ${_serverResponse.data}");
+
+      if (_serverResponse.success) {
+        _restaurantController.clearCart();
+
+        popEverythingAndNavigateTo(
+          getRestaurantOrderRoute(
+            _serverResponse.data["orderId"],
+          ),
         );
+      } else {
+        print(_serverResponse);
+        if (_serverResponse.errorCode == "serverError") {
+          // do something
+        } else if (_serverResponse.errorCode == "inMoreThanThreeOrders") {
+          // do something
+        } else if (_serverResponse.errorCode == "restaurantClosed") {
+          // do something
+        } else {
+          // do something
+        }
       }
-      return false;
+      // } else {
+      //   print(_serverResponse);
+      //   if (_serverResponse.errorCode == "serverError") {
+      //     // do something
+      //   } else if (_serverResponse.errorCode == "inMoreThanThreeOrders") {
+      //     // do something
+      //   } else if (_serverResponse.errorCode == "restaurantClosed") {
+      //     // do something
+      //   } else {
+      //     // do something
+      //   }
+      // }
+      // } else {
+      //   MezSnackbar(
+      //     '${_i18n()["ops"]}',
+      //     '${_i18n()["distanceError"]}',
+      //   );
+      // }
+      mezDbgPrint("success funish checkout");
     } catch (e, s) {
       mezDbgPrint(
         "Error happened during generating order's routeInfos / Stripe payment ===> #$e\n\nStackTrace ==> #$s",
       );
-      return false;
     }
   }
 
@@ -260,9 +291,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       switch (choice) {
         case CardChoice.ApplePay:
           final ServerResponse paymentIntentResponse = await getPaymentIntent(
-              customerId: Get.find<AuthController>().user!.id,
-              serviceProviderId:
-                  _restaurantController.cart.value.restaurant!.info.id,
+              customerId: Get.find<AuthController>().user!.hasuraId.toString(),
+              serviceProviderId: _restaurantController
+                  .cart.value.restaurant!.info.hasuraId
+                  .toString()
+                  .toString(),
               orderType: OrderType.Restaurant,
               paymentAmount: _restaurantController.cart.value.totalCost);
           stripePaymentId = extractPaymentIdFromIntent(
@@ -274,10 +307,14 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                   _restaurantController.cart.value.restaurant!.info.name);
           break;
         case CardChoice.GooglePay:
+          // TODO:544D-HASURA
+
           final ServerResponse paymentIntentResponse = await getPaymentIntent(
-              customerId: Get.find<AuthController>().user!.id,
-              serviceProviderId:
-                  _restaurantController.cart.value.restaurant!.info.id,
+              customerId: Get.find<AuthController>().user!.hasuraId.toString(),
+              serviceProviderId: _restaurantController
+                  .cart.value.restaurant!.info.hasuraId
+                  .toString()
+                  .toString(),
               orderType: OrderType.Restaurant,
               paymentAmount: _restaurantController.cart.value.totalCost);
           stripePaymentId = extractPaymentIdFromIntent(
@@ -290,8 +327,10 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           break;
         case CardChoice.SavedCard:
           stripePaymentId = await acceptPaymentWithSavedCard(
-              serviceProviderId:
-                  _restaurantController.cart.value.restaurant!.info.id,
+              serviceProviderId: _restaurantController
+                  .cart.value.restaurant!.info.hasuraId
+                  .toString()
+                  .toString(),
               paymentAmount: _restaurantController.cart.value.totalCost,
               card: viewCartController.card.value!);
           break;

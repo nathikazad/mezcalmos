@@ -23,14 +23,17 @@ const String stripePubTestKey =
 const String stripePubProdKey =
     "pk_live_51KxdsRDV5wKm9SNKwQNz1HPWMktW0DlhlsewJKUPQDwrJUv8LtB9oNFPHUKQ448oj1u5Jq8oIa1ihA5MJPYw8Wa300ikC6xyTA";
 const String agoraAppId = "6def50fdd2804ffaaa70d807ee445d28";
-
+const String hasuraProdLink = "https://mez-production.hasura.app/v1/graphql";
+const String hasuraStageLink = "https://mez-staging.hasura.app/v1/graphql";
+const String hasuraDevLink = "http://127.0.0.1:8080/v1/graphql";
 // can be dev / prod
 
 // ----------------- TEST STRINGS ----------------- //
 
-const String tTestTaxiValue = "taxi.one@mezcalmos.com";
-const String tTestCustomerValue = "customer.one@mezcalmos.com";
-const String tTestAdminValue = "admin@mezcalmos.com";
+const String tTestRestaurantOpValue = "restaurantop@mezcalmos.com";
+const String tTestCustomerValue = "customer@mezcalmos.com";
+const String tTestDeliveryDriverValue = "deliverydriver@mezcalmos.com";
+const String tTestAdminValue = "mezAdmin@mezcalmos.com";
 const String tEmailTestPassword = "password";
 
 // ----------------- Costants Numbers ----------------- //
@@ -62,13 +65,14 @@ const String getxLmodeKey = "lmod";
 const String getxGmapBottomPaddingKey = "gmap_bottom_padding";
 const String getxTaxiDescriptor = "taxi_descriptor";
 const String getxDestinationDescriptor = "destination_descriptor";
-const String getxUserId = "userid";
 const String getxAppVersion = "version";
 const String getxAppName = "appName";
 const String getxPackageName = "packageName";
 const String getxAppStoreId = "iosAppStoreId";
 const String defaultUserImgUrl =
     "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d";
+const String defaultDriverImgUrl =
+    "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/drivers%2FdeliveryIcon.png?alt=media&token=f02da9dd-07c6-42dc-888e-8bf3646f74cc";
 
 // ----------------- Assets Strings ----------------- //
 const String aDefaultNotificationsSound = 'assets/sounds/notif-alert.mp3';
@@ -81,6 +85,7 @@ const String aMoney = "assets/images/shared/money.png";
 const String aGpay = "assets/images/customer/gPay.png";
 
 const String noOrdersAsset = "assets/images/shared/noOrderIllustration.png";
+const String aRequestWaiting = "assets/images/shared/requestPerson.png";
 const String aDefaultDbUserImgAsset =
     "assets/images/shared/defaultUserLogo.png";
 const String aDefaultAvatar = "assets/images/shared/noUserImage.jpg";

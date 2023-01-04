@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/Controllers/CustomerRestaurantController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/ReviewCard.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
+import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
@@ -34,15 +34,15 @@ class RestaurantInfoTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     mezDbgPrint(
-        "Restaurant ==> ${restaurant.info.id}  : Rate [${restaurant.rate}] - Reviews List: [${restaurant.reviews.length}]");
+        "Restaurant ==> ${restaurant.info.hasuraId.toString().toString()}  : Rate [${restaurant.rate}] - Reviews List: [${restaurant.reviews.length}]");
     final LanguageType userLanguage =
         Get.find<LanguageController>().userLanguageKey;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         _topBarInfo(),
-        if (restaurant.description![userLanguage] != null &&
-            restaurant.description![userLanguage]!.isNotEmpty)
+        if (restaurant.info.description?[userLanguage] != null &&
+            restaurant.info.description![userLanguage]!.isNotEmpty)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -56,11 +56,8 @@ class RestaurantInfoTab extends StatelessWidget {
                 margin: EdgeInsets.only(
                   top: 10,
                 ),
-                child: Text(restaurant.description?[userLanguage] ?? ""),
+                child: Text(restaurant.info.description?[userLanguage] ?? ""),
               ),
-              SizedBox(
-                height: 20,
-              )
             ],
           ),
         if (restaurant.schedule != null)
@@ -165,7 +162,7 @@ class RestaurantInfoTab extends StatelessWidget {
                   Icons.payments_sharp,
                   color: Colors.grey.shade800,
                 ),
-                if (restaurant.paymentInfo.acceptCard)
+                if (restaurant.paymentInfo?.acceptCard == true)
                   Padding(
                       padding: const EdgeInsets.only(left: 5),
                       child: Icon(

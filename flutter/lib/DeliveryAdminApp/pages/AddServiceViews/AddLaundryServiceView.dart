@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/AddServiceViews/Controllers/AddLaundryServiceViewController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/TextInputHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
@@ -25,7 +27,7 @@ class _AddLaundryServiceViewState extends State<AddLaundryServiceView> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    viewController.init(serviceType: ServiceType.Laundry);
+    viewController.init(serviceType: ServiceProviderType.Laundry);
     super.initState();
   }
 
@@ -39,7 +41,7 @@ class _AddLaundryServiceViewState extends State<AddLaundryServiceView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: Get.back, title: '${_i18n()["newLaundry"]}'),
+          onClick: MezRouter.back, title: '${_i18n()["newLaundry"]}'),
       bottomNavigationBar: MezButton(
         height: 65,
         label: '${_i18n()["createLaundry"]}',

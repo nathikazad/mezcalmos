@@ -1,6 +1,39 @@
-// import * as functions from "firebase-functions";
-
+import * as functions from "firebase-functions";
 import * as firebase from "firebase-admin";
+// import * as stripePaymentFunctions from './utilities/stripe/payment'
+// import * as stripeServiceProvderFunctions from './utilities/stripe/serviceProvider'
+// import * as stripeCardFunctions from './utilities/stripe/card'
+import * as restaurantStatusChange from './restaurant/adminStatusChanges'
+ import { createNewRestaurant } from "./restaurant/createNewRestaurant";
+import { checkout } from "./restaurant/checkoutCart";
+// import { addReview } from "./restaurant/addReview";
+ import { cancelOrderFromCustomer } from "./restaurant/cancelOrderFromCustomer";
+// import { requestRide } from "./taxi/request";
+// import * as taxiStatusChange from './taxi/taxiStatusChange'
+// import { acceptRide } from "./taxi/accept";
+// import { cancelTaxiFromCustomer } from "./taxi/cancelTaxiFromCustomer";
+// import * as adminStatusChanges from './taxi/adminStatusChanges'
+// import * as laundryStatusChange from './laundry/adminStatusChanges'
+// import { createLaundry } from "./laundry/createNewLaundry";
+// import { requestLaundry } from "./laundry/laundryRequest";
+// import { cancelFromCustomer } from "./laundry/cancelLaundryFromCustomer";
+// import * as laundryDelivery from './delivery/laundryStatusChange'
+// import * as restaurantDelivery from './delivery/restaurantStatusChange'
+import { HttpsError } from "firebase-functions/v1/auth";
+
+import { getAuthUsingOTP, sendOTPForLogin } from "./utilities/otpAuth";
+// import { assignDriver } from "./delivery/assignDriver";
+// import { setEstimatedTime } from "./delivery/setEstimatedTime";
+import * as userChanges from './utilities/userChanges'
+// import { generateDriverLink,generateOperatorLink } from "./utilities/links/generate";
+import { assignDriver } from "./delivery/assignDriver";
+import { addDriver } from "./delivery/addDriver";
+import { DeliveryCompanyType } from "./shared/models/Services/Delivery/DeliveryOrder";
+import { authorizeDriver } from "./delivery/authorizeDriver";
+import { addRestaurantOperator } from "./restaurant/addRestaurantOperator";
+import { addDeliveryOperator } from "./delivery/addDeliveryOperator";
+import { authorizeRestaurantOperator } from "./restaurant/authorizeOperator";
+import { authorizeDeliveryOperator } from "./delivery/authorizeOperator";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -10,87 +43,132 @@ if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp()
 }
 
-import * as userChanges from './utilities/userChanges'
+
 export const user = {
   processSignUp: userChanges.processSignUp,
-  changeName: userChanges.onNameUpdate,
-  changePhoto: userChanges.onPhotoUpdate,
-  deleteUserAccount : userChanges.deleteAccount
- }
+  // deleteUserAccount: authenticatedCall((userId, data) => userChanges.deleteAccount(userId, data))
+  addHasuraClaim: functions.https.onCall((_, context) => userChanges.addHasuraClaim(context.auth?.uid))
+}
 
-import * as otpAuth from './utilities/otpAuth'
 export const otp = {
-  sendOTPForLogin: otpAuth.sendOTPForLogin,
-  getAuthUsingOTP: otpAuth.getAuthUsingOTP
+  sendOTPForLogin: functions.https.onCall((data) => sendOTPForLogin(data)),
+  getAuthUsingOTP: functions.https.onCall((data) => getAuthUsingOTP(data)),
 }
 
-import * as stripePaymentFunctions from './utilities/stripe/payment'
-import * as stripeServiceProvderFunctions from './utilities/stripe/serviceProvider'
-import * as stripeCardFunctions from './utilities/stripe/card'
 export const stripe = {
-  getPaymentIntent: stripePaymentFunctions.getPaymentIntent,
-  addCard: stripeCardFunctions.addCard,
-  chargeCard: stripeCardFunctions.chargeCard,
-  removeCard: stripeCardFunctions.removeCard,
-  setupServiceProvider: stripeServiceProvderFunctions.setupServiceProvider,
-  updateServiceProvider: stripeServiceProvderFunctions.updateServiceProvider
+  // getPaymentIntent: authenticatedCall((userId, data) => stripePaymentFunctions.getPaymentIntent(userId, data)),
+  // addCard: authenticatedCall((userId, data) => stripeCardFunctions.addCard(userId, data)),
+  // chargeCard: authenticatedCall((userId, data) => stripeCardFunctions.chargeCard(userId, data)),
+  // removeCard: authenticatedCall((userId, data) => stripeCardFunctions.removeCard(userId, data)),
+  // setupServiceProvider: authenticatedCall((userId, data) => stripeServiceProvderFunctions.setupServiceProvider(userId, data)),
+  // updateServiceProvider: authenticatedCall((userId, data) => stripeServiceProvderFunctions.updateServiceProvider(userId, data)),
 }
 
-import * as dlink from './utilities/setLink'
-export const link = {
-  generateDeepLink : dlink.generateDeepLink
+
+
+export const restaurant2 = {
+  createRestaurant: authenticatedCall((userId, data) => createNewRestaurant(userId, data)),
+  // genOperatorLink: authenticatedCall((userId, data) => generateOperatorLink(userId,data )),
+  // genDriverLink: authenticatedCall((userId, data) => generateDriverLink(userId,data )),
+  checkoutCart: authenticatedCall((userId, data) => checkout(userId, data)),
+  // addReview: authenticatedCall((userId, data) => addReview(userId, data)),
+  prepareOrder: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),
+  // prepareOrder2: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),
+  readyForOrderPickup: authenticatedCall((userId, data) => restaurantStatusChange.readyForPickupOrder(userId, data)),
+  // readyForOrderPickup2: authenticatedCall((userId, data) => restaurantStatusChange.readyForPickupOrder(userId, data)),
+  cancelOrderFromAdmin: authenticatedCall((userId, data) => restaurantStatusChange.cancelOrder(userId, data)),
+  cancelOrderFromCustomer: authenticatedCall((userId, data) => cancelOrderFromCustomer(userId, data)),
+  addRestaurantOperator: authenticatedCall((userId, data) => addRestaurantOperator(userId, data)),
+  authorizeRestaurantOperator: authenticatedCall((userId, data) => authorizeRestaurantOperator(userId, data)),
+  addRestaurantDriver: authenticatedCall((userId, data) => addDriver(userId, data, DeliveryCompanyType.Restaurant)),
+  authorizeRestaurantDriver: authenticatedCall((userId, data) => authorizeDriver(userId, data, DeliveryCompanyType.Restaurant)),
+  // setEstimatedFoodReadyTime: authenticatedCall((userId, data) => restaurantStatusChange.setEstimatedFoodReadyTime(userId, data)),
+  // markOrderItemUnavailable: authenticatedCall((userId, data) => restaurantStatusChange.markOrderItemUnavailable(userId, data)),
+  // refundCustomerCustomAmount: authenticatedCall((userId, data) => restaurantStatusChange.refundCustomerCustomAmount(userId, data)),
 }
 
-import * as restaurantStatusChange from './restaurant/adminStatusChanges'
-export const restaurant = {
-  createRestaurant: require("./restaurant/createNewRestaurant"),
-  checkoutCart: require("./restaurant/checkoutCart"),
-  addReview: require("./restaurant/addReview"),
-  prepareOrder: restaurantStatusChange.prepareOrder,
-  readyForOrderPickup: restaurantStatusChange.readyForPickupOrder,
-  cancelOrderFromAdmin: restaurantStatusChange.cancelOrder,
-  cancelOrderFromCustomer: require("./restaurant/cancelOrderFromCustomer"),
-  setEstimatedFoodReadyTime: restaurantStatusChange.setEstimatedFoodReadyTime,
-  markOrderItemUnavailable: restaurantStatusChange.markOrderItemUnavailable,
-  refundCustomerCustomAmount: restaurantStatusChange.refundCustomerCustomAmount
+// export const taxi = {
+//   requestRide: authenticatedCall((userId, data) => requestRide(userId, data)),
+//   startScheduledRide: authenticatedCall((userId, data) => taxiStatusChange.startScheduledRide(userId, data)),
+//   acceptRide: authenticatedCall((userId, data) => acceptRide(userId, data)),
+//   startRide: authenticatedCall((userId, data) => taxiStatusChange.startRide(userId, data)),
+//   cancelFromCustomer: authenticatedCall((userId, data) => cancelTaxiFromCustomer(userId, data)),
+//   cancelFromDriver: authenticatedCall((userId, data) => taxiStatusChange.cancelTaxiFromDriver(userId, data)),
+//   finishRide: authenticatedCall((userId, data) => taxiStatusChange.finishRide(userId, data)),
+//   forwardToLocalCompany: authenticatedCall((userId, data) => adminStatusChanges.forwardToLocalCompany(userId, data)),
+//   submitForwardResult: authenticatedCall((userId, data) => adminStatusChanges.submitForwardResult(userId, data)),
+// }
+
+// export const laundry = {
+//   createLaundry: authenticatedCall((userId, data) => createLaundry(userId, data)),
+//   requestLaundry: authenticatedCall((userId, data) => requestLaundry(userId, data)),
+//   readyForDeliveryOrder: authenticatedCall((userId, data) => laundryStatusChange.readyForDeliveryOrder(userId, data)),
+//   cancelFromCustomer: authenticatedCall((userId, data) => cancelFromCustomer(userId, data)),
+//   cancelFromAdmin: authenticatedCall((userId, data) => laundryStatusChange.cancelOrder(userId, data)),
+//   setWeight: authenticatedCall((userId, data) => laundryStatusChange.setWeight(userId, data)),
+//   setEstimatedLaundryReadyTime: authenticatedCall((userId, data) => laundryStatusChange.setEstimatedLaundryReadyTime(userId, data)),
+// }
+
+export const delivery2 = {
+  assignDriver: authenticatedCall((userId, data) => assignDriver(userId, data)),
+  addDeliveryOperator: authenticatedCall((userId, data) => addDeliveryOperator(userId, data)),
+  authorizeDeliveryOperator: authenticatedCall((userId, data) => authorizeDeliveryOperator(userId, data)),
+  addDeliveryDriver: authenticatedCall((userId, data) => addDriver(userId, data, DeliveryCompanyType.DeliveryCompany)),
+  authorizeDeliveryDriver: authenticatedCall((userId, data) => authorizeDriver(userId, data, DeliveryCompanyType.DeliveryCompany)),
+  // restaurantStartDelivery: authenticatedCall((userId, data) => restaurantDelivery.startDelivery(userId, data)),
+  // restaurantFinishDelivery: authenticatedCall((userId, data) => restaurantDelivery.finishDelivery(userId, data)),
+  // laundryStartPickupFromCustomer: authenticatedCall((userId, data) => laundryDelivery.startPickupFromCustomer(userId, data)),
+  // laundryPickedUpFromCustomer: authenticatedCall((userId, data) => laundryDelivery.pickedUpFromCustomer(userId, data)),
+  // laundryAtFacility: authenticatedCall((userId, data) => laundryDelivery.atFacility(userId, data)),
+  // laundryStartPickupFromLaundry: authenticatedCall((userId, data) => laundryDelivery.startPickupFromLaundry(userId, data)),
+  // laundryPickedUpFromLaundry: authenticatedCall((userId, data) => laundryDelivery.pickedUpFromLaundry(userId, data)),
+  // laundryFinishDropoff: authenticatedCall((userId, data) => laundryDelivery.finishDropoff(userId, data)),
+  // setEstimatedTime: authenticatedCall((userId, data) => setEstimatedTime(userId, data)),
 }
 
-// Taxi
-export const taxi = {
-  requestRide: require("./taxi/request"),
-  startScheduledRide: require("./taxi/taxiStatusChange").startScheduledRide,
-  acceptRide: require("./taxi/accept"),
-  startRide: require("./taxi/taxiStatusChange").startRide,
-  cancelFromCustomer: require("./taxi/cancelTaxiFromCustomer"),
-  cancelFromDriver: require("./taxi/taxiStatusChange").cancelTaxiFromDriver,
-  finishRide: require("./taxi/taxiStatusChange").finishRide,
-  forwardToLocalCompany: require("./taxi/adminStatusChanges").forwardToLocalCompany,
-  submitForwardResult: require("./taxi/adminStatusChanges").submitForwardResult,
-}
+// function adminOnlyCall(func:AuthenticatedFunction) {
+//   return functions.https.onCall(async (data, context) => {
+//     if (!context.auth?.uid) {
+//       throw new HttpsError(
+//         "unauthenticated",
+//         "Request was not authenticated.",
+//       );
+//     }
+//     let hasPermission = await isUserAdmin(context.auth?.uid);
+//     if (!hasPermission) {
+//       throw new HttpsError(
+//         "permission-denied",
+//         "Only admin users can call this function",
+//       );
+//     }
+//     return func(context.auth!.uid, data);
+//   });
+// }
 
-import * as laundryStatusChange from './laundry/adminStatusChanges'
-export const laundry = {
-  createLaundry: require("./laundry/createNewLaundry"),
-  requestLaundry: require("./laundry/laundryRequest"),
-  readyForDeliveryOrder: laundryStatusChange.readyForDeliveryOrder,
-  cancelFromCustomer: require("./laundry/cancelLaundryFromCustomer"),
-  cancelFromAdmin: laundryStatusChange.cancelOrder,
-  setWeight: laundryStatusChange.setWeight,
-  setEstimatedLaundryReadyTime: laundryStatusChange.setEstimatedLaundryReadyTime
-}
-
-import * as laundryDelivery from './delivery/laundryStatusChange'
-import * as restaurantDelivery from './delivery/restaurantStatusChange'
-
-export const delivery = {
-  assignDriver: require("./delivery/assignDriver"),
-  restaurantStartDelivery: restaurantDelivery.startDelivery,
-  restaurantFinishDelivery: restaurantDelivery.finishDelivery,
-  laundryStartPickupFromCustomer: laundryDelivery.startPickupFromCustomer,
-  laundryPickedUpFromCustomer: laundryDelivery.pickedUpFromCustomer,
-  laundryAtFacility: laundryDelivery.atFacility,
-  laundryStartPickupFromLaundry: laundryDelivery.startPickupFromLaundry,
-  laundryPickedUpFromLaundry: laundryDelivery.pickedUpFromLaundry,
-  laundryFinishDropoff: laundryDelivery.finishDropoff,
-  setEstimatedTime: require("./delivery/setEstimatedTime")
+type AuthenticatedFunction = (userId:number, data:any) => any;
+function authenticatedCall(func:AuthenticatedFunction) {
+  return functions.https.onCall(async (data, context) => {
+    
+    console.log("[+] authenticatedCall :: ", data);
+    if (!context.auth?.uid) {
+      throw new HttpsError(
+        "unauthenticated",
+        "Request was not authenticated.",
+      );
+    }
+    let firebaseUser = await firebase.auth().getUser(context.auth!.uid)
+    console.log("Custom claims",firebaseUser.customClaims)
+    if(firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"] == null) {
+    //   throw new HttpsError(
+    //     "unauthenticated",
+    //     "Request was not authenticated.",
+    //   );
+    // } else {
+      await userChanges.addHasuraClaim(context.auth?.uid);
+      firebaseUser = await firebase.auth().getUser(context.auth!.uid)
+      
+    }
+   
+    return await func(parseInt(firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"]), data);
+  });
 }

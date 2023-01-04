@@ -31,7 +31,7 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
             alignment: Alignment.centerLeft,
             padding: const EdgeInsets.only(left: 3),
             child: Text(
-              '${_i18n()["estTimes"]}',
+              '${_i18n()["estTimes"]}'.inCaps,
               style: Get.textTheme.bodyText1!
                   .copyWith(fontSize: (isWebVersion == true) ? 16 : null),
             ),
@@ -106,13 +106,13 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${_i18n()["delivery"]}",
+                    "${_i18n()["delivery"]}".inCaps,
                     style: Get.textTheme.bodyText1!
                         .copyWith(fontSize: (isWebVersion == true) ? 14 : null),
                     maxLines: 2,
                   ),
                   Text(
-                    _getDeliveryTime()!,
+                    _getDeliveryTime()!.inCaps,
                     style: Get.textTheme.bodyText2!
                         .copyWith(fontSize: (isWebVersion == true) ? 14 : null),
                     maxLines: 2,
@@ -125,8 +125,8 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
   }
 
   bool _showFoodReadyTime() {
-    return (order.status == RestaurantOrderStatus.OrderReceieved ||
-            order.status == RestaurantOrderStatus.PreparingOrder) &&
+    return (order.status == RestaurantOrderStatus.OrderReceived ||
+            order.status == RestaurantOrderStatus.Preparing) &&
         _getFoodReadyTime() != null;
   }
 
@@ -178,7 +178,7 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${_i18n()["foodReady"]}",
+                    "${_i18n()["foodReady"]}".inCaps,
                     style: Get.textTheme.bodyText1!
                         .copyWith(fontSize: (isWebVersion == true) ? 14 : null),
                     maxLines: 1,
@@ -204,8 +204,8 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
   }
 
   String? _getDeliveryTime() {
-    if (order.estimatedDropoffAtCustomerTime != null) {
-      return "${order.estimatedDropoffAtCustomerTime!.getEstimatedTime()}";
+    if (order.estDropOffTime != null) {
+      return "${order.estDropOffTime!.getEstimatedTime()}";
     } else
       return null;
   }

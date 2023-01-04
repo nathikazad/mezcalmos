@@ -1,151 +1,136 @@
-// const keys = require("../keys").keys()
-// const hasuraModule = require("../hasura");
-
-// const hasura = new hasuraModule.Hasura(keys.hasura)
-
 import * as functions from "firebase-functions";
-import { Cart } from '../shared/models/Services/Restaurant/Cart';
-import { constructRestaurantOrder, NewRestaurantOrderNotification, RestaurantOrder } from '../shared/models/Services/Restaurant/RestaurantOrder';
-import { buildChatForOrder, ChatObject, ParticipantType } from "../shared/models/Generic/Chat";
-import { OrderType } from "../shared/models/Generic/Order";
+import { NewRestaurantOrderNotification, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderType } from '../shared/models/Services/Restaurant/RestaurantOrder';
+import { OrderType, PaymentType } from "../shared/models/Generic/Order";
+import { Location, AppType, ServerResponse, ServerResponseStatus, Language } from "../shared/models/Generic/Generic";
+import { HttpsError } from "firebase-functions/v1/auth";
+import { getRestaurant } from "../shared/graphql/restaurant/getRestaurant";
+import { createRestaurantOrder } from "../shared/graphql/restaurant/order/createRestaurantOrder";
 import { Restaurant } from "../shared/models/Services/Restaurant/Restaurant";
-import { UserInfo } from "../shared/models/Generic/User";
-import { Language, ServerResponseStatus } from "../shared/models/Generic/Generic";
-import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
-import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
-import * as customerNodes from "../shared/databaseNodes/customer";
-import *  as rootNodes from "../shared/databaseNodes/root";
-import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
-import { isSignedIn } from "../shared/helper/authorizer";
-import { getRestaurant } from "./restaurantController";
-import { getUserInfo } from "../shared/controllers/rootController";
-import * as chatController from "../shared/controllers/chatController";
+import { checkCart } from "../shared/graphql/restaurant/cart/checkCart";
+import { clearCart } from "../shared/graphql/restaurant/cart/clearCart";
+import { setOrderChatInfo } from "../shared/graphql/chat/setChatInfo";
+import { getCart } from "../shared/graphql/restaurant/cart/getCart";
+import { getCustomer } from "../shared/graphql/restaurant/customer/getCustomer";
+import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmins";
+import { CustomerInfo, MezAdmin } from "../shared/models/Generic/User";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { pushNotification } from "../utilities/senders/notifyUser";
+import { Cart } from "../shared/models/Services/Restaurant/Cart";
 import { orderUrl } from "../utilities/senders/appRoutes";
-import { updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
+import { pushNotification } from "../utilities/senders/notifyUser";
+import { ParticipantType } from "../shared/models/Generic/Chat";
+import { AssignCompanyDetails, assignDeliveryCompany } from "./assignDeliveryCompany";
 
-export = functions.https.onCall(async (data, context) => {
+export interface CheckoutRequest {
+  customerAppType: AppType,
+  customerLocation: Location,
+  deliveryCost: number,
+  paymentType: PaymentType,
+  notes: string,
+  restaurantId: number,
+  restaurantOrderType: RestaurantOrderType,
+  tripDistance: number,
+  tripDuration: number,
+  tripPolyline: string,
+  selfDelivery: boolean,
+  scheduledTime?: string
+}
 
-  let response = isSignedIn(context.auth)
-  if (response != undefined)
-    return response;
-
-  let customerId: string = context.auth!.uid;
-  let cart: Cart = <Cart>data;
-  // TODO limit number of active orders
-  // let customerCurrentOrder = (await firebase.database().ref(`/customers/${uid}/state/currentOrders`).once('value')).val();
-  // if (customerCurrentOrder && Object.keys(customerCurrentOrder).length >= 3) {
-  //   return {
-  //     status: "Error",
-  //     errorMessage: "Customer is already in three orders",
-  //     errorCode: "inMoreThanThreeOrders"
-  //   }
-  // }
-
-  let restaurant: Restaurant = await getRestaurant(cart.serviceProviderId);
-
-  if (restaurant.state.open == false) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Restaurant is closed`,
-      errorCode: "restaurantClosed"
-    }
-  }
-
-  let transactionResponse = await customerNodes.lock(customerId).transaction(function (lock) {
-    if (lock == true) {
-      return
-    } else {
-      return true
-    }
-  })
-
-  if (!transactionResponse.committed) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: 'Customer lock not available'
-    }
-  }
-
-  if (!cart.to) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: "Shipping address can't be null!"
-    }
-  }
-
+export async function checkout(customerId: number, checkoutRequest: CheckoutRequest): Promise<ServerResponse> {
   try {
-    let customerInfo: UserInfo = await getUserInfo(customerId);
-    let order: RestaurantOrder = constructRestaurantOrder({
-      cart: cart,
-      customer: customerInfo,
-      restaurant: restaurant.info,
-      stripeFees: data.stripeFees ?? 0
-    })
 
-    let orderId: string = (await customerNodes.inProcessOrders(customerId).push(null)).key!;
+  console.log("\n\n[+] CustomerId ==> \n\n", customerId);
+  console.log("\n\n[+] CustomerId ==> \n\n", checkoutRequest.scheduledTime);
+  console.log("\n\n[+] checkoutRequest ==> \n\n", checkoutRequest);
+  console.log("\n\n[+] restaurantId ==> \n\n", checkoutRequest.restaurantId);
+  let restaurantPromise = getRestaurant(checkoutRequest.restaurantId);
+  let customerCartPromise = getCart(customerId);
+  let customerPromise = getCustomer(customerId);
+  let mezAdminsPromise = getMezAdmins();
 
-    if (data.stripePaymentId) {
-      order = (await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId, data.stripeFees)) as RestaurantOrder
-    }
-    delete (order as any).stripePaymentId;
-    delete (order as any).stripeFees;
-    customerNodes.inProcessOrders(customerId, orderId).set(order);
-    restaurantNodes.inProcessOrders(cart.serviceProviderId, orderId).set(order);
-    rootNodes.inProcessOrders(OrderType.Restaurant, orderId).set(order);
+  let response = await Promise.all([restaurantPromise, customerCartPromise, customerPromise, mezAdminsPromise])
+  let restaurant: Restaurant = response[0];
+  let customerCart: Cart = response[1];
+  let customer: CustomerInfo = response[2];
+  let mezAdmins: MezAdmin[] = response[3];
+  errorChecks(restaurant, checkoutRequest, customerId, customerCart);
 
-    let chat: ChatObject = await buildChatForOrder(
-      orderId,
-      OrderType.Restaurant)
-    chat.addParticipant(
-      {
-        ...customerInfo,
-        particpantType: ParticipantType.Customer
-      });
-    chat.addParticipant(
-      {
-        ...restaurant.info,
-        particpantType: ParticipantType.Restaurant
-      });
+  let restaurantOrder: RestaurantOrder = {
+    customerId,
+    restaurantId: checkoutRequest.restaurantId,
+    paymentType: checkoutRequest.paymentType,
+    toLocation: checkoutRequest.customerLocation,
+    status: RestaurantOrderStatus.OrderReceived,
+    orderType: checkoutRequest.restaurantOrderType,
+    customerAppType: checkoutRequest.customerAppType,
+    items: customerCart.items,
+    deliveryCost: checkoutRequest.deliveryCost,
+    scheduledTime: checkoutRequest.scheduledTime
+  }
+
+  console.log("+ Items[0].SelectedOptions ==> " ,customerCart.items[0].selectedOptions);
+  console.log("+ Items ==> " , customerCart.items);
 
 
-    await chatController.setChat(orderId, chat.chatData);
+    // if (data.stripePaymentId) {
+    //   order = (await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId, data.stripeFees)) as RestaurantOrder
+    // }
 
-    deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
-      let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-      chatController.addParticipantsToChat(Object.keys(deliveryAdmins), chat, orderId, ParticipantType.DeliveryAdmin)
-      notifyParticipants(Object.keys(deliveryAdmins), orderId, ParticipantType.DeliveryAdmin, restaurant.info)
-    })
+    let orderResponse = await createRestaurantOrder(restaurantOrder, restaurant);
+    
+    // clear user cart 
+    clearCart(customerId);
+    console.log(customer);
+    setOrderChatInfo(restaurantOrder, restaurant, orderResponse.deliveryOrder, customer);
 
-    restaurantNodes.restaurantOperators(cart.serviceProviderId).once('value').then((snapshot) => {
-      if (snapshot.val() != null) {
-        let restaurantOperators: Record<string, boolean> = snapshot.val();
-        chatController.addParticipantsToChat(Object.keys(restaurantOperators), chat, orderId, ParticipantType.RestaurantOperator)
-        notifyParticipants(Object.keys(restaurantOperators), orderId, ParticipantType.RestaurantOperator, restaurant.info)
+    notifyAdmins(mezAdmins, orderResponse.restaurantOrder.orderId!, restaurant);
+
+    notifyOperators(orderResponse.restaurantOrder.orderId!, restaurant);
+
+    if(!(checkoutRequest.selfDelivery)) {
+      let assignDetails: AssignCompanyDetails = {
+        deliveryCompanyId: 1,
+        restaurantOrderId: orderResponse.restaurantOrder.orderId!
       }
-    })
+      await assignDeliveryCompany(0, assignDetails)
+    }
 
-    setTimeout(() => customerNodes.cart(customerId).remove(), 1000);
-    return {
+    return <ServerResponse> {
       status: ServerResponseStatus.Success,
-      orderId: orderId
+      orderId: orderResponse.restaurantOrder.orderId
     }
   } catch (e) {
     functions.logger.error(e);
     functions.logger.error(`Order request error ${customerId}`);
-    return {
-      status: ServerResponseStatus.Error,
-      orderId: "Order request error"
-    }
-  } finally {
-    await customerNodes.lock(customerId).remove();
+    throw new HttpsError(
+      "internal",
+       (<Error>e).message
+    )
   }
-})
+}
+function errorChecks(restaurant: Restaurant, checkoutRequest: CheckoutRequest, customerId: number, cart: Cart) {
 
+  checkCart(customerId, checkoutRequest.restaurantId);
+  if(restaurant.approved == false) {
+    throw new HttpsError(
+      "internal",
+      "Restaurant is not approved and taking orders right now"
+    );
+  }
+  if(restaurant.openStatus != "open") {
+    throw new HttpsError(
+      "internal",
+      "Restaurant is closed"
+    );
+  }
+  if((cart.items.length ?? 0) == 0) {
+    throw new HttpsError(
+      "internal",
+      "Empty cart"
+    );
+  }
+}
 
-async function notifyParticipants(participants: Array<string>,
-  orderId: string, participantType: ParticipantType, restaurant: UserInfo) {
+function notifyAdmins(mezAdmins: MezAdmin[], orderId: number, restaurant: Restaurant) {
 
   let notification: Notification = {
     foreground: <NewRestaurantOrderNotification>{
@@ -154,7 +139,11 @@ async function notifyParticipants(participants: Array<string>,
       orderType: OrderType.Restaurant,
       orderId: orderId,
       notificationAction: NotificationAction.ShowSnackBarAlways,
-      restaurant: restaurant
+      restaurant: {
+        name: restaurant.name,
+        image: restaurant.image,
+        id: restaurant.restaurantId
+      }
     },
     background: {
       [Language.ES]: {
@@ -166,11 +155,44 @@ async function notifyParticipants(participants: Array<string>,
         body: `There is a new restaurant order`
       }
     },
-    linkUrl: orderUrl(participantType, OrderType.Restaurant, orderId)
+    linkUrl: orderUrl(OrderType.Restaurant, orderId)
   }
+  mezAdmins.forEach((m) => {
+      pushNotification(m.user?.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+  });
+}
 
-  for (let index in participants) {
-    let participantId: string = participants[index]
-    pushNotification(participantId, notification, participantType);
+function notifyOperators(orderId: number, restaurant: Restaurant) {
+  let notification: Notification = {
+    foreground: <NewRestaurantOrderNotification>{
+      time: (new Date()).toISOString(),
+      notificationType: NotificationType.NewOrder,
+      orderType: OrderType.Restaurant,
+      orderId,
+      notificationAction: NotificationAction.ShowSnackBarAlways,
+      restaurant: {
+        name: restaurant.name,
+        image: restaurant.image,
+        id: restaurant.restaurantId
+      }
+    },
+    background: {
+      [Language.ES]: {
+        title: "Nueva Pedido",
+        body: `Hay una nueva orden de alimento`
+      },
+      [Language.EN]: {
+        title: "New Order",
+        body: `There is a new restaurant order`
+      }
+    },
+    linkUrl: orderUrl(OrderType.Restaurant, orderId)
+  }
+  if(restaurant.restaurantOperators != undefined) {
+    restaurant.restaurantOperators.forEach((r) => {
+      if(r.user) {
+        pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
+      }
+    });
   }
 }

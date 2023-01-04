@@ -66,7 +66,7 @@ class LaundryListViewForDesktop extends StatelessWidget {
                   onClick: () {
                     var xPath = getCurrentPath();
                     QR.to(
-                      "${xPath[0]}/${laundries[index].info.id}${xPath[1]}",
+                      "${xPath[0]}/${laundries[index].info.hasuraId}${xPath[1]}",
                     );
                   },
                   laundry: laundries[index],

@@ -3,7 +3,7 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -71,8 +71,7 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
             }),
         builder: (context, snapShot) {
           if (snapShot.hasData && snapShot.data == true) {
-            final FirbaseAuthController _authcontroller =
-                Get.find<FirbaseAuthController>();
+            final AuthController _authcontroller = Get.find<AuthController>();
             final LanguageController Lcontroller =
                 Get.find<LanguageController>();
 
@@ -107,60 +106,61 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
                 bottomNavigationBar: MezBottomBar(),
                 body: LayoutBuilder(
                   builder: (context, constraints) {
-                    return Obx(
-                      () => Scaffold(
-                        appBar: WebAppBarComponent(
-                          mezWebSideBarController: mezWebSideBarController,
-                          automaticallyGetBack: false,
-                          type: _authcontroller.fireAuthUser?.uid != null
-                              ? WebAppBarType.WithCartActionButton.obs
-                              : WebAppBarType.WithSignInActionButton.obs,
-                          leadingFunction:
-                              _authcontroller.fireAuthUser?.uid != null
-                                  ? () {
-                                      _key.currentState!.openDrawer();
-                                    }
-                                  : null,
-                        ),
-                        body: Scaffold(
-                          //appBar: ,
-                          appBar: AppBar(
-                            leading: null,
-                            automaticallyImplyLeading: false,
-                            title: Obx(
-                              () => Text(
-                                Lcontroller.strings["CustomerApp"]["pages"]
-                                        ["Restaurants"]["ListRestaurantsScreen"]
-                                    ["ListRestaurantScreen"]["restaurants"],
-                                style: GoogleFonts.montserrat(
-                                    textStyle: TextStyle(
-                                  fontWeight:
-                                      (MezCalmosResizer.isMobile(context) ||
-                                              MezCalmosResizer.isSmallMobile(
-                                                  context))
-                                          ? FontWeight.w500
-                                          : FontWeight.w600,
-                                  fontSize: 17,
-                                  color: Colors.black,
-                                )),
-                              ),
+                    return
+                        //  Obx(
+                        //   () =>
+                        Scaffold(
+                      appBar: WebAppBarComponent(
+                        mezWebSideBarController: mezWebSideBarController,
+                        automaticallyGetBack: false,
+                        type: _authcontroller.fireAuthUser?.uid != null
+                            ? WebAppBarType.WithCartActionButton.obs
+                            : WebAppBarType.WithSignInActionButton.obs,
+                        leadingFunction:
+                            _authcontroller.fireAuthUser?.uid != null
+                                ? () {
+                                    _key.currentState!.openDrawer();
+                                  }
+                                : null,
+                      ),
+                      body: Scaffold(
+                        //appBar: ,
+                        appBar: AppBar(
+                          leading: null,
+                          automaticallyImplyLeading: false,
+                          title: Obx(
+                            () => Text(
+                              Lcontroller.strings["CustomerApp"]["pages"]
+                                      ["Restaurants"]["ListRestaurantsScreen"]
+                                  ["ListRestaurantScreen"]["restaurants"],
+                              style: GoogleFonts.montserrat(
+                                  textStyle: TextStyle(
+                                fontWeight: (MezCalmosResizer.isMobile(
+                                            context) ||
+                                        MezCalmosResizer.isSmallMobile(context))
+                                    ? FontWeight.w500
+                                    : FontWeight.w600,
+                                fontSize: 17,
+                                color: Colors.black,
+                              )),
                             ),
-                            centerTitle: true,
                           ),
+                          centerTitle: true,
+                        ),
 
-                          body: SingleChildScrollView(
-                            controller: controller,
-                            child: Column(
-                              children: [
-                                _searchInput(context),
-                                _sortingSwitcher(context),
-                                _restaurantList(context)
-                                //  buildListOFCardsForDesktopAndTablet(context)
-                              ],
-                            ),
+                        body: SingleChildScrollView(
+                          controller: controller,
+                          child: Column(
+                            children: [
+                              _searchInput(context),
+                              _sortingSwitcher(context),
+                              _restaurantList(context)
+                              //  buildListOFCardsForDesktopAndTablet(context)
+                            ],
                           ),
                         ),
                       ),
+                      // ),
                     );
                   },
                 ));
@@ -244,7 +244,7 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
                   shippingPrice: viewController.baseShippingPrice,
                   onClick: () {
                     QR.to(
-                      "/restaurants/${viewController.filteredRestaurants[index].info.id}${getLangParam()}",
+                      "/restaurants/${viewController.filteredRestaurants[index].info.hasuraId}${getLangParam()}",
                     );
                   },
                   restaurant: viewController.filteredRestaurants[index],
@@ -266,7 +266,7 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
                   shippingPrice: viewController.baseShippingPrice,
                   onClick: () {
                     QR.to(
-                      "/restaurants/${viewController.filteredRestaurants[index].info.id}${getLangParam()}",
+                      "/restaurants/${viewController.filteredRestaurants[index].info.hasuraId}${getLangParam()}",
                     );
                     ;
                   },

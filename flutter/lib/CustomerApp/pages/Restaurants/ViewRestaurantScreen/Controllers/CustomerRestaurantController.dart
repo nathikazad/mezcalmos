@@ -4,7 +4,13 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
+import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
@@ -18,18 +24,58 @@ class CustomerRestaurantController {
   final GlobalKey<RectGetterState> listViewKey = RectGetter.createGlobalKey();
 
   // obs //
+  Rx<Category> noCategory = Rx<Category>(Category());
   Rxn<Restaurant> restaurant = Rxn<Restaurant>();
   RxNum basShippingPrice = RxNum(50);
   RxBool showInfo = RxBool(false);
   Rx<RestaurantViewTab> mainTab = Rx<RestaurantViewTab>(RestaurantViewTab.Menu);
   Map<int, dynamic> itemKeys = {};
   RxBool pauseRectGetterIndex = RxBool(false);
+  RxList<Item> specials = RxList.empty();
 
-  void init({required Restaurant restaurant, required TickerProvider vsync}) {
+  Future<void> init(
+      {required Restaurant restaurant, required TickerProvider vsync}) async {
+    scrollController = AutoScrollController();
     this.restaurant.value = restaurant;
-    _getShippingPrice();
+    await _getShippingPrice();
+
+    final List<Category>? _cats =
+        await get_restaurant_categories_by_id(restaurant.info.hasuraId);
+    specials.value =
+        await get_restaurant_special_items(restaurant.info.hasuraId);
+    final List<Item> noCat =
+        await get_restaurant_items_without_cat(restaurant.info.hasuraId);
+    noCategory.value.items = noCat
+        .where((Item element) =>
+            element.available == true && element.itemType == ItemType.Daily)
+        .toList();
+
+    if (_cats != null) {
+      this.restaurant.value?.setCategories(_cats);
+
+      this.restaurant.refresh();
+    }
     _initControllers(vsync, restaurant);
     assignKeys();
+
+    // final List<Item> _items =
+    //     await fetch_restaurant_items(restaurant_id: restaurant.info.hasuraId);
+
+    // _cats.forEach((Category cat) {
+    //   if (item.itemType == ItemType.Special && item.endsAt != null) {
+    //     if (DateTime.now()
+    //         .toLocal()
+    //         .difference(item.endsAt!.toLocal())
+    //         .inSeconds
+    //         .isNegative) {
+    //       this.restaurant.value?.currentSpecials.add(item);
+    //     } else {
+    //       this.restaurant.value?.pastSpecials.add(item);
+    //     }
+    //   } else {
+    //     this.restaurantq.value?.itemsWithoutCategory.add(item);
+    //   }
+    // });
   }
 
   Future<void> _getShippingPrice() async {
@@ -39,12 +85,8 @@ class CustomerRestaurantController {
 
   void assignKeys() {
     if (isOnMenuView) {
-      itemKeys.assign((restaurant.value!.getCategories.length + 1), "info");
+      itemKeys.assign((restaurant.value!.getCategories.length + 1), "noCat");
       itemKeys[(restaurant.value!.getCategories.length + 1)] =
-          RectGetter.createGlobalKey();
-    } else {
-      itemKeys.assign((getGroupedSpecials().length + 1), "info");
-      itemKeys[(getGroupedSpecials().length + 1)] =
           RectGetter.createGlobalKey();
     }
   }
@@ -54,8 +96,6 @@ class CustomerRestaurantController {
         length: restaurant.getAvailableCategories.length, vsync: vsync);
     specialstabsController =
         TabController(length: getGroupedSpecials().length, vsync: vsync);
-
-    scrollController = AutoScrollController();
   }
 
   // scroll methods //
@@ -117,7 +157,7 @@ class CustomerRestaurantController {
   Map<DateTime, List<Item>> getGroupedSpecials() {
     // Creating the map
 
-    final Map<DateTime, List<Item>> data = restaurant.value!.currentSpecials
+    final Map<DateTime, List<Item>> data = specials.value
         .where((Item element) =>
             element.available &&
             (element.endsAt!.toLocal().isAfter(DateTime.now().toLocal()) ||
@@ -132,7 +172,7 @@ class CustomerRestaurantController {
     final SplayTreeMap<DateTime, List<Item>> sortedMap =
         SplayTreeMap<DateTime, List<Item>>.from(data,
             (DateTime a, DateTime b) => a.toLocal().compareTo(b.toLocal()));
-
+    mezDbgPrint("[66] - getGroupedSpecials ===>${sortedMap.length}");
     return sortedMap;
   }
 
@@ -155,11 +195,9 @@ class CustomerRestaurantController {
 
   List<Category> get catsList {
     final List<Category> data = restaurant.value!.getAvailableCategories;
-    if (restaurant.value!.itemsWithoutCategory
-        .where((Item element) => element.available == true)
-        .toList()
-        .isNotEmpty) {
-      data.add(restaurant.value!.getNoCategory!);
+
+    if (noCategory.value.items.isNotEmpty) {
+      data.add(noCategory.value);
     }
     return data;
   }

@@ -22,6 +22,7 @@ import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -84,7 +85,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
     mapController.addOrUpdateUserMarker(
       latLng: order.value?.laundry?.location.toLatLng(),
       customImgHttpUrl: order.value?.laundry?.image,
-      markerId: order.value?.laundry?.id,
+      markerId: order.value?.laundry?.firebaseId,
     );
 
     if (order.value?.routeInformation?.polyline != null)
@@ -98,7 +99,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
       if (order.value == null) {
         // ignore: inference_failure_on_function_invocation
         Future<Null>.delayed(Duration.zero, () {
-          Get.back<Null>();
+          MezRouter.back<Null>();
           MezSnackbar("Error", "Order does not exist");
         });
       } else {
@@ -236,7 +237,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
     mapController.addOrUpdateUserMarker(
       latLng: laundryOrder.laundry?.location.toLatLng(),
       customImgHttpUrl: laundryOrder.laundry?.image,
-      markerId: laundryOrder.laundry?.id,
+      markerId: laundryOrder.laundry?.firebaseId,
       fitWithinBounds: fitLaundryMarkerInBounds,
     );
     // Destination Marker
@@ -387,7 +388,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
         mapController.addOrUpdateUserMarker(
           latLng: laundryOrder.laundry?.location.toLatLng(),
           customImgHttpUrl: laundryOrder.laundry?.image,
-          markerId: laundryOrder.laundry?.id,
+          markerId: laundryOrder.laundry?.firebaseId,
           fitWithinBounds: true,
         );
       }

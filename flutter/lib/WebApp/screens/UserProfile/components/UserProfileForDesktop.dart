@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileScreen.dart';
@@ -12,8 +12,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 
 class UserProfileForDesktop extends StatefulWidget {
-  final FirbaseAuthController authController =
-      Get.find<FirbaseAuthController>();
+  final AuthController authController = Get.find<AuthController>();
   // this is just to controll incase we want to make a push to this route with a pre-defined mode.
   final UserProfileMode pageInitMode;
   // UserProfileController
@@ -35,7 +34,7 @@ class UserProfileForDesktop extends StatefulWidget {
 }
 
 class _UserProfileForDesktopState extends State<UserProfileForDesktop> {
-  FirbaseAuthController _authController = Get.find<FirbaseAuthController>();
+  AuthController _authController = Get.find<AuthController>();
 
   @override
   void initState() {

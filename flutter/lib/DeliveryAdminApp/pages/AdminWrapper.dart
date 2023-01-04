@@ -14,9 +14,10 @@ import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
-import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class AdminWrapper extends StatefulWidget {
   @override
@@ -57,10 +58,10 @@ class _AdminWrapperState extends State<AdminWrapper> {
   void handleAuthorization(bool authorized) {
     if (authorized) {
       mezDbgPrint("AdminWrapper::handleState going to in process orders");
-      Get.toNamed<void>(kOrdersRoute);
+      MezRouter.toNamed<void>(kOrdersRoute);
     } else {
       mezDbgPrint("AdminWrapper::handleState going to unauthorized");
-      Get.toNamed<void>(kUnauthorizedRoute);
+      MezRouter.toNamed<void>(kUnauthorizedRoute);
     }
   }
 

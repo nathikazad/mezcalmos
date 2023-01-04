@@ -4,7 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/components/webAppExpensionPanelComponent.dart';
 import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
@@ -30,7 +31,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
   late String optionId;
   @override
   void initState() {
-    optionId = widget.option.id;
+    optionId = widget.option.id.toString();
 
     super.initState();
   }
@@ -294,14 +295,14 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
     mezDbgPrint("Adding for last timee ========>");
     widget.cartItem.value!.chosenChoices[optionId]!.removeLast();
     widget.cartItem.value!.setNewChoices(
-        optionId: optionId,
+        optionId: int.parse(optionId),
         newChoices: widget.cartItem.value!.chosenChoices[optionId]! + [choice]);
   }
 
   void addNewChoice(Choice choice) {
     mezDbgPrint("Adding for first time ========>");
     widget.cartItem.value!.setNewChoices(
-        optionId: optionId,
+        optionId: int.parse(optionId),
         newChoices: widget.cartItem.value!.chosenChoices[optionId]! + [choice]);
   }
 
@@ -312,7 +313,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
           widget.cartItem.value!.chosenChoices[optionId]!.toList();
       newChoices.remove(choice);
       widget.cartItem.value!
-          .setNewChoices(optionId: optionId, newChoices: newChoices);
+          .setNewChoices(optionId: int.parse(optionId), newChoices: newChoices);
     }
   }
 }

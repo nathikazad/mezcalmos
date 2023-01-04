@@ -3,13 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/WebApp/screens/AuthScreen/components/MezButtonWidget.dart';
 import 'package:mezcalmos/WebApp/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -62,7 +63,7 @@ class _VerificationScreenDesktopState extends State<VerificationScreenDesktop> {
   }
 
   TextEditingController _otpCodeTextController = TextEditingController();
-  FirbaseAuthController controller = Get.find<FirbaseAuthController>();
+  AuthController controller = Get.find<AuthController>();
   String otpCode = '';
 
   @override
@@ -200,7 +201,7 @@ class _VerificationScreenDesktopState extends State<VerificationScreenDesktop> {
                                       canConfirmOtp.value = false;
                                       _otpCodeTextController.clear();
                                       final ServerResponse response =
-                                          await controller.sendOTPForLogin(
+                                          await sendOTPForLogin(
                                               widget.passedPhone);
                                       print(response.data);
                                       setState(() {});
@@ -267,7 +268,7 @@ class _VerificationScreenDesktopState extends State<VerificationScreenDesktop> {
                                     print(
                                         "${Get.arguments ?? widget.passedPhone} -------------- $otpCode ");
                                     final ServerResponse? _resp =
-                                        await controller.signInUsingOTP(
+                                        await signInUsingOTP(
                                             Get.arguments ??
                                                 "+" + widget.passedPhone,
                                             otpCode);

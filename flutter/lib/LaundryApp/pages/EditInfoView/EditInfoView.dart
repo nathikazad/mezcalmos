@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['EditInfoView']['EditInfoView'];
@@ -37,7 +38,7 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
       viewWidgets = EditInfoWidgets(
           editInfoController: editInfoController, context: context);
     } else {
-      Get.back();
+      MezRouter.back();
     }
 
     super.initState();
@@ -55,7 +56,7 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
       backgroundColor: Colors.white,
       appBar: LaundryAppAppBar(
         leftBtnType: AppBarLeftButtonType.Back,
-        onClick: Get.back,
+        onClick: MezRouter.back,
       ),
       body: Obx(() {
         if (editInfoController.laundry.value != null) {

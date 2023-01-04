@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+
+import '../../../../../Shared/models/Services/Restaurant/Restaurant.dart';
 
 enum UserInteraction { isSearching, isSorting, isSearchingAndSorting, Nothing }
 
@@ -20,6 +22,8 @@ class ListRestaurantsController extends GetxController {
     getShiipingPrice();
     _restaurantsInfoController.getRestaurants().then((List<Restaurant> list) {
       _restaurants = list;
+      mezDbgPrint(
+          " Inside restaurant Controller the length of list is ${list.length}");
       filterRestaurants();
     }).whenComplete(() {
       isLoading.value = false;

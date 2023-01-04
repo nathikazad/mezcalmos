@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/WebApp/routes/AuthRoutes.dart';
 import 'package:mezcalmos/WebApp/screens/AuthScreen/components/MezButtonWidget.dart';
 import 'package:mezcalmos/WebApp/widgets/MezSnackbar.dart';
+import "package:mezcalmos/Shared/controllers/authController.dart";
 
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
@@ -23,7 +24,7 @@ class SigninScreenDesktop extends StatefulWidget {
 }
 
 class _SigninScreenDesktopState extends State<SigninScreenDesktop> {
-  FirbaseAuthController controller = Get.find<FirbaseAuthController>();
+  AuthController controller = Get.find<AuthController>();
   final TextEditingController _prefixTextFieldController =
       TextEditingController();
   final TextEditingController _numberTextFieldController =
@@ -224,7 +225,7 @@ class _SigninScreenDesktopState extends State<SigninScreenDesktop> {
                                 print(phone);
                                 if (phone.isPhoneNumber) {
                                   ServerResponse response =
-                                      await controller.sendOTPForLogin(phone);
+                                      await sendOTPForLogin(phone);
                                   print("++++++++++++ response >>> $response");
                                   String xParams =
                                       QR.currentPath.split("?").last;

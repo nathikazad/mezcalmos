@@ -40,34 +40,35 @@ const String kLaundriesListRoute = '/laundriesList';
 const String kSavedCards = '/savedCards';
 const String kSingleLaundryRoute = '/laundriesList/:laundryId';
 
-String getRestaurantRoute(String restaurantId) {
-  return kRestaurantRoute.replaceFirst(":restaurantId", restaurantId);
+String getRestaurantRoute(int restaurantId) {
+  return kRestaurantRoute.replaceFirst(
+      ":restaurantId", restaurantId.toString());
 }
 
 String getSingleLaundryRoute(String laundryId) {
   return kSingleLaundryRoute.replaceFirst(":laundryId", laundryId);
 }
 
-String getItemRoute(String restaurantId, String itemId) {
+String getItemRoute(String restaurantId, int itemId) {
   return kViewRestaurantItemRoute
       .replaceFirst(":restaurantId", restaurantId)
-      .replaceFirst(":itemId", itemId);
+      .replaceFirst(":itemId", itemId.toString());
 }
 
-String editCartItemRoute(String cartItemId) {
-  return kCartItemRoute.replaceFirst(":cartItemId", cartItemId);
+String editCartItemRoute(int cartItemId) {
+  return kCartItemRoute.replaceFirst(":cartItemId", cartItemId.toString());
 }
 
-String getRestaurantOrderRoute(String orderId) {
-  return kRestaurantOrderRoute.replaceFirst(":orderId", orderId);
+String getRestaurantOrderRoute(int orderId) {
+  return kRestaurantOrderRoute.replaceFirst(":orderId", orderId.toString());
 }
 
-String getTaxiOrderRoute(String orderId) {
-  return kTaxiOrderRoute.replaceFirst(":orderId", orderId);
+String getTaxiOrderRoute(int orderId) {
+  return kTaxiOrderRoute.replaceFirst(":orderId", orderId.toString());
 }
 
-String getLaundryOrderRoute(String orderId) {
-  return kLaundryCurrentOrder.replaceFirst(":orderId", orderId);
+String getLaundryOrderRoute(int orderId) {
+  return kLaundryCurrentOrder.replaceFirst(":orderId", orderId.toString());
 }
 
 // GetX based Router (For navigating)

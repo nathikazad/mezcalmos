@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/screens/components/InstallAppBarComponent.dart';
@@ -26,8 +26,7 @@ class NotificationScreenForMobile extends StatelessWidget {
           launchMode: typeMode.toLaunchMode(),
         ),
         builder: (context, snapShot) {
-          final FirbaseAuthController _authcontroller =
-              Get.find<FirbaseAuthController>();
+          final AuthController _authcontroller = Get.find<AuthController>();
 
           if (snapShot.hasData && snapShot.data == true) {
             return Obx(

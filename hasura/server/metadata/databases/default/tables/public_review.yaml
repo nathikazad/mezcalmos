@@ -1,0 +1,112 @@
+table:
+  name: review
+  schema: public
+object_relationships:
+  - name: customer
+    using:
+      manual_configuration:
+        column_mapping:
+          from_entity_id: user_id
+          from_entity_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: customer
+          schema: public
+insert_permissions:
+  - role: customer
+    permission:
+      check:
+        from_entity_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - from_entity_id
+        - id
+        - rating
+        - to_entity_id
+        - from_entity_type
+        - note
+        - to_entity_type
+  - role: delivery_driver
+    permission:
+      check:
+        from_entity_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - from_entity_id
+        - id
+        - rating
+        - to_entity_id
+        - from_entity_type
+        - note
+        - to_entity_type
+  - role: restaurant_operator
+    permission:
+      check:
+        from_entity_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - from_entity_id
+        - id
+        - rating
+        - to_entity_id
+        - from_entity_type
+        - note
+        - to_entity_type
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - from_entity_id
+        - id
+        - rating
+        - to_entity_id
+        - from_entity_type
+        - note
+        - to_entity_type
+      filter: {}
+  - role: customer
+    permission:
+      columns:
+        - from_entity_id
+        - id
+        - rating
+        - to_entity_id
+        - from_entity_type
+        - note
+        - to_entity_type
+      filter: {}
+  - role: delivery_driver
+    permission:
+      columns:
+        - from_entity_id
+        - id
+        - rating
+        - to_entity_id
+        - from_entity_type
+        - note
+        - to_entity_type
+      filter: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - from_entity_id
+        - id
+        - rating
+        - to_entity_id
+        - from_entity_type
+        - note
+        - to_entity_type
+      filter: {}
+  - role: restaurant_operator
+    permission:
+      columns:
+        - created_at
+        - from_entity_id
+        - from_entity_type
+        - id
+        - note
+        - rating
+        - to_entity_id
+        - to_entity_type
+      filter: {}
+      allow_aggregations: true

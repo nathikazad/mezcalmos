@@ -17,24 +17,17 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_compression_flutter/image_compression_flutter.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 import '../../WebApp/screens/AuthScreen/components/MezButtonWidget.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['Shared']['helpers']['ImageHelper'];
-
-String generateRandomString(int len) {
-  final Random r = Random();
-  const String _chars =
-      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  return List.generate(len, (int index) => _chars[r.nextInt(_chars.length)])
-      .join();
-}
 
 /// this compresses the Original Image using jpeg format Since it's much ligher.
 ///
@@ -106,9 +99,9 @@ Image showDefaultOrUserImg({Uint8List? memoryImg}) {
         memoryImage: memoryImg,
         assetInCaseFailed: aDefaultDbUserImgAsset);
   }
+
   return mLoadImage(
-      url: Get.find<FirbaseAuthController>().user!.bigImage ??
-          Get.find<FirbaseAuthController>().user!.image,
+      url: Get.find<AuthController>().user!.image,
       assetInCaseFailed: aDefaultDbUserImgAsset);
 }
 
@@ -184,7 +177,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                 InkWell(
                   onTap: () {
                     _result = imPicker.ImageSource.camera;
-                    Get.back();
+                    MezRouter.back();
                   },
                   child: Container(
                     padding:
@@ -207,7 +200,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                 InkWell(
                   onTap: () {
                     _result = imPicker.ImageSource.gallery;
-                    Get.back();
+                    MezRouter.back();
                   },
                   child: Container(
                     padding:
@@ -230,7 +223,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                 // TextButton(
                 //     onPressed: () {
                 //      _result = imPicker.ImageSource.gallery;
-                //       Get.back();
+                //       MezRouter.back();
                 //     },
                 //     style: TextButton.styleFrom(
                 //         backgroundColor: Colors.purple.shade400,

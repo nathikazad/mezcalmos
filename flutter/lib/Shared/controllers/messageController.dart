@@ -2,25 +2,26 @@
 
 import 'dart:async';
 
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import "package:mezcalmos/Shared/controllers/authController.dart";
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/chatNodes.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
+import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/graphql/chat/hsChat.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 
 class MessageController extends GetxController {
-  Rxn<Chat> chat = Rxn();
+  Rxn<HasuraChat> chat = Rxn();
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
-  FirbaseAuthController _authController = Get.find<FirbaseAuthController>();
+  HasuraDb hasuraDb = Get.find<HasuraDb>();
+  String? subscriptionId;
+
+  AuthController _authController = Get.find<AuthController>();
   SettingsController _settingsController = Get.find<SettingsController>();
   StreamSubscription? chatListener;
   late AppType appType;
@@ -32,25 +33,54 @@ class MessageController extends GetxController {
     appType = Get.find<SettingsController>().appType;
   }
 
-  void loadChat(
-      {required String chatId, material.VoidCallback? onValueCallBack}) {
+  void loadChat({required int chatId, material.VoidCallback? onValueCallBack}) {
     mezDbgPrint("Load chat id ------------->>>> $chatId");
-    chatListener?.cancel();
-    _databaseHelper.firebaseDatabase
-        .ref()
-        .child(chatNode(chatId))
-        .onValueWitchCatch()
-        .then((Stream<DatabaseEvent> value) {
-      chatListener = value.listen((DatabaseEvent event) {
-        if (event.snapshot.value != null) {
-          mezDbgPrint(
-              "PRINTING CHATING EVENT ==========================>>>> ${event.snapshot.value}");
-          // mezDbgPrint("\n\n\n ${event.snapshot.value} \n\n\n");
-          chat.value = Chat.fromJson(chatId, event.snapshot.value);
-          if (onValueCallBack != null) onValueCallBack();
-          // mezDbgPrint(
-          //     "--------------------> messageController Listener Invoked with Messages > ${_model.value.messages} ");
-        }
+    // chatListener?.cancel();
+    // _databaseHelper.firebaseDatabase
+    //     .ref()
+    //     .child(chatNode(chatId))
+    //     .onValueWitchCatch()
+    //     .then((Stream<DatabaseEvent> value) {
+    //   chatListener = value.listen((DatabaseEvent event) {
+    //     if (event.snapshot.value != null) {
+    //       mezDbgPrint(
+    //           "PRINTING CHATING EVENT ==========================>>>> ${event.snapshot.value}");
+    //       // mezDbgPrint("\n\n\n ${event.snapshot.value} \n\n\n");
+    //       chat.value = Chat.fromJson(chatId, event.snapshot.value);
+    //       if (onValueCallBack != null) onValueCallBack();
+    //       // mezDbgPrint(
+    //       //     "--------------------> messageController Listener Invoked with Messages > ${_model.value.messages} ");
+    //     }
+    //   });
+    // });
+    //chat.value = await get_chat_info(chat_id: chatId);
+    get_chat_info(chat_id: chatId).then((HasuraChat? value) {
+      mezDbgPrint("[77] Got Chat :: id ($chatId) :: $value !");
+
+      if (value != null) {
+        mezDbgPrint("[77] Got Chat !");
+        chat.value = value;
+        if (onValueCallBack != null) onValueCallBack();
+      }
+
+      if (subscriptionId != null) {
+        hasuraDb.cancelSubscription(subscriptionId!);
+        chatListener?.cancel();
+        chatListener = null;
+      } // if no listeneres we listen
+      subscriptionId = hasuraDb.createSubscription(start: () {
+        chatListener = listen_on_chat_messages(chatId: chatId)
+            .listen((List<Message> msgs) {
+          mezDbgPrint("[+] Chat :: new messages :: trigger :: listener!");
+          if (msgs.isNotEmpty && msgs.length > chat.value!.messages.length) {
+            chat.value!.messages.clear();
+            chat.value!.messages.addAll(msgs);
+            if (onValueCallBack != null) onValueCallBack();
+          }
+        });
+      }, cancel: () {
+        chatListener?.cancel();
+        chatListener = null;
       });
     });
   }
@@ -59,43 +89,53 @@ class MessageController extends GetxController {
     return [AppType.CustomerApp, AppType.DeliveryApp].contains(appType);
   }
 
-  Future<void> sendMessage(
-      {required String message,
-      required String chatId,
-      OrderType? orderType,
-      String? orderId}) async {
-    final DatabaseReference messageNode = _databaseHelper.firebaseDatabase
-        .ref()
-        .child(messagesNode(chatId))
-        .push();
+  Future<void> sendMessage({
+    required String message,
+    required int chatId,
+    // OrderType? orderType,
+    // String? orderId,
+  }) async {
+    // final DatabaseReference messageNode = _databaseHelper.firebaseDatabase
+    //     .ref()
+    //     .child(messagesNode(chatId))
+    //     .push();
 
-    // ignore: unawaited_futures
-    messageNode.set(<String, dynamic>{
-      "message": message,
-      "userId": _authController.user!.id,
-      "participantType": _settingsController.appType
-          .toParticipantTypefromAppType()
-          .toFirebaseFormattedString(),
+    // messages => _append => messages
+    //TODO: write to hasura messages
+    // messageNode.set(<String, dynamic>{
+    //   "message": message,
+    //   "userId": _authController.user!.id,
+    //   "participantType": _settingsController.appType
+    //       .toParticipantTypefromAppType()
+    //       .toFirebaseFormattedString(),
+    //   "timestamp": DateTime.now().toUtc().toString(),
+    //   "chatId": chatId,
+    //   "orderId": orderId
+    // }).onError((Object? error, StackTrace stackTrace) {
+    //   mezDbgPrint(stackTrace);
+    // });
+
+    await send_message(chat_id: chatId, msg:
+        // timestamp as key
+        <String, dynamic>{
       "timestamp": DateTime.now().toUtc().toString(),
-      "chatId": chatId,
-      "orderId": orderId
-    }).onError((Object? error, StackTrace stackTrace) {
-      mezDbgPrint(stackTrace);
+      "message": message,
+      "userId": _authController.user!.hasuraId,
     });
 
     // ignore: unawaited_futures
-    _databaseHelper.firebaseDatabase
-        .ref()
-        .child(notificationQueueNode(messageNode.key))
-        .set(MessageNotificationForQueue(
-                message: message,
-                userId: _authController.user!.id,
-                chatId: chatId,
-                messageId: messageNode.key!,
-                participantType:
-                    _settingsController.appType.toParticipantTypefromAppType(),
-                orderId: orderId)
-            .toFirebaseFormatJson());
+    // _databaseHelper.firebaseDatabase
+    //     .ref()
+    //     .child(notificationQueueNode(messageNode.key))
+    //     .set(MessageNotificationForQueue(
+    //             message: message,
+    //             userId: FirebaseAuth.instance.currentUser!.uid,
+    //             chatId: chatId,
+    //             messageId: messageNode.key!,
+    //             participantType:
+    //                 _settingsController.appType.toParticipantTypefromAppType(),
+    //             orderId: orderId)
+    //         .toFirebaseFormatJson());
   }
 
   Future<void> callUser(
@@ -123,47 +163,47 @@ class MessageController extends GetxController {
       required Participant callee,
       required CallNotificationtType callNotificationType,
       String? orderId}) async {
-    final DatabaseReference notificationNode = _databaseHelper.firebaseDatabase
-        .ref()
-        .child(notificationQueueNode())
-        .push();
+    // final DatabaseReference notificationNode = _databaseHelper.firebaseDatabase
+    //     .ref()
+    //     .child(notificationQueueNode())
+    //     .push();
 
     // ignore: unawaited_futures
-    _databaseHelper.firebaseDatabase
-        .ref()
-        .child(notificationQueueNode(notificationNode.key))
-        .set(CallNotificationForQueue(
-                chatId: chatId,
-                callerId: _authController.user!.id,
-                callerParticipantType:
-                    _settingsController.appType.toParticipantTypefromAppType(),
-                calleeId: callee.id,
-                calleeParticipantType: callee.participantType,
-                callNotificationType: callNotificationType,
-                orderId: orderId)
-            .toFirebaseFormatJson());
+    // _databaseHelper.firebaseDatabase
+    //     .ref()
+    //     .child(notificationQueueNode(notificationNode.key))
+    //     .set(CallNotificationForQueue(
+    //             chatId: chatId,
+    //             callerId: FirebaseAuth.instance.currentUser!.uid,
+    //             callerParticipantType:
+    //                 _settingsController.appType.toParticipantTypefromAppType(),
+    //             calleeId: callee.id,
+    //             calleeParticipantType: callee.participantType,
+    //             callNotificationType: callNotificationType,
+    //             orderId: orderId)
+    //         .toFirebaseFormatJson());
   }
 
-  Participant? sender() {
-    return chat.value?.getParticipant(
-        _settingsController.appType.toParticipantTypefromAppType(),
-        _authController.user!.id);
-  }
+  // Participant? sender() {
+  //   return chat.value?.getParticipant(
+  //       _settingsController.appType.toParticipantTypefromAppType(),
+  //       FirebaseAuth.instance.currentUser!.uid);
+  // }
 
-  Participant? recipient(
-      {required ParticipantType recipientType, String? recipientId}) {
-    if (chat.value == null) return null;
-    if (recipientId != null)
-      return chat.value!.getParticipant(recipientType, recipientId);
-    final Map<String, Participant>? participants =
-        chat.value!.getParticipants(recipientType);
-    if (participants != null && participants.keys.length > 0) {
-      return participants[participants.keys.toList()[0]];
-    }
-    return null;
-  }
+  // Participant? recipient(
+  //     {required ParticipantType recipientType, String? recipientId}) {
+  //   if (chat.value == null) return null;
+  //   if (recipientId != null)
+  //     return chat.value!.getParticipant(recipientType, recipientId);
+  //   final Map<String, Participant>? participants =
+  //       chat.value!.getParticipants(recipientType);
+  //   if (participants != null && participants.keys.length > 0) {
+  //     return participants[participants.keys.toList()[0]];
+  //   }
+  //   return null;
+  // }
 
-  void clearMessageNotifications({required String chatId}) {
+  void clearMessageNotifications({required int chatId}) {
     mezDbgPrint("Clearing message notifications");
     final ForegroundNotificationsController fbNotificationsController =
         Get.find<ForegroundNotificationsController>();
@@ -183,8 +223,7 @@ class MessageController extends GetxController {
 
   @override
   void onClose() {
-    chatListener?.cancel();
-    chatListener = null;
+    if (subscriptionId != null) hasuraDb.cancelSubscription(subscriptionId!);
     super.onClose();
   }
 }

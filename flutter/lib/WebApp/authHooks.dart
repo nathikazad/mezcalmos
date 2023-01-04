@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/WebApp/controllers/messageWebController.dart';
@@ -43,7 +43,7 @@ class AuthHooks {
     Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(
             customerNotificationsNode(
-                Get.find<FirbaseAuthController>().fireAuthUser!.uid),
+                Get.find<AuthController>().fireAuthUser!.uid),
             webNotificationHandler);
     if (!Get.isRegistered<OrderController>()) {
       await Get.put<OrderController>(OrderController(), permanent: true);

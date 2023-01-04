@@ -8,6 +8,7 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/DriversListView/Componen
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["Orders"]["driversListView"]["driversListScreen"];
@@ -39,12 +40,13 @@ class _DriversListScreenState extends State<DriversListScreen> {
   void initState() {
     super.initState();
     order = Get.arguments as Order?;
-    deliveryDrivers.value = deliveryDriverController.deliveryDrivers;
+    deliveryDrivers.value = deliveryDriverController.deliveryDrivers
+        .where((DeliveryDriver p0) => p0.isAssociated == false)
+        .toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    final TextTheme txt = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
         title: Text('${_i18n()["title"]}'),
@@ -62,10 +64,9 @@ class _DriversListScreenState extends State<DriversListScreen> {
               itemBuilder: (_, int index) {
                 return DriverSelectCard(
                   driver: deliveryDrivers[index],
-                  function:
-                      (deliveryDrivers[index].deliveryDriverState.isOnline)
-                          ? () => Get.back(result: deliveryDrivers[index])
-                          : null,
+                  function: (deliveryDrivers[index].deliveryDriverState.online)
+                      ? () => MezRouter.back(result: deliveryDrivers[index])
+                      : null,
                 );
               },
             ),

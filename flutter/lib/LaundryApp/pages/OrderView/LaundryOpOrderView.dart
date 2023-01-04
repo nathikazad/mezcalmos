@@ -22,6 +22,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['OrderView']['LaundryOpOrderView'];
@@ -76,7 +77,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
       if (order.value == null) {
         // ignore: inference_failure_on_function_invocation
         Future<Null>.delayed(Duration.zero, () {
-          Get.back<Null>();
+          MezRouter.back<Null>();
           MezSnackbar("Error", "Order does not exist");
         });
       } else {
@@ -110,7 +111,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
           latLng: order.value?.laundry?.location.toLatLng(),
           customImgHttpUrl: order.value?.laundry?.image,
           fitWithinBounds: true,
-          markerId: order.value?.laundry?.id,
+          markerId: order.value?.laundry?.firebaseId,
         );
         // add customer's marker - destination
         mGoogleMapController.addOrUpdatePurpleDestinationMarker(
@@ -151,7 +152,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
           latLng: order.value?.laundry?.location.toLatLng(),
           customImgHttpUrl: order.value?.laundry?.image,
           fitWithinBounds: true,
-          markerId: order.value?.laundry?.id,
+          markerId: order.value?.laundry?.firebaseId,
         );
         // add customer's marker - destination
         mGoogleMapController.addOrUpdatePurpleDestinationMarker(
@@ -276,7 +277,8 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
                   ? () {
                       isClicked.value = true;
                       controller
-                          .setAsReadyForDelivery(order.value!.orderId)
+                          .setAsReadyForDelivery(
+                              order.value!.orderId.toString())
                           .whenComplete(() => isClicked.value = false);
                     }
                   : null,

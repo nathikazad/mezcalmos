@@ -1,0 +1,99 @@
+table:
+  name: restaurant_option_choice_map
+  schema: public
+object_relationships:
+  - name: restaurant
+    using:
+      foreign_key_constraint_on: restaurant_id
+array_relationships:
+  - name: option_choices
+    using:
+      manual_configuration:
+        column_mapping:
+          choice_id: id
+        insertion_order: null
+        remote_table:
+          name: restaurant_choice
+          schema: public
+insert_permissions:
+  - role: mez_admin
+    permission:
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - choice_id
+        - option_id
+        - restaurant_id
+  - role: restaurant_operator
+    permission:
+      check:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - choice_id
+        - option_id
+        - restaurant_id
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - option_id
+        - choice_id
+        - restaurant_id
+      filter: {}
+  - role: customer
+    permission:
+      columns:
+        - option_id
+        - choice_id
+        - restaurant_id
+      filter: {}
+  - role: delivery_driver
+    permission:
+      columns:
+        - option_id
+        - choice_id
+        - restaurant_id
+      filter: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - option_id
+        - choice_id
+        - restaurant_id
+      filter: {}
+  - role: restaurant_operator
+    permission:
+      columns:
+        - option_id
+        - choice_id
+        - restaurant_id
+      filter: {}
+delete_permissions:
+  - role: mez_admin
+    permission:
+      backend_only: false
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      backend_only: false
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id

@@ -6,6 +6,7 @@ import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:rive/rive.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class LaundryOrderCard extends StatelessWidget {
   final LaundryOrder order;
@@ -20,7 +21,7 @@ class LaundryOrderCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          Get.toNamed(getLaundryOrderRoute(order.orderId));
+          MezRouter.toNamed(getLaundryOrderRoute(order.orderId));
         },
         child: Container(
           width: double.infinity,
@@ -83,7 +84,7 @@ Color getOrderColor(LaundryOrderStatus status) {
     case LaundryOrderStatus.CancelledByCustomer:
       return Colors.red.withOpacity(0.1);
 
-    case LaundryOrderStatus.OrderReceieved:
+    case LaundryOrderStatus.OrderReceived:
       return Colors.white;
 
     case LaundryOrderStatus.OtwPickupFromCustomer:
@@ -129,7 +130,7 @@ Widget getOrderWidget(LaundryOrderStatus status) {
         ),
       );
 
-    case LaundryOrderStatus.OrderReceieved:
+    case LaundryOrderStatus.OrderReceived:
       return Padding(
         padding: const EdgeInsets.only(right: 5.0),
         child: Icon(
@@ -205,7 +206,7 @@ String getOrderStatus(LaundryOrderStatus status) {
     case LaundryOrderStatus.CancelledByCustomer:
       return 'Order Canceled';
 
-    case LaundryOrderStatus.OrderReceieved:
+    case LaundryOrderStatus.OrderReceived:
       return 'Order Received';
     case LaundryOrderStatus.OtwPickupFromCustomer:
       return 'Pick-up On the way';

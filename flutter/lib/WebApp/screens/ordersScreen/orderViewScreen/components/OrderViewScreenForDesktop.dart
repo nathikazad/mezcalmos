@@ -107,15 +107,16 @@ class _OrderViewScreenFordesktopState extends State<OrderViewScreenFordesktop> {
     if (QR.params['orderId'].toString() == null || orderId.isEmpty) QR.back();
 
     // orderId = Get.parameters['orderId']!;
-    controller.clearOrderNotifications(orderId);
-    order.value = controller.getOrder(orderId) as RestaurantOrder?;
+    controller.clearOrderNotifications(int.parse(orderId));
+    order.value = controller.getOrder(int.parse(orderId)) as RestaurantOrder?;
     if (order.value != null) {
       initMap();
       updateMapIfDeliveryPhase(order.value!.status);
     }
 
-    _orderListener =
-        controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
+    _orderListener = controller
+        .getOrderStream(int.parse(orderId))
+        .listen((Order? newOrderEvent) {
       if (newOrderEvent != null) {
         order.value = newOrderEvent as RestaurantOrder?;
         if (order.value!.inProcess()) {
@@ -168,7 +169,7 @@ class _OrderViewScreenFordesktopState extends State<OrderViewScreenFordesktop> {
         "[cc]===> order resto location ${order.value?.restaurant.location.toLatLng()}");
     mapController.addOrUpdateUserMarker(
       latLng: order.value?.restaurant.location.toLatLng(),
-      markerId: order.value?.restaurant.id,
+      markerId: order.value?.restaurant.hasuraId.toString(),
       customImgHttpUrl: order.value?.restaurant.image,
       fitWithinBounds: true,
     );
@@ -209,13 +210,13 @@ class _OrderViewScreenFordesktopState extends State<OrderViewScreenFordesktop> {
     super.didUpdateWidget(oldWidget);
     mezDbgPrint("this widget is updated");
     if (order.value == null) {
-      order.value = controller.getOrder(orderId) as RestaurantOrder?;
+      order.value = controller.getOrder(int.parse(orderId)) as RestaurantOrder?;
     }
   }
 
   void updateMapIfDeliveryPhase(RestaurantOrderStatus status) {
     switch (status) {
-      case RestaurantOrderStatus.ReadyForPickup:
+      case RestaurantOrderStatus.Ready:
         mezDbgPrint("opopop =--|>  2");
 
         mezDbgPrint("+ poly => ${order.value!.routeInformation?.toJson()}");
@@ -230,7 +231,7 @@ class _OrderViewScreenFordesktopState extends State<OrderViewScreenFordesktop> {
           _statusSnapshot = status;
           mapController.addOrUpdateUserMarker(
             latLng: order.value?.restaurant.location.toLatLng(),
-            markerId: order.value?.restaurant.id,
+            markerId: order.value?.restaurant.hasuraId.toString(),
             customImgHttpUrl: order.value?.restaurant.image,
             fitWithinBounds: true,
           );
@@ -241,7 +242,7 @@ class _OrderViewScreenFordesktopState extends State<OrderViewScreenFordesktop> {
         }
         mapController.addOrUpdateUserMarker(
           latLng: order.value?.dropoffDriver?.location,
-          markerId: order.value?.dropoffDriver?.id,
+          markerId: order.value?.dropoffDriver?.hasuraId.toString(),
           customImgHttpUrl: order.value?.dropoffDriver?.image,
           fitWithinBounds: true,
         );
@@ -257,7 +258,7 @@ class _OrderViewScreenFordesktopState extends State<OrderViewScreenFordesktop> {
           // we ignore the restaurant's marker within bounds
           mapController.addOrUpdateUserMarker(
             latLng: order.value?.restaurant.location.toLatLng(),
-            markerId: order.value?.restaurant.id,
+            markerId: order.value?.restaurant.hasuraId.toString(),
             customImgHttpUrl: order.value?.restaurant.image,
             fitWithinBounds: true,
           );
@@ -271,7 +272,7 @@ class _OrderViewScreenFordesktopState extends State<OrderViewScreenFordesktop> {
         // we keep updating the delivery's
         mapController.addOrUpdateUserMarker(
           latLng: order.value?.dropoffDriver?.location,
-          markerId: order.value?.dropoffDriver?.id,
+          markerId: order.value?.dropoffDriver?.hasuraId.toString(),
           customImgHttpUrl: order.value?.dropoffDriver?.image,
           fitWithinBounds: true,
         );
@@ -466,8 +467,8 @@ class _OrderViewScreenFordesktopState extends State<OrderViewScreenFordesktop> {
         mezDbgPrint("this where the magic happen");
 
         QR.to(MessagesRoutes.getMessagesRoute(
-          chatId: order.value!.orderId,
-          orderId: order.value!.orderId,
+          chatId: order.value!.orderId.toString(),
+          orderId: order.value!.orderId.toString(),
           recipientType: ParticipantType.Restaurant,
         ));
       },

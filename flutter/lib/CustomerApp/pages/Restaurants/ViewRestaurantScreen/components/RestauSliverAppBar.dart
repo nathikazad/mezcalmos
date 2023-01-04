@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -315,7 +316,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
             if (controller.showInfo.isTrue) {
               controller.onInfoTap();
             } else {
-              Get.back();
+              MezRouter.back();
             }
           },
           child: Ink(
@@ -343,7 +344,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
-          Get.toNamed(kOrdersRoute);
+          MezRouter.toNamed(kOrdersRoute);
         },
         child: Ink(
           padding: const EdgeInsets.all(5),
@@ -367,7 +368,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
-          Get.toNamed(kSignInRouteOptional);
+          MezRouter.toNamed(kSignInRouteOptional);
         },
         child: Ink(
           padding: const EdgeInsets.all(7),
@@ -394,7 +395,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
           child: InkWell(
             customBorder: CircleBorder(),
             onTap: () {
-              Get.toNamed(kNotificationsRoute);
+              MezRouter.toNamed(kNotificationsRoute);
             },
             child: Badge(
               badgeColor: Colors.red,
@@ -421,17 +422,30 @@ class RestaurantSliverAppBar extends StatelessWidget {
     });
   }
 
+// TODO:544D-HASURA
+// this
+  // Widget getAppbarIconsButton() {
+  //   return Obx(() {
+  //     return Row(
+  //       children: [
+  //         if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
+  //         if (Get.find<AuthController>().isUserSignedIn)
+  //           _notificationAppBarIcon(),
+  //         if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
+  //       ],
+  //     );
+  //   });
+  // }
+
   Widget getAppbarIconsButton() {
-    return Obx(() {
-      return Row(
-        children: [
-          if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
-          if (Get.find<AuthController>().isUserSignedIn)
-            _notificationAppBarIcon(),
-          if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
-        ],
-      );
-    });
+    return Row(
+      children: [
+        if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
+        if (Get.find<AuthController>().isUserSignedIn)
+          _notificationAppBarIcon(),
+        if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
+      ],
+    );
   }
 
   double _getBottomPadding() {

@@ -1,0 +1,57 @@
+table:
+  name: service_link
+  schema: public
+object_relationships:
+  - name: restaurant
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: restaurant
+          schema: public
+insert_permissions:
+  - role: restaurant_operator
+    permission:
+      check:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - driver_deep_link
+        - driver_qr_image_link
+        - operator_deep_link
+        - operator_qr_image_link
+select_permissions:
+  - role: restaurant_operator
+    permission:
+      columns:
+        - id
+        - service_provider_id
+        - driver_deep_link
+        - driver_qr_image_link
+        - operator_deep_link
+        - operator_qr_image_link
+        - service_provider_type
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+update_permissions:
+  - role: restaurant_operator
+    permission:
+      columns:
+        - driver_deep_link
+        - driver_qr_image_link
+        - operator_deep_link
+        - operator_qr_image_link
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null

@@ -1,15 +1,18 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRouter.dart' as route;
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["notificationHandler"];
 
 Notification deliveryAdminNotificationHandler(String key, value) {
+  mezDbgPrint("FRONT VALUE =====>>>>$value");
   final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
   // mezDbgPrint(notificationType.toFirebaseFormatString());
@@ -21,6 +24,8 @@ Notification deliveryAdminNotificationHandler(String key, value) {
       return orderStatusChangeNotification(key, value);
     case NotificationType.NewOrder:
       return newOrderNotification(key, value);
+    case NotificationType.AssignDriver:
+      return assignDriverNotification(key, value);
     default:
       throw StateError("Invalid Notification Type");
   }
@@ -125,6 +130,21 @@ Notification newMessageNotification(String key, value) {
       title: value['sender']['name'],
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.NewMessage,
+      variableParams: value,
+      notificationAction:
+          value["notificationAction"]?.toString().toNotificationAction() ??
+              NotificationAction.ShowSnackbarOnlyIfNotOnPage);
+}
+
+Notification assignDriverNotification(String key, value) {
+  return Notification(
+      id: key,
+      linkUrl: value["linkUrl"] ?? getRestaurantOrderRoute(value["orderId"]),
+      body: "Please Assign a driver",
+      imgUrl: "assets/images/shared/notifications/onTheWay.png",
+      title: "Assign driver",
+      timestamp: DateTime.parse(value['time']),
+      notificationType: NotificationType.AssignDriver,
       variableParams: value,
       notificationAction:
           value["notificationAction"]?.toString().toNotificationAction() ??

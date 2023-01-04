@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 void dialogRequiredSignIn(
     {BuildContext? context, Function? navigationCallback}) {
@@ -38,7 +39,8 @@ void dialogRequiredSignIn(
                   if (context != null) {
                     Navigator.of(context).pop();
                   } else
-                    Get.back<void>();
+                    mezDbgPrint("Clicked back");
+                  MezRouter.popDialog<void>();
                 },
               ),
             ),
@@ -57,14 +59,14 @@ void dialogRequiredSignIn(
                         ?.copyWith(fontWeight: FontWeight.w700),
                   ),
                 ),
-                const SizedBox(height: 15),
+                Container(height: 15),
                 Image.asset(
                   "assets/images/${(context != null) ? "web" : "shared"}/loginPopUp.png",
                   fit: BoxFit.contain,
                   height: 50.h,
                   width: double.infinity,
                 ),
-                const SizedBox(height: 15),
+                Container(height: 15),
                 MezButton(
                   onClick: () async {
                     if (context != null) {
@@ -72,7 +74,7 @@ void dialogRequiredSignIn(
                       navigationCallback?.call();
                     } else {
                       // to remove the SignIn popUp first!
-                      Get.back<void>();
+                      MezRouter.back<void>();
                       // then head to kSignInRoute.
                       Get.find<AuthController>()
                           .preserveNavigationStackAfterSignIn = true;

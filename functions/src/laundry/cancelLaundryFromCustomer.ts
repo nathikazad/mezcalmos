@@ -1,5 +1,3 @@
-import * as functions from "firebase-functions";
-import { isSignedIn } from "../shared/helper/authorizer";
 import { orderInProcess, LaundryOrder, LaundryOrderStatus, LaundryOrderStatusChangeNotification } from "../shared/models/Services/Laundry/LaundryOrder";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
 import { OrderType } from "../shared/models/Generic/Order";
@@ -9,17 +7,18 @@ import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { LaundryOrderStatusChangeMessages } from "./bgNotificationMessages";
-import { ParticipantType } from "../shared/models/Generic/Chat";
-import { pushNotification } from "../utilities/senders/notifyUser";
+// import { ParticipantType } from "../shared/models/Generic/Chat";
+// import { pushNotification } from "../utilities/senders/notifyUser";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import * as laundryNodes from "../shared/databaseNodes/services/laundry";
 
 // Customer Canceling
-export = functions.https.onCall(async (data, context) => {
-  let response = await isSignedIn(context.auth)
-  if (response != undefined) {
-    return response;
-  }
+export async function cancelFromCustomer(userId: string, data: any) {
+
+  // let response = isSignedIn(userId)
+  // if (response != undefined) {
+  //   return response;
+  // }
 
   if (data.orderId == null) {
     return {
@@ -40,7 +39,7 @@ export = functions.https.onCall(async (data, context) => {
     }
   }
 
-  if (order.customer.id != context.auth!.uid) {
+  if (order.customer.firebaseId != userId) {
     return {
       status: ServerResponseStatus.Error,
       errorMessage: `Order does not belong to customer`,
@@ -62,17 +61,17 @@ export = functions.https.onCall(async (data, context) => {
     let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
     laundryNodes.laundryOperators(order.serviceProviderId!).once('value').then((snapshot) => {
       let laundryOperators: Record<string, boolean> = snapshot.val();
-      notifyOthersCancelledOrder(deliveryAdmins, orderId, order, laundryOperators);
+      notifyOthersCancelledOrder(deliveryAdmins, parseInt(orderId), order, laundryOperators);
     });
   });
 
   return { status: ServerResponseStatus.Success, orderId: data.orderId }
-});
+};
 
 
 async function notifyOthersCancelledOrder(
   deliveryAdmins: Record<string, DeliveryAdmin>,
-  orderId: string,
+  orderId: number,
   order: LaundryOrder,
   laundryOperators: Record<string, boolean>) {
 
@@ -86,21 +85,21 @@ async function notifyOthersCancelledOrder(
       orderId: orderId
     },
     background: LaundryOrderStatusChangeMessages[LaundryOrderStatus.CancelledByCustomer],
-    linkUrl: orderUrl(ParticipantType.DeliveryAdmin, OrderType.Laundry, orderId)
+    linkUrl: orderUrl(OrderType.Laundry, orderId)
   }
 
-  for (let adminId in deliveryAdmins) {
-    pushNotification(adminId!, notification, ParticipantType.DeliveryAdmin);
-  }
+  // for (let adminId in deliveryAdmins) {
+  //   pushNotification(adminId!, notification, ParticipantType.DeliveryAdmin);
+  // }
 
-  for (let operatorId in laundryOperators) {
-    pushNotification(operatorId, notification, ParticipantType.LaundryOperator);
-  }
+  // for (let operatorId in laundryOperators) {
+  //   pushNotification(operatorId, notification, ParticipantType.LaundryOperator);
+  // }
 
 
-  notification.linkUrl = orderUrl(ParticipantType.DeliveryDriver, OrderType.Laundry, orderId)
-  if (order.dropoffDriver)
-    pushNotification(order.dropoffDriver.id, notification, ParticipantType.DeliveryDriver);
-  else if (order.pickupDriver)
-    pushNotification(order.pickupDriver.id, notification, ParticipantType.DeliveryDriver);
+  notification.linkUrl = orderUrl(OrderType.Laundry, orderId)
+  // if (order.dropoffDriver)
+  //   pushNotification(order.dropoffDriver.firebaseId, notification, ParticipantType.DeliveryDriver);
+  // else if (order.pickupDriver)
+  //   pushNotification(order.pickupDriver.firebaseId, notification, ParticipantType.DeliveryDriver);
 }

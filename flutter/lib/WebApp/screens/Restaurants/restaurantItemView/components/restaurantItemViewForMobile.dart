@@ -5,13 +5,14 @@ import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 // import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/BottomBarItemViewScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/ItemOptionCard.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/restaurantItemView/components/ITemSliverAppBar.dart';
@@ -57,7 +58,7 @@ class _RestaurantItemViewForMobileState
   LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
 
   /// AuthController
-  FirbaseAuthController auth = Get.find<FirbaseAuthController>();
+  AuthController auth = Get.find<AuthController>();
 
   /// cartItem
   // Rxn<CartItem> cartItem = Rxn<CartItem>();
@@ -139,19 +140,21 @@ class _RestaurantItemViewForMobileState
     return Obx(
       () => Scaffold(
         resizeToAvoidBottomInset: true,
-        bottomSheet: (widget.cartItem.value != null &&
-                widget.currentRestaurant != null)
-            ? BottomBarItemViewScreen(
-                currentRestaurantId: widget.currentRestaurant.value?.info.id,
-                cartItem: widget.cartItem,
-                mode: widget.viewItemScreenMode,
-                navigationCallback: () {
-                  mezDbgPrint(
-                      "============|||||| lets go to cart view 🔥 ||||||=========");
-                  QR.to("/cart");
-                },
-              )
-            : null,
+        bottomSheet:
+            (widget.cartItem.value != null && widget.currentRestaurant != null)
+                ? BottomBarItemViewScreen(
+                    currentRestaurantId: widget
+                        .currentRestaurant.value?.info.descriptionId
+                        .toString(),
+                    cartItem: widget.cartItem,
+                    mode: widget.viewItemScreenMode,
+                    navigationCallback: () {
+                      mezDbgPrint(
+                          "============|||||| lets go to cart view 🔥 ||||||=========");
+                      QR.to("/cart");
+                    },
+                  )
+                : null,
         body: (widget.cartItem.value == null)
             ? Container(
                 alignment: Alignment.center,

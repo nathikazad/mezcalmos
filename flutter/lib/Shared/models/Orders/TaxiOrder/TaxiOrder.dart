@@ -4,11 +4,11 @@ import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/TaxiDriver.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 enum TaxiOrdersStatus {
   LookingForTaxiScheduled,
@@ -80,7 +80,7 @@ class TaxiOrder extends Order {
   List<CounterOffer> _counterOffers = [];
 
   List<CounterOffer> getValidCounterOfferts() {
-    var s = _counterOffers.where((CounterOffer offer) {
+    List<CounterOffer> s = _counterOffers.where((CounterOffer offer) {
       mezDbgPrint(
           "getValidCounterOfferts ==> validityTimeDifference:${offer.validityTimeDifference()} - valid:${offer.isValid}");
       return offer.validityTimeDifference() < 0 && offer.isValid;
@@ -91,7 +91,7 @@ class TaxiOrder extends Order {
   }
 
   TaxiOrder({
-    required String orderId,
+    required int orderId,
     required num cost,
     required this.from,
     required Location to,
@@ -105,6 +105,7 @@ class TaxiOrder extends Order {
     this.scheduledTime,
     required this.status,
     required UserInfo customer,
+    required super.chatId,
   }) : super(
             orderTime: orderTime,
             orderId: orderId,
@@ -134,10 +135,15 @@ class TaxiOrder extends Order {
     // mezDbgPrint("TAXI ID ------>>>>>>>>>>>>>>>>>>>> $id");
     final TaxiOrder taxiOrder = TaxiOrder(
         orderId: id,
+        chatId: 1,
         driver: (data["driver"] != null)
             ? TaxiUserInfo.fromData(data["driver"])
             : null,
-        customer: UserInfo.fromData(data["customer"]),
+        // customer: UserInfo.fromData(data["customer"]),
+        // TODO:544D-HASURA
+
+        customer: UserInfo(
+            hasuraId: 1, firebaseId: "firebaseId", name: null, image: null),
         rideFinishTime: data['rideFinishTime'],
         rideStartTime: data['rideStartTime'],
         status: data['status'].toString().toTaxiOrderStatus(),
@@ -181,8 +187,17 @@ class TaxiOrder extends Order {
     data["counterOffers"]?.forEach((driverId, counterOfferData) {
       try {
         final CounterOffer _tmpCountOffer = CounterOffer.fromData(
-            counterOfferData,
-            taxiUserInfo: UserInfo.fromData(counterOfferData["driverInfo"]));
+          counterOfferData,
+          taxiUserInfo:
+              // TODO:544D-HASURA
+
+              UserInfo(
+                  hasuraId: 1,
+                  firebaseId: "firebaseId",
+                  name: null,
+                  image: null),
+          // UserInfo.fromData(counterOfferData["driverInfo"]),
+        );
 
         if (_tmpCountOffer.validityTimeDifference() < 0 &&
             _tmpCountOffer.isValid) {
@@ -279,7 +294,7 @@ class TaxiOrder extends Order {
   CounterOffer? findCounterOfferByDriverId(String driverId) {
     try {
       return _counterOffers.firstWhere((CounterOffer counterOffer) =>
-          counterOffer.driverInfo.id == driverId);
+          counterOffer.driverInfo.hasuraId.toString() == driverId);
     } catch (e) {
       return null;
     }

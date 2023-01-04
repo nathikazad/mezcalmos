@@ -5,15 +5,14 @@ import * as laundryNodes from "../shared/databaseNodes/services/laundry";
 import { OrderType } from "../shared/models/Generic/Order";
 import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
 import { ServerResponse, ServerResponseStatus, ValidationPass } from "../shared/models/Generic/Generic";
-import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
-import { AuthData } from "firebase-functions/lib/common/providers/https";
+import { checkDeliveryAdmin } from "../shared/helper/authorizer";
 
 export async function finishOrder(
   order: LaundryOrder,
   orderId: string) {
   // moving the order node from /customers/inProcessOrders => /customers/pastOrders/
-  await customerNodes.pastOrders(order.customer.id!, orderId).set(order)
-  await customerNodes.inProcessOrders(order.customer.id!, orderId).remove();
+  await customerNodes.pastOrders(order.customer.firebaseId!, orderId).set(order)
+  await customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).remove();
 
 
   // and finally remove from root /inProcessOrders   
@@ -22,17 +21,17 @@ export async function finishOrder(
 
 
   if (order.laundry) {
-    laundryNodes.pastOrders(order.laundry.id, orderId).set(order);
-    laundryNodes.inProcessOrders(order.laundry.id, orderId).remove();
+    laundryNodes.pastOrders(order.laundry.firebaseId, orderId).set(order);
+    laundryNodes.inProcessOrders(order.laundry.firebaseId, orderId).remove();
   }
 
   if (order.dropoffDriver) {
-    await deliveryDriverNodes.pastOrders(order.dropoffDriver.id!, orderId).update(order)
-    await deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id!, orderId).remove();
+    await deliveryDriverNodes.pastOrders(order.dropoffDriver.firebaseId!, orderId).update(order)
+    await deliveryDriverNodes.inProcessOrders(order.dropoffDriver.firebaseId!, orderId).remove();
   }
   if (order.pickupDriver) {
-    await deliveryDriverNodes.pastOrders(order.pickupDriver.id!, orderId).update(order)
-    await deliveryDriverNodes.inProcessOrders(order.pickupDriver.id!, orderId).remove();
+    await deliveryDriverNodes.pastOrders(order.pickupDriver.firebaseId!, orderId).update(order)
+    await deliveryDriverNodes.inProcessOrders(order.pickupDriver.firebaseId!, orderId).remove();
   }
 }
 
@@ -63,14 +62,15 @@ async function checkLaundryOperator(laundryId: string, operatorId: string): Prom
   return undefined;
 }
 
-export async function passChecksForLaundry(data: any, auth?: AuthData): Promise<ValidationPass> {
-  let response = await isSignedIn(auth)
-  if (response != undefined) {
-    return {
-      ok: false,
-      error: response
-    }
-  }
+export async function passChecksForLaundry(data: any, userId: string): Promise<ValidationPass> {
+  let response 
+  // = await isSignedIn(userId)
+  // if (response != undefined) {
+  //   return {
+  //     ok: false,
+  //     error: response
+  //   }
+  // }
   if (data.orderId == null) {
     return {
       ok: false,
@@ -96,7 +96,7 @@ export async function passChecksForLaundry(data: any, auth?: AuthData): Promise<
   }
 
   if (data.fromLaundryOperator) {
-    response = await checkLaundryOperator(order.laundry.id, auth!.uid)
+    response = await checkLaundryOperator(order.laundry.firebaseId, userId)
     if (response != undefined) {
       return {
         ok: false,
@@ -104,7 +104,7 @@ export async function passChecksForLaundry(data: any, auth?: AuthData): Promise<
       };
     }
   } else {
-    response = await checkDeliveryAdmin(auth!.uid)
+    response = await checkDeliveryAdmin(userId)
     if (response != undefined) {
       return {
         ok: false,

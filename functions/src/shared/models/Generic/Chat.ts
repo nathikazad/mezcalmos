@@ -1,4 +1,5 @@
 import { NotificationForQueue } from "../Notification";
+import { NotificationInfo } from "./Generic";
 import { OrderType } from "./Order";
 import { UserInfo } from "./User";
 
@@ -25,8 +26,8 @@ export class ChatObject {
     this.chatData.authorizedUsers = this.chatData.authorizedUsers || {};
     this.chatData.authorizedUsers[participant.id] = true;
     this.chatData.participants = this.chatData.participants || {};
-    this.chatData.participants[participant.particpantType] = this.chatData.participants[participant.particpantType] || {};
-    this.chatData.participants[participant.particpantType]![participant.id] = participant;
+    // this.chatData.participants[participant.particpantType] = this.chatData.participants[participant.particpantType] || {};
+    // this.chatData.participants[participant.particpantType]![participant.id] = participant;
   }
 }
 
@@ -37,19 +38,21 @@ export enum ChatType {
 export enum ParticipantType {
   Customer = "customer",
   Taxi = "taxi",
-  DeliveryAdmin = "deliveryAdmin",
+  DeliveryOperator = "deliveryOperator",
   Restaurant = "restaurant",
   DeliveryDriver = "deliveryDriver",
   Laundry = "laundry",
   LaundryOperator = "laundryOperator",
-  RestaurantOperator = "restaurantOperator"
+  RestaurantOperator = "restaurantOperator",
+  MezAdmin = "mezAdmin"
 }
 
 export const nonNotifiableParticipants: Array<ParticipantType> = [ParticipantType.Restaurant, ParticipantType.Laundry];
 
 
 export interface Participant extends UserInfo {
-  particpantType: ParticipantType
+  participantType: ParticipantType,
+  notificationInfo: NotificationInfo | null
 }
 
 export interface Message {
@@ -80,11 +83,12 @@ export function buildChatForOrder(
 
 export interface MessageNotificationForQueue extends NotificationForQueue {
   message: string,
-  userId: string,
-  chatId: string,
+  userId: number,
+  chatId: number,
   participantType: ParticipantType,
-  messageId: string,
-  orderId?: string
+  messageId: number,
+  orderId?: number,
+  orderType: OrderType
 }
 
 export enum CallNotificationtType {
@@ -93,13 +97,13 @@ export enum CallNotificationtType {
 
 }
 export interface CallNotificationForQueue extends NotificationForQueue {
-  chatId: string,
-  callerId: string,
+  chatId: number,
+  callerId: number,
   callerParticipantType: ParticipantType,
-  calleeId: string,
+  calleeId: number,
   calleeParticipantType: ParticipantType,
   callNotificationType: CallNotificationtType,
-  orderId?: string
+  orderId?: number
 }
 
 export interface ParticipantAgoraDetails {

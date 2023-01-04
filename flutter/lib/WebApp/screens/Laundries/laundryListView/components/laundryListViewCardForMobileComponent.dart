@@ -28,7 +28,7 @@ class LaundryListViewCardForMobileComponent extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           onTap: () {
             var xPath = getCurrentPath();
-            QR.to("${xPath[0]}/${laundry.info.id}${xPath[1]}");
+            QR.to("${xPath[0]}/${laundry.info.hasuraId}${xPath[1]}");
           },
           child: Container(
             child: _laundryInfoHeader(),

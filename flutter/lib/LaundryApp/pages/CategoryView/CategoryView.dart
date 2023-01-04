@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['CategoryView'];
@@ -37,7 +38,7 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
     if (laundryId != null) {
       _viewController.init(categoryId: categoryId, laundryID: laundryId!);
     } else {
-      Get.back();
+      MezRouter.back();
     }
 
     super.initState();
@@ -85,7 +86,7 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
   PreferredSizeWidget _addCategoryAppBar() {
     return LaundryAppAppBar(
       leftBtnType: AppBarLeftButtonType.Back,
-      onClick: Get.back,
+      onClick: MezRouter.back,
       title: (_viewController.editMode.value)
           ? _viewController.getRightName() ?? ""
           : "${_i18n()["addCategory"]}",

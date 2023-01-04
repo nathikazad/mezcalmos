@@ -8,7 +8,10 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRouter.dart' as route;
+import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class UserMenu extends StatefulWidget {
   const UserMenu({
@@ -25,9 +28,6 @@ class UserMenu extends StatefulWidget {
 class _UserMenuState extends State<UserMenu> {
   dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
       ['components']['Menu']['UserMenuComponent'];
-
-  /// AuthController
-  final AuthController auth = Get.find<AuthController>();
 
   /// OrderController
   final OrderController orderController = Get.find<OrderController>();
@@ -96,24 +96,24 @@ class _UserMenuState extends State<UserMenu> {
       onSelected: (Object? value) {
         switch (value) {
           case 0:
-            Get.toNamed<void>(kOrdersRoute);
+            MezRouter.toNamed<void>(kOrdersRoute);
             break;
           case 1:
-            Get.toNamed<void>(kNotificationsRoute);
+            MezRouter.toNamed<void>(kNotificationsRoute);
             break;
           case 2:
-            Get.toNamed<void>(kSavedLocations);
+            MezRouter.toNamed<void>(kSavedLocations);
             break;
           case 3:
-            Get.toNamed<void>(kUserProfile);
+            MezRouter.toNamed<void>(kUserProfile);
             break;
           // case 5:
-          //   Get.toNamed<void>(kInAppReview);
+          //   MezRouter.toNamed<void>(kInAppReview);
           // final InAppReview _inAppReview = InAppReview.instance;
           // _inAppReview.requestReview();
           // break;
           case 4:
-            auth.signOut();
+            signOut();
             break;
           default:
         }

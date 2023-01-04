@@ -1,5 +1,3 @@
-import * as functions from "firebase-functions";
-import { AuthData } from "firebase-functions/lib/common/providers/https";
 import { ServerResponse, ServerResponseStatus, ValidationPass } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
 import { orderInProcess, LaundryOrderStatus, LaundryOrder, LaundryOrderStatusChangeNotification } from "../shared/models/Services/Laundry/LaundryOrder";
@@ -11,25 +9,22 @@ import { expectedPreviousStatus, finishOrder, passChecksForLaundry } from "./hel
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { LaundryOrderStatusChangeMessages } from "./bgNotificationMessages";
-import { ParticipantType } from "../shared/models/Generic/Chat";
 import { orderUrl } from "../utilities/senders/appRoutes";
 
+export async function cancelOrder(userId: string, data: any) {
+  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.CancelledByAdmin, userId)
+  return response;
+};
 
-export const cancelOrder =
-  functions.https.onCall(async (data, context) => {
-    let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.CancelledByAdmin, context.auth)
-    return response;
-  });
-
-export const readyForDeliveryOrder = functions.https.onCall(async (data, context) => {
-  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.ReadyForDelivery, context.auth)
+export async function readyForDeliveryOrder(userId: string, data: any) {
+  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.ReadyForDelivery, userId)
   return response
-});
+};
 
 
-async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: AuthData): Promise<ServerResponse> {
+async function changeStatus(data: any, newStatus: LaundryOrderStatus, userId: string): Promise<ServerResponse> {
 
-  let validationPass: ValidationPass = await passChecksForLaundry(data, auth);
+  let validationPass: ValidationPass = await passChecksForLaundry(data, userId);
   if (!validationPass.ok) {
     return validationPass.error!;
   }
@@ -56,10 +51,10 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
   if (newStatus == LaundryOrderStatus.CancelledByAdmin)
     await finishOrder(order, orderId);
   else if (newStatus == LaundryOrderStatus.ReadyForDelivery) {
-    customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-    laundryNodes.inProcessOrders(order.laundry.id, orderId).update(order);
+    customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).update(order);
+    laundryNodes.inProcessOrders(order.laundry.firebaseId, orderId).update(order);
     await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
-    deliveryDriverNodes.inProcessOrders(order.dropoffDriver!.id, orderId).update(order);
+    deliveryDriverNodes.inProcessOrders(order.dropoffDriver!.firebaseId, orderId).update(order);
   }
 
   let notification: Notification = {
@@ -73,23 +68,23 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
       orderId: orderId
     },
     background: LaundryOrderStatusChangeMessages[newStatus],
-    linkUrl: orderUrl(ParticipantType.Customer, OrderType.Laundry, orderId)
+    linkUrl: orderUrl(OrderType.Laundry, orderId)
   }
 
-  await pushNotification(order.customer.id!, notification);
+  await pushNotification(order.customer.firebaseId!, notification);
 
-  notification.linkUrl = orderUrl(ParticipantType.DeliveryDriver, OrderType.Laundry, orderId)
-  if (order.dropoffDriver)
-    pushNotification(order.dropoffDriver.id!, notification, ParticipantType.DeliveryDriver);
-  else if (order.pickupDriver)
-    pushNotification(order.pickupDriver.id!, notification, ParticipantType.DeliveryDriver);
+  notification.linkUrl = orderUrl(OrderType.Laundry, orderId)
+  // if (order.dropoffDriver)
+  //   pushNotification(order.dropoffDriver.firebaseId!, notification, ParticipantType.DeliveryDriver);
+  // else if (order.pickupDriver)
+  //   pushNotification(order.pickupDriver.firebaseId!, notification, ParticipantType.DeliveryDriver);
 
 
 
   return { status: ServerResponseStatus.Success }
 }
 
-export const setWeight = functions.https.onCall(async (data, context) => {
+export async function setWeight(userId: string, data: any) {
 
   if (data.costsByType == null) {
     return {
@@ -99,7 +94,7 @@ export const setWeight = functions.https.onCall(async (data, context) => {
     }
   }
 
-  let validationPass = await passChecksForLaundry(data, context.auth);
+  let validationPass = await passChecksForLaundry(data, userId);
   if (!validationPass.ok) {
     return validationPass.error;
   }
@@ -119,18 +114,18 @@ export const setWeight = functions.https.onCall(async (data, context) => {
 
   let orderId = data.orderId;
   order.costsByType = data.costsByType;
-  order.cost = order.shippingCost + order.costsByType.weighedCost
+  // order.cost = order.shippingCost + order.costsByType?.weighedCost
 
-  customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-  await laundryNodes.inProcessOrders(order.laundry.id, orderId).update(order);
+  customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).update(order);
+  await laundryNodes.inProcessOrders(order.laundry.firebaseId, orderId).update(order);
   rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
   if (order.dropoffDriver)
-    deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
+    deliveryDriverNodes.inProcessOrders(order.dropoffDriver.firebaseId, orderId).update(order);
 
   return { status: ServerResponseStatus.Success }
-});
+};
 
-export const setEstimatedLaundryReadyTime = functions.https.onCall(async (data, context) => {
+export async function setEstimatedLaundryReadyTime(userId: string, data: any) {
 
   if (data.estimatedLaundryReadyTime == null) {
     return {
@@ -140,7 +135,7 @@ export const setEstimatedLaundryReadyTime = functions.https.onCall(async (data, 
     }
   }
 
-  let validationPass = await passChecksForLaundry(data, context.auth);
+  let validationPass = await passChecksForLaundry(data, userId);
   if (!validationPass.ok) {
     return validationPass.error;
   }
@@ -150,12 +145,12 @@ export const setEstimatedLaundryReadyTime = functions.https.onCall(async (data, 
   let orderId = data.orderId;
   order.estimatedLaundryReadyTime = data.estimatedLaundryReadyTime;
 
-  customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-  await laundryNodes.inProcessOrders(order.laundry.id, orderId).update(order);
+  customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).update(order);
+  await laundryNodes.inProcessOrders(order.laundry.firebaseId, orderId).update(order);
   rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
   if (order.dropoffDriver)
-    deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
+    deliveryDriverNodes.inProcessOrders(order.dropoffDriver.firebaseId, orderId).update(order);
 
   return { status: ServerResponseStatus.Success }
-});
+};
 

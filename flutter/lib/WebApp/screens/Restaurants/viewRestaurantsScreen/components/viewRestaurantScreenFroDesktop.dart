@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/components/itemSliverAppBar.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/viewRestaurantsScreen/restaurnatsItemsView.dart';
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
@@ -89,8 +91,8 @@ class _ViewRestaurantScreenFroDesktopState
 
   Future<void> _getRestaurantItemsValue() async {
     String? rstaurantID = QR.params['id'].toString();
-    var restaurnatValue =
-        await Get.find<RestaurantsInfoController>().getRestaurant(rstaurantID);
+    var restaurnatValue = await Get.find<RestaurantsInfoController>()
+        .getRestaurant(int.parse(rstaurantID));
     if (restaurnatValue != null) {
       print(
           "the id of this item is ${QR.params['id'].toString()} 2 and ${restaurnatValue.getCategories.length}");
@@ -190,7 +192,8 @@ class _ViewRestaurantScreenFroDesktopState
                     fontWeight: FontWeight.w500),
               ),
             ),
-          _buildResturantItems(category.items, restaurant.value!.info.id),
+          _buildResturantItems(
+              category.items, restaurant.value!.info.hasuraId.toString()),
           SizedBox(
             height: 10,
           )
@@ -239,13 +242,13 @@ class _ViewRestaurantScreenFroDesktopState
             ? ItemCardComponnent(
                 title: items[index].name[lang.userLanguageKey]!,
                 imageUrl: items[index].image,
-                id: items[index].id!,
+                id: items[index].id!.toString(),
                 price: items[index].cost.toString(),
               )
             : ItemCardWithoutImageComponent(
                 title: items[index].name[lang.userLanguageKey]!,
                 imageUrl: items[index].image,
-                id: items[index].id!,
+                id: items[index].id!.toString(),
                 price: items[index].cost.toString(),
               );
       },
@@ -312,7 +315,7 @@ class _ViewRestaurantScreenFroDesktopState
         child: NotificationListener<ScrollNotification>(
           onNotification: onScrollNotification,
           child: (restaurant.value != null &&
-                  restaurant.value!.info.id.isNotEmpty)
+                  restaurant.value!.info.hasuraId.toString().isNotEmpty)
               ? CustomScrollView(
                   controller: scrollController,
                   slivers: [
@@ -388,14 +391,14 @@ class _ViewRestaurantScreenFroDesktopState
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  (restaurant.value!.description![
+                                  (restaurant.value!.info.description![
                                               lang.userLanguageKey] !=
                                           "")
                                       ? Container(
                                           child: Row(
                                             children: [
                                               Text(
-                                                "${restaurant.value!.description![lang.userLanguageKey]!.trim()}",
+                                                "${restaurant.value!.info.description![lang.userLanguageKey]!.trim()}",
                                                 style: GoogleFonts.nunito(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w600,

@@ -9,10 +9,12 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
+import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['Shared']['widgets']["MezSideMenu"];
@@ -59,13 +61,14 @@ class MezSideMenu extends GetWidget<AuthController> {
                 ),
               ),
               Container(
-                  alignment: Alignment.center,
-                  child: Text(
-                    version +
-                        (lmd != AppLaunchMode.prod
-                            ? " ${lmd.toShortString()}"
-                            : ""),
-                  ))
+                alignment: Alignment.center,
+                child: Text(
+                  version +
+                      (lmd != AppLaunchMode.prod
+                          ? " ${lmd.toShortString()}"
+                          : ""),
+                ),
+              )
             ],
           ),
         ),
@@ -87,9 +90,9 @@ class MezSideMenu extends GetWidget<AuthController> {
           onClick: () {
             _drawerController.closeMenu();
             if (controller.isUserSignedIn) {
-              Get.toNamed<void>(kUserProfile);
+              MezRouter.toNamed<void>(kUserProfile);
             } else
-              Get.toNamed<void>(kSignInRouteOptional);
+              MezRouter.toNamed<void>(kSignInRouteOptional);
           },
         ),
         if (controller.isUserSignedIn)
@@ -99,7 +102,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             title: "${_i18n()["notifications"]}", // _i18n()["userInfo"],
             onClick: () {
               _drawerController.closeMenu();
-              Get.toNamed<void>(kNotificationsRoute);
+              MezRouter.toNamed<void>(kNotificationsRoute);
             },
           ),
         if (_drawerController.pastOrdersRoute != null)
@@ -109,7 +112,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             title: "${_i18n()["pastOrders"]}", // _i18n()["userInfo"],
             onClick: () {
               _drawerController.closeMenu();
-              Get.toNamed<void>(_drawerController.pastOrdersRoute!);
+              MezRouter.toNamed<void>(_drawerController.pastOrdersRoute!);
             },
           ),
         SideMenuItem(
@@ -135,31 +138,34 @@ class MezSideMenu extends GetWidget<AuthController> {
               SizedBox(
                 height: 5,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    height: 15,
-                    width: 15,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: AssetImage(languageController.oppositFlag),
+              Obx(
+                () => Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      height: 15,
+                      width: 15,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage(languageController.oppositFlag),
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    languageController.oppositToLang,
-                  ),
-                ],
+                    const SizedBox(width: 10),
+                    Text(
+                      languageController.oppositToLang,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
           icon: Icons.g_translate_outlined,
           onClick: () {
-            languageController.changeUserLanguage();
-            _drawerController.closeMenu();
+            languageController.changeUserLanguage().then(
+                  (_) => _drawerController.closeMenu(),
+                );
           },
         ),
         Obx(
@@ -177,7 +183,7 @@ class MezSideMenu extends GetWidget<AuthController> {
               title: _i18n()["logout"],
               onClick: () async {
                 _drawerController.closeMenu();
-                await controller.signOut();
+                await signOut();
               },
             ),
           ),

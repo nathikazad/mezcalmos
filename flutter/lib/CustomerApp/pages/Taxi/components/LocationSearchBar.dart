@@ -434,20 +434,26 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   }
 
   List<LocationDropDownItem> getSavedLocationsWithCallbacks() {
-    return _authController!.customer.value?.savedLocations
-            .map<LocationDropDownItem>((SavedLocation e) {
-          return LocationDropDownItem(
-              icon: Icon(MezcalmosIcons.search, size: 20, color: Colors.purple),
-              function: () {
-                final Location? _savedLoc =
-                    _authController?.getLocationById(e.id!);
-                mezDbgPrint(
-                    "${e.id} Saved looooooooooooocccc =====>${_savedLoc?.toFirebaseFormattedJson()}");
-                widget.newLocationChosenEvent(_savedLoc,
-                    locationSearchBarController.focusedTextField.value);
-              },
-              title: e.name);
-        }).toList() ??
-        <LocationDropDownItem>[];
+    List<LocationDropDownItem> ret = [];
+    _authController!.customer?.savedLocations.forEach((sLocation) {
+      if (sLocation.id != null) {
+        ret.add(
+          LocationDropDownItem(
+            icon: Icon(MezcalmosIcons.search, size: 20, color: Colors.purple),
+            function: () {
+              final Location? _savedLoc =
+                  _authController?.getLocationById(sLocation.id!);
+              mezDbgPrint(
+                  "${sLocation.id} Saved looooooooooooocccc =====>${_savedLoc?.toFirebaseFormattedJson()}");
+              widget.newLocationChosenEvent(_savedLoc,
+                  locationSearchBarController.focusedTextField.value);
+            },
+            title: sLocation.name,
+          ),
+        );
+      }
+    });
+
+    return ret;
   }
 }

@@ -14,13 +14,13 @@ import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationview.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["PickLocationScreen"]["PickLocationView"];
@@ -42,7 +42,6 @@ class _PickLocationViewState extends State<PickLocationView> {
   late LocationPickerController locationPickerController;
   //
 
-  // Location? locationPickerController.location;
   SavedLocation? savedLocation;
   bool showScreenLoading = false;
   LatLng? currentLatLng;
@@ -69,9 +68,13 @@ class _PickLocationViewState extends State<PickLocationView> {
         }
       });
     } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
-      final String? x = Get.parameters["id"];
+      final int? x = int.tryParse(Get.parameters["id"] ?? "");
+      if (x == null) {
+        mezDbgPrint("Get.parameters['id'] - Location ID Was null!");
+        MezRouter.back<void>();
+      }
       savedLocation = Get.find<CustomerAuthController>()
-          .customer()!
+          .customer!
           .savedLocations
           .firstWhere((SavedLocation saved) => saved.id == x);
       GeoLoc.Location()
@@ -80,23 +83,15 @@ class _PickLocationViewState extends State<PickLocationView> {
           .then((GeoLoc.LocationData locData) {
         setState(() {
           locationPickerController.location.value = Location.fromFirebaseData({
-            "address": "",
-            "lat": savedLocation?.location?.latitude,
-            "lng": savedLocation?.location?.longitude,
+            "address": savedLocation!.location.address,
+            "lat": savedLocation?.location.latitude,
+            "lng": savedLocation?.location.longitude,
           });
         });
       }).catchError((Object error) {
         if (error.runtimeType == TimeoutException) {
-          // locationPickerController.location.value = Location.fromFirebaseData({
-          //   "address": "15.872141, -97.076737",
-          //   "lat": 15.872141,
-          //   "lng": -97.076737,
-          // });
           currentLatLng = LatLng(15.872141, -97.076737);
           geoCodeAndSetLocation(currentLatLng!);
-          // setState(() {
-          //   _locationAccessFailed = true;
-          // });
         }
       });
     } else {
@@ -108,11 +103,8 @@ class _PickLocationViewState extends State<PickLocationView> {
         geoCodeAndSetLocation(currentLatLng!);
       }).catchError((Object error) {
         if (error.runtimeType == TimeoutException) {
-          // setState(() {
-          //   _locationAccessFailed = true;
-          // });
           locationPickerController.location.value = Location.fromFirebaseData({
-            "address": savedLocation!.location?.address,
+            "address": savedLocation!.location.address,
             "lat": 15.872141,
             "lng": -97.076737,
           });
@@ -226,6 +218,9 @@ class _PickLocationViewState extends State<PickLocationView> {
       await locationPickerController.moveToNewLatLng(
           _pickedLoc.latitude, _pickedLoc.longitude);
 
+      await locationPickerController.moveToNewLatLng(
+          _pickedLoc.latitude, _pickedLoc.longitude);
+
       setState(() {
         showScreenLoading = true;
       });
@@ -235,19 +230,23 @@ class _PickLocationViewState extends State<PickLocationView> {
             comingFromCart: Get.arguments,
             isWebVersion: widget.isWebVerssion);
         if (_result != null && _result != "") {
+          mezDbgPrint(
+              "locationPickerController.location.value ==/ ${locationPickerController.location.value?.address}");
           await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
+          // TODO:544D-HASURA
+
           savedLocation = SavedLocation(
+              id: null,
               name: _result,
               location: locationPickerController.location.value!);
           Get.find<CustomerAuthController>()
               .customer
-              .value
               ?.savedLocations
               .forEach((SavedLocation location) {
             if (location.name.toLowerCase() ==
                     savedLocation?.name.toLowerCase() ||
-                location.location?.address.toLowerCase() ==
-                    savedLocation?.location?.address.toLowerCase()) {
+                location.location.address.toLowerCase() ==
+                    savedLocation?.location.address.toLowerCase()) {
               // delete from db
               Get.find<CustomerAuthController>().deleteLocation(location);
             }
@@ -256,15 +255,21 @@ class _PickLocationViewState extends State<PickLocationView> {
         } else {
           await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
           savedLocation = SavedLocation(
-              name: locationPickerController.location.value!.address,
-              location: locationPickerController.location.value!);
+            id: null,
+            name: locationPickerController.location.value!.address,
+            location: locationPickerController.location.value!,
+          );
         }
+        setState(() {
+          showScreenLoading = true;
+        });
+
         setState(() {
           locationPickerController
               .setLocation(locationPickerController.location.value!);
         });
 
-        Get.back<SavedLocation?>(result: savedLocation);
+        MezRouter.back<SavedLocation?>(result: savedLocation);
       } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
         _result = await savedLocationDailog(
             comingFromCart: Get.arguments,
@@ -281,13 +286,12 @@ class _PickLocationViewState extends State<PickLocationView> {
 
           _isDuplicatedSavedLocation = Get.find<CustomerAuthController>()
               .customer
-              .value
               ?.savedLocations
               .firstWhereOrNull((SavedLocation location) =>
                   location.name.toLowerCase() ==
                       savedLocation?.name.toLowerCase() ||
-                  location.location?.address.toLowerCase() ==
-                      savedLocation?.location?.address.toLowerCase());
+                  location.location.address.toLowerCase() ==
+                      savedLocation?.location.address.toLowerCase());
         }
         if (_isDuplicatedSavedLocation != null) {
           MezSnackbar("Oops",
@@ -299,11 +303,11 @@ class _PickLocationViewState extends State<PickLocationView> {
             locationPickerController
                 .setLocation(locationPickerController.location.value!);
           });
-
-          Get.back<SavedLocation?>(result: savedLocation);
+          MezRouter.back<SavedLocation?>(result: savedLocation);
         }
       } else if (widget.pickLocationMode == PickLocationMode.NonLoggedInPick) {
-        Get.back<Location>(result: locationPickerController.location.value);
+        MezRouter.back<Location>(
+            result: locationPickerController.location.value);
       }
     }
   }
@@ -331,10 +335,6 @@ class _PickLocationViewState extends State<PickLocationView> {
             child: LocationSearchComponent(
                 hintPadding: EdgeInsets.all(12),
                 suffixPadding: EdgeInsets.only(right: 10),
-                // border: _locationAccessFailed
-                //     ? Border.all(
-                //         color: Color.fromARGB(255, 128, 62, 234), width: 1)
-                //     : null,
                 showSearchIcon: true,
                 text: locationPickerController.location.value?.address,
                 onClear: () {},
@@ -369,32 +369,7 @@ class _PickLocationViewState extends State<PickLocationView> {
                           },
                         )
                       : Center(
-                          child:
-                              // _locationAccessFailed
-                              //     ? Row(
-                              //         mainAxisAlignment: MainAxisAlignment.center,
-                              //         crossAxisAlignment: CrossAxisAlignment.center,
-                              //         children: [
-                              //           Icon(
-                              //             Icons.location_disabled_rounded,
-                              //             color: Colors.blue.shade900,
-                              //           ),
-                              //           SizedBox(
-                              //             width: 5,
-                              //           ),
-                              //           Text(
-                              //             "Could not get your location :(",
-                              //             style: TextStyle(
-                              //               color: Colors.purple.shade800,
-                              //               fontFamily: 'Montserrat',
-                              //               fontSize: 16,
-                              //               fontWeight: FontWeight.w600,
-                              //             ),
-                              //           ),
-                              //         ],
-                              //       )
-                              //     :
-                              CircularProgressIndicator(
+                          child: CircularProgressIndicator(
                             color: Colors.black,
                             strokeWidth: 1,
                           ),

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationview.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
@@ -76,7 +77,7 @@ Future<String?> savedLocationDailog(
                   if (isWebVersion = true) {
                     Navigator.of(context).pop(txtController.text);
                   } else {
-                    Get.back(result: txtController.text);
+                    MezRouter.popDialog(result: txtController.text);
                   }
                 },
                 child: Container(
@@ -103,7 +104,7 @@ Future<String?> savedLocationDailog(
                     if (isWebVersion = true) {
                       Navigator.of(context).pop();
                     } else {
-                      Get.back();
+                      MezRouter.back();
                     }
                   },
                   style: TextButton.styleFrom(
@@ -158,7 +159,7 @@ InkWell skipButton(
       ),
     ),
     onTap: () {
-      Get.back(result: txtController.text);
+      MezRouter.back(result: txtController.text);
     },
   );
 }

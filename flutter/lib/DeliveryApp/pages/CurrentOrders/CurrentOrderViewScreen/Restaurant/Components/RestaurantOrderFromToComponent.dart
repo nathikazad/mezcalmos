@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/AnimatedOrderInfoCard.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -70,7 +71,7 @@ class _RestaurantOrderFromToComponentState
           customerTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff, context),
           onCustomerMsgClick: () {
             if (widget.order.customerDropOffDriverChatId != null) {
-              Get.toNamed(
+              MezRouter.toNamed(
                 getMessagesRoute(
                     orderType: OrderType.Restaurant,
                     chatId: widget.order.customerDropOffDriverChatId!,
@@ -86,7 +87,7 @@ class _RestaurantOrderFromToComponentState
               _dateTimeSetter(DeliveryAction.Pickup, context),
           onServiceMsgClick: () {
             if (widget.order.serviceProviderDropOffDriverChatId != null) {
-              Get.toNamed(
+              MezRouter.toNamed(
                 getMessagesRoute(
                     orderType: OrderType.Restaurant,
                     chatId: widget.order.serviceProviderDropOffDriverChatId!,
@@ -130,17 +131,17 @@ class _RestaurantOrderFromToComponentState
       case RestaurantOrderStatus.CancelledByAdmin:
       case RestaurantOrderStatus.CancelledByCustomer:
         return '${_i18n()["orderStatus"]["canceled"]}';
-      case RestaurantOrderStatus.OrderReceieved:
+      case RestaurantOrderStatus.OrderReceived:
         if (widget.order.isScheduled()) {
           return '${_i18n()["orderStatus"]["scheduled"]}';
         } else {
           return '${_i18n()["orderStatus"]["waiting"]}';
         }
-      case RestaurantOrderStatus.PreparingOrder:
+      case RestaurantOrderStatus.Preparing:
         return '${_i18n()["orderStatus"]["waiting"]}';
 
-      case RestaurantOrderStatus.ReadyForPickup:
-        return '${_i18n()["orderStatus"]["readyForPickup"]}';
+      case RestaurantOrderStatus.Ready:
+        return '${_i18n()["orderStatus"]["Ready"]}';
       case RestaurantOrderStatus.OnTheWay:
         return '${_i18n()["orderStatus"]["deliveryOtw"]}';
       case RestaurantOrderStatus.Delivered:
@@ -151,15 +152,15 @@ class _RestaurantOrderFromToComponentState
   }
 
   bool isInPickUpPhase() {
-    return widget.order.status == RestaurantOrderStatus.OrderReceieved ||
-        widget.order.status == RestaurantOrderStatus.ReadyForPickup ||
-        widget.order.status == RestaurantOrderStatus.PreparingOrder;
+    return widget.order.status == RestaurantOrderStatus.OrderReceived ||
+        widget.order.status == RestaurantOrderStatus.Ready ||
+        widget.order.status == RestaurantOrderStatus.Preparing;
   }
 
   bool _showFoodReadyTime() {
     return widget.order.estimatedFoodReadyTime != null &&
-        (widget.order.status == RestaurantOrderStatus.OrderReceieved ||
-            widget.order.status == RestaurantOrderStatus.PreparingOrder);
+        (widget.order.status == RestaurantOrderStatus.OrderReceived ||
+            widget.order.status == RestaurantOrderStatus.Preparing);
   }
 
 // @here
@@ -326,7 +327,7 @@ class _RestaurantOrderFromToComponentState
               .setEstimatedTime(
             widget.order.orderId,
             newDt.toUtc(),
-            DeliveryDriverType.DropOff,
+            DeliveryDriverType.Delivery_driver,
             deliveryAction,
             OrderType.Restaurant,
           )

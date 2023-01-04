@@ -1,4 +1,3 @@
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 String rootTaxiOpenOrdersNode() => "orders/open/taxi";
@@ -16,20 +15,26 @@ String rootOpenOrderReceivedNode(String orderId, String uid) {
       '/$orderId/notificationStatus/$uid/received';
 }
 
-String rootTaxiInProcessOrderDriverLocationNode(String orderId) {
+String rootTaxiInProcessOrderDriverLocationNode(int orderId) {
   return rootInProcessOrderDriverLocationNode(
       orderId: orderId, orderType: OrderType.Taxi);
 }
 
 String rootInProcessOrderDriverLocationNode(
-    {required String orderId,
+    {required int orderId,
     required OrderType orderType,
     String driverAddress = "driver"}) {
   return rootInProcessOrdersNode(orderType: orderType, orderId: orderId) +
       '/$driverAddress/location';
 }
 
-String rootInProcessOrdersNode({OrderType? orderType, String? orderId}) {
+String rootSelfDeliveryPosition(
+    {required OrderType orderType, required int orderId}) {
+  return rootInProcessOrdersNode(orderId: orderId, orderType: orderType) +
+      "/selfDeliveryPosition";
+}
+
+String rootInProcessOrdersNode({OrderType? orderType, int? orderId}) {
   String node = 'orders/inProcess';
   if (orderType != null) {
     node += '/${orderType.toFirebaseFormatString()}';
@@ -39,20 +44,18 @@ String rootInProcessOrdersNode({OrderType? orderType, String? orderId}) {
 }
 
 String rootNotifiedAdminRoute(
-    {required OrderType orderType, required String orderId}) {
-  return rootInProcessOrdersNode(
-          orderId: orderId, orderType: orderType) +
+    {required OrderType orderType, required int orderId}) {
+  return rootInProcessOrdersNode(orderId: orderId, orderType: orderType) +
       "/notified/admin";
 }
 
 String rootNotifiedOperatorRoute(
-    {required OrderType orderType, required String orderId}) {
-  return rootInProcessOrdersNode(
-          orderId: orderId, orderType: orderType) +
+    {required OrderType orderType, required int orderId}) {
+  return rootInProcessOrdersNode(orderId: orderId, orderType: orderType) +
       "/notified/operator";
 }
 
-String rootPastOrdersNode({OrderType? orderType, String? orderId}) {
+String rootPastOrdersNode({OrderType? orderType, int? orderId}) {
   String node = 'orders/past';
   if (orderType != null) {
     node += '/${orderType.toFirebaseFormatString()}';

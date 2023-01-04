@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
 // import 'package:mezcalmos/CustomerApp/pages/Orders/components/routeHandler.dart';
 // import 'package:mezcalmos/CustomerApp/pages/Orders/components/routeHandler.dart';
 
@@ -21,6 +22,7 @@ import 'package:mezcalmos/Shared/widgets/OrderInfoCard/OrderInfoCard.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class CustomerOrderCard extends StatelessWidget {
   CustomerOrderCard({Key? key, required this.order, this.isWebVersion})
@@ -230,6 +232,24 @@ class CustomerOrderCard extends StatelessWidget {
 
       default:
         return Icons.error;
+    }
+  }
+
+  void handleRouting() {
+    switch (order.orderType) {
+      case OrderType.Restaurant:
+        MezRouter.toNamed(getRestaurantOrderRoute(order.orderId));
+
+        break;
+      case OrderType.Laundry:
+        MezRouter.toNamed(getLaundryOrderRoute(order.orderId));
+
+        break;
+      case OrderType.Taxi:
+        MezRouter.toNamed(getTaxiOrderRoute(order.orderId));
+
+        break;
+      default:
     }
   }
 

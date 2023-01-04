@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/WebApp/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 
@@ -50,8 +50,9 @@ class _RestaurantsInfoTapForDesktopState
           SizedBox(
             height: 20,
           ),
-          if (widget.restaurant!.description![lang.userLanguageKey] != null &&
-              widget.restaurant!.description![lang.userLanguageKey]
+          if (widget.restaurant!.info.description![lang.userLanguageKey] !=
+                  null &&
+              widget.restaurant!.info.description![lang.userLanguageKey]
                   .toString()
                   .isNotEmpty)
             Column(
@@ -75,7 +76,7 @@ class _RestaurantsInfoTapForDesktopState
                 ),
                 Container(
                   child: Text(
-                    "${widget.restaurant!.description![lang.userLanguageKey]}",
+                    "${widget.restaurant!.info.description![lang.userLanguageKey]}",
                     style: GoogleFonts.nunito(
                         textStyle: TextStyle(
                             fontSize: 14,

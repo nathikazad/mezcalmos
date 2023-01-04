@@ -1,0 +1,3 @@
+table:
+  name: delivery_order_public
+  schema: public

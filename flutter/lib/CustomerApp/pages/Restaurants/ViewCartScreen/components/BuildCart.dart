@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -33,38 +36,46 @@ class CartBuilder extends StatelessWidget {
                 ),
               ),
               Expanded(
-                  child: Container(
-                alignment: Alignment.centerRight,
-                child: Row(
-                  children: <Widget>[
-                    const Spacer(),
-                    Container(
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(3),
-                      ),
-                      child: InkWell(
-                        onTap: () async {
-                          await showConfirmationDialog(context,
-                              title: _i18n()["clearCart"],
-                              helperText: _i18n()["clearCartConfirm"],
-                              primaryButtonText: _i18n()["yesClear"],
-                              secondaryButtonText: _i18n()["no"],
-                              onYesClick: () async {
-                            controller.clearCart();
-                            Get.back<void>();
-                          });
-                        },
-                        child: const Icon(
-                          Icons.delete_outline,
-                          size: 22,
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  child: Row(
+                    children: <Widget>[
+                      const Spacer(),
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(3),
                         ),
-                      ),
-                    )
-                  ],
+                        child: InkWell(
+                          onTap: () async {
+                            await showConfirmationDialog(context,
+                                title: _i18n()["clearCart"],
+                                helperText: _i18n()["clearCartConfirm"],
+                                primaryButtonText: _i18n()["yesClear"],
+                                secondaryButtonText: _i18n()["no"],
+                                onYesClick: () async {
+                              await clear_customer_cart(
+                                customer_id:
+                                    Get.find<AuthController>().user!.hasuraId,
+                              );
+
+                              controller.clearCart();
+                              await controller.fetchCart();
+                              controller.cart.refresh();
+                              MezRouter.popDialog<void>();
+                            });
+                          },
+                          child: const Icon(
+                            Icons.delete_outline,
+                            size: 22,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ))
+              )
             ],
           ),
         ),

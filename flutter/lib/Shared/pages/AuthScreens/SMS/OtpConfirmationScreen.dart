@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -190,7 +191,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                 canConfirmOtp.value = false;
                                 _otpCodeTextController.clear();
                                 final ServerResponse response =
-                                    await controller.sendOTPForLogin(
+                                    await sendOTPForLogin(
                                         Get.arguments ?? _phonePassed);
                                 mezDbgPrint(response.data);
                                 if (!response.success) {
@@ -235,7 +236,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                   clickedSignInOtp.value = true;
                   mezDbgPrint(
                       "${Get.arguments ?? _phonePassed} -------------- $otpCode ");
-                  final ServerResponse? _resp = await controller.signInUsingOTP(
+                  final ServerResponse? _resp = await signInUsingOTP(
                       Get.arguments ?? _phonePassed, otpCode);
                   switch (_resp?.success) {
                     case null:

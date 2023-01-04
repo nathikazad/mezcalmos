@@ -5,10 +5,11 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/Components/RestaurantControllButtons.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/Components/RestaurantOrderFromToComponent.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/components/RestaurantControllButtons.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/components/RestaurantOrderFromToComponent.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/mapInitHelper.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
@@ -88,7 +89,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
     // Restaurant Marker
     mapController.addOrUpdateUserMarker(
       latLng: order.value?.restaurant.location.toLatLng(),
-      markerId: order.value?.restaurantId,
+      markerId: order.value?.restaurantId.toString(),
       customImgHttpUrl: order.value?.restaurant.image,
     );
     if (order.value != null)
@@ -98,7 +99,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
       if (order.value == null) {
         // ignore: inference_failure_on_function_invocation
         Future<Null>.delayed(Duration.zero, () {
-          Get.back<Null>();
+          MezRouter.back<Null>();
           MezSnackbar("Error", "Order does not exist");
         });
       } else {
@@ -229,8 +230,8 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
   /// this handles Restaurant Order.
   void handleRestaurantOrder(RestaurantOrder order) {
     switch (order.status) {
-      case RestaurantOrderStatus.ReadyForPickup:
-        // only update once upon ReadyForPickUp
+      case RestaurantOrderStatus.Ready:
+        // only update once upon Ready
         if (orderStatusSnapshot != order.status) {
           // ignoring customer's marker (destination)
           mapController.addOrUpdatePurpleDestinationMarker(
@@ -252,7 +253,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
           // ignoring Restaurant's marker
           mapController.addOrUpdateUserMarker(
             latLng: order.restaurant.location.toLatLng(),
-            markerId: order.restaurantId,
+            markerId: order.restaurantId.toString(),
             customImgHttpUrl: order.restaurant.image,
             fitWithinBounds: false,
           );

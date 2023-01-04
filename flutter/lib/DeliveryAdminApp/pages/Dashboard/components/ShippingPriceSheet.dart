@@ -5,6 +5,7 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/Dashboard/controllers/AdminDash
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
@@ -72,7 +73,7 @@ class ShippingPriceSheet extends StatelessWidget {
                   label: '${_i18n()["cancel"]}',
                   height: 50,
                   onClick: () async {
-                    Get.back();
+                    MezRouter.back();
                   },
                   backgroundColor: offRedColor,
                   textColor: Colors.red,

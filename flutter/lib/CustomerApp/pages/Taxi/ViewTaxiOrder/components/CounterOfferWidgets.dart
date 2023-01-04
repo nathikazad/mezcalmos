@@ -179,8 +179,8 @@ class CounterOfferWidgets {
                                 await viewController.taxiController
                                     .acceptCounterOffer(
                               viewController.order.value!.orderId,
-                              viewController.order.value!.customer.id,
-                              offer.driverInfo.id,
+                              viewController.order.value!.customer.hasuraId,
+                              offer.driverInfo.hasuraId,
                             );
                             if (_response.success) {
                               viewController.clickedAccept.value = false;
@@ -213,9 +213,10 @@ class CounterOfferWidgets {
                         onTap: () {
                           viewController.taxiController
                               .rejectCounterOffer(
-                                  viewController.order.value!.orderId,
-                                  viewController.order.value!.customer.id,
-                                  offer.driverInfo.id)
+                            viewController.order.value!.orderId,
+                            viewController.order.value!.customer.hasuraId,
+                            offer.driverInfo.hasuraId,
+                          )
                               .then(
                             (_) {
                               if (viewController.counterOffers.isEmpty) {

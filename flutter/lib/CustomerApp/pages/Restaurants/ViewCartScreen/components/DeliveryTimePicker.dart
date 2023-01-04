@@ -33,7 +33,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
   void initState() {
     if (controller.cart.value.cartPeriod != null) {
       controller.cart.value.deliveryTime = controller.cart.value.getStartTime();
-      controller.saveCart();
+      //  controller.saveCart();
     }
     super.initState();
   }
@@ -181,25 +181,26 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
   }
 
   Future<void> _pickDeliveryTime(BuildContext context) async {
-    mezDbgPrint(controller.cart.value.isSpecial);
-    mezDbgPrint(controller.cart.value.cartPeriod.toString());
-    await showModalBottomSheet<DateTime>(
-        context: context,
-        isDismissible: true,
-        builder: (BuildContext ctx) {
-          return MezDateTimePicker(
-            startDate: controller.cart.value.deliveryTime?.toLocal(),
-            periodOfTime: controller.cart.value.cartPeriod,
-            numberOfDaysInterval: controller.cart.value.isSpecial ? 1 : 7,
-            serviceSchedule: controller.cart.value.restaurant!.schedule!,
-          );
-        }).then((DateTime? value) {
-      if (value != null) {
-        controller.cart.value.deliveryTime = value;
-        controller.saveCart();
-        controller.cart.refresh();
-      }
-    });
+    if (controller.cart.value.restaurant?.schedule != null) {
+      await showModalBottomSheet<DateTime>(
+          context: context,
+          isDismissible: true,
+          builder: (BuildContext ctx) {
+            return MezDateTimePicker(
+              startDate: controller.cart.value.deliveryTime?.toLocal(),
+              periodOfTime: controller.cart.value.cartPeriod,
+              numberOfDaysInterval: controller.cart.value.isSpecial ? 1 : 7,
+              serviceSchedule: controller.cart.value.restaurant!.schedule!,
+            );
+          }).then((DateTime? value) {
+        if (value != null) {
+          controller.cart.value.deliveryTime = value;
+          controller.saveCart();
+        }
+      });
+    } else {
+      mezDbgPrint("[OPS] Restaurant have no schedule!");
+    }
   }
 
   Container _timeError() {

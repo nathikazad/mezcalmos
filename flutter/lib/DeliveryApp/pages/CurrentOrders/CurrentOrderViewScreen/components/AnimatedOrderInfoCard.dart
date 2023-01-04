@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/TwoCirclesAvatars.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
@@ -258,8 +259,8 @@ class AnimatedOrderInfoCard extends StatelessWidget {
             withPadding: false,
             onTap: onServiceMsgClick,
             showRedDot: (_serviceDriverChatId() != null)
-                ? Get.find<OrderController>()
-                    .hasNewMessageNotification(_serviceDriverChatId()!)
+                ? Get.find<OrderController>().hasNewMessageNotification(
+                    _serviceDriverChatId()!.toString())
                 : false,
           ),
         ),
@@ -311,8 +312,8 @@ class AnimatedOrderInfoCard extends StatelessWidget {
             withPadding: false,
             onTap: onCustomerMsgClick,
             showRedDot: (_customerDriverChatId() != null)
-                ? Get.find<OrderController>()
-                    .hasNewMessageNotification(_customerDriverChatId()!)
+                ? Get.find<OrderController>().hasNewMessageNotification(
+                    _customerDriverChatId()!.toString())
                 : false,
           ),
         ),
@@ -320,7 +321,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
     );
   }
 
-  String? _customerDriverChatId() {
+  int? _customerDriverChatId() {
     switch (order.orderType) {
       case OrderType.Laundry:
         return (order as LaundryOrder).getCustomerDriverChatId();
@@ -333,7 +334,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
     return null;
   }
 
-  String? _serviceDriverChatId() {
+  int? _serviceDriverChatId() {
     switch (order.orderType) {
       case OrderType.Laundry:
         return (order as LaundryOrder).getServiceDriverChatId();
@@ -379,7 +380,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            Get.toNamed<void>(
+            MezRouter.toNamed<void>(
               getOrderDetailsRoute(order.orderId),
             );
           },

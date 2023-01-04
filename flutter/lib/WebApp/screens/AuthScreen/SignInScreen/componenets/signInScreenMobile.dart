@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/WebApp/routes/AuthRoutes.dart';
 import 'package:mezcalmos/WebApp/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -22,7 +23,7 @@ class SigninScreenMobile extends StatefulWidget {
 }
 
 class _SigninScreenMobileState extends State<SigninScreenMobile> {
-  FirbaseAuthController controller = Get.find<FirbaseAuthController>();
+  AuthController controller = Get.find<AuthController>();
 
   TextEditingController _prefixTextFieldController = TextEditingController();
   TextEditingController _numberTextFieldController = TextEditingController();
@@ -234,8 +235,7 @@ class _SigninScreenMobileState extends State<SigninScreenMobile> {
                     if (!phone.startsWith('+')) phone = "+" + phone;
                     print(phone);
                     if (phone.isPhoneNumber) {
-                      ServerResponse response =
-                          await controller.sendOTPForLogin(phone);
+                      ServerResponse response = await sendOTPForLogin(phone);
                       print("++++++++++++ response >>> $response");
                       String xParams = QR.currentPath.split("?").last;
                       mezDbgPrint(" xParams $xParams");

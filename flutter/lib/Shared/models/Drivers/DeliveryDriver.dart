@@ -1,27 +1,51 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
+import 'package:mezcalmos/Shared/models/Utilities/DeliveryCompanyType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class DeliveryDriverState {
-  bool isAuthorized;
-  bool isOnline;
+  AgentStatus status;
+
+  bool online;
+  String? deliveryCompanyId;
+
+  DeliveryCompanyType? deliveryCompanyType;
 
   DeliveryDriverState({
-    required this.isAuthorized,
-    required this.isOnline,
+    required this.status,
+    required this.online,
+    this.deliveryCompanyId,
+    this.deliveryCompanyType,
   });
 
   factory DeliveryDriverState.fromSnapshot(data) {
     final bool isAuthorized =
         data == null ? false : data['authorizationStatus'] == "authorized";
     final bool isOnline = data == null ? false : data['isOnline'] == true;
-    return DeliveryDriverState(isAuthorized: isAuthorized, isOnline: isOnline);
+
+    return DeliveryDriverState(
+      status: data["status"],
+      online: isOnline,
+      deliveryCompanyId: data?["serviceProviderId"],
+      deliveryCompanyType:
+          data?["serviceProviderType"]?.toString().toDeliveryCompanyType(),
+    );
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        "authorizationStatus": isAuthorized,
-        "isOnline": isOnline,
+        "isOnline": online,
+        "serviceProviderId": deliveryCompanyId,
+        "serviceProviderType": deliveryCompanyType?.toFirebaseFormatString(),
       };
+
+  bool get isAuthorized {
+    return status == AgentStatus.Authorized;
+  }
+
+  bool get isOnline {
+    return status == AgentStatus.Authorized && online == true;
+  }
 }
 
 // used by delivery admin app
@@ -34,8 +58,8 @@ class DeliveryDriver {
 
   DeliveryDriver({
     required this.deliveryDriverState,
-    required this.driverLocation,
-    required this.lastLocationUpdateTime,
+    this.driverLocation,
+    this.lastLocationUpdateTime,
     required this.deliveryDriverId,
     required this.driverInfo,
   });
@@ -50,7 +74,7 @@ class DeliveryDriver {
         DeliveryDriverUserInfo.fromData(deliveryDriverData['info']);
 
     /// driverLocation
-    final dynamic driverLocation = deliveryDriverData['location'] == null
+    final dynamic? driverLocation = deliveryDriverData['location'] == null
         ? null
         : LatLng(deliveryDriverData["location"]["position"]["lat"],
             deliveryDriverData["location"]["position"]["lng"]);
@@ -73,16 +97,33 @@ class DeliveryDriver {
   /// Added for Debugging Perposes - Don't delete for now
   Map<String, dynamic> toJson() => <String, dynamic>{
         "authorizationStatus": deliveryDriverState.isAuthorized,
-        "isOnline": deliveryDriverState.isOnline,
+        "isOnline": deliveryDriverState.online,
         "driverLocation": driverLocation?.toJson(),
         "lastLocationUpdateTime":
             lastLocationUpdateTime?.toUtc().toIso8601String(),
       };
+  bool get isAssociated {
+    return deliveryDriverState.deliveryCompanyId != null;
+  }
 
   @override
   String toString() {
     return 'DeliveryDriver{deliveryDriverState: $deliveryDriverState, driverInfo: $driverInfo, driverLocation: $driverLocation, lastLocationUpdateTime: $lastLocationUpdateTime, deliveryDriverId: $deliveryDriverId}';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is DeliveryDriver &&
+        other.deliveryDriverId == deliveryDriverId;
+  }
+
+  @override
+  int get hashCode =>
+      driverLocation.hashCode ^
+      lastLocationUpdateTime.hashCode ^
+      deliveryDriverId.hashCode;
 }
 
 enum DriverUserInfoAndUpdateStatus {
@@ -106,17 +147,13 @@ class DeliveryDriverUserInfo extends UserInfo {
   LatLng? location;
 
   DeliveryDriverUserInfo({
-    required String id,
-    required String name,
-    required String image,
+    required super.hasuraId,
+    super.firebaseId,
+    required super.name,
+    required super.image,
     this.location,
-    LanguageType? language,
-  }) : super(
-          id: id,
-          name: name,
-          image: image,
-          language: language,
-        );
+    required super.language,
+  });
 
   factory DeliveryDriverUserInfo.fromData(data) {
     final LatLng? location = data["location"] != null
@@ -126,12 +163,22 @@ class DeliveryDriverUserInfo extends UserInfo {
     final LanguageType? language = data["language"] != null
         ? data["language"].toString().toLanguageType()
         : null;
+// TODO:544D-HASURA
+
     return DeliveryDriverUserInfo(
-        id: data["id"],
+        hasuraId: data["id"] ?? '',
+        firebaseId: data["id"] ?? "",
         name: data["name"],
         image: data["image"],
         location: location ?? null,
         language: language);
+
+    // return DeliveryDriverUserInfo(
+    //     id: data["id"],
+    //     name: data["name"],
+    //     image: data["image"],
+    //     location: location ?? null,
+    //     language: language);
   }
 
   @override
@@ -142,7 +189,7 @@ class DeliveryDriverUserInfo extends UserInfo {
 
 // ignore: constant_identifier_names
 // this is to distinguish between pick up and drop off driver
-enum DeliveryDriverType { Pickup, DropOff }
+enum DeliveryDriverType { Restaurant, Delivery_driver }
 
 // this is to distinguish between which action the driver is doing
 // for example dropoff driver is picking up order from restaurant

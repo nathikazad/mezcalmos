@@ -3,15 +3,14 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import "package:mezcalmos/Shared/controllers/authController.dart";
 
 // ignore: constant_identifier_names
 enum UserProfileMode { Edit, Show }
 
 class UserProfileController {
-  final FirbaseAuthController _authController =
-      Get.find<FirbaseAuthController>();
+  final AuthController _authController = Get.find<AuthController>();
   TextEditingController textEditingController = TextEditingController();
   // Picker object.
   final imPicker.ImagePicker picker = imPicker.ImagePicker();

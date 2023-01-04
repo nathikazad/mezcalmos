@@ -11,7 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:mezcalmos/Shared/constants/global.dart';
 // import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/restaurantNodes.dart';
@@ -24,6 +24,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 // import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 import 'package:mezcalmos/WebApp/controllers/messageWebController.dart';
 import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
@@ -53,7 +54,7 @@ class _MessagingScreenForWebState extends State<MessagingScreenForWeb> {
         future: setupFirebase(
             launchMode: typeMode.toLaunchMode(),
             func: () async {
-              if (Get.find<FirbaseAuthController>().fireAuthUser?.uid != null) {
+              if (Get.find<AuthController>().fireAuthUser?.uid != null) {
                 await Get.put<ForegroundNotificationsController>(
                     ForegroundNotificationsController(),
                     permanent: true);
@@ -64,8 +65,7 @@ class _MessagingScreenForWebState extends State<MessagingScreenForWeb> {
           if (snapShot.hasData && snapShot.data == true) {
             final LanguageController Lcontroller =
                 Get.find<LanguageController>();
-            final FirbaseAuthController _authcontroller =
-                Get.find<FirbaseAuthController>();
+            final AuthController _authcontroller = Get.find<AuthController>();
 
             return MessagingView();
           } else {
@@ -119,9 +119,10 @@ class _MessagingViewState extends State<MessagingView> {
       recipientType =
           QR.params['recipientType']!.toString().toParticipantType();
     }
-    controller.clearMessageNotifications(chatId: chatId);
+    controller.clearMessageNotifications(chatId: int.parse(chatId));
     mezDbgPrint("@AYROUT ===> ${QR.params} | orderLink ==> $orderLink");
-    controller.loadChat(chatId: chatId, onValueCallBack: _fillCallBack);
+    controller.loadChat(
+        chatId: int.parse(chatId), onValueCallBack: _fillCallBack);
     setState(() {
       isChatLoaded = true;
     });
@@ -134,7 +135,7 @@ class _MessagingViewState extends State<MessagingView> {
     super.dispose();
   }
 
-  FirbaseAuthController _authController = Get.find<FirbaseAuthController>();
+  AuthController _authController = Get.find<AuthController>();
 
   TextEditingController _textEditingController = new TextEditingController();
   ScrollController _listViewScrollController = new ScrollController();
@@ -162,10 +163,8 @@ class _MessagingViewState extends State<MessagingView> {
         return singleChatComponent(
           message: message.message,
           time: intl.DateFormat('hh:mm a').format(message.timestamp.toLocal()),
-          isMe: message.userId == _authController.user!.id,
-          userImage: controller.chat.value!
-              .getParticipant(message.participantType, message.userId)
-              ?.image,
+          isMe: message.userId == _authController.user!.firebaseId,
+          userImage: controller.chat.value?.chatInfo.chatImg,
         );
       },
     ));
@@ -173,12 +172,12 @@ class _MessagingViewState extends State<MessagingView> {
   }
 
   /// Using this for now, to limit the calls only between deliveryDrivers<->Customers
-  bool isReciepientAuthorizedToCall() {
-    final ParticipantType? _pType =
-        controller.recipient(recipientType: recipientType)?.participantType;
-    return [ParticipantType.Customer, ParticipantType.DeliveryDriver]
-        .contains(_pType);
-  }
+  // bool isReciepientAuthorizedToCall() {
+  //   final ParticipantType? _pType =
+  //       controller.recipient(recipientType: recipientType)?.participantType;
+  //   return [ParticipantType.Customer, ParticipantType.DeliveryDriver]
+  //       .contains(_pType);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -206,127 +205,184 @@ class _MessagingViewState extends State<MessagingView> {
                         ),
                         body: Material(
                           child: Container(
-                            child: Scaffold(
-                              backgroundColor:
-                                  Color.fromARGB(255, 253, 249, 249),
-                              appBar: PreferredSize(
+                              child: Scaffold(
+                            backgroundColor: Color.fromARGB(255, 253, 249, 249),
+                            appBar: AppBar(
+                              centerTitle: true,
+                              leading: Center(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    QR.back();
+                                  },
                                   child: Container(
-                                    color: Colors.white,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: MezCalmosResizer
-                                            .getWepPageHorizontalPadding(
-                                                context)),
-                                    child: AppBar(
-                                      leading: IconButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          icon: Icon(Icons.arrow_back)),
-                                      centerTitle: true,
-                                      title: Obx(
-                                        () {
-                                          return (controller
-                                                      .recipient(
-                                                          recipientType:
-                                                              recipientType)
-                                                      ?.participantType ==
-                                                  ParticipantType.DeliveryAdmin)
-                                              ? Text("Administrador",
-                                                  style: GoogleFonts.montserrat(
-                                                    textStyle: TextStyle(
-                                                      fontSize: 18,
-                                                    ),
-                                                  ))
-                                              : Text(
-                                                  controller
-                                                          .recipient(
-                                                              recipientType:
-                                                                  recipientType,
-                                                              recipientId:
-                                                                  recipientId)
-                                                          ?.name ??
-                                                      "User",
-                                                  style: GoogleFonts.montserrat(
-                                                    textStyle: TextStyle(
-                                                      fontSize: 18,
-                                                    ),
-                                                  ));
-                                        },
+                                    height: 30,
+                                    width: 30,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Color.fromARGB(255, 97, 127, 255),
+                                          Color.fromARGB(255, 198, 90, 252),
+                                        ],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
                                       ),
-                                      actions: <Widget>[],
+                                    ),
+                                    child: Icon(
+                                      Icons.arrow_back_ios_rounded,
+                                      color: Colors.white,
+                                      size: 15,
                                     ),
                                   ),
-                                  preferredSize:
-                                      Size(Get.width, kToolbarHeight)),
-                              body: isChatLoaded
-                                  ? Container(
-                                      child: Stack(
-                                        children: <Widget>[
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 10.1),
-                                                child: Center(
-                                                  child: Text(
-                                                    formattedDate,
-                                                    style:
-                                                        GoogleFonts.montserrat(
-                                                      fontSize: 16,
-                                                      color: Color.fromRGBO(
-                                                          120, 120, 120, 1),
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: MezCalmosResizer
-                                                          .getWepPageHorizontalPadding(
-                                                              context)),
-                                                  child: Obx(
-                                                    () => ListView(
-                                                      shrinkWrap: true,
-                                                      controller:
-                                                          _listViewScrollController,
-                                                      children:
-                                                          List<Widget>.from(
-                                                              chatLines
-                                                                  .reversed),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  : MezLogoAnimation(
-                                      centered: true,
-                                    ),
-                              bottomNavigationBar: Container(
-                                color: Colors.white,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: MezCalmosResizer
-                                        .getWepPageHorizontalPadding(context)),
-                                child: SendMessageBox(
-                                  typedMsg: _typedMsg,
-                                  textEditingController: _textEditingController,
-                                  controller: controller,
-                                  chatId: chatId,
-                                  orderId: orderId,
                                 ),
                               ),
+                              title: Obx(
+                                () {
+                                  return controller
+                                              .chat.value?.chatInfo.chatTite ==
+                                          null
+                                      ? ThreeDotsLoading()
+                                      : Text(
+                                          controller
+                                              .chat.value!.chatInfo.chatTite,
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                          ),
+                                        );
+                                  // return (controller
+                                  //             .recipient(recipientType: recipientType)
+                                  //             ?.participantType ==
+                                  //         ParticipantType.DeliveryAdmin)
+                                  //     ? Text(
+                                  //         "Administrador",
+                                  //         style: TextStyle(
+                                  //           fontSize: 18,
+                                  //         ),
+                                  //       )
+                                  //     : Text(
+                                  //         controller
+                                  //                 .recipient(
+                                  //                     recipientType: recipientType,
+                                  //                     recipientId: recipientId)
+                                  //                 ?.name ??
+                                  //             "User",
+                                  //         style: TextStyle(
+                                  //           fontSize: 18,
+                                  //         ),
+                                  //       );
+                                },
+                              ),
+                              actions: <Widget>[
+                                if (controller
+                                        .chat.value?.chatInfo.parentlink !=
+                                    null)
+                                  InkWell(
+                                    child: Container(
+                                      width: 60,
+                                      padding: EdgeInsets.all(5),
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 7, vertical: 12),
+                                      decoration: BoxDecoration(
+                                        color: Color.fromRGBO(225, 228, 255, 1),
+                                        borderRadius:
+                                            BorderRadius.circular(14.9),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "order",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontFamily: 'Montserrat',
+                                            fontWeight: FontWeight.w600,
+                                            color: Color.fromRGBO(
+                                                103, 121, 254, 1),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      //   MezRouter.toNamed<void>(
+                                      //   controller.chat.value!.chatInfo.parentlink,
+                                      // );
+                                    },
+                                  ),
+                                // Obx(
+                                //   () =>
+                                // Container(
+                                //   child: controller.isUserAuthorizedToCall() &&
+                                //           // isReciepientNotAdmin() &&
+                                //           sagora != null
+                                //       ? InkWell(
+                                //           // onTap: () async => _onCallPress(),
+                                //           child: Container(
+                                //             width: 30,
+                                //             height: 30,
+                                //             padding: EdgeInsets.all(5),
+                                //             margin: EdgeInsets.only(right: 7),
+                                //             decoration: BoxDecoration(
+                                //               shape: BoxShape.circle,
+                                //               color: Color.fromRGBO(103, 121, 254, 1),
+                                //             ),
+                                //             child: Center(
+                                //               child: FittedBox(
+                                //                 child: Icon(
+                                //                   Icons.call,
+                                //                   color: Colors.white,
+                                //                 ),
+                                //               ),
+                                //             ),
+                                //           ),
+                                //         )
+                                //       : SizedBox(),
+                                // ),
+                                // )
+                              ],
                             ),
-                          ),
+                            body: isChatLoaded
+                                ? Container(
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 10.1),
+                                              child: Center(
+                                                child: Text(formattedDate),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Obx(
+                                                () => ListView(
+                                                  shrinkWrap: true,
+                                                  controller:
+                                                      _listViewScrollController,
+                                                  children: List<Widget>.from(
+                                                      chatLines.reversed),
+                                                ),
+                                              ),
+                                            ),
+                                            SendMessageBox(
+                                              typedMsg: _typedMsg,
+                                              textEditingController:
+                                                  _textEditingController,
+                                              controller: controller,
+                                              chatId: chatId,
+                                              // orderId: orderId,
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : MezLogoAnimation(
+                                    centered: true,
+                                  ),
+                          )),
                         ),
                       )),
                 );
@@ -595,10 +651,9 @@ class SendMessageBox extends StatelessWidget {
                     _textEditingController.text.replaceAll(' ', '').length > 0;
                 if (msgReady2Send) {
                   controller.sendMessage(
-                      message: _typedMsg.value,
-                      chatId: chatId,
-                      orderId: orderId,
-                      orderType: orderType);
+                    message: _typedMsg.value,
+                    chatId: int.parse(chatId),
+                  );
                   _textEditingController.clear();
                   _typedMsg.value = "";
                 } else {

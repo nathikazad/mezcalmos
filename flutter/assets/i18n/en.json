@@ -23,7 +23,7 @@
             "DropDownLocationList": {
                 "chooseLoc": "Choose location",
                 "ops": "Oops",
-                "wrongAddress" : "Wrong/Invalid address picked!",
+                "wrongAddress": "Wrong/Invalid address picked!",
                 "distanceError": "Distance between you and restaurant is more than 10km !",
                 "pickLocation": "Pick from map"
             },
@@ -216,7 +216,7 @@
                     "ViewCartScreen": {
                         "ops": "Oops",
                         "restaurantClosed": "Restuarnt is closed now",
-                        "distanceError": "Distance between you and restaurat is more than 10km !",
+                        "distanceError": "Distance between you and restaurat is more than 15km!",
                         "myCart": "My Cart",
                         "notAvailable": "This restaurant is closed",
                         "orderNow": "ORDER NOW",
@@ -272,7 +272,14 @@
                             "willBeDelivered": "Estimated delivery time"
                         },
                         "RestaurantOrderDriverCard": {
-                            "dropOffTime": "Delivery time"
+                            "dropOffTime": "Delivery time",
+                            
+                            "selfDeliveryTitle": "Delivery handeled by restaurant",
+                            "driver": "Delivery driver"
+
+                        },
+                        "OrderRestaurantCard": {
+                            "restaurant": "Restaurant"
                         },
                         "notesWidget": {
                             "notes": "Order note :"
@@ -1186,8 +1193,9 @@
             "ServicesView": {
                 "services": "Services",
                 "noLaundries": "No laundries are available",
-                "editProfile": "Edit Profile",
-                "editAdmin": "Edit Admin"
+                "editProfile": "Profile",
+                "editAdmin": "Admin",
+                "operators": "Operators"
             },
             "Orders": {
                 "components": {
@@ -1552,6 +1560,7 @@
                                 "scheduled": "Scheduled order",
                                 "preparing": "Order is being prepared",
                                 "readyForPickup": "Ready for pickup",
+                                "justReady": "Ready for delivery",
                                 "deliveryOtw": "Delivery on the way",
                                 "delivered": "Order Delivered",
                                 "canceled": "Order Cancelled"
@@ -1562,7 +1571,14 @@
                                 "timeErrorTitle": "Time not set !",
                                 "timeErrorBody": "Please set the estimated times first.",
                                 "notReadyTitle": "Waiting for order",
-                                "notReadyBody": "Order is not ready for delivery yet"
+                                "notReadyBody": "Order is not ready for delivery yet",
+                              
+                                "startDelivery": "Start Delivery"
+
+
+
+
+
                             }
                         }
                     }
@@ -1845,14 +1861,20 @@
                     },
                     "ROpOrderEstTime": {
                         "title": "Estimated preparation time",
+                        "deliveryTitle": "Estimated delivery time",
+
                         "set": "Set",
                         "confirm": "Confirm",
                         "cancel": "Cancel",
                         "error": "Error",
-                        "minTimes": "Minimum 5 miutes prepare time"
+                        "minTimes": "Minimum 5 miutes prepare time",
+                        "deliveryMinTimes": "Minimum 5 miutes delivery time"
                     },
                     "ROpDriverCard": {
-                        "noDriver": "No driver assigned yet"
+                        "noDriver": "No driver assigned yet",
+                        "set": "Set",
+                        "selfDelivery": "Self delivery",
+                        "forwarded": "Forwarded to Mezcalmos"
                     },
                     "ROpOrderCustomer": {
                         "customer": "Customer"
@@ -1907,8 +1929,8 @@
 
             },
             "ROpOptionView": {
-                "addOption": "Add option",
-                "editOption": "Edit option",
+                "addOption": "Save option",
+                "editOption": "Save option",
                 "optionName": "Option name",
                 "required": "Required",
                 "optionChoices": "Option choices",
@@ -1947,6 +1969,7 @@
                     }
                 },
                 "currentOrders": "Current orders",
+                "pastButton": "View past orders",
                 "pastOrders": "Past orders",
                 "incomingOrders": "Incoming orders",
                 "offlineTitle": "You are offline",
@@ -1969,8 +1992,8 @@
                 "cancelHelperText": "Are you sure you want to cancel the reorder process",
                 "components": {
                     "ROpSpecialsComponent": {
-                        "currentSp": "Current special items",
-                        "recentSp": "Recent special items"
+                        "currentSp": "Current specials",
+                        "recentSp": "Old specials"
                     },
                     "ROpItemCard": {
                         "category": "Category",
@@ -1988,12 +2011,75 @@
 
                 }
             },
+            "ROpPickDriverView": {
+                "components": {
+                    "ROpSelfDeliveryCard": {
+                        "selfDelivery": "Self delivery"
+                    },
+                    "ROpDriverSelectCard": {
+                        "available": "Available",
+                        "unavailable": "Unavailable",
+                        "assign": "Assign"
+                    }
+                },
+                "pick": "Pick driver",
+                "fwdMezcalmos": "Forward to MezCalmos",
+                "assigning": "Assgining driver ..."
+
+            },
+            "ROpDriversView": {
+                "components": {
+                    "ROpListDriverCard": {
+                        "available": "Available",
+                        "unavailable": "Unavailable",
+                        "rmBtn": "Yes, remove driver",
+                        "rmTitle": "Remove driver",
+                        "rmText": "Are you sure you want to remove this driver"
+                    }
+                },
+                "drivers": "Drivers",
+                "falseTitle": "Turn on self delivery to deliver using your own drivers",
+                "falseDesc": "Go to profile > In shortcuts turn on Self delivery",
+                "trueTitle": "Control your delivery by adding your own drivers",
+                "trueDesc": "Authorize drivers by adding them using email or phone number (they must have created an account with our Delivery app) ",
+                "assDrivers": "Associated Drivers",
+                "addDriver": "Add driver",
+                "newDv": "New driver",
+                "phoneOrEmail": "Phone number or email",
+                "cancel": "Cancel"
+            },
+            "ROpTabsViewView": {
+                "orders": "Orders",
+                "menu": "Menu",
+                "drivers": "Drivers",
+                "profile": "Profile"
+            },
+            "ROpDashboardPage": {
+                "openTitle": "Restaurant Availibility",
+                "openSubtitle": "This will close your restaurant indefinitely",
+                "settings": "Settings",
+                "restInfo": "Informations",
+                "schedule": "Working hours",
+                "payments": "Payments",
+                "reviews": "Reviews",
+                "shortcuts": "Shortcuts",
+                "shareRest": "Share restaurant",
+                "selfDvTitle": "Self delivery",
+                "selfDvDesc": "Control your own deliveries.",
+                "privacyPolicies": "Privacy Policies",
+                "logout": "Logout"
+            },
             "ROpEditInfoView": {
 
                 "controllers": {
                     "ROpEditInfoController": {
                         "error": "Error",
-                        "selectPrimaryFirst": "Select Primary language first"
+                        "selectPrimaryFirst": "Select Primary language first",
+                        "dashboard": "Dashboard",
+                        "informations": "Informations",
+                        "reviews": "Reviews",
+                        "schedule": "Schedule",
+                        "payments": "Payments"
 
                     }
                 },
@@ -2017,7 +2103,7 @@
                         "acceptedPayments": "Accepted payments",
                         "setup": "Setup",
                         "fees": "Fees",
-                        "chargeCustomer": "Charge stripe fees on customer",
+                        "chargeCustomer": "charge customer processing fees",
 
                         "setupHelper": "Thanks for setup , you can now receive payments but you will not be able to withdraw money to your bank account",
                         "reqs": "Requirements",

@@ -20,41 +20,41 @@ Notification deliveryDriverNotificationHandler(String key, value) {
 
   mezDbgPrint(notificationType);
   switch (notificationType) {
-    case NotificationType.NewOrder:
-      return Notification(
-          id: key,
-          icon:
-              (value['orderType'].toString().toOrderType() == OrderType.Laundry)
-                  ? mat.Icons.local_laundry_service
-                  : mat.Icons.flatware,
-          linkUrl: getLinkUrl(value['orderType'].toString().toOrderType(),
-              value['orderId']), // needs to be changed, need to add laundry
-          body: '${_i18n()['driverNotifBody']}', // needs to be changed
-          imgUrl:
-              'assets/images/shared/notifications/onTheWay.png', // needs to be changed
-          title: '${_i18n()['driverNotifTitle']}',
-          timestamp: DateTime.parse(value['time']),
-          notificationType: NotificationType.NewOrder,
-          notificationAction:
-              (value["notificationAction"] as String).toNotificationAction(),
-          variableParams: value);
-    case NotificationType.NewMessage:
-      return newMessageNotification(key, value);
-    case NotificationType.OrderStatusChange:
-      switch (value['orderType'].toString().toOrderType()) {
-        case OrderType.Restaurant:
-          return restaurantOrderStatusChangeNotificationHandler(key, value);
-        case OrderType.Laundry:
-          return laundryOrderStatusChangeNotificationHandler(key, value);
-        default:
-          throw Exception("Unexpected Order Type $value['orderType']");
-      }
+    // case NotificationType.NewOrder:
+    //   return Notification(
+    //       id: key,
+    //       icon:
+    //           (value['orderType'].toString().toOrderType() == OrderType.Laundry)
+    //               ? mat.Icons.local_laundry_service
+    //               : mat.Icons.flatware,
+    //       linkUrl: getLinkUrl(value['orderType'].toString().toOrderType(),
+    //           value['orderId']), // needs to be changed, need to add laundry
+    //       body: '${_i18n()['driverNotifBody']}', // needs to be changed
+    //       imgUrl:
+    //           'assets/images/shared/notifications/onTheWay.png', // needs to be changed
+    //       title: '${_i18n()['driverNotifTitle']}',
+    //       timestamp: DateTime.parse(value['time']),
+    //       notificationType: NotificationType.NewOrder,
+    //       notificationAction:
+    //           (value["notificationAction"] as String).toNotificationAction(),
+    //   variableParams: value);
+    // case NotificationType.NewMessage:
+    //   return newMessageNotification(key, value);
+    // case NotificationType.OrderStatusChange:
+    //   switch (value['orderType'].toString().toOrderType()) {
+    //     case OrderType.Restaurant:
+    //       return restaurantOrderStatusChangeNotificationHandler(key, value);
+    //     case OrderType.Laundry:
+    //       return laundryOrderStatusChangeNotificationHandler(key, value);
+    //     default:
+    //       throw Exception("Unexpected Order Type $value['orderType']");
+    //   }
     default:
       throw StateError("Invalid Notification Type");
   }
 }
 
-String getLinkUrl(OrderType orderType, String orderId) {
+String getLinkUrl(OrderType orderType, int orderId) {
   switch (orderType) {
     case OrderType.Laundry:
       return getLaundryOrderRoute(orderId);
@@ -95,17 +95,17 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
 Map<String, dynamic>? getRestaurantOrderStatusFields(
     RestaurantOrderStatus restaurantOrderStatus) {
   switch (restaurantOrderStatus) {
-    case RestaurantOrderStatus.PreparingOrder:
+    case RestaurantOrderStatus.Preparing:
       return <String, dynamic>{
-        "title": "${_i18n()["preparingOrderTitle"]}",
-        "body": "${_i18n()["preparingOrderBody"]}",
+        "title": "${_i18n()["PreparingTitle"]}",
+        "body": "${_i18n()["PreparingBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
       };
-    case RestaurantOrderStatus.ReadyForPickup:
+    case RestaurantOrderStatus.Ready:
       return <String, dynamic>{
-        "title": "${_i18n()["readyForPickupTitle"]}",
-        "body": "${_i18n()["readyForPickupBody"]}",
+        "title": "${_i18n()["ReadyTitle"]}",
+        "body": "${_i18n()["ReadyBody"]}",
         "imgUrl": aDeliveryIcon,
       };
     case RestaurantOrderStatus.CancelledByAdmin:

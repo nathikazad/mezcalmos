@@ -3,8 +3,8 @@ import { OrderType } from "../models/Generic/Order";
 import { ParticipantType } from "../models/Generic/Chat";
 import { ServiceProviderType } from "../../utilities/setLink";
 
-export function notificationsNode(particpantType: ParticipantType, userId: string) {
-  return firebase.database().ref(`/notifications/${particpantType}/${userId}`)
+export function notificationsNode(particpantType: ParticipantType, firebaseUserId: string) {
+  return firebase.database().ref(`/notifications/${particpantType}/${firebaseUserId}`)
 }
 
 export function userInfoNode(userId: string) {
@@ -13,13 +13,14 @@ export function userInfoNode(userId: string) {
 
 const participantTypeToNodeMap: { [id in ParticipantType]: string } = {
   [ParticipantType.Customer]: "customers",
-  [ParticipantType.DeliveryAdmin]: "deliveryAdmins",
+  [ParticipantType.DeliveryOperator]: "deliveryAdmins",
   [ParticipantType.Taxi]: "taxis",
   [ParticipantType.Restaurant]: "restaurants",
   [ParticipantType.DeliveryDriver]: "deliveryDrivers",
   [ParticipantType.Laundry]: "laundries",
   [ParticipantType.LaundryOperator]: "operators/laundry",
   [ParticipantType.RestaurantOperator]: "operators/restaurant",
+  [ParticipantType.MezAdmin]: "medAdmins",
 };
 
 export function notificationInfoNode(participantType: ParticipantType, userId: string) {

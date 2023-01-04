@@ -1,13 +1,17 @@
-import 'dart:math';
-
-import 'package:collection/collection.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
@@ -72,15 +76,16 @@ class Cart {
   }
 
   Map<String, dynamic> toFirebaseFormattedJson() {
-    final Map<String, dynamic> items = {};
+    final Map<int, dynamic> items = {};
     cartItems.forEach((CartItem cartItem) {
-      items[cartItem.idInCart!] = cartItem.toFirebaseFunctionFormattedJson();
+      if (cartItem.idInCart != null)
+        items[cartItem.idInCart!] = cartItem.toFirebaseFunctionFormattedJson();
     });
 
     return <String, dynamic>{
       "orderType": OrderType.Restaurant.toFirebaseFormatString(),
       "routeInformation": _routeInformation?.toJson(),
-      "serviceProviderId": restaurant?.info.id,
+      "serviceProviderId": restaurant?.info.hasuraId.toString(),
       "quantity": quantity(),
       "cost": totalCost.toInt(),
       "itemsCost": itemsCost().toInt(),
@@ -110,7 +115,7 @@ class Cart {
   num get totalCost {
     num tcost = itemsCost() + (shippingCost ?? 0);
     if (paymentType == PaymentType.Card &&
-        restaurant!.paymentInfo.stripe?.chargeFeesOnCustomer == true) {
+        restaurant!.paymentInfo?.stripe?.chargeFeesOnCustomer == true) {
       tcost += stripeFees;
     }
     return tcost;
@@ -121,27 +126,40 @@ class Cart {
       : 0;
 
   void addItem(CartItem cartItem) {
-    if (cartItem.idInCart == null) {
-      cartItem.idInCart = getRandomString(5);
-    } else {
-      final int index = cartItems.indexWhere(
-          (CartItem element) => element.idInCart == cartItem.idInCart);
-      cartItems.removeAt(index);
-    }
-
+    mezDbgPrint(
+        "[cc] Index ==> ${cartItem.idInCart} | cartItems.len ${cartItems.length}");
+    final int index = cartItems.indexWhere((CartItem element) {
+      return element.idInCart == cartItem.idInCart;
+    });
+    if (index != -1) cartItems.removeAt(index);
     cartItems.add(CartItem.clone(cartItem));
   }
 
-  void incrementItem(String id, int quantity) {
+  /// returns new quantity applied
+  CartItem? incrementItem(int id, int quantity) {
     final CartItem? item = getItem(id);
-    if (item != null) item.quantity += quantity;
+    if (item != null) {
+      if (Get.find<AuthController>().user?.hasuraId != null) {
+        update_item_quantity(
+          quantity: item.quantity + quantity,
+          customer_id: Get.find<AuthController>().user!.hasuraId,
+          item_id: id,
+        );
+      }
+      item.quantity += quantity;
+      return item;
+    }
+    return null;
   }
 
-  void deleteItem(String itemId) {
+  void deleteItem(int itemId) {
+    if (Get.find<AuthController>().user?.hasuraId != null) {
+      rm_item_from_cart(item_id: itemId);
+    }
     cartItems.removeWhere((CartItem cartItem) => cartItem.idInCart == itemId);
   }
 
-  CartItem? getItem(String id) {
+  CartItem? getItem(int id) {
     return cartItems
         .firstWhereOrNull((CartItem cartItem) => cartItem.idInCart == id);
   }
@@ -163,6 +181,7 @@ class Cart {
         }
       }
     });
+    mezDbgPrint("success cart period =>>$periodOfTime");
 
     return periodOfTime;
   }
@@ -196,7 +215,8 @@ class Cart {
   PeriodOfTime? get firstItemPeriod {
     final CartItem? citem = cartItems
         .firstWhereOrNull((CartItem element) => element.isSpecial == true);
-    if (citem != null) {
+    if (citem?.item != null) {
+      mezDbgPrint("error period =>${citem!.item.getPeriod}");
       return PeriodOfTime(start: citem.item.startsAt!, end: citem.item.endsAt!);
     }
     return null;
@@ -216,15 +236,15 @@ class Cart {
 }
 
 class CartItem {
-  String restaurantId;
-  String? idInCart;
+  int restaurantId;
+  int? idInCart;
   Item item;
   int quantity;
 
   String? notes;
   //optionId and list of choices for that option
-  Map<String, List<Choice>> chosenChoices = <String, List<Choice>>{};
-
+  Map<int, List<Choice>> chosenChoices = <int, List<Choice>>{};
+  //  selected_options = Map<Int, List<int>>
   CartItem(this.item, this.restaurantId,
       {this.idInCart, this.quantity = 1, this.notes}) {
     item.options.forEach((Option option) {
@@ -236,11 +256,11 @@ class CartItem {
     required itemData,
     required Item item,
     required Restaurant restaurant,
-    required String itemIdInCart,
+    required int itemIdInCart,
   }) {
     final CartItem cartItem = CartItem(
       item,
-      restaurant.info.id,
+      restaurant.info.hasuraId,
       idInCart: itemIdInCart,
       quantity: itemData["quantity"],
       notes: itemData["notes"],
@@ -273,6 +293,26 @@ class CartItem {
     return cartItem;
   }
 
+  //{ 2 : {choices : [] , optionName: {en: ... , es: ...}}}
+  Map<String, Map<String, dynamic>> selectedOptionsToJson() {
+    final Map<String, Map<String, dynamic>> json = {};
+
+    chosenChoices.forEach((int optionId, List<Choice> choices) {
+      final List<Map<String, dynamic>> data = [];
+      choices.forEach((Choice choice) {
+        data.add(choice.toJson());
+      });
+      json[optionId.toString()] = <String, dynamic>{
+        "choices": data,
+        "optionName": item.findOption(optionId)?.name.toFirebaseFormat()
+      };
+      // json["chosenChoices"][optionId]["optionName"] =
+      //     item.findOption(optionId)?.name.toFirebaseFormat();
+      // json["chosenChoices"][optionId]["choices"] = data;
+    });
+    return json;
+  }
+
   Map<String, dynamic> toFirebaseFunctionFormattedJson() {
     final Map<String, dynamic> json = <String, dynamic>{
       "id": item.id,
@@ -281,21 +321,24 @@ class CartItem {
       "costPerOne": costPerOne(),
       "name": item.name.toFirebaseFormat(),
       "image": item.image,
-      "chosenChoices": {},
+      // "chosenChoices": {},
+      "chosenChoices": selectedOptionsToJson(),
       "notes": notes,
     };
 
-    chosenChoices.forEach((String optionId, List<Choice> choices) {
-      final List data = [];
-      choices.forEach((Choice choice) {
-        data.add(choice.toJson());
-      });
+    // {"optionId" : [{choice1} , {choic2} , {} ,{} ] }
 
-      json["chosenChoices"][optionId] = <String, dynamic>{};
-      json["chosenChoices"][optionId]["optionName"] =
-          item.findOption(optionId)?.name.toFirebaseFormat();
-      json["chosenChoices"][optionId]["choices"] = data;
-    });
+    // chosenChoices.forEach((String optionId, List<Choice> choices) {
+    //   final List data = [];
+    //   choices.forEach((Choice choice) {
+    //     data.add(choice.toJson());
+    //   });
+
+    //   json["chosenChoices"][optionId] = <String, dynamic>{};
+    //   json["chosenChoices"][optionId]["optionName"] =
+    //       item.findOption(optionId)?.name.toFirebaseFormat();
+    //   json["chosenChoices"][optionId]["choices"] = data;
+    // });
 
     return json;
   }
@@ -308,21 +351,21 @@ class CartItem {
       quantity: cartItem.quantity,
       notes: cartItem.notes,
     );
-    cartItem.chosenChoices.forEach((String optionId, List<Choice> choices) {
+    cartItem.chosenChoices.forEach((int optionId, List<Choice> choices) {
       newCartItem.chosenChoices[optionId] = <Choice>[...choices]; // hard copy
     });
     return newCartItem;
   }
 
   void setNewChoices(
-      {required String optionId, required List<Choice> newChoices}) {
+      {required int optionId, required List<Choice> newChoices}) {
     chosenChoices[optionId] = newChoices;
   }
 
   num costPerOne() {
     num costPerOne = item.cost;
     // if(chosenChoices.length > item.options
-    chosenChoices.forEach((String optionId, List<Choice> choices) {
+    chosenChoices.forEach((int optionId, List<Choice> choices) {
       final Option? option = item.findOption(optionId);
       if (option != null) {
         if (choices.length > option.freeChoice) {
@@ -344,7 +387,9 @@ class CartItem {
   }
 
   bool get isSpecial {
-    return item.isSpecial;
+    return item.itemType == ItemType.Special &&
+        item.startsAt != null &&
+        item.endsAt != null;
   }
 
   @override
@@ -362,12 +407,4 @@ class CartItem {
         quantity.hashCode ^
         notes.hashCode;
   }
-}
-
-String getRandomString(int length) {
-  const String _chars =
-      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  final Random _rnd = Random();
-  return String.fromCharCodes(Iterable.generate(
-      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 }

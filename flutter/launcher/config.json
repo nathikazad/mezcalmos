@@ -31,7 +31,11 @@
                 "cupertino_icons": "^1.0.2",
                 "google_fonts": "^3.0.1",
                 "url_launcher": "^6.0.9",
-                
+                "graphql": "^5.1.1",
+                "jwt_decoder": "^2.0.1",
+                "jaguar_jwt": "^3.0.0",
+                "graphql_codegen": "^0.11.2",
+                "firebase_dynamic_links": "^4.1.1",
                 "get": "^4.3.8",
                 "get_storage": "^2.0.3",
                 "cached_network_image": "^3.2.0",
@@ -476,6 +480,12 @@
                     "apple-service-file": "services/stage/ios/delivery.plist"
                 },
                 "prod": {
+                    "appName": "Mezdelivery",
+                    "packageName": "com.mezcalmos.delivery",
+                    "googe-service-file": "services/prod/android/delivery.json",
+                    "apple-service-file": "services/prod/ios/delivery.plist"
+                },
+                "dev": {
                     "appName": "Mezdelivery",
                     "packageName": "com.mezcalmos.delivery",
                     "googe-service-file": "services/prod/android/delivery.json",

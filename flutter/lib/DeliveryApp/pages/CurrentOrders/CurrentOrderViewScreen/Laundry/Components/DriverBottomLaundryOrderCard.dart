@@ -126,8 +126,8 @@
 
 // //   String _getOrderStatus() {
 // //     switch (widget.order.status) {
-// //       case LaundryOrderStatus.OrderReceieved:
-// //         return "${_i18n()["orderStatus"]["readyForPickup"]}";
+// //       case LaundryOrderStatus.OrderReceived:
+// //         return "${_i18n()["orderStatus"]["Ready"]}";
 // //       case LaundryOrderStatus.OtwPickup:
 // //         return "${_i18n()["orderStatus"]["pickupOtw"]}";
 // //       case LaundryOrderStatus.PickedUp:

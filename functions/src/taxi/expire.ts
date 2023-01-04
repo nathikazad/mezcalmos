@@ -3,12 +3,12 @@ import * as rootNodes from "../shared/databaseNodes/root";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
-import { pushNotification } from "../utilities/senders/notifyUser";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/Services/Taxi/TaxiOrder";
-import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
-import { ParticipantType } from "../shared/models/Generic/Chat";
-import { orderUrl } from "../utilities/senders/appRoutes";
+// import { pushNotification } from "../utilities/senders/notifyUser";
+// import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+import { TaxiOrder, TaxiOrderStatus } from "../shared/models/Services/Taxi/TaxiOrder";
+// import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
+// import { ParticipantType } from "../shared/models/Generic/Chat";
+// import { orderUrl } from "../utilities/senders/appRoutes";
 
 export async function expireOrder(orderId: string) {
   let order = (await rootNodes.openOrders(OrderType.Taxi, orderId).once('value')).val()
@@ -53,25 +53,25 @@ export async function expireOrder(orderId: string) {
 
     rootNodes.openOrders(OrderType.Taxi, orderId).remove();
     rootNodes.pastOrders(OrderType.Taxi, orderId).set(order);
-    customerNodes.inProcessOrders(order.customer.id!, orderId).remove();
-    customerNodes.pastOrders(order.customer.id!, orderId).set(order);
+    customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).remove();
+    customerNodes.pastOrders(order.customer.firebaseId!, orderId).set(order);
 
 
 
-    let notification: Notification = {
-      foreground: <TaxiOrderStatusChangeNotification>{
-        status: TaxiOrderStatus.Expired,
-        time: (new Date()).toISOString(),
-        notificationType: NotificationType.OrderStatusChange,
-        orderType: OrderType.Taxi,
-        orderId: orderId,
-        notificationAction: NotificationAction.ShowPopUp,
-      },
-      background: taxiOrderStatusChangeMessages[TaxiOrderStatus.Expired],
-      linkUrl: orderUrl(ParticipantType.Customer, OrderType.Taxi, orderId)
-    }
+    // let notification: Notification = {
+    //   foreground: <TaxiOrderStatusChangeNotification>{
+    //     status: TaxiOrderStatus.Expired,
+    //     time: (new Date()).toISOString(),
+    //     notificationType: NotificationType.OrderStatusChange,
+    //     orderType: OrderType.Taxi,
+    //     orderId: orderId,
+    //     notificationAction: NotificationAction.ShowPopUp,
+    //   },
+    //   background: taxiOrderStatusChangeMessages[TaxiOrderStatus.Expired],
+    //   linkUrl: orderUrl(ParticipantType.Customer, OrderType.Taxi, orderId)
+    // }
 
-    pushNotification(order.customer.id!, notification, ParticipantType.Customer, true);
+    // pushNotification(order.customer.id!, notification, ParticipantType.Customer, true);
 
     return {
       status: ServerResponseStatus.Success,

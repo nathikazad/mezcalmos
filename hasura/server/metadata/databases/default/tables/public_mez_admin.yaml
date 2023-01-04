@@ -1,0 +1,28 @@
+table:
+  name: mez_admin
+  schema: public
+object_relationships:
+  - name: user
+    using:
+      manual_configuration:
+        column_mapping:
+          user_id: id
+        insertion_order: null
+        remote_table:
+          name: user
+          schema: public
+computed_fields:
+  - name: notification_token
+    definition:
+      function:
+        name: mez_admin_notification_token
+        schema: public
+update_permissions:
+  - role: mez_admin
+    permission:
+      columns:
+        - version
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check: null

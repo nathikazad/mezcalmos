@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:sizer/sizer.dart';
 
@@ -15,7 +15,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 
 class RestaurantBankInfoCard extends StatefulWidget {
   const RestaurantBankInfoCard({super.key, required this.restaurantId});
-  final String restaurantId;
+  final int restaurantId;
 
   @override
   State<RestaurantBankInfoCard> createState() => _RestaurantBankInfoCardState();
@@ -31,14 +31,14 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
 
   Future<void> _getRest() async {
     restaurant.value = await Get.find<RestaurantsInfoController>()
-        .getRestaurant(widget.restaurantId);
+        .getRestaurant(widget.restaurantId as int);
   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
       if (restaurant.value != null &&
-          restaurant.value!.paymentInfo.bankInfo != null) {
+          restaurant.value!.paymentInfo?.bankInfo != null) {
         return Card(
           margin: const EdgeInsets.only(top: 20),
           child: Container(
@@ -73,7 +73,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                                     style: Get.textTheme.bodyText1?.copyWith(
                                       fontSize: 10.sp,
                                     )),
-                                Text(restaurant.value!.paymentInfo.bankInfo
+                                Text(restaurant.value!.paymentInfo?.bankInfo
                                         ?.bankName ??
                                     "Error"),
                               ],
@@ -83,7 +83,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                               onTap: () {
                                 Clipboard.setData(ClipboardData(
                                         text: restaurant.value!.paymentInfo
-                                            .bankInfo?.bankName
+                                            ?.bankInfo?.bankName
                                             .toString()))
                                     .then((_) => _copiedSnackBar());
                               },
@@ -107,7 +107,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                                   style: Get.textTheme.bodyText1
                                       ?.copyWith(fontSize: 10.sp),
                                 ),
-                                Text(restaurant.value!.paymentInfo.bankInfo
+                                Text(restaurant.value!.paymentInfo?.bankInfo
                                         ?.accountNumber
                                         .toString() ??
                                     "Error"),
@@ -118,7 +118,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                               onTap: () {
                                 Clipboard.setData(ClipboardData(
                                         text: restaurant.value!.paymentInfo
-                                            .bankInfo?.accountNumber
+                                            ?.bankInfo?.accountNumber
                                             .toString()))
                                     .then((_) => _copiedSnackBar());
                               },

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/components/ShippingCostComponent.dart';
 
@@ -56,15 +56,15 @@ class RestaurantCardForMobile extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      if (restaurant.description != null)
+                      if (restaurant.info.description != null)
                         Text(
-                          restaurant.description![userLanguage]!,
+                          restaurant.info.description![userLanguage]!,
                           style: txt.subtitle1,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                      if (restaurant.description != null &&
-                          restaurant.description!.length > 1)
+                      if (restaurant.info.description != null &&
+                          restaurant.info.description!.length > 1)
                         const Spacer(),
                       Container(
                         //  alignment: Alignment.bottomLeft,

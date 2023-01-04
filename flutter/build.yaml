@@ -1,0 +1,34 @@
+# build.yaml
+
+targets:
+  $default:
+    builders:
+      graphql_codegen:
+        options:
+          outputDirectory: __generated
+          assetsPath: lib/Shared/graphql/**
+          clients:
+            - graphql
+          scalars:
+            timestamptz:
+              type: String
+            json:
+              type: dynamic
+              fromJsonFunctionName: mapFromJson
+              toJsonFunctionName: mapToJson
+              import: package:mezcalmos/Shared/graphql/hasuraTypes.dart
+            jsonb:
+              type: dynamic
+              fromJsonFunctionName: mapFromJson
+              toJsonFunctionName: mapToJson
+              import: package:mezcalmos/Shared/graphql/hasuraTypes.dart
+            geography:
+              type: Geography
+              fromJsonFunctionName: geographyFromJson
+              toJsonFunctionName: geographyToJson
+              import: package:mezcalmos/Shared/graphql/hasuraTypes.dart
+            money:
+              type: double
+              fromJsonFunctionName: moneyFromJson
+              toJsonFunctionName: moneyToJson
+              import: package:mezcalmos/Shared/graphql/hasuraTypes.dart

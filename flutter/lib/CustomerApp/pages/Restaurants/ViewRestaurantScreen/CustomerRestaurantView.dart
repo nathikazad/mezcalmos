@@ -8,11 +8,14 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/com
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/RestaurantListItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/restaurantInfoTab.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -34,7 +37,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
   @override
   void initState() {
     restaurant = Get.arguments as Restaurant;
-    mezDbgPrint(restaurant.info.id);
+    mezDbgPrint(restaurant.info.hasuraId.toString().toString());
     _viewController.init(restaurant: restaurant, vsync: this);
     super.initState();
   }
@@ -66,21 +69,20 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
 
   Container _schedulingOrdersBottomWidget() {
     return Container(
+      alignment: Alignment.center,
       height: 60,
       decoration: BoxDecoration(color: Colors.grey.shade400),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(Icons.info),
-          SizedBox(
-            width: 5,
-          ),
           Flexible(
             child: Text(
               '${_i18n()["scheduleTitle"]}',
               style: Get.textTheme.bodyText1,
               maxLines: 2,
+              textAlign: TextAlign.center,
             ),
           ),
         ],
@@ -169,18 +171,17 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
                   ?.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700),
             ),
           ),
-          if (category.dialog?[userLanguage] != null &&
-              category.dialog![userLanguage]!.isNotEmpty)
+          if (category.dialog?[userLanguage] != null)
             Container(
               child: Text(
-                category.dialog![userLanguage]!,
+                category.dialog![userLanguage]!.inCaps,
                 style: Get.textTheme.bodyText2?.copyWith(
                     fontFamily: "Montserrat", color: Colors.grey.shade700),
               ),
             ),
           _buildResturantItems(
             items: category.items,
-            restaurantId: restaurant.info.id,
+            restaurantId: restaurant.info.hasuraId,
             isSpecial: false,
           ),
           SizedBox(
@@ -207,7 +208,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           ),
           _buildResturantItems(
             items: specItems.values.toList()[index],
-            restaurantId: restaurant.info.id,
+            restaurantId: restaurant.info.hasuraId,
             isSpecial: true,
           ),
           SizedBox(
@@ -220,8 +221,9 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
 
   Widget _buildResturantItems(
       {required List<Item> items,
-      required String restaurantId,
+      required int restaurantId,
       bool isSpecial = false}) {
+    mezDbgPrint("[66] called :: _buildResturantItems");
     if (restaurant.restaurantsView == RestaurantsView.Rows || isSpecial) {
       return Container(
         margin: const EdgeInsets.only(top: 5),
@@ -231,8 +233,11 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             children.add(RestaurantsListOfItemsComponent(
                 item: item,
                 function: () {
-                  Get.toNamed(
-                    getItemRoute(restaurantId, item.id!),
+                  mezDbgPrint(
+                      "[66] IUtem id ===> ${item.id} -- route ==> ${getItemRoute(restaurantId.toString(), item.id!)}");
+                  MezRouter.toNamed(
+                    getItemRoute(restaurantId.toString(), item.id!)
+                        .replaceAll(' ', ''),
                     arguments: {
                       "mode": ViewItemScreenMode.AddItemMode,
                       "isSpecial": isSpecial

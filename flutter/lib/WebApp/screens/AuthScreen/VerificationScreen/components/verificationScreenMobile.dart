@@ -3,11 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/WebApp/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -16,7 +17,7 @@ import 'package:sizer/sizer.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["AuthScreens"]["SMS"]["OtpConfirmationScreen"];
 
-class VerificationScreenMobile extends GetView<FirbaseAuthController> {
+class VerificationScreenMobile extends GetView<AuthController> {
   VerificationScreenMobile({super.key, required this.passedPhone});
   final String passedPhone;
   RxBool clickedSignInOtp = false.obs;
@@ -192,7 +193,7 @@ class VerificationScreenMobile extends GetView<FirbaseAuthController> {
                                 canConfirmOtp.value = false;
                                 _otpCodeTextController.clear();
                                 final ServerResponse response =
-                                    await controller.sendOTPForLogin(
+                                    await sendOTPForLogin(
                                         Get.arguments ?? _phonePassed);
                                 print(response.data);
                                 if (!response.success) {
@@ -243,7 +244,7 @@ class VerificationScreenMobile extends GetView<FirbaseAuthController> {
                   clickedSignInOtp.value = true;
                   mezDbgPrint(
                       "${Get.arguments ?? _phonePassed} -------------- $otpCode ");
-                  final ServerResponse? _resp = await controller.signInUsingOTP(
+                  final ServerResponse? _resp = await signInUsingOTP(
                       Get.arguments ?? "+" + _phonePassed.trim(), otpCode);
 
                   switch (_resp?.success) {

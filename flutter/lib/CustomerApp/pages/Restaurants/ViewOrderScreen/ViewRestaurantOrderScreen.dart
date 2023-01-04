@@ -14,20 +14,25 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/componen
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/RestaurantBankInfo.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/notesWidget.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
+import 'package:mezcalmos/Shared/graphql/order/mutations/hsRestaurantOrderMutations.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
+import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -91,40 +96,55 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   @override
   void initState() {
     super.initState();
-
-    final String orderId = Get.parameters['orderId']!;
-
-    if (Get.parameters['orderId'] == null) Get.back();
+    mezDbgPrint("[=] ViewRestaurantOrderScreeen params :: ${Get.parameters}");
+    final int orderId = int.parse(Get.parameters['orderId']!);
+    mezDbgPrint("+orderId ==> $orderId");
+    if (Get.parameters['orderId'] == null) MezRouter.back();
     // orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as RestaurantOrder?;
+    mezDbgPrint("Got Order ===> ${order.value?.orderId}");
+    // order.value = listen_on_restaurant_order(order_id: order_id, cus_id: cus_id).first;
     if (order.value != null) {
       initMap();
       updateMapIfDeliveryPhase(order.value!.status);
     }
 
-    _orderListener =
-        controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
-      if (newOrderEvent != null) {
-        order.value = newOrderEvent as RestaurantOrder?;
+    mezDbgPrint("Listening on + OrderId ($orderId)");
+    _orderListener = listen_on_restaurant_order_by_id(orderId: orderId)
+        .listen((RestaurantOrder? _order) {
+      mezDbgPrint(
+          "[+] listen_on_restaurant_order Trigger ===> ${_order?.orderId}");
+
+      if (_order != null) {
+        order.value = _order;
         if (order.value!.inProcess()) {
           updateMapIfDeliveryPhase(order.value!.status);
         }
       }
     });
+    // _orderListener =
+    //     controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
+    //   if (newOrderEvent != null) {
+    //     order.value = newOrderEvent as RestaurantOrder?;
+    //     if (order.value!.inProcess()) {
+    //       updateMapIfDeliveryPhase(order.value!.status);
+    //     }
+    //   }
+    // });
 
-    waitForOrderIfNotLoaded().then((void value) {
-      if (order.value == null) {
-        // ignore: inference_failure_on_function_invocation
-        Future<void>.delayed(Duration.zero, () {
-          Get.back<void>();
-          MezSnackbar("Error", "Order does not exist");
-        });
-      } else {
-        initMap();
-        updateMapIfDeliveryPhase(order.value!.status);
-      }
-    });
+    // waitForOrderIfNotLoaded().then((void value) {
+    //   if (order.value == null) {
+    //     // ignore: inference_failure_on_function_invocation
+    //     Future<void>.delayed(Duration.zero, () {
+    //       Get.back<void>();
+    //       MezSnackbar("Error", "Order does not exist");
+    //     });
+    //   } else {
+    //     initMap();
+    //     updateMapIfDeliveryPhase(order.value!.status);
+    //   }
+    // });
     super.initState();
   }
 
@@ -142,7 +162,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   @override
   void didUpdateWidget(ViewRestaurantOrderScreen oldWidget) {
-    final String orderId = Get.parameters['orderId']!;
+    final int orderId = int.parse(Get.parameters['orderId']!);
     super.didUpdateWidget(oldWidget);
     mezDbgPrint("this widget is updated");
     if (order.value == null) {
@@ -165,14 +185,23 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         title: order.value?.restaurant.name,
       ),
       bottomNavigationBar: Obx(() {
-        if (showReviewBtn()) {
+        if (showReviewBtn() && order.value != null) {
           return MezButton(
             label: "${_i18n()["writeReview"]}",
             withGradient: true,
             onClick: () async {
-              await showReviewDialog(context,
-                  orderId: order.value!.orderId,
-                  orderType: OrderType.Restaurant);
+              final int? newReviewId = await showReviewDialog(
+                context,
+                orderId: order.value!.orderId,
+                orderType: OrderType.Restaurant,
+                serviceProviderId: order.value!.restaurantId,
+                serviceProviderType: ServiceProviderType.Restaurant,
+              );
+              mezDbgPrint("Reviwww id =====>$newReviewId");
+              if (newReviewId != null) {
+                await insertRestaurantOrderReview(
+                    orderId: order.value!.orderId, reviewId: newReviewId);
+              }
             },
             borderRadius: 0,
           );
@@ -208,7 +237,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                                 PaymentType.BankTransfer)
                               RestaurantBankInfoCard(
                                   restaurantId: order.value!.restaurantId),
-                            CustomerRestaurantOrderEst(order: order.value!),
+                            if (order.value!.inProcess())
+                              CustomerRestaurantOrderEst(order: order.value!),
 
                             RestaurantOrderDriverCard(
                               order: order.value!,
@@ -239,10 +269,27 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                               order: order.value!,
                               margin: const EdgeInsets.only(top: 20),
                             ),
+                            if (order.value!.review != null)
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(
+                                    "Review : ",
+                                    style: Get.textTheme.bodyText1,
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  ReviewCard(review: order.value!.review!),
+                                ],
+                              ),
                             order.value?.notes == null ||
                                     order.value!.notes!.length <= 0
                                 ? Container()
-                                : notesWidget(order),
+                                : notesWidget(order, context),
                             OrderSummaryCard(
                               order: order.value!,
                             ),
@@ -304,7 +351,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     // restaurant ad customer's location are fixed (fit in bound at start)
     mapController.addOrUpdateUserMarker(
       latLng: order.value?.restaurant.location.toLatLng(),
-      markerId: order.value?.restaurant.id,
+      markerId: order.value?.restaurant.firebaseId,
       customImgHttpUrl: order.value?.restaurant.image,
       fitWithinBounds: true,
     );
@@ -323,7 +370,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   void updateMapIfDeliveryPhase(RestaurantOrderStatus status) {
     switch (status) {
-      case RestaurantOrderStatus.ReadyForPickup:
+      case RestaurantOrderStatus.Ready:
         mezDbgPrint("+ poly => ${order.value!.routeInformation?.toJson()}");
         mezDbgPrint("+ markers => ${mapController.markers.length}");
         mezDbgPrint("+ polys => ${mapController.polylines.length}");
@@ -336,7 +383,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
           _statusSnapshot = status;
           mapController.addOrUpdateUserMarker(
             latLng: order.value?.restaurant.location.toLatLng(),
-            markerId: order.value?.restaurant.id,
+            markerId: order.value?.restaurant.firebaseId,
             customImgHttpUrl: order.value?.restaurant.image,
             fitWithinBounds: true,
           );
@@ -345,12 +392,21 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
             fitWithinBounds: true,
           );
         }
-        mapController.addOrUpdateUserMarker(
-          latLng: order.value?.dropoffDriver?.location,
-          markerId: order.value?.dropoffDriver?.id,
-          customImgHttpUrl: order.value?.dropoffDriver?.image,
-          fitWithinBounds: true,
-        );
+        if (order.value?.selfDeliveryDetails != null) {
+          mapController.addOrUpdateUserMarker(
+            latLng: order.value?.selfDeliveryDetails?.location,
+            markerId: order.value?.orderId.toString(),
+            customImgHttpUrl: defaultDriverImgUrl,
+            fitWithinBounds: true,
+          );
+        } else {
+          mapController.addOrUpdateUserMarker(
+            latLng: order.value?.dropoffDriver?.location,
+            markerId: order.value?.dropoffDriver?.hasuraId.toString(),
+            customImgHttpUrl: order.value?.dropoffDriver?.image,
+            fitWithinBounds: true,
+          );
+        }
 
         mapController.animateAndUpdateBounds();
         break;
@@ -361,7 +417,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
           // we ignore the restaurant's marker within bounds
           mapController.addOrUpdateUserMarker(
             latLng: order.value?.restaurant.location.toLatLng(),
-            markerId: order.value?.restaurant.id,
+            markerId: order.value?.restaurant.firebaseId,
             customImgHttpUrl: order.value?.restaurant.image,
             fitWithinBounds: true,
           );
@@ -373,12 +429,21 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         }
 
         // we keep updating the delivery's
-        mapController.addOrUpdateUserMarker(
-          latLng: order.value?.dropoffDriver?.location,
-          markerId: order.value?.dropoffDriver?.id,
-          customImgHttpUrl: order.value?.dropoffDriver?.image,
-          fitWithinBounds: true,
-        );
+        if (order.value?.selfDeliveryDetails != null) {
+          mapController.addOrUpdateUserMarker(
+            latLng: order.value?.selfDeliveryDetails?.location,
+            markerId: order.value?.orderId.toString(),
+            customImgHttpUrl: defaultDriverImgUrl,
+            fitWithinBounds: true,
+          );
+        } else {
+          mapController.addOrUpdateUserMarker(
+            latLng: order.value?.dropoffDriver?.location,
+            markerId: order.value?.dropoffDriver?.hasuraId.toString(),
+            customImgHttpUrl: order.value?.dropoffDriver?.image,
+            fitWithinBounds: true,
+          );
+        }
         mapController.animateAndUpdateBounds();
 
         break;

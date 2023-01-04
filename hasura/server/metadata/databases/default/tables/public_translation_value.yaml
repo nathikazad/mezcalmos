@@ -1,0 +1,119 @@
+table:
+  name: translation_value
+  schema: public
+object_relationships:
+  - name: language
+    using:
+      foreign_key_constraint_on: language_id
+  - name: translation_group
+    using:
+      foreign_key_constraint_on: translation_id
+insert_permissions:
+  - role: delivery_driver
+    permission:
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - translation_id
+        - language_id
+        - value
+  - role: restaurant_operator
+    permission:
+      check:
+        translation_group:
+          restaurant:
+            restaurant_operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      columns:
+        - translation_id
+        - language_id
+        - value
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - translation_id
+        - language_id
+        - value
+      filter: {}
+  - role: customer
+    permission:
+      columns:
+        - translation_id
+        - language_id
+        - value
+      filter: {}
+  - role: delivery_driver
+    permission:
+      columns:
+        - translation_id
+        - language_id
+        - value
+      filter: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - translation_id
+        - language_id
+        - value
+      filter: {}
+  - role: restaurant_operator
+    permission:
+      columns:
+        - translation_id
+        - language_id
+        - value
+      filter: {}
+update_permissions:
+  - role: delivery_driver
+    permission:
+      columns:
+        - value
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null
+  - role: restaurant_operator
+    permission:
+      columns:
+        - value
+      filter:
+        translation_group:
+          restaurant:
+            restaurant_operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      check: null
+delete_permissions:
+  - role: delivery_driver
+    permission:
+      backend_only: false
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      backend_only: false
+      filter:
+        translation_group:
+          restaurant:
+            restaurant_operators:
+              user_id:
+                _eq: X-Hasura-User-Id

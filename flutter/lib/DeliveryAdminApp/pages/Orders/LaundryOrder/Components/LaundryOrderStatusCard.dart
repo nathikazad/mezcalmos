@@ -66,7 +66,7 @@ Widget getOrderWidget(LaundryOrderStatus status) {
         ),
       );
 
-    case LaundryOrderStatus.OrderReceieved:
+    case LaundryOrderStatus.OrderReceived:
       return Padding(
         padding: const EdgeInsets.only(right: 0.0),
         child: Icon(
@@ -142,7 +142,7 @@ String getOrderStatus(LaundryOrderStatus status) {
     case LaundryOrderStatus.CancelledByCustomer:
       return 'Order Canceled';
 
-    case LaundryOrderStatus.OrderReceieved:
+    case LaundryOrderStatus.OrderReceived:
       return _i18n()['orderReceived'];
     case LaundryOrderStatus.OtwPickupFromCustomer:
       return _i18n()['otwPickUp'];

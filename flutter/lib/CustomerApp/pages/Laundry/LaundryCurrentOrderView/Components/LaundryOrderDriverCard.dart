@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() =>
@@ -66,9 +67,9 @@ class LaundryOrderDriverCard extends StatelessWidget {
                       showRedDot: Get.find<OrderController>()
                           .hasNewMessageNotification(_getRightChatId()!),
                       onTap: () {
-                        Get.toNamed(getMessagesRoute(
-                            chatId: _getRightChatId()!,
-                            orderId: order.orderId,
+                        MezRouter.toNamed(getMessagesRoute(
+                            chatId: _getRightChatId()!.toString(),
+                            orderId: order.orderId.toString(),
                             orderType: OrderType.Laundry,
                             recipientType: ParticipantType.DeliveryDriver));
                       })
@@ -80,7 +81,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
     }
   }
 
-  String? _getRightChatId() {
+  int? _getRightChatId() {
     if (order.getCurrentPhase() == LaundryOrderPhase.Pickup &&
         order.customerPickupDriverChatId != null) {
       return order.customerPickupDriverChatId;

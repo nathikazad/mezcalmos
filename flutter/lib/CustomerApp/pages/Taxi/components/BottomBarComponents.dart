@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Taxi"]["components"]["BottomBarComponents"];
@@ -192,9 +193,9 @@ Widget messageBtn({required Rxn<TaxiOrder> order, EdgeInsets? margin}) {
   return Obx(
     () => GestureDetector(
       onTap: () {
-        Get.toNamed<void>(getMessagesRoute(
-            chatId: order.value!.orderId,
-            orderId: order.value!.orderId,
+        MezRouter.toNamed<void>(getMessagesRoute(
+            chatId: order.value!.orderId.toString(),
+            orderId: order.value!.orderId.toString(),
             orderType: OrderType.Taxi,
             recipientType: ParticipantType.Taxi));
       },
@@ -249,7 +250,7 @@ Widget cancelBtn(TaxiOrder order, BuildContext context) {
                 position: SnackPosition.TOP);
           }
         });
-        Get.back();
+        MezRouter.popDialog();
       },
       child: Container(
         height: 33,

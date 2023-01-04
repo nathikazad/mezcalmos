@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -36,7 +36,7 @@ class NotificationPopUpWidget extends StatefulWidget {
 class _NotificationPopUpWidgetState extends State<NotificationPopUpWidget> {
   ForegroundNotificationsController controller =
       Get.find<ForegroundNotificationsController>();
-  FirbaseAuthController authController = Get.find<FirbaseAuthController>();
+  AuthController authController = Get.find<AuthController>();
   final DateFormat f = new DateFormat('hh:mm a');
   final DateFormat ff = new DateFormat('MM.dd.yyyy');
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -30,8 +30,7 @@ class _SignInRedirectionViewState extends State<SignInRedirectionView> {
           if (snapShot.hasData && snapShot.data == true) {
             final LanguageController Lcontroller =
                 Get.find<LanguageController>();
-            final FirbaseAuthController _authcontroller =
-                Get.find<FirbaseAuthController>();
+            final AuthController _authcontroller = Get.find<AuthController>();
 
             return Material(
               child: Container(
@@ -80,7 +79,7 @@ class _SignInRedirectionViewState extends State<SignInRedirectionView> {
                               // to remove the SignIn popUp first!
                               Get.back<void>();
                               // then head to kSignInRoute.
-                              Get.find<FirbaseAuthController>()
+                              Get.find<AuthController>()
                                   .preserveNavigationStackAfterSignIn = true;
                               // ignore: unawaited_futures
                               //Get.toNamed<void>(kSignInRouteOptional);

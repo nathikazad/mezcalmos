@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -66,11 +66,11 @@ class UserProfileWidgetsClass {
               height: 137,
               width: 137,
               decoration: BoxDecoration(
-                color: Get.find<FirbaseAuthController>().isUserImgSet()
+                color: Get.find<AuthController>().isUserImgSet()
                     ? Color.fromRGBO(255, 255, 255, 1)
                     : Color.fromRGBO(217, 217, 217, 1),
                 shape: BoxShape.circle,
-                image: Get.find<FirbaseAuthController>().isUserImgSet() ||
+                image: Get.find<AuthController>().isUserImgSet() ||
                         userProfileController.userImgBytes.value != null
                     ? DecorationImage(
                         fit: BoxFit.cover,
@@ -82,7 +82,7 @@ class UserProfileWidgetsClass {
               ),
               child: userProfileController.stateMode.value ==
                           UserProfileMode.Edit &&
-                      !Get.find<FirbaseAuthController>().isUserImgSet()
+                      !Get.find<AuthController>().isUserImgSet()
                   ? browsImageButton(isImageBeingUploaded: isImageBeingUploaded)
                   : SizedBox(),
             ),
@@ -196,7 +196,7 @@ class UserProfileWidgetsClass {
       return Column(
         children: [
           Text(
-            Get.find<FirbaseAuthController>().user?.name ?? "-",
+            Get.find<AuthController>().user?.name ?? "-",
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w700,
@@ -222,7 +222,7 @@ class UserProfileWidgetsClass {
       return Column(
         children: [
           Text(
-            Get.find<FirbaseAuthController>().user?.name ?? "-",
+            Get.find<AuthController>().user?.name ?? "-",
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w700,

@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -63,7 +64,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
       scale: 0.6,
       child: InkWell(
         onTap: () {
-          Get.back();
+          MezRouter.back();
         },
         child: Ink(
           decoration: BoxDecoration(
@@ -95,7 +96,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
       scale: 0.6,
       child: InkWell(
         onTap: () {
-          //  Get.back();
+          //  MezRouter.back();
           Get.find<SideMenuDrawerController>().openMenu();
         },
         child: Ink(
@@ -130,7 +131,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
-          Get.toNamed(kOrdersRoute);
+          MezRouter.toNamed(kOrdersRoute);
         },
         child: Ink(
           padding: const EdgeInsets.all(5),
@@ -154,7 +155,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
-          Get.toNamed(kSignInRouteOptional);
+          MezRouter.toNamed(kSignInRouteOptional);
         },
         child: Ink(
           padding: const EdgeInsets.all(7),
@@ -181,7 +182,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: InkWell(
             customBorder: CircleBorder(),
             onTap: () {
-              Get.toNamed(kNotificationsRoute);
+              MezRouter.toNamed(kNotificationsRoute);
             },
             child: Badge(
               badgeColor: Colors.red,
@@ -209,22 +210,20 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget getAppbarIconsButton() {
-    return Obx(() {
-      return Row(
-        children: [
-          SizedBox(
-            width: 5,
-          ),
-          if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
-          if (Get.find<AuthController>().isUserSignedIn)
-            _notificationAppBarIcon(),
-          if (Get.find<AuthController>().isUserSignedIn && showPastOrders)
-            _ordersAppBarIcon(),
-          SizedBox(
-            width: 10,
-          ),
-        ],
-      );
-    });
+    return Row(
+      children: [
+        SizedBox(
+          width: 5,
+        ),
+        if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
+        if (Get.find<AuthController>().isUserSignedIn)
+          _notificationAppBarIcon(),
+        if (Get.find<AuthController>().isUserSignedIn && showPastOrders)
+          _ordersAppBarIcon(),
+        SizedBox(
+          width: 10,
+        ),
+      ],
+    );
   }
 }

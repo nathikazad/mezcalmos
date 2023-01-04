@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/animations.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -27,7 +28,7 @@ extension LaundryOrderWidgets on LaundryOrder {
       case LaundryOrderStatus.CancelledByCustomer:
         return _i18n()['canceled'];
 
-      case LaundryOrderStatus.OrderReceieved:
+      case LaundryOrderStatus.OrderReceived:
         return _i18n()['orderReceived'];
       case LaundryOrderStatus.OtwPickupFromCustomer:
         return _i18n()['otwPickUp'];
@@ -53,7 +54,7 @@ extension LaundryOrderWidgets on LaundryOrder {
       case LaundryOrderStatus.CancelledByCustomer:
         return _i18n()['canceled'];
 
-      case LaundryOrderStatus.OrderReceieved:
+      case LaundryOrderStatus.OrderReceived:
         return _i18n()['orderReceived'];
       case LaundryOrderStatus.OtwPickupFromCustomer:
         return _i18n()['otwToCustomer'];
@@ -130,7 +131,7 @@ extension LaundryOrderWidgets on LaundryOrder {
         );
 
         break;
-      case LaundryOrderStatus.OrderReceieved:
+      case LaundryOrderStatus.OrderReceived:
         orderWidget = Container(
           child: Icon(
             Icons.local_laundry_service,

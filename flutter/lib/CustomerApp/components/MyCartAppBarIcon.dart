@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 
 class MyCartAppBarIcon extends StatelessWidget {
@@ -26,7 +27,7 @@ class MyCartAppBarIcon extends StatelessWidget {
               padding: const EdgeInsets.only(right: 5.0, bottom: 8.0),
               child: IconButton(
                 onPressed: () {
-                  Get.toNamed<void>(kCartRoute);
+                  MezRouter.toNamed<void>(kCartRoute);
                 },
                 icon: Badge(
                   padding: EdgeInsets.all(6),

@@ -1,83 +1,82 @@
-import * as functions from "firebase-functions";
-import {
-  ServerResponse,
-  ServerResponseStatus,
-} from "../shared/models/Generic/Generic";
-import * as firebase from "firebase-admin";
-import { UserRecord } from "firebase-functions/v1/auth";
-import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
-import * as operatorNodes from "../shared/databaseNodes/operators/operator";
-import { OrderType } from "../shared/models/Generic/Order";
-import { userInfoNode } from "../shared/databaseNodes/root";
-import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
-import { UserInfo } from "../shared/models/Generic/User";
+import { Language, Location, ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { NewRestaurantNotification, Restaurant } from "../shared/models/Services/Restaurant/Restaurant";
+import { createRestaurant } from "../shared/graphql/restaurant/createRestaurant";
+import { getUser } from "../shared/graphql/user/getUser";
+import { ParticipantType } from "../shared/models/Generic/Chat";
+import { MezAdmin } from "../shared/models/Generic/User";
+import { NotificationType, NotificationAction, Notification } from "../shared/models/Notification";
+import { restaurantUrl } from "../utilities/senders/appRoutes";
+import { pushNotification } from "../utilities/senders/notifyUser";
+import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmins";
 
-export = functions.https.onCall(async (data, context) => {
-  let response: ServerResponse | undefined = await isSignedIn(context.auth);
-  if (response != undefined) {
-    return {
-      ok: false,
-      error: response,
-    };
+export interface RestaurantDetails {
+  name: string,
+  image: string,
+  location: Location,
+  schedule:JSON,
+  restaurantOperatorNotificationToken?: string,
+  firebaseId?: string
+}
+
+export async function createNewRestaurant(userId: number, restaurantDetails: RestaurantDetails) {
+
+  let userPromise = getUser(userId);
+  let mezAdminsPromise = getMezAdmins();
+  let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
+  let mezAdmins: MezAdmin[] = promiseResponse[1];
+
+  let restaurant: Restaurant = {
+    name: restaurantDetails.name,
+    image: restaurantDetails.image,
+    location: restaurantDetails.location,
+    schedule: restaurantDetails.schedule,
+    
+   
   }
 
-  response = await checkDeliveryAdmin(context.auth!.uid);
-  if (response != undefined) {
-    return {
-      ok: false,
-      error: response,
-    };
+  if(restaurantDetails.firebaseId != undefined) {
+    restaurant.firebaseId = restaurantDetails.firebaseId
   }
 
-  if (!data.emailIdOrPhoneNumber && !data.restaurantName) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage:
-        "required parameters emailIdOrPhoneNumber and restaurantName",
-    };
-  }
-  let user: UserRecord;
-  try {
-    user = await firebase
-      .auth()
-      .getUserByPhoneNumber(data.emailIdOrPhoneNumber);
-  } catch (a) {
-    console.log("phone number not there");
-    try {
-      user = await firebase.auth().getUserByEmail(data.emailIdOrPhoneNumber);
-    } catch (a) {
-      console.log("email also not there");
-      return {
-        status: ServerResponseStatus.Error,
-        errorMessage: "User not found",
-      };
-    }
-  }
+    await createRestaurant(restaurant, userId, restaurantDetails.restaurantOperatorNotificationToken);
+  
 
-  let operatorInfo: UserInfo = (
-    await userInfoNode(user.uid).once("value")
-  ).val();
-  if (operatorInfo == null || operatorInfo.name == null)
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: "User info not there",
-    };
+  notifyAdmins(mezAdmins, restaurant);
 
-  let restaurantId: string = (await restaurantNodes.info().push()).key!;
-  let newRestaurant = JSON.parse(restaurantTemplateInJson);
-  newRestaurant.info.id = restaurantId;
-  newRestaurant.info.name = data.restaurantName;
-  newRestaurant.state.operators[user.uid] = true;
-  restaurantNodes.info(restaurantId).set(newRestaurant);
-
-  let newOperator = {
-    info: operatorInfo,
-    state: { restaurantId: restaurantId },
-  };
-  operatorNodes.operatorInfo(OrderType.Restaurant, user.uid).set(newOperator);
   return { status: ServerResponseStatus.Success };
-});
+};
 
+function notifyAdmins(mezAdmins: MezAdmin[], restaurant: Restaurant) {
+
+  if(restaurant.restaurantId == undefined)
+    return
+  let notification: Notification = {
+    foreground: <NewRestaurantNotification>{
+      time: (new Date()).toISOString(),
+      notificationType: NotificationType.NewOrder,
+      notificationAction: NotificationAction.ShowSnackBarAlways,
+      name: restaurant.name,
+      image: restaurant.image,
+      id: restaurant.restaurantId
+    },
+    background: {
+      [Language.ES]: {
+        title: "Nuevo restaurante",
+        body: `Hay un nuevo restaurante`
+      },
+      [Language.EN]: {
+        title: "New Restaurant",
+        body: `There is a new restaurant`
+      }
+    },
+    linkUrl: restaurantUrl(restaurant.restaurantId)
+  }
+  mezAdmins.forEach((m) => {
+    pushNotification(m.user?.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+  });
+}
+//TODO
+/*
 let restaurantTemplateInJson = `{
   "details": {
     "schedule": {
@@ -118,8 +117,8 @@ let restaurantTemplateInJson = `{
       }
     },
     "description":{
-      "en": "description",
-      "es": "descripcion"
+      "en": "",
+      "es": ""
     }
   },
   "info": {
@@ -139,3 +138,4 @@ let restaurantTemplateInJson = `{
     "operators": {}
   }
 }`;
+*/

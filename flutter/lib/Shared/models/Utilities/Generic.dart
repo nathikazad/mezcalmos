@@ -2,20 +2,20 @@
 
 import 'package:collection/collection.dart';
 
-enum AuthorizationStatus { InReview, Authorized, Unauthorized }
+enum ServiceStatus { Open, Closed_temporarily, Closed_indefinitely }
 
-extension ParseAuthorizationStatusToString on AuthorizationStatus {
+extension ParseServiceStatusToString on ServiceStatus {
   String toFirebaseFormatString() {
     final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
 
-extension ParseStringToAuthorizationStatus on String {
-  AuthorizationStatus toAuthorizationStatus() {
-    return AuthorizationStatus.values.firstWhere(
-        (AuthorizationStatus e) => e.toFirebaseFormatString() == this,
-        orElse: () => AuthorizationStatus.Unauthorized);
+extension ParseStringToServiceStatusStatus on String {
+  ServiceStatus toServiceStatus() {
+    return ServiceStatus.values.firstWhere(
+        (ServiceStatus e) => e.toFirebaseFormatString() == this,
+        orElse: () => ServiceStatus.Closed_indefinitely);
   }
 }
 

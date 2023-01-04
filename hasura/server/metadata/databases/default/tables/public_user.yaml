@@ -1,0 +1,117 @@
+table:
+  name: user
+  schema: public
+object_relationships:
+  - name: customer
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          name: customer
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - id
+        - image
+        - language_id
+        - name
+      filter: {}
+  - role: customer
+    permission:
+      columns:
+        - deleted
+        - email
+        - firebase_id
+        - id
+        - image
+        - language_id
+        - name
+        - phone
+      filter: {}
+  - role: delivery_driver
+    permission:
+      columns:
+        - deleted
+        - email
+        - firebase_id
+        - id
+        - image
+        - language_id
+        - name
+        - phone
+      filter: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - deleted
+        - email
+        - firebase_id
+        - id
+        - image
+        - language_id
+        - name
+        - phone
+      filter: {}
+  - role: restaurant_operator
+    permission:
+      columns:
+        - deleted
+        - email
+        - firebase_id
+        - id
+        - image
+        - language_id
+        - name
+        - phone
+      filter: {}
+update_permissions:
+  - role: customer
+    permission:
+      columns:
+        - email
+        - image
+        - language_id
+        - name
+        - phone
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      check: null
+  - role: delivery_driver
+    permission:
+      columns:
+        - email
+        - image
+        - language_id
+        - name
+        - phone
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      check: null
+  - role: mez_admin
+    permission:
+      columns:
+        - email
+        - image
+        - language_id
+        - name
+        - phone
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      check: null
+  - role: restaurant_operator
+    permission:
+      columns:
+        - email
+        - image
+        - language_id
+        - name
+        - phone
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      check: null

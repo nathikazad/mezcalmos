@@ -1,25 +1,20 @@
 import { AuthorizationStatus, NotificationInfo } from "../Generic/Generic";
-import { OrderNotification } from "../Notification";
+import { OrderType } from "../Generic/Order";
 
 export interface State {
   authorizationStatus: AuthorizationStatus;
   isOnline: boolean;
+  serviceProviderType?: OrderType;
+  serviceProviderId?: string;
 }
 
 export interface DeliveryDriver {
+
   state: State;
   notificationInfo: NotificationInfo;
 }
 
-export enum DeliveryDriverType {
-  Pickup = "pickup",
-  DropOff = "dropoff",
-}
-
-export interface NewDeliveryOrderNotification extends OrderNotification {
-  deliveryDriverType: DeliveryDriverType
-}
-
-export interface CancelDeliveryOrderNotification extends OrderNotification {
-  deliveryDriverType: DeliveryDriverType
-}
+// export enum DeliveryDriverType {
+//   RestaurantOperator = "restaurantOperator",
+//   DeliveryDriver = "deliveryDriver"
+// }

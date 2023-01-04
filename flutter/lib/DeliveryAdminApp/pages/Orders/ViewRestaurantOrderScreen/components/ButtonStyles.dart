@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
@@ -17,7 +18,7 @@ class ButtonsStyle {
   RxBool isLoading = RxBool(false);
 
   /// this button for cancel order
-  static Widget cancelButtonWidget(String orderId) {
+  static Widget cancelButtonWidget(int orderId) {
     final RestaurantOrderController controller =
         Get.find<RestaurantOrderController>();
 
@@ -31,10 +32,10 @@ class ButtonsStyle {
           _i18n()["cancelAlertTitle"],
           _i18n()["cancelAlertSubTitle"],
           () {
-            Get.back(result: true);
+            MezRouter.back(result: true);
           },
           () {
-            Get.back(result: false);
+            MezRouter.back(result: false);
           },
           Container(height: 40, width: 40, child: Image.asset(cancelIcon)),
           LinearGradient(
@@ -56,10 +57,10 @@ class ButtonsStyle {
     //         _i18n()["cancelAlertTitle"],
     //         _i18n()["cancelAlertSubTitle"],
     //         () {
-    //           Get.back(result: true);
+    //           MezRouter.back(result: true);
     //         },
     //         () {
-    //           Get.back(result: false);
+    //           MezRouter.back(result: false);
     //         },
     //         Container(height: 40, width: 40, child: Image.asset(cancelIcon)),
     //         LinearGradient(
@@ -106,10 +107,10 @@ class ButtonsStyle {
                 _i18n()["readyAlertTitle"],
                 _i18n()["readyAlertSubTitle"],
                 () {
-                  Get.back(result: true);
+                  MezRouter.back(result: true);
                 },
                 () {
-                  Get.back(result: false);
+                  MezRouter.back(result: false);
                 },
                 Container(height: 70, width: 70, child: Image.asset(box)),
                 LinearGradient(
@@ -155,10 +156,10 @@ class ButtonsStyle {
     //             _i18n()["readyAlertTitle"],
     //             _i18n()["readyAlertSubTitle"],
     //             () {
-    //               Get.back(result: true);
+    //               MezRouter.back(result: true);
     //             },
     //             () {
-    //               Get.back(result: false);
+    //               MezRouter.back(result: false);
     //             },
     //             Container(height: 70, width: 70, child: Image.asset(box)),
     //             LinearGradient(
@@ -192,10 +193,10 @@ class ButtonsStyle {
           _i18n()["onTheWayAlertTitle"],
           _i18n()["onTheWayAlertSubTitle"],
           () {
-            Get.back(result: true);
+            MezRouter.back(result: true);
           },
           () {
-            Get.back(result: false);
+            MezRouter.back(result: false);
           },
           Container(height: 70, width: 70, child: Image.asset(truck)),
           LinearGradient(
@@ -206,7 +207,7 @@ class ButtonsStyle {
         );
         if (res) {
           Get.snackbar("Loading", "");
-          await controller.deliverOrder(orderId);
+          await controller.deliverOrder(int.parse(orderId));
         }
       },
     );
@@ -227,10 +228,10 @@ class ButtonsStyle {
     //       _i18n()["onTheWayAlertTitle"],
     //       _i18n()["onTheWayAlertSubTitle"],
     //       () {
-    //         Get.back(result: true);
+    //         MezRouter.back(result: true);
     //       },
     //       () {
-    //         Get.back(result: false);
+    //         MezRouter.back(result: false);
     //       },
     //       Container(height: 70, width: 70, child: Image.asset(truck)),
     //       LinearGradient(
@@ -247,8 +248,8 @@ class ButtonsStyle {
     // );
   }
 
-  // this button for OrderReceieved
-  static Widget orderReceievedButtonWidget(String orderId) {
+  // this button for OrderReceived
+  static Widget OrderReceivedButtonWidget(int orderId) {
     final RestaurantOrderController controller =
         Get.find<RestaurantOrderController>();
     return MezButton(
@@ -259,10 +260,10 @@ class ButtonsStyle {
           _i18n()["prepareAlertTitle"],
           _i18n()["prepareAlertSubTitle"],
           () {
-            Get.back(result: true);
+            MezRouter.back(result: true);
           },
           () {
-            Get.back(result: false);
+            MezRouter.back(result: false);
           },
           Container(height: 70, width: 70, child: Image.asset(stoveIcon)),
           LinearGradient(
@@ -297,10 +298,10 @@ class ButtonsStyle {
     //       _i18n()["prepareAlertTitle"],
     //       _i18n()["prepareAlertSubTitle"],
     //       () {
-    //         Get.back(result: true);
+    //         MezRouter.back(result: true);
     //       },
     //       () {
-    //         Get.back(result: false);
+    //         MezRouter.back(result: false);
     //       },
     //       Container(height: 70, width: 70, child: Image.asset(stoveIcon)),
     //       LinearGradient(

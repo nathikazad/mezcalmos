@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ListRestaurantsScreen"]["ListRestaurantScreen"];
@@ -240,9 +241,9 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
               restaurant: viewController.filteredRestaurants[index],
               shippingPrice: viewController.baseShippingPrice,
               onClick: () {
-                Get.toNamed<void>(
+                MezRouter.toNamed<void>(
                   getRestaurantRoute(
-                      viewController.filteredRestaurants[index].info.id),
+                      viewController.filteredRestaurants[index].info.hasuraId),
                   arguments: viewController.filteredRestaurants[index],
                 );
               },

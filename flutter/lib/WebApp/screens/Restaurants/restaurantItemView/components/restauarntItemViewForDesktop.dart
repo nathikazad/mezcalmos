@@ -6,11 +6,11 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantControlle
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/DialogRequiredSignIn.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/ButtonStyles.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
 import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/restaurantItemView/components/ItemOptionCard.dart';
@@ -59,7 +59,7 @@ class _RestaurantItemViewForDesktopState
     extends State<RestaurantItemViewForDesktop> {
   RestaurantController restaurantCartController =
       Get.find<RestaurantController>();
-  FirbaseAuthController auth = Get.find<FirbaseAuthController>();
+  AuthController auth = Get.find<AuthController>();
 
   @override
   void initState() {
@@ -181,21 +181,24 @@ class _RestaurantItemViewForDesktopState
                                                     .AddItemMode ==
                                                 widget.viewItemScreenMode) {
                                               mezDbgPrint(
-                                                  "the first id is ${restaurantCartController.associatedRestaurant?.info.id} and the scond is ${widget.currentRestaurant.value?.info.id}");
+                                                  "the first id is ${restaurantCartController.associatedRestaurant?.info.descriptionId} and the scond is ${widget.currentRestaurant.value?.info.descriptionId}");
 
                                               if (restaurantCartController
                                                       .associatedRestaurant
                                                       ?.info
-                                                      .id !=
+                                                      .descriptionId !=
                                                   null) {
                                                 if (restaurantCartController
                                                         .associatedRestaurant
                                                         ?.info
-                                                        .id ==
-                                                    widget.currentRestaurant
-                                                        .value!.info.id) {
+                                                        .descriptionId ==
+                                                    widget
+                                                        .currentRestaurant
+                                                        .value!
+                                                        .info
+                                                        .descriptionId) {
                                                   mezDbgPrint(
-                                                      "the first id is ${restaurantCartController.associatedRestaurant?.info.id} and the scond is ${widget.currentRestaurant.value?.info.id}");
+                                                      "the first id is ${restaurantCartController.associatedRestaurant?.info.descriptionId} and the scond is ${widget.currentRestaurant.value?.info.descriptionId}");
                                                   await restaurantCartController
                                                       .addItem(widget
                                                           .cartItem.value!);
@@ -207,7 +210,7 @@ class _RestaurantItemViewForDesktopState
                                                       .openWebEndDrawer();
                                                 } else {
                                                   mezDbgPrint(
-                                                      "not true ${restaurantCartController.associatedRestaurant?.info.id} and the other is ${widget.currentRestaurant.value?.info.id}");
+                                                      "not true ${restaurantCartController.associatedRestaurant?.info.descriptionId} and the other is ${widget.currentRestaurant.value?.info.descriptionId}");
 
                                                   await showStatusInfoDialog(
                                                     context,
@@ -301,7 +304,7 @@ class _RestaurantItemViewForDesktopState
                                           }
                                         },
                                   // onPressed: () async {
-                                  //   if (Get.find<FirbaseAuthController>()
+                                  //   if (Get.find<AuthController>()
                                   //           .fireAuthUser !=
                                   //       null) {
                                   //     await Get.find<RestaurantController>()
@@ -356,8 +359,8 @@ class _RestaurantItemViewForDesktopState
                                   fit: BoxFit.cover,
                                 ),
                               )
-                            : SizedBox(),
-                        SizedBox(
+                            : Container(),
+                        Container(
                           height: 15,
                         ),
                         Text(
@@ -367,7 +370,7 @@ class _RestaurantItemViewForDesktopState
                               fontWeight: FontWeight.w700,
                               color: Colors.black),
                         ),
-                        SizedBox(
+                        Container(
                           height: 10,
                         ),
                         Text(
@@ -377,7 +380,7 @@ class _RestaurantItemViewForDesktopState
                               fontWeight: FontWeight.w600,
                               color: const Color.fromRGBO(103, 121, 254, 1)),
                         ),
-                        SizedBox(
+                        Container(
                           height: 10,
                         ),
                         if (widget.cartItem.value?.item
@@ -395,7 +398,7 @@ class _RestaurantItemViewForDesktopState
                                       color: Colors.black),
                                 ),
                               ),
-                              SizedBox(
+                              Container(
                                 height: 8,
                               ),
                               Text(
@@ -418,11 +421,11 @@ class _RestaurantItemViewForDesktopState
                                       isRunningOnWeb: true,
                                     )),
                           ),
-                        SizedBox(
+                        Container(
                           height: 15,
                         ),
                         itemNotesComponent(widget.cartItem, context),
-                        SizedBox(
+                        Container(
                           height: kToolbarHeight * 2,
                         )
                       ],

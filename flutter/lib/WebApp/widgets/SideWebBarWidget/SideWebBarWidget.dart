@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -13,7 +13,7 @@ class SideWebBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FirbaseAuthController controller = Get.find<FirbaseAuthController>();
+    final AuthController controller = Get.find<AuthController>();
     return Container(
         color: Colors.white,
         width: 350,
@@ -42,7 +42,7 @@ class SideWebBar extends StatelessWidget {
                         color: primaryBlueColor,
                       )
                     : CachedNetworkImage(
-                        imageUrl: controller.user!.image!,
+                        imageUrl: controller.user!.image,
                         fit: BoxFit.cover,
                         imageBuilder: (BuildContext context,
                                 ImageProvider<Object> imageProvider) =>
@@ -136,7 +136,7 @@ class SideWebBar extends StatelessWidget {
               title: "Log Out",
               onTap: () {
                 Navigator.of(context).pop();
-                Get.find<FirbaseAuthController>().signOut();
+                Get.find<AuthController>().signOut();
               },
             )
           ],

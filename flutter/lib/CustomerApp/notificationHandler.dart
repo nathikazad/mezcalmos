@@ -100,7 +100,8 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
   return Notification(
     id: key,
     icon: Material.Icons.flatware,
-    linkUrl: getRestaurantOrderRoute(value['orderId']),
+    // todo fix this
+    linkUrl: "getRestaurantOrderRoute(int.parse(value['orderId']))",
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],
     imgUrl: dynamicFields["imgUrl"],
@@ -191,14 +192,14 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
 Map<String, dynamic>? getRestaurantOrderStatusFields(
     RestaurantOrderStatus restaurantOrderStatus) {
   switch (restaurantOrderStatus) {
-    case RestaurantOrderStatus.PreparingOrder:
+    case RestaurantOrderStatus.Preparing:
       return <String, dynamic>{
         "title": "${_i18n()["preparingOrderTitle"]}",
         "body": "${_i18n()["preparingOrderBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
       };
-    case RestaurantOrderStatus.ReadyForPickup:
+    case RestaurantOrderStatus.Ready:
       return <String, dynamic>{
         "title": "${_i18n()["readyForPickUpTitle"]}",
         "body": "${_i18n()["readyForPickUpBody"]}",
@@ -298,16 +299,21 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
 }
 
 Notification newMessageNotification(String key, value) {
-  mezDbgPrint("New message notif ==========>>>>>>>>$value");
+  // mezDbgPrint("New message notif ==========>>>>>>>>$value");
+  value.forEach((kkey, vv) {
+    mezDbgPrint("$kkey : $vv}");
+  });
   return Notification(
       id: key,
       linkUrl: value["linkUrl"] ??
           getMessagesRoute(
-              chatId: value["chatId"],
-              orderId: value["orderId"],
-              recipientType: value["sender"]["particpantType"]
-                  .toString()
-                  .toParticipantType()),
+            chatId: int.parse(value["chatId"]),
+            orderId:
+                value["orderId"] != null ? int.parse(value["orderId"]) : null,
+            recipientType: value["sender"]["particpantType"]
+                .toString()
+                .toParticipantType(),
+          ),
       // just for backwards compatibility, future make it just value['orderId']
       body: value['message'],
       imgUrl: value['sender']['image'],

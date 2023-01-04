@@ -4,16 +4,15 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]
     ["components"]["LaundryAppDrawer"];
@@ -47,16 +46,16 @@ class _ROpDrawerState extends State<ROpDrawer> {
 
   @override
   void initState() {
-    Get.put(RestaurantInfoController(), permanent: false);
-    restaurantInfoController = Get.find<RestaurantInfoController>();
-    restaurant.value = restaurantInfoController.restaurant.value;
-    restaurantInfoController
-        .getRestaurant(restaurantOpAuthController.restaurantId!)
-        .listen((Restaurant? event) {
-      if (event != null) {
-        restaurant.value = event;
-      }
-    });
+    // Get.put(RestaurantInfoController(), permanent: false);
+    // restaurantInfoController = Get.find<RestaurantInfoController>();
+    // restaurant.value = restaurantInfoController.restaurant.value;
+    // restaurantInfoController
+    //     .getRestaurant(restaurantOpAuthController.restaurantId!)
+    //     .listen((Restaurant? event) {
+    //   if (event != null) {
+    //     restaurant.value = event;
+    //   }
+    // });
     super.initState();
   }
 
@@ -77,8 +76,8 @@ class _ROpDrawerState extends State<ROpDrawer> {
                       height: 50,
                     ),
                     // Laundry IMAGE AND NAME
-
-                    _laundryImageAndName(),
+                    if (restaurantOpAuthController.operator.value != null)
+                      _opImageAndName(),
 
                     // Navigation links
                     if (restaurantOpAuthController.operator.value != null &&
@@ -102,26 +101,20 @@ class _ROpDrawerState extends State<ROpDrawer> {
                       ),
                     ),
                     _languageSwitcher(),
-                    _navigationLink(
-                        onClick: () {
-                          _drawerController.closeMenu();
-                          launch(GetStorage().read(getxPrivacyPolicyLink));
-                        },
-                        icon: Icons.privacy_tip,
-                        titleWidget: Text(
-                          "${_i18n()["privacyPolicies"]}",
-                          style: Get.textTheme.bodyText1,
-                        )),
-                    _navigationLink(
+                    if (restaurantOpAuthController
+                            .operator.value?.isWaitingToBeApprovedByOwner ==
+                        true)
+                      _navigationLink(
                         onClick: () async {
-                          _drawerController.closeMenu();
-                          await authController.signOut();
+                          await Get.find<AuthController>().signOut();
                         },
-                        icon: Icons.logout,
+                        icon: Icons.alternate_email,
                         titleWidget: Text(
-                          "${_i18n()["logout"]}",
-                          style: Get.textTheme.bodyText1,
-                        )),
+                          '${_i18n()["logout"]}',
+                          style: Get.textTheme.bodyText1
+                              ?.copyWith(color: Colors.red),
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -187,66 +180,25 @@ class _ROpDrawerState extends State<ROpDrawer> {
         SizedBox(
           height: 15,
         ),
+        //
+
         _navigationLink(
             onClick: () {
-              _drawerController.closeMenu();
-              Get.toNamed(getROpEditInfoRoute(
-                  restaurantId: restaurantOpAuthController.restaurantId!));
-            },
-            icon: Icons.person,
-            titleWidget: Text(
-              "${_i18n()["profile"]}",
-              style: Get.textTheme.bodyText1,
-            )),
-        _navigationLink(
-            icon: Icons.flatware_rounded,
-            onClick: () {
-              _drawerController.closeMenu();
-              Get.toNamed(getROpMenuRoute(
-                  restaurantId: restaurantOpAuthController.restaurantId!));
-            },
-            titleWidget: Text(
-              "${_i18n()["menu"] ?? "Menu"}",
-              style: Get.textTheme.bodyText1,
-            )),
-        _navigationLink(
-            onClick: () {
-              _drawerController.closeMenu();
-              Get.toNamed(getROpReviewsoRoute(
-                  restaurantId: restaurantOpAuthController.restaurantId!));
-            },
-            icon: Icons.star_rate_rounded,
-            titleWidget: Text(
-              "${_i18n()["reviews"]}",
-              style: Get.textTheme.bodyText1,
-            )),
-        _navigationLink(
-            onClick: () {
-              Get.toNamed(kNotificationsRoute);
+              MezRouter.toNamed(kNotificationsRoute);
             },
             icon: Icons.notifications,
             titleWidget: Text(
               "${_i18n()["notifications"]}",
               style: Get.textTheme.bodyText1,
             )),
-        _navigationLink(
-            onClick: () {
-              _drawerController.closeMenu();
-              Get.toNamed(kPastOrdersListView);
-            },
-            icon: Icons.history,
-            titleWidget: Text(
-              "${_i18n()["pastOrders"]}",
-              style: Get.textTheme.bodyText1,
-            )),
       ],
     );
   }
 
-  Widget _laundryImageAndName() {
+  Widget _opImageAndName() {
     return Obx(
       () {
-        if (restaurant.value != null) {
+        if (restaurantOpAuthController.operator.value != null) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -257,16 +209,18 @@ class _ROpDrawerState extends State<ROpDrawer> {
                   children: [
                     CircleAvatar(
                       radius: 45,
-                      backgroundImage: (restaurant.value!.info.image != null)
+                      backgroundImage: (restaurantOpAuthController
+                              .operator.value!.info.image.isURL)
                           ? CachedNetworkImageProvider(
-                              restaurant.value?.info.image ?? "")
+                              restaurantOpAuthController
+                                  .operator.value!.info.image)
                           : AssetImage(aNoImage) as ImageProvider,
                     ),
                     SizedBox(
                       height: 15,
                     ),
                     Text(
-                      restaurant.value!.info.name,
+                      restaurantOpAuthController.operator.value!.info.name,
                       style: Get.textTheme.headline3,
                     ),
                     SizedBox(

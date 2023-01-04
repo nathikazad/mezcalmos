@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
         ['DashboardView']['OrdersListView']['LaundryOpOrdersListView']
@@ -29,7 +30,8 @@ class LaundryOpOrderCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          Get.toNamed(getLaundryOpOrderRoute(laundryOrder.orderId));
+          MezRouter.toNamed(
+              getLaundryOpOrderRoute(laundryOrder.orderId.toString()));
         },
         child: Container(
           padding: EdgeInsets.all(8),

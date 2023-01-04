@@ -4,14 +4,13 @@ import * as functions from "firebase-functions";
 import * as rootNodes from "../shared/databaseNodes/root";
 import * as taxiNodes from "../shared/databaseNodes/taxi";
 import * as customerNodes from "../shared/databaseNodes/customer";
-import { isSignedIn } from "../shared/helper/authorizer";
 import { AuthorizationStatus, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
 import { UserInfo } from "../shared/models/Generic/User";
 import { Taxi } from "../shared/models/Drivers/Taxi";
 import { CounterOfferStatus, TaxiInfo, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/Services/Taxi/TaxiOrder";
 import * as chatController from "../shared/controllers/chatController";
-import { ChatObject, ParticipantType } from "../shared/models/Generic/Chat";
+import { ChatObject } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
@@ -19,10 +18,10 @@ import { getUserInfo } from "../shared/controllers/rootController";
 import { getTaxi } from "../shared/controllers/taxiController";
 import { orderUrl } from "../utilities/senders/appRoutes";
 
-export = functions.https.onCall(async (data, context) => {
-  let response = isSignedIn(context.auth)
-  if (response != undefined)
-    return response;
+export async function acceptRide(userId: string, data: any) {
+  // let response = isSignedIn(userId)
+  // if (response != undefined)
+  //   return response;
 
   if (!data.orderId) {
     return {
@@ -30,7 +29,7 @@ export = functions.https.onCall(async (data, context) => {
       errorMessage: "Required orderId"
     }
   }
-  let taxiId: string = data.counterOfferDriverId ?? context.auth!.uid;
+  let taxiId: string = data.counterOfferDriverId ?? userId;
   let orderId: string = data.orderId;
   let taxi: Taxi = (await getTaxi(taxiId));
   console.log(`Got taxi ${taxi}`);
@@ -80,7 +79,7 @@ export = functions.https.onCall(async (data, context) => {
       };
     }
 
-    if (order.customer.id == taxiId) {
+    if (order.customer.firebaseId == taxiId) {
       return {
         status: ServerResponseStatus.Error,
         errorMessage: "Driver and Customer cannot have same id"
@@ -95,7 +94,7 @@ export = functions.https.onCall(async (data, context) => {
     }
 
     if (data.counterOfferDriverId) {
-      let orderFromCustomerNode : TaxiOrder = (await customerNodes.inProcessOrders(order.customer.id, orderId).get()).val();
+      let orderFromCustomerNode : TaxiOrder = (await customerNodes.inProcessOrders(order.customer.firebaseId, orderId).get()).val();
 
       if (!orderFromCustomerNode.counterOffers || !orderFromCustomerNode.counterOffers![data.counterOfferDriverId]
         || orderFromCustomerNode.counterOffers![data.counterOfferDriverId].status != CounterOfferStatus.Accepted) {
@@ -110,9 +109,10 @@ export = functions.https.onCall(async (data, context) => {
     order.status = (order.status == TaxiOrderStatus.LookingForTaxi) ? TaxiOrderStatus.OnTheWay : TaxiOrderStatus.Scheduled;
     order.acceptRideTime = (new Date()).toISOString()
     order.driver = <TaxiInfo>{
-      id: taxiId,
+      id: parseInt(taxiId),
       name: driverInfo.name,
       image: driverInfo.image,
+      firebaseId: driverInfo.firebaseId,
       language: driverInfo.language,
       taxiNumber: taxi.details?.taxiNumber ?? "00-000",
     }
@@ -123,17 +123,17 @@ export = functions.https.onCall(async (data, context) => {
     rootNodes.inProcessOrders(OrderType.Taxi, orderId).set(order);
     rootNodes.openOrders(OrderType.Taxi, orderId).remove();
 
-    customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
+    customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).update(order);
 
 
 
-    let chat: ChatObject = await chatController.getChat(orderId);
-    chat.addParticipant({
-      ...driverInfo,
-      particpantType: ParticipantType.Taxi
-    });
+    let chat: ChatObject = await chatController.getChat(parseInt(orderId));
+    // chat.addParticipant({
+    //   ...driverInfo,
+    //   participantType: ParticipantType.Taxi
+    // });
 
-    await chatController.setChat(orderId, chat.chatData);
+    await chatController.setChat(parseInt(orderId), chat.chatData);
 
     // Notify customer only if driver is the one initiating the accept
     // not notifying driver because driver will get response within 30 
@@ -147,13 +147,13 @@ export = functions.https.onCall(async (data, context) => {
           notificationType: NotificationType.OrderStatusChange,
           orderType: OrderType.Taxi,
           notificationAction: NotificationAction.ShowSnackBarAlways,
-          orderId: orderId
+          orderId: parseInt(orderId)
         },
         background: taxiOrderStatusChangeMessages[TaxiOrderStatus.OnTheWay],
-        linkUrl: orderUrl(ParticipantType.Customer, OrderType.Taxi, orderId)
+        linkUrl: orderUrl(OrderType.Taxi, parseInt(orderId))
       }
 
-      pushNotification(order.customer.id!, notification);
+      pushNotification(order.customer.firebaseId!, notification);
     }
 
     return {
@@ -172,4 +172,4 @@ export = functions.https.onCall(async (data, context) => {
     rootNodes.openOrders(OrderType.Taxi, orderId).child("lock").remove();
   }
 
-});
+};

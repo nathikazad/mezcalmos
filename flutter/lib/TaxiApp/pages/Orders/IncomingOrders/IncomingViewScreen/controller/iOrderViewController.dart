@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class IOrderViewController {
   final AnimatedSliderController animatedSliderController;
@@ -41,12 +42,12 @@ class IOrderViewController {
     if (order.value == null) {
       onOrderNoMoreAvailable();
     } else {
-      controller.markOrderAsRead(orderId, order.value!.customer.id);
+      controller.markOrderAsRead(orderId, order.value!.customer.firebaseId);
 
       // Nathik
       // if (order.value!.inProcess()) {
       // we check valid counterOffer
-      startListeningOnCounterOffer(orderId, order.value!.customer.id);
+      startListeningOnCounterOffer(orderId, order.value!.customer.firebaseId);
 
       // populate the LatLngPoints from the encoded PolyLine String + SetState!
       if (order.value!.routeInformation != null)
@@ -55,7 +56,7 @@ class IOrderViewController {
 
       // add the corresponding markers
       mGoogleMapController.addOrUpdateUserMarker(
-        markerId: order.value?.customer.id,
+        markerId: order.value?.customer.firebaseId,
         latLng: order.value?.from.toLatLng(),
         customImgHttpUrl: order.value?.customer.image,
       );
@@ -109,7 +110,7 @@ class IOrderViewController {
         await cancelStreamsSubscriptions();
         // Go to CurrentOrder View !
         Future<void>.delayed(Duration.zero, () {
-          Get.offNamedUntil(
+          MezRouter.offNamedUntil(
               getTaxiOrderRoute(orderId), ModalRoute.withName(kHomeRoute));
         });
       }
@@ -125,7 +126,7 @@ class IOrderViewController {
     if (counterOffer.value != null && counterOffer.value!.isValid) {
       await controller.removeFromNegotiationMode(
         order.value!.orderId,
-        order.value!.customer.id,
+        order.value!.customer.firebaseId,
         newStatus: CounterOfferStatus.Cancelled,
       );
     }
@@ -136,13 +137,13 @@ class IOrderViewController {
       // canceling Subscription Just to Avoid possible Racing Conditions
       await cancelStreamsSubscriptions();
       // Go to CurrentOrder View !
-      unawaited(Get.offNamedUntil<void>(
+      unawaited(MezRouter.offNamedUntil<void>(
           getTaxiOrderRoute(_orderId), ModalRoute.withName(kHomeRoute)));
       // Notice the User !
     } else {
       // in case Taxi User failed accepting the iOrderViewController.order.
       clickedAcceptButton.value = false;
-      Get.back<void>();
+      MezRouter.back<void>();
       MezSnackbar("Oops..", serverResponse.errorMessage!);
     }
   }
@@ -154,7 +155,7 @@ class IOrderViewController {
       {CounterOfferStatus newStatus = CounterOfferStatus.Expired}) async {
     await controller.removeFromNegotiationMode(
       order.value!.orderId,
-      order.value!.customer.id,
+      order.value!.customer.firebaseId,
       newStatus: newStatus,
     );
   }
@@ -163,14 +164,14 @@ class IOrderViewController {
   Future<void> onCountOfferSent(num price) async {
     await controller.submitCounterOffer(
       order.value!.orderId,
-      order.value!.customer.id,
+      order.value!.customer.firebaseId,
       CounterOffer.buildWithExpiration(
         validTimeInSeconds: order.value!.scheduledTime != null
             ? nScheduledCounterOfferValidExpireTimeInSeconds
             : nDefaultCounterOfferValidExpireTimeInSeconds,
         price: price,
         taxiUserInfo: UserInfo(
-          id: authController.user!.id,
+          firebaseId: authController.user!.firebaseId,
           name: authController.user!.name!,
           image: authController.user!.image!,
         ),

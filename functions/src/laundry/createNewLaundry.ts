@@ -1,4 +1,3 @@
-import * as functions from "firebase-functions";
 import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import * as firebase from "firebase-admin";
 import { UserRecord } from "firebase-functions/v1/auth";
@@ -6,20 +5,20 @@ import * as laundryNodes from "../shared/databaseNodes/services/laundry";
 import * as operatorNodes from "../shared/databaseNodes/operators/operator";
 import { OrderType } from "../shared/models/Generic/Order";
 import { userInfoNode } from "../shared/databaseNodes/root";
-import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
+import { checkDeliveryAdmin } from "../shared/helper/authorizer";
 import { UserInfo } from "../shared/models/Generic/User";
 
+export async function createLaundry(userId: string, data: any) {
 
-export = functions.https.onCall(async (data, context) => {
-  let response = await isSignedIn(context.auth)
-  if (response != undefined) {
-    return {
-      ok: false,
-      error: response
-    }
-  }
+  // let response = isSignedIn(userId)
+  // if (response != undefined) {
+  //   return {
+  //     ok: false,
+  //     error: response
+  //   }
+  // }
 
-  response = await checkDeliveryAdmin(context.auth!.uid)
+  let response = await checkDeliveryAdmin(userId)
   if (response != undefined) {
     return {
       ok: false,
@@ -67,7 +66,7 @@ export = functions.https.onCall(async (data, context) => {
   let newOperator = { info: operatorInfo, state: { laundryId: laundryId } };
   operatorNodes.operatorInfo(OrderType.Laundry, user.uid).set(newOperator);
   return { status: ServerResponseStatus.Success }
-})
+};
 
 
 let laundryTemplateInJson = `{

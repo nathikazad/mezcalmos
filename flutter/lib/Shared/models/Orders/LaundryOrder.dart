@@ -11,7 +11,7 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 enum LaundryOrderStatus {
-  OrderReceieved,
+  OrderReceived,
   OtwPickupFromCustomer,
   PickedUpFromCustomer,
   AtLaundry,
@@ -67,10 +67,10 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       this.estimatedLaundryReadyTime,
       this.routeInformation,
       super.dropoffDriver,
-      String? laundryDropOffDriverChatId,
+      int? laundryDropOffDriverChatId,
       super.customerDropOffDriverChatId,
       super.pickupDriver,
-      String? laundryPickupDriverChatId,
+      int? laundryPickupDriverChatId,
       super.customerPickupDriverChatId,
       super.estimatedPickupFromCustomerTime,
       super.estimatedDropoffAtServiceProviderTime,
@@ -78,18 +78,16 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       super.estimatedDropoffAtCustomerTime,
       this.notes,
       super.orderType = OrderType.Laundry,
+      required super.chatId,
       super.notifiedAdmin,
       super.notifiedOperator})
       : super(
             serviceProviderDropOffDriverChatId: laundryDropOffDriverChatId,
             serviceProviderPickupDriverChatId: laundryPickupDriverChatId,
-            serviceProviderId: laundry?.id,
+            serviceProviderId: laundry?.hasuraId,
             serviceProvider: laundry);
 
-  factory LaundryOrder.fromData(
-    id,
-    data,
-  ) {
+  factory LaundryOrder.fromData(id, data) {
     final dynamic _estimatedPickupFromServiceProviderTime =
         data["estimatedDeliveryTimes"]?["dropoff"]?["pickup"];
     final dynamic _estimatedDropoffAtCustomerTime =
@@ -100,8 +98,16 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         data["estimatedDeliveryTimes"]?["pickup"]?["dropoff"];
 
     final LaundryOrder laundryOrder = LaundryOrder(
+        chatId: 1,
         orderId: id,
-        customer: UserInfo.fromData(data["customer"]),
+        // TODO:544D-HASURA
+        customer: UserInfo(
+            firebaseId: "",
+            hasuraId: 2,
+            name: null,
+            image: null,
+            language: null),
+        // customer: UserInfo.fromData(data["customer"]),
         status: data['status'].toString().toLaundryOrderStatus(),
         cost: data['cost'],
         to: Location.fromFirebaseData(data['to']),
@@ -121,11 +127,13 @@ class LaundryOrder extends TwoWayDeliverableOrder {
                 ? DateTime.parse(_estimatedPickupFromServiceProviderTime)
                 : null,
         estimatedDropoffAtCustomerTime:
-            (_estimatedDropoffAtCustomerTime != null && _estimatedDropoffAtCustomerTime != "")
+            (_estimatedDropoffAtCustomerTime != null &&
+                    _estimatedDropoffAtCustomerTime != "")
                 ? DateTime.parse(_estimatedDropoffAtCustomerTime)
                 : null,
         estimatedPickupFromCustomerTime:
-            (_estimatedPickupFromCustomerTime != null && _estimatedPickupFromCustomerTime != "")
+            (_estimatedPickupFromCustomerTime != null &&
+                    _estimatedPickupFromCustomerTime != "")
                 ? DateTime.parse(_estimatedPickupFromCustomerTime)
                 : null,
         estimatedDropoffAtServiceProviderTime:
@@ -188,7 +196,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         status == LaundryOrderStatus.ReadyForDelivery;
   }
 
-  String? getCustomerDriverChatId() {
+  int? getCustomerDriverChatId() {
     if (getCurrentPhase() == LaundryOrderPhase.Pickup &&
         customerPickupDriverChatId != null) {
       return customerPickupDriverChatId;
@@ -198,7 +206,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
     return null;
   }
 
-  String? getServiceDriverChatId() {
+  int? getServiceDriverChatId() {
     if (getCurrentPhase() == LaundryOrderPhase.Pickup &&
         serviceProviderPickupDriverChatId != null) {
       return serviceProviderPickupDriverChatId;
@@ -210,7 +218,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
 
   @override
   bool inProcess() {
-    return status == LaundryOrderStatus.OrderReceieved ||
+    return status == LaundryOrderStatus.OrderReceived ||
         status == LaundryOrderStatus.OtwPickupFromCustomer ||
         status == LaundryOrderStatus.PickedUpFromCustomer ||
         status == LaundryOrderStatus.AtLaundry ||
@@ -232,7 +240,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
 
   LaundryOrderPhase getCurrentPhase() {
     switch (status) {
-      case LaundryOrderStatus.OrderReceieved:
+      case LaundryOrderStatus.OrderReceived:
       case LaundryOrderStatus.OtwPickupFromCustomer:
       case LaundryOrderStatus.PickedUpFromCustomer:
         return LaundryOrderPhase.Pickup;

@@ -1,0 +1,52 @@
+table:
+  name: chat_participant
+  schema: public
+object_relationships:
+  - name: chat
+    using:
+      foreign_key_constraint_on: chat_id
+  - name: notification_info
+    using:
+      manual_configuration:
+        column_mapping:
+          app_type_id: app_type_id
+          participant_id: user_id
+        insertion_order: null
+        remote_table:
+          name: notification_info
+          schema: public
+  - name: user
+    using:
+      foreign_key_constraint_on: participant_id
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - app_type_id
+        - participant_id
+      filter:
+        chat:
+          chat_participants:
+            user:
+              id:
+                _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - participant_id
+      filter:
+        chat:
+          chat_participants:
+            user:
+              id:
+                _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      columns:
+        - participant_id
+      filter:
+        chat:
+          chat_participants:
+            user:
+              id:
+                _eq: X-Hasura-User-Id

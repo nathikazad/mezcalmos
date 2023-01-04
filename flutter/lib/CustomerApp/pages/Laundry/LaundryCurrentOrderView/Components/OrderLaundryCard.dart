@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class OrderLaundryCard extends StatelessWidget {
   const OrderLaundryCard({Key? key, required this.order}) : super(key: key);
@@ -65,9 +66,9 @@ class OrderLaundryCard extends StatelessWidget {
                 showRedDot: Get.find<OrderController>()
                     .orderHaveNewMessageNotifications(order.orderId),
                 onTap: () {
-                  Get.toNamed<void>(getMessagesRoute(
-                      orderId: order.orderId,
-                      chatId: order.orderId,
+                  MezRouter.toNamed<void>(getMessagesRoute(
+                      orderId: order.orderId.toString(),
+                      chatId: order.orderId.toString(),
                       orderType: OrderType.Laundry,
                       recipientType: ParticipantType.DeliveryAdmin));
                 },
@@ -82,9 +83,9 @@ class OrderLaundryCard extends StatelessWidget {
   Widget _messageButton(BuildContext context) {
     return IconButton(
       onPressed: () {
-        Get.toNamed<void>(getMessagesRoute(
-            orderId: order.orderId,
-            chatId: order.orderId,
+        MezRouter.toNamed<void>(getMessagesRoute(
+            orderId: order.orderId.toString(),
+            chatId: order.orderId.toString(),
             orderType: OrderType.Laundry,
             recipientType: ParticipantType.DeliveryAdmin));
       },

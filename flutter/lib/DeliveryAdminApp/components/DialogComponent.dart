@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 Future<bool> dialogComponent(
   String title,
@@ -116,7 +117,7 @@ Future<bool> dialogComponent(
                     ),
                   ),
                   onTap: () {
-                    // Get.back();
+                    // MezRouter.back();
                     onCancel();
                   },
                 )
@@ -233,7 +234,7 @@ Future<num> orderWeightDialog(
                   ),
                   onTap: () {
                     if (orderWeight != 0) {
-                      Get.back(result: orderWeight);
+                      MezRouter.popDialog(result: orderWeight);
                     } else {
                       Get.snackbar('Error', 'Please Provide a valid weight ');
                     }
@@ -269,8 +270,8 @@ Future<num> orderWeightDialog(
                     ),
                   ),
                   onTap: () {
-                    // Get.back();
-                    Get.back(result: 0);
+                    // MezRouter.back();
+                    MezRouter.popDialog(result: 0);
                   },
                 )
               ],

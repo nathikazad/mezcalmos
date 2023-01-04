@@ -1,26 +1,25 @@
 import * as functions from "firebase-functions";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import * as rootNodes from "../shared/databaseNodes/root";
-import { isSignedIn } from "../shared/helper/authorizer";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
-import { Language, ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { Order, OrderType } from "../shared/models/Generic/Order";
 import { getUserInfo } from "../shared/controllers/rootController";
 import { TaxiOrderRequest } from "../shared/models/Services/Taxi/TaxiOrderRequest";
 import { constructTaxiOrder } from "../shared/models/Services/Taxi/TaxiOrder";
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
-import { Notification, NotificationAction, NotificationType, OrderNotification } from "../shared/models/Notification";
-import { orderUrl } from "../utilities/senders/appRoutes";
+// import { Notification, NotificationAction, NotificationType, OrderNotification } from "../shared/models/Notification";
+// import { orderUrl } from "../utilities/senders/appRoutes";
 import { buildChatForOrder, ChatObject, ParticipantType } from "../shared/models/Generic/Chat";
-import { pushNotification } from "../utilities/senders/notifyUser";
+// import { pushNotification } from "../utilities/senders/notifyUser";
 import * as chatController from "../shared/controllers/chatController";
 
-export = functions.https.onCall(async (data, context) => {
-  let response = isSignedIn(context.auth)
-  if (response != undefined)
-    return response;
+export async function requestRide(userId: string, data: any) {
+  // let response = isSignedIn(userId)
+  // if (response != undefined)
+  //   return response;
 
-  let customerId: string = context.auth!.uid;
+  let customerId: string = userId;
   let orderRequest: TaxiOrderRequest = <TaxiOrderRequest>data;
   console.log(orderRequest);
 
@@ -61,18 +60,18 @@ export = functions.https.onCall(async (data, context) => {
     );
 
     
-    chat.addParticipant(
-    {
-      ...userInfo,
-      particpantType: ParticipantType.Customer
-    });
+    // chat.addParticipant(
+    // {
+    //   ...userInfo,
+    //   particpantType: ParticipantType.Customer
+    // });
 
-    await chatController.setChat(orderId, chat.chatData);
+    await chatController.setChat(parseInt(orderId), chat.chatData);
 
 
     deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
       let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-      chatController.addParticipantsToChat(Object.keys(deliveryAdmins), chat, orderId, ParticipantType.DeliveryAdmin)
+      chatController.addParticipantsToChat(Object.keys(deliveryAdmins), chat, parseInt(orderId), ParticipantType.DeliveryOperator)
       notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId)
     })
     
@@ -91,33 +90,33 @@ export = functions.https.onCall(async (data, context) => {
   } finally {
     await customerNodes.lock(customerId).remove();
   }
-});
+};
 
 async function notifyDeliveryAdminsNewOrder(deliveryAdmins: Record<string, DeliveryAdmin>,
   orderId: string) {
 
-  let notification: Notification = {
-    foreground: <OrderNotification>{
-      time: (new Date()).toISOString(),
-      notificationType: NotificationType.NewOrder,
-      orderType: OrderType.Taxi,
-      orderId: orderId,
-      notificationAction: NotificationAction.ShowSnackBarAlways,
-    },
-    background: {
-      [Language.ES]: {
-        title: "Nueva Pedido",
-        body: `Hay una nueva orden de taxi`
-      },
-      [Language.EN]: {
-        title: "New Order",
-        body: `There is a new taxi order`
-      }
-    },
-    linkUrl: orderUrl(ParticipantType.DeliveryAdmin, OrderType.Taxi, orderId)
-  }
+  // let notification: Notification = {
+  //   foreground: <OrderNotification>{
+  //     time: (new Date()).toISOString(),
+  //     notificationType: NotificationType.NewOrder,
+  //     orderType: OrderType.Taxi,
+  //     orderId: orderId,
+  //     notificationAction: NotificationAction.ShowSnackBarAlways,
+  //   },
+  //   background: {
+  //     [Language.ES]: {
+  //       title: "Nueva Pedido",
+  //       body: `Hay una nueva orden de taxi`
+  //     },
+  //     [Language.EN]: {
+  //       title: "New Order",
+  //       body: `There is a new taxi order`
+  //     }
+  //   },
+  //   linkUrl: orderUrl(ParticipantType.DeliveryAdmin, OrderType.Taxi, orderId)
+  // }
 
-  for (let adminId in deliveryAdmins) {
-    pushNotification(adminId!, notification, ParticipantType.DeliveryAdmin);
-  }
+  // for (let adminId in deliveryAdmins) {
+  //   pushNotification(adminId!, notification, ParticipantType.DeliveryAdmin);
+  // }
 }

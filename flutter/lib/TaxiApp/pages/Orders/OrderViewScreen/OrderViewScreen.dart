@@ -26,6 +26,7 @@ import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/IPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
     ["Orders"]["CurrentOrderScreen"]["CurrentOrderScreen"];
@@ -60,7 +61,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
     mezDbgPrint("_orderSnapshot :: $_orderSnapshot");
 
     if (_orderSnapshot == null) {
-      Get.back<void>();
+      MezRouter.back<void>();
       mezcalmosDialogOrderNoMoreAvailable(context);
     } else {
       // firstTimeExecution
@@ -297,7 +298,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
                       }
                       setState(() {});
                       _clickedBottomButton.value = false;
-                      Get.back<void>();
+                      MezRouter.back<void>();
                     },
                   );
                 },
@@ -357,7 +358,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
         }
       },
       secondaryClickTitle: "No",
-      secondaryCallBack: () => Get.back<void>(),
+      secondaryCallBack: () => MezRouter.back<void>(),
     );
 
     // showConfirmationDialog(
@@ -372,7 +373,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
     //     }
     //     _clickedBottomButton.value = false;
     //     setState(() {});
-    //     Get.back<void>();
+    //     MezRouter.back<void>();
     //   },
     // );
   }
@@ -390,7 +391,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
               if (!resp.success) {
                 MezSnackbar("Error", "Server Error");
               }
-              Get.back<void>();
+              MezRouter.back<void>();
             }).whenComplete(() => _clickedBottomButton.value = false);
           },
         ),
@@ -417,7 +418,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
         case TaxiOrdersStatus.OnTheWay:
           // Add the customer's Marker
           mGoogleMapController.addOrUpdateUserMarker(
-              markerId: orderStreamEvent.customer.id,
+              markerId: orderStreamEvent.customer.firebaseId,
               latLng: orderStreamEvent.from.toLatLng(),
               customImgHttpUrl: orderStreamEvent.customer.image);
           // add the Taxi's
@@ -432,7 +433,8 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           break;
         case TaxiOrdersStatus.InTransit:
           // no more showing the customer's marker
-          mGoogleMapController.removeMarkerById(orderStreamEvent.customer.id);
+          mGoogleMapController
+              .removeMarkerById(orderStreamEvent.customer.firebaseId);
           // add the destination marker
           mGoogleMapController.addOrUpdatePurpleDestinationMarker(
             latLng: orderStreamEvent.to.toLatLng(),
@@ -440,10 +442,11 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           break;
         case TaxiOrdersStatus.DroppedOff:
           // no more showing the taxi's Marker:
-          mGoogleMapController.removeMarkerById(orderStreamEvent.driver!.id);
+          mGoogleMapController
+              .removeMarkerById(orderStreamEvent.driver!.firebaseId);
           // Add the customer's from Marker
           mGoogleMapController.addOrUpdateUserMarker(
-            markerId: orderStreamEvent.customer.id,
+            markerId: orderStreamEvent.customer.firebaseId,
             latLng: orderStreamEvent.from.toLatLng(),
             customImgHttpUrl: orderStreamEvent.customer.image,
           );
@@ -477,7 +480,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
       // we simply keep updating the taxi's Marker's location , only if inProcess!
       if (orderStreamEvent.inProcess()) {
         mGoogleMapController.addOrUpdateTaxiDriverMarker(
-          orderStreamEvent.driver?.id,
+          orderStreamEvent.driver?.firebaseId,
           orderStreamEvent.driver?.location,
         );
       }
@@ -487,9 +490,9 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
   PreferredSizeWidget getRightAppBar(TaxiOrdersStatus status) {
     if (order!.isPastOrder() || order!.status == TaxiOrdersStatus.Scheduled) {
       return mezcalmosAppBar(AppBarLeftButtonType.Back,
-          //   onClick: Get.back,
+          //   onClick: MezRouter.back,
           // );
-          onClick: () => Get.offNamedUntil<void>(
+          onClick: () => MezRouter.offNamedUntil<void>(
               kIncomingOrdersListRoute, ModalRoute.withName(kHomeRoute)));
     } else {
       return mezcalmosAppBar(AppBarLeftButtonType.Menu, onClick: () async {

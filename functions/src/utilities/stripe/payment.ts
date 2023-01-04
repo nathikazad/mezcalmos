@@ -1,6 +1,4 @@
 import Stripe from 'stripe';
-import * as functions from "firebase-functions";
-import { isSignedIn } from "../../shared/helper/authorizer";
 import { ServerResponseStatus } from '../../shared/models/Generic/Generic';
 import { getKeys } from '../../shared/keys';
 import { Keys } from '../../shared/models/Generic/Keys';
@@ -11,59 +9,58 @@ import { PaymentInfo } from '../../shared/models/Services/Service';
 import { getCustomerIdFromServiceAccount } from './serviceProvider';
 let keys: Keys = getKeys();
 
+export async function getPaymentIntent(userId: string, data: any) {
 
-export const getPaymentIntent =
-  functions.https.onCall(async (data, context) => {
-    let response = await isSignedIn(context.auth)
-    if (response != undefined) {
-      return response;
-    }
+  // let response = isSignedIn(userId)
+  // if (response != undefined) {
+  //   return response;
+  // }
 
-    if (data.serviceProviderId == null ||
-      data.orderType == null || data.paymentAmount == null) {
-      return {
-        status: ServerResponseStatus.Error,
-        errorMessage: `Expected customerId, serviceProviderId, orderType and paymentAmount`,
-        errorCode: "incorrectParams"
-      }
-    }
-
-    let serviceProviderPaymentInfo: PaymentInfo = (await serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).once('value')).val()
-
-    if (!serviceProviderPaymentInfo || serviceProviderPaymentInfo.acceptedPayments[PaymentType.Card] == false || serviceProviderPaymentInfo.stripe.id == null || serviceProviderPaymentInfo.stripe.status != StripeStatus.IsWorking) {
-      return {
-        status: ServerResponseStatus.Error,
-        errorMessage: `This service provider does not accept cards`,
-        errorCode: "paymentsNotSupported"
-      }
-    }
-
-    let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripe.id };
-    const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
-
-    let stripeCustomerId: string = await getCustomerIdFromServiceAccount(context.auth!.uid, data.serviceProviderId, data.orderType, stripe, stripeOptions);
-
-    const ephemeralKey: Stripe.EphemeralKey = await stripe.ephemeralKeys.create(
-      { customer: stripeCustomerId },
-      stripeOptions
-    );
-
-    const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.create({
-      amount: parseInt(data.paymentAmount) * 100,
-      currency: 'mxn',
-      customer: stripeCustomerId,
-      capture_method: 'manual'
-    }, stripeOptions);
-
+  if (data.serviceProviderId == null ||
+    data.orderType == null || data.paymentAmount == null) {
     return {
-      status: ServerResponseStatus.Success,
-      paymentIntent: paymentIntent.client_secret,
-      ephemeralKey: ephemeralKey.secret,
-      customer: stripeCustomerId,
-      publishableKey: keys.stripe.publickey,
-      stripeAccountId: serviceProviderPaymentInfo.stripe.id
+      status: ServerResponseStatus.Error,
+      errorMessage: `Expected customerId, serviceProviderId, orderType and paymentAmount`,
+      errorCode: "incorrectParams"
     }
-  });
+  }
+
+  let serviceProviderPaymentInfo: PaymentInfo = (await serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).once('value')).val()
+
+  if (!serviceProviderPaymentInfo || serviceProviderPaymentInfo.acceptedPayments[PaymentType.Card] == false || serviceProviderPaymentInfo.stripe.id == null || serviceProviderPaymentInfo.stripe.status != StripeStatus.IsWorking) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: `This service provider does not accept cards`,
+      errorCode: "paymentsNotSupported"
+    }
+  }
+
+  let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripe.id };
+  const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
+
+  let stripeCustomerId: string = await getCustomerIdFromServiceAccount(userId, data.serviceProviderId, data.orderType, stripe, stripeOptions);
+
+  const ephemeralKey: Stripe.EphemeralKey = await stripe.ephemeralKeys.create(
+    { customer: stripeCustomerId },
+    stripeOptions
+  );
+
+  const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.create({
+    amount: parseInt(data.paymentAmount) * 100,
+    currency: 'mxn',
+    customer: stripeCustomerId,
+    capture_method: 'manual'
+  }, stripeOptions);
+
+  return {
+    status: ServerResponseStatus.Success,
+    paymentIntent: paymentIntent.client_secret,
+    ephemeralKey: ephemeralKey.secret,
+    customer: stripeCustomerId,
+    publishableKey: keys.stripe.publickey,
+    stripeAccountId: serviceProviderPaymentInfo.stripe.id
+  }
+};
 
 export async function capturePayment(order: Order, amountToCapture?: number): Promise<Order> {
   let serviceProviderPaymentInfo: PaymentInfo = (await serviceProviderNodes.serviceProviderPaymentInfo(order.orderType, order.serviceProviderId!).once('value')).val()

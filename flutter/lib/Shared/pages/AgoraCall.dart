@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class AgoraCall extends StatefulWidget {
   @override
@@ -110,7 +111,7 @@ class _AgoraCallState extends State<AgoraCall> {
         );
         _sagora.engine.leaveChannel();
         _sagora.callStatus.value = CallStatus.none;
-        // Get.back<void>();
+        // MezRouter.back<void>();
         MezSnackbar(
           "Oops",
           "You have reached max time for your call!",
@@ -242,7 +243,7 @@ class _AgoraCallState extends State<AgoraCall> {
                 );
                 _sagora.engine.leaveChannel();
                 // get back will dispose the view and reset the call Action back to CallAction.None
-                Get.back<void>();
+                MezRouter.back<void>();
               },
               child: Container(
                 padding: EdgeInsets.all(12),
@@ -293,7 +294,7 @@ class _AgoraCallState extends State<AgoraCall> {
                 );
                 _sagora.engine.leaveChannel();
                 // get back will dispose the view and reset the call Action back to CallAction.None
-                Get.back<void>();
+                MezRouter.back<void>();
               },
               child: Container(
                 padding: EdgeInsets.all(12),
@@ -347,7 +348,7 @@ class _AgoraCallState extends State<AgoraCall> {
                 // @Nathik this part does not work
                 final dynamic _agoraAuth = (await _sagora.getAgoraToken(
                   chatId,
-                  Get.find<AuthController>().user!.id,
+                  Get.find<AuthController>().user!.hasuraId.toString(),
                   talkingTo!.participantType == ParticipantType.Customer
                       ? ParticipantType.DeliveryDriver
                       : ParticipantType.Customer,
@@ -391,7 +392,7 @@ class _AgoraCallState extends State<AgoraCall> {
           ),
           Flexible(
             child: InkWell(
-              onTap: Get.back,
+              onTap: MezRouter.back,
               child: Container(
                 padding: EdgeInsets.all(12),
                 decoration:

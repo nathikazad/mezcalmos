@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 
@@ -12,11 +13,11 @@ class FloatingCartComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => _authController.isUserSignedIn &&
-              Get.find<RestaurantController>().cart.value.cartItems.length > 0
+      () => Get.find<RestaurantController>().cart.value.cartItems.length > 0 &&
+              _authController.isUserSignedIn
           ? FloatingActionButton(
               onPressed: () {
-                Get.toNamed(kCartRoute);
+                MezRouter.toNamed(kCartRoute);
               },
               child: Badge(
                 badgeContent: Text(

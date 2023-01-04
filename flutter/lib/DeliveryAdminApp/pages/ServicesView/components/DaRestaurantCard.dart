@@ -5,7 +5,8 @@ import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantsInfoController
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
@@ -46,10 +47,14 @@ class DaRestaurantCard extends StatelessWidget {
                         ),
                       ),
                       Switch(
-                        value: restaurant.state.open,
+                        // TODO: Switch open @m66are
+                        value: restaurant.state.approved,
                         onChanged: (bool v) {
                           Get.find<RestaurantsInfoController>().setOpen(
-                              isAv: v, restaurantId: restaurant.info.id);
+                              isAv: v,
+                              restaurantId: restaurant.info.hasuraId
+                                  .toString()
+                                  .toString());
                         },
                         activeColor: primaryBlueColor,
                       )
@@ -62,13 +67,15 @@ class DaRestaurantCard extends StatelessWidget {
                       Flexible(
                         child: TextButton.icon(
                           style: TextButton.styleFrom(
+                              foregroundColor: primaryBlueColor,
                               backgroundColor: Colors.transparent,
                               textStyle: Get.textTheme.bodyText1,
-                              padding: const EdgeInsets.all(3),
-                              primary: primaryBlueColor),
+                              padding: const EdgeInsets.all(3)),
                           onPressed: () {
-                            Get.toNamed(getROpEditInfoRoute(
-                                restaurantId: restaurant.info.id));
+                            MezRouter.toNamed(getROpEditInfoRoute(
+                                restaurantId: restaurant.info.hasuraId
+                                    .toString()
+                                    .toString()));
                           },
                           icon: Icon(Icons.person),
                           label: Text('${_i18n()["editProfile"]}'),
@@ -77,16 +84,34 @@ class DaRestaurantCard extends StatelessWidget {
                       Flexible(
                         child: TextButton.icon(
                           onPressed: () {
-                            Get.toNamed(getROpMenuRoute(
-                                restaurantId: restaurant.info.id));
+                            MezRouter.toNamed(getROpMenuRoute(
+                                restaurantId: restaurant.info.hasuraId
+                                    .toString()
+                                    .toString()));
                           },
                           style: TextButton.styleFrom(
+                              foregroundColor: primaryBlueColor,
                               backgroundColor: Colors.transparent,
                               textStyle: Get.textTheme.bodyText1,
-                              padding: const EdgeInsets.all(3),
-                              primary: primaryBlueColor),
+                              padding: const EdgeInsets.all(3)),
                           icon: Icon(Icons.settings),
                           label: Text('${_i18n()["editAdmin"]}'),
+                        ),
+                      ),
+                      Flexible(
+                        child: TextButton.icon(
+                          onPressed: () {
+                            Get.toNamed(getRestaurantOperatorsRoute(
+                                restaurant.info.hasuraId.toString()));
+                          },
+                          style: TextButton.styleFrom(
+                              foregroundColor: primaryBlueColor,
+                              backgroundColor: Colors.transparent,
+                              textStyle: Get.textTheme.bodyText1,
+                              padding: const EdgeInsets.all(3)),
+                          icon: Icon(Icons.support_agent),
+                          label: Text(
+                              '${_i18n()["operators"]} (${restaurant.operators.length})'),
                         ),
                       )
                     ],

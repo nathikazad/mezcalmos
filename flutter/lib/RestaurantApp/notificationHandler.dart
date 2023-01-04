@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' as mat;
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
@@ -10,17 +11,35 @@ dynamic _i18n() =>
     Get.find<LanguageController>().strings["LaundryApp"]["notificationHandler"];
 
 Notification restaurantNotificationHandler(String key, value) {
+  mezDbgPrint("🚀🚀 new notification 🚀🚀 ==> $value");
   final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
   switch (notificationType) {
     case NotificationType.NewOrder:
       return Notification(
           id: key,
-          linkUrl: getROpOrderRoute(value["orderId"]),
+          linkUrl: getROpOrderRoute(value["orderId"].toString()),
           body: '${_i18n()['newOrderBody']}',
           imgUrl:
               'assets/images/shared/notifications/prepareOrderNotificationIcon.png', // needs to be changed
           title: '${_i18n()['newOrderTitle']}',
+          timestamp: DateTime.parse(value['time']),
+          notificationType: NotificationType.NewMessage,
+          notificationAction:
+              (value["notificationAction"] as String).toNotificationAction(),
+          variableParams: value);
+    case NotificationType.OperatorApproved:
+      return Notification(
+          id: key,
+          linkUrl: kWrapperRoute,
+          body: (value["approved"] == true)
+              ? 'You have been approved'
+              : "You have been rejected",
+          imgUrl: (value["approved"] == true)
+              ? 'assets/images/shared/notifications/delivered.png'
+              : 'assets/images/shared/notifications/cancel.png', // needs to be changed
+          title:
+              (value["approved"] == true) ? "Congrats !!" : "Unfortunately !",
           timestamp: DateTime.parse(value['time']),
           notificationType: NotificationType.NewMessage,
           notificationAction:
@@ -54,7 +73,7 @@ Notification _laundryOpOrderChangesNotifier(String key, value) {
 
   return Notification(
       id: key,
-      linkUrl: getROpOrderRoute(value["orderId"]),
+      linkUrl: getROpOrderRoute(value["orderId"].toString()),
       icon: mat.Icons.flatware,
       secondaryIcon: mat.Icons.close,
       body: dynamicFields["body"],
@@ -77,7 +96,7 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
       id: key,
       icon: mat.Icons.flatware,
       secondaryIcon: mat.Icons.close,
-      linkUrl: getROpOrderRoute(value["orderId"]),
+      linkUrl: getROpOrderRoute(value["orderId"].toString()),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -152,7 +171,7 @@ Notification newMessageNotification(String key, value) {
       id: key,
       linkUrl: getMessagesRoute(
           chatId: value['chatId'],
-          orderLink: getROpOrderRoute(value['orderId'])),
+          orderLink: getROpOrderRoute(value['orderId'].toString())),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],

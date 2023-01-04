@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
@@ -34,11 +35,11 @@ class DriverOrderCard extends StatelessWidget {
     return OrderInfosCard(
       orderCardSubWidgets: OrderCardSubWidgets(
           onCardTap: () {
-            // Get.toNamed(getOrderDetailsRoute(order.orderId));
+            // MezRouter.toNamed(getOrderDetailsRoute(order.orderId));
             if (order.orderType == OrderType.Restaurant) {
-              Get.toNamed(getRestaurantOrderRoute(order.orderId));
+              MezRouter.toNamed(getRestaurantOrderRoute(order.orderId));
             } else if (order.orderType == OrderType.Laundry) {
-              Get.toNamed(getLaundryOrderRoute(order.orderId));
+              MezRouter.toNamed(getLaundryOrderRoute(order.orderId));
             }
           },
           cardTitle: _getOrderTitle(),
@@ -134,7 +135,7 @@ class DriverOrderCard extends StatelessWidget {
               ),
             ),
           );
-        case RestaurantOrderStatus.ReadyForPickup:
+        case RestaurantOrderStatus.Ready:
           return Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
@@ -148,7 +149,7 @@ class DriverOrderCard extends StatelessWidget {
               ),
             ),
           );
-        case RestaurantOrderStatus.OrderReceieved:
+        case RestaurantOrderStatus.OrderReceived:
           if ((order as RestaurantOrder).isScheduled()) {
             return Container(
               padding: const EdgeInsets.all(8),

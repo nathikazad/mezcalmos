@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/routes/AuthRoutes.dart';
@@ -12,6 +11,7 @@ import 'package:mezcalmos/WebApp/screens/notificationScreen/notificationPopUpWid
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 import 'package:mezcalmos/WebApp/values/constants.dart';
 import 'package:mezcalmos/WebApp/widgets/mezOverly.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -147,8 +147,7 @@ class _AppbarWidgetForMobileState extends State<AppbarWidgetForMobile> {
               children: [
                 Row(
                   children: [
-                    if (Get.find<FirbaseAuthController>().fireAuthUser?.uid !=
-                            null &&
+                    if (Get.find<AuthController>().fireAuthUser?.uid != null &&
                         widget.type.value != WebAppBarType.DontShowMenu)
                       Padding(
                         padding: const EdgeInsets.only(right: 15, bottom: 5),
@@ -165,8 +164,7 @@ class _AppbarWidgetForMobileState extends State<AppbarWidgetForMobile> {
                       ),
                     SizedBox(
                       width:
-                          Get.find<FirbaseAuthController>().fireAuthUser?.uid !=
-                                  null
+                          Get.find<AuthController>().fireAuthUser?.uid != null
                               ? null
                               : MezCalmosResizer.getWepPageHorizontalPadding(
                                   context),
@@ -387,8 +385,7 @@ class _AppBarWedgetForDesktopState extends State<AppBarWedgetForDesktop>
               children: [
                 Row(
                   children: [
-                    if (Get.find<FirbaseAuthController>().fireAuthUser?.uid !=
-                        null)
+                    if (Get.find<AuthController>().fireAuthUser?.uid != null)
                       Padding(
                         padding: const EdgeInsets.only(right: 15, bottom: 5),
                         child: IconButton(

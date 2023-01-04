@@ -4,11 +4,15 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/operatorNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/restaurantNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
+import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class RestaurantsInfoController extends GetxController {
@@ -35,6 +39,19 @@ class RestaurantsInfoController extends GetxController {
       } else {}
       restaurants.value = data;
     });
+  }
+
+  Future<RestaurantOperator?> getOperatorById(String id) async {
+    final DataSnapshot data = await _databaseHelper.firebaseDatabase
+        .ref()
+        .child(operatorAuthNode(operatorType: OperatorType.Restaurant, uid: id))
+        .get();
+
+    if (data.exists) {
+      final RestaurantOperator op = RestaurantOperator.fromData(id, data.value);
+      return op;
+    }
+    return null;
   }
 
   Future<List<Restaurant>> getRestaurants() {
@@ -90,7 +107,7 @@ class RestaurantsInfoController extends GetxController {
     });
   }
 
-  Future<Item> getItem(String restaurantId, String itemId) {
+  Future<Item> getItem(int restaurantId, int itemId) {
     return _databaseHelper.firebaseDatabase
         .ref()
         .child('restaurants/info/$restaurantId/menu/$itemId')
@@ -112,6 +129,48 @@ class RestaurantsInfoController extends GetxController {
         "restaurantName": restaurantName,
         "emailIdOrPhoneNumber": laundryPhoneOrEmail
       });
+      mezDbgPrint('HttpsCallableResult response: ${response.data}');
+      return ServerResponse.fromJson(response.data);
+    } catch (e) {
+      mezDbgPrint(e);
+
+      return ServerResponse(
+        ResponseStatus.Error,
+        errorMessage: "Server Error",
+        errorCode: "serverError",
+      );
+    }
+  }
+
+  Future<ServerResponse> addOperator(
+      {required String restId, required String opId}) async {
+    final HttpsCallable addOp =
+        FirebaseFunctions.instance.httpsCallable('restaurant-addOperator');
+    mezDbgPrint("name : $restId ========= email : $opId");
+    try {
+      final HttpsCallableResult<dynamic> response = await addOp
+          .call({"restaurantId": restId, "emailIdOrPhoneNumber": opId});
+      mezDbgPrint('HttpsCallableResult response: ${response.data}');
+      return ServerResponse.fromJson(response.data);
+    } catch (e) {
+      mezDbgPrint(e);
+
+      return ServerResponse(
+        ResponseStatus.Error,
+        errorMessage: "Server Error",
+        errorCode: "serverError",
+      );
+    }
+  }
+
+  Future<ServerResponse> removeOperator(
+      {required String restId, required String opId}) async {
+    final HttpsCallable addOp =
+        FirebaseFunctions.instance.httpsCallable('restaurant-removeOperator');
+    mezDbgPrint("restID : $restId ========= OPID : $opId");
+    try {
+      final HttpsCallableResult<dynamic> response =
+          await addOp.call({"restaurantId": restId, "operatorId": opId});
       mezDbgPrint('HttpsCallableResult response: ${response.data}');
       return ServerResponse.fromJson(response.data);
     } catch (e) {

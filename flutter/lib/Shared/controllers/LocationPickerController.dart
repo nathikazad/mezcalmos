@@ -6,7 +6,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as GeoLoc;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
-import 'package:mezcalmos/Shared/controllers/firbaseAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -14,6 +13,8 @@ import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
+import "package:mezcalmos/Shared/controllers/authController.dart";
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["components"]["LocationPicker"];
@@ -143,6 +144,7 @@ class LocationPickerState extends State<LocationPicker> {
     );
   }
 
+  /******************************  Widgets ************************************/
   Widget bottomButton() {
     switch (widget.locationPickerMapController._bottomButtomToShow.value) {
       case BottomButtomToShow.Pick:
@@ -152,15 +154,15 @@ class LocationPickerState extends State<LocationPicker> {
           // onPress: showGrayedOutButton
         );
       case BottomButtomToShow.Confirm:
-        if (Get.find<FirbaseAuthController>().fireAuthUser != null) {
+        if (Get.find<AuthController>().isUserSignedIn) {
           return buildBottomButton(_i18n()['confirm'].toString().capitalize,
               notifier: widget.notifyParentOfConfirm);
         } else {
           return buildBottomButton(_i18n()["signInToMakeOrder"],
               notifier: (_) async {
-            Get.find<FirbaseAuthController>()
-                .preserveNavigationStackAfterSignIn = true;
-            await Get.toNamed<void>(kSignInRouteOptional);
+            Get.find<AuthController>().preserveNavigationStackAfterSignIn =
+                true;
+            await MezRouter.toNamed<void>(kSignInRouteOptional);
 
             // call back in case User was signedOut and he signedIn before confirming his Order Successfully!
             widget.onSuccessSignIn?.call();

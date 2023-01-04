@@ -9,9 +9,11 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
+import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 enum SignInMode {
   OptionalSignIn,
@@ -55,7 +57,7 @@ class SignIn extends GetWidget<AuthController> {
                                 color: Colors.black,
                               ),
                               onPressed: () {
-                                Get.back();
+                                MezRouter.back();
                               },
                             ),
                           )
@@ -121,9 +123,7 @@ class SignIn extends GetWidget<AuthController> {
       child: TextButton(
           onPressed: () {
             clickedLogin.value = true;
-            controller
-                .signInWithApple()
-                .whenComplete(() => clickedLogin.value = false);
+            signInWithApple().whenComplete(() => clickedLogin.value = false);
           },
           style: TextButton.styleFrom(
               backgroundColor: Colors.black,
@@ -152,7 +152,7 @@ class SignIn extends GetWidget<AuthController> {
     return Container(
       width: double.infinity,
       child: TextButton(
-          onPressed: () => Get.toNamed(kOtpRoute),
+          onPressed: () => MezRouter.toNamed(kOtpRoute),
           style: TextButton.styleFrom(
               backgroundColor: Colors.blue,
               fixedSize: Size(double.infinity, 50)),
@@ -183,8 +183,7 @@ class SignIn extends GetWidget<AuthController> {
           onPressed: () async {
             clickedLogin.value = true;
             lmode != AppLaunchMode.dev
-                ? controller
-                    .signInWithFacebook()
+                ? signInWithFacebook()
                     .whenComplete(() => clickedLogin.value = false)
                 : await Get.defaultDialog<dynamic>(
                     title: "Choose Test User",
@@ -193,22 +192,20 @@ class SignIn extends GetWidget<AuthController> {
                         TextButton(
                             onPressed: () {
                               // Get.back();
-                              controller.signIn(
-                                  tTestCustomerValue, tEmailTestPassword);
+                              signIn(tTestCustomerValue, tEmailTestPassword);
                             },
                             child: Text(tTestCustomerValue)),
                         TextButton(
                             onPressed: () {
                               // Get.back();
-                              controller.signIn(
-                                  tTestTaxiValue, tEmailTestPassword);
+                              signIn(
+                                  tTestRestaurantOpValue, tEmailTestPassword);
                             },
-                            child: Text(tTestTaxiValue)),
+                            child: Text(tTestRestaurantOpValue)),
                         TextButton(
                             onPressed: () {
                               // Get.back();
-                              controller.signIn(
-                                  tTestAdminValue, tEmailTestPassword);
+                              signIn(tTestAdminValue, tEmailTestPassword);
                             },
                             child: Text(tTestAdminValue))
                       ],

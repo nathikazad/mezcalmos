@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart' as fireAuth;
 import 'package:get/get.dart';
 
 void SignTheUserWithFacbook()async{
