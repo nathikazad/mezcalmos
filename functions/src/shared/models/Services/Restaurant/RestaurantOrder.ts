@@ -30,6 +30,7 @@ export interface RestaurantOrder {
   totalCost?: number;
   chatId?: number;
   scheduledTime?: string;
+
   // customer?: CustomerInfo;
   // delivery?: Delivery;
 }

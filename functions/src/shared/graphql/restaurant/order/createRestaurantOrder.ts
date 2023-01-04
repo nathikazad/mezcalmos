@@ -4,7 +4,7 @@ import { DeliveryOrder, DeliveryOrderStatus } from "../../../models/Services/Del
 import { Restaurant } from "../../../models/Services/Restaurant/Restaurant";
 import { RestaurantOrder, RestaurantOrderStatus } from "../../../models/Services/Restaurant/RestaurantOrder";
 
-export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, restaurant: Restaurant)
+export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, restaurant: Restaurant, tripDuration?: number, tripDistance?: number , tripPolyline?: string)
   : Promise<{ restaurantOrder: RestaurantOrder, deliveryOrder: DeliveryOrder }> {
 
   let chain = getHasura();
@@ -76,9 +76,9 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
             service_provider_id: restaurantOrder.restaurantId,
             service_provider_type: "restaurant",
             scheduled_time: restaurantOrder.scheduledTime,
-            // trip_distance: deliveryDetails.tripDistance,
-            // trip_duration: deliveryDetails.tripDuration,
-            // trip_polyline: deliveryDetails.tripPolyline,
+            trip_distance: tripDistance,
+            trip_duration: tripDuration,
+            trip_polyline: tripPolyline,
             package_cost: restaurantOrder.itemsCost
           }
         },
@@ -142,7 +142,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
     customerId: restaurantOrder.customerId,
     deliveryCost: restaurantOrder.deliveryCost,
     packageCost: restaurantOrder.paymentType == "cash" ? response.insert_restaurant_order_one.items_cost : 0,
-    orderTime: response.insert_restaurant_order_one.order_time
+    orderTime: response.insert_restaurant_order_one.order_time,
   }
 
   return { restaurantOrder, deliveryOrder };

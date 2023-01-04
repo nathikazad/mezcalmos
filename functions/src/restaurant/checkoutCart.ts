@@ -75,8 +75,16 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     //   order = (await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId, data.stripeFees)) as RestaurantOrder
     // }
 
-    let orderResponse = await createRestaurantOrder(restaurantOrder, restaurant);
-    
+    let orderResponse = await createRestaurantOrder(
+      restaurantOrder,
+      restaurant, 
+      checkoutRequest.tripDuration,
+      checkoutRequest.tripDistance,
+      checkoutRequest.tripPolyline
+    );
+   
+
+    console.log("[544D] DELIVERY-ORDER ==> ", orderResponse.deliveryOrder);
     // clear user cart 
     clearCart(customerId);
     console.log(customer);
