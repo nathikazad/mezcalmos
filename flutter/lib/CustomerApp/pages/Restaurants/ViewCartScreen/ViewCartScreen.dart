@@ -34,7 +34,8 @@ enum CardChoice { SavedCard, GooglePay, ApplePay }
 
 class _ViewCartScreenState extends State<ViewCartScreen> {
   /// RestaurantController
-  RestaurantController _restaurantController = Get.find<RestaurantController>();
+  CustomerCartController _restaurantController =
+      Get.find<CustomerCartController>();
   ViewCartController viewCartController = ViewCartController();
 
   /// _textEditingController

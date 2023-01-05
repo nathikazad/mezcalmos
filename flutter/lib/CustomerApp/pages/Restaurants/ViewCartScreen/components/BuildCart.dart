@@ -14,8 +14,8 @@ class CartBuilder extends StatelessWidget {
   const CartBuilder({Key? key}) : super(key: key);
 
   /// RestaurantController
-  static final RestaurantController controller =
-      Get.find<RestaurantController>();
+  static final CustomerCartController controller =
+      Get.find<CustomerCartController>();
 
   @override
   Widget build(BuildContext context) {

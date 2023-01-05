@@ -22,7 +22,7 @@ class MyCartAppBarIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => _authController.isUserSignedIn &&
-              Get.find<RestaurantController>().cart.value.cartItems.length > 0
+              Get.find<CustomerCartController>().cart.value.cartItems.length > 0
           ? Padding(
               padding: const EdgeInsets.only(right: 5.0, bottom: 8.0),
               child: IconButton(
@@ -32,7 +32,7 @@ class MyCartAppBarIcon extends StatelessWidget {
                 icon: Badge(
                   padding: EdgeInsets.all(6),
                   badgeContent: Text(
-                    Get.find<RestaurantController>()
+                    Get.find<CustomerCartController>()
                         .cart
                         .value
                         .cartItems

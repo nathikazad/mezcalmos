@@ -56,7 +56,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   OrderController controller = Get.find<OrderController>();
 
   /// restaurantController
-  RestaurantController restaurantController = Get.find<RestaurantController>();
+  CustomerCartController restaurantController =
+      Get.find<CustomerCartController>();
   StreamSubscription<Order?>? _orderListener;
   bool _clickedButton = false;
 

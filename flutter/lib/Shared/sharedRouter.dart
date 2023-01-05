@@ -42,6 +42,7 @@ const String kAgoraCallScreen = '/agora';
 const String kPickLocationWithoutAuth = "/pick_location/noAuth";
 const String kPickLocationEdit = "/pick_location/edit";
 const String kSomethingWentWrongScreen = "/SomethingWentWrongScreen";
+const String kDeliveryCostSettingScreen = "/costDeliverySettingScreen";
 
 String getMessagesRoute({
   required int chatId,

@@ -21,7 +21,7 @@ import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 
-class RestaurantController extends GetxController {
+class CustomerCartController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
 
@@ -46,41 +46,37 @@ class RestaurantController extends GetxController {
     mezDbgPrint(
         "--------------------> RestaurantsCartController Initialized !");
 
-    if (_authController.fireAuthUser != null && _authController.user != null) {
-      //  getShippingPrice().then((num value) => shippingPrice.value = value);
-      baseShippingPrice.value = await getShippingPrice();
-      minShiipingPrice.value = await getMinShippingPrice();
-      perKmPrice.value = await getPerKmShippingPrice();
-      // ignore: unawaited_futures
-      fetchCart();
-    }
-    if (Get.find<AuthController>().user?.hasuraId != null) {
-      final HasuraDb _hasuraDb = Get.find<HasuraDb>();
-      _hasuraDb.createSubscription(start: () {
-        _cartListener = hsCart
-            .listen_on_customer_cart(
-                customer_id: Get.find<AuthController>().user!.hasuraId)
-            .listen((Cart? event) {
-          mezDbgPrint(
-              "Cart event stream from front 😍😍😍😍 ${event?.toFirebaseFormattedJson()}");
-          if (event != null) {
-            cart.value = event;
-            if (event.restaurant != null)
-              cart.value.restaurant = event.restaurant;
+    baseShippingPrice.value = await getShippingPrice();
+    minShiipingPrice.value = await getMinShippingPrice();
+    perKmPrice.value = await getPerKmShippingPrice();
 
-            associatedRestaurant = event.restaurant;
-          } else {
-            create_customer_cart();
-          }
-          cart.refresh();
-        });
-      }, cancel: () {
-        if (_subscriptionId != null)
-          _hasuraDb.cancelSubscription(_subscriptionId!);
-        _cartListener?.cancel();
-        _cartListener = null;
+    await fetchCart();
+    final HasuraDb _hasuraDb = Get.find<HasuraDb>();
+    _hasuraDb.createSubscription(start: () {
+      _cartListener = hsCart
+          .listen_on_customer_cart(
+              customer_id: Get.find<AuthController>().user!.hasuraId)
+          .listen((Cart? event) {
+        mezDbgPrint(
+            "Cart event stream from front 😍😍😍😍 ${event?.toFirebaseFormattedJson()}");
+        if (event != null) {
+          cart.value = event;
+          if (event.restaurant != null)
+            cart.value.restaurant = event.restaurant;
+
+          associatedRestaurant = event.restaurant;
+        } else {
+          create_customer_cart();
+        }
+        cart.refresh();
       });
-    }
+    }, cancel: () {
+      if (_subscriptionId != null)
+        _hasuraDb.cancelSubscription(_subscriptionId!);
+      _cartListener?.cancel();
+      _cartListener = null;
+    });
+
     // check for old special items and remove them
     checkCartPeriod();
   }

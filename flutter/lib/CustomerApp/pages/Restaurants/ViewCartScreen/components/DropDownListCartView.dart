@@ -29,7 +29,7 @@ class DropDownListCartView extends StatefulWidget {
 }
 
 class _DropDownListCartViewState extends State<DropDownListCartView> {
-  RestaurantController controller = Get.find<RestaurantController>();
+  CustomerCartController controller = Get.find<CustomerCartController>();
 
   CustomerAuthController customerAuthController =
       Get.find<CustomerAuthController>();

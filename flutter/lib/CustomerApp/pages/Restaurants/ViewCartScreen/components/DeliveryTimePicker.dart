@@ -27,7 +27,7 @@ class DeliveryTimePicker extends StatefulWidget {
 }
 
 class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
-  RestaurantController controller = Get.find<RestaurantController>();
+  CustomerCartController controller = Get.find<CustomerCartController>();
 
   @override
   void initState() {

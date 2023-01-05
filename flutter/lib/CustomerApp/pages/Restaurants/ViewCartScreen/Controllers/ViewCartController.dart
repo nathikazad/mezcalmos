@@ -23,7 +23,7 @@ typedef PaymentOption = Map<PickerChoice, CreditCard?>;
 // controller class //
 class ViewCartController {
   // instances //
-  RestaurantController controller = Get.find<RestaurantController>();
+  CustomerCartController controller = Get.find<CustomerCartController>();
   // streams //
   StreamSubscription? cardsListener;
   // Obs variables //

@@ -25,7 +25,7 @@ class PaymentMethodPicker extends StatefulWidget {
 }
 
 class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
-  RestaurantController controller = Get.find<RestaurantController>();
+  CustomerCartController controller = Get.find<CustomerCartController>();
 
   @override
   void initState() {

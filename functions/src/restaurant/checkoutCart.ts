@@ -77,7 +77,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
 
     let orderResponse = await createRestaurantOrder(
       restaurantOrder,
-      restaurant, 
+      restaurant,
       checkoutRequest.tripDuration,
       checkoutRequest.tripDistance,
       checkoutRequest.tripPolyline

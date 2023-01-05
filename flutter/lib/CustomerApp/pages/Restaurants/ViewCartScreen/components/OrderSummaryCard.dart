@@ -21,7 +21,7 @@ class OrderSummaryCard extends StatelessWidget {
 
   final Location? serviceLoc;
   final void Function({Location? location})? setLocationCallBack;
-  final RestaurantController controller;
+  final CustomerCartController controller;
 
   @override
   Widget build(BuildContext context) {

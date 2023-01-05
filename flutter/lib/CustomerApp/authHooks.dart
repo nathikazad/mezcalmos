@@ -19,8 +19,8 @@ class AuthHooks {
     await Get.delete<Sagora>(force: true);
     await Get.delete<CustomerAuthController>(force: true);
     await Get.delete<OrderController>(force: true);
-    await Get.delete<TaxiController>(force: true);
-    await Get.delete<RestaurantController>(force: true);
+    // await Get.delete<TaxiController>(force: true);
+    await Get.delete<CustomerCartController>(force: true);
     await Get.delete<BackgroundNotificationsController>(force: true);
     await Get.delete<MessageController>(force: true);
     await Get.delete<ForegroundNotificationsController>(force: true);
@@ -46,8 +46,8 @@ class AuthHooks {
         ForegroundNotificationsController(),
         permanent: true);
     Get.put<OrderController>(OrderController(), permanent: true);
-    Get.put<TaxiController>(TaxiController(), permanent: true);
-    Get.put<RestaurantController>(RestaurantController(), permanent: true);
+    // Get.put<TaxiController>(TaxiController(), permanent: true);
+    Get.put<CustomerCartController>(CustomerCartController(), permanent: true);
     Get.put<MessageController>(MessageController(), permanent: true);
   }
 }

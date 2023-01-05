@@ -73,12 +73,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   @override
   void initState() {
     super.initState();
-    Get.put(TaxiController(), permanent: true);
-    Get.put(RestaurantController(), permanent: true);
-    Get.put(RestaurantsInfoController(), permanent: true);
-    Get.put(LaundryController(), permanent: true);
     WidgetsBinding.instance.addObserver(this);
-
     if (Get.find<AuthController>().fireAuthUser != null) {
       _doIfFireAuthUserIsNotNull();
     }

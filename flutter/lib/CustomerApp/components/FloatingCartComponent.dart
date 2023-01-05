@@ -13,42 +13,43 @@ class FloatingCartComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Get.find<RestaurantController>().cart.value.cartItems.length > 0 &&
-              _authController.isUserSignedIn
-          ? FloatingActionButton(
-              onPressed: () {
-                MezRouter.toNamed(kCartRoute);
-              },
-              child: Badge(
-                badgeContent: Text(
-                  Get.find<RestaurantController>()
-                      .cart
-                      .value
-                      .cartItems
-                      .length
-                      .toStringAsFixed(0),
-                  style: Get.textTheme.bodyText1
-                      ?.copyWith(color: primaryBlueColor),
-                ),
-                position: BadgePosition.topEnd(top: -8, end: 0),
-                badgeColor: secondaryLightBlueColor,
-                child: Container(
-                  height: 60,
-                  width: 60,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle, // circular shape
-                    gradient: LinearGradient(
-                      colors: [primaryBlueColor, Color(0xFFAC59FC)],
+      () =>
+          Get.find<CustomerCartController>().cart.value.cartItems.length > 0 &&
+                  _authController.isUserSignedIn
+              ? FloatingActionButton(
+                  onPressed: () {
+                    MezRouter.toNamed(kCartRoute);
+                  },
+                  child: Badge(
+                    badgeContent: Text(
+                      Get.find<CustomerCartController>()
+                          .cart
+                          .value
+                          .cartItems
+                          .length
+                          .toStringAsFixed(0),
+                      style: Get.textTheme.bodyText1
+                          ?.copyWith(color: primaryBlueColor),
+                    ),
+                    position: BadgePosition.topEnd(top: -8, end: 0),
+                    badgeColor: secondaryLightBlueColor,
+                    child: Container(
+                      height: 60,
+                      width: 60,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle, // circular shape
+                        gradient: LinearGradient(
+                          colors: [primaryBlueColor, Color(0xFFAC59FC)],
+                        ),
+                      ),
+                      child: Icon(
+                        Icons.shopping_cart,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                  child: Icon(
-                    Icons.shopping_cart,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            )
-          : Container(),
+                )
+              : Container(),
     );
   }
 }

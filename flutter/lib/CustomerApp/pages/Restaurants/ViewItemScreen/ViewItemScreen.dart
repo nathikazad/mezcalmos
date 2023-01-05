@@ -50,8 +50,8 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   Rxn<CartItem> cartItem = Rxn<CartItem>();
 
   /// RestaurantController
-  RestaurantController restaurantCartController =
-      Get.find<RestaurantController>();
+  CustomerCartController restaurantCartController =
+      Get.find<CustomerCartController>();
 
   /// RestaurantsInfoController
   RestaurantsInfoController controller = Get.find<RestaurantsInfoController>();

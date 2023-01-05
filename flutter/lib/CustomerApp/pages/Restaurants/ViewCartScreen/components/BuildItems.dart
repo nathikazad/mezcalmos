@@ -22,8 +22,8 @@ class CartItemsBuilder extends StatelessWidget {
   const CartItemsBuilder({Key? key}) : super(key: key);
 
   /// RestaurantController
-  static final RestaurantController _restaurantController =
-      Get.find<RestaurantController>();
+  static final CustomerCartController _restaurantController =
+      Get.find<CustomerCartController>();
 
   /// LanguageType
   static final LanguageType userLanguage =

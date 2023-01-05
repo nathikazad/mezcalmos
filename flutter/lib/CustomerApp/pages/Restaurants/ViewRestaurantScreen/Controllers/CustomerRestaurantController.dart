@@ -80,7 +80,7 @@ class CustomerRestaurantController {
 
   Future<void> _getShippingPrice() async {
     basShippingPrice.value =
-        await Get.find<RestaurantController>().getShippingPrice() ?? 50;
+        await Get.find<CustomerCartController>().getShippingPrice() ?? 50;
   }
 
   void assignKeys() {

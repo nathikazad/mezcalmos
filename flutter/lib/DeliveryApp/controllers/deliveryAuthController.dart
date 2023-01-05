@@ -235,4 +235,8 @@ class DeliveryAuthController extends GetxController {
       MezSnackbar("Error ~", "Failed turning_listenForLocation it on!");
     });
   }
+
+  Future setDeliveryCosts({num? minCost, num? costPerKm}) async {
+    //
+  }
 }

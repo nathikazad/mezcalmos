@@ -40,8 +40,8 @@ class BottomBarItemViewScreen extends StatefulWidget {
 }
 
 class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
-  RestaurantController restaurantCartController =
-      Get.find<RestaurantController>();
+  CustomerCartController restaurantCartController =
+      Get.find<CustomerCartController>();
   AuthController auth = Get.find<AuthController>();
 
   @override

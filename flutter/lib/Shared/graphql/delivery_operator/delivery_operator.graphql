@@ -5,9 +5,9 @@ query get_delivery_operator_by_id($user_id : Int!)
     app_version,
     current_gps,
     delivery_company_id,
-    #delivery_company {
-    #  name,
-    #}
+    delivery_company {
+      name,
+    }
     delivery_driver_type,
     id,
     notification_token,
@@ -37,19 +37,3 @@ subscription get_delivery_operator_by_id($user_id : Int!)
 }
 
 
-mutation set_delivery_costs($minCost : money! , $costPerKm: money!)
-{
-  delivery_operator(where : {user_id : {_eq : $user_id}} , limit:1) {
-    app_version,
-    current_gps,
-    delivery_company_id,
-    #delivery_company {
-    #  name,
-    #}
-    delivery_driver_type,
-    id,
-    notification_token,
-    owner,
-    status
-  }
-}

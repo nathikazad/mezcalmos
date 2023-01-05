@@ -25,7 +25,8 @@ class OrderFooterCard extends StatefulWidget {
 
 class _OrderFooterCardState extends State<OrderFooterCard> {
   OrderController controller = Get.find<OrderController>();
-  RestaurantController restaurantController = Get.find<RestaurantController>();
+  CustomerCartController restaurantController =
+      Get.find<CustomerCartController>();
 
   @override
   Widget build(BuildContext context) {

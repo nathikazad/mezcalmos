@@ -34,6 +34,12 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    viewController.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomerAppBar(

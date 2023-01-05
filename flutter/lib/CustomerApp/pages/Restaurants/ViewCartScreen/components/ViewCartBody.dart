@@ -34,7 +34,7 @@ class ViewCartBody extends StatefulWidget {
 }
 
 class _ViewCartBodyState extends State<ViewCartBody> {
-  RestaurantController controller = Get.find<RestaurantController>();
+  CustomerCartController controller = Get.find<CustomerCartController>();
   FocusNode _noteFocus = new FocusNode();
 
   @override

@@ -39,8 +39,8 @@ class ItemInformationCart extends StatefulWidget {
 }
 
 class _ItemInformationCartState extends State<ItemInformationCart> {
-  final RestaurantController _restaurantController =
-      Get.find<RestaurantController>();
+  final CustomerCartController _restaurantController =
+      Get.find<CustomerCartController>();
   @override
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
