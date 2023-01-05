@@ -6,6 +6,7 @@ import { OrderType } from "../shared/models/Generic/Order";
 import {
   RestaurantOrder,
   RestaurantOrderStatus,
+  RestaurantOrderStatusChangeNotification,
 } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import {
   Notification,
@@ -21,7 +22,7 @@ import {
   DeliveryDriverType,
   DeliveryOrder,
   DeliveryOrderStatus,
-  DeliveryOrderStatusChangeNotification,
+  
 } from "../shared/models/Services/Delivery/DeliveryOrder";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
@@ -31,7 +32,7 @@ import { getRestaurantOrder } from "../shared/graphql/restaurant/order/getRestau
 import { deliveryOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { CustomerInfo } from "../shared/models/Generic/User";
 import { getCustomer } from "../shared/graphql/restaurant/customer/getCustomer";
-import { updateOrderStatus } from "../shared/graphql/restaurant/order/updateOrder";
+import { updateRestaurantOrderStatus as updateRestaurantOrderStatus } from "../shared/graphql/restaurant/order/updateOrder";
 import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { RestaurantOperator } from "../shared/models/Services/Restaurant/Restaurant";
 export interface ChangeDeliveryStatusDetails {
@@ -173,21 +174,25 @@ async function changeStatus(
   let customer: CustomerInfo = await getCustomer(restaurantOrder.customerId);
 
   checkExpectedStatus(deliveryOrder.status, newStatus);
-
+ 
   deliveryOrder.status = newStatus;
   updateDeliveryOrderStatus(deliveryOrder);
 
   if (deliveryOrder.status == DeliveryOrderStatus.OnTheWayToDropoff) {
     restaurantOrder.status = RestaurantOrderStatus.OnTheWay;
-    updateOrderStatus(restaurantOrder);
+    updateRestaurantOrderStatus(restaurantOrder); 
+    
   }
   if (deliveryOrder.status == DeliveryOrderStatus.Delivered) {
     restaurantOrder.status = RestaurantOrderStatus.Delivered;
-    updateOrderStatus(restaurantOrder);
+    updateRestaurantOrderStatus(restaurantOrder);
   }
+
+
+
   let notification: Notification = {
-    foreground: <DeliveryOrderStatusChangeNotification>{
-      status: newStatus,
+    foreground: <RestaurantOrderStatusChangeNotification>{
+      status: restaurantOrder.status,
       time: new Date().toISOString(),
       notificationType: NotificationType.OrderStatusChange,
       orderType: OrderType.Restaurant,
@@ -227,3 +232,5 @@ async function changeStatus(
 
   return { status: ServerResponseStatus.Success };
 }
+
+ 

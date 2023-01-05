@@ -3,7 +3,7 @@ import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 // import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 // import { capturePayment } from "../utilities/stripe/payment";
 import { getRestaurantOrder } from "../shared/graphql/restaurant/order/getRestaurantOrder";
-import { updateOrderStatus } from "../shared/graphql/restaurant/order/updateOrder"
+import { updateRestaurantOrderStatus } from "../shared/graphql/restaurant/order/updateOrder"
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { OrderType } from "../shared/models/Generic/Order";
 import { restaurantOrderStatusChangeMessages } from "./bgNotificationMessages";
@@ -116,7 +116,7 @@ export async function cancelOrderFromCustomer(userId: number, data: any) {
       // notifyOthersCancelledOrder(deliveryAdmins, orderId, order, restaurantOperators);
   //   });
 
-  updateOrderStatus(order)
+  updateRestaurantOrderStatus(order)
   deliveryOrder.status = DeliveryOrderStatus.CancelledByCustomer;
   updateDeliveryOrderStatus(deliveryOrder);
   

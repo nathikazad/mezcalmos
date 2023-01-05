@@ -4,9 +4,9 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/TwoAvatarsComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/global.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 final DateFormat f = new DateFormat('hh:mm a');
 

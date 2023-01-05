@@ -9,7 +9,7 @@ import { ParticipantType } from "../shared/models/Generic/Chat";
 import { orderUrl } from "../utilities/senders/appRoutes";
 // import { refundPayment } from "../utilities/stripe/payment";
 import { getRestaurantOrder } from "../shared/graphql/restaurant/order/getRestaurantOrder";
-import { updateOrderStatus } from "../shared/graphql/restaurant/order/updateOrder";
+import { updateRestaurantOrderStatus as updateRestaurantOrderStatus } from "../shared/graphql/restaurant/order/updateOrder";
 import { OrderType } from "../shared/models/Generic/Order";
 import { getCustomer } from "../shared/graphql/restaurant/customer/getCustomer";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
@@ -93,14 +93,17 @@ async function changeStatus(statusDetails: any, newStatus: RestaurantOrderStatus
       // TODO: cancel or capture shipping payment depending on status
     // }
     order.refundAmount = order.totalCost;
-    // order.costToCustomer = order.totalCost - order.refundAmount;
+    deliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
+    updateDeliveryOrderStatus(deliveryOrder);
   } 
-  updateOrderStatus(order);
+  updateRestaurantOrderStatus(order);
   if(order.status == RestaurantOrderStatus.ReadyForPickup && deliveryOrder.status != DeliveryOrderStatus.AtPickup) {
     deliveryOrder.status = DeliveryOrderStatus.PackageReady;
     updateDeliveryOrderStatus(deliveryOrder);
-  }
-    
+  } 
+  
+
+  
   let notification: Notification = {
     foreground: <RestaurantOrderStatusChangeNotification>{
       status: newStatus,

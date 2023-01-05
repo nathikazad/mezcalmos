@@ -2,7 +2,7 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { RestaurantOrder } from "../../../models/Services/Restaurant/RestaurantOrder";
 
-export async function updateOrderStatus(order: RestaurantOrder) {
+export async function updateRestaurantOrderStatus(order: RestaurantOrder) {
   let chain = getHasura();
   if(order.orderId == null) {
     throw new HttpsError(

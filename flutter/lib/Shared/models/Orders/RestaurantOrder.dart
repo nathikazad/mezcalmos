@@ -21,7 +21,7 @@ enum RestaurantOrderStatus {
   OnTheWay,
   Delivered,
   CancelledByAdmin,
-  CancelledByCustomer
+  CancelledByCustomer,
 }
 
 extension ParseRestaurantOrderStatusToString on RestaurantOrderStatus {
