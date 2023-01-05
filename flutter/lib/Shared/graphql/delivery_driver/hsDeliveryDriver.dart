@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/DeliveryAdminApp/models/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/__generated/delivery_driver.graphql.dart';
@@ -8,6 +9,7 @@ import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCompanyType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -25,6 +27,7 @@ Future<List<DeliveryDriver>?> get_drivers_by_service_provider_id(
           Variables$Query$getDriversByServiceId(serviceId: serviceProviderId),
     ),
   );
+  mezDbgPrint(" 🚨🚨 Getting drivers of service $serviceProviderId ");
   if (response.parsedData?.delivery_driver == null) {
     throw Exception(
         " 🚨🚨 Getting drivers of service $serviceProviderId exceptions 🚨🚨 \n ${response.exception}");
@@ -36,18 +39,22 @@ Future<List<DeliveryDriver>?> get_drivers_by_service_provider_id(
     final List<DeliveryDriver> drivers =
         data.map((Query$getDriversByServiceId$delivery_driver driverData) {
       return DeliveryDriver(
-          deliveryDriverState: DeliveryDriverState(
-              status: driverData.status.toAgentStatus(),
-              online: driverData.online,
-              deliveryCompanyId: driverData.delivery_company_id.toString(),
-              deliveryCompanyType:
-                  driverData.delivery_company_type.toDeliveryCompanyType()),
-          deliveryDriverId: driverData.id.toString(),
-          driverInfo: DeliveryDriverUserInfo(
-              hasuraId: driverData.id,
-              image: driverData.user.image,
-              language: driverData.user.language_id.toString().toLanguageType(),
-              name: driverData.user.name));
+        driverLocation: driverData.current_location?.toLatLng(),
+        type: driverData.delivery_driver_type.toDeliveryDriverType(),
+        deliveryDriverState: DeliveryDriverState(
+            status: driverData.status.toAgentStatus(),
+            online: driverData.online,
+            deliveryCompanyId: driverData.delivery_company_id.toString(),
+            deliveryCompanyType:
+                driverData.delivery_company_type.toDeliveryCompanyType()),
+        deliveryDriverId: driverData.id,
+        driverInfo: DeliveryDriverUserInfo(
+          hasuraId: driverData.id,
+          image: driverData.user.image,
+          language: driverData.user.language_id.toString().toLanguageType(),
+          name: driverData.user.name,
+        ),
+      );
     }).toList();
     return drivers;
   }
@@ -69,18 +76,21 @@ Future<DeliveryDriver?> get_driver_by_user_id(
         response.parsedData!.delivery_driver;
     if (data.isNotEmpty) {
       return DeliveryDriver(
-          deliveryDriverState: DeliveryDriverState(
-              status: data.first.status.toAgentStatus(),
-              online: data.first.online,
-              deliveryCompanyId: data.first.delivery_company_id.toString(),
-              deliveryCompanyType:
-                  data.first.delivery_company_type.toDeliveryCompanyType()),
-          deliveryDriverId: data.first.id.toString(),
-          driverInfo: DeliveryDriverUserInfo(
-              hasuraId: data.first.id,
-              image: data.first.user.image,
-              language: data.first.user.language_id.toString().toLanguageType(),
-              name: data.first.user.name));
+        type: data.first.delivery_driver_type.toDeliveryDriverType(),
+        deliveryDriverState: DeliveryDriverState(
+            status: data.first.status.toAgentStatus(),
+            online: data.first.online,
+            deliveryCompanyId: data.first.delivery_company_id.toString(),
+            deliveryCompanyType:
+                data.first.delivery_company_type.toDeliveryCompanyType()),
+        deliveryDriverId: data.first.id,
+        driverInfo: DeliveryDriverUserInfo(
+          hasuraId: data.first.id,
+          image: data.first.user.image,
+          language: data.first.user.language_id.toString().toLanguageType(),
+          name: data.first.user.name,
+        ),
+      );
     }
   }
   return null;

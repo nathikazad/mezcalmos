@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart' show NumberFormat;
 import 'package:location/location.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
@@ -30,6 +31,10 @@ class MezFormatter {
 extension ParseGeography on Geography {
   LocationData toLocationData() {
     return LocationData.fromMap({"latitude": latitude, "longitude": longitude});
+  }
+
+  LatLng toLatLng() {
+    return LatLng(latitude, longitude);
   }
 }
 

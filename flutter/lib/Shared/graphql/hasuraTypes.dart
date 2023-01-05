@@ -11,8 +11,10 @@ class Geography {
 Geography geographyFromJson(data) {
   final List<dynamic> coordinates = data["coordinates"];
 
-  return Geography(double.parse(coordinates[0].toString()),
-      double.parse(coordinates[1].toString()));
+  return Geography(
+    double.parse(coordinates[1].toString()),
+    double.parse(coordinates[0].toString()),
+  );
 }
 
 dynamic geographyToJson(Geography geography) => <String, dynamic>{

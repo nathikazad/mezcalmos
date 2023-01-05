@@ -76,7 +76,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
             service_provider_id: restaurantOrder.restaurantId,
             service_provider_type: "restaurant",
             scheduled_time: restaurantOrder.scheduledTime,
-            trip_distance: tripDistance,
+            trip_distance:  ,
             trip_duration: tripDuration,
             trip_polyline: tripPolyline,
             package_cost: restaurantOrder.itemsCost

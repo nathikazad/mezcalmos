@@ -1,19 +1,15 @@
-import 'dart:typed_data';
-
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:http/http.dart' as http;
+import "package:http/http.dart" as http;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/MezMarker.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
@@ -123,58 +119,107 @@ class MGoogleMapController {
       bool fitWithinBounds = true,
       required LatLng? latLng,
       String? customImgHttpUrl}) async {
+    if (latLng != null) {
+      BitmapDescriptor icon;
+
+      final String? uImg = Get.find<AuthController>().user?.image ??
+          Get.find<AuthController>().user?.image;
+
+      if (uImg == null) {
+        icon = await bitmapDescriptorLoader(
+            (await cropRonded(
+                (await rootBundle.load(aDefaultAvatar)).buffer.asUint8List())),
+            _calculateMarkersSize(),
+            _calculateMarkersSize(),
+            isBytes: true);
+      } else {
+        icon = await bitmapDescriptorLoader(
+            (await cropRonded(
+                (await http.get(Uri.parse(customImgHttpUrl ?? uImg)))
+                    .bodyBytes) as Uint8List),
+            _calculateMarkersSize(),
+            _calculateMarkersSize(),
+            isBytes: true);
+      }
+
+      final String mId = (markerId ??
+          Get.find<AuthController>().user?.hasuraId.toString() ??
+          'ANONYMOUS');
+
+      // default userId is authenticated's
+      _addOrUpdateMarker(
+        MezMarker(
+          fitWithinBounds: fitWithinBounds,
+          markerId: MarkerId(mId),
+          icon: icon,
+          position: latLng,
+        ),
+      );
+    } else
+      mezDbgPrint(
+          "addOrUpdatePurpleDestinationMarker skipppping ==> $markerId");
     // Inside function to get ImgBytes
-    Future<Uint8List?> _fetchImgBytes(String uImg) async {
-      Uint8List? _imgBytes;
+    // Future<Uint8List?> _fetchImgBytes(String uImg) async {
+    //   Uint8List? _imgBytes;
 
-      final String? uImg = Get.find<AuthController>().user?.image;
+    //   final String? uImg = Get.find<AuthController>().user?.image;
 
-      // Inside function to get Bitmapdescriptor
-      Future<BitmapDescriptor?> _buildBitmap(String? uImg) async {
-        BitmapDescriptor? bitMap;
-        if (uImg == null) {
-          bitMap = await bitmapDescriptorLoader(
-              (await cropRonded((await rootBundle.load(aDefaultAvatar))
-                  .buffer
-                  .asUint8List())),
-              _calculateMarkersSize(),
-              _calculateMarkersSize(),
-              isBytes: true);
-        } else {
-          await _fetchImgBytes(uImg).then((Uint8List? _imgBytes) async {
-            if (_imgBytes != null) {
-              bitMap = await bitmapDescriptorLoader(
-                (await cropRonded(_imgBytes)),
-                _calculateMarkersSize(),
-                _calculateMarkersSize(),
-                isBytes: true,
-              );
-            }
-          });
-        }
-        return bitMap;
-      }
+    //   // Inside function to get Bitmapdescriptor
 
-      if (latLng != null) {
-        final String mId = (markerId ??
-            fireAuth.FirebaseAuth.instance.currentUser?.uid ??
-            'ANONYMOUS');
+    //   return null;
+    // }
 
-        await _buildBitmap(uImg).then((BitmapDescriptor? icon) {
-          if (icon != null) {
-            // default userId is authenticated's
-            _addOrUpdateMarker(
-              MezMarker(
-                fitWithinBounds: fitWithinBounds,
-                markerId: MarkerId(mId),
-                icon: icon,
-                position: latLng,
-              ),
-            );
-          }
-        });
-      }
-    }
+    // Future<BitmapDescriptor?> _buildBitmap(String? uImg) async {
+    //   BitmapDescriptor? bitMap;
+    //   if (uImg == null) {
+    //     mezDbgPrint("uiImage null =========");
+    //     bitMap = await bitmapDescriptorLoader(
+    //         (await cropRonded(
+    //             (await rootBundle.load(aDefaultAvatar)).buffer.asUint8List())),
+    //         _calculateMarkersSize(),
+    //         _calculateMarkersSize(),
+    //         isBytes: true);
+    //   } else {
+    //     mezDbgPrint("uImage not null ======>$uImg");
+    //     await _fetchImgBytes(uImg).then((Uint8List? _imgBytes) async {
+    //       mezDbgPrint("Image bytes check =======>$_imgBytes");
+    //       if (_imgBytes != null) {
+    //         bitMap = await bitmapDescriptorLoader(
+    //           (await cropRonded(_imgBytes)),
+    //           _calculateMarkersSize(),
+    //           _calculateMarkersSize(),
+    //           isBytes: true,
+    //         );
+    //       }
+    //     });
+    //   }
+
+    //   return bitMap;
+    // }
+
+    // if (latLng != null) {
+    //   mezDbgPrint("Called add or update user marker 🤣 $latLng");
+    //   final String mId = (markerId ??
+    //       fireAuth.FirebaseAuth.instance.currentUser?.uid ??
+    //       'ANONYMOUS');
+
+    //   await _buildBitmap(customImgHttpUrl).then((BitmapDescriptor? icon) {
+    //     mezDbgPrint("Print icon ::::::===>$icon");
+    //     if (icon != null) {
+    //       // default userId is authenticated's
+    //       _addOrUpdateMarker(
+    //         MezMarker(
+    //           fitWithinBounds: fitWithinBounds,
+    //           markerId: MarkerId(mId),
+    //           icon: icon,
+    //           position: latLng,
+    //         ),
+    //       );
+    //     }
+    //   });
+    // } else {
+    //   mezDbgPrint("Else print 😍");
+    // }
   }
 
   Future<void> addOrUpdateTaxiDriverMarker(String? markerId, LatLng? latLng,
@@ -247,9 +292,12 @@ class MGoogleMapController {
   }
 
   void decodeAndAddPolyline({required String encodedPolylineString}) {
-    addPolyline(MapHelper.loadUpPolyline(encodedPolylineString)
+    List<PointLatLng> pts = MapHelper.loadUpPolyline(encodedPolylineString)
         .map<PointLatLng>((LatLng e) => PointLatLng(e.latitude, e.longitude))
-        .toList());
+        .toList();
+    mezDbgPrint("[AAA] First cords of polyline => ${pts.first}");
+    mezDbgPrint("[AAA] Last cords of polyline => ${pts.last}");
+    addPolyline(pts);
   }
 
   void removeMarkerById(String? markerId) {

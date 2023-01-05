@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/DeliveryAdminApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class DeliveryOpBottomNavBar extends StatelessWidget {
   const DeliveryOpBottomNavBar({super.key});
@@ -54,6 +56,7 @@ class DeliveryOpBottomNavBar extends StatelessWidget {
             ),
           ),
           InkWell(
+            onTap: () => MezRouter.toNamed(kCompanyDriversScreen),
             child: Container(
               child: Center(
                 child: Column(
@@ -80,6 +83,7 @@ class DeliveryOpBottomNavBar extends StatelessWidget {
             ),
           ),
           InkWell(
+            onTap: () => MezRouter.toNamed(kDeliveryCostSetter),
             child: Container(
               child: Center(
                 child: Column(
@@ -106,6 +110,7 @@ class DeliveryOpBottomNavBar extends StatelessWidget {
             ),
           ),
           InkWell(
+            onTap: () => MezRouter.toNamed(kServiceProfileScreen),
             child: Container(
               child: Center(
                 child: Column(

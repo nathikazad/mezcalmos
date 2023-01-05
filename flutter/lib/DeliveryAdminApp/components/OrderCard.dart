@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/models/DeliveryOrder.dart';
-import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/LaundryApp/constants/assets.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
 import 'package:sizer/sizer.dart';
 
@@ -149,36 +144,36 @@ class DeliveryOrderCard extends StatelessWidget {
           ),
         );
       case DeliveryOrderStatus.orderReceived:
-        if ((order as RestaurantOrder).isScheduled()) {
-          return Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: secondaryLightBlueColor,
-              borderRadius: BorderRadius.circular(25),
+        // if ((order).isScheduled()) {
+        //   return Container(
+        //     padding: const EdgeInsets.all(8),
+        //     decoration: BoxDecoration(
+        //       color: secondaryLightBlueColor,
+        //       borderRadius: BorderRadius.circular(25),
+        //     ),
+        //     child: Center(
+        //       child: Text(
+        //         "${_i18n()["scheduled"]}",
+        //         style:
+        //             Get.textTheme.bodyText1?.copyWith(color: primaryBlueColor),
+        //       ),
+        //     ),
+        //   );
+        // } else {
+        return Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.amber.shade100,
+            borderRadius: BorderRadius.circular(25),
+          ),
+          child: Center(
+            child: Text(
+              "${_i18n()["waiting"]}",
+              style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
             ),
-            child: Center(
-              child: Text(
-                "${_i18n()["scheduled"]}",
-                style:
-                    Get.textTheme.bodyText1?.copyWith(color: primaryBlueColor),
-              ),
-            ),
-          );
-        } else {
-          return Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.amber.shade100,
-              borderRadius: BorderRadius.circular(25),
-            ),
-            child: Center(
-              child: Text(
-                "${_i18n()["waiting"]}",
-                style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
-              ),
-            ),
-          );
-        }
+          ),
+        );
+      // }
       default:
         return Container(
           padding: const EdgeInsets.all(8),

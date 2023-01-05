@@ -72,7 +72,7 @@ Stream<List<DeliveryOrder>> listen_on_delivery_orders() {
               currentGps: orderData.current_gps?.toLocationData(),
               deliveryDriverId: orderData.delivery_driver_id,
               deliveryServiceType:
-                  orderData.delivery_driver_type?.toDeliveryProviderType(),
+                  orderData.service_provider_type?.toDeliveryProviderType(),
               estimatedPkgReadyTime: DateTime.tryParse(
                   orderData.estimated_package_ready_time ?? ""),
               routeInformation: orderData.trip_polyline != null &&
@@ -104,6 +104,103 @@ Stream<List<DeliveryOrder>> listen_on_delivery_orders() {
             ),
           );
       });
+      return _o;
+    } else {
+      throw Exception(
+          "🚨🚨🚨🚨 listen_on_restaurant_order_by_id exception ${event.exception}");
+    }
+  });
+}
+
+Stream<DeliveryOrder?> listen_on_delivery_order_by_id({required int orderId}) {
+  return _hasuraDb.graphQLClient
+      .subscribe$listen_on_delivery_order_by_id(
+    Options$Subscription$listen_on_delivery_order_by_id(
+      variables: Variables$Subscription$listen_on_delivery_order_by_id(
+        orderId: orderId,
+      ),
+      fetchPolicy: FetchPolicy.noCache,
+    ),
+  )
+      .map<DeliveryOrder?>(
+          (QueryResult<Subscription$listen_on_delivery_order_by_id> event) {
+    DeliveryOrder? _o;
+
+    if (event.hasException) {
+      mezDbgPrint(
+          "[AAA] listen_on_delivery_orders :: FAILED WITH EXCEPTION ===> ${event.exception}");
+    }
+    final Subscription$listen_on_delivery_order_by_id$delivery_order?
+        orderData = event.parsedData?.delivery_order.first;
+    if (orderData != null) {
+      _o = DeliveryOrder(
+        id: orderData.id,
+        pickupLocation: locModel.Location(
+          orderData.pickup_address,
+          orderData.pickup_gps.toLocationData(),
+        ),
+        dropoffLocation: locModel.Location(
+          orderData.dropoff_address,
+          orderData.dropoff_gps.toLocationData(),
+        ),
+        deliveryDriverType:
+            orderData.delivery_driver_type?.toDeliveryDriverType() ??
+                DeliveryDriverType.Delivery_driver,
+        chatWithCustomerId: orderData.chat_with_customer_id,
+        paymentType: orderData.payment_type.toPaymentType(),
+        status: orderData.status.toDeliveryOrderStatus(),
+        customerId: orderData.customer_id,
+        deliveryCost: orderData.delivery_cost,
+        packageCost: orderData.package_cost,
+        orderTime: DateTime.parse(orderData.order_time),
+        actualArrivalAtDropoffTime:
+            DateTime.tryParse(orderData.actual_arrival_at_dropoff_time ?? ""),
+        estimatedArrivalAtDropoffTime: DateTime.tryParse(
+            orderData.estimated_arrival_at_dropoff_time ?? ""),
+        actualArrivalAtPickupTime:
+            DateTime.tryParse(orderData.actual_arrival_at_pickup_time ?? ""),
+        estimatedArrivalAtPickupTime:
+            DateTime.tryParse(orderData.estimated_arrival_at_pickup_time ?? ""),
+        actualPkgReadyTime:
+            DateTime.tryParse(orderData.actual_package_ready_time ?? ""),
+        actualDeliveredTime:
+            DateTime.tryParse(orderData.actual_delivered_time ?? ""),
+        cancellationTime: DateTime.tryParse(orderData.cancellation_time ?? ""),
+        chatWithServiceProviderId: orderData.chat_with_service_provider_id,
+        currentGps: orderData.current_gps?.toLocationData(),
+        deliveryDriverId: orderData.delivery_driver_id,
+        deliveryServiceType:
+            orderData.service_provider_type?.toDeliveryProviderType(),
+        estimatedPkgReadyTime:
+            DateTime.tryParse(orderData.estimated_package_ready_time ?? ""),
+        routeInformation: orderData.trip_polyline != null &&
+                orderData.trip_distance != null &&
+                orderData.trip_duration != null
+            ? RouteInformation(
+                polyline: orderData.trip_polyline!,
+                distance: RideDistance(
+                  orderData.trip_distance.toString(),
+                  orderData.trip_distance!,
+                ),
+                duration: RideDuration(
+                  orderData.trip_duration.toString(),
+                  orderData.trip_duration!,
+                ),
+              )
+            : null,
+        serviceProviderId: orderData.service_provider_id,
+        stripePaymentId: orderData.stripe_payment_id,
+        moreInfo: DeliveryOrderInfo(
+          customerImage: orderData.customer.user.image,
+          customerName: orderData.customer.user.name,
+          serviceProviderAddress: orderData.restaurant?.location_text,
+          serviceProviderImage: orderData.restaurant?.image,
+          serviceProviderName: orderData.restaurant?.name,
+          deliveryDriverImage: orderData.delivery_driver?.user.image,
+          deliveryDriverName: orderData.delivery_driver?.user.name,
+        ),
+      );
+
       return _o;
     } else {
       throw Exception(
