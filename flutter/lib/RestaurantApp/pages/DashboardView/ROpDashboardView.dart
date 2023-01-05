@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/ROpAppBar.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpDashboardPage.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpDeliveryCost.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpDriversPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpInfoPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpOperatorsPage.dart';
@@ -91,10 +90,6 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
                 if (editInfoController.restaurant.value!.selfDelivery)
                   ROpDriversView(
                     restID: restaurantID!,
-                  ),
-                if (editInfoController.restaurant.value!.selfDelivery)
-                  ROpDeliveryCost(
-                    editInfoController: editInfoController,
                   ),
               ],
             ),

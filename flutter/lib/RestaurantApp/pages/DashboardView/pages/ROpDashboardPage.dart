@@ -181,9 +181,10 @@ class ROpDashboardPage extends StatelessWidget {
                     _divider(),
                     _navigationLink(
                         onClick: () async {
-                          await pageController.animateToPage(7,
-                              duration: Duration(milliseconds: 1),
-                              curve: Curves.easeIn);
+                          // todo handle root
+                          // await pageController.animateToPage(7,
+                          //     duration: Duration(milliseconds: 1),
+                          //     curve: Curves.easeIn);
                         },
                         icon: Icons.price_check_rounded,
                         titleWidget: Text(
