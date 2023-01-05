@@ -237,29 +237,4 @@ class _ROpDeliveryCostState extends State<ROpDeliveryCost> {
       ],
     );
   }
-
-  TextFormField _restNameTextField() {
-    return TextFormField(
-      controller: widget.editInfoController.restaurantNameTxt,
-      style: Get.textTheme.bodyText1,
-    );
-  }
-
-  TextFormField _prdescTextField() {
-    return TextFormField(
-      controller: widget.editInfoController.prRestaurantDescTxt,
-      style: Get.textTheme.bodyText1,
-      maxLines: 5,
-      minLines: 3,
-    );
-  }
-
-  TextFormField _scdescTextField() {
-    return TextFormField(
-      controller: widget.editInfoController.scRestaurantDescTxt,
-      style: Get.textTheme.bodyText1,
-      maxLines: 5,
-      minLines: 3,
-    );
-  }
 }

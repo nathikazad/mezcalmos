@@ -1,10 +1,9 @@
 import 'package:get/get.dart'; // getX
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/LaundryOrderView.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/RestaurantOrderView.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/CurrentOrdersListScreen.dart';
 import 'package:mezcalmos/DeliveryApp/pages/DeliveryWrapper.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/OrderDetailsScreen.dart';
-import 'package:mezcalmos/DeliveryApp/pages/PastOrders/PastOrdersView.dart';
+import 'package:mezcalmos/DeliveryApp/pages/OrdersList/CurrentOrdersListScreen.dart';
+import 'package:mezcalmos/DeliveryApp/pages/OrdersList/PastOrdersView.dart';
+import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/Restaurant/RestaurantOrderView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/Unauthorized/UnAuthrizedDriverView.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
@@ -33,8 +32,9 @@ class XRouter {
             name: kCurrentOrdersListRoute,
             page: () => CurrentOrdersListScreen()),
         GetPage(name: kHomeRoute, page: () => DeliveryWrapper()),
-        GetPage(name: kLaundryOrderView, page: () => LaundryOrderView()),
-        GetPage(name: kRestaurantOrderView, page: () => RestaurantOrderView()),
+        //  GetPage(name: kLaundryOrderView, page: () => LaundryOrderView()),
+        GetPage(
+            name: kRestaurantOrderView, page: () => DvRestaurantOrderView()),
         GetPage(name: kOrderDetailsView, page: () => OrderDetailsScreen()),
         GetPage(name: kPastOrdersView, page: () => DriverPastOrdersView()),
         GetPage(name: kDriverUnAuth, page: () => UnAuthorizedDriverView()),

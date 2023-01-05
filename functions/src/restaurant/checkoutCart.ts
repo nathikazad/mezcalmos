@@ -24,6 +24,7 @@ export interface CheckoutRequest {
   customerAppType: AppType,
   customerLocation: Location,
   deliveryCost: number,
+  itemsCost: number,
   paymentType: PaymentType,
   notes: string,
   restaurantId: number,
@@ -63,6 +64,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     orderType: checkoutRequest.restaurantOrderType,
     customerAppType: checkoutRequest.customerAppType,
     items: customerCart.items,
+    itemsCost : checkoutRequest.itemsCost,
     deliveryCost: checkoutRequest.deliveryCost,
     scheduledTime: checkoutRequest.scheduledTime
   }
@@ -75,7 +77,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     //   order = (await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId, data.stripeFees)) as RestaurantOrder
     // }
 
-    let orderResponse = await createRestaurantOrder(restaurantOrder, restaurant);
+    let orderResponse = await createRestaurantOrder(restaurantOrder, restaurant,checkoutRequest);
     
     // clear user cart 
     clearCart(customerId);

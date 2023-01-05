@@ -155,7 +155,6 @@ extension ParseOrderTypeToString on AppType {
       default:
         return null;
     }
-    return null;
   }
 }
 

@@ -1,10 +1,12 @@
 import { HttpsError } from "firebase-functions/v1/auth";
+import { CheckoutRequest } from "../../../../restaurant/checkoutCart";
 import { getHasura } from "../../../../utilities/hasura";
 import { DeliveryOrder, DeliveryOrderStatus } from "../../../models/Services/Delivery/DeliveryOrder";
 import { Restaurant } from "../../../models/Services/Restaurant/Restaurant";
 import { RestaurantOrder, RestaurantOrderStatus } from "../../../models/Services/Restaurant/RestaurantOrder";
 
-export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, restaurant: Restaurant)
+
+export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, restaurant: Restaurant,checkoutReq : CheckoutRequest)
   : Promise<{ restaurantOrder: RestaurantOrder, deliveryOrder: DeliveryOrder }> {
 
   let chain = getHasura();
@@ -72,13 +74,14 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
             },
             payment_type: restaurantOrder.paymentType,
             delivery_cost: restaurantOrder.deliveryCost,
+          
             status: DeliveryOrderStatus.OrderReceived,
             service_provider_id: restaurantOrder.restaurantId,
             service_provider_type: "restaurant",
             scheduled_time: restaurantOrder.scheduledTime,
-            // trip_distance: deliveryDetails.tripDistance,
-            // trip_duration: deliveryDetails.tripDuration,
-            // trip_polyline: deliveryDetails.tripPolyline,
+            trip_distance: checkoutReq.tripDistance,
+            trip_duration: checkoutReq.tripDuration,
+            trip_polyline: checkoutReq.tripPolyline,
             package_cost: restaurantOrder.itemsCost
           }
         },
@@ -142,7 +145,11 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
     customerId: restaurantOrder.customerId,
     deliveryCost: restaurantOrder.deliveryCost,
     packageCost: restaurantOrder.paymentType == "cash" ? response.insert_restaurant_order_one.items_cost : 0,
-    orderTime: response.insert_restaurant_order_one.order_time
+    orderTime: response.insert_restaurant_order_one.order_time,
+    tripDistance : checkoutReq.tripDistance,
+    tripDuration : checkoutReq.tripDuration,
+    tripPolyline : checkoutReq.tripPolyline,
+  
   }
 
   return { restaurantOrder, deliveryOrder };

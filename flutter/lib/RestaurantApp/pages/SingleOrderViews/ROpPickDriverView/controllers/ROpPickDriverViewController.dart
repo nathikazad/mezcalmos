@@ -30,7 +30,7 @@ class ROpPickDriverController {
 
   // assign driver //
   Future<ServerResponse> assignDriver({
-    required int driverId,
+    required DeliveryDriver driver,
   }) async {
     screenLoading.value = true;
 
@@ -40,7 +40,8 @@ class ROpPickDriverController {
       final HttpsCallableResult response = await cloudFunction.call({
         "orderType": OrderType.Restaurant.toFirebaseFormatString(),
         "deliveryOrderId": order.value!.deliveryOrderId,
-        "deliveryDriverId": driverId,
+        "deliveryDriverId": driver.deliveryDriverId,
+        "deliveryCompanyId": driver.deliveryDriverState.deliveryCompanyId,
         "deliveryDriverType":
             DeliveryDriverType.Delivery_driver.toFirebaseFormatString(),
         "changeDriver": order.value!.dropoffDriver != null

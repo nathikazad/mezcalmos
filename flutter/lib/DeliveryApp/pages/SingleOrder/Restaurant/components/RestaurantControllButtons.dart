@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/restaurantController.dart';
+import 'package:mezcalmos/DeliveryApp/models/DeliveryOrder.dart';
+import 'package:mezcalmos/DeliveryApp/models/utilities/DeliveryOrderStatus.dart';
+import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/Restaurant/controllers/DvRestaurantOrderViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/GradientCircularLoading.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['DeliveryApp']
@@ -15,9 +19,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings['DeliveryApp']
 class RestaurantControllButtons extends StatefulWidget {
   /// buttons to controll the restaurant driver order status and the final status of the order (Delivered/Canceled)
 
-  const RestaurantControllButtons({Key? key, required this.order})
+  const RestaurantControllButtons(
+      {Key? key, required this.order, required this.viewController})
       : super(key: key);
-  final RestaurantOrder order;
+  final DeliveryOrder order;
+  final DvRestaurantOrderViewController viewController;
 
   @override
   State<RestaurantControllButtons> createState() =>
@@ -44,23 +50,41 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
 
   Widget _getFooterComponent() {
     switch (widget.order.status) {
-      case RestaurantOrderStatus.OrderReceived:
-      case RestaurantOrderStatus.Preparing:
+      case DeliveryOrderStatus.OrderReceived:
         return _waitingDisabledButton(
             header: "${_i18n()["RestaurantControllButtons"]["notReadyTitle"]}",
             body: "${_i18n()["RestaurantControllButtons"]["notReadyBody"]}");
 
-      case RestaurantOrderStatus.Ready:
-        return _startDeliveryButton();
-      case RestaurantOrderStatus.OnTheWay:
-        return _confirmDeliveryButton();
-      case RestaurantOrderStatus.CancelledByAdmin:
-      case RestaurantOrderStatus.CancelledByCustomer:
+      case DeliveryOrderStatus.CancelledByDeliverer:
+      case DeliveryOrderStatus.CancelledByServiceProvider:
+      case DeliveryOrderStatus.CancelledByCustomer:
         return _canceledOrderComponent();
-      case RestaurantOrderStatus.Delivered:
+      case DeliveryOrderStatus.Delivered:
         return _orderDeliveredComponent();
       default:
-        return Container();
+        return MezButton(
+          label: _getBtnTitle(),
+          borderRadius: 0,
+          onClick: () async {
+            switch (widget.order.status) {
+              case DeliveryOrderStatus.PackageReady:
+                await widget.viewController.atPickup();
+
+                break;
+              case DeliveryOrderStatus.AtPickup:
+                await widget.viewController.startDelivery();
+                break;
+              case DeliveryOrderStatus.OnTheWayToDropoff:
+                await widget.viewController.atDropoff();
+                break;
+              case DeliveryOrderStatus.AtDropoff:
+                await widget.viewController.finishDelivery();
+                break;
+
+              default:
+            }
+          },
+        );
     }
   }
 
@@ -71,13 +95,13 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
               setState(() {
                 clicked = true;
               });
-              // await restaurantOrderController
-              //     .startRestaurantDelivery(widget.order.orderId)
-              //     .then((ServerResponse value) {
-              //   setState(() {
-              //     clicked = false;
-              //   });
-              // });
+              await widget.viewController
+                  .startDelivery()
+                  .then((ServerResponse value) {
+                setState(() {
+                  clicked = false;
+                });
+              });
             },
             child: Container(
               decoration: BoxDecoration(gradient: bluePurpleGradient),
@@ -102,8 +126,8 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
   }
 
   bool shouldDisableBottomButton() {
-    if (widget.order.estimatedDropoffAtCustomerTime != null &&
-        widget.order.estimatedPickupFromServiceProviderTime != null) {
+    if (widget.order.estimatedArrivalAtDropoffTime != null &&
+        widget.order.estimatedArrivalAtPickupTime != null) {
       return false;
     }
 
@@ -282,5 +306,21 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
             ),
           ),
         ));
+  }
+
+  String _getBtnTitle() {
+    switch (widget.order.status) {
+      case DeliveryOrderStatus.PackageReady:
+        return "Confirm pickup";
+      case DeliveryOrderStatus.AtPickup:
+        return "Start Delivery";
+      case DeliveryOrderStatus.OnTheWayToDropoff:
+        return "At dropoff";
+      case DeliveryOrderStatus.AtDropoff:
+        return "Finish delivery";
+
+      default:
+        return "";
+    }
   }
 }

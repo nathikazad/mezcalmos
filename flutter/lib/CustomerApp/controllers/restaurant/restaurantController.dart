@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart' as hsCart;
+import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -19,7 +20,6 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 
 class RestaurantController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -188,8 +188,6 @@ class RestaurantController extends GetxController {
             duration: routeInfo.duration,
           );
 
-          mezDbgPrint(
-              "SHIPPPPPING COOOOST =========>>>>>>>>>>>${cart.value.shippingCost}");
           // await saveCart();
           isShippingSet.value = true;
 
@@ -342,12 +340,11 @@ class RestaurantController extends GetxController {
   }
 
   Future<ServerResponse> checkout({String? stripePaymentId}) async {
-    mezDbgPrint("[+]Delivery time ===> ${cart.value.deliveryTime}");
     final HttpsCallable checkoutRestaurantCart =
         FirebaseFunctions.instance.httpsCallable("restaurant2-checkoutCart");
 
     try {
-      mezDbgPrint("[+]Delivery time ===> ${cart.value.deliveryTime}");
+      mezDbgPrint("[+]Delivery time ===> ${cart.value.getRouteInfo}");
       final Map<String, dynamic> payload = <String, dynamic>{
         // "customerId": _authController.user!.hasuraId,
         // "checkoutRequest": <String, dynamic>{
@@ -363,6 +360,7 @@ class RestaurantController extends GetxController {
               ),
             ).toFirebaseFormattedJson(),
         "deliveryCost": cart.value.shippingCost ?? 0,
+        "itemsCost": cart.value.itemsCost(),
         "scheduledTime": cart.value.deliveryTime?.toUtc().toString(),
 
         "paymentType": cart.value.paymentType.toFirebaseFormatString(),

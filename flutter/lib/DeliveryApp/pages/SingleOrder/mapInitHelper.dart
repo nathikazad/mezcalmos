@@ -1,14 +1,14 @@
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
+import 'package:mezcalmos/DeliveryApp/models/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
-void initilizeMap(
-    MGoogleMapController mapController, Rxn<Order> order, ServiceInfo service) {
+void initilizeMap(MGoogleMapController mapController, Rxn<DeliveryOrder> order,
+    ServiceInfo service) {
   final DeliveryAuthController deliveryAuthAuthController =
       Get.find<DeliveryAuthController>();
   if (order.value?.routeInformation != null) {
@@ -20,7 +20,7 @@ void initilizeMap(
   Future.wait(<Future<void>>[
     // DESTINATION MARKER
     mapController.addOrUpdatePurpleDestinationMarker(
-      latLng: order.value?.to.toLatLng(),
+      latLng: order.value?.dropoffLocation.toLatLng(),
     ),
     // USER MARKER
     mapController.addOrUpdateUserMarker(
@@ -28,8 +28,8 @@ void initilizeMap(
     ),
     // Restaurant Marker
     mapController.addOrUpdateUserMarker(
-      latLng: service.location.toLatLng(),
-      markerId: service.firebaseId,
+      latLng: order.value!.pickupLocation.toLatLng(),
+      markerId: service.hasuraId.toString(),
       customImgHttpUrl: service.image,
     )
   ]).then((_) {

@@ -3920,3 +3920,593 @@ class _CopyWithStubImpl$Subscription$driverStatusStream$delivery_driver<TRes>
   }) =>
       _res;
 }
+
+class Variables$Mutation$updateDriverLocation {
+  factory Variables$Mutation$updateDriverLocation({
+    required int driverId,
+    required Input$delivery_driver_set_input data,
+  }) =>
+      Variables$Mutation$updateDriverLocation._({
+        r'driverId': driverId,
+        r'data': data,
+      });
+
+  Variables$Mutation$updateDriverLocation._(this._$data);
+
+  factory Variables$Mutation$updateDriverLocation.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$driverId = data['driverId'];
+    result$data['driverId'] = (l$driverId as int);
+    final l$data = data['data'];
+    result$data['data'] = Input$delivery_driver_set_input.fromJson(
+        (l$data as Map<String, dynamic>));
+    return Variables$Mutation$updateDriverLocation._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get driverId => (_$data['driverId'] as int);
+  Input$delivery_driver_set_input get data =>
+      (_$data['data'] as Input$delivery_driver_set_input);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$driverId = driverId;
+    result$data['driverId'] = l$driverId;
+    final l$data = data;
+    result$data['data'] = l$data.toJson();
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$updateDriverLocation<
+          Variables$Mutation$updateDriverLocation>
+      get copyWith => CopyWith$Variables$Mutation$updateDriverLocation(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$updateDriverLocation) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$driverId = driverId;
+    final lOther$driverId = other.driverId;
+    if (l$driverId != lOther$driverId) {
+      return false;
+    }
+    final l$data = data;
+    final lOther$data = other.data;
+    if (l$data != lOther$data) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$driverId = driverId;
+    final l$data = data;
+    return Object.hashAll([
+      l$driverId,
+      l$data,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$updateDriverLocation<TRes> {
+  factory CopyWith$Variables$Mutation$updateDriverLocation(
+    Variables$Mutation$updateDriverLocation instance,
+    TRes Function(Variables$Mutation$updateDriverLocation) then,
+  ) = _CopyWithImpl$Variables$Mutation$updateDriverLocation;
+
+  factory CopyWith$Variables$Mutation$updateDriverLocation.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$updateDriverLocation;
+
+  TRes call({
+    int? driverId,
+    Input$delivery_driver_set_input? data,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$updateDriverLocation<TRes>
+    implements CopyWith$Variables$Mutation$updateDriverLocation<TRes> {
+  _CopyWithImpl$Variables$Mutation$updateDriverLocation(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$updateDriverLocation _instance;
+
+  final TRes Function(Variables$Mutation$updateDriverLocation) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? driverId = _undefined,
+    Object? data = _undefined,
+  }) =>
+      _then(Variables$Mutation$updateDriverLocation._({
+        ..._instance._$data,
+        if (driverId != _undefined && driverId != null)
+          'driverId': (driverId as int),
+        if (data != _undefined && data != null)
+          'data': (data as Input$delivery_driver_set_input),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$updateDriverLocation<TRes>
+    implements CopyWith$Variables$Mutation$updateDriverLocation<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$updateDriverLocation(this._res);
+
+  TRes _res;
+
+  call({
+    int? driverId,
+    Input$delivery_driver_set_input? data,
+  }) =>
+      _res;
+}
+
+class Mutation$updateDriverLocation {
+  Mutation$updateDriverLocation({
+    this.update_delivery_driver_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateDriverLocation.fromJson(Map<String, dynamic> json) {
+    final l$update_delivery_driver_by_pk = json['update_delivery_driver_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateDriverLocation(
+      update_delivery_driver_by_pk: l$update_delivery_driver_by_pk == null
+          ? null
+          : Mutation$updateDriverLocation$update_delivery_driver_by_pk.fromJson(
+              (l$update_delivery_driver_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$updateDriverLocation$update_delivery_driver_by_pk?
+      update_delivery_driver_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_delivery_driver_by_pk = update_delivery_driver_by_pk;
+    _resultData['update_delivery_driver_by_pk'] =
+        l$update_delivery_driver_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_delivery_driver_by_pk = update_delivery_driver_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_delivery_driver_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$updateDriverLocation) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_delivery_driver_by_pk = update_delivery_driver_by_pk;
+    final lOther$update_delivery_driver_by_pk =
+        other.update_delivery_driver_by_pk;
+    if (l$update_delivery_driver_by_pk != lOther$update_delivery_driver_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateDriverLocation
+    on Mutation$updateDriverLocation {
+  CopyWith$Mutation$updateDriverLocation<Mutation$updateDriverLocation>
+      get copyWith => CopyWith$Mutation$updateDriverLocation(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateDriverLocation<TRes> {
+  factory CopyWith$Mutation$updateDriverLocation(
+    Mutation$updateDriverLocation instance,
+    TRes Function(Mutation$updateDriverLocation) then,
+  ) = _CopyWithImpl$Mutation$updateDriverLocation;
+
+  factory CopyWith$Mutation$updateDriverLocation.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$updateDriverLocation;
+
+  TRes call({
+    Mutation$updateDriverLocation$update_delivery_driver_by_pk?
+        update_delivery_driver_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$updateDriverLocation$update_delivery_driver_by_pk<TRes>
+      get update_delivery_driver_by_pk;
+}
+
+class _CopyWithImpl$Mutation$updateDriverLocation<TRes>
+    implements CopyWith$Mutation$updateDriverLocation<TRes> {
+  _CopyWithImpl$Mutation$updateDriverLocation(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateDriverLocation _instance;
+
+  final TRes Function(Mutation$updateDriverLocation) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_delivery_driver_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateDriverLocation(
+        update_delivery_driver_by_pk: update_delivery_driver_by_pk == _undefined
+            ? _instance.update_delivery_driver_by_pk
+            : (update_delivery_driver_by_pk
+                as Mutation$updateDriverLocation$update_delivery_driver_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$updateDriverLocation$update_delivery_driver_by_pk<TRes>
+      get update_delivery_driver_by_pk {
+    final local$update_delivery_driver_by_pk =
+        _instance.update_delivery_driver_by_pk;
+    return local$update_delivery_driver_by_pk == null
+        ? CopyWith$Mutation$updateDriverLocation$update_delivery_driver_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$updateDriverLocation$update_delivery_driver_by_pk(
+            local$update_delivery_driver_by_pk,
+            (e) => call(update_delivery_driver_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$updateDriverLocation<TRes>
+    implements CopyWith$Mutation$updateDriverLocation<TRes> {
+  _CopyWithStubImpl$Mutation$updateDriverLocation(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$updateDriverLocation$update_delivery_driver_by_pk?
+        update_delivery_driver_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$updateDriverLocation$update_delivery_driver_by_pk<TRes>
+      get update_delivery_driver_by_pk =>
+          CopyWith$Mutation$updateDriverLocation$update_delivery_driver_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationupdateDriverLocation = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'updateDriverLocation'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'driverId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'data')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'delivery_driver_set_input'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_delivery_driver_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'driverId')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: VariableNode(name: NameNode(value: 'data')),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'current_location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$updateDriverLocation _parserFn$Mutation$updateDriverLocation(
+        Map<String, dynamic> data) =>
+    Mutation$updateDriverLocation.fromJson(data);
+typedef OnMutationCompleted$Mutation$updateDriverLocation = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$updateDriverLocation?,
+);
+
+class Options$Mutation$updateDriverLocation
+    extends graphql.MutationOptions<Mutation$updateDriverLocation> {
+  Options$Mutation$updateDriverLocation({
+    String? operationName,
+    required Variables$Mutation$updateDriverLocation variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$updateDriverLocation? onCompleted,
+    graphql.OnMutationUpdate<Mutation$updateDriverLocation>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$updateDriverLocation(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdateDriverLocation,
+          parserFn: _parserFn$Mutation$updateDriverLocation,
+        );
+
+  final OnMutationCompleted$Mutation$updateDriverLocation?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$updateDriverLocation
+    extends graphql.WatchQueryOptions<Mutation$updateDriverLocation> {
+  WatchOptions$Mutation$updateDriverLocation({
+    String? operationName,
+    required Variables$Mutation$updateDriverLocation variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdateDriverLocation,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$updateDriverLocation,
+        );
+}
+
+extension ClientExtension$Mutation$updateDriverLocation
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$updateDriverLocation>>
+      mutate$updateDriverLocation(
+              Options$Mutation$updateDriverLocation options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$updateDriverLocation>
+      watchMutation$updateDriverLocation(
+              WatchOptions$Mutation$updateDriverLocation options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$updateDriverLocation$update_delivery_driver_by_pk {
+  Mutation$updateDriverLocation$update_delivery_driver_by_pk({
+    this.current_location,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateDriverLocation$update_delivery_driver_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$current_location = json['current_location'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateDriverLocation$update_delivery_driver_by_pk(
+      current_location: l$current_location == null
+          ? null
+          : geographyFromJson(l$current_location),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography? current_location;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$current_location = current_location;
+    _resultData['current_location'] =
+        l$current_location == null ? null : geographyToJson(l$current_location);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$current_location = current_location;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$current_location,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$updateDriverLocation$update_delivery_driver_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$current_location = current_location;
+    final lOther$current_location = other.current_location;
+    if (l$current_location != lOther$current_location) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateDriverLocation$update_delivery_driver_by_pk
+    on Mutation$updateDriverLocation$update_delivery_driver_by_pk {
+  CopyWith$Mutation$updateDriverLocation$update_delivery_driver_by_pk<
+          Mutation$updateDriverLocation$update_delivery_driver_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$updateDriverLocation$update_delivery_driver_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateDriverLocation$update_delivery_driver_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$updateDriverLocation$update_delivery_driver_by_pk(
+    Mutation$updateDriverLocation$update_delivery_driver_by_pk instance,
+    TRes Function(Mutation$updateDriverLocation$update_delivery_driver_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$updateDriverLocation$update_delivery_driver_by_pk;
+
+  factory CopyWith$Mutation$updateDriverLocation$update_delivery_driver_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateDriverLocation$update_delivery_driver_by_pk;
+
+  TRes call({
+    Geography? current_location,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$updateDriverLocation$update_delivery_driver_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$updateDriverLocation$update_delivery_driver_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$updateDriverLocation$update_delivery_driver_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateDriverLocation$update_delivery_driver_by_pk _instance;
+
+  final TRes Function(
+      Mutation$updateDriverLocation$update_delivery_driver_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? current_location = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateDriverLocation$update_delivery_driver_by_pk(
+        current_location: current_location == _undefined
+            ? _instance.current_location
+            : (current_location as Geography?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$updateDriverLocation$update_delivery_driver_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$updateDriverLocation$update_delivery_driver_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$updateDriverLocation$update_delivery_driver_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? current_location,
+    String? $__typename,
+  }) =>
+      _res;
+}

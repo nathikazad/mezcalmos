@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
-import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/__generated/restaurant.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
@@ -222,9 +221,12 @@ Future<Schedule?> get_restaurant_schedule(
 
 Future<Restaurant> update_restaurant_info(
     {required int id, required Restaurant restaurant}) async {
+  mezDbgPrint(
+      "Location before saving 📍 ${restaurant.info.location.toFirebaseFormattedJson()}");
   final QueryResult<Mutation$updateRestaurantInfo> response = await _db
       .graphQLClient
       .mutate$updateRestaurantInfo(Options$Mutation$updateRestaurantInfo(
+          fetchPolicy: FetchPolicy.networkOnly,
           variables: Variables$Mutation$updateRestaurantInfo(
               id: id,
               data: Input$restaurant_set_input(
@@ -234,10 +236,7 @@ Future<Restaurant> update_restaurant_info(
                   schedule: restaurant.schedule?.toFirebaseFormattedJson(),
                   language_id:
                       restaurant.primaryLanguage.toFirebaseFormatString(),
-                  location_gps: Geography(
-                    restaurant.info.location.position.latitude!,
-                    restaurant.info.location.position.longitude!,
-                  ),
+                  location_gps: restaurant.info.location.toGeography(),
                   description_id: restaurant.info.descriptionId,
                   location_text: restaurant.info.location.address,
                   open_status:
@@ -249,6 +248,8 @@ Future<Restaurant> update_restaurant_info(
   }
   final Mutation$updateRestaurantInfo$update_restaurant_by_pk data =
       response.parsedData!.update_restaurant_by_pk!;
+  mezDbgPrint(
+      "Location after saving 📍 ${data.location_gps.latitude}  --  ${data.location_gps.longitude} ");
   return Restaurant(
       userInfo: ServiceInfo(
           hasuraId: data.id,

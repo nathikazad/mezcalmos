@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/TwoCirclesAvatars.dart';
+import 'package:mezcalmos/DeliveryApp/models/DeliveryOrder.dart';
+import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/TwoCirclesAvatars.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:sizer/sizer.dart';
 
@@ -49,7 +47,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
   final String formattedOrderStatus;
   final String? subtitle;
   final String? secondSubtitle;
-  final Order order;
+  final DeliveryOrder order;
   final bool enableExpand;
 
   AnimatedOrderInfoCard({
@@ -177,7 +175,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text(
-              "\$${order.cost}",
+              "\$${order.packageCost}",
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -254,15 +252,14 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         SizedBox(
           width: 15,
         ),
-        Obx(
-          () => MessageButton(
-            withPadding: false,
-            onTap: onServiceMsgClick,
-            showRedDot: (_serviceDriverChatId() != null)
-                ? Get.find<OrderController>().hasNewMessageNotification(
-                    _serviceDriverChatId()!.toString())
-                : false,
-          ),
+        // todo fix obx @m66are
+        MessageButton(
+          withPadding: false,
+          onTap: onServiceMsgClick,
+          showRedDot: (order.chatWithServiceProviderId != null)
+              ? Get.find<OrderController>().hasNewMessageNotification(
+                  order.chatWithServiceProviderId!.toString())
+              : false,
         ),
       ],
     );
@@ -307,44 +304,17 @@ class AnimatedOrderInfoCard extends StatelessWidget {
           ],
         ),
         SizedBox(width: 15),
-        Obx(
-          () => MessageButton(
-            withPadding: false,
-            onTap: onCustomerMsgClick,
-            showRedDot: (_customerDriverChatId() != null)
-                ? Get.find<OrderController>().hasNewMessageNotification(
-                    _customerDriverChatId()!.toString())
-                : false,
-          ),
+        // todo fix obx @m66are
+        MessageButton(
+          withPadding: false,
+          onTap: onCustomerMsgClick,
+          showRedDot: (order.chatWithCustomerId != null)
+              ? Get.find<OrderController>().hasNewMessageNotification(
+                  order.chatWithCustomerId.toString())
+              : false,
         ),
       ],
     );
-  }
-
-  int? _customerDriverChatId() {
-    switch (order.orderType) {
-      case OrderType.Laundry:
-        return (order as LaundryOrder).getCustomerDriverChatId();
-
-      case OrderType.Restaurant:
-        return (order as RestaurantOrder).customerDropOffDriverChatId;
-
-      default:
-    }
-    return null;
-  }
-
-  int? _serviceDriverChatId() {
-    switch (order.orderType) {
-      case OrderType.Laundry:
-        return (order as LaundryOrder).getServiceDriverChatId();
-
-      case OrderType.Restaurant:
-        return (order as RestaurantOrder).serviceProviderDropOffDriverChatId;
-
-      default:
-    }
-    return null;
   }
 
   Row orderCardMainBody() {
@@ -358,9 +328,10 @@ class AnimatedOrderInfoCard extends StatelessWidget {
           child: TwoCirclesAvatar(
             topImg: serviceProviderImage,
             // bottomImg: customerImage,
-            bottomIconData: order.orderType == OrderType.Laundry
-                ? Icons.local_laundry_service_outlined
-                : Icons.restaurant_rounded,
+            bottomIconData:
+                order.serviceProviderType == ServiceProviderType.Laundry
+                    ? Icons.local_laundry_service_outlined
+                    : Icons.restaurant_rounded,
           ),
         ),
         Flexible(
@@ -381,7 +352,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         InkWell(
           onTap: () {
             MezRouter.toNamed<void>(
-              getOrderDetailsRoute(order.orderId),
+              getOrderDetailsRoute(order.id),
             );
           },
           child: Align(
@@ -441,7 +412,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         SizedBox(width: 3),
         Flexible(
           child: Text(
-            order.routeInformation?.duration.shortTextVersion ?? '- - - -',
+            order.routeInformation?.duration.inMinutesText() ?? '- - - -',
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
             style: TextStyle(
@@ -451,7 +422,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(width: 16.33),
+        SizedBox(width: 10),
         Icon(
           Icons.route_outlined,
           color: Color.fromRGBO(73, 73, 73, 1),
@@ -460,7 +431,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         SizedBox(width: 3),
         Flexible(
           child: Text(
-            order.routeInformation?.distance.distanceStringInKm ?? '- - - -',
+            order.routeInformation?.distance.toKmText() ?? '- - - -',
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
             style: TextStyle(
@@ -470,9 +441,9 @@ class AnimatedOrderInfoCard extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(width: 16.33),
+        SizedBox(width: 10),
         Icon(
-          order.stripePaymentInfo?.brand?.toIcon() ?? Icons.payments,
+          Icons.payments,
           color: Color.fromRGBO(73, 73, 73, 1),
           size: 18,
         ),

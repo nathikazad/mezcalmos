@@ -1,22 +1,15 @@
-import 'dart:async';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
+import 'package:mezcalmos/DeliveryApp/models/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/hsDeliveryOrder.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -32,25 +25,16 @@ class OrderDetailsScreen extends StatefulWidget {
 
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   late String orderId;
-  Rxn<Order> order = Rxn();
-  StreamSubscription<Order?>? _orderListener;
-  OrderController controller = Get.find<OrderController>();
+  Rxn<DeliveryOrder> order = Rxn();
 
   @override
   void initState() {
     final String orderId = Get.parameters['orderId']!;
     mezDbgPrint("Get.parameters ===> $orderId");
-    controller.clearOrderNotifications(orderId);
-    order.value = controller.getOrder(orderId);
-    mezDbgPrint("order.value.id ===> ${order.value?.orderId}");
-    _orderListener =
-        controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
-      if (newOrderEvent != null) {
-        order.value = newOrderEvent;
-
-        order.refresh();
-      }
-    });
+    if (int.tryParse(orderId) != null) {
+      get_driver_restaurant_order_by_id(orderId: int.parse(orderId))
+          .then((DeliveryOrder? value) => order.value = value);
+    }
 
     super.initState();
   }
@@ -73,31 +57,31 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 SizedBox(
                   height: 20,
                 ),
-                if (_getDeliveryTime() != null)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${_i18n()["dvTime"]}',
-                        style: Get.textTheme.bodyText1,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(_getDeliveryTime()!),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  ),
+                // if (_getDeliveryTime() != null)
+                //   Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       Text(
+                //         '${_i18n()["dvTime"]}',
+                //         style: Get.textTheme.bodyText1,
+                //       ),
+                //       const SizedBox(
+                //         height: 10,
+                //       ),
+                //       Text(_getDeliveryTime()!),
+                //       const SizedBox(
+                //         height: 20,
+                //       ),
+                //     ],
+                //   ),
                 Text(
                   "${_i18n()["from"]}",
                   style: Get.textTheme.bodyText1,
                 ),
-                if (_getOrderFromLocation() != null)
-                  Container(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Text(_getOrderFromLocation()!)),
+
+                Container(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Text(order.value!.pickupLocation.address)),
                 SizedBox(
                   height: 20,
                 ),
@@ -108,11 +92,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 SizedBox(
                   height: 10,
                 ),
-                Text("${order.value!.to.address}"),
+                Text("${order.value!.dropoffLocation.address}"),
                 SizedBox(
                   height: 20,
                 ),
-                OrderPaymentMethod(order: order.value!),
+                //     OrderPaymentMethod(order: order.value!),
                 SizedBox(
                   height: 20,
                 ),
@@ -131,11 +115,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       "${_i18n()["deliveryCost"]}",
                       style: Get.textTheme.bodyText1,
                     ),
-                    if (_getOrderShippingCost() != null)
-                      Text(
-                        _getOrderShippingCost()!.toPriceString(),
-                        style: Get.textTheme.bodyText1,
-                      ),
+                    Text(
+                      order.value!.deliveryCost.toPriceString(),
+                      style: Get.textTheme.bodyText1,
+                    ),
                   ],
                 ),
               ],
@@ -148,18 +131,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         }
       }),
     );
-  }
-
-  num? _getOrderShippingCost() {
-    switch (order.value!.orderType) {
-      case OrderType.Restaurant:
-        return (order.value as RestaurantOrder).shippingCost;
-
-      case OrderType.Laundry:
-        return (order.value as LaundryOrder).shippingCost;
-      default:
-        return null;
-    }
   }
 
   Container _orderDetailsHeader() {
@@ -178,9 +149,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           Text(
               order.value!.isCanceled()
                   ? "${_i18n()["cancelled"]}"
-                  : (_getDeliveryTime() != null)
-                      ? "${_i18n()["scheduled"]}"
-                      : "${_i18n()["approved"]}",
+                  : "${_i18n()["approved"]}",
               style: Get.textTheme.bodyText1?.copyWith(
                   color: order.value!.isCanceled()
                       ? Colors.red
@@ -199,13 +168,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           children: [
             CircleAvatar(
               backgroundImage:
-                  CachedNetworkImageProvider(order.value!.customer.image),
+                  CachedNetworkImageProvider(order.value!.customerInfo.image),
             ),
             SizedBox(
               width: 8,
             ),
             Text(
-              "${order.value!.customer.name}",
+              "${order.value!.customerInfo.name}",
               style: Get.textTheme.bodyText1,
             ),
             Spacer(),
@@ -225,13 +194,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           children: [
             CircleAvatar(
               backgroundImage: CachedNetworkImageProvider(
-                  _getOrderServiceProvider()?.image ?? defaultUserImgUrl),
+                  order.value!.serviceInfo.image ?? defaultUserImgUrl),
             ),
             SizedBox(
               width: 8,
             ),
             Text(
-              "${_getOrderServiceProvider()?.name ?? ""}",
+              "${order.value!.serviceInfo.name ?? ""}",
               style: Get.textTheme.bodyText1,
             ),
             Spacer(),
@@ -243,47 +212,14 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   }
 
   String _getOrderType() {
-    switch (order.value!.orderType) {
-      case OrderType.Restaurant:
+    switch (order.value!.serviceProviderType) {
+      case ServiceProviderType.Restaurant:
         return "${_i18n()["restaurant"]}";
-      case OrderType.Laundry:
+      case ServiceProviderType.Laundry:
         return "${_i18n()["laundry"]}";
 
       default:
         return "";
     }
-  }
-
-  ServiceInfo? _getOrderServiceProvider() {
-    switch (order.value!.orderType) {
-      case OrderType.Restaurant:
-        return (order.value as RestaurantOrder).restaurant;
-      case OrderType.Laundry:
-        return (order.value as LaundryOrder).laundry;
-
-      default:
-        return null;
-    }
-  }
-
-  String? _getOrderFromLocation() {
-    if (order.value!.orderType == OrderType.Restaurant) {
-      return (order.value as RestaurantOrder).restaurant.location.address;
-    } else {
-      if ((order.value as LaundryOrder).getCurrentPhase() ==
-          LaundryOrderPhase.Pickup) {
-        return (order.value as LaundryOrder).to.address;
-      } else {
-        return (order.value as LaundryOrder).laundry!.location.address;
-      }
-    }
-  }
-
-  String? _getDeliveryTime() {
-    if (order.value!.orderType == OrderType.Restaurant &&
-        (order.value as RestaurantOrder).isScheduled()) {
-      return "${DateFormat.yMMMd(userLangCode).format((order.value as RestaurantOrder).deliveryTime!.toLocal()).capitalizeFirstofEach}, ${DateFormat("hh:mm a").format((order.value as RestaurantOrder).deliveryTime!.toLocal())}";
-    }
-    return null;
   }
 }

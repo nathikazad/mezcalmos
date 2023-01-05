@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/AnimatedOrderInfoCard.dart';
+import 'package:mezcalmos/DeliveryApp/models/DeliveryOrder.dart';
+import 'package:mezcalmos/DeliveryApp/models/utilities/DeliveryOrderStatus.dart';
+import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/hsDeliveryOrder.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -13,7 +15,6 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
@@ -30,7 +31,7 @@ class RestaurantOrderFromToComponent extends StatefulWidget {
     this.onCardStateChange,
   }) : super(key: key);
   final OnOrderInfoCardStateChange? onCardStateChange;
-  final RestaurantOrder order;
+  final DeliveryOrder order;
 
   @override
   State<RestaurantOrderFromToComponent> createState() =>
@@ -51,7 +52,7 @@ class _RestaurantOrderFromToComponentState
   }
 
   void getRestaurant() {
-    restaurant = widget.order.restaurant;
+    restaurant = widget.order.serviceInfo;
   }
 
   @override
@@ -61,37 +62,35 @@ class _RestaurantOrderFromToComponentState
       child: Obx(
         () => AnimatedOrderInfoCard(
           // customer
-          customerImage: widget.order.customer.image,
+          customerImage: widget.order.customerInfo.image,
           subtitle: (_showFoodReadyTime())
-              ? "${_i18n()["foodReady"]} ${widget.order.estimatedFoodReadyTime!.getEstimatedTime()}"
+              ? "${_i18n()["foodReady"]} ${widget.order.estimatedPackageReadyTime!.getEstimatedTime()}"
               : null,
           secondSubtitle: _getDeliveryTime(),
-          customerName: widget.order.customer.name,
+          customerName: widget.order.customerInfo.name,
           enableExpand: (widget.order.inProcess()) ? _isTimesSetted() : true,
           customerTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff, context),
           onCustomerMsgClick: () {
-            if (widget.order.customerDropOffDriverChatId != null) {
-              MezRouter.toNamed(
-                getMessagesRoute(
-                    orderType: OrderType.Restaurant,
-                    chatId: widget.order.customerDropOffDriverChatId!,
-                    orderId: widget.order.orderId,
-                    recipientType: ParticipantType.Customer),
-              );
-            }
+            MezRouter.toNamed(
+              getMessagesRoute(
+                  orderType: OrderType.Restaurant,
+                  chatId: widget.order.chatWithCustomerId,
+                  orderId: widget.order.id,
+                  recipientType: ParticipantType.Customer),
+            );
           },
           // landry
-          serviceProviderImage: widget.order.restaurant.image,
-          serviceProviderName: widget.order.restaurant.name,
+          serviceProviderImage: widget.order.serviceInfo.image,
+          serviceProviderName: widget.order.serviceInfo.name,
           serviceProviderTimeWidgets:
               _dateTimeSetter(DeliveryAction.Pickup, context),
           onServiceMsgClick: () {
-            if (widget.order.serviceProviderDropOffDriverChatId != null) {
+            if (widget.order.chatWithServiceProviderId != null) {
               MezRouter.toNamed(
                 getMessagesRoute(
                     orderType: OrderType.Restaurant,
-                    chatId: widget.order.serviceProviderDropOffDriverChatId!,
-                    orderId: widget.order.orderId,
+                    chatId: widget.order.chatWithServiceProviderId!,
+                    orderId: widget.order.id,
                     recipientType: ParticipantType.DeliveryAdmin),
               );
             }
@@ -115,36 +114,40 @@ class _RestaurantOrderFromToComponentState
 
   String? _getDeliveryTime() {
     if (widget.order.isScheduled()) {
-      return "${_i18n()["dvTime"]}: ${widget.order.deliveryTime!.toLocal().toDayName()}, ${DateFormat("hh:mm a").format(widget.order.deliveryTime!.toLocal())}";
+      // todo @m66are fix this
+      //  return "${_i18n()["dvTime"]}: ${widget.order.deliveryTime!.toLocal().toDayName()}, ${DateFormat("hh:mm a").format(widget.order.deliveryTime!.toLocal())}";
     }
     return null;
   }
 
   bool _isTimesSetted() {
-    return widget.order.estimatedDropoffAtCustomerTime != null &&
-        widget.order.estimatedPickupFromServiceProviderTime != null;
+    return widget.order.estimatedArrivalAtPickupTime != null &&
+        widget.order.estimatedArrivalAtDropoffTime != null;
   }
 
 // get order status readable title
   String _getOrderStatus() {
     switch (widget.order.status) {
-      case RestaurantOrderStatus.CancelledByAdmin:
-      case RestaurantOrderStatus.CancelledByCustomer:
+      case DeliveryOrderStatus.CancelledByCustomer:
+      case DeliveryOrderStatus.CancelledByDeliverer:
+      case DeliveryOrderStatus.CancelledByServiceProvider:
         return '${_i18n()["orderStatus"]["canceled"]}';
-      case RestaurantOrderStatus.OrderReceived:
+      case DeliveryOrderStatus.OrderReceived:
         if (widget.order.isScheduled()) {
           return '${_i18n()["orderStatus"]["scheduled"]}';
         } else {
           return '${_i18n()["orderStatus"]["waiting"]}';
         }
-      case RestaurantOrderStatus.Preparing:
-        return '${_i18n()["orderStatus"]["waiting"]}';
 
-      case RestaurantOrderStatus.Ready:
-        return '${_i18n()["orderStatus"]["Ready"]}';
-      case RestaurantOrderStatus.OnTheWay:
+      case DeliveryOrderStatus.PackageReady:
+        return '${_i18n()["orderStatus"]["justReady"]}';
+      case DeliveryOrderStatus.AtPickup:
+        return 'At pickup';
+      case DeliveryOrderStatus.AtDropoff:
+        return 'At dropoff';
+      case DeliveryOrderStatus.OnTheWayToDropoff:
         return '${_i18n()["orderStatus"]["deliveryOtw"]}';
-      case RestaurantOrderStatus.Delivered:
+      case DeliveryOrderStatus.Delivered:
         return '${_i18n()["orderStatus"]["delivered"]} ';
       default:
         return '';
@@ -158,7 +161,7 @@ class _RestaurantOrderFromToComponentState
   }
 
   bool _showFoodReadyTime() {
-    return widget.order.estimatedFoodReadyTime != null &&
+    return widget.order.estimatedPackageReadyTime != null &&
         (widget.order.status == RestaurantOrderStatus.OrderReceived ||
             widget.order.status == RestaurantOrderStatus.Preparing);
   }
@@ -170,7 +173,7 @@ class _RestaurantOrderFromToComponentState
       final DateTime? pickedDate = await getDatePicker(
         context,
         initialDate: initialDate ?? DateTime.now(),
-        firstDate: widget.order.estimatedFoodReadyTime ?? DateTime.now(),
+        firstDate: widget.order.estimatedPackageReadyTime ?? DateTime.now(),
         lastDate: DateTime.now().add(
           Duration(days: 3),
         ),
@@ -180,13 +183,14 @@ class _RestaurantOrderFromToComponentState
         final TimeOfDay? pickedTime = await getTimePicker(
           context,
           initialTime: TimeOfDay.fromDateTime(
-            widget.order.estimatedFoodReadyTime?.toLocal() ?? DateTime.now(),
+            widget.order.estimatedPackageReadyTime?.toLocal() ?? DateTime.now(),
           ),
         );
         if (pickedTime != null) {
           final DateTime _finalDt = pickedDate.copyWithTimeOfDay(pickedTime);
-          if (_finalDt.isAfter(widget.order.estimatedFoodReadyTime?.toLocal() ??
-              DateTime.now())) {
+          if (_finalDt.isAfter(
+              widget.order.estimatedPackageReadyTime?.toLocal() ??
+                  DateTime.now())) {
             return _finalDt;
           } else
             MezSnackbar('${_i18n()['oops']}', '${_i18n()['wrongTime']}');
@@ -288,17 +292,16 @@ class _RestaurantOrderFromToComponentState
     if (widget.order.inProcess()) {
       return _getRightContainer(
         deliveryAction == DeliveryAction.Pickup
-            ? widget.order.estimatedPickupFromServiceProviderTime?.toLocal()
-            : widget.order.estimatedDropoffAtCustomerTime?.toLocal(),
+            ? widget.order.estimatedArrivalAtPickupTime?.toLocal()
+            : widget.order.estimatedArrivalAtDropoffTime?.toLocal(),
         isSettingTime: deliveryAction == DeliveryAction.Pickup
             ? isSettingPickUpTime
             : isSettingDropoffTime,
         onNewDateTimeSet: (DateTime newDt) async {
           // DropOff
           if (deliveryAction == DeliveryAction.DropOff) {
-            if (widget.order.estimatedPickupFromServiceProviderTime != null &&
-                !widget.order.estimatedPickupFromServiceProviderTime!
-                    .isBefore(newDt)) {
+            if (widget.order.estimatedArrivalAtPickupTime != null &&
+                !widget.order.estimatedArrivalAtPickupTime!.isBefore(newDt)) {
               MezSnackbar(
                 "${_i18n()['oops']}",
                 "${_i18n()['pickupTimeError']}",
@@ -307,8 +310,8 @@ class _RestaurantOrderFromToComponentState
             }
             // PickUp
           } else {
-            if (widget.order.estimatedDropoffAtCustomerTime != null &&
-                !widget.order.estimatedDropoffAtCustomerTime!.isAfter(newDt)) {
+            if (widget.order.estimatedArrivalAtDropoffTime != null &&
+                !widget.order.estimatedArrivalAtDropoffTime!.isAfter(newDt)) {
               MezSnackbar(
                 "${_i18n()['oops']}",
                 "${_i18n()['pickupTimeError']}",
@@ -317,35 +320,48 @@ class _RestaurantOrderFromToComponentState
               return;
             }
           }
-          if (deliveryAction == DeliveryAction.Pickup) {
-            isSettingPickUpTime.value = true;
-          } else {
-            isSettingDropoffTime.value = true;
-          }
-          // ignore: unawaited_futures
-          Get.find<OrderController>()
-              .setEstimatedTime(
-            widget.order.orderId,
-            newDt.toUtc(),
-            DeliveryDriverType.Delivery_driver,
-            deliveryAction,
-            OrderType.Restaurant,
-          )
-              .then((ServerResponse _resp) {
-            mezDbgPrint("Responsoooooo ===> $_resp");
-            if (_resp.success) {
-              if (deliveryAction == DeliveryAction.Pickup)
-                widget.order.estimatedPickupFromServiceProviderTime = newDt;
-              else
-                widget.order.estimatedDropoffAtCustomerTime = newDt;
-            }
-          }).whenComplete(() {
+          try {
             if (deliveryAction == DeliveryAction.Pickup) {
-              isSettingPickUpTime.value = false;
+              isSettingPickUpTime.value = true;
+              await dv_update_est_pickup_time(
+                  orderId: widget.order.id, time: newDt);
             } else {
-              isSettingDropoffTime.value = false;
+              isSettingDropoffTime.value = true;
+              await dv_update_est_dropoff_time(
+                  orderId: widget.order.id, time: newDt);
             }
-          });
+          } catch (e, stk) {
+            mezDbgPrint(e);
+            mezDbgPrint(stk);
+          } finally {
+            isSettingPickUpTime.value = false;
+            isSettingDropoffTime.value = false;
+          }
+
+          // ignore: unawaited_futures
+          // Get.find<OrderController>()
+          //     .setEstimatedTime(
+          //   widget.order.id,
+          //   newDt.toUtc(),
+          //   DeliveryDriverType.Delivery_driver,
+          //   deliveryAction,
+          //   OrderType.Restaurant,
+          // )
+          //     .then((ServerResponse _resp) {
+          //   mezDbgPrint("Responsoooooo ===> $_resp");
+          //   if (_resp.success) {
+          //     if (deliveryAction == DeliveryAction.Pickup)
+          //       widget.order.estimatedArrivalAtPickupTime = newDt;
+          //     else
+          //       widget.order.estimatedArrivalAtDropoffTime = newDt;
+          //   }
+          // }).whenComplete(() {
+          //   if (deliveryAction == DeliveryAction.Pickup) {
+          //     isSettingPickUpTime.value = false;
+          //   } else {
+          //     isSettingDropoffTime.value = false;
+          //   }
+          // });
         },
       );
     }

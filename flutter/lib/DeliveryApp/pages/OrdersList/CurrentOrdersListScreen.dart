@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/constants/assets.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/controllers/DriverCurrentOrdersController.dart';
+import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
-import 'package:mezcalmos/Shared/widgets/Order/ROpOrderCard.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersOnOff.dart
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
+import 'package:mezcalmos/Shared/widgets/Order/ROpOrderCard.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -34,7 +35,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
   @override
   void initState() {
     Get.find<SideMenuDrawerController>().pastOrdersRoute = kPastOrdersView;
-    orderController.clearNewOrderNotificationsOfPastOrders();
+   orderController.clearNewOrderNotificationsOfPastOrders();
     viewController.init();
 
     super.initState();
@@ -119,7 +120,10 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                 viewController.currentOrders.length,
                 (int index) => MinimalOrderCard(
                       order: viewController.currentOrders[index],
-                      onTap: () {},
+                      onTap: () {
+                        MezRouter.toNamed(getRestaurantOrderRoute(
+                            viewController.currentOrders[index].id));
+                      },
                     )).reversed.toList(),
           ),
         ],

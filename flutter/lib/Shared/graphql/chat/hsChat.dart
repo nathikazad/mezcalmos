@@ -71,7 +71,8 @@ Future<HasuraChat?> get_chat_info({required int chat_id}) async {
     mezDbgPrint("[+] called get_chat_info :: Exception :: ${_chat.exception}");
   } else {
     mezDbgPrint("[+] called get_chat_info :: SUCCESS.");
-    mezDbgPrint("Messages ===> ${_chat.parsedData!.chat_by_pk!.messages}");
+    mezDbgPrint(
+        " 📥📥📥 Chat info ===> ${_chat.parsedData!.chat_by_pk!.chat_info.first}");
     final HasuraChat RetChat = HasuraChat(
       chatInfo: HasuraChatInfo(
         chatTite: _chat.parsedData!.chat_by_pk!.chat_info![

@@ -52,6 +52,10 @@ class RideDistance {
   RideDistance.fromJson(data)
       : distanceStringInKm = data['text'],
         distanceInMeters = data['value'];
+
+  String toKmText() {
+    return "${(distanceInMeters / 1000).toStringAsFixed(1)} Km";
+  }
 }
 
 String hoursMinsShortner(String original) {
@@ -74,6 +78,10 @@ class RideDuration {
     return {
       "duration": {"text": longTextVersion, "value": seconds}
     };
+  }
+
+  String inMinutesText() {
+    return "${(seconds / 60).round()} m";
   }
 
   RideDuration.fromJson(data)
@@ -201,7 +209,7 @@ Future<Route?> getDurationAndDistance(
   mezDbgPrint(
       "[tt] Called getDurationAndDistance \n- TO :  lat(${to.latitude}) | lng(to(${to.longitude}) \n- FROM :  lat(${from.latitude}) | lng(to(${from.longitude})!");
   final String url =
-      "https://maps.googleapis.com/maps/api/directions/json?units=metric&region=mx&destination=${to.longitude}%2C${to.latitude}&origin=${from.longitude}%2C${from.latitude}&key=$placesApikey";
+      "https://maps.googleapis.com/maps/api/directions/json?units=metric&region=mx&destination=${to.latitude},${to.longitude}&origin=${from.latitude},${from.longitude}&key=$placesApikey";
   mezDbgPrint("URL ==> $url");
   final http.Response resp = await http.get(Uri.parse(url));
   final Map<String, dynamic> respJson = json.decode(resp.body);

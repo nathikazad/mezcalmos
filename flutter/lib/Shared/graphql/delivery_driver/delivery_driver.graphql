@@ -1,7 +1,6 @@
-
-# get delivery drivers list associated to a service provider 
+# get delivery drivers list associated to a service provider
 query getDriversByUserId($userId: Int!) {
-  delivery_driver(where: {user_id: {_eq: $userId}}) {
+  delivery_driver(where: { user_id: { _eq: $userId } }) {
     app_version
     current_location
     delivery_driver_type
@@ -11,7 +10,7 @@ query getDriversByUserId($userId: Int!) {
     online
     status
     user {
-        id
+      id
       image
       name
       firebase_id
@@ -19,14 +18,14 @@ query getDriversByUserId($userId: Int!) {
     }
   }
 }
-# # insert a new delivery driver row 
+# # insert a new delivery driver row
 # mutation insertDriver($driver: delivery_driver_insert_input!) {
 #   insert_delivery_driver_one(object: $driver){id}
 # }
 
-# get delivery drivers list associated to a service provider 
+# get delivery drivers list associated to a service provider
 query getDriversByServiceId($serviceId: Int!) {
-  delivery_driver(where: {delivery_company_id: {_eq: $serviceId}}) {
+  delivery_driver(where: { delivery_company_id: { _eq: $serviceId } }) {
     app_version
     current_location
     delivery_driver_type
@@ -36,7 +35,7 @@ query getDriversByServiceId($serviceId: Int!) {
     online
     status
     user {
-        id
+      id
       image
       name
       firebase_id
@@ -45,8 +44,14 @@ query getDriversByServiceId($serviceId: Int!) {
   }
 }
 # edit a delivery driver row
-mutation updateDeliveryDriverById($driverId: Int!,$driverData : delivery_driver_set_input) {
-  update_delivery_driver_by_pk(pk_columns: {id: $driverId}, _set: $driverData) {
+mutation updateDeliveryDriverById(
+  $driverId: Int!
+  $driverData: delivery_driver_set_input
+) {
+  update_delivery_driver_by_pk(
+    pk_columns: { id: $driverId }
+    _set: $driverData
+  ) {
     id
   }
 }
@@ -62,10 +67,16 @@ mutation deleteDriverById($driverId: Int!) {
   }
 }
 
-
-
 subscription driverStatusStream($userId: Int!) {
-  delivery_driver(where: {user_id: {_eq: $userId}}) {
+  delivery_driver(where: { user_id: { _eq: $userId } }) {
     status
+  }
+}
+mutation updateDriverLocation(
+  $driverId: Int!
+  $data: delivery_driver_set_input!
+) {
+  update_delivery_driver_by_pk(pk_columns: { id: $driverId }, _set: $data) {
+    current_location
   }
 }

@@ -3,6 +3,7 @@ import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/__generated/delivery_driver.graphql.dart';
+import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
@@ -128,6 +129,31 @@ Future<bool?> update_driver_status_by_id(
     final Mutation$updateDeliveryDriverById$update_delivery_driver_by_pk data =
         response.parsedData!.update_delivery_driver_by_pk!;
     return true;
+  }
+}
+
+Future<Geography?> update_driver_location_by_id(
+    {required int driverId,
+    required double lat,
+    required double long,
+    bool withCache = true}) async {
+  final QueryResult<Mutation$updateDriverLocation> response = await _db
+      .graphQLClient
+      .mutate$updateDriverLocation(Options$Mutation$updateDriverLocation(
+    variables: Variables$Mutation$updateDriverLocation(
+        driverId: driverId,
+        data: Input$delivery_driver_set_input(
+            current_location: Geography(lat, long))),
+  ));
+
+  if (response.parsedData?.update_delivery_driver_by_pk?.current_location ==
+      null) {
+    throw Exception(
+        " 🚨🚨 Updating driver  $driverId exceptions 🚨🚨 \n ${response.exception}");
+  } else {
+    final Mutation$updateDriverLocation$update_delivery_driver_by_pk data =
+        response.parsedData!.update_delivery_driver_by_pk!;
+    return data.current_location;
   }
 }
 

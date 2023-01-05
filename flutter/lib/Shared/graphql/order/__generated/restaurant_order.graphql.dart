@@ -5707,6 +5707,13 @@ const documentNodeQueryget_restaurant_order_by_id = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'actual_delivered_time'),
                 alias: null,
                 arguments: [],
@@ -9293,6 +9300,7 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
 
 class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
   Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery({
+    required this.id,
     this.actual_delivered_time,
     this.actual_package_ready_time,
     this.actual_arrival_at_pickup_time,
@@ -9305,6 +9313,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
 
   factory Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$actual_delivered_time = json['actual_delivered_time'];
     final l$actual_package_ready_time = json['actual_package_ready_time'];
     final l$actual_arrival_at_pickup_time =
@@ -9316,6 +9325,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
     final l$delivery_cost = json['delivery_cost'];
     final l$$__typename = json['__typename'];
     return Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery(
+      id: (l$id as int),
       actual_delivered_time: (l$actual_delivered_time as String?),
       actual_package_ready_time: (l$actual_package_ready_time as String?),
       actual_arrival_at_pickup_time:
@@ -9329,6 +9339,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final int id;
 
   final String? actual_delivered_time;
 
@@ -9348,6 +9360,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$actual_delivered_time = actual_delivered_time;
     _resultData['actual_delivered_time'] = l$actual_delivered_time;
     final l$actual_package_ready_time = actual_package_ready_time;
@@ -9372,6 +9386,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$actual_delivered_time = actual_delivered_time;
     final l$actual_package_ready_time = actual_package_ready_time;
     final l$actual_arrival_at_pickup_time = actual_arrival_at_pickup_time;
@@ -9381,6 +9396,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
     final l$delivery_cost = delivery_cost;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$actual_delivered_time,
       l$actual_package_ready_time,
       l$actual_arrival_at_pickup_time,
@@ -9400,6 +9416,11 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
     if (!(other
             is Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$actual_delivered_time = actual_delivered_time;
@@ -9475,6 +9496,7 @@ abstract class CopyWith$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
       _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery;
 
   TRes call({
+    int? id,
     String? actual_delivered_time,
     String? actual_package_ready_time,
     String? actual_arrival_at_pickup_time,
@@ -9505,6 +9527,7 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$deli
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? actual_delivered_time = _undefined,
     Object? actual_package_ready_time = _undefined,
     Object? actual_arrival_at_pickup_time = _undefined,
@@ -9515,6 +9538,7 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$deli
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         actual_delivered_time: actual_delivered_time == _undefined
             ? _instance.actual_delivered_time
             : (actual_delivered_time as String?),
@@ -9555,6 +9579,7 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
   TRes _res;
 
   call({
+    int? id,
     String? actual_delivered_time,
     String? actual_package_ready_time,
     String? actual_arrival_at_pickup_time,

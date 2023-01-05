@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 enum NotificationType {
   NewMessage,
@@ -86,9 +85,7 @@ class Notification {
       required this.linkUrl,
       required this.notificationType,
       required this.notificationAction,
-      this.linkText}) {
-    mezDbgPrint("variableParams ==> $variableParams");
-  }
+      this.linkText}) {}
 
   String get formattedTime =>
       DateFormat('HH:mm').format(timestamp.toLocal()).toString();
