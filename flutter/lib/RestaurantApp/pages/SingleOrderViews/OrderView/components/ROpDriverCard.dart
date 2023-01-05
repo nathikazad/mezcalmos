@@ -110,21 +110,19 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                   // TODO handle @m66are handle message btn
 
                   if (widget.order.serviceProviderDropOffDriverChatId != null)
-                    Obx(
-                      () => MessageButton(
-                        onTap: () {
-                          MezRouter.toNamed(getMessagesRoute(
-                              chatId: widget
-                                  .order.serviceProviderDropOffDriverChatId!,
-                              recipientType: ParticipantType.DeliveryDriver,
-                              orderId: widget.order.orderId));
-                        },
-                        // showRedDot: Get.find<ROpOrderController>()
-                        //     .hasNewMessageNotification(widget
-                        //         .order.serviceProviderDropOffDriverChatId!
-                        //         .toString()),
-                      ),
-                    )
+                    MessageButton(
+                      onTap: () {
+                        MezRouter.toNamed(getMessagesRoute(
+                            chatId: widget
+                                .order.serviceProviderDropOffDriverChatId!,
+                            recipientType: ParticipantType.DeliveryDriver,
+                            orderId: widget.order.orderId));
+                      },
+                      // showRedDot: Get.find<ROpOrderController>()
+                      //     .hasNewMessageNotification(widget
+                      //         .order.serviceProviderDropOffDriverChatId!
+                      //         .toString()),
+                    ),
                 ])
               : (widget.order.selfDelivery)
                   ? _selfDeliveryWidget()
