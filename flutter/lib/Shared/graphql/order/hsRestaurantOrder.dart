@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/order/__generated/restaurant_order.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -103,6 +104,14 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
         image: orderData.restaurant.image,
         name: orderData.restaurant.name,
       ),
+      dropoffDriver: (orderData.delivery?.delivery_driver != null)
+          ? DeliveryDriverUserInfo(
+              hasuraId: orderData.delivery!.delivery_driver!.user.id,
+              name: orderData.delivery!.delivery_driver!.user.name,
+              image: orderData.delivery!.delivery_driver!.user.name,
+              language: orderData.delivery!.delivery_driver!.user.language_id
+                  .toLanguageType())
+          : null,
       customer: UserInfo(
           hasuraId: orderData.customer.user.id,
           image: orderData.customer.user.image,
@@ -192,6 +201,14 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     paymentType: orderData.payment_type.toPaymentType(),
     orderTime: DateTime.parse(orderData.order_time),
     cost: orderData.delivery_cost,
+    dropoffDriver: (orderData.delivery?.delivery_driver != null)
+        ? DeliveryDriverUserInfo(
+            hasuraId: orderData.delivery!.delivery_driver!.user.id,
+            name: orderData.delivery!.delivery_driver!.user.name,
+            image: orderData.delivery!.delivery_driver!.user.name,
+            language: orderData.delivery!.delivery_driver!.user.language_id
+                .toLanguageType())
+        : null,
     review: (orderData.review != null)
         ? Review(
             comment: orderData.review!.note,
