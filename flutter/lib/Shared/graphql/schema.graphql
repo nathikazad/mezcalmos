@@ -1273,6 +1273,8 @@ type delivery_company {
   id: Int!
   image: String!
   name: String!
+
+  """same as restaurant"""
   open_status: String!
   service_provider_type: String!
 }
@@ -1357,6 +1359,8 @@ input delivery_company_insert_input {
   id: Int
   image: String
   name: String
+
+  """same as restaurant"""
   open_status: String
   service_provider_type: String
 }
@@ -1367,6 +1371,8 @@ type delivery_company_max_fields {
   id: Int
   image: String
   name: String
+
+  """same as restaurant"""
   open_status: String
   service_provider_type: String
 }
@@ -1377,6 +1383,8 @@ type delivery_company_min_fields {
   id: Int
   image: String
   name: String
+
+  """same as restaurant"""
   open_status: String
   service_provider_type: String
 }
@@ -1465,6 +1473,8 @@ input delivery_company_set_input {
   id: Int
   image: String
   name: String
+
+  """same as restaurant"""
   open_status: String
   service_provider_type: String
 }
@@ -1505,6 +1515,8 @@ input delivery_company_stream_cursor_value_input {
   id: Int
   image: String
   name: String
+
+  """same as restaurant"""
   open_status: String
   service_provider_type: String
 }
@@ -2474,6 +2486,9 @@ columns and relationships of "delivery_operator"
 type delivery_operator {
   app_version: String!
   current_gps: geography!
+
+  """An object relationship"""
+  delivery_company: delivery_company!
   delivery_company_id: Int!
   delivery_driver_type: String!
   id: Int!
@@ -2567,6 +2582,7 @@ input delivery_operator_bool_exp {
   _or: [delivery_operator_bool_exp!]
   app_version: String_comparison_exp
   current_gps: geography_comparison_exp
+  delivery_company: delivery_company_bool_exp
   delivery_company_id: Int_comparison_exp
   delivery_driver_type: String_comparison_exp
   id: Int_comparison_exp
@@ -2602,6 +2618,7 @@ input type for inserting data into table "delivery_operator"
 input delivery_operator_insert_input {
   app_version: String
   current_gps: geography
+  delivery_company: delivery_company_obj_rel_insert_input
   delivery_company_id: Int
   delivery_driver_type: String
   id: Int
@@ -2689,6 +2706,7 @@ input delivery_operator_on_conflict {
 input delivery_operator_order_by {
   app_version: order_by
   current_gps: order_by
+  delivery_company: delivery_company_order_by
   delivery_company_id: order_by
   delivery_driver_type: order_by
   id: order_by
@@ -21031,3 +21049,4 @@ type user_var_samp_fields {
 type user_variance_fields {
   id: Float
 }
+

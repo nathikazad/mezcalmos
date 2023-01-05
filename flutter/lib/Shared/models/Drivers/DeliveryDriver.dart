@@ -50,13 +50,15 @@ class DeliveryDriverState {
 
 // used by delivery admin app
 class DeliveryDriver {
+  DeliveryDriverType type;
   DeliveryDriverState deliveryDriverState;
   DeliveryDriverUserInfo driverInfo;
   LatLng? driverLocation;
   DateTime? lastLocationUpdateTime;
-  String deliveryDriverId;
+  int deliveryDriverId;
 
   DeliveryDriver({
+    required this.type,
     required this.deliveryDriverState,
     this.driverLocation,
     this.lastLocationUpdateTime,
@@ -64,7 +66,7 @@ class DeliveryDriver {
     required this.driverInfo,
   });
 
-  factory DeliveryDriver.fromData(String deliveryDriverId, deliveryDriverData) {
+  factory DeliveryDriver.fromData(int deliveryDriverId, deliveryDriverData) {
     /// deliveryDriverState
     final DeliveryDriverState deliveryDriverState =
         DeliveryDriverState.fromSnapshot(deliveryDriverData['state']);
@@ -91,6 +93,7 @@ class DeliveryDriver {
       driverLocation: driverLocation,
       lastLocationUpdateTime: lastLocationUpdateTime,
       driverInfo: deliveryDriverUserInfo,
+      type: DeliveryDriverType.Delivery_driver,
     );
   }
 
@@ -209,9 +212,9 @@ extension ParseDeliveryActionToString on DeliveryAction {
   }
 }
 
-extension ParseStringToDeliveryDriverType on String {
-  DeliveryDriverType toDeliveryDriverType() {
-    return DeliveryDriverType.values.firstWhere((DeliveryDriverType e) =>
-        e.toFirebaseFormatString().toLowerCase() == toLowerCase());
-  }
-}
+// extension ParseStringToDeliveryDriverType on String {
+//   DeliveryDriverType toDeliveryDriverType() {
+//     return DeliveryDriverType.values.firstWhere((DeliveryDriverType e) =>
+//         e.toFirebaseFormatString().toLowerCase() == toLowerCase());
+//   }
+// }

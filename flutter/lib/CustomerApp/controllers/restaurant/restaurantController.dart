@@ -19,6 +19,7 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 
 class RestaurantController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -68,6 +69,8 @@ class RestaurantController extends GetxController {
               cart.value.restaurant = event.restaurant;
 
             associatedRestaurant = event.restaurant;
+          } else {
+            create_customer_cart();
           }
           cart.refresh();
         });
@@ -339,23 +342,20 @@ class RestaurantController extends GetxController {
   }
 
   Future<ServerResponse> checkout({String? stripePaymentId}) async {
-    mezDbgPrint("[+]Delivery time ===> ${cart.value.deliveryTime}");
     final HttpsCallable checkoutRestaurantCart =
         FirebaseFunctions.instance.httpsCallable("restaurant2-checkoutCart");
-
     try {
-      mezDbgPrint("[+]Delivery time ===> ${cart.value.deliveryTime}");
       final Map<String, dynamic> payload = <String, dynamic>{
         // "customerId": _authController.user!.hasuraId,
         // "checkoutRequest": <String, dynamic>{
         "customerAppType": "customer_mobile",
         "customerLocation": cart.value.toLocation?.toFirebaseFormattedJson() ??
             LocModel.Location(
-              "Test _ Location ",
+              "Puerto Escondido - test ",
               LocationData.fromMap(
                 {
-                  "latitude": 15.872451864887513,
-                  "longitude": -97.0771243663329
+                  "latitude": 15.8744427,
+                  "longitude": -97.0705436,
                 },
               ),
             ).toFirebaseFormattedJson(),

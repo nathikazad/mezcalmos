@@ -74,6 +74,14 @@ select_permissions:
       filter:
         customer_id:
           _eq: X-Hasura-User-Id
+  - role: delivery_operator
+    permission:
+      columns: []
+      filter:
+        delivery:
+          delivery_driver:
+            id:
+              _eq: X-Hasura-User-Id
   - role: mez_admin
     permission:
       columns:

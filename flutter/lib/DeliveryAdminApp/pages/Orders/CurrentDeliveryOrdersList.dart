@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/BottomNavBar.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/OrderCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverOrderCard.dart';
+import 'package:mezcalmos/DeliveryAdminApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
@@ -65,13 +69,23 @@ class _CurrentDeliveryOrdersListViewState
                           color: Color.fromARGB(255, 225, 228, 255),
                         ),
                         child: Center(
-                          child: Text(
-                            "view past orders",
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 103, 121, 254),
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12,
-                              fontFamily: 'Montserrat',
+                          child: InkWell(
+                            onTap: () {
+                              Clipboard.setData(
+                                ClipboardData(
+                                  text: Get.find<HasuraDb>().tokenSnapshot,
+                                ),
+                              );
+                              MezRouter.toNamed<void>(kPastOrdersList);
+                            },
+                            child: Text(
+                              "view past orders",
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 103, 121, 254),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                                fontFamily: 'Montserrat',
+                              ),
                             ),
                           ),
                         ),
@@ -79,14 +93,21 @@ class _CurrentDeliveryOrdersListViewState
                     ],
                   ),
                 ),
-                Column(
-                  children: List.generate(
-                    _controller.orders.length,
-                    (int index) => DeliveryOrderCard(
-                      order: _controller.orders[index],
-                      showLeftIcon: false,
-                    ),
-                  ).reversed.toList(),
+                Obx(
+                  () => Column(
+                    children: List.generate(_controller.currentOrders.length,
+                        (int index) {
+                      return DeliveryOrderCard(
+                        order: _controller.currentOrders[index],
+                        showLeftIcon: false,
+                        onCardClick: () => MezRouter.toNamed<void>(
+                          currentDeliveryOrderInfoRoute(
+                            _controller.currentOrders[index].id,
+                          ),
+                        ),
+                      );
+                    }).reversed.toList(),
+                  ),
                 ),
               ],
             ),

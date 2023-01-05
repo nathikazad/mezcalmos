@@ -125,7 +125,7 @@ class Item {
     };
   }
 
-  Option? findOption(String id) {
+  Option? findOption(int id) {
     if (options.length == 0) return null;
     return options.firstWhereOrNull((Option element) => element.id == id);
   }

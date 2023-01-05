@@ -30,13 +30,15 @@ export interface RestaurantOrder {
   totalCost?: number;
   chatId?: number;
   scheduledTime?: string;
+
   // customer?: CustomerInfo;
   // delivery?: Delivery;
 }
 export interface OrderItem {
   orderItemId?: number;
   itemId: number;
-  name?: Record<Language, string>;
+  name: any;
+  image?:string;
   selectedOptions?: Array<SelectedOption>;
   reviewId?: number;
   notes?: string;

@@ -62,6 +62,7 @@ class _ROpOperatorsViewState extends State<ROpOperatorsView> {
               children: List.generate(
                   viewController.operators.length,
                   (int index) => ROpOperatorCard(
+                      viewController: viewController,
                       operator: viewController.operators[index])),
             ),
           )

@@ -1,7 +1,6 @@
-
-# listen on all delivery Orders on database
+# For Delivery operator.
 subscription listen_on_delivery_orders {
-  delivery_order {
+  delivery_order{
     id
     pickup_gps
     pickup_address
@@ -22,7 +21,25 @@ subscription listen_on_delivery_orders {
     actual_delivered_time
     status
     customer_id
+    customer {
+      user {
+        name,
+        image
+      }
+    }
+    restaurant {
+      name,
+      image,
+      location_text,
+    }
+    delivery_driver {
+      user {
+        name,
+        image
+      }
+    }
     service_provider_id
+    service_provider_type
     trip_polyline
     trip_duration
     trip_distance
@@ -34,4 +51,57 @@ subscription listen_on_delivery_orders {
   }
 }
 
+
+# Listen on delivery Order by id.
+subscription listen_on_delivery_order_by_id($orderId : Int!) {
+  delivery_order(where : {id : {_eq : $orderId}}){
+    id
+    pickup_gps
+    pickup_address
+    dropoff_gps
+    dropoff_address
+    delivery_driver_type
+    delivery_driver_id
+    chat_with_service_provider_id
+    chat_with_customer_id
+    payment_type
+    stripe_payment_id
+    estimated_package_ready_time
+    actual_package_ready_time
+    estimated_arrival_at_pickup_time
+    actual_arrival_at_pickup_time
+    estimated_arrival_at_dropoff_time
+    actual_arrival_at_dropoff_time
+    actual_delivered_time
+    status
+    customer_id
+    customer {
+      user {
+        name,
+        image
+      }
+    }
+    restaurant {
+      name,
+      image,
+      location_text,
+    }
+    delivery_driver {
+      user {
+        name,
+        image
+      }
+    }
+    service_provider_id
+    service_provider_type
+    trip_polyline
+    trip_duration
+    trip_distance
+    delivery_cost
+    package_cost
+    current_gps
+    order_time
+    cancellation_time
+  }
+}
 

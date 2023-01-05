@@ -1,0 +1,6 @@
+mutation insertReview($review :    review_insert_input!) {
+  insert_review_one(object: $review) {
+    created_at
+    id
+  }
+}

@@ -16,7 +16,7 @@ export function updateServiceProviderOrder(orderId: string, order: Order) {
 }
 
 export function addServiceProviderAndOperatorsToChat(orderId: string, order: Order, serviceProviderchat: ChatObject,
-  serviceProviderDriverChatId: string) {
+  serviceProviderDriverChatId: number) {
   switch (order.orderType) {
     case OrderType.Laundry:
       addParticipantToChat((order as LaundryOrder).laundry, serviceProviderchat, serviceProviderDriverChatId, ParticipantType.Laundry);

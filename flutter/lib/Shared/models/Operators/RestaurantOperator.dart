@@ -28,7 +28,7 @@ class RestaurantOperatorState {
 class RestaurantOperator {
   final RestaurantOperatorState state;
   final UserInfo info;
-  final String operatorId;
+  final int operatorId;
 
   const RestaurantOperator({
     required this.state,
@@ -37,7 +37,7 @@ class RestaurantOperator {
   });
 
   factory RestaurantOperator.fromData(
-      String restaurantOperatorId, restaurantOperatorData) {
+      int restaurantOperatorId, restaurantOperatorData) {
     final RestaurantOperatorState restaurantOperatorState =
         RestaurantOperatorState.fromSnapshot(restaurantOperatorData['state']);
 
@@ -62,12 +62,11 @@ class RestaurantOperator {
         "info": info.toFirebaseFormatJson(),
       };
   bool get isAuthorized {
-    return state.operatorState == AgentStatus.Authorized &&
-        state.restaurantId != null;
+    return state.operatorState == AgentStatus.Authorized;
   }
 
-  bool get isWaiting {
+  bool get isWaitingToBeApprovedByOwner {
     return state.operatorState == AgentStatus.Awaiting_approval &&
-        state.restaurantId != null;
+        state.owner == false;
   }
 }

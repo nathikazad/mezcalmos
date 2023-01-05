@@ -54,9 +54,7 @@ select_permissions:
         - email
         - phone
         - big_image
-      filter:
-        id:
-          _eq: X-Hasura-User-Id
+      filter: {}
       limit: 1
   - role: mez_admin
     permission:

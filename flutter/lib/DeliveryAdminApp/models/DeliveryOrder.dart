@@ -1,5 +1,6 @@
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as locModel;
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
@@ -27,6 +28,12 @@ extension DeliveryOrderParser on String {
   }
 }
 
+extension DeliveryServiceTypeParser on DeliveryServiceType {
+  String toHasuraString() {
+    return toString().split('.').last.toLowerCase();
+  }
+}
+
 enum DeliveryOrderStatus {
   orderReceived,
   packageReady,
@@ -39,7 +46,30 @@ enum DeliveryOrderStatus {
   cancelledByServiceProvider
 }
 
-enum DeliveryServiceType { restaurant, deliveryCompany }
+enum DeliveryServiceType { restaurant, delivery_company }
+
+class DeliveryOrderInfo {
+  final String? serviceProviderName;
+  final String? serviceProviderAddress;
+  final String? serviceProviderImage;
+  final String? customerName;
+  final String? customerImage;
+  final String? deliveryDriverName;
+  final String? deliveryDriverImage;
+  final String? orderNotes =
+      "Please call the concierge and tell'em this is for saad.";
+
+  DeliveryOrderInfo({
+    this.serviceProviderName,
+    this.serviceProviderAddress,
+    this.serviceProviderImage,
+    this.customerName,
+    this.customerImage,
+    this.deliveryDriverName,
+    this.deliveryDriverImage,
+    // this.orderNote,
+  });
+}
 
 class DeliveryOrder {
   final int id;
@@ -72,6 +102,7 @@ class DeliveryOrder {
   final LocationData? currentGps;
   final DateTime orderTime;
   final DateTime? cancellationTime;
+  final DeliveryOrderInfo moreInfo;
 
   DeliveryOrder({
     required this.id,
@@ -104,7 +135,15 @@ class DeliveryOrder {
     required this.orderTime,
     this.cancellationTime,
     this.currentGps,
+    required this.moreInfo,
   });
 
+  bool get isInProcess => <DeliveryOrderStatus>[
+        DeliveryOrderStatus.atDropoff,
+        DeliveryOrderStatus.atPickup,
+        DeliveryOrderStatus.onTheWayToDropoff,
+        DeliveryOrderStatus.orderReceived,
+        DeliveryOrderStatus.packageReady
+      ].contains(status);
   num get totalCost => packageCost + deliveryCost;
 }

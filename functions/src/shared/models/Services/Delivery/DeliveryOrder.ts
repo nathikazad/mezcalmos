@@ -1,7 +1,7 @@
 import { Location, NotificationInfo } from "../../Generic/Generic";
-import { PaymentType } from "../../Generic/Order";
+import { OrderType, PaymentType } from "../../Generic/Order";
 import { UserInfo } from "../../Generic/User";
-import { OrderNotification } from "../../Notification";
+import { ForegroundNotification, NotificationForQueue, OrderNotification } from "../../Notification";
 
 export interface DeliveryOrder {
     deliveryId?: number;
@@ -63,8 +63,8 @@ export interface DeliveryOperator {
     deliveryCompanyId: number,
     status: DeliveryOperatorStatus,
     owner: boolean,
-    appVersion: string,
-    currentGPS: Location,
+    appVersion?: string,
+    currentGPS?: Location,
     // deliveryDriverType:,
     notificationInfo?: NotificationInfo,
     user?: UserInfo
@@ -112,4 +112,34 @@ export interface CancelDeliveryOrderNotification extends OrderNotification {
 
 export interface DeliveryOrderStatusChangeNotification extends OrderNotification {
     status: DeliveryOrderStatus
+}
+
+export interface AssignDeliveryCompanyNotification extends ForegroundNotification {
+    orderType: OrderType,
+    orderId: number,
+    deliveryCompanyId: number
+}
+
+export interface AssignDeliveryCompanyNotificationForQueue extends NotificationForQueue {
+    orderType: OrderType,
+    orderId: number,
+    deliveryCompanyId: number
+}
+
+export interface AuthorizeDriverNotification extends ForegroundNotification {
+    newDriverName: string,
+    newDriverImage: string,
+}
+export interface DriverApprovedNotification extends ForegroundNotification {
+    // operatorId: number,
+    approved: boolean,
+    // deliveryCompanyName: string,
+    // deliveryCompanyId: number
+  }
+
+export interface DeliveryOperatorApprovedNotification extends ForegroundNotification {
+    operatorId: number,
+    approved: boolean,
+    DeliveryCompanyName: string,
+    DeliveryCompanyId: number
 }

@@ -67,11 +67,11 @@ class ROpCreateRestuarantViewController {
       restaurantImage.value =
           "https://img.freepik.com/premium-vector/restaurant-logo-design-template_79169-56.jpg?w=2000";
     }
-    final HttpsCallable cloudFunction =
-        FirebaseFunctions.instance.httpsCallable('restaurant-createRestaurant');
+    final HttpsCallable cloudFunction = FirebaseFunctions.instance
+        .httpsCallable('restaurant2-createRestaurant');
     try {
       final HttpsCallableResult response =
-          await cloudFunction.call(_constructRestaurant());
+          await cloudFunction.call({"kkkkk": "jjjjjj"});
       mezDbgPrint("Response : ${response.data}");
 
       return ServerResponse.fromJson(response.data);

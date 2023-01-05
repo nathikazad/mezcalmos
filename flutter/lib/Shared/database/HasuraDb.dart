@@ -38,7 +38,7 @@ class MyParser extends gqClient.ResponseParser {
 class HasuraDb {
   late gqClient.GraphQLClient _graphQLClient;
   gqClient.GraphQLClient get graphQLClient => _graphQLClient;
-
+  String? tokenSnapshot;
   gqClient.WebSocketLink? _wsLink;
   AppLaunchMode appLaunchMode;
   // FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -109,6 +109,7 @@ class HasuraDb {
         fireAuth.FirebaseAuth.instance.currentUser!,
         appLaunchMode == AppLaunchMode.dev,
       );
+      tokenSnapshot = hasuraAuthToken;
       logToken(hasuraAuthToken);
       //  stdout.write("[MZL]  TOKKEN : $hasuraAuthToken");
       // hasuraAuthToken.characters.forEach((String c) {
@@ -119,10 +120,11 @@ class HasuraDb {
       // mezDbgPrint("ROLE ${_getRoleBasedOnApp()}");
       // mezDbgPrint("✅ TOKKEN ✅: \n $hasuraAuthToken");
 
-      headers = <String, String>{
-        'Authorization': 'Bearer $hasuraAuthToken',
-        'x-hasura-role': _getRoleBasedOnApp()
-      };
+      // headers = <String, String>{
+      //   'Authorization': 'Bearer $hasuraAuthToken',
+      //   'x-hasura-role': _getRoleBasedOnApp()
+      // };
+      mezDbgPrint("[AAA] TOKEN ==> $hasuraAuthToken");
       mezDbgPrint("headers ===> ${headers.toString()}");
       final gqClient.AuthLink _authLink =
           gqClient.AuthLink(getToken: () async => 'Bearer $hasuraAuthToken');

@@ -32,7 +32,12 @@ class ROpOrderViewController {
 
   // init
   Future<void> init({required int orderId}) async {
-    order.value = await get_restaurant_order_by_id(orderId: orderId);
+    try {
+      order.value = await get_restaurant_order_by_id(orderId: orderId);
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
     if (order.value == null) {
       mezDbgPrint("🚨 Can't get order $orderId 🚨 ROpOrderViewController");
     } else {

@@ -9,6 +9,7 @@ enum NotificationType {
   NewOrder,
   NewCounterOffer,
   AssignDriver,
+  OperatorApproved,
   Call
 }
 

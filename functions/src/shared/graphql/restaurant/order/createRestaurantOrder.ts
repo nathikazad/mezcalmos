@@ -4,7 +4,7 @@ import { DeliveryOrder, DeliveryOrderStatus } from "../../../models/Services/Del
 import { Restaurant } from "../../../models/Services/Restaurant/Restaurant";
 import { RestaurantOrder, RestaurantOrderStatus } from "../../../models/Services/Restaurant/RestaurantOrder";
 
-export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, restaurant: Restaurant)
+export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, restaurant: Restaurant, tripDuration?: number, tripDistance?: number , tripPolyline?: string)
   : Promise<{ restaurantOrder: RestaurantOrder, deliveryOrder: DeliveryOrder }> {
 
   let chain = getHasura();
@@ -24,7 +24,6 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
         restaurant_id: restaurantOrder.restaurantId,
         customer_app_type: restaurantOrder.customerAppType,
         chat: {
-        
           data: {
             
             chat_participants: {
@@ -77,9 +76,9 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
             service_provider_id: restaurantOrder.restaurantId,
             service_provider_type: "restaurant",
             scheduled_time: restaurantOrder.scheduledTime,
-            // trip_distance: deliveryDetails.tripDistance,
-            // trip_duration: deliveryDetails.tripDuration,
-            // trip_polyline: deliveryDetails.tripPolyline,
+            trip_distance:  ,
+            trip_duration: tripDuration,
+            trip_polyline: tripPolyline,
             package_cost: restaurantOrder.itemsCost
           }
         },
@@ -93,17 +92,17 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
         status: RestaurantOrderStatus.OrderReceived,
         items: {
           data: restaurantOrder.items!.map((i) => {
+            console.log("+ SelectedOptions of item ", i.itemId , ": ",i.selectedOptions);
+            console.log("+ ItemName ", i.name);
             return {
               cost_per_one: i.costPerOne,
               notes: i.notes,
               quantity: i.quantity,
               restaurant_item_id: i.itemId,
-              in_json: JSON.stringify({
-                // name: i.restaurant_item.name?.translations.reduce((prev:Record<any, any>, current) => {
-                //   prev[current.language_id] = current.value;
-                //   return prev;
-                // }, {}),
+              in_json: 
+               JSON.stringify({
                 name: i.name,
+                image : i.image,
                 selected_options: i.selectedOptions
               }),
             };
@@ -143,7 +142,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
     customerId: restaurantOrder.customerId,
     deliveryCost: restaurantOrder.deliveryCost,
     packageCost: restaurantOrder.paymentType == "cash" ? response.insert_restaurant_order_one.items_cost : 0,
-    orderTime: response.insert_restaurant_order_one.order_time
+    orderTime: response.insert_restaurant_order_one.order_time,
   }
 
   return { restaurantOrder, deliveryOrder };

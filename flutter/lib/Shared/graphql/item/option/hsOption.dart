@@ -30,7 +30,7 @@ Future<Option?> get_option_by_id(int optionId, {bool withCache = true}) async {
 
     if (data != null) {
       final Option option = Option(
-          id: data.id.toString(),
+          id: data.id,
           position: data.position,
           optionType: data.option_type.toOptionType(),
           maximumChoice: data.maximum_choice,

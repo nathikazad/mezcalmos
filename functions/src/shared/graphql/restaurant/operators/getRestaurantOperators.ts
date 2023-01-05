@@ -99,3 +99,53 @@ export async function getRestaurantOperator(restaurantOperatorId: number): Promi
     }
   };
 }
+
+export async function getRestaurantOperatorByUserId(restaurantOperatorUserId: number, restaurantId: number): Promise<RestaurantOperator> {
+  let chain = getHasura();
+
+  let response = await chain.query({
+    restaurant_operator: [{
+      where: {
+        user_id: {
+          _eq: restaurantOperatorUserId
+        },
+        restaurant_id: {
+          _eq: restaurantId
+        }
+      }
+    }, {
+      id: true,
+      user_id: true,
+      status: true,
+      owner: true,
+      restaurant_id: true,
+      notification_token: true,
+      user: {
+        firebase_id: true,
+        language_id: true,
+      }
+    }]
+  });
+  if(response.restaurant_operator == null) {
+    throw new HttpsError(
+      "internal",
+      "No restaurant operator with that user id or restaurant id found"
+    );
+  }
+  return {
+    id: response.restaurant_operator[0].id,
+    userId: response.restaurant_operator[0].user_id,
+    restaurantId: response.restaurant_operator[0].restaurant_id,
+    status: response.restaurant_operator[0].status as OperatorStatus,
+    owner: response.restaurant_operator[0].owner,
+    notificationInfo: (response.restaurant_operator[0].notification_token) ? {
+      AppTypeId: AppType.RestaurantApp,
+      token: response.restaurant_operator[0].notification_token
+    }: undefined,
+    user: {
+      id: response.restaurant_operator[0].user_id,
+      firebaseId: response.restaurant_operator[0].user.firebase_id,
+      language: response.restaurant_operator[0].user.language_id as Language
+    }
+  };
+}
