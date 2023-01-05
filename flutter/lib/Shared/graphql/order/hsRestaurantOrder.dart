@@ -81,6 +81,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
     });
 
     final RestaurantOrder res = RestaurantOrder(
+      dropOffDriverChatId: orderData.delivery?.chat_with_service_provider_id,
       chatId: orderData.chat_id,
       orderId: orderData.id,
       notes: orderData.notes,
@@ -192,6 +193,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     chatId: orderData.chat_id,
     orderId: orderData.id,
     notes: orderData.notes,
+    dropOffDriverChatId: orderData.delivery?.chat_with_service_provider_id,
     estimatedFoodReadyTime: (orderData.estimated_food_ready_time != null)
         ? DateTime.tryParse(orderData.estimated_food_ready_time!)
         : null,

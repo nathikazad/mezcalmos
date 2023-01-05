@@ -956,6 +956,13 @@ const documentNodeSubscriptionlisten_on_restaurant_order_by_id =
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'chat_with_service_provider_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'cancellation_time'),
                 alias: null,
                 arguments: [],
@@ -4597,6 +4604,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     this.actual_package_ready_time,
     this.actual_arrival_at_pickup_time,
     this.actual_arrival_at_dropoff_time,
+    this.chat_with_service_provider_id,
     this.cancellation_time,
     this.current_gps,
     required this.delivery_cost,
@@ -4612,6 +4620,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
         json['actual_arrival_at_pickup_time'];
     final l$actual_arrival_at_dropoff_time =
         json['actual_arrival_at_dropoff_time'];
+    final l$chat_with_service_provider_id =
+        json['chat_with_service_provider_id'];
     final l$cancellation_time = json['cancellation_time'];
     final l$current_gps = json['current_gps'];
     final l$delivery_cost = json['delivery_cost'];
@@ -4624,6 +4634,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
           (l$actual_arrival_at_pickup_time as String?),
       actual_arrival_at_dropoff_time:
           (l$actual_arrival_at_dropoff_time as String?),
+      chat_with_service_provider_id: (l$chat_with_service_provider_id as int?),
       cancellation_time: (l$cancellation_time as String?),
       current_gps:
           l$current_gps == null ? null : geographyFromJson(l$current_gps),
@@ -4643,6 +4654,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
   final String? actual_arrival_at_pickup_time;
 
   final String? actual_arrival_at_dropoff_time;
+
+  final int? chat_with_service_provider_id;
 
   final String? cancellation_time;
 
@@ -4667,6 +4680,9 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     final l$actual_arrival_at_dropoff_time = actual_arrival_at_dropoff_time;
     _resultData['actual_arrival_at_dropoff_time'] =
         l$actual_arrival_at_dropoff_time;
+    final l$chat_with_service_provider_id = chat_with_service_provider_id;
+    _resultData['chat_with_service_provider_id'] =
+        l$chat_with_service_provider_id;
     final l$cancellation_time = cancellation_time;
     _resultData['cancellation_time'] = l$cancellation_time;
     final l$current_gps = current_gps;
@@ -4687,6 +4703,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     final l$actual_package_ready_time = actual_package_ready_time;
     final l$actual_arrival_at_pickup_time = actual_arrival_at_pickup_time;
     final l$actual_arrival_at_dropoff_time = actual_arrival_at_dropoff_time;
+    final l$chat_with_service_provider_id = chat_with_service_provider_id;
     final l$cancellation_time = cancellation_time;
     final l$current_gps = current_gps;
     final l$delivery_cost = delivery_cost;
@@ -4697,6 +4714,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
       l$actual_package_ready_time,
       l$actual_arrival_at_pickup_time,
       l$actual_arrival_at_dropoff_time,
+      l$chat_with_service_provider_id,
       l$cancellation_time,
       l$current_gps,
       l$delivery_cost,
@@ -4737,6 +4755,13 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
         other.actual_arrival_at_dropoff_time;
     if (l$actual_arrival_at_dropoff_time !=
         lOther$actual_arrival_at_dropoff_time) {
+      return false;
+    }
+    final l$chat_with_service_provider_id = chat_with_service_provider_id;
+    final lOther$chat_with_service_provider_id =
+        other.chat_with_service_provider_id;
+    if (l$chat_with_service_provider_id !=
+        lOther$chat_with_service_provider_id) {
       return false;
     }
     final l$cancellation_time = cancellation_time;
@@ -4798,6 +4823,7 @@ abstract class CopyWith$Subscription$listen_on_restaurant_order_by_id$restaurant
     String? actual_package_ready_time,
     String? actual_arrival_at_pickup_time,
     String? actual_arrival_at_dropoff_time,
+    int? chat_with_service_provider_id,
     String? cancellation_time,
     Geography? current_gps,
     double? delivery_cost,
@@ -4833,6 +4859,7 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
     Object? actual_package_ready_time = _undefined,
     Object? actual_arrival_at_pickup_time = _undefined,
     Object? actual_arrival_at_dropoff_time = _undefined,
+    Object? chat_with_service_provider_id = _undefined,
     Object? cancellation_time = _undefined,
     Object? current_gps = _undefined,
     Object? delivery_cost = _undefined,
@@ -4855,6 +4882,10 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
             actual_arrival_at_dropoff_time == _undefined
                 ? _instance.actual_arrival_at_dropoff_time
                 : (actual_arrival_at_dropoff_time as String?),
+        chat_with_service_provider_id:
+            chat_with_service_provider_id == _undefined
+                ? _instance.chat_with_service_provider_id
+                : (chat_with_service_provider_id as int?),
         cancellation_time: cancellation_time == _undefined
             ? _instance.cancellation_time
             : (cancellation_time as String?),
@@ -4898,6 +4929,7 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
     String? actual_package_ready_time,
     String? actual_arrival_at_pickup_time,
     String? actual_arrival_at_dropoff_time,
+    int? chat_with_service_provider_id,
     String? cancellation_time,
     Geography? current_gps,
     double? delivery_cost,
@@ -6227,6 +6259,13 @@ const documentNodeQueryget_restaurant_order_by_id = DocumentNode(definitions: [
             arguments: [],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'chat_with_service_provider_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
               FieldNode(
                 name: NameNode(value: 'id'),
                 alias: null,
@@ -9893,6 +9932,7 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
 
 class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
   Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery({
+    this.chat_with_service_provider_id,
     required this.id,
     this.actual_delivered_time,
     this.actual_package_ready_time,
@@ -9907,6 +9947,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
 
   factory Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery.fromJson(
       Map<String, dynamic> json) {
+    final l$chat_with_service_provider_id =
+        json['chat_with_service_provider_id'];
     final l$id = json['id'];
     final l$actual_delivered_time = json['actual_delivered_time'];
     final l$actual_package_ready_time = json['actual_package_ready_time'];
@@ -9920,6 +9962,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
     final l$delivery_driver = json['delivery_driver'];
     final l$$__typename = json['__typename'];
     return Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery(
+      chat_with_service_provider_id: (l$chat_with_service_provider_id as int?),
       id: (l$id as int),
       actual_delivered_time: (l$actual_delivered_time as String?),
       actual_package_ready_time: (l$actual_package_ready_time as String?),
@@ -9938,6 +9981,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final int? chat_with_service_provider_id;
 
   final int id;
 
@@ -9962,6 +10007,9 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$chat_with_service_provider_id = chat_with_service_provider_id;
+    _resultData['chat_with_service_provider_id'] =
+        l$chat_with_service_provider_id;
     final l$id = id;
     _resultData['id'] = l$id;
     final l$actual_delivered_time = actual_delivered_time;
@@ -9990,6 +10038,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
 
   @override
   int get hashCode {
+    final l$chat_with_service_provider_id = chat_with_service_provider_id;
     final l$id = id;
     final l$actual_delivered_time = actual_delivered_time;
     final l$actual_package_ready_time = actual_package_ready_time;
@@ -10001,6 +10050,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
     final l$delivery_driver = delivery_driver;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$chat_with_service_provider_id,
       l$id,
       l$actual_delivered_time,
       l$actual_package_ready_time,
@@ -10022,6 +10072,13 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
     if (!(other
             is Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$chat_with_service_provider_id = chat_with_service_provider_id;
+    final lOther$chat_with_service_provider_id =
+        other.chat_with_service_provider_id;
+    if (l$chat_with_service_provider_id !=
+        lOther$chat_with_service_provider_id) {
       return false;
     }
     final l$id = id;
@@ -10107,6 +10164,7 @@ abstract class CopyWith$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
       _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery;
 
   TRes call({
+    int? chat_with_service_provider_id,
     int? id,
     String? actual_delivered_time,
     String? actual_package_ready_time,
@@ -10142,6 +10200,7 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$deli
   static const _undefined = {};
 
   TRes call({
+    Object? chat_with_service_provider_id = _undefined,
     Object? id = _undefined,
     Object? actual_delivered_time = _undefined,
     Object? actual_package_ready_time = _undefined,
@@ -10154,6 +10213,10 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$deli
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery(
+        chat_with_service_provider_id:
+            chat_with_service_provider_id == _undefined
+                ? _instance.chat_with_service_provider_id
+                : (chat_with_service_provider_id as int?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         actual_delivered_time: actual_delivered_time == _undefined
             ? _instance.actual_delivered_time
@@ -10208,6 +10271,7 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
   TRes _res;
 
   call({
+    int? chat_with_service_provider_id,
     int? id,
     String? actual_delivered_time,
     String? actual_package_ready_time,

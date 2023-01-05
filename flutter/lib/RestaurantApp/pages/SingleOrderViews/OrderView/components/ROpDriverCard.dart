@@ -9,7 +9,10 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryMode.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -106,22 +109,22 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                     ),
                   // TODO handle @m66are handle message btn
 
-                  // if (widget.order.serviceProviderDropOffDriverChatId != null)
-                  //   Obx(
-                  //     () => MessageButton(
-                  //       onTap: () {
-                  //         MezRouter.toNamed(getMessagesRoute(
-                  //             chatId: widget
-                  //                 .order.serviceProviderDropOffDriverChatId!,
-                  //             recipientType: ParticipantType.DeliveryDriver,
-                  //             orderId: widget.order.orderId));
-                  //       },
-                  //       showRedDot: Get.find<ROpOrderController>()
-                  //           .hasNewMessageNotification(widget
-                  //               .order.serviceProviderDropOffDriverChatId!
-                  //               .toString()),
-                  //     ),
-                  //   )
+                  if (widget.order.serviceProviderDropOffDriverChatId != null)
+                    Obx(
+                      () => MessageButton(
+                        onTap: () {
+                          MezRouter.toNamed(getMessagesRoute(
+                              chatId: widget
+                                  .order.serviceProviderDropOffDriverChatId!,
+                              recipientType: ParticipantType.DeliveryDriver,
+                              orderId: widget.order.orderId));
+                        },
+                        // showRedDot: Get.find<ROpOrderController>()
+                        //     .hasNewMessageNotification(widget
+                        //         .order.serviceProviderDropOffDriverChatId!
+                        //         .toString()),
+                      ),
+                    )
                 ])
               : (widget.order.selfDelivery)
                   ? _selfDeliveryWidget()
