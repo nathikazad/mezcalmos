@@ -108,7 +108,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
           ? DeliveryDriverUserInfo(
               hasuraId: orderData.delivery!.delivery_driver!.user.id,
               name: orderData.delivery!.delivery_driver!.user.name,
-              image: orderData.delivery!.delivery_driver!.user.name,
+              image: orderData.delivery!.delivery_driver!.user.image,
               language: orderData.delivery!.delivery_driver!.user.language_id
                   .toLanguageType())
           : null,
@@ -205,7 +205,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
         ? DeliveryDriverUserInfo(
             hasuraId: orderData.delivery!.delivery_driver!.user.id,
             name: orderData.delivery!.delivery_driver!.user.name,
-            image: orderData.delivery!.delivery_driver!.user.name,
+            image: orderData.delivery!.delivery_driver!.user.image,
             language: orderData.delivery!.delivery_driver!.user.language_id
                 .toLanguageType())
         : null,
