@@ -99,6 +99,32 @@
             "disabled": false,
             "initialEmail": "deliverydriver@gmail.com",
             "lastRefreshAt": "2022-11-16T21:19:16.559Z"
+        },
+        {
+            "localId": "GtdUVLJxEES5kDYtrn1DRmmsoXkU",
+            "createdAt": "1668606822299",
+            "lastLoginAt": "1668633556458",
+            "displayName": "deliveryop",
+            "photoUrl": "https://scontent.fcmn1-1.fna.fbcdn.net/v/t39.30808-6/300126472_4929216143850800_3172087881795748670_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeG468-_VCJJXJJN40dzMwwi7ljJA6RgBrjuWMkDpGAGuJ56S5ezsEL07omIyp3dwckQ9fYZd9T_HUWgLY0LungU&_nc_ohc=6WWud2Q1j5UAX9hCbh6&_nc_zt=23&_nc_ht=scontent.fcmn1-1.fna&oh=00_AfAU6tpFvQCCGcOAkch--EbOB65k8mp2Hfe0V2W7nncosA&oe=63BB3117",
+            "passwordHash": "fakeHash:salt=fakeSaltvjHJNx8AxaefO8zeiZRk:password=password",
+            "salt": "fakeSaltvjHJNx8AxaefO8zeiZRk",
+            "passwordUpdatedAt": 1672836545535,
+            "customAttributes": "{\"https://hasura.io/jwt/claims\":{\"x-hasura-default-role\":\"anonymous\",\"x-hasura-allowed-roles\":[\"anonymous\",\"customer\",\"mez_admin\",\"deliverer\",\"restaurant_operator\"],\"x-hasura-user-id\":\"7\"}}",
+            "providerUserInfo": [
+                {
+                    "providerId": "password",
+                    "email": "deliveryop@mezcalmos.com",
+                    "federatedId": "deliveryop@mezcalmos.com",
+                    "rawId": "deliveryop@mezcalmos.com",
+                    "displayName": "deliveryop",
+                    "photoUrl": "https://scontent.fcmn1-1.fna.fbcdn.net/v/t39.30808-6/300126472_4929216143850800_3172087881795748670_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeG468-_VCJJXJJN40dzMwwi7ljJA6RgBrjuWMkDpGAGuJ56S5ezsEL07omIyp3dwckQ9fYZd9T_HUWgLY0LungU&_nc_ohc=6WWud2Q1j5UAX9hCbh6&_nc_zt=23&_nc_ht=scontent.fcmn1-1.fna&oh=00_AfAU6tpFvQCCGcOAkch--EbOB65k8mp2Hfe0V2W7nncosA&oe=63BB3117"
+                }
+            ],
+            "validSince": "1672836545",
+            "email": "deliveryop@mezcalmos.com",
+            "emailVerified": true,
+            "disabled": false,
+            "lastRefreshAt": "2023-01-04T13:04:02.966Z"
         }
     ]
 }
