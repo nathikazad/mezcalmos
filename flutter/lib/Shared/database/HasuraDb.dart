@@ -78,7 +78,7 @@ class HasuraDb {
     mezDbgPrint(
         "🥶🥶🥶 Hasura DB Links 🥶🥶🥶 \n hasuraDbLink : $hasuraDbLink \n hasuraDbSocketLink : $hasuraDbSocketLink ");
     Map<String, String> headers = <String, String>{
-      "x-hasura-admin-secret": "myadminsecretkey"
+      //"x-hasura-admin-secret": "myadminsecretkey"
     };
     HttpLink _httpLink = HttpLink(hasuraDbLink, defaultHeaders: headers);
     Link _link = _httpLink;
