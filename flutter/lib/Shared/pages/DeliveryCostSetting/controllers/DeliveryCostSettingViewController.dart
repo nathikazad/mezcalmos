@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
-class ROpDeliveryCostController {
-  ROpEditInfoController editInfoController;
-  ROpDeliveryCostController({required this.editInfoController});
+class DeliveryCostSettingViewController {
   // text inputs //
   TextEditingController freeKmRange = TextEditingController();
   TextEditingController minCost = TextEditingController();
@@ -19,9 +16,15 @@ class ROpDeliveryCostController {
   Rxn<DeliveryCost> deliveryCost = Rxn();
   RxBool isEditing = RxBool(false);
   RxnNum previewCost = RxnNum();
+  late int serviceProviderId;
+  late ServiceProviderType serviceProviderType;
 
   // inti //
-  Future<void> init() async {
+  Future<void> init(
+      {required int serviceProviderId,
+      required ServiceProviderType serviceProviderType}) async {
+    this.serviceProviderId = serviceProviderId;
+    this.serviceProviderType = serviceProviderType;
     try {
       await fetchDeliveryCost();
     } on Exception catch (e, stk) {
@@ -33,7 +36,7 @@ class ROpDeliveryCostController {
 
   Future<void> fetchDeliveryCost() async {
     deliveryCost.value = await get_delivery_cost(
-        serviceProviderId: editInfoController.restaurantId, withCache: false);
+        serviceProviderId: serviceProviderId, withCache: false);
     if (deliveryCost.value != null) {
       isEditing.value = true;
       freeKmRange.text = deliveryCost.value!.freeDeliveryKmRange.toString();
@@ -51,8 +54,8 @@ class ROpDeliveryCostController {
   DeliveryCost _constructDeliveryCost() {
     return DeliveryCost(
         id: null,
-        serviceProviderType: OrderType.Restaurant,
-        serviceProviderId: editInfoController.restaurantId,
+        serviceProviderType: serviceProviderType,
+        serviceProviderId: serviceProviderId,
         minimumCost: double.parse(minCost.text),
         freeDeliveryKmRange: double.parse(freeKmRange.text),
         costPerKm: double.parse(costPerKm.text));

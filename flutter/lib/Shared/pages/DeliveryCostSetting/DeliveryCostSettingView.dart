@@ -2,31 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpDeliveryCostController.dart';
+import 'package:mezcalmos/Shared/pages/DeliveryCostSetting/controllers/DeliveryCostSettingViewController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpEditInfoView']['ROpEditInfoView'];
 
-class ROpDeliveryCost extends StatefulWidget {
-  const ROpDeliveryCost({Key? key, required this.editInfoController})
+class DeliveryCostSettingView extends StatefulWidget {
+  const DeliveryCostSettingView({Key? key, required this.editInfoController})
       : super(key: key);
   final ROpEditInfoController editInfoController;
 
   @override
-  State<ROpDeliveryCost> createState() => _ROpDeliveryCostState();
+  State<DeliveryCostSettingView> createState() =>
+      _DeliveryCostSettingViewState();
 }
 
-class _ROpDeliveryCostState extends State<ROpDeliveryCost> {
-  late ROpDeliveryCostController viewController;
+class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
+  DeliveryCostSettingViewController viewController =
+      DeliveryCostSettingViewController();
+  int? serviceProviderId;
+  ServiceProviderType? serviceProviderType;
   @override
   void initState() {
-    viewController = ROpDeliveryCostController(
-        editInfoController: widget.editInfoController);
-    viewController.init();
+
+
+    
+    // provide service provider id and service Provider type
+    if (serviceProviderId != null && serviceProviderType != null) {
+  viewController.init(serviceProviderId: serviceProviderId!,serviceProviderType: serviceProviderType!);
+}
 
     super.initState();
   }
@@ -39,76 +50,79 @@ class _ROpDeliveryCostState extends State<ROpDeliveryCost> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _costComponent(
-                          controller: viewController.freeKmRange,
-                          suffixTitle: 'Km',
-                          title: 'Free Delivery range'),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "Within this distance, the customer won’t be charged for the delivery.",
-                        style: Get.textTheme.bodyText2,
-                      ),
-                      Divider(
-                        height: 35,
-                      ),
-                      _costComponent(
-                          controller: viewController.minCost,
-                          suffixTitle: '\$',
-                          title: 'Minimum cost'),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      _costComponent(
-                          controller: viewController.costPerKm,
-                          suffixTitle: '\$/Km',
-                          title: 'Cost per km'),
-                    ],
+    return Scaffold(
+      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,onClick: MezRouter.back,title: "Delivery Cost"),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _costComponent(
+                            controller: viewController.freeKmRange,
+                            suffixTitle: 'Km',
+                            title: 'Free Delivery range'),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "Within this distance, the customer won’t be charged for the delivery.",
+                          style: Get.textTheme.bodyText2,
+                        ),
+                        Divider(
+                          height: 35,
+                        ),
+                        _costComponent(
+                            controller: viewController.minCost,
+                            suffixTitle: '\$',
+                            title: 'Minimum cost'),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        _costComponent(
+                            controller: viewController.costPerKm,
+                            suffixTitle: '\$/Km',
+                            title: 'Cost per km'),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-                _previewWidget()
-              ],
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  _previewWidget()
+                ],
+              ),
             ),
           ),
-        ),
-        MezButton(
-          label: 'Save',
-          borderRadius: 0,
-          withGradient: true,
-          height: 70,
-          onClick: () async {
-            await viewController.saveDeliveryCost().then((bool? value) {
-              if (value == true) {
-                return Get.snackbar('Saved', 'Delivery cost have been saved',
-                    backgroundColor: Colors.black,
-                    colorText: Colors.white,
-                    shouldIconPulse: false,
-                    icon: Icon(
-                      Icons.check_circle,
-                      color: Colors.green,
-                    ));
-              }
-            });
-          },
-        )
-      ],
+          MezButton(
+            label: 'Save',
+            borderRadius: 0,
+            withGradient: true,
+            height: 70,
+            onClick: () async {
+              await viewController.saveDeliveryCost().then((bool? value) {
+                if (value == true) {
+                  return Get.snackbar('Saved', 'Delivery cost have been saved',
+                      backgroundColor: Colors.black,
+                      colorText: Colors.white,
+                      shouldIconPulse: false,
+                      icon: Icon(
+                        Icons.check_circle,
+                        color: Colors.green,
+                      ));
+                }
+              });
+            },
+          )
+        ],
+      ),
     );
   }
 

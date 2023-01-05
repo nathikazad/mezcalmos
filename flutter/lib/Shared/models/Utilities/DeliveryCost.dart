@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class DeliveryCost {
   int? id;
-  OrderType serviceProviderType;
+  ServiceProviderType serviceProviderType;
   int serviceProviderId;
   double minimumCost;
   double costPerKm;
@@ -21,7 +21,7 @@ class DeliveryCost {
   });
 
   DeliveryCost copyWith({
-    OrderType? serviceProviderType,
+    ServiceProviderType? serviceProviderType,
     int? serviceProviderId,
     double? minimumCost,
     double? costPerKm,
@@ -54,7 +54,8 @@ class DeliveryCost {
   factory DeliveryCost.fromMap(Map<String, dynamic> map) {
     return DeliveryCost(
       id: map["id"],
-      serviceProviderType: map["serviceProviderType"].toString().toOrderType(),
+      serviceProviderType:
+          map["serviceProviderType"].toString().toServiceProviderType(),
       serviceProviderId: map['serviceProviderId']?.toInt() ?? 0,
       minimumCost: map['minimumCost']?.toDouble() ?? 0.0,
       costPerKm: map['costPerKm']?.toDouble() ?? 0.0,
