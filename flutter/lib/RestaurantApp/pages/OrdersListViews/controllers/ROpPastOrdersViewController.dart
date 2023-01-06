@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
 import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalRestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 
 class ROpPastOrdersController {
   //instances
@@ -13,7 +13,7 @@ class ROpPastOrdersController {
 
   // vars
 
-  RxList<MinimalRestaurantOrder> pastOrders = <MinimalRestaurantOrder>[].obs;
+  RxList<MinimalOrder> pastOrders = <MinimalOrder>[].obs;
   RxBool initalized = RxBool(false);
   late int restaurantId;
 

@@ -133,70 +133,72 @@ class MGoogleMapState extends State<MGoogleMap> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Stack(
-        children: <Widget>[
-          if (widget.mGoogleMapController.location.value != null)
-            MGoogleMapGestures(
-              mGoogleController: widget.mGoogleMapController,
-              child: GoogleMap(
-                onTap: (_) {
-                  widget.mGoogleMapController.onMapTap?.call();
-                },
-                padding: widget.padding,
-                mapToolbarEnabled: false,
-                // gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
-                //   new Factory<OneSequenceGestureRecognizer>(
-                //     () => new EagerGestureRecognizer(),
-                //   ),
-                // ].toSet(),
-                gestureRecognizers: Set()
-                  ..add(Factory<PanGestureRecognizer>(() {
+      () {
+        return Stack(
+          children: <Widget>[
+            if (widget.mGoogleMapController.location.value != null)
+              MGoogleMapGestures(
+                mGoogleController: widget.mGoogleMapController,
+                child: GoogleMap(
+                  onTap: (_) {
+                    widget.mGoogleMapController.onMapTap?.call();
+                  },
+                  padding: widget.padding,
+                  mapToolbarEnabled: false,
+                  // gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
+                  //   new Factory<OneSequenceGestureRecognizer>(
+                  //     () => new EagerGestureRecognizer(),
+                  //   ),
+                  // ].toSet(),
+                  gestureRecognizers: Set()
+                    ..add(Factory<PanGestureRecognizer>(() {
+                      mezDbgPrint(
+                          "Pan gesture is enabled ==================> $PanGestureRecognizer()");
+                      return PanGestureRecognizer();
+                    })),
+                  minMaxZoomPreference:
+                      widget.mGoogleMapController.getMapMinMaxZommPrefs(),
+                  onCameraMove: (CameraPosition camMove) {
+                    if (lastZoomSnapshot != camMove.zoom) {
+                      lastZoomSnapshot = camMove.zoom;
+                      // make sure to not call heavy callbacks that do a lot of operations
+                      // cuz this is invoked once per frame, ofc if the zoom changes.
+                      widget.mGoogleMapController.onZoomChange(camMove.zoom);
+                      widget.mGoogleMapController
+                          .updateMarkersIconOnZoomChange(zoom: camMove.zoom);
+                    }
+                  },
+                  myLocationButtonEnabled: false,
+                  buildingsEnabled: false,
+                  markers: widget.mGoogleMapController.markers.toSet(),
+                  polylines: widget.mGoogleMapController.polylines,
+                  zoomControlsEnabled: false,
+                  compassEnabled: false,
+                  mapType: MapType.normal,
+                  tiltGesturesEnabled: true,
+                  initialCameraPosition: CameraPosition(
+                      target: widget.mGoogleMapController.location.value!
+                          .toLatLng()!,
+                      tilt: 9.440717697143555,
+                      zoom: 5.151926040649414),
+                  onMapCreated: (GoogleMapController _gController) async {
                     mezDbgPrint(
-                        "Pan gesture is enabled ==================> $PanGestureRecognizer()");
-                    return PanGestureRecognizer();
-                  })),
-                minMaxZoomPreference:
-                    widget.mGoogleMapController.getMapMinMaxZommPrefs(),
-                onCameraMove: (CameraPosition camMove) {
-                  if (lastZoomSnapshot != camMove.zoom) {
-                    lastZoomSnapshot = camMove.zoom;
-                    // make sure to not call heavy callbacks that do a lot of operations
-                    // cuz this is invoked once per frame, ofc if the zoom changes.
-                    widget.mGoogleMapController.onZoomChange(camMove.zoom);
-                    widget.mGoogleMapController
-                        .updateMarkersIconOnZoomChange(zoom: camMove.zoom);
-                  }
-                },
-                myLocationButtonEnabled: false,
-                buildingsEnabled: false,
-                markers: widget.mGoogleMapController.markers.toSet(),
-                polylines: widget.mGoogleMapController.polylines,
-                zoomControlsEnabled: false,
-                compassEnabled: false,
-                mapType: MapType.normal,
-                tiltGesturesEnabled: true,
-                initialCameraPosition: CameraPosition(
-                    target:
-                        widget.mGoogleMapController.location.value!.toLatLng()!,
-                    tilt: 9.440717697143555,
-                    zoom: 5.151926040649414),
-                onMapCreated: (GoogleMapController _gController) async {
-                  mezDbgPrint(
-                      "\n\n\n\n\n o n   m a p   c r e a t e d !\n\n\n\n\n\n");
-                  widget.mGoogleMapController.controller.value = _gController;
-                  await _gController.setMapStyle(mezMapStyle);
-                  await widget.mGoogleMapController.animateAndUpdateBounds();
-                  _completer.complete(_gController);
-                  // Executing Callback that is depending on [widget.mGoogleMapController.controller].
-                },
-              ),
-            ).detector,
-          if (widget.mGoogleMapController.recenterButtonEnabled.value)
-            recenterButton(),
-          if (widget.mGoogleMapController.myLocationButtonEnabled.value)
-            locateMeButton()
-        ],
-      ),
+                        "\n\n\n\n\n o n   m a p   c r e a t e d !\n\n\n\n\n\n");
+                    widget.mGoogleMapController.controller.value = _gController;
+                    await _gController.setMapStyle(mezMapStyle);
+                    await widget.mGoogleMapController.animateAndUpdateBounds();
+                    _completer.complete(_gController);
+                    // Executing Callback that is depending on [widget.mGoogleMapController.controller].
+                  },
+                ),
+              ).detector,
+            if (widget.mGoogleMapController.recenterButtonEnabled.value)
+              recenterButton(),
+            if (widget.mGoogleMapController.myLocationButtonEnabled.value)
+              locateMeButton()
+          ],
+        );
+      },
     );
   }
 

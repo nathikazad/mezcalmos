@@ -4,6 +4,7 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -13,7 +14,6 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["Shared"]["helpers"]["StripeHelper"];
@@ -247,7 +247,7 @@ Future<void> acceptPaymentWithApplePay(
     await Stripe.instance.applySettings();
     // 1. Present Apple Pay sheet
     await Stripe.instance.presentApplePay(
-      ApplePayPresentParams(
+      params: ApplePayPresentParams(
         cartItems: [
           ApplePayCartSummaryItem.immediate(
             label: merchantName,
@@ -406,8 +406,9 @@ class _CardFormState extends State<CardForm> {
       Stripe.stripeAccountId = null;
       await Stripe.instance.applySettings();
       final PaymentMethod paymentMethod = await Stripe.instance
-          .createPaymentMethod(const PaymentMethodParams.card(
-              paymentMethodData: PaymentMethodData()));
+          .createPaymentMethod(
+              params: PaymentMethodParams.card(
+                  paymentMethodData: PaymentMethodData()));
       mezDbgPrint("payment method from stripe =========>$paymentMethod");
       final ServerResponse serverResponse =
           await addCard(paymentMethod: paymentMethod.id);

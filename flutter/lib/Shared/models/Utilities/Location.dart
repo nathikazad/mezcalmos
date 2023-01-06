@@ -50,6 +50,10 @@ class Location {
     };
   }
 
+  Geography toGeography() {
+    return Geography(position.latitude!, -97.07638386636972);
+  }
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;

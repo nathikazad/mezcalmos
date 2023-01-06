@@ -107,10 +107,13 @@ export const delivery2 = {
   authorizeDeliveryOperator: authenticatedCall((userId, data) => authorizeDeliveryOperator(userId, data)),
   addDeliveryDriver: authenticatedCall((userId, data) => addDriver(userId, data, DeliveryCompanyType.DeliveryCompany)),
   authorizeDeliveryDriver: authenticatedCall((userId, data) => authorizeDriver(userId, data, DeliveryCompanyType.DeliveryCompany)),
-  deliveryDriverAtPickup: authenticatedCall((userId, data) => deliveryDriverAtPickup(userId, data)),
-  startDelivery: authenticatedCall((userId, data) => startDelivery(userId, data)),
-  deliveryDriverAtDropoff: authenticatedCall((userId, data) => deliveryDriverAtDropoff(userId, data)),
-  finishDelivery: authenticatedCall((userId, data) => finishDelivery(userId, data)),
+  restaurantAtPickup: authenticatedCall((userId, data) => deliveryDriverAtPickup(userId, data)),
+  restaurantAtDropoff: authenticatedCall((userId, data) => deliveryDriverAtDropoff(userId, data)),
+  restaurantFinishDelivery: authenticatedCall((userId, data) => finishDelivery(userId, data)),
+  restaurantStartDelivery: authenticatedCall((userId, data) => startDelivery(userId, data)),
+  
+  // restaurantStartDelivery: authenticatedCall((userId, data) => restaurantDelivery.startDelivery(userId, data)),
+  // restaurantFinishDelivery: authenticatedCall((userId, data) => restaurantDelivery.finishDelivery(userId, data)),
   // laundryStartPickupFromCustomer: authenticatedCall((userId, data) => laundryDelivery.startPickupFromCustomer(userId, data)),
   // laundryPickedUpFromCustomer: authenticatedCall((userId, data) => laundryDelivery.pickedUpFromCustomer(userId, data)),
   // laundryAtFacility: authenticatedCall((userId, data) => laundryDelivery.atFacility(userId, data)),
@@ -160,3 +163,4 @@ function authenticatedCall(func:AuthenticatedFunction) {
     return await func(parseInt(firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"]), data);
   });
 }
+

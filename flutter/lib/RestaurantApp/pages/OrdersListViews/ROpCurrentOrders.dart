@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/constants/assets.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
-import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/components/ROpOrderCard.dart';
+import 'package:mezcalmos/Shared/widgets/Order/ROpOrderCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/components/ROpWaitingForApproval.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/controllers/ROpCurrentOrdersController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
@@ -118,56 +118,58 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
   }
 
   Widget _inProcessOrders() {
-    return Column(
-      children: [
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                  fit: FlexFit.tight,
-                  child: Text('${_i18n()["currentOrders"]}'.inCaps,
-                      style: Get.textTheme.bodyText1)),
-              Flexible(
-                child: MezButton(
-                  backgroundColor: secondaryLightBlueColor,
-                  textColor: primaryBlueColor,
-                  height: 32,
-                  //  width: 35.w,
-                  borderRadius: 35,
-                  label: '${_i18n()["pastButton"]}'.inCaps,
-                  onClick: () async {
-                    await MezRouter.toNamed(kPastOrdersListView);
-                  },
+    return Expanded(
+      child: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                    fit: FlexFit.tight,
+                    child: Text('${_i18n()["currentOrders"]}'.inCaps,
+                        style: Get.textTheme.bodyText1)),
+                Flexible(
+                  child: MezButton(
+                    backgroundColor: secondaryLightBlueColor,
+                    textColor: primaryBlueColor,
+                    height: 32,
+                    //  width: 35.w,
+                    borderRadius: 35,
+                    label: '${_i18n()["pastButton"]}'.inCaps,
+                    onClick: () async {
+                      await MezRouter.toNamed(kPastOrdersListView);
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Container(
-            alignment: Alignment.center,
-            child: (viewController.currentOrders.value.isNotEmpty)
-                ? Scrollbar(
-                    child: SingleChildScrollView(
-                      padding: EdgeInsets.all(8),
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: viewController.currentOrders.length,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (_, int index) {
-                          return ROpOrderCard(
-                            order: viewController.currentOrders[index],
-                          );
-                        },
-                      ),
+          viewController.currentOrders.isNotEmpty
+              ? Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: List.generate(
+                          viewController.currentOrders.length, (int index) {
+                        return MinimalOrderCard(
+                          order: viewController.currentOrders[index],
+                          onTap: () {
+                            MezRouter.toNamed(getROpOrderRoute(viewController
+                                .currentOrders[index].id
+                                .toString()));
+                          },
+                        );
+                      }),
                     ),
-                  )
-                : Container(
-                    margin: EdgeInsets.only(top: 10.h),
-                    alignment: Alignment.center,
-                    child: Center(child: NoOrdersComponent()))),
-      ],
+                  ),
+                )
+              : Container(
+                  margin: EdgeInsets.only(top: 10.h),
+                  alignment: Alignment.center,
+                  child: Center(child: NoOrdersComponent())),
+        ],
+      ),
     );
   }
 }

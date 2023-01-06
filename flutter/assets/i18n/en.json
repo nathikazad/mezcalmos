@@ -1629,8 +1629,8 @@
             "laundryReadyForDeliveryBody": "Order is ready for delivery",
             "laundryOtwDeliveryTitle": "Delivery on the way",
             "laundryOtwDeliveryBody": "order is on the way to the customer",
-            "laundryDeliveredTitle": "Delivered",
-            "LaundryDeliveredBody": "Order has been delivered",
+            "deliveredTitle": "Delivered",
+            "deliveredBody": "Order has been delivered",
             "driverNotifTitle": "New Order",
             "driverNotifBody": "You got a new order"
 

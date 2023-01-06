@@ -10,6 +10,7 @@ export interface Restaurant {
   name: string;
   image: string;
   firebaseId?: string;
+  selfDelivery: boolean;
   location: Location;
   description?: Record<Language, string>;
   schedule?: any;

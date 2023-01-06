@@ -2,7 +2,6 @@ import 'package:flutter/material.dart' as mat;
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -11,7 +10,6 @@ dynamic _i18n() =>
     Get.find<LanguageController>().strings["LaundryApp"]["notificationHandler"];
 
 Notification restaurantNotificationHandler(String key, value) {
-  mezDbgPrint("🚀🚀 new notification 🚀🚀 ==> $value");
   final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
   switch (notificationType) {
@@ -45,6 +43,8 @@ Notification restaurantNotificationHandler(String key, value) {
           notificationAction:
               (value["notificationAction"] as String).toNotificationAction(),
           variableParams: value);
+    case NotificationType.NewDriver:
+      return newDriverNotification(key, value);
     case NotificationType.NewMessage:
       return newMessageNotification(key, value);
     case NotificationType.OrderStatusChange:
@@ -177,6 +177,20 @@ Notification newMessageNotification(String key, value) {
       title: value['sender']['name'],
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.NewMessage,
+      notificationAction:
+          (value["notificationAction"] as String).toNotificationAction(),
+      variableParams: value);
+}
+
+Notification newDriverNotification(String key, value) {
+  return Notification(
+      id: key,
+      linkUrl: kDriversList,
+      body: "${value["newDriverName"]} has request join your drivers",
+      imgUrl: value['newDriverImage'],
+      title: "New driver request",
+      timestamp: DateTime.parse(value['time']),
+      notificationType: NotificationType.NewDriver,
       notificationAction:
           (value["notificationAction"] as String).toNotificationAction(),
       variableParams: value);

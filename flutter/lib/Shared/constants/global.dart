@@ -137,6 +137,11 @@ extension ParseOrderTypeToString on AppType {
     return str[0].toLowerCase() + str.substring(1);
   }
 
+  String toNormalString() {
+    final String str = toString().split('.').last;
+    return str;
+  }
+
   ParticipantType? toParticipantType() {
     switch (this) {
       case AppType.CustomerApp:
@@ -150,7 +155,6 @@ extension ParseOrderTypeToString on AppType {
       default:
         return null;
     }
-    return null;
   }
 }
 

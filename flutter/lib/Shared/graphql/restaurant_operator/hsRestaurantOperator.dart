@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant_operator/__generated/restaurantOperator.graphql.dart';
-import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
+import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
 
@@ -34,8 +34,7 @@ HasuraDb _db = Get.find<HasuraDb>();
 //   }
 //   return null;
 // }
-Future<RestaurantOperator?> get_restaurant_operator(
-    {required int userId}) async {
+Future<Operator?> get_restaurant_operator({required int userId}) async {
   final QueryResult<Query$getOperatorByUserId> res = await _db.graphQLClient
       .query$getOperatorByUserId(Options$Query$getOperatorByUserId(
           fetchPolicy: FetchPolicy.noCache,
@@ -47,8 +46,8 @@ Future<RestaurantOperator?> get_restaurant_operator(
   if (res.parsedData!.restaurant_operator.isNotEmpty) {
     final Query$getOperatorByUserId$restaurant_operator data =
         res.parsedData!.restaurant_operator.first;
-    return RestaurantOperator(
-        state: RestaurantOperatorState(
+    return Operator(
+        state: OperatorState(
             operatorState: data.status.toAgentStatus(),
             owner: data.owner,
             restaurantId: data.restaurant_id),
@@ -56,7 +55,7 @@ Future<RestaurantOperator?> get_restaurant_operator(
             hasuraId: data.user_id,
             firebaseId: data.user.firebase_id,
             image: data.user.image,
-            name: data.user.image),
+            name: data.user.name),
         operatorId: data.id);
   }
   return null;

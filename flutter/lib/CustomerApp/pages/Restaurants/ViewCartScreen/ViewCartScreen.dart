@@ -118,12 +118,13 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
               viewCartController: viewCartController,
               setLocationCallBack: ({Location? location}) async {
                 if (location != null && location.isValidLocation()) {
-                  mezDbgPrint(
-                      "[UUUU] => RESTAURANT INFO ==> ${_restaurantController.cart.value.restaurant?.info.hasuraId}");
                   _restaurantController.cart.value.toLocation = location;
+
                   // ignore: unawaited_futures
                   _restaurantController.updateShippingPrice().then(
                       (bool value) => _restaurantController.cart.refresh());
+                  mezDbgPrint(
+                      "Should update cart location 🥸🥸🥸 ===> ${_restaurantController.cart.value.toLocation}");
                 }
               },
               notesTextController: _textEditingController,
@@ -141,13 +142,15 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                       false)
                   ? '${_i18n()["scheduleOrder"]}'
                   : '${_i18n()["orderNow"]}',
-              enabled: _restaurantController.canOrder &&
-                  !viewCartController.clickedCheckout.value,
+              // enabled: _restaurantController.canOrder &&
+              //     !viewCartController.clickedCheckout.value,
               withGradient: true,
               borderRadius: 0,
               onClick: viewCartController.clickedCheckout.value
                   ? null
                   : () async {
+                      mezDbgPrint(_restaurantController.cart.value.toLocation
+                          ?.toFirebaseFormattedJson());
                       if (_restaurantController.canOrder &&
                           !viewCartController.clickedCheckout.value) {
                         viewCartController.clickedCheckout.value = true;
@@ -225,7 +228,6 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   }
 
   Future<void> checkoutActionButton() async {
-    _restaurantController.cart.value.toLocation = orderToLocation;
     _restaurantController.cart.value.notes = _textEditingController.text;
     try {
       // if (_restaurantController.getOrderDistance <= 10) {

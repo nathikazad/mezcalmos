@@ -66,19 +66,21 @@ class ForegroundNotificationsController extends GetxController {
               _displayNotificationsStreamController.add(_notification);
               break;
             case NotificationAction.ShowSnackbarOnlyIfNotOnPage:
-              if (!alreadyOnLinkPage) {
-                _displayNotificationsStreamController.add(_notification);
-              }
+              //   if (!alreadyOnLinkPage) {
+              _displayNotificationsStreamController.add(_notification);
+              //  }
               break;
           }
 
-          if (!alreadyOnLinkPage) {
-            notifications.add(_notification);
-          } else {
-            removeNotification(_notification.id);
-          }
-        } on StateError {
+          // if (!alreadyOnLinkPage) {
+          notifications.add(_notification);
+          // } else {
+          //   removeNotification(_notification.id);
+          // }
+        } catch (e, stk) {
           mezDbgPrint("Invalid notification");
+          mezDbgPrint(e);
+          mezDbgPrint(stk);
         }
       });
     });
