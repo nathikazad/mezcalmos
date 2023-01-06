@@ -2400,6 +2400,13 @@ const documentNodeMutationupdateDeliveryDriverById = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'online'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -2515,20 +2522,25 @@ extension ClientExtension$Mutation$updateDeliveryDriverById
 class Mutation$updateDeliveryDriverById$update_delivery_driver_by_pk {
   Mutation$updateDeliveryDriverById$update_delivery_driver_by_pk({
     required this.id,
+    required this.online,
     required this.$__typename,
   });
 
   factory Mutation$updateDeliveryDriverById$update_delivery_driver_by_pk.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
+    final l$online = json['online'];
     final l$$__typename = json['__typename'];
     return Mutation$updateDeliveryDriverById$update_delivery_driver_by_pk(
       id: (l$id as int),
+      online: (l$online as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final int id;
+
+  final bool online;
 
   final String $__typename;
 
@@ -2536,6 +2548,8 @@ class Mutation$updateDeliveryDriverById$update_delivery_driver_by_pk {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$online = online;
+    _resultData['online'] = l$online;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -2544,9 +2558,11 @@ class Mutation$updateDeliveryDriverById$update_delivery_driver_by_pk {
   @override
   int get hashCode {
     final l$id = id;
+    final l$online = online;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
+      l$online,
       l$$__typename,
     ]);
   }
@@ -2564,6 +2580,11 @@ class Mutation$updateDeliveryDriverById$update_delivery_driver_by_pk {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$online = online;
+    final lOther$online = other.online;
+    if (l$online != lOther$online) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -2601,6 +2622,7 @@ abstract class CopyWith$Mutation$updateDeliveryDriverById$update_delivery_driver
 
   TRes call({
     int? id,
+    bool? online,
     String? $__typename,
   });
 }
@@ -2625,10 +2647,14 @@ class _CopyWithImpl$Mutation$updateDeliveryDriverById$update_delivery_driver_by_
 
   TRes call({
     Object? id = _undefined,
+    Object? online = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$updateDeliveryDriverById$update_delivery_driver_by_pk(
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        online: online == _undefined || online == null
+            ? _instance.online
+            : (online as bool),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -2647,6 +2673,541 @@ class _CopyWithStubImpl$Mutation$updateDeliveryDriverById$update_delivery_driver
 
   call({
     int? id,
+    bool? online,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$getDriverOnlineStatus {
+  factory Variables$Query$getDriverOnlineStatus({required int driverId}) =>
+      Variables$Query$getDriverOnlineStatus._({
+        r'driverId': driverId,
+      });
+
+  Variables$Query$getDriverOnlineStatus._(this._$data);
+
+  factory Variables$Query$getDriverOnlineStatus.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$driverId = data['driverId'];
+    result$data['driverId'] = (l$driverId as int);
+    return Variables$Query$getDriverOnlineStatus._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get driverId => (_$data['driverId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$driverId = driverId;
+    result$data['driverId'] = l$driverId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getDriverOnlineStatus<
+          Variables$Query$getDriverOnlineStatus>
+      get copyWith => CopyWith$Variables$Query$getDriverOnlineStatus(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getDriverOnlineStatus) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$driverId = driverId;
+    final lOther$driverId = other.driverId;
+    if (l$driverId != lOther$driverId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$driverId = driverId;
+    return Object.hashAll([l$driverId]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getDriverOnlineStatus<TRes> {
+  factory CopyWith$Variables$Query$getDriverOnlineStatus(
+    Variables$Query$getDriverOnlineStatus instance,
+    TRes Function(Variables$Query$getDriverOnlineStatus) then,
+  ) = _CopyWithImpl$Variables$Query$getDriverOnlineStatus;
+
+  factory CopyWith$Variables$Query$getDriverOnlineStatus.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getDriverOnlineStatus;
+
+  TRes call({int? driverId});
+}
+
+class _CopyWithImpl$Variables$Query$getDriverOnlineStatus<TRes>
+    implements CopyWith$Variables$Query$getDriverOnlineStatus<TRes> {
+  _CopyWithImpl$Variables$Query$getDriverOnlineStatus(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getDriverOnlineStatus _instance;
+
+  final TRes Function(Variables$Query$getDriverOnlineStatus) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? driverId = _undefined}) =>
+      _then(Variables$Query$getDriverOnlineStatus._({
+        ..._instance._$data,
+        if (driverId != _undefined && driverId != null)
+          'driverId': (driverId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getDriverOnlineStatus<TRes>
+    implements CopyWith$Variables$Query$getDriverOnlineStatus<TRes> {
+  _CopyWithStubImpl$Variables$Query$getDriverOnlineStatus(this._res);
+
+  TRes _res;
+
+  call({int? driverId}) => _res;
+}
+
+class Query$getDriverOnlineStatus {
+  Query$getDriverOnlineStatus({
+    this.delivery_driver_by_pk,
+    required this.$__typename,
+  });
+
+  factory Query$getDriverOnlineStatus.fromJson(Map<String, dynamic> json) {
+    final l$delivery_driver_by_pk = json['delivery_driver_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Query$getDriverOnlineStatus(
+      delivery_driver_by_pk: l$delivery_driver_by_pk == null
+          ? null
+          : Query$getDriverOnlineStatus$delivery_driver_by_pk.fromJson(
+              (l$delivery_driver_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getDriverOnlineStatus$delivery_driver_by_pk?
+      delivery_driver_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_driver_by_pk = delivery_driver_by_pk;
+    _resultData['delivery_driver_by_pk'] = l$delivery_driver_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_driver_by_pk = delivery_driver_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delivery_driver_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getDriverOnlineStatus) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_driver_by_pk = delivery_driver_by_pk;
+    final lOther$delivery_driver_by_pk = other.delivery_driver_by_pk;
+    if (l$delivery_driver_by_pk != lOther$delivery_driver_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getDriverOnlineStatus
+    on Query$getDriverOnlineStatus {
+  CopyWith$Query$getDriverOnlineStatus<Query$getDriverOnlineStatus>
+      get copyWith => CopyWith$Query$getDriverOnlineStatus(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getDriverOnlineStatus<TRes> {
+  factory CopyWith$Query$getDriverOnlineStatus(
+    Query$getDriverOnlineStatus instance,
+    TRes Function(Query$getDriverOnlineStatus) then,
+  ) = _CopyWithImpl$Query$getDriverOnlineStatus;
+
+  factory CopyWith$Query$getDriverOnlineStatus.stub(TRes res) =
+      _CopyWithStubImpl$Query$getDriverOnlineStatus;
+
+  TRes call({
+    Query$getDriverOnlineStatus$delivery_driver_by_pk? delivery_driver_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Query$getDriverOnlineStatus$delivery_driver_by_pk<TRes>
+      get delivery_driver_by_pk;
+}
+
+class _CopyWithImpl$Query$getDriverOnlineStatus<TRes>
+    implements CopyWith$Query$getDriverOnlineStatus<TRes> {
+  _CopyWithImpl$Query$getDriverOnlineStatus(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getDriverOnlineStatus _instance;
+
+  final TRes Function(Query$getDriverOnlineStatus) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_driver_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getDriverOnlineStatus(
+        delivery_driver_by_pk: delivery_driver_by_pk == _undefined
+            ? _instance.delivery_driver_by_pk
+            : (delivery_driver_by_pk
+                as Query$getDriverOnlineStatus$delivery_driver_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getDriverOnlineStatus$delivery_driver_by_pk<TRes>
+      get delivery_driver_by_pk {
+    final local$delivery_driver_by_pk = _instance.delivery_driver_by_pk;
+    return local$delivery_driver_by_pk == null
+        ? CopyWith$Query$getDriverOnlineStatus$delivery_driver_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Query$getDriverOnlineStatus$delivery_driver_by_pk(
+            local$delivery_driver_by_pk, (e) => call(delivery_driver_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getDriverOnlineStatus<TRes>
+    implements CopyWith$Query$getDriverOnlineStatus<TRes> {
+  _CopyWithStubImpl$Query$getDriverOnlineStatus(this._res);
+
+  TRes _res;
+
+  call({
+    Query$getDriverOnlineStatus$delivery_driver_by_pk? delivery_driver_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getDriverOnlineStatus$delivery_driver_by_pk<TRes>
+      get delivery_driver_by_pk =>
+          CopyWith$Query$getDriverOnlineStatus$delivery_driver_by_pk.stub(_res);
+}
+
+const documentNodeQuerygetDriverOnlineStatus = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getDriverOnlineStatus'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'driverId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delivery_driver_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: IntValueNode(value: '10'),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'online'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getDriverOnlineStatus _parserFn$Query$getDriverOnlineStatus(
+        Map<String, dynamic> data) =>
+    Query$getDriverOnlineStatus.fromJson(data);
+
+class Options$Query$getDriverOnlineStatus
+    extends graphql.QueryOptions<Query$getDriverOnlineStatus> {
+  Options$Query$getDriverOnlineStatus({
+    String? operationName,
+    required Variables$Query$getDriverOnlineStatus variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetDriverOnlineStatus,
+          parserFn: _parserFn$Query$getDriverOnlineStatus,
+        );
+}
+
+class WatchOptions$Query$getDriverOnlineStatus
+    extends graphql.WatchQueryOptions<Query$getDriverOnlineStatus> {
+  WatchOptions$Query$getDriverOnlineStatus({
+    String? operationName,
+    required Variables$Query$getDriverOnlineStatus variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetDriverOnlineStatus,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getDriverOnlineStatus,
+        );
+}
+
+class FetchMoreOptions$Query$getDriverOnlineStatus
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getDriverOnlineStatus({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getDriverOnlineStatus variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetDriverOnlineStatus,
+        );
+}
+
+extension ClientExtension$Query$getDriverOnlineStatus on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getDriverOnlineStatus>>
+      query$getDriverOnlineStatus(
+              Options$Query$getDriverOnlineStatus options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$getDriverOnlineStatus>
+      watchQuery$getDriverOnlineStatus(
+              WatchOptions$Query$getDriverOnlineStatus options) =>
+          this.watchQuery(options);
+  void writeQuery$getDriverOnlineStatus({
+    required Query$getDriverOnlineStatus data,
+    required Variables$Query$getDriverOnlineStatus variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQuerygetDriverOnlineStatus),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getDriverOnlineStatus? readQuery$getDriverOnlineStatus({
+    required Variables$Query$getDriverOnlineStatus variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQuerygetDriverOnlineStatus),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$getDriverOnlineStatus.fromJson(result);
+  }
+}
+
+class Query$getDriverOnlineStatus$delivery_driver_by_pk {
+  Query$getDriverOnlineStatus$delivery_driver_by_pk({
+    required this.online,
+    required this.$__typename,
+  });
+
+  factory Query$getDriverOnlineStatus$delivery_driver_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$online = json['online'];
+    final l$$__typename = json['__typename'];
+    return Query$getDriverOnlineStatus$delivery_driver_by_pk(
+      online: (l$online as bool),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final bool online;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$online = online;
+    _resultData['online'] = l$online;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$online = online;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$online,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getDriverOnlineStatus$delivery_driver_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$online = online;
+    final lOther$online = other.online;
+    if (l$online != lOther$online) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getDriverOnlineStatus$delivery_driver_by_pk
+    on Query$getDriverOnlineStatus$delivery_driver_by_pk {
+  CopyWith$Query$getDriverOnlineStatus$delivery_driver_by_pk<
+          Query$getDriverOnlineStatus$delivery_driver_by_pk>
+      get copyWith =>
+          CopyWith$Query$getDriverOnlineStatus$delivery_driver_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getDriverOnlineStatus$delivery_driver_by_pk<
+    TRes> {
+  factory CopyWith$Query$getDriverOnlineStatus$delivery_driver_by_pk(
+    Query$getDriverOnlineStatus$delivery_driver_by_pk instance,
+    TRes Function(Query$getDriverOnlineStatus$delivery_driver_by_pk) then,
+  ) = _CopyWithImpl$Query$getDriverOnlineStatus$delivery_driver_by_pk;
+
+  factory CopyWith$Query$getDriverOnlineStatus$delivery_driver_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getDriverOnlineStatus$delivery_driver_by_pk;
+
+  TRes call({
+    bool? online,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getDriverOnlineStatus$delivery_driver_by_pk<TRes>
+    implements
+        CopyWith$Query$getDriverOnlineStatus$delivery_driver_by_pk<TRes> {
+  _CopyWithImpl$Query$getDriverOnlineStatus$delivery_driver_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getDriverOnlineStatus$delivery_driver_by_pk _instance;
+
+  final TRes Function(Query$getDriverOnlineStatus$delivery_driver_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? online = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getDriverOnlineStatus$delivery_driver_by_pk(
+        online: online == _undefined || online == null
+            ? _instance.online
+            : (online as bool),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getDriverOnlineStatus$delivery_driver_by_pk<TRes>
+    implements
+        CopyWith$Query$getDriverOnlineStatus$delivery_driver_by_pk<TRes> {
+  _CopyWithStubImpl$Query$getDriverOnlineStatus$delivery_driver_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    bool? online,
     String? $__typename,
   }) =>
       _res;

@@ -11,7 +11,7 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
-class ROpOrderViewController {
+class RestaurantOrderViewController {
   // instances //
   final MGoogleMapController mGoogleMapController = MGoogleMapController(
     enableMezSmartPointer: true,

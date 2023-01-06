@@ -30,6 +30,7 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
     image: restaurantDetails.image,
     location: restaurantDetails.location,
     schedule: restaurantDetails.schedule,
+    selfDelivery:false,
     
    
   }

@@ -24,7 +24,7 @@ export interface CheckoutRequest {
   customerAppType: AppType,
   customerLocation: Location,
   deliveryCost: number,
-  itemsCost: number,
+ 
   paymentType: PaymentType,
   notes: string,
   restaurantId: number,
@@ -32,7 +32,7 @@ export interface CheckoutRequest {
   tripDistance: number,
   tripDuration: number,
   tripPolyline: string,
-  selfDelivery: boolean,
+  
   scheduledTime?: string
 }
 
@@ -64,7 +64,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     orderType: checkoutRequest.restaurantOrderType,
     customerAppType: checkoutRequest.customerAppType,
     items: customerCart.items,
-    itemsCost : checkoutRequest.itemsCost,
+    itemsCost : customerCart.cost,
     deliveryCost: checkoutRequest.deliveryCost,
     scheduledTime: checkoutRequest.scheduledTime
   }
@@ -88,7 +88,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
 
     notifyOperators(orderResponse.restaurantOrder.orderId!, restaurant);
 
-    if(!(checkoutRequest.selfDelivery)) {
+    if(!(restaurant.selfDelivery)) {
       let assignDetails: AssignCompanyDetails = {
         deliveryCompanyId: 1,
         restaurantOrderId: orderResponse.restaurantOrder.orderId!

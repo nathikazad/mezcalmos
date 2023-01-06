@@ -53,6 +53,13 @@ mutation updateDeliveryDriverById(
     _set: $driverData
   ) {
     id
+    online
+  }
+}
+ # get delivery online status
+query getDriverOnlineStatus($driverId: Int!) {
+  delivery_driver_by_pk(id: 10) {
+    online
   }
 }
 

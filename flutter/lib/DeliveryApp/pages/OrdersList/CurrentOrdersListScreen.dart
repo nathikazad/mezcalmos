@@ -35,7 +35,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
   @override
   void initState() {
     Get.find<SideMenuDrawerController>().pastOrdersRoute = kPastOrdersView;
-   orderController.clearNewOrderNotificationsOfPastOrders();
+    orderController.clearNewOrderNotificationsOfPastOrders();
     viewController.init();
 
     super.initState();
@@ -63,18 +63,16 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
               () => Column(
                 children: [
                   TitleWithOnOffSwitcher(
-                    title: "${_i18n()["title"]}",
-                    onTurnedOn: () {
-                      _deliveryAuthController.turnOn();
-                    },
-                    onTurnedOff: () {
-                      _deliveryAuthController.turnOff();
-                    },
-                    initialSwitcherValue:
-                        _deliveryAuthController.driverState?.online ?? false,
-                  ),
-                  if (_deliveryAuthController.driverState?.online != true &&
-                      orderController.currentOrders.isEmpty)
+                      title: "${_i18n()["title"]}",
+                      onTurnedOn: () {
+                        viewController.switchOnlineStatus(true);
+                      },
+                      onTurnedOff: () {
+                        viewController.switchOnlineStatus(false);
+                      },
+                      initialSwitcherValue: viewController.isOnline),
+                  if (viewController.isOnline != true &&
+                      viewController.currentOrders.isEmpty)
                     Container(
                       height: 60.h,
                       child: IncomingOrdersStatus(

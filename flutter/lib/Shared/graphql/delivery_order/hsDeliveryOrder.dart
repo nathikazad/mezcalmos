@@ -35,6 +35,7 @@ Stream<DeliveryOrder?> listen_on_driver_restaurant_order_by_id(
 
     return DeliveryOrder(
         id: orderData.id,
+        driverAssigned: orderData.delivery_driver != null,
         serviceOrderId: orderData.restaurant_order?.id,
         // TODO MONTASSARE handle other service providers
         serviceInfo: ServiceInfo(
@@ -90,8 +91,7 @@ Stream<DeliveryOrder?> listen_on_driver_restaurant_order_by_id(
   });
 }
 
-Future<DeliveryOrder?> get_driver_restaurant_order_by_id(
-    {required int orderId}) async {
+Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
   final QueryResult<Query$get_driver_order> response =
       await _hasuraDb.graphQLClient.query$get_driver_order(
     Options$Query$get_driver_order(
@@ -109,6 +109,7 @@ Future<DeliveryOrder?> get_driver_restaurant_order_by_id(
   return DeliveryOrder(
       id: orderData.id,
       serviceOrderId: orderData.restaurant_order?.id,
+      driverAssigned: orderData.delivery_driver != null,
       // TODO MONTASSARE handle other service providers
       serviceInfo: ServiceInfo(
           hasuraId: orderData.restaurant!.id,

@@ -4,7 +4,7 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/__generated/restaurant.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
+import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
@@ -347,7 +347,7 @@ Future<List<Review>?> get_restaurant_reviews(
   }
 }
 
-Future<List<RestaurantOperator>?> get_restaurant_operators(
+Future<List<Operator>?> get_restaurant_operators(
     {required int restaurantId, bool withCache = true}) async {
   final QueryResult<Query$getRestaurantOperators> response =
       await _db.graphQLClient.query$getRestaurantOperators(
@@ -366,11 +366,11 @@ Future<List<RestaurantOperator>?> get_restaurant_operators(
         data = response.parsedData!.restaurant_by_pk!.restaurant_operators;
     mezDbgPrint(
         "✅✅ Hasura get operators querry ${response.parsedData?.toJson()} ");
-    final List<RestaurantOperator> ops = data.map(
+    final List<Operator> ops = data.map(
         (Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators
             opData) {
-      return RestaurantOperator(
-          state: RestaurantOperatorState(
+      return Operator(
+          state: OperatorState(
               owner: opData.owner,
               operatorState: opData.status.toAgentStatus(),
               restaurantId: restaurantId),

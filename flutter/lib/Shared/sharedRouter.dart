@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ControllerType.dart';
 import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
 import 'package:mezcalmos/Shared/pages/AppNeedsUpdateScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dart';
@@ -14,7 +15,9 @@ import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/LocationPermissi
 import 'package:mezcalmos/Shared/pages/MessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/NoInternetConnectionScreen.dart';
 import 'package:mezcalmos/Shared/pages/Notifications/ViewNotifications.dart';
+import 'package:mezcalmos/Shared/pages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationview.dart';
+import 'package:mezcalmos/Shared/pages/ServiceDriversList/DriversListView.dart';
 import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileScreen.dart';
@@ -40,6 +43,8 @@ const String kAppNeedsUpdate = '/needs_update';
 const String kAgoraCallScreen = '/agora';
 // const String kInAppReview = '/in-app_review';
 const String kPickLocationWithoutAuth = "/pick_location/noAuth";
+const String kPickDriver = "/pickDriver/:orderId";
+const String kDriversList = "/driversList/:serviceProviderId";
 const String kPickLocationEdit = "/pick_location/edit";
 const String kSomethingWentWrongScreen = "/SomethingWentWrongScreen";
 
@@ -51,7 +56,8 @@ String getMessagesRoute({
   ParticipantType recipientType = ParticipantType.Customer,
   String? recipientId,
 }) {
-  String mainUrl = kMessagesRoute.replaceFirst(":chatId", chatId.toString());
+  final String mainUrl =
+      kMessagesRoute.replaceFirst(":chatId", chatId.toString());
 
   // if (recipientId != null)
   //   mainUrl += "?recipientId=$recipientId";
@@ -81,6 +87,25 @@ bool routeMatch(String routeA, String routeB) {
 
 bool isCurrentRoute(String route) {
   return routeMatch(route, Get.currentRoute);
+}
+
+// shared navigation methods //
+void navigateToPickDriver(
+    {required int deliveryOrderId, required bool showForwardButton}) {
+  final String route = kPickDriver.replaceFirst(":orderId", "$deliveryOrderId");
+  MezRouter.toNamed(kPickDriver, arguments: {
+    "showForwardButton": showForwardButton,
+  });
+}
+
+void navigateToDrivers(
+    {required int serviceProviderId, required ControllerType controllerType}) {
+  final String route =
+      kDriversList.replaceFirst(":serviceProviderId", "$serviceProviderId");
+  MezRouter.toNamed(kDriversList, arguments: {
+    "controllerType": controllerType,
+    "showAppBar": true,
+  });
 }
 
 // GetX based Router (For navigating)
@@ -139,5 +164,7 @@ class SharedRouter {
         name: kPickLocationEdit,
         page: () => PickLocationView(PickLocationMode.EditLocation)),
     GetPage(name: kAgoraCallScreen, page: () => AgoraCall()),
+    GetPage(name: kPickDriver, page: () => PickDriverView()),
+    GetPage(name: kDriversList, page: () => DriversListView()),
   ];
 }

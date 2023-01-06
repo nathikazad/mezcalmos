@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/ROpPickDriverView/components/ROpDriverSelectCard.dart';
-import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/ROpPickDriverView/controllers/ROpPickDriverViewController.dart';
+import 'package:mezcalmos/Shared/pages/PickDriverView/components/DriverSelectCard.dart';
+import 'package:mezcalmos/Shared/pages/PickDriverView/controllers/PickDriverViewController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -16,29 +16,30 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpPickDriverView'];
 
 //
-
-class ROpPickDriverView extends StatefulWidget {
-  const ROpPickDriverView({super.key});
+/// params orderId
+/// Arguments showForwardButton
+/// Delivery order id
+class PickDriverView extends StatefulWidget {
+  const PickDriverView({super.key});
 
   @override
-  State<ROpPickDriverView> createState() => _ROpPickDriverViewState();
+  State<PickDriverView> createState() => _PickDriverViewState();
 }
 
-class _ROpPickDriverViewState extends State<ROpPickDriverView> {
-  ROpPickDriverController viewController = ROpPickDriverController();
-  int? orderID;
-  int? serviceProvderId;
+class _PickDriverViewState extends State<PickDriverView> {
+  PickDriverController viewController = PickDriverController();
+  int? deliveryOrderId;
+  bool showForward = false;
 
   @override
   void initState() {
     mezDbgPrint("Inside kpickdriver routre :::::::::");
-    if (Get.parameters["orderId"] != null &&
-        Get.parameters["serviceProviderId"] != null) {
-      orderID = int.tryParse(Get.parameters["orderId"]!);
-      serviceProvderId = int.tryParse(Get.parameters["serviceProviderId"]!);
-      if (orderID != null && serviceProvderId != null) {
-        viewController.init(
-            serviceProviderId: serviceProvderId!, orderId: orderID!);
+    if (Get.parameters["orderId"] != null) {
+      showForward = Get.arguments?["showForwardButton"] as bool? ?? false;
+      deliveryOrderId = int.tryParse(Get.parameters["orderId"]!);
+
+      if (deliveryOrderId != null) {
+        viewController.init(orderId: deliveryOrderId!);
       } else {
         MezRouter.back();
       }
@@ -67,25 +68,20 @@ class _ROpPickDriverViewState extends State<ROpPickDriverView> {
                 child: Column(
                   children: [
                     // forward to mezcalmos //
-                    MezButton(
-                      label: "${_i18n()["fwdMezcalmos"]} (50\$)",
-                      onClick: () async {
-                        //   await viewController.forwardToMezcalmos(order.value!);
-                      },
-                    ),
+                    if (showForward)
+                      MezButton(
+                        label: "${_i18n()["fwdMezcalmos"]} (50\$)",
+                        onClick: () async {
+                          //   await viewController.forwardToMezcalmos(order.value!);
+                        },
+                      ),
                     // drivers map //
                     // ROpDriversMapComponent(
                     //     drivers: viewController.drivers, order: order.value!),
                     const SizedBox(
                       height: 25,
                     ),
-                    // ROpSelfDeliveryCard(
-                    //   restaurant: order.value!.restaurant,
-                    //   assignCallBack: () async {
-                    //     await viewController.assignSelfDelivery(
-                    //         order: order.value!);
-                    //   },
-                    // ),
+
                     const SizedBox(
                       height: 5,
                     ),
@@ -93,7 +89,7 @@ class _ROpPickDriverViewState extends State<ROpPickDriverView> {
                     Column(
                       children: List.generate(
                           viewController.drivers.length,
-                          (int index) => ROpDriverSelectCard(
+                          (int index) => DriverSelectCard(
                                 driver: viewController.drivers[index],
                                 assingCallback: () async {
                                   final bool result = await _assignCallback(

@@ -8,9 +8,11 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
   let response = await chain.query({
     restaurant_by_pk: [{
       id: restaurantId
+      
     }, {
       id: true,
       name: true,
+      self_delivery:true,
       // schedule : [{path :'' },true],
       description: {
         translations: [{ }, {
@@ -74,6 +76,7 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
     restaurantId: response.restaurant_by_pk.id,
     name: response.restaurant_by_pk.name,
     image: response.restaurant_by_pk.image,
+    selfDelivery:response.restaurant_by_pk.self_delivery,
 
     
     location: {

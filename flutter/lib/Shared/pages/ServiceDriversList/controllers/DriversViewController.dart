@@ -2,16 +2,15 @@ import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceLink.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
-class ROpDriversViewController {
+class DriversViewController {
   // instances and streams subscriptions
 
   RxList<DeliveryDriver> drivers = RxList.empty();
@@ -30,20 +29,23 @@ class ROpDriversViewController {
   }
 
   // late variables //
-
-  late int restaurantId;
-  Future<void> init() async {
-    restaurantId = Get.find<RestaurantOpAuthController>().restaurantId!;
+  late ServiceProviderType serviceProviderType;
+  late int serviceProviderId;
+  Future<void> init(
+      {required int serviceProviderId,
+      required ServiceProviderType serviceProviderType}) async {
+    this.serviceProviderId = serviceProviderId;
+    this.serviceProviderType = serviceProviderType;
     await fetchDrivers();
     await fetchServiceLinks();
 
-    mezDbgPrint("Init operators of restaurant id  ====>$restaurantId");
+    mezDbgPrint("Init operators of restaurant id  ====>$serviceProviderId");
   }
 
   Future<void> fetchServiceLinks() async {
     try {
       serviceLink.value = await get_service_link_by_id(
-          serviceProviderId: restaurantId, withCache: false);
+          serviceProviderId: serviceProviderId, withCache: false);
     } on Exception {
       mezDbgPrint("Service dont have links");
     }
@@ -52,7 +54,7 @@ class ROpDriversViewController {
   Future<void> fetchDrivers() async {
     try {
       drivers.value = await get_drivers_by_service_provider_id(
-              serviceProviderId: restaurantId, withCache: false) ??
+              serviceProviderId: serviceProviderId, withCache: false) ??
           [];
     } on Exception catch (e, stk) {
       mezDbgPrint("Service dont have drivers yet");
@@ -61,27 +63,10 @@ class ROpDriversViewController {
     }
   }
 
-  Future<ServerResponse> generateLinks() async {
-    final HttpsCallable cloudFunction =
-        FirebaseFunctions.instance.httpsCallable('restaurant-genDriverLink');
-    try {
-      final HttpsCallableResult response = await cloudFunction.call({
-        "providerId": restaurantId,
-        "providerType": OrderType.Restaurant.toFirebaseFormatString()
-      });
-      mezDbgPrint("Response : ${response.data}");
-
-      return ServerResponse.fromJson(response.data);
-    } catch (e, stk) {
-      mezDbgPrint("Errrooooooooor =======> $e");
-      mezDbgPrint("Errrooooooooor =======> $stk");
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
-    }
-  }
-
   Future<ServerResponse> approveDriver(
       {required bool approved, required int driverId}) async {
+    // todo check service provider get func name
+    final String funcName = "";
     mezDbgPrint("Driver id =======>>>>$driverId");
     final HttpsCallable cloudFunction = FirebaseFunctions.instance
         .httpsCallable('restaurant2-authorizeRestaurantDriver');

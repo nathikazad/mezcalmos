@@ -1,7 +1,6 @@
 import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/ROpCreateRestaurantView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/ROpDashboardView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpDriversPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/ROpChoiceView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/ROpItemView.dart';
@@ -10,13 +9,13 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/ROpOptionView
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/ROpCurrentOrders.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/ROpPastOrdersList.dart';
 import 'package:mezcalmos/RestaurantApp/pages/RestaurantWrapper.dart';
-import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/ROpOrderView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/ROpPickDriverView/ROpPickDriverView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/ROpSelfDeliveryView/ROpSelfDeliveryView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/TabsView/ROpTabsView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/UnauthrizedOpView/UnauthrizedOpView.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/pages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/Order/RestaurantOrderView/RestaurantOrderView.dart';
 
 // const String kCurrentOrdersListRoute = '/currentOrders';
 const String kCreateRestaurant = '/createRestuarant';
@@ -40,7 +39,6 @@ const String kOptionView = "/optionView/:restaurantId/:itemId/:optionId";
 const String kChoiceView = "/Choice/:restaurantId:/:optionId/:choiceId";
 const String kSelfDeliveryView = '/selfDelivery/:orderId';
 const String kPickDriver = '/pickDriver/:serviceProviderId/:orderId';
-const String kDriversList = '/drivers';
 
 String getROpEditInfoRoute({required String restaurantId}) {
   return kDashboardView.replaceFirst(":restaurantId", restaurantId);
@@ -155,19 +153,14 @@ class XRouter {
           name: kEditItemView,
           page: () => ROpItemView(),
         ),
-        GetPage(name: kOrderView, page: () => ROpOrderView()),
+        GetPage(name: kOrderView, page: () => RestaurantOrderView()),
         GetPage(name: kOptionView, page: () => ROpOptionView()),
         GetPage(name: kChoiceView, page: () => ROpChoiceView()),
         GetPage(name: kCreateRestaurant, page: () => ROpCreateRestuarantView()),
         GetPage(name: kTabsView, page: () => ROpTabsViewView()),
-        GetPage(name: kPickDriver, page: () => ROpPickDriverView()),
+        GetPage(name: kPickDriver, page: () => PickDriverView()),
         GetPage(name: kSelfDeliveryView, page: () => ROpSelfDeliveryView()),
         GetPage(name: kOpUnauth, page: () => ROpUnauthorizedOpView()),
-        GetPage(
-            name: kDriversList,
-            page: () => ROpDriversView(
-                  asRoute: true,
-                )),
       ] +
       SharedRouter.sharedRoutes;
 }

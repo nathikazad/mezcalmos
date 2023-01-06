@@ -17,7 +17,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
-class DvRestaurantOrderViewController {
+class DvOrderViewcontroller {
   // instances //
   final MGoogleMapController mapController = MGoogleMapController(
     enableMezSmartPointer: true,
@@ -41,7 +41,7 @@ class DvRestaurantOrderViewController {
   // init
   Future<void> init({required int orderId}) async {
     try {
-      order.value = await get_driver_restaurant_order_by_id(orderId: orderId);
+      order.value = await get_driver_order_by_id(orderId: orderId);
       if (order.value!.routeInformation != null) {
         mapController.decodeAndAddPolyline(
             encodedPolylineString: order.value!.routeInformation!.polyline);

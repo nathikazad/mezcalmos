@@ -10,8 +10,8 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpPickDriverView']["components"]["ROpDriverSelectCard"];
 
 //
-class ROpDriverSelectCard extends StatelessWidget {
-  const ROpDriverSelectCard(
+class DriverSelectCard extends StatelessWidget {
+  const DriverSelectCard(
       {super.key, required this.driver, required this.assingCallback});
   final DeliveryDriver driver;
   final Function()? assingCallback;

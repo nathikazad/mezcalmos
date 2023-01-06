@@ -110,24 +110,26 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
   switch (restaurantOrderStatus) {
     case RestaurantOrderStatus.Preparing:
       return <String, dynamic>{
-        "title": "${_i18n()["PreparingTitle"]}",
-        "body": "${_i18n()["PreparingBody"]}",
+        "title": "${_i18n()["preparingOrderTitle"]}",
+        "body": "${_i18n()["preparingOrderBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.Ready:
       return <String, dynamic>{
-        "title": "${_i18n()["ReadyTitle"]}",
-        "body": "${_i18n()["ReadyBody"]}",
+        "title": "${_i18n()["readyForPickupTitle"]}",
+        "body": "${_i18n()["readyForPickupBody"]}",
         "imgUrl": aDeliveryIcon,
       };
-    case RestaurantOrderStatus.CancelledByAdmin:
+    case RestaurantOrderStatus.Delivered:
       return <String, dynamic>{
-        "title": "${_i18n()["cancelledTitle"]}",
-        "body": "${_i18n()["cancelledBody"]}",
-        "imgUrl": aCancelledIcon,
+        "title": "${_i18n()["deliveredTitle"]}",
+        "body": "${_i18n()["deliveredBody"]}",
+        "imgUrl": aDeliveryIcon,
       };
+
     case RestaurantOrderStatus.CancelledByCustomer:
+    case RestaurantOrderStatus.CancelledByAdmin:
       return <String, dynamic>{
         "title": "${_i18n()["cancelledTitle"]}",
         "body": "${_i18n()["cancelledBody"]}",

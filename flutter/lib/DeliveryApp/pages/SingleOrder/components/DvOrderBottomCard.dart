@@ -23,9 +23,9 @@ dynamic _i18n() => Get.find<LanguageController>().strings['DeliveryApp']
         ['pages']['CurrentOrders']['CurrentOrderViewScreen']['Components']
     ['DriverBottomRestaurantOrderCard'];
 
-class RestaurantOrderFromToComponent extends StatefulWidget {
+class DvOrderBottomCard extends StatefulWidget {
   /// shows order from info (service provider name image and adress) and destination info  (customer name image and adress)
-  const RestaurantOrderFromToComponent({
+  const DvOrderBottomCard({
     Key? key,
     required this.order,
     this.onCardStateChange,
@@ -34,12 +34,10 @@ class RestaurantOrderFromToComponent extends StatefulWidget {
   final DeliveryOrder order;
 
   @override
-  State<RestaurantOrderFromToComponent> createState() =>
-      _RestaurantOrderFromToComponentState();
+  State<DvOrderBottomCard> createState() => _DvOrderBottomCardState();
 }
 
-class _RestaurantOrderFromToComponentState
-    extends State<RestaurantOrderFromToComponent> {
+class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
   ServiceInfo? restaurant;
   final Rx<OrderInfoCardState> orderInfoCardState =
       OrderInfoCardState.Maximized.obs;
@@ -337,31 +335,6 @@ class _RestaurantOrderFromToComponentState
             isSettingPickUpTime.value = false;
             isSettingDropoffTime.value = false;
           }
-
-          // ignore: unawaited_futures
-          // Get.find<OrderController>()
-          //     .setEstimatedTime(
-          //   widget.order.id,
-          //   newDt.toUtc(),
-          //   DeliveryDriverType.Delivery_driver,
-          //   deliveryAction,
-          //   OrderType.Restaurant,
-          // )
-          //     .then((ServerResponse _resp) {
-          //   mezDbgPrint("Responsoooooo ===> $_resp");
-          //   if (_resp.success) {
-          //     if (deliveryAction == DeliveryAction.Pickup)
-          //       widget.order.estimatedArrivalAtPickupTime = newDt;
-          //     else
-          //       widget.order.estimatedArrivalAtDropoffTime = newDt;
-          //   }
-          // }).whenComplete(() {
-          //   if (deliveryAction == DeliveryAction.Pickup) {
-          //     isSettingPickUpTime.value = false;
-          //   } else {
-          //     isSettingDropoffTime.value = false;
-          //   }
-          // });
         },
       );
     }

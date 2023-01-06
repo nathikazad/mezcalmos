@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/controller/ROpOrderViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/Order/RestaurantOrderView/controller/RestaurantOrderViewController.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -12,7 +12,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
 class ROpOrderHandleButton extends StatefulWidget {
   const ROpOrderHandleButton({Key? key, required this.viewController})
       : super(key: key);
-  final ROpOrderViewController viewController;
+  final RestaurantOrderViewController viewController;
 
   @override
   State<ROpOrderHandleButton> createState() => _ROpOrderHandleButtonState();

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/Restaurant/components/RestaurantControllButtons.dart';
-import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/Restaurant/components/RestaurantOrderFromToComponent.dart';
-import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/Restaurant/controllers/DvRestaurantOrderViewController.dart';
+import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/RestaurantControllButtons.dart';
+import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/DvOrderBottomCard.dart';
+import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -17,16 +17,15 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
     ["pages"]["RestaurantOrderView"];
 //
 
-class DvRestaurantOrderView extends StatefulWidget {
-  const DvRestaurantOrderView({Key? key}) : super(key: key);
+class DvOrderView extends StatefulWidget {
+  const DvOrderView({Key? key}) : super(key: key);
 
   @override
-  _DvRestaurantOrderViewState createState() => _DvRestaurantOrderViewState();
+  _DvOrderViewState createState() => _DvOrderViewState();
 }
 
-class _DvRestaurantOrderViewState extends State<DvRestaurantOrderView> {
-  DvRestaurantOrderViewController viewController =
-      DvRestaurantOrderViewController();
+class _DvOrderViewState extends State<DvOrderView> {
+  DvOrderViewcontroller viewController = DvOrderViewcontroller();
 //  OrderController controller = Get.find<OrderController>();
 
   @override
@@ -122,7 +121,7 @@ class _DvRestaurantOrderViewState extends State<DvRestaurantOrderView> {
                     child: Card(
                       child: Container(
                         padding: const EdgeInsets.all(8),
-                        child: RestaurantOrderFromToComponent(
+                        child: DvOrderBottomCard(
                           order: viewController.order.value!,
                           onCardStateChange: (OrderInfoCardState state) {
                             setState(() {

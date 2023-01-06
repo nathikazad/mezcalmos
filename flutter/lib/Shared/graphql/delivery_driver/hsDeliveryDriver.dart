@@ -132,6 +132,30 @@ Future<bool?> update_driver_status_by_id(
   }
 }
 
+Future<bool?> switch_driver_online_status_by_id(
+    {required int driverId,
+    required bool online,
+    bool withCache = true}) async {
+  final QueryResult<Mutation$updateDeliveryDriverById> response =
+      await _db.graphQLClient.mutate$updateDeliveryDriverById(
+          Options$Mutation$updateDeliveryDriverById(
+    fetchPolicy: FetchPolicy.networkOnly,
+    variables: Variables$Mutation$updateDeliveryDriverById(
+        driverId: driverId,
+        driverData: Input$delivery_driver_set_input(online: online)),
+  ));
+
+  if (response.parsedData?.update_delivery_driver_by_pk == null) {
+    throw Exception(
+        " 🚨🚨 Updating driver  $driverId exceptions 🚨🚨 \n ${response.exception}");
+  } else {
+    mezDbgPrint(
+        "Updating driver mutation ✅✅ ===>${response.parsedData?.update_delivery_driver_by_pk}");
+    final bool data = response.parsedData!.update_delivery_driver_by_pk!.online;
+    return data;
+  }
+}
+
 Future<Geography?> update_driver_location_by_id(
     {required int driverId,
     required double lat,

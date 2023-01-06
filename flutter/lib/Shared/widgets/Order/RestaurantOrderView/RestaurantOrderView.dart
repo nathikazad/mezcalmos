@@ -1,14 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/components/ROpDriverCard.dart';
-import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/components/ROpEstDeliveryTime.dart';
-import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/components/ROpOrderCustomer.dart';
-import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/components/ROpOrderEstTime.dart';
-import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/components/ROpOrderHandleButton.dart';
-import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/components/ROpOrderItems.dart';
-import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/components/ROpOrderNote.dart';
-import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/components/ROpOrderStatusCard.dart';
-import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/OrderView/controller/ROpOrderViewController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -21,21 +12,31 @@ import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
+import 'package:mezcalmos/Shared/widgets/Order/RestaurantOrderView/components/ROpDriverCard.dart';
+import 'package:mezcalmos/Shared/widgets/Order/RestaurantOrderView/components/ROpEstDeliveryTime.dart';
+import 'package:mezcalmos/Shared/widgets/Order/RestaurantOrderView/components/ROpOrderCustomer.dart';
+import 'package:mezcalmos/Shared/widgets/Order/RestaurantOrderView/components/ROpOrderEstTime.dart';
+import 'package:mezcalmos/Shared/widgets/Order/RestaurantOrderView/components/ROpOrderHandleButton.dart';
+import 'package:mezcalmos/Shared/widgets/Order/RestaurantOrderView/components/ROpOrderItems.dart';
+import 'package:mezcalmos/Shared/widgets/Order/RestaurantOrderView/components/ROpOrderNote.dart';
+import 'package:mezcalmos/Shared/widgets/Order/RestaurantOrderView/components/ROpOrderStatusCard.dart';
+import 'package:mezcalmos/Shared/widgets/Order/RestaurantOrderView/controller/RestaurantOrderViewController.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpOrderView'];
 
-class ROpOrderView extends StatefulWidget {
-  const ROpOrderView({Key? key}) : super(key: key);
+class RestaurantOrderView extends StatefulWidget {
+  const RestaurantOrderView({Key? key}) : super(key: key);
 
   @override
-  State<ROpOrderView> createState() => _ROpOrderViewState();
+  State<RestaurantOrderView> createState() => _RestaurantOrderViewState();
 }
 
-class _ROpOrderViewState extends State<ROpOrderView> {
-  ROpOrderViewController viewController = ROpOrderViewController();
+class _RestaurantOrderViewState extends State<RestaurantOrderView> {
+  RestaurantOrderViewController viewController =
+      RestaurantOrderViewController();
 
   @override
   void initState() {

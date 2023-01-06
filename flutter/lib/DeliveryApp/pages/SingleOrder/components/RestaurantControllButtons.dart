@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/restaurantController.dart';
 import 'package:mezcalmos/DeliveryApp/models/DeliveryOrder.dart';
 import 'package:mezcalmos/DeliveryApp/models/utilities/DeliveryOrderStatus.dart';
-import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/Restaurant/controllers/DvRestaurantOrderViewController.dart';
+import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
@@ -23,7 +23,7 @@ class RestaurantControllButtons extends StatefulWidget {
       {Key? key, required this.order, required this.viewController})
       : super(key: key);
   final DeliveryOrder order;
-  final DvRestaurantOrderViewController viewController;
+  final DvOrderViewcontroller viewController;
 
   @override
   State<RestaurantControllButtons> createState() =>

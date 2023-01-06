@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/components/ROpDriverCard.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpDriversPageController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/pages/ServiceDriversList/components/ListDriverCard.dart';
+import 'package:mezcalmos/Shared/pages/ServiceDriversList/controllers/DriversViewController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
@@ -15,28 +16,50 @@ import 'package:sizer/sizer.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpDriversView'];
 
-class ROpDriversView extends StatefulWidget {
-  const ROpDriversView({
+class DriversListView extends StatefulWidget {
+  const DriversListView({
     super.key,
-    this.asRoute = false,
+    this.serviceProviderType,
+    this.serviceProviderId,
+    this.showAppBar,
   });
-  final bool asRoute;
+  final int? serviceProviderId;
+  final ServiceProviderType? serviceProviderType;
+  final bool? showAppBar;
+
   @override
-  State<ROpDriversView> createState() => _ROpDriversViewState();
+  State<DriversListView> createState() => _DriversListViewState();
 }
 
-class _ROpDriversViewState extends State<ROpDriversView> {
-  ROpDriversViewController viewController = ROpDriversViewController();
+class _DriversListViewState extends State<DriversListView> {
+  late DriversViewController viewController;
+  int? serviceProviderId;
+  bool showAppBar = true;
+  ServiceProviderType? serviceProviderType;
   @override
   void initState() {
-    viewController.init();
+    _settingVariables();
+
+    viewController.init(
+        serviceProviderId: serviceProviderId!,
+        serviceProviderType: serviceProviderType!);
+
     super.initState();
+  }
+
+  void _settingVariables() {
+    serviceProviderId = widget.serviceProviderId ??
+        int.tryParse(Get.parameters["serviceProviderId"]!);
+    showAppBar =
+        widget.showAppBar ?? Get.arguments?["showAppBar"] as bool? ?? true;
+    serviceProviderType = widget.serviceProviderType ??
+        Get.arguments?["serviceProviderType"] as ServiceProviderType;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: (widget.asRoute)
+      appBar: (showAppBar)
           ? mezcalmosAppBar(AppBarLeftButtonType.Back,
               onClick: MezRouter.back, title: "Drivers")
           : null,
@@ -63,7 +86,7 @@ class _ROpDriversViewState extends State<ROpDriversView> {
                 () => Column(
                   children: List.generate(
                       viewController.drivers.length,
-                      (int index) => ROpListDriverCard(
+                      (int index) => ListDriverCard(
                             driver: viewController.drivers[index],
                             viewController: viewController,
                           )),
@@ -130,7 +153,7 @@ class _ROpDriversViewState extends State<ROpDriversView> {
                     onClick: () async {
                       await Clipboard.setData(ClipboardData(
                               text: viewController
-                                  .serviceLink.value!.operatorDeepLink
+                                  .serviceLink.value!.driverDeepLink
                                   .toString()))
                           .whenComplete(() {
                         MezRouter.back();

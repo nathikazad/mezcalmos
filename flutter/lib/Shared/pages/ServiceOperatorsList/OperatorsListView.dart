@@ -3,67 +3,98 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/components/ROpOperatorCard.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpOperatorsPageController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/pages/ServiceOperatorsList/components/ListOperatorCard.dart';
+import 'package:mezcalmos/Shared/pages/ServiceOperatorsList/controllers/OperatorsViewController.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
-class ROpOperatorsView extends StatefulWidget {
-  const ROpOperatorsView({super.key, required this.restaurantId});
-  final int restaurantId;
+dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
+    ['pages']['ROpDriversView'];
+
+class OperatorsListView extends StatefulWidget {
+  const OperatorsListView({
+    super.key,
+    this.serviceProviderType,
+    this.serviceProviderId,
+    this.showAppBar,
+  });
+  final int? serviceProviderId;
+  final ServiceProviderType? serviceProviderType;
+  final bool? showAppBar;
+
   @override
-  State<ROpOperatorsView> createState() => _ROpOperatorsViewState();
+  State<OperatorsListView> createState() => _OperatorsListViewState();
 }
 
-class _ROpOperatorsViewState extends State<ROpOperatorsView> {
-  final ROpOperatorsViewController viewController =
-      ROpOperatorsViewController();
+class _OperatorsListViewState extends State<OperatorsListView> {
+  late OperatorsListViewController viewController;
+  int? serviceProviderId;
+  bool showAppBar = true;
+  ServiceProviderType? serviceProviderType;
   @override
   void initState() {
-    Future.microtask(() async {
-      await viewController.init(restaurantID: widget.restaurantId);
-    });
+    _settingVariables();
+    if (serviceProviderType == ServiceProviderType.Delivery_company) {
+      viewController = DeliveryOperatorsListViewController();
+    } else {
+      viewController = RestaurantOperatorsListViewController();
+    }
+    viewController.init(serviceProviderId: serviceProviderId!);
+
     super.initState();
+  }
+
+  void _settingVariables() {
+    serviceProviderId = widget.serviceProviderId ??
+        int.tryParse(Get.parameters["serviceProviderId"]!);
+    showAppBar =
+        widget.showAppBar ?? Get.arguments?["showAppBar"] as bool? ?? true;
+    serviceProviderType = widget.serviceProviderType ??
+        Get.arguments?["serviceProviderType"] as ServiceProviderType;
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        children: [
-          MezAddButton(
-            onClick: () async {
-              await viewController.fetchServiceLinks();
-              if (viewController.hasLinks) {
-                await _addDriverSheet();
-              } else {
-                await _addDriverSheet();
-              }
-            },
-            title: "Add operator",
+    return Scaffold(
+        appBar: (showAppBar)
+            ? mezcalmosAppBar(AppBarLeftButtonType.Back,
+                onClick: MezRouter.back, title: "Operators")
+            : null,
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              MezAddButton(
+                onClick: () async {
+                  await viewController.fetchServiceLinks();
+                  await _addOperatorSheet();
+                },
+                title: "Add operator",
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Obx(
+                () => Column(
+                  children: List.generate(
+                      viewController.operators.length,
+                      (int index) => ListOperatorCard(
+                          viewController: viewController,
+                          operator: viewController.operators[index])),
+                ),
+              )
+            ],
           ),
-          SizedBox(
-            height: 15,
-          ),
-          Obx(
-            () => Column(
-              children: List.generate(
-                  viewController.operators.length,
-                  (int index) => ROpOperatorCard(
-                      viewController: viewController,
-                      operator: viewController.operators[index])),
-            ),
-          )
-        ],
-      ),
-    );
+        ));
   }
 
-  Future<void> _addDriverSheet() {
+  Future<void> _addOperatorSheet() {
     return showModalBottomSheet(
         isScrollControlled: true,
         context: Get.context!,

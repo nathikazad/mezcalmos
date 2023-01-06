@@ -29,6 +29,7 @@ class DeliveryOrder {
   DateTime? estimatedArrivalAtPickupTime;
   DateTime? estimatedPackageReadyTime;
   String? stripePaymentId;
+  bool driverAssigned;
   DeliveryOrder({
     required this.id,
     required this.serviceInfo,
@@ -48,6 +49,7 @@ class DeliveryOrder {
     required this.paymentType,
     this.estimatedArrivalAtDropoffTime,
     this.serviceOrderId,
+    this.driverAssigned = false,
     this.estimatedArrivalAtPickupTime,
     this.estimatedPackageReadyTime,
     this.stripePaymentId,

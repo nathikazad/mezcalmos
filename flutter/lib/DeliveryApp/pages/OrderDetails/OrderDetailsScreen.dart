@@ -32,7 +32,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     final String orderId = Get.parameters['orderId']!;
     mezDbgPrint("Get.parameters ===> $orderId");
     if (int.tryParse(orderId) != null) {
-      get_driver_restaurant_order_by_id(orderId: int.parse(orderId))
+      get_driver_order_by_id(orderId: int.parse(orderId))
           .then((DeliveryOrder? value) => order.value = value);
     }
 

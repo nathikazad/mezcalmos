@@ -2,30 +2,31 @@ import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryApp/models/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
-import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/hsDeliveryOrder.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
-class ROpPickDriverController {
+class PickDriverController {
   RxList<DeliveryDriver> drivers = RxList.empty();
   RxBool screenLoading = RxBool(false);
-  late int serviceProviderId;
+  int? serviceProviderId;
   late int orderId;
-  Rxn<RestaurantOrder> order = Rxn();
+  Rxn<DeliveryOrder> order = Rxn();
   // init //
   Future<void> init({
-    required int serviceProviderId,
     required int orderId,
   }) async {
-    this.serviceProviderId = serviceProviderId;
     this.orderId = orderId;
     // assigning restaurant data and start the stream subscription //
-    order.value = await get_restaurant_order_by_id(orderId: orderId);
-    await _getDrivers();
+    order.value = await get_driver_order_by_id(orderId: orderId);
+    if (order.value != null) {
+      serviceProviderId = order.value?.serviceInfo.hasuraId;
+      await _getDrivers();
+    }
   }
 
   // assign driver //
@@ -38,13 +39,13 @@ class ROpPickDriverController {
         FirebaseFunctions.instance.httpsCallable('delivery2-assignDriver');
     try {
       final HttpsCallableResult response = await cloudFunction.call({
-        "orderType": OrderType.Restaurant.toFirebaseFormatString(),
-        "deliveryOrderId": order.value!.deliveryOrderId,
+        "orderType": order.value!.serviceProviderType!.toFirebaseFormatString(),
+        "deliveryOrderId": order.value!.id,
         "deliveryDriverId": driver.deliveryDriverId,
         "deliveryCompanyId": driver.deliveryDriverState.deliveryCompanyId,
         "deliveryDriverType":
             DeliveryDriverType.Delivery_driver.toFirebaseFormatString(),
-        "changeDriver": order.value!.dropoffDriver != null
+        "changeDriver": order.value!.driverAssigned
       });
       mezDbgPrint("Response : ${response.data}");
       screenLoading.value = false;
@@ -65,7 +66,7 @@ class ROpPickDriverController {
   Future<void> _getDrivers() async {
     drivers.clear();
     drivers.value = await get_drivers_by_service_provider_id(
-            withCache: false, serviceProviderId: serviceProviderId) ??
+            withCache: false, serviceProviderId: serviceProviderId!) ??
         [];
   }
 }

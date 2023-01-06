@@ -1,28 +1,32 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpDriversPageController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
+import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
+import 'package:mezcalmos/Shared/pages/ServiceOperatorsList/controllers/OperatorsViewController.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
-    ['pages']['ROpDriversView']["components"]["ROpListDriverCard"];
+    ['pages']['ROpDriversView']["components"]["ROpListOperatorCard"];
 
-class ROpListDriverCard extends StatefulWidget {
-  const ROpListDriverCard(
-      {super.key, required this.driver, required this.viewController});
-  final DeliveryDriver driver;
-  final ROpDriversViewController viewController;
+class ListOperatorCard extends StatefulWidget {
+  const ListOperatorCard({
+    super.key,
+    required this.operator,
+    required this.viewController,
+  });
+  final Operator operator;
+  final OperatorsListViewController viewController;
+
   @override
-  State<ROpListDriverCard> createState() => _ROpListDriverCardState();
+  State<ListOperatorCard> createState() => _ListOperatorCardState();
 }
 
-class _ROpListDriverCardState extends State<ROpListDriverCard> {
+class _ListOperatorCardState extends State<ListOperatorCard> {
   bool isLoading = false;
 
   @override
@@ -41,7 +45,7 @@ class _ROpListDriverCardState extends State<ROpListDriverCard> {
                       CircleAvatar(
                           radius: 23,
                           backgroundImage: CachedNetworkImageProvider(
-                              widget.driver.driverInfo.image)),
+                              widget.operator.info.image)),
                       Positioned(
                         right: -35,
                         child: CircleAvatar(
@@ -65,7 +69,7 @@ class _ROpListDriverCardState extends State<ROpListDriverCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          widget.driver.driverInfo.name,
+                          widget.operator.info.name,
                           style: Get.textTheme.bodyText1,
                         ),
                         const SizedBox(height: 5),
@@ -74,7 +78,7 @@ class _ROpListDriverCardState extends State<ROpListDriverCard> {
                             Icon(
                               Icons.circle,
                               size: 11.sp,
-                              color: widget.driver.deliveryDriverState.isOnline
+                              color: widget.operator.isAuthorized
                                   ? primaryBlueColor
                                   : Colors.grey,
                             ),
@@ -82,17 +86,16 @@ class _ROpListDriverCardState extends State<ROpListDriverCard> {
                               width: 5,
                             ),
                             Flexible(
-                                child: Text(
-                                    widget.driver.deliveryDriverState.isOnline
-                                        ? '${_i18n()["available"]}'
-                                        : '${_i18n()["unavailable"]}'))
+                                child: Text(widget.operator.isAuthorized
+                                    ? '${_i18n()["available"]}'
+                                    : '${_i18n()["unavailable"]}'))
                           ],
                         )
                       ],
                     ),
                   ),
                   const Spacer(),
-                  if (widget.driver.deliveryDriverState.isAuthorized)
+                  if (widget.operator.isAuthorized)
                     MezIconButton(
                       onTap: () async {
                         await showConfirmationDialog(context,
@@ -101,7 +104,7 @@ class _ROpListDriverCardState extends State<ROpListDriverCard> {
                             primaryButtonText: '${_i18n()["rmBtn"]}',
                             onYesClick: () async {
                           // final bool result = await widget.viewController
-                          //     .removeDriver(widget.driver.deliveryDriverId);
+                          //     .removeDriver(widget.op.deliveryDriverId);
                           //  if (result) MezRouter.back();
                         });
                       },
@@ -111,7 +114,7 @@ class _ROpListDriverCardState extends State<ROpListDriverCard> {
                       backgroundColor: offRedColor,
                     )
                 ]),
-                if (!widget.driver.deliveryDriverState.isAuthorized)
+                if (!widget.operator.isAuthorized)
                   Container(
                     margin: const EdgeInsets.only(top: 15),
                     child: (isLoading)
@@ -129,9 +132,9 @@ class _ROpListDriverCardState extends State<ROpListDriverCard> {
                                   setState(() {
                                     isLoading = true;
                                   });
-                                  await widget.viewController.approveDriver(
+                                  await widget.viewController.approveOperator(
                                       approved: true,
-                                      driverId: widget.driver.deliveryDriverId);
+                                      opId: widget.operator.operatorId);
                                   setState(() {
                                     isLoading = false;
                                   });
@@ -150,9 +153,9 @@ class _ROpListDriverCardState extends State<ROpListDriverCard> {
                                   setState(() {
                                     isLoading = true;
                                   });
-                                  await widget.viewController.approveDriver(
+                                  await widget.viewController.approveOperator(
                                       approved: false,
-                                      driverId: widget.driver.deliveryDriverId);
+                                      opId: widget.operator.operatorId);
                                   setState(() {
                                     isLoading = false;
                                   });

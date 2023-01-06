@@ -3,15 +3,14 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/ROpAppBar.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpDashboardPage.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpDriversPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpInfoPage.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpOperatorsPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpPaymentsPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpReviewsPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpSchedulePage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/TabsView/controllers/ROpTabsViewViewController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/pages/ServiceDriversList/DriversListView.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -86,9 +85,9 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
                 ),
                 ROpReviewsView(restId: restaurantID!),
 
-                ROpOperatorsView(restaurantId: restaurantID!),
+                // OperatorsListView(restaurantId: restaurantID!),
                 if (editInfoController.restaurant.value!.selfDelivery)
-                  ROpDriversView(),
+                  DriversListView(),
               ],
             ),
             // bottomNavigationBar: _editInfoSaveButton(),
