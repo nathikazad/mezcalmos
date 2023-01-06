@@ -3,8 +3,9 @@ import { deleteDeliveryOperator } from "../shared/graphql/delivery/operator/dele
 import { getDeliveryOperator, getDeliveryOperatorByUserId } from "../shared/graphql/delivery/operator/getDeliveryOperator";
 import { updateDeliveryOperatorStatusToAuthorized } from "../shared/graphql/delivery/operator/updateOperatorStatus";
 import { ParticipantType } from "../shared/models/Generic/Chat";
+import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { DeliveryOperatorApprovedNotification } from "../shared/models/Services/Delivery/DeliveryOrder";
+import { DeliveryOperatorApprovedNotification } from "../shared/models/Generic/Delivery";
 import { pushNotification } from "../utilities/senders/notifyUser";
 
 export interface AuthorizeDetails {
@@ -13,7 +14,7 @@ export interface AuthorizeDetails {
 }
 
 export async function authorizeDeliveryOperator(ownerUserId: number, authorizeDetails: AuthorizeDetails) {
-    
+  try {
     let deliveryOperator = await getDeliveryOperatorByUserId(ownerUserId);
     if(!(deliveryOperator.owner)) {
         throw new HttpsError(
@@ -66,4 +67,13 @@ export async function authorizeDeliveryOperator(ownerUserId: number, authorizeDe
             operator.user.language,
         );
     }
+    return { status: ServerResponseStatus.Success }
+  } catch(error) {
+    console.log("error =>", error);
+    throw new HttpsError(
+      "unknown",
+      "Request was not authenticated.",
+      error
+    );
+  }
 }

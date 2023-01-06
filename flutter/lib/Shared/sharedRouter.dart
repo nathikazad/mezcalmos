@@ -18,6 +18,7 @@ import 'package:mezcalmos/Shared/pages/Notifications/ViewNotifications.dart';
 import 'package:mezcalmos/Shared/pages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationview.dart';
 import 'package:mezcalmos/Shared/pages/ServiceDriversList/DriversListView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceOperatorsList/OperatorsListView.dart';
 import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileScreen.dart';
@@ -45,6 +46,7 @@ const String kAgoraCallScreen = '/agora';
 const String kPickLocationWithoutAuth = "/pick_location/noAuth";
 const String kPickDriver = "/pickDriver/:orderId";
 const String kDriversList = "/driversList/:serviceProviderId";
+const String kOperatorsList = "/driversList/:serviceProviderId";
 const String kPickLocationEdit = "/pick_location/edit";
 const String kSomethingWentWrongScreen = "/SomethingWentWrongScreen";
 
@@ -109,6 +111,17 @@ void navigateToDrivers(
   });
 }
 
+void navigateToOperators(
+    {required int serviceProviderId,
+    required ServiceProviderType controllerType}) {
+  final String route =
+      kOperatorsList.replaceFirst(":serviceProviderId", "$serviceProviderId");
+  MezRouter.toNamed(kOperatorsList, arguments: {
+    "controllerType": controllerType,
+    "showAppBar": true,
+  });
+}
+
 // GetX based Router (For navigating)
 class SharedRouter {
   static List<GetPage> sharedRoutes = [
@@ -167,5 +180,6 @@ class SharedRouter {
     GetPage(name: kAgoraCallScreen, page: () => AgoraCall()),
     GetPage(name: kPickDriver, page: () => PickDriverView()),
     GetPage(name: kDriversList, page: () => DriversListView()),
+    GetPage(name: kOperatorsList, page: () => OperatorsListView()),
   ];
 }

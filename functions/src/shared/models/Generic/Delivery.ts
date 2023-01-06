@@ -1,14 +1,14 @@
-import { ServiceProviderType } from "../Services/Service";
-import { AppType, Location, NotificationInfo } from "./Generic";
-import { PaymentType } from "./Order";
+import { Location, NotificationInfo } from "./Generic";
+import { OrderType, PaymentType } from "./Order";
 import { UserInfo } from "./User";
+import { ForegroundNotification, NotificationForQueue, OrderNotification } from "../Notification";
 
-export interface Delivery {
+export interface DeliveryOrder {
     deliveryId?: number;
     pickupLocation: Location;
     dropoffLocation: Location;
-    delivererAppType?: AppType;
-    delivererId?: number;
+    deliveryDriverType?: DeliveryDriverType
+    deliveryDriverId?: number;
     chatWithServiceProviderId?: number;
     chatWithCustomerId: number;
     paymentType: PaymentType;
@@ -20,7 +20,7 @@ export interface Delivery {
     estimatedArrivalAtDropoffTime?: string;
     actualArrivalAtDropoffTime?: string;
     actualDeliveredTime?: string;
-    status: DeliveryStatus;
+    status: DeliveryOrderStatus;
     driverReviewByServiceProviderId?: number;
     driverReviewByCustomerId?: number;
     serviceProviderReviewBydriverId?: number;
@@ -31,26 +31,119 @@ export interface Delivery {
     tripPolyline?: string;
     deliveryCost: number;
     packageCost?: number;
-    currentGps?: [number, number];
+    currentGps?: Location
     tripDistance?: number;
     tripDuration?: number;
     orderTime: string;
-    deliverer?: Deliverer;
+    cancellationTime?: string;
+    deliveryDriver?: DeliveryDriver;
 }
 
-export interface Deliverer {
+export interface DeliveryDriver {
     id?: number,
     userId: number,
-    deliveryCompanyType?: string,
+    deliveryCompanyType?: DeliveryCompanyType,
     deliveryCompanyId?: number,
     status?: string,
     appVersion?: string,
     currentLocation?: Location
     user?: UserInfo,
-    notificationInfo?: NotificationInfo
+    online?: boolean,
+    notificationInfo?: NotificationInfo,
+    deliveryDriverType: DeliveryDriverType
+}
+export enum DeliveryCompanyType {
+    DeliveryCompany = "delivery_company",
+    Restaurant = "restaurant"
 }
 
-export enum DeliveryStatus {
+export interface DeliveryOperator {
+    id?: number,
+    userId: number,
+    deliveryCompanyId: number,
+    status: DeliveryOperatorStatus,
+    owner: boolean,
+    appVersion?: string,
+    currentGPS?: Location,
+    // deliveryDriverType:,
+    notificationInfo?: NotificationInfo,
+    user?: UserInfo
+}
+
+export enum DelivererStatus {
+    AwaitingApproval = "awaiting_approval",
+    Authorized = "authorized",
+    Banned = "banned"
+}
+export enum DeliveryOperatorStatus {
+    AwaitingApproval = "awaiting_approval",
+    Authorized = "authorized",
+    Banned = "banned"
+}
+
+export enum DeliveryOrderStatus {
     OrderReceived = "orderReceived",
+    PackageReady = "packageReady", 
+    AtPickup = "atPickup", 
+    OnTheWayToDropoff = "onTheWayToDropoff", 
+    AtDropoff = "atDropoff", 
+    Delivered = "delivered", 
+    CancelledByCustomer = "cancelledByCustomer", 
+    CancelledByDeliverer = "cancelledByDeliverer", 
+    CancelledByServiceProvider = "cancelledByServiceProvider"
 }
 
+export enum ServiceProviderType {
+    Restaurnt = "restaurant",
+    DeliveryCompany = "delivery_company"
+}
+
+export enum DeliveryDriverType {
+    RestaurantOperator = "restaurant_operator",
+    DeliveryDriver = "delivery_driver"
+}
+
+export interface NewDeliveryOrderNotification extends OrderNotification {
+    deliveryDriverType: DeliveryDriverType
+}
+  
+export interface CancelDeliveryOrderNotification extends OrderNotification {
+    deliveryDriverType: DeliveryDriverType
+}
+
+export interface DeliveryOrderStatusChangeNotification extends OrderNotification {
+    status: DeliveryOrderStatus
+}
+
+export interface AssignDeliveryCompanyNotification extends ForegroundNotification {
+    orderType: OrderType,
+    orderId: number,
+    deliveryCompanyId: number
+}
+
+export interface AssignDeliveryCompanyNotificationForQueue extends NotificationForQueue {
+    orderType: OrderType,
+    orderId: number,
+    deliveryCompanyId: number
+}
+
+export interface AuthorizeDriverNotification extends ForegroundNotification {
+    newDriverName: string,
+    newDriverImage: string,
+}
+export interface DriverApprovedNotification extends ForegroundNotification {
+    approved: boolean,
+}
+
+export interface DeliveryOperatorApprovedNotification extends ForegroundNotification {
+    operatorId: number,
+    approved: boolean,
+    DeliveryCompanyName: string,
+    DeliveryCompanyId: number
+}
+
+export interface DeliveryAdmin {
+    authorized: boolean,
+    versionNumber: string,
+    notificationInfo: NotificationInfo
+}

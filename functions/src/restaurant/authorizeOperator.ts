@@ -28,10 +28,7 @@ export async function authorizeRestaurantOperator(
     console.log("Starting authorize restaurant operator");
     let operator = await getRestaurantOperator(authorizeDetails.newOperatorId);
 
-    let restaurantOwner = await getRestaurantOperatorByUserId(
-      ownerUserId,
-      operator.restaurantId
-    );
+    let restaurantOwner = await getRestaurantOperatorByUserId(ownerUserId);
     console.log("hasura fetch");
     if (!restaurantOwner.owner) {
       throw new HttpsError("internal", "Only owner can add operators");

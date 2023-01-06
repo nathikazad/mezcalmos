@@ -1,43 +1,9 @@
+import { ServiceProviderStripeInfo } from "../../../../utilities/stripe/model";
 import { Language, Location, NotificationInfo } from "../../Generic/Generic";
-// import { OrderType } from "../../Generic/Order";
+import { PaymentType } from "../../Generic/Order";
 import { UserInfo } from "../../Generic/User";
 import { ForegroundNotification, NotificationForQueue } from "../../Notification";
 import { ServiceLink } from "../Service";
-
-// export interface ChooseManyOption {
-//   cost: number;
-//   default: boolean;
-//   name: Record<Language, string>;
-// }
-
-// export interface ChooseOneOptionListItem {
-//   cost: number;
-//   name: Record<Language, string>;
-// }
-
-// export interface ChooseOneOption {
-//   dialog: Record<Language, string>;
-//   name: Record<Language, string>;
-//   options: Record<string, ChooseOneOptionListItem>;
-// }
-
-// export interface Options {
-//   chooseMany: Record<string, ChooseManyOption>;
-//   chooseOne: Record<string, ChooseOneOption>;
-// }
-
-// export interface MenuItem {
-//   available: boolean;
-//   cost: number;
-//   description: Record<Language, string>;
-//   image: string;
-//   name: Record<Language, string>;
-//   options: Options;
-// }
-
-// export interface Restaurant extends Service {
-//   menu: Record<string, MenuItem>;
-// }
 
 export interface Restaurant {
   restaurantId?: number;
@@ -50,13 +16,12 @@ export interface Restaurant {
   schedule?: any;
   paymentInfoId?: number;
   openStatus?: OpenStatus;
- 
-  // LanguageId: Language;
+  stripeInfo?: ServiceProviderStripeInfo;
+  acceptedPayments?: Record<PaymentType, boolean>;
   approved?: boolean;
   restaurantOperators?: Array<RestaurantOperator>
   links?: ServiceLink;
 }
-
 
 export enum OpenStatus {
   Open = "open",
@@ -110,5 +75,6 @@ export interface RestaurantOperatorApprovedNotification extends ForegroundNotifi
 
 export interface AuthorizeOperatorNotificationForQueue extends NotificationForQueue {
   newOperatorName: string,
+  newOperatorImage: string,
   restaurantId: number,
 }
