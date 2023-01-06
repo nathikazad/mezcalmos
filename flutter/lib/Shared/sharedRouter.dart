@@ -4,7 +4,7 @@ import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ControllerType.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
 import 'package:mezcalmos/Shared/pages/AppNeedsUpdateScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dart';
@@ -99,7 +99,8 @@ void navigateToPickDriver(
 }
 
 void navigateToDrivers(
-    {required int serviceProviderId, required ControllerType controllerType}) {
+    {required int serviceProviderId,
+    required ServiceProviderType controllerType}) {
   final String route =
       kDriversList.replaceFirst(":serviceProviderId", "$serviceProviderId");
   MezRouter.toNamed(kDriversList, arguments: {
