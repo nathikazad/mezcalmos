@@ -2793,31 +2793,46 @@ const documentNodeSubscriptionlisten_on_delivery_order_by_id =
             ]),
           ),
           FieldNode(
-            name: NameNode(value: 'restaurant'),
+            name: NameNode(value: 'restaurant_order'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
-                name: NameNode(value: 'name'),
+                name: NameNode(value: 'restaurant'),
                 alias: null,
                 arguments: [],
                 directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'image'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'location_text'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'location_text'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
               ),
               FieldNode(
                 name: NameNode(value: '__typename'),
@@ -3062,7 +3077,7 @@ class Subscription$listen_on_delivery_order_by_id$delivery_order {
     required this.status,
     required this.customer_id,
     required this.customer,
-    this.restaurant,
+    this.restaurant_order,
     this.delivery_driver,
     this.service_provider_id,
     this.service_provider_type,
@@ -3105,7 +3120,7 @@ class Subscription$listen_on_delivery_order_by_id$delivery_order {
     final l$status = json['status'];
     final l$customer_id = json['customer_id'];
     final l$customer = json['customer'];
-    final l$restaurant = json['restaurant'];
+    final l$restaurant_order = json['restaurant_order'];
     final l$delivery_driver = json['delivery_driver'];
     final l$service_provider_id = json['service_provider_id'];
     final l$service_provider_type = json['service_provider_type'];
@@ -3146,10 +3161,10 @@ class Subscription$listen_on_delivery_order_by_id$delivery_order {
       customer:
           Subscription$listen_on_delivery_order_by_id$delivery_order$customer
               .fromJson((l$customer as Map<String, dynamic>)),
-      restaurant: l$restaurant == null
+      restaurant_order: l$restaurant_order == null
           ? null
-          : Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant
-              .fromJson((l$restaurant as Map<String, dynamic>)),
+          : Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order
+              .fromJson((l$restaurant_order as Map<String, dynamic>)),
       delivery_driver: l$delivery_driver == null
           ? null
           : Subscription$listen_on_delivery_order_by_id$delivery_order$delivery_driver
@@ -3212,8 +3227,8 @@ class Subscription$listen_on_delivery_order_by_id$delivery_order {
   final Subscription$listen_on_delivery_order_by_id$delivery_order$customer
       customer;
 
-  final Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant?
-      restaurant;
+  final Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order?
+      restaurant_order;
 
   final Subscription$listen_on_delivery_order_by_id$delivery_order$delivery_driver?
       delivery_driver;
@@ -3291,8 +3306,8 @@ class Subscription$listen_on_delivery_order_by_id$delivery_order {
     _resultData['customer_id'] = l$customer_id;
     final l$customer = customer;
     _resultData['customer'] = l$customer.toJson();
-    final l$restaurant = restaurant;
-    _resultData['restaurant'] = l$restaurant?.toJson();
+    final l$restaurant_order = restaurant_order;
+    _resultData['restaurant_order'] = l$restaurant_order?.toJson();
     final l$delivery_driver = delivery_driver;
     _resultData['delivery_driver'] = l$delivery_driver?.toJson();
     final l$service_provider_id = service_provider_id;
@@ -3345,7 +3360,7 @@ class Subscription$listen_on_delivery_order_by_id$delivery_order {
     final l$status = status;
     final l$customer_id = customer_id;
     final l$customer = customer;
-    final l$restaurant = restaurant;
+    final l$restaurant_order = restaurant_order;
     final l$delivery_driver = delivery_driver;
     final l$service_provider_id = service_provider_id;
     final l$service_provider_type = service_provider_type;
@@ -3380,7 +3395,7 @@ class Subscription$listen_on_delivery_order_by_id$delivery_order {
       l$status,
       l$customer_id,
       l$customer,
-      l$restaurant,
+      l$restaurant_order,
       l$delivery_driver,
       l$service_provider_id,
       l$service_provider_type,
@@ -3523,9 +3538,9 @@ class Subscription$listen_on_delivery_order_by_id$delivery_order {
     if (l$customer != lOther$customer) {
       return false;
     }
-    final l$restaurant = restaurant;
-    final lOther$restaurant = other.restaurant;
-    if (l$restaurant != lOther$restaurant) {
+    final l$restaurant_order = restaurant_order;
+    final lOther$restaurant_order = other.restaurant_order;
+    if (l$restaurant_order != lOther$restaurant_order) {
       return false;
     }
     final l$delivery_driver = delivery_driver;
@@ -3638,8 +3653,8 @@ abstract class CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_ord
     int? customer_id,
     Subscription$listen_on_delivery_order_by_id$delivery_order$customer?
         customer,
-    Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant?
-        restaurant,
+    Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order?
+        restaurant_order,
     Subscription$listen_on_delivery_order_by_id$delivery_order$delivery_driver?
         delivery_driver,
     int? service_provider_id,
@@ -3656,8 +3671,8 @@ abstract class CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_ord
   });
   CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$customer<
       TRes> get customer;
-  CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant<
-      TRes> get restaurant;
+  CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order<
+      TRes> get restaurant_order;
   CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$delivery_driver<
       TRes> get delivery_driver;
 }
@@ -3701,7 +3716,7 @@ class _CopyWithImpl$Subscription$listen_on_delivery_order_by_id$delivery_order<
     Object? status = _undefined,
     Object? customer_id = _undefined,
     Object? customer = _undefined,
-    Object? restaurant = _undefined,
+    Object? restaurant_order = _undefined,
     Object? delivery_driver = _undefined,
     Object? service_provider_id = _undefined,
     Object? service_provider_type = _undefined,
@@ -3785,10 +3800,10 @@ class _CopyWithImpl$Subscription$listen_on_delivery_order_by_id$delivery_order<
             ? _instance.customer
             : (customer
                 as Subscription$listen_on_delivery_order_by_id$delivery_order$customer),
-        restaurant: restaurant == _undefined
-            ? _instance.restaurant
-            : (restaurant
-                as Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant?),
+        restaurant_order: restaurant_order == _undefined
+            ? _instance.restaurant_order
+            : (restaurant_order
+                as Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order?),
         delivery_driver: delivery_driver == _undefined
             ? _instance.delivery_driver
             : (delivery_driver
@@ -3834,14 +3849,14 @@ class _CopyWithImpl$Subscription$listen_on_delivery_order_by_id$delivery_order<
         local$customer, (e) => call(customer: e));
   }
 
-  CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant<
-      TRes> get restaurant {
-    final local$restaurant = _instance.restaurant;
-    return local$restaurant == null
-        ? CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant
+  CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order<
+      TRes> get restaurant_order {
+    final local$restaurant_order = _instance.restaurant_order;
+    return local$restaurant_order == null
+        ? CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order
             .stub(_then(_instance))
-        : CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant(
-            local$restaurant, (e) => call(restaurant: e));
+        : CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order(
+            local$restaurant_order, (e) => call(restaurant_order: e));
   }
 
   CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$delivery_driver<
@@ -3888,8 +3903,8 @@ class _CopyWithStubImpl$Subscription$listen_on_delivery_order_by_id$delivery_ord
     int? customer_id,
     Subscription$listen_on_delivery_order_by_id$delivery_order$customer?
         customer,
-    Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant?
-        restaurant,
+    Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order?
+        restaurant_order,
     Subscription$listen_on_delivery_order_by_id$delivery_order$delivery_driver?
         delivery_driver,
     int? service_provider_id,
@@ -3910,10 +3925,10 @@ class _CopyWithStubImpl$Subscription$listen_on_delivery_order_by_id$delivery_ord
       get customer =>
           CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$customer
               .stub(_res);
-  CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant<
+  CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order<
           TRes>
-      get restaurant =>
-          CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant
+      get restaurant_order =>
+          CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order
               .stub(_res);
   CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$delivery_driver<
           TRes>
@@ -4246,21 +4261,185 @@ class _CopyWithStubImpl$Subscription$listen_on_delivery_order_by_id$delivery_ord
       _res;
 }
 
-class Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant {
-  Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant({
+class Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order {
+  Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order({
+    required this.restaurant,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order.fromJson(
+      Map<String, dynamic> json) {
+    final l$restaurant = json['restaurant'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order(
+      restaurant:
+          Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant
+              .fromJson((l$restaurant as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant
+      restaurant;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$restaurant = restaurant;
+    _resultData['restaurant'] = l$restaurant.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$restaurant = restaurant;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$restaurant,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$restaurant = restaurant;
+    final lOther$restaurant = other.restaurant;
+    if (l$restaurant != lOther$restaurant) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order
+    on Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order {
+  CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order<
+          Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order(
+    Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order
+        instance,
+    TRes Function(
+            Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order;
+
+  factory CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order;
+
+  TRes call({
+    Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant?
+        restaurant,
+    String? $__typename,
+  });
+  CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant<
+      TRes> get restaurant;
+}
+
+class _CopyWithImpl$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? restaurant = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order(
+        restaurant: restaurant == _undefined || restaurant == null
+            ? _instance.restaurant
+            : (restaurant
+                as Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant<
+      TRes> get restaurant {
+    final local$restaurant = _instance.restaurant;
+    return CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant(
+        local$restaurant, (e) => call(restaurant: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant?
+        restaurant,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant<
+          TRes>
+      get restaurant =>
+          CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant
+              .stub(_res);
+}
+
+class Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant {
+  Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant({
     required this.name,
     required this.image,
     required this.location_text,
     required this.$__typename,
   });
 
-  factory Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant.fromJson(
+  factory Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant.fromJson(
       Map<String, dynamic> json) {
     final l$name = json['name'];
     final l$image = json['image'];
     final l$location_text = json['location_text'];
     final l$$__typename = json['__typename'];
-    return Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant(
+    return Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant(
       name: (l$name as String),
       image: (l$image as String),
       location_text: (l$location_text as String),
@@ -4309,7 +4488,7 @@ class Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant {
       return true;
     }
     if (!(other
-            is Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant) ||
+            is Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -4337,30 +4516,30 @@ class Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant {
   }
 }
 
-extension UtilityExtension$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant
-    on Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant {
-  CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant<
-          Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant>
+extension UtilityExtension$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant
+    on Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant {
+  CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant<
+          Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant>
       get copyWith =>
-          CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant(
+          CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant<
+abstract class CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant<
     TRes> {
-  factory CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant(
-    Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant
+  factory CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant(
+    Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant
         instance,
     TRes Function(
-            Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant)
+            Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant)
         then,
-  ) = _CopyWithImpl$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant;
+  ) = _CopyWithImpl$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant;
 
-  factory CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant.stub(
+  factory CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant.stub(
           TRes res) =
-      _CopyWithStubImpl$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant;
+      _CopyWithStubImpl$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant;
 
   TRes call({
     String? name,
@@ -4370,21 +4549,21 @@ abstract class CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_ord
   });
 }
 
-class _CopyWithImpl$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant<
+class _CopyWithImpl$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant<
         TRes>
     implements
-        CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant<
+        CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant<
             TRes> {
-  _CopyWithImpl$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant(
+  _CopyWithImpl$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant(
     this._instance,
     this._then,
   );
 
-  final Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant
+  final Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant
       _instance;
 
   final TRes Function(
-          Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant)
+          Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant)
       _then;
 
   static const _undefined = {};
@@ -4396,7 +4575,7 @@ class _CopyWithImpl$Subscription$listen_on_delivery_order_by_id$delivery_order$r
     Object? $__typename = _undefined,
   }) =>
       _then(
-          Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant(
+          Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant(
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -4412,12 +4591,12 @@ class _CopyWithImpl$Subscription$listen_on_delivery_order_by_id$delivery_order$r
       ));
 }
 
-class _CopyWithStubImpl$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant<
+class _CopyWithStubImpl$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant<
         TRes>
     implements
-        CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant<
+        CopyWith$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant<
             TRes> {
-  _CopyWithStubImpl$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant(
+  _CopyWithStubImpl$Subscription$listen_on_delivery_order_by_id$delivery_order$restaurant_order$restaurant(
       this._res);
 
   TRes _res;

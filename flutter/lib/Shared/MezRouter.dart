@@ -331,10 +331,13 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPop(route, previousRoute);
     final MRoute? _rCurrent = currentRoute();
-
+    _navigationStack.forEach((element) {
+      mezDbgPrint("---> ${element.name}");
+    });
     if (previousRoute is PageRoute && route is PageRoute && _rCurrent != null) {
-      if (_rCurrent.name == route.settings.name) {
-        mezDbgPrint("[+] MissMatch on NavStack :: resolving ... done!");
+      if (_rCurrent.name == previousRoute.settings.name) {
+        mezDbgPrint(
+            "[+] MissMatch on NavStack :: current [MezStack](${_rCurrent.name}) | [Material](${route.settings.name})  :: resolving ... done!");
         if (_navigationStack.isNotEmpty) {
           _navigationStack.removeLast();
         }

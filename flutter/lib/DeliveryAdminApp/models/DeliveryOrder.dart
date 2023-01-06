@@ -13,7 +13,7 @@ extension DeliveryOrderParser on String {
     );
   }
 
-  DeliveryServiceType? toDeliveryProviderType() {
+  DeliveryServiceType toDeliveryProviderType() {
     return DeliveryServiceType.values.firstWhere(
       (element) =>
           element.toString().split('.').last.toLowerCase() == toLowerCase(),
@@ -46,7 +46,7 @@ enum DeliveryOrderStatus {
   cancelledByServiceProvider
 }
 
-enum DeliveryServiceType { restaurant, delivery_company }
+enum DeliveryServiceType { restaurant, delivery_company, delivery_operator }
 
 class DeliveryOrderInfo {
   final String? serviceProviderName;

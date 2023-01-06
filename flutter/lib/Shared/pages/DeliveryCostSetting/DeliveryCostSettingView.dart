@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/models/DeliveryOrder.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+
 import 'package:mezcalmos/Shared/pages/DeliveryCostSetting/controllers/DeliveryCostSettingViewController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -15,10 +17,9 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpEditInfoView']['ROpEditInfoView'];
 
 class DeliveryCostSettingView extends StatefulWidget {
-  const DeliveryCostSettingView({Key? key, required this.editInfoController})
+  const DeliveryCostSettingView({this.isTab = false, Key? key})
       : super(key: key);
-  final ROpEditInfoController editInfoController;
-
+  final bool isTab;
   @override
   State<DeliveryCostSettingView> createState() =>
       _DeliveryCostSettingViewState();
@@ -28,16 +29,26 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
   DeliveryCostSettingViewController viewController =
       DeliveryCostSettingViewController();
   int? serviceProviderId;
-  ServiceProviderType? serviceProviderType;
+  DeliveryServiceType? serviceProviderType;
   @override
   void initState() {
+    mezDbgPrint(
+      "[AAA] DeliveryCostSettingView :: PARAMS  ${Get.parameters['providerType']}",
+    );
 
+    if (Get.parameters['providerId'] != null &&
+        Get.parameters['providerType'] != null) {
+      serviceProviderId = int.tryParse(Get.parameters['providerId']!);
+      serviceProviderType =
+          Get.parameters['providerType']!.toDeliveryProviderType();
+    }
 
-    
     // provide service provider id and service Provider type
     if (serviceProviderId != null && serviceProviderType != null) {
-  viewController.init(serviceProviderId: serviceProviderId!,serviceProviderType: serviceProviderType!);
-}
+      viewController.init(
+          serviceProviderId: serviceProviderId!,
+          serviceProviderType: serviceProviderType!);
+    }
 
     super.initState();
   }
@@ -51,7 +62,10 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,onClick: MezRouter.back,title: "Delivery Cost"),
+      appBar: widget.isTab
+          ? null
+          : mezcalmosAppBar(AppBarLeftButtonType.Back,
+              onClick: MezRouter.back, title: "Delivery Cost"),
       body: Column(
         children: [
           Expanded(

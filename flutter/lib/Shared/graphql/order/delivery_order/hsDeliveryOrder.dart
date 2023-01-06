@@ -193,9 +193,10 @@ Stream<DeliveryOrder?> listen_on_delivery_order_by_id({required int orderId}) {
         moreInfo: DeliveryOrderInfo(
           customerImage: orderData.customer.user.image,
           customerName: orderData.customer.user.name,
-          serviceProviderAddress: orderData.restaurant?.location_text,
-          serviceProviderImage: orderData.restaurant?.image,
-          serviceProviderName: orderData.restaurant?.name,
+          serviceProviderAddress:
+              orderData.restaurant_order?.restaurant.location_text,
+          serviceProviderImage: orderData.restaurant_order?.restaurant.image,
+          serviceProviderName: orderData.restaurant_order?.restaurant.name,
           deliveryDriverImage: orderData.delivery_driver?.user.image,
           deliveryDriverName: orderData.delivery_driver?.user.name,
         ),

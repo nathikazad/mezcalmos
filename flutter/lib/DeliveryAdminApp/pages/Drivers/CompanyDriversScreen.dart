@@ -9,6 +9,13 @@ import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
+class DeliveryDriverStatusHelper {
+  Color color;
+  String textStatus;
+
+  DeliveryDriverStatusHelper({required this.color, required this.textStatus});
+}
+
 class CompanyDriversScreen extends StatefulWidget {
   const CompanyDriversScreen({super.key});
 
@@ -23,85 +30,80 @@ class _CompanyDriversScreenState extends State<CompanyDriversScreen> {
 
   @override
   void initState() {
+    _fetchDrivers();
+    super.initState();
+  }
+
+  void _fetchDrivers() {
     get_drivers_by_service_provider_id(
             serviceProviderId:
                 _operatorAuthController.deliveryOperator!.companyId)
         .then((value) {
       mezDbgPrint("[AAA] GOT drivers list === len ===> ${value?.length}");
-      if (value != null) _drivers.assignAll(value);
+      if (value != null) _drivers.value = value;
     });
-
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: mezcalmosAppBar(
-        AppBarLeftButtonType.Back,
-        autoBack: true,
-        title: 'Drivers',
-        showNotifications: true,
-      ),
-      body: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          children: [
-            InkWell(
-              onTap: _showAddDriverBottomSheet,
-              child: Container(
-                width: Get.width,
-                height: 72,
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  color: Color.fromRGBO(225, 228, 255, 1),
-                ),
-                child: Center(
-                  child: Text(
-                    'Add driver',
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          color: Color.fromRGBO(103, 121, 254, 1),
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: Column(
+        children: [
+          InkWell(
+            onTap: _showAddDriverBottomSheet,
+            child: Container(
+              width: Get.width,
+              height: 72,
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                color: Color.fromRGBO(225, 228, 255, 1),
+              ),
+              child: Center(
+                child: Text(
+                  'Add driver',
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        color: Color.fromRGBO(103, 121, 254, 1),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
                 ),
               ),
             ),
-            SizedBox(
-              height: 21,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Your drivers list',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 14,
-            ),
-            Obx(
-              () => SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _drivers.map<Widget>((d) {
-                    return _driverCard(d);
-                    // Container(
-                    //   padding: EdgeInsets.all(5),
-                    //   child: Center(child: Text(d.driverInfo.name)),
-                    // );
-                  }).toList(),
-                ),
+          ),
+          SizedBox(
+            height: 21,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Your drivers list',
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 14,
+          ),
+          Obx(
+            () => SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: _drivers.map<Widget>((d) {
+                  return _driverCard(d);
+                  // Container(
+                  //   padding: EdgeInsets.all(5),
+                  //   child: Center(child: Text(d.driverInfo.name)),
+                  // );
+                }).toList(),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -167,24 +169,18 @@ class _CompanyDriversScreenState extends State<CompanyDriversScreen> {
                               width: 8,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: driver.deliveryDriverState.status ==
-                                        AgentStatus.Awaiting_approval
-                                    ? Colors.orange
-                                    : (driver.deliveryDriverState.isOnline
-                                        ? primaryBlueColor
-                                        : Colors.grey.shade700),
+                                color: getDeliveryDriverStatusColor(
+                                        driver.deliveryDriverState)
+                                    .color,
                               ),
                             ),
                             SizedBox(
                               width: 10,
                             ),
                             Text(
-                              driver.deliveryDriverState.status ==
-                                      AgentStatus.Awaiting_approval
-                                  ? 'Waiting for approval'
-                                  : (driver.deliveryDriverState.isOnline
-                                      ? 'Available'
-                                      : 'Unavailable'),
+                              getDeliveryDriverStatusColor(
+                                      driver.deliveryDriverState)
+                                  .textStatus,
                               style: Get.textTheme.bodySmall
                                   ?.copyWith(fontSize: 14),
                             ),
@@ -193,10 +189,14 @@ class _CompanyDriversScreenState extends State<CompanyDriversScreen> {
                       ],
                     ),
                   ),
-                  if (driver.deliveryDriverState.status !=
-                      AgentStatus.Awaiting_approval)
+                  if (![AgentStatus.Awaiting_approval, AgentStatus.Banned]
+                      .contains(driver.deliveryDriverState.status))
                     InkWell(
-                      onTap: () async {},
+                      onTap: () async {
+                        await _operatorAuthController.banDeliveryDriver(
+                            driverId: driver.deliveryDriverId);
+                        _fetchDrivers();
+                      },
                       child: Ink(
                         padding: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
@@ -291,6 +291,26 @@ class _CompanyDriversScreenState extends State<CompanyDriversScreen> {
         ),
       ),
     );
+  }
+
+  DeliveryDriverStatusHelper getDeliveryDriverStatusColor(
+      DeliveryDriverState driverState) {
+    switch (driverState.status) {
+      case AgentStatus.Authorized:
+        if (!driverState.isOnline)
+          return DeliveryDriverStatusHelper(
+              color: Colors.grey.shade700, textStatus: 'Unavailable');
+        return DeliveryDriverStatusHelper(
+            color: primaryBlueColor, textStatus: 'Available');
+
+      case AgentStatus.Awaiting_approval:
+        return DeliveryDriverStatusHelper(
+            color: Colors.orange, textStatus: 'Awaiting approval');
+
+      case AgentStatus.Banned:
+        return DeliveryDriverStatusHelper(
+            color: Colors.red, textStatus: 'Banned');
+    }
   }
 
   void _showAddDriverBottomSheet() {

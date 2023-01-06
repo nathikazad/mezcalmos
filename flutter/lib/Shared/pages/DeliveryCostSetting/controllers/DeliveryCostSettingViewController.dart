@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryAdminApp/models/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
@@ -17,12 +18,12 @@ class DeliveryCostSettingViewController {
   RxBool isEditing = RxBool(false);
   RxnNum previewCost = RxnNum();
   late int serviceProviderId;
-  late ServiceProviderType serviceProviderType;
+  late DeliveryServiceType serviceProviderType;
 
   // inti //
   Future<void> init(
       {required int serviceProviderId,
-      required ServiceProviderType serviceProviderType}) async {
+      required DeliveryServiceType serviceProviderType}) async {
     this.serviceProviderId = serviceProviderId;
     this.serviceProviderType = serviceProviderType;
     try {
@@ -52,6 +53,7 @@ class DeliveryCostSettingViewController {
   }
 
   DeliveryCost _constructDeliveryCost() {
+    mezDbgPrint("freeKmRange.text =====> [BBB] ===> ${freeKmRange.text}");
     return DeliveryCost(
         id: null,
         serviceProviderType: serviceProviderType,

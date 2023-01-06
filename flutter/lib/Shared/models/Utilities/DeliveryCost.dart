@@ -1,10 +1,11 @@
 import 'dart:convert';
 
+import 'package:mezcalmos/DeliveryAdminApp/models/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class DeliveryCost {
   int? id;
-  ServiceProviderType serviceProviderType;
+  DeliveryServiceType serviceProviderType;
   int serviceProviderId;
   double minimumCost;
   double costPerKm;
@@ -21,7 +22,7 @@ class DeliveryCost {
   });
 
   DeliveryCost copyWith({
-    ServiceProviderType? serviceProviderType,
+    DeliveryServiceType? serviceProviderType,
     int? serviceProviderId,
     double? minimumCost,
     double? costPerKm,
@@ -42,7 +43,7 @@ class DeliveryCost {
 
   Map<String, dynamic> toMap() {
     return {
-      'serviceProviderType': serviceProviderType.toFirebaseFormatString(),
+      'serviceProviderType': serviceProviderType.toHasuraString(),
       'serviceProviderId': serviceProviderId,
       'minimumCost': minimumCost,
       'costPerKm': costPerKm,
@@ -55,7 +56,7 @@ class DeliveryCost {
     return DeliveryCost(
       id: map["id"],
       serviceProviderType:
-          map["serviceProviderType"].toString().toServiceProviderType(),
+          map["serviceProviderType"].toString().toDeliveryProviderType(),
       serviceProviderId: map['serviceProviderId']?.toInt() ?? 0,
       minimumCost: map['minimumCost']?.toDouble() ?? 0.0,
       costPerKm: map['costPerKm']?.toDouble() ?? 0.0,

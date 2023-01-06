@@ -340,6 +340,13 @@ const documentNodeQueryget_delivery_operator_by_id = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: '__typename'),
                 alias: null,
                 arguments: [],
@@ -828,20 +835,25 @@ class _CopyWithStubImpl$Query$get_delivery_operator_by_id$delivery_operator<
 class Query$get_delivery_operator_by_id$delivery_operator$delivery_company {
   Query$get_delivery_operator_by_id$delivery_operator$delivery_company({
     required this.name,
+    required this.image,
     required this.$__typename,
   });
 
   factory Query$get_delivery_operator_by_id$delivery_operator$delivery_company.fromJson(
       Map<String, dynamic> json) {
     final l$name = json['name'];
+    final l$image = json['image'];
     final l$$__typename = json['__typename'];
     return Query$get_delivery_operator_by_id$delivery_operator$delivery_company(
       name: (l$name as String),
+      image: (l$image as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final String name;
+
+  final String image;
 
   final String $__typename;
 
@@ -849,6 +861,8 @@ class Query$get_delivery_operator_by_id$delivery_operator$delivery_company {
     final _resultData = <String, dynamic>{};
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$image = image;
+    _resultData['image'] = l$image;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -857,9 +871,11 @@ class Query$get_delivery_operator_by_id$delivery_operator$delivery_company {
   @override
   int get hashCode {
     final l$name = name;
+    final l$image = image;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$name,
+      l$image,
       l$$__typename,
     ]);
   }
@@ -877,6 +893,11 @@ class Query$get_delivery_operator_by_id$delivery_operator$delivery_company {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -915,6 +936,7 @@ abstract class CopyWith$Query$get_delivery_operator_by_id$delivery_operator$deli
 
   TRes call({
     String? name,
+    String? image,
     String? $__typename,
   });
 }
@@ -940,6 +962,7 @@ class _CopyWithImpl$Query$get_delivery_operator_by_id$delivery_operator$delivery
 
   TRes call({
     Object? name = _undefined,
+    Object? image = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
@@ -947,6 +970,9 @@ class _CopyWithImpl$Query$get_delivery_operator_by_id$delivery_operator$delivery
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -965,6 +991,7 @@ class _CopyWithStubImpl$Query$get_delivery_operator_by_id$delivery_operator$deli
 
   call({
     String? name,
+    String? image,
     String? $__typename,
   }) =>
       _res;
@@ -1302,6 +1329,35 @@ const documentNodeSubscriptionget_delivery_operator_by_id =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'delivery_company'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
             name: NameNode(value: 'delivery_driver_type'),
             alias: null,
             arguments: [],
@@ -1437,6 +1493,7 @@ class Subscription$get_delivery_operator_by_id$delivery_operator {
     required this.app_version,
     required this.current_gps,
     required this.delivery_company_id,
+    required this.delivery_company,
     required this.delivery_driver_type,
     required this.id,
     this.notification_token,
@@ -1450,6 +1507,7 @@ class Subscription$get_delivery_operator_by_id$delivery_operator {
     final l$app_version = json['app_version'];
     final l$current_gps = json['current_gps'];
     final l$delivery_company_id = json['delivery_company_id'];
+    final l$delivery_company = json['delivery_company'];
     final l$delivery_driver_type = json['delivery_driver_type'];
     final l$id = json['id'];
     final l$notification_token = json['notification_token'];
@@ -1460,6 +1518,9 @@ class Subscription$get_delivery_operator_by_id$delivery_operator {
       app_version: (l$app_version as String),
       current_gps: geographyFromJson(l$current_gps),
       delivery_company_id: (l$delivery_company_id as int),
+      delivery_company:
+          Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company
+              .fromJson((l$delivery_company as Map<String, dynamic>)),
       delivery_driver_type: (l$delivery_driver_type as String),
       id: (l$id as int),
       notification_token: (l$notification_token as String?),
@@ -1474,6 +1535,9 @@ class Subscription$get_delivery_operator_by_id$delivery_operator {
   final Geography current_gps;
 
   final int delivery_company_id;
+
+  final Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company
+      delivery_company;
 
   final String delivery_driver_type;
 
@@ -1495,6 +1559,8 @@ class Subscription$get_delivery_operator_by_id$delivery_operator {
     _resultData['current_gps'] = geographyToJson(l$current_gps);
     final l$delivery_company_id = delivery_company_id;
     _resultData['delivery_company_id'] = l$delivery_company_id;
+    final l$delivery_company = delivery_company;
+    _resultData['delivery_company'] = l$delivery_company.toJson();
     final l$delivery_driver_type = delivery_driver_type;
     _resultData['delivery_driver_type'] = l$delivery_driver_type;
     final l$id = id;
@@ -1515,6 +1581,7 @@ class Subscription$get_delivery_operator_by_id$delivery_operator {
     final l$app_version = app_version;
     final l$current_gps = current_gps;
     final l$delivery_company_id = delivery_company_id;
+    final l$delivery_company = delivery_company;
     final l$delivery_driver_type = delivery_driver_type;
     final l$id = id;
     final l$notification_token = notification_token;
@@ -1525,6 +1592,7 @@ class Subscription$get_delivery_operator_by_id$delivery_operator {
       l$app_version,
       l$current_gps,
       l$delivery_company_id,
+      l$delivery_company,
       l$delivery_driver_type,
       l$id,
       l$notification_token,
@@ -1557,6 +1625,11 @@ class Subscription$get_delivery_operator_by_id$delivery_operator {
     final l$delivery_company_id = delivery_company_id;
     final lOther$delivery_company_id = other.delivery_company_id;
     if (l$delivery_company_id != lOther$delivery_company_id) {
+      return false;
+    }
+    final l$delivery_company = delivery_company;
+    final lOther$delivery_company = other.delivery_company;
+    if (l$delivery_company != lOther$delivery_company) {
       return false;
     }
     final l$delivery_driver_type = delivery_driver_type;
@@ -1620,6 +1693,8 @@ abstract class CopyWith$Subscription$get_delivery_operator_by_id$delivery_operat
     String? app_version,
     Geography? current_gps,
     int? delivery_company_id,
+    Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company?
+        delivery_company,
     String? delivery_driver_type,
     int? id,
     String? notification_token,
@@ -1627,6 +1702,8 @@ abstract class CopyWith$Subscription$get_delivery_operator_by_id$delivery_operat
     String? status,
     String? $__typename,
   });
+  CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company<
+      TRes> get delivery_company;
 }
 
 class _CopyWithImpl$Subscription$get_delivery_operator_by_id$delivery_operator<
@@ -1650,6 +1727,7 @@ class _CopyWithImpl$Subscription$get_delivery_operator_by_id$delivery_operator<
     Object? app_version = _undefined,
     Object? current_gps = _undefined,
     Object? delivery_company_id = _undefined,
+    Object? delivery_company = _undefined,
     Object? delivery_driver_type = _undefined,
     Object? id = _undefined,
     Object? notification_token = _undefined,
@@ -1668,6 +1746,11 @@ class _CopyWithImpl$Subscription$get_delivery_operator_by_id$delivery_operator<
             delivery_company_id == _undefined || delivery_company_id == null
                 ? _instance.delivery_company_id
                 : (delivery_company_id as int),
+        delivery_company: delivery_company == _undefined ||
+                delivery_company == null
+            ? _instance.delivery_company
+            : (delivery_company
+                as Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company),
         delivery_driver_type:
             delivery_driver_type == _undefined || delivery_driver_type == null
                 ? _instance.delivery_driver_type
@@ -1686,6 +1769,12 @@ class _CopyWithImpl$Subscription$get_delivery_operator_by_id$delivery_operator<
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company<
+      TRes> get delivery_company {
+    final local$delivery_company = _instance.delivery_company;
+    return CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company(
+        local$delivery_company, (e) => call(delivery_company: e));
+  }
 }
 
 class _CopyWithStubImpl$Subscription$get_delivery_operator_by_id$delivery_operator<
@@ -1702,11 +1791,915 @@ class _CopyWithStubImpl$Subscription$get_delivery_operator_by_id$delivery_operat
     String? app_version,
     Geography? current_gps,
     int? delivery_company_id,
+    Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company?
+        delivery_company,
     String? delivery_driver_type,
     int? id,
     String? notification_token,
     bool? owner,
     String? status,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company<
+          TRes>
+      get delivery_company =>
+          CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company
+              .stub(_res);
+}
+
+class Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company {
+  Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company({
+    required this.name,
+    required this.image,
+    required this.$__typename,
+  });
+
+  factory Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$image = json['image'];
+    final l$$__typename = json['__typename'];
+    return Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company(
+      name: (l$name as String),
+      image: (l$image as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String name;
+
+  final String image;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$image = image;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$image,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company
+    on Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company {
+  CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company<
+          Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company>
+      get copyWith =>
+          CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company<
+    TRes> {
+  factory CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company(
+    Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company
+        instance,
+    TRes Function(
+            Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company)
+        then,
+  ) = _CopyWithImpl$Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company;
+
+  factory CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company;
+
+  TRes call({
+    String? name,
+    String? image,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company<
+        TRes>
+    implements
+        CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company<
+            TRes> {
+  _CopyWithImpl$Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company
+      _instance;
+
+  final TRes Function(
+          Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? image = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company(
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company<
+        TRes>
+    implements
+        CopyWith$Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company<
+            TRes> {
+  _CopyWithStubImpl$Subscription$get_delivery_operator_by_id$delivery_operator$delivery_company(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$bannDeliveryDriver {
+  factory Variables$Mutation$bannDeliveryDriver({required int driverId}) =>
+      Variables$Mutation$bannDeliveryDriver._({
+        r'driverId': driverId,
+      });
+
+  Variables$Mutation$bannDeliveryDriver._(this._$data);
+
+  factory Variables$Mutation$bannDeliveryDriver.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$driverId = data['driverId'];
+    result$data['driverId'] = (l$driverId as int);
+    return Variables$Mutation$bannDeliveryDriver._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get driverId => (_$data['driverId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$driverId = driverId;
+    result$data['driverId'] = l$driverId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$bannDeliveryDriver<
+          Variables$Mutation$bannDeliveryDriver>
+      get copyWith => CopyWith$Variables$Mutation$bannDeliveryDriver(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$bannDeliveryDriver) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$driverId = driverId;
+    final lOther$driverId = other.driverId;
+    if (l$driverId != lOther$driverId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$driverId = driverId;
+    return Object.hashAll([l$driverId]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$bannDeliveryDriver<TRes> {
+  factory CopyWith$Variables$Mutation$bannDeliveryDriver(
+    Variables$Mutation$bannDeliveryDriver instance,
+    TRes Function(Variables$Mutation$bannDeliveryDriver) then,
+  ) = _CopyWithImpl$Variables$Mutation$bannDeliveryDriver;
+
+  factory CopyWith$Variables$Mutation$bannDeliveryDriver.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$bannDeliveryDriver;
+
+  TRes call({int? driverId});
+}
+
+class _CopyWithImpl$Variables$Mutation$bannDeliveryDriver<TRes>
+    implements CopyWith$Variables$Mutation$bannDeliveryDriver<TRes> {
+  _CopyWithImpl$Variables$Mutation$bannDeliveryDriver(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$bannDeliveryDriver _instance;
+
+  final TRes Function(Variables$Mutation$bannDeliveryDriver) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? driverId = _undefined}) =>
+      _then(Variables$Mutation$bannDeliveryDriver._({
+        ..._instance._$data,
+        if (driverId != _undefined && driverId != null)
+          'driverId': (driverId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$bannDeliveryDriver<TRes>
+    implements CopyWith$Variables$Mutation$bannDeliveryDriver<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$bannDeliveryDriver(this._res);
+
+  TRes _res;
+
+  call({int? driverId}) => _res;
+}
+
+class Mutation$bannDeliveryDriver {
+  Mutation$bannDeliveryDriver({
+    this.update_delivery_driver,
+    required this.$__typename,
+  });
+
+  factory Mutation$bannDeliveryDriver.fromJson(Map<String, dynamic> json) {
+    final l$update_delivery_driver = json['update_delivery_driver'];
+    final l$$__typename = json['__typename'];
+    return Mutation$bannDeliveryDriver(
+      update_delivery_driver: l$update_delivery_driver == null
+          ? null
+          : Mutation$bannDeliveryDriver$update_delivery_driver.fromJson(
+              (l$update_delivery_driver as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$bannDeliveryDriver$update_delivery_driver?
+      update_delivery_driver;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_delivery_driver = update_delivery_driver;
+    _resultData['update_delivery_driver'] = l$update_delivery_driver?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_delivery_driver = update_delivery_driver;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_delivery_driver,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$bannDeliveryDriver) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_delivery_driver = update_delivery_driver;
+    final lOther$update_delivery_driver = other.update_delivery_driver;
+    if (l$update_delivery_driver != lOther$update_delivery_driver) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$bannDeliveryDriver
+    on Mutation$bannDeliveryDriver {
+  CopyWith$Mutation$bannDeliveryDriver<Mutation$bannDeliveryDriver>
+      get copyWith => CopyWith$Mutation$bannDeliveryDriver(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$bannDeliveryDriver<TRes> {
+  factory CopyWith$Mutation$bannDeliveryDriver(
+    Mutation$bannDeliveryDriver instance,
+    TRes Function(Mutation$bannDeliveryDriver) then,
+  ) = _CopyWithImpl$Mutation$bannDeliveryDriver;
+
+  factory CopyWith$Mutation$bannDeliveryDriver.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$bannDeliveryDriver;
+
+  TRes call({
+    Mutation$bannDeliveryDriver$update_delivery_driver? update_delivery_driver,
+    String? $__typename,
+  });
+  CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver<TRes>
+      get update_delivery_driver;
+}
+
+class _CopyWithImpl$Mutation$bannDeliveryDriver<TRes>
+    implements CopyWith$Mutation$bannDeliveryDriver<TRes> {
+  _CopyWithImpl$Mutation$bannDeliveryDriver(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$bannDeliveryDriver _instance;
+
+  final TRes Function(Mutation$bannDeliveryDriver) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_delivery_driver = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$bannDeliveryDriver(
+        update_delivery_driver: update_delivery_driver == _undefined
+            ? _instance.update_delivery_driver
+            : (update_delivery_driver
+                as Mutation$bannDeliveryDriver$update_delivery_driver?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver<TRes>
+      get update_delivery_driver {
+    final local$update_delivery_driver = _instance.update_delivery_driver;
+    return local$update_delivery_driver == null
+        ? CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver.stub(
+            _then(_instance))
+        : CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver(
+            local$update_delivery_driver,
+            (e) => call(update_delivery_driver: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$bannDeliveryDriver<TRes>
+    implements CopyWith$Mutation$bannDeliveryDriver<TRes> {
+  _CopyWithStubImpl$Mutation$bannDeliveryDriver(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$bannDeliveryDriver$update_delivery_driver? update_delivery_driver,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver<TRes>
+      get update_delivery_driver =>
+          CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver.stub(
+              _res);
+}
+
+const documentNodeMutationbannDeliveryDriver = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'bannDeliveryDriver'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'driverId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_delivery_driver'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'driverId')),
+                  )
+                ]),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'status'),
+                value: StringValueNode(
+                  value: 'banned',
+                  isBlock: false,
+                ),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'returning'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$bannDeliveryDriver _parserFn$Mutation$bannDeliveryDriver(
+        Map<String, dynamic> data) =>
+    Mutation$bannDeliveryDriver.fromJson(data);
+typedef OnMutationCompleted$Mutation$bannDeliveryDriver = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$bannDeliveryDriver?,
+);
+
+class Options$Mutation$bannDeliveryDriver
+    extends graphql.MutationOptions<Mutation$bannDeliveryDriver> {
+  Options$Mutation$bannDeliveryDriver({
+    String? operationName,
+    required Variables$Mutation$bannDeliveryDriver variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$bannDeliveryDriver? onCompleted,
+    graphql.OnMutationUpdate<Mutation$bannDeliveryDriver>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$bannDeliveryDriver(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationbannDeliveryDriver,
+          parserFn: _parserFn$Mutation$bannDeliveryDriver,
+        );
+
+  final OnMutationCompleted$Mutation$bannDeliveryDriver? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$bannDeliveryDriver
+    extends graphql.WatchQueryOptions<Mutation$bannDeliveryDriver> {
+  WatchOptions$Mutation$bannDeliveryDriver({
+    String? operationName,
+    required Variables$Mutation$bannDeliveryDriver variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationbannDeliveryDriver,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$bannDeliveryDriver,
+        );
+}
+
+extension ClientExtension$Mutation$bannDeliveryDriver on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$bannDeliveryDriver>>
+      mutate$bannDeliveryDriver(
+              Options$Mutation$bannDeliveryDriver options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$bannDeliveryDriver>
+      watchMutation$bannDeliveryDriver(
+              WatchOptions$Mutation$bannDeliveryDriver options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$bannDeliveryDriver$update_delivery_driver {
+  Mutation$bannDeliveryDriver$update_delivery_driver({
+    required this.returning,
+    required this.$__typename,
+  });
+
+  factory Mutation$bannDeliveryDriver$update_delivery_driver.fromJson(
+      Map<String, dynamic> json) {
+    final l$returning = json['returning'];
+    final l$$__typename = json['__typename'];
+    return Mutation$bannDeliveryDriver$update_delivery_driver(
+      returning: (l$returning as List<dynamic>)
+          .map((e) =>
+              Mutation$bannDeliveryDriver$update_delivery_driver$returning
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Mutation$bannDeliveryDriver$update_delivery_driver$returning>
+      returning;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$returning = returning;
+    _resultData['returning'] = l$returning.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$returning = returning;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$returning.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$bannDeliveryDriver$update_delivery_driver) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$returning = returning;
+    final lOther$returning = other.returning;
+    if (l$returning.length != lOther$returning.length) {
+      return false;
+    }
+    for (int i = 0; i < l$returning.length; i++) {
+      final l$returning$entry = l$returning[i];
+      final lOther$returning$entry = lOther$returning[i];
+      if (l$returning$entry != lOther$returning$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$bannDeliveryDriver$update_delivery_driver
+    on Mutation$bannDeliveryDriver$update_delivery_driver {
+  CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver<
+          Mutation$bannDeliveryDriver$update_delivery_driver>
+      get copyWith =>
+          CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver<
+    TRes> {
+  factory CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver(
+    Mutation$bannDeliveryDriver$update_delivery_driver instance,
+    TRes Function(Mutation$bannDeliveryDriver$update_delivery_driver) then,
+  ) = _CopyWithImpl$Mutation$bannDeliveryDriver$update_delivery_driver;
+
+  factory CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$bannDeliveryDriver$update_delivery_driver;
+
+  TRes call({
+    List<Mutation$bannDeliveryDriver$update_delivery_driver$returning>?
+        returning,
+    String? $__typename,
+  });
+  TRes returning(
+      Iterable<Mutation$bannDeliveryDriver$update_delivery_driver$returning> Function(
+              Iterable<
+                  CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver$returning<
+                      Mutation$bannDeliveryDriver$update_delivery_driver$returning>>)
+          _fn);
+}
+
+class _CopyWithImpl$Mutation$bannDeliveryDriver$update_delivery_driver<TRes>
+    implements
+        CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver<TRes> {
+  _CopyWithImpl$Mutation$bannDeliveryDriver$update_delivery_driver(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$bannDeliveryDriver$update_delivery_driver _instance;
+
+  final TRes Function(Mutation$bannDeliveryDriver$update_delivery_driver) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? returning = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$bannDeliveryDriver$update_delivery_driver(
+        returning: returning == _undefined || returning == null
+            ? _instance.returning
+            : (returning as List<
+                Mutation$bannDeliveryDriver$update_delivery_driver$returning>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes returning(
+          Iterable<Mutation$bannDeliveryDriver$update_delivery_driver$returning> Function(
+                  Iterable<
+                      CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver$returning<
+                          Mutation$bannDeliveryDriver$update_delivery_driver$returning>>)
+              _fn) =>
+      call(
+          returning: _fn(_instance.returning.map((e) =>
+              CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver$returning(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Mutation$bannDeliveryDriver$update_delivery_driver<TRes>
+    implements
+        CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver<TRes> {
+  _CopyWithStubImpl$Mutation$bannDeliveryDriver$update_delivery_driver(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Mutation$bannDeliveryDriver$update_delivery_driver$returning>?
+        returning,
+    String? $__typename,
+  }) =>
+      _res;
+  returning(_fn) => _res;
+}
+
+class Mutation$bannDeliveryDriver$update_delivery_driver$returning {
+  Mutation$bannDeliveryDriver$update_delivery_driver$returning({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Mutation$bannDeliveryDriver$update_delivery_driver$returning.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$bannDeliveryDriver$update_delivery_driver$returning(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$bannDeliveryDriver$update_delivery_driver$returning) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$bannDeliveryDriver$update_delivery_driver$returning
+    on Mutation$bannDeliveryDriver$update_delivery_driver$returning {
+  CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver$returning<
+          Mutation$bannDeliveryDriver$update_delivery_driver$returning>
+      get copyWith =>
+          CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver$returning(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver$returning<
+    TRes> {
+  factory CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver$returning(
+    Mutation$bannDeliveryDriver$update_delivery_driver$returning instance,
+    TRes Function(Mutation$bannDeliveryDriver$update_delivery_driver$returning)
+        then,
+  ) = _CopyWithImpl$Mutation$bannDeliveryDriver$update_delivery_driver$returning;
+
+  factory CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver$returning.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$bannDeliveryDriver$update_delivery_driver$returning;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$bannDeliveryDriver$update_delivery_driver$returning<
+        TRes>
+    implements
+        CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver$returning<
+            TRes> {
+  _CopyWithImpl$Mutation$bannDeliveryDriver$update_delivery_driver$returning(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$bannDeliveryDriver$update_delivery_driver$returning _instance;
+
+  final TRes Function(
+      Mutation$bannDeliveryDriver$update_delivery_driver$returning) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$bannDeliveryDriver$update_delivery_driver$returning(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$bannDeliveryDriver$update_delivery_driver$returning<
+        TRes>
+    implements
+        CopyWith$Mutation$bannDeliveryDriver$update_delivery_driver$returning<
+            TRes> {
+  _CopyWithStubImpl$Mutation$bannDeliveryDriver$update_delivery_driver$returning(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
     String? $__typename,
   }) =>
       _res;

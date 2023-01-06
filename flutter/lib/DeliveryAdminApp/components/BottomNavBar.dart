@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/DeliveryAdminApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class DeliveryOpBottomNavBar extends StatelessWidget {
-  const DeliveryOpBottomNavBar({super.key});
-
+  const DeliveryOpBottomNavBar({required this.tabController, super.key});
+  final TabController tabController;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,11 +23,11 @@ class DeliveryOpBottomNavBar extends StatelessWidget {
         ],
       ),
       height: 68,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          InkWell(
+      child: TabBar(
+        indicator: UnderlineTabIndicator(borderSide: BorderSide.none),
+        controller: tabController,
+        tabs: [
+          Tab(
             child: Container(
               child: Center(
                 child: Column(
@@ -39,12 +37,12 @@ class DeliveryOpBottomNavBar extends StatelessWidget {
                     Icon(
                       Icons.history,
                       size: 20,
-                      color: Colors.grey.shade400,
+                      color: _getColorBasedOnSelectedTabIndex(0),
                     ),
                     Text(
                       "Orders",
                       style: TextStyle(
-                        color: Colors.grey.shade400,
+                        color: _getColorBasedOnSelectedTabIndex(0),
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
                         fontFamily: 'Montserrat',
@@ -55,8 +53,7 @@ class DeliveryOpBottomNavBar extends StatelessWidget {
               ),
             ),
           ),
-          InkWell(
-            onTap: () => MezRouter.toNamed(kCompanyDriversScreen),
+          Tab(
             child: Container(
               child: Center(
                 child: Column(
@@ -66,12 +63,12 @@ class DeliveryOpBottomNavBar extends StatelessWidget {
                     Icon(
                       Icons.delivery_dining,
                       size: 20,
-                      color: Colors.grey.shade400,
+                      color: _getColorBasedOnSelectedTabIndex(1),
                     ),
                     Text(
                       "Drivers",
                       style: TextStyle(
-                        color: Colors.grey.shade400,
+                        color: _getColorBasedOnSelectedTabIndex(1),
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
                         fontFamily: 'Montserrat',
@@ -82,8 +79,7 @@ class DeliveryOpBottomNavBar extends StatelessWidget {
               ),
             ),
           ),
-          InkWell(
-            onTap: () => MezRouter.toNamed(kDeliveryCostSetter),
+          Tab(
             child: Container(
               child: Center(
                 child: Column(
@@ -93,12 +89,12 @@ class DeliveryOpBottomNavBar extends StatelessWidget {
                     Icon(
                       Icons.price_check,
                       size: 20,
-                      color: Colors.grey.shade400,
+                      color: _getColorBasedOnSelectedTabIndex(2),
                     ),
                     Text(
                       "Cost",
                       style: TextStyle(
-                        color: Colors.grey.shade400,
+                        color: _getColorBasedOnSelectedTabIndex(2),
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
                         fontFamily: 'Montserrat',
@@ -109,8 +105,7 @@ class DeliveryOpBottomNavBar extends StatelessWidget {
               ),
             ),
           ),
-          InkWell(
-            onTap: () => MezRouter.toNamed(kServiceProfileScreen),
+          Tab(
             child: Container(
               child: Center(
                 child: Column(
@@ -120,12 +115,12 @@ class DeliveryOpBottomNavBar extends StatelessWidget {
                     Icon(
                       Icons.person,
                       size: 20,
-                      color: Colors.grey.shade400,
+                      color: _getColorBasedOnSelectedTabIndex(3),
                     ),
                     Text(
                       "Profile",
                       style: TextStyle(
-                        color: Colors.grey.shade400,
+                        color: _getColorBasedOnSelectedTabIndex(3),
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
                         fontFamily: 'Montserrat',
@@ -139,5 +134,12 @@ class DeliveryOpBottomNavBar extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Color _getColorBasedOnSelectedTabIndex(int _tabIndex) {
+    if (tabController.index == _tabIndex)
+      return Color.fromRGBO(103, 121, 254, 1);
+    else
+      return Color.fromRGBO(196, 196, 196, 1);
   }
 }

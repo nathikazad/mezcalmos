@@ -4,12 +4,14 @@ import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
 import 'package:mezcalmos/Shared/pages/AppNeedsUpdateScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/UnauthorizedScreen.dart';
+import 'package:mezcalmos/Shared/pages/DeliveryCostSetting/DeliveryCostSettingView.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/LocationPermissionScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/NoInternetConnectionScreen.dart';
@@ -42,7 +44,8 @@ const String kAgoraCallScreen = '/agora';
 const String kPickLocationWithoutAuth = "/pick_location/noAuth";
 const String kPickLocationEdit = "/pick_location/edit";
 const String kSomethingWentWrongScreen = "/SomethingWentWrongScreen";
-const String kDeliveryCostSettingScreen = "/costDeliverySettingScreen";
+const String kDeliveryCostSettingScreen =
+    "/costDeliverySettingScreen/:providerId/:providerType";
 
 String getMessagesRoute({
   required int chatId,
@@ -87,6 +90,9 @@ bool isCurrentRoute(String route) {
 // GetX based Router (For navigating)
 class SharedRouter {
   static List<GetPage> sharedRoutes = [
+    GetPage(
+        name: kDeliveryCostSettingScreen,
+        page: () => DeliveryCostSettingView()),
     GetPage(
         name: kSomethingWentWrongScreen,
         page: () => SomethingWentWrongScreen()),

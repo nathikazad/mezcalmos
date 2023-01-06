@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/models/DeliveryOperator.dart';
@@ -45,6 +46,10 @@ class DeliveryOperatorAuthController extends GetxController {
       deliveryOpListener?.cancel();
       deliveryOpListener = null;
     });
+  }
+
+  Future<void> banDeliveryDriver({required int driverId}) async {
+    await bann_delivery_driver(driverId);
   }
 
   @override

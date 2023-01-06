@@ -68,19 +68,24 @@ class OrderController extends GetxController {
 //   changeDriver?: boolean,
 //   operatorType: OperatorType,
 //   deliveryCompanyId: number
-      final HttpsCallableResult<dynamic> response =
-          await checkoutRestaurantCart.call({
+      final Map<String, dynamic> _payload = {
         "deliveryOrderId": orderId,
         "deliveryDriverId": driverId,
         "orderType": orderType.toHasuraString(),
         "deliveryDriverType": driverType.toFirebaseFormatString(),
         "changeDriver": changedDriver,
-        "operatorType":
-            Get.find<DeliveryOperatorAuthController>().deliveryOperator!.type,
+        "operatorType": Get.find<DeliveryOperatorAuthController>()
+            .deliveryOperator!
+            .type
+            .toHasuraString(),
         "deliveryCompanyId": Get.find<DeliveryOperatorAuthController>()
             .deliveryOperator!
             .companyId,
-      });
+      };
+
+      mezDbgPrint(_payload);
+      final HttpsCallableResult<dynamic> response =
+          await checkoutRestaurantCart.call(_payload);
       return ServerResponse.fromJson(response.data);
     } catch (e) {
       mezDbgPrint("error function");

@@ -81,10 +81,12 @@ subscription listen_on_delivery_order_by_id($orderId : Int!) {
         image
       }
     }
-    restaurant {
-      name,
-      image,
-      location_text,
+    restaurant_order {
+      restaurant {
+       	name,
+      	image,
+      	location_text, 
+      }
     }
     delivery_driver {
       user {
@@ -104,4 +106,3 @@ subscription listen_on_delivery_order_by_id($orderId : Int!) {
     cancellation_time
   }
 }
-

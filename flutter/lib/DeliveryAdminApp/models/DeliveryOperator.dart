@@ -1,6 +1,5 @@
 import 'package:location/location.dart';
-import 'package:mezcalmos/DeliveryAdminApp/models/DeliveryService.dart';
-import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
+import 'package:mezcalmos/DeliveryAdminApp/models/DeliveryOrder.dart';
 
 class DeliveryOperator {
   // for testing now
@@ -8,19 +7,23 @@ class DeliveryOperator {
   final int companyId;
   final String appVersion;
   final LocationData currentGps;
-  final String type;
+  final DeliveryServiceType type;
   final String? notificationToken;
   final bool isOwner;
   final String status;
+  final String? companyName;
+  final String? companyImg;
 
-  DeliveryOperator(
-    this.id,
-    this.companyId,
-    this.appVersion,
-    this.currentGps,
-    this.type,
-    this.notificationToken,
-    this.isOwner,
-    this.status,
-  );
+  DeliveryOperator({
+    this.companyName,
+    this.companyImg,
+    required this.id,
+    required this.companyId,
+    required this.appVersion,
+    required this.currentGps,
+    required this.type,
+    required this.notificationToken,
+    required this.isOwner,
+    required this.status,
+  });
 }
