@@ -5,7 +5,7 @@ import { updateDeliveryOperatorStatusToAuthorized } from "../shared/graphql/deli
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { DeliveryOperatorApprovedNotification } from "../shared/models/Services/Delivery/DeliveryOrder";
+import { DeliveryOperatorApprovedNotification } from "../shared/models/Generic/Delivery";
 import { pushNotification } from "../utilities/senders/notifyUser";
 
 export interface AuthorizeDetails {

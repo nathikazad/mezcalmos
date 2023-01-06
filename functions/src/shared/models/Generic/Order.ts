@@ -1,5 +1,5 @@
 import { OrderStripeInfo } from "../../../utilities/stripe/model";
-import { DeliveryDriverType } from "../Services/Delivery/DeliveryOrder";
+import { DeliveryDriverType } from "./Delivery";
 import { Location } from "./Generic";
 import { UserInfo } from "./User";
 

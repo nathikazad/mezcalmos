@@ -1,45 +1,9 @@
 import { ServiceProviderStripeInfo } from "../../../../utilities/stripe/model";
 import { Language, Location, NotificationInfo } from "../../Generic/Generic";
 import { PaymentType } from "../../Generic/Order";
-// import { OrderType } from "../../Generic/Order";
 import { UserInfo } from "../../Generic/User";
 import { ForegroundNotification, NotificationForQueue } from "../../Notification";
 import { ServiceLink } from "../Service";
-
-// export interface ChooseManyOption {
-//   cost: number;
-//   default: boolean;
-//   name: Record<Language, string>;
-// }
-
-// export interface ChooseOneOptionListItem {
-//   cost: number;
-//   name: Record<Language, string>;
-// }
-
-// export interface ChooseOneOption {
-//   dialog: Record<Language, string>;
-//   name: Record<Language, string>;
-//   options: Record<string, ChooseOneOptionListItem>;
-// }
-
-// export interface Options {
-//   chooseMany: Record<string, ChooseManyOption>;
-//   chooseOne: Record<string, ChooseOneOption>;
-// }
-
-// export interface MenuItem {
-//   available: boolean;
-//   cost: number;
-//   description: Record<Language, string>;
-//   image: string;
-//   name: Record<Language, string>;
-//   options: Options;
-// }
-
-// export interface Restaurant extends Service {
-//   menu: Record<string, MenuItem>;
-// }
 
 export interface Restaurant {
   restaurantId?: number;
@@ -53,12 +17,10 @@ export interface Restaurant {
   openStatus?: OpenStatus;
   stripeInfo?: ServiceProviderStripeInfo;
   acceptedPayments?: Record<PaymentType, boolean>;
-  // LanguageId: Language;
   approved?: boolean;
   restaurantOperators?: Array<RestaurantOperator>
   links?: ServiceLink;
 }
-
 
 export enum OpenStatus {
   Open = "open",

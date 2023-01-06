@@ -40,23 +40,6 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
         }
       }]
     }],
-    // restaurant_operator: [{
-    //   where: { 
-    //     restaurant_id: {
-    //       _eq: restaurantId
-    //     } 
-    //   }
-    // }, {
-    //   id: true,
-    //   user_id: true,
-    //   status: true,
-    //   owner: true,
-    //   notification_token: true,
-    //   user: {
-    //     firebase_id: true,
-    //     language_id: true,
-    //   }
-    // }]
   });
 
   if(response.restaurant_by_pk == null) {

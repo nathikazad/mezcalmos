@@ -1,7 +1,7 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, Language } from "../../../models/Generic/Generic";
-import { DelivererStatus, DeliveryDriver } from "../../../models/Services/Delivery/DeliveryOrder";
+import { DelivererStatus, DeliveryDriver } from "../../../models/Generic/Delivery";
 
 export async function createDeliveryDriver(deliveryDriver: DeliveryDriver)/*: Promise<DeliveryDriver>*/ {
     let chain = getHasura();

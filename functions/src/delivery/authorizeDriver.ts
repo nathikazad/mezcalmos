@@ -1,5 +1,5 @@
 import { HttpsError } from "firebase-functions/v1/auth";
-import { DeliveryCompanyType, DeliveryDriverType, DeliveryOperatorStatus, DriverApprovedNotification } from "../shared/models/Services/Delivery/DeliveryOrder";
+import { DeliveryCompanyType, DeliveryDriverType, DeliveryOperatorStatus, DriverApprovedNotification } from "../shared/models/Generic/Delivery";
 import { getRestaurantOperatorByUserId } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { updateDriverStatustoAuthorized } from "../shared/graphql/delivery/driver/updateDriverStatus";
 import { deleteDeliveryDriver } from "../shared/graphql/delivery/driver/deleteDriver";
@@ -12,7 +12,6 @@ import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 
 export interface AuthorizeDetails {
     deliveryDriverId: number,
-    // operatorId: number,
     approved: boolean
 }
 
@@ -22,7 +21,7 @@ export async function authorizeDriver(userId: number, authorizeDetails: Authoriz
 
     if(deliveryCompanyType == DeliveryCompanyType.Restaurant) {
 
-      let restaurantOperator = await getRestaurantOperatorByUserId(userId, deliveryDriver.deliveryCompanyId!)
+      let restaurantOperator = await getRestaurantOperatorByUserId(userId)
       if(!(restaurantOperator.owner)) {
         throw new HttpsError(
           "internal",
@@ -52,10 +51,7 @@ export async function authorizeDriver(userId: number, authorizeDetails: Authoriz
     }
     let notification: Notification = {
         foreground: <DriverApprovedNotification>{
-          // operatorId: authorizeDetails.operatorId,
           approved: authorizeDetails.approved,
-          // deliveryCompanyName: authorizeDetails.deliveryCompanyName,
-          // deliveryCompanyId: authorizeDetails.deliveryCompanyId,
           time: (new Date()).toISOString(),
           notificationType: NotificationType.DriverApproved,
           notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,

@@ -2,7 +2,7 @@ import Stripe from 'stripe';
 import { ServerResponseStatus } from '../../shared/models/Generic/Generic';
 import { getKeys } from '../../shared/keys';
 import { Keys } from '../../shared/models/Generic/Keys';
-import { OrderType } from '../../shared/models/Generic/Order';
+import { OrderType, PaymentType } from '../../shared/models/Generic/Order';
 import { OrderStripeInfo, StripePaymentStatus, StripeStatus } from './model';
 import { verifyCustomerIdForServiceAccount } from './serviceProvider';
 import { getRestaurant } from '../../shared/graphql/restaurant/getRestaurant';
@@ -29,7 +29,7 @@ export async function getPaymentIntent(userId: number, paymentIntentDetails: Pay
     );
   }
   if (!(serviceProvider.acceptedPayments)
-    // || serviceProvider.acceptedPayments[PaymentType.Card] == false
+    || serviceProvider.acceptedPayments[PaymentType.Card] == false
     || serviceProvider.stripeInfo == null 
     || serviceProvider.stripeInfo.status != StripeStatus.IsWorking
   ) {
@@ -81,24 +81,6 @@ export interface PaymentDetails {
   orderStripePaymentInfo?: OrderStripeInfo,
 }
 export async function capturePayment(paymentDetails: PaymentDetails, amountToCapture?: number) {
-  // let serviceProviderPaymentInfo: PaymentInfo = (await serviceProviderNodes.serviceProviderPaymentInfo(order.orderType, order.serviceProviderId!).once('value')).val()
-  // let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripe.id };
-  // const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
-  // if (amountToCapture == null) {
-  //   await stripe.paymentIntents.capture(order.stripePaymentInfo!.id, {}, stripeOptions)
-  //   order.stripePaymentInfo!.status = StripePaymentStatus.Captured
-  // } else if (amountToCapture > 0) {
-  //   await stripe.paymentIntents.capture(order.stripePaymentInfo!.id, {
-  //     amount_to_capture: amountToCapture * 100,
-  //   }, stripeOptions)
-  //   order.stripePaymentInfo!.amountCharged = amountToCapture;
-  //   order.stripePaymentInfo!.status = StripePaymentStatus.Captured
-  // } else {
-  //   await stripe.paymentIntents.cancel(order.stripePaymentInfo!.id, stripeOptions)
-  //   order.stripePaymentInfo!.amountCharged = 0;
-  //   order.stripePaymentInfo!.status = StripePaymentStatus.Cancelled
-  // }
-  // return order;
 
   let serviceProvider;
   if(!(paymentDetails.orderStripePaymentInfo)) {

@@ -1,6 +1,6 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { DeliveryOrder, DeliveryOrderStatus } from "../../../models/Services/Delivery/DeliveryOrder";
+import { DeliveryOrder, DeliveryOrderStatus } from "../../../models/Generic/Delivery";
 import { Restaurant } from "../../../models/Services/Restaurant/Restaurant";
 import { RestaurantOrder, RestaurantOrderStatus } from "../../../models/Services/Restaurant/RestaurantOrder";
 
@@ -15,7 +15,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
       app_type_id: "restaurant"
     };
   });
-
+  console.log("Hi")
   let response = await chain.mutation({
     insert_restaurant_order_one: [{
       object: {
@@ -53,7 +53,6 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
             pickup_address: restaurant.location.address,
             chat_with_customer: {
               data: {
-                chat_info: JSON.stringify({}),
                 chat_participants: {
                   data: [{
                     participant_id: restaurantOrder.customerId,
@@ -64,7 +63,6 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
             },
             chat_with_service_provider: {
               data: {
-                chat_info: JSON.stringify({}),
                 chat_participants: {
                   data: restaurantOperatorsDetails
                 }

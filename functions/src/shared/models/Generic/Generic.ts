@@ -7,13 +7,6 @@ export interface Location {
   address?: string;
 }
 
-// export interface GPS {
-//   type: string;
-//   coordinates: [number, number];
-// }
-
-
-
 export interface Review {
   rating: number,
   fromEntityId: number,
@@ -45,7 +38,6 @@ export const AppParticipant: Record<AppType, ParticipantType> = {
   [AppType.RestaurantApp]: ParticipantType.RestaurantOperator
 }
 
-// export type NotificationInfo = Record<TokenType, string>;
 export interface NotificationInfo {
   token: string;
   AppTypeId: AppType;

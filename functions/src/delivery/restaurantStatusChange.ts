@@ -1,12 +1,11 @@
 import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
-import { OrderType } from "../shared/models/Generic/Order";
+import { OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { RestaurantOrder, RestaurantOrderStatus } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-// import { capturePayment } from "../utilities/stripe/payment";
-import { DeliveryDriver, DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus, DeliveryOrderStatusChangeNotification } from "../shared/models/Services/Delivery/DeliveryOrder";
+import { DeliveryDriver, DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus, DeliveryOrderStatusChangeNotification } from "../shared/models/Generic/Delivery";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
 import { HttpsError } from "firebase-functions/v1/auth";
@@ -18,6 +17,7 @@ import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { updateOrderStatus } from "../shared/graphql/restaurant/order/updateOrder";
 import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { RestaurantOperator } from "../shared/models/Services/Restaurant/Restaurant";
+import { capturePayment, PaymentDetails } from "../utilities/stripe/payment";
 
 let statusArrayInSeq: Array<DeliveryOrderStatus> =
   [
@@ -76,18 +76,6 @@ async function changeStatus(
   userId: number
 ): Promise<ServerResponse> {
   try {
-    // let response = await isSignedIn(userId)
-    // if (response != undefined) {
-    //   return response;
-    // }
-
-    // if (changeDeliveryStatusDetails.deliveryId == null) {
-    //   return {
-    //     status: ServerResponseStatus.Error,
-    //     errorMessage: `Expected order id`,
-    //     errorCode: "orderIdNotGiven"
-    //   }
-    // }
     let deliveryOrderPromise = getDeliveryOrder(changeDeliveryStatusDetails.deliveryId);
     let deliveryDriverPromise = getDeliveryDriver(changeDeliveryStatusDetails.deliveryDriverId, changeDeliveryStatusDetails.deliveryDriverType);
     let restaurantOrderPromise = getRestaurantOrder(changeDeliveryStatusDetails.restaurantOrderId);
@@ -159,12 +147,17 @@ async function changeStatus(
         }
       })
     });
-    // if (newStatus == RestaurantOrderStatus.Delivered) {
-    //   if (order.paymentType == PaymentType.Card) {
-    //     order = (await capturePayment(order, order.costToCustomer)) as RestaurantOrder
-    //     TODO: capture shipping payment
-    //   }
-    // }
+    if (newStatus == DeliveryOrderStatus.Delivered) {
+      if (restaurantOrder.paymentType == PaymentType.Card) {
+        let paymentDetails: PaymentDetails = {
+          orderId: changeDeliveryStatusDetails.restaurantOrderId,
+          orderType: OrderType.Restaurant,
+          serviceProviderId: restaurantOrder.restaurantId,
+          orderStripePaymentInfo: restaurantOrder.stripeInfo!
+        }
+        capturePayment(paymentDetails, restaurantOrder.totalCost)
+      }
+    }
 
     return { status: ServerResponseStatus.Success }
   } catch(error) {

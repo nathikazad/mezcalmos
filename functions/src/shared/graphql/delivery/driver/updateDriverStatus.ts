@@ -1,6 +1,6 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { DelivererStatus } from "../../../models/Services/Delivery/DeliveryOrder";
+import { DelivererStatus } from "../../../models/Generic/Delivery";
 
 export async function updateDriverStatustoAuthorized(deliveryDriverId: number) {
     let chain = getHasura();

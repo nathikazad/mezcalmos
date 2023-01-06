@@ -27,6 +27,7 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
         estimated_food_ready_time: true,
         customer_app_type: true,
         delivery_cost: true,
+        stripe_info: [{}, true],
         customer: {
           user: {
             firebase_id: true,
@@ -42,13 +43,13 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
           cost_per_one: true,
           restaurant_item : {
             name : {
-            translations :  [{} , {
+              translations :  [{} , {
                 language_id : true,
                 value : true
-            }], 
-        } , 
-        image : true,
-        }   
+              }], 
+            },
+            image : true,
+          }   
         }],
       }
     ]
@@ -86,7 +87,8 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
     orderType: response.restaurant_order_by_pk.order_type as RestaurantOrderType,
     customerAppType: response.restaurant_order_by_pk.customer_app_type as AppType,
     deliveryCost: response.restaurant_order_by_pk.delivery_cost,
-    items
+    items,
+    stripeInfo: JSON.parse(response.restaurant_order_by_pk.stripe_info)
   }
   if(response.restaurant_order_by_pk.delivery_id != undefined) {
     restaurantOrder.deliveryId = response.restaurant_order_by_pk.delivery_id
@@ -129,22 +131,23 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
         image: true,
         location_gps: true,
       },
-      // to_location_address: true,
       customer_app_type: true,
       delivery_cost: true,
-      // customer: {
-      //   user: {
-      //     firebase_id: true,
-      //     language_id: true,
-      //   },
-      //   app_version: true,
-      // },
       items: [{}, {
         // in_json: [{path: "[name(en,es), selected_options]"}, true]
         id: true,
         restaurant_item_id: true,
         quantity: true,
         cost_per_one: true,
+        restaurant_item : {
+          name : {
+            translations :  [{} , {
+              language_id : true,
+              value : true
+            }], 
+          },
+          image : true,
+        } 
       }],
     }]
   });
@@ -169,6 +172,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
     })
     let items: OrderItem[] = o.items.map((i) => {
       return {
+        name: i.restaurant_item.name,
         orderItemId: i.id,
         itemId: i.restaurant_item_id,
         quantity: i.quantity,
@@ -226,12 +230,22 @@ export async function getCustomerRestaurantOrders(customerId: number): Promise<R
         restaurant_item_id: true,
         quantity: true,
         cost_per_one: true,
+        restaurant_item : {
+          name : {
+            translations :  [{} , {
+              language_id : true,
+              value : true
+            }], 
+          },
+          image : true,
+        } 
       }],
     }]
   });
   return response.restaurant_order.map((o) => {
     let items: OrderItem[] = o.items.map((i) => {
       return {
+        name: i.restaurant_item.name,
         orderItemId: i.id,
         itemId: i.restaurant_item_id,
         quantity: i.quantity,

@@ -5,7 +5,6 @@ import { CustomerInfo } from "../../../models/Generic/User";
 
 export async function getCustomer(customerId: number): Promise<CustomerInfo> {
     let chain = getHasura();
-    
     let response = await chain.query({
         customer_by_pk: [{
             user_id: customerId
@@ -20,7 +19,8 @@ export async function getCustomer(customerId: number): Promise<CustomerInfo> {
             },
             stripe_info: [{}, true]
         }]
-    });
+    })
+
     if(response.customer_by_pk == null) {
         throw new HttpsError(
             "internal",

@@ -5,7 +5,7 @@ import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/g
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { NotificationInfo, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { AuthorizeDriverNotification, DeliveryCompanyType, DeliveryDriver, DeliveryDriverType } from "../shared/models/Services/Delivery/DeliveryOrder";
+import { AuthorizeDriverNotification, DeliveryCompanyType, DeliveryDriver, DeliveryDriverType } from "../shared/models/Generic/Delivery";
 import { pushNotification } from "../utilities/senders/notifyUser";
 
 export interface AddDriverDetails {
@@ -61,7 +61,6 @@ export async function addDriver(userId: number, addDriverDetails: AddDriverDetai
             });
         } else {
             let operators = await getRestaurantOperators(addDriverDetails.deliveryCompanyId);
-            // console.log(operators);
             operators.forEach((o) => {
                 if(o.owner && o.user) {
                     pushNotification(

@@ -21,16 +21,6 @@ export async function addCard(userId: number, cardDetails: CardDetails) {
 
   let stripeOptions = { apiVersion: <any>'2020-08-27' };
   const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
-  // const stripeCustomerId: string = await getCustomerId(userId, stripe);
-
-  // let cardRef = await customerNodes.stripeCardsNode(mezCustomerId).push(<CustomerCard>{
-  //   id: paymentMethod.id,
-  //   last4: paymentMethod.card?.last4,
-  //   brand: paymentMethod.card?.brand,
-  //   expMonth: paymentMethod.card?.exp_month,
-  //   expYear: paymentMethod.card?.exp_year,
-  // })
-
   let customer = await getCustomer(userId);
   customer = await verifyCustomerStripeInfo(customer, stripe)
 
@@ -79,11 +69,6 @@ export async function chargeCard(userId: number, chargeCardDetails: ChargeCardDe
     || serviceProvider.acceptedPayments[PaymentType.Card] == false
     || serviceProvider.stripeInfo.status != StripeStatus.IsWorking
   ) {
-    // return {
-    //   status: ServerResponseStatus.Error,
-    //   errorMessage: `This service provider does not accept cards`,
-    //   errorCode: "paymentsNotSupported"
-    // }
     throw new HttpsError(
       "internal",
       "This service provider does not accept cards"
@@ -94,11 +79,6 @@ export async function chargeCard(userId: number, chargeCardDetails: ChargeCardDe
   let customer: CustomerInfo = await getCustomer(userId);
   customer = await verifyCustomerStripeInfo(customer, stripe);
   if (!(customer.stripeInfo!.cards[chargeCardDetails.cardId])) {
-    // return {
-    //   status: ServerResponseStatus.Error,
-    //   errorMessage: `There is no card with this key`,
-    //   errorCode: "cardIdNotValid"
-    // }
     throw new HttpsError(
       "internal",
       "There is no card with this key"
@@ -147,14 +127,6 @@ export interface RemoveCardDetails {
 }
 export async function removeCard(userId: number, removeCardDetails: RemoveCardDetails) {
 
-  // let inProcessOrders = (await customerNodes.inProcessOrders(mezCustomerId).once('value')).val()
-  // if (inProcessOrders && Object.keys(inProcessOrders).length > 0) {
-  //   return {
-  //     status: ServerResponseStatus.Error,
-  //     errorMessage: `Can't remove cards with in process orders, please wait till you finish your order`,
-  //     errorCode: "incorrectParams"
-  //   }
-  // }
   //Restaurant order
   let restaurantOrders = await getCustomerRestaurantOrders(userId);
   restaurantOrders.filter((o) => ((o.status != RestaurantOrderStatus.Delivered) 
@@ -162,11 +134,6 @@ export async function removeCard(userId: number, removeCardDetails: RemoveCardDe
     && (o.status != RestaurantOrderStatus.CancelledByCustomer)
   ))
   if(restaurantOrders.length) {
-    // return {
-    //   status: ServerResponseStatus.Error,
-    //   errorMessage: `Can't remove cards with in process orders, please wait till you finish your order`,
-    //   errorCode: "incorrectParams"
-    // }
     throw new HttpsError(
       "internal",
       "Can't remove cards with in process orders, please wait till you finish your order"
@@ -177,11 +144,6 @@ export async function removeCard(userId: number, removeCardDetails: RemoveCardDe
     || !(customer.stripeInfo.cards) 
     || !(customer.stripeInfo.cards[removeCardDetails.cardId])
   ) {
-    // return {
-    //   status: ServerResponseStatus.Error,
-    //   errorMessage: `There is no card with this key`,
-    //   errorCode: "cardIdNotValid"
-    // }
     throw new HttpsError(
       "internal",
       "There is no card with this key"
@@ -244,7 +206,6 @@ export async function verifyCustomerStripeInfo(customerInfo: CustomerInfo, strip
 }
 
 export async function verifyCardForServiceAccount(customer: CustomerInfo, cardId: string, serviceProviderId: number, orderType: OrderType, stripeCustomerServiceAccountId: string, stripe: Stripe, stripeOptions: any): Promise<CustomerCard> {
-  // let stripeCardIdWithServiceProvider: string = (await customerNodes.stripeClonedCardsNode(customerId, cardId, serviceProviderId, orderType).once('value')).val();
 
   if(!(customer.stripeInfo)) {
     throw new HttpsError(

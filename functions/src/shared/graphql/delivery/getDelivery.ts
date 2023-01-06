@@ -2,7 +2,7 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { AppType, Language } from "../../models/Generic/Generic";
 import { PaymentType } from "../../models/Generic/Order";
-import { DeliveryCompanyType, DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus } from "../../models/Services/Delivery/DeliveryOrder";
+import { DeliveryCompanyType, DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus } from "../../models/Generic/Delivery";
 
 export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrder> {
   let chain = getHasura();
@@ -115,8 +115,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
       } : undefined,
       deliveryDriverType: DeliveryDriverType.RestaurantOperator
     }
-  } //else if(response.delivery_order_by_pk.delivery_operator) {
-  // }
+  }
   return delivery;
 }
 

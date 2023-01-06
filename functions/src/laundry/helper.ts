@@ -5,7 +5,6 @@ import * as laundryNodes from "../shared/databaseNodes/services/laundry";
 import { OrderType } from "../shared/models/Generic/Order";
 import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
 import { ServerResponse, ServerResponseStatus, ValidationPass } from "../shared/models/Generic/Generic";
-import { checkDeliveryAdmin } from "../shared/helper/authorizer";
 
 export async function finishOrder(
   order: LaundryOrder,
@@ -104,13 +103,13 @@ export async function passChecksForLaundry(data: any, userId: string): Promise<V
       };
     }
   } else {
-    response = await checkDeliveryAdmin(userId)
-    if (response != undefined) {
-      return {
-        ok: false,
-        error: response
-      };
-    }
+    // response = await checkDeliveryAdmin(userId)
+    // if (response != undefined) {
+    //   return {
+    //     ok: false,
+    //     error: response
+    //   };
+    // }
   }
 
   return {

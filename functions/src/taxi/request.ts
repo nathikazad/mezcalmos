@@ -4,15 +4,11 @@ import * as rootNodes from "../shared/databaseNodes/root";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { Order, OrderType } from "../shared/models/Generic/Order";
-import { getUserInfo } from "../shared/controllers/rootController";
 import { TaxiOrderRequest } from "../shared/models/Services/Taxi/TaxiOrderRequest";
 import { constructTaxiOrder } from "../shared/models/Services/Taxi/TaxiOrder";
-import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
-// import { Notification, NotificationAction, NotificationType, OrderNotification } from "../shared/models/Notification";
-// import { orderUrl } from "../utilities/senders/appRoutes";
-import { buildChatForOrder, ChatObject, ParticipantType } from "../shared/models/Generic/Chat";
+import { getUser } from "../shared/graphql/user/getUser";
+import { DeliveryAdmin } from "../shared/models/Generic/Delivery";
 // import { pushNotification } from "../utilities/senders/notifyUser";
-import * as chatController from "../shared/controllers/chatController";
 
 export async function requestRide(userId: string, data: any) {
   // let response = isSignedIn(userId)
@@ -48,16 +44,16 @@ export async function requestRide(userId: string, data: any) {
       }
     }
 
-    let userInfo = await getUserInfo(customerId);
+    let userInfo = await getUser(parseInt(customerId));
     let order = constructTaxiOrder(orderRequest, userInfo);
     let orderRef = await customerNodes.inProcessOrders(customerId).push(order);
     let orderId = orderRef.key!
     rootNodes.openOrders(OrderType.Taxi, orderId).set(order);
 
-    let chat: ChatObject = await buildChatForOrder(
-      orderId,
-      OrderType.Taxi,
-    );
+    // let chat: ChatObject = await buildChatForOrder(
+    //   orderId,
+    //   OrderType.Taxi,
+    // );
 
     
     // chat.addParticipant(
@@ -66,12 +62,12 @@ export async function requestRide(userId: string, data: any) {
     //   particpantType: ParticipantType.Customer
     // });
 
-    await chatController.setChat(parseInt(orderId), chat.chatData);
+    // await chatController.setChat(parseInt(orderId), chat.chatData);
 
 
     deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
       let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-      chatController.addParticipantsToChat(Object.keys(deliveryAdmins), chat, parseInt(orderId), ParticipantType.DeliveryOperator)
+      // chatController.addParticipantsToChat(Object.keys(deliveryAdmins), chat, parseInt(orderId), ParticipantType.DeliveryOperator)
       notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId)
     })
     

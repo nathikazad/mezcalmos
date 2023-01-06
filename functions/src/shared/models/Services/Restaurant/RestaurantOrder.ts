@@ -1,10 +1,8 @@
 import { PaymentType } from '../../Generic/Order';
-// import { CustomerInfo, UserInfo } from '../../Generic/User';
 import { OrderNotification } from '../../Notification';
 import { AppType, Language, Location } from '../../Generic/Generic';
 import { Restaurant } from './Restaurant';
-// import { Restaurant } from './Restaurant';
-// import { Delivery } from '../../Generic/Delivery';
+import { OrderStripeInfo } from '../../../../utilities/stripe/model';
 
 export interface RestaurantOrder {
   orderId?: number;
@@ -32,8 +30,7 @@ export interface RestaurantOrder {
   chatId?: number;
   scheduledTime?: string;
   restaurant?: Restaurant;
-  // customer?: CustomerInfo;
-  // delivery?: Delivery;
+  stripeInfo?: OrderStripeInfo;
 }
 export interface OrderItem {
   orderItemId?: number;
@@ -76,29 +73,6 @@ export enum RestaurantOrderType {
   Pickup = "pickup",
   Delivery = "delivery",
 }
-
-// interface ConstructRestaurantOrderParameters {
-//   cart: Cart,
-//   customer: UserInfo,
-//   restaurant: UserInfo,
-//   stripeFees: number
-// }
-// export function constructRestaurantOrder(
-//   params: ConstructRestaurantOrderParameters): RestaurantOrder {
-//   return <RestaurantOrder>{
-//     ...params.cart,
-//     customer: params.customer,
-//     restaurant: params.restaurant,
-//     orderType: OrderType.Restaurant,
-//     status: RestaurantOrderStatus.OrderReceived,
-//     orderTime: (new Date()).toISOString(),
-//     dropOffShippingCost: params.cart.shippingCost,
-//     totalCostBeforeShipping: params.cart.cost - params.cart.shippingCost - params.stripeFees,
-//     totalCost: params.cart.cost,
-//     refundAmount: 0,
-//     costToCustomer: params.cart.cost
-//   }
-// }
 
 export function orderInProcess(status: RestaurantOrderStatus): boolean {
   return !(status == RestaurantOrderStatus.CancelledByAdmin ||

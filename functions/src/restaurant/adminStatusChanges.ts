@@ -1,22 +1,21 @@
 import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
-// import { PaymentType } from "../shared/models/Generic/Order";
-import { orderInProcess, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
+import { orderInProcess, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import { passChecksForRestaurant } from "./helper";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { restaurantOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { orderUrl } from "../utilities/senders/appRoutes";
-// import { refundPayment } from "../utilities/stripe/payment";
 import { getRestaurantOrder } from "../shared/graphql/restaurant/order/getRestaurantOrder";
 import { updateOrderStatus } from "../shared/graphql/restaurant/order/updateOrder";
-import { OrderType } from "../shared/models/Generic/Order";
+import { OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
-import { DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Services/Delivery/DeliveryOrder";
+import { DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
 import { CustomerInfo } from "../shared/models/Generic/User";
 import { HttpsError } from "firebase-functions/v1/auth";
 import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
+import { capturePayment, PaymentDetails } from "../utilities/stripe/payment";
 
 let statusArrayInSeq: Array<RestaurantOrderStatus> =
   [RestaurantOrderStatus.OrderReceived,
@@ -61,16 +60,6 @@ async function changeStatus(orderId: number, newStatus: RestaurantOrderStatus, u
     let customer: CustomerInfo = response[0];
     let deliveryOrder: DeliveryOrder = response[1];
 
-    // let order: RestaurantOrder = validationPass.order;
-
-    // if (order == null) {
-    //   return {
-    //     status: ServerResponseStatus.Error,
-    //     errorMessage: `Order does not exist`,
-    //     errorCode: "orderDontExist"
-    //   }
-    // }
-
     if (newStatus == RestaurantOrderStatus.CancelledByAdmin) {
       if (!orderInProcess(order.status)) {
         throw new HttpsError(
@@ -88,12 +77,17 @@ async function changeStatus(orderId: number, newStatus: RestaurantOrderStatus, u
     order.status = newStatus;
 
     if (newStatus == RestaurantOrderStatus.CancelledByAdmin) {
-      // if (order.payment_type == PaymentType.Card) {
-      //   order = (await capturePayment(order, 0)) as RestaurantOrder
+      if (order.paymentType == PaymentType.Card) {
+        let paymentDetails: PaymentDetails = {
+          orderId: orderId,
+          orderType: OrderType.Restaurant,
+          serviceProviderId: order.restaurantId,
+          orderStripePaymentInfo: order.stripeInfo!
+        }
+        capturePayment(paymentDetails, 0)
         // TODO: cancel or capture shipping payment depending on status
-      // }
+      }
       order.refundAmount = order.totalCost;
-      // order.costToCustomer = order.totalCost - order.refundAmount;
     } 
     updateOrderStatus(order);
     if(order.status == RestaurantOrderStatus.ReadyForPickup && deliveryOrder.status != DeliveryOrderStatus.AtPickup) {
@@ -143,72 +137,18 @@ async function changeStatus(orderId: number, newStatus: RestaurantOrderStatus, u
     );
   }
 }
-// export async function setEstimatedFoodReadyTime(userId: number, data: any): Promise<ServerResponse> {
 
-//   if (data.estimatedFoodReadyTime == null || data.orderId == null) {
-//     return {
-//       status: ServerResponseStatus.Error,
-//       errorMessage: `Expected estimatedFoodReadyTime`,
-//       errorCode: "invalidParam"
-//     }
+// export async function refundCustomerCustomAmount(userId: number, data: any) {
+
+//   if (data.refundAmount == null || data.orderId == null) {
+//     throw new HttpsError(
+//       "internal", 
+//       `Expected refundAmount`,
+//     );
 //   }
-
-//   let validationPass: ValidationPass = await passChecksForRestaurant(data, userId);
-//   if (!validationPass.ok) {
-//     return validationPass.error!;
-//   }
-//   setEstFoodReadyTime(data.orderId, data.estimatedFoodReadyTime);
-
-  // let order: RestaurantOrder = validationPass.order;
-  // order.estimatedFoodReadyTime = data.estimatedFoodReadyTime;
-
-  // customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-  // await restaurantNodes.inProcessOrders(order.restaurant.id, orderId).update(order);
-  // await rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).update(order);
-  // if (order.dropoffDriver)
-  //   deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
-
-//   return { status: ServerResponseStatus.Success }
+//   await passChecksForRestaurant(data, userId);
+  // return //refund(data.orderId, validationPass.order, data.refundAmount);
 // };
-
-export async function refundCustomerCustomAmount(userId: number, data: any) {
-
-  if (data.refundAmount == null || data.orderId == null) {
-    throw new HttpsError(
-      "internal", 
-      `Expected refundAmount`,
-    );
-  }
-  await passChecksForRestaurant(data, userId);
-  return //refund(data.orderId, validationPass.order, data.refundAmount);
-};
-
-export async function markOrderItemUnavailable(userId: number, data: any) {
-
-  if (data.itemId == null || data.orderId == null) {
-    throw new HttpsError(
-      "internal",
-      `Expected itemId and orderId`,
-    );
-  }
-  await passChecksForRestaurant(data, userId);
-
-  // let order: RestaurantOrder = validationPass.order;
-  let order: RestaurantOrder = await getRestaurantOrder(data.orderId);
-  let item = order.items.find((i) => i.orderItemId == data.itemId);
-  
-  if (item == undefined) {
-    throw new HttpsError(
-      "internal",
-      `invalid item id`,
-    );
-  }
-  item.unavailable = true;
-
-  // order.items[data.itemId].unavailable = true;
-  return //refund(data.orderId, order, item.costPerOne * item.quantity);
-
-};
 
 //TODO
 // async function refund(orderId: string, order: RestaurantOrder, newRefundAmount: number): Promise<ServerResponse> {

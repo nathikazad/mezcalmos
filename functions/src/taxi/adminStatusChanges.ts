@@ -1,7 +1,6 @@
 import { Language, ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
-import { checkDeliveryAdmin } from "../shared/helper/authorizer";
 import { TaxiOrder, TaxiOrderStatus } from "../shared/models/Services/Taxi/TaxiOrder";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { BackgroundNotification } from "../shared/models/Notification";
@@ -29,10 +28,10 @@ async function changeStatus(data: any, newStatus: TaxiOrderStatus, userId: strin
   //   return response;
   // }
 
-  let response = await checkDeliveryAdmin(userId)
-  if (response != undefined) {
-    return response;
-  }
+  // let response = await checkDeliveryAdmin(userId)
+  // if (response != undefined) {
+  //   return response;
+  // }
 
   if (data.orderId == null) {
     return {

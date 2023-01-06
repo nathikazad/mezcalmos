@@ -54,7 +54,8 @@ export async function updateRestaurantOrderStripe(orderId: number, orderStripePa
         id: orderId
       }, 
       _set: {
-        stripe_info: JSON.stringify(orderStripePaymentInfo)
+        stripe_info: JSON.stringify(orderStripePaymentInfo),
+        stripe_fees: orderStripePaymentInfo.stripeFees
       }
     }, { 
       stripe_info: [{}, true]

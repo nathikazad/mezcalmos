@@ -23,12 +23,12 @@ export async function getCart(customerId: number): Promise<Cart> {
                 cost_per_one: true,
                 restaurant_item : {
                     name : {
-                    translations :  [{} , {
-                        language_id : true,
-                        value : true
-                    }], 
-                } , 
-                image : true,
+                        translations :  [{} , {
+                            language_id : true,
+                            value : true
+                        }], 
+                    }, 
+                    image: true,
                 }              
             }]
         }]

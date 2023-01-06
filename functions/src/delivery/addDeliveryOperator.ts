@@ -6,7 +6,7 @@ import { ParticipantType } from "../shared/models/Generic/Chat"
 import { NotificationInfo, ServerResponseStatus } from "../shared/models/Generic/Generic"
 import { UserInfo } from "../shared/models/Generic/User"
 import { AuthorizeOperatorNotification, Notification, NotificationAction, NotificationType } from "../shared/models/Notification"
-import { DeliveryOperator, DeliveryOperatorStatus } from "../shared/models/Services/Delivery/DeliveryOrder"
+import { DeliveryOperator, DeliveryOperatorStatus } from "../shared/models/Generic/Delivery"
 import { pushNotification } from "../utilities/senders/notifyUser"
 
 export interface AddOperatorDetails {
