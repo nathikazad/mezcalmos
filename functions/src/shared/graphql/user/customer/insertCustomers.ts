@@ -18,7 +18,8 @@ export async function insertCustomers(data: any) {
             }]
         })
         return {
-            user_id: (response.user[0]) ? response.user[0].id : undefined
+            user_id: (response.user[0]) ? response.user[0].id : undefined,
+            stripe_info: JSON.stringify(c.stripeInfo)
         }
     })
     customers = await Promise.all(customers)
@@ -29,6 +30,7 @@ export async function insertCustomers(data: any) {
             objects: customers
             // [{
             //     user_id: ,
+            //     stripe_info: ,
             // }]
         }, {
             returning: {

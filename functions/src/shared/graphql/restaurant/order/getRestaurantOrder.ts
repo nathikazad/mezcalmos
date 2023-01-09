@@ -21,6 +21,7 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
         order_time: true,
         restaurant: {
           location_gps: true,
+          self_delivery :true,
         },
         delivery_id: true,
         to_location_address: true,
@@ -88,7 +89,8 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
     customerAppType: response.restaurant_order_by_pk.customer_app_type as AppType,
     deliveryCost: response.restaurant_order_by_pk.delivery_cost,
     items,
-    stripeInfo: JSON.parse(response.restaurant_order_by_pk.stripe_info)
+    stripeInfo: JSON.parse(response.restaurant_order_by_pk.stripe_info),
+    totalCost: response.restaurant_order_by_pk.total_cost
   }
   if(response.restaurant_order_by_pk.delivery_id != undefined) {
     restaurantOrder.deliveryId = response.restaurant_order_by_pk.delivery_id
@@ -131,6 +133,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
         image: true,
         self_delivery:true,
         location_gps: true,
+       
       },
       customer_app_type: true,
       delivery_cost: true,
@@ -201,8 +204,8 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
       items,
       restaurant: {
         name: o.restaurant.name,
+        selfDelivery : o.restaurant.self_delivery,
         image: o.restaurant.image,
-        selfDelivery: o.restaurant.self_delivery,
         location: o.restaurant.location_gps as Location,
         restaurantOperators
       }

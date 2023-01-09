@@ -29,7 +29,7 @@ export async function addCard(userId: number, cardDetails: CardDetails) {
     { customer: customer.stripeInfo!.id },
     stripeOptions
   );
-
+  customer.stripeInfo!.cards = customer.stripeInfo!.cards ?? {}
   customer.stripeInfo!.cards[paymentMethod.id] = {
     id: paymentMethod.id,
     last4: paymentMethod.card?.last4,
@@ -47,7 +47,6 @@ export async function addCard(userId: number, cardDetails: CardDetails) {
 };
 
 export interface ChargeCardDetails {
-  paymentMethod: string,
   serviceProviderId: number,
   cardId: string,
   orderType: OrderType,
