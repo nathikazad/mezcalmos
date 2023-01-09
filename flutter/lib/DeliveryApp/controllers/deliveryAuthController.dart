@@ -45,9 +45,10 @@ class DeliveryAuthController extends GetxController {
     const String _tmpLmode =
         String.fromEnvironment('LMODE', defaultValue: "prod");
     _launchMode = _tmpLmode.toLaunchMode();
-    _locationListener?.cancel();
-    _locationListener = _listenForLocation();
-    if (driver?.driverInfo.hasuraId != null) {
+
+    if (driver != null && driver?.driverInfo.hasuraId != null) {
+      _locationListener?.cancel();
+      _locationListener = _listenForLocation();
       unawaited(saveNotificationToken());
     }
     super.onInit();
