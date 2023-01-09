@@ -125,7 +125,7 @@ export async function setDeliveryChatInfo(delivery: DeliveryOrder, deliveryDrive
       pk_columns: {
         id: delivery.chatWithCustomerId
       },
-      _append: {
+      _set: {
         chat_info: JSON.stringify(chatInfo),
       } 
     }, {
@@ -150,7 +150,7 @@ export async function setDeliveryChatInfo(delivery: DeliveryOrder, deliveryDrive
       pk_columns: {
         id: delivery.chatWithServiceProviderId
       },
-      _append: {
+      _set: {
         chat_info: JSON.stringify(chatInfo),
       }
     }, {
