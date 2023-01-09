@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreen/controllers/ListRestaurantController.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -20,7 +21,6 @@ import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/WebApp/authHooks.dart';
 import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
-import 'package:mezcalmos/WebApp/screens/Restaurants/resturentListView/controller/ListRestaurantController.dart';
 import 'package:mezcalmos/WebApp/values/constants.dart';
 
 import '../../CustomerApp/controllers/orderController.dart';
@@ -44,37 +44,40 @@ Future<bool> putControllers() async {
     });
   }
 
-  if (!Get.isRegistered<HasuraDb>()) {
-    Get.put(AppLifeCycleController());
-    Get.put(HasuraDb(typeMode.toLaunchMode()), permanent: true);
-    mezDbgPrint(
-        "]]]]]]]]]] the HasuraDb controller  is intailized ]]]]]]]]]]]]");
-    areAllIntilized.add(true);
-  }
-  if (!Get.isRegistered<AuthController>()) {
-    await Get.put<AuthController>(
-      AuthController(signInCallback, signOutCallback),
-      permanent: true,
-    );
-    if (!Get.isRegistered<RestaurantsInfoController>()) {
-      await Get.put<RestaurantsInfoController>(
-        RestaurantsInfoController(),
-        permanent: true,
-      );
-      mezDbgPrint(
-          "]]]]]]]]]] the RestaurantsInfoController is intailized ]]]]]]]]]]]]");
-      areAllIntilized.add(true);
-    }
-    if (!Get.isRegistered<RestaurantController>()) {
-      await Get.put(RestaurantController(), permanent: true);
-      mezDbgPrint(
-          "]]]]]]]]]] the RestaurantController is intailized ]]]]]]]]]]]]");
-      areAllIntilized.add(true);
-    }
+  //if (!Get.isRegistered<HasuraDb>()) {
+  await Get.put(AppLifeCycleController());
+  await Get.put(HasuraDb(typeMode.toLaunchMode()), permanent: true);
+  mezDbgPrint("]]]]]]]]]] the HasuraDb controller  is intailized ]]]]]]]]]]]]");
+  areAllIntilized.add(true);
+//  }
+  // if (!Get.isRegistered<AuthController>()) {
+  await Get.put<RestaurantsInfoController>(
+    RestaurantsInfoController(),
+    permanent: true,
+  );
+  await Get.put<AuthController>(
+    AuthController(signInCallback, signOutCallback),
+    permanent: true,
+  );
+  await Get.put<RestaurantsInfoController>(
+    RestaurantsInfoController(),
+    permanent: true,
+  );
+  //  if (!Get.isRegistered<RestaurantsInfoController>()) {
+  mezDbgPrint(
+      "]]]]]]]]]] the RestaurantsInfoController is intailized ]]]]]]]]]]]]");
+  areAllIntilized.add(true);
+  //  }
+  // if (!Get.isRegistered<RestaurantController>()) {
+  //   await Get.put(RestaurantController(), permanent: true);
+  //   mezDbgPrint(
+  //       "]]]]]]]]]] the RestaurantController is intailized ]]]]]]]]]]]]");
+  //   areAllIntilized.add(true);
+  //   // }
 
-    mezDbgPrint("]]]]]]]]]] the authController is intailized ]]]]]]]]]]]]");
-    areAllIntilized.add(true);
-  }
+  //   mezDbgPrint("]]]]]]]]]] the authController is intailized ]]]]]]]]]]]]");
+  //   areAllIntilized.add(true);
+  // }
 
   if (!Get.isRegistered<AppLifeCycleController>()) {
     await Get.put<AppLifeCycleController>(
@@ -132,7 +135,7 @@ Future<bool> putControllers() async {
   });
   return await waitWhile(
           () => Get.find<LanguageController>().isLamgInitialized.value,
-          Duration(seconds: 5))
+          Duration(seconds: 2))
       .then((value) {
     mezDbgPrint("🔴🔴🔴🔴🔴🔴🔴🔴 the value is $value");
     return value;

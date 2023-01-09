@@ -23,7 +23,9 @@ class ListRestaurantsController {
   RxString searchQuery = RxString("");
   num baseShippingPrice = 50;
   RestaurantsInfoController _restaurantsInfoController =
-      Get.find<RestaurantsInfoController>();
+      Get.isRegistered<RestaurantsInfoController>()
+          ? Get.find<RestaurantsInfoController>()
+          : Get.put<RestaurantsInfoController>(RestaurantsInfoController());
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 

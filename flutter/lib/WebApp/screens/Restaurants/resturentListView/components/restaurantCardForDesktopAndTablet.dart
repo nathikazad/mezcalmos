@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,6 +8,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/components/ShippingCostComponent.dart';
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
+import 'package:shimmer/shimmer.dart';
 
 import 'package:sizer/sizer.dart';
 
@@ -63,12 +65,26 @@ class _RestaurantCardForDesktopAndTabletState
                       child: Container(
                         width: Get.width,
                         height: double.infinity,
-                        child: Image(
-                          image: NetworkImage(
-                            '${widget.restaurant.info.image}',
-                          ),
+                        child: CachedNetworkImage(
+                          imageUrl: widget.restaurant.info.image,
                           fit: BoxFit.cover,
+                          placeholder: (_, __) {
+                            return Shimmer.fromColors(
+                              child: Container(
+                                color: Colors.grey,
+                              ),
+                              highlightColor: Colors.grey[400]!,
+                              baseColor: Colors.grey[300]!,
+                              direction: ShimmerDirection.ltr,
+                            );
+                          },
                         ),
+                        // child: Image(
+                        //   image: NetworkImage(widget.restaurant.info.image
+                        //       // "https://img.freepik.com/premium-vector/restaurant-logo-design-template_79169-56.jpg?w=2000",
+                        //       ),
+                        //   fit: BoxFit.cover,
+                        // ),
                       ),
                     ),
                     ClipRRect(
@@ -126,8 +142,7 @@ class _RestaurantCardForDesktopAndTabletState
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        if (widget.restaurant.info.description != null ||
-                            widget.restaurant.info.description!.isNotEmpty)
+                        if (widget.restaurant.info.description != null)
                           Text(
                             widget.restaurant.info
                                 .description![lang.userLanguageKey]!,

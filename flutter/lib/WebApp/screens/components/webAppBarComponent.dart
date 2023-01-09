@@ -47,6 +47,7 @@ class WebAppBarComponent extends StatelessWidget
           MezCalmosResizer.isSmallDesktop(context) ||
           MezCalmosResizer.isTablet(context) ||
           MezCalmosResizer.isSmallTablet(context)) {
+        return Container();
         return AppBarWedgetForDesktop(
           type: type,
           mezWebSideBarController: mezWebSideBarController,
