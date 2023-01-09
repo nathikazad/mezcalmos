@@ -131,6 +131,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
         name: true,
         image: true,
         location_gps: true,
+        self_delivery: true,
       },
       customer_app_type: true,
       delivery_cost: true,
@@ -199,7 +200,8 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
         name: o.restaurant.name,
         image: o.restaurant.image,
         location: o.restaurant.location_gps as Location,
-        restaurantOperators
+        restaurantOperators,
+        selfDelivery: o.restaurant.self_delivery
       }
     }
   })

@@ -1,6 +1,5 @@
 import { NewRestaurantOrderNotification, RestaurantOrder } from "../../functions/src/shared/models/Services/Restaurant/RestaurantOrder";
 import { getReceivedRestaurantOrders } from "../../functions/src/shared/graphql/restaurant/order/getRestaurantOrder";
-import { RestaurantOperator } from "../../functions/src/shared/models/Services/Restaurant/Restaurant";
 import { ParticipantType } from "../../functions/src/shared/models/Generic/Chat";
 import { Language } from "../../functions/src/shared/models/Generic/Generic";
 import { OrderType } from "../../functions/src/shared/models/Generic/Order";
@@ -27,67 +26,102 @@ async function checkRestaurantOrders() {
   let mezAdmins: MezAdmin[] = response[1];
   restaurantOrders.forEach(async(o) => {
     if((new Date()).getTime() - (new Date(o.orderTime!)).getTime() < 60 * 1000) {
-
-      notifyAdmins(mezAdmins, o.orderId!);
-      notifyOperators(o.orderId!, o.restaurant!.restaurantOperators!);
+      let notification: Notification = {
+        foreground: <NewRestaurantOrderNotification>{
+          time: (new Date()).toISOString(),
+          notificationType: NotificationType.NewOrder,
+          orderType: OrderType.Restaurant,
+          orderId: o.orderId,
+          notificationAction: NotificationAction.ShowSnackBarAlways,
+        },
+        background: {
+          [Language.ES]: {
+            title: "Nueva Pedido",
+            body: `Hay una nueva orden de alimento`
+          },
+          [Language.EN]: {
+            title: "New Order",
+            body: `There is a new restaurant order`
+          }
+        },
+        linkUrl: orderUrl(OrderType.Restaurant, o.orderId!)
+      }
+      let snap = await firebase.database().ref(`/orders/restaurant/${o.orderId}`).once("value");
+      let readOperators = snap.val();
+      // console.log(readOperators)
+      o.restaurant!.restaurantOperators!.forEach((r) => {
+        if(!(readOperators && readOperators[r.userId!]) &&  r.user) {
+          pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
+        }
+      });
+      mezAdmins.forEach((m) => {
+        if(!(readOperators && readOperators[m.userId]) && m.user) {
+          pushNotification(m.user.firebaseId, notification, m.notificationInfo, ParticipantType.MezAdmin);
+        }
+      })
     }
   })
 }
 
-function notifyAdmins(mezAdmins: MezAdmin[], orderId: number) {
+// function notifyAdmins(mezAdmins: MezAdmin[], orderId: number) {
 
-    let notification: Notification = {
-      foreground: <NewRestaurantOrderNotification>{
-        time: (new Date()).toISOString(),
-        notificationType: NotificationType.NewOrder,
-        orderType: OrderType.Restaurant,
-        orderId: orderId,
-        notificationAction: NotificationAction.ShowSnackBarAlways,
-      },
-      background: {
-        [Language.ES]: {
-          title: "Nueva Pedido",
-          body: `Hay una nueva orden de alimento`
-        },
-        [Language.EN]: {
-          title: "New Order",
-          body: `There is a new restaurant order`
-        }
-      },
-      linkUrl: orderUrl(OrderType.Restaurant, orderId)
-    }
-    mezAdmins.forEach((m) => {
-        pushNotification(m.user?.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
-    });
-}
+//     let notification: Notification = {
+//       foreground: <NewRestaurantOrderNotification>{
+//         time: (new Date()).toISOString(),
+//         notificationType: NotificationType.NewOrder,
+//         orderType: OrderType.Restaurant,
+//         orderId: orderId,
+//         notificationAction: NotificationAction.ShowSnackBarAlways,
+//       },
+//       background: {
+//         [Language.ES]: {
+//           title: "Nueva Pedido",
+//           body: `Hay una nueva orden de alimento`
+//         },
+//         [Language.EN]: {
+//           title: "New Order",
+//           body: `There is a new restaurant order`
+//         }
+//       },
+//       linkUrl: orderUrl(OrderType.Restaurant, orderId)
+//     }
+//     mezAdmins.forEach((m) => {
+//         pushNotification(m.user?.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+//     });
+// }
 
-async function notifyOperators(orderId: number, operators: RestaurantOperator[]) {
-    let notification: Notification = {
-      foreground: <NewRestaurantOrderNotification>{
-        time: (new Date()).toISOString(),
-        notificationType: NotificationType.NewOrder,
-        orderType: OrderType.Restaurant,
-        orderId,
-        notificationAction: NotificationAction.ShowSnackBarAlways,
-      },
-      background: {
-        [Language.ES]: {
-          title: "Nueva Pedido",
-          body: `Hay una nueva orden de alimento`
-        },
-        [Language.EN]: {
-          title: "New Order",
-          body: `There is a new restaurant order`
-        }
-      },
-      linkUrl: orderUrl(OrderType.Restaurant, orderId)
-    }
-    let snap = await firebase.database().ref(`/orders/restaurant/${orderId}`).once("value");
-    let readOperators = snap.val();
-    // console.log(readOperators)
-    operators.forEach((r) => {
-      if(!(readOperators && readOperators[r.id!]) &&  r.user) {
-        pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
-      }
-    });
-  }
+// async function notifyOperators(orderId: number, operators: RestaurantOperator[]) {
+//     let notification: Notification = {
+//       foreground: <NewRestaurantOrderNotification>{
+//         time: (new Date()).toISOString(),
+//         notificationType: NotificationType.NewOrder,
+//         orderType: OrderType.Restaurant,
+//         orderId,
+//         notificationAction: NotificationAction.ShowSnackBarAlways,
+//       },
+//       background: {
+//         [Language.ES]: {
+//           title: "Nueva Pedido",
+//           body: `Hay una nueva orden de alimento`
+//         },
+//         [Language.EN]: {
+//           title: "New Order",
+//           body: `There is a new restaurant order`
+//         }
+//       },
+//       linkUrl: orderUrl(OrderType.Restaurant, orderId)
+//     }
+//     let snap = await firebase.database().ref(`/orders/restaurant/${orderId}`).once("value");
+//     let readOperators = snap.val();
+//     // console.log(readOperators)
+//     operators.forEach((r) => {
+//       if(!(readOperators && readOperators[r.id!]) &&  r.user) {
+//         pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
+//       }
+//     });
+//     mezAdmins.forEach((m) => {
+//       if(!(readOperators && readOperators[m.userId]) && m.user) {
+//         pushNotification(m.user.firebaseId, notification, m.notificationInfo, ParticipantType.MezAdmin);
+//       }
+//     })
+//   }

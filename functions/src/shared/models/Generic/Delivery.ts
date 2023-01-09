@@ -37,6 +37,7 @@ export interface DeliveryOrder {
     orderTime: string;
     cancellationTime?: string;
     deliveryDriver?: DeliveryDriver;
+    orderType: OrderType;
 }
 
 export interface DeliveryDriver {

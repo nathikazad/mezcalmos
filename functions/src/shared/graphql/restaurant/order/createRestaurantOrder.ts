@@ -2,6 +2,7 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { CheckoutRequest } from "../../../../restaurant/checkoutCart";
 import { getHasura } from "../../../../utilities/hasura";
 import { DeliveryOrder, DeliveryOrderStatus } from "../../../models/Generic/Delivery";
+import { OrderType } from "../../../models/Generic/Order";
 import { Restaurant } from "../../../models/Services/Restaurant/Restaurant";
 import { RestaurantOrder, RestaurantOrderStatus } from "../../../models/Services/Restaurant/RestaurantOrder";
 
@@ -42,6 +43,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
         delivery: {
           data: {
             customer_id: restaurantOrder.customerId,
+            order_type: OrderType.Restaurant,
             dropoff_gps: JSON.stringify({
               "type": "Point",
               "coordinates": [restaurantOrder.toLocation.lng, restaurantOrder.toLocation.lat ],
@@ -134,6 +136,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
   restaurantOrder.deliveryId = response.insert_restaurant_order_one.delivery.id;
   let deliveryOrder: DeliveryOrder = {
     deliveryId: response.insert_restaurant_order_one.delivery.id,
+    orderType: OrderType.Restaurant,
     pickupLocation: restaurant.location,
     dropoffLocation: restaurantOrder.toLocation,
     chatWithServiceProviderId: response.insert_restaurant_order_one.delivery.chat_with_service_provider_id,

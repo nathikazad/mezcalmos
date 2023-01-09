@@ -5,7 +5,7 @@ import * as functions from "firebase-functions";
 import * as fs from 'fs';
 // import { startWatchingTaxiOrders } from "./taxiOrdersWatcher";
 import { startWatchingMessageNotificationQueue } from "./messagesNotifier";
-// import { startWatchingRestaurantOrders } from "./restaurantOrdersWatcher";
+import { startWatchingRestaurantOrders } from "./restaurantOrdersWatcher";
 import { startWatchingDeliveryOrders } from "./deliveryOrdersWatcher";
 
 enum Environment {
@@ -61,7 +61,7 @@ setKeys(keys[env]);
 startWatchingMessageNotificationQueue(keys[env]);
 // startWatchingTaxiOrders(constructReturnUrl);
 startWatchingDeliveryOrders();
-// startWatchingRestaurantOrders();
+startWatchingRestaurantOrders();
 /****************************  Some Helper Functions *************************************/
 // function constructReturnUrl(orderId: string) {
 //   let url;

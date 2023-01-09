@@ -2976,6 +2976,7 @@ type delivery_order {
   """
   notification_token: String
   order_time: timestamptz!
+  order_type: String!
   package_cost: money!
   payment_type: String!
   pickup_address: String!
@@ -3155,6 +3156,7 @@ input delivery_order_bool_exp {
   id: Int_comparison_exp
   notification_token: String_comparison_exp
   order_time: timestamptz_comparison_exp
+  order_type: String_comparison_exp
   package_cost: money_comparison_exp
   payment_type: String_comparison_exp
   pickup_address: String_comparison_exp
@@ -3249,6 +3251,7 @@ input delivery_order_insert_input {
   estimated_package_ready_time: timestamptz
   id: Int
   order_time: timestamptz
+  order_type: String
   package_cost: money
   payment_type: String
   pickup_address: String
@@ -3307,6 +3310,7 @@ type delivery_order_max_fields {
   estimated_package_ready_time: timestamptz
   id: Int
   order_time: timestamptz
+  order_type: String
   package_cost: money
   payment_type: String
   pickup_address: String
@@ -3362,6 +3366,7 @@ input delivery_order_max_order_by {
   estimated_package_ready_time: order_by
   id: order_by
   order_time: order_by
+  order_type: order_by
   package_cost: order_by
   payment_type: order_by
   pickup_address: order_by
@@ -3415,6 +3420,7 @@ type delivery_order_min_fields {
   estimated_package_ready_time: timestamptz
   id: Int
   order_time: timestamptz
+  order_type: String
   package_cost: money
   payment_type: String
   pickup_address: String
@@ -3470,6 +3476,7 @@ input delivery_order_min_order_by {
   estimated_package_ready_time: order_by
   id: order_by
   order_time: order_by
+  order_type: order_by
   package_cost: order_by
   payment_type: order_by
   pickup_address: order_by
@@ -3561,6 +3568,7 @@ input delivery_order_order_by {
   id: order_by
   notification_token: order_by
   order_time: order_by
+  order_type: order_by
   package_cost: order_by
   payment_type: order_by
   pickup_address: order_by
@@ -4102,6 +4110,9 @@ enum delivery_order_select_column {
   order_time
 
   """column name"""
+  order_type
+
+  """column name"""
   package_cost
 
   """column name"""
@@ -4172,6 +4183,7 @@ input delivery_order_set_input {
   estimated_package_ready_time: timestamptz
   id: Int
   order_time: timestamptz
+  order_type: String
   package_cost: money
   payment_type: String
   pickup_address: String
@@ -4383,6 +4395,7 @@ input delivery_order_stream_cursor_value_input {
   estimated_package_ready_time: timestamptz
   id: Int
   order_time: timestamptz
+  order_type: String
   package_cost: money
   payment_type: String
   pickup_address: String
@@ -4530,6 +4543,9 @@ enum delivery_order_update_column {
 
   """column name"""
   order_time
+
+  """column name"""
+  order_type
 
   """column name"""
   package_cost
@@ -5272,6 +5288,19 @@ type mutation_root {
   delete_notification_info_by_pk(id: Int!): notification_info
 
   """
+  delete data from the table: "post"
+  """
+  delete_post(
+    """filter the rows which have to be deleted"""
+    where: post_bool_exp!
+  ): post_mutation_response
+
+  """
+  delete single row from the table: "post"
+  """
+  delete_post_by_pk(id: Int!): post
+
+  """
   delete data from the table: "restaurant"
   """
   delete_restaurant(
@@ -5499,6 +5528,19 @@ type mutation_root {
   delete single row from the table: "stripe_info"
   """
   delete_stripe_info_by_pk(id: Int!): stripe_info
+
+  """
+  delete data from the table: "subscriber"
+  """
+  delete_subscriber(
+    """filter the rows which have to be deleted"""
+    where: subscriber_bool_exp!
+  ): subscriber_mutation_response
+
+  """
+  delete single row from the table: "subscriber"
+  """
+  delete_subscriber_by_pk(id: Int!): subscriber
 
   """
   delete data from the table: "topology.app_type"
@@ -5803,6 +5845,28 @@ type mutation_root {
     """upsert condition"""
     on_conflict: notification_info_on_conflict
   ): notification_info
+
+  """
+  insert data into the table: "post"
+  """
+  insert_post(
+    """the rows to be inserted"""
+    objects: [post_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: post_on_conflict
+  ): post_mutation_response
+
+  """
+  insert a single row into the table: "post"
+  """
+  insert_post_one(
+    """the row to be inserted"""
+    object: post_insert_input!
+
+    """upsert condition"""
+    on_conflict: post_on_conflict
+  ): post
 
   """
   insert data into the table: "restaurant"
@@ -6193,6 +6257,28 @@ type mutation_root {
     """upsert condition"""
     on_conflict: stripe_info_on_conflict
   ): stripe_info
+
+  """
+  insert data into the table: "subscriber"
+  """
+  insert_subscriber(
+    """the rows to be inserted"""
+    objects: [subscriber_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: subscriber_on_conflict
+  ): subscriber_mutation_response
+
+  """
+  insert a single row into the table: "subscriber"
+  """
+  insert_subscriber_one(
+    """the row to be inserted"""
+    object: subscriber_insert_input!
+
+    """upsert condition"""
+    on_conflict: subscriber_on_conflict
+  ): subscriber
 
   """
   insert data into the table: "topology.app_type"
@@ -6753,6 +6839,84 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [notification_info_updates!]!
   ): [notification_info_mutation_response]
+
+  """
+  update data of the table: "post"
+  """
+  update_post(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: post_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: post_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: post_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: post_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: post_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: post_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: post_set_input
+
+    """filter the rows which have to be updated"""
+    where: post_bool_exp!
+  ): post_mutation_response
+
+  """
+  update single row of the table: "post"
+  """
+  update_post_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: post_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: post_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: post_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: post_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: post_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: post_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: post_set_input
+    pk_columns: post_pk_columns_input!
+  ): post
+
+  """
+  update multiples rows of table: "post"
+  """
+  update_post_many(
+    """updates to execute, in order"""
+    updates: [post_updates!]!
+  ): [post_mutation_response]
 
   """
   update data of the table: "restaurant"
@@ -7443,6 +7607,40 @@ type mutation_root {
   ): [stripe_info_mutation_response]
 
   """
+  update data of the table: "subscriber"
+  """
+  update_subscriber(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: subscriber_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: subscriber_set_input
+
+    """filter the rows which have to be updated"""
+    where: subscriber_bool_exp!
+  ): subscriber_mutation_response
+
+  """
+  update single row of the table: "subscriber"
+  """
+  update_subscriber_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: subscriber_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: subscriber_set_input
+    pk_columns: subscriber_pk_columns_input!
+  ): subscriber
+
+  """
+  update multiples rows of table: "subscriber"
+  """
+  update_subscriber_many(
+    """updates to execute, in order"""
+    updates: [subscriber_updates!]!
+  ): [subscriber_mutation_response]
+
+  """
   update data of the table: "topology.app_type"
   """
   update_topology_app_type(
@@ -7885,6 +8083,374 @@ enum order_by {
 
   """in descending order, nulls last"""
   desc_nulls_last
+}
+
+"""
+columns and relationships of "post"
+"""
+type post {
+  comments(
+    """JSON select path"""
+    path: String
+  ): jsonb
+  id: Int!
+  image: String
+  likes(
+    """JSON select path"""
+    path: String
+  ): jsonb
+  message: String!
+  posted_on: timestamptz!
+
+  """An object relationship"""
+  restaurant: restaurant
+  service_provider_id: Int!
+  service_provider_type: String!
+}
+
+"""
+aggregated selection of "post"
+"""
+type post_aggregate {
+  aggregate: post_aggregate_fields
+  nodes: [post!]!
+}
+
+"""
+aggregate fields of "post"
+"""
+type post_aggregate_fields {
+  avg: post_avg_fields
+  count(columns: [post_select_column!], distinct: Boolean): Int!
+  max: post_max_fields
+  min: post_min_fields
+  stddev: post_stddev_fields
+  stddev_pop: post_stddev_pop_fields
+  stddev_samp: post_stddev_samp_fields
+  sum: post_sum_fields
+  var_pop: post_var_pop_fields
+  var_samp: post_var_samp_fields
+  variance: post_variance_fields
+}
+
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input post_append_input {
+  comments: jsonb
+  likes: jsonb
+}
+
+"""aggregate avg on columns"""
+type post_avg_fields {
+  id: Float
+  service_provider_id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "post". All fields are combined with a logical 'AND'.
+"""
+input post_bool_exp {
+  _and: [post_bool_exp!]
+  _not: post_bool_exp
+  _or: [post_bool_exp!]
+  comments: jsonb_comparison_exp
+  id: Int_comparison_exp
+  image: String_comparison_exp
+  likes: jsonb_comparison_exp
+  message: String_comparison_exp
+  posted_on: timestamptz_comparison_exp
+  restaurant: restaurant_bool_exp
+  service_provider_id: Int_comparison_exp
+  service_provider_type: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "post"
+"""
+enum post_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  post_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input post_delete_at_path_input {
+  comments: [String!]
+  likes: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input post_delete_elem_input {
+  comments: Int
+  likes: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input post_delete_key_input {
+  comments: String
+  likes: String
+}
+
+"""
+input type for incrementing numeric columns in table "post"
+"""
+input post_inc_input {
+  id: Int
+  service_provider_id: Int
+}
+
+"""
+input type for inserting data into table "post"
+"""
+input post_insert_input {
+  comments: jsonb
+  id: Int
+  image: String
+  likes: jsonb
+  message: String
+  posted_on: timestamptz
+  restaurant: restaurant_obj_rel_insert_input
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""aggregate max on columns"""
+type post_max_fields {
+  id: Int
+  image: String
+  message: String
+  posted_on: timestamptz
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""aggregate min on columns"""
+type post_min_fields {
+  id: Int
+  image: String
+  message: String
+  posted_on: timestamptz
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""
+response of any mutation on the table "post"
+"""
+type post_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [post!]!
+}
+
+"""
+on_conflict condition type for table "post"
+"""
+input post_on_conflict {
+  constraint: post_constraint!
+  update_columns: [post_update_column!]! = []
+  where: post_bool_exp
+}
+
+"""Ordering options when selecting data from "post"."""
+input post_order_by {
+  comments: order_by
+  id: order_by
+  image: order_by
+  likes: order_by
+  message: order_by
+  posted_on: order_by
+  restaurant: restaurant_order_by
+  service_provider_id: order_by
+  service_provider_type: order_by
+}
+
+"""primary key columns input for table: post"""
+input post_pk_columns_input {
+  id: Int!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input post_prepend_input {
+  comments: jsonb
+  likes: jsonb
+}
+
+"""
+select columns of table "post"
+"""
+enum post_select_column {
+  """column name"""
+  comments
+
+  """column name"""
+  id
+
+  """column name"""
+  image
+
+  """column name"""
+  likes
+
+  """column name"""
+  message
+
+  """column name"""
+  posted_on
+
+  """column name"""
+  service_provider_id
+
+  """column name"""
+  service_provider_type
+}
+
+"""
+input type for updating data in table "post"
+"""
+input post_set_input {
+  comments: jsonb
+  id: Int
+  image: String
+  likes: jsonb
+  message: String
+  posted_on: timestamptz
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""aggregate stddev on columns"""
+type post_stddev_fields {
+  id: Float
+  service_provider_id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type post_stddev_pop_fields {
+  id: Float
+  service_provider_id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type post_stddev_samp_fields {
+  id: Float
+  service_provider_id: Float
+}
+
+"""
+Streaming cursor of the table "post"
+"""
+input post_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: post_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input post_stream_cursor_value_input {
+  comments: jsonb
+  id: Int
+  image: String
+  likes: jsonb
+  message: String
+  posted_on: timestamptz
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""aggregate sum on columns"""
+type post_sum_fields {
+  id: Int
+  service_provider_id: Int
+}
+
+"""
+update columns of table "post"
+"""
+enum post_update_column {
+  """column name"""
+  comments
+
+  """column name"""
+  id
+
+  """column name"""
+  image
+
+  """column name"""
+  likes
+
+  """column name"""
+  message
+
+  """column name"""
+  posted_on
+
+  """column name"""
+  service_provider_id
+
+  """column name"""
+  service_provider_type
+}
+
+input post_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: post_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: post_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: post_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: post_delete_key_input
+
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: post_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: post_prepend_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: post_set_input
+  where: post_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type post_var_pop_fields {
+  id: Float
+  service_provider_id: Float
+}
+
+"""aggregate var_samp on columns"""
+type post_var_samp_fields {
+  id: Float
+  service_provider_id: Float
+}
+
+"""aggregate variance on columns"""
+type post_variance_fields {
+  id: Float
+  service_provider_id: Float
 }
 
 type query_root {
@@ -8365,6 +8931,49 @@ type query_root {
   fetch data from the table: "notification_info" using primary key columns
   """
   notification_info_by_pk(id: Int!): notification_info
+
+  """
+  fetch data from the table: "post"
+  """
+  post(
+    """distinct select on columns"""
+    distinct_on: [post_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [post_order_by!]
+
+    """filter the rows returned"""
+    where: post_bool_exp
+  ): [post!]!
+
+  """
+  fetch aggregated fields from the table: "post"
+  """
+  post_aggregate(
+    """distinct select on columns"""
+    distinct_on: [post_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [post_order_by!]
+
+    """filter the rows returned"""
+    where: post_bool_exp
+  ): post_aggregate!
+
+  """fetch data from the table: "post" using primary key columns"""
+  post_by_pk(id: Int!): post
 
   """
   fetch data from the table: "restaurant"
@@ -9156,6 +9765,49 @@ type query_root {
 
   """fetch data from the table: "stripe_info" using primary key columns"""
   stripe_info_by_pk(id: Int!): stripe_info
+
+  """
+  fetch data from the table: "subscriber"
+  """
+  subscriber(
+    """distinct select on columns"""
+    distinct_on: [subscriber_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [subscriber_order_by!]
+
+    """filter the rows returned"""
+    where: subscriber_bool_exp
+  ): [subscriber!]!
+
+  """
+  fetch aggregated fields from the table: "subscriber"
+  """
+  subscriber_aggregate(
+    """distinct select on columns"""
+    distinct_on: [subscriber_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [subscriber_order_by!]
+
+    """filter the rows returned"""
+    where: subscriber_bool_exp
+  ): subscriber_aggregate!
+
+  """fetch data from the table: "subscriber" using primary key columns"""
+  subscriber_by_pk(id: Int!): subscriber
 
   """
   fetch data from the table: "topology.app_type"
@@ -14331,7 +14983,6 @@ type restaurant_order {
     """JSON select path"""
     path: String
   ): jsonb
-  stripe_payment_id: Int
   tax: money!
   to_location_address: String
   to_location_gps: geography
@@ -14410,7 +15061,6 @@ type restaurant_order_avg_fields {
   restaurant_id: Float
   review_id: Float
   stripe_fees: Float
-  stripe_payment_id: Float
   tax: Float
 }
 
@@ -14427,7 +15077,6 @@ input restaurant_order_avg_order_by {
   restaurant_id: order_by
   review_id: order_by
   stripe_fees: order_by
-  stripe_payment_id: order_by
   tax: order_by
 }
 
@@ -14467,7 +15116,6 @@ input restaurant_order_bool_exp {
   status: String_comparison_exp
   stripe_fees: money_comparison_exp
   stripe_info: jsonb_comparison_exp
-  stripe_payment_id: Int_comparison_exp
   tax: money_comparison_exp
   to_location_address: String_comparison_exp
   to_location_gps: geography_comparison_exp
@@ -14557,7 +15205,6 @@ input restaurant_order_inc_input {
   restaurant_id: Int
   review_id: Int
   stripe_fees: money
-  stripe_payment_id: Int
   tax: money
 }
 
@@ -14596,7 +15243,6 @@ input restaurant_order_insert_input {
   status: String
   stripe_fees: money
   stripe_info: jsonb
-  stripe_payment_id: Int
   tax: money
   to_location_address: String
   to_location_gps: geography
@@ -15137,7 +15783,6 @@ type restaurant_order_max_fields {
   """
   status: String
   stripe_fees: money
-  stripe_payment_id: Int
   tax: money
   to_location_address: String
 }
@@ -15170,7 +15815,6 @@ input restaurant_order_max_order_by {
   """
   status: order_by
   stripe_fees: order_by
-  stripe_payment_id: order_by
   tax: order_by
   to_location_address: order_by
 }
@@ -15201,7 +15845,6 @@ type restaurant_order_min_fields {
   """
   status: String
   stripe_fees: money
-  stripe_payment_id: Int
   tax: money
   to_location_address: String
 }
@@ -15234,7 +15877,6 @@ input restaurant_order_min_order_by {
   """
   status: order_by
   stripe_fees: order_by
-  stripe_payment_id: order_by
   tax: order_by
   to_location_address: order_by
 }
@@ -15300,7 +15942,6 @@ input restaurant_order_order_by {
   status: order_by
   stripe_fees: order_by
   stripe_info: order_by
-  stripe_payment_id: order_by
   tax: order_by
   to_location_address: order_by
   to_location_gps: order_by
@@ -15670,9 +16311,6 @@ enum restaurant_order_select_column {
   stripe_info
 
   """column name"""
-  stripe_payment_id
-
-  """column name"""
   tax
 
   """column name"""
@@ -15711,7 +16349,6 @@ input restaurant_order_set_input {
   status: String
   stripe_fees: money
   stripe_info: jsonb
-  stripe_payment_id: Int
   tax: money
   to_location_address: String
   to_location_gps: geography
@@ -15728,7 +16365,6 @@ type restaurant_order_stddev_fields {
   restaurant_id: Float
   review_id: Float
   stripe_fees: Float
-  stripe_payment_id: Float
   tax: Float
 }
 
@@ -15745,7 +16381,6 @@ input restaurant_order_stddev_order_by {
   restaurant_id: order_by
   review_id: order_by
   stripe_fees: order_by
-  stripe_payment_id: order_by
   tax: order_by
 }
 
@@ -15760,7 +16395,6 @@ type restaurant_order_stddev_pop_fields {
   restaurant_id: Float
   review_id: Float
   stripe_fees: Float
-  stripe_payment_id: Float
   tax: Float
 }
 
@@ -15777,7 +16411,6 @@ input restaurant_order_stddev_pop_order_by {
   restaurant_id: order_by
   review_id: order_by
   stripe_fees: order_by
-  stripe_payment_id: order_by
   tax: order_by
 }
 
@@ -15792,7 +16425,6 @@ type restaurant_order_stddev_samp_fields {
   restaurant_id: Float
   review_id: Float
   stripe_fees: Float
-  stripe_payment_id: Float
   tax: Float
 }
 
@@ -15809,7 +16441,6 @@ input restaurant_order_stddev_samp_order_by {
   restaurant_id: order_by
   review_id: order_by
   stripe_fees: order_by
-  stripe_payment_id: order_by
   tax: order_by
 }
 
@@ -15851,7 +16482,6 @@ input restaurant_order_stream_cursor_value_input {
   status: String
   stripe_fees: money
   stripe_info: jsonb
-  stripe_payment_id: Int
   tax: money
   to_location_address: String
   to_location_gps: geography
@@ -15868,7 +16498,6 @@ type restaurant_order_sum_fields {
   restaurant_id: Int
   review_id: Int
   stripe_fees: money
-  stripe_payment_id: Int
   tax: money
 }
 
@@ -15885,7 +16514,6 @@ input restaurant_order_sum_order_by {
   restaurant_id: order_by
   review_id: order_by
   stripe_fees: order_by
-  stripe_payment_id: order_by
   tax: order_by
 }
 
@@ -15957,9 +16585,6 @@ enum restaurant_order_update_column {
   stripe_info
 
   """column name"""
-  stripe_payment_id
-
-  """column name"""
   tax
 
   """column name"""
@@ -16011,7 +16636,6 @@ type restaurant_order_var_pop_fields {
   restaurant_id: Float
   review_id: Float
   stripe_fees: Float
-  stripe_payment_id: Float
   tax: Float
 }
 
@@ -16028,7 +16652,6 @@ input restaurant_order_var_pop_order_by {
   restaurant_id: order_by
   review_id: order_by
   stripe_fees: order_by
-  stripe_payment_id: order_by
   tax: order_by
 }
 
@@ -16043,7 +16666,6 @@ type restaurant_order_var_samp_fields {
   restaurant_id: Float
   review_id: Float
   stripe_fees: Float
-  stripe_payment_id: Float
   tax: Float
 }
 
@@ -16060,7 +16682,6 @@ input restaurant_order_var_samp_order_by {
   restaurant_id: order_by
   review_id: order_by
   stripe_fees: order_by
-  stripe_payment_id: order_by
   tax: order_by
 }
 
@@ -16075,7 +16696,6 @@ type restaurant_order_variance_fields {
   restaurant_id: Float
   review_id: Float
   stripe_fees: Float
-  stripe_payment_id: Float
   tax: Float
 }
 
@@ -16092,7 +16712,6 @@ input restaurant_order_variance_order_by {
   restaurant_id: order_by
   review_id: order_by
   stripe_fees: order_by
-  stripe_payment_id: order_by
   tax: order_by
 }
 
@@ -18192,6 +18811,282 @@ type stripe_info_variance_fields {
   id: Float
 }
 
+"""
+columns and relationships of "subscriber"
+"""
+type subscriber {
+  """An object relationship"""
+  customer: customer
+  customer_id: Int!
+  id: Int!
+
+  """An object relationship"""
+  restaurant: restaurant
+  service_provider_id: Int!
+  service_provider_type: String!
+
+  """An object relationship"""
+  user: user
+}
+
+"""
+aggregated selection of "subscriber"
+"""
+type subscriber_aggregate {
+  aggregate: subscriber_aggregate_fields
+  nodes: [subscriber!]!
+}
+
+"""
+aggregate fields of "subscriber"
+"""
+type subscriber_aggregate_fields {
+  avg: subscriber_avg_fields
+  count(columns: [subscriber_select_column!], distinct: Boolean): Int!
+  max: subscriber_max_fields
+  min: subscriber_min_fields
+  stddev: subscriber_stddev_fields
+  stddev_pop: subscriber_stddev_pop_fields
+  stddev_samp: subscriber_stddev_samp_fields
+  sum: subscriber_sum_fields
+  var_pop: subscriber_var_pop_fields
+  var_samp: subscriber_var_samp_fields
+  variance: subscriber_variance_fields
+}
+
+"""aggregate avg on columns"""
+type subscriber_avg_fields {
+  customer_id: Float
+  id: Float
+  service_provider_id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "subscriber". All fields are combined with a logical 'AND'.
+"""
+input subscriber_bool_exp {
+  _and: [subscriber_bool_exp!]
+  _not: subscriber_bool_exp
+  _or: [subscriber_bool_exp!]
+  customer: customer_bool_exp
+  customer_id: Int_comparison_exp
+  id: Int_comparison_exp
+  restaurant: restaurant_bool_exp
+  service_provider_id: Int_comparison_exp
+  service_provider_type: String_comparison_exp
+  user: user_bool_exp
+}
+
+"""
+unique or primary key constraints on table "subscriber"
+"""
+enum subscriber_constraint {
+  """
+  unique or primary key constraint on columns "service_provider_type", "service_provider_id", "customer_id"
+  """
+  subscriber_customer_id_service_provider_type_service_provid_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  subscriber_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "subscriber"
+"""
+input subscriber_inc_input {
+  customer_id: Int
+  id: Int
+  service_provider_id: Int
+}
+
+"""
+input type for inserting data into table "subscriber"
+"""
+input subscriber_insert_input {
+  customer: customer_obj_rel_insert_input
+  customer_id: Int
+  id: Int
+  restaurant: restaurant_obj_rel_insert_input
+  service_provider_id: Int
+  service_provider_type: String
+  user: user_obj_rel_insert_input
+}
+
+"""aggregate max on columns"""
+type subscriber_max_fields {
+  customer_id: Int
+  id: Int
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""aggregate min on columns"""
+type subscriber_min_fields {
+  customer_id: Int
+  id: Int
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""
+response of any mutation on the table "subscriber"
+"""
+type subscriber_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [subscriber!]!
+}
+
+"""
+on_conflict condition type for table "subscriber"
+"""
+input subscriber_on_conflict {
+  constraint: subscriber_constraint!
+  update_columns: [subscriber_update_column!]! = []
+  where: subscriber_bool_exp
+}
+
+"""Ordering options when selecting data from "subscriber"."""
+input subscriber_order_by {
+  customer: customer_order_by
+  customer_id: order_by
+  id: order_by
+  restaurant: restaurant_order_by
+  service_provider_id: order_by
+  service_provider_type: order_by
+  user: user_order_by
+}
+
+"""primary key columns input for table: subscriber"""
+input subscriber_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "subscriber"
+"""
+enum subscriber_select_column {
+  """column name"""
+  customer_id
+
+  """column name"""
+  id
+
+  """column name"""
+  service_provider_id
+
+  """column name"""
+  service_provider_type
+}
+
+"""
+input type for updating data in table "subscriber"
+"""
+input subscriber_set_input {
+  customer_id: Int
+  id: Int
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""aggregate stddev on columns"""
+type subscriber_stddev_fields {
+  customer_id: Float
+  id: Float
+  service_provider_id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type subscriber_stddev_pop_fields {
+  customer_id: Float
+  id: Float
+  service_provider_id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type subscriber_stddev_samp_fields {
+  customer_id: Float
+  id: Float
+  service_provider_id: Float
+}
+
+"""
+Streaming cursor of the table "subscriber"
+"""
+input subscriber_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: subscriber_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input subscriber_stream_cursor_value_input {
+  customer_id: Int
+  id: Int
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""aggregate sum on columns"""
+type subscriber_sum_fields {
+  customer_id: Int
+  id: Int
+  service_provider_id: Int
+}
+
+"""
+update columns of table "subscriber"
+"""
+enum subscriber_update_column {
+  """column name"""
+  customer_id
+
+  """column name"""
+  id
+
+  """column name"""
+  service_provider_id
+
+  """column name"""
+  service_provider_type
+}
+
+input subscriber_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: subscriber_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: subscriber_set_input
+  where: subscriber_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type subscriber_var_pop_fields {
+  customer_id: Float
+  id: Float
+  service_provider_id: Float
+}
+
+"""aggregate var_samp on columns"""
+type subscriber_var_samp_fields {
+  customer_id: Float
+  id: Float
+  service_provider_id: Float
+}
+
+"""aggregate variance on columns"""
+type subscriber_variance_fields {
+  customer_id: Float
+  id: Float
+  service_provider_id: Float
+}
+
 type subscription_root {
   """
   fetch data from the table: "chat"
@@ -18824,6 +19719,63 @@ type subscription_root {
     """filter the rows returned"""
     where: notification_info_bool_exp
   ): [notification_info!]!
+
+  """
+  fetch data from the table: "post"
+  """
+  post(
+    """distinct select on columns"""
+    distinct_on: [post_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [post_order_by!]
+
+    """filter the rows returned"""
+    where: post_bool_exp
+  ): [post!]!
+
+  """
+  fetch aggregated fields from the table: "post"
+  """
+  post_aggregate(
+    """distinct select on columns"""
+    distinct_on: [post_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [post_order_by!]
+
+    """filter the rows returned"""
+    where: post_bool_exp
+  ): post_aggregate!
+
+  """fetch data from the table: "post" using primary key columns"""
+  post_by_pk(id: Int!): post
+
+  """
+  fetch data from the table in a streaming manner : "post"
+  """
+  post_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [post_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: post_bool_exp
+  ): [post!]!
 
   """
   fetch data from the table: "restaurant"
@@ -19867,6 +20819,63 @@ type subscription_root {
     """filter the rows returned"""
     where: stripe_info_bool_exp
   ): [stripe_info!]!
+
+  """
+  fetch data from the table: "subscriber"
+  """
+  subscriber(
+    """distinct select on columns"""
+    distinct_on: [subscriber_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [subscriber_order_by!]
+
+    """filter the rows returned"""
+    where: subscriber_bool_exp
+  ): [subscriber!]!
+
+  """
+  fetch aggregated fields from the table: "subscriber"
+  """
+  subscriber_aggregate(
+    """distinct select on columns"""
+    distinct_on: [subscriber_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [subscriber_order_by!]
+
+    """filter the rows returned"""
+    where: subscriber_bool_exp
+  ): subscriber_aggregate!
+
+  """fetch data from the table: "subscriber" using primary key columns"""
+  subscriber_by_pk(id: Int!): subscriber
+
+  """
+  fetch data from the table in a streaming manner : "subscriber"
+  """
+  subscriber_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [subscriber_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: subscriber_bool_exp
+  ): [subscriber!]!
 
   """
   fetch data from the table: "topology.app_type"

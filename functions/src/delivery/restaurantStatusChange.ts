@@ -5,7 +5,7 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { DeliveryDriver, DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus, DeliveryOrderStatusChangeNotification } from "../shared/models/Generic/Delivery";
+import { DeliveryDriver, DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
 import { HttpsError } from "firebase-functions/v1/auth";
