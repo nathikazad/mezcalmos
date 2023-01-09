@@ -1,12 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryApp/pages/Unauthorized/controllers/UnauthDriverViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
-class UnAuthorizedDriverView extends StatelessWidget {
+class UnAuthorizedDriverView extends StatefulWidget {
   const UnAuthorizedDriverView({super.key});
+
+  @override
+  State<UnAuthorizedDriverView> createState() => _UnAuthorizedDriverViewState();
+}
+
+class _UnAuthorizedDriverViewState extends State<UnAuthorizedDriverView> {
+  UnautthDriverViewController viewController = UnautthDriverViewController();
+  @override
+  void initState() {
+    viewController.init();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    viewController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

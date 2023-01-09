@@ -194,18 +194,18 @@ class OrderController extends GetxController {
   }
 
   void clearNewOrderNotificationsOfPastOrders() {
-    final List<int> currentOrderIds = <int>[];
-    currentOrders.forEach((Order order) => currentOrderIds.add(order.orderId));
-    _foregroundNotificationsController
-        .notifications()
-        .where((MezNotification.Notification notification) =>
-            notification.notificationType ==
-                MezNotification.NotificationType.NewOrder &&
-            !currentOrderIds.contains(notification.orderId!))
-        .forEach((MezNotification.Notification notification) {
-      _foregroundNotificationsController.removeNotification(notification.id);
-      mezDbgPrint("Clearing notifs");
-    });
+    // final List<int> currentOrderIds = <int>[];
+    // currentOrders.forEach((Order order) => currentOrderIds.add(order.orderId));
+    // _foregroundNotificationsController
+    //     .notifications()
+    //     .where((MezNotification.Notification notification) =>
+    //         notification.notificationType ==
+    //             MezNotification.NotificationType.NewOrder &&
+    //         !currentOrderIds.contains(notification.orderId!))
+    //     .forEach((MezNotification.Notification notification) {
+    //   _foregroundNotificationsController.removeNotification(notification.id);
+    //   mezDbgPrint("Clearing notifs");
+    // });
   }
 
   Future<ServerResponse> setEstimatedTime(

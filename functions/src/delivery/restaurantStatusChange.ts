@@ -1,6 +1,6 @@
 import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { OrderType, PaymentType } from "../shared/models/Generic/Order";
-import { RestaurantOrder, RestaurantOrderStatus } from "../shared/models/Services/Restaurant/RestaurantOrder";
+import { RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { orderUrl } from "../utilities/senders/appRoutes";
@@ -14,7 +14,7 @@ import { getRestaurantOrder } from "../shared/graphql/restaurant/order/getRestau
 import { deliveryOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { CustomerInfo } from "../shared/models/Generic/User";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
-import { updateOrderStatus } from "../shared/graphql/restaurant/order/updateOrder";
+import { updateRestaurantOrderStatus } from "../shared/graphql/restaurant/order/updateOrder";
 import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { RestaurantOperator } from "../shared/models/Services/Restaurant/Restaurant";
 import { capturePayment, PaymentDetails } from "../utilities/stripe/payment";
@@ -116,21 +116,22 @@ async function changeStatus(
 
     if(deliveryOrder.status == DeliveryOrderStatus.OnTheWayToDropoff) {
       restaurantOrder.status = RestaurantOrderStatus.OnTheWay;
-      updateOrderStatus(restaurantOrder);
+      updateRestaurantOrderStatus(restaurantOrder);
     }
     if(deliveryOrder.status == DeliveryOrderStatus.Delivered) {
       restaurantOrder.status = RestaurantOrderStatus.Delivered;
-      updateOrderStatus(restaurantOrder);
+      updateRestaurantOrderStatus(restaurantOrder);
     }
     let notification: Notification = {
-      foreground: <DeliveryOrderStatusChangeNotification>{
-        status: newStatus,
+      foreground: <RestaurantOrderStatusChangeNotification>{
+        status: restaurantOrder.status,
         time: (new Date()).toISOString(),
         notificationType: NotificationType.OrderStatusChange,
         orderType: OrderType.Restaurant,
         notificationAction: NotificationAction.ShowSnackBarAlways,
         orderId: changeDeliveryStatusDetails.restaurantOrderId
       },
+      // todo @SanchitUke fix the background message based on Restaurant Order Status
       background: deliveryOrderStatusChangeMessages[newStatus],
       linkUrl: orderUrl(OrderType.Restaurant, changeDeliveryStatusDetails.restaurantOrderId)
     }

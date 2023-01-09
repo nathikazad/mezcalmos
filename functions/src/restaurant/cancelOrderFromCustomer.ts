@@ -1,7 +1,7 @@
 import { orderInProcess, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { getRestaurantOrder } from "../shared/graphql/restaurant/order/getRestaurantOrder";
-import { updateOrderStatus } from "../shared/graphql/restaurant/order/updateOrder"
+import { updateRestaurantOrderStatus } from "../shared/graphql/restaurant/order/updateOrder"
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { restaurantOrderStatusChangeMessages } from "./bgNotificationMessages";
@@ -98,7 +98,7 @@ export async function cancelOrderFromCustomer(userId: number, data: any) {
 
     order.status = RestaurantOrderStatus.CancelledByCustomer;
 
-    updateOrderStatus(order)
+    updateRestaurantOrderStatus(order)
     deliveryOrder.status = DeliveryOrderStatus.CancelledByCustomer;
     updateDeliveryOrderStatus(deliveryOrder);
     

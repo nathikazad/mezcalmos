@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantsInfoController.dart';
-import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
+import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 
 class OperatorsViewController {
@@ -13,7 +13,7 @@ class OperatorsViewController {
 
   Rxn<Restaurant> restaurant = Rxn();
 
-  RxList<RestaurantOperator> ops = RxList.empty();
+  RxList<Operator> ops = RxList.empty();
 
   //
   TextEditingController emailOrPhone = TextEditingController();

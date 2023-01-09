@@ -63,6 +63,8 @@ class ROpCreateRestuarantViewController {
   }
 
   Future<ServerResponse> createRestaurant() async {
+    mezDbgPrint(
+        "Creating restaurant with this paylod ====>>>\n $_constructRestaurant()");
     if (restaurantImage.value == null) {
       restaurantImage.value =
           "https://img.freepik.com/premium-vector/restaurant-logo-design-template_79169-56.jpg?w=2000";
@@ -71,7 +73,7 @@ class ROpCreateRestuarantViewController {
         .httpsCallable('restaurant2-createRestaurant');
     try {
       final HttpsCallableResult response =
-          await cloudFunction.call({"kkkkk": "jjjjjj"});
+          await cloudFunction.call(_constructRestaurant());
       mezDbgPrint("Response : ${response.data}");
 
       return ServerResponse.fromJson(response.data);

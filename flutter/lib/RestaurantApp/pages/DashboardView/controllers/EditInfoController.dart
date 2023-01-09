@@ -111,6 +111,7 @@ class ROpEditInfoController {
             serviceId: restaurantId);
       }
     }
+
     await update_restaurant_info(
         id: restaurantId,
         restaurant: restaurant.value!.copyWith(

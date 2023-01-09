@@ -60,6 +60,7 @@ class MessageController extends GetxController {
       if (value != null) {
         mezDbgPrint("[77] Got Chat !");
         chat.value = value;
+      
         if (onValueCallBack != null) onValueCallBack();
       }
 
@@ -71,7 +72,8 @@ class MessageController extends GetxController {
       subscriptionId = hasuraDb.createSubscription(start: () {
         chatListener = listen_on_chat_messages(chatId: chatId)
             .listen((List<Message> msgs) {
-          mezDbgPrint("[+] Chat :: new messages :: trigger :: listener!");
+          mezDbgPrint(
+              "[+] Chat :: new messages :: trigger :: listener! =====>> ${chat.value.toString()}");
           if (msgs.isNotEmpty && msgs.length > chat.value!.messages.length) {
             chat.value!.messages.clear();
             chat.value!.messages.addAll(msgs);

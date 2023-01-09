@@ -2,7 +2,6 @@
 
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-import 'package:location/location.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
@@ -168,8 +167,8 @@ Future<ServerResponse> delete_saved_location(
 /// [customer_id] is the user's hasuraId
 Future<ServerResponse> add_saved_location(
     {required SavedLocation saved_location, required int customer_id}) async {
-  final Geography? _location_gps =
-      saved_location.location.position.toGeography();
+  final Geography? _location_gps = Geography(
+      saved_location.location.latitude, saved_location.location.longitude);
   if (_location_gps != null) {
     final QueryResult<Mutation$addSavedLocation> _location_add =
         await hasuraDb.graphQLClient.mutate$addSavedLocation(

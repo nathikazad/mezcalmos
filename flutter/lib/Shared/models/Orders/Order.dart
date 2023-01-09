@@ -146,6 +146,7 @@ abstract class DeliverableOrder extends Order {
       this.notifiedAdmin = false,
       this.notifiedOperator = false,
       super.totalCostBeforeShipping,
+      
       super.totalCost,
       super.refundAmount,
       super.costToCustomer,

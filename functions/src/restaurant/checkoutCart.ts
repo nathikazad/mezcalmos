@@ -25,6 +25,7 @@ export interface CheckoutRequest {
   customerAppType: AppType,
   customerLocation: Location,
   deliveryCost: number,
+ 
   paymentType: PaymentType,
   notes: string,
   restaurantId: number,
@@ -32,7 +33,7 @@ export interface CheckoutRequest {
   tripDistance: number,
   tripDuration: number,
   tripPolyline: string,
-  selfDelivery: boolean,
+ 
   scheduledTime?: string,
   stripePaymentId?: string,
   stripeFees?: number,
@@ -66,6 +67,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     orderType: checkoutRequest.restaurantOrderType,
     customerAppType: checkoutRequest.customerAppType,
     items: customerCart.items,
+    itemsCost : customerCart.cost,
     deliveryCost: checkoutRequest.deliveryCost,
     scheduledTime: checkoutRequest.scheduledTime
   }
@@ -73,7 +75,12 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
   console.log("+ Items[0].SelectedOptions ==> " ,customerCart.items[0].selectedOptions);
   console.log("+ Items ==> " , customerCart.items);
 
-    let orderResponse = await createRestaurantOrder(restaurantOrder, restaurant);
+
+    // if (data.stripePaymentId) {
+    //   order = (await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId, data.stripeFees)) as RestaurantOrder
+    // }
+
+    let orderResponse = await createRestaurantOrder(restaurantOrder, restaurant, checkoutRequest);
     
     // clear user cart 
     clearCart(customerId);
@@ -84,7 +91,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
 
     notifyOperators(orderResponse.restaurantOrder.orderId!, restaurant);
 
-    if(!(checkoutRequest.selfDelivery)) {
+    if(!(restaurant.selfDelivery)) {
       let assignDetails: AssignCompanyDetails = {
         deliveryCompanyId: 1,
         restaurantOrderId: orderResponse.restaurantOrder.orderId!

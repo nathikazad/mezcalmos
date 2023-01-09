@@ -13,12 +13,12 @@ import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant_operator/hsRestaurantOperator.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
-import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
+import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
 
 class RestaurantOpAuthController extends GetxController {
-  Rxn<RestaurantOperator> operator = Rxn();
+  Rxn<Operator> operator = Rxn();
   final int operatorUserId = Get.find<AuthController>().hasuraUserId!;
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
@@ -29,8 +29,8 @@ class RestaurantOpAuthController extends GetxController {
   RxnInt _restaurantId = RxnInt();
   int? get restaurantId => _restaurantId.value;
 
-  RestaurantOperatorState? get restaurantOperatorState => operator.value?.state;
-  Stream<RestaurantOperator?> get operatorInfoStream => operator.stream;
+  OperatorState? get restaurantOperatorState => operator.value?.state;
+  Stream<Operator?> get operatorInfoStream => operator.stream;
 
   StreamSubscription? _restaurantOperatorNodeListener;
   StreamSubscription<MainUserInfo>? _userInfoStreamListener;

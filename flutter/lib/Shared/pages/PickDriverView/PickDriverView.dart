@@ -1,0 +1,135 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/pages/PickDriverView/components/DriverSelectCard.dart';
+import 'package:mezcalmos/Shared/pages/PickDriverView/controllers/PickDriverViewController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+
+//
+dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
+    ['pages']['ROpPickDriverView'];
+
+//
+/// params orderId
+/// Arguments showForwardButton
+/// Delivery order id
+class PickDriverView extends StatefulWidget {
+  const PickDriverView({super.key});
+
+  @override
+  State<PickDriverView> createState() => _PickDriverViewState();
+}
+
+class _PickDriverViewState extends State<PickDriverView> {
+  PickDriverController viewController = PickDriverController();
+  int? deliveryOrderId;
+  bool showForward = false;
+
+  @override
+  void initState() {
+    mezDbgPrint("Inside kpickdriver routre :::::::::");
+    if (Get.parameters["orderId"] != null) {
+      showForward = Get.arguments?["showForwardButton"] as bool? ?? false;
+      deliveryOrderId = int.tryParse(Get.parameters["orderId"]!);
+
+      if (deliveryOrderId != null) {
+        viewController.init(orderId: deliveryOrderId!);
+      } else {
+        MezRouter.back();
+      }
+    } else {
+      MezRouter.back();
+    }
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    viewController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+            onClick: MezRouter.back, title: '${_i18n()["pick"]}'),
+        body: Obx(() {
+          if (viewController.screenLoading.isFalse) {
+            return SingleChildScrollView(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  children: [
+                    // forward to mezcalmos //
+                    if (showForward)
+                      MezButton(
+                        label: "${_i18n()["fwdMezcalmos"]} (50\$)",
+                        onClick: () async {
+                          //   await viewController.forwardToMezcalmos(order.value!);
+                        },
+                      ),
+                    // drivers map //
+                    // ROpDriversMapComponent(
+                    //     drivers: viewController.drivers, order: order.value!),
+                    const SizedBox(
+                      height: 25,
+                    ),
+
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    // drivers list //
+                    Column(
+                      children: List.generate(
+                          viewController.drivers.length,
+                          (int index) => DriverSelectCard(
+                                driver: viewController.drivers[index],
+                                assingCallback: () async {
+                                  final bool result = await _assignCallback(
+                                      viewController.drivers[index]);
+                                  if (result) {
+                                    MezRouter.back();
+                                    viewController.screenLoading.value = false;
+                                  }
+                                },
+                              )),
+                    )
+                  ],
+                ));
+          } else {
+            return Container(
+                alignment: Alignment.center,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      '${_i18n()["assigning"]}',
+                      style: Get.textTheme.bodyText2
+                          ?.copyWith(color: primaryBlueColor),
+                    )
+                  ],
+                ));
+          }
+        }));
+  }
+
+  Future<bool> _assignCallback(DeliveryDriver driver) async {
+    final ServerResponse result = await viewController.assignDriver(
+      driver: driver,
+    );
+    return result.success;
+    // return true;
+  }
+}
