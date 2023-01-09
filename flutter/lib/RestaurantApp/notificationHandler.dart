@@ -50,7 +50,7 @@ Notification restaurantNotificationHandler(String key, value) {
     case NotificationType.OrderStatusChange:
       return _restaurantOpOrderChangesNotifier(key, value);
     default:
-      throw StateError("Invalid Notification Type");
+      throw StateError("Invalid Notification Type $value");
   }
 }
 
