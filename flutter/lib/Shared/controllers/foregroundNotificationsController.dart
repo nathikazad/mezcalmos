@@ -140,4 +140,13 @@ class ForegroundNotificationsController extends GetxController {
     _notificationNodeRemoveListener?.cancel();
     super.onClose();
   }
+
+  bool hasNewMessageNotification(String chatId) {
+    return notifications()
+        .where((Notification notification) =>
+            notification.notificationType == NotificationType.NewMessage &&
+            notification.chatId == chatId)
+        .toList()
+        .isNotEmpty;
+  }
 }

@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/order/__generated/restaurant_order.graphql.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
@@ -34,7 +36,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
       .map<RestaurantOrder?>(
           (QueryResult<Subscription$listen_on_restaurant_order_by_id> event) {
     mezDbgPrint(
-        "Event from hs restaurant order 🚀🚀🚀 ${event.parsedData?.restaurant_order_by_pk?.delivery?.delivery_driver}");
+        "Event from hs restaurant order 🚀🚀🚀 ${event.parsedData?.restaurant_order_by_pk?.delivery?.delivery_driver?.current_location}");
 
     if (event.parsedData?.restaurant_order_by_pk != null) {
       final List<RestaurantOrderItem> items = [];
@@ -95,6 +97,18 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
         quantity: 1,
         deliveryOrderId: orderData.delivery_id,
         serviceProviderId: orderData.restaurant.id,
+        routeInformation: (orderData.delivery?.trip_polyline != null &&
+                orderData.delivery?.trip_polyline != null &&
+                orderData.delivery?.trip_polyline != null)
+            ? RouteInformation(
+                duration: RideDuration(
+                    orderData.delivery!.trip_duration!.toString(),
+                    orderData.delivery!.trip_duration!),
+                distance: RideDistance(
+                    orderData.delivery!.trip_distance!.toString(),
+                    orderData.delivery!.trip_distance!),
+                polyline: orderData.delivery!.trip_polyline!)
+            : null,
         paymentType: orderData.payment_type.toPaymentType(),
         orderTime: DateTime.parse(orderData.order_time),
         cost: orderData.delivery_cost,
@@ -110,6 +124,15 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
         ),
         dropoffDriver: (orderData.delivery?.delivery_driver != null)
             ? DeliveryDriverUserInfo(
+                location:
+                    (orderData.delivery?.delivery_driver?.current_location !=
+                            null)
+                        ? LatLng(
+                            orderData.delivery!.delivery_driver!
+                                .current_location!.latitude,
+                            orderData.delivery!.delivery_driver!
+                                .current_location!.longitude)
+                        : null,
                 hasuraId: orderData.delivery!.delivery_driver!.user.id,
                 name: orderData.delivery!.delivery_driver!.user.name,
                 image: orderData.delivery!.delivery_driver!.user.image,
@@ -206,12 +229,32 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
         : null,
     status: orderData.status.toRestaurantOrderStatus(),
     quantity: 1,
+    routeInformation: (orderData.delivery?.trip_polyline != null &&
+            orderData.delivery?.trip_polyline != null &&
+            orderData.delivery?.trip_polyline != null)
+        ? RouteInformation(
+            duration: RideDuration(
+                orderData.delivery!.trip_duration!.toString(),
+                orderData.delivery!.trip_duration!),
+            distance: RideDistance(
+                orderData.delivery!.trip_distance!.toString(),
+                orderData.delivery!.trip_distance!),
+            polyline: orderData.delivery!.trip_polyline!)
+        : null,
     serviceProviderId: orderData.restaurant.id,
     paymentType: orderData.payment_type.toPaymentType(),
     orderTime: DateTime.parse(orderData.order_time),
     cost: orderData.delivery_cost,
     dropoffDriver: (orderData.delivery?.delivery_driver != null)
         ? DeliveryDriverUserInfo(
+            location:
+                (orderData.delivery?.delivery_driver?.current_location != null)
+                    ? LatLng(
+                        orderData.delivery!.delivery_driver!.current_location!
+                            .latitude,
+                        orderData.delivery!.delivery_driver!.current_location!
+                            .longitude)
+                    : null,
             hasuraId: orderData.delivery!.delivery_driver!.user.id,
             name: orderData.delivery!.delivery_driver!.user.name,
             image: orderData.delivery!.delivery_driver!.user.image,

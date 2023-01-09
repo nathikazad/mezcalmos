@@ -175,6 +175,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
     if (viewController.order.value!.inDeliveryPhase())
       return Container(
         height: 350,
+        margin: const EdgeInsets.only(bottom: 20),
         child: MGoogleMap(
           mGoogleMapController: viewController.mGoogleMapController,
           padding: EdgeInsets.all(20),

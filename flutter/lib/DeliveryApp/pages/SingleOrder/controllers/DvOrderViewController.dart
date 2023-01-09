@@ -118,6 +118,7 @@ class DvOrderViewcontroller {
           MezSnackbar("Error", "Order does not exist");
         });
       } else {
+        mezDbgPrint("InitiiiiiiiiiInitiiiiiiiiiInitiiiiiiiiiInitiiiiiiiii");
         initilizeMap(mapController, order, order.value!.serviceInfo);
       }
     });

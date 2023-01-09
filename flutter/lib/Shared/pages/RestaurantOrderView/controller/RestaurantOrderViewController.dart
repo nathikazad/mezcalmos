@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
@@ -10,6 +11,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class RestaurantOrderViewController {
   // instances //
@@ -35,9 +37,12 @@ class RestaurantOrderViewController {
     try {
       order.value =
           await get_restaurant_order_by_id(orderId: orderId, withCache: false);
-      // order.value?.dropoffDriver = event.dropoffDriver;
-
-      // mezDbgPrint(order.value!.dropoffDriver?.toFirebaseFormatJson());
+      if (order.value!.routeInformation != null) {
+        mezDbgPrint(
+            "Order route informations ====🥸🥸🥸🥸===== => ${order.value!.routeInformation}");
+        mGoogleMapController.decodeAndAddPolyline(
+            encodedPolylineString: order.value!.routeInformation!.polyline);
+      }
     } catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
@@ -51,11 +56,10 @@ class RestaurantOrderViewController {
           mezDbgPrint(event);
           if (event != null) {
             mezDbgPrint(
-                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.dropoffDriver}");
+                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.dropoffDriver?.location?.toJson()}");
             order.value = event;
             order.value?.dropoffDriver = event.dropoffDriver;
-
-            mezDbgPrint(order.value!.dropoffDriver?.toFirebaseFormatJson());
+            _updateMapByPhaseAndStatus();
           }
         });
       }, cancel: () {
@@ -63,7 +67,37 @@ class RestaurantOrderViewController {
         orderStream = null;
       });
     }
-    mezDbgPrint("Order stream =============>$orderStream");
+    // first time init map
+    //mGoogleMapController.animateMarkersPolyLinesBounds(true);
+    await _initMap();
+  }
+
+  Future<void> _initMap() async {
+    // first time init map
+    mGoogleMapController.minMaxZoomPrefs =
+        MinMaxZoomPreference.unbounded; // LEZEM
+    mGoogleMapController.animateMarkersPolyLinesBounds.value = true;
+    mGoogleMapController.periodicRerendering.value = true;
+
+    // mGoogleMapController.periodicRerendering.value = true;
+    if (order.value?.routeInformation?.polyline != null)
+      mGoogleMapController.decodeAndAddPolyline(
+        encodedPolylineString: order.value!.routeInformation!.polyline,
+      );
+
+    _updateMapByPhaseAndStatus();
+
+    await waitForOrderIfNotLoaded().then((void value) {
+      if (order.value == null) {
+        // ignore: inference_failure_on_function_invocation
+        Future<Null>.delayed(Duration.zero, () {
+          Get.back<Null>();
+          MezSnackbar("Error", "Order does not exist");
+        });
+      } else {
+        // controller.setNotifiedAsTrue(order.value!);
+      }
+    });
   }
 
 // Map methods //
@@ -72,7 +106,7 @@ class RestaurantOrderViewController {
       mezDbgPrint(
           "PICK UP PHASE snapshot [$_statusSnapshot] - [${order.value!.status}]");
       if (_statusSnapshot != order.value!.status) {
-        if (order.value?.restaurant.location != null)
+        if (order.value?.restaurant.location != null) {
           mGoogleMapController.setLocation(
             LocModel.Location(
               "_",
@@ -84,6 +118,7 @@ class RestaurantOrderViewController {
               ),
             ),
           );
+        }
 
         _statusSnapshot = order.value?.status;
         // add laundry marker
@@ -100,6 +135,7 @@ class RestaurantOrderViewController {
         );
       }
       // keep updating driver's marker
+      mezDbgPrint("Updating driver location");
       mGoogleMapController.addOrUpdateUserMarker(
         latLng: order.value?.dropoffDriver?.location,
         customImgHttpUrl: order.value?.dropoffDriver?.image,

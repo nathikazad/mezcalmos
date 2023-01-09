@@ -35,21 +35,23 @@ class DeliveryAuthController extends GetxController {
   late AppLaunchMode _launchMode;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     // ------------------------------------------------------------------------
     mezDbgPrint("DeliveryAuthController: init $hashCode");
     mezDbgPrint(
         "DeliveryAuthController: calling handle state change first time");
-    setupDeliveryDriver();
+    await setupDeliveryDriver();
 
     const String _tmpLmode =
         String.fromEnvironment('LMODE', defaultValue: "prod");
     _launchMode = _tmpLmode.toLaunchMode();
 
     if (driver != null && driver?.driverInfo.hasuraId != null) {
+      unawaited(saveNotificationToken());
+    }
+    if (driver?.deliveryDriverId != null) {
       _locationListener?.cancel();
       _locationListener = _listenForLocation();
-      unawaited(saveNotificationToken());
     }
     super.onInit();
   }

@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
@@ -41,7 +41,6 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
 
   @override
   Widget build(BuildContext context) {
- 
     return Card(
       margin: const EdgeInsets.only(bottom: 20),
       child: Container(
@@ -107,18 +106,21 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                   // TODO handle @m66are handle message btn
 
                   if (widget.order.serviceProviderDropOffDriverChatId != null)
-                    MessageButton(
-                      onTap: () {
-                        MezRouter.toNamed(getMessagesRoute(
-                            chatId: widget
-                                .order.serviceProviderDropOffDriverChatId!,
-                            recipientType: ParticipantType.DeliveryDriver,
-                            orderId: widget.order.orderId));
-                      },
-                      // showRedDot: Get.find<ROpOrderController>()
-                      //     .hasNewMessageNotification(widget
-                      //         .order.serviceProviderDropOffDriverChatId!
-                      //         .toString()),
+                    Obx(
+                      () => MessageButton(
+                        onTap: () {
+                          MezRouter.toNamed(getMessagesRoute(
+                              chatId: widget
+                                  .order.serviceProviderDropOffDriverChatId!,
+                              recipientType: ParticipantType.DeliveryDriver,
+                              orderId: widget.order.orderId));
+                        },
+                        showRedDot:
+                            Get.find<ForegroundNotificationsController>()
+                                .hasNewMessageNotification(widget
+                                    .order.serviceProviderDropOffDriverChatId!
+                                    .toString()),
+                      ),
                     ),
                 ])
               : (widget.order.selfDelivery)

@@ -6,8 +6,8 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
-dynamic _i18n() =>
-    Get.find<LanguageController>().strings["LaundryApp"]["notificationHandler"];
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['notificationHandler'];
 
 Notification restaurantNotificationHandler(String key, value) {
   final NotificationType notificationType =
@@ -68,17 +68,17 @@ Notification restaurantNotificationHandler(String key, value) {
 Notification _restaurantOpOrderChangesNotifier(String key, value) {
   final RestaurantOrderStatus newOrdersStatus =
       value['status'].toString().toRestaurantOrderStatus();
-  final Map<String, dynamic> dynamicFields =
-      _getRestaurantOrderStatusFields(newOrdersStatus)!;
+  final Map<String, dynamic>? dynamicFields =
+      _getRestaurantOrderStatusFields(newOrdersStatus);
 
   return Notification(
       id: key,
       linkUrl: getROpOrderRoute(value["orderId"].toString()),
       icon: mat.Icons.flatware,
       secondaryIcon: mat.Icons.close,
-      body: dynamicFields["body"],
-      imgUrl: dynamicFields["imgUrl"],
-      title: dynamicFields["title"],
+      body: dynamicFields?["body"],
+      imgUrl: dynamicFields?["imgUrl"],
+      title: dynamicFields?["title"],
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.OrderStatusChange,
       notificationAction:
@@ -89,19 +89,19 @@ Notification _restaurantOpOrderChangesNotifier(String key, value) {
 Map<String, dynamic>? _getRestaurantOrderStatusFields(
     RestaurantOrderStatus restaurantOrderStatus) {
   switch (restaurantOrderStatus) {
-    case RestaurantOrderStatus.Preparing:
-      return <String, dynamic>{
-        "title": "${_i18n()["preparingOrderTitle"]}",
-        "body": "${_i18n()["preparingOrderBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
-      };
-    case RestaurantOrderStatus.Ready:
-      return <String, dynamic>{
-        "title": "${_i18n()["readyForPickUpTitle"]}",
-        "body": "${_i18n()["readyForPickUpBody"]}",
-        "imgUrl": "assets/images/shared/notifications/onTheWay.png",
-      };
+    // case RestaurantOrderStatus.Preparing:
+    //   return <String, dynamic>{
+    //     "title": "${_i18n()["preparingOrderTitle"]}",
+    //     "body": "${_i18n()["preparingOrderBody"]}",
+    //     "imgUrl":
+    //         "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
+    //   };
+    // case RestaurantOrderStatus.Ready:
+    //   return <String, dynamic>{
+    //     "title": "${_i18n()["readyForPickUpTitle"]}",
+    //     "body": "${_i18n()["readyForPickUpBody"]}",
+    //     "imgUrl": "assets/images/shared/notifications/onTheWay.png",
+    //   };
     case RestaurantOrderStatus.OnTheWay:
       return <String, dynamic>{
         "title": "${_i18n()["onTheWayRestaurantTitle"]}",
@@ -114,13 +114,7 @@ Map<String, dynamic>? _getRestaurantOrderStatusFields(
         "body": "${_i18n()["deliveredBody"]}",
         "imgUrl": "assets/images/shared/notifications/delivered.png",
       };
-    case RestaurantOrderStatus.CancelledByAdmin:
-      return <String, dynamic>{
-        "title": "${_i18n()["cancelledTitle"]}",
-        "body": "${_i18n()["cancelledBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
-      };
+
     default:
     // do nothing
   }
