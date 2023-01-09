@@ -21,6 +21,7 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
         order_time: true,
         restaurant: {
           location_gps: true,
+          self_delivery :true,
         },
         delivery_id: true,
         to_location_address: true,
@@ -131,6 +132,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
         name: true,
         image: true,
         location_gps: true,
+        self_delivery : true,
       },
       customer_app_type: true,
       delivery_cost: true,
@@ -152,7 +154,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
       }],
     }]
   });
-  return response.restaurant_order.map((o) => {
+  return response.restaurant_order.map((o) : RestaurantOrder => {
     let restaurantOperators: RestaurantOperator[] = o.restaurant.restaurant_operators.map((r) => {
       return {
         id: r.id,
@@ -197,6 +199,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
       items,
       restaurant: {
         name: o.restaurant.name,
+        selfDelivery : o.restaurant.self_delivery,
         image: o.restaurant.image,
         location: o.restaurant.location_gps as Location,
         restaurantOperators
