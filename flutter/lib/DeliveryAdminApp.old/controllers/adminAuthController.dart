@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/DeliveryAdminApp.old/models/Admin.dart';
+import 'package:mezcalmos/MezAdminApp/models/MezAdmin.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
@@ -14,15 +15,15 @@ import 'package:mezcalmos/Shared/graphql/admin/hsAdmin.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class AdminAuthController extends GetxController {
-  Rxn<Admin> _admin = Rxn();
+  Rxn<MezAdmin> _admin = Rxn();
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
 
   BackgroundNotificationsController _notificationsController =
       Get.find<BackgroundNotificationsController>();
 
-  Admin? get admin => _admin.value;
-  Stream<Admin?> get adminStream => _admin.stream;
+  MezAdmin? get admin => _admin.value;
+  Stream<MezAdmin?> get adminStream => _admin.stream;
   // StreamSubscription? _adminNodeListener;
 
   bool _checkedAppVersion = false;

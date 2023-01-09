@@ -34,7 +34,7 @@ const String hasuraDevLink = "http://127.0.0.1:8080/v1/graphql";
 const String tTestRestaurantOpValue = "restaurantop@mezcalmos.com";
 const String tTestCustomerValue = "customer@mezcalmos.com";
 const String tTestDeliveryDriverValue = "deliverydriver@mezcalmos.com";
-const String tTestAdminValue = "mezAdmin@mezcalmos.com";
+const String tTestAdminValue = "mezadmin@mezcalmos.com";
 const String tTestDeliveryOpValue = "deliveryop@mezcalmos.com";
 const String tEmailTestPassword = "password";
 
@@ -129,7 +129,8 @@ enum AppType {
   DeliveryAdminApp,
   DeliveryApp,
   LaundryApp,
-  RestaurantApp
+  RestaurantApp,
+  MezAdminApp
 }
 
 extension ParseOrderTypeToString on AppType {

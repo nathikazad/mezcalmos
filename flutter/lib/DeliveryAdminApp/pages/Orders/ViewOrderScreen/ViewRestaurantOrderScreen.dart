@@ -800,7 +800,6 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                         Text(
                           order.moreInfo.serviceProviderName ??
                               "ServiceProvider's name",
-
                           // order.restaurant.name,
                           style: Get.textTheme.bodyText1,
                         ),

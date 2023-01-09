@@ -335,7 +335,7 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
       mezDbgPrint("---> ${element.name}");
     });
     if (previousRoute is PageRoute && route is PageRoute && _rCurrent != null) {
-      if (_rCurrent.name == previousRoute.settings.name) {
+      if (_rCurrent.name == route.settings.name) {
         mezDbgPrint(
             "[+] MissMatch on NavStack :: current [MezStack](${_rCurrent.name}) | [Material](${route.settings.name})  :: resolving ... done!");
         if (_navigationStack.isNotEmpty) {
