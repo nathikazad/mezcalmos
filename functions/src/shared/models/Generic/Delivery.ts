@@ -10,6 +10,7 @@ export interface DeliveryOrder {
     deliveryDriverType?: DeliveryDriverType
     deliveryDriverId?: number;
     chatWithServiceProviderId?: number;
+    
     chatWithCustomerId: number;
     paymentType: PaymentType;
     stripePaymentId?: number;
