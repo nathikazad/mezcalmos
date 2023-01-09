@@ -129,6 +129,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
         }],
         name: true,
         image: true,
+        self_delivery:true,
         location_gps: true,
       },
       customer_app_type: true,
@@ -151,18 +152,20 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
       }],
     }]
   });
-  return response.restaurant_order.map((o) => {
+
+ return  response.restaurant_order.map((o ): RestaurantOrder => {
     let restaurantOperators: RestaurantOperator[] = o.restaurant.restaurant_operators.map((r) => {
       return {
         id: r.id,
         userId: r.user_id,
         restaurantId: o.restaurant_id,
+        
         status: r.status as OperatorStatus,
         owner: r.owner,
         notificationInfo: (r.notification_token) ? {
           AppTypeId: AppType.RestaurantApp,
           token: r.notification_token
-        }: undefined,
+        } : undefined,
         user: {
           id: r.user_id,
           firebaseId: r.user.firebase_id,
@@ -181,6 +184,8 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
     })
     return {
       orderId: o.id,
+      
+      
       customerId: o.customer_id,
       restaurantId: o.restaurant_id,
       paymentType: o.payment_type as PaymentType,
@@ -197,6 +202,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
       restaurant: {
         name: o.restaurant.name,
         image: o.restaurant.image,
+        selfDelivery: o.restaurant.self_delivery,
         location: o.restaurant.location_gps as Location,
         restaurantOperators
       }

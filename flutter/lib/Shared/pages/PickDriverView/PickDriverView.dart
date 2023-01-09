@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/pages/PickDriverView/components/DriverSelectCard.dart';
-import 'package:mezcalmos/Shared/pages/PickDriverView/controllers/PickDriverViewController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/pages/PickDriverView/components/DriverSelectCard.dart';
+import 'package:mezcalmos/Shared/pages/PickDriverView/controllers/PickDriverViewController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
@@ -69,22 +69,19 @@ class _PickDriverViewState extends State<PickDriverView> {
                   children: [
                     // forward to mezcalmos //
                     if (showForward)
-                      MezButton(
-                        label: "${_i18n()["fwdMezcalmos"]} (50\$)",
-                        onClick: () async {
-                          //   await viewController.forwardToMezcalmos(order.value!);
-                        },
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: MezButton(
+                          label: "${_i18n()["fwdMezcalmos"]} (50\$)",
+                          onClick: () async {
+                            //   await viewController.forwardToMezcalmos(order.value!);
+                          },
+                        ),
                       ),
                     // drivers map //
                     // ROpDriversMapComponent(
                     //     drivers: viewController.drivers, order: order.value!),
-                    const SizedBox(
-                      height: 25,
-                    ),
 
-                    const SizedBox(
-                      height: 5,
-                    ),
                     // drivers list //
                     Column(
                       children: List.generate(

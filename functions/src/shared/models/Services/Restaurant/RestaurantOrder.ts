@@ -8,6 +8,7 @@ export interface RestaurantOrder {
   orderId?: number;
   customerId: number;
   restaurantId: number;
+  
   paymentType: PaymentType;
   toLocation: Location;
   estimatedFoodReadyTime?: string;

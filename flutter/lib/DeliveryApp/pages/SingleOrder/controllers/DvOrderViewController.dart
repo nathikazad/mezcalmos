@@ -43,6 +43,7 @@ class DvOrderViewcontroller {
     try {
       order.value = await get_driver_order_by_id(orderId: orderId);
       if (order.value!.routeInformation != null) {
+        mezDbgPrint(order.value.toString());
         mapController.decodeAndAddPolyline(
             encodedPolylineString: order.value!.routeInformation!.polyline);
       }
@@ -54,20 +55,20 @@ class DvOrderViewcontroller {
       mezDbgPrint(
           "🚨 Can't get order $orderId 🚨 DvRestaurantOrderViewController");
     } else {
-      subscriptionId = hasuraDb.createSubscription(start: () {
-        orderStream = listen_on_driver_restaurant_order_by_id(orderId: orderId)
-            .listen((DeliveryOrder? event) {
-          mezDbgPrint(event);
-          if (event != null) {
-            mezDbgPrint("Stream triggred from order controller ✅✅✅✅✅✅✅✅✅");
-            order.value = event;
-            handleRestaurantOrder(event);
-          }
-        });
-      }, cancel: () {
-        orderStream?.cancel();
-        orderStream = null;
-      });
+      // subscriptionId = hasuraDb.createSubscription(start: () {
+      //   orderStream = listen_on_driver_restaurant_order_by_id(orderId: orderId)
+      //       .listen((DeliveryOrder? event) {
+      //     mezDbgPrint(event);
+      //     if (event != null) {
+      //       mezDbgPrint("Stream triggred from order controller ✅✅✅✅✅✅✅✅✅");
+      //       order.value = event;
+      //       handleRestaurantOrder(event);
+      //     }
+      //   });
+      // }, cancel: () {
+      //   orderStream?.cancel();
+      //   orderStream = null;
+      // });
     }
     initOrderMap();
   }

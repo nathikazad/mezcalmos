@@ -32,7 +32,8 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
   )
       .map<RestaurantOrder?>(
           (QueryResult<Subscription$listen_on_restaurant_order_by_id> event) {
-    mezDbgPrint("Event from hs restaurant order 🚀🚀🚀 $event");
+    mezDbgPrint(
+        "Event from hs restaurant order 🚀🚀🚀 ${event.parsedData?.restaurant_order_by_pk?.delivery?.delivery_driver}");
 
     final List<RestaurantOrderItem> items = [];
     final Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk
@@ -145,7 +146,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
   final Query$get_restaurant_order_by_id$restaurant_order_by_pk orderData =
       response.parsedData!.restaurant_order_by_pk!;
   mezDbgPrint(
-      "[544D] get_restaurant_order_by_id::SUCCESS ====>${orderData.delivery_id}");
+      "🥹🥹🥹🥹====  $orderId get_restaurant_order_by_id::SUCCESS ====>${orderData.delivery?.delivery_driver}");
   final List<RestaurantOrderItem> items = [];
 
   orderData.items.forEach(
