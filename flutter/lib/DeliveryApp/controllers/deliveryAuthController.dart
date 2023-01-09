@@ -64,11 +64,12 @@ class DeliveryAuthController extends GetxController {
         await _notificationsController.getToken();
     final NotificationInfo? notifInfo =
         await get_notif_info(userId: driver!.driverInfo.hasuraId);
-    mezDbgPrint("🫡🫡 saving notification info 🫡🫡");
+
     try {
       if (notifInfo != null &&
           deviceNotificationToken != null &&
           notifInfo.token != deviceNotificationToken) {
+        mezDbgPrint("🫡🫡 Updating notification info 🫡🫡");
         // ignore: unawaited_futures
         update_notif_info(
             notificationInfo: NotificationInfo(
@@ -77,6 +78,7 @@ class DeliveryAuthController extends GetxController {
                 id: notifInfo.id,
                 token: deviceNotificationToken));
       } else if (deviceNotificationToken != null && notifInfo == null) {
+        mezDbgPrint("🫡🫡 saving notification info First Time🫡🫡");
         // ignore: unawaited_futures
         insert_notif_info(
             userId: driver!.driverInfo.hasuraId,

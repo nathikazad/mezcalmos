@@ -17,7 +17,6 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
       app_type_id: "restaurant"
     };
   });
-  console.log("Hi")
   let response = await chain.mutation({
     insert_restaurant_order_one: [{
       object: {
@@ -132,6 +131,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
   }
   restaurantOrder.orderId = response.insert_restaurant_order_one.id;
   restaurantOrder.chatId = response.insert_restaurant_order_one.chat_id;
+  restaurantOrder.deliveryId = response.insert_restaurant_order_one.delivery.id;
   let deliveryOrder: DeliveryOrder = {
     deliveryId: response.insert_restaurant_order_one.delivery.id,
     pickupLocation: restaurant.location,

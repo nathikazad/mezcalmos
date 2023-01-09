@@ -6,10 +6,10 @@ import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/models/Utilities/DeliveryMode.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
@@ -41,14 +41,13 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
 
   @override
   Widget build(BuildContext context) {
+ 
     return Card(
       margin: const EdgeInsets.only(bottom: 20),
       child: Container(
           width: double.infinity,
           padding: const EdgeInsets.all(8),
-          child: (widget.order.dropoffDriver != null &&
-                  widget.order.deliveryMode !=
-                      DeliveryMode.SelfDeliveryByRestaurant)
+          child: (widget.order.dropoffDriver != null)
               ? Row(children: [
                   Stack(
                     clipBehavior: Clip.none,

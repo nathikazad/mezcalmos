@@ -33,7 +33,11 @@ class RestaurantOrderViewController {
   // init
   Future<void> init({required int orderId}) async {
     try {
-      order.value = await get_restaurant_order_by_id(orderId: orderId);
+      order.value =
+          await get_restaurant_order_by_id(orderId: orderId, withCache: false);
+      // order.value?.dropoffDriver = event.dropoffDriver;
+
+      // mezDbgPrint(order.value!.dropoffDriver?.toFirebaseFormatJson());
     } catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
@@ -46,8 +50,12 @@ class RestaurantOrderViewController {
             .listen((RestaurantOrder? event) {
           mezDbgPrint(event);
           if (event != null) {
-            mezDbgPrint("Stream triggred from order controller ✅✅✅✅✅✅✅✅✅");
+            mezDbgPrint(
+                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.dropoffDriver}");
             order.value = event;
+            order.value?.dropoffDriver = event.dropoffDriver;
+
+            mezDbgPrint(order.value!.dropoffDriver?.toFirebaseFormatJson());
           }
         });
       }, cancel: () {

@@ -41,7 +41,6 @@ query get_driver_order($orderId: Int!) {
     service_provider_review_by_driver_id
     service_provider_type
     status
-    stripe_payment_id
     trip_distance
     trip_duration
     trip_polyline
@@ -98,7 +97,6 @@ subscription listen_on_driver_order($orderId: Int!) {
     service_provider_review_by_driver_id
     service_provider_type
     status
-    stripe_payment_id
     trip_distance
     trip_duration
     trip_polyline

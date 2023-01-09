@@ -59,12 +59,12 @@ export async function setOrderChatInfo(restaurantOrder: RestaurantOrder, restaur
           DeliveryApp: {
             chatTitle: customer.name ?? "Customer",
             chatImage: customer.image,
-            parentLink: `/Orders/${restaurantOrder.deliveryId}`
+            parentLink: `/Orders/${delivery.deliveryId}`
           },
           RestaurantApp: {
             chatTitle: customer.name ?? "Customer",
             chatImage: customer.image,
-            parentLink: `/Orders/${restaurantOrder.deliveryId}`
+            parentLink: `/Orders/${delivery.deliveryId}`
           },
           CustomerApp: {
             parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`
@@ -85,7 +85,7 @@ export async function setOrderChatInfo(restaurantOrder: RestaurantOrder, restaur
           DeliveryApp: {
             chatTitle: restaurant.name,
             chatImage: restaurant.image,
-            parentLink: `/Orders/${restaurantOrder.deliveryId}`
+            parentLink: `/Orders/${delivery.deliveryId}`
           },
           RestaurantApp: {
             parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`

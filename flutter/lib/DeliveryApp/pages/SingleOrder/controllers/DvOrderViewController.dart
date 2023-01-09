@@ -55,20 +55,20 @@ class DvOrderViewcontroller {
       mezDbgPrint(
           "🚨 Can't get order $orderId 🚨 DvRestaurantOrderViewController");
     } else {
-      // subscriptionId = hasuraDb.createSubscription(start: () {
-      //   orderStream = listen_on_driver_restaurant_order_by_id(orderId: orderId)
-      //       .listen((DeliveryOrder? event) {
-      //     mezDbgPrint(event);
-      //     if (event != null) {
-      //       mezDbgPrint("Stream triggred from order controller ✅✅✅✅✅✅✅✅✅");
-      //       order.value = event;
-      //       handleRestaurantOrder(event);
-      //     }
-      //   });
-      // }, cancel: () {
-      //   orderStream?.cancel();
-      //   orderStream = null;
-      // });
+      subscriptionId = hasuraDb.createSubscription(start: () {
+        orderStream = listen_on_driver_restaurant_order_by_id(orderId: orderId)
+            .listen((DeliveryOrder? event) {
+          mezDbgPrint(event);
+          if (event != null) {
+            mezDbgPrint("Stream triggred from order controller ✅✅✅✅✅✅✅✅✅");
+            order.value = event;
+            handleRestaurantOrder(event);
+          }
+        });
+      }, cancel: () {
+        orderStream?.cancel();
+        orderStream = null;
+      });
     }
     initOrderMap();
   }

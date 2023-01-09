@@ -13,7 +13,6 @@ import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant_operator/hsRestaurantOperator.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
-import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
 
@@ -52,7 +51,10 @@ class RestaurantOpAuthController extends GetxController {
     // Todo @m66are remove this restaurant id hard code
 
     setupRestaurantOperator();
-    unawaited(saveNotificationToken());
+    if (operator.value?.info.hasuraId != null) {
+      saveNotificationToken();
+    }
+
     super.onInit();
   }
 
@@ -124,12 +126,14 @@ class RestaurantOpAuthController extends GetxController {
     final String? deviceNotificationToken =
         await _notificationsController.getToken();
     final NotificationInfo? notifInfo =
-        await get_notif_info(userId: operatorUserId);
-    mezDbgPrint("🫡🫡 saving notification info 🫡🫡");
+        await get_notif_info(userId: operator.value!.info.hasuraId);
+    mezDbgPrint("inside save notif token=====>>>😍");
+    mezDbgPrint("inside save notif token=====>>>${notifInfo?.token}");
     try {
       if (notifInfo != null &&
           deviceNotificationToken != null &&
           notifInfo.token != deviceNotificationToken) {
+        mezDbgPrint("🫡🫡 Updating notification info 🫡🫡");
         // ignore: unawaited_futures
         update_notif_info(
             notificationInfo: NotificationInfo(
@@ -138,6 +142,7 @@ class RestaurantOpAuthController extends GetxController {
                 id: notifInfo.id,
                 token: deviceNotificationToken));
       } else if (deviceNotificationToken != null && notifInfo == null) {
+        mezDbgPrint("🫡🫡 Saving notification info for the first time 🫡🫡");
         // ignore: unawaited_futures
         insert_notif_info(
             userId: operatorUserId,

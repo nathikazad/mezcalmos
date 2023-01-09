@@ -318,22 +318,32 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
               return;
             }
           }
-          try {
-            if (deliveryAction == DeliveryAction.Pickup) {
-              isSettingPickUpTime.value = true;
+
+          if (deliveryAction == DeliveryAction.Pickup) {
+            isSettingPickUpTime.value = true;
+
+            try {
+              mezDbgPrint("Setting pickup time ======>>> ⏰⏰⏰⏰⏰⏰  ");
               await dv_update_est_pickup_time(
                   orderId: widget.order.id, time: newDt);
-            } else {
-              isSettingDropoffTime.value = true;
+            } catch (e, stk) {
+              mezDbgPrint(e);
+              mezDbgPrint(stk);
+            } finally {
+              isSettingPickUpTime.value = false;
+            }
+          } else {
+            isSettingDropoffTime.value = true;
+            mezDbgPrint("Setting dropOff time ======>>> ⏰⏰⏰⏰⏰⏰  ");
+            try {
               await dv_update_est_dropoff_time(
                   orderId: widget.order.id, time: newDt);
+            } catch (e, stk) {
+              mezDbgPrint(e);
+              mezDbgPrint(stk);
+            } finally {
+              isSettingDropoffTime.value = false;
             }
-          } catch (e, stk) {
-            mezDbgPrint(e);
-            mezDbgPrint(stk);
-          } finally {
-            isSettingPickUpTime.value = false;
-            isSettingDropoffTime.value = false;
           }
         },
       );
