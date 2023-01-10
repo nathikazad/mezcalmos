@@ -11,7 +11,7 @@ import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { assignDeliveryDriver } from "../shared/graphql/delivery/driver/assignDeliverer";
 import { setDeliveryChatInfo } from "../shared/graphql/chat/setChatInfo";
 import { HttpsError } from "firebase-functions/v1/auth";
-import { deleteDeliveryChatMessages } from "../shared/graphql/chat/deleteChatMessages";
+import { deleteDeliveryChatMessagesAndParticipant } from "../shared/graphql/chat/deleteChatMessages";
 import { getDeliveryOperatorByUserId } from "../shared/graphql/delivery/operator/getDeliveryOperator";
 import { getRestaurantOperatorByUserId } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { OperatorStatus } from "../shared/models/Services/Restaurant/Restaurant";
@@ -112,7 +112,7 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
       );
     }
     if (assignDriverDetails.changeDriver) {
-      deleteDeliveryChatMessages(deliveryOrder);
+      await deleteDeliveryChatMessagesAndParticipant(deliveryOrder);
     }
     
     await assignDeliveryDriver(assignDriverDetails, deliveryDriver.userId);

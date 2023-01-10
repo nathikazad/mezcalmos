@@ -16,6 +16,8 @@ export type ValueTypes = {
 };
 	/** columns and relationships of "chat" */
 ["chat"]: AliasType<{
+agora_info?: [{	/** JSON select path */
+	path?:string},true],
 chat_info?: [{	/** JSON select path */
 	path?:string},true],
 chat_participants?: [{	/** distinct select on columns */
@@ -59,6 +61,7 @@ count?: [{	columns?:ValueTypes["chat_select_column"][],	distinct?:boolean},true]
 }>;
 	/** append existing jsonb value of filtered columns with new jsonb value */
 ["chat_append_input"]: {
+	agora_info?:ValueTypes["jsonb"],
 	chat_info?:ValueTypes["jsonb"],
 	messages?:ValueTypes["jsonb"]
 };
@@ -72,6 +75,7 @@ count?: [{	columns?:ValueTypes["chat_select_column"][],	distinct?:boolean},true]
 	_and?:ValueTypes["chat_bool_exp"][],
 	_not?:ValueTypes["chat_bool_exp"],
 	_or?:ValueTypes["chat_bool_exp"][],
+	agora_info?:ValueTypes["jsonb_comparison_exp"],
 	chat_info?:ValueTypes["jsonb_comparison_exp"],
 	chat_participants?:ValueTypes["chat_participant_bool_exp"],
 	creation_time?:ValueTypes["timestamptz_comparison_exp"],
@@ -82,17 +86,20 @@ count?: [{	columns?:ValueTypes["chat_select_column"][],	distinct?:boolean},true]
 ["chat_constraint"]:chat_constraint;
 	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 ["chat_delete_at_path_input"]: {
+	agora_info?:string[],
 	chat_info?:string[],
 	messages?:string[]
 };
 	/** delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array */
 ["chat_delete_elem_input"]: {
+	agora_info?:number,
 	chat_info?:number,
 	messages?:number
 };
 	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
 ["chat_delete_key_input"]: {
+	agora_info?:string,
 	chat_info?:string,
 	messages?:string
 };
@@ -102,6 +109,7 @@ end). throws an error if top level container is not an array */
 };
 	/** input type for inserting data into table "chat" */
 ["chat_insert_input"]: {
+	agora_info?:ValueTypes["jsonb"],
 	chat_info?:ValueTypes["jsonb"],
 	chat_participants?:ValueTypes["chat_participant_arr_rel_insert_input"],
 	creation_time?:ValueTypes["timestamptz"],
@@ -142,6 +150,7 @@ end). throws an error if top level container is not an array */
 };
 	/** Ordering options when selecting data from "chat". */
 ["chat_order_by"]: {
+	agora_info?:ValueTypes["order_by"],
 	chat_info?:ValueTypes["order_by"],
 	chat_participants_aggregate?:ValueTypes["chat_participant_aggregate_order_by"],
 	creation_time?:ValueTypes["order_by"],
@@ -434,6 +443,7 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 };
 	/** prepend existing jsonb value of filtered columns with new jsonb value */
 ["chat_prepend_input"]: {
+	agora_info?:ValueTypes["jsonb"],
 	chat_info?:ValueTypes["jsonb"],
 	messages?:ValueTypes["jsonb"]
 };
@@ -441,6 +451,7 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 ["chat_select_column"]:chat_select_column;
 	/** input type for updating data in table "chat" */
 ["chat_set_input"]: {
+	agora_info?:ValueTypes["jsonb"],
 	chat_info?:ValueTypes["jsonb"],
 	creation_time?:ValueTypes["timestamptz"],
 	id?:number,
@@ -470,6 +481,7 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 };
 	/** Initial value of the column from where the streaming should start */
 ["chat_stream_cursor_value_input"]: {
+	agora_info?:ValueTypes["jsonb"],
 	chat_info?:ValueTypes["jsonb"],
 	creation_time?:ValueTypes["timestamptz"],
 	id?:number,
@@ -12774,6 +12786,7 @@ export type PartialObjects = {
 	/** columns and relationships of "chat" */
 ["chat"]: {
 		__typename?: "chat";
+			agora_info?:PartialObjects["jsonb"],
 			chat_info?:PartialObjects["jsonb"],
 			/** An array relationship */
 	chat_participants?:PartialObjects["chat_participant"][],
@@ -12806,6 +12819,7 @@ export type PartialObjects = {
 	},
 	/** append existing jsonb value of filtered columns with new jsonb value */
 ["chat_append_input"]: {
+	agora_info?:PartialObjects["jsonb"],
 	chat_info?:PartialObjects["jsonb"],
 	messages?:PartialObjects["jsonb"]
 },
@@ -12819,6 +12833,7 @@ export type PartialObjects = {
 	_and?:PartialObjects["chat_bool_exp"][],
 	_not?:PartialObjects["chat_bool_exp"],
 	_or?:PartialObjects["chat_bool_exp"][],
+	agora_info?:PartialObjects["jsonb_comparison_exp"],
 	chat_info?:PartialObjects["jsonb_comparison_exp"],
 	chat_participants?:PartialObjects["chat_participant_bool_exp"],
 	creation_time?:PartialObjects["timestamptz_comparison_exp"],
@@ -12829,17 +12844,20 @@ export type PartialObjects = {
 ["chat_constraint"]:chat_constraint,
 	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 ["chat_delete_at_path_input"]: {
+	agora_info?:string[],
 	chat_info?:string[],
 	messages?:string[]
 },
 	/** delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array */
 ["chat_delete_elem_input"]: {
+	agora_info?:number,
 	chat_info?:number,
 	messages?:number
 },
 	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
 ["chat_delete_key_input"]: {
+	agora_info?:string,
 	chat_info?:string,
 	messages?:string
 },
@@ -12849,6 +12867,7 @@ end). throws an error if top level container is not an array */
 },
 	/** input type for inserting data into table "chat" */
 ["chat_insert_input"]: {
+	agora_info?:PartialObjects["jsonb"],
 	chat_info?:PartialObjects["jsonb"],
 	chat_participants?:PartialObjects["chat_participant_arr_rel_insert_input"],
 	creation_time?:PartialObjects["timestamptz"],
@@ -12889,6 +12908,7 @@ end). throws an error if top level container is not an array */
 },
 	/** Ordering options when selecting data from "chat". */
 ["chat_order_by"]: {
+	agora_info?:PartialObjects["order_by"],
 	chat_info?:PartialObjects["order_by"],
 	chat_participants_aggregate?:PartialObjects["chat_participant_aggregate_order_by"],
 	creation_time?:PartialObjects["order_by"],
@@ -13181,6 +13201,7 @@ end). throws an error if top level container is not an array */
 },
 	/** prepend existing jsonb value of filtered columns with new jsonb value */
 ["chat_prepend_input"]: {
+	agora_info?:PartialObjects["jsonb"],
 	chat_info?:PartialObjects["jsonb"],
 	messages?:PartialObjects["jsonb"]
 },
@@ -13188,6 +13209,7 @@ end). throws an error if top level container is not an array */
 ["chat_select_column"]:chat_select_column,
 	/** input type for updating data in table "chat" */
 ["chat_set_input"]: {
+	agora_info?:PartialObjects["jsonb"],
 	chat_info?:PartialObjects["jsonb"],
 	creation_time?:PartialObjects["timestamptz"],
 	id?:number,
@@ -13217,6 +13239,7 @@ end). throws an error if top level container is not an array */
 },
 	/** Initial value of the column from where the streaming should start */
 ["chat_stream_cursor_value_input"]: {
+	agora_info?:PartialObjects["jsonb"],
 	chat_info?:PartialObjects["jsonb"],
 	creation_time?:PartialObjects["timestamptz"],
 	id?:number,
@@ -24571,6 +24594,7 @@ export type Boolean_comparison_exp = {
 /** columns and relationships of "chat" */
 export type chat = {
 	__typename?: "chat",
+	agora_info?:jsonb,
 	chat_info?:jsonb,
 	/** An array relationship */
 	chat_participants:chat_participant[],
@@ -24606,7 +24630,8 @@ export type chat_aggregate_fields = {
 
 /** append existing jsonb value of filtered columns with new jsonb value */
 export type chat_append_input = {
-		chat_info?:jsonb,
+		agora_info?:jsonb,
+	chat_info?:jsonb,
 	messages?:jsonb
 }
 
@@ -24621,6 +24646,7 @@ export type chat_bool_exp = {
 		_and?:chat_bool_exp[],
 	_not?:chat_bool_exp,
 	_or?:chat_bool_exp[],
+	agora_info?:jsonb_comparison_exp,
 	chat_info?:jsonb_comparison_exp,
 	chat_participants?:chat_participant_bool_exp,
 	creation_time?:timestamptz_comparison_exp,
@@ -24635,20 +24661,23 @@ export enum chat_constraint {
 
 /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 export type chat_delete_at_path_input = {
-		chat_info?:string[],
+		agora_info?:string[],
+	chat_info?:string[],
 	messages?:string[]
 }
 
 /** delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array */
 export type chat_delete_elem_input = {
-		chat_info?:number,
+		agora_info?:number,
+	chat_info?:number,
 	messages?:number
 }
 
 /** delete key/value pair or string element. key/value pairs are matched based on their key value */
 export type chat_delete_key_input = {
-		chat_info?:string,
+		agora_info?:string,
+	chat_info?:string,
 	messages?:string
 }
 
@@ -24659,7 +24688,8 @@ export type chat_inc_input = {
 
 /** input type for inserting data into table "chat" */
 export type chat_insert_input = {
-		chat_info?:jsonb,
+		agora_info?:jsonb,
+	chat_info?:jsonb,
 	chat_participants?:chat_participant_arr_rel_insert_input,
 	creation_time?:timestamptz,
 	id?:number,
@@ -24705,7 +24735,8 @@ export type chat_on_conflict = {
 
 /** Ordering options when selecting data from "chat". */
 export type chat_order_by = {
-		chat_info?:order_by,
+		agora_info?:order_by,
+	chat_info?:order_by,
 	chat_participants_aggregate?:chat_participant_aggregate_order_by,
 	creation_time?:order_by,
 	id?:order_by,
@@ -25050,12 +25081,14 @@ export type chat_pk_columns_input = {
 
 /** prepend existing jsonb value of filtered columns with new jsonb value */
 export type chat_prepend_input = {
-		chat_info?:jsonb,
+		agora_info?:jsonb,
+	chat_info?:jsonb,
 	messages?:jsonb
 }
 
 /** select columns of table "chat" */
 export enum chat_select_column {
+	agora_info = "agora_info",
 	chat_info = "chat_info",
 	creation_time = "creation_time",
 	id = "id",
@@ -25064,7 +25097,8 @@ export enum chat_select_column {
 
 /** input type for updating data in table "chat" */
 export type chat_set_input = {
-		chat_info?:jsonb,
+		agora_info?:jsonb,
+	chat_info?:jsonb,
 	creation_time?:timestamptz,
 	id?:number,
 	messages?:jsonb
@@ -25098,7 +25132,8 @@ export type chat_stream_cursor_input = {
 
 /** Initial value of the column from where the streaming should start */
 export type chat_stream_cursor_value_input = {
-		chat_info?:jsonb,
+		agora_info?:jsonb,
+	chat_info?:jsonb,
 	creation_time?:timestamptz,
 	id?:number,
 	messages?:jsonb
@@ -25112,6 +25147,7 @@ export type chat_sum_fields = {
 
 /** update columns of table "chat" */
 export enum chat_update_column {
+	agora_info = "agora_info",
 	chat_info = "chat_info",
 	creation_time = "creation_time",
 	id = "id",
@@ -38356,6 +38392,14 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	chat:{
+		agora_info:{
+			path:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
 		chat_info:{
 			path:{
 				type:"String",
@@ -38454,6 +38498,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	chat_append_input:{
+		agora_info:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		chat_info:{
 			type:"jsonb",
 			array:false,
@@ -38485,6 +38535,12 @@ export const AllTypesProps: Record<string,any> = {
 			array:true,
 			arrayRequired:false,
 			required:true
+		},
+		agora_info:{
+			type:"jsonb_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
 		},
 		chat_info:{
 			type:"jsonb_comparison_exp",
@@ -38519,6 +38575,12 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	chat_constraint: "enum",
 	chat_delete_at_path_input:{
+		agora_info:{
+			type:"String",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
 		chat_info:{
 			type:"String",
 			array:true,
@@ -38533,6 +38595,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	chat_delete_elem_input:{
+		agora_info:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		chat_info:{
 			type:"Int",
 			array:false,
@@ -38547,6 +38615,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	chat_delete_key_input:{
+		agora_info:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		chat_info:{
 			type:"String",
 			array:false,
@@ -38569,6 +38643,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	chat_insert_input:{
+		agora_info:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		chat_info:{
 			type:"jsonb",
 			array:false,
@@ -38635,6 +38715,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	chat_order_by:{
+		agora_info:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		chat_info:{
 			type:"order_by",
 			array:false,
@@ -39272,6 +39358,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	chat_prepend_input:{
+		agora_info:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		chat_info:{
 			type:"jsonb",
 			array:false,
@@ -39287,6 +39379,12 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	chat_select_column: "enum",
 	chat_set_input:{
+		agora_info:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		chat_info:{
 			type:"jsonb",
 			array:false,
@@ -39327,6 +39425,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	chat_stream_cursor_value_input:{
+		agora_info:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		chat_info:{
 			type:"jsonb",
 			array:false,
@@ -73541,6 +73645,7 @@ export const AllTypesProps: Record<string,any> = {
 
 export const ReturnTypes: Record<string,any> = {
 	chat:{
+		agora_info:"jsonb",
 		chat_info:"jsonb",
 		chat_participants:"chat_participant",
 		chat_participants_aggregate:"chat_participant_aggregate",
