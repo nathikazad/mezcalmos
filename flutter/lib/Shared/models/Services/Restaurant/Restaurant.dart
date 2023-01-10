@@ -324,9 +324,7 @@ class Restaurant extends Service {
   }
 
   bool isOpen() {
-// TODO:544D-HASURA
-    return true;
-    // return state.isOpen && (schedule?.isOpen() ?? true);
+    return state.isOpen && (schedule?.isOpen() ?? true);
   }
 
   Restaurant copyWith({
