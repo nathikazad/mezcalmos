@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -72,8 +73,9 @@ class _OperatorsListViewState extends State<OperatorsListView> {
             children: [
               MezAddButton(
                 onClick: () async {
-                  await viewController.fetchServiceLinks();
-                  await _addOperatorSheet();
+                  await MezRouter.toNamed(kTabsView);
+                  // await viewController.fetchServiceLinks();
+                  // await _addOperatorSheet();
                 },
                 title: "Add operator",
               ),

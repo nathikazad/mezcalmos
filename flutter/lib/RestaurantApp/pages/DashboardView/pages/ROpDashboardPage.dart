@@ -113,6 +113,8 @@ class ROpDashboardPage extends StatelessWidget {
               _divider(),
               _navigationLink(
                   onClick: () async {
+                    viewController.tabsViewViewController?.showTabs.value =
+                        true;
                     navigateToOperators(
                         serviceProviderId: viewController.restaurantId,
                         controllerType: ServiceProviderType.Restaurant);
@@ -162,6 +164,8 @@ class ROpDashboardPage extends StatelessWidget {
                     _divider(),
                     _navigationLink(
                         onClick: () async {
+                          viewController
+                              .tabsViewViewController?.showTabs.value = true;
                           navigateToDrivers(
                               serviceProviderId: viewController.restaurantId,
                               controllerType: ServiceProviderType.Restaurant);
@@ -177,10 +181,12 @@ class ROpDashboardPage extends StatelessWidget {
                     _divider(),
                     _navigationLink(
                         onClick: () async {
-                          // todo handle root
-                          // await pageController.animateToPage(7,
-                          //     duration: Duration(milliseconds: 1),
-                          //     curve: Curves.easeIn);
+                          viewController
+                              .tabsViewViewController?.showTabs.value = true;
+                          navigateToDeliveryCost(
+                              serviceProviderId: viewController.restaurantId,
+                              serviceProviderType:
+                                  ServiceProviderType.Restaurant);
                         },
                         icon: Icons.price_check_rounded,
                         titleWidget: Text(
@@ -331,13 +337,13 @@ class ROpDashboardPage extends StatelessWidget {
       Future<void> Function()? onClick}) {
     return InkWell(
       onTap: () async {
-        await onClick?.call();
         viewController.cuurentPage.value = pageController.page!;
         if (viewController.cuurentPage != 0) {
           viewController.tabsViewViewController?.showTabs.value = false;
         } else {
           viewController.tabsViewViewController?.showTabs.value = true;
         }
+        await onClick?.call();
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 0),
