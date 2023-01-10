@@ -18,7 +18,7 @@ import {
 import { getRestaurantOperator, getRestaurantOperators } from "../../functions/src/shared/graphql/restaurant/operators/getRestaurantOperators"
 import { getMezAdmins } from "../../functions/src/shared/graphql/user/mezAdmin/getMezAdmins"
 import { getDeliveryOperators } from "../../functions/src/shared/graphql/delivery/operator/getDeliveryOperator"
-import { AssignDeliveryCompanyNotificationForQueue, AssignDeliveryCompanyNotification } from "../../functions/src/shared/models/Services/Delivery/DeliveryOrder";
+import { AssignDeliveryCompanyNotificationForQueue, AssignDeliveryCompanyNotification } from "../../functions/src/shared/models/Generic/Delivery";
 import { getChatParticipant, getChatParticipants } from "../../functions/src/shared/graphql/chat/getChatParticipant"
 import { HttpsError } from "firebase-functions/v1/auth";
 

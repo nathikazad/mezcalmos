@@ -10,6 +10,7 @@ export interface DeliveryOrder {
     deliveryDriverType?: DeliveryDriverType
     deliveryDriverId?: number;
     chatWithServiceProviderId?: number;
+    
     chatWithCustomerId: number;
     paymentType: PaymentType;
     stripePaymentId?: number;
@@ -37,6 +38,7 @@ export interface DeliveryOrder {
     orderTime: string;
     cancellationTime?: string;
     deliveryDriver?: DeliveryDriver;
+    orderType: OrderType;
 }
 
 export interface DeliveryDriver {

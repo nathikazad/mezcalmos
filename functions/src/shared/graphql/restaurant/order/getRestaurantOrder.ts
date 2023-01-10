@@ -207,7 +207,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
         selfDelivery : o.restaurant.self_delivery,
         image: o.restaurant.image,
         location: o.restaurant.location_gps as Location,
-        restaurantOperators
+        restaurantOperators,
       }
     }
   })

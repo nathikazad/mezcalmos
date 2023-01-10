@@ -2,6 +2,7 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { AppType, Language } from "../../models/Generic/Generic";
 import { PaymentType } from "../../models/Generic/Order";
+import { OrderType,  } from "../../models/Generic/Order";
 import { DeliveryCompanyType, DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus, ServiceProviderType } from "../../models/Generic/Delivery";
 
 export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrder> {
@@ -27,6 +28,8 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
         order_time: true,
         delivery_driver_type: true,
         delivery_driver_id: true,
+       
+        order_type: true,
         delivery_driver: {
           id: true,
           delivery_company_type: true,
@@ -59,6 +62,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
     deliveryId: deliveryId,
     serviceProviderId : response.delivery_order_by_pk.service_provider_id,
     serviceProviderType: response.delivery_order_by_pk.service_provider_type as ServiceProviderType,
+    orderType: response.delivery_order_by_pk.order_type as OrderType,
     pickupLocation: {
       lat: response.delivery_order_by_pk.pickup_gps.coordinates[1],
       lng: response.delivery_order_by_pk.pickup_gps.coordinates[0],
@@ -77,7 +81,8 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
     deliveryCost: response.delivery_order_by_pk.delivery_cost,
     packageCost: response.delivery_order_by_pk.package_cost,
     orderTime: response.delivery_order_by_pk.order_time,
-    deliveryDriverType: response.delivery_order_by_pk.delivery_driver_type as DeliveryDriverType
+    deliveryDriverType: response.delivery_order_by_pk.delivery_driver_type as DeliveryDriverType,
+  
   }
   if(!(response.delivery_order_by_pk.delivery_driver_id)) {
     return delivery;
@@ -143,6 +148,16 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
       customer_id: true,
       delivery_cost: true,
       order_time: true,
+      order_type: true,
+      delivery_driver: {
+        delivery_driver_type: true,
+        user: {
+          firebase_id: true,
+          id: true,
+          language_id: true,
+        },
+        notification_token: true,
+      }
     }]
   });
 
@@ -163,6 +178,20 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
       customerId: d.customer_id,
       deliveryCost: d.delivery_cost,
       orderTime: d.order_time,
+      orderType: d.order_type as OrderType,
+      deliveryDriver: (d.delivery_driver) ? {
+        userId: d.delivery_driver.user.id,
+        deliveryDriverType: d.delivery_driver.delivery_driver_type as DeliveryDriverType,
+        user: {
+          id: d.delivery_driver.user.id,
+          firebaseId: d.delivery_driver.user.firebase_id,
+          language: d.delivery_driver.user.language_id as Language
+        },
+        notificationInfo: (d.delivery_driver.notification_token) ? {
+          AppTypeId: AppType.DeliveryApp,
+          token: d.delivery_driver.notification_token as string
+        } : undefined,
+      }: undefined
     }
     return delivery;
   })

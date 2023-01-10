@@ -16,11 +16,12 @@ import { getDeliveryCompanyOrders } from "../../functions/src/shared/graphql/del
 import { getDeliveryOperators } from "../../functions/src/shared/graphql/delivery/operator/getDeliveryOperator";
 import { ParticipantType } from "../../functions/src/shared/models/Generic/Chat";
 import { Language } from "../../functions/src/shared/models/Generic/Generic";
-import { OrderType } from "../../functions/src/shared/models/Generic/Order";
 import { Notification, NotificationAction, NotificationType } from "../../functions/src/shared/models/Notification";
-import { DeliveryOperator, DeliveryOrder, NewDeliveryOrderNotification } from "../../functions/src/shared/models/Services/Delivery/DeliveryOrder";
+import { DeliveryOperator, DeliveryOrder, DeliveryOrderStatus, NewDeliveryOrderNotification } from "../../functions/src/shared/models/Generic/Delivery";
 import { pushNotification } from "../../functions/src/utilities/senders/notifyUser";
 import * as firebase from "firebase-admin";
+import { MezAdmin } from "../../functions/src/shared/models/Generic/User";
+import { getMezAdmins } from "../../functions/src/shared/graphql/user/mezAdmin/getMezAdmins";
 
 const checkOrdersInterval: number = 10 //seconds 60
 
@@ -29,44 +30,63 @@ export function startWatchingDeliveryOrders() {
 }
 
 async function checkDeliveryOrders() {
-    console.log("checking inProcess delivery orders")
-    let deliveryOrders: DeliveryOrder[] = await getDeliveryCompanyOrders();
+  console.log("checking inProcess delivery orders")
+  let deliveryOrders: DeliveryOrder[] = await getDeliveryCompanyOrders();
 
-    deliveryOrders.forEach(async(o) => {
-        if((new Date()).getTime() - (new Date(o.orderTime!)).getTime() < 60 * 1000) {
+  deliveryOrders.forEach(async(o) => {
+    if((new Date()).getTime() - (new Date(o.orderTime!)).getTime() < 60 * 1000) {
 
-            let operators: DeliveryOperator[] = await getDeliveryOperators(o.serviceProviderId!);
+        let operators: DeliveryOperator[] = await getDeliveryOperators(o.serviceProviderId!);
+        let mezAdmins: MezAdmin[] = await getMezAdmins();
 
-            let notification: Notification = {
-                foreground: <NewDeliveryOrderNotification>{
-                  time: (new Date()).toISOString(),
-                  notificationType: NotificationType.NewOrder,
-                  orderType: OrderType.Restaurant,
-                  orderId: o.deliveryId,
-                  notificationAction: NotificationAction.ShowSnackBarAlways,
-                },
-                background: {
-                  [Language.ES]: {
-                    title: "Nueva Pedido",
-                    body: `Hay una nueva orden de alimento`
-                  },
-                  [Language.EN]: {
-                    title: "New Order",
-                    body: `There is a new restaurant order`
-                  }
-                },
-                linkUrl: `/`
+        let notification: Notification = buildNotification()
+        let snap = await firebase.database().ref(`/orders/delivery/${o.deliveryId}`).once("value");
+        let readOperators = snap.val();
+        console.log(readOperators)
+        operators.forEach((r) => {
+            if(!(readOperators && readOperators[r.userId!]) && r.user) {
+                pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.DeliveryOperator);
             }
-            let snap = await firebase.database().ref(`/orders/delivery/${o.deliveryId}`).once("value");
-            let readOperators = snap.val();
-            console.log(readOperators)
-            operators.forEach((r) => {
-                if(!(readOperators && readOperators[r.id!]) && r.user) {
-                    pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.DeliveryOperator);
-                }
-            });
-        }
-    })
+        });
+        mezAdmins.forEach((m) => {
+          if(!(readOperators && readOperators[m.userId]) && m.user) {
+            pushNotification(m.user.firebaseId, notification, m.notificationInfo, ParticipantType.MezAdmin);
+          }
+        })
+    }
+    if(o.deliveryDriverId 
+      && ((o.status == DeliveryOrderStatus.OrderReceived)||(o.status == DeliveryOrderStatus.PackageReady))
+    ) {
+      let snap = await firebase.database().ref(`/orders/delivery/${o.deliveryId}`).once("value");
+      let readDrivers = snap.val();
+      if(!(readDrivers && readDrivers[o.deliveryDriver!.userId]) && o.deliveryDriver!.user) {
+        pushNotification(o.deliveryDriver!.user.firebaseId, buildNotification(), o.deliveryDriver!.notificationInfo, ParticipantType.DeliveryDriver);
+      }
+    }
+
+    function buildNotification(): Notification {
+      return {
+        foreground: <NewDeliveryOrderNotification>{
+          time: (new Date()).toISOString(),
+          notificationType: NotificationType.NewOrder,
+          orderType: o.orderType,
+          orderId: o.deliveryId,
+          notificationAction: NotificationAction.ShowSnackBarAlways,
+        },
+        background: {
+          [Language.ES]: {
+            title: "Nueva Pedido",
+            body: `Hay una nueva orden de alimento`
+          },
+          [Language.EN]: {
+            title: "New Order",
+            body: `There is a new restaurant order`
+          }
+        },
+        linkUrl: `/`
+      };
+    }
+  })
 }
 
 

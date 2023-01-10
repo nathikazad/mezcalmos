@@ -1,0 +1,14 @@
+table:
+  name: post
+  schema: public
+object_relationships:
+  - name: restaurant
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: restaurant
+          schema: public

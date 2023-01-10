@@ -134,7 +134,7 @@ export async function getDeliveryOperatorByUserId(deliveryOperatorUserId: number
             }
         }]
     })
-    if(response.delivery_operator == null) {
+    if(!(response.delivery_operator.length)) {
         throw new HttpsError(
           "internal",
           "No delivery operator with that user id found"

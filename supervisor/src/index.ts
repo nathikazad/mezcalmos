@@ -5,7 +5,7 @@ import * as functions from "firebase-functions";
 import * as fs from 'fs';
 // import { startWatchingTaxiOrders } from "./taxiOrdersWatcher";
 import { startWatchingMessageNotificationQueue } from "./messagesNotifier";
-// import { startWatchingRestaurantOrders } from "./restaurantOrdersWatcher";
+import { startWatchingRestaurantOrders } from "./restaurantOrdersWatcher";
 import { startWatchingDeliveryOrders } from "./deliveryOrdersWatcher";
 
 enum Environment {
@@ -30,6 +30,7 @@ if (process.argv.length != 3) {
 }
 
 const env: Environment = <Environment>process.argv[2]
+process.env.supervisor_environment = env;
 
 if(env == Environment.Emulate)
   process.env.FUNCTIONS_EMULATOR = "true"
@@ -53,7 +54,7 @@ let firebaseParams: any = { databaseURL: keys[env].databaseURL };
 // console.log(keys, env, keys[env].serviceAccount)
 if (keys[env].serviceAccount)
   firebaseParams.credential = firebase.credential.cert(require(keys[env].serviceAccount!))
-  console.log(firebaseParams)
+  // console.log(firebaseParams)
 firebase.initializeApp(firebaseParams)
 // const hasura = new hasuraClass.Hasura(keys[env].hasura)
 setKeys(keys[env]);
@@ -61,7 +62,7 @@ setKeys(keys[env]);
 startWatchingMessageNotificationQueue(keys[env]);
 // startWatchingTaxiOrders(constructReturnUrl);
 startWatchingDeliveryOrders();
-// startWatchingRestaurantOrders();
+startWatchingRestaurantOrders();
 /****************************  Some Helper Functions *************************************/
 // function constructReturnUrl(orderId: string) {
 //   let url;
