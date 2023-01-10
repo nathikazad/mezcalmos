@@ -3,6 +3,7 @@ import { OrderNotification } from '../../Notification';
 import { AppType, Language, Location } from '../../Generic/Generic';
 import { Restaurant } from './Restaurant';
 import { OrderStripeInfo } from '../../../../utilities/stripe/model';
+import { DeliveryOrderStatus } from '../../Generic/Delivery';
 
 export interface RestaurantOrder {
   orderId?: number;
@@ -90,4 +91,5 @@ export interface NewRestaurantOrderNotification extends OrderNotification {
 
 export interface RestaurantOrderStatusChangeNotification extends OrderNotification {
   status: RestaurantOrderStatus
+  deliveryOrderStatus: DeliveryOrderStatus
 }
