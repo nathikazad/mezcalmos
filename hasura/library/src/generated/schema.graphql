@@ -32,6 +32,10 @@ input Boolean_comparison_exp {
 columns and relationships of "chat"
 """
 type chat {
+  agora_info(
+    """JSON select path"""
+    path: String
+  ): jsonb
   chat_info(
     """JSON select path"""
     path: String
@@ -107,6 +111,7 @@ type chat_aggregate_fields {
 
 """append existing jsonb value of filtered columns with new jsonb value"""
 input chat_append_input {
+  agora_info: jsonb
   chat_info: jsonb
   messages: jsonb
 }
@@ -123,6 +128,7 @@ input chat_bool_exp {
   _and: [chat_bool_exp!]
   _not: chat_bool_exp
   _or: [chat_bool_exp!]
+  agora_info: jsonb_comparison_exp
   chat_info: jsonb_comparison_exp
   chat_participants: chat_participant_bool_exp
   creation_time: timestamptz_comparison_exp
@@ -144,6 +150,7 @@ enum chat_constraint {
 delete the field or element with specified path (for JSON arrays, negative integers count from the end)
 """
 input chat_delete_at_path_input {
+  agora_info: [String!]
   chat_info: [String!]
   messages: [String!]
 }
@@ -153,6 +160,7 @@ delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array
 """
 input chat_delete_elem_input {
+  agora_info: Int
   chat_info: Int
   messages: Int
 }
@@ -161,6 +169,7 @@ input chat_delete_elem_input {
 delete key/value pair or string element. key/value pairs are matched based on their key value
 """
 input chat_delete_key_input {
+  agora_info: String
   chat_info: String
   messages: String
 }
@@ -176,6 +185,7 @@ input chat_inc_input {
 input type for inserting data into table "chat"
 """
 input chat_insert_input {
+  agora_info: jsonb
   chat_info: jsonb
   chat_participants: chat_participant_arr_rel_insert_input
   creation_time: timestamptz
@@ -227,6 +237,7 @@ input chat_on_conflict {
 
 """Ordering options when selecting data from "chat"."""
 input chat_order_by {
+  agora_info: order_by
   chat_info: order_by
   chat_participants_aggregate: chat_participant_aggregate_order_by
   creation_time: order_by
@@ -632,6 +643,7 @@ input chat_pk_columns_input {
 
 """prepend existing jsonb value of filtered columns with new jsonb value"""
 input chat_prepend_input {
+  agora_info: jsonb
   chat_info: jsonb
   messages: jsonb
 }
@@ -640,6 +652,9 @@ input chat_prepend_input {
 select columns of table "chat"
 """
 enum chat_select_column {
+  """column name"""
+  agora_info
+
   """column name"""
   chat_info
 
@@ -657,6 +672,7 @@ enum chat_select_column {
 input type for updating data in table "chat"
 """
 input chat_set_input {
+  agora_info: jsonb
   chat_info: jsonb
   creation_time: timestamptz
   id: Int
@@ -691,6 +707,7 @@ input chat_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input chat_stream_cursor_value_input {
+  agora_info: jsonb
   chat_info: jsonb
   creation_time: timestamptz
   id: Int
@@ -706,6 +723,9 @@ type chat_sum_fields {
 update columns of table "chat"
 """
 enum chat_update_column {
+  """column name"""
+  agora_info
+
   """column name"""
   chat_info
 
