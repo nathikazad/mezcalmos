@@ -63,6 +63,12 @@ class ListRestaurantsController {
       newList.sortByOpen();
       filteredRestaurants.value = newList;
     } else {
+      servicesIds = newList
+          .showOnlyOpen(showOnlyOpen.value)
+          .map(
+            (Restaurant e) => e.info.hasuraId,
+          )
+          .toList();
       _searchItem();
     }
   }
