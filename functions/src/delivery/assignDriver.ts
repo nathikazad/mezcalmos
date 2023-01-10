@@ -115,7 +115,7 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
       deleteDeliveryChatMessages(deliveryOrder);
     }
     
-    await assignDeliveryDriver(assignDriverDetails);
+    await assignDeliveryDriver(assignDriverDetails, deliveryDriver.userId);
 
     setDeliveryChatInfo(deliveryOrder, deliveryDriver);
       
