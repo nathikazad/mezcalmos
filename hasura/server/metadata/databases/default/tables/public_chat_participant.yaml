@@ -30,6 +30,19 @@ select_permissions:
             user:
               id:
                 _eq: X-Hasura-User-Id
+  - role: delivery_driver
+    permission:
+      columns:
+        - chat_id
+        - id
+        - participant_id
+        - app_type_id
+      filter:
+        chat:
+          chat_participants:
+            user:
+              id:
+                _eq: X-Hasura-User-Id
   - role: mez_admin
     permission:
       columns:
@@ -43,7 +56,10 @@ select_permissions:
   - role: restaurant_operator
     permission:
       columns:
+        - chat_id
+        - id
         - participant_id
+        - app_type_id
       filter:
         chat:
           chat_participants:

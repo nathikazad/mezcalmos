@@ -32,7 +32,7 @@ class DriversListView extends StatefulWidget {
 }
 
 class _DriversListViewState extends State<DriversListView> {
-  late DriversViewController viewController;
+  DriversViewController viewController = DriversViewController();
   int? serviceProviderId;
   bool showAppBar = true;
   ServiceProviderType? serviceProviderType;

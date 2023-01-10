@@ -233,11 +233,8 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             children.add(RestaurantsListOfItemsComponent(
                 item: item,
                 function: () {
-                  mezDbgPrint(
-                      "[66] IUtem id ===> ${item.id} -- route ==> ${getItemRoute(restaurantId.toString(), item.id!)}");
                   MezRouter.toNamed(
-                    getItemRoute(restaurantId.toString(), item.id!)
-                        .replaceAll(' ', ''),
+                    getItemRoute(restaurantId, item.id!).replaceAll(' ', ''),
                     arguments: {
                       "mode": ViewItemScreenMode.AddItemMode,
                       "isSpecial": isSpecial

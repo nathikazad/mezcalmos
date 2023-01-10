@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dar
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/UnauthorizedScreen.dart';
+import 'package:mezcalmos/Shared/pages/DeliveryCostSetting/DeliveryCostSettingView.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/LocationPermissionScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/NoInternetConnectionScreen.dart';
@@ -46,7 +47,8 @@ const String kAgoraCallScreen = '/agora';
 const String kPickLocationWithoutAuth = "/pick_location/noAuth";
 const String kPickDriver = "/pickDriver/:orderId";
 const String kDriversList = "/driversList/:serviceProviderId";
-const String kOperatorsList = "/driversList/:serviceProviderId";
+const String kOperatorsList = "/operatorsList/:serviceProviderId";
+const String kDeliveryCost = "/deliveryCost/:serviceProviderId";
 const String kPickLocationEdit = "/pick_location/edit";
 const String kSomethingWentWrongScreen = "/SomethingWentWrongScreen";
 
@@ -105,8 +107,8 @@ void navigateToDrivers(
     required ServiceProviderType controllerType}) {
   final String route =
       kDriversList.replaceFirst(":serviceProviderId", "$serviceProviderId");
-  MezRouter.toNamed(kDriversList, arguments: {
-    "controllerType": controllerType,
+  MezRouter.toNamed(route, arguments: {
+    "serviceProviderType": controllerType,
     "showAppBar": true,
   });
 }
@@ -116,9 +118,19 @@ void navigateToOperators(
     required ServiceProviderType controllerType}) {
   final String route =
       kOperatorsList.replaceFirst(":serviceProviderId", "$serviceProviderId");
-  MezRouter.toNamed(kOperatorsList, arguments: {
-    "controllerType": controllerType,
+  MezRouter.toNamed(route, arguments: {
+    "serviceProviderType": controllerType,
     "showAppBar": true,
+  });
+}
+
+void navigateToDeliveryCost(
+    {required int serviceProviderId,
+    required ServiceProviderType serviceProviderType}) {
+  final String route =
+      kDeliveryCost.replaceFirst(":serviceProviderId", "$serviceProviderId");
+  MezRouter.toNamed(route, arguments: {
+    "serviceProviderType": serviceProviderType,
   });
 }
 
@@ -181,5 +193,6 @@ class SharedRouter {
     GetPage(name: kPickDriver, page: () => PickDriverView()),
     GetPage(name: kDriversList, page: () => DriversListView()),
     GetPage(name: kOperatorsList, page: () => OperatorsListView()),
+    GetPage(name: kDeliveryCost, page: () => DeliveryCostSettingView()),
   ];
 }

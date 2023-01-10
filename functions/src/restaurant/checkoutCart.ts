@@ -25,7 +25,6 @@ export interface CheckoutRequest {
   customerAppType: AppType,
   customerLocation: Location,
   deliveryCost: number,
- 
   paymentType: PaymentType,
   notes: string,
   restaurantId: number,
@@ -33,7 +32,6 @@ export interface CheckoutRequest {
   tripDistance: number,
   tripDuration: number,
   tripPolyline: string,
- 
   scheduledTime?: string,
   stripePaymentId?: string,
   stripeFees?: number,
@@ -69,7 +67,8 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     items: customerCart.items,
     itemsCost : customerCart.cost,
     deliveryCost: checkoutRequest.deliveryCost,
-    scheduledTime: checkoutRequest.scheduledTime
+    scheduledTime: checkoutRequest.scheduledTime,
+    
   }
 
   console.log("+ Items[0].SelectedOptions ==> " ,customerCart.items[0].selectedOptions);

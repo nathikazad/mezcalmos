@@ -3,8 +3,8 @@
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 
 enum ParticipantType {
   Customer,
@@ -252,11 +252,11 @@ class Chat {
 
 class MessageNotificationForQueue extends NotificationForQueue {
   String message;
-  String userId;
+  int userId;
   String chatId;
   String messageId;
   ParticipantType participantType;
-  String? orderId;
+  int? orderId;
   MessageNotificationForQueue(
       {required this.message,
       required this.userId,

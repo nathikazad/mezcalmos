@@ -11,7 +11,7 @@ import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
-    ['pages']['ROpDriversView']["components"]["ROpListOperatorCard"];
+    ['pages']['ROpDriversView']["components"]["ROpListDriverCard"];
 
 class ListOperatorCard extends StatefulWidget {
   const ListOperatorCard({

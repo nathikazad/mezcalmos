@@ -7,6 +7,8 @@ import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfo
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -111,9 +113,11 @@ class ROpDashboardPage extends StatelessWidget {
               _divider(),
               _navigationLink(
                   onClick: () async {
-                    await pageController.animateToPage(5,
-                        duration: Duration(milliseconds: 1),
-                        curve: Curves.easeIn);
+                    viewController.tabsViewViewController?.showTabs.value =
+                        true;
+                    navigateToOperators(
+                        serviceProviderId: viewController.restaurantId,
+                        controllerType: ServiceProviderType.Restaurant);
                   },
                   icon: Icons.people,
                   titleWidget: Text(
@@ -160,9 +164,11 @@ class ROpDashboardPage extends StatelessWidget {
                     _divider(),
                     _navigationLink(
                         onClick: () async {
-                          await pageController.animateToPage(6,
-                              duration: Duration(milliseconds: 1),
-                              curve: Curves.easeIn);
+                          viewController
+                              .tabsViewViewController?.showTabs.value = true;
+                          navigateToDrivers(
+                              serviceProviderId: viewController.restaurantId,
+                              controllerType: ServiceProviderType.Restaurant);
                         },
                         icon: Icons.delivery_dining,
                         titleWidget: Text(
@@ -172,19 +178,15 @@ class ROpDashboardPage extends StatelessWidget {
                               fontWeight: FontWeight.w600,
                               color: Colors.grey.shade900),
                         )),
-                  ],
-                ),
-              if (viewController.restaurant.value!.selfDelivery)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
                     _divider(),
                     _navigationLink(
                         onClick: () async {
-                          // todo handle root
-                          // await pageController.animateToPage(7,
-                          //     duration: Duration(milliseconds: 1),
-                          //     curve: Curves.easeIn);
+                          viewController
+                              .tabsViewViewController?.showTabs.value = true;
+                          navigateToDeliveryCost(
+                              serviceProviderId: viewController.restaurantId,
+                              serviceProviderType:
+                                  ServiceProviderType.Restaurant);
                         },
                         icon: Icons.price_check_rounded,
                         titleWidget: Text(
@@ -335,13 +337,13 @@ class ROpDashboardPage extends StatelessWidget {
       Future<void> Function()? onClick}) {
     return InkWell(
       onTap: () async {
-        await onClick?.call();
         viewController.cuurentPage.value = pageController.page!;
         if (viewController.cuurentPage != 0) {
           viewController.tabsViewViewController?.showTabs.value = false;
         } else {
           viewController.tabsViewViewController?.showTabs.value = true;
         }
+        await onClick?.call();
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 0),

@@ -5,19 +5,19 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { DeliveryDriver, DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
+import { DeliveryDriver, DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus,  } from "../shared/models/Generic/Delivery";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
 import { HttpsError } from "firebase-functions/v1/auth";
 import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
 import { getRestaurantOrder } from "../shared/graphql/restaurant/order/getRestaurantOrder";
-import { deliveryOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { CustomerInfo } from "../shared/models/Generic/User";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { updateRestaurantOrderStatus } from "../shared/graphql/restaurant/order/updateOrder";
 import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { RestaurantOperator } from "../shared/models/Services/Restaurant/Restaurant";
 import { capturePayment, PaymentDetails } from "../utilities/stripe/payment";
+import { restaurantOrderStatusChangeMessages } from "../restaurant/bgNotificationMessages";
 
 let statusArrayInSeq: Array<DeliveryOrderStatus> =
   [
@@ -133,7 +133,7 @@ async function changeStatus(
         orderId: changeDeliveryStatusDetails.restaurantOrderId
       },
       // todo @SanchitUke fix the background message based on Restaurant Order Status
-      background: deliveryOrderStatusChangeMessages[newStatus],
+      background: restaurantOrderStatusChangeMessages[restaurantOrder.status],
       linkUrl: orderUrl(OrderType.Restaurant, changeDeliveryStatusDetails.restaurantOrderId)
     }
 

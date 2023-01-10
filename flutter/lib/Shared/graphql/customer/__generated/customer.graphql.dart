@@ -3722,13 +3722,6 @@ const documentNodeQueryget_customer_orders = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'stripe_payment_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'refund_amount'),
             alias: null,
             arguments: [],
@@ -4010,7 +4003,6 @@ class Query$get_customer_orders$restaurant_order {
     this.to_location_address,
     this.estimated_food_ready_time,
     this.actual_food_ready_time,
-    this.stripe_payment_id,
     required this.refund_amount,
     this.delivery_id,
     required this.status,
@@ -4037,7 +4029,6 @@ class Query$get_customer_orders$restaurant_order {
     final l$to_location_address = json['to_location_address'];
     final l$estimated_food_ready_time = json['estimated_food_ready_time'];
     final l$actual_food_ready_time = json['actual_food_ready_time'];
-    final l$stripe_payment_id = json['stripe_payment_id'];
     final l$refund_amount = json['refund_amount'];
     final l$delivery_id = json['delivery_id'];
     final l$status = json['status'];
@@ -4068,7 +4059,6 @@ class Query$get_customer_orders$restaurant_order {
       to_location_address: (l$to_location_address as String?),
       estimated_food_ready_time: (l$estimated_food_ready_time as String?),
       actual_food_ready_time: (l$actual_food_ready_time as String?),
-      stripe_payment_id: (l$stripe_payment_id as int?),
       refund_amount: moneyFromJson(l$refund_amount),
       delivery_id: (l$delivery_id as int?),
       status: (l$status as String),
@@ -4104,8 +4094,6 @@ class Query$get_customer_orders$restaurant_order {
   final String? estimated_food_ready_time;
 
   final String? actual_food_ready_time;
-
-  final int? stripe_payment_id;
 
   final double refund_amount;
 
@@ -4154,8 +4142,6 @@ class Query$get_customer_orders$restaurant_order {
     _resultData['estimated_food_ready_time'] = l$estimated_food_ready_time;
     final l$actual_food_ready_time = actual_food_ready_time;
     _resultData['actual_food_ready_time'] = l$actual_food_ready_time;
-    final l$stripe_payment_id = stripe_payment_id;
-    _resultData['stripe_payment_id'] = l$stripe_payment_id;
     final l$refund_amount = refund_amount;
     _resultData['refund_amount'] = moneyToJson(l$refund_amount);
     final l$delivery_id = delivery_id;
@@ -4197,7 +4183,6 @@ class Query$get_customer_orders$restaurant_order {
     final l$to_location_address = to_location_address;
     final l$estimated_food_ready_time = estimated_food_ready_time;
     final l$actual_food_ready_time = actual_food_ready_time;
-    final l$stripe_payment_id = stripe_payment_id;
     final l$refund_amount = refund_amount;
     final l$delivery_id = delivery_id;
     final l$status = status;
@@ -4221,7 +4206,6 @@ class Query$get_customer_orders$restaurant_order {
       l$to_location_address,
       l$estimated_food_ready_time,
       l$actual_food_ready_time,
-      l$stripe_payment_id,
       l$refund_amount,
       l$delivery_id,
       l$status,
@@ -4293,11 +4277,6 @@ class Query$get_customer_orders$restaurant_order {
     final l$actual_food_ready_time = actual_food_ready_time;
     final lOther$actual_food_ready_time = other.actual_food_ready_time;
     if (l$actual_food_ready_time != lOther$actual_food_ready_time) {
-      return false;
-    }
-    final l$stripe_payment_id = stripe_payment_id;
-    final lOther$stripe_payment_id = other.stripe_payment_id;
-    if (l$stripe_payment_id != lOther$stripe_payment_id) {
       return false;
     }
     final l$refund_amount = refund_amount;
@@ -4402,7 +4381,6 @@ abstract class CopyWith$Query$get_customer_orders$restaurant_order<TRes> {
     String? to_location_address,
     String? estimated_food_ready_time,
     String? actual_food_ready_time,
-    int? stripe_payment_id,
     double? refund_amount,
     int? delivery_id,
     String? status,
@@ -4452,7 +4430,6 @@ class _CopyWithImpl$Query$get_customer_orders$restaurant_order<TRes>
     Object? to_location_address = _undefined,
     Object? estimated_food_ready_time = _undefined,
     Object? actual_food_ready_time = _undefined,
-    Object? stripe_payment_id = _undefined,
     Object? refund_amount = _undefined,
     Object? delivery_id = _undefined,
     Object? status = _undefined,
@@ -4492,9 +4469,6 @@ class _CopyWithImpl$Query$get_customer_orders$restaurant_order<TRes>
         actual_food_ready_time: actual_food_ready_time == _undefined
             ? _instance.actual_food_ready_time
             : (actual_food_ready_time as String?),
-        stripe_payment_id: stripe_payment_id == _undefined
-            ? _instance.stripe_payment_id
-            : (stripe_payment_id as int?),
         refund_amount: refund_amount == _undefined || refund_amount == null
             ? _instance.refund_amount
             : (refund_amount as double),
@@ -4580,7 +4554,6 @@ class _CopyWithStubImpl$Query$get_customer_orders$restaurant_order<TRes>
     String? to_location_address,
     String? estimated_food_ready_time,
     String? actual_food_ready_time,
-    int? stripe_payment_id,
     double? refund_amount,
     int? delivery_id,
     String? status,

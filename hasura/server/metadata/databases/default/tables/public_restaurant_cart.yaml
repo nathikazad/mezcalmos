@@ -54,7 +54,6 @@ update_permissions:
 delete_permissions:
   - role: customer
     permission:
-      backend_only: false
       filter:
         customer_id:
           _eq: X-Hasura-User-Id

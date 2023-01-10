@@ -349,6 +349,8 @@ class RestaurantController extends GetxController {
         // "customerId": _authController.user!.hasuraId,
         // "checkoutRequest": <String, dynamic>{
         "customerAppType": "customer_mobile",
+        "stripeFees": 5,
+        "stripePaymentId": 1,
         "customerLocation": cart.value.toLocation?.toFirebaseFormattedJson() ??
             LocModel.Location(
               "Test _ Location ",
