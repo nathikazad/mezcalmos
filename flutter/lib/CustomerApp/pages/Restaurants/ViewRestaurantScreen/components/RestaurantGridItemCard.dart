@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class RestaurantgridItemCard extends StatefulWidget {
   const RestaurantgridItemCard(
@@ -39,9 +39,7 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
         child: InkWell(
           onTap: () {
             MezRouter.toNamed(
-              getItemRoute(
-                  widget.restaurant.info.hasuraId.toString().toString(),
-                  widget.item.id!),
+              getItemRoute(widget.restaurant.info.hasuraId, widget.item.id!),
               arguments: {
                 "mode": ViewItemScreenMode.AddItemMode,
                 "isSpecial": widget.isSpecial
