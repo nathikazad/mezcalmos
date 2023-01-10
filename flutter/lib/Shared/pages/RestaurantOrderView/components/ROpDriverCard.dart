@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -94,33 +93,31 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                     ),
                   ),
                   if (widget.order.inProcess() &&
-                      widget.order.dropoffDriver != null &&
-                      widget.order.selfDelivery)
+                      widget.order.dropoffDriver != null)
                     MezIconButton(
-                      onTap: () {
-                        // MezRouter.toNamed(getROpPickDriverRoute(
-                        //     orderId: widget.order.orderId));
+                      onTap: () async {
+                        final bool? forwardToMezCalmos =
+                            await MezRouter.toNamed(getROpPickDriverRoute(
+                                serviceProviderId: widget.order.restaurantId,
+                                orderId:
+                                    widget.order.deliveryOrderId!)) as bool?;
+                        if (forwardToMezCalmos != null &&
+                            forwardToMezCalmos == false) {
+                          showSet.value = false;
+                        }
                       },
                       icon: Icons.edit,
                     ),
-                  // TODO handle @m66are handle message btn
-
                   if (widget.order.serviceProviderDropOffDriverChatId != null)
-                    Obx(
-                      () => MessageButton(
-                        onTap: () {
-                          MezRouter.toNamed(getMessagesRoute(
-                              chatId: widget
-                                  .order.serviceProviderDropOffDriverChatId!,
-                              recipientType: ParticipantType.DeliveryDriver,
-                              orderId: widget.order.orderId));
-                        },
-                        showRedDot:
-                            Get.find<ForegroundNotificationsController>()
-                                .hasNewMessageNotification(widget
-                                    .order.serviceProviderDropOffDriverChatId!
-                                    .toString()),
-                      ),
+                    MessageButton(
+                      onTap: () {
+                        MezRouter.toNamed(getMessagesRoute(
+                            chatId: widget
+                                .order.serviceProviderDropOffDriverChatId!,
+                            recipientType: ParticipantType.DeliveryDriver,
+                            orderId: widget.order.orderId));
+                      },
+                      chatId: widget.order.serviceProviderDropOffDriverChatId!,
                     ),
                 ])
               : (widget.order.selfDelivery)

@@ -73,6 +73,15 @@ select_permissions:
       filter:
         customer_id:
           _eq: X-Hasura-User-Id
+  - role: delivery_driver
+    permission:
+      columns:
+        - id
+      filter:
+        delivery:
+          delivery_driver:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: mez_admin
     permission:
       columns:
@@ -126,7 +135,10 @@ select_permissions:
         - refund_amount
         - restaurant_id
         - review_id
+        - scheduled_time
         - status
+        - stripe_fees
+        - stripe_info
         - tax
         - to_location_address
         - to_location_gps

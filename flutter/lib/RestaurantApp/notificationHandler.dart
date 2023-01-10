@@ -125,7 +125,7 @@ Notification newMessageNotification(String key, value) {
   return Notification(
       id: key,
       linkUrl: getMessagesRoute(
-          chatId: value['chatId'],
+          chatId: int.parse(value['chatId']),
           orderLink: getROpOrderRoute(value['orderId'].toString())),
       body: value['message'],
       imgUrl: value['sender']['image'],

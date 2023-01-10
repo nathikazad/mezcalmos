@@ -46,7 +46,7 @@ const String kAgoraCallScreen = '/agora';
 const String kPickLocationWithoutAuth = "/pick_location/noAuth";
 const String kPickDriver = "/pickDriver/:orderId";
 const String kDriversList = "/driversList/:serviceProviderId";
-const String kOperatorsList = "/driversList/:serviceProviderId";
+const String kOperatorsList = "/operatorsList/:serviceProviderId";
 const String kPickLocationEdit = "/pick_location/edit";
 const String kSomethingWentWrongScreen = "/SomethingWentWrongScreen";
 
@@ -116,7 +116,7 @@ void navigateToOperators(
     required ServiceProviderType controllerType}) {
   final String route =
       kOperatorsList.replaceFirst(":serviceProviderId", "$serviceProviderId");
-  MezRouter.toNamed(kOperatorsList, arguments: {
+  MezRouter.toNamed(route, arguments: {
     "controllerType": controllerType,
     "showAppBar": true,
   });
