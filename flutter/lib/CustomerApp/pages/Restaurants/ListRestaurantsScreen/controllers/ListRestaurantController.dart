@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -21,16 +21,14 @@ class ListRestaurantsController {
   RxBool isLoading = RxBool(false);
   RxBool showOnlyOpen = RxBool(true);
   RxString searchQuery = RxString("");
-  num baseShippingPrice = 50;
-  RestaurantsInfoController _restaurantsInfoController =
-      Get.find<RestaurantsInfoController>();
+
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 
   void init() {
     isLoading.value = true;
-    getShippingPrice();
-    _restaurantsInfoController.getRestaurants().then((List<Restaurant> list) {
+
+    fetch_restaurants(withCache: false).then((List<Restaurant> list) {
       _restaurants = list;
       _assignServiceIds();
       filter();
@@ -41,10 +39,6 @@ class ListRestaurantsController {
 
   void changeAlwaysOpenSwitch(bool value) {
     showOnlyOpen.value = value;
-  }
-
-  Future<void> getShippingPrice() async {
-    baseShippingPrice = await _restaurantsInfoController.getShippingPrice();
   }
 
   void _assignServiceIds() {

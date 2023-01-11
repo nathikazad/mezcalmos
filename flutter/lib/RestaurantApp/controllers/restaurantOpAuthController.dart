@@ -50,10 +50,11 @@ class RestaurantOpAuthController extends GetxController {
         "RestaurantAuthController: calling handle state change first time");
     // Todo @m66are remove this restaurant id hard code
 
-    setupRestaurantOperator();
-    if (operator.value?.info.hasuraId != null) {
-      saveNotificationToken();
-    }
+    setupRestaurantOperator().then((value) {
+      if (operator.value?.info.hasuraId != null) {
+        saveNotificationToken();
+      }
+    });
 
     super.onInit();
   }

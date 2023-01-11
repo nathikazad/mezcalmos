@@ -50,23 +50,6 @@ class OrderController extends GetxController {
     pastOrders.value = _orders
         .where((RestaurantOrder element) => !element.inProcess())
         .toList();
-    // get_customer_orders(customer_id: _authController.user!.hasuraId)
-    //     .then((List<RestaurantOrder> value) {
-    //   final List<Order> _currentOrders = <Order>[];
-    //   final List<Order> _pastOrders = <Order>[];
-
-    //   if (value.isNotEmpty) {
-    //     value.forEach((RestaurantOrder order) {
-    //       if (order.inProcess()) {
-    //         _currentOrders.add(order);
-    //       } else {
-    //         _pastOrders.add(order);
-    //       }
-    //     });
-    //   }
-    //   currentOrders.value = _currentOrders;
-    //   pastOrders.value = _pastOrders;
-    // });
   }
 
   Order? hasOrderOfType({required OrderType typeToCheck}) {
@@ -224,6 +207,8 @@ class OrderController extends GetxController {
   @override
   Future<void> onClose() async {
     print("[+] OrderController::onClose ---------> Was invoked !");
+    currentOrders.close();
+    pastOrders.close();
     await _currentOrdersListener?.cancel();
     _currentOrdersListener = null;
     await _pastOrdersListener?.cancel();

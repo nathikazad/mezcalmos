@@ -10,8 +10,8 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewCartScreen"]["components"]["BuildCart"];
 
-class CartBuilder extends StatelessWidget {
-  const CartBuilder({Key? key}) : super(key: key);
+class CartItemsHeader extends StatelessWidget {
+  const CartItemsHeader({Key? key}) : super(key: key);
 
   /// RestaurantController
   static final RestaurantController controller =
@@ -60,7 +60,7 @@ class CartBuilder extends StatelessWidget {
                                     Get.find<AuthController>().user!.hasuraId,
                               );
 
-                              controller.clearCart();
+                              await controller.clearCart();
                               await controller.fetchCart();
                               controller.cart.refresh();
                               MezRouter.popDialog<void>();

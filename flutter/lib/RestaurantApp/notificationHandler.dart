@@ -96,12 +96,12 @@ Map<String, dynamic>? _getRestaurantOrderStatusFields(
     //     "imgUrl":
     //         "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
     //   };
-    // case RestaurantOrderStatus.Ready:
-    //   return <String, dynamic>{
-    //     "title": "${_i18n()["readyForPickUpTitle"]}",
-    //     "body": "${_i18n()["readyForPickUpBody"]}",
-    //     "imgUrl": "assets/images/shared/notifications/onTheWay.png",
-    //   };
+    case RestaurantOrderStatus.Ready:
+      return <String, dynamic>{
+        "title": "${_i18n()["readyForPickUpTitle"]}",
+        "body": "${_i18n()["readyForPickUpBody"]}",
+        "imgUrl": "assets/images/shared/notifications/onTheWay.png",
+      };
     case RestaurantOrderStatus.OnTheWay:
       return <String, dynamic>{
         "title": "${_i18n()["onTheWayRestaurantTitle"]}",

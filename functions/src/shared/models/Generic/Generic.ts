@@ -21,8 +21,8 @@ export enum Language {
 }
 
 export enum AppType {
-  CustomerWeb = "customer_web",
-  CustomerMobile = "customer_mobile",
+  Customer = "customer",
+ 
   RestaurantApp = "restaurant",
   DeliveryApp = "delivery",
   DeliveryAdmin = "delivery_admin",
@@ -30,8 +30,8 @@ export enum AppType {
 }
 
 export const AppParticipant: Record<AppType, ParticipantType> = {
-  [AppType.CustomerMobile]: ParticipantType.Customer,
-  [AppType.CustomerWeb]: ParticipantType.Customer,
+  
+  [AppType.Customer]: ParticipantType.Customer,
   [AppType.DeliveryAdmin]: ParticipantType.DeliveryOperator,
   [AppType.DeliveryApp]: ParticipantType.DeliveryDriver,
   [AppType.MezAdmin]: ParticipantType.MezAdmin,

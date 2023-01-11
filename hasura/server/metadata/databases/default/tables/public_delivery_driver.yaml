@@ -32,6 +32,23 @@ computed_fields:
         name: driver_notification_token
         schema: public
 select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - current_location
+        - delivery_company_id
+        - delivery_company_type
+        - delivery_driver_type
+        - id
+        - online
+        - status
+        - user_id
+      filter:
+        restaurant:
+          orders:
+            customer:
+              user_id:
+                _eq: X-Hasura-User-Id
   - role: delivery_driver
     permission:
       columns:

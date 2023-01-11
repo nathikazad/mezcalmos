@@ -110,6 +110,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
                 polyline: orderData.delivery!.trip_polyline!)
             : null,
         paymentType: orderData.payment_type.toPaymentType(),
+        customerDropOffDriverChatId: orderData.delivery?.chat_with_customer_id,
         orderTime: DateTime.parse(orderData.order_time),
         cost: orderData.delivery_cost,
         restaurant: ServiceInfo(
@@ -138,6 +139,9 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
                 image: orderData.delivery!.delivery_driver!.user.image,
                 language: orderData.delivery!.delivery_driver!.user.language_id
                     .toLanguageType())
+            : null,
+        scheduledTime: (orderData.scheduled_time != null)
+            ? DateTime.tryParse(orderData.scheduled_time!)
             : null,
         customer: UserInfo(
             hasuraId: orderData.customer.user.id,
@@ -221,6 +225,10 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
 
   final RestaurantOrder res = RestaurantOrder(
     chatId: orderData.chat_id,
+    customerDropOffDriverChatId: orderData.delivery?.chat_with_customer_id,
+    scheduledTime: (orderData.scheduled_time != null)
+        ? DateTime.tryParse(orderData.scheduled_time!)
+        : null,
     orderId: orderData.id,
     notes: orderData.notes,
     dropOffDriverChatId: orderData.delivery?.chat_with_service_provider_id,

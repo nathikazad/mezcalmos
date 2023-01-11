@@ -48,7 +48,7 @@ Future<NotificationInfo?> get_notif_info({required int userId}) async {
     throw Exception("🚨 insert notif token failed =>${res.exception}");
   }
   mezDbgPrint(
-      "😉 Get notif token ===>\n ${res.parsedData!.notification_info.first.toJson()}");
+      "😉 Get notif token ===>\n ${res.parsedData!.notification_info.length}");
   final List<Query$getNotifInfoByUserId$notification_info> data =
       res.parsedData!.notification_info;
   if (data.isNotEmpty) {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:sizer/sizer.dart';
@@ -30,8 +30,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
   }
 
   Future<void> _getRest() async {
-    restaurant.value = await Get.find<RestaurantsInfoController>()
-        .getRestaurant(widget.restaurantId as int);
+    restaurant.value = await get_restaurant_by_id(id: widget.restaurantId);
   }
 
   @override

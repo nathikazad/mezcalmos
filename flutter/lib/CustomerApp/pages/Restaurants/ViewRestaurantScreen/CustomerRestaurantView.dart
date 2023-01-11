@@ -9,6 +9,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/com
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/restaurantInfoTab.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -36,7 +37,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
 
   @override
   void initState() {
-    restaurant = Get.arguments as Restaurant;
+    restaurant = Get.arguments["restaurant"] as Restaurant;
     mezDbgPrint(restaurant.info.hasuraId.toString().toString());
     _viewController.init(restaurant: restaurant, vsync: this);
     super.initState();
@@ -67,29 +68,6 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
     );
   }
 
-  Container _schedulingOrdersBottomWidget() {
-    return Container(
-      alignment: Alignment.center,
-      height: 60,
-      decoration: BoxDecoration(color: Colors.grey.shade400),
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Flexible(
-            child: Text(
-              '${_i18n()["scheduleTitle"]}',
-              style: Get.textTheme.bodyText1,
-              maxLines: 2,
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget buildSliverScrollView() {
     return CustomScrollView(
       controller: _viewController.scrollController,
@@ -105,8 +83,19 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
                 controller: _viewController,
               )),
             );
-          else
+          else if (_viewController.isInitialzed) {
             return _buildItemsList();
+          } else {
+            return SliverFillRemaining(
+                child: Container(
+              alignment: Alignment.center,
+              child: Text(
+                "Some magic is happening ...",
+                style: Get.textTheme.bodyText1?.copyWith(
+                    color: primaryBlueColor, fontStyle: FontStyle.italic),
+              ),
+            ));
+          }
         })
       ],
     );
@@ -260,5 +249,28 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
         }),
       );
     }
+  }
+
+  Container _schedulingOrdersBottomWidget() {
+    return Container(
+      alignment: Alignment.center,
+      height: 60,
+      decoration: BoxDecoration(color: Colors.grey.shade400),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Flexible(
+            child: Text(
+              '${_i18n()["scheduleTitle"]}',
+              style: Get.textTheme.bodyText1,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

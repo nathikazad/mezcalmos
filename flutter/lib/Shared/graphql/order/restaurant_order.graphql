@@ -98,6 +98,7 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
       actual_arrival_at_pickup_time
       actual_arrival_at_dropoff_time
       chat_with_service_provider_id
+      chat_with_customer_id
       cancellation_time
       current_gps
 
@@ -211,6 +212,7 @@ query get_restaurant_order_by_id($order_id: Int!) {
       trip_distance
       trip_duration
       chat_with_service_provider_id
+      chat_with_customer_id
       id
       actual_delivered_time
       actual_package_ready_time

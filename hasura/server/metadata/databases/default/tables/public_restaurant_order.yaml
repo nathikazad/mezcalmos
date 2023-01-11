@@ -62,7 +62,10 @@ select_permissions:
         - refund_amount
         - restaurant_id
         - review_id
+        - scheduled_time
         - status
+        - stripe_fees
+        - stripe_info
         - tax
         - to_location_address
         - to_location_gps

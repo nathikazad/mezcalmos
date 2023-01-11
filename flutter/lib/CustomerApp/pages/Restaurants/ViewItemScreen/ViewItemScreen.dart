@@ -7,10 +7,10 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/component
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/ITemSliverAppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/ItemOptionCard.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
@@ -20,7 +20,6 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 
@@ -54,7 +53,6 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       Get.find<RestaurantController>();
 
   /// RestaurantsInfoController
-  RestaurantsInfoController controller = Get.find<RestaurantsInfoController>();
 
   /// currentRestaurant
   Restaurant? currentRestaurant;
@@ -76,6 +74,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
     mezDbgPrint("widget.viewItemScreenMode => ${widget.viewItemScreenMode}");
     showViewRestaurant = Get.arguments?["showViewRestaurant"] ?? false;
     isSpecial = Get.arguments?["isSpecial"] ?? false;
+    Get.find<RestaurantController>().fetchCart();
     if (widget.viewItemScreenMode == ViewItemScreenMode.AddItemMode) {
       final int? restaurantId = Get.parameters['restaurantId'] == null
           ? null

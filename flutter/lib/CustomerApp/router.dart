@@ -39,7 +39,9 @@ const String kLaundriesListRoute = '/laundriesList';
 const String kSavedCards = '/savedCards';
 const String kSingleLaundryRoute = '/laundriesList/:laundryId';
 
-String getRestaurantRoute(int restaurantId) {
+String getRestaurantRoute(
+  int restaurantId,
+) {
   return kRestaurantRoute.replaceFirst(
       ":restaurantId", restaurantId.toString());
 }

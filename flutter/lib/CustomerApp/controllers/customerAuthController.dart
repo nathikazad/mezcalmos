@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -11,10 +12,12 @@ import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
+import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
 import 'package:mezcalmos/Shared/graphql/saved_location/saved_location.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
 
 class CustomerAuthController extends GetxController {
   Rxn<Customer> _customer = Rxn<Customer>();
@@ -61,18 +64,52 @@ class CustomerAuthController extends GetxController {
     // setting device notification
     final String? deviceNotificationToken =
         await _notificationsController.getToken();
-    if (deviceNotificationToken != null)
-      await set_notification_token(
-        token: deviceNotificationToken,
-        customer_id: _authController.hasuraUserId!,
-      );
+    if (deviceNotificationToken != null) {
+      mezDbgPrint("😉😉😉😉😉😉 setting notif token 😉😉😉😉😉");
+      unawaited(saveNotificationToken());
+    }
     // ignore: always_specify_types, unawaited_futures
     getCustomerCart(customerId: _authController.hasuraUserId!).then((value) {
-      mezDbgPrint("[JJ] -CART-LEN-  ${value?.cartItems.length}");
+      mezDbgPrint(
+          "Customer Auth controller -CART-LEN-  ${value?.cartItems.length}");
       if (value == null) {
         create_customer_cart();
       }
     });
+  }
+
+  Future<void> saveNotificationToken() async {
+    final String? deviceNotificationToken =
+        await _notificationsController.getToken();
+    final NotificationInfo? notifInfo =
+        await get_notif_info(userId: _authController.hasuraUserId!);
+    mezDbgPrint(
+        "inside save notif token=====>>>😍 ${_authController.hasuraUserId!}");
+    mezDbgPrint("inside save notif token=====>>>${notifInfo?.token}");
+    try {
+      if (notifInfo != null &&
+          deviceNotificationToken != null &&
+          notifInfo.token != deviceNotificationToken) {
+        mezDbgPrint("🫡🫡 Updating notification info 🫡🫡");
+        // ignore: unawaited_futures
+        update_notif_info(
+            notificationInfo: NotificationInfo(
+                userId: _authController.hasuraUserId!,
+                appType: "customer",
+                id: notifInfo.id,
+                token: deviceNotificationToken));
+      } else if (deviceNotificationToken != null && notifInfo == null) {
+        mezDbgPrint("🫡🫡 Saving notification info for the first time 🫡🫡");
+        // ignore: unawaited_futures
+        insert_notif_info(
+            userId: _authController.hasuraUserId!,
+            token: deviceNotificationToken,
+            appType: "customer");
+      }
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
   }
 
   void saveNewLocation(SavedLocation savedLocation) {
