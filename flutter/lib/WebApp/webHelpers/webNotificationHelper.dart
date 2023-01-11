@@ -105,7 +105,7 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
   var notif = Notification(
     id: key,
     icon: Material.Icons.flatware,
-    linkUrl: getRestaurantOrderRoute(value['orderId']),
+    linkUrl: getRestaurantOrderRoute(value['orderId'].toString()),
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],
     imgUrl: dynamicFields["imgUrl"],

@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -38,7 +39,13 @@ class CustomerRestaurantController {
     scrollController = AutoScrollController();
     this.restaurant.value = restaurant;
     await _getShippingPrice();
+    // var cat = Category(
+    //   name: <LanguageType,String>{LanguageType.EN:"test",LanguageType.ES:"test2"},
+    //    id:2,
+    //    descriptionId:4,
+    //    nameId:3,
 
+    // );
     final List<Category>? _cats =
         await get_restaurant_categories_by_id(restaurant.info.hasuraId);
     specials.value =
@@ -55,8 +62,8 @@ class CustomerRestaurantController {
 
       this.restaurant.refresh();
     }
-    _initControllers(vsync, restaurant);
-    assignKeys();
+    // _initControllers(vsync, restaurant);
+    // assignKeys();
 
     // final List<Item> _items =
     //     await fetch_restaurant_items(restaurant_id: restaurant.info.hasuraId);

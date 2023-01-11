@@ -73,7 +73,7 @@ Future<bool> putControllers() async {
   //   mezDbgPrint(
   //       "]]]]]]]]]] the RestaurantController is intailized ]]]]]]]]]]]]");
   //   areAllIntilized.add(true);
-  //   // }
+  // }
 
   //   mezDbgPrint("]]]]]]]]]] the authController is intailized ]]]]]]]]]]]]");
   //   areAllIntilized.add(true);

@@ -7,8 +7,11 @@ import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
@@ -74,27 +77,47 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
           : ViewItemScreenMode.EditItemMode;
       mezDbgPrint("===========> this is the mode ${mode} <=============");
       if (mode == ViewItemScreenMode.AddItemMode) {
-        Get.find<RestaurantsInfoController>()
-            .getRestaurant(int.parse(QR.params['id'].toString()))
-            .then((value) {
-          if (value != null) {
-            setState(() {
-              currentRestaurant = value;
-              var item = value.findItemById(id: QR.params['itemId'].toString());
+        get_restaurant_by_id(
+                id: int.parse(QR.params['id'].toString()), withCache: false)
+            .then((Restaurant? rest) {
+          setState(() {
+            currentRestaurant = rest;
+          });
+        });
 
-              cartItem.value =
-                  CartItem(item!, int.parse(QR.params['id'].toString()));
-
-              if (item != null) {
-                print("this is another test ${item.toJson()}");
-              } else {
-                // QR.to("/404");
-              }
-            });
+        get_one_item_by_id(int.parse("${QR.params['itemId'].toString()}"))
+            .then((Item? _item) {
+          if (_item != null) {
+            mezDbgPrint("[66] Got Item ==> |item : ${_item.id}|");
+            cartItem.value =
+                CartItem(_item, int.parse(QR.params['id'].toString()));
           } else {
-            //QR.to("/404");
+            mezDbgPrint("[66] Failed getting Item ==> |item|");
           }
         });
+        //  mezDbgPrint("IS SPECIAL ITEM==========>>>>$isSpecial");
+        mezDbgPrint("CartValue =--> ${cartItem.value}");
+        // Get.find<RestaurantsInfoController>()
+        //     .getRestaurant(int.parse(QR.params['id'].toString()))
+        //     .then((value) {
+        //   if (value != null) {
+        //     setState(() {
+        //       currentRestaurant = value;
+        //       var item = value.findItemById(id: QR.params['itemId'].toString());
+
+        //       cartItem.value =
+        //           CartItem(item!, int.parse(QR.params['id'].toString()));
+
+        //       if (item != null) {
+        //         print("this is another test ${item.toJson()}");
+        //       } else {
+        //         // QR.to("/404");
+        //       }
+        //     });
+        //   } else {
+        //     //QR.to("/404");
+        //   }
+        // });
       } else if (QR.params['mode'].toString() == "edit") {
         mezDbgPrint(
             "👋===========> this is the mode ${mode}  and the id is ${QR.params['idInCart'].toString()}<=============");

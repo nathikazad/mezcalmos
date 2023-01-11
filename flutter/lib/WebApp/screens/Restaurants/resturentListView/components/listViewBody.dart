@@ -264,18 +264,24 @@ class _ListRestauBodyState extends State<ListRestauBody> {
 
   Widget _sortingSwitcher() {
     return Obx(
-      () => SwitchListTile(
-        value: widget.viewController.showOnlyOpen.value,
-        onChanged: (bool v) {
-          widget.viewController.changeAlwaysOpenSwitch(v);
-          widget.viewController.filter();
-          setState(() {});
-        },
-        activeColor: primaryBlueColor,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-        title: Text(
-          "${_i18n()["showOnlyOpen"]}",
-          style: Get.textTheme.bodyText2?.copyWith(fontWeight: FontWeight.w700),
+      () => Container(
+        padding: EdgeInsets.symmetric(
+            horizontal:
+                MezCalmosResizer.getWepPageHorizontalPadding(context) + 10),
+        child: SwitchListTile(
+          value: widget.viewController.showOnlyOpen.value,
+          onChanged: (bool v) {
+            widget.viewController.changeAlwaysOpenSwitch(v);
+            widget.viewController.filter();
+            setState(() {});
+          },
+          activeColor: primaryBlueColor,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+          title: Text(
+            "${_i18n()["showOnlyOpen"]}",
+            style: Get.textTheme.bodyText2
+                ?.copyWith(fontWeight: FontWeight.w700, fontSize: 16),
+          ),
         ),
       ),
     );

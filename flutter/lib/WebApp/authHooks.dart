@@ -3,6 +3,7 @@ import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/Shared/controllers/AuthController.dart';
+import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/WebApp/controllers/messageWebController.dart';
@@ -18,6 +19,7 @@ class AuthHooks {
     await Get.delete<RestaurantController>(force: true);
 
     await Get.delete<ForegroundNotificationsController>(force: true);
+
     // NotifListener.cancel();
   }
 
@@ -27,6 +29,15 @@ class AuthHooks {
     );
     print("[+] WebApp::AuthHooks::onSignInHook -> Callback Executed.");
 
+    if (!Get.isRegistered<AuthController>()) {
+      await Get.put<AuthController>(
+        AuthController(onSignInHook, onSignOutHook),
+        permanent: true,
+      );
+    }
+
+    Get.put<BackgroundNotificationsController>(
+        BackgroundNotificationsController());
     if (!Get.isRegistered<CustomerAuthController>()) {
       await Get.put<CustomerAuthController>(CustomerAuthController(),
           permanent: true);

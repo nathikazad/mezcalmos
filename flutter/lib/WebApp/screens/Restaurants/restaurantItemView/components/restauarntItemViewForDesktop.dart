@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/component
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/ButtonStyles.dart';
 import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
@@ -166,6 +167,7 @@ class _RestaurantItemViewForDesktopState
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(5))),
+
                                   onPressed: (restaurantCartController
                                               .cart.value
                                               .canAddSpecial(
@@ -173,45 +175,108 @@ class _RestaurantItemViewForDesktopState
                                                       widget.cartItem.value!) ==
                                           false)
                                       ? () async {
+                                          mezDbgPrint(
+                                              "[cc] Exec :: _addSpecialItemCallBack ");
                                           await _addSpecialItemCallBack();
                                         }
                                       : () async {
+                                          mezDbgPrint("[cc] Exec :: other ");
+
                                           if (auth.fireAuthUser != null) {
                                             if (ViewItemScreenMode
                                                     .AddItemMode ==
                                                 widget.viewItemScreenMode) {
                                               mezDbgPrint(
-                                                  "the first id is ${restaurantCartController.associatedRestaurant?.info.descriptionId} and the scond is ${widget.currentRestaurant.value?.info.descriptionId}");
+                                                  "[cc] Exec :: AddItemMode ");
 
                                               if (restaurantCartController
                                                       .associatedRestaurant
                                                       ?.info
-                                                      .descriptionId !=
+                                                      .hasuraId
+                                                      .toString() !=
                                                   null) {
+                                                mezDbgPrint(
+                                                    "[popo] Exec :: AddItemMode :: if 1 RES ID / ${restaurantCartController.associatedRestaurant?.info.hasuraId} ");
+                                                mezDbgPrint(
+                                                    "[popo] widget.currentRestaurantId :: ${widget.currentRestaurant.value?.info.hasuraId} ");
+
                                                 if (restaurantCartController
                                                         .associatedRestaurant
                                                         ?.info
-                                                        .descriptionId ==
-                                                    widget
-                                                        .currentRestaurant
-                                                        .value!
-                                                        .info
-                                                        .descriptionId) {
-                                                  mezDbgPrint(
-                                                      "the first id is ${restaurantCartController.associatedRestaurant?.info.descriptionId} and the scond is ${widget.currentRestaurant.value?.info.descriptionId}");
+                                                        .hasuraId ==
+                                                    widget.currentRestaurant
+                                                        .value!.info.hasuraId) {
+                                                  // final Cart? _c = await getCustomerCart(
+                                                  //   customerId: auth.user!.hasuraId,
+                                                  // );
+                                                  // if (_c == null) {
+                                                  //   await create_customer_cart(
+                                                  //       restaurant_id: restaurantCartController
+                                                  //           .associatedRestaurant!.info.hasuraId);
+                                                  // }
+                                                  if (restaurantCartController
+                                                          .cart
+                                                          .value
+                                                          .restaurant ==
+                                                      null) {
+                                                    mezDbgPrint(
+                                                      "[popo] Restaurant is null ... setting it to ${widget.currentRestaurant.value!.info.hasuraId}!",
+                                                    );
+
+                                                    await set_cart_restaurant_id(
+                                                      customer_id:
+                                                          auth.hasuraUserId!,
+                                                      restaurant_id: widget
+                                                          .currentRestaurant
+                                                          .value!
+                                                          .info
+                                                          .hasuraId,
+                                                    );
+                                                  }
                                                   await restaurantCartController
-                                                      .addItem(widget
-                                                          .cartItem.value!);
+                                                      .fetchCart();
+                                                  final CartItem? _itemCheck =
+                                                      restaurantCartController
+                                                          .cart.value.cartItems
+                                                          .firstWhereOrNull(
+                                                              (CartItem
+                                                                      element) =>
+                                                                  element.item
+                                                                      .id ==
+                                                                  widget
+                                                                      .cartItem
+                                                                      .value
+                                                                      ?.item
+                                                                      .id);
+                                                  if (_itemCheck != null) {
+                                                    await update_item_quantity(
+                                                        quantity: (_itemCheck
+                                                                .quantity +
+                                                            widget
+                                                                .cartItem
+                                                                .value!
+                                                                .quantity),
+                                                        customer_id: Get.find<
+                                                                AuthController>()
+                                                            .hasuraUserId!,
+                                                        item_id: _itemCheck
+                                                            .idInCart!);
+                                                  } else {
+                                                    mezDbgPrint("[popo] rara ");
+                                                    await add_item_to_cart(
+                                                      cartItem: widget
+                                                          .cartItem.value!,
+                                                    );
+                                                  }
+                                                  restaurantCartController.cart
+                                                          .value.restaurant =
+                                                      widget.currentRestaurant
+                                                          .value;
 
-                                                  mezDbgPrint(
-                                                      "🛒🛒🛒🛒🛒🛒🛒🛒🛒 ${restaurantCartController.cart.value.toFirebaseFormattedJson()}");
-
-                                                  widget.mezWebSideBarController
-                                                      .openWebEndDrawer();
+                                                  /// please add routing
+                                                  // await MezRouter.offNamed<
+                                                  //     void>(kCartRoute);
                                                 } else {
-                                                  mezDbgPrint(
-                                                      "not true ${restaurantCartController.associatedRestaurant?.info.descriptionId} and the other is ${widget.currentRestaurant.value?.info.descriptionId}");
-
                                                   await showStatusInfoDialog(
                                                     context,
                                                     bottomRightIcon:
@@ -231,23 +296,21 @@ class _RestaurantItemViewForDesktopState
                                                             .name ??
                                                         "",
                                                     primaryClickTitle:
-                                                        _i182n()["rightBtn"],
+                                                        _i18n()["rightBtn"],
                                                     secondaryClickTitle:
-                                                        _i182n()["leftBtn"],
+                                                        _i18n()["leftBtn"],
                                                     description:
-                                                        _i182n()["subtitle"],
+                                                        _i18n()["subtitle"],
                                                     secondaryCallBack:
                                                         () async {
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                      // await Get.toNamed<void>(kCartRoute);
-                                                      widget
-                                                          .mezWebSideBarController
-                                                          .openWebEndDrawer();
+                                                      QR.back();
+
+                                                      //   please add routing
+                                                      // await MezRouter.toNamed<
+                                                      //     void>(kCartRoute);
                                                     },
                                                     primaryCallBack: () async {
-                                                      Navigator.of(context)
-                                                          .pop();
+                                                      QR.back();
                                                       await restaurantCartController
                                                           .addItem(widget
                                                               .cartItem.value!);
@@ -255,6 +318,8 @@ class _RestaurantItemViewForDesktopState
                                                       widget
                                                           .mezWebSideBarController
                                                           .openWebEndDrawer();
+                                                      // await MezRouter.offNamed<
+                                                      //     void>(kCartRoute);
                                                     },
                                                   );
                                                 }
@@ -273,36 +338,208 @@ class _RestaurantItemViewForDesktopState
                                                                     .cartItem
                                                                     .value!) ==
                                                         false) {
-                                                  mezDbgPrint("Error");
                                                   MezSnackbar("Error",
                                                       "Special time error");
                                                 } else {
-                                                  await restaurantCartController
-                                                      .addItem(widget
-                                                          .cartItem.value!);
-                                                  widget.mezWebSideBarController
-                                                      .openWebEndDrawer();
-                                                  //await Get.offNamed<void>(kCartRoute);
+                                                  restaurantCartController
+                                                          .associatedRestaurant =
+                                                      widget.currentRestaurant
+                                                          .value;
+                                                  // final Cart? _c = await getCustomerCart(
+                                                  //   customerId: auth.user!.hasuraId,
+                                                  // );
+                                                  // if (_c == null) {
+                                                  //   await create_customer_cart(
+                                                  //       restaurant_id: restaurantCartController
+                                                  //           .associatedRestaurant!.info.hasuraId);
+                                                  // }
+                                                  mezDbgPrint("[popo] rara2 ");
+                                                  if (restaurantCartController
+                                                          .cart
+                                                          .value
+                                                          .restaurant
+                                                          ?.info
+                                                          .hasuraId ==
+                                                      null) {
+                                                    mezDbgPrint(
+                                                      "[popo] Restaurant is null ... setting it to ${widget.currentRestaurant.value!.info.hasuraId}!",
+                                                    );
+                                                    mezDbgPrint(
+                                                        "[popo] Exec :: AddItemMode :: if 1 RES ID / ${restaurantCartController.associatedRestaurant?.info.hasuraId} ");
+                                                    mezDbgPrint(
+                                                        "[popo] widget.currentRestaurantId :: ${restaurantCartController.cart.value.restaurant?.info.hasuraId} ");
+
+                                                    await set_cart_restaurant_id(
+                                                      customer_id:
+                                                          auth.hasuraUserId!,
+                                                      restaurant_id: widget
+                                                          .currentRestaurant
+                                                          .value!
+                                                          .info
+                                                          .hasuraId,
+                                                    );
+                                                  }
+                                                  final int? itemId =
+                                                      await add_item_to_cart(
+                                                    cartItem:
+                                                        widget.cartItem.value!,
+                                                  );
+                                                  widget.cartItem.value
+                                                      ?.idInCart = itemId;
+                                                  widget.cartItem.refresh();
+                                                  // await MezRouter.offNamed<void>(kCartRoute);
                                                 }
                                               }
                                             } else {
                                               await restaurantCartController
                                                   .addItem(
                                                       widget.cartItem.value!);
+                                              QR.back();
                                               widget.mezWebSideBarController
                                                   .openWebEndDrawer();
                                             }
                                           } else {
-                                            mezDbgPrint(
-                                                "show dailog Required SignIn");
-                                            dialogRequiredSignIn(
-                                                context: context,
-                                                navigationCallback: () {
-                                                  QR.to(
-                                                      "/signIn?type=restaurants&id=${QR.params["id"].toString()}&itemId=${QR.params["itemId"].toString()}");
-                                                });
+                                            dialogRequiredSignIn();
                                           }
                                         },
+                                  // onPressed: (restaurantCartController
+                                  //             .cart.value
+                                  //             .canAddSpecial(
+                                  //                 item:
+                                  //                     widget.cartItem.value!) ==
+                                  //         false)
+                                  //     ? () async {
+                                  //         await _addSpecialItemCallBack();
+                                  //       }
+                                  //     : () async {
+                                  //         if (auth.fireAuthUser != null) {
+                                  //           if (ViewItemScreenMode
+                                  //                   .AddItemMode ==
+                                  //               widget.viewItemScreenMode) {
+                                  //             mezDbgPrint(
+                                  //                 "the first id is ${restaurantCartController.associatedRestaurant?.info.descriptionId} and the scond is ${widget.currentRestaurant.value?.info.descriptionId}");
+
+                                  //             if (restaurantCartController
+                                  //                     .associatedRestaurant
+                                  //                     ?.info
+                                  //                     .descriptionId !=
+                                  //                 null) {
+                                  //               if (restaurantCartController
+                                  //                       .associatedRestaurant
+                                  //                       ?.info
+                                  //                       .descriptionId ==
+                                  //                   widget
+                                  //                       .currentRestaurant
+                                  //                       .value!
+                                  //                       .info
+                                  //                       .descriptionId) {
+                                  //                 mezDbgPrint(
+                                  //                     "the first id is ${restaurantCartController.associatedRestaurant?.info.descriptionId} and the scond is ${widget.currentRestaurant.value?.info.descriptionId}");
+
+                                  //                 await restaurantCartController
+                                  //                     .addItem(widget
+                                  //                         .cartItem.value!);
+
+                                  //                 mezDbgPrint(
+                                  //                     "🛒🛒🛒🛒🛒🛒🛒🛒🛒 ${restaurantCartController.cart.value.toFirebaseFormattedJson()}");
+
+                                  //                 widget.mezWebSideBarController
+                                  //                     .openWebEndDrawer();
+                                  //               } else {
+                                  //                 mezDbgPrint(
+                                  //                     "not true ${restaurantCartController.associatedRestaurant?.info.descriptionId} and the other is ${widget.currentRestaurant.value?.info.descriptionId}");
+
+                                  //                 await showStatusInfoDialog(
+                                  //                   context,
+                                  //                   bottomRightIcon:
+                                  //                       Icons.shopping_cart,
+                                  //                   btnRightIconBgColor:
+                                  //                       secondaryLightBlueColor,
+                                  //                   primaryImageUrl:
+                                  //                       restaurantCartController
+                                  //                           .associatedRestaurant
+                                  //                           ?.info
+                                  //                           .image,
+                                  //                   btnRightIconColor:
+                                  //                       primaryBlueColor,
+                                  //                   status: restaurantCartController
+                                  //                           .associatedRestaurant
+                                  //                           ?.info
+                                  //                           .name ??
+                                  //                       "",
+                                  //                   primaryClickTitle:
+                                  //                       _i182n()["rightBtn"],
+                                  //                   secondaryClickTitle:
+                                  //                       _i182n()["leftBtn"],
+                                  //                   description:
+                                  //                       _i182n()["subtitle"],
+                                  //                   secondaryCallBack:
+                                  //                       () async {
+                                  //                     Navigator.of(context)
+                                  //                         .pop();
+                                  //                     // await Get.toNamed<void>(kCartRoute);
+                                  //                     widget
+                                  //                         .mezWebSideBarController
+                                  //                         .openWebEndDrawer();
+                                  //                   },
+                                  //                   primaryCallBack: () async {
+                                  //                     Navigator.of(context)
+                                  //                         .pop();
+                                  //                     await restaurantCartController
+                                  //                         .addItem(widget
+                                  //                             .cartItem.value!);
+
+                                  //                     widget
+                                  //                         .mezWebSideBarController
+                                  //                         .openWebEndDrawer();
+                                  //                   },
+                                  //                 );
+                                  //               }
+                                  //             } else {
+                                  //               if (restaurantCartController
+                                  //                           .cart.value
+                                  //                           .canAddSpecial(
+                                  //                               item: widget
+                                  //                                   .cartItem
+                                  //                                   .value!) !=
+                                  //                       null &&
+                                  //                   restaurantCartController
+                                  //                           .cart.value
+                                  //                           .canAddSpecial(
+                                  //                               item: widget
+                                  //                                   .cartItem
+                                  //                                   .value!) ==
+                                  //                       false) {
+                                  //                 mezDbgPrint("Error");
+                                  //                 MezSnackbar("Error",
+                                  //                     "Special time error");
+                                  //               } else {
+                                  //                 await restaurantCartController
+                                  //                     .addItem(widget
+                                  //                         .cartItem.value!);
+                                  //                 widget.mezWebSideBarController
+                                  //                     .openWebEndDrawer();
+                                  //                 //await Get.offNamed<void>(kCartRoute);
+                                  //               }
+                                  //             }
+                                  //           } else {
+                                  //             await restaurantCartController
+                                  //                 .addItem(
+                                  //                     widget.cartItem.value!);
+                                  //             widget.mezWebSideBarController
+                                  //                 .openWebEndDrawer();
+                                  //           }
+                                  //         } else {
+                                  //           mezDbgPrint(
+                                  //               "show dailog Required SignIn");
+                                  //           dialogRequiredSignIn(
+                                  //               context: context,
+                                  //               navigationCallback: () {
+                                  //                 QR.to(
+                                  //                     "/signIn?type=restaurants&id=${QR.params["id"].toString()}&itemId=${QR.params["itemId"].toString()}");
+                                  //               });
+                                  //         }
+                                  //       },
                                   // onPressed: () async {
                                   //   if (Get.find<AuthController>()
                                   //           .fireAuthUser !=

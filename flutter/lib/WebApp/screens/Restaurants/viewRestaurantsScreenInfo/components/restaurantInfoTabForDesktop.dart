@@ -50,7 +50,7 @@ class _RestaurantsInfoTapForDesktopState
           SizedBox(
             height: 20,
           ),
-          if (widget.restaurant!.info.description![lang.userLanguageKey] !=
+          if (widget.restaurant!.info.description?[lang.userLanguageKey] !=
                   null &&
               widget.restaurant!.info.description![lang.userLanguageKey]
                   .toString()
@@ -76,7 +76,7 @@ class _RestaurantsInfoTapForDesktopState
                 ),
                 Container(
                   child: Text(
-                    "${widget.restaurant!.info.description![lang.userLanguageKey]}",
+                    "${widget.restaurant!.info.description?[lang.userLanguageKey]}",
                     style: GoogleFonts.nunito(
                         textStyle: TextStyle(
                             fontSize: 14,

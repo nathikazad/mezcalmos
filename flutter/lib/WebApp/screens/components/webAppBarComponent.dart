@@ -15,6 +15,8 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 
 import 'package:qlevar_router/qlevar_router.dart';
 
+import '../../webHelpers/SetUpHelper.dart';
+
 enum WebAppBarType {
   Normal,
   WithSignInActionButton,
@@ -47,7 +49,7 @@ class WebAppBarComponent extends StatelessWidget
           MezCalmosResizer.isSmallDesktop(context) ||
           MezCalmosResizer.isTablet(context) ||
           MezCalmosResizer.isSmallTablet(context)) {
-        return Container();
+        // return Container();
         return AppBarWedgetForDesktop(
           type: type,
           mezWebSideBarController: mezWebSideBarController,
@@ -93,6 +95,17 @@ class AppbarWidgetForMobile extends StatefulWidget {
 }
 
 class _AppbarWidgetForMobileState extends State<AppbarWidgetForMobile> {
+  @override
+  void initState() {
+    if (!Get.isRegistered<AuthController>()) {
+      Get.put<AuthController>(
+        AuthController(signInCallback, signOutCallback),
+        permanent: true,
+      );
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -332,6 +345,17 @@ class AppBarWedgetForDesktop extends StatefulWidget {
 
 class _AppBarWedgetForDesktopState extends State<AppBarWedgetForDesktop>
     with OverlayStateMixin {
+  @override
+  void initState() {
+    if (!Get.isRegistered<AuthController>()) {
+      Get.put<AuthController>(
+        AuthController(signInCallback, signOutCallback),
+        permanent: true,
+      );
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(

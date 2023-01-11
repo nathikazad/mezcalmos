@@ -371,6 +371,9 @@ class RestaurantController extends GetxController {
 
     try {
       mezDbgPrint("[+]Delivery time ===> ${cart.value.deliveryTime}");
+
+      mezDbgPrint(
+          "_]]]]]][[[[[ inside the cart check if the reastaurat id ${cart.value.restaurant!.info.hasuraId}");
       final Map<String, dynamic> payload = <String, dynamic>{
         // "customerId": _authController.user!.hasuraId,
         // "checkoutRequest": <String, dynamic>{

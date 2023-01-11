@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site" : "test-website-mezc",
+    "site" : "mez-site-hs",
     "public": "flutter/build/web",
     "ignore": [
       "firebase.json",

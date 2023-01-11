@@ -123,27 +123,31 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
     return Obx(
       () => (isControllerIntilized.value == true)
           ? Scaffold(
-              appBar: WebAppBarComponent(
-                mezWebSideBarController: mezWebSideBarController,
-                automaticallyGetBack: false,
-                type: WebAppBarType.Normal.obs,
-                // type: _authcontroller.isUserSignedIn != false
-                //     ? WebAppBarType.WithCartActionButton.obs
-                //     : WebAppBarType.WithSignInActionButton.obs,
-                // leadingFunction: _authcontroller.isUserSignedIn != false
-                //     ? () {
-                //         _key.currentState!.openDrawer();
-                //       }
-                //     : null,
-              ),
+              key: mezWebSideBarController.drawerKey,
+              endDrawer: mezWebSideBarController.endDrawerContent,
+              drawer: mezWebSideBarController.frontDrawerContent,
+              bottomNavigationBar: MezBottomBar(),
+              appBar: InstallAppBarComponent(),
+              // type:
+              // leadingFunction: _authcontroller.isUserSignedIn != false
+              //     ? () {
+              //         _key.currentState!.openDrawer();
+              //       }
+              //     : null,
+
               body: Scaffold(
-                  appBar: InstallAppBarComponent(),
+                  appBar: WebAppBarComponent(
+                      mezWebSideBarController: mezWebSideBarController,
+                      automaticallyGetBack: false,
+                      type: Get.find<AuthController>().isUserSignedIn != false
+                          ? WebAppBarType.WithCartActionButton.obs
+                          : WebAppBarType.WithSignInActionButton.obs),
                   body: ListRestauBody(
                     viewController: viewController,
                   )),
             )
           : Scaffold(
-              backgroundColor: Colors.black,
+              body: Center(child: MezLoaderWidget()),
             ),
     );
     //   return FutureBuilder<bool>(

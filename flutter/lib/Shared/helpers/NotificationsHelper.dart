@@ -22,6 +22,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['helpers']
 
 StreamSubscription<notifs.Notification> initializeShowNotificationsListener(
     {bool? isWebVersion = false}) {
+  if (!Get.isRegistered<ForegroundNotificationsController>()) {
+    Get.put<ForegroundNotificationsController>(
+        ForegroundNotificationsController(isWebVersion: true),
+        permanent: true);
+  }
   return Get.find<ForegroundNotificationsController>()
       .displayNotificationsStream
       .listen((notifs.Notification notification) {

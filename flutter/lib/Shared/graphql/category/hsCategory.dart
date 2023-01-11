@@ -30,7 +30,10 @@ Future<List<Category>?> get_restaurant_categories_by_id(int restaurantId,
     mezDbgPrint("Hasura get restaurant categories querry success ✅✅✅ ");
     final List<Query$getRestaurantCategories$restaurant_category> data =
         response.parsedData!.restaurant_category;
+    mezDbgPrint(
+        "|||| categories   ${response.parsedData!.restaurant_category}");
     final List<Category> categories = _parseCategories(data);
+    mezDbgPrint("|||| categories   ${categories.length}");
     return categories;
   }
   return null;

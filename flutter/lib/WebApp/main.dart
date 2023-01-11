@@ -12,14 +12,14 @@ import 'dart:html' as html;
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //prod stage
   js.context["my_dart_var"] = typeMode;
   html.document.dispatchEvent(html.CustomEvent("dart_loaded"));
   String _tmpLmode = typeMode;
   var _launchMode = _tmpLmode.toLaunchMode();
-  setupFirebase(launchMode: _launchMode);
+  await setupFirebase(launchMode: _launchMode);
   runMainGuarded(() => runApp(Sizer(builder: (
         BuildContext context,
         Orientation orientation,

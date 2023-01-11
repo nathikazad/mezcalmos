@@ -73,21 +73,19 @@ class _RestaurantsItemsViewState extends State<RestaurantsItemsView> {
                       MezCalmosResizer.isSmallMobile(context)) {
                     return ViewRestaurantScreenFroMobile();
                   } else {
-                    return Obx(
-                      () => Scaffold(
-                          appBar: WebAppBarComponent(
-                            mezWebSideBarController: mezWebSideBarController,
-                            automaticallyGetBack:
-                                (MezCalmosResizer.isMobile(context) ||
-                                        MezCalmosResizer.isSmallMobile(context))
-                                    ? false
-                                    : true,
-                            type: _authcontroller.fireAuthUser?.uid != null
-                                ? WebAppBarType.WithCartActionButton.obs
-                                : WebAppBarType.WithSignInActionButton.obs,
-                          ),
-                          body: ViewRestaurantScreenFroDesktop()),
-                    );
+                    return Scaffold(
+                        appBar: WebAppBarComponent(
+                          mezWebSideBarController: mezWebSideBarController,
+                          automaticallyGetBack:
+                              (MezCalmosResizer.isMobile(context) ||
+                                      MezCalmosResizer.isSmallMobile(context))
+                                  ? false
+                                  : true,
+                          type: _authcontroller.fireAuthUser?.uid != null
+                              ? WebAppBarType.WithCartActionButton.obs
+                              : WebAppBarType.WithSignInActionButton.obs,
+                        ),
+                        body: ViewRestaurantScreenFroDesktop());
                   }
                 },
               ),

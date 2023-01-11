@@ -172,7 +172,13 @@ class HasuraDb {
 
   /// this return by default customer we are not handling all app types
   String _getRoleBasedOnApp() {
-    final AppType appType = Get.find<SettingsController>().appType;
+    AppType? appType;
+    if (Get.isRegistered<SettingsController>()) {
+      appType = Get.find<SettingsController>().appType;
+    } else {
+      appType = AppType.CustomerApp;
+    }
+
     switch (appType) {
       case AppType.CustomerApp:
         return "customer";
