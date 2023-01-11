@@ -83,14 +83,12 @@ class CustomerAuthController extends GetxController {
         await _notificationsController.getToken();
     final NotificationInfo? notifInfo =
         await get_notif_info(userId: _authController.hasuraUserId!);
-    mezDbgPrint(
-        "inside save notif token=====>>>😍 ${_authController.hasuraUserId!}");
-    mezDbgPrint("inside save notif token=====>>>${notifInfo?.token}");
+ 
     try {
       if (notifInfo != null &&
           deviceNotificationToken != null &&
           notifInfo.token != deviceNotificationToken) {
-        mezDbgPrint("🫡🫡 Updating notification info 🫡🫡");
+ 
         // ignore: unawaited_futures
         update_notif_info(
             notificationInfo: NotificationInfo(
@@ -99,7 +97,7 @@ class CustomerAuthController extends GetxController {
                 id: notifInfo.id,
                 token: deviceNotificationToken));
       } else if (deviceNotificationToken != null && notifInfo == null) {
-        mezDbgPrint("🫡🫡 Saving notification info for the first time 🫡🫡");
+       
         // ignore: unawaited_futures
         insert_notif_info(
             userId: _authController.hasuraUserId!,
