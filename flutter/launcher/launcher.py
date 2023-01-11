@@ -385,6 +385,7 @@ class Launcher:
         else:
             is_apk = self.user_args["build"] == 'apk'
             cmd_build = f'flutter build {self.user_args["build"]} -t lib/{self.user_args["app"]}/main.dart {isVerbose}{"--split-per-abi"if is_apk else""}'
+	    cmd_build += f" --dart-define=LMODE={self.user_args['lmode']}"
             if is_apk:
                 PRINTLN(f"[⚒️] Building : app-armeabi-v7a-release.apk ...")
             os.system(cmd_build)
