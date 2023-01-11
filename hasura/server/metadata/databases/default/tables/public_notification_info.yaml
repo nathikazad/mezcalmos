@@ -7,7 +7,7 @@ insert_permissions:
       check:
         _and:
           - app_type_id:
-              _eq: customer_mobile
+              _eq: customer
           - user_id:
               _eq: X-Hasura-User-Id
       columns:
@@ -54,6 +54,8 @@ select_permissions:
   - role: customer
     permission:
       columns:
+        - app_type_id
+        - id
         - token
         - user_id
       filter:

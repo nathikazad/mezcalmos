@@ -58,7 +58,7 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        return widget.canGoBack || _pageController.page == 0;
+        return widget.canGoBack || _pageController.page != 0;
       },
       child: Obx(() {
         if (editInfoController.restaurant.value != null) {

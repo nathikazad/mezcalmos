@@ -81,8 +81,6 @@ class ROpDashboardPage extends StatelessWidget {
             children: [
               _navigationLink(
                   onClick: () async {
-                    // pageController.animateTo(MediaQuery.of(context).size.width,
-                    //     duration: new Duration(seconds: 1), curve: Curves.easeIn);
                     await pageController.animateToPage(1,
                         duration: Duration(milliseconds: 1),
                         curve: Curves.easeIn);
@@ -337,13 +335,13 @@ class ROpDashboardPage extends StatelessWidget {
       Future<void> Function()? onClick}) {
     return InkWell(
       onTap: () async {
-        viewController.cuurentPage.value = pageController.page!;
+        await onClick?.call();
+        viewController.cuurentPage.value = pageController.page!.toInt();
         if (viewController.cuurentPage != 0) {
           viewController.tabsViewViewController?.showTabs.value = false;
         } else {
           viewController.tabsViewViewController?.showTabs.value = true;
         }
-        await onClick?.call();
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 0),
