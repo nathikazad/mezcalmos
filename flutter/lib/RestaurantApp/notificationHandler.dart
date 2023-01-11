@@ -89,6 +89,13 @@ Notification _restaurantOpOrderChangesNotifier(String key, value) {
 Map<String, dynamic>? _getRestaurantOrderStatusFields(
     RestaurantOrderStatus restaurantOrderStatus) {
   switch (restaurantOrderStatus) {
+    case RestaurantOrderStatus.CancelledByCustomer:
+      return <String, dynamic>{
+        "title": "${_i18n()["cancelledTitle"]}",
+        "body": "${_i18n()["cancelledBody"]}",
+        "imgUrl":
+            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
+      };
     // case RestaurantOrderStatus.Preparing:
     //   return <String, dynamic>{
     //     "title": "${_i18n()["preparingOrderTitle"]}",
