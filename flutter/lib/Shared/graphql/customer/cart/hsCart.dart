@@ -20,7 +20,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 final HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
-Future<Cart?> getCustomerCart({required int customerId}) async {
+Future<Cart?> get_customer_cart({required int customerId}) async {
   final QueryResult<Query$getCustomerCart> getCartResp =
       await _hasuraDb.graphQLClient.query$getCustomerCart(
     Options$Query$getCustomerCart(
@@ -29,65 +29,64 @@ Future<Cart?> getCustomerCart({required int customerId}) async {
     ),
   );
 
-  if (getCartResp.hasException) {
-    mezDbgPrint(
-        "[JJ] called :: getCustomerCart :: Exception ==> ${getCartResp.exception}");
-    return null;
+  if (getCartResp.parsedData?.customer_by_pk == null) {
+    throw Exception(
+        "[🛑] create_customer_cart :: exception ===> ${getCartResp.exception}!");
   }
   mezDbgPrint(
-      "[JJ] called :: getCustomerCart :: NO Exception CUS_ID ( $customerId )!");
+      "[✅] called :: getCustomerCart :: NO Exception CUS_ID ( $customerId )!");
 
-  final Query$getCustomerCart$customer_by_pk$cart? CartData =
+  final Query$getCustomerCart$customer_by_pk$cart? cartData =
       getCartResp.parsedData?.customer_by_pk?.cart;
-  mezDbgPrint("[JJ] Caart_TO_JSON ==> ${CartData?.toJson()}");
-  if (CartData != null) {
+  mezDbgPrint("[JJ] Caart_TO_JSON ==> ${cartData?.toJson()}");
+  if (cartData != null) {
     final Cart cart = Cart(
-        restaurant: CartData.restaurant != null
+        restaurant: cartData.restaurant != null
             ? Restaurant(
                 userInfo: ServiceInfo(
-                  hasuraId: CartData.restaurant!.id,
+                  hasuraId: cartData.restaurant!.id,
                   description:
-                      (CartData.restaurant!.description?.translations != null)
+                      (cartData.restaurant!.description?.translations != null)
                           ? {
-                              CartData.restaurant!.description!.translations
+                              cartData.restaurant!.description!.translations
                                       .first.language_id
                                       .toLanguageType():
-                                  CartData.restaurant!.description!.translations
+                                  cartData.restaurant!.description!.translations
                                       .first.value,
-                              CartData.restaurant!.description!.translations[1]
+                              cartData.restaurant!.description!.translations[1]
                                       .language_id
                                       .toLanguageType():
-                                  CartData.restaurant!.description!
+                                  cartData.restaurant!.description!
                                       .translations[1].value,
                             }
                           : null,
-                  image: CartData.restaurant!.image,
-                  firebaseId: CartData.restaurant?.firebase_id,
-                  name: CartData.restaurant!.name,
-                  descriptionId: CartData.restaurant!.description_id,
+                  image: cartData.restaurant!.image,
+                  firebaseId: cartData.restaurant?.firebase_id,
+                  name: cartData.restaurant!.name,
+                  descriptionId: cartData.restaurant!.description_id,
                   //   descriptionId: data.d,
                   location: Location.fromHasura(
-                    CartData.restaurant!.location_gps,
-                    CartData.restaurant!.location_text,
+                    cartData.restaurant!.location_gps,
+                    cartData.restaurant!.location_text,
                   ),
                 ),
-                schedule: CartData.restaurant?.schedule != null
-                    ? Schedule.fromData(CartData.restaurant?.schedule)
+                schedule: cartData.restaurant?.schedule != null
+                    ? Schedule.fromData(cartData.restaurant?.schedule)
                     : null,
                 paymentInfo: PaymentInfo(),
                 restaurantState: ServiceState(
-                  CartData.restaurant!.open_status.toServiceStatus(),
-                  CartData.restaurant!.approved,
+                  cartData.restaurant!.open_status.toServiceStatus(),
+                  cartData.restaurant!.approved,
                 ),
-                primaryLanguage: CartData.restaurant!.language_id
+                primaryLanguage: cartData.restaurant!.language_id
                     .toString()
                     .toLanguageType(),
-                secondaryLanguage: CartData.restaurant!.language_id
+                secondaryLanguage: cartData.restaurant!.language_id
                     .toString()
                     .toLanguageType()
                     .toOpLang())
             : null);
-    CartData.items
+    cartData.items
         .forEach((Query$getCustomerCart$customer_by_pk$cart$items cartitem) {
       cart.addItem(
         CartItem(
@@ -123,7 +122,7 @@ Future<Cart?> getCustomerCart({required int customerId}) async {
   return null;
 }
 
-Future<void> create_customer_cart({int? restaurant_id}) async {
+Future<int> create_customer_cart({int? restaurant_id}) async {
   mezDbgPrint("[JJ] Called :: create_customer_cart!");
   final QueryResult<Mutation$create_customer_cart> res =
       await _hasuraDb.graphQLClient.mutate$create_customer_cart(
@@ -138,11 +137,11 @@ Future<void> create_customer_cart({int? restaurant_id}) async {
     ),
   );
 
-  if (res.parsedData?.insert_restaurant_cart_one == null) {
+  if (res.parsedData?.insert_restaurant_cart_one?.restaurant_id == null) {
     throw Exception(
         "🛑🛑🛑🛑 create_customer_cart :: exception ===> ${res.exception}!");
   } else {
-    mezDbgPrint(" ✅✅✅ Called :: create_customer_cart :: SUCCESS!!!");
+    return res.parsedData!.insert_restaurant_cart_one!.restaurant_id!;
   }
 }
 
@@ -153,7 +152,7 @@ extension HasuraCartItem on CartItem {
       customer_id: Get.find<AuthController>().user!.hasuraId,
       note: notes,
       quantity: quantity,
-      selected_options: item.toJson(),
+      selected_options: item.parseOptionsListToJson(),
       restaurant_item_id: item.id,
     );
   }
@@ -171,15 +170,7 @@ Future<int> add_item_to_cart({required CartItem cartItem}) async {
     Options$Mutation$addItemToCart(
       fetchPolicy: FetchPolicy.noCache,
       variables: Variables$Mutation$addItemToCart(
-        item: Input$restaurant_cart_item_insert_input(
-          cost_per_one: cartItem.costPerOne().toDouble(),
-          customer_id: Get.find<AuthController>().user!.hasuraId,
-          note: cartItem.notes,
-          quantity: cartItem.quantity,
-          selected_options: cartItem.selectedOptionsToJson(),
-          restaurant_item_id: cartItem.item.id,
-        ),
-      ),
+          item: cartItem.toHasuraInputCartItem()),
     ),
   );
 
@@ -193,6 +184,33 @@ Future<int> add_item_to_cart({required CartItem cartItem}) async {
   }
 }
 
+/// Returns Item Id
+Future<int> update_cart_item(
+    {required CartItem cartItem, required int id}) async {
+  final QueryResult<Mutation$updateRestaurantCartItem> result =
+      await _hasuraDb.graphQLClient.mutate$updateRestaurantCartItem(
+    Options$Mutation$updateRestaurantCartItem(
+      variables: Variables$Mutation$updateRestaurantCartItem(
+        itemId: id,
+        itemData: Input$restaurant_cart_item_set_input(
+          cost_per_one: cartItem.costPerOne().toDouble(),
+          note: cartItem.notes,
+          quantity: cartItem.quantity,
+          selected_options: cartItem.item.parseOptionsListToJson(),
+        ),
+      ),
+    ),
+  );
+
+  if (result.parsedData?.update_restaurant_cart_item_by_pk?.id == null) {
+    throw Exception(
+        "🚨 graphql::update_item_to_cart::exception :: ${result.exception}");
+  } else {
+    mezDbgPrint("✅ _update_item_result :: success :D}");
+    return result.parsedData!.update_restaurant_cart_item_by_pk!.id;
+  }
+}
+
 Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
   return _hasuraDb.graphQLClient
       .subscribe$listen_on_customer_cart(
@@ -203,8 +221,7 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
   )
       .map<Cart?>((QueryResult<Subscription$listen_on_customer_cart> cart) {
     mezDbgPrint(
-        "[[JJ]]  listen_on_customer_cart:::TRIGGERED:: ${cart.parsedData?.customer_by_pk?.cart?.items.length} ::");
-
+        "Stream triggred from cart controller ✅✅✅✅✅✅✅✅✅ =====> ${cart.parsedData?.toJson()}");
     final Cart _c = Cart();
     final Subscription$listen_on_customer_cart$customer_by_pk$cart? parsedCart =
         cart.parsedData?.customer_by_pk?.cart;
@@ -286,9 +303,9 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
   });
 }
 
-Future rm_item_from_cart({required int item_id}) async {
+Future<int> delete_cart_item({required int item_id}) async {
   mezDbgPrint("CustomerId ==> ${Get.find<AuthController>().hasuraUserId}");
-  final QueryResult<Mutation$removeItemFromCart> RmItemResult =
+  final QueryResult<Mutation$removeItemFromCart> rmItemResult =
       await _hasuraDb.graphQLClient.mutate$removeItemFromCart(
     Options$Mutation$removeItemFromCart(
       fetchPolicy: FetchPolicy.noCache,
@@ -296,11 +313,12 @@ Future rm_item_from_cart({required int item_id}) async {
     ),
   );
 
-  if (RmItemResult.hasException) {
-    mezDbgPrint(
-        "[88] graphql::add_item_to_cart::exception :: ${RmItemResult.exception}");
+  if (rmItemResult.parsedData?.delete_restaurant_cart_item_by_pk?.id == null) {
+    throw Exception(
+        "[🛑] graphql::add_item_to_cart::exception :: ${rmItemResult.exception}");
   } else {
-    mezDbgPrint("[88] _rm_item_result :: success :D ");
+    mezDbgPrint("[✅] _rm_item_result :: success :D ");
+    return rmItemResult.parsedData!.delete_restaurant_cart_item_by_pk!.id;
   }
 }
 
@@ -323,129 +341,6 @@ Future<bool> clear_customer_cart({required int customer_id}) async {
   }
 }
 
-Future<void> update_item_quantity(
-    {required int quantity,
-    required int customer_id,
-    required int item_id}) async {
-  final QueryResult<Mutation$update_item_quantity> _resp =
-      await _hasuraDb.graphQLClient.mutate$update_item_quantity(
-    Options$Mutation$update_item_quantity(
-      fetchPolicy: FetchPolicy.noCache,
-      variables: Variables$Mutation$update_item_quantity(
-        customer_id: customer_id,
-        item_id: item_id,
-        quantity: quantity,
-      ),
-    ),
-  );
-
-  if (_resp.hasException) {
-    mezDbgPrint(
-        "[66] Called update_item_quantity :: Has Exception - ${_resp.exception}");
-  } else {
-    mezDbgPrint("[66] update_item_quantity :: SUCCESS!");
-  }
-}
-
-Future<Cart?> update_cart({
-  required int customer_id,
-  required int restaurant_id,
-  required List<CartItem> items,
-}) async {
-  mezDbgPrint("Cart items ======================>>>>> ${items.length}");
-  Cart? retCart = null;
-  final QueryResult<Mutation$updateCart> _cart =
-      await _hasuraDb.graphQLClient.mutate$updateCart(
-    Options$Mutation$updateCart(
-      fetchPolicy: FetchPolicy.noCache,
-      variables: Variables$Mutation$updateCart(
-          customer_id: customer_id,
-          restaurant_id: restaurant_id,
-          items: _covertItems(items)),
-    ),
-  );
-  if (_cart.parsedData?.update_restaurant_cart?.returning == null) {
-    throw Exception(
-        "[66] called :: update_cart :: exception :: ${_cart.exception}");
-  } else {
-    mezDbgPrint(
-        "[66] called :: update_cart :: cus_id ($customer_id) :: rest_id($restaurant_id) :: item(${items.length}) SUCESS  !");
-
-    final Mutation$updateCart$update_restaurant_cart$returning? restaurantCart =
-        _cart.parsedData?.update_restaurant_cart?.returning[0];
-    retCart = Cart(
-        restaurant: restaurantCart?.restaurant != null
-            ? Restaurant(
-                userInfo: ServiceInfo(
-                  hasuraId: restaurantCart!.restaurant!.id,
-                  image: restaurantCart.restaurant!.image,
-                  firebaseId: restaurantCart.restaurant!.firebase_id,
-                  name: restaurantCart.restaurant!.name,
-                  description:
-                      (restaurantCart.restaurant!.description?.translations !=
-                              null)
-                          ? {
-                              restaurantCart.restaurant!.description!
-                                      .translations.first.language_id
-                                      .toLanguageType():
-                                  restaurantCart.restaurant!.description!
-                                      .translations.first.value,
-                              restaurantCart.restaurant!.description!
-                                      .translations[1].language_id
-                                      .toLanguageType():
-                                  restaurantCart.restaurant!.description!
-                                      .translations[1].value,
-                            }
-                          : null,
-                  descriptionId: restaurantCart.restaurant!.description_id,
-                  //   descriptionId: data.d,
-                  location: Location.fromHasura(
-                    restaurantCart.restaurant!.location_gps,
-                    restaurantCart.restaurant!.location_text,
-                  ),
-                ),
-                schedule: restaurantCart.restaurant?.schedule != null
-                    ? Schedule.fromData(restaurantCart.restaurant?.schedule)
-                    : null,
-                paymentInfo: PaymentInfo(),
-                restaurantState: ServiceState(
-                  restaurantCart.restaurant!.open_status.toServiceStatus(),
-                  restaurantCart.restaurant!.approved,
-                ),
-                primaryLanguage: restaurantCart.restaurant!.language_id
-                    .toString()
-                    .toLanguageType(),
-                secondaryLanguage: restaurantCart.restaurant!.language_id
-                    .toString()
-                    .toLanguageType()
-                    .toOpLang())
-            : null);
-    _cart.parsedData?.insert_restaurant_cart_item?.returning.forEach(
-        (Mutation$updateCart$insert_restaurant_cart_item$returning cartItem) {
-      retCart!.addItem(
-        CartItem(
-          Item(
-              name: {
-                cartItem.restaurant_item.name.translations.first.language_id
-                        .toLanguageType():
-                    cartItem.restaurant_item.name.translations.first.value,
-                cartItem.restaurant_item.name.translations[1].language_id
-                        .toLanguageType():
-                    cartItem.restaurant_item.name.translations[1].value,
-              },
-              itemType: cartItem.restaurant_item.item_type.toItemType(),
-              cost: cartItem.restaurant_item.cost),
-          cartItem.restaurant_item.restaurant_id,
-          quantity: cartItem.quantity,
-          notes: cartItem.note,
-          idInCart: cartItem.id,
-        ),
-      );
-    });
-  }
-  return retCart;
-}
-
 List<Input$restaurant_cart_item_insert_input> _covertItems(
     List<CartItem> cartITems) {
   final List<Input$restaurant_cart_item_insert_input> data = [];
@@ -455,11 +350,10 @@ List<Input$restaurant_cart_item_insert_input> _covertItems(
   return data;
 }
 
-Future<Restaurant?> set_cart_restaurant_id({
+Future<int> set_cart_restaurant_id({
   required int restaurant_id,
   required int customer_id,
 }) async {
-  Restaurant? _res = null;
   final QueryResult<Mutation$set_cart_restaurant_id> _cart =
       await _hasuraDb.graphQLClient.mutate$set_cart_restaurant_id(
     Options$Mutation$set_cart_restaurant_id(
@@ -470,59 +364,16 @@ Future<Restaurant?> set_cart_restaurant_id({
       ),
     ),
   );
-  if (_cart.hasException) {
-    mezDbgPrint(
-        "[66] called :: set_cart_restaurant_id :: exception :: ${_cart.hasException}");
+  if (_cart.parsedData?.update_restaurant_cart_by_pk == null ||
+      _cart.parsedData!.update_restaurant_cart_by_pk?.restaurant_id == null) {
+    throw Exception(
+        "[🛑] called :: set_cart_restaurant_id :: exception :: ${_cart.hasException}");
   } else {
     mezDbgPrint(
-        "[66] called :: set_cart_restaurant_id :: cus_id ($customer_id) :: rest_id($restaurant_id) SUCESS  !");
+        "[✅] called :: set_cart_restaurant_id :: cus_id ($customer_id) :: rest_id($restaurant_id) SUCESS  !");
 
-    final Mutation$set_cart_restaurant_id$update_restaurant_cart_by_pk?
-        restaurant = _cart.parsedData?.update_restaurant_cart_by_pk;
-    _res = restaurant != null
-        ? Restaurant(
-            userInfo: ServiceInfo(
-              hasuraId: restaurant.restaurant!.id,
-              image: restaurant.restaurant!.image,
-              firebaseId: restaurant.restaurant!.firebase_id,
-              name: restaurant.restaurant!.name,
-              description:
-                  (restaurant.restaurant!.description?.translations != null)
-                      ? {
-                          restaurant.restaurant!.description!.translations.first
-                                  .language_id
-                                  .toLanguageType():
-                              restaurant.restaurant!.description!.translations
-                                  .first.value,
-                          restaurant.restaurant!.description!.translations[1]
-                                  .language_id
-                                  .toLanguageType():
-                              restaurant.restaurant!.description!
-                                  .translations[1].value,
-                        }
-                      : null,
-              descriptionId: restaurant.restaurant!.description_id,
-              //   descriptionId: data.d,
-              location: Location.fromHasura(
-                restaurant.restaurant!.location_gps,
-                restaurant.restaurant!.location_text,
-              ),
-            ),
-            schedule: restaurant.restaurant?.schedule != null
-                ? Schedule.fromData(restaurant.restaurant?.schedule)
-                : null,
-            paymentInfo: PaymentInfo(),
-            restaurantState: ServiceState(
-              restaurant.restaurant!.open_status.toServiceStatus(),
-              restaurant.restaurant!.approved,
-            ),
-            primaryLanguage:
-                restaurant.restaurant!.language_id.toString().toLanguageType(),
-            secondaryLanguage: restaurant.restaurant!.language_id
-                .toString()
-                .toLanguageType()
-                .toOpLang())
-        : null;
+    final int newRestId =
+        _cart.parsedData!.update_restaurant_cart_by_pk!.restaurant_id!;
+    return newRestId;
   }
-  return _res;
 }

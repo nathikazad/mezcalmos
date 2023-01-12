@@ -69,7 +69,7 @@ class CustomerAuthController extends GetxController {
       unawaited(saveNotificationToken());
     }
     // ignore: always_specify_types, unawaited_futures
-    getCustomerCart(customerId: _authController.hasuraUserId!).then((value) {
+    get_customer_cart(customerId: _authController.hasuraUserId!).then((value) {
       mezDbgPrint(
           "Customer Auth controller -CART-LEN-  ${value?.cartItems.length}");
       if (value == null) {
@@ -83,12 +83,11 @@ class CustomerAuthController extends GetxController {
         await _notificationsController.getToken();
     final NotificationInfo? notifInfo =
         await get_notif_info(userId: _authController.hasuraUserId!);
- 
+
     try {
       if (notifInfo != null &&
           deviceNotificationToken != null &&
           notifInfo.token != deviceNotificationToken) {
- 
         // ignore: unawaited_futures
         update_notif_info(
             notificationInfo: NotificationInfo(
@@ -97,7 +96,6 @@ class CustomerAuthController extends GetxController {
                 id: notifInfo.id,
                 token: deviceNotificationToken));
       } else if (deviceNotificationToken != null && notifInfo == null) {
-       
         // ignore: unawaited_futures
         insert_notif_info(
             userId: _authController.hasuraUserId!,

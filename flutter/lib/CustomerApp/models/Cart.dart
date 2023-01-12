@@ -139,13 +139,6 @@ class Cart {
   CartItem? incrementItem(int id, int quantity) {
     final CartItem? item = getItem(id);
     if (item != null) {
-      if (Get.find<AuthController>().user?.hasuraId != null) {
-        update_item_quantity(
-          quantity: item.quantity + quantity,
-          customer_id: Get.find<AuthController>().user!.hasuraId,
-          item_id: id,
-        );
-      }
       item.quantity += quantity;
       return item;
     }
@@ -154,7 +147,7 @@ class Cart {
 
   void deleteItem(int itemId) {
     if (Get.find<AuthController>().user?.hasuraId != null) {
-      rm_item_from_cart(item_id: itemId);
+      delete_cart_item(item_id: itemId);
     }
     cartItems.removeWhere((CartItem cartItem) => cartItem.idInCart == itemId);
   }

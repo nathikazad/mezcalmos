@@ -43,7 +43,7 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
 
     final String userId = Get.find<AuthController>().fireAuthUser!.uid;
     _notificationsStreamListener = initializeShowNotificationsListener();
-    // listenForLocationPermissions();
+
     Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(
             deliveryDriverNotificationsNode(userId),

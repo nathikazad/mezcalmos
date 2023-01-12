@@ -2172,6 +2172,18 @@
                     }
                 }
             }
+        },
+        "notificationHandler" : {
+            "onTheWayTitle": "En camino",
+            "onTheWayBody": "Tu pedido está en camino",
+            "deliveredTitle": "Entregada",
+            "deliveredBody": "Su pedido ha sido entregado",
+            "newOrderTitle": "Orden recibida",
+            "newOrderBody": "Tienes un nuevo pedido",
+            "canceledOrderTitle": "Orden cancelada",
+            "canceledOrderBody": "Su pedido ha sido cancelado",
+            "atPickupTitle" : "El conductor está aquí",
+            "atPickupBody" : "Su conductor llegó a la ubicación de recogida"
         }
     },
     "General": {

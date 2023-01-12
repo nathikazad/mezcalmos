@@ -177,6 +177,8 @@ class Restaurant extends Service {
         .toList();
   }
 
+  int get restaurantId => info.hasuraId;
+
   List<Category> get getAvailableCategories {
     List<Category> categories = _categories
         .where((Category category) => category.id != kNoCategoryNode)

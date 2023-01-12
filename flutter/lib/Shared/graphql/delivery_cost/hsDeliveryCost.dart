@@ -4,7 +4,6 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_cost/__generated/delivery_cost.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
@@ -12,6 +11,7 @@ HasuraDb _db = Get.find<HasuraDb>();
 
 Future<DeliveryCost?> get_delivery_cost(
     {required int serviceProviderId, bool withCache = true}) async {
+  mezDbgPrint("Getting dv cost =====🥹");
   final QueryResult<Query$getDeliveryCostByServiceProviderId> response =
       await _db.graphQLClient.query$getDeliveryCostByServiceProviderId(
     Options$Query$getDeliveryCostByServiceProviderId(
@@ -24,6 +24,8 @@ Future<DeliveryCost?> get_delivery_cost(
   if (response.parsedData?.delivery_cost == null) {
     throw Exception("🚨🚨 get_delivery_cost exceptions ${response.exception}");
   }
+  mezDbgPrint(
+      "Getting dv cost =====🥹==>${response.parsedData?.delivery_cost}");
 
   if (response.parsedData!.delivery_cost.isNotEmpty) {
     final Query$getDeliveryCostByServiceProviderId$delivery_cost data =

@@ -1,13 +1,10 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
-import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class AuthHooks {
@@ -18,9 +15,9 @@ class AuthHooks {
 // TODO : these deletes should not delete stuff that should be Globaly injected (on Signin And SiGnout)
     await Get.delete<Sagora>(force: true);
     await Get.delete<CustomerAuthController>(force: true);
-    await Get.delete<OrderController>(force: true);
+    // await Get.delete<OrderController>(force: true);
     await Get.delete<TaxiController>(force: true);
-    await Get.delete<RestaurantController>(force: true);
+    //   await Get.delete<RestaurantController>(force: true);
     await Get.delete<BackgroundNotificationsController>(force: true);
     await Get.delete<MessageController>(force: true);
     await Get.delete<ForegroundNotificationsController>(force: true);
@@ -29,7 +26,7 @@ class AuthHooks {
     );
   }
 
-  static void onSignInHook() async {
+  static Future<void> onSignInHook() async {
     mezDbgPrint(
         "[+] CustomerApp::AuthHooks::onSignInHook -> Callback Executed.");
 
@@ -45,9 +42,9 @@ class AuthHooks {
     Get.put<ForegroundNotificationsController>(
         ForegroundNotificationsController(),
         permanent: true);
-    Get.put<OrderController>(OrderController(), permanent: true);
+    //  Get.put<OrderController>(OrderController(), permanent: true);
     Get.put<TaxiController>(TaxiController(), permanent: true);
-    Get.put<RestaurantController>(RestaurantController(), permanent: true);
+    //  Get.put<RestaurantController>(RestaurantController(), permanent: true);
     Get.put<MessageController>(MessageController(), permanent: true);
   }
 }

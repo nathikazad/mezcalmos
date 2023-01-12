@@ -39,7 +39,6 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
     mezDbgPrint("RestaurantWrapper::init state");
 
     Future(() async {
-      
       await rOpDeeplinkHandler.startDynamicLinkCheckRoutine();
       restaurantOpAuthController
           .setupRestaurantOperator()
@@ -66,6 +65,7 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
   void _setupNotifications() {
     if (Get.find<AuthController>().isUserSignedIn) {
       mezDbgPrint("Setup notifs listener 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 ");
+      _notificationsStreamListener?.cancel();
       _notificationsStreamListener = initializeShowNotificationsListener();
       Get.find<ForegroundNotificationsController>()
           .startListeningForNotificationsFromFirebase(

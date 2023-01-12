@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/order/__generated/restaurant_order.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
@@ -61,19 +62,23 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
               .forEach((String key, value) {
             final List<Choice> choices = [];
             _restauItem.optionNames[key] = {
-              LanguageType.EN: value['optionName']['en'],
-              LanguageType.ES: value['optionName']['en']
+              LanguageType.EN: value['name']
+                  [userLanguage.toFirebaseFormatString()],
+              LanguageType.ES: value['name']
+                  [userLanguage.toFirebaseFormatString()]
             };
 
-            ((value['choices'] ?? []) as List).forEach((element) {
+            value['choices'].forEach((key, value) {
               choices.add(
                 Choice(
-                  id: element['id'],
+                  id: value['id'],
                   name: {
-                    LanguageType.EN: element['name']['en'],
-                    LanguageType.ES: element['name']['es']
+                    LanguageType.EN: value['name']
+                        [userLanguage.toFirebaseFormatString()],
+                    LanguageType.ES: value['name']
+                        [userLanguage.toFirebaseFormatString()]
                   },
-                  cost: element['cost'],
+                  cost: value['cost'],
                 ),
               );
             });
@@ -194,30 +199,34 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
       idInRestaurant: item.restaurant_item.id,
     );
     if (item.in_json['selected_options'] != null) {
-      mezDbgPrint("[544D] item.in_json ===> ${item.in_json}");
+      mezDbgPrint(
+          "[544D] item.in_json ===> ${item.in_json['selected_options']}");
       (item.in_json['selected_options'] as Map<String, dynamic>)
           .forEach((String key, value) {
+        mezDbgPrint("KEy ===> $key");
+        mezDbgPrint("value ===> $value");
         final List<Choice> choices = [];
         _restauItem.optionNames[key] = {
-          LanguageType.EN: value['optionName']['en'],
-          LanguageType.ES: value['optionName']['en']
+          LanguageType.EN: value['name'][userLanguage.toFirebaseFormatString()],
+          LanguageType.ES: value['name'][userLanguage.toFirebaseFormatString()]
         };
 
-        ((value['choices'] ?? []) as List).forEach((element) {
+        value['choices'].forEach((key, value) {
           choices.add(
             Choice(
-              id: element['id'],
+              id: value['id'],
               name: {
-                LanguageType.EN: element['name']['en'],
-                LanguageType.ES: element['name']['es']
+                LanguageType.EN: value['name']
+                    [userLanguage.toFirebaseFormatString()],
+                LanguageType.ES: value['name']
+                    [userLanguage.toFirebaseFormatString()]
               },
-              cost: element['cost'],
+              cost: value['cost'],
             ),
           );
         });
 
-        mezDbgPrint("[544D] Parsed Choices ===> ${choices.length}");
-        _restauItem.chosenChoices[key] = choices;
+        // _restauItem.chosenChoices[key] = choices;
       });
     }
     items.add(_restauItem);

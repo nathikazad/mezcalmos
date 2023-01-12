@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['notificationHandler'];
 
 Notification restaurantNotificationHandler(String key, value) {
@@ -19,7 +19,7 @@ Notification restaurantNotificationHandler(String key, value) {
           linkUrl: getROpOrderRoute(value["orderId"].toString()),
           body: '${_i18n()['newOrderBody']}',
           imgUrl:
-              'assets/images/shared/notifications/prepareOrderNotificationIcon.png', // needs to be changed
+              'assets/images/shared/notifications/readyOrderNotificationIcon.png', // needs to be changed
           title: '${_i18n()['newOrderTitle']}',
           timestamp: DateTime.parse(value['time']),
           notificationType: NotificationType.NewMessage,
@@ -91,8 +91,8 @@ Map<String, dynamic>? _getRestaurantOrderStatusFields(
   switch (restaurantOrderStatus) {
     case RestaurantOrderStatus.CancelledByCustomer:
       return <String, dynamic>{
-        "title": "${_i18n()["cancelledTitle"]}",
-        "body": "${_i18n()["cancelledBody"]}",
+        "title": "${_i18n()["canceledOrderTitle"]}",
+        "body": "${_i18n()["canceledOrderBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
@@ -105,14 +105,15 @@ Map<String, dynamic>? _getRestaurantOrderStatusFields(
     //   };
     case RestaurantOrderStatus.Ready:
       return <String, dynamic>{
-        "title": "${_i18n()["readyForPickUpTitle"]}",
-        "body": "${_i18n()["readyForPickUpBody"]}",
-        "imgUrl": "assets/images/shared/notifications/onTheWay.png",
+        "title": "${_i18n()["atPickupTitle"]}",
+        "body": "${_i18n()["atPickupTitleBody"]}",
+        "imgUrl":
+            "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.OnTheWay:
       return <String, dynamic>{
-        "title": "${_i18n()["onTheWayRestaurantTitle"]}",
-        "body": "${_i18n()["onTheWayRestaurantBody"]}",
+        "title": "${_i18n()["onTheWayTitle"]}",
+        "body": "${_i18n()["onTheWayBody"]}",
         "imgUrl": "assets/images/shared/notifications/onTheWay.png",
       };
     case RestaurantOrderStatus.Delivered:

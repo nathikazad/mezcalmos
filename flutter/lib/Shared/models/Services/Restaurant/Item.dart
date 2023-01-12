@@ -103,16 +103,6 @@ class Item {
 
 //  }
   Map<String, dynamic> toJson() {
-    Map<String, dynamic> _parseOptionsListToFirebaseFormattedStriing(
-        List<Option> options) {
-      final Map<String, dynamic> _mappedOptions = <String, dynamic>{};
-      options.forEach((Option op) {
-        _mappedOptions[op.name[LanguageType.EN]!] = op.toJson();
-      });
-
-      return _mappedOptions;
-    }
-
     return <String, dynamic>{
       "id": id,
       "available": available,
@@ -122,10 +112,19 @@ class Item {
       "startsAt": startsAt?.toUtc().toString() ?? null,
       "endsAt": endsAt?.toUtc().toString() ?? null,
       "name": name.toFirebaseFormat(),
-      "options": _parseOptionsListToFirebaseFormattedStriing(
-          options), //options.map<List<Option>>((Option x) => <String, dynamic>{x.id: x.toJson()}),
+      "options":
+          parseOptionsListToJson(), //options.map<List<Option>>((Option x) => <String, dynamic>{x.id: x.toJson()}),
       "position": position
     };
+  }
+
+  Map<String, dynamic> parseOptionsListToJson() {
+    final Map<String, dynamic> _mappedOptions = <String, dynamic>{};
+    options.forEach((Option op) {
+      _mappedOptions[op.name[LanguageType.EN]!] = op.toJson();
+    });
+
+    return _mappedOptions;
   }
 
   Option? findOption(int id) {

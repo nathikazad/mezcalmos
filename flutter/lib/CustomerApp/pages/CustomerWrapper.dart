@@ -7,7 +7,7 @@ import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/deepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
@@ -21,7 +21,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
@@ -45,8 +44,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   AppLifeCycleController appLifeCycleController =
       Get.find<AppLifeCycleController>();
 
-  /// _orderController
-  OrderController? _orderController;
+  CustomerOrderController? _orderController;
 
   /// appClosedTime
   DateTime? appClosedTime;
@@ -74,9 +72,11 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   void initState() {
     super.initState();
     Get.put(TaxiController(), permanent: true);
-    Get.put(RestaurantController(), permanent: true);
+    Get.put(CustomerCartController(), permanent: true);
+    Get.put(CustomerOrderController(), permanent: true);
 
     Get.put(LaundryController(), permanent: true);
+    _orderController = Get.find<CustomerOrderController>();
     WidgetsBinding.instance.addObserver(this);
 
     if (Get.find<AuthController>().fireAuthUser != null) {
@@ -105,7 +105,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     if (lastBgNotAppOpen != null &&
         DateTime.now().difference(lastBgNotAppOpen) >
             Duration(seconds: 1)) if (appClosedTime != null &&
-        _orderController != null &&
         DateTime.now().difference(appClosedTime!) > Duration(seconds: 10) &&
         !isCurrentRoute(kLocationPermissionPage)) {
       _navigateToOrdersIfNecessary();
@@ -169,9 +168,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   }
 
   Future<void> _doIfFireAuthUserIsNotNull() async {
-    _orderController = Get.find<OrderController>();
-    await _orderController?.fetchCustomerOrders();
-    await Get.find<RestaurantController>().fetchCart();
     final String? userId = Get.find<AuthController>().fireAuthUser!.uid;
     _notificationsStreamListener = initializeShowNotificationsListener();
     // listening for notification Permissions!
@@ -192,25 +188,25 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     });
   }
 
-  void checkTaxiCurrentOrdersAndNavigate() {
-    _orderController = Get.find<OrderController>();
-    // return;
-    final num noOfCurrentTaxiOrders = _orderController
-            ?.currentOrders()
-            .where((Order currentOrder) =>
-                currentOrder.orderType == OrderType.Taxi)
-            .length ??
-        0;
-    if (noOfCurrentTaxiOrders == 0) {
-      MezRouter.toNamed<void>(kTaxiRequestRoute);
-    } else {
-      final int orderId = _orderController!.currentOrders
-          .firstWhere(
-              (Order currentOrder) => currentOrder.orderType == OrderType.Taxi)
-          .orderId;
-      MezRouter.toNamed<void>(getTaxiOrderRoute(orderId));
-    }
-  }
+  // void checkTaxiCurrentOrdersAndNavigate() {
+  //   _orderController = Get.find<OrderController>();
+  //   // return;
+  //   final num noOfCurrentTaxiOrders = _orderController
+  //           ?.currentOrders()
+  //           .where((Order currentOrder) =>
+  //               currentOrder.orderType == OrderType.Taxi)
+  //           .length ??
+  //       0;
+  //   if (noOfCurrentTaxiOrders == 0) {
+  //     MezRouter.toNamed<void>(kTaxiRequestRoute);
+  //   } else {
+  //     final int orderId = _orderController!.currentOrders
+  //         .firstWhere(
+  //             (Order currentOrder) => currentOrder.orderType == OrderType.Taxi)
+  //         .orderId;
+  //     MezRouter.toNamed<void>(getTaxiOrderRoute(orderId));
+  //   }
+  // }
 
   Widget mezWelcomeContainer(TextStyle textStyle) {
     return Container(
@@ -312,6 +308,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       required String serviceRoute,
       required void Function(int) singleOrderRoute}) async {
     if (Get.find<AuthController>().fireAuthUser != null) {
+      await _orderController?.fetchCustomerOrders();
       final List<Order> orders = _orderController!.currentOrders
           .where((Order p0) => p0.orderType == orderType)
           .toList();
@@ -333,8 +330,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
 
   // when app resumes check if there are current orders and if yes navigate to orders page
   Future<void> _navigateToOrdersIfNecessary() async {
-    mezDbgPrint(
-        "😍 checking orders ===========😍 ====>${_orderController?.currentOrders.length}");
+    await _orderController?.fetchCustomerOrders();
     if (_orderController?.currentOrders != null &&
         _orderController?.currentOrders.length == 1) {
       // Restaurant
