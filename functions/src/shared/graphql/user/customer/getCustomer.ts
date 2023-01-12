@@ -34,7 +34,7 @@ export async function getCustomer(customerId: number): Promise<CustomerInfo> {
         name : response.customer_by_pk.user.name,
         image : response.customer_by_pk.user.image,
         notificationInfo: (response.customer_by_pk.notification_token) ? {
-            AppTypeId: AppType.CustomerMobile,
+            AppTypeId: AppType.Customer,
             token: response.customer_by_pk.notification_token
         } : undefined,
         appVersion: response.customer_by_pk.app_version,

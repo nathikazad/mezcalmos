@@ -40,10 +40,10 @@ export async function getCart(customerId: number): Promise<Cart> {
           "Cart for that customer does not exist"
         );
     }
-    console.log("[GLOBAL[0]] SelectedOptions ===> ", response.restaurant_cart[0].items[0].selected_options);
+    // console.log("[GLOBAL[0]] SelectedOptions ===> ", response.restaurant_cart[0].items[0].selected_options);
     
     let items: CartItem[] = response.restaurant_cart[0].items.map((i) => {
-        console.log("SelectedOptions ===> ", i.selected_options);
+        // console.log("SelectedOptions ===> ", i.selected_options);
         return {
             cartItemId: i.id,
             customerId,

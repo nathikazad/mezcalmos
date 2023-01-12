@@ -35,7 +35,7 @@ export interface ServiceLink{
 
 }
 export enum ServiceProviderType {
-  restaurant = "restaurant",
-  laundry = "laundry",
-  taxi = "taxi"
+  Restaurant = "restaurant",
+  Laundry = "laundry",
+  Taxi = "taxi"
 }

@@ -2,6 +2,7 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { CheckoutRequest } from "../../../../restaurant/checkoutCart";
 import { getHasura } from "../../../../utilities/hasura";
 import { DeliveryOrder, DeliveryOrderStatus } from "../../../models/Generic/Delivery";
+import { AppType } from "../../../models/Generic/Generic";
 import { OrderType } from "../../../models/Generic/Order";
 import { Restaurant } from "../../../models/Services/Restaurant/Restaurant";
 import { RestaurantOrder, RestaurantOrderStatus } from "../../../models/Services/Restaurant/RestaurantOrder";
@@ -15,7 +16,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
   let restaurantOperatorsDetails = restaurant.restaurantOperators!.map((v) => {
     return {
       participant_id: v.userId,
-      app_type_id: "restaurant"
+      app_type_id: AppType.RestaurantApp
     };
   });
   let response = await chain.mutation({

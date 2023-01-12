@@ -2,7 +2,7 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { AppType, Language } from "../../models/Generic/Generic";
 import { OrderType, PaymentType } from "../../models/Generic/Order";
-import { DeliveryCompanyType, DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus, ServiceProviderType } from "../../models/Generic/Delivery";
+import { DeliveryCompanyType, DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
 
 export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrder> {
   let chain = getHasura();
@@ -78,7 +78,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
     packageCost: response.delivery_order_by_pk.package_cost,
     orderTime: response.delivery_order_by_pk.order_time,
     deliveryDriverType: response.delivery_order_by_pk.delivery_driver_type as DeliveryDriverType,
-    serviceProviderType: response.delivery_order_by_pk.service_provider_type as ServiceProviderType,
+    serviceProviderType: response.delivery_order_by_pk.service_provider_type as DeliveryServiceProviderType,
     serviceProviderId: response.delivery_order_by_pk.service_provider_id
   }
   if(!(response.delivery_order_by_pk.delivery_driver_id)) {
