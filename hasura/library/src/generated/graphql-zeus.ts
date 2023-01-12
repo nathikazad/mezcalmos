@@ -78,6 +78,7 @@ count?: [{	columns?:ValueTypes["chat_select_column"][],	distinct?:boolean},true]
 	agora_info?:ValueTypes["jsonb_comparison_exp"],
 	chat_info?:ValueTypes["jsonb_comparison_exp"],
 	chat_participants?:ValueTypes["chat_participant_bool_exp"],
+	chat_participants_aggregate?:ValueTypes["chat_participant_aggregate_bool_exp"],
 	creation_time?:ValueTypes["timestamptz_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	messages?:ValueTypes["jsonb_comparison_exp"]
@@ -177,6 +178,15 @@ end). throws an error if top level container is not an array */
 	nodes?:ValueTypes["chat_participant"],
 		__typename?: true
 }>;
+	["chat_participant_aggregate_bool_exp"]: {
+	count?:ValueTypes["chat_participant_aggregate_bool_exp_count"]
+};
+	["chat_participant_aggregate_bool_exp_count"]: {
+	arguments?:ValueTypes["chat_participant_select_column"][],
+	distinct?:boolean,
+	filter?:ValueTypes["chat_participant_bool_exp"],
+	predicate:ValueTypes["Int_comparison_exp"]
+};
 	/** aggregate fields of "chat_participant" */
 ["chat_participant_aggregate_fields"]: AliasType<{
 	avg?:ValueTypes["chat_participant_avg_fields"],
@@ -606,8 +616,10 @@ count?: [{	columns?:ValueTypes["customer_select_column"][],	distinct?:boolean},t
 	app_version?:ValueTypes["String_comparison_exp"],
 	cart?:ValueTypes["restaurant_cart_bool_exp"],
 	deliveries?:ValueTypes["delivery_order_bool_exp"],
+	deliveries_aggregate?:ValueTypes["delivery_order_aggregate_bool_exp"],
 	notification_token?:ValueTypes["String_comparison_exp"],
 	saved_locations?:ValueTypes["saved_location_bool_exp"],
+	saved_locations_aggregate?:ValueTypes["saved_location_aggregate_bool_exp"],
 	service_provider_type?:ValueTypes["String_comparison_exp"],
 	stripe_info?:ValueTypes["jsonb_comparison_exp"],
 	user?:ValueTypes["user_bool_exp"],
@@ -846,7 +858,9 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 	_or?:ValueTypes["delivery_company_bool_exp"][],
 	approved?:ValueTypes["Boolean_comparison_exp"],
 	delivery_drivers?:ValueTypes["delivery_driver_bool_exp"],
+	delivery_drivers_aggregate?:ValueTypes["delivery_driver_aggregate_bool_exp"],
 	delivery_operators?:ValueTypes["delivery_operator_bool_exp"],
+	delivery_operators_aggregate?:ValueTypes["delivery_operator_aggregate_bool_exp"],
 	description?:ValueTypes["translation_bool_exp"],
 	description_id?:ValueTypes["Int_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
@@ -1282,6 +1296,29 @@ count?: [{	columns?:ValueTypes["delivery_cost_select_column"][],	distinct?:boole
 	nodes?:ValueTypes["delivery_driver"],
 		__typename?: true
 }>;
+	["delivery_driver_aggregate_bool_exp"]: {
+	bool_and?:ValueTypes["delivery_driver_aggregate_bool_exp_bool_and"],
+	bool_or?:ValueTypes["delivery_driver_aggregate_bool_exp_bool_or"],
+	count?:ValueTypes["delivery_driver_aggregate_bool_exp_count"]
+};
+	["delivery_driver_aggregate_bool_exp_bool_and"]: {
+	arguments:ValueTypes["delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns"],
+	distinct?:boolean,
+	filter?:ValueTypes["delivery_driver_bool_exp"],
+	predicate:ValueTypes["Boolean_comparison_exp"]
+};
+	["delivery_driver_aggregate_bool_exp_bool_or"]: {
+	arguments:ValueTypes["delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns"],
+	distinct?:boolean,
+	filter?:ValueTypes["delivery_driver_bool_exp"],
+	predicate:ValueTypes["Boolean_comparison_exp"]
+};
+	["delivery_driver_aggregate_bool_exp_count"]: {
+	arguments?:ValueTypes["delivery_driver_select_column"][],
+	distinct?:boolean,
+	filter?:ValueTypes["delivery_driver_bool_exp"],
+	predicate:ValueTypes["Int_comparison_exp"]
+};
 	/** aggregate fields of "delivery_driver" */
 ["delivery_driver_aggregate_fields"]: AliasType<{
 	avg?:ValueTypes["delivery_driver_avg_fields"],
@@ -1481,6 +1518,10 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 };
 	/** select columns of table "delivery_driver" */
 ["delivery_driver_select_column"]:delivery_driver_select_column;
+	/** select "delivery_driver_aggregate_bool_exp_bool_and_arguments_columns" columns of table "delivery_driver" */
+["delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns"]:delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns;
+	/** select "delivery_driver_aggregate_bool_exp_bool_or_arguments_columns" columns of table "delivery_driver" */
+["delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns"]:delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns;
 	/** input type for updating data in table "delivery_driver" */
 ["delivery_driver_set_input"]: {
 	app_version?:string,
@@ -1656,6 +1697,29 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	nodes?:ValueTypes["delivery_operator"],
 		__typename?: true
 }>;
+	["delivery_operator_aggregate_bool_exp"]: {
+	bool_and?:ValueTypes["delivery_operator_aggregate_bool_exp_bool_and"],
+	bool_or?:ValueTypes["delivery_operator_aggregate_bool_exp_bool_or"],
+	count?:ValueTypes["delivery_operator_aggregate_bool_exp_count"]
+};
+	["delivery_operator_aggregate_bool_exp_bool_and"]: {
+	arguments:ValueTypes["delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_and_arguments_columns"],
+	distinct?:boolean,
+	filter?:ValueTypes["delivery_operator_bool_exp"],
+	predicate:ValueTypes["Boolean_comparison_exp"]
+};
+	["delivery_operator_aggregate_bool_exp_bool_or"]: {
+	arguments:ValueTypes["delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_or_arguments_columns"],
+	distinct?:boolean,
+	filter?:ValueTypes["delivery_operator_bool_exp"],
+	predicate:ValueTypes["Boolean_comparison_exp"]
+};
+	["delivery_operator_aggregate_bool_exp_count"]: {
+	arguments?:ValueTypes["delivery_operator_select_column"][],
+	distinct?:boolean,
+	filter?:ValueTypes["delivery_operator_bool_exp"],
+	predicate:ValueTypes["Int_comparison_exp"]
+};
 	/** aggregate fields of "delivery_operator" */
 ["delivery_operator_aggregate_fields"]: AliasType<{
 	avg?:ValueTypes["delivery_operator_avg_fields"],
@@ -1817,6 +1881,10 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 };
 	/** select columns of table "delivery_operator" */
 ["delivery_operator_select_column"]:delivery_operator_select_column;
+	/** select "delivery_operator_aggregate_bool_exp_bool_and_arguments_columns" columns of table "delivery_operator" */
+["delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_and_arguments_columns"]:delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_and_arguments_columns;
+	/** select "delivery_operator_aggregate_bool_exp_bool_or_arguments_columns" columns of table "delivery_operator" */
+["delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_or_arguments_columns"]:delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_or_arguments_columns;
 	/** input type for updating data in table "delivery_operator" */
 ["delivery_operator_set_input"]: {
 	app_version?:string,
@@ -1990,6 +2058,8 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 	estimated_arrival_at_pickup_time?:true,
 	estimated_package_ready_time?:true,
 	id?:true,
+	/** A computed field, executes function "delivery_in_process" */
+	in_process?:true,
 	/** A computed field, executes function "delivery_notification_token" */
 	notification_token?:true,
 	order_time?:true,
@@ -2029,6 +2099,15 @@ cancelledByServiceProvider */
 	nodes?:ValueTypes["delivery_order"],
 		__typename?: true
 }>;
+	["delivery_order_aggregate_bool_exp"]: {
+	count?:ValueTypes["delivery_order_aggregate_bool_exp_count"]
+};
+	["delivery_order_aggregate_bool_exp_count"]: {
+	arguments?:ValueTypes["delivery_order_select_column"][],
+	distinct?:boolean,
+	filter?:ValueTypes["delivery_order_bool_exp"],
+	predicate:ValueTypes["Int_comparison_exp"]
+};
 	/** aggregate fields of "delivery_order" */
 ["delivery_order_aggregate_fields"]: AliasType<{
 	avg?:ValueTypes["delivery_order_avg_fields"],
@@ -2141,6 +2220,7 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	estimated_arrival_at_pickup_time?:ValueTypes["timestamptz_comparison_exp"],
 	estimated_package_ready_time?:ValueTypes["timestamptz_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
+	in_process?:ValueTypes["Boolean_comparison_exp"],
 	notification_token?:ValueTypes["String_comparison_exp"],
 	order_time?:ValueTypes["timestamptz_comparison_exp"],
 	order_type?:ValueTypes["String_comparison_exp"],
@@ -2480,6 +2560,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:ValueTypes["order_by"],
 	estimated_package_ready_time?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
+	in_process?:ValueTypes["order_by"],
 	notification_token?:ValueTypes["order_by"],
 	order_time?:ValueTypes["order_by"],
 	order_type?:ValueTypes["order_by"],
@@ -5281,7 +5362,9 @@ count?: [{	columns?:ValueTypes["restaurant_select_column"][],	distinct?:boolean}
 	accepted_payments?:ValueTypes["jsonb_comparison_exp"],
 	approved?:ValueTypes["Boolean_comparison_exp"],
 	categories?:ValueTypes["restaurant_category_bool_exp"],
+	categories_aggregate?:ValueTypes["restaurant_category_aggregate_bool_exp"],
 	delivery_drivers?:ValueTypes["delivery_driver_bool_exp"],
+	delivery_drivers_aggregate?:ValueTypes["delivery_driver_aggregate_bool_exp"],
 	description?:ValueTypes["translation_bool_exp"],
 	description_id?:ValueTypes["Int_comparison_exp"],
 	firebase_id?:ValueTypes["String_comparison_exp"],
@@ -5293,10 +5376,13 @@ count?: [{	columns?:ValueTypes["restaurant_select_column"][],	distinct?:boolean}
 	name?:ValueTypes["String_comparison_exp"],
 	open_status?:ValueTypes["String_comparison_exp"],
 	orders?:ValueTypes["restaurant_order_bool_exp"],
+	orders_aggregate?:ValueTypes["restaurant_order_aggregate_bool_exp"],
 	payment_info?:ValueTypes["service_provider_payment_info_bool_exp"],
 	payment_info_id?:ValueTypes["Int_comparison_exp"],
 	restaurant_operators?:ValueTypes["restaurant_operator_bool_exp"],
+	restaurant_operators_aggregate?:ValueTypes["restaurant_operator_aggregate_bool_exp"],
 	reviews?:ValueTypes["review_bool_exp"],
+	reviews_aggregate?:ValueTypes["review_aggregate_bool_exp"],
 	schedule?:ValueTypes["jsonb_comparison_exp"],
 	self_delivery?:ValueTypes["Boolean_comparison_exp"],
 	service_provider_type?:ValueTypes["String_comparison_exp"],
@@ -5363,6 +5449,7 @@ count?: [{	columns?:ValueTypes["restaurant_cart_select_column"][],	distinct?:boo
 	customer?:ValueTypes["customer_bool_exp"],
 	customer_id?:ValueTypes["Int_comparison_exp"],
 	items?:ValueTypes["restaurant_cart_item_bool_exp"],
+	items_aggregate?:ValueTypes["restaurant_cart_item_aggregate_bool_exp"],
 	restaurant?:ValueTypes["restaurant_bool_exp"],
 	restaurant_id?:ValueTypes["Int_comparison_exp"]
 };
@@ -5403,6 +5490,15 @@ selected_options?: [{	/** JSON select path */
 	nodes?:ValueTypes["restaurant_cart_item"],
 		__typename?: true
 }>;
+	["restaurant_cart_item_aggregate_bool_exp"]: {
+	count?:ValueTypes["restaurant_cart_item_aggregate_bool_exp_count"]
+};
+	["restaurant_cart_item_aggregate_bool_exp_count"]: {
+	arguments?:ValueTypes["restaurant_cart_item_select_column"][],
+	distinct?:boolean,
+	filter?:ValueTypes["restaurant_cart_item_bool_exp"],
+	predicate:ValueTypes["Int_comparison_exp"]
+};
 	/** aggregate fields of "restaurant_cart_item" */
 ["restaurant_cart_item_aggregate_fields"]: AliasType<{
 	avg?:ValueTypes["restaurant_cart_item_avg_fields"],
@@ -5869,6 +5965,15 @@ items_aggregate?: [{	/** distinct select on columns */
 	nodes?:ValueTypes["restaurant_category"],
 		__typename?: true
 }>;
+	["restaurant_category_aggregate_bool_exp"]: {
+	count?:ValueTypes["restaurant_category_aggregate_bool_exp_count"]
+};
+	["restaurant_category_aggregate_bool_exp_count"]: {
+	arguments?:ValueTypes["restaurant_category_select_column"][],
+	distinct?:boolean,
+	filter?:ValueTypes["restaurant_category_bool_exp"],
+	predicate:ValueTypes["Int_comparison_exp"]
+};
 	/** aggregate fields of "restaurant_category" */
 ["restaurant_category_aggregate_fields"]: AliasType<{
 	avg?:ValueTypes["restaurant_category_avg_fields"],
@@ -5932,6 +6037,7 @@ count?: [{	columns?:ValueTypes["restaurant_category_select_column"][],	distinct?
 	description_id?:ValueTypes["Int_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	items?:ValueTypes["restaurant_item_bool_exp"],
+	items_aggregate?:ValueTypes["restaurant_item_aggregate_bool_exp"],
 	name?:ValueTypes["translation_bool_exp"],
 	name_id?:ValueTypes["Int_comparison_exp"],
 	position?:ValueTypes["Int_comparison_exp"],
@@ -6238,6 +6344,29 @@ options_aggregate?: [{	/** distinct select on columns */
 	nodes?:ValueTypes["restaurant_choice"],
 		__typename?: true
 }>;
+	["restaurant_choice_aggregate_bool_exp"]: {
+	bool_and?:ValueTypes["restaurant_choice_aggregate_bool_exp_bool_and"],
+	bool_or?:ValueTypes["restaurant_choice_aggregate_bool_exp_bool_or"],
+	count?:ValueTypes["restaurant_choice_aggregate_bool_exp_count"]
+};
+	["restaurant_choice_aggregate_bool_exp_bool_and"]: {
+	arguments:ValueTypes["restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_and_arguments_columns"],
+	distinct?:boolean,
+	filter?:ValueTypes["restaurant_choice_bool_exp"],
+	predicate:ValueTypes["Boolean_comparison_exp"]
+};
+	["restaurant_choice_aggregate_bool_exp_bool_or"]: {
+	arguments:ValueTypes["restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_or_arguments_columns"],
+	distinct?:boolean,
+	filter?:ValueTypes["restaurant_choice_bool_exp"],
+	predicate:ValueTypes["Boolean_comparison_exp"]
+};
+	["restaurant_choice_aggregate_bool_exp_count"]: {
+	arguments?:ValueTypes["restaurant_choice_select_column"][],
+	distinct?:boolean,
+	filter?:ValueTypes["restaurant_choice_bool_exp"],
+	predicate:ValueTypes["Int_comparison_exp"]
+};
 	/** aggregate fields of "restaurant_choice" */
 ["restaurant_choice_aggregate_fields"]: AliasType<{
 	avg?:ValueTypes["restaurant_choice_avg_fields"],
@@ -6299,6 +6428,7 @@ count?: [{	columns?:ValueTypes["restaurant_choice_select_column"][],	distinct?:b
 	name?:ValueTypes["translation_bool_exp"],
 	name_id?:ValueTypes["Int_comparison_exp"],
 	options?:ValueTypes["restaurant_option_choice_map_bool_exp"],
+	options_aggregate?:ValueTypes["restaurant_option_choice_map_aggregate_bool_exp"],
 	restaurant?:ValueTypes["restaurant_bool_exp"],
 	restaurant_id?:ValueTypes["Int_comparison_exp"]
 };
@@ -6383,6 +6513,10 @@ count?: [{	columns?:ValueTypes["restaurant_choice_select_column"][],	distinct?:b
 };
 	/** select columns of table "restaurant_choice" */
 ["restaurant_choice_select_column"]:restaurant_choice_select_column;
+	/** select "restaurant_choice_aggregate_bool_exp_bool_and_arguments_columns" columns of table "restaurant_choice" */
+["restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_and_arguments_columns"]:restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_and_arguments_columns;
+	/** select "restaurant_choice_aggregate_bool_exp_bool_or_arguments_columns" columns of table "restaurant_choice" */
+["restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_or_arguments_columns"]:restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_or_arguments_columns;
 	/** input type for updating data in table "restaurant_choice" */
 ["restaurant_choice_set_input"]: {
 	available?:boolean,
@@ -6618,6 +6752,29 @@ options_aggregate?: [{	/** distinct select on columns */
 	nodes?:ValueTypes["restaurant_item"],
 		__typename?: true
 }>;
+	["restaurant_item_aggregate_bool_exp"]: {
+	bool_and?:ValueTypes["restaurant_item_aggregate_bool_exp_bool_and"],
+	bool_or?:ValueTypes["restaurant_item_aggregate_bool_exp_bool_or"],
+	count?:ValueTypes["restaurant_item_aggregate_bool_exp_count"]
+};
+	["restaurant_item_aggregate_bool_exp_bool_and"]: {
+	arguments:ValueTypes["restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_and_arguments_columns"],
+	distinct?:boolean,
+	filter?:ValueTypes["restaurant_item_bool_exp"],
+	predicate:ValueTypes["Boolean_comparison_exp"]
+};
+	["restaurant_item_aggregate_bool_exp_bool_or"]: {
+	arguments:ValueTypes["restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_or_arguments_columns"],
+	distinct?:boolean,
+	filter?:ValueTypes["restaurant_item_bool_exp"],
+	predicate:ValueTypes["Boolean_comparison_exp"]
+};
+	["restaurant_item_aggregate_bool_exp_count"]: {
+	arguments?:ValueTypes["restaurant_item_select_column"][],
+	distinct?:boolean,
+	filter?:ValueTypes["restaurant_item_bool_exp"],
+	predicate:ValueTypes["Int_comparison_exp"]
+};
 	/** aggregate fields of "restaurant_item" */
 ["restaurant_item_aggregate_fields"]: AliasType<{
 	avg?:ValueTypes["restaurant_item_avg_fields"],
@@ -6692,6 +6849,7 @@ count?: [{	columns?:ValueTypes["restaurant_item_select_column"][],	distinct?:boo
 	name?:ValueTypes["translation_bool_exp"],
 	name_id?:ValueTypes["Int_comparison_exp"],
 	options?:ValueTypes["restaurant_item_option_map_bool_exp"],
+	options_aggregate?:ValueTypes["restaurant_item_option_map_aggregate_bool_exp"],
 	position?:ValueTypes["Int_comparison_exp"],
 	restaurant?:ValueTypes["restaurant_bool_exp"],
 	restaurant_id?:ValueTypes["Int_comparison_exp"],
@@ -6842,6 +7000,15 @@ item_options_aggregate?: [{	/** distinct select on columns */
 	nodes?:ValueTypes["restaurant_item_option_map"],
 		__typename?: true
 }>;
+	["restaurant_item_option_map_aggregate_bool_exp"]: {
+	count?:ValueTypes["restaurant_item_option_map_aggregate_bool_exp_count"]
+};
+	["restaurant_item_option_map_aggregate_bool_exp_count"]: {
+	arguments?:ValueTypes["restaurant_item_option_map_select_column"][],
+	distinct?:boolean,
+	filter?:ValueTypes["restaurant_item_option_map_bool_exp"],
+	predicate:ValueTypes["Int_comparison_exp"]
+};
 	/** aggregate fields of "restaurant_item_option_map" */
 ["restaurant_item_option_map_aggregate_fields"]: AliasType<{
 	avg?:ValueTypes["restaurant_item_option_map_avg_fields"],
@@ -6900,6 +7067,7 @@ count?: [{	columns?:ValueTypes["restaurant_item_option_map_select_column"][],	di
 	id?:ValueTypes["Int_comparison_exp"],
 	item_id?:ValueTypes["Int_comparison_exp"],
 	item_options?:ValueTypes["restaurant_option_bool_exp"],
+	item_options_aggregate?:ValueTypes["restaurant_option_aggregate_bool_exp"],
 	option_id?:ValueTypes["Int_comparison_exp"],
 	restaurant?:ValueTypes["restaurant_bool_exp"],
 	restaurant_id?:ValueTypes["Int_comparison_exp"]
@@ -7143,6 +7311,10 @@ count?: [{	columns?:ValueTypes["restaurant_item_option_map_select_column"][],	di
 };
 	/** select columns of table "restaurant_item" */
 ["restaurant_item_select_column"]:restaurant_item_select_column;
+	/** select "restaurant_item_aggregate_bool_exp_bool_and_arguments_columns" columns of table "restaurant_item" */
+["restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_and_arguments_columns"]:restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_and_arguments_columns;
+	/** select "restaurant_item_aggregate_bool_exp_bool_or_arguments_columns" columns of table "restaurant_item" */
+["restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_or_arguments_columns"]:restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_or_arguments_columns;
 	/** input type for updating data in table "restaurant_item" */
 ["restaurant_item_set_input"]: {
 	archived?:boolean,
@@ -7415,6 +7587,29 @@ count?: [{	columns?:ValueTypes["restaurant_item_option_map_select_column"][],	di
 	nodes?:ValueTypes["restaurant_operator"],
 		__typename?: true
 }>;
+	["restaurant_operator_aggregate_bool_exp"]: {
+	bool_and?:ValueTypes["restaurant_operator_aggregate_bool_exp_bool_and"],
+	bool_or?:ValueTypes["restaurant_operator_aggregate_bool_exp_bool_or"],
+	count?:ValueTypes["restaurant_operator_aggregate_bool_exp_count"]
+};
+	["restaurant_operator_aggregate_bool_exp_bool_and"]: {
+	arguments:ValueTypes["restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_and_arguments_columns"],
+	distinct?:boolean,
+	filter?:ValueTypes["restaurant_operator_bool_exp"],
+	predicate:ValueTypes["Boolean_comparison_exp"]
+};
+	["restaurant_operator_aggregate_bool_exp_bool_or"]: {
+	arguments:ValueTypes["restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_or_arguments_columns"],
+	distinct?:boolean,
+	filter?:ValueTypes["restaurant_operator_bool_exp"],
+	predicate:ValueTypes["Boolean_comparison_exp"]
+};
+	["restaurant_operator_aggregate_bool_exp_count"]: {
+	arguments?:ValueTypes["restaurant_operator_select_column"][],
+	distinct?:boolean,
+	filter?:ValueTypes["restaurant_operator_bool_exp"],
+	predicate:ValueTypes["Int_comparison_exp"]
+};
 	/** aggregate fields of "restaurant_operator" */
 ["restaurant_operator_aggregate_fields"]: AliasType<{
 	avg?:ValueTypes["restaurant_operator_avg_fields"],
@@ -7584,6 +7779,10 @@ count?: [{	columns?:ValueTypes["restaurant_operator_select_column"][],	distinct?
 };
 	/** select columns of table "restaurant_operator" */
 ["restaurant_operator_select_column"]:restaurant_operator_select_column;
+	/** select "restaurant_operator_aggregate_bool_exp_bool_and_arguments_columns" columns of table "restaurant_operator" */
+["restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_and_arguments_columns"]:restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_and_arguments_columns;
+	/** select "restaurant_operator_aggregate_bool_exp_bool_or_arguments_columns" columns of table "restaurant_operator" */
+["restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_or_arguments_columns"]:restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_or_arguments_columns;
 	/** input type for updating data in table "restaurant_operator" */
 ["restaurant_operator_set_input"]: {
 	app_version?:string,
@@ -7762,6 +7961,15 @@ items_aggregate?: [{	/** distinct select on columns */
 	nodes?:ValueTypes["restaurant_option"],
 		__typename?: true
 }>;
+	["restaurant_option_aggregate_bool_exp"]: {
+	count?:ValueTypes["restaurant_option_aggregate_bool_exp_count"]
+};
+	["restaurant_option_aggregate_bool_exp_count"]: {
+	arguments?:ValueTypes["restaurant_option_select_column"][],
+	distinct?:boolean,
+	filter?:ValueTypes["restaurant_option_bool_exp"],
+	predicate:ValueTypes["Int_comparison_exp"]
+};
 	/** aggregate fields of "restaurant_option" */
 ["restaurant_option_aggregate_fields"]: AliasType<{
 	avg?:ValueTypes["restaurant_option_avg_fields"],
@@ -7826,10 +8034,12 @@ count?: [{	columns?:ValueTypes["restaurant_option_select_column"][],	distinct?:b
 	_not?:ValueTypes["restaurant_option_bool_exp"],
 	_or?:ValueTypes["restaurant_option_bool_exp"][],
 	choices?:ValueTypes["restaurant_option_choice_map_bool_exp"],
+	choices_aggregate?:ValueTypes["restaurant_option_choice_map_aggregate_bool_exp"],
 	cost_per_extra?:ValueTypes["money_comparison_exp"],
 	free_choice?:ValueTypes["Int_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	items?:ValueTypes["restaurant_item_option_map_bool_exp"],
+	items_aggregate?:ValueTypes["restaurant_item_option_map_aggregate_bool_exp"],
 	maximum_choice?:ValueTypes["Int_comparison_exp"],
 	minimum_choice?:ValueTypes["Int_comparison_exp"],
 	name?:ValueTypes["translation_bool_exp"],
@@ -7867,6 +8077,15 @@ option_choices_aggregate?: [{	/** distinct select on columns */
 	nodes?:ValueTypes["restaurant_option_choice_map"],
 		__typename?: true
 }>;
+	["restaurant_option_choice_map_aggregate_bool_exp"]: {
+	count?:ValueTypes["restaurant_option_choice_map_aggregate_bool_exp_count"]
+};
+	["restaurant_option_choice_map_aggregate_bool_exp_count"]: {
+	arguments?:ValueTypes["restaurant_option_choice_map_select_column"][],
+	distinct?:boolean,
+	filter?:ValueTypes["restaurant_option_choice_map_bool_exp"],
+	predicate:ValueTypes["Int_comparison_exp"]
+};
 	/** aggregate fields of "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_aggregate_fields"]: AliasType<{
 	avg?:ValueTypes["restaurant_option_choice_map_avg_fields"],
@@ -7926,6 +8145,7 @@ All fields are combined with a logical 'AND'. */
 	choice_id?:ValueTypes["Int_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	option_choices?:ValueTypes["restaurant_choice_bool_exp"],
+	option_choices_aggregate?:ValueTypes["restaurant_choice_aggregate_bool_exp"],
 	option_id?:ValueTypes["Int_comparison_exp"],
 	restaurant?:ValueTypes["restaurant_bool_exp"],
 	restaurant_id?:ValueTypes["Int_comparison_exp"]
@@ -8522,6 +8742,15 @@ stripe_info?: [{	/** JSON select path */
 	nodes?:ValueTypes["restaurant_order"],
 		__typename?: true
 }>;
+	["restaurant_order_aggregate_bool_exp"]: {
+	count?:ValueTypes["restaurant_order_aggregate_bool_exp_count"]
+};
+	["restaurant_order_aggregate_bool_exp_count"]: {
+	arguments?:ValueTypes["restaurant_order_select_column"][],
+	distinct?:boolean,
+	filter?:ValueTypes["restaurant_order_bool_exp"],
+	predicate:ValueTypes["Int_comparison_exp"]
+};
 	/** aggregate fields of "restaurant_order" */
 ["restaurant_order_aggregate_fields"]: AliasType<{
 	avg?:ValueTypes["restaurant_order_avg_fields"],
@@ -8608,6 +8837,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_select_column"][],	distinct?:bo
 	id?:ValueTypes["Int_comparison_exp"],
 	in_process?:ValueTypes["Boolean_comparison_exp"],
 	items?:ValueTypes["restaurant_order_item_bool_exp"],
+	items_aggregate?:ValueTypes["restaurant_order_item_aggregate_bool_exp"],
 	items_cost?:ValueTypes["money_comparison_exp"],
 	notes?:ValueTypes["String_comparison_exp"],
 	order_time?:ValueTypes["timestamptz_comparison_exp"],
@@ -8740,6 +8970,29 @@ in_json?: [{	/** JSON select path */
 	nodes?:ValueTypes["restaurant_order_item"],
 		__typename?: true
 }>;
+	["restaurant_order_item_aggregate_bool_exp"]: {
+	bool_and?:ValueTypes["restaurant_order_item_aggregate_bool_exp_bool_and"],
+	bool_or?:ValueTypes["restaurant_order_item_aggregate_bool_exp_bool_or"],
+	count?:ValueTypes["restaurant_order_item_aggregate_bool_exp_count"]
+};
+	["restaurant_order_item_aggregate_bool_exp_bool_and"]: {
+	arguments:ValueTypes["restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_and_arguments_columns"],
+	distinct?:boolean,
+	filter?:ValueTypes["restaurant_order_item_bool_exp"],
+	predicate:ValueTypes["Boolean_comparison_exp"]
+};
+	["restaurant_order_item_aggregate_bool_exp_bool_or"]: {
+	arguments:ValueTypes["restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_or_arguments_columns"],
+	distinct?:boolean,
+	filter?:ValueTypes["restaurant_order_item_bool_exp"],
+	predicate:ValueTypes["Boolean_comparison_exp"]
+};
+	["restaurant_order_item_aggregate_bool_exp_count"]: {
+	arguments?:ValueTypes["restaurant_order_item_select_column"][],
+	distinct?:boolean,
+	filter?:ValueTypes["restaurant_order_item_bool_exp"],
+	predicate:ValueTypes["Int_comparison_exp"]
+};
 	/** aggregate fields of "restaurant_order_item" */
 ["restaurant_order_item_aggregate_fields"]: AliasType<{
 	avg?:ValueTypes["restaurant_order_item_avg_fields"],
@@ -8912,6 +9165,10 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 };
 	/** select columns of table "restaurant_order_item" */
 ["restaurant_order_item_select_column"]:restaurant_order_item_select_column;
+	/** select "restaurant_order_item_aggregate_bool_exp_bool_and_arguments_columns" columns of table "restaurant_order_item" */
+["restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_and_arguments_columns"]:restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_and_arguments_columns;
+	/** select "restaurant_order_item_aggregate_bool_exp_bool_or_arguments_columns" columns of table "restaurant_order_item" */
+["restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_or_arguments_columns"]:restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_or_arguments_columns;
 	/** input type for updating data in table "restaurant_order_item" */
 ["restaurant_order_item_set_input"]: {
 	cost_per_one?:ValueTypes["money"],
@@ -9317,6 +9574,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_public_select_column"][],	disti
 	order_time?:ValueTypes["timestamptz_comparison_exp"],
 	restaurant_id?:ValueTypes["Int_comparison_exp"],
 	restaurant_operators?:ValueTypes["restaurant_operator_bool_exp"],
+	restaurant_operators_aggregate?:ValueTypes["restaurant_operator_aggregate_bool_exp"],
 	review_id?:ValueTypes["Int_comparison_exp"],
 	status?:ValueTypes["String_comparison_exp"]
 };
@@ -9885,6 +10143,15 @@ the end). throws an error if top level container is not an array */
 	nodes?:ValueTypes["review"],
 		__typename?: true
 }>;
+	["review_aggregate_bool_exp"]: {
+	count?:ValueTypes["review_aggregate_bool_exp_count"]
+};
+	["review_aggregate_bool_exp_count"]: {
+	arguments?:ValueTypes["review_select_column"][],
+	distinct?:boolean,
+	filter?:ValueTypes["review_bool_exp"],
+	predicate:ValueTypes["Int_comparison_exp"]
+};
 	/** aggregate fields of "review" */
 ["review_aggregate_fields"]: AliasType<{
 	avg?:ValueTypes["review_avg_fields"],
@@ -10214,6 +10481,29 @@ count?: [{	columns?:ValueTypes["review_select_column"][],	distinct?:boolean},tru
 	nodes?:ValueTypes["saved_location"],
 		__typename?: true
 }>;
+	["saved_location_aggregate_bool_exp"]: {
+	bool_and?:ValueTypes["saved_location_aggregate_bool_exp_bool_and"],
+	bool_or?:ValueTypes["saved_location_aggregate_bool_exp_bool_or"],
+	count?:ValueTypes["saved_location_aggregate_bool_exp_count"]
+};
+	["saved_location_aggregate_bool_exp_bool_and"]: {
+	arguments:ValueTypes["saved_location_select_column_saved_location_aggregate_bool_exp_bool_and_arguments_columns"],
+	distinct?:boolean,
+	filter?:ValueTypes["saved_location_bool_exp"],
+	predicate:ValueTypes["Boolean_comparison_exp"]
+};
+	["saved_location_aggregate_bool_exp_bool_or"]: {
+	arguments:ValueTypes["saved_location_select_column_saved_location_aggregate_bool_exp_bool_or_arguments_columns"],
+	distinct?:boolean,
+	filter?:ValueTypes["saved_location_bool_exp"],
+	predicate:ValueTypes["Boolean_comparison_exp"]
+};
+	["saved_location_aggregate_bool_exp_count"]: {
+	arguments?:ValueTypes["saved_location_select_column"][],
+	distinct?:boolean,
+	filter?:ValueTypes["saved_location_bool_exp"],
+	predicate:ValueTypes["Int_comparison_exp"]
+};
 	/** aggregate fields of "saved_location" */
 ["saved_location_aggregate_fields"]: AliasType<{
 	avg?:ValueTypes["saved_location_avg_fields"],
@@ -10347,6 +10637,10 @@ count?: [{	columns?:ValueTypes["saved_location_select_column"][],	distinct?:bool
 };
 	/** select columns of table "saved_location" */
 ["saved_location_select_column"]:saved_location_select_column;
+	/** select "saved_location_aggregate_bool_exp_bool_and_arguments_columns" columns of table "saved_location" */
+["saved_location_select_column_saved_location_aggregate_bool_exp_bool_and_arguments_columns"]:saved_location_select_column_saved_location_aggregate_bool_exp_bool_and_arguments_columns;
+	/** select "saved_location_aggregate_bool_exp_bool_or_arguments_columns" columns of table "saved_location" */
+["saved_location_select_column_saved_location_aggregate_bool_exp_bool_or_arguments_columns"]:saved_location_select_column_saved_location_aggregate_bool_exp_bool_or_arguments_columns;
 	/** input type for updating data in table "saved_location" */
 ["saved_location_set_input"]: {
 	customer_id?:number,
@@ -12006,7 +12300,7 @@ count?: [{	columns?:ValueTypes["topology_app_type_select_column"][],	distinct?:b
 ["topology_app_type_order_by"]: {
 	id?:ValueTypes["order_by"]
 };
-	/** primary key columns input for table: topology_app_type */
+	/** primary key columns input for table: topology.app_type */
 ["topology_app_type_pk_columns_input"]: {
 	/** customer, delivery, restaurant, admin */
 	id:string
@@ -12102,7 +12396,7 @@ count?: [{	columns?:ValueTypes["topology_language_select_column"][],	distinct?:b
 ["topology_language_order_by"]: {
 	id?:ValueTypes["order_by"]
 };
-	/** primary key columns input for table: topology_language */
+	/** primary key columns input for table: topology.language */
 ["topology_language_pk_columns_input"]: {
 	id:string
 };
@@ -12187,7 +12481,8 @@ count?: [{	columns?:ValueTypes["translation_select_column"][],	distinct?:boolean
 	restaurant?:ValueTypes["restaurant_bool_exp"],
 	service_provider_id?:ValueTypes["Int_comparison_exp"],
 	service_provider_type?:ValueTypes["String_comparison_exp"],
-	translations?:ValueTypes["translation_value_bool_exp"]
+	translations?:ValueTypes["translation_value_bool_exp"],
+	translations_aggregate?:ValueTypes["translation_value_aggregate_bool_exp"]
 };
 	/** unique or primary key constraints on table "translation" */
 ["translation_constraint"]:translation_constraint;
@@ -12321,6 +12616,15 @@ count?: [{	columns?:ValueTypes["translation_select_column"][],	distinct?:boolean
 	nodes?:ValueTypes["translation_value"],
 		__typename?: true
 }>;
+	["translation_value_aggregate_bool_exp"]: {
+	count?:ValueTypes["translation_value_aggregate_bool_exp_count"]
+};
+	["translation_value_aggregate_bool_exp_count"]: {
+	arguments?:ValueTypes["translation_value_select_column"][],
+	distinct?:boolean,
+	filter?:ValueTypes["translation_value_bool_exp"],
+	predicate:ValueTypes["Int_comparison_exp"]
+};
 	/** aggregate fields of "translation_value" */
 ["translation_value_aggregate_fields"]: AliasType<{
 	avg?:ValueTypes["translation_value_avg_fields"],
@@ -12836,6 +13140,7 @@ export type PartialObjects = {
 	agora_info?:PartialObjects["jsonb_comparison_exp"],
 	chat_info?:PartialObjects["jsonb_comparison_exp"],
 	chat_participants?:PartialObjects["chat_participant_bool_exp"],
+	chat_participants_aggregate?:PartialObjects["chat_participant_aggregate_bool_exp"],
 	creation_time?:PartialObjects["timestamptz_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	messages?:PartialObjects["jsonb_comparison_exp"]
@@ -12935,6 +13240,15 @@ end). throws an error if top level container is not an array */
 			aggregate?:PartialObjects["chat_participant_aggregate_fields"],
 			nodes?:PartialObjects["chat_participant"][]
 	},
+	["chat_participant_aggregate_bool_exp"]: {
+	count?:PartialObjects["chat_participant_aggregate_bool_exp_count"]
+},
+	["chat_participant_aggregate_bool_exp_count"]: {
+	arguments?:PartialObjects["chat_participant_select_column"][],
+	distinct?:boolean,
+	filter?:PartialObjects["chat_participant_bool_exp"],
+	predicate:PartialObjects["Int_comparison_exp"]
+},
 	/** aggregate fields of "chat_participant" */
 ["chat_participant_aggregate_fields"]: {
 		__typename?: "chat_participant_aggregate_fields";
@@ -13347,8 +13661,10 @@ the end). throws an error if top level container is not an array */
 	app_version?:PartialObjects["String_comparison_exp"],
 	cart?:PartialObjects["restaurant_cart_bool_exp"],
 	deliveries?:PartialObjects["delivery_order_bool_exp"],
+	deliveries_aggregate?:PartialObjects["delivery_order_aggregate_bool_exp"],
 	notification_token?:PartialObjects["String_comparison_exp"],
 	saved_locations?:PartialObjects["saved_location_bool_exp"],
+	saved_locations_aggregate?:PartialObjects["saved_location_aggregate_bool_exp"],
 	service_provider_type?:PartialObjects["String_comparison_exp"],
 	stripe_info?:PartialObjects["jsonb_comparison_exp"],
 	user?:PartialObjects["user_bool_exp"],
@@ -13571,7 +13887,9 @@ the end). throws an error if top level container is not an array */
 	_or?:PartialObjects["delivery_company_bool_exp"][],
 	approved?:PartialObjects["Boolean_comparison_exp"],
 	delivery_drivers?:PartialObjects["delivery_driver_bool_exp"],
+	delivery_drivers_aggregate?:PartialObjects["delivery_driver_aggregate_bool_exp"],
 	delivery_operators?:PartialObjects["delivery_operator_bool_exp"],
+	delivery_operators_aggregate?:PartialObjects["delivery_operator_aggregate_bool_exp"],
 	description?:PartialObjects["translation_bool_exp"],
 	description_id?:PartialObjects["Int_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
@@ -14007,6 +14325,29 @@ the end). throws an error if top level container is not an array */
 			aggregate?:PartialObjects["delivery_driver_aggregate_fields"],
 			nodes?:PartialObjects["delivery_driver"][]
 	},
+	["delivery_driver_aggregate_bool_exp"]: {
+	bool_and?:PartialObjects["delivery_driver_aggregate_bool_exp_bool_and"],
+	bool_or?:PartialObjects["delivery_driver_aggregate_bool_exp_bool_or"],
+	count?:PartialObjects["delivery_driver_aggregate_bool_exp_count"]
+},
+	["delivery_driver_aggregate_bool_exp_bool_and"]: {
+	arguments:PartialObjects["delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns"],
+	distinct?:boolean,
+	filter?:PartialObjects["delivery_driver_bool_exp"],
+	predicate:PartialObjects["Boolean_comparison_exp"]
+},
+	["delivery_driver_aggregate_bool_exp_bool_or"]: {
+	arguments:PartialObjects["delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns"],
+	distinct?:boolean,
+	filter?:PartialObjects["delivery_driver_bool_exp"],
+	predicate:PartialObjects["Boolean_comparison_exp"]
+},
+	["delivery_driver_aggregate_bool_exp_count"]: {
+	arguments?:PartialObjects["delivery_driver_select_column"][],
+	distinct?:boolean,
+	filter?:PartialObjects["delivery_driver_bool_exp"],
+	predicate:PartialObjects["Int_comparison_exp"]
+},
 	/** aggregate fields of "delivery_driver" */
 ["delivery_driver_aggregate_fields"]: {
 		__typename?: "delivery_driver_aggregate_fields";
@@ -14206,6 +14547,10 @@ the end). throws an error if top level container is not an array */
 },
 	/** select columns of table "delivery_driver" */
 ["delivery_driver_select_column"]:delivery_driver_select_column,
+	/** select "delivery_driver_aggregate_bool_exp_bool_and_arguments_columns" columns of table "delivery_driver" */
+["delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns"]:delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns,
+	/** select "delivery_driver_aggregate_bool_exp_bool_or_arguments_columns" columns of table "delivery_driver" */
+["delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns"]:delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns,
 	/** input type for updating data in table "delivery_driver" */
 ["delivery_driver_set_input"]: {
 	app_version?:string,
@@ -14381,6 +14726,29 @@ the end). throws an error if top level container is not an array */
 			aggregate?:PartialObjects["delivery_operator_aggregate_fields"],
 			nodes?:PartialObjects["delivery_operator"][]
 	},
+	["delivery_operator_aggregate_bool_exp"]: {
+	bool_and?:PartialObjects["delivery_operator_aggregate_bool_exp_bool_and"],
+	bool_or?:PartialObjects["delivery_operator_aggregate_bool_exp_bool_or"],
+	count?:PartialObjects["delivery_operator_aggregate_bool_exp_count"]
+},
+	["delivery_operator_aggregate_bool_exp_bool_and"]: {
+	arguments:PartialObjects["delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_and_arguments_columns"],
+	distinct?:boolean,
+	filter?:PartialObjects["delivery_operator_bool_exp"],
+	predicate:PartialObjects["Boolean_comparison_exp"]
+},
+	["delivery_operator_aggregate_bool_exp_bool_or"]: {
+	arguments:PartialObjects["delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_or_arguments_columns"],
+	distinct?:boolean,
+	filter?:PartialObjects["delivery_operator_bool_exp"],
+	predicate:PartialObjects["Boolean_comparison_exp"]
+},
+	["delivery_operator_aggregate_bool_exp_count"]: {
+	arguments?:PartialObjects["delivery_operator_select_column"][],
+	distinct?:boolean,
+	filter?:PartialObjects["delivery_operator_bool_exp"],
+	predicate:PartialObjects["Int_comparison_exp"]
+},
 	/** aggregate fields of "delivery_operator" */
 ["delivery_operator_aggregate_fields"]: {
 		__typename?: "delivery_operator_aggregate_fields";
@@ -14542,6 +14910,10 @@ the end). throws an error if top level container is not an array */
 },
 	/** select columns of table "delivery_operator" */
 ["delivery_operator_select_column"]:delivery_operator_select_column,
+	/** select "delivery_operator_aggregate_bool_exp_bool_and_arguments_columns" columns of table "delivery_operator" */
+["delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_and_arguments_columns"]:delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_and_arguments_columns,
+	/** select "delivery_operator_aggregate_bool_exp_bool_or_arguments_columns" columns of table "delivery_operator" */
+["delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_or_arguments_columns"]:delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_or_arguments_columns,
 	/** input type for updating data in table "delivery_operator" */
 ["delivery_operator_set_input"]: {
 	app_version?:string,
@@ -14716,6 +15088,8 @@ the end). throws an error if top level container is not an array */
 			estimated_arrival_at_pickup_time?:PartialObjects["timestamptz"],
 			estimated_package_ready_time?:PartialObjects["timestamptz"],
 			id?:number,
+			/** A computed field, executes function "delivery_in_process" */
+	in_process?:boolean,
 			/** A computed field, executes function "delivery_notification_token" */
 	notification_token?:string,
 			order_time?:PartialObjects["timestamptz"],
@@ -14754,6 +15128,15 @@ cancelledByServiceProvider */
 			aggregate?:PartialObjects["delivery_order_aggregate_fields"],
 			nodes?:PartialObjects["delivery_order"][]
 	},
+	["delivery_order_aggregate_bool_exp"]: {
+	count?:PartialObjects["delivery_order_aggregate_bool_exp_count"]
+},
+	["delivery_order_aggregate_bool_exp_count"]: {
+	arguments?:PartialObjects["delivery_order_select_column"][],
+	distinct?:boolean,
+	filter?:PartialObjects["delivery_order_bool_exp"],
+	predicate:PartialObjects["Int_comparison_exp"]
+},
 	/** aggregate fields of "delivery_order" */
 ["delivery_order_aggregate_fields"]: {
 		__typename?: "delivery_order_aggregate_fields";
@@ -14866,6 +15249,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:PartialObjects["timestamptz_comparison_exp"],
 	estimated_package_ready_time?:PartialObjects["timestamptz_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
+	in_process?:PartialObjects["Boolean_comparison_exp"],
 	notification_token?:PartialObjects["String_comparison_exp"],
 	order_time?:PartialObjects["timestamptz_comparison_exp"],
 	order_type?:PartialObjects["String_comparison_exp"],
@@ -15205,6 +15589,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:PartialObjects["order_by"],
 	estimated_package_ready_time?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
+	in_process?:PartialObjects["order_by"],
 	notification_token?:PartialObjects["order_by"],
 	order_time?:PartialObjects["order_by"],
 	order_type?:PartialObjects["order_by"],
@@ -17505,7 +17890,9 @@ the end). throws an error if top level container is not an array */
 	accepted_payments?:PartialObjects["jsonb_comparison_exp"],
 	approved?:PartialObjects["Boolean_comparison_exp"],
 	categories?:PartialObjects["restaurant_category_bool_exp"],
+	categories_aggregate?:PartialObjects["restaurant_category_aggregate_bool_exp"],
 	delivery_drivers?:PartialObjects["delivery_driver_bool_exp"],
+	delivery_drivers_aggregate?:PartialObjects["delivery_driver_aggregate_bool_exp"],
 	description?:PartialObjects["translation_bool_exp"],
 	description_id?:PartialObjects["Int_comparison_exp"],
 	firebase_id?:PartialObjects["String_comparison_exp"],
@@ -17517,10 +17904,13 @@ the end). throws an error if top level container is not an array */
 	name?:PartialObjects["String_comparison_exp"],
 	open_status?:PartialObjects["String_comparison_exp"],
 	orders?:PartialObjects["restaurant_order_bool_exp"],
+	orders_aggregate?:PartialObjects["restaurant_order_aggregate_bool_exp"],
 	payment_info?:PartialObjects["service_provider_payment_info_bool_exp"],
 	payment_info_id?:PartialObjects["Int_comparison_exp"],
 	restaurant_operators?:PartialObjects["restaurant_operator_bool_exp"],
+	restaurant_operators_aggregate?:PartialObjects["restaurant_operator_aggregate_bool_exp"],
 	reviews?:PartialObjects["review_bool_exp"],
+	reviews_aggregate?:PartialObjects["review_aggregate_bool_exp"],
 	schedule?:PartialObjects["jsonb_comparison_exp"],
 	self_delivery?:PartialObjects["Boolean_comparison_exp"],
 	service_provider_type?:PartialObjects["String_comparison_exp"],
@@ -17579,6 +17969,7 @@ the end). throws an error if top level container is not an array */
 	customer?:PartialObjects["customer_bool_exp"],
 	customer_id?:PartialObjects["Int_comparison_exp"],
 	items?:PartialObjects["restaurant_cart_item_bool_exp"],
+	items_aggregate?:PartialObjects["restaurant_cart_item_aggregate_bool_exp"],
 	restaurant?:PartialObjects["restaurant_bool_exp"],
 	restaurant_id?:PartialObjects["Int_comparison_exp"]
 },
@@ -17619,6 +18010,15 @@ the end). throws an error if top level container is not an array */
 			aggregate?:PartialObjects["restaurant_cart_item_aggregate_fields"],
 			nodes?:PartialObjects["restaurant_cart_item"][]
 	},
+	["restaurant_cart_item_aggregate_bool_exp"]: {
+	count?:PartialObjects["restaurant_cart_item_aggregate_bool_exp_count"]
+},
+	["restaurant_cart_item_aggregate_bool_exp_count"]: {
+	arguments?:PartialObjects["restaurant_cart_item_select_column"][],
+	distinct?:boolean,
+	filter?:PartialObjects["restaurant_cart_item_bool_exp"],
+	predicate:PartialObjects["Int_comparison_exp"]
+},
 	/** aggregate fields of "restaurant_cart_item" */
 ["restaurant_cart_item_aggregate_fields"]: {
 		__typename?: "restaurant_cart_item_aggregate_fields";
@@ -18077,6 +18477,15 @@ the end). throws an error if top level container is not an array */
 			aggregate?:PartialObjects["restaurant_category_aggregate_fields"],
 			nodes?:PartialObjects["restaurant_category"][]
 	},
+	["restaurant_category_aggregate_bool_exp"]: {
+	count?:PartialObjects["restaurant_category_aggregate_bool_exp_count"]
+},
+	["restaurant_category_aggregate_bool_exp_count"]: {
+	arguments?:PartialObjects["restaurant_category_select_column"][],
+	distinct?:boolean,
+	filter?:PartialObjects["restaurant_category_bool_exp"],
+	predicate:PartialObjects["Int_comparison_exp"]
+},
 	/** aggregate fields of "restaurant_category" */
 ["restaurant_category_aggregate_fields"]: {
 		__typename?: "restaurant_category_aggregate_fields";
@@ -18140,6 +18549,7 @@ the end). throws an error if top level container is not an array */
 	description_id?:PartialObjects["Int_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	items?:PartialObjects["restaurant_item_bool_exp"],
+	items_aggregate?:PartialObjects["restaurant_item_aggregate_bool_exp"],
 	name?:PartialObjects["translation_bool_exp"],
 	name_id?:PartialObjects["Int_comparison_exp"],
 	position?:PartialObjects["Int_comparison_exp"],
@@ -18438,6 +18848,29 @@ the end). throws an error if top level container is not an array */
 			aggregate?:PartialObjects["restaurant_choice_aggregate_fields"],
 			nodes?:PartialObjects["restaurant_choice"][]
 	},
+	["restaurant_choice_aggregate_bool_exp"]: {
+	bool_and?:PartialObjects["restaurant_choice_aggregate_bool_exp_bool_and"],
+	bool_or?:PartialObjects["restaurant_choice_aggregate_bool_exp_bool_or"],
+	count?:PartialObjects["restaurant_choice_aggregate_bool_exp_count"]
+},
+	["restaurant_choice_aggregate_bool_exp_bool_and"]: {
+	arguments:PartialObjects["restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_and_arguments_columns"],
+	distinct?:boolean,
+	filter?:PartialObjects["restaurant_choice_bool_exp"],
+	predicate:PartialObjects["Boolean_comparison_exp"]
+},
+	["restaurant_choice_aggregate_bool_exp_bool_or"]: {
+	arguments:PartialObjects["restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_or_arguments_columns"],
+	distinct?:boolean,
+	filter?:PartialObjects["restaurant_choice_bool_exp"],
+	predicate:PartialObjects["Boolean_comparison_exp"]
+},
+	["restaurant_choice_aggregate_bool_exp_count"]: {
+	arguments?:PartialObjects["restaurant_choice_select_column"][],
+	distinct?:boolean,
+	filter?:PartialObjects["restaurant_choice_bool_exp"],
+	predicate:PartialObjects["Int_comparison_exp"]
+},
 	/** aggregate fields of "restaurant_choice" */
 ["restaurant_choice_aggregate_fields"]: {
 		__typename?: "restaurant_choice_aggregate_fields";
@@ -18499,6 +18932,7 @@ the end). throws an error if top level container is not an array */
 	name?:PartialObjects["translation_bool_exp"],
 	name_id?:PartialObjects["Int_comparison_exp"],
 	options?:PartialObjects["restaurant_option_choice_map_bool_exp"],
+	options_aggregate?:PartialObjects["restaurant_option_choice_map_aggregate_bool_exp"],
 	restaurant?:PartialObjects["restaurant_bool_exp"],
 	restaurant_id?:PartialObjects["Int_comparison_exp"]
 },
@@ -18583,6 +19017,10 @@ the end). throws an error if top level container is not an array */
 },
 	/** select columns of table "restaurant_choice" */
 ["restaurant_choice_select_column"]:restaurant_choice_select_column,
+	/** select "restaurant_choice_aggregate_bool_exp_bool_and_arguments_columns" columns of table "restaurant_choice" */
+["restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_and_arguments_columns"]:restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_and_arguments_columns,
+	/** select "restaurant_choice_aggregate_bool_exp_bool_or_arguments_columns" columns of table "restaurant_choice" */
+["restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_or_arguments_columns"]:restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_or_arguments_columns,
 	/** input type for updating data in table "restaurant_choice" */
 ["restaurant_choice_set_input"]: {
 	available?:boolean,
@@ -18810,6 +19248,29 @@ end). throws an error if top level container is not an array */
 			aggregate?:PartialObjects["restaurant_item_aggregate_fields"],
 			nodes?:PartialObjects["restaurant_item"][]
 	},
+	["restaurant_item_aggregate_bool_exp"]: {
+	bool_and?:PartialObjects["restaurant_item_aggregate_bool_exp_bool_and"],
+	bool_or?:PartialObjects["restaurant_item_aggregate_bool_exp_bool_or"],
+	count?:PartialObjects["restaurant_item_aggregate_bool_exp_count"]
+},
+	["restaurant_item_aggregate_bool_exp_bool_and"]: {
+	arguments:PartialObjects["restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_and_arguments_columns"],
+	distinct?:boolean,
+	filter?:PartialObjects["restaurant_item_bool_exp"],
+	predicate:PartialObjects["Boolean_comparison_exp"]
+},
+	["restaurant_item_aggregate_bool_exp_bool_or"]: {
+	arguments:PartialObjects["restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_or_arguments_columns"],
+	distinct?:boolean,
+	filter?:PartialObjects["restaurant_item_bool_exp"],
+	predicate:PartialObjects["Boolean_comparison_exp"]
+},
+	["restaurant_item_aggregate_bool_exp_count"]: {
+	arguments?:PartialObjects["restaurant_item_select_column"][],
+	distinct?:boolean,
+	filter?:PartialObjects["restaurant_item_bool_exp"],
+	predicate:PartialObjects["Int_comparison_exp"]
+},
 	/** aggregate fields of "restaurant_item" */
 ["restaurant_item_aggregate_fields"]: {
 		__typename?: "restaurant_item_aggregate_fields";
@@ -18884,6 +19345,7 @@ end). throws an error if top level container is not an array */
 	name?:PartialObjects["translation_bool_exp"],
 	name_id?:PartialObjects["Int_comparison_exp"],
 	options?:PartialObjects["restaurant_item_option_map_bool_exp"],
+	options_aggregate?:PartialObjects["restaurant_item_option_map_aggregate_bool_exp"],
 	position?:PartialObjects["Int_comparison_exp"],
 	restaurant?:PartialObjects["restaurant_bool_exp"],
 	restaurant_id?:PartialObjects["Int_comparison_exp"],
@@ -19026,6 +19488,15 @@ end). throws an error if top level container is not an array */
 			aggregate?:PartialObjects["restaurant_item_option_map_aggregate_fields"],
 			nodes?:PartialObjects["restaurant_item_option_map"][]
 	},
+	["restaurant_item_option_map_aggregate_bool_exp"]: {
+	count?:PartialObjects["restaurant_item_option_map_aggregate_bool_exp_count"]
+},
+	["restaurant_item_option_map_aggregate_bool_exp_count"]: {
+	arguments?:PartialObjects["restaurant_item_option_map_select_column"][],
+	distinct?:boolean,
+	filter?:PartialObjects["restaurant_item_option_map_bool_exp"],
+	predicate:PartialObjects["Int_comparison_exp"]
+},
 	/** aggregate fields of "restaurant_item_option_map" */
 ["restaurant_item_option_map_aggregate_fields"]: {
 		__typename?: "restaurant_item_option_map_aggregate_fields";
@@ -19084,6 +19555,7 @@ end). throws an error if top level container is not an array */
 	id?:PartialObjects["Int_comparison_exp"],
 	item_id?:PartialObjects["Int_comparison_exp"],
 	item_options?:PartialObjects["restaurant_option_bool_exp"],
+	item_options_aggregate?:PartialObjects["restaurant_option_aggregate_bool_exp"],
 	option_id?:PartialObjects["Int_comparison_exp"],
 	restaurant?:PartialObjects["restaurant_bool_exp"],
 	restaurant_id?:PartialObjects["Int_comparison_exp"]
@@ -19327,6 +19799,10 @@ end). throws an error if top level container is not an array */
 },
 	/** select columns of table "restaurant_item" */
 ["restaurant_item_select_column"]:restaurant_item_select_column,
+	/** select "restaurant_item_aggregate_bool_exp_bool_and_arguments_columns" columns of table "restaurant_item" */
+["restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_and_arguments_columns"]:restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_and_arguments_columns,
+	/** select "restaurant_item_aggregate_bool_exp_bool_or_arguments_columns" columns of table "restaurant_item" */
+["restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_or_arguments_columns"]:restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_or_arguments_columns,
 	/** input type for updating data in table "restaurant_item" */
 ["restaurant_item_set_input"]: {
 	archived?:boolean,
@@ -19599,6 +20075,29 @@ end). throws an error if top level container is not an array */
 			aggregate?:PartialObjects["restaurant_operator_aggregate_fields"],
 			nodes?:PartialObjects["restaurant_operator"][]
 	},
+	["restaurant_operator_aggregate_bool_exp"]: {
+	bool_and?:PartialObjects["restaurant_operator_aggregate_bool_exp_bool_and"],
+	bool_or?:PartialObjects["restaurant_operator_aggregate_bool_exp_bool_or"],
+	count?:PartialObjects["restaurant_operator_aggregate_bool_exp_count"]
+},
+	["restaurant_operator_aggregate_bool_exp_bool_and"]: {
+	arguments:PartialObjects["restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_and_arguments_columns"],
+	distinct?:boolean,
+	filter?:PartialObjects["restaurant_operator_bool_exp"],
+	predicate:PartialObjects["Boolean_comparison_exp"]
+},
+	["restaurant_operator_aggregate_bool_exp_bool_or"]: {
+	arguments:PartialObjects["restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_or_arguments_columns"],
+	distinct?:boolean,
+	filter?:PartialObjects["restaurant_operator_bool_exp"],
+	predicate:PartialObjects["Boolean_comparison_exp"]
+},
+	["restaurant_operator_aggregate_bool_exp_count"]: {
+	arguments?:PartialObjects["restaurant_operator_select_column"][],
+	distinct?:boolean,
+	filter?:PartialObjects["restaurant_operator_bool_exp"],
+	predicate:PartialObjects["Int_comparison_exp"]
+},
 	/** aggregate fields of "restaurant_operator" */
 ["restaurant_operator_aggregate_fields"]: {
 		__typename?: "restaurant_operator_aggregate_fields";
@@ -19768,6 +20267,10 @@ end). throws an error if top level container is not an array */
 },
 	/** select columns of table "restaurant_operator" */
 ["restaurant_operator_select_column"]:restaurant_operator_select_column,
+	/** select "restaurant_operator_aggregate_bool_exp_bool_and_arguments_columns" columns of table "restaurant_operator" */
+["restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_and_arguments_columns"]:restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_and_arguments_columns,
+	/** select "restaurant_operator_aggregate_bool_exp_bool_or_arguments_columns" columns of table "restaurant_operator" */
+["restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_or_arguments_columns"]:restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_or_arguments_columns,
 	/** input type for updating data in table "restaurant_operator" */
 ["restaurant_operator_set_input"]: {
 	app_version?:string,
@@ -19930,6 +20433,15 @@ end). throws an error if top level container is not an array */
 			aggregate?:PartialObjects["restaurant_option_aggregate_fields"],
 			nodes?:PartialObjects["restaurant_option"][]
 	},
+	["restaurant_option_aggregate_bool_exp"]: {
+	count?:PartialObjects["restaurant_option_aggregate_bool_exp_count"]
+},
+	["restaurant_option_aggregate_bool_exp_count"]: {
+	arguments?:PartialObjects["restaurant_option_select_column"][],
+	distinct?:boolean,
+	filter?:PartialObjects["restaurant_option_bool_exp"],
+	predicate:PartialObjects["Int_comparison_exp"]
+},
 	/** aggregate fields of "restaurant_option" */
 ["restaurant_option_aggregate_fields"]: {
 		__typename?: "restaurant_option_aggregate_fields";
@@ -19994,10 +20506,12 @@ end). throws an error if top level container is not an array */
 	_not?:PartialObjects["restaurant_option_bool_exp"],
 	_or?:PartialObjects["restaurant_option_bool_exp"][],
 	choices?:PartialObjects["restaurant_option_choice_map_bool_exp"],
+	choices_aggregate?:PartialObjects["restaurant_option_choice_map_aggregate_bool_exp"],
 	cost_per_extra?:PartialObjects["money_comparison_exp"],
 	free_choice?:PartialObjects["Int_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	items?:PartialObjects["restaurant_item_option_map_bool_exp"],
+	items_aggregate?:PartialObjects["restaurant_item_option_map_aggregate_bool_exp"],
 	maximum_choice?:PartialObjects["Int_comparison_exp"],
 	minimum_choice?:PartialObjects["Int_comparison_exp"],
 	name?:PartialObjects["translation_bool_exp"],
@@ -20027,6 +20541,15 @@ end). throws an error if top level container is not an array */
 			aggregate?:PartialObjects["restaurant_option_choice_map_aggregate_fields"],
 			nodes?:PartialObjects["restaurant_option_choice_map"][]
 	},
+	["restaurant_option_choice_map_aggregate_bool_exp"]: {
+	count?:PartialObjects["restaurant_option_choice_map_aggregate_bool_exp_count"]
+},
+	["restaurant_option_choice_map_aggregate_bool_exp_count"]: {
+	arguments?:PartialObjects["restaurant_option_choice_map_select_column"][],
+	distinct?:boolean,
+	filter?:PartialObjects["restaurant_option_choice_map_bool_exp"],
+	predicate:PartialObjects["Int_comparison_exp"]
+},
 	/** aggregate fields of "restaurant_option_choice_map" */
 ["restaurant_option_choice_map_aggregate_fields"]: {
 		__typename?: "restaurant_option_choice_map_aggregate_fields";
@@ -20086,6 +20609,7 @@ All fields are combined with a logical 'AND'. */
 	choice_id?:PartialObjects["Int_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	option_choices?:PartialObjects["restaurant_choice_bool_exp"],
+	option_choices_aggregate?:PartialObjects["restaurant_choice_aggregate_bool_exp"],
 	option_id?:PartialObjects["Int_comparison_exp"],
 	restaurant?:PartialObjects["restaurant_bool_exp"],
 	restaurant_id?:PartialObjects["Int_comparison_exp"]
@@ -20673,6 +21197,15 @@ All fields are combined with a logical 'AND'. */
 			aggregate?:PartialObjects["restaurant_order_aggregate_fields"],
 			nodes?:PartialObjects["restaurant_order"][]
 	},
+	["restaurant_order_aggregate_bool_exp"]: {
+	count?:PartialObjects["restaurant_order_aggregate_bool_exp_count"]
+},
+	["restaurant_order_aggregate_bool_exp_count"]: {
+	arguments?:PartialObjects["restaurant_order_select_column"][],
+	distinct?:boolean,
+	filter?:PartialObjects["restaurant_order_bool_exp"],
+	predicate:PartialObjects["Int_comparison_exp"]
+},
 	/** aggregate fields of "restaurant_order" */
 ["restaurant_order_aggregate_fields"]: {
 		__typename?: "restaurant_order_aggregate_fields";
@@ -20759,6 +21292,7 @@ All fields are combined with a logical 'AND'. */
 	id?:PartialObjects["Int_comparison_exp"],
 	in_process?:PartialObjects["Boolean_comparison_exp"],
 	items?:PartialObjects["restaurant_order_item_bool_exp"],
+	items_aggregate?:PartialObjects["restaurant_order_item_aggregate_bool_exp"],
 	items_cost?:PartialObjects["money_comparison_exp"],
 	notes?:PartialObjects["String_comparison_exp"],
 	order_time?:PartialObjects["timestamptz_comparison_exp"],
@@ -20890,6 +21424,29 @@ end). throws an error if top level container is not an array */
 			aggregate?:PartialObjects["restaurant_order_item_aggregate_fields"],
 			nodes?:PartialObjects["restaurant_order_item"][]
 	},
+	["restaurant_order_item_aggregate_bool_exp"]: {
+	bool_and?:PartialObjects["restaurant_order_item_aggregate_bool_exp_bool_and"],
+	bool_or?:PartialObjects["restaurant_order_item_aggregate_bool_exp_bool_or"],
+	count?:PartialObjects["restaurant_order_item_aggregate_bool_exp_count"]
+},
+	["restaurant_order_item_aggregate_bool_exp_bool_and"]: {
+	arguments:PartialObjects["restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_and_arguments_columns"],
+	distinct?:boolean,
+	filter?:PartialObjects["restaurant_order_item_bool_exp"],
+	predicate:PartialObjects["Boolean_comparison_exp"]
+},
+	["restaurant_order_item_aggregate_bool_exp_bool_or"]: {
+	arguments:PartialObjects["restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_or_arguments_columns"],
+	distinct?:boolean,
+	filter?:PartialObjects["restaurant_order_item_bool_exp"],
+	predicate:PartialObjects["Boolean_comparison_exp"]
+},
+	["restaurant_order_item_aggregate_bool_exp_count"]: {
+	arguments?:PartialObjects["restaurant_order_item_select_column"][],
+	distinct?:boolean,
+	filter?:PartialObjects["restaurant_order_item_bool_exp"],
+	predicate:PartialObjects["Int_comparison_exp"]
+},
 	/** aggregate fields of "restaurant_order_item" */
 ["restaurant_order_item_aggregate_fields"]: {
 		__typename?: "restaurant_order_item_aggregate_fields";
@@ -21062,6 +21619,10 @@ end). throws an error if top level container is not an array */
 },
 	/** select columns of table "restaurant_order_item" */
 ["restaurant_order_item_select_column"]:restaurant_order_item_select_column,
+	/** select "restaurant_order_item_aggregate_bool_exp_bool_and_arguments_columns" columns of table "restaurant_order_item" */
+["restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_and_arguments_columns"]:restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_and_arguments_columns,
+	/** select "restaurant_order_item_aggregate_bool_exp_bool_or_arguments_columns" columns of table "restaurant_order_item" */
+["restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_or_arguments_columns"]:restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_or_arguments_columns,
 	/** input type for updating data in table "restaurant_order_item" */
 ["restaurant_order_item_set_input"]: {
 	cost_per_one?:PartialObjects["money"],
@@ -21459,6 +22020,7 @@ end). throws an error if top level container is not an array */
 	order_time?:PartialObjects["timestamptz_comparison_exp"],
 	restaurant_id?:PartialObjects["Int_comparison_exp"],
 	restaurant_operators?:PartialObjects["restaurant_operator_bool_exp"],
+	restaurant_operators_aggregate?:PartialObjects["restaurant_operator_aggregate_bool_exp"],
 	review_id?:PartialObjects["Int_comparison_exp"],
 	status?:PartialObjects["String_comparison_exp"]
 },
@@ -22027,6 +22589,15 @@ the end). throws an error if top level container is not an array */
 			aggregate?:PartialObjects["review_aggregate_fields"],
 			nodes?:PartialObjects["review"][]
 	},
+	["review_aggregate_bool_exp"]: {
+	count?:PartialObjects["review_aggregate_bool_exp_count"]
+},
+	["review_aggregate_bool_exp_count"]: {
+	arguments?:PartialObjects["review_select_column"][],
+	distinct?:boolean,
+	filter?:PartialObjects["review_bool_exp"],
+	predicate:PartialObjects["Int_comparison_exp"]
+},
 	/** aggregate fields of "review" */
 ["review_aggregate_fields"]: {
 		__typename?: "review_aggregate_fields";
@@ -22356,6 +22927,29 @@ the end). throws an error if top level container is not an array */
 			aggregate?:PartialObjects["saved_location_aggregate_fields"],
 			nodes?:PartialObjects["saved_location"][]
 	},
+	["saved_location_aggregate_bool_exp"]: {
+	bool_and?:PartialObjects["saved_location_aggregate_bool_exp_bool_and"],
+	bool_or?:PartialObjects["saved_location_aggregate_bool_exp_bool_or"],
+	count?:PartialObjects["saved_location_aggregate_bool_exp_count"]
+},
+	["saved_location_aggregate_bool_exp_bool_and"]: {
+	arguments:PartialObjects["saved_location_select_column_saved_location_aggregate_bool_exp_bool_and_arguments_columns"],
+	distinct?:boolean,
+	filter?:PartialObjects["saved_location_bool_exp"],
+	predicate:PartialObjects["Boolean_comparison_exp"]
+},
+	["saved_location_aggregate_bool_exp_bool_or"]: {
+	arguments:PartialObjects["saved_location_select_column_saved_location_aggregate_bool_exp_bool_or_arguments_columns"],
+	distinct?:boolean,
+	filter?:PartialObjects["saved_location_bool_exp"],
+	predicate:PartialObjects["Boolean_comparison_exp"]
+},
+	["saved_location_aggregate_bool_exp_count"]: {
+	arguments?:PartialObjects["saved_location_select_column"][],
+	distinct?:boolean,
+	filter?:PartialObjects["saved_location_bool_exp"],
+	predicate:PartialObjects["Int_comparison_exp"]
+},
 	/** aggregate fields of "saved_location" */
 ["saved_location_aggregate_fields"]: {
 		__typename?: "saved_location_aggregate_fields";
@@ -22489,6 +23083,10 @@ the end). throws an error if top level container is not an array */
 },
 	/** select columns of table "saved_location" */
 ["saved_location_select_column"]:saved_location_select_column,
+	/** select "saved_location_aggregate_bool_exp_bool_and_arguments_columns" columns of table "saved_location" */
+["saved_location_select_column_saved_location_aggregate_bool_exp_bool_and_arguments_columns"]:saved_location_select_column_saved_location_aggregate_bool_exp_bool_and_arguments_columns,
+	/** select "saved_location_aggregate_bool_exp_bool_or_arguments_columns" columns of table "saved_location" */
+["saved_location_select_column_saved_location_aggregate_bool_exp_bool_or_arguments_columns"]:saved_location_select_column_saved_location_aggregate_bool_exp_bool_or_arguments_columns,
 	/** input type for updating data in table "saved_location" */
 ["saved_location_set_input"]: {
 	customer_id?:number,
@@ -23471,9 +24069,9 @@ the end). throws an error if top level container is not an array */
 	chat_participant_aggregate?:PartialObjects["chat_participant_aggregate"],
 			/** fetch data from the table: "chat_participant" using primary key columns */
 	chat_participant_by_pk?:PartialObjects["chat_participant"],
-			/** fetch data from the table in a streaming manner : "chat_participant" */
+			/** fetch data from the table in a streaming manner: "chat_participant" */
 	chat_participant_stream?:PartialObjects["chat_participant"][],
-			/** fetch data from the table in a streaming manner : "chat" */
+			/** fetch data from the table in a streaming manner: "chat" */
 	chat_stream?:PartialObjects["chat"][],
 			/** fetch data from the table: "customer" */
 	customer?:PartialObjects["customer"][],
@@ -23481,7 +24079,7 @@ the end). throws an error if top level container is not an array */
 	customer_aggregate?:PartialObjects["customer_aggregate"],
 			/** fetch data from the table: "customer" using primary key columns */
 	customer_by_pk?:PartialObjects["customer"],
-			/** fetch data from the table in a streaming manner : "customer" */
+			/** fetch data from the table in a streaming manner: "customer" */
 	customer_stream?:PartialObjects["customer"][],
 			/** fetch data from the table: "delivery_company" */
 	delivery_company?:PartialObjects["delivery_company"][],
@@ -23489,7 +24087,7 @@ the end). throws an error if top level container is not an array */
 	delivery_company_aggregate?:PartialObjects["delivery_company_aggregate"],
 			/** fetch data from the table: "delivery_company" using primary key columns */
 	delivery_company_by_pk?:PartialObjects["delivery_company"],
-			/** fetch data from the table in a streaming manner : "delivery_company" */
+			/** fetch data from the table in a streaming manner: "delivery_company" */
 	delivery_company_stream?:PartialObjects["delivery_company"][],
 			/** fetch data from the table: "delivery_cost" */
 	delivery_cost?:PartialObjects["delivery_cost"][],
@@ -23497,7 +24095,7 @@ the end). throws an error if top level container is not an array */
 	delivery_cost_aggregate?:PartialObjects["delivery_cost_aggregate"],
 			/** fetch data from the table: "delivery_cost" using primary key columns */
 	delivery_cost_by_pk?:PartialObjects["delivery_cost"],
-			/** fetch data from the table in a streaming manner : "delivery_cost" */
+			/** fetch data from the table in a streaming manner: "delivery_cost" */
 	delivery_cost_stream?:PartialObjects["delivery_cost"][],
 			/** fetch data from the table: "delivery_driver" */
 	delivery_driver?:PartialObjects["delivery_driver"][],
@@ -23505,7 +24103,7 @@ the end). throws an error if top level container is not an array */
 	delivery_driver_aggregate?:PartialObjects["delivery_driver_aggregate"],
 			/** fetch data from the table: "delivery_driver" using primary key columns */
 	delivery_driver_by_pk?:PartialObjects["delivery_driver"],
-			/** fetch data from the table in a streaming manner : "delivery_driver" */
+			/** fetch data from the table in a streaming manner: "delivery_driver" */
 	delivery_driver_stream?:PartialObjects["delivery_driver"][],
 			/** fetch data from the table: "delivery_operator" */
 	delivery_operator?:PartialObjects["delivery_operator"][],
@@ -23513,7 +24111,7 @@ the end). throws an error if top level container is not an array */
 	delivery_operator_aggregate?:PartialObjects["delivery_operator_aggregate"],
 			/** fetch data from the table: "delivery_operator" using primary key columns */
 	delivery_operator_by_pk?:PartialObjects["delivery_operator"],
-			/** fetch data from the table in a streaming manner : "delivery_operator" */
+			/** fetch data from the table in a streaming manner: "delivery_operator" */
 	delivery_operator_stream?:PartialObjects["delivery_operator"][],
 			/** fetch data from the table: "delivery_order" */
 	delivery_order?:PartialObjects["delivery_order"][],
@@ -23525,9 +24123,9 @@ the end). throws an error if top level container is not an array */
 	delivery_order_public?:PartialObjects["delivery_order_public"][],
 			/** fetch aggregated fields from the table: "delivery_order_public" */
 	delivery_order_public_aggregate?:PartialObjects["delivery_order_public_aggregate"],
-			/** fetch data from the table in a streaming manner : "delivery_order_public" */
+			/** fetch data from the table in a streaming manner: "delivery_order_public" */
 	delivery_order_public_stream?:PartialObjects["delivery_order_public"][],
-			/** fetch data from the table in a streaming manner : "delivery_order" */
+			/** fetch data from the table in a streaming manner: "delivery_order" */
 	delivery_order_stream?:PartialObjects["delivery_order"][],
 			/** fetch data from the table: "mez_admin" */
 	mez_admin?:PartialObjects["mez_admin"][],
@@ -23535,7 +24133,7 @@ the end). throws an error if top level container is not an array */
 	mez_admin_aggregate?:PartialObjects["mez_admin_aggregate"],
 			/** fetch data from the table: "mez_admin" using primary key columns */
 	mez_admin_by_pk?:PartialObjects["mez_admin"],
-			/** fetch data from the table in a streaming manner : "mez_admin" */
+			/** fetch data from the table in a streaming manner: "mez_admin" */
 	mez_admin_stream?:PartialObjects["mez_admin"][],
 			/** fetch data from the table: "notification_info" */
 	notification_info?:PartialObjects["notification_info"][],
@@ -23543,7 +24141,7 @@ the end). throws an error if top level container is not an array */
 	notification_info_aggregate?:PartialObjects["notification_info_aggregate"],
 			/** fetch data from the table: "notification_info" using primary key columns */
 	notification_info_by_pk?:PartialObjects["notification_info"],
-			/** fetch data from the table in a streaming manner : "notification_info" */
+			/** fetch data from the table in a streaming manner: "notification_info" */
 	notification_info_stream?:PartialObjects["notification_info"][],
 			/** fetch data from the table: "post" */
 	post?:PartialObjects["post"][],
@@ -23551,7 +24149,7 @@ the end). throws an error if top level container is not an array */
 	post_aggregate?:PartialObjects["post_aggregate"],
 			/** fetch data from the table: "post" using primary key columns */
 	post_by_pk?:PartialObjects["post"],
-			/** fetch data from the table in a streaming manner : "post" */
+			/** fetch data from the table in a streaming manner: "post" */
 	post_stream?:PartialObjects["post"][],
 			/** fetch data from the table: "restaurant" */
 	restaurant?:PartialObjects["restaurant"][],
@@ -23571,9 +24169,9 @@ the end). throws an error if top level container is not an array */
 	restaurant_cart_item_aggregate?:PartialObjects["restaurant_cart_item_aggregate"],
 			/** fetch data from the table: "restaurant_cart_item" using primary key columns */
 	restaurant_cart_item_by_pk?:PartialObjects["restaurant_cart_item"],
-			/** fetch data from the table in a streaming manner : "restaurant_cart_item" */
+			/** fetch data from the table in a streaming manner: "restaurant_cart_item" */
 	restaurant_cart_item_stream?:PartialObjects["restaurant_cart_item"][],
-			/** fetch data from the table in a streaming manner : "restaurant_cart" */
+			/** fetch data from the table in a streaming manner: "restaurant_cart" */
 	restaurant_cart_stream?:PartialObjects["restaurant_cart"][],
 			/** fetch data from the table: "restaurant_category" */
 	restaurant_category?:PartialObjects["restaurant_category"][],
@@ -23581,7 +24179,7 @@ the end). throws an error if top level container is not an array */
 	restaurant_category_aggregate?:PartialObjects["restaurant_category_aggregate"],
 			/** fetch data from the table: "restaurant_category" using primary key columns */
 	restaurant_category_by_pk?:PartialObjects["restaurant_category"],
-			/** fetch data from the table in a streaming manner : "restaurant_category" */
+			/** fetch data from the table in a streaming manner: "restaurant_category" */
 	restaurant_category_stream?:PartialObjects["restaurant_category"][],
 			/** fetch data from the table: "restaurant_choice" */
 	restaurant_choice?:PartialObjects["restaurant_choice"][],
@@ -23589,7 +24187,7 @@ the end). throws an error if top level container is not an array */
 	restaurant_choice_aggregate?:PartialObjects["restaurant_choice_aggregate"],
 			/** fetch data from the table: "restaurant_choice" using primary key columns */
 	restaurant_choice_by_pk?:PartialObjects["restaurant_choice"],
-			/** fetch data from the table in a streaming manner : "restaurant_choice" */
+			/** fetch data from the table in a streaming manner: "restaurant_choice" */
 	restaurant_choice_stream?:PartialObjects["restaurant_choice"][],
 			/** fetch data from the table: "restaurant_item" */
 	restaurant_item?:PartialObjects["restaurant_item"][],
@@ -23603,9 +24201,9 @@ the end). throws an error if top level container is not an array */
 	restaurant_item_option_map_aggregate?:PartialObjects["restaurant_item_option_map_aggregate"],
 			/** fetch data from the table: "restaurant_item_option_map" using primary key columns */
 	restaurant_item_option_map_by_pk?:PartialObjects["restaurant_item_option_map"],
-			/** fetch data from the table in a streaming manner : "restaurant_item_option_map" */
+			/** fetch data from the table in a streaming manner: "restaurant_item_option_map" */
 	restaurant_item_option_map_stream?:PartialObjects["restaurant_item_option_map"][],
-			/** fetch data from the table in a streaming manner : "restaurant_item" */
+			/** fetch data from the table in a streaming manner: "restaurant_item" */
 	restaurant_item_stream?:PartialObjects["restaurant_item"][],
 			/** fetch data from the table: "restaurant_operator" */
 	restaurant_operator?:PartialObjects["restaurant_operator"][],
@@ -23613,7 +24211,7 @@ the end). throws an error if top level container is not an array */
 	restaurant_operator_aggregate?:PartialObjects["restaurant_operator_aggregate"],
 			/** fetch data from the table: "restaurant_operator" using primary key columns */
 	restaurant_operator_by_pk?:PartialObjects["restaurant_operator"],
-			/** fetch data from the table in a streaming manner : "restaurant_operator" */
+			/** fetch data from the table in a streaming manner: "restaurant_operator" */
 	restaurant_operator_stream?:PartialObjects["restaurant_operator"][],
 			/** fetch data from the table: "restaurant_option" */
 	restaurant_option?:PartialObjects["restaurant_option"][],
@@ -23627,9 +24225,9 @@ the end). throws an error if top level container is not an array */
 	restaurant_option_choice_map_aggregate?:PartialObjects["restaurant_option_choice_map_aggregate"],
 			/** fetch data from the table: "restaurant_option_choice_map" using primary key columns */
 	restaurant_option_choice_map_by_pk?:PartialObjects["restaurant_option_choice_map"],
-			/** fetch data from the table in a streaming manner : "restaurant_option_choice_map" */
+			/** fetch data from the table in a streaming manner: "restaurant_option_choice_map" */
 	restaurant_option_choice_map_stream?:PartialObjects["restaurant_option_choice_map"][],
-			/** fetch data from the table in a streaming manner : "restaurant_option" */
+			/** fetch data from the table in a streaming manner: "restaurant_option" */
 	restaurant_option_stream?:PartialObjects["restaurant_option"][],
 			/** fetch data from the table: "restaurant_order" */
 	restaurant_order?:PartialObjects["restaurant_order"][],
@@ -23643,17 +24241,17 @@ the end). throws an error if top level container is not an array */
 	restaurant_order_item_aggregate?:PartialObjects["restaurant_order_item_aggregate"],
 			/** fetch data from the table: "restaurant_order_item" using primary key columns */
 	restaurant_order_item_by_pk?:PartialObjects["restaurant_order_item"],
-			/** fetch data from the table in a streaming manner : "restaurant_order_item" */
+			/** fetch data from the table in a streaming manner: "restaurant_order_item" */
 	restaurant_order_item_stream?:PartialObjects["restaurant_order_item"][],
 			/** fetch data from the table: "restaurant_order_public" */
 	restaurant_order_public?:PartialObjects["restaurant_order_public"][],
 			/** fetch aggregated fields from the table: "restaurant_order_public" */
 	restaurant_order_public_aggregate?:PartialObjects["restaurant_order_public_aggregate"],
-			/** fetch data from the table in a streaming manner : "restaurant_order_public" */
+			/** fetch data from the table in a streaming manner: "restaurant_order_public" */
 	restaurant_order_public_stream?:PartialObjects["restaurant_order_public"][],
-			/** fetch data from the table in a streaming manner : "restaurant_order" */
+			/** fetch data from the table in a streaming manner: "restaurant_order" */
 	restaurant_order_stream?:PartialObjects["restaurant_order"][],
-			/** fetch data from the table in a streaming manner : "restaurant" */
+			/** fetch data from the table in a streaming manner: "restaurant" */
 	restaurant_stream?:PartialObjects["restaurant"][],
 			/** fetch data from the table: "review" */
 	review?:PartialObjects["review"][],
@@ -23661,7 +24259,7 @@ the end). throws an error if top level container is not an array */
 	review_aggregate?:PartialObjects["review_aggregate"],
 			/** fetch data from the table: "review" using primary key columns */
 	review_by_pk?:PartialObjects["review"],
-			/** fetch data from the table in a streaming manner : "review" */
+			/** fetch data from the table in a streaming manner: "review" */
 	review_stream?:PartialObjects["review"][],
 			/** fetch data from the table: "saved_location" */
 	saved_location?:PartialObjects["saved_location"][],
@@ -23669,7 +24267,7 @@ the end). throws an error if top level container is not an array */
 	saved_location_aggregate?:PartialObjects["saved_location_aggregate"],
 			/** fetch data from the table: "saved_location" using primary key columns */
 	saved_location_by_pk?:PartialObjects["saved_location"],
-			/** fetch data from the table in a streaming manner : "saved_location" */
+			/** fetch data from the table in a streaming manner: "saved_location" */
 	saved_location_stream?:PartialObjects["saved_location"][],
 			/** fetch data from the table: "service_link" */
 	service_link?:PartialObjects["service_link"][],
@@ -23677,7 +24275,7 @@ the end). throws an error if top level container is not an array */
 	service_link_aggregate?:PartialObjects["service_link_aggregate"],
 			/** fetch data from the table: "service_link" using primary key columns */
 	service_link_by_pk?:PartialObjects["service_link"],
-			/** fetch data from the table in a streaming manner : "service_link" */
+			/** fetch data from the table in a streaming manner: "service_link" */
 	service_link_stream?:PartialObjects["service_link"][],
 			/** fetch data from the table: "service_provider_payment_info" */
 	service_provider_payment_info?:PartialObjects["service_provider_payment_info"][],
@@ -23685,7 +24283,7 @@ the end). throws an error if top level container is not an array */
 	service_provider_payment_info_aggregate?:PartialObjects["service_provider_payment_info_aggregate"],
 			/** fetch data from the table: "service_provider_payment_info" using primary key columns */
 	service_provider_payment_info_by_pk?:PartialObjects["service_provider_payment_info"],
-			/** fetch data from the table in a streaming manner : "service_provider_payment_info" */
+			/** fetch data from the table in a streaming manner: "service_provider_payment_info" */
 	service_provider_payment_info_stream?:PartialObjects["service_provider_payment_info"][],
 			/** fetch data from the table: "stripe_info" */
 	stripe_info?:PartialObjects["stripe_info"][],
@@ -23693,7 +24291,7 @@ the end). throws an error if top level container is not an array */
 	stripe_info_aggregate?:PartialObjects["stripe_info_aggregate"],
 			/** fetch data from the table: "stripe_info" using primary key columns */
 	stripe_info_by_pk?:PartialObjects["stripe_info"],
-			/** fetch data from the table in a streaming manner : "stripe_info" */
+			/** fetch data from the table in a streaming manner: "stripe_info" */
 	stripe_info_stream?:PartialObjects["stripe_info"][],
 			/** fetch data from the table: "subscriber" */
 	subscriber?:PartialObjects["subscriber"][],
@@ -23701,7 +24299,7 @@ the end). throws an error if top level container is not an array */
 	subscriber_aggregate?:PartialObjects["subscriber_aggregate"],
 			/** fetch data from the table: "subscriber" using primary key columns */
 	subscriber_by_pk?:PartialObjects["subscriber"],
-			/** fetch data from the table in a streaming manner : "subscriber" */
+			/** fetch data from the table in a streaming manner: "subscriber" */
 	subscriber_stream?:PartialObjects["subscriber"][],
 			/** fetch data from the table: "topology.app_type" */
 	topology_app_type?:PartialObjects["topology_app_type"][],
@@ -23709,7 +24307,7 @@ the end). throws an error if top level container is not an array */
 	topology_app_type_aggregate?:PartialObjects["topology_app_type_aggregate"],
 			/** fetch data from the table: "topology.app_type" using primary key columns */
 	topology_app_type_by_pk?:PartialObjects["topology_app_type"],
-			/** fetch data from the table in a streaming manner : "topology.app_type" */
+			/** fetch data from the table in a streaming manner: "topology.app_type" */
 	topology_app_type_stream?:PartialObjects["topology_app_type"][],
 			/** fetch data from the table: "topology.language" */
 	topology_language?:PartialObjects["topology_language"][],
@@ -23717,7 +24315,7 @@ the end). throws an error if top level container is not an array */
 	topology_language_aggregate?:PartialObjects["topology_language_aggregate"],
 			/** fetch data from the table: "topology.language" using primary key columns */
 	topology_language_by_pk?:PartialObjects["topology_language"],
-			/** fetch data from the table in a streaming manner : "topology.language" */
+			/** fetch data from the table in a streaming manner: "topology.language" */
 	topology_language_stream?:PartialObjects["topology_language"][],
 			/** fetch data from the table: "translation" */
 	translation?:PartialObjects["translation"][],
@@ -23725,7 +24323,7 @@ the end). throws an error if top level container is not an array */
 	translation_aggregate?:PartialObjects["translation_aggregate"],
 			/** fetch data from the table: "translation" using primary key columns */
 	translation_by_pk?:PartialObjects["translation"],
-			/** fetch data from the table in a streaming manner : "translation" */
+			/** fetch data from the table in a streaming manner: "translation" */
 	translation_stream?:PartialObjects["translation"][],
 			/** fetch data from the table: "translation_value" */
 	translation_value?:PartialObjects["translation_value"][],
@@ -23733,7 +24331,7 @@ the end). throws an error if top level container is not an array */
 	translation_value_aggregate?:PartialObjects["translation_value_aggregate"],
 			/** fetch data from the table: "translation_value" using primary key columns */
 	translation_value_by_pk?:PartialObjects["translation_value"],
-			/** fetch data from the table in a streaming manner : "translation_value" */
+			/** fetch data from the table in a streaming manner: "translation_value" */
 	translation_value_stream?:PartialObjects["translation_value"][],
 			/** fetch data from the table: "user" */
 	user?:PartialObjects["user"][],
@@ -23741,7 +24339,7 @@ the end). throws an error if top level container is not an array */
 	user_aggregate?:PartialObjects["user_aggregate"],
 			/** fetch data from the table: "user" using primary key columns */
 	user_by_pk?:PartialObjects["user"],
-			/** fetch data from the table in a streaming manner : "user" */
+			/** fetch data from the table in a streaming manner: "user" */
 	user_stream?:PartialObjects["user"][]
 	},
 	["timestamptz"]:any,
@@ -23820,7 +24418,7 @@ the end). throws an error if top level container is not an array */
 ["topology_app_type_order_by"]: {
 	id?:PartialObjects["order_by"]
 },
-	/** primary key columns input for table: topology_app_type */
+	/** primary key columns input for table: topology.app_type */
 ["topology_app_type_pk_columns_input"]: {
 	/** customer, delivery, restaurant, admin */
 	id:string
@@ -23916,7 +24514,7 @@ the end). throws an error if top level container is not an array */
 ["topology_language_order_by"]: {
 	id?:PartialObjects["order_by"]
 },
-	/** primary key columns input for table: topology_language */
+	/** primary key columns input for table: topology.language */
 ["topology_language_pk_columns_input"]: {
 	id:string
 },
@@ -23993,7 +24591,8 @@ the end). throws an error if top level container is not an array */
 	restaurant?:PartialObjects["restaurant_bool_exp"],
 	service_provider_id?:PartialObjects["Int_comparison_exp"],
 	service_provider_type?:PartialObjects["String_comparison_exp"],
-	translations?:PartialObjects["translation_value_bool_exp"]
+	translations?:PartialObjects["translation_value_bool_exp"],
+	translations_aggregate?:PartialObjects["translation_value_aggregate_bool_exp"]
 },
 	/** unique or primary key constraints on table "translation" */
 ["translation_constraint"]:translation_constraint,
@@ -24127,6 +24726,15 @@ the end). throws an error if top level container is not an array */
 			aggregate?:PartialObjects["translation_value_aggregate_fields"],
 			nodes?:PartialObjects["translation_value"][]
 	},
+	["translation_value_aggregate_bool_exp"]: {
+	count?:PartialObjects["translation_value_aggregate_bool_exp_count"]
+},
+	["translation_value_aggregate_bool_exp_count"]: {
+	arguments?:PartialObjects["translation_value_select_column"][],
+	distinct?:boolean,
+	filter?:PartialObjects["translation_value_bool_exp"],
+	predicate:PartialObjects["Int_comparison_exp"]
+},
 	/** aggregate fields of "translation_value" */
 ["translation_value_aggregate_fields"]: {
 		__typename?: "translation_value_aggregate_fields";
@@ -24602,7 +25210,7 @@ export type chat = {
 	chat_participants_aggregate:chat_participant_aggregate,
 	creation_time:timestamptz,
 	id:number,
-	messages?:jsonb
+	messages:jsonb
 }
 
 /** aggregated selection of "chat" */
@@ -24649,6 +25257,7 @@ export type chat_bool_exp = {
 	agora_info?:jsonb_comparison_exp,
 	chat_info?:jsonb_comparison_exp,
 	chat_participants?:chat_participant_bool_exp,
+	chat_participants_aggregate?:chat_participant_aggregate_bool_exp,
 	creation_time?:timestamptz_comparison_exp,
 	id?:Int_comparison_exp,
 	messages?:jsonb_comparison_exp
@@ -24763,6 +25372,17 @@ export type chat_participant_aggregate = {
 	__typename?: "chat_participant_aggregate",
 	aggregate?:chat_participant_aggregate_fields,
 	nodes:chat_participant[]
+}
+
+export type chat_participant_aggregate_bool_exp = {
+		count?:chat_participant_aggregate_bool_exp_count
+}
+
+export type chat_participant_aggregate_bool_exp_count = {
+		arguments?:chat_participant_select_column[],
+	distinct?:boolean,
+	filter?:chat_participant_bool_exp,
+	predicate:Int_comparison_exp
 }
 
 /** aggregate fields of "chat_participant" */
@@ -25262,8 +25882,10 @@ export type customer_bool_exp = {
 	app_version?:String_comparison_exp,
 	cart?:restaurant_cart_bool_exp,
 	deliveries?:delivery_order_bool_exp,
+	deliveries_aggregate?:delivery_order_aggregate_bool_exp,
 	notification_token?:String_comparison_exp,
 	saved_locations?:saved_location_bool_exp,
+	saved_locations_aggregate?:saved_location_aggregate_bool_exp,
 	service_provider_type?:String_comparison_exp,
 	stripe_info?:jsonb_comparison_exp,
 	user?:user_bool_exp,
@@ -25531,7 +26153,9 @@ export type delivery_company_bool_exp = {
 	_or?:delivery_company_bool_exp[],
 	approved?:Boolean_comparison_exp,
 	delivery_drivers?:delivery_driver_bool_exp,
+	delivery_drivers_aggregate?:delivery_driver_aggregate_bool_exp,
 	delivery_operators?:delivery_operator_bool_exp,
+	delivery_operators_aggregate?:delivery_operator_aggregate_bool_exp,
 	description?:translation_bool_exp,
 	description_id?:Int_comparison_exp,
 	id?:Int_comparison_exp,
@@ -26057,6 +26681,33 @@ export type delivery_driver_aggregate = {
 	nodes:delivery_driver[]
 }
 
+export type delivery_driver_aggregate_bool_exp = {
+		bool_and?:delivery_driver_aggregate_bool_exp_bool_and,
+	bool_or?:delivery_driver_aggregate_bool_exp_bool_or,
+	count?:delivery_driver_aggregate_bool_exp_count
+}
+
+export type delivery_driver_aggregate_bool_exp_bool_and = {
+		arguments:delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns,
+	distinct?:boolean,
+	filter?:delivery_driver_bool_exp,
+	predicate:Boolean_comparison_exp
+}
+
+export type delivery_driver_aggregate_bool_exp_bool_or = {
+		arguments:delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns,
+	distinct?:boolean,
+	filter?:delivery_driver_bool_exp,
+	predicate:Boolean_comparison_exp
+}
+
+export type delivery_driver_aggregate_bool_exp_count = {
+		arguments?:delivery_driver_select_column[],
+	distinct?:boolean,
+	filter?:delivery_driver_bool_exp,
+	predicate:Int_comparison_exp
+}
+
 /** aggregate fields of "delivery_driver" */
 export type delivery_driver_aggregate_fields = {
 	__typename?: "delivery_driver_aggregate_fields",
@@ -26289,6 +26940,16 @@ export enum delivery_driver_select_column {
 	user_id = "user_id"
 }
 
+/** select "delivery_driver_aggregate_bool_exp_bool_and_arguments_columns" columns of table "delivery_driver" */
+export enum delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns {
+	online = "online"
+}
+
+/** select "delivery_driver_aggregate_bool_exp_bool_or_arguments_columns" columns of table "delivery_driver" */
+export enum delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns {
+	online = "online"
+}
+
 /** input type for updating data in table "delivery_driver" */
 export type delivery_driver_set_input = {
 		app_version?:string,
@@ -26496,6 +27157,33 @@ export type delivery_operator_aggregate = {
 	nodes:delivery_operator[]
 }
 
+export type delivery_operator_aggregate_bool_exp = {
+		bool_and?:delivery_operator_aggregate_bool_exp_bool_and,
+	bool_or?:delivery_operator_aggregate_bool_exp_bool_or,
+	count?:delivery_operator_aggregate_bool_exp_count
+}
+
+export type delivery_operator_aggregate_bool_exp_bool_and = {
+		arguments:delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_and_arguments_columns,
+	distinct?:boolean,
+	filter?:delivery_operator_bool_exp,
+	predicate:Boolean_comparison_exp
+}
+
+export type delivery_operator_aggregate_bool_exp_bool_or = {
+		arguments:delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_or_arguments_columns,
+	distinct?:boolean,
+	filter?:delivery_operator_bool_exp,
+	predicate:Boolean_comparison_exp
+}
+
+export type delivery_operator_aggregate_bool_exp_count = {
+		arguments?:delivery_operator_select_column[],
+	distinct?:boolean,
+	filter?:delivery_operator_bool_exp,
+	predicate:Int_comparison_exp
+}
+
 /** aggregate fields of "delivery_operator" */
 export type delivery_operator_aggregate_fields = {
 	__typename?: "delivery_operator_aggregate_fields",
@@ -26686,6 +27374,16 @@ export enum delivery_operator_select_column {
 	owner = "owner",
 	status = "status",
 	user_id = "user_id"
+}
+
+/** select "delivery_operator_aggregate_bool_exp_bool_and_arguments_columns" columns of table "delivery_operator" */
+export enum delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_and_arguments_columns {
+	owner = "owner"
+}
+
+/** select "delivery_operator_aggregate_bool_exp_bool_or_arguments_columns" columns of table "delivery_operator" */
+export enum delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_or_arguments_columns {
+	owner = "owner"
 }
 
 /** input type for updating data in table "delivery_operator" */
@@ -26890,6 +27588,8 @@ export type delivery_order = {
 	estimated_arrival_at_pickup_time?:timestamptz,
 	estimated_package_ready_time?:timestamptz,
 	id:number,
+	/** A computed field, executes function "delivery_in_process" */
+	in_process?:boolean,
 	/** A computed field, executes function "delivery_notification_token" */
 	notification_token?:string,
 	order_time:timestamptz,
@@ -26928,6 +27628,17 @@ export type delivery_order_aggregate = {
 	__typename?: "delivery_order_aggregate",
 	aggregate?:delivery_order_aggregate_fields,
 	nodes:delivery_order[]
+}
+
+export type delivery_order_aggregate_bool_exp = {
+		count?:delivery_order_aggregate_bool_exp_count
+}
+
+export type delivery_order_aggregate_bool_exp_count = {
+		arguments?:delivery_order_select_column[],
+	distinct?:boolean,
+	filter?:delivery_order_bool_exp,
+	predicate:Int_comparison_exp
 }
 
 /** aggregate fields of "delivery_order" */
@@ -27047,6 +27758,7 @@ export type delivery_order_bool_exp = {
 	estimated_arrival_at_pickup_time?:timestamptz_comparison_exp,
 	estimated_package_ready_time?:timestamptz_comparison_exp,
 	id?:Int_comparison_exp,
+	in_process?:Boolean_comparison_exp,
 	notification_token?:String_comparison_exp,
 	order_time?:timestamptz_comparison_exp,
 	order_type?:String_comparison_exp,
@@ -27399,6 +28111,7 @@ export type delivery_order_order_by = {
 	estimated_arrival_at_pickup_time?:order_by,
 	estimated_package_ready_time?:order_by,
 	id?:order_by,
+	in_process?:order_by,
 	notification_token?:order_by,
 	order_time?:order_by,
 	order_type?:order_by,
@@ -30000,7 +30713,9 @@ export type restaurant_bool_exp = {
 	accepted_payments?:jsonb_comparison_exp,
 	approved?:Boolean_comparison_exp,
 	categories?:restaurant_category_bool_exp,
+	categories_aggregate?:restaurant_category_aggregate_bool_exp,
 	delivery_drivers?:delivery_driver_bool_exp,
+	delivery_drivers_aggregate?:delivery_driver_aggregate_bool_exp,
 	description?:translation_bool_exp,
 	description_id?:Int_comparison_exp,
 	firebase_id?:String_comparison_exp,
@@ -30012,10 +30727,13 @@ export type restaurant_bool_exp = {
 	name?:String_comparison_exp,
 	open_status?:String_comparison_exp,
 	orders?:restaurant_order_bool_exp,
+	orders_aggregate?:restaurant_order_aggregate_bool_exp,
 	payment_info?:service_provider_payment_info_bool_exp,
 	payment_info_id?:Int_comparison_exp,
 	restaurant_operators?:restaurant_operator_bool_exp,
+	restaurant_operators_aggregate?:restaurant_operator_aggregate_bool_exp,
 	reviews?:review_bool_exp,
+	reviews_aggregate?:review_aggregate_bool_exp,
 	schedule?:jsonb_comparison_exp,
 	self_delivery?:Boolean_comparison_exp,
 	service_provider_type?:String_comparison_exp,
@@ -30079,6 +30797,7 @@ export type restaurant_cart_bool_exp = {
 	customer?:customer_bool_exp,
 	customer_id?:Int_comparison_exp,
 	items?:restaurant_cart_item_bool_exp,
+	items_aggregate?:restaurant_cart_item_aggregate_bool_exp,
 	restaurant?:restaurant_bool_exp,
 	restaurant_id?:Int_comparison_exp
 }
@@ -30125,6 +30844,17 @@ export type restaurant_cart_item_aggregate = {
 	__typename?: "restaurant_cart_item_aggregate",
 	aggregate?:restaurant_cart_item_aggregate_fields,
 	nodes:restaurant_cart_item[]
+}
+
+export type restaurant_cart_item_aggregate_bool_exp = {
+		count?:restaurant_cart_item_aggregate_bool_exp_count
+}
+
+export type restaurant_cart_item_aggregate_bool_exp_count = {
+		arguments?:restaurant_cart_item_select_column[],
+	distinct?:boolean,
+	filter?:restaurant_cart_item_bool_exp,
+	predicate:Int_comparison_exp
 }
 
 /** aggregate fields of "restaurant_cart_item" */
@@ -30669,6 +31399,17 @@ export type restaurant_category_aggregate = {
 	nodes:restaurant_category[]
 }
 
+export type restaurant_category_aggregate_bool_exp = {
+		count?:restaurant_category_aggregate_bool_exp_count
+}
+
+export type restaurant_category_aggregate_bool_exp_count = {
+		arguments?:restaurant_category_select_column[],
+	distinct?:boolean,
+	filter?:restaurant_category_bool_exp,
+	predicate:Int_comparison_exp
+}
+
 /** aggregate fields of "restaurant_category" */
 export type restaurant_category_aggregate_fields = {
 	__typename?: "restaurant_category_aggregate_fields",
@@ -30737,6 +31478,7 @@ export type restaurant_category_bool_exp = {
 	description_id?:Int_comparison_exp,
 	id?:Int_comparison_exp,
 	items?:restaurant_item_bool_exp,
+	items_aggregate?:restaurant_item_aggregate_bool_exp,
 	name?:translation_bool_exp,
 	name_id?:Int_comparison_exp,
 	position?:Int_comparison_exp,
@@ -31086,6 +31828,33 @@ export type restaurant_choice_aggregate = {
 	nodes:restaurant_choice[]
 }
 
+export type restaurant_choice_aggregate_bool_exp = {
+		bool_and?:restaurant_choice_aggregate_bool_exp_bool_and,
+	bool_or?:restaurant_choice_aggregate_bool_exp_bool_or,
+	count?:restaurant_choice_aggregate_bool_exp_count
+}
+
+export type restaurant_choice_aggregate_bool_exp_bool_and = {
+		arguments:restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_and_arguments_columns,
+	distinct?:boolean,
+	filter?:restaurant_choice_bool_exp,
+	predicate:Boolean_comparison_exp
+}
+
+export type restaurant_choice_aggregate_bool_exp_bool_or = {
+		arguments:restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_or_arguments_columns,
+	distinct?:boolean,
+	filter?:restaurant_choice_bool_exp,
+	predicate:Boolean_comparison_exp
+}
+
+export type restaurant_choice_aggregate_bool_exp_count = {
+		arguments?:restaurant_choice_select_column[],
+	distinct?:boolean,
+	filter?:restaurant_choice_bool_exp,
+	predicate:Int_comparison_exp
+}
+
 /** aggregate fields of "restaurant_choice" */
 export type restaurant_choice_aggregate_fields = {
 	__typename?: "restaurant_choice_aggregate_fields",
@@ -31152,6 +31921,7 @@ export type restaurant_choice_bool_exp = {
 	name?:translation_bool_exp,
 	name_id?:Int_comparison_exp,
 	options?:restaurant_option_choice_map_bool_exp,
+	options_aggregate?:restaurant_option_choice_map_aggregate_bool_exp,
 	restaurant?:restaurant_bool_exp,
 	restaurant_id?:Int_comparison_exp
 }
@@ -31255,6 +32025,16 @@ export enum restaurant_choice_select_column {
 	id = "id",
 	name_id = "name_id",
 	restaurant_id = "restaurant_id"
+}
+
+/** select "restaurant_choice_aggregate_bool_exp_bool_and_arguments_columns" columns of table "restaurant_choice" */
+export enum restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_and_arguments_columns {
+	available = "available"
+}
+
+/** select "restaurant_choice_aggregate_bool_exp_bool_or_arguments_columns" columns of table "restaurant_choice" */
+export enum restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_or_arguments_columns {
+	available = "available"
 }
 
 /** input type for updating data in table "restaurant_choice" */
@@ -31521,6 +32301,33 @@ export type restaurant_item_aggregate = {
 	nodes:restaurant_item[]
 }
 
+export type restaurant_item_aggregate_bool_exp = {
+		bool_and?:restaurant_item_aggregate_bool_exp_bool_and,
+	bool_or?:restaurant_item_aggregate_bool_exp_bool_or,
+	count?:restaurant_item_aggregate_bool_exp_count
+}
+
+export type restaurant_item_aggregate_bool_exp_bool_and = {
+		arguments:restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_and_arguments_columns,
+	distinct?:boolean,
+	filter?:restaurant_item_bool_exp,
+	predicate:Boolean_comparison_exp
+}
+
+export type restaurant_item_aggregate_bool_exp_bool_or = {
+		arguments:restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_or_arguments_columns,
+	distinct?:boolean,
+	filter?:restaurant_item_bool_exp,
+	predicate:Boolean_comparison_exp
+}
+
+export type restaurant_item_aggregate_bool_exp_count = {
+		arguments?:restaurant_item_select_column[],
+	distinct?:boolean,
+	filter?:restaurant_item_bool_exp,
+	predicate:Int_comparison_exp
+}
+
 /** aggregate fields of "restaurant_item" */
 export type restaurant_item_aggregate_fields = {
 	__typename?: "restaurant_item_aggregate_fields",
@@ -31600,6 +32407,7 @@ export type restaurant_item_bool_exp = {
 	name?:translation_bool_exp,
 	name_id?:Int_comparison_exp,
 	options?:restaurant_item_option_map_bool_exp,
+	options_aggregate?:restaurant_item_option_map_aggregate_bool_exp,
 	position?:Int_comparison_exp,
 	restaurant?:restaurant_bool_exp,
 	restaurant_id?:Int_comparison_exp,
@@ -31757,6 +32565,17 @@ export type restaurant_item_option_map_aggregate = {
 	nodes:restaurant_item_option_map[]
 }
 
+export type restaurant_item_option_map_aggregate_bool_exp = {
+		count?:restaurant_item_option_map_aggregate_bool_exp_count
+}
+
+export type restaurant_item_option_map_aggregate_bool_exp_count = {
+		arguments?:restaurant_item_option_map_select_column[],
+	distinct?:boolean,
+	filter?:restaurant_item_option_map_bool_exp,
+	predicate:Int_comparison_exp
+}
+
 /** aggregate fields of "restaurant_item_option_map" */
 export type restaurant_item_option_map_aggregate_fields = {
 	__typename?: "restaurant_item_option_map_aggregate_fields",
@@ -31820,6 +32639,7 @@ export type restaurant_item_option_map_bool_exp = {
 	id?:Int_comparison_exp,
 	item_id?:Int_comparison_exp,
 	item_options?:restaurant_option_bool_exp,
+	item_options_aggregate?:restaurant_option_aggregate_bool_exp,
 	option_id?:Int_comparison_exp,
 	restaurant?:restaurant_bool_exp,
 	restaurant_id?:Int_comparison_exp
@@ -32123,6 +32943,18 @@ export enum restaurant_item_select_column {
 	restaurant_id = "restaurant_id",
 	special_period_end = "special_period_end",
 	special_period_start = "special_period_start"
+}
+
+/** select "restaurant_item_aggregate_bool_exp_bool_and_arguments_columns" columns of table "restaurant_item" */
+export enum restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_and_arguments_columns {
+	archived = "archived",
+	available = "available"
+}
+
+/** select "restaurant_item_aggregate_bool_exp_bool_or_arguments_columns" columns of table "restaurant_item" */
+export enum restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_or_arguments_columns {
+	archived = "archived",
+	available = "available"
 }
 
 /** input type for updating data in table "restaurant_item" */
@@ -32437,6 +33269,33 @@ export type restaurant_operator_aggregate = {
 	nodes:restaurant_operator[]
 }
 
+export type restaurant_operator_aggregate_bool_exp = {
+		bool_and?:restaurant_operator_aggregate_bool_exp_bool_and,
+	bool_or?:restaurant_operator_aggregate_bool_exp_bool_or,
+	count?:restaurant_operator_aggregate_bool_exp_count
+}
+
+export type restaurant_operator_aggregate_bool_exp_bool_and = {
+		arguments:restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_and_arguments_columns,
+	distinct?:boolean,
+	filter?:restaurant_operator_bool_exp,
+	predicate:Boolean_comparison_exp
+}
+
+export type restaurant_operator_aggregate_bool_exp_bool_or = {
+		arguments:restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_or_arguments_columns,
+	distinct?:boolean,
+	filter?:restaurant_operator_bool_exp,
+	predicate:Boolean_comparison_exp
+}
+
+export type restaurant_operator_aggregate_bool_exp_count = {
+		arguments?:restaurant_operator_select_column[],
+	distinct?:boolean,
+	filter?:restaurant_operator_bool_exp,
+	predicate:Int_comparison_exp
+}
+
 /** aggregate fields of "restaurant_operator" */
 export type restaurant_operator_aggregate_fields = {
 	__typename?: "restaurant_operator_aggregate_fields",
@@ -32637,6 +33496,16 @@ export enum restaurant_operator_select_column {
 	user_id = "user_id"
 }
 
+/** select "restaurant_operator_aggregate_bool_exp_bool_and_arguments_columns" columns of table "restaurant_operator" */
+export enum restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_and_arguments_columns {
+	owner = "owner"
+}
+
+/** select "restaurant_operator_aggregate_bool_exp_bool_or_arguments_columns" columns of table "restaurant_operator" */
+export enum restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_or_arguments_columns {
+	owner = "owner"
+}
+
 /** input type for updating data in table "restaurant_operator" */
 export type restaurant_operator_set_input = {
 		app_version?:string,
@@ -32829,6 +33698,17 @@ export type restaurant_option_aggregate = {
 	nodes:restaurant_option[]
 }
 
+export type restaurant_option_aggregate_bool_exp = {
+		count?:restaurant_option_aggregate_bool_exp_count
+}
+
+export type restaurant_option_aggregate_bool_exp_count = {
+		arguments?:restaurant_option_select_column[],
+	distinct?:boolean,
+	filter?:restaurant_option_bool_exp,
+	predicate:Int_comparison_exp
+}
+
 /** aggregate fields of "restaurant_option" */
 export type restaurant_option_aggregate_fields = {
 	__typename?: "restaurant_option_aggregate_fields",
@@ -32898,10 +33778,12 @@ export type restaurant_option_bool_exp = {
 	_not?:restaurant_option_bool_exp,
 	_or?:restaurant_option_bool_exp[],
 	choices?:restaurant_option_choice_map_bool_exp,
+	choices_aggregate?:restaurant_option_choice_map_aggregate_bool_exp,
 	cost_per_extra?:money_comparison_exp,
 	free_choice?:Int_comparison_exp,
 	id?:Int_comparison_exp,
 	items?:restaurant_item_option_map_bool_exp,
+	items_aggregate?:restaurant_item_option_map_aggregate_bool_exp,
 	maximum_choice?:Int_comparison_exp,
 	minimum_choice?:Int_comparison_exp,
 	name?:translation_bool_exp,
@@ -32932,6 +33814,17 @@ export type restaurant_option_choice_map_aggregate = {
 	__typename?: "restaurant_option_choice_map_aggregate",
 	aggregate?:restaurant_option_choice_map_aggregate_fields,
 	nodes:restaurant_option_choice_map[]
+}
+
+export type restaurant_option_choice_map_aggregate_bool_exp = {
+		count?:restaurant_option_choice_map_aggregate_bool_exp_count
+}
+
+export type restaurant_option_choice_map_aggregate_bool_exp_count = {
+		arguments?:restaurant_option_choice_map_select_column[],
+	distinct?:boolean,
+	filter?:restaurant_option_choice_map_bool_exp,
+	predicate:Int_comparison_exp
 }
 
 /** aggregate fields of "restaurant_option_choice_map" */
@@ -32998,6 +33891,7 @@ export type restaurant_option_choice_map_bool_exp = {
 	choice_id?:Int_comparison_exp,
 	id?:Int_comparison_exp,
 	option_choices?:restaurant_choice_bool_exp,
+	option_choices_aggregate?:restaurant_choice_aggregate_bool_exp,
 	option_id?:Int_comparison_exp,
 	restaurant?:restaurant_bool_exp,
 	restaurant_id?:Int_comparison_exp
@@ -33685,6 +34579,17 @@ export type restaurant_order_aggregate = {
 	nodes:restaurant_order[]
 }
 
+export type restaurant_order_aggregate_bool_exp = {
+		count?:restaurant_order_aggregate_bool_exp_count
+}
+
+export type restaurant_order_aggregate_bool_exp_count = {
+		arguments?:restaurant_order_select_column[],
+	distinct?:boolean,
+	filter?:restaurant_order_bool_exp,
+	predicate:Int_comparison_exp
+}
+
 /** aggregate fields of "restaurant_order" */
 export type restaurant_order_aggregate_fields = {
 	__typename?: "restaurant_order_aggregate_fields",
@@ -33777,6 +34682,7 @@ export type restaurant_order_bool_exp = {
 	id?:Int_comparison_exp,
 	in_process?:Boolean_comparison_exp,
 	items?:restaurant_order_item_bool_exp,
+	items_aggregate?:restaurant_order_item_aggregate_bool_exp,
 	items_cost?:money_comparison_exp,
 	notes?:String_comparison_exp,
 	order_time?:timestamptz_comparison_exp,
@@ -33920,6 +34826,33 @@ export type restaurant_order_item_aggregate = {
 	__typename?: "restaurant_order_item_aggregate",
 	aggregate?:restaurant_order_item_aggregate_fields,
 	nodes:restaurant_order_item[]
+}
+
+export type restaurant_order_item_aggregate_bool_exp = {
+		bool_and?:restaurant_order_item_aggregate_bool_exp_bool_and,
+	bool_or?:restaurant_order_item_aggregate_bool_exp_bool_or,
+	count?:restaurant_order_item_aggregate_bool_exp_count
+}
+
+export type restaurant_order_item_aggregate_bool_exp_bool_and = {
+		arguments:restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_and_arguments_columns,
+	distinct?:boolean,
+	filter?:restaurant_order_item_bool_exp,
+	predicate:Boolean_comparison_exp
+}
+
+export type restaurant_order_item_aggregate_bool_exp_bool_or = {
+		arguments:restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_or_arguments_columns,
+	distinct?:boolean,
+	filter?:restaurant_order_item_bool_exp,
+	predicate:Boolean_comparison_exp
+}
+
+export type restaurant_order_item_aggregate_bool_exp_count = {
+		arguments?:restaurant_order_item_select_column[],
+	distinct?:boolean,
+	filter?:restaurant_order_item_bool_exp,
+	predicate:Int_comparison_exp
 }
 
 /** aggregate fields of "restaurant_order_item" */
@@ -34121,6 +35054,16 @@ export enum restaurant_order_item_select_column {
 	restaurant_item_id = "restaurant_item_id",
 	restaurant_order_id = "restaurant_order_id",
 	review_id = "review_id",
+	unavailable = "unavailable"
+}
+
+/** select "restaurant_order_item_aggregate_bool_exp_bool_and_arguments_columns" columns of table "restaurant_order_item" */
+export enum restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_and_arguments_columns {
+	unavailable = "unavailable"
+}
+
+/** select "restaurant_order_item_aggregate_bool_exp_bool_or_arguments_columns" columns of table "restaurant_order_item" */
+export enum restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_or_arguments_columns {
 	unavailable = "unavailable"
 }
 
@@ -34564,6 +35507,7 @@ export type restaurant_order_public_bool_exp = {
 	order_time?:timestamptz_comparison_exp,
 	restaurant_id?:Int_comparison_exp,
 	restaurant_operators?:restaurant_operator_bool_exp,
+	restaurant_operators_aggregate?:restaurant_operator_aggregate_bool_exp,
 	review_id?:Int_comparison_exp,
 	status?:String_comparison_exp
 }
@@ -35280,6 +36224,17 @@ export type review_aggregate = {
 	nodes:review[]
 }
 
+export type review_aggregate_bool_exp = {
+		count?:review_aggregate_bool_exp_count
+}
+
+export type review_aggregate_bool_exp_count = {
+		arguments?:review_select_column[],
+	distinct?:boolean,
+	filter?:review_bool_exp,
+	predicate:Int_comparison_exp
+}
+
 /** aggregate fields of "review" */
 export type review_aggregate_fields = {
 	__typename?: "review_aggregate_fields",
@@ -35669,6 +36624,33 @@ export type saved_location_aggregate = {
 	nodes:saved_location[]
 }
 
+export type saved_location_aggregate_bool_exp = {
+		bool_and?:saved_location_aggregate_bool_exp_bool_and,
+	bool_or?:saved_location_aggregate_bool_exp_bool_or,
+	count?:saved_location_aggregate_bool_exp_count
+}
+
+export type saved_location_aggregate_bool_exp_bool_and = {
+		arguments:saved_location_select_column_saved_location_aggregate_bool_exp_bool_and_arguments_columns,
+	distinct?:boolean,
+	filter?:saved_location_bool_exp,
+	predicate:Boolean_comparison_exp
+}
+
+export type saved_location_aggregate_bool_exp_bool_or = {
+		arguments:saved_location_select_column_saved_location_aggregate_bool_exp_bool_or_arguments_columns,
+	distinct?:boolean,
+	filter?:saved_location_bool_exp,
+	predicate:Boolean_comparison_exp
+}
+
+export type saved_location_aggregate_bool_exp_count = {
+		arguments?:saved_location_select_column[],
+	distinct?:boolean,
+	filter?:saved_location_bool_exp,
+	predicate:Int_comparison_exp
+}
+
 /** aggregate fields of "saved_location" */
 export type saved_location_aggregate_fields = {
 	__typename?: "saved_location_aggregate_fields",
@@ -35827,6 +36809,16 @@ export enum saved_location_select_column {
 	location_gps = "location_gps",
 	location_text = "location_text",
 	name = "name"
+}
+
+/** select "saved_location_aggregate_bool_exp_bool_and_arguments_columns" columns of table "saved_location" */
+export enum saved_location_select_column_saved_location_aggregate_bool_exp_bool_and_arguments_columns {
+	default = "default"
+}
+
+/** select "saved_location_aggregate_bool_exp_bool_or_arguments_columns" columns of table "saved_location" */
+export enum saved_location_select_column_saved_location_aggregate_bool_exp_bool_or_arguments_columns {
+	default = "default"
 }
 
 /** input type for updating data in table "saved_location" */
@@ -37024,9 +38016,9 @@ export type subscription_root = {
 	chat_participant_aggregate:chat_participant_aggregate,
 	/** fetch data from the table: "chat_participant" using primary key columns */
 	chat_participant_by_pk?:chat_participant,
-	/** fetch data from the table in a streaming manner : "chat_participant" */
+	/** fetch data from the table in a streaming manner: "chat_participant" */
 	chat_participant_stream:chat_participant[],
-	/** fetch data from the table in a streaming manner : "chat" */
+	/** fetch data from the table in a streaming manner: "chat" */
 	chat_stream:chat[],
 	/** fetch data from the table: "customer" */
 	customer:customer[],
@@ -37034,7 +38026,7 @@ export type subscription_root = {
 	customer_aggregate:customer_aggregate,
 	/** fetch data from the table: "customer" using primary key columns */
 	customer_by_pk?:customer,
-	/** fetch data from the table in a streaming manner : "customer" */
+	/** fetch data from the table in a streaming manner: "customer" */
 	customer_stream:customer[],
 	/** fetch data from the table: "delivery_company" */
 	delivery_company:delivery_company[],
@@ -37042,7 +38034,7 @@ export type subscription_root = {
 	delivery_company_aggregate:delivery_company_aggregate,
 	/** fetch data from the table: "delivery_company" using primary key columns */
 	delivery_company_by_pk?:delivery_company,
-	/** fetch data from the table in a streaming manner : "delivery_company" */
+	/** fetch data from the table in a streaming manner: "delivery_company" */
 	delivery_company_stream:delivery_company[],
 	/** fetch data from the table: "delivery_cost" */
 	delivery_cost:delivery_cost[],
@@ -37050,7 +38042,7 @@ export type subscription_root = {
 	delivery_cost_aggregate:delivery_cost_aggregate,
 	/** fetch data from the table: "delivery_cost" using primary key columns */
 	delivery_cost_by_pk?:delivery_cost,
-	/** fetch data from the table in a streaming manner : "delivery_cost" */
+	/** fetch data from the table in a streaming manner: "delivery_cost" */
 	delivery_cost_stream:delivery_cost[],
 	/** fetch data from the table: "delivery_driver" */
 	delivery_driver:delivery_driver[],
@@ -37058,7 +38050,7 @@ export type subscription_root = {
 	delivery_driver_aggregate:delivery_driver_aggregate,
 	/** fetch data from the table: "delivery_driver" using primary key columns */
 	delivery_driver_by_pk?:delivery_driver,
-	/** fetch data from the table in a streaming manner : "delivery_driver" */
+	/** fetch data from the table in a streaming manner: "delivery_driver" */
 	delivery_driver_stream:delivery_driver[],
 	/** fetch data from the table: "delivery_operator" */
 	delivery_operator:delivery_operator[],
@@ -37066,7 +38058,7 @@ export type subscription_root = {
 	delivery_operator_aggregate:delivery_operator_aggregate,
 	/** fetch data from the table: "delivery_operator" using primary key columns */
 	delivery_operator_by_pk?:delivery_operator,
-	/** fetch data from the table in a streaming manner : "delivery_operator" */
+	/** fetch data from the table in a streaming manner: "delivery_operator" */
 	delivery_operator_stream:delivery_operator[],
 	/** fetch data from the table: "delivery_order" */
 	delivery_order:delivery_order[],
@@ -37078,9 +38070,9 @@ export type subscription_root = {
 	delivery_order_public:delivery_order_public[],
 	/** fetch aggregated fields from the table: "delivery_order_public" */
 	delivery_order_public_aggregate:delivery_order_public_aggregate,
-	/** fetch data from the table in a streaming manner : "delivery_order_public" */
+	/** fetch data from the table in a streaming manner: "delivery_order_public" */
 	delivery_order_public_stream:delivery_order_public[],
-	/** fetch data from the table in a streaming manner : "delivery_order" */
+	/** fetch data from the table in a streaming manner: "delivery_order" */
 	delivery_order_stream:delivery_order[],
 	/** fetch data from the table: "mez_admin" */
 	mez_admin:mez_admin[],
@@ -37088,7 +38080,7 @@ export type subscription_root = {
 	mez_admin_aggregate:mez_admin_aggregate,
 	/** fetch data from the table: "mez_admin" using primary key columns */
 	mez_admin_by_pk?:mez_admin,
-	/** fetch data from the table in a streaming manner : "mez_admin" */
+	/** fetch data from the table in a streaming manner: "mez_admin" */
 	mez_admin_stream:mez_admin[],
 	/** fetch data from the table: "notification_info" */
 	notification_info:notification_info[],
@@ -37096,7 +38088,7 @@ export type subscription_root = {
 	notification_info_aggregate:notification_info_aggregate,
 	/** fetch data from the table: "notification_info" using primary key columns */
 	notification_info_by_pk?:notification_info,
-	/** fetch data from the table in a streaming manner : "notification_info" */
+	/** fetch data from the table in a streaming manner: "notification_info" */
 	notification_info_stream:notification_info[],
 	/** fetch data from the table: "post" */
 	post:post[],
@@ -37104,7 +38096,7 @@ export type subscription_root = {
 	post_aggregate:post_aggregate,
 	/** fetch data from the table: "post" using primary key columns */
 	post_by_pk?:post,
-	/** fetch data from the table in a streaming manner : "post" */
+	/** fetch data from the table in a streaming manner: "post" */
 	post_stream:post[],
 	/** fetch data from the table: "restaurant" */
 	restaurant:restaurant[],
@@ -37124,9 +38116,9 @@ export type subscription_root = {
 	restaurant_cart_item_aggregate:restaurant_cart_item_aggregate,
 	/** fetch data from the table: "restaurant_cart_item" using primary key columns */
 	restaurant_cart_item_by_pk?:restaurant_cart_item,
-	/** fetch data from the table in a streaming manner : "restaurant_cart_item" */
+	/** fetch data from the table in a streaming manner: "restaurant_cart_item" */
 	restaurant_cart_item_stream:restaurant_cart_item[],
-	/** fetch data from the table in a streaming manner : "restaurant_cart" */
+	/** fetch data from the table in a streaming manner: "restaurant_cart" */
 	restaurant_cart_stream:restaurant_cart[],
 	/** fetch data from the table: "restaurant_category" */
 	restaurant_category:restaurant_category[],
@@ -37134,7 +38126,7 @@ export type subscription_root = {
 	restaurant_category_aggregate:restaurant_category_aggregate,
 	/** fetch data from the table: "restaurant_category" using primary key columns */
 	restaurant_category_by_pk?:restaurant_category,
-	/** fetch data from the table in a streaming manner : "restaurant_category" */
+	/** fetch data from the table in a streaming manner: "restaurant_category" */
 	restaurant_category_stream:restaurant_category[],
 	/** fetch data from the table: "restaurant_choice" */
 	restaurant_choice:restaurant_choice[],
@@ -37142,7 +38134,7 @@ export type subscription_root = {
 	restaurant_choice_aggregate:restaurant_choice_aggregate,
 	/** fetch data from the table: "restaurant_choice" using primary key columns */
 	restaurant_choice_by_pk?:restaurant_choice,
-	/** fetch data from the table in a streaming manner : "restaurant_choice" */
+	/** fetch data from the table in a streaming manner: "restaurant_choice" */
 	restaurant_choice_stream:restaurant_choice[],
 	/** fetch data from the table: "restaurant_item" */
 	restaurant_item:restaurant_item[],
@@ -37156,9 +38148,9 @@ export type subscription_root = {
 	restaurant_item_option_map_aggregate:restaurant_item_option_map_aggregate,
 	/** fetch data from the table: "restaurant_item_option_map" using primary key columns */
 	restaurant_item_option_map_by_pk?:restaurant_item_option_map,
-	/** fetch data from the table in a streaming manner : "restaurant_item_option_map" */
+	/** fetch data from the table in a streaming manner: "restaurant_item_option_map" */
 	restaurant_item_option_map_stream:restaurant_item_option_map[],
-	/** fetch data from the table in a streaming manner : "restaurant_item" */
+	/** fetch data from the table in a streaming manner: "restaurant_item" */
 	restaurant_item_stream:restaurant_item[],
 	/** fetch data from the table: "restaurant_operator" */
 	restaurant_operator:restaurant_operator[],
@@ -37166,7 +38158,7 @@ export type subscription_root = {
 	restaurant_operator_aggregate:restaurant_operator_aggregate,
 	/** fetch data from the table: "restaurant_operator" using primary key columns */
 	restaurant_operator_by_pk?:restaurant_operator,
-	/** fetch data from the table in a streaming manner : "restaurant_operator" */
+	/** fetch data from the table in a streaming manner: "restaurant_operator" */
 	restaurant_operator_stream:restaurant_operator[],
 	/** fetch data from the table: "restaurant_option" */
 	restaurant_option:restaurant_option[],
@@ -37180,9 +38172,9 @@ export type subscription_root = {
 	restaurant_option_choice_map_aggregate:restaurant_option_choice_map_aggregate,
 	/** fetch data from the table: "restaurant_option_choice_map" using primary key columns */
 	restaurant_option_choice_map_by_pk?:restaurant_option_choice_map,
-	/** fetch data from the table in a streaming manner : "restaurant_option_choice_map" */
+	/** fetch data from the table in a streaming manner: "restaurant_option_choice_map" */
 	restaurant_option_choice_map_stream:restaurant_option_choice_map[],
-	/** fetch data from the table in a streaming manner : "restaurant_option" */
+	/** fetch data from the table in a streaming manner: "restaurant_option" */
 	restaurant_option_stream:restaurant_option[],
 	/** fetch data from the table: "restaurant_order" */
 	restaurant_order:restaurant_order[],
@@ -37196,17 +38188,17 @@ export type subscription_root = {
 	restaurant_order_item_aggregate:restaurant_order_item_aggregate,
 	/** fetch data from the table: "restaurant_order_item" using primary key columns */
 	restaurant_order_item_by_pk?:restaurant_order_item,
-	/** fetch data from the table in a streaming manner : "restaurant_order_item" */
+	/** fetch data from the table in a streaming manner: "restaurant_order_item" */
 	restaurant_order_item_stream:restaurant_order_item[],
 	/** fetch data from the table: "restaurant_order_public" */
 	restaurant_order_public:restaurant_order_public[],
 	/** fetch aggregated fields from the table: "restaurant_order_public" */
 	restaurant_order_public_aggregate:restaurant_order_public_aggregate,
-	/** fetch data from the table in a streaming manner : "restaurant_order_public" */
+	/** fetch data from the table in a streaming manner: "restaurant_order_public" */
 	restaurant_order_public_stream:restaurant_order_public[],
-	/** fetch data from the table in a streaming manner : "restaurant_order" */
+	/** fetch data from the table in a streaming manner: "restaurant_order" */
 	restaurant_order_stream:restaurant_order[],
-	/** fetch data from the table in a streaming manner : "restaurant" */
+	/** fetch data from the table in a streaming manner: "restaurant" */
 	restaurant_stream:restaurant[],
 	/** fetch data from the table: "review" */
 	review:review[],
@@ -37214,7 +38206,7 @@ export type subscription_root = {
 	review_aggregate:review_aggregate,
 	/** fetch data from the table: "review" using primary key columns */
 	review_by_pk?:review,
-	/** fetch data from the table in a streaming manner : "review" */
+	/** fetch data from the table in a streaming manner: "review" */
 	review_stream:review[],
 	/** fetch data from the table: "saved_location" */
 	saved_location:saved_location[],
@@ -37222,7 +38214,7 @@ export type subscription_root = {
 	saved_location_aggregate:saved_location_aggregate,
 	/** fetch data from the table: "saved_location" using primary key columns */
 	saved_location_by_pk?:saved_location,
-	/** fetch data from the table in a streaming manner : "saved_location" */
+	/** fetch data from the table in a streaming manner: "saved_location" */
 	saved_location_stream:saved_location[],
 	/** fetch data from the table: "service_link" */
 	service_link:service_link[],
@@ -37230,7 +38222,7 @@ export type subscription_root = {
 	service_link_aggregate:service_link_aggregate,
 	/** fetch data from the table: "service_link" using primary key columns */
 	service_link_by_pk?:service_link,
-	/** fetch data from the table in a streaming manner : "service_link" */
+	/** fetch data from the table in a streaming manner: "service_link" */
 	service_link_stream:service_link[],
 	/** fetch data from the table: "service_provider_payment_info" */
 	service_provider_payment_info:service_provider_payment_info[],
@@ -37238,7 +38230,7 @@ export type subscription_root = {
 	service_provider_payment_info_aggregate:service_provider_payment_info_aggregate,
 	/** fetch data from the table: "service_provider_payment_info" using primary key columns */
 	service_provider_payment_info_by_pk?:service_provider_payment_info,
-	/** fetch data from the table in a streaming manner : "service_provider_payment_info" */
+	/** fetch data from the table in a streaming manner: "service_provider_payment_info" */
 	service_provider_payment_info_stream:service_provider_payment_info[],
 	/** fetch data from the table: "stripe_info" */
 	stripe_info:stripe_info[],
@@ -37246,7 +38238,7 @@ export type subscription_root = {
 	stripe_info_aggregate:stripe_info_aggregate,
 	/** fetch data from the table: "stripe_info" using primary key columns */
 	stripe_info_by_pk?:stripe_info,
-	/** fetch data from the table in a streaming manner : "stripe_info" */
+	/** fetch data from the table in a streaming manner: "stripe_info" */
 	stripe_info_stream:stripe_info[],
 	/** fetch data from the table: "subscriber" */
 	subscriber:subscriber[],
@@ -37254,7 +38246,7 @@ export type subscription_root = {
 	subscriber_aggregate:subscriber_aggregate,
 	/** fetch data from the table: "subscriber" using primary key columns */
 	subscriber_by_pk?:subscriber,
-	/** fetch data from the table in a streaming manner : "subscriber" */
+	/** fetch data from the table in a streaming manner: "subscriber" */
 	subscriber_stream:subscriber[],
 	/** fetch data from the table: "topology.app_type" */
 	topology_app_type:topology_app_type[],
@@ -37262,7 +38254,7 @@ export type subscription_root = {
 	topology_app_type_aggregate:topology_app_type_aggregate,
 	/** fetch data from the table: "topology.app_type" using primary key columns */
 	topology_app_type_by_pk?:topology_app_type,
-	/** fetch data from the table in a streaming manner : "topology.app_type" */
+	/** fetch data from the table in a streaming manner: "topology.app_type" */
 	topology_app_type_stream:topology_app_type[],
 	/** fetch data from the table: "topology.language" */
 	topology_language:topology_language[],
@@ -37270,7 +38262,7 @@ export type subscription_root = {
 	topology_language_aggregate:topology_language_aggregate,
 	/** fetch data from the table: "topology.language" using primary key columns */
 	topology_language_by_pk?:topology_language,
-	/** fetch data from the table in a streaming manner : "topology.language" */
+	/** fetch data from the table in a streaming manner: "topology.language" */
 	topology_language_stream:topology_language[],
 	/** fetch data from the table: "translation" */
 	translation:translation[],
@@ -37278,7 +38270,7 @@ export type subscription_root = {
 	translation_aggregate:translation_aggregate,
 	/** fetch data from the table: "translation" using primary key columns */
 	translation_by_pk?:translation,
-	/** fetch data from the table in a streaming manner : "translation" */
+	/** fetch data from the table in a streaming manner: "translation" */
 	translation_stream:translation[],
 	/** fetch data from the table: "translation_value" */
 	translation_value:translation_value[],
@@ -37286,7 +38278,7 @@ export type subscription_root = {
 	translation_value_aggregate:translation_value_aggregate,
 	/** fetch data from the table: "translation_value" using primary key columns */
 	translation_value_by_pk?:translation_value,
-	/** fetch data from the table in a streaming manner : "translation_value" */
+	/** fetch data from the table in a streaming manner: "translation_value" */
 	translation_value_stream:translation_value[],
 	/** fetch data from the table: "user" */
 	user:user[],
@@ -37294,7 +38286,7 @@ export type subscription_root = {
 	user_aggregate:user_aggregate,
 	/** fetch data from the table: "user" using primary key columns */
 	user_by_pk?:user,
-	/** fetch data from the table in a streaming manner : "user" */
+	/** fetch data from the table in a streaming manner: "user" */
 	user_stream:user[]
 }
 
@@ -37389,7 +38381,7 @@ export type topology_app_type_order_by = {
 		id?:order_by
 }
 
-/** primary key columns input for table: topology_app_type */
+/** primary key columns input for table: topology.app_type */
 export type topology_app_type_pk_columns_input = {
 		/** customer, delivery, restaurant, admin */
 	id:string
@@ -37510,7 +38502,7 @@ export type topology_language_order_by = {
 		id?:order_by
 }
 
-/** primary key columns input for table: topology_language */
+/** primary key columns input for table: topology.language */
 export type topology_language_pk_columns_input = {
 		id:string
 }
@@ -37602,7 +38594,8 @@ export type translation_bool_exp = {
 	restaurant?:restaurant_bool_exp,
 	service_provider_id?:Int_comparison_exp,
 	service_provider_type?:String_comparison_exp,
-	translations?:translation_value_bool_exp
+	translations?:translation_value_bool_exp,
+	translations_aggregate?:translation_value_aggregate_bool_exp
 }
 
 /** unique or primary key constraints on table "translation" */
@@ -37767,6 +38760,17 @@ export type translation_value_aggregate = {
 	__typename?: "translation_value_aggregate",
 	aggregate?:translation_value_aggregate_fields,
 	nodes:translation_value[]
+}
+
+export type translation_value_aggregate_bool_exp = {
+		count?:translation_value_aggregate_bool_exp_count
+}
+
+export type translation_value_aggregate_bool_exp_count = {
+		arguments?:translation_value_select_column[],
+	distinct?:boolean,
+	filter?:translation_value_bool_exp,
+	predicate:Int_comparison_exp
 }
 
 /** aggregate fields of "translation_value" */
@@ -38063,7 +39067,7 @@ export type user = {
 	firebase_id:string,
 	id:number,
 	image?:string,
-	language_id:string,
+	language_id?:string,
 	name?:string,
 	phone?:string
 }
@@ -38554,6 +39558,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		chat_participants_aggregate:{
+			type:"chat_participant_aggregate_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		creation_time:{
 			type:"timestamptz_comparison_exp",
 			array:false,
@@ -38750,6 +39760,40 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
+		}
+	},
+	chat_participant_aggregate_bool_exp:{
+		count:{
+			type:"chat_participant_aggregate_bool_exp_count",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	chat_participant_aggregate_bool_exp_count:{
+		arguments:{
+			type:"chat_participant_select_column",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"chat_participant_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
 		}
 	},
 	chat_participant_aggregate_fields:{
@@ -39707,6 +40751,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		deliveries_aggregate:{
+			type:"delivery_order_aggregate_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		notification_token:{
 			type:"String_comparison_exp",
 			array:false,
@@ -39715,6 +40765,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		saved_locations:{
 			type:"saved_location_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		saved_locations_aggregate:{
+			type:"saved_location_aggregate_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -40228,8 +41284,20 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		delivery_drivers_aggregate:{
+			type:"delivery_driver_aggregate_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		delivery_operators:{
 			type:"delivery_operator_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_operators_aggregate:{
+			type:"delivery_operator_aggregate_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -40957,6 +42025,104 @@ export const AllTypesProps: Record<string,any> = {
 			required:true
 		}
 	},
+	delivery_driver_aggregate_bool_exp:{
+		bool_and:{
+			type:"delivery_driver_aggregate_bool_exp_bool_and",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		bool_or:{
+			type:"delivery_driver_aggregate_bool_exp_bool_or",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		count:{
+			type:"delivery_driver_aggregate_bool_exp_count",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	delivery_driver_aggregate_bool_exp_bool_and:{
+		arguments:{
+			type:"delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"delivery_driver_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	delivery_driver_aggregate_bool_exp_bool_or:{
+		arguments:{
+			type:"delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"delivery_driver_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	delivery_driver_aggregate_bool_exp_count:{
+		arguments:{
+			type:"delivery_driver_select_column",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"delivery_driver_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	delivery_driver_aggregate_fields:{
 		count:{
 			columns:{
@@ -41521,6 +42687,8 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	delivery_driver_select_column: "enum",
+	delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns: "enum",
+	delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns: "enum",
 	delivery_driver_set_input:{
 		app_version:{
 			type:"String",
@@ -41860,6 +43028,104 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
+		}
+	},
+	delivery_operator_aggregate_bool_exp:{
+		bool_and:{
+			type:"delivery_operator_aggregate_bool_exp_bool_and",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		bool_or:{
+			type:"delivery_operator_aggregate_bool_exp_bool_or",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		count:{
+			type:"delivery_operator_aggregate_bool_exp_count",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	delivery_operator_aggregate_bool_exp_bool_and:{
+		arguments:{
+			type:"delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_and_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"delivery_operator_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	delivery_operator_aggregate_bool_exp_bool_or:{
+		arguments:{
+			type:"delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_or_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"delivery_operator_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	delivery_operator_aggregate_bool_exp_count:{
+		arguments:{
+			type:"delivery_operator_select_column",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"delivery_operator_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
 		}
 	},
 	delivery_operator_aggregate_fields:{
@@ -42318,6 +43584,8 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	delivery_operator_select_column: "enum",
+	delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_and_arguments_columns: "enum",
+	delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_or_arguments_columns: "enum",
 	delivery_operator_set_input:{
 		app_version:{
 			type:"String",
@@ -42591,6 +43859,40 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
+		}
+	},
+	delivery_order_aggregate_bool_exp:{
+		count:{
+			type:"delivery_order_aggregate_bool_exp_count",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	delivery_order_aggregate_bool_exp_count:{
+		arguments:{
+			type:"delivery_order_select_column",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"delivery_order_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
 		}
 	},
 	delivery_order_aggregate_fields:{
@@ -42984,6 +44286,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		id:{
 			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		in_process:{
+			type:"Boolean_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -44132,6 +45440,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		in_process:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -54185,8 +55499,20 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		categories_aggregate:{
+			type:"restaurant_category_aggregate_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		delivery_drivers:{
 			type:"delivery_driver_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_drivers_aggregate:{
+			type:"delivery_driver_aggregate_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -54257,6 +55583,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		orders_aggregate:{
+			type:"restaurant_order_aggregate_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		payment_info:{
 			type:"service_provider_payment_info_bool_exp",
 			array:false,
@@ -54275,8 +55607,20 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		restaurant_operators_aggregate:{
+			type:"restaurant_operator_aggregate_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		reviews:{
 			type:"review_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		reviews_aggregate:{
+			type:"review_aggregate_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -54437,6 +55781,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		items_aggregate:{
+			type:"restaurant_cart_item_aggregate_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		restaurant:{
 			type:"restaurant_bool_exp",
 			array:false,
@@ -54505,6 +55855,40 @@ export const AllTypesProps: Record<string,any> = {
 				arrayRequired:false,
 				required:false
 			}
+		}
+	},
+	restaurant_cart_item_aggregate_bool_exp:{
+		count:{
+			type:"restaurant_cart_item_aggregate_bool_exp_count",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	restaurant_cart_item_aggregate_bool_exp_count:{
+		arguments:{
+			type:"restaurant_cart_item_select_column",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"restaurant_cart_item_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
 		}
 	},
 	restaurant_cart_item_aggregate_fields:{
@@ -55518,6 +56902,40 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		}
 	},
+	restaurant_category_aggregate_bool_exp:{
+		count:{
+			type:"restaurant_category_aggregate_bool_exp_count",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	restaurant_category_aggregate_bool_exp_count:{
+		arguments:{
+			type:"restaurant_category_select_column",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"restaurant_category_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	restaurant_category_aggregate_fields:{
 		count:{
 			columns:{
@@ -55693,6 +57111,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		items:{
 			type:"restaurant_item_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		items_aggregate:{
+			type:"restaurant_item_aggregate_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -56459,6 +57883,104 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		}
 	},
+	restaurant_choice_aggregate_bool_exp:{
+		bool_and:{
+			type:"restaurant_choice_aggregate_bool_exp_bool_and",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		bool_or:{
+			type:"restaurant_choice_aggregate_bool_exp_bool_or",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		count:{
+			type:"restaurant_choice_aggregate_bool_exp_count",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	restaurant_choice_aggregate_bool_exp_bool_and:{
+		arguments:{
+			type:"restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_and_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"restaurant_choice_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	restaurant_choice_aggregate_bool_exp_bool_or:{
+		arguments:{
+			type:"restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_or_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"restaurant_choice_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	restaurant_choice_aggregate_bool_exp_count:{
+		arguments:{
+			type:"restaurant_choice_select_column",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"restaurant_choice_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	restaurant_choice_aggregate_fields:{
 		count:{
 			columns:{
@@ -56634,6 +58156,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		options:{
 			type:"restaurant_option_choice_map_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		options_aggregate:{
+			type:"restaurant_option_choice_map_aggregate_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -56859,6 +58387,8 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_choice_select_column: "enum",
+	restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_and_arguments_columns: "enum",
+	restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_or_arguments_columns: "enum",
 	restaurant_choice_set_input:{
 		available:{
 			type:"Boolean",
@@ -57427,6 +58957,104 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		}
 	},
+	restaurant_item_aggregate_bool_exp:{
+		bool_and:{
+			type:"restaurant_item_aggregate_bool_exp_bool_and",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		bool_or:{
+			type:"restaurant_item_aggregate_bool_exp_bool_or",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		count:{
+			type:"restaurant_item_aggregate_bool_exp_count",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	restaurant_item_aggregate_bool_exp_bool_and:{
+		arguments:{
+			type:"restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_and_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"restaurant_item_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	restaurant_item_aggregate_bool_exp_bool_or:{
+		arguments:{
+			type:"restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_or_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"restaurant_item_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	restaurant_item_aggregate_bool_exp_count:{
+		arguments:{
+			type:"restaurant_item_select_column",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"restaurant_item_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	restaurant_item_aggregate_fields:{
 		count:{
 			columns:{
@@ -57662,6 +59290,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		options:{
 			type:"restaurant_item_option_map_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		options_aggregate:{
+			type:"restaurant_item_option_map_aggregate_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -58088,6 +59722,40 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		}
 	},
+	restaurant_item_option_map_aggregate_bool_exp:{
+		count:{
+			type:"restaurant_item_option_map_aggregate_bool_exp_count",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	restaurant_item_option_map_aggregate_bool_exp_count:{
+		arguments:{
+			type:"restaurant_item_option_map_select_column",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"restaurant_item_option_map_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	restaurant_item_option_map_aggregate_fields:{
 		count:{
 			columns:{
@@ -58245,6 +59913,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		item_options:{
 			type:"restaurant_option_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		item_options_aggregate:{
+			type:"restaurant_option_aggregate_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -58840,6 +60514,8 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_item_select_column: "enum",
+	restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_and_arguments_columns: "enum",
+	restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_or_arguments_columns: "enum",
 	restaurant_item_set_input:{
 		archived:{
 			type:"Boolean",
@@ -59377,6 +61053,104 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
+	restaurant_operator_aggregate_bool_exp:{
+		bool_and:{
+			type:"restaurant_operator_aggregate_bool_exp_bool_and",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		bool_or:{
+			type:"restaurant_operator_aggregate_bool_exp_bool_or",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		count:{
+			type:"restaurant_operator_aggregate_bool_exp_count",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	restaurant_operator_aggregate_bool_exp_bool_and:{
+		arguments:{
+			type:"restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_and_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"restaurant_operator_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	restaurant_operator_aggregate_bool_exp_bool_or:{
+		arguments:{
+			type:"restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_or_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"restaurant_operator_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	restaurant_operator_aggregate_bool_exp_count:{
+		arguments:{
+			type:"restaurant_operator_select_column",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"restaurant_operator_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	restaurant_operator_aggregate_fields:{
 		count:{
 			columns:{
@@ -59851,6 +61625,8 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_operator_select_column: "enum",
+	restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_and_arguments_columns: "enum",
+	restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_or_arguments_columns: "enum",
 	restaurant_operator_set_input:{
 		app_version:{
 			type:"String",
@@ -60256,6 +62032,40 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		}
 	},
+	restaurant_option_aggregate_bool_exp:{
+		count:{
+			type:"restaurant_option_aggregate_bool_exp_count",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	restaurant_option_aggregate_bool_exp_count:{
+		arguments:{
+			type:"restaurant_option_select_column",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"restaurant_option_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	restaurant_option_aggregate_fields:{
 		count:{
 			columns:{
@@ -60429,6 +62239,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		choices_aggregate:{
+			type:"restaurant_option_choice_map_aggregate_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		cost_per_extra:{
 			type:"money_comparison_exp",
 			array:false,
@@ -60449,6 +62265,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		items:{
 			type:"restaurant_item_option_map_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		items_aggregate:{
+			type:"restaurant_item_option_map_aggregate_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -60566,6 +62388,40 @@ export const AllTypesProps: Record<string,any> = {
 				arrayRequired:false,
 				required:false
 			}
+		}
+	},
+	restaurant_option_choice_map_aggregate_bool_exp:{
+		count:{
+			type:"restaurant_option_choice_map_aggregate_bool_exp_count",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	restaurant_option_choice_map_aggregate_bool_exp_count:{
+		arguments:{
+			type:"restaurant_option_choice_map_select_column",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"restaurant_option_choice_map_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
 		}
 	},
 	restaurant_option_choice_map_aggregate_fields:{
@@ -60725,6 +62581,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		option_choices:{
 			type:"restaurant_choice_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		option_choices_aggregate:{
+			type:"restaurant_choice_aggregate_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -62124,6 +63986,40 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		}
 	},
+	restaurant_order_aggregate_bool_exp:{
+		count:{
+			type:"restaurant_order_aggregate_bool_exp_count",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	restaurant_order_aggregate_bool_exp_count:{
+		arguments:{
+			type:"restaurant_order_select_column",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"restaurant_order_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	restaurant_order_aggregate_fields:{
 		count:{
 			columns:{
@@ -62397,6 +64293,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		items:{
 			type:"restaurant_order_item_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		items_aggregate:{
+			type:"restaurant_order_item_aggregate_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -62935,6 +64837,104 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		}
 	},
+	restaurant_order_item_aggregate_bool_exp:{
+		bool_and:{
+			type:"restaurant_order_item_aggregate_bool_exp_bool_and",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		bool_or:{
+			type:"restaurant_order_item_aggregate_bool_exp_bool_or",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		count:{
+			type:"restaurant_order_item_aggregate_bool_exp_count",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	restaurant_order_item_aggregate_bool_exp_bool_and:{
+		arguments:{
+			type:"restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_and_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"restaurant_order_item_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	restaurant_order_item_aggregate_bool_exp_bool_or:{
+		arguments:{
+			type:"restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_or_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"restaurant_order_item_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	restaurant_order_item_aggregate_bool_exp_count:{
+		arguments:{
+			type:"restaurant_order_item_select_column",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"restaurant_order_item_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	restaurant_order_item_aggregate_fields:{
 		count:{
 			columns:{
@@ -63449,6 +65449,8 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_order_item_select_column: "enum",
+	restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_and_arguments_columns: "enum",
+	restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_or_arguments_columns: "enum",
 	restaurant_order_item_set_input:{
 		cost_per_one:{
 			type:"money",
@@ -64513,6 +66515,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		restaurant_operators:{
 			type:"restaurant_operator_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		restaurant_operators_aggregate:{
+			type:"restaurant_operator_aggregate_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -65855,6 +67863,40 @@ export const AllTypesProps: Record<string,any> = {
 			required:true
 		}
 	},
+	review_aggregate_bool_exp:{
+		count:{
+			type:"review_aggregate_bool_exp_count",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	review_aggregate_bool_exp_count:{
+		arguments:{
+			type:"review_select_column",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"review_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	review_aggregate_fields:{
 		count:{
 			columns:{
@@ -66652,6 +68694,104 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
+	saved_location_aggregate_bool_exp:{
+		bool_and:{
+			type:"saved_location_aggregate_bool_exp_bool_and",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		bool_or:{
+			type:"saved_location_aggregate_bool_exp_bool_or",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		count:{
+			type:"saved_location_aggregate_bool_exp_count",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	saved_location_aggregate_bool_exp_bool_and:{
+		arguments:{
+			type:"saved_location_select_column_saved_location_aggregate_bool_exp_bool_and_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"saved_location_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	saved_location_aggregate_bool_exp_bool_or:{
+		arguments:{
+			type:"saved_location_select_column_saved_location_aggregate_bool_exp_bool_or_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"saved_location_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	saved_location_aggregate_bool_exp_count:{
+		arguments:{
+			type:"saved_location_select_column",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"saved_location_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	saved_location_aggregate_fields:{
 		count:{
 			columns:{
@@ -66992,6 +69132,8 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	saved_location_select_column: "enum",
+	saved_location_select_column_saved_location_aggregate_bool_exp_bool_and_arguments_columns: "enum",
+	saved_location_select_column_saved_location_aggregate_bool_exp_bool_or_arguments_columns: "enum",
 	saved_location_set_input:{
 		customer_id:{
 			type:"Int",
@@ -72588,6 +74730,12 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
+		},
+		translations_aggregate:{
+			type:"translation_value_aggregate_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	translation_constraint: "enum",
@@ -72782,6 +74930,40 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		where:{
 			type:"translation_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	translation_value_aggregate_bool_exp:{
+		count:{
+			type:"translation_value_aggregate_bool_exp_count",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	translation_value_aggregate_bool_exp_count:{
+		arguments:{
+			type:"translation_value_select_column",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"translation_value_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Int_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:true
@@ -74278,6 +76460,7 @@ export const ReturnTypes: Record<string,any> = {
 		estimated_arrival_at_pickup_time:"timestamptz",
 		estimated_package_ready_time:"timestamptz",
 		id:"Int",
+		in_process:"Boolean",
 		notification_token:"String",
 		order_time:"timestamptz",
 		order_type:"String",
@@ -78113,4 +80296,4 @@ subscription: ZeusSelect<ValueTypes["subscription_root"]>()
 };
   
 
-export const Gql = Chain('http://localhost:8080/v1/graphql')
+export const Gql = Chain('https://mez-staging.hasura.app/v1/graphql')

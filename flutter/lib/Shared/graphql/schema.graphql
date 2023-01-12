@@ -29,89 +29,6 @@ input Boolean_comparison_exp {
 }
 
 """
-Boolean expression to compare columns of type "Float". All fields are combined with logical 'AND'.
-"""
-input Float_comparison_exp {
-  _eq: Float
-  _gt: Float
-  _gte: Float
-  _in: [Float!]
-  _is_null: Boolean
-  _lt: Float
-  _lte: Float
-  _neq: Float
-  _nin: [Float!]
-}
-
-"""
-Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'.
-"""
-input Int_comparison_exp {
-  _eq: Int
-  _gt: Int
-  _gte: Int
-  _in: [Int!]
-  _is_null: Boolean
-  _lt: Int
-  _lte: Int
-  _neq: Int
-  _nin: [Int!]
-}
-
-"""
-Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'.
-"""
-input String_comparison_exp {
-  _eq: String
-  _gt: String
-  _gte: String
-
-  """does the column match the given case-insensitive pattern"""
-  _ilike: String
-  _in: [String!]
-
-  """
-  does the column match the given POSIX regular expression, case insensitive
-  """
-  _iregex: String
-  _is_null: Boolean
-
-  """does the column match the given pattern"""
-  _like: String
-  _lt: String
-  _lte: String
-  _neq: String
-
-  """does the column NOT match the given case-insensitive pattern"""
-  _nilike: String
-  _nin: [String!]
-
-  """
-  does the column NOT match the given POSIX regular expression, case insensitive
-  """
-  _niregex: String
-
-  """does the column NOT match the given pattern"""
-  _nlike: String
-
-  """
-  does the column NOT match the given POSIX regular expression, case sensitive
-  """
-  _nregex: String
-
-  """does the column NOT match the given SQL regular expression"""
-  _nsimilar: String
-
-  """
-  does the column match the given POSIX regular expression, case sensitive
-  """
-  _regex: String
-
-  """does the column match the given SQL regular expression"""
-  _similar: String
-}
-
-"""
 columns and relationships of "chat"
 """
 type chat {
@@ -240,7 +157,8 @@ input chat_delete_at_path_input {
 }
 
 """
-delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
 """
 input chat_delete_elem_input {
   agora_info: Int
@@ -843,7 +761,8 @@ input chat_updates {
   _delete_at_path: chat_delete_at_path_input
 
   """
-  delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
   """
   _delete_elem: chat_delete_elem_input
 
@@ -1061,7 +980,8 @@ input customer_delete_at_path_input {
 }
 
 """
-delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
 """
 input customer_delete_elem_input {
   stripe_info: Int
@@ -1255,7 +1175,8 @@ input customer_updates {
   _delete_at_path: customer_delete_at_path_input
 
   """
-  delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
   """
   _delete_elem: customer_delete_elem_input
 
@@ -3207,7 +3128,9 @@ type delivery_order {
   service_provider_type: String
 
   """
-  orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff, delivered, cancelledByCustomer, cancelledByDeliverer, cancelledByServiceProvider
+  orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
+  delivered, cancelledByCustomer, cancelledByDeliverer,
+  cancelledByServiceProvider
   """
   status: String!
   stripe_payment_id: Int
@@ -3484,7 +3407,9 @@ input delivery_order_insert_input {
   service_provider_type: String
 
   """
-  orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff, delivered, cancelledByCustomer, cancelledByDeliverer, cancelledByServiceProvider
+  orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
+  delivered, cancelledByCustomer, cancelledByDeliverer,
+  cancelledByServiceProvider
   """
   status: String
   stripe_payment_id: Int
@@ -3536,7 +3461,9 @@ type delivery_order_max_fields {
   service_provider_type: String
 
   """
-  orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff, delivered, cancelledByCustomer, cancelledByDeliverer, cancelledByServiceProvider
+  orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
+  delivered, cancelledByCustomer, cancelledByDeliverer,
+  cancelledByServiceProvider
   """
   status: String
   stripe_payment_id: Int
@@ -3590,7 +3517,9 @@ input delivery_order_max_order_by {
   service_provider_type: order_by
 
   """
-  orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff, delivered, cancelledByCustomer, cancelledByDeliverer, cancelledByServiceProvider
+  orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
+  delivered, cancelledByCustomer, cancelledByDeliverer,
+  cancelledByServiceProvider
   """
   status: order_by
   stripe_payment_id: order_by
@@ -3642,7 +3571,9 @@ type delivery_order_min_fields {
   service_provider_type: String
 
   """
-  orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff, delivered, cancelledByCustomer, cancelledByDeliverer, cancelledByServiceProvider
+  orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
+  delivered, cancelledByCustomer, cancelledByDeliverer,
+  cancelledByServiceProvider
   """
   status: String
   stripe_payment_id: Int
@@ -3696,7 +3627,9 @@ input delivery_order_min_order_by {
   service_provider_type: order_by
 
   """
-  orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff, delivered, cancelledByCustomer, cancelledByDeliverer, cancelledByServiceProvider
+  orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
+  delivered, cancelledByCustomer, cancelledByDeliverer,
+  cancelledByServiceProvider
   """
   status: order_by
   stripe_payment_id: order_by
@@ -4403,7 +4336,9 @@ input delivery_order_set_input {
   service_provider_type: String
 
   """
-  orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff, delivered, cancelledByCustomer, cancelledByDeliverer, cancelledByServiceProvider
+  orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
+  delivered, cancelledByCustomer, cancelledByDeliverer,
+  cancelledByServiceProvider
   """
   status: String
   stripe_payment_id: Int
@@ -4613,7 +4548,9 @@ input delivery_order_stream_cursor_value_input {
   service_provider_type: String
 
   """
-  orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff, delivered, cancelledByCustomer, cancelledByDeliverer, cancelledByServiceProvider
+  orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
+  delivered, cancelledByCustomer, cancelledByDeliverer,
+  cancelledByServiceProvider
   """
   status: String
   stripe_payment_id: Int
@@ -4943,6 +4880,21 @@ input delivery_order_variance_order_by {
   trip_duration: order_by
 }
 
+"""
+Boolean expression to compare columns of type "Float". All fields are combined with logical 'AND'.
+"""
+input Float_comparison_exp {
+  _eq: Float
+  _gt: Float
+  _gte: Float
+  _in: [Float!]
+  _is_null: Boolean
+  _lt: Float
+  _lte: Float
+  _neq: Float
+  _nin: [Float!]
+}
+
 scalar geography
 
 input geography_cast_exp {
@@ -5027,6 +4979,21 @@ input geometry_comparison_exp {
 
   """is the column contained in the given geometry value"""
   _st_within: geometry
+}
+
+"""
+Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'.
+"""
+input Int_comparison_exp {
+  _eq: Int
+  _gt: Int
+  _gte: Int
+  _in: [Int!]
+  _is_null: Boolean
+  _lt: Int
+  _lte: Int
+  _neq: Int
+  _nin: [Int!]
 }
 
 scalar json
@@ -6576,7 +6543,8 @@ type mutation_root {
     _delete_at_path: chat_delete_at_path_input
 
     """
-    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
     """
     _delete_elem: chat_delete_elem_input
 
@@ -6611,7 +6579,8 @@ type mutation_root {
     _delete_at_path: chat_delete_at_path_input
 
     """
-    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
     """
     _delete_elem: chat_delete_elem_input
 
@@ -6686,7 +6655,8 @@ type mutation_root {
     _delete_at_path: customer_delete_at_path_input
 
     """
-    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
     """
     _delete_elem: customer_delete_elem_input
 
@@ -6721,7 +6691,8 @@ type mutation_root {
     _delete_at_path: customer_delete_at_path_input
 
     """
-    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
     """
     _delete_elem: customer_delete_elem_input
 
@@ -7022,7 +6993,8 @@ type mutation_root {
     _delete_at_path: post_delete_at_path_input
 
     """
-    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
     """
     _delete_elem: post_delete_elem_input
 
@@ -7057,7 +7029,8 @@ type mutation_root {
     _delete_at_path: post_delete_at_path_input
 
     """
-    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
     """
     _delete_elem: post_delete_elem_input
 
@@ -7098,7 +7071,8 @@ type mutation_root {
     _delete_at_path: restaurant_delete_at_path_input
 
     """
-    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
     """
     _delete_elem: restaurant_delete_elem_input
 
@@ -7133,7 +7107,8 @@ type mutation_root {
     _delete_at_path: restaurant_delete_at_path_input
 
     """
-    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
     """
     _delete_elem: restaurant_delete_elem_input
 
@@ -7480,7 +7455,8 @@ type mutation_root {
     _delete_at_path: restaurant_order_delete_at_path_input
 
     """
-    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
     """
     _delete_elem: restaurant_order_delete_elem_input
 
@@ -7515,7 +7491,8 @@ type mutation_root {
     _delete_at_path: restaurant_order_delete_at_path_input
 
     """
-    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
     """
     _delete_elem: restaurant_order_delete_elem_input
 
@@ -8345,7 +8322,8 @@ input post_delete_at_path_input {
 }
 
 """
-delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
 """
 input post_delete_elem_input {
   comments: Int
@@ -8576,7 +8554,8 @@ input post_updates {
   _delete_at_path: post_delete_at_path_input
 
   """
-  delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
   """
   _delete_elem: post_delete_elem_input
 
@@ -12347,7 +12326,8 @@ input restaurant_delete_at_path_input {
 }
 
 """
-delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
 """
 input restaurant_delete_elem_input {
   accepted_payments: Int
@@ -14494,7 +14474,8 @@ input restaurant_option_choice_map_avg_order_by {
 }
 
 """
-Boolean expression to filter rows from the table "restaurant_option_choice_map". All fields are combined with a logical 'AND'.
+Boolean expression to filter rows from the table "restaurant_option_choice_map".
+All fields are combined with a logical 'AND'.
 """
 input restaurant_option_choice_map_bool_exp {
   _and: [restaurant_option_choice_map_bool_exp!]
@@ -15552,7 +15533,8 @@ input restaurant_order_delete_at_path_input {
 }
 
 """
-delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
 """
 input restaurant_order_delete_elem_input {
   stripe_info: Int
@@ -17021,7 +17003,8 @@ input restaurant_order_updates {
   _delete_at_path: restaurant_order_delete_at_path_input
 
   """
-  delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
   """
   _delete_elem: restaurant_order_delete_elem_input
 
@@ -17344,7 +17327,8 @@ input restaurant_updates {
   _delete_at_path: restaurant_delete_at_path_input
 
   """
-  delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
   """
   _delete_elem: restaurant_delete_elem_input
 
@@ -18663,7 +18647,8 @@ type service_provider_payment_info_avg_fields {
 }
 
 """
-Boolean expression to filter rows from the table "service_provider_payment_info". All fields are combined with a logical 'AND'.
+Boolean expression to filter rows from the table
+"service_provider_payment_info". All fields are combined with a logical 'AND'.
 """
 input service_provider_payment_info_bool_exp {
   _and: [service_provider_payment_info_bool_exp!]
@@ -18918,6 +18903,59 @@ input st_d_within_geography_input {
 input st_d_within_input {
   distance: Float!
   from: geometry!
+}
+
+"""
+Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'.
+"""
+input String_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+
+  """does the column match the given case-insensitive pattern"""
+  _ilike: String
+  _in: [String!]
+
+  """
+  does the column match the given POSIX regular expression, case insensitive
+  """
+  _iregex: String
+  _is_null: Boolean
+
+  """does the column match the given pattern"""
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+
+  """does the column NOT match the given case-insensitive pattern"""
+  _nilike: String
+  _nin: [String!]
+
+  """
+  does the column NOT match the given POSIX regular expression, case insensitive
+  """
+  _niregex: String
+
+  """does the column NOT match the given pattern"""
+  _nlike: String
+
+  """
+  does the column NOT match the given POSIX regular expression, case sensitive
+  """
+  _nregex: String
+
+  """does the column NOT match the given SQL regular expression"""
+  _nsimilar: String
+
+  """
+  does the column match the given POSIX regular expression, case sensitive
+  """
+  _regex: String
+
+  """does the column match the given SQL regular expression"""
+  _similar: String
 }
 
 """
@@ -22845,4 +22883,3 @@ type user_var_samp_fields {
 type user_variance_fields {
   id: Float
 }
-
