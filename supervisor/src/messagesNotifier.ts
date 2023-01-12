@@ -6,7 +6,7 @@ import * as rootNodes from "../../functions/src/shared/databaseNodes/root";
 import { NewMessageNotification, Notification, NotificationAction, NotificationType, NotificationForQueue, NewCallBackgroundNotification, AuthorizeOperatorNotification } from "../../functions/src/shared/models/Notification";
 // import { CounterOfferNotificationForQueue } from "../../functions/src/shared/models/Services/Taxi/TaxiOrder";
 import * as fcm from "../../functions/src/utilities/senders/fcm";
-// import * as agora from 'agora-access-token';
+import * as agora from 'agora-access-token';
 import { Keys } from "../../functions/src/shared/models/Generic/Keys";
 import { 
   AuthorizeOperatorNotificationForQueue, 
@@ -20,6 +20,8 @@ import { getMezAdmins } from "../../functions/src/shared/graphql/user/mezAdmin/g
 import { getDeliveryOperators } from "../../functions/src/shared/graphql/delivery/operator/getDeliveryOperator"
 import { AssignDeliveryCompanyNotificationForQueue, AssignDeliveryCompanyNotification } from "../../functions/src/shared/models/Generic/Delivery";
 import { getChatParticipant, getChatParticipants } from "../../functions/src/shared/graphql/chat/getChatParticipant"
+import { setUserAgoraInfo } from "../../functions/src/shared/graphql/chat/setChatInfo"
+
 import { HttpsError } from "firebase-functions/v1/auth";
 
 export function startWatchingMessageNotificationQueue(keys: Keys) {
@@ -158,14 +160,12 @@ async function notifyMezAdminsNewRestaurant(notificationForQueue: NewRestaurantN
   }
   let mezAdmins = await getMezAdmins();
   mezAdmins.forEach((m) => {
-    if(m.user) {
       notifyUser.pushNotification(
-        m.user.firebaseId, 
+        m.firebaseId, 
         notification, 
         m.notificationInfo, 
         chat.ParticipantType.MezAdmin
       );
-    }
   });
   
 }
@@ -239,20 +239,19 @@ async function notifyCallerRecipient(notificationForQueue: chat.CallNotification
 
     if (notificationForQueue.callNotificationType == chat.CallNotificationtType.Incoming) {
       //TODO
-      // let calleeToken = await createAgoraTokensIfNotPresent(
-      //   notificationForQueue.chatId, 
-      //   callerInfo as chat.ParticipantWithAgora, 
-      //   calleeInfo as chat.ParticipantWithAgora, 
-      //   keys
-      // );
-      // if (calleeToken == null)
-      //   console.log("Agora token generation error");
-      // else {
-      //   fcmMessage.payload.data!.agoraToken = calleeToken;
-      //   fcmMessage.payload.data!.calleeuid = convertFbIdtoInt(calleeInfo.id.toString()).toString();
-      // }
-      // console.log(notificationForQueue);
-      // console.log();
+      let calleeToken = await createAgoraTokensIfNotPresent(
+        notificationForQueue.chatId, 
+        caller as chat.ParticipantWithAgora, 
+        callee as chat.ParticipantWithAgora, 
+        keys
+      );
+      if (calleeToken == null)
+        console.log("Agora token generation error");
+      else {
+        fcmMessage.payload.data!.agoraToken = calleeToken;
+        fcmMessage.payload.data!.calleeuid = callee.id.toString(); //convertFbIdtoInt(callee.id.toString()).toString();
+      }
+      console.log(notificationForQueue);
     }
     console.log(fcmMessage);    
     fcm.push(fcmMessage);
@@ -287,11 +286,9 @@ async function notifyOtherMessageParticipants(notificationForQueue: chat.Message
           chatId: notificationForQueue.chatId,
           sender,
           message: notificationForQueue.message,
-          orderId: notificationForQueue.orderId,
           time: notificationForQueue.timestamp,
           notificationType: NotificationType.NewMessage,
           notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
-          orderType: notificationForQueue.orderType
         },
         background: {
           en: {
@@ -381,29 +378,29 @@ async function notifyOtherMessageParticipants(notificationForQueue: chat.Message
 // }
 
 
-// async function createAgoraTokensIfNotPresent(chatId: string, caller: chat.ParticipantWithAgora, callee: chat.ParticipantWithAgora, keys: Keys): Promise<string | null> {
-//   if (keys.agora == null)
-//     return null
-//   await setAgoraDetails(chatId, caller, keys)
-//   let calleetoken: string = await setAgoraDetails(chatId, callee, keys)
-//   return calleetoken;
-// }
+async function createAgoraTokensIfNotPresent(chatId: number, caller: chat.ParticipantWithAgora, callee: chat.ParticipantWithAgora, keys: Keys): Promise<string | null> {
+  if (keys.agora == null)
+    return null
+  await setAgoraDetails(chatId, caller.id, keys)
+  let calleetoken: string = await setAgoraDetails(chatId, callee.id, keys)
+  return calleetoken;
+}
 
-// async function setAgoraDetails(chatId: string, user: chat.Participant, keys: Keys): Promise<string> {
-//   // let expirationTime: number = Math.floor(Date.now() / 1000) + 24 * 60 * 60;
-//   let token: string = agora.RtcTokenBuilder.buildTokenWithUid(keys.agora!.appId,
-//     keys.agora!.certificate,
-//     chatId,
-//     user.id,
-//     agora.RtcRole.PUBLISHER,
-//     0);
-//   // await setUserAgoraInfo(chatId, user.particpantType, user.id, <chat.ParticipantAgoraDetails>{
-//   //   token: token,
-//   //   expirationTime: (new Date(expirationTime * 1000)).toISOString(),
-//   //   uid: user.id
-//   // })
-//   return token
-// }
+async function setAgoraDetails(chatId: number, userId: number, keys: Keys): Promise<string> {
+  let expirationTime: number = Math.floor(Date.now() / 1000) + 24 * 60 * 60;
+  let token: string = agora.RtcTokenBuilder.buildTokenWithUid(keys.agora!.appId,
+    keys.agora!.certificate,
+    chatId.toString(),
+    userId,
+    agora.RtcRole.PUBLISHER,
+    0
+  );
+  await setUserAgoraInfo(chatId, userId, <chat.ParticipantAgoraDetails>{
+    token,
+    expirationTime: (new Date(expirationTime * 1000)).toISOString(),
+  })
+  return token;
+}
 
 // function convertFbIdtoInt(uid: string): number {
 //   let encode = '';

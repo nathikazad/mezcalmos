@@ -5,9 +5,9 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -213,7 +213,6 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
 
 // FUNCTIONS //
   void assignMinimumChoices() {
-    // TODO : MONTASSAR
     if (widget.option.minimumChoice == 1) {
       widget.cartItem.value!.setNewChoices(
           optionId: optionId, newChoices: [widget.option.getChoices.first]);
@@ -232,6 +231,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
   }
 
   void handleChoiceCheckBox(Choice choice) {
+    mezDbgPrint(widget.option.maximumChoice);
     if (widget.cartItem.value!.chosenChoices[optionId]!.contains(choice)) {
       removeChoice(choice);
     } else if (widget.cartItem.value!.chosenChoices[optionId]!.length <

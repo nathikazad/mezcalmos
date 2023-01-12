@@ -1,5 +1,6 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
+import { ParticipantAgoraDetails } from "../../models/Generic/Chat";
 import { DeliveryDriver, DeliveryOrder } from "../../models/Generic/Delivery";
 import { CustomerInfo } from "../../models/Generic/User";
 import { Restaurant } from "../../models/Services/Restaurant/Restaurant";
@@ -157,4 +158,39 @@ export async function setDeliveryChatInfo(delivery: DeliveryOrder, deliveryDrive
       id: true
     },]
   });
+}
+
+export async function setUserAgoraInfo(chatId: number, userId: number, agoraDetails: ParticipantAgoraDetails) {
+  let chain = getHasura();
+  let response = await chain.query({
+    chat_by_pk: [{
+      id: chatId
+    }, {
+      agora_info: [{}, true]
+    }]
+  });
+  if((!response.chat_by_pk)) {
+    throw new HttpsError(
+      "internal",
+      "Incorrect chat id"
+    );
+  }
+  let agoraInfo: Record<number, ParticipantAgoraDetails> = {};
+  if(response.chat_by_pk.agora_info) {
+    agoraInfo = JSON.parse(response.chat_by_pk.agora_info);
+  }
+  agoraInfo[userId] = agoraDetails;
+  await chain.mutation({
+    update_chat_by_pk: [{
+      pk_columns: {
+        id: chatId
+      },
+      _set: {
+        agora_info: JSON.stringify(agoraInfo)
+      }
+    }, {
+      id: true,
+    }]
+  })
+  
 }

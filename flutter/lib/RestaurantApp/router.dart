@@ -15,7 +15,7 @@ import 'package:mezcalmos/RestaurantApp/pages/UnauthrizedOpView/UnauthrizedOpVie
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/pages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/widgets/Order/RestaurantOrderView/RestaurantOrderView.dart';
+import 'package:mezcalmos/Shared/pages/RestaurantOrderView/RestaurantOrderView.dart';
 
 // const String kCurrentOrdersListRoute = '/currentOrders';
 const String kCreateRestaurant = '/createRestuarant';

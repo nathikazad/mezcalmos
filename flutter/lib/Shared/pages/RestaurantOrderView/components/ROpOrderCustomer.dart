@@ -63,14 +63,15 @@ class ROpOrderCustomer extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // TODO handle @m66are handle chat root
                   MessageButton(
-                      showRedDot: false,
-                      onTap: () {
-                        MezRouter.toNamed(getMessagesRoute(
-                            chatId: order.chatId,
-                            recipientType: ParticipantType.Customer));
-                      }),
+                    onTap: () {
+                      MezRouter.toNamed(getMessagesRoute(
+                          chatId: order.chatId,
+                          recipientType: ParticipantType.DeliveryDriver,
+                          orderId: order.orderId));
+                    },
+                    chatId: order.chatId,
+                  ),
                 ],
               ),
             ),

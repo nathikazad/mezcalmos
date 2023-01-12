@@ -2,7 +2,7 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { AppType, Language } from "../../models/Generic/Generic";
 import { OrderType, PaymentType } from "../../models/Generic/Order";
-import { DeliveryCompanyType, DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus, ServiceProviderType } from "../../models/Generic/Delivery";
+import { DeliveryCompanyType, DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
 
 export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrder> {
   let chain = getHasura();
@@ -21,12 +21,13 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
         status: true,
         customer_id: true,
         delivery_cost: true,
+        service_provider_type: true,
+        service_provider_id : true,
         package_cost: true,
         order_time: true,
         delivery_driver_type: true,
         delivery_driver_id: true,
-        service_provider_type: true,
-        service_provider_id: true,
+       
         order_type: true,
         delivery_driver: {
           id: true,
@@ -58,6 +59,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
   }
   let delivery: DeliveryOrder = {
     deliveryId: deliveryId,
+    serviceProviderId : response.delivery_order_by_pk.service_provider_id,
     orderType: response.delivery_order_by_pk.order_type as OrderType,
     pickupLocation: {
       lat: response.delivery_order_by_pk.pickup_gps.coordinates[1],
@@ -78,8 +80,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
     packageCost: response.delivery_order_by_pk.package_cost,
     orderTime: response.delivery_order_by_pk.order_time,
     deliveryDriverType: response.delivery_order_by_pk.delivery_driver_type as DeliveryDriverType,
-    serviceProviderType: response.delivery_order_by_pk.service_provider_type as ServiceProviderType,
-    serviceProviderId: response.delivery_order_by_pk.service_provider_id
+    serviceProviderType: response.delivery_order_by_pk.service_provider_type as DeliveryServiceProviderType,
   }
   if(!(response.delivery_order_by_pk.delivery_driver_id)) {
     return delivery;

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() =>
@@ -64,15 +63,18 @@ class LaundryOrderDriverCard extends StatelessWidget {
                 ),
                 if (_getRightChatId() != null)
                   MessageButton(
-                      showRedDot: Get.find<OrderController>()
-                          .hasNewMessageNotification(_getRightChatId()!),
-                      onTap: () {
-                        MezRouter.toNamed(getMessagesRoute(
-                            chatId: _getRightChatId()!,
-                            orderId: order.orderId,
-                            orderType: OrderType.Laundry,
-                            recipientType: ParticipantType.DeliveryDriver));
-                      })
+                    onTap: () {
+                      MezRouter.toNamed(
+                        getMessagesRoute(
+                          chatId: _getRightChatId()!,
+                          recipientType: ParticipantType.DeliveryDriver,
+                          orderType: OrderType.Laundry,
+                          orderId: order.orderId,
+                        ),
+                      );
+                    },
+                    chatId: _getRightChatId()!,
+                  ),
               ],
             ),
           ));

@@ -4,6 +4,7 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     id
     notes
     scheduled_time
+
     restaurant {
       id
       firebase_id
@@ -89,20 +90,23 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     chat_id
     delivery_cost
     delivery {
+      trip_polyline
+      trip_distance
+      trip_duration
       actual_delivered_time
       actual_package_ready_time
       actual_arrival_at_pickup_time
       actual_arrival_at_dropoff_time
       chat_with_service_provider_id
+      chat_with_customer_id
       cancellation_time
       current_gps
 
       delivery_cost
 
       delivery_driver {
-         current_location
-       
-       
+        current_location
+
         user {
           id
           image
@@ -204,7 +208,11 @@ query get_restaurant_order_by_id($order_id: Int!) {
     }
     delivery_cost
     delivery {
+      trip_polyline
+      trip_distance
+      trip_duration
       chat_with_service_provider_id
+      chat_with_customer_id
       id
       actual_delivered_time
       actual_package_ready_time
@@ -215,10 +223,8 @@ query get_restaurant_order_by_id($order_id: Int!) {
 
       delivery_cost
       delivery_driver {
-       
         current_location
-       
-       
+
         user {
           id
           image

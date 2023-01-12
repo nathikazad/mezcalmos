@@ -35,20 +35,23 @@ class DeliveryAuthController extends GetxController {
   late AppLaunchMode _launchMode;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     // ------------------------------------------------------------------------
     mezDbgPrint("DeliveryAuthController: init $hashCode");
     mezDbgPrint(
         "DeliveryAuthController: calling handle state change first time");
-    setupDeliveryDriver();
+    await setupDeliveryDriver();
 
     const String _tmpLmode =
         String.fromEnvironment('LMODE', defaultValue: "prod");
     _launchMode = _tmpLmode.toLaunchMode();
-    _locationListener?.cancel();
-    _locationListener = _listenForLocation();
-    if (driver?.driverInfo.hasuraId != null) {
+
+    if (driver != null && driver?.driverInfo.hasuraId != null) {
       unawaited(saveNotificationToken());
+    }
+    if (driver?.deliveryDriverId != null) {
+      _locationListener?.cancel();
+      _locationListener = _listenForLocation();
     }
     super.onInit();
   }
@@ -64,11 +67,12 @@ class DeliveryAuthController extends GetxController {
         await _notificationsController.getToken();
     final NotificationInfo? notifInfo =
         await get_notif_info(userId: driver!.driverInfo.hasuraId);
-    mezDbgPrint("🫡🫡 saving notification info 🫡🫡");
+
     try {
       if (notifInfo != null &&
           deviceNotificationToken != null &&
           notifInfo.token != deviceNotificationToken) {
+        mezDbgPrint("🫡🫡 Updating notification info 🫡🫡");
         // ignore: unawaited_futures
         update_notif_info(
             notificationInfo: NotificationInfo(
@@ -77,6 +81,7 @@ class DeliveryAuthController extends GetxController {
                 id: notifInfo.id,
                 token: deviceNotificationToken));
       } else if (deviceNotificationToken != null && notifInfo == null) {
+        mezDbgPrint("🫡🫡 saving notification info First Time🫡🫡");
         // ignore: unawaited_futures
         insert_notif_info(
             userId: driver!.driverInfo.hasuraId,

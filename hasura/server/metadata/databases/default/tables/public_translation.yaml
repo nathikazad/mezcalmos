@@ -85,7 +85,6 @@ select_permissions:
 delete_permissions:
   - role: mez_admin
     permission:
-      backend_only: false
       filter:
         _exists:
           _table:
@@ -96,7 +95,6 @@ delete_permissions:
               _eq: X-Hasura-User-Id
   - role: restaurant_operator
     permission:
-      backend_only: false
       filter:
         restaurant:
           restaurant_operators:

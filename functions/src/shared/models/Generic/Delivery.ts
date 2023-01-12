@@ -28,7 +28,7 @@ export interface DeliveryOrder {
     customerReviewByDriverId?: number;
     customerId: number;
     serviceProviderId?: number;
-    serviceProviderType?: ServiceProviderType;
+    serviceProviderType?: DeliveryServiceProviderType;
     tripPolyline?: string;
     deliveryCost: number;
     packageCost?: number;
@@ -95,7 +95,7 @@ export enum DeliveryOrderStatus {
     CancelledByServiceProvider = "cancelledByServiceProvider"
 }
 
-export enum ServiceProviderType {
+export enum DeliveryServiceProviderType {
     Restaurnt = "restaurant",
     DeliveryCompany = "delivery_company"
 }

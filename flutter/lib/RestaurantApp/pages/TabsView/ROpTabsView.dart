@@ -57,8 +57,6 @@ class _ROpTabsViewViewState extends State<ROpTabsViewView> {
           canGoBack: false,
         );
 
-   
-
       case 1:
         return ROpMenuView(
           restID: opAuthController.restaurantId!,

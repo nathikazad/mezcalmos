@@ -22,7 +22,12 @@ class PickDriverController {
   }) async {
     this.orderId = orderId;
     // assigning restaurant data and start the stream subscription //
-    order.value = await get_driver_order_by_id(orderId: orderId);
+    try {
+      order.value = await get_driver_order_by_id(orderId: orderId);
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
     if (order.value != null) {
       serviceProviderId = order.value?.serviceInfo.hasuraId;
       await _getDrivers();

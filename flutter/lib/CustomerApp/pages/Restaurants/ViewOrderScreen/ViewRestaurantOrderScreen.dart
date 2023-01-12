@@ -31,6 +31,7 @@ import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
@@ -62,37 +63,6 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   RestaurantOrderStatus? _statusSnapshot;
 
-  Future<void> onTapButtonsShowLoading(Function function) async {
-    if (!_clickedButton) {
-      // set true to show loading button
-      setState(() {
-        _clickedButton = true;
-      });
-
-      await function();
-
-      // after function done set to back to false
-      setState(() {
-        _clickedButton = false;
-      });
-    }
-  }
-
-  Widget getWidgetOrShowLoading(Widget desiredWidget) {
-    if (!_clickedButton) {
-      return desiredWidget;
-    } else {
-      return Container(
-        width: 20,
-        height: 20,
-        child: CircularProgressIndicator(
-          color: Colors.white,
-          strokeWidth: 1.5,
-        ),
-      );
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -102,7 +72,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     if (Get.parameters['orderId'] == null) MezRouter.back();
     // orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
-    order.value = controller.getOrder(orderId) as RestaurantOrder?;
+    get_restaurant_order_by_id(orderId: orderId)
+        .then((RestaurantOrder? value) => order.value = value);
     mezDbgPrint("Got Order ===> ${order.value?.orderId}");
     // order.value = listen_on_restaurant_order(order_id: order_id, cus_id: cus_id).first;
     if (order.value != null) {
@@ -123,28 +94,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         }
       }
     });
-    // _orderListener =
-    //     controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
-    //   if (newOrderEvent != null) {
-    //     order.value = newOrderEvent as RestaurantOrder?;
-    //     if (order.value!.inProcess()) {
-    //       updateMapIfDeliveryPhase(order.value!.status);
-    //     }
-    //   }
-    // });
 
-    // waitForOrderIfNotLoaded().then((void value) {
-    //   if (order.value == null) {
-    //     // ignore: inference_failure_on_function_invocation
-    //     Future<void>.delayed(Duration.zero, () {
-    //       Get.back<void>();
-    //       MezSnackbar("Error", "Order does not exist");
-    //     });
-    //   } else {
-    //     initMap();
-    //     updateMapIfDeliveryPhase(order.value!.status);
-    //   }
-    // });
     super.initState();
   }
 
@@ -257,6 +207,9 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                                 style: Get.textTheme.bodyText1,
                               ),
                             ),
+                            OrderScheduledTimeCard(
+                                time: order.value!.scheduledTime,
+                                margin: const EdgeInsets.only(top: 20)),
                             RestaurantOrderDeliveryTimeCard(
                               order: order.value!,
                               margin: EdgeInsets.zero,

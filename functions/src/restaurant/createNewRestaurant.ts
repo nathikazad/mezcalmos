@@ -81,6 +81,6 @@ function notifyAdmins(mezAdmins: MezAdmin[], restaurant: Restaurant) {
     linkUrl: restaurantUrl(restaurant.restaurantId)
   }
   mezAdmins.forEach((m) => {
-    pushNotification(m.user?.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+    pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
   });
 }

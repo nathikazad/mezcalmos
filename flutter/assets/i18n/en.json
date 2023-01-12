@@ -14,9 +14,7 @@
                     "notifications": "Notifications",
                     "orders": "Orders"
                 }
-
             },
-
             "CustomerHomeFooterButtons": {
                 "privacyPolicy": "Privacy policy"
             },
@@ -39,7 +37,6 @@
         },
         "pages": {
             "cards": {
-
                 "SavedCardsListView": {
                     "cards": "Cards",
                     "card": "Card",
@@ -47,7 +44,6 @@
                     "removeTitle": "Remove card",
                     "removeDesc": "Are you sure you want to remove this card",
                     "removeBtn": "Yes, remove card"
-
                 }
             },
             "ListOrdersScreen": {
@@ -138,7 +134,6 @@
                     },
                     "ListRestaurantScreen": {
                         "restaurants": "Restaurants",
-
                         "search": "Search",
                         "showOnlyOpen": "Show only open restaurants",
                         "emptRestaurantList": "Sorry no restaurant found.",
@@ -156,7 +151,6 @@
                             "pickTime": "Pick your time",
                             "now": "Now",
                             "timeError": "Picked delivery time is passed, please pick a valid time"
-
                         },
                         "PaymentMethodPicker": {
                             "paymentMethod": "Payment method",
@@ -265,7 +259,6 @@
                             "foodReady": "Food ready",
                             "delivery": "Delivery"
                         },
-
                         "OrderStatusCard": {
                             "willBeReady": "Estimated food ready time",
                             "willBePicked": "Estimated pick-up time",
@@ -275,7 +268,6 @@
                             "dropOffTime": "Delivery time",
                             "selfDeliveryTitle": "Delivery handeled by restaurant",
                             "driver": "Delivery driver"
-
                         },
                         "OrderRestaurantCard": {
                             "restaurant": "Restaurant"
@@ -450,7 +442,6 @@
                             "cancel": "Cancel",
                             "taxiRidePriceTooltip": "Click + - to increase/decrease your price by 5. If you see your order not being accepted try them out.",
                             "serverCommunicationError": "Failed to communicate with the server :("
-
                         }
                     },
                     "ViewTaxiOrderScreen": {
@@ -492,7 +483,6 @@
                             "laundryReady": "Laundry ready time:",
                             "estTimes": "Estimated times"
                         },
-
                         "LaundryOrderDriverCard": {
                             "dropOffTime": "Delivery time",
                             "pickUpTime": "Pickup time"
@@ -526,7 +516,6 @@
                             "otwToLaundry": "On the way to laundry",
                             "pickedUpFromCustomer": "On the way to laundry",
                             "pickedUpFromLaundry": "Delivery on the way",
-
                             "cancelByAdmin": " Order Canceled by the admin",
                             "cancelByUser": " You canceled the order",
                             "received": " Order received and will be proceed as soon as possible",
@@ -539,8 +528,6 @@
                             "willBePickedUp": "Will be picked up",
                             "willBeReady": "Will be ready",
                             "willBeDropped": "Will be delivered"
-
-
                         },
                         "LaundryPricingComponent": {
                             "laundryPricing": "Laundry cost",
@@ -572,7 +559,6 @@
                         "laundry": "Laundry",
                         "estimatedDeliveryTime": "Estimated delivery time"
                     }
-
                 },
                 "LaundriesListView": {
                     "components": {
@@ -585,9 +571,7 @@
                             "startingFrom": "Starting"
                         }
                     },
-
                     "laundries": "Laundries",
-
                     "title": "Find your closest laundries\nor dry cleaners "
                 },
                 "SingleLaundryScreen": {
@@ -597,11 +581,9 @@
                     "openHours": "openHours",
                     "sendMyLaundry": "Send my laundry",
                     "categories": "Categories"
-
                 },
                 "LaundryRequestView": {
                     "LaundryOrderRequestView": {
-
                         "howItWorks": "How it works",
                         "deliveryLocation": "Delivery Location",
                         "orderSummary": "Order Summary",
@@ -671,7 +653,6 @@
         }
     },
     "Shared": {
-
         "controllers": {
             "authController": {
                 "failedOTPConfirmRequest": "OTP Code confirmation failed :("
@@ -709,7 +690,6 @@
                     "close": "Close",
                     "successTitle": "Thank you",
                     "successSubtitle": "Your review have been submitted successfuly"
-
                 }
             },
             "NotificationsHelper": {
@@ -732,7 +712,6 @@
                 "minuteAgo": "Minute ago",
                 "secondsAgo": "Seconds ago",
                 "now": "Just now"
-
             }
         },
         "pages": {
@@ -803,7 +782,6 @@
                     "deletePrBtn": "Yes, delete !",
                     "deleteScBtn": "Cancel",
                     "deleteHelper": "Clicking yes will permanently delete you account, are you sure?"
-
                 },
                 "UserProfileWidgets": {
                     "namePlaceHolder": "Enter your first name",
@@ -878,7 +856,6 @@
                 "sendedBody": "We will be in touch, shortly!",
                 "requiredError": "Field required",
                 "emailError": "Email is not correct"
-
             }
         },
         "widgets": {
@@ -906,7 +883,6 @@
             },
             "OrderPaymentMethod": {
                 "paymentMethod": "Payment method",
-
                 "cash": "Cash",
                 "newcard": "New Card",
                 "applepay": "Apple Pay",
@@ -915,6 +891,9 @@
             },
             "OrderDeliveryLocation": {
                 "title": "Delivery location"
+            },
+            "OrderScheduledTimeCard": {
+                "title": "Scheduled time"
             },
             "CreditCardInfo": {
                 "creditCardInfo": "Credit card info",
@@ -966,8 +945,6 @@
                     "from": "From :",
                     "to": "To :"
                 }
-
-
             },
             "LocationSearchComponent": {
                 "address": "Enter address"
@@ -1160,7 +1137,6 @@
                 "canceledByCustomer": "Order Cancelled",
                 "canceledByAdmin": "Order Cancelled"
             }
-
         },
         "pages": {
             "AdminDashboardView": {
@@ -1215,7 +1191,6 @@
                         "laundry": "Laundry",
                         "noLaundry": "Pick a laundry"
                     }
-
                 },
                 "driversListView": {
                     "driversListScreen": {
@@ -1226,7 +1201,6 @@
                                 "unavailable": "Unavailable"
                             }
                         }
-
                     }
                 },
                 "SingleLaundryScreen": {
@@ -1236,14 +1210,11 @@
                     "openHours": "openHours",
                     "sendMyLaundry": "Send my laundry",
                     "categories": "Categories"
-
                 },
                 "laundryListView": {
                     "laundriesListView": {
                         "title": "Pick a laundry",
                         "laundries": "Laundries",
-
-
                         "components": {
                             "laundrySelectCard": {
                                 "available": "Available",
@@ -1254,10 +1225,8 @@
                                 "startingFrom": "Starting from :"
                             }
                         }
-
                     }
                 },
-
                 "LaundryOrder": {
                     "Components": {
                         "LaundryOrderButtons": {
@@ -1326,9 +1295,7 @@
                             "currentOrders": "Current orders",
                             "pastOrders": "Past orders",
                             "noOrders": "No orders found"
-
                         }
-
                     },
                     "ListOrdersScreen": {
                         "title": "Orders",
@@ -1395,10 +1362,8 @@
                             "deliveryLocation": "Delivery Location"
                         }
                     }
-
                 },
                 "TaxiOrder": {
-
                     "components": {
                         "taxiOrderBottomCard": {
                             "customer": "Customer",
@@ -1422,8 +1387,6 @@
                                 "forwarding": "Forwarding to company",
                                 "forwardSuccess": "Forwarded",
                                 "forwardUnsuccess": "Forwarding canceled"
-
-
                             },
                             "TaxiOpenOrderControllButton": {
                                 "fwdToCompany": "Forward to company",
@@ -1432,26 +1395,18 @@
                                 "fwdAlertErrorText": "Please enter a valid taxi number",
                                 "taxiNumber": "Taxi number",
                                 "confirmTaxi": "Confirm local taxi"
-
-
                             }
-
                         }
-
                     },
                     "TaxiOrderView": {
                         "order": "Order"
                     }
-
-
                 }
             }
-
         }
     },
     "DeliveryApp": {
         "pages": {
-
             "OrderDetailsScreen": {
                 "cancelled": "Cancelled",
                 "approved": "Approved",
@@ -1465,7 +1420,6 @@
                 "customer": "Customer",
                 "restaurant": "Restaurant",
                 "laundry": "Laundry"
-
             },
             "RestaurantOrderView": {
                 "components": {
@@ -1484,7 +1438,6 @@
                         "RestaurantControllButtons": {
                             "confirmPickup": "Confirm Order Pickup",
                             "confirmDelivery": "Confirm Delivery"
-
                         }
                     }
                 },
@@ -1511,7 +1464,6 @@
                                 "restaurantDelivery": "Restaurant Delivery",
                                 "laundryPickup": "Laundry Pickup",
                                 "laundryDelivery": "Laundry Delivery"
-
                             },
                             "waiting": "Waiting",
                             "ready": "Ready",
@@ -1521,14 +1473,11 @@
                             "scheduled": "Scheduled"
                         }
                     }
-
-
                 },
                 "CurrentOrderViewScreen": {
                     "LaundryOrderView": {
                         "pickup": "Laundry Pick up",
                         "dropoff": "Laundry Delivery"
-
                     },
                     "Components": {
                         "AnimatedOrderInfoCard": {
@@ -1570,7 +1519,6 @@
                                 "timeErrorTitle": "Time not set!",
                                 "timeErrorBody": "Please set the estimated times first."
                             }
-
                         },
                         "DriverBottomRestaurantOrderCard": {
                             "restaurantDelivery": "Restaurant Delivery",
@@ -1601,11 +1549,6 @@
                                 "notReadyTitle": "Waiting for order",
                                 "notReadyBody": "Order is not ready for delivery yet",
                                 "startDelivery": "Start Delivery"
-
-
-
-
-
                             }
                         }
                     }
@@ -1633,7 +1576,6 @@
             "deliveredBody": "Order has been delivered",
             "driverNotifTitle": "New Order",
             "driverNotifBody": "You got a new order"
-
         }
     },
     "LaundryApp": {
@@ -1651,7 +1593,6 @@
                 "reviews": "Reviews"
             }
         },
-
         "pages": {
             "CategoryView": {
                 "components": {
@@ -1663,10 +1604,8 @@
                         "categoryPrice": "Category pricing per kilogramme",
                         "categoryPriceHint": "Enter category pricing per kilogramme...",
                         "categoryPriceError": "Please enter valid price"
-
                     }
                 },
-
                 "addCategory": "Add category",
                 "catDesc": "Catgeory description",
                 "catDescIn": "Catgeory description in",
@@ -1681,7 +1620,6 @@
                 "categoryNameError": "Please add a category name",
                 "catgeoryPriceError": "Please add a correct category price",
                 "categoryDescHint": "Enter a category description"
-
             },
             "DashboardView": {
                 "orders": "Orders",
@@ -1693,7 +1631,6 @@
                         "categories": "Categories",
                         "addCategory": "Add category",
                         "editMyInfo": "Edit my information"
-
                     }
                 },
                 "OrdersListView": {
@@ -1717,7 +1654,6 @@
                     "EditInfoController": {
                         "error": "Error",
                         "selectPrimaryFirst": "Select Primary language first"
-
                     }
                 },
                 "components": {
@@ -1744,7 +1680,6 @@
                     "CategoryGridCard": {
                         "nameTooltip": "Name missing in your selected primary language",
                         "deleteTitle": "Delete Category",
-
                         "deleteHelperText": "are you sure you would like to delete ?",
                         "yesDelete": "Yes, delete category"
                     },
@@ -1775,9 +1710,7 @@
                             "laundryFinish": "Finishing",
                             "driverArriving": "Driver arriving",
                             "willBeDropped": "Will be delivered"
-
                         }
-
                     },
                     "OrderEstimatedTimeComponent": {
                         "estFinishTime": "Estimated finish time",
@@ -1788,8 +1721,6 @@
                         "cancel": "Cancel",
                         "error": "Error",
                         "errorText": "Please select a correct time."
-
-
                     },
                     "LaundryOpOrderDriverCard": {
                         "driver": "Driver",
@@ -1798,7 +1729,6 @@
                         "pickUpTime": "Pickup time"
                     },
                     "LaundryOpSetCategoryComponent": {
-
                         "deleteTitle": "Yes, delete item",
                         "deleteBody": " are you sure you'd like to delete ?",
                         "deleteItem": "Delete item",
@@ -1821,8 +1751,6 @@
                         "perKilo": "Per kilo",
                         "weight": "Weight",
                         "cost": "Cost"
-
-
                     },
                     "LaundryOpOrderNote": {
                         "notes": "Notes"
@@ -1838,7 +1766,6 @@
                         "orderWeight": "Order Weight",
                         "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order."
                     }
-
                 },
                 "LaundryOpOrderView": {
                     "customer": "Customer Info",
@@ -1854,9 +1781,7 @@
             "newOrderBody": "You got a new order",
             "canceledOrderTitle": "Order cancelled",
             "canceledOrderBody": "Your order has been cancelled"
-
         }
-
     },
     "RestaurantApp": {
         "pages": {
@@ -1897,7 +1822,6 @@
                         "confirmRefund": "Confirm",
                         "dialogTitle": "Refund confirmed",
                         "dialogDesc": "Your customer will receive the refund soon."
-
                     },
                     "ROpOrderHandleButton": {
                         "prepareOrder": "Prepare order",
@@ -1906,7 +1830,6 @@
                     "ROpOrderEstTime": {
                         "title": "Estimated preparation time",
                         "deliveryTitle": "Estimated delivery time",
-
                         "set": "Set",
                         "confirm": "Confirm",
                         "cancel": "Cancel",
@@ -1970,7 +1893,6 @@
                         "errorText": "Image is required"
                     }
                 }
-
             },
             "ROpOptionView": {
                 "addOption": "Save option",
@@ -2018,7 +1940,6 @@
                 "incomingOrders": "Incoming orders",
                 "offlineTitle": "You are offline",
                 "offlineBody": "Turn on to see incoming orders"
-
             },
             "ROpMenuView": {
                 "menu": "Menu",
@@ -2052,7 +1973,6 @@
                         "deleteHelper": "Are you sure you want to delete this category",
                         "deleteBtn": "Yes, delete category"
                     }
-
                 }
             },
             "ROpPickDriverView": {
@@ -2069,7 +1989,6 @@
                 "pick": "Pick driver",
                 "fwdMezcalmos": "Forward to MezCalmos",
                 "assigning": "Assgining driver ..."
-
             },
             "ROpDriversView": {
                 "components": {
@@ -2114,7 +2033,6 @@
                 "logout": "Logout"
             },
             "ROpEditInfoView": {
-
                 "controllers": {
                     "ROpEditInfoController": {
                         "error": "Error",
@@ -2124,7 +2042,6 @@
                         "reviews": "Reviews",
                         "schedule": "Schedule",
                         "payments": "Payments"
-
                     }
                 },
                 "components": {
@@ -2148,7 +2065,6 @@
                         "setup": "Setup",
                         "fees": "Fees",
                         "chargeCustomer": "charge customer processing fees",
-
                         "setupHelper": "Thanks for setup , you can now receive payments but you will not be able to withdraw money to your bank account",
                         "reqs": "Requirements",
                         "emailId": "Email ID",
@@ -2173,7 +2089,6 @@
                             "open": "Open",
                             "closed": "Closed"
                         }
-
                     }
                 }
             }

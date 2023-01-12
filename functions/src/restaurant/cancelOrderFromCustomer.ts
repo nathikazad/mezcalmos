@@ -115,7 +115,7 @@ export async function cancelOrderFromCustomer(userId: number, data: any) {
       linkUrl: orderUrl(OrderType.Restaurant, data.orderId)
     }
     mezAdmins.forEach((m) => {
-        pushNotification(m.user?.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+        pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
     });
     restaurantOperators.forEach((r) => {
       pushNotification(r.user?.firebaseId!, notification, r.notificationInfo, ParticipantType.RestaurantOperator);

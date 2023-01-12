@@ -18,9 +18,7 @@ export interface CustomerInfo extends UserInfo {
   stripeInfo?: CustomerStripe
 }
 
-export interface MezAdmin {
-  userId: number,
+export interface MezAdmin extends UserInfo {
   version?: string,
   notificationInfo?: NotificationInfo,
-  user?: UserInfo,
 }

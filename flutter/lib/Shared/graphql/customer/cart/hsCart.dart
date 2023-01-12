@@ -125,7 +125,7 @@ Future<Cart?> getCustomerCart({required int customerId}) async {
 
 Future<void> create_customer_cart({int? restaurant_id}) async {
   mezDbgPrint("[JJ] Called :: create_customer_cart!");
-  final QueryResult<Mutation$create_customer_cart> InsertCartResponse =
+  final QueryResult<Mutation$create_customer_cart> res =
       await _hasuraDb.graphQLClient.mutate$create_customer_cart(
     Options$Mutation$create_customer_cart(
       fetchPolicy: FetchPolicy.noCache,
@@ -138,11 +138,11 @@ Future<void> create_customer_cart({int? restaurant_id}) async {
     ),
   );
 
-  if (InsertCartResponse.hasException) {
-    mezDbgPrint(
-        "[[JJ]] Called :: create_customer_cart :: exception ===> ${InsertCartResponse.exception}!");
+  if (res.parsedData?.insert_restaurant_cart_one == null) {
+    throw Exception(
+        "🛑🛑🛑🛑 create_customer_cart :: exception ===> ${res.exception}!");
   } else {
-    mezDbgPrint("[[JJ]] Called :: create_customer_cart :: SUCCESS!!!");
+    mezDbgPrint(" ✅✅✅ Called :: create_customer_cart :: SUCCESS!!!");
   }
 }
 
@@ -304,8 +304,8 @@ Future rm_item_from_cart({required int item_id}) async {
   }
 }
 
-Future clear_customer_cart({required int customer_id}) async {
-  final QueryResult<Mutation$clearCart> RmItemsResult =
+Future<bool> clear_customer_cart({required int customer_id}) async {
+  final QueryResult<Mutation$clearCart> response =
       await _hasuraDb.graphQLClient.mutate$clearCart(
     Options$Mutation$clearCart(
       fetchPolicy: FetchPolicy.noCache,
@@ -313,11 +313,13 @@ Future clear_customer_cart({required int customer_id}) async {
     ),
   );
 
-  if (RmItemsResult.hasException) {
-    mezDbgPrint(
-        "[cc] graphql::clear_customer_cart::exception :: ${RmItemsResult.exception}");
+  if (response.parsedData?.delete_restaurant_cart_item == null) {
+    throw Exception(
+        " 🛑🛑 Clear customer cart exceptions 🛑🛑 \n ${response.exception}");
   } else {
-    mezDbgPrint("[cc] clear_customer_cart :: success :D ");
+    return response.parsedData?.delete_restaurant_cart_item!.affected_rows
+            .isGreaterThan(0) ==
+        true;
   }
 }
 
