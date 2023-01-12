@@ -170,7 +170,7 @@ function notifyAdmins(mezAdmins: MezAdmin[], orderId: number, restaurant: Restau
     linkUrl: orderUrl(OrderType.Restaurant, orderId)
   }
   mezAdmins.forEach((m) => {
-      pushNotification(m.user?.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+      pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
   });
 }
 

@@ -160,14 +160,12 @@ async function notifyMezAdminsNewRestaurant(notificationForQueue: NewRestaurantN
   }
   let mezAdmins = await getMezAdmins();
   mezAdmins.forEach((m) => {
-    if(m.user) {
       notifyUser.pushNotification(
-        m.user.firebaseId, 
+        m.firebaseId, 
         notification, 
         m.notificationInfo, 
         chat.ParticipantType.MezAdmin
       );
-    }
   });
   
 }

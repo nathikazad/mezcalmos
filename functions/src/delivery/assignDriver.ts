@@ -6,7 +6,7 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { deliveryNewOrderMessage } from "./bgNotificationMessages";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
-import { DelivererStatus, DeliveryCompanyType, DeliveryDriver, DeliveryDriverType, DeliveryOperatorStatus, DeliveryOrder, DeliveryOrderStatus, NewDeliveryOrderNotification, ServiceProviderType } from "../shared/models/Generic/Delivery";
+import { DelivererStatus, DeliveryCompanyType, DeliveryDriver, DeliveryDriverType, DeliveryOperatorStatus, DeliveryOrder, DeliveryOrderStatus, NewDeliveryOrderNotification, DeliveryServiceProviderType } from "../shared/models/Generic/Delivery";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { assignDeliveryDriver } from "../shared/graphql/delivery/driver/assignDeliverer";
 import { setDeliveryChatInfo } from "../shared/graphql/chat/setChatInfo";
@@ -40,7 +40,7 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
       );
     }
     let operator;
-    if(deliveryOrder.serviceProviderType == ServiceProviderType.DeliveryCompany) {
+    if(deliveryOrder.serviceProviderType == DeliveryServiceProviderType.DeliveryCompany) {
       operator = await getDeliveryOperatorByUserId(userId);
       if(operator.status != DeliveryOperatorStatus.Authorized) {
         throw new HttpsError(
@@ -97,9 +97,9 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
         );
       }
     }
-    if(((deliveryOrder.serviceProviderType == ServiceProviderType.DeliveryCompany) 
+    if(((deliveryOrder.serviceProviderType == DeliveryServiceProviderType.DeliveryCompany) 
         && (deliveryDriver.deliveryCompanyType == DeliveryCompanyType.Restaurant))
-      || ((deliveryOrder.serviceProviderType == ServiceProviderType.Restaurnt) 
+      || ((deliveryOrder.serviceProviderType == DeliveryServiceProviderType.Restaurnt) 
         && (deliveryDriver.deliveryCompanyType == DeliveryCompanyType.DeliveryCompany))) {
       throw new HttpsError(
         "internal",

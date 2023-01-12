@@ -19,17 +19,14 @@ export async function getMezAdmins(): Promise<MezAdmin[]> {
     });
     return response.mez_admin.map((m) => {
         return {
-            userId: m.user_id,
             version: m.version,
             notificationInfo: (m.notification_token) ? {
                 token: m.notification_token,
                 AppTypeId: AppType.MezAdmin
             } : undefined,
-            user: {
-                id: m.user_id,
-                firebaseId: m.user?.firebase_id!,
-                language: m.user?.language_id as Language
-            }
+            id: m.user_id,
+            firebaseId: m.user?.firebase_id!,
+            language: m.user?.language_id as Language
         }
     })
 

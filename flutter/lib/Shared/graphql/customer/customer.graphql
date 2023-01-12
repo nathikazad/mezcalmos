@@ -97,7 +97,6 @@ query get_customer_orders($customer_id : Int!) {
     to_location_address,
     estimated_food_ready_time,
     actual_food_ready_time,
-  
     refund_amount,
     delivery_id,
     status,
