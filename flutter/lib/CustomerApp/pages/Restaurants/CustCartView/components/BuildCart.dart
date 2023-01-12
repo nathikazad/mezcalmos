@@ -61,6 +61,7 @@ class CartItemsHeader extends StatelessWidget {
                               );
 
                               await viewController.cartController.clearCart();
+                              viewController.refrechCart();
 
                               MezRouter.popDialog<void>();
                             });

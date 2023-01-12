@@ -220,9 +220,7 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
     ),
   )
       .map<Cart?>((QueryResult<Subscription$listen_on_customer_cart> cart) {
-    mezDbgPrint(
-        "Stream triggred from cart controller ✅✅✅✅✅✅✅✅✅ =====> ${cart.parsedData?.toJson()}");
-    final Cart _c = Cart();
+    final Cart _cartEvent = Cart();
     final Subscription$listen_on_customer_cart$customer_by_pk$cart? parsedCart =
         cart.parsedData?.customer_by_pk?.cart;
     if (cart.parsedData?.customer_by_pk?.cart != null) {
@@ -230,7 +228,7 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
           _res = cart.parsedData?.customer_by_pk?.cart?.restaurant;
       if (cart.parsedData?.customer_by_pk?.cart?.restaurant != null) {
         mezDbgPrint("[UUUU] ===> Got the restaurant which is not null :D !");
-        _c.restaurant = Restaurant(
+        _cartEvent.restaurant = Restaurant(
           userInfo: ServiceInfo(
             hasuraId: _res!.id,
             image: _res.image,
@@ -269,7 +267,7 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
       parsedCart!.items.forEach(
           (Subscription$listen_on_customer_cart$customer_by_pk$cart$items
               cartitem) {
-        _c.addItem(
+        _cartEvent.addItem(
           CartItem(
             Item(
                 startsAt:
@@ -299,7 +297,7 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
         );
       });
     }
-    return null;
+    return _cartEvent;
   });
 }
 

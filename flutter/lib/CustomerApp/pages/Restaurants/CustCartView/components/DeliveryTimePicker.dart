@@ -194,6 +194,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
           }).then((DateTime? value) {
         if (value != null) {
           widget.viewCartController.cart.deliveryTime = value;
+          widget.viewCartController.refrechCart();
         }
       });
     } else {

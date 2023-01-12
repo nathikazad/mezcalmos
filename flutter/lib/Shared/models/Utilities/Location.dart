@@ -1,7 +1,6 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class Location {
   String address;
@@ -19,7 +18,6 @@ class Location {
   }
 
   factory Location.fromHasura(Geography locationData, address) {
-    mezDbgPrint("Location data =====>$locationData");
     final LocationData position = buildLocationData(
         locationData.latitude.toDouble(), locationData.longitude.toDouble());
     return Location(address, position);

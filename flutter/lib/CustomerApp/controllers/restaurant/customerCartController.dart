@@ -29,9 +29,8 @@ class CustomerCartController extends GetxController {
   }
 
   Future<void> _initCart() async {
-    cart.value = await get_customer_cart(customerId: _auth.hasuraUserId!);
-    mezDbgPrint(
-        "Initing Cart Stream ============😛 ===>${_auth.hasuraUserId!}");
+    await fetchCart();
+
     subscriptionId = _hasuraDb.createSubscription(start: () {
       cartStream = listen_on_customer_cart(customer_id: _auth.hasuraUserId!)
           .listen((Cart? event) {
@@ -39,6 +38,7 @@ class CustomerCartController extends GetxController {
           mezDbgPrint(
               "Stream triggred from cart controller ✅✅✅✅✅✅✅✅✅ =====> ${event.toFirebaseFormattedJson()}");
           cart.value = event;
+          cart.value?.restaurant = event.restaurant;
           cart.refresh();
         }
       });
@@ -54,7 +54,7 @@ class CustomerCartController extends GetxController {
     super.onClose();
   }
 
-  Future<void> _fetchCart() async {
+  Future<void> fetchCart() async {
     if (_auth.hasuraUserId != null) {
       final Cart? value = await get_customer_cart(
         customerId: _auth.user!.hasuraId,

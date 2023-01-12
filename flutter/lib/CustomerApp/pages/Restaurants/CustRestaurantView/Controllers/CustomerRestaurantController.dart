@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
@@ -156,7 +155,7 @@ class CustomerRestaurantController {
     final SplayTreeMap<DateTime, List<Item>> sortedMap =
         SplayTreeMap<DateTime, List<Item>>.from(data,
             (DateTime a, DateTime b) => a.toLocal().compareTo(b.toLocal()));
-    mezDbgPrint("[66] - getGroupedSpecials ===>${sortedMap.length}");
+
     return sortedMap;
   }
 

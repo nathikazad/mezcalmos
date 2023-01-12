@@ -65,6 +65,7 @@ class CustCartViewController {
   Future<void> init() async {
     unawaited(get_delivery_cost(serviceProviderId: 1, withCache: false)
         .then((DeliveryCost? value) => _mezDeliveryCost.value = value));
+
     if (customerAuthController.customer?.savedCards.isNotEmpty == true)
       savedCardChoice = customerAuthController.customer?.savedCards.first;
     orderToLocation.value =
@@ -339,7 +340,7 @@ class CustCartViewController {
     isShippingSet.value = false;
     final LocModel.Location? loc = cart.toLocation;
 
-    if (loc != null) {
+    if (loc != null && cart.restaurant != null) {
       final MapHelper.Route? routeInfo = await MapHelper.getDurationAndDistance(
         cart.restaurant!.info.location,
         loc,
@@ -412,6 +413,10 @@ class CustCartViewController {
     } else {
       return true;
     }
+  }
+
+  void refrechCart() {
+    _cartRxn.refresh();
   }
 }
 

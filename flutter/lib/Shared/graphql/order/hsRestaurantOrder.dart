@@ -92,7 +92,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
 
       final RestaurantOrder res = RestaurantOrder(
         dropOffDriverChatId: orderData.delivery?.chat_with_service_provider_id,
-        chatId: orderData.chat_id,
+        chatId: orderData.chat_id!,
         orderId: orderData.id,
         notes: orderData.notes,
         estimatedFoodReadyTime: (orderData.estimated_food_ready_time != null)
@@ -143,7 +143,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
                 name: orderData.delivery!.delivery_driver!.user.name,
                 image: orderData.delivery!.delivery_driver!.user.image,
                 language: orderData.delivery!.delivery_driver!.user.language_id
-                    .toLanguageType())
+                    ?.toLanguageType())
             : null,
         scheduledTime: (orderData.scheduled_time != null)
             ? DateTime.tryParse(orderData.scheduled_time!)
@@ -233,7 +233,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
   });
 
   final RestaurantOrder res = RestaurantOrder(
-    chatId: orderData.chat_id,
+    chatId: orderData.chat_id!,
     customerDropOffDriverChatId: orderData.delivery?.chat_with_customer_id,
     scheduledTime: (orderData.scheduled_time != null)
         ? DateTime.tryParse(orderData.scheduled_time!)
@@ -276,7 +276,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
             name: orderData.delivery!.delivery_driver!.user.name,
             image: orderData.delivery!.delivery_driver!.user.image,
             language: orderData.delivery!.delivery_driver!.user.language_id
-                .toLanguageType())
+                ?.toLanguageType())
         : null,
     review: (orderData.review != null)
         ? Review(

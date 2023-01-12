@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
@@ -16,6 +17,7 @@ class AuthHooks {
     await Get.delete<Sagora>(force: true);
     await Get.delete<CustomerAuthController>(force: true);
     // await Get.delete<OrderController>(force: true);
+    await Get.delete<CustomerCartController>(force: true);
     await Get.delete<TaxiController>(force: true);
     //   await Get.delete<RestaurantController>(force: true);
     await Get.delete<BackgroundNotificationsController>(force: true);
@@ -39,6 +41,8 @@ class AuthHooks {
     /// Put CustomerAuthController
     Get.put<Sagora>(Sagora(), permanent: true);
     Get.put<CustomerAuthController>(CustomerAuthController(), permanent: true);
+    Get.put<CustomerCartController>(CustomerCartController(), permanent: true);
+
     Get.put<ForegroundNotificationsController>(
         ForegroundNotificationsController(),
         permanent: true);
