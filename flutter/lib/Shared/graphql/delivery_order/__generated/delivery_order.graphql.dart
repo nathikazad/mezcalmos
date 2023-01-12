@@ -568,13 +568,6 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'stripe_payment_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'trip_distance'),
             alias: null,
             arguments: [],
@@ -805,7 +798,6 @@ class Query$get_driver_order$delivery_order_by_pk {
     this.service_provider_review_by_driver_id,
     this.service_provider_type,
     required this.status,
-    this.stripe_payment_id,
     this.trip_distance,
     this.trip_duration,
     this.trip_polyline,
@@ -850,7 +842,6 @@ class Query$get_driver_order$delivery_order_by_pk {
         json['service_provider_review_by_driver_id'];
     final l$service_provider_type = json['service_provider_type'];
     final l$status = json['status'];
-    final l$stripe_payment_id = json['stripe_payment_id'];
     final l$trip_distance = json['trip_distance'];
     final l$trip_duration = json['trip_duration'];
     final l$trip_polyline = json['trip_polyline'];
@@ -901,7 +892,6 @@ class Query$get_driver_order$delivery_order_by_pk {
           (l$service_provider_review_by_driver_id as int?),
       service_provider_type: (l$service_provider_type as String?),
       status: (l$status as String),
-      stripe_payment_id: (l$stripe_payment_id as int?),
       trip_distance: (l$trip_distance as int?),
       trip_duration: (l$trip_duration as int?),
       trip_polyline: (l$trip_polyline as String?),
@@ -970,8 +960,6 @@ class Query$get_driver_order$delivery_order_by_pk {
   final String? service_provider_type;
 
   final String status;
-
-  final int? stripe_payment_id;
 
   final int? trip_distance;
 
@@ -1054,8 +1042,6 @@ class Query$get_driver_order$delivery_order_by_pk {
     _resultData['service_provider_type'] = l$service_provider_type;
     final l$status = status;
     _resultData['status'] = l$status;
-    final l$stripe_payment_id = stripe_payment_id;
-    _resultData['stripe_payment_id'] = l$stripe_payment_id;
     final l$trip_distance = trip_distance;
     _resultData['trip_distance'] = l$trip_distance;
     final l$trip_duration = trip_duration;
@@ -1102,7 +1088,6 @@ class Query$get_driver_order$delivery_order_by_pk {
         service_provider_review_by_driver_id;
     final l$service_provider_type = service_provider_type;
     final l$status = status;
-    final l$stripe_payment_id = stripe_payment_id;
     final l$trip_distance = trip_distance;
     final l$trip_duration = trip_duration;
     final l$trip_polyline = trip_polyline;
@@ -1138,7 +1123,6 @@ class Query$get_driver_order$delivery_order_by_pk {
       l$service_provider_review_by_driver_id,
       l$service_provider_type,
       l$status,
-      l$stripe_payment_id,
       l$trip_distance,
       l$trip_duration,
       l$trip_polyline,
@@ -1317,11 +1301,6 @@ class Query$get_driver_order$delivery_order_by_pk {
     if (l$status != lOther$status) {
       return false;
     }
-    final l$stripe_payment_id = stripe_payment_id;
-    final lOther$stripe_payment_id = other.stripe_payment_id;
-    if (l$stripe_payment_id != lOther$stripe_payment_id) {
-      return false;
-    }
     final l$trip_distance = trip_distance;
     final lOther$trip_distance = other.trip_distance;
     if (l$trip_distance != lOther$trip_distance) {
@@ -1402,7 +1381,6 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk<TRes> {
     int? service_provider_review_by_driver_id,
     String? service_provider_type,
     String? status,
-    int? stripe_payment_id,
     int? trip_distance,
     int? trip_duration,
     String? trip_polyline,
@@ -1462,7 +1440,6 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     Object? service_provider_review_by_driver_id = _undefined,
     Object? service_provider_type = _undefined,
     Object? status = _undefined,
-    Object? stripe_payment_id = _undefined,
     Object? trip_distance = _undefined,
     Object? trip_duration = _undefined,
     Object? trip_polyline = _undefined,
@@ -1566,9 +1543,6 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
-        stripe_payment_id: stripe_payment_id == _undefined
-            ? _instance.stripe_payment_id
-            : (stripe_payment_id as int?),
         trip_distance: trip_distance == _undefined
             ? _instance.trip_distance
             : (trip_distance as int?),
@@ -1662,7 +1636,6 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     int? service_provider_review_by_driver_id,
     String? service_provider_type,
     String? status,
-    int? stripe_payment_id,
     int? trip_distance,
     int? trip_duration,
     String? trip_polyline,
@@ -2396,7 +2369,7 @@ class Query$get_driver_order$delivery_order_by_pk$customer$user {
     required this.id,
     this.image,
     this.name,
-    required this.language_id,
+    this.language_id,
     required this.$__typename,
   });
 
@@ -2411,7 +2384,7 @@ class Query$get_driver_order$delivery_order_by_pk$customer$user {
       id: (l$id as int),
       image: (l$image as String?),
       name: (l$name as String?),
-      language_id: (l$language_id as String),
+      language_id: (l$language_id as String?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -2422,7 +2395,7 @@ class Query$get_driver_order$delivery_order_by_pk$customer$user {
 
   final String? name;
 
-  final String language_id;
+  final String? language_id;
 
   final String $__typename;
 
@@ -2555,9 +2528,9 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$customer$user<
         id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined ? _instance.image : (image as String?),
         name: name == _undefined ? _instance.name : (name as String?),
-        language_id: language_id == _undefined || language_id == null
+        language_id: language_id == _undefined
             ? _instance.language_id
-            : (language_id as String),
+            : (language_id as String?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -3160,13 +3133,6 @@ const documentNodeSubscriptionlisten_on_driver_order =
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'stripe_payment_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'trip_distance'),
             alias: null,
             arguments: [],
@@ -3371,7 +3337,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     this.service_provider_review_by_driver_id,
     this.service_provider_type,
     required this.status,
-    this.stripe_payment_id,
     this.trip_distance,
     this.trip_duration,
     this.trip_polyline,
@@ -3416,7 +3381,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
         json['service_provider_review_by_driver_id'];
     final l$service_provider_type = json['service_provider_type'];
     final l$status = json['status'];
-    final l$stripe_payment_id = json['stripe_payment_id'];
     final l$trip_distance = json['trip_distance'];
     final l$trip_duration = json['trip_duration'];
     final l$trip_polyline = json['trip_polyline'];
@@ -3467,7 +3431,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
           (l$service_provider_review_by_driver_id as int?),
       service_provider_type: (l$service_provider_type as String?),
       status: (l$status as String),
-      stripe_payment_id: (l$stripe_payment_id as int?),
       trip_distance: (l$trip_distance as int?),
       trip_duration: (l$trip_duration as int?),
       trip_polyline: (l$trip_polyline as String?),
@@ -3538,8 +3501,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
   final String? service_provider_type;
 
   final String status;
-
-  final int? stripe_payment_id;
 
   final int? trip_distance;
 
@@ -3623,8 +3584,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     _resultData['service_provider_type'] = l$service_provider_type;
     final l$status = status;
     _resultData['status'] = l$status;
-    final l$stripe_payment_id = stripe_payment_id;
-    _resultData['stripe_payment_id'] = l$stripe_payment_id;
     final l$trip_distance = trip_distance;
     _resultData['trip_distance'] = l$trip_distance;
     final l$trip_duration = trip_duration;
@@ -3671,7 +3630,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
         service_provider_review_by_driver_id;
     final l$service_provider_type = service_provider_type;
     final l$status = status;
-    final l$stripe_payment_id = stripe_payment_id;
     final l$trip_distance = trip_distance;
     final l$trip_duration = trip_duration;
     final l$trip_polyline = trip_polyline;
@@ -3707,7 +3665,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
       l$service_provider_review_by_driver_id,
       l$service_provider_type,
       l$status,
-      l$stripe_payment_id,
       l$trip_distance,
       l$trip_duration,
       l$trip_polyline,
@@ -3886,11 +3843,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     if (l$status != lOther$status) {
       return false;
     }
-    final l$stripe_payment_id = stripe_payment_id;
-    final lOther$stripe_payment_id = other.stripe_payment_id;
-    if (l$stripe_payment_id != lOther$stripe_payment_id) {
-      return false;
-    }
     final l$trip_distance = trip_distance;
     final lOther$trip_distance = other.trip_distance;
     if (l$trip_distance != lOther$trip_distance) {
@@ -3976,7 +3928,6 @@ abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk
     int? service_provider_review_by_driver_id,
     String? service_provider_type,
     String? status,
-    int? stripe_payment_id,
     int? trip_distance,
     int? trip_duration,
     String? trip_polyline,
@@ -4040,7 +3991,6 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk<
     Object? service_provider_review_by_driver_id = _undefined,
     Object? service_provider_type = _undefined,
     Object? status = _undefined,
-    Object? stripe_payment_id = _undefined,
     Object? trip_distance = _undefined,
     Object? trip_duration = _undefined,
     Object? trip_polyline = _undefined,
@@ -4144,9 +4094,6 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk<
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
-        stripe_payment_id: stripe_payment_id == _undefined
-            ? _instance.stripe_payment_id
-            : (stripe_payment_id as int?),
         trip_distance: trip_distance == _undefined
             ? _instance.trip_distance
             : (trip_distance as int?),
@@ -4245,7 +4192,6 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
     int? service_provider_review_by_driver_id,
     String? service_provider_type,
     String? status,
-    int? stripe_payment_id,
     int? trip_distance,
     int? trip_duration,
     String? trip_polyline,
@@ -5014,7 +4960,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$customer$user {
     required this.id,
     this.image,
     this.name,
-    required this.language_id,
+    this.language_id,
     required this.$__typename,
   });
 
@@ -5029,7 +4975,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$customer$user {
       id: (l$id as int),
       image: (l$image as String?),
       name: (l$name as String?),
-      language_id: (l$language_id as String),
+      language_id: (l$language_id as String?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -5040,7 +4986,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$customer$user {
 
   final String? name;
 
-  final String language_id;
+  final String? language_id;
 
   final String $__typename;
 
@@ -5179,9 +5125,9 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$cus
         id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined ? _instance.image : (image as String?),
         name: name == _undefined ? _instance.name : (name as String?),
-        language_id: language_id == _undefined || language_id == null
+        language_id: language_id == _undefined
             ? _instance.language_id
-            : (language_id as String),
+            : (language_id as String?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),

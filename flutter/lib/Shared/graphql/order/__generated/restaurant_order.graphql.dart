@@ -644,13 +644,6 @@ const documentNodeSubscriptionlisten_on_restaurant_order_by_id =
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'stripe_payment_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'refund_amount'),
             alias: null,
             arguments: [],
@@ -1173,7 +1166,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     this.to_location_address,
     this.estimated_food_ready_time,
     this.actual_food_ready_time,
-    this.stripe_payment_id,
     required this.refund_amount,
     this.delivery_id,
     required this.status,
@@ -1187,7 +1179,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     required this.tax,
     this.total_cost,
     this.items_cost,
-    required this.chat_id,
+    this.chat_id,
     required this.delivery_cost,
     this.delivery,
     required this.$__typename,
@@ -1205,7 +1197,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$to_location_address = json['to_location_address'];
     final l$estimated_food_ready_time = json['estimated_food_ready_time'];
     final l$actual_food_ready_time = json['actual_food_ready_time'];
-    final l$stripe_payment_id = json['stripe_payment_id'];
     final l$refund_amount = json['refund_amount'];
     final l$delivery_id = json['delivery_id'];
     final l$status = json['status'];
@@ -1242,7 +1233,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
       to_location_address: (l$to_location_address as String?),
       estimated_food_ready_time: (l$estimated_food_ready_time as String?),
       actual_food_ready_time: (l$actual_food_ready_time as String?),
-      stripe_payment_id: (l$stripe_payment_id as int?),
       refund_amount: moneyFromJson(l$refund_amount),
       delivery_id: (l$delivery_id as int?),
       status: (l$status as String),
@@ -1261,7 +1251,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
       tax: moneyFromJson(l$tax),
       total_cost: l$total_cost == null ? null : moneyFromJson(l$total_cost),
       items_cost: l$items_cost == null ? null : moneyFromJson(l$items_cost),
-      chat_id: (l$chat_id as int),
+      chat_id: (l$chat_id as int?),
       delivery_cost: moneyFromJson(l$delivery_cost),
       delivery: l$delivery == null
           ? null
@@ -1294,8 +1284,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
 
   final String? actual_food_ready_time;
 
-  final int? stripe_payment_id;
-
   final double refund_amount;
 
   final int? delivery_id;
@@ -1324,7 +1312,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
 
   final double? items_cost;
 
-  final int chat_id;
+  final int? chat_id;
 
   final double delivery_cost;
 
@@ -1356,8 +1344,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     _resultData['estimated_food_ready_time'] = l$estimated_food_ready_time;
     final l$actual_food_ready_time = actual_food_ready_time;
     _resultData['actual_food_ready_time'] = l$actual_food_ready_time;
-    final l$stripe_payment_id = stripe_payment_id;
-    _resultData['stripe_payment_id'] = l$stripe_payment_id;
     final l$refund_amount = refund_amount;
     _resultData['refund_amount'] = moneyToJson(l$refund_amount);
     final l$delivery_id = delivery_id;
@@ -1409,7 +1395,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$to_location_address = to_location_address;
     final l$estimated_food_ready_time = estimated_food_ready_time;
     final l$actual_food_ready_time = actual_food_ready_time;
-    final l$stripe_payment_id = stripe_payment_id;
     final l$refund_amount = refund_amount;
     final l$delivery_id = delivery_id;
     final l$status = status;
@@ -1438,7 +1423,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
       l$to_location_address,
       l$estimated_food_ready_time,
       l$actual_food_ready_time,
-      l$stripe_payment_id,
       l$refund_amount,
       l$delivery_id,
       l$status,
@@ -1524,11 +1508,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$actual_food_ready_time = actual_food_ready_time;
     final lOther$actual_food_ready_time = other.actual_food_ready_time;
     if (l$actual_food_ready_time != lOther$actual_food_ready_time) {
-      return false;
-    }
-    final l$stripe_payment_id = stripe_payment_id;
-    final lOther$stripe_payment_id = other.stripe_payment_id;
-    if (l$stripe_payment_id != lOther$stripe_payment_id) {
       return false;
     }
     final l$refund_amount = refund_amount;
@@ -1658,7 +1637,6 @@ abstract class CopyWith$Subscription$listen_on_restaurant_order_by_id$restaurant
     String? to_location_address,
     String? estimated_food_ready_time,
     String? actual_food_ready_time,
-    int? stripe_payment_id,
     double? refund_amount,
     int? delivery_id,
     String? status,
@@ -1726,7 +1704,6 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
     Object? to_location_address = _undefined,
     Object? estimated_food_ready_time = _undefined,
     Object? actual_food_ready_time = _undefined,
-    Object? stripe_payment_id = _undefined,
     Object? refund_amount = _undefined,
     Object? delivery_id = _undefined,
     Object? status = _undefined,
@@ -1775,9 +1752,6 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
         actual_food_ready_time: actual_food_ready_time == _undefined
             ? _instance.actual_food_ready_time
             : (actual_food_ready_time as String?),
-        stripe_payment_id: stripe_payment_id == _undefined
-            ? _instance.stripe_payment_id
-            : (stripe_payment_id as int?),
         refund_amount: refund_amount == _undefined || refund_amount == null
             ? _instance.refund_amount
             : (refund_amount as double),
@@ -1817,9 +1791,7 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
         items_cost: items_cost == _undefined
             ? _instance.items_cost
             : (items_cost as double?),
-        chat_id: chat_id == _undefined || chat_id == null
-            ? _instance.chat_id
-            : (chat_id as int),
+        chat_id: chat_id == _undefined ? _instance.chat_id : (chat_id as int?),
         delivery_cost: delivery_cost == _undefined || delivery_cost == null
             ? _instance.delivery_cost
             : (delivery_cost as double),
@@ -1901,7 +1873,6 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
     String? to_location_address,
     String? estimated_food_ready_time,
     String? actual_food_ready_time,
-    int? stripe_payment_id,
     double? refund_amount,
     int? delivery_id,
     String? status,
@@ -5138,7 +5109,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     this.image,
     this.name,
     required this.firebase_id,
-    required this.language_id,
+    this.language_id,
     required this.$__typename,
   });
 
@@ -5155,7 +5126,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
       image: (l$image as String?),
       name: (l$name as String?),
       firebase_id: (l$firebase_id as String),
-      language_id: (l$language_id as String),
+      language_id: (l$language_id as String?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -5168,7 +5139,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
 
   final String firebase_id;
 
-  final String language_id;
+  final String? language_id;
 
   final String $__typename;
 
@@ -5321,9 +5292,9 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
         firebase_id: firebase_id == _undefined || firebase_id == null
             ? _instance.firebase_id
             : (firebase_id as String),
-        language_id: language_id == _undefined || language_id == null
+        language_id: language_id == _undefined
             ? _instance.language_id
-            : (language_id as String),
+            : (language_id as String?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -5976,13 +5947,6 @@ const documentNodeQueryget_restaurant_order_by_id = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'stripe_payment_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'refund_amount'),
             alias: null,
             arguments: [],
@@ -6542,7 +6506,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     this.to_location_address,
     this.estimated_food_ready_time,
     this.actual_food_ready_time,
-    this.stripe_payment_id,
     required this.refund_amount,
     this.delivery_id,
     required this.status,
@@ -6555,7 +6518,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     required this.tax,
     this.total_cost,
     this.items_cost,
-    required this.chat_id,
+    this.chat_id,
     required this.customer,
     required this.delivery_cost,
     this.delivery,
@@ -6574,7 +6537,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     final l$to_location_address = json['to_location_address'];
     final l$estimated_food_ready_time = json['estimated_food_ready_time'];
     final l$actual_food_ready_time = json['actual_food_ready_time'];
-    final l$stripe_payment_id = json['stripe_payment_id'];
     final l$refund_amount = json['refund_amount'];
     final l$delivery_id = json['delivery_id'];
     final l$status = json['status'];
@@ -6611,7 +6573,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
       to_location_address: (l$to_location_address as String?),
       estimated_food_ready_time: (l$estimated_food_ready_time as String?),
       actual_food_ready_time: (l$actual_food_ready_time as String?),
-      stripe_payment_id: (l$stripe_payment_id as int?),
       refund_amount: moneyFromJson(l$refund_amount),
       delivery_id: (l$delivery_id as int?),
       status: (l$status as String),
@@ -6627,7 +6588,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
       tax: moneyFromJson(l$tax),
       total_cost: l$total_cost == null ? null : moneyFromJson(l$total_cost),
       items_cost: l$items_cost == null ? null : moneyFromJson(l$items_cost),
-      chat_id: (l$chat_id as int),
+      chat_id: (l$chat_id as int?),
       customer: Query$get_restaurant_order_by_id$restaurant_order_by_pk$customer
           .fromJson((l$customer as Map<String, dynamic>)),
       delivery_cost: moneyFromJson(l$delivery_cost),
@@ -6661,8 +6622,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
 
   final String? actual_food_ready_time;
 
-  final int? stripe_payment_id;
-
   final double refund_amount;
 
   final int? delivery_id;
@@ -6687,7 +6646,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
 
   final double? items_cost;
 
-  final int chat_id;
+  final int? chat_id;
 
   final Query$get_restaurant_order_by_id$restaurant_order_by_pk$customer
       customer;
@@ -6722,8 +6681,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     _resultData['estimated_food_ready_time'] = l$estimated_food_ready_time;
     final l$actual_food_ready_time = actual_food_ready_time;
     _resultData['actual_food_ready_time'] = l$actual_food_ready_time;
-    final l$stripe_payment_id = stripe_payment_id;
-    _resultData['stripe_payment_id'] = l$stripe_payment_id;
     final l$refund_amount = refund_amount;
     _resultData['refund_amount'] = moneyToJson(l$refund_amount);
     final l$delivery_id = delivery_id;
@@ -6775,7 +6732,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     final l$to_location_address = to_location_address;
     final l$estimated_food_ready_time = estimated_food_ready_time;
     final l$actual_food_ready_time = actual_food_ready_time;
-    final l$stripe_payment_id = stripe_payment_id;
     final l$refund_amount = refund_amount;
     final l$delivery_id = delivery_id;
     final l$status = status;
@@ -6804,7 +6760,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
       l$to_location_address,
       l$estimated_food_ready_time,
       l$actual_food_ready_time,
-      l$stripe_payment_id,
       l$refund_amount,
       l$delivery_id,
       l$status,
@@ -6889,11 +6844,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     final l$actual_food_ready_time = actual_food_ready_time;
     final lOther$actual_food_ready_time = other.actual_food_ready_time;
     if (l$actual_food_ready_time != lOther$actual_food_ready_time) {
-      return false;
-    }
-    final l$stripe_payment_id = stripe_payment_id;
-    final lOther$stripe_payment_id = other.stripe_payment_id;
-    if (l$stripe_payment_id != lOther$stripe_payment_id) {
       return false;
     }
     final l$refund_amount = refund_amount;
@@ -7019,7 +6969,6 @@ abstract class CopyWith$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
     String? to_location_address,
     String? estimated_food_ready_time,
     String? actual_food_ready_time,
-    int? stripe_payment_id,
     double? refund_amount,
     int? delivery_id,
     String? status,
@@ -7081,7 +7030,6 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
     Object? to_location_address = _undefined,
     Object? estimated_food_ready_time = _undefined,
     Object? actual_food_ready_time = _undefined,
-    Object? stripe_payment_id = _undefined,
     Object? refund_amount = _undefined,
     Object? delivery_id = _undefined,
     Object? status = _undefined,
@@ -7129,9 +7077,6 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
         actual_food_ready_time: actual_food_ready_time == _undefined
             ? _instance.actual_food_ready_time
             : (actual_food_ready_time as String?),
-        stripe_payment_id: stripe_payment_id == _undefined
-            ? _instance.stripe_payment_id
-            : (stripe_payment_id as int?),
         refund_amount: refund_amount == _undefined || refund_amount == null
             ? _instance.refund_amount
             : (refund_amount as double),
@@ -7167,9 +7112,7 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
         items_cost: items_cost == _undefined
             ? _instance.items_cost
             : (items_cost as double?),
-        chat_id: chat_id == _undefined || chat_id == null
-            ? _instance.chat_id
-            : (chat_id as int),
+        chat_id: chat_id == _undefined ? _instance.chat_id : (chat_id as int?),
         customer: customer == _undefined || customer == null
             ? _instance.customer
             : (customer
@@ -7253,7 +7196,6 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
     String? to_location_address,
     String? estimated_food_ready_time,
     String? actual_food_ready_time,
-    int? stripe_payment_id,
     double? refund_amount,
     int? delivery_id,
     String? status,
@@ -10485,7 +10427,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_
     this.image,
     this.name,
     required this.firebase_id,
-    required this.language_id,
+    this.language_id,
     required this.$__typename,
   });
 
@@ -10502,7 +10444,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_
       image: (l$image as String?),
       name: (l$name as String?),
       firebase_id: (l$firebase_id as String),
-      language_id: (l$language_id as String),
+      language_id: (l$language_id as String?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -10515,7 +10457,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_
 
   final String firebase_id;
 
-  final String language_id;
+  final String? language_id;
 
   final String $__typename;
 
@@ -10668,9 +10610,9 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$deli
         firebase_id: firebase_id == _undefined || firebase_id == null
             ? _instance.firebase_id
             : (firebase_id as String),
-        language_id: language_id == _undefined || language_id == null
+        language_id: language_id == _undefined
             ? _instance.language_id
-            : (language_id as String),
+            : (language_id as String?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
