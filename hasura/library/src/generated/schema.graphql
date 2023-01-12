@@ -76,6 +76,7 @@ type chat {
     """filter the rows returned"""
     where: chat_participant_bool_exp
   ): chat_participant_aggregate!
+  chat_type: String!
   creation_time: timestamptz!
   id: Int!
   messages(
@@ -131,6 +132,7 @@ input chat_bool_exp {
   agora_info: jsonb_comparison_exp
   chat_info: jsonb_comparison_exp
   chat_participants: chat_participant_bool_exp
+  chat_type: String_comparison_exp
   creation_time: timestamptz_comparison_exp
   id: Int_comparison_exp
   messages: jsonb_comparison_exp
@@ -188,6 +190,7 @@ input chat_insert_input {
   agora_info: jsonb
   chat_info: jsonb
   chat_participants: chat_participant_arr_rel_insert_input
+  chat_type: String
   creation_time: timestamptz
   id: Int
   messages: jsonb
@@ -195,12 +198,14 @@ input chat_insert_input {
 
 """aggregate max on columns"""
 type chat_max_fields {
+  chat_type: String
   creation_time: timestamptz
   id: Int
 }
 
 """aggregate min on columns"""
 type chat_min_fields {
+  chat_type: String
   creation_time: timestamptz
   id: Int
 }
@@ -240,6 +245,7 @@ input chat_order_by {
   agora_info: order_by
   chat_info: order_by
   chat_participants_aggregate: chat_participant_aggregate_order_by
+  chat_type: order_by
   creation_time: order_by
   id: order_by
   messages: order_by
@@ -659,6 +665,9 @@ enum chat_select_column {
   chat_info
 
   """column name"""
+  chat_type
+
+  """column name"""
   creation_time
 
   """column name"""
@@ -674,6 +683,7 @@ input type for updating data in table "chat"
 input chat_set_input {
   agora_info: jsonb
   chat_info: jsonb
+  chat_type: String
   creation_time: timestamptz
   id: Int
   messages: jsonb
@@ -709,6 +719,7 @@ input chat_stream_cursor_input {
 input chat_stream_cursor_value_input {
   agora_info: jsonb
   chat_info: jsonb
+  chat_type: String
   creation_time: timestamptz
   id: Int
   messages: jsonb
@@ -728,6 +739,9 @@ enum chat_update_column {
 
   """column name"""
   chat_info
+
+  """column name"""
+  chat_type
 
   """column name"""
   creation_time
@@ -4761,6 +4775,268 @@ input delivery_order_variance_order_by {
 }
 
 """
+columns and relationships of "direct_chat"
+"""
+type direct_chat {
+  """An object relationship"""
+  chat: chat
+  chat_id: Int!
+
+  """An object relationship"""
+  user1: user
+
+  """An object relationship"""
+  user2: user
+  user_id1: Int!
+  user_id2: Int!
+}
+
+"""
+aggregated selection of "direct_chat"
+"""
+type direct_chat_aggregate {
+  aggregate: direct_chat_aggregate_fields
+  nodes: [direct_chat!]!
+}
+
+"""
+aggregate fields of "direct_chat"
+"""
+type direct_chat_aggregate_fields {
+  avg: direct_chat_avg_fields
+  count(columns: [direct_chat_select_column!], distinct: Boolean): Int!
+  max: direct_chat_max_fields
+  min: direct_chat_min_fields
+  stddev: direct_chat_stddev_fields
+  stddev_pop: direct_chat_stddev_pop_fields
+  stddev_samp: direct_chat_stddev_samp_fields
+  sum: direct_chat_sum_fields
+  var_pop: direct_chat_var_pop_fields
+  var_samp: direct_chat_var_samp_fields
+  variance: direct_chat_variance_fields
+}
+
+"""aggregate avg on columns"""
+type direct_chat_avg_fields {
+  chat_id: Float
+  user_id1: Float
+  user_id2: Float
+}
+
+"""
+Boolean expression to filter rows from the table "direct_chat". All fields are combined with a logical 'AND'.
+"""
+input direct_chat_bool_exp {
+  _and: [direct_chat_bool_exp!]
+  _not: direct_chat_bool_exp
+  _or: [direct_chat_bool_exp!]
+  chat: chat_bool_exp
+  chat_id: Int_comparison_exp
+  user1: user_bool_exp
+  user2: user_bool_exp
+  user_id1: Int_comparison_exp
+  user_id2: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "direct_chat"
+"""
+enum direct_chat_constraint {
+  """
+  unique or primary key constraint on columns "chat_id"
+  """
+  direct_chat_pkey
+
+  """
+  unique or primary key constraint on columns "user_id1", "user_id2"
+  """
+  direct_chat_user_id_1_user_id_2_key
+}
+
+"""
+input type for incrementing numeric columns in table "direct_chat"
+"""
+input direct_chat_inc_input {
+  chat_id: Int
+  user_id1: Int
+  user_id2: Int
+}
+
+"""
+input type for inserting data into table "direct_chat"
+"""
+input direct_chat_insert_input {
+  chat: chat_obj_rel_insert_input
+  chat_id: Int
+  user1: user_obj_rel_insert_input
+  user2: user_obj_rel_insert_input
+  user_id1: Int
+  user_id2: Int
+}
+
+"""aggregate max on columns"""
+type direct_chat_max_fields {
+  chat_id: Int
+  user_id1: Int
+  user_id2: Int
+}
+
+"""aggregate min on columns"""
+type direct_chat_min_fields {
+  chat_id: Int
+  user_id1: Int
+  user_id2: Int
+}
+
+"""
+response of any mutation on the table "direct_chat"
+"""
+type direct_chat_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [direct_chat!]!
+}
+
+"""
+on_conflict condition type for table "direct_chat"
+"""
+input direct_chat_on_conflict {
+  constraint: direct_chat_constraint!
+  update_columns: [direct_chat_update_column!]! = []
+  where: direct_chat_bool_exp
+}
+
+"""Ordering options when selecting data from "direct_chat"."""
+input direct_chat_order_by {
+  chat: chat_order_by
+  chat_id: order_by
+  user1: user_order_by
+  user2: user_order_by
+  user_id1: order_by
+  user_id2: order_by
+}
+
+"""primary key columns input for table: direct_chat"""
+input direct_chat_pk_columns_input {
+  chat_id: Int!
+}
+
+"""
+select columns of table "direct_chat"
+"""
+enum direct_chat_select_column {
+  """column name"""
+  chat_id
+
+  """column name"""
+  user_id1
+
+  """column name"""
+  user_id2
+}
+
+"""
+input type for updating data in table "direct_chat"
+"""
+input direct_chat_set_input {
+  chat_id: Int
+  user_id1: Int
+  user_id2: Int
+}
+
+"""aggregate stddev on columns"""
+type direct_chat_stddev_fields {
+  chat_id: Float
+  user_id1: Float
+  user_id2: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type direct_chat_stddev_pop_fields {
+  chat_id: Float
+  user_id1: Float
+  user_id2: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type direct_chat_stddev_samp_fields {
+  chat_id: Float
+  user_id1: Float
+  user_id2: Float
+}
+
+"""
+Streaming cursor of the table "direct_chat"
+"""
+input direct_chat_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: direct_chat_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input direct_chat_stream_cursor_value_input {
+  chat_id: Int
+  user_id1: Int
+  user_id2: Int
+}
+
+"""aggregate sum on columns"""
+type direct_chat_sum_fields {
+  chat_id: Int
+  user_id1: Int
+  user_id2: Int
+}
+
+"""
+update columns of table "direct_chat"
+"""
+enum direct_chat_update_column {
+  """column name"""
+  chat_id
+
+  """column name"""
+  user_id1
+
+  """column name"""
+  user_id2
+}
+
+input direct_chat_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: direct_chat_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: direct_chat_set_input
+  where: direct_chat_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type direct_chat_var_pop_fields {
+  chat_id: Float
+  user_id1: Float
+  user_id2: Float
+}
+
+"""aggregate var_samp on columns"""
+type direct_chat_var_samp_fields {
+  chat_id: Float
+  user_id1: Float
+  user_id2: Float
+}
+
+"""aggregate variance on columns"""
+type direct_chat_variance_fields {
+  chat_id: Float
+  user_id1: Float
+  user_id2: Float
+}
+
+"""
 Boolean expression to compare columns of type "Float". All fields are combined with logical 'AND'.
 """
 input Float_comparison_exp {
@@ -4986,6 +5262,249 @@ input mez_admin_bool_exp {
   user: user_bool_exp
   user_id: Int_comparison_exp
   version: String_comparison_exp
+}
+
+"""
+columns and relationships of "mez_admin_chat"
+"""
+type mez_admin_chat {
+  app_type: String!
+
+  """An object relationship"""
+  chat: chat
+  chat_id: Int!
+
+  """An object relationship"""
+  user: user
+  user_id: Int!
+}
+
+"""
+aggregated selection of "mez_admin_chat"
+"""
+type mez_admin_chat_aggregate {
+  aggregate: mez_admin_chat_aggregate_fields
+  nodes: [mez_admin_chat!]!
+}
+
+"""
+aggregate fields of "mez_admin_chat"
+"""
+type mez_admin_chat_aggregate_fields {
+  avg: mez_admin_chat_avg_fields
+  count(columns: [mez_admin_chat_select_column!], distinct: Boolean): Int!
+  max: mez_admin_chat_max_fields
+  min: mez_admin_chat_min_fields
+  stddev: mez_admin_chat_stddev_fields
+  stddev_pop: mez_admin_chat_stddev_pop_fields
+  stddev_samp: mez_admin_chat_stddev_samp_fields
+  sum: mez_admin_chat_sum_fields
+  var_pop: mez_admin_chat_var_pop_fields
+  var_samp: mez_admin_chat_var_samp_fields
+  variance: mez_admin_chat_variance_fields
+}
+
+"""aggregate avg on columns"""
+type mez_admin_chat_avg_fields {
+  chat_id: Float
+  user_id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "mez_admin_chat". All fields are combined with a logical 'AND'.
+"""
+input mez_admin_chat_bool_exp {
+  _and: [mez_admin_chat_bool_exp!]
+  _not: mez_admin_chat_bool_exp
+  _or: [mez_admin_chat_bool_exp!]
+  app_type: String_comparison_exp
+  chat: chat_bool_exp
+  chat_id: Int_comparison_exp
+  user: user_bool_exp
+  user_id: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "mez_admin_chat"
+"""
+enum mez_admin_chat_constraint {
+  """
+  unique or primary key constraint on columns "chat_id"
+  """
+  mez_admin_chat_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "mez_admin_chat"
+"""
+input mez_admin_chat_inc_input {
+  chat_id: Int
+  user_id: Int
+}
+
+"""
+input type for inserting data into table "mez_admin_chat"
+"""
+input mez_admin_chat_insert_input {
+  app_type: String
+  chat: chat_obj_rel_insert_input
+  chat_id: Int
+  user: user_obj_rel_insert_input
+  user_id: Int
+}
+
+"""aggregate max on columns"""
+type mez_admin_chat_max_fields {
+  app_type: String
+  chat_id: Int
+  user_id: Int
+}
+
+"""aggregate min on columns"""
+type mez_admin_chat_min_fields {
+  app_type: String
+  chat_id: Int
+  user_id: Int
+}
+
+"""
+response of any mutation on the table "mez_admin_chat"
+"""
+type mez_admin_chat_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [mez_admin_chat!]!
+}
+
+"""
+on_conflict condition type for table "mez_admin_chat"
+"""
+input mez_admin_chat_on_conflict {
+  constraint: mez_admin_chat_constraint!
+  update_columns: [mez_admin_chat_update_column!]! = []
+  where: mez_admin_chat_bool_exp
+}
+
+"""Ordering options when selecting data from "mez_admin_chat"."""
+input mez_admin_chat_order_by {
+  app_type: order_by
+  chat: chat_order_by
+  chat_id: order_by
+  user: user_order_by
+  user_id: order_by
+}
+
+"""primary key columns input for table: mez_admin_chat"""
+input mez_admin_chat_pk_columns_input {
+  chat_id: Int!
+}
+
+"""
+select columns of table "mez_admin_chat"
+"""
+enum mez_admin_chat_select_column {
+  """column name"""
+  app_type
+
+  """column name"""
+  chat_id
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "mez_admin_chat"
+"""
+input mez_admin_chat_set_input {
+  app_type: String
+  chat_id: Int
+  user_id: Int
+}
+
+"""aggregate stddev on columns"""
+type mez_admin_chat_stddev_fields {
+  chat_id: Float
+  user_id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type mez_admin_chat_stddev_pop_fields {
+  chat_id: Float
+  user_id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type mez_admin_chat_stddev_samp_fields {
+  chat_id: Float
+  user_id: Float
+}
+
+"""
+Streaming cursor of the table "mez_admin_chat"
+"""
+input mez_admin_chat_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: mez_admin_chat_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input mez_admin_chat_stream_cursor_value_input {
+  app_type: String
+  chat_id: Int
+  user_id: Int
+}
+
+"""aggregate sum on columns"""
+type mez_admin_chat_sum_fields {
+  chat_id: Int
+  user_id: Int
+}
+
+"""
+update columns of table "mez_admin_chat"
+"""
+enum mez_admin_chat_update_column {
+  """column name"""
+  app_type
+
+  """column name"""
+  chat_id
+
+  """column name"""
+  user_id
+}
+
+input mez_admin_chat_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: mez_admin_chat_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: mez_admin_chat_set_input
+  where: mez_admin_chat_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type mez_admin_chat_var_pop_fields {
+  chat_id: Float
+  user_id: Float
+}
+
+"""aggregate var_samp on columns"""
+type mez_admin_chat_var_samp_fields {
+  chat_id: Float
+  user_id: Float
+}
+
+"""aggregate variance on columns"""
+type mez_admin_chat_variance_fields {
+  chat_id: Float
+  user_id: Float
 }
 
 """
@@ -5282,6 +5801,19 @@ type mutation_root {
   ): delivery_order_public_mutation_response
 
   """
+  delete data from the table: "direct_chat"
+  """
+  delete_direct_chat(
+    """filter the rows which have to be deleted"""
+    where: direct_chat_bool_exp!
+  ): direct_chat_mutation_response
+
+  """
+  delete single row from the table: "direct_chat"
+  """
+  delete_direct_chat_by_pk(chat_id: Int!): direct_chat
+
+  """
   delete data from the table: "mez_admin"
   """
   delete_mez_admin(
@@ -5293,6 +5825,19 @@ type mutation_root {
   delete single row from the table: "mez_admin"
   """
   delete_mez_admin_by_pk(user_id: Int!): mez_admin
+
+  """
+  delete data from the table: "mez_admin_chat"
+  """
+  delete_mez_admin_chat(
+    """filter the rows which have to be deleted"""
+    where: mez_admin_chat_bool_exp!
+  ): mez_admin_chat_mutation_response
+
+  """
+  delete single row from the table: "mez_admin_chat"
+  """
+  delete_mez_admin_chat_by_pk(chat_id: Int!): mez_admin_chat
 
   """
   delete data from the table: "notification_info"
@@ -5522,6 +6067,19 @@ type mutation_root {
   delete single row from the table: "service_link"
   """
   delete_service_link_by_pk(id: Int!): service_link
+
+  """
+  delete data from the table: "service_provider_customer_chat"
+  """
+  delete_service_provider_customer_chat(
+    """filter the rows which have to be deleted"""
+    where: service_provider_customer_chat_bool_exp!
+  ): service_provider_customer_chat_mutation_response
+
+  """
+  delete single row from the table: "service_provider_customer_chat"
+  """
+  delete_service_provider_customer_chat_by_pk(chat_id: Int!): service_provider_customer_chat
 
   """
   delete data from the table: "service_provider_payment_info"
@@ -5823,6 +6381,28 @@ type mutation_root {
   ): delivery_order_public
 
   """
+  insert data into the table: "direct_chat"
+  """
+  insert_direct_chat(
+    """the rows to be inserted"""
+    objects: [direct_chat_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: direct_chat_on_conflict
+  ): direct_chat_mutation_response
+
+  """
+  insert a single row into the table: "direct_chat"
+  """
+  insert_direct_chat_one(
+    """the row to be inserted"""
+    object: direct_chat_insert_input!
+
+    """upsert condition"""
+    on_conflict: direct_chat_on_conflict
+  ): direct_chat
+
+  """
   insert data into the table: "mez_admin"
   """
   insert_mez_admin(
@@ -5832,6 +6412,28 @@ type mutation_root {
     """upsert condition"""
     on_conflict: mez_admin_on_conflict
   ): mez_admin_mutation_response
+
+  """
+  insert data into the table: "mez_admin_chat"
+  """
+  insert_mez_admin_chat(
+    """the rows to be inserted"""
+    objects: [mez_admin_chat_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: mez_admin_chat_on_conflict
+  ): mez_admin_chat_mutation_response
+
+  """
+  insert a single row into the table: "mez_admin_chat"
+  """
+  insert_mez_admin_chat_one(
+    """the row to be inserted"""
+    object: mez_admin_chat_insert_input!
+
+    """upsert condition"""
+    on_conflict: mez_admin_chat_on_conflict
+  ): mez_admin_chat
 
   """
   insert a single row into the table: "mez_admin"
@@ -6233,6 +6835,28 @@ type mutation_root {
     """upsert condition"""
     on_conflict: service_link_on_conflict
   ): service_link
+
+  """
+  insert data into the table: "service_provider_customer_chat"
+  """
+  insert_service_provider_customer_chat(
+    """the rows to be inserted"""
+    objects: [service_provider_customer_chat_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: service_provider_customer_chat_on_conflict
+  ): service_provider_customer_chat_mutation_response
+
+  """
+  insert a single row into the table: "service_provider_customer_chat"
+  """
+  insert_service_provider_customer_chat_one(
+    """the row to be inserted"""
+    object: service_provider_customer_chat_insert_input!
+
+    """upsert condition"""
+    on_conflict: service_provider_customer_chat_on_conflict
+  ): service_provider_customer_chat
 
   """
   insert data into the table: "service_provider_payment_info"
@@ -6793,6 +7417,40 @@ type mutation_root {
   ): [delivery_order_public_mutation_response]
 
   """
+  update data of the table: "direct_chat"
+  """
+  update_direct_chat(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: direct_chat_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: direct_chat_set_input
+
+    """filter the rows which have to be updated"""
+    where: direct_chat_bool_exp!
+  ): direct_chat_mutation_response
+
+  """
+  update single row of the table: "direct_chat"
+  """
+  update_direct_chat_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: direct_chat_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: direct_chat_set_input
+    pk_columns: direct_chat_pk_columns_input!
+  ): direct_chat
+
+  """
+  update multiples rows of table: "direct_chat"
+  """
+  update_direct_chat_many(
+    """updates to execute, in order"""
+    updates: [direct_chat_updates!]!
+  ): [direct_chat_mutation_response]
+
+  """
   update data of the table: "mez_admin"
   """
   update_mez_admin(
@@ -6817,6 +7475,40 @@ type mutation_root {
     _set: mez_admin_set_input
     pk_columns: mez_admin_pk_columns_input!
   ): mez_admin
+
+  """
+  update data of the table: "mez_admin_chat"
+  """
+  update_mez_admin_chat(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: mez_admin_chat_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: mez_admin_chat_set_input
+
+    """filter the rows which have to be updated"""
+    where: mez_admin_chat_bool_exp!
+  ): mez_admin_chat_mutation_response
+
+  """
+  update single row of the table: "mez_admin_chat"
+  """
+  update_mez_admin_chat_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: mez_admin_chat_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: mez_admin_chat_set_input
+    pk_columns: mez_admin_chat_pk_columns_input!
+  ): mez_admin_chat
+
+  """
+  update multiples rows of table: "mez_admin_chat"
+  """
+  update_mez_admin_chat_many(
+    """updates to execute, in order"""
+    updates: [mez_admin_chat_updates!]!
+  ): [mez_admin_chat_mutation_response]
 
   """
   update multiples rows of table: "mez_admin"
@@ -7557,6 +8249,40 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [service_link_updates!]!
   ): [service_link_mutation_response]
+
+  """
+  update data of the table: "service_provider_customer_chat"
+  """
+  update_service_provider_customer_chat(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: service_provider_customer_chat_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: service_provider_customer_chat_set_input
+
+    """filter the rows which have to be updated"""
+    where: service_provider_customer_chat_bool_exp!
+  ): service_provider_customer_chat_mutation_response
+
+  """
+  update single row of the table: "service_provider_customer_chat"
+  """
+  update_service_provider_customer_chat_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: service_provider_customer_chat_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: service_provider_customer_chat_set_input
+    pk_columns: service_provider_customer_chat_pk_columns_input!
+  ): service_provider_customer_chat
+
+  """
+  update multiples rows of table: "service_provider_customer_chat"
+  """
+  update_service_provider_customer_chat_many(
+    """updates to execute, in order"""
+    updates: [service_provider_customer_chat_updates!]!
+  ): [service_provider_customer_chat_mutation_response]
 
   """
   update data of the table: "service_provider_payment_info"
@@ -8865,6 +9591,49 @@ type query_root {
   ): delivery_order_public_aggregate!
 
   """
+  fetch data from the table: "direct_chat"
+  """
+  direct_chat(
+    """distinct select on columns"""
+    distinct_on: [direct_chat_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [direct_chat_order_by!]
+
+    """filter the rows returned"""
+    where: direct_chat_bool_exp
+  ): [direct_chat!]!
+
+  """
+  fetch aggregated fields from the table: "direct_chat"
+  """
+  direct_chat_aggregate(
+    """distinct select on columns"""
+    distinct_on: [direct_chat_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [direct_chat_order_by!]
+
+    """filter the rows returned"""
+    where: direct_chat_bool_exp
+  ): direct_chat_aggregate!
+
+  """fetch data from the table: "direct_chat" using primary key columns"""
+  direct_chat_by_pk(chat_id: Int!): direct_chat
+
+  """
   fetch data from the table: "mez_admin"
   """
   mez_admin(
@@ -8906,6 +9675,49 @@ type query_root {
 
   """fetch data from the table: "mez_admin" using primary key columns"""
   mez_admin_by_pk(user_id: Int!): mez_admin
+
+  """
+  fetch data from the table: "mez_admin_chat"
+  """
+  mez_admin_chat(
+    """distinct select on columns"""
+    distinct_on: [mez_admin_chat_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_admin_chat_order_by!]
+
+    """filter the rows returned"""
+    where: mez_admin_chat_bool_exp
+  ): [mez_admin_chat!]!
+
+  """
+  fetch aggregated fields from the table: "mez_admin_chat"
+  """
+  mez_admin_chat_aggregate(
+    """distinct select on columns"""
+    distinct_on: [mez_admin_chat_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_admin_chat_order_by!]
+
+    """filter the rows returned"""
+    where: mez_admin_chat_bool_exp
+  ): mez_admin_chat_aggregate!
+
+  """fetch data from the table: "mez_admin_chat" using primary key columns"""
+  mez_admin_chat_by_pk(chat_id: Int!): mez_admin_chat
 
   """
   fetch data from the table: "notification_info"
@@ -9697,6 +10509,51 @@ type query_root {
 
   """fetch data from the table: "service_link" using primary key columns"""
   service_link_by_pk(id: Int!): service_link
+
+  """
+  fetch data from the table: "service_provider_customer_chat"
+  """
+  service_provider_customer_chat(
+    """distinct select on columns"""
+    distinct_on: [service_provider_customer_chat_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_customer_chat_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_customer_chat_bool_exp
+  ): [service_provider_customer_chat!]!
+
+  """
+  fetch aggregated fields from the table: "service_provider_customer_chat"
+  """
+  service_provider_customer_chat_aggregate(
+    """distinct select on columns"""
+    distinct_on: [service_provider_customer_chat_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_customer_chat_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_customer_chat_bool_exp
+  ): service_provider_customer_chat_aggregate!
+
+  """
+  fetch data from the table: "service_provider_customer_chat" using primary key columns
+  """
+  service_provider_customer_chat_by_pk(chat_id: Int!): service_provider_customer_chat
 
   """
   fetch data from the table: "service_provider_payment_info"
@@ -18165,6 +19022,285 @@ type service_link_variance_fields {
 }
 
 """
+columns and relationships of "service_provider_customer_chat"
+"""
+type service_provider_customer_chat {
+  """An object relationship"""
+  chat: chat
+  chat_id: Int!
+
+  """An object relationship"""
+  customer: customer
+  customer_id: Int!
+
+  """An object relationship"""
+  restaurant: restaurant
+  service_provider_id: Int!
+  service_provider_type: String!
+}
+
+"""
+aggregated selection of "service_provider_customer_chat"
+"""
+type service_provider_customer_chat_aggregate {
+  aggregate: service_provider_customer_chat_aggregate_fields
+  nodes: [service_provider_customer_chat!]!
+}
+
+"""
+aggregate fields of "service_provider_customer_chat"
+"""
+type service_provider_customer_chat_aggregate_fields {
+  avg: service_provider_customer_chat_avg_fields
+  count(columns: [service_provider_customer_chat_select_column!], distinct: Boolean): Int!
+  max: service_provider_customer_chat_max_fields
+  min: service_provider_customer_chat_min_fields
+  stddev: service_provider_customer_chat_stddev_fields
+  stddev_pop: service_provider_customer_chat_stddev_pop_fields
+  stddev_samp: service_provider_customer_chat_stddev_samp_fields
+  sum: service_provider_customer_chat_sum_fields
+  var_pop: service_provider_customer_chat_var_pop_fields
+  var_samp: service_provider_customer_chat_var_samp_fields
+  variance: service_provider_customer_chat_variance_fields
+}
+
+"""aggregate avg on columns"""
+type service_provider_customer_chat_avg_fields {
+  chat_id: Float
+  customer_id: Float
+  service_provider_id: Float
+}
+
+"""
+Boolean expression to filter rows from the table
+"service_provider_customer_chat". All fields are combined with a logical 'AND'.
+"""
+input service_provider_customer_chat_bool_exp {
+  _and: [service_provider_customer_chat_bool_exp!]
+  _not: service_provider_customer_chat_bool_exp
+  _or: [service_provider_customer_chat_bool_exp!]
+  chat: chat_bool_exp
+  chat_id: Int_comparison_exp
+  customer: customer_bool_exp
+  customer_id: Int_comparison_exp
+  restaurant: restaurant_bool_exp
+  service_provider_id: Int_comparison_exp
+  service_provider_type: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "service_provider_customer_chat"
+"""
+enum service_provider_customer_chat_constraint {
+  """
+  unique or primary key constraint on columns "service_provider_type", "service_provider_id", "customer_id"
+  """
+  service_provider_customer_cha_customer_id_service_provider__key
+
+  """
+  unique or primary key constraint on columns "chat_id"
+  """
+  service_provider_customer_chat_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "service_provider_customer_chat"
+"""
+input service_provider_customer_chat_inc_input {
+  chat_id: Int
+  customer_id: Int
+  service_provider_id: Int
+}
+
+"""
+input type for inserting data into table "service_provider_customer_chat"
+"""
+input service_provider_customer_chat_insert_input {
+  chat: chat_obj_rel_insert_input
+  chat_id: Int
+  customer: customer_obj_rel_insert_input
+  customer_id: Int
+  restaurant: restaurant_obj_rel_insert_input
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""aggregate max on columns"""
+type service_provider_customer_chat_max_fields {
+  chat_id: Int
+  customer_id: Int
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""aggregate min on columns"""
+type service_provider_customer_chat_min_fields {
+  chat_id: Int
+  customer_id: Int
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""
+response of any mutation on the table "service_provider_customer_chat"
+"""
+type service_provider_customer_chat_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [service_provider_customer_chat!]!
+}
+
+"""
+on_conflict condition type for table "service_provider_customer_chat"
+"""
+input service_provider_customer_chat_on_conflict {
+  constraint: service_provider_customer_chat_constraint!
+  update_columns: [service_provider_customer_chat_update_column!]! = []
+  where: service_provider_customer_chat_bool_exp
+}
+
+"""
+Ordering options when selecting data from "service_provider_customer_chat".
+"""
+input service_provider_customer_chat_order_by {
+  chat: chat_order_by
+  chat_id: order_by
+  customer: customer_order_by
+  customer_id: order_by
+  restaurant: restaurant_order_by
+  service_provider_id: order_by
+  service_provider_type: order_by
+}
+
+"""primary key columns input for table: service_provider_customer_chat"""
+input service_provider_customer_chat_pk_columns_input {
+  chat_id: Int!
+}
+
+"""
+select columns of table "service_provider_customer_chat"
+"""
+enum service_provider_customer_chat_select_column {
+  """column name"""
+  chat_id
+
+  """column name"""
+  customer_id
+
+  """column name"""
+  service_provider_id
+
+  """column name"""
+  service_provider_type
+}
+
+"""
+input type for updating data in table "service_provider_customer_chat"
+"""
+input service_provider_customer_chat_set_input {
+  chat_id: Int
+  customer_id: Int
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""aggregate stddev on columns"""
+type service_provider_customer_chat_stddev_fields {
+  chat_id: Float
+  customer_id: Float
+  service_provider_id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type service_provider_customer_chat_stddev_pop_fields {
+  chat_id: Float
+  customer_id: Float
+  service_provider_id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type service_provider_customer_chat_stddev_samp_fields {
+  chat_id: Float
+  customer_id: Float
+  service_provider_id: Float
+}
+
+"""
+Streaming cursor of the table "service_provider_customer_chat"
+"""
+input service_provider_customer_chat_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: service_provider_customer_chat_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input service_provider_customer_chat_stream_cursor_value_input {
+  chat_id: Int
+  customer_id: Int
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""aggregate sum on columns"""
+type service_provider_customer_chat_sum_fields {
+  chat_id: Int
+  customer_id: Int
+  service_provider_id: Int
+}
+
+"""
+update columns of table "service_provider_customer_chat"
+"""
+enum service_provider_customer_chat_update_column {
+  """column name"""
+  chat_id
+
+  """column name"""
+  customer_id
+
+  """column name"""
+  service_provider_id
+
+  """column name"""
+  service_provider_type
+}
+
+input service_provider_customer_chat_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: service_provider_customer_chat_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: service_provider_customer_chat_set_input
+  where: service_provider_customer_chat_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type service_provider_customer_chat_var_pop_fields {
+  chat_id: Float
+  customer_id: Float
+  service_provider_id: Float
+}
+
+"""aggregate var_samp on columns"""
+type service_provider_customer_chat_var_samp_fields {
+  chat_id: Float
+  customer_id: Float
+  service_provider_id: Float
+}
+
+"""aggregate variance on columns"""
+type service_provider_customer_chat_variance_fields {
+  chat_id: Float
+  customer_id: Float
+  service_provider_id: Float
+}
+
+"""
 columns and relationships of "service_provider_payment_info"
 """
 type service_provider_payment_info {
@@ -19625,6 +20761,63 @@ type subscription_root {
   ): [delivery_order!]!
 
   """
+  fetch data from the table: "direct_chat"
+  """
+  direct_chat(
+    """distinct select on columns"""
+    distinct_on: [direct_chat_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [direct_chat_order_by!]
+
+    """filter the rows returned"""
+    where: direct_chat_bool_exp
+  ): [direct_chat!]!
+
+  """
+  fetch aggregated fields from the table: "direct_chat"
+  """
+  direct_chat_aggregate(
+    """distinct select on columns"""
+    distinct_on: [direct_chat_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [direct_chat_order_by!]
+
+    """filter the rows returned"""
+    where: direct_chat_bool_exp
+  ): direct_chat_aggregate!
+
+  """fetch data from the table: "direct_chat" using primary key columns"""
+  direct_chat_by_pk(chat_id: Int!): direct_chat
+
+  """
+  fetch data from the table in a streaming manner : "direct_chat"
+  """
+  direct_chat_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [direct_chat_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: direct_chat_bool_exp
+  ): [direct_chat!]!
+
+  """
   fetch data from the table: "mez_admin"
   """
   mez_admin(
@@ -19666,6 +20859,63 @@ type subscription_root {
 
   """fetch data from the table: "mez_admin" using primary key columns"""
   mez_admin_by_pk(user_id: Int!): mez_admin
+
+  """
+  fetch data from the table: "mez_admin_chat"
+  """
+  mez_admin_chat(
+    """distinct select on columns"""
+    distinct_on: [mez_admin_chat_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_admin_chat_order_by!]
+
+    """filter the rows returned"""
+    where: mez_admin_chat_bool_exp
+  ): [mez_admin_chat!]!
+
+  """
+  fetch aggregated fields from the table: "mez_admin_chat"
+  """
+  mez_admin_chat_aggregate(
+    """distinct select on columns"""
+    distinct_on: [mez_admin_chat_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_admin_chat_order_by!]
+
+    """filter the rows returned"""
+    where: mez_admin_chat_bool_exp
+  ): mez_admin_chat_aggregate!
+
+  """fetch data from the table: "mez_admin_chat" using primary key columns"""
+  mez_admin_chat_by_pk(chat_id: Int!): mez_admin_chat
+
+  """
+  fetch data from the table in a streaming manner : "mez_admin_chat"
+  """
+  mez_admin_chat_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [mez_admin_chat_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: mez_admin_chat_bool_exp
+  ): [mez_admin_chat!]!
 
   """
   fetch data from the table in a streaming manner : "mez_admin"
@@ -20723,6 +21973,65 @@ type subscription_root {
     """filter the rows returned"""
     where: service_link_bool_exp
   ): [service_link!]!
+
+  """
+  fetch data from the table: "service_provider_customer_chat"
+  """
+  service_provider_customer_chat(
+    """distinct select on columns"""
+    distinct_on: [service_provider_customer_chat_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_customer_chat_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_customer_chat_bool_exp
+  ): [service_provider_customer_chat!]!
+
+  """
+  fetch aggregated fields from the table: "service_provider_customer_chat"
+  """
+  service_provider_customer_chat_aggregate(
+    """distinct select on columns"""
+    distinct_on: [service_provider_customer_chat_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_customer_chat_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_customer_chat_bool_exp
+  ): service_provider_customer_chat_aggregate!
+
+  """
+  fetch data from the table: "service_provider_customer_chat" using primary key columns
+  """
+  service_provider_customer_chat_by_pk(chat_id: Int!): service_provider_customer_chat
+
+  """
+  fetch data from the table in a streaming manner : "service_provider_customer_chat"
+  """
+  service_provider_customer_chat_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [service_provider_customer_chat_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: service_provider_customer_chat_bool_exp
+  ): [service_provider_customer_chat!]!
 
   """
   fetch data from the table: "service_provider_payment_info"

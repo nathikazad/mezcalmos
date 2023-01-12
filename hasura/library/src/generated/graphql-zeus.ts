@@ -32,6 +32,7 @@ chat_participants_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["chat_participant_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["chat_participant_bool_exp"]},ValueTypes["chat_participant_aggregate"]],
+	chat_type?:true,
 	creation_time?:true,
 	id?:true,
 messages?: [{	/** JSON select path */
@@ -78,6 +79,7 @@ count?: [{	columns?:ValueTypes["chat_select_column"][],	distinct?:boolean},true]
 	agora_info?:ValueTypes["jsonb_comparison_exp"],
 	chat_info?:ValueTypes["jsonb_comparison_exp"],
 	chat_participants?:ValueTypes["chat_participant_bool_exp"],
+	chat_type?:ValueTypes["String_comparison_exp"],
 	creation_time?:ValueTypes["timestamptz_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	messages?:ValueTypes["jsonb_comparison_exp"]
@@ -112,18 +114,21 @@ end). throws an error if top level container is not an array */
 	agora_info?:ValueTypes["jsonb"],
 	chat_info?:ValueTypes["jsonb"],
 	chat_participants?:ValueTypes["chat_participant_arr_rel_insert_input"],
+	chat_type?:string,
 	creation_time?:ValueTypes["timestamptz"],
 	id?:number,
 	messages?:ValueTypes["jsonb"]
 };
 	/** aggregate max on columns */
 ["chat_max_fields"]: AliasType<{
+	chat_type?:true,
 	creation_time?:true,
 	id?:true,
 		__typename?: true
 }>;
 	/** aggregate min on columns */
 ["chat_min_fields"]: AliasType<{
+	chat_type?:true,
 	creation_time?:true,
 	id?:true,
 		__typename?: true
@@ -153,6 +158,7 @@ end). throws an error if top level container is not an array */
 	agora_info?:ValueTypes["order_by"],
 	chat_info?:ValueTypes["order_by"],
 	chat_participants_aggregate?:ValueTypes["chat_participant_aggregate_order_by"],
+	chat_type?:ValueTypes["order_by"],
 	creation_time?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	messages?:ValueTypes["order_by"]
@@ -453,6 +459,7 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 ["chat_set_input"]: {
 	agora_info?:ValueTypes["jsonb"],
 	chat_info?:ValueTypes["jsonb"],
+	chat_type?:string,
 	creation_time?:ValueTypes["timestamptz"],
 	id?:number,
 	messages?:ValueTypes["jsonb"]
@@ -483,6 +490,7 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 ["chat_stream_cursor_value_input"]: {
 	agora_info?:ValueTypes["jsonb"],
 	chat_info?:ValueTypes["jsonb"],
+	chat_type?:string,
 	creation_time?:ValueTypes["timestamptz"],
 	id?:number,
 	messages?:ValueTypes["jsonb"]
@@ -3257,6 +3265,196 @@ cancelledByServiceProvider */
 	/** in seconds */
 	trip_duration?:ValueTypes["order_by"]
 };
+	/** columns and relationships of "direct_chat" */
+["direct_chat"]: AliasType<{
+	/** An object relationship */
+	chat?:ValueTypes["chat"],
+	chat_id?:true,
+	/** An object relationship */
+	user1?:ValueTypes["user"],
+	/** An object relationship */
+	user2?:ValueTypes["user"],
+	user_id1?:true,
+	user_id2?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "direct_chat" */
+["direct_chat_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["direct_chat_aggregate_fields"],
+	nodes?:ValueTypes["direct_chat"],
+		__typename?: true
+}>;
+	/** aggregate fields of "direct_chat" */
+["direct_chat_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["direct_chat_avg_fields"],
+count?: [{	columns?:ValueTypes["direct_chat_select_column"][],	distinct?:boolean},true],
+	max?:ValueTypes["direct_chat_max_fields"],
+	min?:ValueTypes["direct_chat_min_fields"],
+	stddev?:ValueTypes["direct_chat_stddev_fields"],
+	stddev_pop?:ValueTypes["direct_chat_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["direct_chat_stddev_samp_fields"],
+	sum?:ValueTypes["direct_chat_sum_fields"],
+	var_pop?:ValueTypes["direct_chat_var_pop_fields"],
+	var_samp?:ValueTypes["direct_chat_var_samp_fields"],
+	variance?:ValueTypes["direct_chat_variance_fields"],
+		__typename?: true
+}>;
+	/** aggregate avg on columns */
+["direct_chat_avg_fields"]: AliasType<{
+	chat_id?:true,
+	user_id1?:true,
+	user_id2?:true,
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table "direct_chat". All fields are combined with a logical 'AND'. */
+["direct_chat_bool_exp"]: {
+	_and?:ValueTypes["direct_chat_bool_exp"][],
+	_not?:ValueTypes["direct_chat_bool_exp"],
+	_or?:ValueTypes["direct_chat_bool_exp"][],
+	chat?:ValueTypes["chat_bool_exp"],
+	chat_id?:ValueTypes["Int_comparison_exp"],
+	user1?:ValueTypes["user_bool_exp"],
+	user2?:ValueTypes["user_bool_exp"],
+	user_id1?:ValueTypes["Int_comparison_exp"],
+	user_id2?:ValueTypes["Int_comparison_exp"]
+};
+	/** unique or primary key constraints on table "direct_chat" */
+["direct_chat_constraint"]:direct_chat_constraint;
+	/** input type for incrementing numeric columns in table "direct_chat" */
+["direct_chat_inc_input"]: {
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+};
+	/** input type for inserting data into table "direct_chat" */
+["direct_chat_insert_input"]: {
+	chat?:ValueTypes["chat_obj_rel_insert_input"],
+	chat_id?:number,
+	user1?:ValueTypes["user_obj_rel_insert_input"],
+	user2?:ValueTypes["user_obj_rel_insert_input"],
+	user_id1?:number,
+	user_id2?:number
+};
+	/** aggregate max on columns */
+["direct_chat_max_fields"]: AliasType<{
+	chat_id?:true,
+	user_id1?:true,
+	user_id2?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["direct_chat_min_fields"]: AliasType<{
+	chat_id?:true,
+	user_id1?:true,
+	user_id2?:true,
+		__typename?: true
+}>;
+	/** response of any mutation on the table "direct_chat" */
+["direct_chat_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["direct_chat"],
+		__typename?: true
+}>;
+	/** on_conflict condition type for table "direct_chat" */
+["direct_chat_on_conflict"]: {
+	constraint:ValueTypes["direct_chat_constraint"],
+	update_columns:ValueTypes["direct_chat_update_column"][],
+	where?:ValueTypes["direct_chat_bool_exp"]
+};
+	/** Ordering options when selecting data from "direct_chat". */
+["direct_chat_order_by"]: {
+	chat?:ValueTypes["chat_order_by"],
+	chat_id?:ValueTypes["order_by"],
+	user1?:ValueTypes["user_order_by"],
+	user2?:ValueTypes["user_order_by"],
+	user_id1?:ValueTypes["order_by"],
+	user_id2?:ValueTypes["order_by"]
+};
+	/** primary key columns input for table: direct_chat */
+["direct_chat_pk_columns_input"]: {
+	chat_id:number
+};
+	/** select columns of table "direct_chat" */
+["direct_chat_select_column"]:direct_chat_select_column;
+	/** input type for updating data in table "direct_chat" */
+["direct_chat_set_input"]: {
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+};
+	/** aggregate stddev on columns */
+["direct_chat_stddev_fields"]: AliasType<{
+	chat_id?:true,
+	user_id1?:true,
+	user_id2?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_pop on columns */
+["direct_chat_stddev_pop_fields"]: AliasType<{
+	chat_id?:true,
+	user_id1?:true,
+	user_id2?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_samp on columns */
+["direct_chat_stddev_samp_fields"]: AliasType<{
+	chat_id?:true,
+	user_id1?:true,
+	user_id2?:true,
+		__typename?: true
+}>;
+	/** Streaming cursor of the table "direct_chat" */
+["direct_chat_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:ValueTypes["direct_chat_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:ValueTypes["cursor_ordering"]
+};
+	/** Initial value of the column from where the streaming should start */
+["direct_chat_stream_cursor_value_input"]: {
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+};
+	/** aggregate sum on columns */
+["direct_chat_sum_fields"]: AliasType<{
+	chat_id?:true,
+	user_id1?:true,
+	user_id2?:true,
+		__typename?: true
+}>;
+	/** update columns of table "direct_chat" */
+["direct_chat_update_column"]:direct_chat_update_column;
+	["direct_chat_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["direct_chat_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["direct_chat_set_input"],
+	where:ValueTypes["direct_chat_bool_exp"]
+};
+	/** aggregate var_pop on columns */
+["direct_chat_var_pop_fields"]: AliasType<{
+	chat_id?:true,
+	user_id1?:true,
+	user_id2?:true,
+		__typename?: true
+}>;
+	/** aggregate var_samp on columns */
+["direct_chat_var_samp_fields"]: AliasType<{
+	chat_id?:true,
+	user_id1?:true,
+	user_id2?:true,
+		__typename?: true
+}>;
+	/** aggregate variance on columns */
+["direct_chat_variance_fields"]: AliasType<{
+	chat_id?:true,
+	user_id1?:true,
+	user_id2?:true,
+		__typename?: true
+}>;
 	/** Boolean expression to compare columns of type "Float". All fields are combined with logical 'AND'. */
 ["Float_comparison_exp"]: {
 	_eq?:number,
@@ -3425,6 +3623,182 @@ count?: [{	columns?:ValueTypes["mez_admin_select_column"][],	distinct?:boolean},
 	user_id?:ValueTypes["Int_comparison_exp"],
 	version?:ValueTypes["String_comparison_exp"]
 };
+	/** columns and relationships of "mez_admin_chat" */
+["mez_admin_chat"]: AliasType<{
+	app_type?:true,
+	/** An object relationship */
+	chat?:ValueTypes["chat"],
+	chat_id?:true,
+	/** An object relationship */
+	user?:ValueTypes["user"],
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "mez_admin_chat" */
+["mez_admin_chat_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["mez_admin_chat_aggregate_fields"],
+	nodes?:ValueTypes["mez_admin_chat"],
+		__typename?: true
+}>;
+	/** aggregate fields of "mez_admin_chat" */
+["mez_admin_chat_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["mez_admin_chat_avg_fields"],
+count?: [{	columns?:ValueTypes["mez_admin_chat_select_column"][],	distinct?:boolean},true],
+	max?:ValueTypes["mez_admin_chat_max_fields"],
+	min?:ValueTypes["mez_admin_chat_min_fields"],
+	stddev?:ValueTypes["mez_admin_chat_stddev_fields"],
+	stddev_pop?:ValueTypes["mez_admin_chat_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["mez_admin_chat_stddev_samp_fields"],
+	sum?:ValueTypes["mez_admin_chat_sum_fields"],
+	var_pop?:ValueTypes["mez_admin_chat_var_pop_fields"],
+	var_samp?:ValueTypes["mez_admin_chat_var_samp_fields"],
+	variance?:ValueTypes["mez_admin_chat_variance_fields"],
+		__typename?: true
+}>;
+	/** aggregate avg on columns */
+["mez_admin_chat_avg_fields"]: AliasType<{
+	chat_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table "mez_admin_chat". All fields are combined with a logical 'AND'. */
+["mez_admin_chat_bool_exp"]: {
+	_and?:ValueTypes["mez_admin_chat_bool_exp"][],
+	_not?:ValueTypes["mez_admin_chat_bool_exp"],
+	_or?:ValueTypes["mez_admin_chat_bool_exp"][],
+	app_type?:ValueTypes["String_comparison_exp"],
+	chat?:ValueTypes["chat_bool_exp"],
+	chat_id?:ValueTypes["Int_comparison_exp"],
+	user?:ValueTypes["user_bool_exp"],
+	user_id?:ValueTypes["Int_comparison_exp"]
+};
+	/** unique or primary key constraints on table "mez_admin_chat" */
+["mez_admin_chat_constraint"]:mez_admin_chat_constraint;
+	/** input type for incrementing numeric columns in table "mez_admin_chat" */
+["mez_admin_chat_inc_input"]: {
+	chat_id?:number,
+	user_id?:number
+};
+	/** input type for inserting data into table "mez_admin_chat" */
+["mez_admin_chat_insert_input"]: {
+	app_type?:string,
+	chat?:ValueTypes["chat_obj_rel_insert_input"],
+	chat_id?:number,
+	user?:ValueTypes["user_obj_rel_insert_input"],
+	user_id?:number
+};
+	/** aggregate max on columns */
+["mez_admin_chat_max_fields"]: AliasType<{
+	app_type?:true,
+	chat_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["mez_admin_chat_min_fields"]: AliasType<{
+	app_type?:true,
+	chat_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** response of any mutation on the table "mez_admin_chat" */
+["mez_admin_chat_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["mez_admin_chat"],
+		__typename?: true
+}>;
+	/** on_conflict condition type for table "mez_admin_chat" */
+["mez_admin_chat_on_conflict"]: {
+	constraint:ValueTypes["mez_admin_chat_constraint"],
+	update_columns:ValueTypes["mez_admin_chat_update_column"][],
+	where?:ValueTypes["mez_admin_chat_bool_exp"]
+};
+	/** Ordering options when selecting data from "mez_admin_chat". */
+["mez_admin_chat_order_by"]: {
+	app_type?:ValueTypes["order_by"],
+	chat?:ValueTypes["chat_order_by"],
+	chat_id?:ValueTypes["order_by"],
+	user?:ValueTypes["user_order_by"],
+	user_id?:ValueTypes["order_by"]
+};
+	/** primary key columns input for table: mez_admin_chat */
+["mez_admin_chat_pk_columns_input"]: {
+	chat_id:number
+};
+	/** select columns of table "mez_admin_chat" */
+["mez_admin_chat_select_column"]:mez_admin_chat_select_column;
+	/** input type for updating data in table "mez_admin_chat" */
+["mez_admin_chat_set_input"]: {
+	app_type?:string,
+	chat_id?:number,
+	user_id?:number
+};
+	/** aggregate stddev on columns */
+["mez_admin_chat_stddev_fields"]: AliasType<{
+	chat_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_pop on columns */
+["mez_admin_chat_stddev_pop_fields"]: AliasType<{
+	chat_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_samp on columns */
+["mez_admin_chat_stddev_samp_fields"]: AliasType<{
+	chat_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** Streaming cursor of the table "mez_admin_chat" */
+["mez_admin_chat_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:ValueTypes["mez_admin_chat_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:ValueTypes["cursor_ordering"]
+};
+	/** Initial value of the column from where the streaming should start */
+["mez_admin_chat_stream_cursor_value_input"]: {
+	app_type?:string,
+	chat_id?:number,
+	user_id?:number
+};
+	/** aggregate sum on columns */
+["mez_admin_chat_sum_fields"]: AliasType<{
+	chat_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** update columns of table "mez_admin_chat" */
+["mez_admin_chat_update_column"]:mez_admin_chat_update_column;
+	["mez_admin_chat_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["mez_admin_chat_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["mez_admin_chat_set_input"],
+	where:ValueTypes["mez_admin_chat_bool_exp"]
+};
+	/** aggregate var_pop on columns */
+["mez_admin_chat_var_pop_fields"]: AliasType<{
+	chat_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregate var_samp on columns */
+["mez_admin_chat_var_samp_fields"]: AliasType<{
+	chat_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregate variance on columns */
+["mez_admin_chat_variance_fields"]: AliasType<{
+	chat_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
 	/** unique or primary key constraints on table "mez_admin" */
 ["mez_admin_constraint"]:mez_admin_constraint;
 	/** input type for incrementing numeric columns in table "mez_admin" */
@@ -3578,9 +3952,15 @@ delete_delivery_order?: [{	/** filter the rows which have to be deleted */
 delete_delivery_order_by_pk?: [{	id:number},ValueTypes["delivery_order"]],
 delete_delivery_order_public?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["delivery_order_public_bool_exp"]},ValueTypes["delivery_order_public_mutation_response"]],
+delete_direct_chat?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["direct_chat_bool_exp"]},ValueTypes["direct_chat_mutation_response"]],
+delete_direct_chat_by_pk?: [{	chat_id:number},ValueTypes["direct_chat"]],
 delete_mez_admin?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["mez_admin_bool_exp"]},ValueTypes["mez_admin_mutation_response"]],
 delete_mez_admin_by_pk?: [{	user_id:number},ValueTypes["mez_admin"]],
+delete_mez_admin_chat?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["mez_admin_chat_bool_exp"]},ValueTypes["mez_admin_chat_mutation_response"]],
+delete_mez_admin_chat_by_pk?: [{	chat_id:number},ValueTypes["mez_admin_chat"]],
 delete_notification_info?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["notification_info_bool_exp"]},ValueTypes["notification_info_mutation_response"]],
 delete_notification_info_by_pk?: [{	id:number},ValueTypes["notification_info"]],
@@ -3634,6 +4014,9 @@ delete_saved_location_by_pk?: [{	id:number},ValueTypes["saved_location"]],
 delete_service_link?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["service_link_bool_exp"]},ValueTypes["service_link_mutation_response"]],
 delete_service_link_by_pk?: [{	id:number},ValueTypes["service_link"]],
+delete_service_provider_customer_chat?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["service_provider_customer_chat_bool_exp"]},ValueTypes["service_provider_customer_chat_mutation_response"]],
+delete_service_provider_customer_chat_by_pk?: [{	chat_id:number},ValueTypes["service_provider_customer_chat"]],
 delete_service_provider_payment_info?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["service_provider_payment_info_bool_exp"]},ValueTypes["service_provider_payment_info_mutation_response"]],
 delete_service_provider_payment_info_by_pk?: [{	id:number},ValueTypes["service_provider_payment_info"]],
@@ -3711,9 +4094,21 @@ insert_delivery_order_public?: [{	/** the rows to be inserted */
 	objects:ValueTypes["delivery_order_public_insert_input"][]},ValueTypes["delivery_order_public_mutation_response"]],
 insert_delivery_order_public_one?: [{	/** the row to be inserted */
 	object:ValueTypes["delivery_order_public_insert_input"]},ValueTypes["delivery_order_public"]],
+insert_direct_chat?: [{	/** the rows to be inserted */
+	objects:ValueTypes["direct_chat_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["direct_chat_on_conflict"]},ValueTypes["direct_chat_mutation_response"]],
+insert_direct_chat_one?: [{	/** the row to be inserted */
+	object:ValueTypes["direct_chat_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["direct_chat_on_conflict"]},ValueTypes["direct_chat"]],
 insert_mez_admin?: [{	/** the rows to be inserted */
 	objects:ValueTypes["mez_admin_insert_input"][],	/** upsert condition */
 	on_conflict?:ValueTypes["mez_admin_on_conflict"]},ValueTypes["mez_admin_mutation_response"]],
+insert_mez_admin_chat?: [{	/** the rows to be inserted */
+	objects:ValueTypes["mez_admin_chat_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["mez_admin_chat_on_conflict"]},ValueTypes["mez_admin_chat_mutation_response"]],
+insert_mez_admin_chat_one?: [{	/** the row to be inserted */
+	object:ValueTypes["mez_admin_chat_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["mez_admin_chat_on_conflict"]},ValueTypes["mez_admin_chat"]],
 insert_mez_admin_one?: [{	/** the row to be inserted */
 	object:ValueTypes["mez_admin_insert_input"],	/** upsert condition */
 	on_conflict?:ValueTypes["mez_admin_on_conflict"]},ValueTypes["mez_admin"]],
@@ -3823,6 +4218,12 @@ insert_service_link?: [{	/** the rows to be inserted */
 insert_service_link_one?: [{	/** the row to be inserted */
 	object:ValueTypes["service_link_insert_input"],	/** upsert condition */
 	on_conflict?:ValueTypes["service_link_on_conflict"]},ValueTypes["service_link"]],
+insert_service_provider_customer_chat?: [{	/** the rows to be inserted */
+	objects:ValueTypes["service_provider_customer_chat_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["service_provider_customer_chat_on_conflict"]},ValueTypes["service_provider_customer_chat_mutation_response"]],
+insert_service_provider_customer_chat_one?: [{	/** the row to be inserted */
+	object:ValueTypes["service_provider_customer_chat_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["service_provider_customer_chat_on_conflict"]},ValueTypes["service_provider_customer_chat"]],
 insert_service_provider_payment_info?: [{	/** the rows to be inserted */
 	objects:ValueTypes["service_provider_payment_info_insert_input"][],	/** upsert condition */
 	on_conflict?:ValueTypes["service_provider_payment_info_on_conflict"]},ValueTypes["service_provider_payment_info_mutation_response"]],
@@ -3973,6 +4374,15 @@ update_delivery_order_public?: [{	/** increments the numeric columns with given 
 	where:ValueTypes["delivery_order_public_bool_exp"]},ValueTypes["delivery_order_public_mutation_response"]],
 update_delivery_order_public_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["delivery_order_public_updates"][]},ValueTypes["delivery_order_public_mutation_response"]],
+update_direct_chat?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["direct_chat_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["direct_chat_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["direct_chat_bool_exp"]},ValueTypes["direct_chat_mutation_response"]],
+update_direct_chat_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["direct_chat_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["direct_chat_set_input"],	pk_columns:ValueTypes["direct_chat_pk_columns_input"]},ValueTypes["direct_chat"]],
+update_direct_chat_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["direct_chat_updates"][]},ValueTypes["direct_chat_mutation_response"]],
 update_mez_admin?: [{	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["mez_admin_inc_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["mez_admin_set_input"],	/** filter the rows which have to be updated */
@@ -3980,6 +4390,15 @@ update_mez_admin?: [{	/** increments the numeric columns with given value of the
 update_mez_admin_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["mez_admin_inc_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["mez_admin_set_input"],	pk_columns:ValueTypes["mez_admin_pk_columns_input"]},ValueTypes["mez_admin"]],
+update_mez_admin_chat?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["mez_admin_chat_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["mez_admin_chat_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["mez_admin_chat_bool_exp"]},ValueTypes["mez_admin_chat_mutation_response"]],
+update_mez_admin_chat_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["mez_admin_chat_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["mez_admin_chat_set_input"],	pk_columns:ValueTypes["mez_admin_chat_pk_columns_input"]},ValueTypes["mez_admin_chat"]],
+update_mez_admin_chat_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["mez_admin_chat_updates"][]},ValueTypes["mez_admin_chat_mutation_response"]],
 update_mez_admin_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["mez_admin_updates"][]},ValueTypes["mez_admin_mutation_response"]],
 update_notification_info?: [{	/** increments the numeric columns with given value of the filtered values */
@@ -4177,6 +4596,15 @@ update_service_link_by_pk?: [{	/** increments the numeric columns with given val
 	_set?:ValueTypes["service_link_set_input"],	pk_columns:ValueTypes["service_link_pk_columns_input"]},ValueTypes["service_link"]],
 update_service_link_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["service_link_updates"][]},ValueTypes["service_link_mutation_response"]],
+update_service_provider_customer_chat?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["service_provider_customer_chat_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["service_provider_customer_chat_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["service_provider_customer_chat_bool_exp"]},ValueTypes["service_provider_customer_chat_mutation_response"]],
+update_service_provider_customer_chat_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["service_provider_customer_chat_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["service_provider_customer_chat_set_input"],	pk_columns:ValueTypes["service_provider_customer_chat_pk_columns_input"]},ValueTypes["service_provider_customer_chat"]],
+update_service_provider_customer_chat_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["service_provider_customer_chat_updates"][]},ValueTypes["service_provider_customer_chat_mutation_response"]],
 update_service_provider_payment_info?: [{	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["service_provider_payment_info_inc_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_payment_info_set_input"],	/** filter the rows which have to be updated */
@@ -4792,6 +5220,19 @@ delivery_order_public_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["delivery_order_public_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["delivery_order_public_bool_exp"]},ValueTypes["delivery_order_public_aggregate"]],
+direct_chat?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["direct_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["direct_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["direct_chat_bool_exp"]},ValueTypes["direct_chat"]],
+direct_chat_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["direct_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["direct_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["direct_chat_bool_exp"]},ValueTypes["direct_chat_aggregate"]],
+direct_chat_by_pk?: [{	chat_id:number},ValueTypes["direct_chat"]],
 mez_admin?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["mez_admin_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -4805,6 +5246,19 @@ mez_admin_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["mez_admin_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["mez_admin_bool_exp"]},ValueTypes["mez_admin_aggregate"]],
 mez_admin_by_pk?: [{	user_id:number},ValueTypes["mez_admin"]],
+mez_admin_chat?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_admin_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_admin_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_admin_chat_bool_exp"]},ValueTypes["mez_admin_chat"]],
+mez_admin_chat_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_admin_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_admin_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_admin_chat_bool_exp"]},ValueTypes["mez_admin_chat_aggregate"]],
+mez_admin_chat_by_pk?: [{	chat_id:number},ValueTypes["mez_admin_chat"]],
 notification_info?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["notification_info_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -5038,6 +5492,19 @@ service_link_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["service_link_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["service_link_bool_exp"]},ValueTypes["service_link_aggregate"]],
 service_link_by_pk?: [{	id:number},ValueTypes["service_link"]],
+service_provider_customer_chat?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_customer_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_customer_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_customer_chat_bool_exp"]},ValueTypes["service_provider_customer_chat"]],
+service_provider_customer_chat_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_customer_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_customer_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_customer_chat_bool_exp"]},ValueTypes["service_provider_customer_chat_aggregate"]],
+service_provider_customer_chat_by_pk?: [{	chat_id:number},ValueTypes["service_provider_customer_chat"]],
 service_provider_payment_info?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["service_provider_payment_info_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -10677,6 +11144,205 @@ count?: [{	columns?:ValueTypes["service_link_select_column"][],	distinct?:boolea
 	service_provider_id?:true,
 		__typename?: true
 }>;
+	/** columns and relationships of "service_provider_customer_chat" */
+["service_provider_customer_chat"]: AliasType<{
+	/** An object relationship */
+	chat?:ValueTypes["chat"],
+	chat_id?:true,
+	/** An object relationship */
+	customer?:ValueTypes["customer"],
+	customer_id?:true,
+	/** An object relationship */
+	restaurant?:ValueTypes["restaurant"],
+	service_provider_id?:true,
+	service_provider_type?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "service_provider_customer_chat" */
+["service_provider_customer_chat_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["service_provider_customer_chat_aggregate_fields"],
+	nodes?:ValueTypes["service_provider_customer_chat"],
+		__typename?: true
+}>;
+	/** aggregate fields of "service_provider_customer_chat" */
+["service_provider_customer_chat_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["service_provider_customer_chat_avg_fields"],
+count?: [{	columns?:ValueTypes["service_provider_customer_chat_select_column"][],	distinct?:boolean},true],
+	max?:ValueTypes["service_provider_customer_chat_max_fields"],
+	min?:ValueTypes["service_provider_customer_chat_min_fields"],
+	stddev?:ValueTypes["service_provider_customer_chat_stddev_fields"],
+	stddev_pop?:ValueTypes["service_provider_customer_chat_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["service_provider_customer_chat_stddev_samp_fields"],
+	sum?:ValueTypes["service_provider_customer_chat_sum_fields"],
+	var_pop?:ValueTypes["service_provider_customer_chat_var_pop_fields"],
+	var_samp?:ValueTypes["service_provider_customer_chat_var_samp_fields"],
+	variance?:ValueTypes["service_provider_customer_chat_variance_fields"],
+		__typename?: true
+}>;
+	/** aggregate avg on columns */
+["service_provider_customer_chat_avg_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table
+"service_provider_customer_chat". All fields are combined with a logical 'AND'. */
+["service_provider_customer_chat_bool_exp"]: {
+	_and?:ValueTypes["service_provider_customer_chat_bool_exp"][],
+	_not?:ValueTypes["service_provider_customer_chat_bool_exp"],
+	_or?:ValueTypes["service_provider_customer_chat_bool_exp"][],
+	chat?:ValueTypes["chat_bool_exp"],
+	chat_id?:ValueTypes["Int_comparison_exp"],
+	customer?:ValueTypes["customer_bool_exp"],
+	customer_id?:ValueTypes["Int_comparison_exp"],
+	restaurant?:ValueTypes["restaurant_bool_exp"],
+	service_provider_id?:ValueTypes["Int_comparison_exp"],
+	service_provider_type?:ValueTypes["String_comparison_exp"]
+};
+	/** unique or primary key constraints on table "service_provider_customer_chat" */
+["service_provider_customer_chat_constraint"]:service_provider_customer_chat_constraint;
+	/** input type for incrementing numeric columns in table "service_provider_customer_chat" */
+["service_provider_customer_chat_inc_input"]: {
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number
+};
+	/** input type for inserting data into table "service_provider_customer_chat" */
+["service_provider_customer_chat_insert_input"]: {
+	chat?:ValueTypes["chat_obj_rel_insert_input"],
+	chat_id?:number,
+	customer?:ValueTypes["customer_obj_rel_insert_input"],
+	customer_id?:number,
+	restaurant?:ValueTypes["restaurant_obj_rel_insert_input"],
+	service_provider_id?:number,
+	service_provider_type?:string
+};
+	/** aggregate max on columns */
+["service_provider_customer_chat_max_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+	service_provider_type?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["service_provider_customer_chat_min_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+	service_provider_type?:true,
+		__typename?: true
+}>;
+	/** response of any mutation on the table "service_provider_customer_chat" */
+["service_provider_customer_chat_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["service_provider_customer_chat"],
+		__typename?: true
+}>;
+	/** on_conflict condition type for table "service_provider_customer_chat" */
+["service_provider_customer_chat_on_conflict"]: {
+	constraint:ValueTypes["service_provider_customer_chat_constraint"],
+	update_columns:ValueTypes["service_provider_customer_chat_update_column"][],
+	where?:ValueTypes["service_provider_customer_chat_bool_exp"]
+};
+	/** Ordering options when selecting data from "service_provider_customer_chat". */
+["service_provider_customer_chat_order_by"]: {
+	chat?:ValueTypes["chat_order_by"],
+	chat_id?:ValueTypes["order_by"],
+	customer?:ValueTypes["customer_order_by"],
+	customer_id?:ValueTypes["order_by"],
+	restaurant?:ValueTypes["restaurant_order_by"],
+	service_provider_id?:ValueTypes["order_by"],
+	service_provider_type?:ValueTypes["order_by"]
+};
+	/** primary key columns input for table: service_provider_customer_chat */
+["service_provider_customer_chat_pk_columns_input"]: {
+	chat_id:number
+};
+	/** select columns of table "service_provider_customer_chat" */
+["service_provider_customer_chat_select_column"]:service_provider_customer_chat_select_column;
+	/** input type for updating data in table "service_provider_customer_chat" */
+["service_provider_customer_chat_set_input"]: {
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+};
+	/** aggregate stddev on columns */
+["service_provider_customer_chat_stddev_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_pop on columns */
+["service_provider_customer_chat_stddev_pop_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_samp on columns */
+["service_provider_customer_chat_stddev_samp_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** Streaming cursor of the table "service_provider_customer_chat" */
+["service_provider_customer_chat_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:ValueTypes["service_provider_customer_chat_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:ValueTypes["cursor_ordering"]
+};
+	/** Initial value of the column from where the streaming should start */
+["service_provider_customer_chat_stream_cursor_value_input"]: {
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+};
+	/** aggregate sum on columns */
+["service_provider_customer_chat_sum_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** update columns of table "service_provider_customer_chat" */
+["service_provider_customer_chat_update_column"]:service_provider_customer_chat_update_column;
+	["service_provider_customer_chat_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["service_provider_customer_chat_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["service_provider_customer_chat_set_input"],
+	where:ValueTypes["service_provider_customer_chat_bool_exp"]
+};
+	/** aggregate var_pop on columns */
+["service_provider_customer_chat_var_pop_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** aggregate var_samp on columns */
+["service_provider_customer_chat_var_samp_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** aggregate variance on columns */
+["service_provider_customer_chat_variance_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
 	/** columns and relationships of "service_provider_payment_info" */
 ["service_provider_payment_info"]: AliasType<{
 	bank_transfer?:true,
@@ -11469,6 +12135,23 @@ delivery_order_stream?: [{	/** maximum number of rows returned in a single batch
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["delivery_order_stream_cursor_input"][],	/** filter the rows returned */
 	where?:ValueTypes["delivery_order_bool_exp"]},ValueTypes["delivery_order"]],
+direct_chat?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["direct_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["direct_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["direct_chat_bool_exp"]},ValueTypes["direct_chat"]],
+direct_chat_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["direct_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["direct_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["direct_chat_bool_exp"]},ValueTypes["direct_chat_aggregate"]],
+direct_chat_by_pk?: [{	chat_id:number},ValueTypes["direct_chat"]],
+direct_chat_stream?: [{	/** maximum number of rows returned in a single batch */
+	batch_size:number,	/** cursor to stream the results returned by the query */
+	cursor?:ValueTypes["direct_chat_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["direct_chat_bool_exp"]},ValueTypes["direct_chat"]],
 mez_admin?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["mez_admin_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -11482,6 +12165,23 @@ mez_admin_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["mez_admin_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["mez_admin_bool_exp"]},ValueTypes["mez_admin_aggregate"]],
 mez_admin_by_pk?: [{	user_id:number},ValueTypes["mez_admin"]],
+mez_admin_chat?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_admin_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_admin_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_admin_chat_bool_exp"]},ValueTypes["mez_admin_chat"]],
+mez_admin_chat_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_admin_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_admin_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_admin_chat_bool_exp"]},ValueTypes["mez_admin_chat_aggregate"]],
+mez_admin_chat_by_pk?: [{	chat_id:number},ValueTypes["mez_admin_chat"]],
+mez_admin_chat_stream?: [{	/** maximum number of rows returned in a single batch */
+	batch_size:number,	/** cursor to stream the results returned by the query */
+	cursor?:ValueTypes["mez_admin_chat_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_admin_chat_bool_exp"]},ValueTypes["mez_admin_chat"]],
 mez_admin_stream?: [{	/** maximum number of rows returned in a single batch */
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["mez_admin_stream_cursor_input"][],	/** filter the rows returned */
@@ -11791,6 +12491,23 @@ service_link_stream?: [{	/** maximum number of rows returned in a single batch *
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["service_link_stream_cursor_input"][],	/** filter the rows returned */
 	where?:ValueTypes["service_link_bool_exp"]},ValueTypes["service_link"]],
+service_provider_customer_chat?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_customer_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_customer_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_customer_chat_bool_exp"]},ValueTypes["service_provider_customer_chat"]],
+service_provider_customer_chat_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_customer_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_customer_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_customer_chat_bool_exp"]},ValueTypes["service_provider_customer_chat_aggregate"]],
+service_provider_customer_chat_by_pk?: [{	chat_id:number},ValueTypes["service_provider_customer_chat"]],
+service_provider_customer_chat_stream?: [{	/** maximum number of rows returned in a single batch */
+	batch_size:number,	/** cursor to stream the results returned by the query */
+	cursor?:ValueTypes["service_provider_customer_chat_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_customer_chat_bool_exp"]},ValueTypes["service_provider_customer_chat"]],
 service_provider_payment_info?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["service_provider_payment_info_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -12792,6 +13509,7 @@ export type PartialObjects = {
 	chat_participants?:PartialObjects["chat_participant"][],
 			/** An aggregate relationship */
 	chat_participants_aggregate?:PartialObjects["chat_participant_aggregate"],
+			chat_type?:string,
 			creation_time?:PartialObjects["timestamptz"],
 			id?:number,
 			messages?:PartialObjects["jsonb"]
@@ -12836,6 +13554,7 @@ export type PartialObjects = {
 	agora_info?:PartialObjects["jsonb_comparison_exp"],
 	chat_info?:PartialObjects["jsonb_comparison_exp"],
 	chat_participants?:PartialObjects["chat_participant_bool_exp"],
+	chat_type?:PartialObjects["String_comparison_exp"],
 	creation_time?:PartialObjects["timestamptz_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	messages?:PartialObjects["jsonb_comparison_exp"]
@@ -12870,6 +13589,7 @@ end). throws an error if top level container is not an array */
 	agora_info?:PartialObjects["jsonb"],
 	chat_info?:PartialObjects["jsonb"],
 	chat_participants?:PartialObjects["chat_participant_arr_rel_insert_input"],
+	chat_type?:string,
 	creation_time?:PartialObjects["timestamptz"],
 	id?:number,
 	messages?:PartialObjects["jsonb"]
@@ -12877,12 +13597,14 @@ end). throws an error if top level container is not an array */
 	/** aggregate max on columns */
 ["chat_max_fields"]: {
 		__typename?: "chat_max_fields";
+			chat_type?:string,
 			creation_time?:PartialObjects["timestamptz"],
 			id?:number
 	},
 	/** aggregate min on columns */
 ["chat_min_fields"]: {
 		__typename?: "chat_min_fields";
+			chat_type?:string,
 			creation_time?:PartialObjects["timestamptz"],
 			id?:number
 	},
@@ -12911,6 +13633,7 @@ end). throws an error if top level container is not an array */
 	agora_info?:PartialObjects["order_by"],
 	chat_info?:PartialObjects["order_by"],
 	chat_participants_aggregate?:PartialObjects["chat_participant_aggregate_order_by"],
+	chat_type?:PartialObjects["order_by"],
 	creation_time?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	messages?:PartialObjects["order_by"]
@@ -13211,6 +13934,7 @@ end). throws an error if top level container is not an array */
 ["chat_set_input"]: {
 	agora_info?:PartialObjects["jsonb"],
 	chat_info?:PartialObjects["jsonb"],
+	chat_type?:string,
 	creation_time?:PartialObjects["timestamptz"],
 	id?:number,
 	messages?:PartialObjects["jsonb"]
@@ -13241,6 +13965,7 @@ end). throws an error if top level container is not an array */
 ["chat_stream_cursor_value_input"]: {
 	agora_info?:PartialObjects["jsonb"],
 	chat_info?:PartialObjects["jsonb"],
+	chat_type?:string,
 	creation_time?:PartialObjects["timestamptz"],
 	id?:number,
 	messages?:PartialObjects["jsonb"]
@@ -15982,6 +16707,196 @@ cancelledByServiceProvider */
 	/** in seconds */
 	trip_duration?:PartialObjects["order_by"]
 },
+	/** columns and relationships of "direct_chat" */
+["direct_chat"]: {
+		__typename?: "direct_chat";
+			/** An object relationship */
+	chat?:PartialObjects["chat"],
+			chat_id?:number,
+			/** An object relationship */
+	user1?:PartialObjects["user"],
+			/** An object relationship */
+	user2?:PartialObjects["user"],
+			user_id1?:number,
+			user_id2?:number
+	},
+	/** aggregated selection of "direct_chat" */
+["direct_chat_aggregate"]: {
+		__typename?: "direct_chat_aggregate";
+			aggregate?:PartialObjects["direct_chat_aggregate_fields"],
+			nodes?:PartialObjects["direct_chat"][]
+	},
+	/** aggregate fields of "direct_chat" */
+["direct_chat_aggregate_fields"]: {
+		__typename?: "direct_chat_aggregate_fields";
+			avg?:PartialObjects["direct_chat_avg_fields"],
+			count?:number,
+			max?:PartialObjects["direct_chat_max_fields"],
+			min?:PartialObjects["direct_chat_min_fields"],
+			stddev?:PartialObjects["direct_chat_stddev_fields"],
+			stddev_pop?:PartialObjects["direct_chat_stddev_pop_fields"],
+			stddev_samp?:PartialObjects["direct_chat_stddev_samp_fields"],
+			sum?:PartialObjects["direct_chat_sum_fields"],
+			var_pop?:PartialObjects["direct_chat_var_pop_fields"],
+			var_samp?:PartialObjects["direct_chat_var_samp_fields"],
+			variance?:PartialObjects["direct_chat_variance_fields"]
+	},
+	/** aggregate avg on columns */
+["direct_chat_avg_fields"]: {
+		__typename?: "direct_chat_avg_fields";
+			chat_id?:number,
+			user_id1?:number,
+			user_id2?:number
+	},
+	/** Boolean expression to filter rows from the table "direct_chat". All fields are combined with a logical 'AND'. */
+["direct_chat_bool_exp"]: {
+	_and?:PartialObjects["direct_chat_bool_exp"][],
+	_not?:PartialObjects["direct_chat_bool_exp"],
+	_or?:PartialObjects["direct_chat_bool_exp"][],
+	chat?:PartialObjects["chat_bool_exp"],
+	chat_id?:PartialObjects["Int_comparison_exp"],
+	user1?:PartialObjects["user_bool_exp"],
+	user2?:PartialObjects["user_bool_exp"],
+	user_id1?:PartialObjects["Int_comparison_exp"],
+	user_id2?:PartialObjects["Int_comparison_exp"]
+},
+	/** unique or primary key constraints on table "direct_chat" */
+["direct_chat_constraint"]:direct_chat_constraint,
+	/** input type for incrementing numeric columns in table "direct_chat" */
+["direct_chat_inc_input"]: {
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+},
+	/** input type for inserting data into table "direct_chat" */
+["direct_chat_insert_input"]: {
+	chat?:PartialObjects["chat_obj_rel_insert_input"],
+	chat_id?:number,
+	user1?:PartialObjects["user_obj_rel_insert_input"],
+	user2?:PartialObjects["user_obj_rel_insert_input"],
+	user_id1?:number,
+	user_id2?:number
+},
+	/** aggregate max on columns */
+["direct_chat_max_fields"]: {
+		__typename?: "direct_chat_max_fields";
+			chat_id?:number,
+			user_id1?:number,
+			user_id2?:number
+	},
+	/** aggregate min on columns */
+["direct_chat_min_fields"]: {
+		__typename?: "direct_chat_min_fields";
+			chat_id?:number,
+			user_id1?:number,
+			user_id2?:number
+	},
+	/** response of any mutation on the table "direct_chat" */
+["direct_chat_mutation_response"]: {
+		__typename?: "direct_chat_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["direct_chat"][]
+	},
+	/** on_conflict condition type for table "direct_chat" */
+["direct_chat_on_conflict"]: {
+	constraint:PartialObjects["direct_chat_constraint"],
+	update_columns:PartialObjects["direct_chat_update_column"][],
+	where?:PartialObjects["direct_chat_bool_exp"]
+},
+	/** Ordering options when selecting data from "direct_chat". */
+["direct_chat_order_by"]: {
+	chat?:PartialObjects["chat_order_by"],
+	chat_id?:PartialObjects["order_by"],
+	user1?:PartialObjects["user_order_by"],
+	user2?:PartialObjects["user_order_by"],
+	user_id1?:PartialObjects["order_by"],
+	user_id2?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: direct_chat */
+["direct_chat_pk_columns_input"]: {
+	chat_id:number
+},
+	/** select columns of table "direct_chat" */
+["direct_chat_select_column"]:direct_chat_select_column,
+	/** input type for updating data in table "direct_chat" */
+["direct_chat_set_input"]: {
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+},
+	/** aggregate stddev on columns */
+["direct_chat_stddev_fields"]: {
+		__typename?: "direct_chat_stddev_fields";
+			chat_id?:number,
+			user_id1?:number,
+			user_id2?:number
+	},
+	/** aggregate stddev_pop on columns */
+["direct_chat_stddev_pop_fields"]: {
+		__typename?: "direct_chat_stddev_pop_fields";
+			chat_id?:number,
+			user_id1?:number,
+			user_id2?:number
+	},
+	/** aggregate stddev_samp on columns */
+["direct_chat_stddev_samp_fields"]: {
+		__typename?: "direct_chat_stddev_samp_fields";
+			chat_id?:number,
+			user_id1?:number,
+			user_id2?:number
+	},
+	/** Streaming cursor of the table "direct_chat" */
+["direct_chat_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:PartialObjects["direct_chat_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:PartialObjects["cursor_ordering"]
+},
+	/** Initial value of the column from where the streaming should start */
+["direct_chat_stream_cursor_value_input"]: {
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+},
+	/** aggregate sum on columns */
+["direct_chat_sum_fields"]: {
+		__typename?: "direct_chat_sum_fields";
+			chat_id?:number,
+			user_id1?:number,
+			user_id2?:number
+	},
+	/** update columns of table "direct_chat" */
+["direct_chat_update_column"]:direct_chat_update_column,
+	["direct_chat_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:PartialObjects["direct_chat_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:PartialObjects["direct_chat_set_input"],
+	where:PartialObjects["direct_chat_bool_exp"]
+},
+	/** aggregate var_pop on columns */
+["direct_chat_var_pop_fields"]: {
+		__typename?: "direct_chat_var_pop_fields";
+			chat_id?:number,
+			user_id1?:number,
+			user_id2?:number
+	},
+	/** aggregate var_samp on columns */
+["direct_chat_var_samp_fields"]: {
+		__typename?: "direct_chat_var_samp_fields";
+			chat_id?:number,
+			user_id1?:number,
+			user_id2?:number
+	},
+	/** aggregate variance on columns */
+["direct_chat_variance_fields"]: {
+		__typename?: "direct_chat_variance_fields";
+			chat_id?:number,
+			user_id1?:number,
+			user_id2?:number
+	},
 	/** Boolean expression to compare columns of type "Float". All fields are combined with logical 'AND'. */
 ["Float_comparison_exp"]: {
 	_eq?:number,
@@ -16150,6 +17065,182 @@ cancelledByServiceProvider */
 	user_id?:PartialObjects["Int_comparison_exp"],
 	version?:PartialObjects["String_comparison_exp"]
 },
+	/** columns and relationships of "mez_admin_chat" */
+["mez_admin_chat"]: {
+		__typename?: "mez_admin_chat";
+			app_type?:string,
+			/** An object relationship */
+	chat?:PartialObjects["chat"],
+			chat_id?:number,
+			/** An object relationship */
+	user?:PartialObjects["user"],
+			user_id?:number
+	},
+	/** aggregated selection of "mez_admin_chat" */
+["mez_admin_chat_aggregate"]: {
+		__typename?: "mez_admin_chat_aggregate";
+			aggregate?:PartialObjects["mez_admin_chat_aggregate_fields"],
+			nodes?:PartialObjects["mez_admin_chat"][]
+	},
+	/** aggregate fields of "mez_admin_chat" */
+["mez_admin_chat_aggregate_fields"]: {
+		__typename?: "mez_admin_chat_aggregate_fields";
+			avg?:PartialObjects["mez_admin_chat_avg_fields"],
+			count?:number,
+			max?:PartialObjects["mez_admin_chat_max_fields"],
+			min?:PartialObjects["mez_admin_chat_min_fields"],
+			stddev?:PartialObjects["mez_admin_chat_stddev_fields"],
+			stddev_pop?:PartialObjects["mez_admin_chat_stddev_pop_fields"],
+			stddev_samp?:PartialObjects["mez_admin_chat_stddev_samp_fields"],
+			sum?:PartialObjects["mez_admin_chat_sum_fields"],
+			var_pop?:PartialObjects["mez_admin_chat_var_pop_fields"],
+			var_samp?:PartialObjects["mez_admin_chat_var_samp_fields"],
+			variance?:PartialObjects["mez_admin_chat_variance_fields"]
+	},
+	/** aggregate avg on columns */
+["mez_admin_chat_avg_fields"]: {
+		__typename?: "mez_admin_chat_avg_fields";
+			chat_id?:number,
+			user_id?:number
+	},
+	/** Boolean expression to filter rows from the table "mez_admin_chat". All fields are combined with a logical 'AND'. */
+["mez_admin_chat_bool_exp"]: {
+	_and?:PartialObjects["mez_admin_chat_bool_exp"][],
+	_not?:PartialObjects["mez_admin_chat_bool_exp"],
+	_or?:PartialObjects["mez_admin_chat_bool_exp"][],
+	app_type?:PartialObjects["String_comparison_exp"],
+	chat?:PartialObjects["chat_bool_exp"],
+	chat_id?:PartialObjects["Int_comparison_exp"],
+	user?:PartialObjects["user_bool_exp"],
+	user_id?:PartialObjects["Int_comparison_exp"]
+},
+	/** unique or primary key constraints on table "mez_admin_chat" */
+["mez_admin_chat_constraint"]:mez_admin_chat_constraint,
+	/** input type for incrementing numeric columns in table "mez_admin_chat" */
+["mez_admin_chat_inc_input"]: {
+	chat_id?:number,
+	user_id?:number
+},
+	/** input type for inserting data into table "mez_admin_chat" */
+["mez_admin_chat_insert_input"]: {
+	app_type?:string,
+	chat?:PartialObjects["chat_obj_rel_insert_input"],
+	chat_id?:number,
+	user?:PartialObjects["user_obj_rel_insert_input"],
+	user_id?:number
+},
+	/** aggregate max on columns */
+["mez_admin_chat_max_fields"]: {
+		__typename?: "mez_admin_chat_max_fields";
+			app_type?:string,
+			chat_id?:number,
+			user_id?:number
+	},
+	/** aggregate min on columns */
+["mez_admin_chat_min_fields"]: {
+		__typename?: "mez_admin_chat_min_fields";
+			app_type?:string,
+			chat_id?:number,
+			user_id?:number
+	},
+	/** response of any mutation on the table "mez_admin_chat" */
+["mez_admin_chat_mutation_response"]: {
+		__typename?: "mez_admin_chat_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["mez_admin_chat"][]
+	},
+	/** on_conflict condition type for table "mez_admin_chat" */
+["mez_admin_chat_on_conflict"]: {
+	constraint:PartialObjects["mez_admin_chat_constraint"],
+	update_columns:PartialObjects["mez_admin_chat_update_column"][],
+	where?:PartialObjects["mez_admin_chat_bool_exp"]
+},
+	/** Ordering options when selecting data from "mez_admin_chat". */
+["mez_admin_chat_order_by"]: {
+	app_type?:PartialObjects["order_by"],
+	chat?:PartialObjects["chat_order_by"],
+	chat_id?:PartialObjects["order_by"],
+	user?:PartialObjects["user_order_by"],
+	user_id?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: mez_admin_chat */
+["mez_admin_chat_pk_columns_input"]: {
+	chat_id:number
+},
+	/** select columns of table "mez_admin_chat" */
+["mez_admin_chat_select_column"]:mez_admin_chat_select_column,
+	/** input type for updating data in table "mez_admin_chat" */
+["mez_admin_chat_set_input"]: {
+	app_type?:string,
+	chat_id?:number,
+	user_id?:number
+},
+	/** aggregate stddev on columns */
+["mez_admin_chat_stddev_fields"]: {
+		__typename?: "mez_admin_chat_stddev_fields";
+			chat_id?:number,
+			user_id?:number
+	},
+	/** aggregate stddev_pop on columns */
+["mez_admin_chat_stddev_pop_fields"]: {
+		__typename?: "mez_admin_chat_stddev_pop_fields";
+			chat_id?:number,
+			user_id?:number
+	},
+	/** aggregate stddev_samp on columns */
+["mez_admin_chat_stddev_samp_fields"]: {
+		__typename?: "mez_admin_chat_stddev_samp_fields";
+			chat_id?:number,
+			user_id?:number
+	},
+	/** Streaming cursor of the table "mez_admin_chat" */
+["mez_admin_chat_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:PartialObjects["mez_admin_chat_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:PartialObjects["cursor_ordering"]
+},
+	/** Initial value of the column from where the streaming should start */
+["mez_admin_chat_stream_cursor_value_input"]: {
+	app_type?:string,
+	chat_id?:number,
+	user_id?:number
+},
+	/** aggregate sum on columns */
+["mez_admin_chat_sum_fields"]: {
+		__typename?: "mez_admin_chat_sum_fields";
+			chat_id?:number,
+			user_id?:number
+	},
+	/** update columns of table "mez_admin_chat" */
+["mez_admin_chat_update_column"]:mez_admin_chat_update_column,
+	["mez_admin_chat_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:PartialObjects["mez_admin_chat_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:PartialObjects["mez_admin_chat_set_input"],
+	where:PartialObjects["mez_admin_chat_bool_exp"]
+},
+	/** aggregate var_pop on columns */
+["mez_admin_chat_var_pop_fields"]: {
+		__typename?: "mez_admin_chat_var_pop_fields";
+			chat_id?:number,
+			user_id?:number
+	},
+	/** aggregate var_samp on columns */
+["mez_admin_chat_var_samp_fields"]: {
+		__typename?: "mez_admin_chat_var_samp_fields";
+			chat_id?:number,
+			user_id?:number
+	},
+	/** aggregate variance on columns */
+["mez_admin_chat_variance_fields"]: {
+		__typename?: "mez_admin_chat_variance_fields";
+			chat_id?:number,
+			user_id?:number
+	},
 	/** unique or primary key constraints on table "mez_admin" */
 ["mez_admin_constraint"]:mez_admin_constraint,
 	/** input type for incrementing numeric columns in table "mez_admin" */
@@ -16312,10 +17403,18 @@ cancelledByServiceProvider */
 	delete_delivery_order_by_pk?:PartialObjects["delivery_order"],
 			/** delete data from the table: "delivery_order_public" */
 	delete_delivery_order_public?:PartialObjects["delivery_order_public_mutation_response"],
+			/** delete data from the table: "direct_chat" */
+	delete_direct_chat?:PartialObjects["direct_chat_mutation_response"],
+			/** delete single row from the table: "direct_chat" */
+	delete_direct_chat_by_pk?:PartialObjects["direct_chat"],
 			/** delete data from the table: "mez_admin" */
 	delete_mez_admin?:PartialObjects["mez_admin_mutation_response"],
 			/** delete single row from the table: "mez_admin" */
 	delete_mez_admin_by_pk?:PartialObjects["mez_admin"],
+			/** delete data from the table: "mez_admin_chat" */
+	delete_mez_admin_chat?:PartialObjects["mez_admin_chat_mutation_response"],
+			/** delete single row from the table: "mez_admin_chat" */
+	delete_mez_admin_chat_by_pk?:PartialObjects["mez_admin_chat"],
 			/** delete data from the table: "notification_info" */
 	delete_notification_info?:PartialObjects["notification_info_mutation_response"],
 			/** delete single row from the table: "notification_info" */
@@ -16386,6 +17485,10 @@ cancelledByServiceProvider */
 	delete_service_link?:PartialObjects["service_link_mutation_response"],
 			/** delete single row from the table: "service_link" */
 	delete_service_link_by_pk?:PartialObjects["service_link"],
+			/** delete data from the table: "service_provider_customer_chat" */
+	delete_service_provider_customer_chat?:PartialObjects["service_provider_customer_chat_mutation_response"],
+			/** delete single row from the table: "service_provider_customer_chat" */
+	delete_service_provider_customer_chat_by_pk?:PartialObjects["service_provider_customer_chat"],
 			/** delete data from the table: "service_provider_payment_info" */
 	delete_service_provider_payment_info?:PartialObjects["service_provider_payment_info_mutation_response"],
 			/** delete single row from the table: "service_provider_payment_info" */
@@ -16454,8 +17557,16 @@ cancelledByServiceProvider */
 	insert_delivery_order_public?:PartialObjects["delivery_order_public_mutation_response"],
 			/** insert a single row into the table: "delivery_order_public" */
 	insert_delivery_order_public_one?:PartialObjects["delivery_order_public"],
+			/** insert data into the table: "direct_chat" */
+	insert_direct_chat?:PartialObjects["direct_chat_mutation_response"],
+			/** insert a single row into the table: "direct_chat" */
+	insert_direct_chat_one?:PartialObjects["direct_chat"],
 			/** insert data into the table: "mez_admin" */
 	insert_mez_admin?:PartialObjects["mez_admin_mutation_response"],
+			/** insert data into the table: "mez_admin_chat" */
+	insert_mez_admin_chat?:PartialObjects["mez_admin_chat_mutation_response"],
+			/** insert a single row into the table: "mez_admin_chat" */
+	insert_mez_admin_chat_one?:PartialObjects["mez_admin_chat"],
 			/** insert a single row into the table: "mez_admin" */
 	insert_mez_admin_one?:PartialObjects["mez_admin"],
 			/** insert data into the table: "notification_info" */
@@ -16530,6 +17641,10 @@ cancelledByServiceProvider */
 	insert_service_link?:PartialObjects["service_link_mutation_response"],
 			/** insert a single row into the table: "service_link" */
 	insert_service_link_one?:PartialObjects["service_link"],
+			/** insert data into the table: "service_provider_customer_chat" */
+	insert_service_provider_customer_chat?:PartialObjects["service_provider_customer_chat_mutation_response"],
+			/** insert a single row into the table: "service_provider_customer_chat" */
+	insert_service_provider_customer_chat_one?:PartialObjects["service_provider_customer_chat"],
 			/** insert data into the table: "service_provider_payment_info" */
 	insert_service_provider_payment_info?:PartialObjects["service_provider_payment_info_mutation_response"],
 			/** insert a single row into the table: "service_provider_payment_info" */
@@ -16614,10 +17729,22 @@ cancelledByServiceProvider */
 	update_delivery_order_public?:PartialObjects["delivery_order_public_mutation_response"],
 			/** update multiples rows of table: "delivery_order_public" */
 	update_delivery_order_public_many?:(PartialObjects["delivery_order_public_mutation_response"] | undefined)[],
+			/** update data of the table: "direct_chat" */
+	update_direct_chat?:PartialObjects["direct_chat_mutation_response"],
+			/** update single row of the table: "direct_chat" */
+	update_direct_chat_by_pk?:PartialObjects["direct_chat"],
+			/** update multiples rows of table: "direct_chat" */
+	update_direct_chat_many?:(PartialObjects["direct_chat_mutation_response"] | undefined)[],
 			/** update data of the table: "mez_admin" */
 	update_mez_admin?:PartialObjects["mez_admin_mutation_response"],
 			/** update single row of the table: "mez_admin" */
 	update_mez_admin_by_pk?:PartialObjects["mez_admin"],
+			/** update data of the table: "mez_admin_chat" */
+	update_mez_admin_chat?:PartialObjects["mez_admin_chat_mutation_response"],
+			/** update single row of the table: "mez_admin_chat" */
+	update_mez_admin_chat_by_pk?:PartialObjects["mez_admin_chat"],
+			/** update multiples rows of table: "mez_admin_chat" */
+	update_mez_admin_chat_many?:(PartialObjects["mez_admin_chat_mutation_response"] | undefined)[],
 			/** update multiples rows of table: "mez_admin" */
 	update_mez_admin_many?:(PartialObjects["mez_admin_mutation_response"] | undefined)[],
 			/** update data of the table: "notification_info" */
@@ -16726,6 +17853,12 @@ cancelledByServiceProvider */
 	update_service_link_by_pk?:PartialObjects["service_link"],
 			/** update multiples rows of table: "service_link" */
 	update_service_link_many?:(PartialObjects["service_link_mutation_response"] | undefined)[],
+			/** update data of the table: "service_provider_customer_chat" */
+	update_service_provider_customer_chat?:PartialObjects["service_provider_customer_chat_mutation_response"],
+			/** update single row of the table: "service_provider_customer_chat" */
+	update_service_provider_customer_chat_by_pk?:PartialObjects["service_provider_customer_chat"],
+			/** update multiples rows of table: "service_provider_customer_chat" */
+	update_service_provider_customer_chat_many?:(PartialObjects["service_provider_customer_chat_mutation_response"] | undefined)[],
 			/** update data of the table: "service_provider_payment_info" */
 	update_service_provider_payment_info?:PartialObjects["service_provider_payment_info_mutation_response"],
 			/** update single row of the table: "service_provider_payment_info" */
@@ -17255,12 +18388,24 @@ the end). throws an error if top level container is not an array */
 	delivery_order_public?:PartialObjects["delivery_order_public"][],
 			/** fetch aggregated fields from the table: "delivery_order_public" */
 	delivery_order_public_aggregate?:PartialObjects["delivery_order_public_aggregate"],
+			/** fetch data from the table: "direct_chat" */
+	direct_chat?:PartialObjects["direct_chat"][],
+			/** fetch aggregated fields from the table: "direct_chat" */
+	direct_chat_aggregate?:PartialObjects["direct_chat_aggregate"],
+			/** fetch data from the table: "direct_chat" using primary key columns */
+	direct_chat_by_pk?:PartialObjects["direct_chat"],
 			/** fetch data from the table: "mez_admin" */
 	mez_admin?:PartialObjects["mez_admin"][],
 			/** fetch aggregated fields from the table: "mez_admin" */
 	mez_admin_aggregate?:PartialObjects["mez_admin_aggregate"],
 			/** fetch data from the table: "mez_admin" using primary key columns */
 	mez_admin_by_pk?:PartialObjects["mez_admin"],
+			/** fetch data from the table: "mez_admin_chat" */
+	mez_admin_chat?:PartialObjects["mez_admin_chat"][],
+			/** fetch aggregated fields from the table: "mez_admin_chat" */
+	mez_admin_chat_aggregate?:PartialObjects["mez_admin_chat_aggregate"],
+			/** fetch data from the table: "mez_admin_chat" using primary key columns */
+	mez_admin_chat_by_pk?:PartialObjects["mez_admin_chat"],
 			/** fetch data from the table: "notification_info" */
 	notification_info?:PartialObjects["notification_info"][],
 			/** fetch aggregated fields from the table: "notification_info" */
@@ -17367,6 +18512,12 @@ the end). throws an error if top level container is not an array */
 	service_link_aggregate?:PartialObjects["service_link_aggregate"],
 			/** fetch data from the table: "service_link" using primary key columns */
 	service_link_by_pk?:PartialObjects["service_link"],
+			/** fetch data from the table: "service_provider_customer_chat" */
+	service_provider_customer_chat?:PartialObjects["service_provider_customer_chat"][],
+			/** fetch aggregated fields from the table: "service_provider_customer_chat" */
+	service_provider_customer_chat_aggregate?:PartialObjects["service_provider_customer_chat_aggregate"],
+			/** fetch data from the table: "service_provider_customer_chat" using primary key columns */
+	service_provider_customer_chat_by_pk?:PartialObjects["service_provider_customer_chat"],
 			/** fetch data from the table: "service_provider_payment_info" */
 	service_provider_payment_info?:PartialObjects["service_provider_payment_info"][],
 			/** fetch aggregated fields from the table: "service_provider_payment_info" */
@@ -22819,6 +23970,205 @@ the end). throws an error if top level container is not an array */
 			id?:number,
 			service_provider_id?:number
 	},
+	/** columns and relationships of "service_provider_customer_chat" */
+["service_provider_customer_chat"]: {
+		__typename?: "service_provider_customer_chat";
+			/** An object relationship */
+	chat?:PartialObjects["chat"],
+			chat_id?:number,
+			/** An object relationship */
+	customer?:PartialObjects["customer"],
+			customer_id?:number,
+			/** An object relationship */
+	restaurant?:PartialObjects["restaurant"],
+			service_provider_id?:number,
+			service_provider_type?:string
+	},
+	/** aggregated selection of "service_provider_customer_chat" */
+["service_provider_customer_chat_aggregate"]: {
+		__typename?: "service_provider_customer_chat_aggregate";
+			aggregate?:PartialObjects["service_provider_customer_chat_aggregate_fields"],
+			nodes?:PartialObjects["service_provider_customer_chat"][]
+	},
+	/** aggregate fields of "service_provider_customer_chat" */
+["service_provider_customer_chat_aggregate_fields"]: {
+		__typename?: "service_provider_customer_chat_aggregate_fields";
+			avg?:PartialObjects["service_provider_customer_chat_avg_fields"],
+			count?:number,
+			max?:PartialObjects["service_provider_customer_chat_max_fields"],
+			min?:PartialObjects["service_provider_customer_chat_min_fields"],
+			stddev?:PartialObjects["service_provider_customer_chat_stddev_fields"],
+			stddev_pop?:PartialObjects["service_provider_customer_chat_stddev_pop_fields"],
+			stddev_samp?:PartialObjects["service_provider_customer_chat_stddev_samp_fields"],
+			sum?:PartialObjects["service_provider_customer_chat_sum_fields"],
+			var_pop?:PartialObjects["service_provider_customer_chat_var_pop_fields"],
+			var_samp?:PartialObjects["service_provider_customer_chat_var_samp_fields"],
+			variance?:PartialObjects["service_provider_customer_chat_variance_fields"]
+	},
+	/** aggregate avg on columns */
+["service_provider_customer_chat_avg_fields"]: {
+		__typename?: "service_provider_customer_chat_avg_fields";
+			chat_id?:number,
+			customer_id?:number,
+			service_provider_id?:number
+	},
+	/** Boolean expression to filter rows from the table
+"service_provider_customer_chat". All fields are combined with a logical 'AND'. */
+["service_provider_customer_chat_bool_exp"]: {
+	_and?:PartialObjects["service_provider_customer_chat_bool_exp"][],
+	_not?:PartialObjects["service_provider_customer_chat_bool_exp"],
+	_or?:PartialObjects["service_provider_customer_chat_bool_exp"][],
+	chat?:PartialObjects["chat_bool_exp"],
+	chat_id?:PartialObjects["Int_comparison_exp"],
+	customer?:PartialObjects["customer_bool_exp"],
+	customer_id?:PartialObjects["Int_comparison_exp"],
+	restaurant?:PartialObjects["restaurant_bool_exp"],
+	service_provider_id?:PartialObjects["Int_comparison_exp"],
+	service_provider_type?:PartialObjects["String_comparison_exp"]
+},
+	/** unique or primary key constraints on table "service_provider_customer_chat" */
+["service_provider_customer_chat_constraint"]:service_provider_customer_chat_constraint,
+	/** input type for incrementing numeric columns in table "service_provider_customer_chat" */
+["service_provider_customer_chat_inc_input"]: {
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number
+},
+	/** input type for inserting data into table "service_provider_customer_chat" */
+["service_provider_customer_chat_insert_input"]: {
+	chat?:PartialObjects["chat_obj_rel_insert_input"],
+	chat_id?:number,
+	customer?:PartialObjects["customer_obj_rel_insert_input"],
+	customer_id?:number,
+	restaurant?:PartialObjects["restaurant_obj_rel_insert_input"],
+	service_provider_id?:number,
+	service_provider_type?:string
+},
+	/** aggregate max on columns */
+["service_provider_customer_chat_max_fields"]: {
+		__typename?: "service_provider_customer_chat_max_fields";
+			chat_id?:number,
+			customer_id?:number,
+			service_provider_id?:number,
+			service_provider_type?:string
+	},
+	/** aggregate min on columns */
+["service_provider_customer_chat_min_fields"]: {
+		__typename?: "service_provider_customer_chat_min_fields";
+			chat_id?:number,
+			customer_id?:number,
+			service_provider_id?:number,
+			service_provider_type?:string
+	},
+	/** response of any mutation on the table "service_provider_customer_chat" */
+["service_provider_customer_chat_mutation_response"]: {
+		__typename?: "service_provider_customer_chat_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["service_provider_customer_chat"][]
+	},
+	/** on_conflict condition type for table "service_provider_customer_chat" */
+["service_provider_customer_chat_on_conflict"]: {
+	constraint:PartialObjects["service_provider_customer_chat_constraint"],
+	update_columns:PartialObjects["service_provider_customer_chat_update_column"][],
+	where?:PartialObjects["service_provider_customer_chat_bool_exp"]
+},
+	/** Ordering options when selecting data from "service_provider_customer_chat". */
+["service_provider_customer_chat_order_by"]: {
+	chat?:PartialObjects["chat_order_by"],
+	chat_id?:PartialObjects["order_by"],
+	customer?:PartialObjects["customer_order_by"],
+	customer_id?:PartialObjects["order_by"],
+	restaurant?:PartialObjects["restaurant_order_by"],
+	service_provider_id?:PartialObjects["order_by"],
+	service_provider_type?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: service_provider_customer_chat */
+["service_provider_customer_chat_pk_columns_input"]: {
+	chat_id:number
+},
+	/** select columns of table "service_provider_customer_chat" */
+["service_provider_customer_chat_select_column"]:service_provider_customer_chat_select_column,
+	/** input type for updating data in table "service_provider_customer_chat" */
+["service_provider_customer_chat_set_input"]: {
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+},
+	/** aggregate stddev on columns */
+["service_provider_customer_chat_stddev_fields"]: {
+		__typename?: "service_provider_customer_chat_stddev_fields";
+			chat_id?:number,
+			customer_id?:number,
+			service_provider_id?:number
+	},
+	/** aggregate stddev_pop on columns */
+["service_provider_customer_chat_stddev_pop_fields"]: {
+		__typename?: "service_provider_customer_chat_stddev_pop_fields";
+			chat_id?:number,
+			customer_id?:number,
+			service_provider_id?:number
+	},
+	/** aggregate stddev_samp on columns */
+["service_provider_customer_chat_stddev_samp_fields"]: {
+		__typename?: "service_provider_customer_chat_stddev_samp_fields";
+			chat_id?:number,
+			customer_id?:number,
+			service_provider_id?:number
+	},
+	/** Streaming cursor of the table "service_provider_customer_chat" */
+["service_provider_customer_chat_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:PartialObjects["service_provider_customer_chat_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:PartialObjects["cursor_ordering"]
+},
+	/** Initial value of the column from where the streaming should start */
+["service_provider_customer_chat_stream_cursor_value_input"]: {
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+},
+	/** aggregate sum on columns */
+["service_provider_customer_chat_sum_fields"]: {
+		__typename?: "service_provider_customer_chat_sum_fields";
+			chat_id?:number,
+			customer_id?:number,
+			service_provider_id?:number
+	},
+	/** update columns of table "service_provider_customer_chat" */
+["service_provider_customer_chat_update_column"]:service_provider_customer_chat_update_column,
+	["service_provider_customer_chat_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:PartialObjects["service_provider_customer_chat_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:PartialObjects["service_provider_customer_chat_set_input"],
+	where:PartialObjects["service_provider_customer_chat_bool_exp"]
+},
+	/** aggregate var_pop on columns */
+["service_provider_customer_chat_var_pop_fields"]: {
+		__typename?: "service_provider_customer_chat_var_pop_fields";
+			chat_id?:number,
+			customer_id?:number,
+			service_provider_id?:number
+	},
+	/** aggregate var_samp on columns */
+["service_provider_customer_chat_var_samp_fields"]: {
+		__typename?: "service_provider_customer_chat_var_samp_fields";
+			chat_id?:number,
+			customer_id?:number,
+			service_provider_id?:number
+	},
+	/** aggregate variance on columns */
+["service_provider_customer_chat_variance_fields"]: {
+		__typename?: "service_provider_customer_chat_variance_fields";
+			chat_id?:number,
+			customer_id?:number,
+			service_provider_id?:number
+	},
 	/** columns and relationships of "service_provider_payment_info" */
 ["service_provider_payment_info"]: {
 		__typename?: "service_provider_payment_info";
@@ -23529,12 +24879,28 @@ the end). throws an error if top level container is not an array */
 	delivery_order_public_stream?:PartialObjects["delivery_order_public"][],
 			/** fetch data from the table in a streaming manner : "delivery_order" */
 	delivery_order_stream?:PartialObjects["delivery_order"][],
+			/** fetch data from the table: "direct_chat" */
+	direct_chat?:PartialObjects["direct_chat"][],
+			/** fetch aggregated fields from the table: "direct_chat" */
+	direct_chat_aggregate?:PartialObjects["direct_chat_aggregate"],
+			/** fetch data from the table: "direct_chat" using primary key columns */
+	direct_chat_by_pk?:PartialObjects["direct_chat"],
+			/** fetch data from the table in a streaming manner : "direct_chat" */
+	direct_chat_stream?:PartialObjects["direct_chat"][],
 			/** fetch data from the table: "mez_admin" */
 	mez_admin?:PartialObjects["mez_admin"][],
 			/** fetch aggregated fields from the table: "mez_admin" */
 	mez_admin_aggregate?:PartialObjects["mez_admin_aggregate"],
 			/** fetch data from the table: "mez_admin" using primary key columns */
 	mez_admin_by_pk?:PartialObjects["mez_admin"],
+			/** fetch data from the table: "mez_admin_chat" */
+	mez_admin_chat?:PartialObjects["mez_admin_chat"][],
+			/** fetch aggregated fields from the table: "mez_admin_chat" */
+	mez_admin_chat_aggregate?:PartialObjects["mez_admin_chat_aggregate"],
+			/** fetch data from the table: "mez_admin_chat" using primary key columns */
+	mez_admin_chat_by_pk?:PartialObjects["mez_admin_chat"],
+			/** fetch data from the table in a streaming manner : "mez_admin_chat" */
+	mez_admin_chat_stream?:PartialObjects["mez_admin_chat"][],
 			/** fetch data from the table in a streaming manner : "mez_admin" */
 	mez_admin_stream?:PartialObjects["mez_admin"][],
 			/** fetch data from the table: "notification_info" */
@@ -23679,6 +25045,14 @@ the end). throws an error if top level container is not an array */
 	service_link_by_pk?:PartialObjects["service_link"],
 			/** fetch data from the table in a streaming manner : "service_link" */
 	service_link_stream?:PartialObjects["service_link"][],
+			/** fetch data from the table: "service_provider_customer_chat" */
+	service_provider_customer_chat?:PartialObjects["service_provider_customer_chat"][],
+			/** fetch aggregated fields from the table: "service_provider_customer_chat" */
+	service_provider_customer_chat_aggregate?:PartialObjects["service_provider_customer_chat_aggregate"],
+			/** fetch data from the table: "service_provider_customer_chat" using primary key columns */
+	service_provider_customer_chat_by_pk?:PartialObjects["service_provider_customer_chat"],
+			/** fetch data from the table in a streaming manner : "service_provider_customer_chat" */
+	service_provider_customer_chat_stream?:PartialObjects["service_provider_customer_chat"][],
 			/** fetch data from the table: "service_provider_payment_info" */
 	service_provider_payment_info?:PartialObjects["service_provider_payment_info"][],
 			/** fetch aggregated fields from the table: "service_provider_payment_info" */
@@ -24600,6 +25974,7 @@ export type chat = {
 	chat_participants:chat_participant[],
 	/** An aggregate relationship */
 	chat_participants_aggregate:chat_participant_aggregate,
+	chat_type:string,
 	creation_time:timestamptz,
 	id:number,
 	messages?:jsonb
@@ -24649,6 +26024,7 @@ export type chat_bool_exp = {
 	agora_info?:jsonb_comparison_exp,
 	chat_info?:jsonb_comparison_exp,
 	chat_participants?:chat_participant_bool_exp,
+	chat_type?:String_comparison_exp,
 	creation_time?:timestamptz_comparison_exp,
 	id?:Int_comparison_exp,
 	messages?:jsonb_comparison_exp
@@ -24691,6 +26067,7 @@ export type chat_insert_input = {
 		agora_info?:jsonb,
 	chat_info?:jsonb,
 	chat_participants?:chat_participant_arr_rel_insert_input,
+	chat_type?:string,
 	creation_time?:timestamptz,
 	id?:number,
 	messages?:jsonb
@@ -24699,6 +26076,7 @@ export type chat_insert_input = {
 /** aggregate max on columns */
 export type chat_max_fields = {
 	__typename?: "chat_max_fields",
+	chat_type?:string,
 	creation_time?:timestamptz,
 	id?:number
 }
@@ -24706,6 +26084,7 @@ export type chat_max_fields = {
 /** aggregate min on columns */
 export type chat_min_fields = {
 	__typename?: "chat_min_fields",
+	chat_type?:string,
 	creation_time?:timestamptz,
 	id?:number
 }
@@ -24738,6 +26117,7 @@ export type chat_order_by = {
 		agora_info?:order_by,
 	chat_info?:order_by,
 	chat_participants_aggregate?:chat_participant_aggregate_order_by,
+	chat_type?:order_by,
 	creation_time?:order_by,
 	id?:order_by,
 	messages?:order_by
@@ -25090,6 +26470,7 @@ export type chat_prepend_input = {
 export enum chat_select_column {
 	agora_info = "agora_info",
 	chat_info = "chat_info",
+	chat_type = "chat_type",
 	creation_time = "creation_time",
 	id = "id",
 	messages = "messages"
@@ -25099,6 +26480,7 @@ export enum chat_select_column {
 export type chat_set_input = {
 		agora_info?:jsonb,
 	chat_info?:jsonb,
+	chat_type?:string,
 	creation_time?:timestamptz,
 	id?:number,
 	messages?:jsonb
@@ -25134,6 +26516,7 @@ export type chat_stream_cursor_input = {
 export type chat_stream_cursor_value_input = {
 		agora_info?:jsonb,
 	chat_info?:jsonb,
+	chat_type?:string,
 	creation_time?:timestamptz,
 	id?:number,
 	messages?:jsonb
@@ -25149,6 +26532,7 @@ export type chat_sum_fields = {
 export enum chat_update_column {
 	agora_info = "agora_info",
 	chat_info = "chat_info",
+	chat_type = "chat_type",
 	creation_time = "creation_time",
 	id = "id",
 	messages = "messages"
@@ -28318,6 +29702,234 @@ export type delivery_order_variance_order_by = {
 	trip_duration?:order_by
 }
 
+/** columns and relationships of "direct_chat" */
+export type direct_chat = {
+	__typename?: "direct_chat",
+	/** An object relationship */
+	chat?:chat,
+	chat_id:number,
+	/** An object relationship */
+	user1?:user,
+	/** An object relationship */
+	user2?:user,
+	user_id1:number,
+	user_id2:number
+}
+
+/** aggregated selection of "direct_chat" */
+export type direct_chat_aggregate = {
+	__typename?: "direct_chat_aggregate",
+	aggregate?:direct_chat_aggregate_fields,
+	nodes:direct_chat[]
+}
+
+/** aggregate fields of "direct_chat" */
+export type direct_chat_aggregate_fields = {
+	__typename?: "direct_chat_aggregate_fields",
+	avg?:direct_chat_avg_fields,
+	count:number,
+	max?:direct_chat_max_fields,
+	min?:direct_chat_min_fields,
+	stddev?:direct_chat_stddev_fields,
+	stddev_pop?:direct_chat_stddev_pop_fields,
+	stddev_samp?:direct_chat_stddev_samp_fields,
+	sum?:direct_chat_sum_fields,
+	var_pop?:direct_chat_var_pop_fields,
+	var_samp?:direct_chat_var_samp_fields,
+	variance?:direct_chat_variance_fields
+}
+
+/** aggregate avg on columns */
+export type direct_chat_avg_fields = {
+	__typename?: "direct_chat_avg_fields",
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** Boolean expression to filter rows from the table "direct_chat". All fields are combined with a logical 'AND'. */
+export type direct_chat_bool_exp = {
+		_and?:direct_chat_bool_exp[],
+	_not?:direct_chat_bool_exp,
+	_or?:direct_chat_bool_exp[],
+	chat?:chat_bool_exp,
+	chat_id?:Int_comparison_exp,
+	user1?:user_bool_exp,
+	user2?:user_bool_exp,
+	user_id1?:Int_comparison_exp,
+	user_id2?:Int_comparison_exp
+}
+
+/** unique or primary key constraints on table "direct_chat" */
+export enum direct_chat_constraint {
+	direct_chat_pkey = "direct_chat_pkey",
+	direct_chat_user_id_1_user_id_2_key = "direct_chat_user_id_1_user_id_2_key"
+}
+
+/** input type for incrementing numeric columns in table "direct_chat" */
+export type direct_chat_inc_input = {
+		chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** input type for inserting data into table "direct_chat" */
+export type direct_chat_insert_input = {
+		chat?:chat_obj_rel_insert_input,
+	chat_id?:number,
+	user1?:user_obj_rel_insert_input,
+	user2?:user_obj_rel_insert_input,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** aggregate max on columns */
+export type direct_chat_max_fields = {
+	__typename?: "direct_chat_max_fields",
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** aggregate min on columns */
+export type direct_chat_min_fields = {
+	__typename?: "direct_chat_min_fields",
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** response of any mutation on the table "direct_chat" */
+export type direct_chat_mutation_response = {
+	__typename?: "direct_chat_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:direct_chat[]
+}
+
+/** on_conflict condition type for table "direct_chat" */
+export type direct_chat_on_conflict = {
+		constraint:direct_chat_constraint,
+	update_columns:direct_chat_update_column[],
+	where?:direct_chat_bool_exp
+}
+
+/** Ordering options when selecting data from "direct_chat". */
+export type direct_chat_order_by = {
+		chat?:chat_order_by,
+	chat_id?:order_by,
+	user1?:user_order_by,
+	user2?:user_order_by,
+	user_id1?:order_by,
+	user_id2?:order_by
+}
+
+/** primary key columns input for table: direct_chat */
+export type direct_chat_pk_columns_input = {
+		chat_id:number
+}
+
+/** select columns of table "direct_chat" */
+export enum direct_chat_select_column {
+	chat_id = "chat_id",
+	user_id1 = "user_id1",
+	user_id2 = "user_id2"
+}
+
+/** input type for updating data in table "direct_chat" */
+export type direct_chat_set_input = {
+		chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** aggregate stddev on columns */
+export type direct_chat_stddev_fields = {
+	__typename?: "direct_chat_stddev_fields",
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** aggregate stddev_pop on columns */
+export type direct_chat_stddev_pop_fields = {
+	__typename?: "direct_chat_stddev_pop_fields",
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** aggregate stddev_samp on columns */
+export type direct_chat_stddev_samp_fields = {
+	__typename?: "direct_chat_stddev_samp_fields",
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** Streaming cursor of the table "direct_chat" */
+export type direct_chat_stream_cursor_input = {
+		/** Stream column input with initial value */
+	initial_value:direct_chat_stream_cursor_value_input,
+	/** cursor ordering */
+	ordering?:cursor_ordering
+}
+
+/** Initial value of the column from where the streaming should start */
+export type direct_chat_stream_cursor_value_input = {
+		chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** aggregate sum on columns */
+export type direct_chat_sum_fields = {
+	__typename?: "direct_chat_sum_fields",
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** update columns of table "direct_chat" */
+export enum direct_chat_update_column {
+	chat_id = "chat_id",
+	user_id1 = "user_id1",
+	user_id2 = "user_id2"
+}
+
+export type direct_chat_updates = {
+		/** increments the numeric columns with given value of the filtered values */
+	_inc?:direct_chat_inc_input,
+	/** sets the columns of the filtered rows to the given values */
+	_set?:direct_chat_set_input,
+	where:direct_chat_bool_exp
+}
+
+/** aggregate var_pop on columns */
+export type direct_chat_var_pop_fields = {
+	__typename?: "direct_chat_var_pop_fields",
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** aggregate var_samp on columns */
+export type direct_chat_var_samp_fields = {
+	__typename?: "direct_chat_var_samp_fields",
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** aggregate variance on columns */
+export type direct_chat_variance_fields = {
+	__typename?: "direct_chat_variance_fields",
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
 /** Boolean expression to compare columns of type "Float". All fields are combined with logical 'AND'. */
 export type Float_comparison_exp = {
 		_eq?:number,
@@ -28502,6 +30114,219 @@ export type mez_admin_bool_exp = {
 	user?:user_bool_exp,
 	user_id?:Int_comparison_exp,
 	version?:String_comparison_exp
+}
+
+/** columns and relationships of "mez_admin_chat" */
+export type mez_admin_chat = {
+	__typename?: "mez_admin_chat",
+	app_type:string,
+	/** An object relationship */
+	chat?:chat,
+	chat_id:number,
+	/** An object relationship */
+	user?:user,
+	user_id:number
+}
+
+/** aggregated selection of "mez_admin_chat" */
+export type mez_admin_chat_aggregate = {
+	__typename?: "mez_admin_chat_aggregate",
+	aggregate?:mez_admin_chat_aggregate_fields,
+	nodes:mez_admin_chat[]
+}
+
+/** aggregate fields of "mez_admin_chat" */
+export type mez_admin_chat_aggregate_fields = {
+	__typename?: "mez_admin_chat_aggregate_fields",
+	avg?:mez_admin_chat_avg_fields,
+	count:number,
+	max?:mez_admin_chat_max_fields,
+	min?:mez_admin_chat_min_fields,
+	stddev?:mez_admin_chat_stddev_fields,
+	stddev_pop?:mez_admin_chat_stddev_pop_fields,
+	stddev_samp?:mez_admin_chat_stddev_samp_fields,
+	sum?:mez_admin_chat_sum_fields,
+	var_pop?:mez_admin_chat_var_pop_fields,
+	var_samp?:mez_admin_chat_var_samp_fields,
+	variance?:mez_admin_chat_variance_fields
+}
+
+/** aggregate avg on columns */
+export type mez_admin_chat_avg_fields = {
+	__typename?: "mez_admin_chat_avg_fields",
+	chat_id?:number,
+	user_id?:number
+}
+
+/** Boolean expression to filter rows from the table "mez_admin_chat". All fields are combined with a logical 'AND'. */
+export type mez_admin_chat_bool_exp = {
+		_and?:mez_admin_chat_bool_exp[],
+	_not?:mez_admin_chat_bool_exp,
+	_or?:mez_admin_chat_bool_exp[],
+	app_type?:String_comparison_exp,
+	chat?:chat_bool_exp,
+	chat_id?:Int_comparison_exp,
+	user?:user_bool_exp,
+	user_id?:Int_comparison_exp
+}
+
+/** unique or primary key constraints on table "mez_admin_chat" */
+export enum mez_admin_chat_constraint {
+	mez_admin_chat_pkey = "mez_admin_chat_pkey"
+}
+
+/** input type for incrementing numeric columns in table "mez_admin_chat" */
+export type mez_admin_chat_inc_input = {
+		chat_id?:number,
+	user_id?:number
+}
+
+/** input type for inserting data into table "mez_admin_chat" */
+export type mez_admin_chat_insert_input = {
+		app_type?:string,
+	chat?:chat_obj_rel_insert_input,
+	chat_id?:number,
+	user?:user_obj_rel_insert_input,
+	user_id?:number
+}
+
+/** aggregate max on columns */
+export type mez_admin_chat_max_fields = {
+	__typename?: "mez_admin_chat_max_fields",
+	app_type?:string,
+	chat_id?:number,
+	user_id?:number
+}
+
+/** aggregate min on columns */
+export type mez_admin_chat_min_fields = {
+	__typename?: "mez_admin_chat_min_fields",
+	app_type?:string,
+	chat_id?:number,
+	user_id?:number
+}
+
+/** response of any mutation on the table "mez_admin_chat" */
+export type mez_admin_chat_mutation_response = {
+	__typename?: "mez_admin_chat_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:mez_admin_chat[]
+}
+
+/** on_conflict condition type for table "mez_admin_chat" */
+export type mez_admin_chat_on_conflict = {
+		constraint:mez_admin_chat_constraint,
+	update_columns:mez_admin_chat_update_column[],
+	where?:mez_admin_chat_bool_exp
+}
+
+/** Ordering options when selecting data from "mez_admin_chat". */
+export type mez_admin_chat_order_by = {
+		app_type?:order_by,
+	chat?:chat_order_by,
+	chat_id?:order_by,
+	user?:user_order_by,
+	user_id?:order_by
+}
+
+/** primary key columns input for table: mez_admin_chat */
+export type mez_admin_chat_pk_columns_input = {
+		chat_id:number
+}
+
+/** select columns of table "mez_admin_chat" */
+export enum mez_admin_chat_select_column {
+	app_type = "app_type",
+	chat_id = "chat_id",
+	user_id = "user_id"
+}
+
+/** input type for updating data in table "mez_admin_chat" */
+export type mez_admin_chat_set_input = {
+		app_type?:string,
+	chat_id?:number,
+	user_id?:number
+}
+
+/** aggregate stddev on columns */
+export type mez_admin_chat_stddev_fields = {
+	__typename?: "mez_admin_chat_stddev_fields",
+	chat_id?:number,
+	user_id?:number
+}
+
+/** aggregate stddev_pop on columns */
+export type mez_admin_chat_stddev_pop_fields = {
+	__typename?: "mez_admin_chat_stddev_pop_fields",
+	chat_id?:number,
+	user_id?:number
+}
+
+/** aggregate stddev_samp on columns */
+export type mez_admin_chat_stddev_samp_fields = {
+	__typename?: "mez_admin_chat_stddev_samp_fields",
+	chat_id?:number,
+	user_id?:number
+}
+
+/** Streaming cursor of the table "mez_admin_chat" */
+export type mez_admin_chat_stream_cursor_input = {
+		/** Stream column input with initial value */
+	initial_value:mez_admin_chat_stream_cursor_value_input,
+	/** cursor ordering */
+	ordering?:cursor_ordering
+}
+
+/** Initial value of the column from where the streaming should start */
+export type mez_admin_chat_stream_cursor_value_input = {
+		app_type?:string,
+	chat_id?:number,
+	user_id?:number
+}
+
+/** aggregate sum on columns */
+export type mez_admin_chat_sum_fields = {
+	__typename?: "mez_admin_chat_sum_fields",
+	chat_id?:number,
+	user_id?:number
+}
+
+/** update columns of table "mez_admin_chat" */
+export enum mez_admin_chat_update_column {
+	app_type = "app_type",
+	chat_id = "chat_id",
+	user_id = "user_id"
+}
+
+export type mez_admin_chat_updates = {
+		/** increments the numeric columns with given value of the filtered values */
+	_inc?:mez_admin_chat_inc_input,
+	/** sets the columns of the filtered rows to the given values */
+	_set?:mez_admin_chat_set_input,
+	where:mez_admin_chat_bool_exp
+}
+
+/** aggregate var_pop on columns */
+export type mez_admin_chat_var_pop_fields = {
+	__typename?: "mez_admin_chat_var_pop_fields",
+	chat_id?:number,
+	user_id?:number
+}
+
+/** aggregate var_samp on columns */
+export type mez_admin_chat_var_samp_fields = {
+	__typename?: "mez_admin_chat_var_samp_fields",
+	chat_id?:number,
+	user_id?:number
+}
+
+/** aggregate variance on columns */
+export type mez_admin_chat_variance_fields = {
+	__typename?: "mez_admin_chat_variance_fields",
+	chat_id?:number,
+	user_id?:number
 }
 
 /** unique or primary key constraints on table "mez_admin" */
@@ -28698,10 +30523,18 @@ export type mutation_root = {
 	delete_delivery_order_by_pk?:delivery_order,
 	/** delete data from the table: "delivery_order_public" */
 	delete_delivery_order_public?:delivery_order_public_mutation_response,
+	/** delete data from the table: "direct_chat" */
+	delete_direct_chat?:direct_chat_mutation_response,
+	/** delete single row from the table: "direct_chat" */
+	delete_direct_chat_by_pk?:direct_chat,
 	/** delete data from the table: "mez_admin" */
 	delete_mez_admin?:mez_admin_mutation_response,
 	/** delete single row from the table: "mez_admin" */
 	delete_mez_admin_by_pk?:mez_admin,
+	/** delete data from the table: "mez_admin_chat" */
+	delete_mez_admin_chat?:mez_admin_chat_mutation_response,
+	/** delete single row from the table: "mez_admin_chat" */
+	delete_mez_admin_chat_by_pk?:mez_admin_chat,
 	/** delete data from the table: "notification_info" */
 	delete_notification_info?:notification_info_mutation_response,
 	/** delete single row from the table: "notification_info" */
@@ -28772,6 +30605,10 @@ export type mutation_root = {
 	delete_service_link?:service_link_mutation_response,
 	/** delete single row from the table: "service_link" */
 	delete_service_link_by_pk?:service_link,
+	/** delete data from the table: "service_provider_customer_chat" */
+	delete_service_provider_customer_chat?:service_provider_customer_chat_mutation_response,
+	/** delete single row from the table: "service_provider_customer_chat" */
+	delete_service_provider_customer_chat_by_pk?:service_provider_customer_chat,
 	/** delete data from the table: "service_provider_payment_info" */
 	delete_service_provider_payment_info?:service_provider_payment_info_mutation_response,
 	/** delete single row from the table: "service_provider_payment_info" */
@@ -28840,8 +30677,16 @@ export type mutation_root = {
 	insert_delivery_order_public?:delivery_order_public_mutation_response,
 	/** insert a single row into the table: "delivery_order_public" */
 	insert_delivery_order_public_one?:delivery_order_public,
+	/** insert data into the table: "direct_chat" */
+	insert_direct_chat?:direct_chat_mutation_response,
+	/** insert a single row into the table: "direct_chat" */
+	insert_direct_chat_one?:direct_chat,
 	/** insert data into the table: "mez_admin" */
 	insert_mez_admin?:mez_admin_mutation_response,
+	/** insert data into the table: "mez_admin_chat" */
+	insert_mez_admin_chat?:mez_admin_chat_mutation_response,
+	/** insert a single row into the table: "mez_admin_chat" */
+	insert_mez_admin_chat_one?:mez_admin_chat,
 	/** insert a single row into the table: "mez_admin" */
 	insert_mez_admin_one?:mez_admin,
 	/** insert data into the table: "notification_info" */
@@ -28916,6 +30761,10 @@ export type mutation_root = {
 	insert_service_link?:service_link_mutation_response,
 	/** insert a single row into the table: "service_link" */
 	insert_service_link_one?:service_link,
+	/** insert data into the table: "service_provider_customer_chat" */
+	insert_service_provider_customer_chat?:service_provider_customer_chat_mutation_response,
+	/** insert a single row into the table: "service_provider_customer_chat" */
+	insert_service_provider_customer_chat_one?:service_provider_customer_chat,
 	/** insert data into the table: "service_provider_payment_info" */
 	insert_service_provider_payment_info?:service_provider_payment_info_mutation_response,
 	/** insert a single row into the table: "service_provider_payment_info" */
@@ -29000,10 +30849,22 @@ export type mutation_root = {
 	update_delivery_order_public?:delivery_order_public_mutation_response,
 	/** update multiples rows of table: "delivery_order_public" */
 	update_delivery_order_public_many?:(delivery_order_public_mutation_response | undefined)[],
+	/** update data of the table: "direct_chat" */
+	update_direct_chat?:direct_chat_mutation_response,
+	/** update single row of the table: "direct_chat" */
+	update_direct_chat_by_pk?:direct_chat,
+	/** update multiples rows of table: "direct_chat" */
+	update_direct_chat_many?:(direct_chat_mutation_response | undefined)[],
 	/** update data of the table: "mez_admin" */
 	update_mez_admin?:mez_admin_mutation_response,
 	/** update single row of the table: "mez_admin" */
 	update_mez_admin_by_pk?:mez_admin,
+	/** update data of the table: "mez_admin_chat" */
+	update_mez_admin_chat?:mez_admin_chat_mutation_response,
+	/** update single row of the table: "mez_admin_chat" */
+	update_mez_admin_chat_by_pk?:mez_admin_chat,
+	/** update multiples rows of table: "mez_admin_chat" */
+	update_mez_admin_chat_many?:(mez_admin_chat_mutation_response | undefined)[],
 	/** update multiples rows of table: "mez_admin" */
 	update_mez_admin_many?:(mez_admin_mutation_response | undefined)[],
 	/** update data of the table: "notification_info" */
@@ -29112,6 +30973,12 @@ export type mutation_root = {
 	update_service_link_by_pk?:service_link,
 	/** update multiples rows of table: "service_link" */
 	update_service_link_many?:(service_link_mutation_response | undefined)[],
+	/** update data of the table: "service_provider_customer_chat" */
+	update_service_provider_customer_chat?:service_provider_customer_chat_mutation_response,
+	/** update single row of the table: "service_provider_customer_chat" */
+	update_service_provider_customer_chat_by_pk?:service_provider_customer_chat,
+	/** update multiples rows of table: "service_provider_customer_chat" */
+	update_service_provider_customer_chat_many?:(service_provider_customer_chat_mutation_response | undefined)[],
 	/** update data of the table: "service_provider_payment_info" */
 	update_service_provider_payment_info?:service_provider_payment_info_mutation_response,
 	/** update single row of the table: "service_provider_payment_info" */
@@ -29744,12 +31611,24 @@ export type query_root = {
 	delivery_order_public:delivery_order_public[],
 	/** fetch aggregated fields from the table: "delivery_order_public" */
 	delivery_order_public_aggregate:delivery_order_public_aggregate,
+	/** fetch data from the table: "direct_chat" */
+	direct_chat:direct_chat[],
+	/** fetch aggregated fields from the table: "direct_chat" */
+	direct_chat_aggregate:direct_chat_aggregate,
+	/** fetch data from the table: "direct_chat" using primary key columns */
+	direct_chat_by_pk?:direct_chat,
 	/** fetch data from the table: "mez_admin" */
 	mez_admin:mez_admin[],
 	/** fetch aggregated fields from the table: "mez_admin" */
 	mez_admin_aggregate:mez_admin_aggregate,
 	/** fetch data from the table: "mez_admin" using primary key columns */
 	mez_admin_by_pk?:mez_admin,
+	/** fetch data from the table: "mez_admin_chat" */
+	mez_admin_chat:mez_admin_chat[],
+	/** fetch aggregated fields from the table: "mez_admin_chat" */
+	mez_admin_chat_aggregate:mez_admin_chat_aggregate,
+	/** fetch data from the table: "mez_admin_chat" using primary key columns */
+	mez_admin_chat_by_pk?:mez_admin_chat,
 	/** fetch data from the table: "notification_info" */
 	notification_info:notification_info[],
 	/** fetch aggregated fields from the table: "notification_info" */
@@ -29856,6 +31735,12 @@ export type query_root = {
 	service_link_aggregate:service_link_aggregate,
 	/** fetch data from the table: "service_link" using primary key columns */
 	service_link_by_pk?:service_link,
+	/** fetch data from the table: "service_provider_customer_chat" */
+	service_provider_customer_chat:service_provider_customer_chat[],
+	/** fetch aggregated fields from the table: "service_provider_customer_chat" */
+	service_provider_customer_chat_aggregate:service_provider_customer_chat_aggregate,
+	/** fetch data from the table: "service_provider_customer_chat" using primary key columns */
+	service_provider_customer_chat_by_pk?:service_provider_customer_chat,
 	/** fetch data from the table: "service_provider_payment_info" */
 	service_provider_payment_info:service_provider_payment_info[],
 	/** fetch aggregated fields from the table: "service_provider_payment_info" */
@@ -36235,6 +38120,245 @@ export type service_link_variance_fields = {
 	service_provider_id?:number
 }
 
+/** columns and relationships of "service_provider_customer_chat" */
+export type service_provider_customer_chat = {
+	__typename?: "service_provider_customer_chat",
+	/** An object relationship */
+	chat?:chat,
+	chat_id:number,
+	/** An object relationship */
+	customer?:customer,
+	customer_id:number,
+	/** An object relationship */
+	restaurant?:restaurant,
+	service_provider_id:number,
+	service_provider_type:string
+}
+
+/** aggregated selection of "service_provider_customer_chat" */
+export type service_provider_customer_chat_aggregate = {
+	__typename?: "service_provider_customer_chat_aggregate",
+	aggregate?:service_provider_customer_chat_aggregate_fields,
+	nodes:service_provider_customer_chat[]
+}
+
+/** aggregate fields of "service_provider_customer_chat" */
+export type service_provider_customer_chat_aggregate_fields = {
+	__typename?: "service_provider_customer_chat_aggregate_fields",
+	avg?:service_provider_customer_chat_avg_fields,
+	count:number,
+	max?:service_provider_customer_chat_max_fields,
+	min?:service_provider_customer_chat_min_fields,
+	stddev?:service_provider_customer_chat_stddev_fields,
+	stddev_pop?:service_provider_customer_chat_stddev_pop_fields,
+	stddev_samp?:service_provider_customer_chat_stddev_samp_fields,
+	sum?:service_provider_customer_chat_sum_fields,
+	var_pop?:service_provider_customer_chat_var_pop_fields,
+	var_samp?:service_provider_customer_chat_var_samp_fields,
+	variance?:service_provider_customer_chat_variance_fields
+}
+
+/** aggregate avg on columns */
+export type service_provider_customer_chat_avg_fields = {
+	__typename?: "service_provider_customer_chat_avg_fields",
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** Boolean expression to filter rows from the table
+"service_provider_customer_chat". All fields are combined with a logical 'AND'. */
+export type service_provider_customer_chat_bool_exp = {
+		_and?:service_provider_customer_chat_bool_exp[],
+	_not?:service_provider_customer_chat_bool_exp,
+	_or?:service_provider_customer_chat_bool_exp[],
+	chat?:chat_bool_exp,
+	chat_id?:Int_comparison_exp,
+	customer?:customer_bool_exp,
+	customer_id?:Int_comparison_exp,
+	restaurant?:restaurant_bool_exp,
+	service_provider_id?:Int_comparison_exp,
+	service_provider_type?:String_comparison_exp
+}
+
+/** unique or primary key constraints on table "service_provider_customer_chat" */
+export enum service_provider_customer_chat_constraint {
+	service_provider_customer_cha_customer_id_service_provider__key = "service_provider_customer_cha_customer_id_service_provider__key",
+	service_provider_customer_chat_pkey = "service_provider_customer_chat_pkey"
+}
+
+/** input type for incrementing numeric columns in table "service_provider_customer_chat" */
+export type service_provider_customer_chat_inc_input = {
+		chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** input type for inserting data into table "service_provider_customer_chat" */
+export type service_provider_customer_chat_insert_input = {
+		chat?:chat_obj_rel_insert_input,
+	chat_id?:number,
+	customer?:customer_obj_rel_insert_input,
+	customer_id?:number,
+	restaurant?:restaurant_obj_rel_insert_input,
+	service_provider_id?:number,
+	service_provider_type?:string
+}
+
+/** aggregate max on columns */
+export type service_provider_customer_chat_max_fields = {
+	__typename?: "service_provider_customer_chat_max_fields",
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+}
+
+/** aggregate min on columns */
+export type service_provider_customer_chat_min_fields = {
+	__typename?: "service_provider_customer_chat_min_fields",
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+}
+
+/** response of any mutation on the table "service_provider_customer_chat" */
+export type service_provider_customer_chat_mutation_response = {
+	__typename?: "service_provider_customer_chat_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:service_provider_customer_chat[]
+}
+
+/** on_conflict condition type for table "service_provider_customer_chat" */
+export type service_provider_customer_chat_on_conflict = {
+		constraint:service_provider_customer_chat_constraint,
+	update_columns:service_provider_customer_chat_update_column[],
+	where?:service_provider_customer_chat_bool_exp
+}
+
+/** Ordering options when selecting data from "service_provider_customer_chat". */
+export type service_provider_customer_chat_order_by = {
+		chat?:chat_order_by,
+	chat_id?:order_by,
+	customer?:customer_order_by,
+	customer_id?:order_by,
+	restaurant?:restaurant_order_by,
+	service_provider_id?:order_by,
+	service_provider_type?:order_by
+}
+
+/** primary key columns input for table: service_provider_customer_chat */
+export type service_provider_customer_chat_pk_columns_input = {
+		chat_id:number
+}
+
+/** select columns of table "service_provider_customer_chat" */
+export enum service_provider_customer_chat_select_column {
+	chat_id = "chat_id",
+	customer_id = "customer_id",
+	service_provider_id = "service_provider_id",
+	service_provider_type = "service_provider_type"
+}
+
+/** input type for updating data in table "service_provider_customer_chat" */
+export type service_provider_customer_chat_set_input = {
+		chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+}
+
+/** aggregate stddev on columns */
+export type service_provider_customer_chat_stddev_fields = {
+	__typename?: "service_provider_customer_chat_stddev_fields",
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** aggregate stddev_pop on columns */
+export type service_provider_customer_chat_stddev_pop_fields = {
+	__typename?: "service_provider_customer_chat_stddev_pop_fields",
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** aggregate stddev_samp on columns */
+export type service_provider_customer_chat_stddev_samp_fields = {
+	__typename?: "service_provider_customer_chat_stddev_samp_fields",
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** Streaming cursor of the table "service_provider_customer_chat" */
+export type service_provider_customer_chat_stream_cursor_input = {
+		/** Stream column input with initial value */
+	initial_value:service_provider_customer_chat_stream_cursor_value_input,
+	/** cursor ordering */
+	ordering?:cursor_ordering
+}
+
+/** Initial value of the column from where the streaming should start */
+export type service_provider_customer_chat_stream_cursor_value_input = {
+		chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+}
+
+/** aggregate sum on columns */
+export type service_provider_customer_chat_sum_fields = {
+	__typename?: "service_provider_customer_chat_sum_fields",
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** update columns of table "service_provider_customer_chat" */
+export enum service_provider_customer_chat_update_column {
+	chat_id = "chat_id",
+	customer_id = "customer_id",
+	service_provider_id = "service_provider_id",
+	service_provider_type = "service_provider_type"
+}
+
+export type service_provider_customer_chat_updates = {
+		/** increments the numeric columns with given value of the filtered values */
+	_inc?:service_provider_customer_chat_inc_input,
+	/** sets the columns of the filtered rows to the given values */
+	_set?:service_provider_customer_chat_set_input,
+	where:service_provider_customer_chat_bool_exp
+}
+
+/** aggregate var_pop on columns */
+export type service_provider_customer_chat_var_pop_fields = {
+	__typename?: "service_provider_customer_chat_var_pop_fields",
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** aggregate var_samp on columns */
+export type service_provider_customer_chat_var_samp_fields = {
+	__typename?: "service_provider_customer_chat_var_samp_fields",
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** aggregate variance on columns */
+export type service_provider_customer_chat_variance_fields = {
+	__typename?: "service_provider_customer_chat_variance_fields",
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
 /** columns and relationships of "service_provider_payment_info" */
 export type service_provider_payment_info = {
 	__typename?: "service_provider_payment_info",
@@ -37082,12 +39206,28 @@ export type subscription_root = {
 	delivery_order_public_stream:delivery_order_public[],
 	/** fetch data from the table in a streaming manner : "delivery_order" */
 	delivery_order_stream:delivery_order[],
+	/** fetch data from the table: "direct_chat" */
+	direct_chat:direct_chat[],
+	/** fetch aggregated fields from the table: "direct_chat" */
+	direct_chat_aggregate:direct_chat_aggregate,
+	/** fetch data from the table: "direct_chat" using primary key columns */
+	direct_chat_by_pk?:direct_chat,
+	/** fetch data from the table in a streaming manner : "direct_chat" */
+	direct_chat_stream:direct_chat[],
 	/** fetch data from the table: "mez_admin" */
 	mez_admin:mez_admin[],
 	/** fetch aggregated fields from the table: "mez_admin" */
 	mez_admin_aggregate:mez_admin_aggregate,
 	/** fetch data from the table: "mez_admin" using primary key columns */
 	mez_admin_by_pk?:mez_admin,
+	/** fetch data from the table: "mez_admin_chat" */
+	mez_admin_chat:mez_admin_chat[],
+	/** fetch aggregated fields from the table: "mez_admin_chat" */
+	mez_admin_chat_aggregate:mez_admin_chat_aggregate,
+	/** fetch data from the table: "mez_admin_chat" using primary key columns */
+	mez_admin_chat_by_pk?:mez_admin_chat,
+	/** fetch data from the table in a streaming manner : "mez_admin_chat" */
+	mez_admin_chat_stream:mez_admin_chat[],
 	/** fetch data from the table in a streaming manner : "mez_admin" */
 	mez_admin_stream:mez_admin[],
 	/** fetch data from the table: "notification_info" */
@@ -37232,6 +39372,14 @@ export type subscription_root = {
 	service_link_by_pk?:service_link,
 	/** fetch data from the table in a streaming manner : "service_link" */
 	service_link_stream:service_link[],
+	/** fetch data from the table: "service_provider_customer_chat" */
+	service_provider_customer_chat:service_provider_customer_chat[],
+	/** fetch aggregated fields from the table: "service_provider_customer_chat" */
+	service_provider_customer_chat_aggregate:service_provider_customer_chat_aggregate,
+	/** fetch data from the table: "service_provider_customer_chat" using primary key columns */
+	service_provider_customer_chat_by_pk?:service_provider_customer_chat,
+	/** fetch data from the table in a streaming manner : "service_provider_customer_chat" */
+	service_provider_customer_chat_stream:service_provider_customer_chat[],
 	/** fetch data from the table: "service_provider_payment_info" */
 	service_provider_payment_info:service_provider_payment_info[],
 	/** fetch aggregated fields from the table: "service_provider_payment_info" */
@@ -38554,6 +40702,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		chat_type:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		creation_time:{
 			type:"timestamptz_comparison_exp",
 			array:false,
@@ -38661,6 +40815,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		chat_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		creation_time:{
 			type:"timestamptz",
 			array:false,
@@ -38729,6 +40889,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		chat_participants_aggregate:{
 			type:"chat_participant_aggregate_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_type:{
+			type:"order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -39391,6 +41557,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		chat_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		creation_time:{
 			type:"timestamptz",
 			array:false,
@@ -39433,6 +41605,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		chat_info:{
 			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_type:{
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -46129,6 +48307,279 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
+	direct_chat_aggregate_fields:{
+		count:{
+			columns:{
+				type:"direct_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	direct_chat_bool_exp:{
+		_and:{
+			type:"direct_chat_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"direct_chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"direct_chat_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		chat:{
+			type:"chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user1:{
+			type:"user_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user2:{
+			type:"user_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id1:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id2:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	direct_chat_constraint: "enum",
+	direct_chat_inc_input:{
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id1:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id2:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	direct_chat_insert_input:{
+		chat:{
+			type:"chat_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user1:{
+			type:"user_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user2:{
+			type:"user_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id1:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id2:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	direct_chat_on_conflict:{
+		constraint:{
+			type:"direct_chat_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"direct_chat_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"direct_chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	direct_chat_order_by:{
+		chat:{
+			type:"chat_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user1:{
+			type:"user_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user2:{
+			type:"user_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id1:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id2:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	direct_chat_pk_columns_input:{
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	direct_chat_select_column: "enum",
+	direct_chat_set_input:{
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id1:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id2:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	direct_chat_stream_cursor_input:{
+		initial_value:{
+			type:"direct_chat_stream_cursor_value_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		ordering:{
+			type:"cursor_ordering",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	direct_chat_stream_cursor_value_input:{
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id1:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id2:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	direct_chat_update_column: "enum",
+	direct_chat_updates:{
+		_inc:{
+			type:"direct_chat_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_set:{
+			type:"direct_chat_set_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		where:{
+			type:"direct_chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	Float_comparison_exp:{
 		_eq:{
 			type:"Float",
@@ -46673,6 +49124,255 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
+	mez_admin_chat_aggregate_fields:{
+		count:{
+			columns:{
+				type:"mez_admin_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	mez_admin_chat_bool_exp:{
+		_and:{
+			type:"mez_admin_chat_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"mez_admin_chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"mez_admin_chat_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		app_type:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat:{
+			type:"chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user:{
+			type:"user_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_chat_constraint: "enum",
+	mez_admin_chat_inc_input:{
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_chat_insert_input:{
+		app_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat:{
+			type:"chat_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user:{
+			type:"user_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_chat_on_conflict:{
+		constraint:{
+			type:"mez_admin_chat_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"mez_admin_chat_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"mez_admin_chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_chat_order_by:{
+		app_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat:{
+			type:"chat_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user:{
+			type:"user_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_chat_pk_columns_input:{
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	mez_admin_chat_select_column: "enum",
+	mez_admin_chat_set_input:{
+		app_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_chat_stream_cursor_input:{
+		initial_value:{
+			type:"mez_admin_chat_stream_cursor_value_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		ordering:{
+			type:"cursor_ordering",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_chat_stream_cursor_value_input:{
+		app_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_chat_update_column: "enum",
+	mez_admin_chat_updates:{
+		_inc:{
+			type:"mez_admin_chat_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_set:{
+			type:"mez_admin_chat_set_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		where:{
+			type:"mez_admin_chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	mez_admin_constraint: "enum",
 	mez_admin_inc_input:{
 		user_id:{
@@ -47014,6 +49714,22 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		delete_direct_chat:{
+			where:{
+				type:"direct_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_direct_chat_by_pk:{
+			chat_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
 		delete_mez_admin:{
 			where:{
 				type:"mez_admin_bool_exp",
@@ -47024,6 +49740,22 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		delete_mez_admin_by_pk:{
 			user_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_mez_admin_chat:{
+			where:{
+				type:"mez_admin_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_mez_admin_chat_by_pk:{
+			chat_id:{
 				type:"Int",
 				array:false,
 				arrayRequired:false,
@@ -47304,6 +50036,22 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		delete_service_link_by_pk:{
 			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_service_provider_customer_chat:{
+			where:{
+				type:"service_provider_customer_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_service_provider_customer_chat_by_pk:{
+			chat_id:{
 				type:"Int",
 				array:false,
 				arrayRequired:false,
@@ -47684,6 +50432,34 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		insert_direct_chat:{
+			objects:{
+				type:"direct_chat_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"direct_chat_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_direct_chat_one:{
+			object:{
+				type:"direct_chat_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"direct_chat_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
 		insert_mez_admin:{
 			objects:{
 				type:"mez_admin_insert_input",
@@ -47693,6 +50469,34 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			on_conflict:{
 				type:"mez_admin_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_mez_admin_chat:{
+			objects:{
+				type:"mez_admin_chat_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"mez_admin_chat_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_mez_admin_chat_one:{
+			object:{
+				type:"mez_admin_chat_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"mez_admin_chat_on_conflict",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -48199,6 +51003,34 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			on_conflict:{
 				type:"service_link_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_service_provider_customer_chat:{
+			objects:{
+				type:"service_provider_customer_chat_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"service_provider_customer_chat_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_service_provider_customer_chat_one:{
+			object:{
+				type:"service_provider_customer_chat_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"service_provider_customer_chat_on_conflict",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -48960,6 +51792,54 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		update_direct_chat:{
+			_inc:{
+				type:"direct_chat_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"direct_chat_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"direct_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_direct_chat_by_pk:{
+			_inc:{
+				type:"direct_chat_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"direct_chat_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"direct_chat_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_direct_chat_many:{
+			updates:{
+				type:"direct_chat_updates",
+				array:true,
+				arrayRequired:true,
+				required:true
+			}
+		},
 		update_mez_admin:{
 			_inc:{
 				type:"mez_admin_inc_input",
@@ -48997,6 +51877,54 @@ export const AllTypesProps: Record<string,any> = {
 				type:"mez_admin_pk_columns_input",
 				array:false,
 				arrayRequired:false,
+				required:true
+			}
+		},
+		update_mez_admin_chat:{
+			_inc:{
+				type:"mez_admin_chat_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"mez_admin_chat_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"mez_admin_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_mez_admin_chat_by_pk:{
+			_inc:{
+				type:"mez_admin_chat_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"mez_admin_chat_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"mez_admin_chat_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_mez_admin_chat_many:{
+			updates:{
+				type:"mez_admin_chat_updates",
+				array:true,
+				arrayRequired:true,
 				required:true
 			}
 		},
@@ -50027,6 +52955,54 @@ export const AllTypesProps: Record<string,any> = {
 		update_service_link_many:{
 			updates:{
 				type:"service_link_updates",
+				array:true,
+				arrayRequired:true,
+				required:true
+			}
+		},
+		update_service_provider_customer_chat:{
+			_inc:{
+				type:"service_provider_customer_chat_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"service_provider_customer_chat_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"service_provider_customer_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_service_provider_customer_chat_by_pk:{
+			_inc:{
+				type:"service_provider_customer_chat_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"service_provider_customer_chat_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"service_provider_customer_chat_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_service_provider_customer_chat_many:{
+			updates:{
+				type:"service_provider_customer_chat_updates",
 				array:true,
 				arrayRequired:true,
 				required:true
@@ -51791,6 +54767,78 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
+		direct_chat:{
+			distinct_on:{
+				type:"direct_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"direct_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"direct_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		direct_chat_aggregate:{
+			distinct_on:{
+				type:"direct_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"direct_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"direct_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		direct_chat_by_pk:{
+			chat_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
 		mez_admin:{
 			distinct_on:{
 				type:"mez_admin_select_column",
@@ -51857,6 +54905,78 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		mez_admin_by_pk:{
 			user_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		mez_admin_chat:{
+			distinct_on:{
+				type:"mez_admin_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_admin_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_admin_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		mez_admin_chat_aggregate:{
+			distinct_on:{
+				type:"mez_admin_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_admin_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_admin_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		mez_admin_chat_by_pk:{
+			chat_id:{
 				type:"Int",
 				array:false,
 				arrayRequired:false,
@@ -53145,6 +56265,78 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		service_link_by_pk:{
 			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		service_provider_customer_chat:{
+			distinct_on:{
+				type:"service_provider_customer_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_customer_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_customer_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_customer_chat_aggregate:{
+			distinct_on:{
+				type:"service_provider_customer_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_customer_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_customer_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_customer_chat_by_pk:{
+			chat_id:{
 				type:"Int",
 				array:false,
 				arrayRequired:false,
@@ -67612,6 +70804,309 @@ export const AllTypesProps: Record<string,any> = {
 			required:true
 		}
 	},
+	service_provider_customer_chat_aggregate_fields:{
+		count:{
+			columns:{
+				type:"service_provider_customer_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	service_provider_customer_chat_bool_exp:{
+		_and:{
+			type:"service_provider_customer_chat_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"service_provider_customer_chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"service_provider_customer_chat_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		chat:{
+			type:"chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer:{
+			type:"customer_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		restaurant:{
+			type:"restaurant_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_customer_chat_constraint: "enum",
+	service_provider_customer_chat_inc_input:{
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_customer_chat_insert_input:{
+		chat:{
+			type:"chat_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer:{
+			type:"customer_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		restaurant:{
+			type:"restaurant_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_customer_chat_on_conflict:{
+		constraint:{
+			type:"service_provider_customer_chat_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"service_provider_customer_chat_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"service_provider_customer_chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_customer_chat_order_by:{
+		chat:{
+			type:"chat_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer:{
+			type:"customer_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		restaurant:{
+			type:"restaurant_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_customer_chat_pk_columns_input:{
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	service_provider_customer_chat_select_column: "enum",
+	service_provider_customer_chat_set_input:{
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_customer_chat_stream_cursor_input:{
+		initial_value:{
+			type:"service_provider_customer_chat_stream_cursor_value_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		ordering:{
+			type:"cursor_ordering",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_customer_chat_stream_cursor_value_input:{
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_customer_chat_update_column: "enum",
+	service_provider_customer_chat_updates:{
+		_inc:{
+			type:"service_provider_customer_chat_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_set:{
+			type:"service_provider_customer_chat_set_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		where:{
+			type:"service_provider_customer_chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	service_provider_payment_info_aggregate_fields:{
 		count:{
 			columns:{
@@ -69638,6 +73133,98 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
+		direct_chat:{
+			distinct_on:{
+				type:"direct_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"direct_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"direct_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		direct_chat_aggregate:{
+			distinct_on:{
+				type:"direct_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"direct_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"direct_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		direct_chat_by_pk:{
+			chat_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		direct_chat_stream:{
+			batch_size:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			cursor:{
+				type:"direct_chat_stream_cursor_input",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"direct_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
 		mez_admin:{
 			distinct_on:{
 				type:"mez_admin_select_column",
@@ -69708,6 +73295,98 @@ export const AllTypesProps: Record<string,any> = {
 				array:false,
 				arrayRequired:false,
 				required:true
+			}
+		},
+		mez_admin_chat:{
+			distinct_on:{
+				type:"mez_admin_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_admin_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_admin_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		mez_admin_chat_aggregate:{
+			distinct_on:{
+				type:"mez_admin_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_admin_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_admin_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		mez_admin_chat_by_pk:{
+			chat_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		mez_admin_chat_stream:{
+			batch_size:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			cursor:{
+				type:"mez_admin_chat_stream_cursor_input",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_admin_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
 			}
 		},
 		mez_admin_stream:{
@@ -71373,6 +75052,98 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			where:{
 				type:"service_link_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_customer_chat:{
+			distinct_on:{
+				type:"service_provider_customer_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_customer_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_customer_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_customer_chat_aggregate:{
+			distinct_on:{
+				type:"service_provider_customer_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_customer_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_customer_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_customer_chat_by_pk:{
+			chat_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		service_provider_customer_chat_stream:{
+			batch_size:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			cursor:{
+				type:"service_provider_customer_chat_stream_cursor_input",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_customer_chat_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -73649,6 +77420,7 @@ export const ReturnTypes: Record<string,any> = {
 		chat_info:"jsonb",
 		chat_participants:"chat_participant",
 		chat_participants_aggregate:"chat_participant_aggregate",
+		chat_type:"String",
 		creation_time:"timestamptz",
 		id:"Int",
 		messages:"jsonb"
@@ -73674,10 +77446,12 @@ export const ReturnTypes: Record<string,any> = {
 		id:"Float"
 	},
 	chat_max_fields:{
+		chat_type:"String",
 		creation_time:"timestamptz",
 		id:"Int"
 	},
 	chat_min_fields:{
+		chat_type:"String",
 		creation_time:"timestamptz",
 		id:"Int"
 	},
@@ -74703,6 +78477,85 @@ export const ReturnTypes: Record<string,any> = {
 		trip_distance:"Float",
 		trip_duration:"Float"
 	},
+	direct_chat:{
+		chat:"chat",
+		chat_id:"Int",
+		user1:"user",
+		user2:"user",
+		user_id1:"Int",
+		user_id2:"Int"
+	},
+	direct_chat_aggregate:{
+		aggregate:"direct_chat_aggregate_fields",
+		nodes:"direct_chat"
+	},
+	direct_chat_aggregate_fields:{
+		avg:"direct_chat_avg_fields",
+		count:"Int",
+		max:"direct_chat_max_fields",
+		min:"direct_chat_min_fields",
+		stddev:"direct_chat_stddev_fields",
+		stddev_pop:"direct_chat_stddev_pop_fields",
+		stddev_samp:"direct_chat_stddev_samp_fields",
+		sum:"direct_chat_sum_fields",
+		var_pop:"direct_chat_var_pop_fields",
+		var_samp:"direct_chat_var_samp_fields",
+		variance:"direct_chat_variance_fields"
+	},
+	direct_chat_avg_fields:{
+		chat_id:"Float",
+		user_id1:"Float",
+		user_id2:"Float"
+	},
+	direct_chat_max_fields:{
+		chat_id:"Int",
+		user_id1:"Int",
+		user_id2:"Int"
+	},
+	direct_chat_min_fields:{
+		chat_id:"Int",
+		user_id1:"Int",
+		user_id2:"Int"
+	},
+	direct_chat_mutation_response:{
+		affected_rows:"Int",
+		returning:"direct_chat"
+	},
+	direct_chat_stddev_fields:{
+		chat_id:"Float",
+		user_id1:"Float",
+		user_id2:"Float"
+	},
+	direct_chat_stddev_pop_fields:{
+		chat_id:"Float",
+		user_id1:"Float",
+		user_id2:"Float"
+	},
+	direct_chat_stddev_samp_fields:{
+		chat_id:"Float",
+		user_id1:"Float",
+		user_id2:"Float"
+	},
+	direct_chat_sum_fields:{
+		chat_id:"Int",
+		user_id1:"Int",
+		user_id2:"Int"
+	},
+	direct_chat_var_pop_fields:{
+		chat_id:"Float",
+		user_id1:"Float",
+		user_id2:"Float"
+	},
+	direct_chat_var_samp_fields:{
+		chat_id:"Float",
+		user_id1:"Float",
+		user_id2:"Float"
+	},
+	direct_chat_variance_fields:{
+		chat_id:"Float",
+		user_id1:"Float",
+		user_id2:"Float"
+	},
 	mez_admin:{
 		notification_token:"String",
 		user:"user",
@@ -74727,6 +78580,76 @@ export const ReturnTypes: Record<string,any> = {
 		variance:"mez_admin_variance_fields"
 	},
 	mez_admin_avg_fields:{
+		user_id:"Float"
+	},
+	mez_admin_chat:{
+		app_type:"String",
+		chat:"chat",
+		chat_id:"Int",
+		user:"user",
+		user_id:"Int"
+	},
+	mez_admin_chat_aggregate:{
+		aggregate:"mez_admin_chat_aggregate_fields",
+		nodes:"mez_admin_chat"
+	},
+	mez_admin_chat_aggregate_fields:{
+		avg:"mez_admin_chat_avg_fields",
+		count:"Int",
+		max:"mez_admin_chat_max_fields",
+		min:"mez_admin_chat_min_fields",
+		stddev:"mez_admin_chat_stddev_fields",
+		stddev_pop:"mez_admin_chat_stddev_pop_fields",
+		stddev_samp:"mez_admin_chat_stddev_samp_fields",
+		sum:"mez_admin_chat_sum_fields",
+		var_pop:"mez_admin_chat_var_pop_fields",
+		var_samp:"mez_admin_chat_var_samp_fields",
+		variance:"mez_admin_chat_variance_fields"
+	},
+	mez_admin_chat_avg_fields:{
+		chat_id:"Float",
+		user_id:"Float"
+	},
+	mez_admin_chat_max_fields:{
+		app_type:"String",
+		chat_id:"Int",
+		user_id:"Int"
+	},
+	mez_admin_chat_min_fields:{
+		app_type:"String",
+		chat_id:"Int",
+		user_id:"Int"
+	},
+	mez_admin_chat_mutation_response:{
+		affected_rows:"Int",
+		returning:"mez_admin_chat"
+	},
+	mez_admin_chat_stddev_fields:{
+		chat_id:"Float",
+		user_id:"Float"
+	},
+	mez_admin_chat_stddev_pop_fields:{
+		chat_id:"Float",
+		user_id:"Float"
+	},
+	mez_admin_chat_stddev_samp_fields:{
+		chat_id:"Float",
+		user_id:"Float"
+	},
+	mez_admin_chat_sum_fields:{
+		chat_id:"Int",
+		user_id:"Int"
+	},
+	mez_admin_chat_var_pop_fields:{
+		chat_id:"Float",
+		user_id:"Float"
+	},
+	mez_admin_chat_var_samp_fields:{
+		chat_id:"Float",
+		user_id:"Float"
+	},
+	mez_admin_chat_variance_fields:{
+		chat_id:"Float",
 		user_id:"Float"
 	},
 	mez_admin_max_fields:{
@@ -74780,8 +78703,12 @@ export const ReturnTypes: Record<string,any> = {
 		delete_delivery_order:"delivery_order_mutation_response",
 		delete_delivery_order_by_pk:"delivery_order",
 		delete_delivery_order_public:"delivery_order_public_mutation_response",
+		delete_direct_chat:"direct_chat_mutation_response",
+		delete_direct_chat_by_pk:"direct_chat",
 		delete_mez_admin:"mez_admin_mutation_response",
 		delete_mez_admin_by_pk:"mez_admin",
+		delete_mez_admin_chat:"mez_admin_chat_mutation_response",
+		delete_mez_admin_chat_by_pk:"mez_admin_chat",
 		delete_notification_info:"notification_info_mutation_response",
 		delete_notification_info_by_pk:"notification_info",
 		delete_post:"post_mutation_response",
@@ -74817,6 +78744,8 @@ export const ReturnTypes: Record<string,any> = {
 		delete_saved_location_by_pk:"saved_location",
 		delete_service_link:"service_link_mutation_response",
 		delete_service_link_by_pk:"service_link",
+		delete_service_provider_customer_chat:"service_provider_customer_chat_mutation_response",
+		delete_service_provider_customer_chat_by_pk:"service_provider_customer_chat",
 		delete_service_provider_payment_info:"service_provider_payment_info_mutation_response",
 		delete_service_provider_payment_info_by_pk:"service_provider_payment_info",
 		delete_stripe_info:"stripe_info_mutation_response",
@@ -74851,7 +78780,11 @@ export const ReturnTypes: Record<string,any> = {
 		insert_delivery_order_one:"delivery_order",
 		insert_delivery_order_public:"delivery_order_public_mutation_response",
 		insert_delivery_order_public_one:"delivery_order_public",
+		insert_direct_chat:"direct_chat_mutation_response",
+		insert_direct_chat_one:"direct_chat",
 		insert_mez_admin:"mez_admin_mutation_response",
+		insert_mez_admin_chat:"mez_admin_chat_mutation_response",
+		insert_mez_admin_chat_one:"mez_admin_chat",
 		insert_mez_admin_one:"mez_admin",
 		insert_notification_info:"notification_info_mutation_response",
 		insert_notification_info_one:"notification_info",
@@ -74889,6 +78822,8 @@ export const ReturnTypes: Record<string,any> = {
 		insert_saved_location_one:"saved_location",
 		insert_service_link:"service_link_mutation_response",
 		insert_service_link_one:"service_link",
+		insert_service_provider_customer_chat:"service_provider_customer_chat_mutation_response",
+		insert_service_provider_customer_chat_one:"service_provider_customer_chat",
 		insert_service_provider_payment_info:"service_provider_payment_info_mutation_response",
 		insert_service_provider_payment_info_one:"service_provider_payment_info",
 		insert_stripe_info:"stripe_info_mutation_response",
@@ -74931,8 +78866,14 @@ export const ReturnTypes: Record<string,any> = {
 		update_delivery_order_many:"delivery_order_mutation_response",
 		update_delivery_order_public:"delivery_order_public_mutation_response",
 		update_delivery_order_public_many:"delivery_order_public_mutation_response",
+		update_direct_chat:"direct_chat_mutation_response",
+		update_direct_chat_by_pk:"direct_chat",
+		update_direct_chat_many:"direct_chat_mutation_response",
 		update_mez_admin:"mez_admin_mutation_response",
 		update_mez_admin_by_pk:"mez_admin",
+		update_mez_admin_chat:"mez_admin_chat_mutation_response",
+		update_mez_admin_chat_by_pk:"mez_admin_chat",
+		update_mez_admin_chat_many:"mez_admin_chat_mutation_response",
 		update_mez_admin_many:"mez_admin_mutation_response",
 		update_notification_info:"notification_info_mutation_response",
 		update_notification_info_by_pk:"notification_info",
@@ -74987,6 +78928,9 @@ export const ReturnTypes: Record<string,any> = {
 		update_service_link:"service_link_mutation_response",
 		update_service_link_by_pk:"service_link",
 		update_service_link_many:"service_link_mutation_response",
+		update_service_provider_customer_chat:"service_provider_customer_chat_mutation_response",
+		update_service_provider_customer_chat_by_pk:"service_provider_customer_chat",
+		update_service_provider_customer_chat_many:"service_provider_customer_chat_mutation_response",
 		update_service_provider_payment_info:"service_provider_payment_info_mutation_response",
 		update_service_provider_payment_info_by_pk:"service_provider_payment_info",
 		update_service_provider_payment_info_many:"service_provider_payment_info_mutation_response",
@@ -75190,9 +79134,15 @@ export const ReturnTypes: Record<string,any> = {
 		delivery_order_by_pk:"delivery_order",
 		delivery_order_public:"delivery_order_public",
 		delivery_order_public_aggregate:"delivery_order_public_aggregate",
+		direct_chat:"direct_chat",
+		direct_chat_aggregate:"direct_chat_aggregate",
+		direct_chat_by_pk:"direct_chat",
 		mez_admin:"mez_admin",
 		mez_admin_aggregate:"mez_admin_aggregate",
 		mez_admin_by_pk:"mez_admin",
+		mez_admin_chat:"mez_admin_chat",
+		mez_admin_chat_aggregate:"mez_admin_chat_aggregate",
+		mez_admin_chat_by_pk:"mez_admin_chat",
 		notification_info:"notification_info",
 		notification_info_aggregate:"notification_info_aggregate",
 		notification_info_by_pk:"notification_info",
@@ -75246,6 +79196,9 @@ export const ReturnTypes: Record<string,any> = {
 		service_link:"service_link",
 		service_link_aggregate:"service_link_aggregate",
 		service_link_by_pk:"service_link",
+		service_provider_customer_chat:"service_provider_customer_chat",
+		service_provider_customer_chat_aggregate:"service_provider_customer_chat_aggregate",
+		service_provider_customer_chat_by_pk:"service_provider_customer_chat",
 		service_provider_payment_info:"service_provider_payment_info",
 		service_provider_payment_info_aggregate:"service_provider_payment_info_aggregate",
 		service_provider_payment_info_by_pk:"service_provider_payment_info",
@@ -76984,6 +80937,88 @@ export const ReturnTypes: Record<string,any> = {
 		id:"Float",
 		service_provider_id:"Float"
 	},
+	service_provider_customer_chat:{
+		chat:"chat",
+		chat_id:"Int",
+		customer:"customer",
+		customer_id:"Int",
+		restaurant:"restaurant",
+		service_provider_id:"Int",
+		service_provider_type:"String"
+	},
+	service_provider_customer_chat_aggregate:{
+		aggregate:"service_provider_customer_chat_aggregate_fields",
+		nodes:"service_provider_customer_chat"
+	},
+	service_provider_customer_chat_aggregate_fields:{
+		avg:"service_provider_customer_chat_avg_fields",
+		count:"Int",
+		max:"service_provider_customer_chat_max_fields",
+		min:"service_provider_customer_chat_min_fields",
+		stddev:"service_provider_customer_chat_stddev_fields",
+		stddev_pop:"service_provider_customer_chat_stddev_pop_fields",
+		stddev_samp:"service_provider_customer_chat_stddev_samp_fields",
+		sum:"service_provider_customer_chat_sum_fields",
+		var_pop:"service_provider_customer_chat_var_pop_fields",
+		var_samp:"service_provider_customer_chat_var_samp_fields",
+		variance:"service_provider_customer_chat_variance_fields"
+	},
+	service_provider_customer_chat_avg_fields:{
+		chat_id:"Float",
+		customer_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_customer_chat_max_fields:{
+		chat_id:"Int",
+		customer_id:"Int",
+		service_provider_id:"Int",
+		service_provider_type:"String"
+	},
+	service_provider_customer_chat_min_fields:{
+		chat_id:"Int",
+		customer_id:"Int",
+		service_provider_id:"Int",
+		service_provider_type:"String"
+	},
+	service_provider_customer_chat_mutation_response:{
+		affected_rows:"Int",
+		returning:"service_provider_customer_chat"
+	},
+	service_provider_customer_chat_stddev_fields:{
+		chat_id:"Float",
+		customer_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_customer_chat_stddev_pop_fields:{
+		chat_id:"Float",
+		customer_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_customer_chat_stddev_samp_fields:{
+		chat_id:"Float",
+		customer_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_customer_chat_sum_fields:{
+		chat_id:"Int",
+		customer_id:"Int",
+		service_provider_id:"Int"
+	},
+	service_provider_customer_chat_var_pop_fields:{
+		chat_id:"Float",
+		customer_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_customer_chat_var_samp_fields:{
+		chat_id:"Float",
+		customer_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_customer_chat_variance_fields:{
+		chat_id:"Float",
+		customer_id:"Float",
+		service_provider_id:"Float"
+	},
 	service_provider_payment_info:{
 		bank_transfer:"Boolean",
 		card:"Boolean",
@@ -77241,9 +81276,17 @@ export const ReturnTypes: Record<string,any> = {
 		delivery_order_public_aggregate:"delivery_order_public_aggregate",
 		delivery_order_public_stream:"delivery_order_public",
 		delivery_order_stream:"delivery_order",
+		direct_chat:"direct_chat",
+		direct_chat_aggregate:"direct_chat_aggregate",
+		direct_chat_by_pk:"direct_chat",
+		direct_chat_stream:"direct_chat",
 		mez_admin:"mez_admin",
 		mez_admin_aggregate:"mez_admin_aggregate",
 		mez_admin_by_pk:"mez_admin",
+		mez_admin_chat:"mez_admin_chat",
+		mez_admin_chat_aggregate:"mez_admin_chat_aggregate",
+		mez_admin_chat_by_pk:"mez_admin_chat",
+		mez_admin_chat_stream:"mez_admin_chat",
 		mez_admin_stream:"mez_admin",
 		notification_info:"notification_info",
 		notification_info_aggregate:"notification_info_aggregate",
@@ -77316,6 +81359,10 @@ export const ReturnTypes: Record<string,any> = {
 		service_link_aggregate:"service_link_aggregate",
 		service_link_by_pk:"service_link",
 		service_link_stream:"service_link",
+		service_provider_customer_chat:"service_provider_customer_chat",
+		service_provider_customer_chat_aggregate:"service_provider_customer_chat_aggregate",
+		service_provider_customer_chat_by_pk:"service_provider_customer_chat",
+		service_provider_customer_chat_stream:"service_provider_customer_chat",
 		service_provider_payment_info:"service_provider_payment_info",
 		service_provider_payment_info_aggregate:"service_provider_payment_info_aggregate",
 		service_provider_payment_info_by_pk:"service_provider_payment_info",

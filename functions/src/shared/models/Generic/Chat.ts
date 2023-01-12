@@ -32,7 +32,8 @@ export class ChatObject {
 }
 
 export enum ChatType {
-  Order = "order",
+  Direct = "direct",
+  Group = "group"
 }
 
 export enum ParticipantType {
@@ -65,26 +66,27 @@ export interface Message {
   timestamp: string
 }
 
-export function buildChatForOrder(
-  chatId: string,
-  orderType: OrderType,
-  orderId?: string,
-): ChatObject {
-  let chat: ChatData = {
-    orderId: orderId ?? chatId,
-    chatId: chatId,
-    chatType: ChatType.Order,
-    orderType: orderType,
-    participants: {},
-    authorizedUsers: {}
-  }
-  return new ChatObject(chat);
-}
+// export function buildChatForOrder(
+//   chatId: string,
+//   orderType: OrderType,
+//   orderId?: string,
+// ): ChatObject {
+//   let chat: ChatData = {
+//     orderId: orderId ?? chatId,
+//     chatId: chatId,
+//     // chatType: ChatType.Order,
+//     orderType: orderType,
+//     participants: {},
+//     authorizedUsers: {}
+//   }
+//   return new ChatObject(chat);
+// }
 
 export interface MessageNotificationForQueue extends NotificationForQueue {
   message: string,
   userId: number,
   chatId: number,
+  chatType: ChatType,
   participantType: ParticipantType,
   messageId: number,
   orderId?: number,
