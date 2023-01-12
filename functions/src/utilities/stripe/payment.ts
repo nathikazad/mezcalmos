@@ -2,51 +2,64 @@ import Stripe from 'stripe';
 import { ServerResponseStatus } from '../../shared/models/Generic/Generic';
 import { getKeys } from '../../shared/keys';
 import { Keys } from '../../shared/models/Generic/Keys';
-import * as serviceProviderNodes from '../../shared/databaseNodes/services/serviceProvider';
-import { Order, PaymentType } from '../../shared/models/Generic/Order';
-import { StripePaymentStatus, StripeStatus } from './model';
-import { PaymentInfo } from '../../shared/models/Services/Service';
-import { getCustomerIdFromServiceAccount } from './serviceProvider';
+import { OrderType, PaymentType } from '../../shared/models/Generic/Order';
+import { OrderStripeInfo, StripePaymentStatus, StripeStatus } from './model';
+import { verifyCustomerIdForServiceAccount } from './serviceProvider';
+import { getRestaurant } from '../../shared/graphql/restaurant/getRestaurant';
+import { HttpsError } from 'firebase-functions/v1/auth';
+import { verifyCustomerStripeInfo } from './card';
+import { updateRestaurantOrderStripe } from '../../shared/graphql/restaurant/order/updateOrder';
+import { getCustomer } from '../../shared/graphql/user/customer/getCustomer';
+import { CustomerInfo } from '../../shared/models/Generic/User';
 let keys: Keys = getKeys();
 
-export async function getPaymentIntent(userId: string, data: any) {
-
-  // let response = isSignedIn(userId)
-  // if (response != undefined) {
-  //   return response;
-  // }
-
-  if (data.serviceProviderId == null ||
-    data.orderType == null || data.paymentAmount == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Expected customerId, serviceProviderId, orderType and paymentAmount`,
-      errorCode: "incorrectParams"
-    }
+export interface PaymentIntentDetails {
+  serviceProviderId: number,
+  orderType: OrderType,
+  paymentAmount: number,
+}
+export async function getPaymentIntent(userId: number, paymentIntentDetails: PaymentIntentDetails) {
+  let serviceProvider;
+  if(paymentIntentDetails.orderType == OrderType.Restaurant) {
+    serviceProvider = await getRestaurant(paymentIntentDetails.serviceProviderId);
+  } else {
+    throw new HttpsError(
+      "internal",
+      "invalid order type"
+    );
   }
-
-  let serviceProviderPaymentInfo: PaymentInfo = (await serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).once('value')).val()
-
-  if (!serviceProviderPaymentInfo || serviceProviderPaymentInfo.acceptedPayments[PaymentType.Card] == false || serviceProviderPaymentInfo.stripe.id == null || serviceProviderPaymentInfo.stripe.status != StripeStatus.IsWorking) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `This service provider does not accept cards`,
-      errorCode: "paymentsNotSupported"
-    }
+  if (!(serviceProvider.acceptedPayments)
+    || serviceProvider.acceptedPayments[PaymentType.Card] == false
+    || serviceProvider.stripeInfo == null 
+    || serviceProvider.stripeInfo.status != StripeStatus.IsWorking
+  ) {
+    throw new HttpsError(
+      "internal",
+      "This service provider does not accept cards, apple pay or google pay"
+    );
   }
+  let stripeOptionsDefault = { apiVersion: <any>'2020-08-27' };
+  let stripe = new Stripe(keys.stripe.secretkey, stripeOptionsDefault);
+  let customer: CustomerInfo = await getCustomer(userId);
+  customer = await verifyCustomerStripeInfo(customer, stripe);
 
-  let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripe.id };
-  const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
-
-  let stripeCustomerId: string = await getCustomerIdFromServiceAccount(userId, data.serviceProviderId, data.orderType, stripe, stripeOptions);
-
+  let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProvider.stripeInfo.id };
+  stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
+  customer = await verifyCustomerIdForServiceAccount(
+    customer, 
+    paymentIntentDetails.serviceProviderId, 
+    paymentIntentDetails.orderType, 
+    stripe,
+    stripeOptions
+  )
+  let stripeCustomerId = customer.stripeInfo?.idsWithServiceProvider[paymentIntentDetails.orderType][paymentIntentDetails.serviceProviderId];
   const ephemeralKey: Stripe.EphemeralKey = await stripe.ephemeralKeys.create(
     { customer: stripeCustomerId },
     stripeOptions
   );
 
   const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.create({
-    amount: parseInt(data.paymentAmount) * 100,
+    amount: paymentIntentDetails.paymentAmount * 100,
     currency: 'mxn',
     customer: stripeCustomerId,
     capture_method: 'manual'
@@ -58,51 +71,131 @@ export async function getPaymentIntent(userId: string, data: any) {
     ephemeralKey: ephemeralKey.secret,
     customer: stripeCustomerId,
     publishableKey: keys.stripe.publickey,
-    stripeAccountId: serviceProviderPaymentInfo.stripe.id
+    stripeAccountId: serviceProvider.stripeInfo.id
   }
-};
+}
+export interface PaymentDetails {
+  serviceProviderId: number,
+  orderType: OrderType,
+  orderId: number,
+  orderStripePaymentInfo?: OrderStripeInfo,
+}
+export async function capturePayment(paymentDetails: PaymentDetails, amountToCapture?: number) {
 
-export async function capturePayment(order: Order, amountToCapture?: number): Promise<Order> {
-  let serviceProviderPaymentInfo: PaymentInfo = (await serviceProviderNodes.serviceProviderPaymentInfo(order.orderType, order.serviceProviderId!).once('value')).val()
-  let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripe.id };
+  let serviceProvider;
+  if(!(paymentDetails.orderStripePaymentInfo)) {
+    throw new HttpsError(
+      "internal",
+      "Order stripe payment info is undefined"
+    );
+  }
+  if(paymentDetails.orderType == OrderType.Restaurant) {
+    serviceProvider = await getRestaurant(paymentDetails.serviceProviderId);
+  } else {
+    throw new HttpsError(
+      "internal",
+      "invalid order type"
+    );
+  }
+  if(!(serviceProvider.stripeInfo)) {
+    throw new HttpsError(
+      "internal",
+      "Service provider does not have a stripe account"
+    );
+  }
+  
+  let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProvider.stripeInfo.id };
   const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
   if (amountToCapture == null) {
-    await stripe.paymentIntents.capture(order.stripePaymentInfo!.id, {}, stripeOptions)
-    order.stripePaymentInfo!.status = StripePaymentStatus.Captured
+    await stripe.paymentIntents.capture(paymentDetails.orderStripePaymentInfo.id, {}, stripeOptions)
+    paymentDetails.orderStripePaymentInfo.status = StripePaymentStatus.Captured
   } else if (amountToCapture > 0) {
-    await stripe.paymentIntents.capture(order.stripePaymentInfo!.id, {
+    await stripe.paymentIntents.capture(paymentDetails.orderStripePaymentInfo.id, {
       amount_to_capture: amountToCapture * 100,
     }, stripeOptions)
-    order.stripePaymentInfo!.amountCharged = amountToCapture;
-    order.stripePaymentInfo!.status = StripePaymentStatus.Captured
+    paymentDetails.orderStripePaymentInfo.amountCharged = amountToCapture;
+    paymentDetails.orderStripePaymentInfo.status = StripePaymentStatus.Captured
   } else {
-    await stripe.paymentIntents.cancel(order.stripePaymentInfo!.id, stripeOptions)
-    order.stripePaymentInfo!.amountCharged = 0;
-    order.stripePaymentInfo!.status = StripePaymentStatus.Cancelled
+    await stripe.paymentIntents.cancel(paymentDetails.orderStripePaymentInfo.id, stripeOptions)
+    paymentDetails.orderStripePaymentInfo.amountCharged = 0;
+    paymentDetails.orderStripePaymentInfo.status = StripePaymentStatus.Cancelled
   }
-  return order;
+  if(paymentDetails.orderType == OrderType.Restaurant) {
+    updateRestaurantOrderStripe(paymentDetails.orderId, paymentDetails.orderStripePaymentInfo);
+  }
 }
 
-export async function refundPayment(order: Order, amountToRefund: number): Promise<Order> {
-  let serviceProviderPaymentInfo: PaymentInfo = (await serviceProviderNodes.serviceProviderPaymentInfo(order.orderType, order.serviceProviderId!).once('value')).val()
-  let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripe.id };
+export async function refundPayment(paymentDetails: PaymentDetails, amountToRefund: number) {
+
+  let serviceProvider;
+  if(!(paymentDetails.orderStripePaymentInfo)) {
+    throw new HttpsError(
+      "internal",
+      "Order stripe payment info is undefined"
+    );
+  }
+  if(paymentDetails.orderType == OrderType.Restaurant) {
+    serviceProvider = await getRestaurant(paymentDetails.serviceProviderId);
+  } else {
+    throw new HttpsError(
+      "internal",
+      "invalid order type"
+    );
+  }
+  if(!(serviceProvider.stripeInfo)) {
+    throw new HttpsError(
+      "internal",
+      "Service provider does not have a stripe account"
+    );
+  }
+  let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProvider.stripeInfo.id };
   const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
   await stripe.refunds.create({
-    payment_intent: order.stripePaymentInfo!.id,
+    payment_intent: paymentDetails.orderStripePaymentInfo.id,
     amount: amountToRefund * 100,
   }, stripeOptions)
-  order.stripePaymentInfo!.amountRefunded += amountToRefund;
-  return order;
+  paymentDetails.orderStripePaymentInfo.amountRefunded += amountToRefund;
+  if(paymentDetails.orderType == OrderType.Restaurant) {
+    updateRestaurantOrderStripe(paymentDetails.orderId, paymentDetails.orderStripePaymentInfo);
+  }
 }
 
-export async function updateOrderIdAndFetchPaymentInfo(orderId: string, order: Order, stripePaymentId: string, stripeFees: number): Promise<Order> {
-  let serviceProviderPaymentInfo: PaymentInfo = (await serviceProviderNodes.serviceProviderPaymentInfo(order.orderType, order.serviceProviderId!).once('value')).val()
-  let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripe.id };
+export async function updateOrderIdAndFetchPaymentInfo(
+  paymentDetails: PaymentDetails, 
+  stripePaymentId: string, 
+  stripeFees: number
+) {
+  let serviceProvider;
+  if(!(paymentDetails.serviceProviderId)) {
+    throw new HttpsError(
+      "internal",
+      "Order service provider id is undefined"
+    );
+  }
+  if(paymentDetails.orderType == OrderType.Restaurant) {
+    serviceProvider = await getRestaurant(paymentDetails.serviceProviderId);
+  } else {
+    throw new HttpsError(
+      "internal",
+      "invalid order type"
+    );
+  }
+  if(!(serviceProvider.stripeInfo)) {
+    throw new HttpsError(
+      "internal",
+      "Service provider does not have a stripe account"
+    );
+  }
+  let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProvider.stripeInfo.id };
   const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
 
   await stripe.paymentIntents.update(
     stripePaymentId,
-    { metadata: { orderId: orderId, orderType: order.orderType, serviceProviderId: order.serviceProviderId ?? "unknown" } },
+    { metadata: { 
+      orderId: paymentDetails.orderId, 
+      orderType: paymentDetails.orderType, 
+      serviceProviderId: paymentDetails.serviceProviderId ?? "unknown" 
+    } },
     stripeOptions
   );
 
@@ -115,22 +208,24 @@ export async function updateOrderIdAndFetchPaymentInfo(orderId: string, order: O
     pi.payment_method as string,
     stripeOptions
   );
-  order.stripePaymentInfo = {
+  paymentDetails.orderStripePaymentInfo = {
     id: stripePaymentId,
     stripeFees: stripeFees,
-    chargeFeesOnCustomer : serviceProviderPaymentInfo.stripe.chargeFeesOnCustomer,
+    chargeFeesOnCustomer : serviceProvider.stripeInfo.chargeFeesOnCustomer,
     amountCharged: pi.amount / 100,
     amountRefunded: 0,
     status: StripePaymentStatus.Authorized,
-    serviceProviderAccount: serviceProviderPaymentInfo.stripe.id!
+    serviceProviderAccount: serviceProvider.stripeInfo.id
   }
   if (pm.card)
-    order.stripePaymentInfo = {
-      ...order.stripePaymentInfo,
-      last4: pm.card!.last4,
-      expMonth: pm.card!.exp_month,
-      expYear: pm.card!.exp_year,
-      brand: pm.card!.brand,
+    paymentDetails.orderStripePaymentInfo = {
+      ...paymentDetails.orderStripePaymentInfo,
+      last4: pm.card.last4,
+      expMonth: pm.card.exp_month,
+      expYear: pm.card.exp_year,
+      brand: pm.card.brand,
     }
-  return order
+  if(paymentDetails.orderType == OrderType.Restaurant) {
+    updateRestaurantOrderStripe(paymentDetails.orderId, paymentDetails.orderStripePaymentInfo);
+  }
 }

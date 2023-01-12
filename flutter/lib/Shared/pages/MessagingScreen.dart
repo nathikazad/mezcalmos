@@ -12,20 +12,17 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 // Extends GetView<MessagingController> after Nathik implements the controller
 import 'package:intl/intl.dart' as intl;
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
 import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
@@ -113,7 +110,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
         return singleChatComponent(
           message: message.message,
           time: intl.DateFormat('hh:mm a').format(message.timestamp.toLocal()),
-          isMe: message.userId == _authController.user!.firebaseId,
+          isMe: message.userId == _authController.user!.hasuraId,
           userImage: controller.chat.value?.chatInfo.chatImg,
         );
       },
@@ -198,32 +195,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
           },
         ),
         actions: <Widget>[
-          if (controller.chat.value?.chatInfo.parentlink != null)
-            InkWell(
-              child: Container(
-                width: 60,
-                padding: EdgeInsets.all(5),
-                margin: EdgeInsets.symmetric(horizontal: 7, vertical: 12),
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(225, 228, 255, 1),
-                  borderRadius: BorderRadius.circular(14.9),
-                ),
-                child: Center(
-                  child: Text(
-                    "order",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w600,
-                      color: Color.fromRGBO(103, 121, 254, 1),
-                    ),
-                  ),
-                ),
-              ),
-              onTap: () => MezRouter.toNamed<void>(
-                controller.chat.value!.chatInfo.parentlink,
-              ),
-            ),
           // Obx(
           //   () =>
           Container(
@@ -236,16 +207,16 @@ class _MessagingScreenState extends State<MessagingScreen> {
                       width: 30,
                       height: 30,
                       padding: EdgeInsets.all(5),
-                      margin: EdgeInsets.only(right: 7),
+                      margin: EdgeInsets.only(right: 12),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Color.fromRGBO(103, 121, 254, 1),
+                        color: secondaryLightBlueColor,
                       ),
                       child: Center(
                         child: FittedBox(
                           child: Icon(
                             Icons.call,
-                            color: Colors.white,
+                            color: primaryBlueColor,
                           ),
                         ),
                       ),
@@ -265,17 +236,43 @@ class _MessagingScreenState extends State<MessagingScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10.1),
+                        padding: EdgeInsets.only(top: 10.1),
                         child: Center(
                           child: Text(formattedDate),
                         ),
                       ),
+                      Obx(() {
+                        if (MezRouter.isRouteInStack(
+                            controller.chat.value?.chatInfo.parentlink)) {
+                          return SizedBox();
+                        } else {
+                          return Center(
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(10),
+                              onTap: () => MezRouter.toNamed<void>(
+                                controller.chat.value!.chatInfo.parentlink,
+                              ),
+                              child: Ink(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 6),
+                                  child: Text(
+                                    "View order details",
+                                    style: Get.textTheme.bodyText1
+                                        ?.copyWith(color: primaryBlueColor),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                      }),
                       Expanded(
                         child: Obx(
                           () => ListView(
                             shrinkWrap: true,
                             controller: _listViewScrollController,
-                            children: List<Widget>.from(chatLines.reversed),
+                            children: List<Widget>.from(chatLines),
                           ),
                         ),
                       ),
@@ -402,9 +399,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                   radius: 23,
                   backgroundColor: Colors.grey.shade200,
                   backgroundImage: mLoadImage(
-                          url: !isMe
-                              ? userImage
-                              : _authController.fireAuthUser?.photoURL,
+                          url: !isMe ? userImage : _authController.user?.image,
                           assetInCaseFailed: aDefaultAvatar)
                       .image,
                 ),

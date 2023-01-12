@@ -1,7 +1,7 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, Language, NotificationInfo } from "../../../models/Generic/Generic";
-import { DeliveryOperator, DeliveryOperatorStatus } from "../../../models/Services/Delivery/DeliveryOrder";
+import { DeliveryOperator, DeliveryOperatorStatus } from "../../../models/Generic/Delivery";
 
 export async function getDeliveryOperators(deliveryCompanyId: number): Promise<DeliveryOperator[]> {
     let chain = getHasura();
@@ -33,7 +33,6 @@ export async function getDeliveryOperators(deliveryCompanyId: number): Promise<D
           "No delivery company with that id found or company has no operators"
         );
       }
-    
     return response.delivery_operator.map((d) => {
         return <DeliveryOperator>{
             id: d.id,
@@ -42,10 +41,10 @@ export async function getDeliveryOperators(deliveryCompanyId: number): Promise<D
             status: d.status as DeliveryOperatorStatus,
             owner: d.owner,
             appVersion: d.app_version,
-            currentGPS: {
+            currentGPS: (d.current_gps) ? {
                 lat: d.current_gps.coordinates[1],
                 lng: d.current_gps.coordinates[0]
-            },
+            }: undefined,
             notificationInfo: (d.notification_token) ? <NotificationInfo>{
                 AppTypeId: AppType.DeliveryAdmin,
                 token: d.notification_token
@@ -135,7 +134,7 @@ export async function getDeliveryOperatorByUserId(deliveryOperatorUserId: number
             }
         }]
     })
-    if(response.delivery_operator == null) {
+    if(!(response.delivery_operator.length)) {
         throw new HttpsError(
           "internal",
           "No delivery operator with that user id found"

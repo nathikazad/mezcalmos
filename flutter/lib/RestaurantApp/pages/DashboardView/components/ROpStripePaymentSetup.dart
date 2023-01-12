@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpPaymentsPageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-// import 'package:webview_flutter/webview_flutter.dart';
 
 class ROpStripePaymentSetup extends StatelessWidget {
   const ROpStripePaymentSetup({Key? key, required this.viewController})
@@ -31,15 +28,15 @@ class ROpStripePaymentSetup extends StatelessWidget {
                 ],
               )),
         ),
-        body: WebView(
-          javascriptMode: JavascriptMode.unrestricted,
-          initialUrl: viewController.stripeUrl,
-          onPageStarted: (String url) {
-            mezDbgPrint("URL is =====>>>> $url");
-            viewController.currentUrl.value = url;
-            viewController.handleStripeUrlChanges(url);
-          },
-        ),
+        // body: WebView(
+        //   javascriptMode: JavascriptMode.unrestricted,
+        //   initialUrl: viewController.stripeUrl,
+        //   onPageStarted: (String url) {
+        //     mezDbgPrint("URL is =====>>>> $url");
+        //     viewController.currentUrl.value = url;
+        //     viewController.handleStripeUrlChanges(url);
+        //   },
+        // ),
       ),
     );
   }

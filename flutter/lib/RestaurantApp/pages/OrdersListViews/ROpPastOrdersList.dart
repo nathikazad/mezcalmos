@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/components/ROpOrderCard.dart';
+import 'package:mezcalmos/Shared/widgets/Order/ROpOrderCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/controllers/ROpPastOrdersViewController.dart';
+import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -23,16 +24,6 @@ class _ROpPastOrdersListState extends State<ROpPastOrdersList> {
   @override
   void initState() {
     viewController.init();
-    // inProcessOrders = widget.viewController.currentOrders;
-    // pastOrders = widget.viewController.pastOrders;
-    // _inProcessOrdersListener = widget.viewController.currentOrders.stream
-    //     .listen((List<RestaurantOrder> event) {
-    //   inProcessOrders.value = event;
-    // });
-    // _pastOrdersListener =
-    //     widget.viewController.pastOrders.stream.listen((List<RestaurantOrder> event) {
-    //   pastOrders.value = event;
-    // });
 
     super.initState();
   }
@@ -67,8 +58,12 @@ class _ROpPastOrdersListState extends State<ROpPastOrdersList> {
                   itemCount: viewController.pastOrders.length,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (_, int index) {
-                    return ROpOrderCard(
+                    return MinimalOrderCard(
                       order: viewController.pastOrders[index],
+                      onTap: () {
+                        MezRouter.toNamed(getROpOrderRoute(
+                            viewController.pastOrders[index].id.toString()));
+                      },
                     );
                   },
                 ),

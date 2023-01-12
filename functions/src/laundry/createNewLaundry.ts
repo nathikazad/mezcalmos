@@ -2,10 +2,9 @@ import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import * as firebase from "firebase-admin";
 import { UserRecord } from "firebase-functions/v1/auth";
 import * as laundryNodes from "../shared/databaseNodes/services/laundry";
-import * as operatorNodes from "../shared/databaseNodes/operators/operator";
-import { OrderType } from "../shared/models/Generic/Order";
+// import * as operatorNodes from "../shared/databaseNodes/operators/operator";
+// import { OrderType } from "../shared/models/Generic/Order";
 import { userInfoNode } from "../shared/databaseNodes/root";
-import { checkDeliveryAdmin } from "../shared/helper/authorizer";
 import { UserInfo } from "../shared/models/Generic/User";
 
 export async function createLaundry(userId: string, data: any) {
@@ -18,13 +17,13 @@ export async function createLaundry(userId: string, data: any) {
   //   }
   // }
 
-  let response = await checkDeliveryAdmin(userId)
-  if (response != undefined) {
-    return {
-      ok: false,
-      error: response
-    };
-  }
+  // let response = await checkDeliveryAdmin(userId)
+  // if (response != undefined) {
+  //   return {
+  //     ok: false,
+  //     error: response
+  //   };
+  // }
 
 
   if (!data.emailIdOrPhoneNumber && !data.laundryName) {
@@ -63,8 +62,8 @@ export async function createLaundry(userId: string, data: any) {
   newLaundry.state.operators[user.uid] = true;
   laundryNodes.info(laundryId).set(newLaundry);
 
-  let newOperator = { info: operatorInfo, state: { laundryId: laundryId } };
-  operatorNodes.operatorInfo(OrderType.Laundry, user.uid).set(newOperator);
+  // let newOperator = { info: operatorInfo, state: { laundryId: laundryId } };
+  // operatorNodes.operatorInfo(OrderType.Laundry, user.uid).set(newOperator);
   return { status: ServerResponseStatus.Success }
 };
 

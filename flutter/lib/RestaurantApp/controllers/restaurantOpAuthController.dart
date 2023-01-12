@@ -13,12 +13,11 @@ import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant_operator/hsRestaurantOperator.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
-import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
 
 class RestaurantOpAuthController extends GetxController {
-  Rxn<RestaurantOperator> operator = Rxn();
+  Rxn<Operator> operator = Rxn();
   final int operatorUserId = Get.find<AuthController>().hasuraUserId!;
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
@@ -29,8 +28,8 @@ class RestaurantOpAuthController extends GetxController {
   RxnInt _restaurantId = RxnInt();
   int? get restaurantId => _restaurantId.value;
 
-  RestaurantOperatorState? get restaurantOperatorState => operator.value?.state;
-  Stream<RestaurantOperator?> get operatorInfoStream => operator.stream;
+  OperatorState? get restaurantOperatorState => operator.value?.state;
+  Stream<Operator?> get operatorInfoStream => operator.stream;
 
   StreamSubscription? _restaurantOperatorNodeListener;
   StreamSubscription<MainUserInfo>? _userInfoStreamListener;
@@ -51,8 +50,12 @@ class RestaurantOpAuthController extends GetxController {
         "RestaurantAuthController: calling handle state change first time");
     // Todo @m66are remove this restaurant id hard code
 
-    setupRestaurantOperator();
-    unawaited(saveNotificationToken());
+    setupRestaurantOperator().then((value) {
+      if (operator.value?.info.hasuraId != null) {
+        saveNotificationToken();
+      }
+    });
+
     super.onInit();
   }
 
@@ -124,12 +127,14 @@ class RestaurantOpAuthController extends GetxController {
     final String? deviceNotificationToken =
         await _notificationsController.getToken();
     final NotificationInfo? notifInfo =
-        await get_notif_info(userId: operatorUserId);
-    mezDbgPrint("🫡🫡 saving notification info 🫡🫡");
+        await get_notif_info(userId: operator.value!.info.hasuraId);
+    mezDbgPrint("inside save notif token=====>>>😍");
+    mezDbgPrint("inside save notif token=====>>>${notifInfo?.token}");
     try {
       if (notifInfo != null &&
           deviceNotificationToken != null &&
           notifInfo.token != deviceNotificationToken) {
+        mezDbgPrint("🫡🫡 Updating notification info 🫡🫡");
         // ignore: unawaited_futures
         update_notif_info(
             notificationInfo: NotificationInfo(
@@ -138,6 +143,7 @@ class RestaurantOpAuthController extends GetxController {
                 id: notifInfo.id,
                 token: deviceNotificationToken));
       } else if (deviceNotificationToken != null && notifInfo == null) {
+        mezDbgPrint("🫡🫡 Saving notification info for the first time 🫡🫡");
         // ignore: unawaited_futures
         insert_notif_info(
             userId: operatorUserId,

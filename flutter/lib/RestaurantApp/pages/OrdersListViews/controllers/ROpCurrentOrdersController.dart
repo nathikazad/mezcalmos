@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalRestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class ROpCurrentOrdersController {
@@ -16,8 +16,8 @@ class ROpCurrentOrdersController {
   HasuraDb hasuraDb = Get.find<HasuraDb>();
 
   // vars
-  RxList<MinimalRestaurantOrder> currentOrders = <MinimalRestaurantOrder>[].obs;
-  RxList<MinimalRestaurantOrder> pastOrders = <MinimalRestaurantOrder>[].obs;
+  RxList<MinimalOrder> currentOrders = <MinimalOrder>[].obs;
+  RxList<MinimalOrder> pastOrders = <MinimalOrder>[].obs;
   RxBool initalized = RxBool(false);
   late int restaurantId;
   // Rxn<Restaurant> restaurant = Rxn();
@@ -53,7 +53,7 @@ class ROpCurrentOrdersController {
     subscriptionId = hasuraDb.createSubscription(start: () {
       currentOrdersListener =
           listen_on_current_restaurant_orders(restaurantId: restaurantId)
-              .listen((List<MinimalRestaurantOrder>? event) {
+              .listen((List<MinimalOrder>? event) {
         if (event != null) {
           currentOrders.value = event;
         }

@@ -1,4 +1,4 @@
-enum ServiceProviderType { Customer, Restaurant, Laundry }
+enum ServiceProviderType { Customer, Restaurant, Laundry, Delivery_company }
 
 extension ParseServiceProviderTypeToString on ServiceProviderType {
   String toFirebaseFormatString() {

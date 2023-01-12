@@ -3,10 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/ROpAppBar.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpDashboardPage.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpDeliveryCost.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpDriversPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpInfoPage.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpOperatorsPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpPaymentsPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpReviewsPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpSchedulePage.dart';
@@ -61,7 +58,7 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        return widget.canGoBack || _pageController.page == 0;
+        return widget.canGoBack || _pageController.page != 0;
       },
       child: Obx(() {
         if (editInfoController.restaurant.value != null) {
@@ -87,15 +84,9 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
                 ),
                 ROpReviewsView(restId: restaurantID!),
 
-                ROpOperatorsView(restaurantId: restaurantID!),
-                if (editInfoController.restaurant.value!.selfDelivery)
-                  ROpDriversView(
-                    restID: restaurantID!,
-                  ),
-                if (editInfoController.restaurant.value!.selfDelivery)
-                  ROpDeliveryCost(
-                    editInfoController: editInfoController,
-                  ),
+                // OperatorsListView(restaurantId: restaurantID!),
+                // if (editInfoController.restaurant.value!.selfDelivery)
+                //   DriversListView(),
               ],
             ),
             // bottomNavigationBar: _editInfoSaveButton(),

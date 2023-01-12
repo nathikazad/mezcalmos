@@ -71,19 +71,21 @@ class ForegroundNotificationsController extends GetxController {
               _displayNotificationsStreamController.add(_notification);
               break;
             case NotificationAction.ShowSnackbarOnlyIfNotOnPage:
-              if (!alreadyOnLinkPage) {
-                _displayNotificationsStreamController.add(_notification);
-              }
+              //   if (!alreadyOnLinkPage) {
+              _displayNotificationsStreamController.add(_notification);
+              //  }
               break;
           }
 
-          if (!alreadyOnLinkPage) {
-            notifications.add(_notification);
-          } else {
-            removeNotification(_notification.id);
-          }
-        } on StateError {
+          // if (!alreadyOnLinkPage) {
+          notifications.add(_notification);
+          // } else {
+          //   removeNotification(_notification.id);
+          // }
+        } catch (e, stk) {
           mezDbgPrint("Invalid notification");
+          mezDbgPrint(e);
+          mezDbgPrint(stk);
         }
       });
     });
@@ -145,34 +147,32 @@ class ForegroundNotificationsController extends GetxController {
     super.onClose();
   }
 
-  void _NotificationHndlerForWeb(
-      {required DatabaseEvent event,
-      required Notification Function(String key, dynamic value)
-          notificationHandler}) {
-    mezDbgPrint("[cc] ===== . inside stream   ${event.snapshot.value}");
-
-    Notification? _notification;
-    try {
-      _notification =
-          notificationHandler(event.snapshot.key!, event.snapshot.value);
-      mezDbgPrint("this is a test inside the stream  ${_notification}");
-      final bool alreadyOnLinkPage =
-          isCurrentRoute(_notification.linkUrl, isWebVersion!);
-
-      notifications.value.add(_notification);
-    } catch (e) {
-      mezDbgPrint("[cc] ERORR in Notification ${e.toString()}");
-    }
+  bool hasNewMessageNotification(int chatId) {
+    mezDbgPrint("🥸 chatId ==========>>>$chatId");
+    notifications().forEach((Notification n) {
+      mezDbgPrint(n.chatId);
+    });
+    mezDbgPrint(
+        "Final value ===>${notifications().where((Notification notification) => notification.notificationType == NotificationType.NewMessage && notification.chatId == chatId).toList().isNotEmpty}");
+    return notifications()
+        .where((Notification notification) =>
+            notification.notificationType == NotificationType.NewMessage &&
+            notification.chatId == chatId)
+        .toList()
+        .isNotEmpty;
   }
+}
+
+bool isCurrentRoute(String route, bool isWebVersion) {
+  return routeMatch(route, isWebVersion ? QR.currentPath : Get.currentRoute);
 }
 
 bool routeMatch(String routeA, String routeB) {
   return routeA.split("?")[0] == routeB.split("?")[0];
 }
 
-bool isCurrentRoute(String route, bool isWebVersion) {
-  return routeMatch(route, isWebVersion ? QR.currentPath : Get.currentRoute);
-}
+
+
 
 
 

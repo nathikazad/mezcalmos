@@ -1,14 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -85,22 +84,19 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                   ),
                 ),
                 if (order.customerDropOffDriverChatId != null)
-                  Obx(
-                    () => MessageButton(
-                        showRedDot: Get.find<OrderController>()
-                            .hasNewMessageNotification(
-                                order.customerDropOffDriverChatId!),
-                        onTap: () {
-                          MezRouter.toNamed(
-                            getMessagesRoute(chatId: order.chatId.toString()
-                                // recipientType: ParticipantType.DeliveryDriver,
-                                // orderType: OrderType.Restaurant,
-                                // orderId: order.orderId,
-                                // chatId: order.customerDropOffDriverChatId!,
-                                ),
-                          );
-                        }),
-                  )
+                  MessageButton(
+                    onTap: () {
+                      MezRouter.toNamed(
+                        getMessagesRoute(
+                          chatId: order.customerDropOffDriverChatId!.toString(),
+                          recipientType: ParticipantType.DeliveryDriver,
+                          orderType: OrderType.Restaurant,
+                          orderId: order.orderId.toString(),
+                        ),
+                      );
+                    },
+                    chatId: order.customerDropOffDriverChatId!,
+                  ),
               ],
             ),
           )),

@@ -2,12 +2,12 @@
 
 import 'dart:async';
 
-import 'package:agora_rtc_engine/rtc_engine.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter_callkit_incoming/entities/call_event.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/chatNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
@@ -41,7 +41,7 @@ class Sagora extends GetxController {
   @override
   void onClose() {
     removeSession();
-    _engine.destroy();
+    //  _engine.destroy();
     super.onClose();
   }
 
@@ -83,40 +83,40 @@ class Sagora extends GetxController {
 
   Future<void> _initAgora() async {
     //create the engine
-    _engine = await RtcEngine.createWithContext(RtcEngineContext(agoraAppId));
-    _engine.setEventHandler(RtcEngineEventHandler(
-      error: (code) {
-        final info = '👻👻👻👻👻 onError: $code';
-        _infoStrings.add(info);
-      },
-      joinChannelSuccess: (channel, uid, elapsed) {
-        final info = '👻👻👻👻👻 onJoinChannel: $channel, uid: $uid';
-        _infoStrings.add(info);
-      },
-      leaveChannel: (stats) {
-        _infoStrings.add(' 👻👻👻👻👻 onLeaveChannel');
-        removeSession();
+    // _engine = await RtcEngine.createWithContext(RtcEngineContext(agoraAppId));
+    // _engine.setEventHandler(RtcEngineEventHandler(
+    //   error: (code) {
+    //     final info = '👻👻👻👻👻 onError: $code';
+    //     _infoStrings.add(info);
+    //   },
+    //   joinChannelSuccess: (channel, uid, elapsed) {
+    //     final info = '👻👻👻👻👻 onJoinChannel: $channel, uid: $uid';
+    //     _infoStrings.add(info);
+    //   },
+    //   leaveChannel: (stats) {
+    //     _infoStrings.add(' 👻👻👻👻👻 onLeaveChannel');
+    //     removeSession();
 
-        // if (Get.currentRoute == kAgoraCallScreen) {
-        //   MezRouter.back<void>();
-        // }
-      },
-      userJoined: (uid, elapsed) {
-        final info = '👻👻👻👻👻 userJoined: $uid';
-        _infoStrings.add(info);
-        callStatus.value = CallStatus.inCall;
-      },
-      userOffline: (uid, reason) {
-        final info = '👻👻👻👻👻 userOffline: $uid , reason: $reason';
-        removeSession();
+    //     // if (Get.currentRoute == kAgoraCallScreen) {
+    //     //   MezRouter.back<void>();
+    //     // }
+    //   },
+    //   userJoined: (uid, elapsed) {
+    //     final info = '👻👻👻👻👻 userJoined: $uid';
+    //     _infoStrings.add(info);
+    //     callStatus.value = CallStatus.inCall;
+    //   },
+    //   userOffline: (uid, reason) {
+    //     final info = '👻👻👻👻👻 userOffline: $uid , reason: $reason';
+    //     removeSession();
 
-        _infoStrings.add(info);
-      },
-    ));
+    //     _infoStrings.add(info);
+    //   },
+    // ));
 
-    await _engine.enableAudio();
-    await _engine.disableVideo();
-    await _engine.setChannelProfile(ChannelProfile.Communication);
+    // await _engine.enableAudio();
+    // await _engine.disableVideo();
+    // await _engine.setChannelProfile(ChannelProfile.Communication);
   }
 
   Future<void> joinChannel({
@@ -126,14 +126,14 @@ class Sagora extends GetxController {
   }) async {
     // mezDbgPrint(" 👻👻👻 JOIN CHANNEL CALLED !!!! 👻👻👻  ");
     mezDbgPrint("👻👻👻 Joining using : $token | $channelId | $uid");
-    await _engine.joinChannel(token, channelId, null, uid);
+    //   await _engine.joinChannel(token, channelId, null, uid);
   }
 
   Future<void> removeSession({String? chatId}) async {
     await _engine.leaveChannel();
     callStatus.value = CallStatus.none;
     if (chatId != null) {
-      await FlutterCallkitIncoming.endCall({"chatId": chatId});
+      await FlutterCallkitIncoming.endCall(chatId);
     } else
       await FlutterCallkitIncoming.endAllCalls();
   }
@@ -165,8 +165,8 @@ class Sagora extends GetxController {
     FlutterCallkitIncoming.onEvent.listen((CallEvent? event) async {
       mezDbgPrint("CallEvent ===>  $event");
 
-      switch (event?.name) {
-        case CallEvent.ACTION_CALL_DECLINE:
+      switch (event?.event) {
+        case Event.ACTION_CALL_DECLINE:
           mezDbgPrint("CallEvent.DECLINED !");
           final MessageController _msgCtrl = Get.find<MessageController>();
           _msgCtrl.endCall(
@@ -185,7 +185,7 @@ class Sagora extends GetxController {
           // change to decline to update view parts.
           // if (Get.currentRoute == kAgoraCallScreen) MezRouter.back<void>();
           break;
-        case CallEvent.ACTION_CALL_ENDED:
+        case Event.ACTION_CALL_ENDED:
           mezDbgPrint("CallEvent.ACTION_CALL_ENDED!");
           if (event!.body?['extra']?['chatId'] != null) {
             await Get.find<MessageController>().endCall(
@@ -207,7 +207,7 @@ class Sagora extends GetxController {
           //   MezRouter.back<void>(closeOverlays: true);
           // }
           break;
-        case CallEvent.ACTION_CALL_ACCEPT:
+        case Event.ACTION_CALL_ACCEPT:
           if ((await checkAgoraPermissions())) {
             // it's better to send token and chatId withing the variableParams on call notif
             // that way we wont need to fetch the token and uid from db, using the bellow line :

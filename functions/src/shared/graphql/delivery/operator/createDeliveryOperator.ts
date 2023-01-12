@@ -1,7 +1,7 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType } from "../../../models/Generic/Generic";
-import { DeliveryOperator } from "../../../models/Services/Delivery/DeliveryOrder";
+import { DeliveryOperator } from "../../../models/Generic/Delivery";
 
 
 export async function createDeliveryOperator(operator: DeliveryOperator) {

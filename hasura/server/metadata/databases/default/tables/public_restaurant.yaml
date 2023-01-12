@@ -72,10 +72,12 @@ select_permissions:
         - open_status
         - payment_info_id
         - schedule
+        - self_delivery
       filter: {}
   - role: customer
     permission:
       columns:
+        - accepted_payments
         - approved
         - description_id
         - firebase_id
@@ -89,7 +91,25 @@ select_permissions:
         - payment_info_id
         - schedule
         - self_delivery
+        - service_provider_type
+        - stripe_info
       filter: {}
+  - role: delivery_driver
+    permission:
+      columns:
+        - firebase_id
+        - id
+        - image
+        - language_id
+        - location_gps
+        - location_text
+        - name
+        - open_status
+        - service_provider_type
+      filter:
+        delivery_drivers:
+          user_id:
+            _eq: X-Hasura-User-Id
   - role: mez_admin
     permission:
       columns:
@@ -117,6 +137,7 @@ select_permissions:
   - role: restaurant_operator
     permission:
       columns:
+        - accepted_payments
         - approved
         - description_id
         - firebase_id
@@ -131,6 +152,7 @@ select_permissions:
         - schedule
         - self_delivery
         - service_provider_type
+        - stripe_info
       filter:
         restaurant_operators:
           user_id:
@@ -160,16 +182,21 @@ update_permissions:
   - role: restaurant_operator
     permission:
       columns:
+        - accepted_payments
         - approved
         - description_id
+        - firebase_id
         - image
         - language_id
         - location_gps
         - location_text
         - name
         - open_status
+        - payment_info_id
         - schedule
         - self_delivery
+        - service_provider_type
+        - stripe_info
       filter:
         restaurant_operators:
           user_id:

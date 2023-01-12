@@ -19,8 +19,7 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (_getDeliveryTime() != null ||
-        (_showFoodReadyTime() && _getFoodReadyTime() != null)) {
+    if (_getDeliveryTime() != null || _showFoodReadyTime()) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

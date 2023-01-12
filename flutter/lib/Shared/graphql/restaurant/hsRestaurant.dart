@@ -2,10 +2,9 @@ import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
-import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/__generated/restaurant.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
+import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
@@ -24,57 +23,51 @@ HasuraDb _db = Get.find<HasuraDb>();
 // Get single restuarant //
 // ignore: non_constant_identifier_names
 
-Future<List<Restaurant>> fetch_restaurants() async {
-  mezDbgPrint("[77] fetch_restaurants !");
+Future<List<Restaurant>> fetch_restaurants({required bool withCache}) async {
+  final List<Restaurant> _restaurants = <Restaurant>[];
 
-  final List<Restaurant> _restaus = <Restaurant>[];
+  final QueryResult<Query$getRestaurants> response = await _db.graphQLClient
+      .query$getRestaurants(Options$Query$getRestaurants(
+          fetchPolicy: withCache
+              ? FetchPolicy.cacheAndNetwork
+              : FetchPolicy.networkOnly));
 
-  final QueryResult<Query$getRestaurants> response =
-      await _db.graphQLClient.query$getRestaurants();
-  if (response.hasException) {
-    mezDbgPrint(
-        "[777] fetch_restaurants :: exception :: ${response.exception}!");
-  } else
-    mezDbgPrint("rESTAUS ===> ${response.data}");
-  response.parsedData?.restaurant
-      .forEach((Query$getRestaurants$restaurant data) async {
-    _restaus.add(Restaurant(
-        userInfo: ServiceInfo(
-            hasuraId: data.id,
-            image: data.image,
-            description: (data.description?.translations != null)
-                ? {
-                    data.description!.translations.first.language_id
-                            .toLanguageType():
-                        data.description!.translations.first.value,
-                    data.description!.translations[1].language_id
-                            .toLanguageType():
-                        data.description!.translations[1].value,
-                  }
-                : null,
-            firebaseId: data.firebase_id,
-            name: data.name,
-            descriptionId: data.description_id,
-            //   descriptionId: data.d,
-            location:
-                Location.fromHasura(data.location_gps, data.location_text)),
-
-        // {
-        //   data.description!.translations.first.language_id.toLanguageType():
-        //       data.description!.translations.first.value,
-        //   data.description!.translations[1].language_id.toLanguageType():
-        //       data.description!.translations[1].value,
-        // },
-        schedule:
-            data.schedule != null ? Schedule.fromData(data.schedule) : null,
-        paymentInfo: PaymentInfo(),
-        restaurantState:
-            ServiceState(data.open_status.toServiceStatus(), data.approved),
-        primaryLanguage: data.language_id.toString().toLanguageType(),
-        secondaryLanguage:
-            data.language_id.toString().toLanguageType().toOpLang()));
-  });
-  return _restaus;
+  if (response.parsedData != null) {
+    response.parsedData?.restaurant
+        .forEach((Query$getRestaurants$restaurant data) async {
+      _restaurants.add(Restaurant(
+          userInfo: ServiceInfo(
+              hasuraId: data.id,
+              image: data.image,
+              description: (data.description?.translations != null)
+                  ? {
+                      data.description!.translations.first.language_id
+                              .toLanguageType():
+                          data.description!.translations.first.value,
+                      data.description!.translations[1].language_id
+                              .toLanguageType():
+                          data.description!.translations[1].value,
+                    }
+                  : null,
+              firebaseId: data.firebase_id,
+              name: data.name,
+              descriptionId: data.description_id,
+              location:
+                  Location.fromHasura(data.location_gps, data.location_text)),
+          schedule:
+              data.schedule != null ? Schedule.fromData(data.schedule) : null,
+          paymentInfo: PaymentInfo(),
+          restaurantState:
+              ServiceState(data.open_status.toServiceStatus(), data.approved),
+          primaryLanguage: data.language_id.toString().toLanguageType(),
+          secondaryLanguage:
+              data.language_id.toString().toLanguageType().toOpLang()));
+    });
+    return _restaurants;
+  } else {
+    throw Exception(
+        "🛑🛑🛑 Get restaurants exceptions 🛑🛑🛑 \n ${response.exception} ");
+  }
 }
 
 Future<List<Item>> fetch_restaurant_items({required int restaurant_id}) async {
@@ -222,9 +215,12 @@ Future<Schedule?> get_restaurant_schedule(
 
 Future<Restaurant> update_restaurant_info(
     {required int id, required Restaurant restaurant}) async {
+  mezDbgPrint(
+      "Location before saving 📍 ${restaurant.info.location.toFirebaseFormattedJson()}");
   final QueryResult<Mutation$updateRestaurantInfo> response = await _db
       .graphQLClient
       .mutate$updateRestaurantInfo(Options$Mutation$updateRestaurantInfo(
+          fetchPolicy: FetchPolicy.networkOnly,
           variables: Variables$Mutation$updateRestaurantInfo(
               id: id,
               data: Input$restaurant_set_input(
@@ -234,10 +230,7 @@ Future<Restaurant> update_restaurant_info(
                   schedule: restaurant.schedule?.toFirebaseFormattedJson(),
                   language_id:
                       restaurant.primaryLanguage.toFirebaseFormatString(),
-                  location_gps: Geography(
-                    restaurant.info.location.position.latitude!,
-                    restaurant.info.location.position.longitude!,
-                  ),
+                  location_gps: restaurant.info.location.toGeography(),
                   description_id: restaurant.info.descriptionId,
                   location_text: restaurant.info.location.address,
                   open_status:
@@ -249,6 +242,8 @@ Future<Restaurant> update_restaurant_info(
   }
   final Mutation$updateRestaurantInfo$update_restaurant_by_pk data =
       response.parsedData!.update_restaurant_by_pk!;
+  mezDbgPrint(
+      "Location after saving 📍 ${data.location_gps.latitude}  --  ${data.location_gps.longitude} ");
   return Restaurant(
       userInfo: ServiceInfo(
           hasuraId: data.id,
@@ -346,7 +341,7 @@ Future<List<Review>?> get_restaurant_reviews(
   }
 }
 
-Future<List<RestaurantOperator>?> get_restaurant_operators(
+Future<List<Operator>?> get_restaurant_operators(
     {required int restaurantId, bool withCache = true}) async {
   final QueryResult<Query$getRestaurantOperators> response =
       await _db.graphQLClient.query$getRestaurantOperators(
@@ -365,11 +360,11 @@ Future<List<RestaurantOperator>?> get_restaurant_operators(
         data = response.parsedData!.restaurant_by_pk!.restaurant_operators;
     mezDbgPrint(
         "✅✅ Hasura get operators querry ${response.parsedData?.toJson()} ");
-    final List<RestaurantOperator> ops = data.map(
+    final List<Operator> ops = data.map(
         (Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators
             opData) {
-      return RestaurantOperator(
-          state: RestaurantOperatorState(
+      return Operator(
+          state: OperatorState(
               owner: opData.owner,
               operatorState: opData.status.toAgentStatus(),
               restaurantId: restaurantId),

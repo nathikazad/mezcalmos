@@ -57,7 +57,7 @@ class _ViewRestaurantScreenFroMobileState
   }
 
   Future<Restaurant?> getRestaurants() async {
-    return await Get.find<RestaurantsInfoController>()
+    return await Get.find<>()
         .getRestaurant(int.parse(QR.params['id'].toString()))
         .then((value) {
       if (value != null) {

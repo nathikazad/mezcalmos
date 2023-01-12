@@ -929,6 +929,9 @@
             "OrderDeliveryLocation": {
                 "title": "Lugar de entrega"
             },
+            "OrderScheduledTimeCard": {
+                "title": "hora Programada"
+            },
             "CreditCardInfo": {
                 "creditCardInfo": "Información de la tarjeta de crédito",
                 "cardType": "Tipo de tarjeta",

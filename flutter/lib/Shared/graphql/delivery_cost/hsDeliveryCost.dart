@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/graphql/delivery_cost/__generated/delivery_cost
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -30,7 +31,7 @@ Future<DeliveryCost?> get_delivery_cost(
     return DeliveryCost(
         id: data.id,
         serviceProviderType:
-            data.service_provider_type.toString().toOrderType(),
+            data.service_provider_type.toString().toServiceProviderType(),
         serviceProviderId: serviceProviderId,
         minimumCost: data.minimum_cost,
         costPerKm: data.cost_per_km,

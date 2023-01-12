@@ -3,7 +3,6 @@ import 'dart:collection';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -33,6 +32,10 @@ class CustomerRestaurantController {
   Map<int, dynamic> itemKeys = {};
   RxBool pauseRectGetterIndex = RxBool(false);
   RxList<Item> specials = RxList.empty();
+  RxBool _initialized = RxBool(false);
+  bool get isInitialzed {
+    return _initialized.value;
+  }
 
   Future<void> init(
       {required Restaurant restaurant, required TickerProvider vsync}) async {
@@ -62,32 +65,13 @@ class CustomerRestaurantController {
 
       this.restaurant.refresh();
     }
-    // _initControllers(vsync, restaurant);
-    // assignKeys();
-
-    // final List<Item> _items =
-    //     await fetch_restaurant_items(restaurant_id: restaurant.info.hasuraId);
-
-    // _cats.forEach((Category cat) {
-    //   if (item.itemType == ItemType.Special && item.endsAt != null) {
-    //     if (DateTime.now()
-    //         .toLocal()
-    //         .difference(item.endsAt!.toLocal())
-    //         .inSeconds
-    //         .isNegative) {
-    //       this.restaurant.value?.currentSpecials.add(item);
-    //     } else {
-    //       this.restaurant.value?.pastSpecials.add(item);
-    //     }
-    //   } else {
-    //     this.restaurantq.value?.itemsWithoutCategory.add(item);
-    //   }
-    // });
+    _initControllers(vsync, restaurant);
+    assignKeys();
+    _initialized.value = true;
   }
 
   Future<void> _getShippingPrice() async {
-    basShippingPrice.value =
-        await Get.find<RestaurantController>().getShippingPrice() ?? 50;
+    basShippingPrice.value = 50;
   }
 
   void assignKeys() {

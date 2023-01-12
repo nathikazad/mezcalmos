@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/Controllers/CustomerRestaurantController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -15,7 +16,6 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -40,7 +40,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
           expandedHeight: 270,
           leadingWidth: 35,
           automaticallyImplyLeading: false,
-          bottom: controller.showInfo.isFalse ? bottom : null,
+          bottom: getBottom,
           leading: _BackButtonAppBar(),
           actions: <Widget>[
             getAppbarIconsButton(),
@@ -96,6 +96,18 @@ class RestaurantSliverAppBar extends StatelessWidget {
             background: _backgroundImageComponent(),
           )),
     );
+  }
+
+  PreferredSizeWidget? get getBottom {
+    if (controller.isInitialzed == false) {
+      return PreferredSize(
+        preferredSize: Size.fromHeight(15),
+        child: LinearProgressIndicator(color: primaryBlueColor),
+      );
+    } else if (controller.showInfo.isFalse) {
+      return bottomFilters;
+    }
+    return null;
   }
 
   Widget _backgroundImageComponent() {
@@ -158,7 +170,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget? get bottom {
+  PreferredSizeWidget get bottomFilters {
     final LanguageType userLanguage =
         Get.find<LanguageController>().userLanguageKey;
     return PreferredSize(
@@ -421,21 +433,6 @@ class RestaurantSliverAppBar extends StatelessWidget {
       }
     });
   }
-
-// TODO:544D-HASURA
-// this
-  // Widget getAppbarIconsButton() {
-  //   return Obx(() {
-  //     return Row(
-  //       children: [
-  //         if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
-  //         if (Get.find<AuthController>().isUserSignedIn)
-  //           _notificationAppBarIcon(),
-  //         if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
-  //       ],
-  //     );
-  //   });
-  // }
 
   Widget getAppbarIconsButton() {
     return Row(

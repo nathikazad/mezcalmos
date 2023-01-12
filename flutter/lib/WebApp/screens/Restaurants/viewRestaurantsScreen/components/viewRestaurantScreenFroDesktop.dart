@@ -102,8 +102,9 @@ class _ViewRestaurantScreenFroDesktopState
   Future<void> _getRestaurantItemsValue() async {
     String? rstaurantID = QR.params['id'].toString();
 
-    var restaurnatValue = await Get.find<RestaurantsInfoController>()
-        .getRestaurant(int.parse(QR.params['id'].toString()));
+    var restaurnatValue = null;
+    // = await Get.find<RestaurantsInfoController>()
+    //     .getRestaurant(int.parse(QR.params['id'].toString()));
     if (restaurnatValue != null) {
       print(
           " 💮💮💮💮💮 the id of this item is ${QR.params['id'].toString()} 2 and ${restaurnatValue.toJson()} and the length is ${restaurnatValue.getCategories.length}");

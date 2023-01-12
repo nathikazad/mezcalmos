@@ -1,20 +1,16 @@
-import 'dart:typed_data';
-
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:http/http.dart' as http;
+import "package:http/http.dart" as http;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import "package:mezcalmos/Shared/controllers/authController.dart";
 
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/MezMarker.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
@@ -144,14 +140,14 @@ class MGoogleMapController {
     Future<Uint8List?> _fetchImgBytes(String uImg) async {
       mezDbgPrint("[cc] this function has been called _fetchImgBytes ");
       Uint8List? _imgBytes;
+      if (latLng != null) {
+        BitmapDescriptor icon;
 
-      final String? uImg = Get.find<AuthController>().user?.image;
+        final String? uImg = Get.find<AuthController>().user?.image ??
+            Get.find<AuthController>().user?.image;
 
-      // Inside function to get Bitmapdescriptor
-      Future<BitmapDescriptor?> _buildBitmap(String? uImg) async {
-        BitmapDescriptor? bitMap;
         if (uImg == null) {
-          bitMap = await bitmapDescriptorLoader(
+          icon = await bitmapDescriptorLoader(
               (await cropRonded((await rootBundle.load(aDefaultAvatar))
                   .buffer
                   .asUint8List())),
@@ -159,303 +155,357 @@ class MGoogleMapController {
               _calculateMarkersSize(),
               isBytes: true);
         } else {
-          await _fetchImgBytes(uImg).then((Uint8List? _imgBytes) async {
-            if (_imgBytes != null) {
-              bitMap = await bitmapDescriptorLoader(
-                (await cropRonded(_imgBytes)),
-                _calculateMarkersSize(),
-                _calculateMarkersSize(),
-                isBytes: true,
-              );
-            }
-          });
+          icon = await bitmapDescriptorLoader(
+              (await cropRonded(
+                  (await http.get(Uri.parse(customImgHttpUrl ?? uImg)))
+                      .bodyBytes) as Uint8List),
+              _calculateMarkersSize(),
+              _calculateMarkersSize(),
+              isBytes: true);
         }
-        return bitMap;
-      }
 
-      if (latLng != null) {
         final String mId = (markerId ??
-            fireAuth.FirebaseAuth.instance.currentUser?.uid ??
+            Get.find<AuthController>().user?.hasuraId.toString() ??
             'ANONYMOUS');
 
-        await _buildBitmap(uImg).then((BitmapDescriptor? icon) {
-          if (icon != null) {
-            // default userId is authenticated's
-            _addOrUpdateMarker(
-              MezMarker(
-                fitWithinBounds: fitWithinBounds,
-                markerId: MarkerId(mId),
-                icon: icon,
-                position: latLng,
-              ),
-            );
-          }
-        });
-      }
+        // default userId is authenticated's
+        _addOrUpdateMarker(
+          MezMarker(
+            fitWithinBounds: fitWithinBounds,
+            markerId: MarkerId(mId),
+            icon: icon,
+            position: latLng,
+          ),
+        );
+      } else
+        mezDbgPrint(
+            "addOrUpdatePurpleDestinationMarker skipppping ==> $markerId");
+      // Inside function to get ImgBytes
+      // Future<Uint8List?> _fetchImgBytes(String uImg) async {
+      //   Uint8List? _imgBytes;
+
+      //   final String? uImg = Get.find<AuthController>().user?.image;
+
+      //   // Inside function to get Bitmapdescriptor
+
+      //   return null;
+      // }
+
+      // Future<BitmapDescriptor?> _buildBitmap(String? uImg) async {
+      //   BitmapDescriptor? bitMap;
+      //   if (uImg == null) {
+      //     mezDbgPrint("uiImage null =========");
+      //     bitMap = await bitmapDescriptorLoader(
+      //         (await cropRonded(
+      //             (await rootBundle.load(aDefaultAvatar)).buffer.asUint8List())),
+      //         _calculateMarkersSize(),
+      //         _calculateMarkersSize(),
+      //         isBytes: true);
+      //   } else {
+      //     mezDbgPrint("uImage not null ======>$uImg");
+      //     await _fetchImgBytes(uImg).then((Uint8List? _imgBytes) async {
+      //       mezDbgPrint("Image bytes check =======>$_imgBytes");
+      //       if (_imgBytes != null) {
+      //         bitMap = await bitmapDescriptorLoader(
+      //           (await cropRonded(_imgBytes)),
+      //           _calculateMarkersSize(),
+      //           _calculateMarkersSize(),
+      //           isBytes: true,
+      //         );
+      //       }
+      //     });
+      //   }
+
+      //   return bitMap;
+      // }
+
+      // if (latLng != null) {
+      //   mezDbgPrint("Called add or update user marker 🤣 $latLng");
+      //   final String mId = (markerId ??
+      //       fireAuth.FirebaseAuth.instance.currentUser?.uid ??
+      //       'ANONYMOUS');
+
+      //   await _buildBitmap(customImgHttpUrl).then((BitmapDescriptor? icon) {
+      //     mezDbgPrint("Print icon ::::::===>$icon");
+      //     if (icon != null) {
+      //       // default userId is authenticated's
+      //       _addOrUpdateMarker(
+      //         MezMarker(
+      //           fitWithinBounds: fitWithinBounds,
+      //           markerId: MarkerId(mId),
+      //           icon: icon,
+      //           position: latLng,
+      //         ),
+      //       );
+      //     }
+      //   });
+      // } else {
+      //   mezDbgPrint("Else print 😍");
+      // }
     }
-  }
 
-  Future<void> addOrUpdateTaxiDriverMarker(String? markerId, LatLng? latLng,
-      {String? markerTitle, bool fitWithinBounds = true}) async {
-    if (latLng != null && markerId != null) {
-      // this check so we keep one single copy of the asset Bytes instead of re-croping again n again
-      if (_taxiDriverImgDescruptorCopy == null) {
-        _taxiDriverImgDescruptorCopy = await cropRonded(
-            (await rootBundle.load(taxi_driver_marker_asset))
-                .buffer
-                .asUint8List());
-      }
-
-      _addOrUpdateMarker(
-        MezMarker(
-          fitWithinBounds: fitWithinBounds,
-          infoWindow: markerTitle == null
-              ? InfoWindow.noText
-              : InfoWindow(title: markerTitle),
-          markerId: MarkerId(markerId),
-          icon: await bitmapDescriptorLoader(
-            (await cropRonded(
+    Future<void> addOrUpdateTaxiDriverMarker(String? markerId, LatLng? latLng,
+        {String? markerTitle, bool fitWithinBounds = true}) async {
+      if (latLng != null && markerId != null) {
+        // this check so we keep one single copy of the asset Bytes instead of re-croping again n again
+        if (_taxiDriverImgDescruptorCopy == null) {
+          _taxiDriverImgDescruptorCopy = await cropRonded(
               (await rootBundle.load(taxi_driver_marker_asset))
                   .buffer
-                  .asUint8List(),
-            )),
+                  .asUint8List());
+        }
+
+        _addOrUpdateMarker(
+          MezMarker(
+            fitWithinBounds: fitWithinBounds,
+            infoWindow: markerTitle == null
+                ? InfoWindow.noText
+                : InfoWindow(title: markerTitle),
+            markerId: MarkerId(markerId),
+            icon: await bitmapDescriptorLoader(
+              (await cropRonded(
+                (await rootBundle.load(taxi_driver_marker_asset))
+                    .buffer
+                    .asUint8List(),
+              )),
+              _calculateMarkersSize(),
+              _calculateMarkersSize(),
+              isBytes: true,
+            ).then((value) {
+              mezDbgPrint("[cc] @@@@@@@@@ .  ${value} @@@@@@@@@@");
+              return value;
+            }).catchError((e) {
+              mezDbgPrint("[cc] something bad happen e || ${e.toString()}");
+            }),
+            flat: true,
+            position: latLng,
+          ),
+        );
+      } else
+        mezDbgPrint(
+            "addOrUpdatePurpleDestinationMarker skipppping ==> $markerId");
+    }
+
+    Future<void> addOrUpdatePurpleDestinationMarker(
+        {String markerId = "dest",
+        required LatLng? latLng,
+        bool fitWithinBounds = true}) async {
+      mezDbgPrint(
+          "this is the marker should show to user ${markerImagePath == aPurpleLocationCircle ? purple_destination_marker_asset : markerForWeb} ");
+      if (latLng != null) {
+        final BitmapDescriptor icon = await bitmapDescriptorLoader(
+            (await cropRonded((await rootBundle.load(
+                    markerImagePath == aPurpleLocationCircle
+                        ? purple_destination_marker_asset
+                        : markerForWeb))
+                .buffer
+                .asUint8List())),
             _calculateMarkersSize(),
             _calculateMarkersSize(),
-            isBytes: true,
-          ).then((value) {
-            mezDbgPrint("[cc] @@@@@@@@@ .  ${value} @@@@@@@@@@");
-            return value;
-          }).catchError((e) {
-            mezDbgPrint("[cc] something bad happen e || ${e.toString()}");
-          }),
-          flat: true,
-          position: latLng,
-        ),
-      );
-    } else
-      mezDbgPrint(
-          "addOrUpdatePurpleDestinationMarker skipppping ==> $markerId");
-  }
+            isBytes: true);
+        // markerId = markerId;
 
-  Future<void> addOrUpdatePurpleDestinationMarker(
-      {String markerId = "dest",
-      required LatLng? latLng,
-      bool fitWithinBounds = true}) async {
-    mezDbgPrint(
-        "this is the marker should show to user ${markerImagePath == aPurpleLocationCircle ? purple_destination_marker_asset : markerForWeb} ");
-    if (latLng != null) {
-      final BitmapDescriptor icon = await bitmapDescriptorLoader(
-          (await cropRonded((await rootBundle.load(
-                  markerImagePath == aPurpleLocationCircle
-                      ? purple_destination_marker_asset
-                      : markerForWeb))
-              .buffer
-              .asUint8List())),
-          _calculateMarkersSize(),
-          _calculateMarkersSize(),
-          isBytes: true);
-      // markerId = markerId;
-
-      _addOrUpdateMarker(
-        MezMarker(
-          fitWithinBounds: fitWithinBounds,
-          markerId: MarkerId(markerId),
-          icon: icon,
-          position: latLng,
-        ),
-      );
-    } else
-      mezDbgPrint(
-          "addOrUpdatePurpleDestinationMarker skipppping ==> $markerId");
-  }
-
-  void removeDestinationMarker({String id = "dest"}) {
-    removeMarkerById(id);
-  }
-
-  void decodeAndAddPolyline({required String encodedPolylineString}) {
-    addPolyline(MapHelper.loadUpPolyline(encodedPolylineString)
-        .map<PointLatLng>((LatLng e) => PointLatLng(e.latitude, e.longitude))
-        .toList());
-  }
-
-  void removeMarkerById(String? markerId) {
-    if (markerId != null)
-      markers
-          .removeWhere((Marker _marker) => _marker.markerId.value == markerId);
-  }
-
-  void removerAuthenticatedUserMarker() {
-    final String _mId =
-        (fireAuth.FirebaseAuth.instance.currentUser?.uid ?? 'ANONYMOUS');
-    markers.removeWhere((Marker _marker) => _marker.markerId.value == _mId);
-  }
-
-  void addPolyline(List<PointLatLng> latLngPoints) {
-    final Polyline _poly = Polyline(
-        color: Color.fromARGB(255, 172, 89, 252),
-        jointType: JointType.round,
-        width: 2,
-        startCap: Cap.buttCap,
-        endCap: Cap.roundCap,
-        polylineId: PolylineId('_poly_'),
-        visible: true,
-        points: latLngPoints
-            .map<LatLng>((PointLatLng e) => LatLng(e.latitude, e.longitude))
-            .toList());
-    polylines.assign(_poly);
-    animateMarkersPolyLinesBounds.value = true;
-  }
-
-  void clearPolyline() {
-    polylines.clear();
-  }
-
-  void setAnimateMarkersPolyLinesBounds(bool value) {
-    animateMarkersPolyLinesBounds.value = value;
-  }
-
-  Future<void> moveToNewLatLng(double lat, double lng) async {
-    mezDbgPrint("controller ====> $controller");
-    await controller.value
-        ?.animateCamera(CameraUpdate.newLatLng(LatLng(lat, lng)));
-  }
-
-  Future<LatLng?> getMapCenter() async {
-    final LatLngBounds? visibleRegion =
-        await controller.value?.getVisibleRegion();
-    LatLng? centerLatLng;
-    if (visibleRegion != null) {
-      centerLatLng = LatLng(
-        (visibleRegion.northeast.latitude + visibleRegion.southwest.latitude) /
-            2,
-        (visibleRegion.northeast.longitude +
-                visibleRegion.southwest.longitude) /
-            2,
-      );
+        _addOrUpdateMarker(
+          MezMarker(
+            fitWithinBounds: fitWithinBounds,
+            markerId: MarkerId(markerId),
+            icon: icon,
+            position: latLng,
+          ),
+        );
+      } else
+        mezDbgPrint(
+            "addOrUpdatePurpleDestinationMarker skipppping ==> $markerId");
     }
 
-    return centerLatLng;
-  }
-
-  void setLocation(Location newLocation) {
-    location.value = newLocation;
-  }
-
-  void setBounds(LatLngBounds? bounds) {
-    this.bounds = bounds;
-  }
-
-  // Animate the camera using widget.bounds
-  Future<void> animateCameraWithNewBounds() async {
-    if (controller.value != null && bounds != null) {
-      final CameraUpdate _camUpdate =
-          CameraUpdate.newLatLngBounds(bounds!, 100);
-      await controller.value!.animateCamera(_camUpdate);
-      await _boundsReChecker(_camUpdate);
+    void removeDestinationMarker({String id = "dest"}) {
+      removeMarkerById(id);
     }
-  }
 
-  // Cheker -> Animate first and Double check if the bounds fit well the MapScreen
-  Future<void> _boundsReChecker(CameraUpdate u) async {
-    await controller.value?.animateCamera(u);
-    final LatLngBounds? l1 = await controller.value?.getVisibleRegion();
-    final LatLngBounds? l2 = await controller.value?.getVisibleRegion();
-    if (l1 != null && l2 != null) {
-      if (l1.southwest.latitude == -90 || l2.southwest.latitude == -90)
-        await _boundsReChecker(u);
+    void decodeAndAddPolyline({required String encodedPolylineString}) {
+      addPolyline(MapHelper.loadUpPolyline(encodedPolylineString)
+          .map<PointLatLng>((LatLng e) => PointLatLng(e.latitude, e.longitude))
+          .toList());
     }
-  }
 
-  // adds up the markers the new markers latLn ot polyline's and calculate out of them all the latLngbounds
-  LatLngBounds? _getMarkersAndPolylinesBounds(bool shouldFitPolylineInBound) {
-    final List<LatLng> _polyLinesBnds = shouldFitPolylineInBound
-        ? _getLatLngBoundsFromPolyline(polylines)
-        : <LatLng>[];
+    void removeMarkerById(String? markerId) {
+      if (markerId != null)
+        markers.removeWhere(
+            (Marker _marker) => _marker.markerId.value == markerId);
+    }
 
-    final List<LatLng> _bnds = <LatLng>[..._polyLinesBnds];
-    markers.forEach((MezMarker _marker) {
-      if (_marker.fitWithinBounds) {
-        _bnds.add(_marker.position);
+    void removerAuthenticatedUserMarker() {
+      final String _mId =
+          (fireAuth.FirebaseAuth.instance.currentUser?.uid ?? 'ANONYMOUS');
+      markers.removeWhere((Marker _marker) => _marker.markerId.value == _mId);
+    }
+
+    void addPolyline(List<PointLatLng> latLngPoints) {
+      final Polyline _poly = Polyline(
+          color: Color.fromARGB(255, 172, 89, 252),
+          jointType: JointType.round,
+          width: 2,
+          startCap: Cap.buttCap,
+          endCap: Cap.roundCap,
+          polylineId: PolylineId('_poly_'),
+          visible: true,
+          points: latLngPoints
+              .map<LatLng>((PointLatLng e) => LatLng(e.latitude, e.longitude))
+              .toList());
+      polylines.assign(_poly);
+      animateMarkersPolyLinesBounds.value = true;
+    }
+
+    void clearPolyline() {
+      polylines.clear();
+    }
+
+    void setAnimateMarkersPolyLinesBounds(bool value) {
+      animateMarkersPolyLinesBounds.value = value;
+    }
+
+    Future<void> moveToNewLatLng(double lat, double lng) async {
+      mezDbgPrint("controller ====> $controller");
+      await controller.value
+          ?.animateCamera(CameraUpdate.newLatLng(LatLng(lat, lng)));
+    }
+
+    Future<LatLng?> getMapCenter() async {
+      final LatLngBounds? visibleRegion =
+          await controller.value?.getVisibleRegion();
+      LatLng? centerLatLng;
+      if (visibleRegion != null) {
+        centerLatLng = LatLng(
+          (visibleRegion.northeast.latitude +
+                  visibleRegion.southwest.latitude) /
+              2,
+          (visibleRegion.northeast.longitude +
+                  visibleRegion.southwest.longitude) /
+              2,
+        );
       }
-    });
 
-    return _bnds.isEmpty ? null : MapHelper.createMapBounds(_bnds);
-  }
+      return centerLatLng;
+    }
 
-  // Calculate bounds from the polyline's List of LatLng
-  // we're using this onInit (one time calculation since we have the polyline always the same)
-  List<LatLng> _getLatLngBoundsFromPolyline(Set<Polyline> p) {
-    if (p.isNotEmpty) {
-      double minLat = p.first.points.first.latitude;
-      double minLong = p.first.points.first.longitude;
-      double maxLat = p.first.points.first.latitude;
-      double maxLong = p.first.points.first.longitude;
-      p.forEach((Polyline poly) {
-        poly.points.forEach((LatLng point) {
-          if (point.latitude < minLat) minLat = point.latitude;
-          if (point.latitude > maxLat) maxLat = point.latitude;
-          if (point.longitude < minLong) minLong = point.longitude;
-          if (point.longitude > maxLong) maxLong = point.longitude;
-        });
+    void setLocation(Location newLocation) {
+      location.value = newLocation;
+    }
+
+    void setBounds(LatLngBounds? bounds) {
+      this.bounds = bounds;
+    }
+
+    // Animate the camera using widget.bounds
+    Future<void> animateCameraWithNewBounds() async {
+      if (controller.value != null && bounds != null) {
+        final CameraUpdate _camUpdate =
+            CameraUpdate.newLatLngBounds(bounds!, 100);
+        await controller.value!.animateCamera(_camUpdate);
+        await _boundsReChecker(_camUpdate);
+      }
+    }
+
+    // Cheker -> Animate first and Double check if the bounds fit well the MapScreen
+    Future<void> _boundsReChecker(CameraUpdate u) async {
+      await controller.value?.animateCamera(u);
+      final LatLngBounds? l1 = await controller.value?.getVisibleRegion();
+      final LatLngBounds? l2 = await controller.value?.getVisibleRegion();
+      if (l1 != null && l2 != null) {
+        if (l1.southwest.latitude == -90 || l2.southwest.latitude == -90)
+          await _boundsReChecker(u);
+      }
+    }
+
+    // adds up the markers the new markers latLn ot polyline's and calculate out of them all the latLngbounds
+    LatLngBounds? _getMarkersAndPolylinesBounds(bool shouldFitPolylineInBound) {
+      final List<LatLng> _polyLinesBnds = shouldFitPolylineInBound
+          ? _getLatLngBoundsFromPolyline(polylines)
+          : <LatLng>[];
+
+      final List<LatLng> _bnds = <LatLng>[..._polyLinesBnds];
+      markers.forEach((MezMarker _marker) {
+        if (_marker.fitWithinBounds) {
+          _bnds.add(_marker.position);
+        }
       });
 
-      return <LatLng>[LatLng(minLat, minLong), LatLng(maxLat, maxLong)];
-    } else {
-      return <LatLng>[];
+      return _bnds.isEmpty ? null : MapHelper.createMapBounds(_bnds);
     }
-  }
 
-  /// Main function for updating the bounds and start the animation
-  Future<void> animateAndUpdateBounds(
-      {bool shouldFitPolylineInBound = true}) async {
-    if (periodicRerendering.value) {
-      setBounds(animateMarkersPolyLinesBounds.value
-          ? _getMarkersAndPolylinesBounds(shouldFitPolylineInBound)
-          : null);
-      await animateCameraWithNewBounds();
+    // Calculate bounds from the polyline's List of LatLng
+    // we're using this onInit (one time calculation since we have the polyline always the same)
+    List<LatLng> _getLatLngBoundsFromPolyline(Set<Polyline> p) {
+      if (p.isNotEmpty) {
+        double minLat = p.first.points.first.latitude;
+        double minLong = p.first.points.first.longitude;
+        double maxLat = p.first.points.first.latitude;
+        double maxLong = p.first.points.first.longitude;
+        p.forEach((Polyline poly) {
+          poly.points.forEach((LatLng point) {
+            if (point.latitude < minLat) minLat = point.latitude;
+            if (point.latitude > maxLat) maxLat = point.latitude;
+            if (point.longitude < minLong) minLong = point.longitude;
+            if (point.longitude > maxLong) maxLong = point.longitude;
+          });
+        });
+
+        return <LatLng>[LatLng(minLat, minLong), LatLng(maxLat, maxLong)];
+      } else {
+        return <LatLng>[];
+      }
     }
-  }
 
-  /// This locks In AutoZoom and AutoAnimate
-  void lockInAutoZoomAnimation() {
-    if (!periodicRerendering.value) {
-      periodicRerendering.value = true;
+    /// Main function for updating the bounds and start the animation
+    Future<void> animateAndUpdateBounds(
+        {bool shouldFitPolylineInBound = true}) async {
+      if (periodicRerendering.value) {
+        setBounds(animateMarkersPolyLinesBounds.value
+            ? _getMarkersAndPolylinesBounds(shouldFitPolylineInBound)
+            : null);
+        await animateCameraWithNewBounds();
+      }
     }
-    recenterButtonEnabled.value = false;
-  }
 
-  /// Unlock AutoZoom and AutoAnimation and shows [Recenter Button]
-  void unlockAutoZoomAnimation() {
-    if (periodicRerendering.value) {
-      periodicRerendering.value = false;
-      myLocationButtonEnabled.value = false;
-      recenterButtonEnabled.value = true;
+    /// This locks In AutoZoom and AutoAnimate
+    void lockInAutoZoomAnimation() {
+      if (!periodicRerendering.value) {
+        periodicRerendering.value = true;
+      }
+      recenterButtonEnabled.value = false;
     }
-  }
 
-  MinMaxZoomPreference getMapMinMaxZommPrefs() {
-    if (minMaxZoomPrefs == null) {
-      return polylines.isNotEmpty
-          ? MinMaxZoomPreference.unbounded
-          : MinMaxZoomPreference(16, 17);
-    } else {
-      return minMaxZoomPrefs!;
+    /// Unlock AutoZoom and AutoAnimation and shows [Recenter Button]
+    void unlockAutoZoomAnimation() {
+      if (periodicRerendering.value) {
+        periodicRerendering.value = false;
+        myLocationButtonEnabled.value = false;
+        recenterButtonEnabled.value = true;
+      }
     }
-  }
 
-  /// This basically sets the ZoomLvl of the map manually.
-  ///
-  /// `periodicRerendering` should be false to do this , because if periodicRendering is true it will keep fitting/animating every `x` second.
-  ///
-  /// `minMaxZoomPrefs` shoud be unbounded, else You can not controll the zoom since it's already sat with a min/max.
-  void setZoomLvl({required double zoomLvl}) {
-    assert(periodicRerendering == false);
-    assert(minMaxZoomPrefs == MinMaxZoomPreference.unbounded);
-    controller.value?.animateCamera(CameraUpdate.zoomTo(zoomLvl));
+    MinMaxZoomPreference getMapMinMaxZommPrefs() {
+      if (minMaxZoomPrefs == null) {
+        return polylines.isNotEmpty
+            ? MinMaxZoomPreference.unbounded
+            : MinMaxZoomPreference(16, 17);
+      } else {
+        return minMaxZoomPrefs!;
+      }
+    }
+
+    /// This basically sets the ZoomLvl of the map manually.
+    ///
+    /// `periodicRerendering` should be false to do this , because if periodicRendering is true it will keep fitting/animating every `x` second.
+    ///
+    /// `minMaxZoomPrefs` shoud be unbounded, else You can not controll the zoom since it's already sat with a min/max.
+    void setZoomLvl({required double zoomLvl}) {
+      assert(periodicRerendering == false);
+      assert(minMaxZoomPrefs == MinMaxZoomPreference.unbounded);
+      controller.value?.animateCamera(CameraUpdate.zoomTo(zoomLvl));
+    }
   }
 }
-
 
 
 

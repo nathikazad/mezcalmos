@@ -1,15 +1,13 @@
 import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
+import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
-import "package:mezcalmos/Shared/controllers/authController.dart";
-import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart' as hsCart;
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
@@ -19,10 +17,8 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 
 class RestaurantController extends GetxController {
-  FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
   bool? isWebversion;
   RestaurantController({this.isWebversion = false});
@@ -31,9 +27,9 @@ class RestaurantController extends GetxController {
   String? _subscriptionId;
   Restaurant? associatedRestaurant;
   Rx<Cart> cart = Cart().obs;
-  RxnNum minShiipingPrice = RxnNum();
-  RxnNum perKmPrice = RxnNum();
-  RxnNum baseShippingPrice = RxnNum();
+  RxNum minShiipingPrice = RxNum(15);
+  RxNum perKmPrice = RxNum(7);
+  RxNum baseShippingPrice = RxNum(50);
   RxBool isShippingSet = RxBool(false);
   num _orderDistanceInKm = 0;
 
@@ -49,12 +45,7 @@ class RestaurantController extends GetxController {
         "--------------------> RestaurantsCartController Initialized ! 🇲🇦🇲🇦🇲🇦🇲🇦🇲🇦");
 
     if (_authController.fireAuthUser != null && _authController.user != null) {
-      //  getShippingPrice().then((num value) => shippingPrice.value = value);
-      baseShippingPrice.value = await getShippingPrice();
-      minShiipingPrice.value = await getMinShippingPrice();
-      perKmPrice.value = await getPerKmShippingPrice();
-      // ignore: unawaited_futures
-      fetchCart();
+      await fetchCart();
     }
     if (Get.find<AuthController>().user?.hasuraId != null) {
       final HasuraDb _hasuraDb = Get.find<HasuraDb>();
@@ -71,8 +62,6 @@ class RestaurantController extends GetxController {
               cart.value.restaurant = event.restaurant;
 
             associatedRestaurant = event.restaurant;
-          } else {
-            create_customer_cart();
           }
           cart.refresh();
         });
@@ -101,37 +90,6 @@ class RestaurantController extends GetxController {
     return get_restaurant_by_id(id: restaurantId);
   }
 
-  Future<num?> getShippingPrice() async {
-    final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
-            .ref()
-            .child(baseShippingPriceNode())
-            .once())
-        .snapshot;
-
-    return snapshot.value as num;
-  }
-
-  Future<num?> getMinShippingPrice() async {
-    final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
-            .ref()
-            .child(minShippingPriceNode())
-            .once())
-        .snapshot;
-    mezDbgPrint("Min price =======>>>>>>${snapshot.value}");
-    return snapshot.value as num;
-  }
-
-  Future<num?> getPerKmShippingPrice() async {
-    final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
-            .ref()
-            .child(perKmShippingPriceNode())
-            .once())
-        .snapshot;
-    mezDbgPrint("Per km price =======>>>>>>${snapshot.value}");
-
-    return snapshot.value as num;
-  }
-
   void checkCartPeriod() {
     if (cart.value.cartPeriod != null &&
         cart.value.cartPeriod!.end
@@ -152,13 +110,6 @@ class RestaurantController extends GetxController {
     isShippingSet.value = false;
     final LocModel.Location? loc = cart.value.toLocation;
 
-    mezDbgPrint(
-        "[tt] Called updateShippingPrice :: to _ loc _ address :: ${loc?.address} ");
-    minShiipingPrice.value =
-        minShiipingPrice.value ?? await getMinShippingPrice();
-    perKmPrice.value = perKmPrice.value ?? await getPerKmShippingPrice();
-    baseShippingPrice.value =
-        baseShippingPrice.value ?? await getShippingPrice();
     if (loc != null) {
       mezDbgPrint("====-==-==- cus loc : ${loc.isValidLocation()}");
       mezDbgPrint(
@@ -167,23 +118,18 @@ class RestaurantController extends GetxController {
         cart.value.restaurant!.info.location,
         loc,
       );
-      mezDbgPrint(
-          "[tt] Got route Info :: distanceStringInKm :: ${routeInfo?.distance.distanceStringInKm} ");
 
       if (routeInfo != null) {
         _orderDistanceInKm = routeInfo.distance.distanceInMeters / 1000;
-        mezDbgPrint(
-            "[[+]] Shipping Distance in km ========>>>>>>>$_orderDistanceInKm");
-        mezDbgPrint("[[+]] MinShippingPrice ===> ${minShiipingPrice.value}");
-        mezDbgPrint("[[+]] perKmPrice ===> ${perKmPrice.value}");
+
         if (_orderDistanceInKm <= 15) {
-          final num shippingCost = perKmPrice.value! * (_orderDistanceInKm);
+          final num shippingCost = perKmPrice.value * (_orderDistanceInKm);
           mezDbgPrint(
               "[[+]] Calculated final ShippingCost  ========>>>>>>>$shippingCost");
-          if (shippingCost < minShiipingPrice.value!) {
+          if (shippingCost < minShiipingPrice.value) {
             mezDbgPrint(
                 "LESS THAN MINIMUM COST ===================== $shippingCost << ${minShiipingPrice.value}");
-            cart.value.shippingCost = minShiipingPrice.value!.ceil();
+            cart.value.shippingCost = minShiipingPrice.value.ceil();
           } else {
             cart.value.shippingCost = shippingCost.ceil();
           }
@@ -193,8 +139,6 @@ class RestaurantController extends GetxController {
             duration: routeInfo.duration,
           );
 
-          mezDbgPrint(
-              "SHIPPPPPING COOOOST =========>>>>>>>>>>>${cart.value.shippingCost}");
           // await saveCart();
           isShippingSet.value = true;
 
@@ -365,19 +309,16 @@ class RestaurantController extends GetxController {
   }
 
   Future<ServerResponse> checkout({String? stripePaymentId}) async {
-    mezDbgPrint("[+]Delivery time ===> ${cart.value.deliveryTime}");
     final HttpsCallable checkoutRestaurantCart =
         FirebaseFunctions.instance.httpsCallable("restaurant2-checkoutCart");
 
     try {
-      mezDbgPrint("[+]Delivery time ===> ${cart.value.deliveryTime}");
-
-      mezDbgPrint(
-          "_]]]]]][[[[[ inside the cart check if the reastaurat id ${cart.value.restaurant!.info.hasuraId}");
+      mezDbgPrint("[+]Delivery time ===> ${cart.value.getRouteInfo}");
       final Map<String, dynamic> payload = <String, dynamic>{
         // "customerId": _authController.user!.hasuraId,
         // "checkoutRequest": <String, dynamic>{
-        "customerAppType": "customer_mobile",
+        "customerAppType": "customer",
+
         "customerLocation": cart.value.toLocation?.toFirebaseFormattedJson() ??
             LocModel.Location(
               "Test _ Location ",
@@ -389,8 +330,8 @@ class RestaurantController extends GetxController {
               ),
             ).toFirebaseFormattedJson(),
         "deliveryCost": cart.value.shippingCost ?? 0,
+        "itemsCost": cart.value.itemsCost(),
         "scheduledTime": cart.value.deliveryTime?.toUtc().toString(),
-
         "paymentType": cart.value.paymentType.toFirebaseFormatString(),
         "notes": cart.value.notes,
         "restaurantId": cart.value.restaurant!.info.hasuraId,
@@ -424,7 +365,13 @@ class RestaurantController extends GetxController {
           await cancelOrder.call(<String, dynamic>{"orderId": orderId});
       mezDbgPrint(response.toString());
       print(response.data);
-      return ServerResponse.fromJson(response.data);
+
+      final ServerResponse res = ServerResponse.fromJson(response.data);
+      if (res.success) {
+        await fetchCart();
+        await Get.find<OrderController>().fetchCustomerOrders();
+      }
+      return res;
     } catch (e) {
       return ServerResponse(ResponseStatus.Error,
           errorMessage: "Server Error", errorCode: "serverError");

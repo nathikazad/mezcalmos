@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_callkit_incoming/entities/entities.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:http/http.dart' as http;
-import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
@@ -14,7 +12,6 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart' as Gen;
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 import 'package:uuid/uuid.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
   mezDbgPrint("Handling a background message");
@@ -107,8 +104,9 @@ Future<void> triggerIncomingCallAlert({
       'ringtonePath': 'system_ringtone_default'
     }
   };
+  final CallKitParams kitParams = CallKitParams.fromJson(params);
   // ignore: unawaited_futures
-  await FlutterCallkitIncoming.showCallkitIncoming(params);
+  await FlutterCallkitIncoming.showCallkitIncoming(kitParams);
 }
 
 // Future<void> markInDb(String url) async {

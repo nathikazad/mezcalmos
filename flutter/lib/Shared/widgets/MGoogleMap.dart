@@ -160,8 +160,8 @@ class MGoogleMapState extends State<MGoogleMap> {
                           "Pan gesture is enabled ==================> $PanGestureRecognizer()");
                       return PanGestureRecognizer();
                     })),
-                  minMaxZoomPreference: MinMaxZoomPreference.unbounded,
-                  // widget.mGoogleMapController.getMapMinMaxZommPrefs(),
+                  minMaxZoomPreference:
+                      widget.mGoogleMapController.getMapMinMaxZommPrefs(),
                   onCameraMove: (CameraPosition camMove) {
                     if (lastZoomSnapshot != camMove.zoom) {
                       lastZoomSnapshot = camMove.zoom;

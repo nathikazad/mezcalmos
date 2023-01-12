@@ -11,7 +11,7 @@ import { orderInProcess, TaxiOrder, TaxiOrderStatus } from "../shared/models/Ser
 // import { ParticipantType } from "../shared/models/Generic/Chat";
 // import { orderUrl } from "../utilities/senders/appRoutes";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
-import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
+import { DeliveryAdmin } from "../shared/models/Generic/Delivery";
 
 export async function cancelTaxiFromCustomer(userId: string, data: any) {
 

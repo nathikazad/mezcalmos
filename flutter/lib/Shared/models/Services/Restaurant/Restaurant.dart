@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
+import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
@@ -35,7 +35,7 @@ class Restaurant extends Service {
 
   List<Item> currentSpecials = <Item>[];
   List<Item> pastSpecials = <Item>[];
-  List<RestaurantOperator> operators = [];
+  List<Operator> operators = [];
   List<Review> reviews = <Review>[];
   num? rate;
   bool selfDelivery;
@@ -324,9 +324,7 @@ class Restaurant extends Service {
   }
 
   bool isOpen() {
-// TODO:544D-HASURA
-    return true;
-    // return state.isOpen && (schedule?.isOpen() ?? true);
+    return state.isOpen && (schedule?.isOpen() ?? true);
   }
 
   Restaurant copyWith({

@@ -15,15 +15,14 @@ dynamic _i18n() =>
 class OrderSummaryCard extends StatelessWidget {
   OrderSummaryCard(
       {Key? key,
-      required this.setLocationCallBack,
       required this.controller,
-      this.pickerWidget,
       this.serviceLoc,
+      this.pickerWidget,
       this.isWebWidget})
       : super(key: key);
 
   final Location? serviceLoc;
-  final void Function({Location? location})? setLocationCallBack;
+
   final RestaurantController controller;
 
   /// this param will take a widget

@@ -100,7 +100,7 @@ export async function getRestaurantOperator(restaurantOperatorId: number): Promi
   };
 }
 
-export async function getRestaurantOperatorByUserId(restaurantOperatorUserId: number, restaurantId: number): Promise<RestaurantOperator> {
+export async function getRestaurantOperatorByUserId(restaurantOperatorUserId: number): Promise<RestaurantOperator> {
   let chain = getHasura();
 
   let response = await chain.query({
@@ -109,9 +109,6 @@ export async function getRestaurantOperatorByUserId(restaurantOperatorUserId: nu
         user_id: {
           _eq: restaurantOperatorUserId
         },
-        restaurant_id: {
-          _eq: restaurantId
-        }
       }
     }, {
       id: true,

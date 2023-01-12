@@ -18,10 +18,10 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
@@ -77,7 +77,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     super.initState();
     Get.put(TaxiController(), permanent: true);
     Get.put(RestaurantController(), permanent: true);
-    Get.put(RestaurantsInfoController(), permanent: true);
+
     Get.put(LaundryController(), permanent: true);
     WidgetsBinding.instance.addObserver(this);
 
@@ -170,11 +170,10 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     });
   }
 
-  void _doIfFireAuthUserIsNotNull() {
+  Future<void> _doIfFireAuthUserIsNotNull() async {
     _orderController = Get.find<OrderController>();
-    _orderCountListener = _orderController!.currentOrders.stream.listen((_) {
-      numberOfCurrentOrders.value = _orderController!.currentOrders.length;
-    });
+    await _orderController?.fetchCustomerOrders();
+    await Get.find<RestaurantController>().fetchCart();
     final String? userId = Get.find<AuthController>().fireAuthUser!.uid;
     _notificationsStreamListener = initializeShowNotificationsListener();
     // listening for notification Permissions!
@@ -183,6 +182,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         .startListeningForNotificationsFromFirebase(
             customerNotificationsNode(userId!), customerNotificationHandler);
     if (r.isCurrentRoute(kHomeRoute)) {
+      // ignore: unawaited_futures
       Future.microtask(() {
         _navigateToOrdersIfNecessary();
       });
@@ -309,10 +309,10 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     );
   }
 
-  void getServiceRoute(
+  Future<void> getServiceRoute(
       {required OrderType orderType,
       required String serviceRoute,
-      required void Function(int) singleOrderRoute}) {
+      required void Function(int) singleOrderRoute}) async {
     if (Get.find<AuthController>().fireAuthUser != null) {
       final List<Order> orders = _orderController!.currentOrders
           .where((Order p0) => p0.orderType == orderType)
@@ -321,32 +321,41 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         //   MezRouter.toNamed(getLaundyOrderRoute(orders[0].orderId));
         singleOrderRoute(orders[0].orderId);
       } else if (orders.length > 1) {
+        // ignore: unawaited_futures
         MezRouter.toNamed<void>(kOrdersRoute);
       } else {
+        // ignore: unawaited_futures
         MezRouter.toNamed<void>(serviceRoute);
       }
     } else {
+      // ignore: unawaited_futures
       MezRouter.toNamed<void>(serviceRoute);
     }
   }
 
   // when app resumes check if there are current orders and if yes navigate to orders page
   Future<void> _navigateToOrdersIfNecessary() async {
-    await _orderController?.fetchCustomerOrders();
-    final List<Order>? currentOrders = _orderController?.currentOrders.value;
-    if (currentOrders != null && currentOrders.length == 1) {
+    mezDbgPrint(
+        "😍 checking orders ===========😍 ====>${_orderController?.currentOrders.length}");
+    if (_orderController?.currentOrders != null &&
+        _orderController?.currentOrders.length == 1) {
       // Restaurant
-      if (currentOrders[0].orderType == OrderType.Restaurant) {
-        popEverythingAndNavigateTo(
-            getRestaurantOrderRoute(currentOrders[0].orderId));
+      if (_orderController?.currentOrders[0].orderType ==
+          OrderType.Restaurant) {
+        popEverythingAndNavigateTo(getRestaurantOrderRoute(
+            _orderController!.currentOrders[0].orderId));
         // Taxi
-      } else if (currentOrders[0].orderType == OrderType.Taxi) {
-        popEverythingAndNavigateTo(getTaxiOrderRoute(currentOrders[0].orderId));
-      } else if (currentOrders[0].orderType == OrderType.Laundry) {
+      } else if (_orderController?.currentOrders[0].orderType ==
+          OrderType.Taxi) {
         popEverythingAndNavigateTo(
-            getLaundryOrderRoute(currentOrders[0].orderId));
+            getTaxiOrderRoute(_orderController!.currentOrders[0].orderId));
+      } else if (_orderController?.currentOrders[0].orderType ==
+          OrderType.Laundry) {
+        popEverythingAndNavigateTo(
+            getLaundryOrderRoute(_orderController!.currentOrders[0].orderId));
       }
-    } else if (currentOrders != null && currentOrders.length > 1) {
+    } else if (_orderController?.currentOrders != null &&
+        _orderController!.currentOrders.length > 1) {
       popEverythingAndNavigateTo(kOrdersRoute);
     }
   }

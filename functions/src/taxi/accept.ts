@@ -7,16 +7,12 @@ import * as customerNodes from "../shared/databaseNodes/customer";
 import { AuthorizationStatus, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
 import { UserInfo } from "../shared/models/Generic/User";
-import { Taxi } from "../shared/models/Drivers/Taxi";
 import { CounterOfferStatus, TaxiInfo, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/Services/Taxi/TaxiOrder";
-import * as chatController from "../shared/controllers/chatController";
-import { ChatObject } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
-import { getUserInfo } from "../shared/controllers/rootController";
-import { getTaxi } from "../shared/controllers/taxiController";
 import { orderUrl } from "../utilities/senders/appRoutes";
+import { Taxi } from "../shared/models/Services/Taxi/Taxi";
 
 export async function acceptRide(userId: string, data: any) {
   // let response = isSignedIn(userId)
@@ -127,13 +123,13 @@ export async function acceptRide(userId: string, data: any) {
 
 
 
-    let chat: ChatObject = await chatController.getChat(parseInt(orderId));
+    // let chat: ChatObject = await chatController.getChat(parseInt(orderId));
     // chat.addParticipant({
     //   ...driverInfo,
     //   participantType: ParticipantType.Taxi
     // });
 
-    await chatController.setChat(parseInt(orderId), chat.chatData);
+    // await chatController.setChat(parseInt(orderId), chat.chatData);
 
     // Notify customer only if driver is the one initiating the accept
     // not notifying driver because driver will get response within 30 
@@ -173,3 +169,11 @@ export async function acceptRide(userId: string, data: any) {
   }
 
 };
+function getTaxi(taxiId: string): Taxi | PromiseLike<Taxi> {
+  throw new Error("Function not implemented.");
+}
+
+function getUserInfo(taxiId: string): UserInfo | PromiseLike<UserInfo> {
+  throw new Error("Function not implemented.");
+}
+

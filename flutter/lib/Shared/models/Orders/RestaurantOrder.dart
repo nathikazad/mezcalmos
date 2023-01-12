@@ -21,7 +21,7 @@ enum RestaurantOrderStatus {
   OnTheWay,
   Delivered,
   CancelledByAdmin,
-  CancelledByCustomer
+  CancelledByCustomer,
 }
 
 extension ParseRestaurantOrderStatusToString on RestaurantOrderStatus {
@@ -36,7 +36,6 @@ extension ParseStringToRestaurantOrderStatus on String {
     mezDbgPrint(this);
     return RestaurantOrderStatus.values.firstWhere(
       (RestaurantOrderStatus e) {
-        mezDbgPrint("ENUM :: $e ||| STR :: $this");
         return e.toFirebaseFormatString() == this;
       },
     );
@@ -53,9 +52,11 @@ class RestaurantOrder extends DeliverableOrder {
   ServiceInfo get restaurant => serviceProvider! as ServiceInfo;
   DateTime? estimatedFoodReadyTime;
   DateTime? deliveryTime;
+  DateTime? scheduledTime;
   Review? review;
   DeliveryMode deliveryMode;
   SelfDeliveryDetails? selfDeliveryDetails;
+  int? deliveryOrderId;
 
   RestaurantOrder(
       {required super.orderId,
@@ -72,6 +73,8 @@ class RestaurantOrder extends DeliverableOrder {
       this.estimatedFoodReadyTime,
       super.dropoffDriver,
       this.deliveryTime,
+      this.scheduledTime,
+      this.deliveryOrderId,
       this.review,
       int? dropOffDriverChatId,
       required this.itemsCost,

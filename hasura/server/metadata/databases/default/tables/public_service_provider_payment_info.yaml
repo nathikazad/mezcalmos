@@ -12,3 +12,36 @@ object_relationships:
   - name: stripe_info
     using:
       foreign_key_constraint_on: stripe_info_id
+select_permissions:
+  - role: restaurant_operator
+    permission:
+      columns:
+        - bank_transfer
+        - card
+        - cash
+        - id
+        - stripe_info_id
+        - service_provider_type
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+update_permissions:
+  - role: restaurant_operator
+    permission:
+      columns:
+        - bank_transfer
+        - card
+        - cash
+        - stripe_info_id
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id

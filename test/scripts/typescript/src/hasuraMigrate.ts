@@ -5,7 +5,7 @@ import { insertRestaurants } from "../../../../functions/src/shared/graphql/rest
 import { insertRestaurantOrders } from "../../../../functions/src/shared/graphql/restaurant/order/insertRestaurantOrders"
 import { insertRestaurantOperators } from "../../../../functions/src/shared/graphql/restaurant/operators/insertRestaurantOperators"
 import { insertDeliveryDrivers } from "../../../../functions/src/shared/graphql/delivery/driver/insertDeliveryDrivers"
-import { insertCustomers } from "../../../../functions/src/shared/graphql/restaurant/customer/insertCustomers"
+import { insertCustomers } from "../../../../functions/src/shared/graphql/user/customer/insertCustomers"
 
 import { insertUsers } from "../../../../functions/src/shared/graphql/user/insertUsers"
 
@@ -414,7 +414,8 @@ async function writeToDBCustomers() {
       continue
 
     let customerObject = {
-      userFirebaseId: customerId
+      userFirebaseId: customerId,
+      stripeInfo: customer.stripe
     }
     array.push(customerObject)
   }

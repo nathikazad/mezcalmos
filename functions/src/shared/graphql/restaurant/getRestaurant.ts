@@ -8,9 +8,11 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
   let response = await chain.query({
     restaurant_by_pk: [{
       id: restaurantId
+      
     }, {
       id: true,
       name: true,
+      self_delivery:true,
       // schedule : [{path :'' },true],
       description: {
         translations: [{ }, {
@@ -22,25 +24,24 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
       location_gps: true,
       location_text: true,
       open_status: true,     
-      approved: true
+      approved: true,
+      stripe_info: [{}, true],
+      accepted_payments: [{}, true],
+      restaurant_operators: [{}, {
+        id: true,
+        user_id: true,
+        status: true,
+        owner: true,
+        notification_token: true,
+        user: {
+          firebase_id: true,
+          language_id: true,
+          name: true,
+          email: true,
+          phone: true,
+        }
+      }]
     }],
-    restaurant_operator: [{
-      where: { 
-        restaurant_id: {
-          _eq: restaurantId
-        } 
-      }
-    }, {
-      id: true,
-      user_id: true,
-      status: true,
-      owner: true,
-      notification_token: true,
-      user: {
-        firebase_id: true,
-        language_id: true,
-      }
-    }]
   });
 
   if(response.restaurant_by_pk == null) {
@@ -50,7 +51,7 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
     );
   }
 
-  let restaurantOperators: RestaurantOperator[] = response.restaurant_operator.map((r): RestaurantOperator => {
+  let restaurantOperators: RestaurantOperator[] = response.restaurant_by_pk.restaurant_operators.map((r): RestaurantOperator => {
     return {
       id: r.id,
       userId: r.user_id,
@@ -64,16 +65,19 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
       user: {
         id: r.user_id,
         firebaseId: r.user.firebase_id,
-        language: r.user.language_id as Language
+        language: r.user.language_id as Language,
+        name: r.user.name,
+        email: r.user.email,
+        phoneNumber: r.user.phone,
       }
     }
   });
-
 
   let restaurant: Restaurant = {
     restaurantId: response.restaurant_by_pk.id,
     name: response.restaurant_by_pk.name,
     image: response.restaurant_by_pk.image,
+    selfDelivery:response.restaurant_by_pk.self_delivery,
 
     
     location: {
@@ -88,6 +92,8 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
     // schedule: response.restaurant_by_pk.schedule,
     openStatus: response.restaurant_by_pk.open_status as OpenStatus,
     approved: response.restaurant_by_pk.approved,
+    stripeInfo: JSON.parse(response.restaurant_by_pk.stripe_info),
+    acceptedPayments: JSON.parse(response.restaurant_by_pk.accepted_payments),
     restaurantOperators
   }
 

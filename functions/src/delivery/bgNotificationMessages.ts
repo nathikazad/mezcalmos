@@ -1,6 +1,6 @@
 import { Language } from "../shared/models/Generic/Generic";
 import { BackgroundNotification } from "../shared/models/Notification";
-import { DeliveryOrderStatus } from "../shared/models/Services/Delivery/DeliveryOrder";
+import { DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
 
 export const deliveryNewOrderMessage: BackgroundNotification =
 {
@@ -41,12 +41,12 @@ export const deliveryDriverChangeMessage: BackgroundNotification =
 export const deliveryOrderStatusChangeMessages: { [id in DeliveryOrderStatus]: BackgroundNotification } = {
   [DeliveryOrderStatus.AtPickup]: {
     [Language.EN]: {
-      title: "at pickup",
-      body: ""
+      title: "Driver arrived",
+      body: "Driver has arrived at your location for pickup"
     },
     [Language.ES]: {
-      title: "at pickup",
-      body: ""
+      title: "Conductor llegado",
+      body: "El conductor ha llegado a su ubicación para recoger"
     }
   },
   [DeliveryOrderStatus.PackageReady]: {
@@ -61,12 +61,12 @@ export const deliveryOrderStatusChangeMessages: { [id in DeliveryOrderStatus]: B
   },
   [DeliveryOrderStatus.OnTheWayToDropoff]: {
     [Language.EN]: {
-      title: "OnTheWayToDropoff",
-      body: ""
+      title: "Order Picked Up",
+      body: "Driver has picked up your order and is on the way."
     },
     [Language.ES]: {
-      title: "OnTheWayToDropoff",
-      body: ""
+      title: "Pedido Recogido",
+      body: "El conductor ha recogido su pedido y está en camino."
     }
   },
   [DeliveryOrderStatus.AtDropoff]: {
@@ -82,11 +82,11 @@ export const deliveryOrderStatusChangeMessages: { [id in DeliveryOrderStatus]: B
   [DeliveryOrderStatus.Delivered]: {
     [Language.EN]: {
       title: "Delivered",
-      body: ""
+      body: "Your order has been delivered"
     },
     [Language.ES]: {
-      title: "Delivered",
-      body: ""
+      title: "Entregado",
+      body: "Tu pedido ha sido entregado"
     }
   },
   [DeliveryOrderStatus.CancelledByCustomer]: {

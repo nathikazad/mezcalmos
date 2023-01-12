@@ -54,6 +54,18 @@ select_permissions:
         user_id:
           _eq: X-Hasura-User-Id
       limit: 1
+  - role: delivery_driver
+    permission:
+      columns:
+        - user_id
+        - stripe_info
+        - app_version
+        - service_provider_type
+      filter:
+        deliveries:
+          delivery_driver:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: restaurant_operator
     permission:
       columns:

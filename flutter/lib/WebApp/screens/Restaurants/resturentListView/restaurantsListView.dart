@@ -70,10 +70,6 @@ class _RestaurantsListViewState extends State<RestaurantsListView> {
       return setupFirebase(
           launchMode: typeMode.toLaunchMode(),
           func: () {
-            Get.put<RestaurantsInfoController>(
-              RestaurantsInfoController(),
-              permanent: true,
-            );
             //  Get.put<ListRestaurantsController>(ListRestaurantsController());
           });
     }, Duration(milliseconds: 500))

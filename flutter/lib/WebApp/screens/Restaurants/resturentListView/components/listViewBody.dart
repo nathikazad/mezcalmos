@@ -205,7 +205,7 @@ class _ListRestauBodyState extends State<ListRestauBody> {
               itemCount: widget.viewController.filteredRestaurants.length,
               itemBuilder: (BuildContext context, int index) {
                 return RestaurantCardForDesktopAndTablet(
-                  shippingPrice: widget.viewController.baseShippingPrice,
+                  shippingPrice: 50,
                   onClick: () {
                     QR.to(
                       "/restaurants/${widget.viewController.filteredRestaurants[index].info.hasuraId}${getLangParam()}",
@@ -227,7 +227,7 @@ class _ListRestauBodyState extends State<ListRestauBody> {
               itemBuilder: (context, index) {
                 return RestaurantCardForMobile(
                   restaurant: widget.viewController.filteredRestaurants[index],
-                  shippingPrice: widget.viewController.baseShippingPrice,
+                  shippingPrice: 50,
                   onClick: () {
                     QR.to(
                       "/restaurants/${widget.viewController.filteredRestaurants[index].info.hasuraId}${getLangParam()}",

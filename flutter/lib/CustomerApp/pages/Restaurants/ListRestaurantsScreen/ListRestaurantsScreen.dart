@@ -7,11 +7,11 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreen/co
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreen/components/SearchItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreen/controllers/ListRestaurantController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ListRestaurantsScreen"]["ListRestaurantScreen"];
@@ -239,13 +239,17 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
               (int index) {
             return RestaurantCard(
               restaurant: viewController.filteredRestaurants[index],
-              shippingPrice: viewController.baseShippingPrice,
+              shippingPrice: viewController
+                      .filteredRestaurants[index].deliveryCost?.minimumCost ??
+                  50,
               onClick: () {
                 MezRouter.toNamed<void>(
-                  getRestaurantRoute(
-                      viewController.filteredRestaurants[index].info.hasuraId),
-                  arguments: viewController.filteredRestaurants[index],
-                );
+                    getRestaurantRoute(
+                      viewController.filteredRestaurants[index].info.hasuraId,
+                    ),
+                    arguments: {
+                      "restaurant": viewController.filteredRestaurants[index]
+                    });
               },
             );
           }),

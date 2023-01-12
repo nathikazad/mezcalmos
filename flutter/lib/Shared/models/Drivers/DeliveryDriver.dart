@@ -54,7 +54,7 @@ class DeliveryDriver {
   DeliveryDriverUserInfo driverInfo;
   LatLng? driverLocation;
   DateTime? lastLocationUpdateTime;
-  String deliveryDriverId;
+  int deliveryDriverId;
 
   DeliveryDriver({
     required this.deliveryDriverState,
@@ -86,7 +86,7 @@ class DeliveryDriver {
             : DateTime.parse(deliveryDriverData['location']['lastUpdateTime']);
 
     return DeliveryDriver(
-      deliveryDriverId: deliveryDriverId,
+      deliveryDriverId: int.parse(deliveryDriverId),
       deliveryDriverState: deliveryDriverState,
       driverLocation: driverLocation,
       lastLocationUpdateTime: lastLocationUpdateTime,
@@ -189,7 +189,7 @@ class DeliveryDriverUserInfo extends UserInfo {
 
 // ignore: constant_identifier_names
 // this is to distinguish between pick up and drop off driver
-enum DeliveryDriverType { Restaurant, Delivery_driver }
+enum DeliveryDriverType { Restaurant_operator, Delivery_driver }
 
 // this is to distinguish between which action the driver is doing
 // for example dropoff driver is picking up order from restaurant
