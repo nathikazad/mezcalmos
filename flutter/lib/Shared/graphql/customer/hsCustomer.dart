@@ -14,7 +14,7 @@ import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 final GraphQLClient _graphClient = Get.find<HasuraDb>().graphQLClient;
 
 Future<Customer?> get_customer({required int user_id}) async {
-  QueryResult<Query$get_customer_info> cus_info =
+  final QueryResult<Query$get_customer_info> cusInfo =
       await _graphClient.query$get_customer_info(
     Options$Query$get_customer_info(
       fetchPolicy: FetchPolicy.noCache,
@@ -22,27 +22,29 @@ Future<Customer?> get_customer({required int user_id}) async {
     ),
   );
 
-  if (cus_info.hasException) {
+  if (cusInfo.hasException) {
     mezDbgPrint(
-        "[tt] Called :: get_customer_info :: exception :: ${cus_info.exception}");
+        "[tt] Called :: get_customer_info :: exception :: ${cusInfo.exception}");
   }
 
   final List<Query$get_customer_info$customer>? _cus =
-      cus_info.parsedData?.customer;
+      cusInfo.parsedData?.customer;
 
   if (_cus != null && _cus.isNotEmpty) {
     mezDbgPrint(
         "[tt] Called :: get_customer_info :: SUCCESS :: got_customer(${_cus[0].user.name})");
 
-    final Customer _returned_cus = Customer(
+    final Customer ReturnedCus = Customer(
       appVersion: _cus[0].app_version,
       notificationInfo: _cus[0].notification_token,
     );
 
     // Adding Saved Locations!
-    _cus[0].saved_locations.forEach((sLocation) {
+    _cus[0]
+        .saved_locations
+        .forEach((Query$get_customer_info$customer$saved_locations sLocation) {
       mezDbgPrint("[tt] Found new Saved Location ==> ${sLocation.id}");
-      _returned_cus.addSavedLocation(
+      ReturnedCus.addSavedLocation(
         SavedLocation(
           name: sLocation.name,
           id: sLocation.id,
@@ -57,7 +59,7 @@ Future<Customer?> get_customer({required int user_id}) async {
 
     // TODO : ADD Saved Credit Cards.
 
-    return _returned_cus;
+    return ReturnedCus;
   } else {
     mezDbgPrint("[tt] No such customer exists :: id($user_id)");
   }
@@ -117,17 +119,17 @@ Future set_notification_token(
     ),
   );
 
-  if (_res.hasException) {
-    mezDbgPrint(
-        "[tt] Called :: set_notification_token :: exception :: ${_res.exception}");
+  if (_res.parsedData?.update_notification_info == null) {
+    throw Exception(
+        " 🛑🛑🛑🛑🛑 set_notification_token :: exception :: ${_res.exception}");
   } else {
-    mezDbgPrint("[tt] Called :: set_notification_token :: SUCCESS");
+    mezDbgPrint(" ✅✅✅✅✅ update notif token success");
   }
 }
 
 Future<List<RestaurantOrder>> get_customer_orders(
     {required int customer_id}) async {
-  List<RestaurantOrder> _ret = [];
+  final List<RestaurantOrder> _ret = [];
 
   final QueryResult<Query$get_customer_orders> _res =
       await _graphClient.query$get_customer_orders(
@@ -143,7 +145,7 @@ Future<List<RestaurantOrder>> get_customer_orders(
   } else {
     mezDbgPrint("[tt] Called :: get_customer_orders :: SUCCESS");
 
-    List<Query$get_customer_orders$restaurant_order>? _orders =
+    final List<Query$get_customer_orders$restaurant_order>? _orders =
         _res.parsedData?.restaurant_order;
     if (_orders != null) {
       mezDbgPrint(
@@ -151,7 +153,8 @@ Future<List<RestaurantOrder>> get_customer_orders(
 
       _orders.forEach((Query$get_customer_orders$restaurant_order _o) {
         num _itemsCost = 0;
-        _o.items.forEach((item) {
+        _o.items
+            .forEach((Query$get_customer_orders$restaurant_order$items item) {
           _itemsCost += (item.cost_per_one * item.quantity);
         });
         _ret.add(

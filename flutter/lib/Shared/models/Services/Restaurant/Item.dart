@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
@@ -10,8 +9,10 @@ class Item {
   int? id;
   int? nameId;
   int? descriptionId;
+  int? restaurantId;
   int? categoryId;
   bool available;
+  String? restaurantName;
   ItemType itemType;
   LanguageMap? description;
 
@@ -20,7 +21,7 @@ class Item {
   num cost = 0;
   List<Option> options;
   Category? category;
-  Restaurant? restaurant;
+
   String? linkUrl;
   DateTime? startsAt;
   DateTime? endsAt;
@@ -35,11 +36,13 @@ class Item {
       {this.id,
       this.nameId,
       this.descriptionId,
+      this.restaurantId,
       this.available = false,
       this.description,
       this.image,
       this.startsAt,
       this.categoryId,
+      this.restaurantName,
       this.endsAt,
       List<Option>? newOptions,
       required this.name,
@@ -178,7 +181,6 @@ class Item {
         cost.hashCode ^
         options.hashCode ^
         category.hashCode ^
-        restaurant.hashCode ^
         linkUrl.hashCode ^
         position.hashCode;
   }

@@ -14,13 +14,12 @@ dynamic _i18n() =>
 class OrderSummaryCard extends StatelessWidget {
   const OrderSummaryCard({
     Key? key,
-    required this.setLocationCallBack,
     required this.controller,
     this.serviceLoc,
   }) : super(key: key);
 
   final Location? serviceLoc;
-  final void Function({Location? location})? setLocationCallBack;
+
   final RestaurantController controller;
 
   @override

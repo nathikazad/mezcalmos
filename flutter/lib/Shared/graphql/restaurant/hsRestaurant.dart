@@ -23,57 +23,51 @@ HasuraDb _db = Get.find<HasuraDb>();
 // Get single restuarant //
 // ignore: non_constant_identifier_names
 
-Future<List<Restaurant>> fetch_restaurants() async {
-  mezDbgPrint("[77] fetch_restaurants !");
+Future<List<Restaurant>> fetch_restaurants({required bool withCache}) async {
+  final List<Restaurant> _restaurants = <Restaurant>[];
 
-  final List<Restaurant> _restaus = <Restaurant>[];
+  final QueryResult<Query$getRestaurants> response = await _db.graphQLClient
+      .query$getRestaurants(Options$Query$getRestaurants(
+          fetchPolicy: withCache
+              ? FetchPolicy.cacheAndNetwork
+              : FetchPolicy.networkOnly));
 
-  final QueryResult<Query$getRestaurants> response =
-      await _db.graphQLClient.query$getRestaurants();
-  if (response.hasException) {
-    mezDbgPrint(
-        "[777] fetch_restaurants :: exception :: ${response.exception}!");
-  } else
-    mezDbgPrint("rESTAUS ===> ${response.data}");
-  response.parsedData?.restaurant
-      .forEach((Query$getRestaurants$restaurant data) async {
-    _restaus.add(Restaurant(
-        userInfo: ServiceInfo(
-            hasuraId: data.id,
-            image: data.image,
-            description: (data.description?.translations != null)
-                ? {
-                    data.description!.translations.first.language_id
-                            .toLanguageType():
-                        data.description!.translations.first.value,
-                    data.description!.translations[1].language_id
-                            .toLanguageType():
-                        data.description!.translations[1].value,
-                  }
-                : null,
-            firebaseId: data.firebase_id,
-            name: data.name,
-            descriptionId: data.description_id,
-            //   descriptionId: data.d,
-            location:
-                Location.fromHasura(data.location_gps, data.location_text)),
-
-        // {
-        //   data.description!.translations.first.language_id.toLanguageType():
-        //       data.description!.translations.first.value,
-        //   data.description!.translations[1].language_id.toLanguageType():
-        //       data.description!.translations[1].value,
-        // },
-        schedule:
-            data.schedule != null ? Schedule.fromData(data.schedule) : null,
-        paymentInfo: PaymentInfo(),
-        restaurantState:
-            ServiceState(data.open_status.toServiceStatus(), data.approved),
-        primaryLanguage: data.language_id.toString().toLanguageType(),
-        secondaryLanguage:
-            data.language_id.toString().toLanguageType().toOpLang()));
-  });
-  return _restaus;
+  if (response.parsedData != null) {
+    response.parsedData?.restaurant
+        .forEach((Query$getRestaurants$restaurant data) async {
+      _restaurants.add(Restaurant(
+          userInfo: ServiceInfo(
+              hasuraId: data.id,
+              image: data.image,
+              description: (data.description?.translations != null)
+                  ? {
+                      data.description!.translations.first.language_id
+                              .toLanguageType():
+                          data.description!.translations.first.value,
+                      data.description!.translations[1].language_id
+                              .toLanguageType():
+                          data.description!.translations[1].value,
+                    }
+                  : null,
+              firebaseId: data.firebase_id,
+              name: data.name,
+              descriptionId: data.description_id,
+              location:
+                  Location.fromHasura(data.location_gps, data.location_text)),
+          schedule:
+              data.schedule != null ? Schedule.fromData(data.schedule) : null,
+          paymentInfo: PaymentInfo(),
+          restaurantState:
+              ServiceState(data.open_status.toServiceStatus(), data.approved),
+          primaryLanguage: data.language_id.toString().toLanguageType(),
+          secondaryLanguage:
+              data.language_id.toString().toLanguageType().toOpLang()));
+    });
+    return _restaurants;
+  } else {
+    throw Exception(
+        "🛑🛑🛑 Get restaurants exceptions 🛑🛑🛑 \n ${response.exception} ");
+  }
 }
 
 Future<List<Item>> fetch_restaurant_items({required int restaurant_id}) async {

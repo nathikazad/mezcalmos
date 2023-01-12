@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -10,7 +9,6 @@ import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/models/Utilities/DeliveryMode.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
@@ -37,7 +35,6 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
 
   @override
   void dispose() {
-    Get.delete<RestaurantInfoController>(force: true);
     super.dispose();
   }
 
@@ -48,9 +45,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
       child: Container(
           width: double.infinity,
           padding: const EdgeInsets.all(8),
-          child: (widget.order.dropoffDriver != null &&
-                  widget.order.deliveryMode !=
-                      DeliveryMode.SelfDeliveryByRestaurant)
+          child: (widget.order.dropoffDriver != null)
               ? Row(children: [
                   Stack(
                     clipBehavior: Clip.none,
@@ -98,17 +93,21 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                     ),
                   ),
                   if (widget.order.inProcess() &&
-                      widget.order.dropoffDriver != null &&
-                      widget.order.selfDelivery)
+                      widget.order.dropoffDriver != null)
                     MezIconButton(
-                      onTap: () {
-                        // MezRouter.toNamed(getROpPickDriverRoute(
-                        //     orderId: widget.order.orderId));
+                      onTap: () async {
+                        final bool? forwardToMezCalmos =
+                            await MezRouter.toNamed(getROpPickDriverRoute(
+                                serviceProviderId: widget.order.restaurantId,
+                                orderId:
+                                    widget.order.deliveryOrderId!)) as bool?;
+                        if (forwardToMezCalmos != null &&
+                            forwardToMezCalmos == false) {
+                          showSet.value = false;
+                        }
                       },
                       icon: Icons.edit,
                     ),
-                  // TODO handle @m66are handle message btn
-
                   if (widget.order.serviceProviderDropOffDriverChatId != null)
                     MessageButton(
                       onTap: () {
@@ -118,10 +117,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                             recipientType: ParticipantType.DeliveryDriver,
                             orderId: widget.order.orderId));
                       },
-                      // showRedDot: Get.find<ROpOrderController>()
-                      //     .hasNewMessageNotification(widget
-                      //         .order.serviceProviderDropOffDriverChatId!
-                      //         .toString()),
+                      chatId: widget.order.serviceProviderDropOffDriverChatId!,
                     ),
                 ])
               : (widget.order.selfDelivery)
@@ -252,7 +248,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                   final bool? forwardToMezCalmos = await MezRouter.toNamed(
                       getROpPickDriverRoute(
                           serviceProviderId: widget.order.restaurantId,
-                          orderId: widget.order.orderId)) as bool?;
+                          orderId: widget.order.deliveryOrderId!)) as bool?;
                   if (forwardToMezCalmos != null &&
                       forwardToMezCalmos == false) {
                     showSet.value = false;

@@ -22,7 +22,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
   let response = await chain.mutation({
     insert_restaurant_order_one: [{
       object: {
-       
+       scheduled_time: restaurantOrder.scheduledTime,
         customer_id: restaurantOrder.customerId,
         restaurant_id: restaurantOrder.restaurantId,
         customer_app_type: restaurantOrder.customerAppType,
@@ -55,6 +55,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
               "coordinates": [restaurant.location.lng, restaurant.location.lat ],
             }),
             pickup_address: restaurant.location.address,
+            schedule_time: restaurantOrder.scheduledTime,
             chat_with_customer: {
               data: {
                 chat_participants: {
@@ -78,6 +79,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
             status: DeliveryOrderStatus.OrderReceived,
             service_provider_id: restaurantOrder.restaurantId,
             service_provider_type: "restaurant",
+            
             scheduled_time: restaurantOrder.scheduledTime,
             trip_distance: checkoutReq.tripDistance,
             trip_duration: checkoutReq.tripDuration,
@@ -140,14 +142,17 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
     orderType: OrderType.Restaurant,
     pickupLocation: restaurant.location,
     dropoffLocation: restaurantOrder.toLocation,
+    
     chatWithServiceProviderId: response.insert_restaurant_order_one.delivery.chat_with_service_provider_id,
     chatWithCustomerId: response.insert_restaurant_order_one.delivery.chat_with_customer_id,
     paymentType: restaurantOrder.paymentType,
     status: DeliveryOrderStatus.OrderReceived,
     customerId: restaurantOrder.customerId,
+    
     deliveryCost: restaurantOrder.deliveryCost,
     packageCost: restaurantOrder.paymentType == "cash" ? response.insert_restaurant_order_one.items_cost : 0,
     orderTime: response.insert_restaurant_order_one.order_time,
+    
     tripDistance : checkoutReq.tripDistance,
     tripDuration : checkoutReq.tripDuration,
     tripPolyline : checkoutReq.tripPolyline,

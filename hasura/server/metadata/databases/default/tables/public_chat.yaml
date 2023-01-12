@@ -22,6 +22,18 @@ select_permissions:
           user:
             id:
               _eq: X-Hasura-User-Id
+  - role: delivery_driver
+    permission:
+      columns:
+        - id
+        - chat_info
+        - messages
+        - creation_time
+      filter:
+        chat_participants:
+          user:
+            id:
+              _eq: X-Hasura-User-Id
   - role: mez_admin
     permission:
       columns:
@@ -37,6 +49,7 @@ select_permissions:
     permission:
       columns:
         - chat_info
+        - creation_time
         - id
         - messages
       filter:

@@ -21,12 +21,13 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
         status: true,
         customer_id: true,
         delivery_cost: true,
+        service_provider_type: true,
+        service_provider_id : true,
         package_cost: true,
         order_time: true,
         delivery_driver_type: true,
         delivery_driver_id: true,
-        service_provider_type: true,
-        service_provider_id: true,
+       
         order_type: true,
         delivery_driver: {
           id: true,
@@ -58,6 +59,8 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
   }
   let delivery: DeliveryOrder = {
     deliveryId: deliveryId,
+    serviceProviderId : response.delivery_order_by_pk.service_provider_id,
+    serviceProviderType: response.delivery_order_by_pk.service_provider_type as ServiceProviderType,
     orderType: response.delivery_order_by_pk.order_type as OrderType,
     pickupLocation: {
       lat: response.delivery_order_by_pk.pickup_gps.coordinates[1],

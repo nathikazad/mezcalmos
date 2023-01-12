@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -10,6 +11,8 @@ import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.d
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/chatNodes.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/graphql/chat/hsChat.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
@@ -60,7 +63,7 @@ class MessageController extends GetxController {
       if (value != null) {
         mezDbgPrint("[77] Got Chat !");
         chat.value = value;
-      
+
         if (onValueCallBack != null) onValueCallBack();
       }
 
@@ -95,12 +98,12 @@ class MessageController extends GetxController {
     required String message,
     required int chatId,
     // OrderType? orderType,
-    // String? orderId,
+    // int? orderId,
   }) async {
-    // final DatabaseReference messageNode = _databaseHelper.firebaseDatabase
-    //     .ref()
-    //     .child(messagesNode(chatId))
-    //     .push();
+    final DatabaseReference messageNode = _databaseHelper.firebaseDatabase
+        .ref()
+        .child(messagesNode(chatId.toString()))
+        .push();
 
     // messages => _append => messages
     //TODO: write to hasura messages
@@ -126,18 +129,17 @@ class MessageController extends GetxController {
     });
 
     // ignore: unawaited_futures
-    // _databaseHelper.firebaseDatabase
-    //     .ref()
-    //     .child(notificationQueueNode(messageNode.key))
-    //     .set(MessageNotificationForQueue(
-    //             message: message,
-    //             userId: FirebaseAuth.instance.currentUser!.uid,
-    //             chatId: chatId,
-    //             messageId: messageNode.key!,
-    //             participantType:
-    //                 _settingsController.appType.toParticipantTypefromAppType(),
-    //             orderId: orderId)
-    //         .toFirebaseFormatJson());
+    _databaseHelper.firebaseDatabase
+        .ref()
+        .child(notificationQueueNode(messageNode.key))
+        .set(MessageNotificationForQueue(
+          message: message,
+          userId: Get.find<AuthController>().hasuraUserId!,
+          chatId: chatId.toString(),
+          messageId: messageNode.key!,
+          participantType:
+              _settingsController.appType.toParticipantTypefromAppType(),
+        ).toFirebaseFormatJson());
   }
 
   Future<void> callUser(

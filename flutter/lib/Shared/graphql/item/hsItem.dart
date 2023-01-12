@@ -261,3 +261,35 @@ List<Choice> _convertChoices(
   }).toList();
   return choices;
 }
+
+Future<List<Item>> search_items(
+    {required List<int> servicesIds,
+    required String keyword,
+    required LanguageType lang,
+    bool withCache = true}) async {
+  final QueryResult<Query$searchItems> response =
+      await _db.graphQLClient.query$searchItems(Options$Query$searchItems(
+          variables: Variables$Query$searchItems(
+    keyword: "%$keyword%",
+    languageId: lang.toFirebaseFormatString(),
+    servicesIds: servicesIds,
+  )));
+
+  if (response.parsedData?.restaurant_item == null) {
+    throw Exception(
+        "🚨🚨🚨 Hasura get restaurant items no cat querry exception =>${response.exception}");
+  } else {
+    return response.parsedData!.restaurant_item
+        .map((Query$searchItems$restaurant_item item) {
+      return Item(
+          name: toLanguageMap(translations: item.name.translations),
+          itemType: item.item_type.toItemType(),
+          id: item.id,
+          restaurantName: item.restaurant?.name,
+          restaurantId: item.restaurant_id,
+          image: item.image,
+          available: item.available,
+          cost: item.cost);
+    }).toList();
+  }
+}

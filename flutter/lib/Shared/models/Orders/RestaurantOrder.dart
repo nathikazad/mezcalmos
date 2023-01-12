@@ -52,6 +52,7 @@ class RestaurantOrder extends DeliverableOrder {
   ServiceInfo get restaurant => serviceProvider! as ServiceInfo;
   DateTime? estimatedFoodReadyTime;
   DateTime? deliveryTime;
+  DateTime? scheduledTime;
   Review? review;
   DeliveryMode deliveryMode;
   SelfDeliveryDetails? selfDeliveryDetails;
@@ -72,6 +73,7 @@ class RestaurantOrder extends DeliverableOrder {
       this.estimatedFoodReadyTime,
       super.dropoffDriver,
       this.deliveryTime,
+      this.scheduledTime,
       this.deliveryOrderId,
       this.review,
       int? dropOffDriverChatId,

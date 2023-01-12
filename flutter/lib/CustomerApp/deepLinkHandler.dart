@@ -4,8 +4,8 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
-import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 
@@ -66,8 +66,7 @@ class DeepLinkHandler {
     switch (providerType) {
       case CustomerDeepLinkType.Restaurant:
         mezDbgPrint("@deepLink@ ===> handling restaurant routing ! ");
-        final Restaurant? _rest = await Get.find<RestaurantsInfoController>()
-            .getRestaurant(providerId);
+        final Restaurant? _rest = await get_restaurant_by_id(id: providerId);
         if (_rest != null) {
           Future<void>.delayed(
             Duration.zero,

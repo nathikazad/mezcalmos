@@ -33,15 +33,13 @@ mutation deleteItem($itemId: Int!) {
     id
   }
 }
-mutation upadateItem($id: Int!,$itemData: restaurant_item_set_input!) {
-  update_restaurant_item_by_pk(pk_columns: {id: $id},_set : $itemData) {
+mutation upadateItem($id: Int!, $itemData: restaurant_item_set_input!) {
+  update_restaurant_item_by_pk(pk_columns: { id: $id }, _set: $itemData) {
     id
   }
 }
 
-
-
-#  QUERIES 
+#  QUERIES
 query getItemById($id: Int!) {
   restaurant_item_by_pk(id: $id) {
     id
@@ -104,7 +102,12 @@ query getItemById($id: Int!) {
   }
 }
 query getRestaurantItemsWithoutCat($restaurantId: Int) {
-  restaurant_item(where: {restaurant_id: {_eq: $restaurantId}, category_id: {_is_null: true}}) {
+  restaurant_item(
+    where: {
+      restaurant_id: { _eq: $restaurantId }
+      category_id: { _is_null: true }
+    }
+  ) {
     id
     image
     available
@@ -119,7 +122,12 @@ query getRestaurantItemsWithoutCat($restaurantId: Int) {
   }
 }
 query getRestaurantSpecialItems($restaurantId: Int) {
-  restaurant_item(where: {restaurant_id: {_eq: $restaurantId}, item_type: {_eq: "special"}}) {
+  restaurant_item(
+    where: {
+      restaurant_id: { _eq: $restaurantId }
+      item_type: { _eq: "special" }
+    }
+  ) {
     id
     image
     available
@@ -131,6 +139,81 @@ query getRestaurantSpecialItems($restaurantId: Int) {
       translations {
         language_id
         value
+      }
+    }
+  }
+}
+query searchItems($servicesIds: [Int!], $languageId: String, $keyword: String) {
+  restaurant_item(
+    where: {
+      _or: [
+        {
+          _and: {
+            restaurant_id: { _in: $servicesIds }
+            category: {
+              name: {
+                translations: {
+                  _and: {
+                    language_id: { _eq: $languageId }
+                    value: { _ilike: $keyword }
+                  }
+                }
+              }
+            }
+          }
+        }
+        {
+          _and: {
+            restaurant_id: { _in: $servicesIds }
+            name: {
+              translations: {
+                _and: {
+                  language_id: { _eq: $languageId }
+                  value: { _ilike: $keyword }
+                }
+              }
+            }
+          }
+        }
+        {
+          _and: {
+            restaurant_id: { _in: $servicesIds }
+            options: {
+              item_options: {
+                choices: {
+                  option_choices: {
+                    name: {
+                      translations: {
+                        _and: {
+                          language_id: { _eq: "en" }
+                          value: { _ilike: $keyword }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ) {
+    image
+    available
+    cost
+    item_type
+    restaurant_id
+    restaurant {
+      name
+    }
+    id
+    name {
+      service_provider_id
+      translations(where: { language_id: { _eq: $languageId } }) {
+        value
+        language_id
+        translation_id
       }
     }
   }
