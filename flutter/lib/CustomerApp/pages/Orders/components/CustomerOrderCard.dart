@@ -42,7 +42,7 @@ class CustomerOrderCard extends StatelessWidget {
               QR.navigator.replaceAll("/orders/${order.orderId}");
               // QR.toName("orders/${order.orderId}");
             } else {
-              //handleRouting(order);
+              // handleRouting(order);
             }
           },
           primaryBodyContent: _getRightBody(),

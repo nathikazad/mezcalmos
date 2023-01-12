@@ -15,6 +15,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/componen
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
@@ -102,41 +103,67 @@ class _OrderViewScreenFordesktopState extends State<OrderViewScreenFordesktop> {
     super.initState();
     _itializeController();
 
-    final String orderId = QR.params['orderId'].toString();
-
-    if (QR.params['orderId'].toString() == null || orderId.isEmpty) QR.back();
-
+    mezDbgPrint("[=] ViewRestaurantOrderScreeen params :: ${Get.parameters}");
+    final int orderId = int.parse(QR.params['orderId'].toString());
+    mezDbgPrint("+orderId ==> $orderId");
+    if (QR.params['orderId'] == null) QR.back();
     // orderId = Get.parameters['orderId']!;
-    controller.clearOrderNotifications(int.parse(orderId));
-    order.value = controller.getOrder(int.parse(orderId)) as RestaurantOrder?;
+    controller.clearOrderNotifications(orderId);
+    order.value = controller.getOrder(orderId) as RestaurantOrder?;
+    mezDbgPrint("Got Order ===> ${order.value?.orderId}");
+    // order.value = listen_on_restaurant_order(order_id: order_id, cus_id: cus_id).first;
     if (order.value != null) {
       initMap();
       updateMapIfDeliveryPhase(order.value!.status);
     }
 
-    _orderListener = controller
-        .getOrderStream(int.parse(orderId))
-        .listen((Order? newOrderEvent) {
-      if (newOrderEvent != null) {
-        order.value = newOrderEvent as RestaurantOrder?;
+    mezDbgPrint("Listening on + OrderId ($orderId)");
+    _orderListener = listen_on_restaurant_order_by_id(orderId: orderId)
+        .listen((RestaurantOrder? _order) {
+      mezDbgPrint(
+          "[+] listen_on_restaurant_order Trigger ===> ${_order?.orderId}");
+
+      if (_order != null) {
+        order.value = _order;
         if (order.value!.inProcess()) {
           updateMapIfDeliveryPhase(order.value!.status);
         }
       }
     });
 
-    waitForOrderIfNotLoaded().then((void value) {
-      if (order.value == null) {
-        // ignore: inference_failure_on_function_invocation
-        Future<void>.delayed(Duration.zero, () {
-          Get.back<void>();
-          MezSnackbar("Error", "Order does not exist");
-        });
-      } else {
-        initMap();
-        updateMapIfDeliveryPhase(order.value!.status);
-      }
-    });
+    // if (QR.params['orderId'].toString() == null || orderId.isEmpty) QR.back();
+
+    // // orderId = Get.parameters['orderId']!;
+    // controller.clearOrderNotifications(int.parse(orderId));
+    // order.value = controller.getOrder(int.parse(orderId)) as RestaurantOrder?;
+    // if (order.value != null) {
+    //   initMap();
+    //   updateMapIfDeliveryPhase(order.value!.status);
+    // }
+
+    // _orderListener = controller
+    //     .getOrderStream(int.parse(orderId))
+    //     .listen((Order? newOrderEvent) {
+    //   if (newOrderEvent != null) {
+    //     order.value = newOrderEvent as RestaurantOrder?;
+    //     if (order.value!.inProcess()) {
+    //       updateMapIfDeliveryPhase(order.value!.status);
+    //     }
+    //   }
+    // });
+
+    // waitForOrderIfNotLoaded().then((void value) {
+    //   if (order.value == null) {
+    //     // ignore: inference_failure_on_function_invocation
+    //     Future<void>.delayed(Duration.zero, () {
+    //       Get.back<void>();
+    //       MezSnackbar("Error", "Order does not exist");
+    //     });
+    //   } else {
+    //     initMap();
+    //     updateMapIfDeliveryPhase(order.value!.status);
+    //   }
+    // });
     super.initState();
   }
 
