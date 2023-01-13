@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
@@ -297,24 +298,24 @@ String extractPaymentIdFromIntent(String a) {
 }
 
 Future<ServerResponse> onboardServiceProvider(
-    String serviceProviderId, OrderType orderType) async {
+    int serviceProviderId, ServiceProviderType orderType) async {
   return serviceProviderFunctions(
       "setupServiceProvider", serviceProviderId, orderType);
 }
 
 Future<ServerResponse> updateServiceProvider(
-    String serviceProviderId, OrderType orderType) async {
+    int serviceProviderId, ServiceProviderType orderType) async {
   return serviceProviderFunctions(
       "updateServiceProvider", serviceProviderId, orderType);
 }
 
-Future<ServerResponse> serviceProviderFunctions(
-    String functionName, String serviceProviderId, OrderType orderType) async {
+Future<ServerResponse> serviceProviderFunctions(String functionName,
+    int serviceProviderId, ServiceProviderType orderType) async {
   final HttpsCallable cloudFunction =
       FirebaseFunctions.instance.httpsCallable('stripe-$functionName');
   try {
     final HttpsCallableResult response = await cloudFunction.call({
-      "serviceProviderId": serviceProviderId,
+      "serviceProviderId": "$serviceProviderId",
       "orderType": orderType.toFirebaseFormatString(),
       "redirectUrl": "https://example.com/redirect"
     });

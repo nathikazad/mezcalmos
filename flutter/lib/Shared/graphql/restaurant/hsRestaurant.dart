@@ -165,8 +165,10 @@ Future<Restaurant?> get_restaurant_by_id(
                   Location.fromHasura(data.location_gps, data.location_text)),
           schedule:
               data.schedule != null ? Schedule.fromData(data.schedule) : null,
-          // schedule: Schedule(openHours: {}),
-          paymentInfo: PaymentInfo(),
+          paymentInfo: PaymentInfo(
+              acceptedPayments:
+                  parseAcceptedPayments(data.accepted_payments),
+              stripe: parseServiceStripeInfo(data.stripe_info)),
           selfDelivery: data.self_delivery,
           restaurantState:
               ServiceState(data.open_status.toServiceStatus(), data.approved),
@@ -442,4 +444,37 @@ Future<ServiceStatus> update_restaurant_status(
         response.parsedData!.update_restaurant_by_pk!;
     return data.open_status.toServiceStatus();
   }
+}
+
+// Future<PaymentInfo?> get_restaurant_payment_info({required int serviceProviderId})async{
+//   var res = await _db.graphQLClient.
+
+// }
+
+// helpers //
+Map<PaymentType, bool> parseAcceptedPayments(data) {
+  final Map<PaymentType, bool> result = {};
+  data.forEach((String key, data) {
+    result[key.toPaymentType()] = data;
+  });
+  return result;
+}
+
+StripeInfo? parseServiceStripeInfo(data) {
+  StripeInfo? stripe;
+
+  final List<String> requis = [];
+  data["requirements"]?.forEach((req) {
+    requis.add(req.toString());
+  });
+  stripe = StripeInfo(
+      id: data["id"],
+      status: data["status"].toString().toStripeStatus(),
+      payoutsEnabled: data["payoutsEnabled"] ?? false,
+      detailsSubmitted: data["detailsSubmitted"] ?? false,
+      chargesEnabled: data["chargesEnabled"] ?? false,
+      chargeFeesOnCustomer: data["chargeFeesOnCustomer"] ?? true,
+      email: data["email"],
+      requirements: requis);
+  return stripe;
 }

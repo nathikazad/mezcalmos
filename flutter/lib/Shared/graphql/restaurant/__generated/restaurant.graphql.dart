@@ -2234,6 +2234,20 @@ const documentNodeQuerygetOneRestaurant = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'accepted_payments'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'stripe_info'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'name'),
             alias: null,
             arguments: [],
@@ -2436,6 +2450,8 @@ class Query$getOneRestaurant$restaurant_by_pk {
     required this.location_gps,
     required this.location_text,
     required this.self_delivery,
+    this.accepted_payments,
+    this.stripe_info,
     required this.name,
     this.description,
     required this.approved,
@@ -2454,6 +2470,8 @@ class Query$getOneRestaurant$restaurant_by_pk {
     final l$location_gps = json['location_gps'];
     final l$location_text = json['location_text'];
     final l$self_delivery = json['self_delivery'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$stripe_info = json['stripe_info'];
     final l$name = json['name'];
     final l$description = json['description'];
     final l$approved = json['approved'];
@@ -2469,6 +2487,9 @@ class Query$getOneRestaurant$restaurant_by_pk {
       location_gps: geographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
       self_delivery: (l$self_delivery as bool),
+      accepted_payments:
+          l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
+      stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       name: (l$name as String),
       description: l$description == null
           ? null
@@ -2496,6 +2517,10 @@ class Query$getOneRestaurant$restaurant_by_pk {
   final String location_text;
 
   final bool self_delivery;
+
+  final dynamic? accepted_payments;
+
+  final dynamic? stripe_info;
 
   final String name;
 
@@ -2527,6 +2552,12 @@ class Query$getOneRestaurant$restaurant_by_pk {
     _resultData['location_text'] = l$location_text;
     final l$self_delivery = self_delivery;
     _resultData['self_delivery'] = l$self_delivery;
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] =
+        l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
+    final l$stripe_info = stripe_info;
+    _resultData['stripe_info'] =
+        l$stripe_info == null ? null : mapToJson(l$stripe_info);
     final l$name = name;
     _resultData['name'] = l$name;
     final l$description = description;
@@ -2552,6 +2583,8 @@ class Query$getOneRestaurant$restaurant_by_pk {
     final l$location_gps = location_gps;
     final l$location_text = location_text;
     final l$self_delivery = self_delivery;
+    final l$accepted_payments = accepted_payments;
+    final l$stripe_info = stripe_info;
     final l$name = name;
     final l$description = description;
     final l$approved = approved;
@@ -2567,6 +2600,8 @@ class Query$getOneRestaurant$restaurant_by_pk {
       l$location_gps,
       l$location_text,
       l$self_delivery,
+      l$accepted_payments,
+      l$stripe_info,
       l$name,
       l$description,
       l$approved,
@@ -2623,6 +2658,16 @@ class Query$getOneRestaurant$restaurant_by_pk {
     final l$self_delivery = self_delivery;
     final lOther$self_delivery = other.self_delivery;
     if (l$self_delivery != lOther$self_delivery) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$stripe_info = stripe_info;
+    final lOther$stripe_info = other.stripe_info;
+    if (l$stripe_info != lOther$stripe_info) {
       return false;
     }
     final l$name = name;
@@ -2687,6 +2732,8 @@ abstract class CopyWith$Query$getOneRestaurant$restaurant_by_pk<TRes> {
     Geography? location_gps,
     String? location_text,
     bool? self_delivery,
+    dynamic? accepted_payments,
+    dynamic? stripe_info,
     String? name,
     Query$getOneRestaurant$restaurant_by_pk$description? description,
     bool? approved,
@@ -2720,6 +2767,8 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_by_pk<TRes>
     Object? location_gps = _undefined,
     Object? location_text = _undefined,
     Object? self_delivery = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? stripe_info = _undefined,
     Object? name = _undefined,
     Object? description = _undefined,
     Object? approved = _undefined,
@@ -2750,6 +2799,12 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_by_pk<TRes>
         self_delivery: self_delivery == _undefined || self_delivery == null
             ? _instance.self_delivery
             : (self_delivery as bool),
+        accepted_payments: accepted_payments == _undefined
+            ? _instance.accepted_payments
+            : (accepted_payments as dynamic?),
+        stripe_info: stripe_info == _undefined
+            ? _instance.stripe_info
+            : (stripe_info as dynamic?),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -2796,6 +2851,8 @@ class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_by_pk<TRes>
     Geography? location_gps,
     String? location_text,
     bool? self_delivery,
+    dynamic? accepted_payments,
+    dynamic? stripe_info,
     String? name,
     Query$getOneRestaurant$restaurant_by_pk$description? description,
     bool? approved,
@@ -4714,6 +4771,566 @@ class _CopyWithStubImpl$Query$getRestaurantAprroved$restaurant_by_pk<TRes>
 
   call({
     bool? approved,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$getRestaurantPaymentInfo {
+  factory Variables$Query$getRestaurantPaymentInfo({required int id}) =>
+      Variables$Query$getRestaurantPaymentInfo._({
+        r'id': id,
+      });
+
+  Variables$Query$getRestaurantPaymentInfo._(this._$data);
+
+  factory Variables$Query$getRestaurantPaymentInfo.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    return Variables$Query$getRestaurantPaymentInfo._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getRestaurantPaymentInfo<
+          Variables$Query$getRestaurantPaymentInfo>
+      get copyWith => CopyWith$Variables$Query$getRestaurantPaymentInfo(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getRestaurantPaymentInfo) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    return Object.hashAll([l$id]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getRestaurantPaymentInfo<TRes> {
+  factory CopyWith$Variables$Query$getRestaurantPaymentInfo(
+    Variables$Query$getRestaurantPaymentInfo instance,
+    TRes Function(Variables$Query$getRestaurantPaymentInfo) then,
+  ) = _CopyWithImpl$Variables$Query$getRestaurantPaymentInfo;
+
+  factory CopyWith$Variables$Query$getRestaurantPaymentInfo.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getRestaurantPaymentInfo;
+
+  TRes call({int? id});
+}
+
+class _CopyWithImpl$Variables$Query$getRestaurantPaymentInfo<TRes>
+    implements CopyWith$Variables$Query$getRestaurantPaymentInfo<TRes> {
+  _CopyWithImpl$Variables$Query$getRestaurantPaymentInfo(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getRestaurantPaymentInfo _instance;
+
+  final TRes Function(Variables$Query$getRestaurantPaymentInfo) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? id = _undefined}) =>
+      _then(Variables$Query$getRestaurantPaymentInfo._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getRestaurantPaymentInfo<TRes>
+    implements CopyWith$Variables$Query$getRestaurantPaymentInfo<TRes> {
+  _CopyWithStubImpl$Variables$Query$getRestaurantPaymentInfo(this._res);
+
+  TRes _res;
+
+  call({int? id}) => _res;
+}
+
+class Query$getRestaurantPaymentInfo {
+  Query$getRestaurantPaymentInfo({
+    this.restaurant_by_pk,
+    required this.$__typename,
+  });
+
+  factory Query$getRestaurantPaymentInfo.fromJson(Map<String, dynamic> json) {
+    final l$restaurant_by_pk = json['restaurant_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Query$getRestaurantPaymentInfo(
+      restaurant_by_pk: l$restaurant_by_pk == null
+          ? null
+          : Query$getRestaurantPaymentInfo$restaurant_by_pk.fromJson(
+              (l$restaurant_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getRestaurantPaymentInfo$restaurant_by_pk? restaurant_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$restaurant_by_pk = restaurant_by_pk;
+    _resultData['restaurant_by_pk'] = l$restaurant_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$restaurant_by_pk = restaurant_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$restaurant_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getRestaurantPaymentInfo) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$restaurant_by_pk = restaurant_by_pk;
+    final lOther$restaurant_by_pk = other.restaurant_by_pk;
+    if (l$restaurant_by_pk != lOther$restaurant_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getRestaurantPaymentInfo
+    on Query$getRestaurantPaymentInfo {
+  CopyWith$Query$getRestaurantPaymentInfo<Query$getRestaurantPaymentInfo>
+      get copyWith => CopyWith$Query$getRestaurantPaymentInfo(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getRestaurantPaymentInfo<TRes> {
+  factory CopyWith$Query$getRestaurantPaymentInfo(
+    Query$getRestaurantPaymentInfo instance,
+    TRes Function(Query$getRestaurantPaymentInfo) then,
+  ) = _CopyWithImpl$Query$getRestaurantPaymentInfo;
+
+  factory CopyWith$Query$getRestaurantPaymentInfo.stub(TRes res) =
+      _CopyWithStubImpl$Query$getRestaurantPaymentInfo;
+
+  TRes call({
+    Query$getRestaurantPaymentInfo$restaurant_by_pk? restaurant_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Query$getRestaurantPaymentInfo$restaurant_by_pk<TRes>
+      get restaurant_by_pk;
+}
+
+class _CopyWithImpl$Query$getRestaurantPaymentInfo<TRes>
+    implements CopyWith$Query$getRestaurantPaymentInfo<TRes> {
+  _CopyWithImpl$Query$getRestaurantPaymentInfo(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getRestaurantPaymentInfo _instance;
+
+  final TRes Function(Query$getRestaurantPaymentInfo) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? restaurant_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getRestaurantPaymentInfo(
+        restaurant_by_pk: restaurant_by_pk == _undefined
+            ? _instance.restaurant_by_pk
+            : (restaurant_by_pk
+                as Query$getRestaurantPaymentInfo$restaurant_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getRestaurantPaymentInfo$restaurant_by_pk<TRes>
+      get restaurant_by_pk {
+    final local$restaurant_by_pk = _instance.restaurant_by_pk;
+    return local$restaurant_by_pk == null
+        ? CopyWith$Query$getRestaurantPaymentInfo$restaurant_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Query$getRestaurantPaymentInfo$restaurant_by_pk(
+            local$restaurant_by_pk, (e) => call(restaurant_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getRestaurantPaymentInfo<TRes>
+    implements CopyWith$Query$getRestaurantPaymentInfo<TRes> {
+  _CopyWithStubImpl$Query$getRestaurantPaymentInfo(this._res);
+
+  TRes _res;
+
+  call({
+    Query$getRestaurantPaymentInfo$restaurant_by_pk? restaurant_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getRestaurantPaymentInfo$restaurant_by_pk<TRes>
+      get restaurant_by_pk =>
+          CopyWith$Query$getRestaurantPaymentInfo$restaurant_by_pk.stub(_res);
+}
+
+const documentNodeQuerygetRestaurantPaymentInfo = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getRestaurantPaymentInfo'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'restaurant_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'id')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'stripe_info'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'accepted_payments'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getRestaurantPaymentInfo _parserFn$Query$getRestaurantPaymentInfo(
+        Map<String, dynamic> data) =>
+    Query$getRestaurantPaymentInfo.fromJson(data);
+
+class Options$Query$getRestaurantPaymentInfo
+    extends graphql.QueryOptions<Query$getRestaurantPaymentInfo> {
+  Options$Query$getRestaurantPaymentInfo({
+    String? operationName,
+    required Variables$Query$getRestaurantPaymentInfo variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetRestaurantPaymentInfo,
+          parserFn: _parserFn$Query$getRestaurantPaymentInfo,
+        );
+}
+
+class WatchOptions$Query$getRestaurantPaymentInfo
+    extends graphql.WatchQueryOptions<Query$getRestaurantPaymentInfo> {
+  WatchOptions$Query$getRestaurantPaymentInfo({
+    String? operationName,
+    required Variables$Query$getRestaurantPaymentInfo variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetRestaurantPaymentInfo,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getRestaurantPaymentInfo,
+        );
+}
+
+class FetchMoreOptions$Query$getRestaurantPaymentInfo
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getRestaurantPaymentInfo({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getRestaurantPaymentInfo variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetRestaurantPaymentInfo,
+        );
+}
+
+extension ClientExtension$Query$getRestaurantPaymentInfo
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getRestaurantPaymentInfo>>
+      query$getRestaurantPaymentInfo(
+              Options$Query$getRestaurantPaymentInfo options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$getRestaurantPaymentInfo>
+      watchQuery$getRestaurantPaymentInfo(
+              WatchOptions$Query$getRestaurantPaymentInfo options) =>
+          this.watchQuery(options);
+  void writeQuery$getRestaurantPaymentInfo({
+    required Query$getRestaurantPaymentInfo data,
+    required Variables$Query$getRestaurantPaymentInfo variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQuerygetRestaurantPaymentInfo),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getRestaurantPaymentInfo? readQuery$getRestaurantPaymentInfo({
+    required Variables$Query$getRestaurantPaymentInfo variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQuerygetRestaurantPaymentInfo),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$getRestaurantPaymentInfo.fromJson(result);
+  }
+}
+
+class Query$getRestaurantPaymentInfo$restaurant_by_pk {
+  Query$getRestaurantPaymentInfo$restaurant_by_pk({
+    this.stripe_info,
+    this.accepted_payments,
+    required this.$__typename,
+  });
+
+  factory Query$getRestaurantPaymentInfo$restaurant_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$stripe_info = json['stripe_info'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$$__typename = json['__typename'];
+    return Query$getRestaurantPaymentInfo$restaurant_by_pk(
+      stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
+      accepted_payments:
+          l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic? stripe_info;
+
+  final dynamic? accepted_payments;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$stripe_info = stripe_info;
+    _resultData['stripe_info'] =
+        l$stripe_info == null ? null : mapToJson(l$stripe_info);
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] =
+        l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$stripe_info = stripe_info;
+    final l$accepted_payments = accepted_payments;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$stripe_info,
+      l$accepted_payments,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getRestaurantPaymentInfo$restaurant_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$stripe_info = stripe_info;
+    final lOther$stripe_info = other.stripe_info;
+    if (l$stripe_info != lOther$stripe_info) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getRestaurantPaymentInfo$restaurant_by_pk
+    on Query$getRestaurantPaymentInfo$restaurant_by_pk {
+  CopyWith$Query$getRestaurantPaymentInfo$restaurant_by_pk<
+          Query$getRestaurantPaymentInfo$restaurant_by_pk>
+      get copyWith => CopyWith$Query$getRestaurantPaymentInfo$restaurant_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getRestaurantPaymentInfo$restaurant_by_pk<TRes> {
+  factory CopyWith$Query$getRestaurantPaymentInfo$restaurant_by_pk(
+    Query$getRestaurantPaymentInfo$restaurant_by_pk instance,
+    TRes Function(Query$getRestaurantPaymentInfo$restaurant_by_pk) then,
+  ) = _CopyWithImpl$Query$getRestaurantPaymentInfo$restaurant_by_pk;
+
+  factory CopyWith$Query$getRestaurantPaymentInfo$restaurant_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getRestaurantPaymentInfo$restaurant_by_pk;
+
+  TRes call({
+    dynamic? stripe_info,
+    dynamic? accepted_payments,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getRestaurantPaymentInfo$restaurant_by_pk<TRes>
+    implements CopyWith$Query$getRestaurantPaymentInfo$restaurant_by_pk<TRes> {
+  _CopyWithImpl$Query$getRestaurantPaymentInfo$restaurant_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getRestaurantPaymentInfo$restaurant_by_pk _instance;
+
+  final TRes Function(Query$getRestaurantPaymentInfo$restaurant_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? stripe_info = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getRestaurantPaymentInfo$restaurant_by_pk(
+        stripe_info: stripe_info == _undefined
+            ? _instance.stripe_info
+            : (stripe_info as dynamic?),
+        accepted_payments: accepted_payments == _undefined
+            ? _instance.accepted_payments
+            : (accepted_payments as dynamic?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getRestaurantPaymentInfo$restaurant_by_pk<TRes>
+    implements CopyWith$Query$getRestaurantPaymentInfo$restaurant_by_pk<TRes> {
+  _CopyWithStubImpl$Query$getRestaurantPaymentInfo$restaurant_by_pk(this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? stripe_info,
+    dynamic? accepted_payments,
     String? $__typename,
   }) =>
       _res;
@@ -7979,42 +8596,6 @@ const documentNodeSubscriptionGetRestaurants = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
-            name: NameNode(value: 'payment_info'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'bank_transfer'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'card'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'cash'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
-          ),
-          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -8112,7 +8693,6 @@ class Subscription$GetRestaurants$restaurant {
     required this.image,
     this.schedule,
     this.description,
-    this.payment_info,
     required this.$__typename,
   });
 
@@ -8126,7 +8706,6 @@ class Subscription$GetRestaurants$restaurant {
     final l$image = json['image'];
     final l$schedule = json['schedule'];
     final l$description = json['description'];
-    final l$payment_info = json['payment_info'];
     final l$$__typename = json['__typename'];
     return Subscription$GetRestaurants$restaurant(
       id: (l$id as int),
@@ -8140,10 +8719,6 @@ class Subscription$GetRestaurants$restaurant {
           ? null
           : Subscription$GetRestaurants$restaurant$description.fromJson(
               (l$description as Map<String, dynamic>)),
-      payment_info: l$payment_info == null
-          ? null
-          : Subscription$GetRestaurants$restaurant$payment_info.fromJson(
-              (l$payment_info as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -8163,8 +8738,6 @@ class Subscription$GetRestaurants$restaurant {
   final dynamic? schedule;
 
   final Subscription$GetRestaurants$restaurant$description? description;
-
-  final Subscription$GetRestaurants$restaurant$payment_info? payment_info;
 
   final String $__typename;
 
@@ -8186,8 +8759,6 @@ class Subscription$GetRestaurants$restaurant {
     _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$description = description;
     _resultData['description'] = l$description?.toJson();
-    final l$payment_info = payment_info;
-    _resultData['payment_info'] = l$payment_info?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -8203,7 +8774,6 @@ class Subscription$GetRestaurants$restaurant {
     final l$image = image;
     final l$schedule = schedule;
     final l$description = description;
-    final l$payment_info = payment_info;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
@@ -8214,7 +8784,6 @@ class Subscription$GetRestaurants$restaurant {
       l$image,
       l$schedule,
       l$description,
-      l$payment_info,
       l$$__typename,
     ]);
   }
@@ -8268,11 +8837,6 @@ class Subscription$GetRestaurants$restaurant {
     if (l$description != lOther$description) {
       return false;
     }
-    final l$payment_info = payment_info;
-    final lOther$payment_info = other.payment_info;
-    if (l$payment_info != lOther$payment_info) {
-      return false;
-    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -8310,13 +8874,10 @@ abstract class CopyWith$Subscription$GetRestaurants$restaurant<TRes> {
     String? image,
     dynamic? schedule,
     Subscription$GetRestaurants$restaurant$description? description,
-    Subscription$GetRestaurants$restaurant$payment_info? payment_info,
     String? $__typename,
   });
   CopyWith$Subscription$GetRestaurants$restaurant$description<TRes>
       get description;
-  CopyWith$Subscription$GetRestaurants$restaurant$payment_info<TRes>
-      get payment_info;
 }
 
 class _CopyWithImpl$Subscription$GetRestaurants$restaurant<TRes>
@@ -8341,7 +8902,6 @@ class _CopyWithImpl$Subscription$GetRestaurants$restaurant<TRes>
     Object? image = _undefined,
     Object? schedule = _undefined,
     Object? description = _undefined,
-    Object? payment_info = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Subscription$GetRestaurants$restaurant(
@@ -8368,10 +8928,6 @@ class _CopyWithImpl$Subscription$GetRestaurants$restaurant<TRes>
             ? _instance.description
             : (description
                 as Subscription$GetRestaurants$restaurant$description?),
-        payment_info: payment_info == _undefined
-            ? _instance.payment_info
-            : (payment_info
-                as Subscription$GetRestaurants$restaurant$payment_info?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -8384,16 +8940,6 @@ class _CopyWithImpl$Subscription$GetRestaurants$restaurant<TRes>
             _then(_instance))
         : CopyWith$Subscription$GetRestaurants$restaurant$description(
             local$description, (e) => call(description: e));
-  }
-
-  CopyWith$Subscription$GetRestaurants$restaurant$payment_info<TRes>
-      get payment_info {
-    final local$payment_info = _instance.payment_info;
-    return local$payment_info == null
-        ? CopyWith$Subscription$GetRestaurants$restaurant$payment_info.stub(
-            _then(_instance))
-        : CopyWith$Subscription$GetRestaurants$restaurant$payment_info(
-            local$payment_info, (e) => call(payment_info: e));
   }
 }
 
@@ -8412,17 +8958,12 @@ class _CopyWithStubImpl$Subscription$GetRestaurants$restaurant<TRes>
     String? image,
     dynamic? schedule,
     Subscription$GetRestaurants$restaurant$description? description,
-    Subscription$GetRestaurants$restaurant$payment_info? payment_info,
     String? $__typename,
   }) =>
       _res;
   CopyWith$Subscription$GetRestaurants$restaurant$description<TRes>
       get description =>
           CopyWith$Subscription$GetRestaurants$restaurant$description.stub(
-              _res);
-  CopyWith$Subscription$GetRestaurants$restaurant$payment_info<TRes>
-      get payment_info =>
-          CopyWith$Subscription$GetRestaurants$restaurant$payment_info.stub(
               _res);
 }
 
@@ -8751,181 +9292,6 @@ class _CopyWithStubImpl$Subscription$GetRestaurants$restaurant$description$trans
   call({
     String? language_id,
     String? value,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
-class Subscription$GetRestaurants$restaurant$payment_info {
-  Subscription$GetRestaurants$restaurant$payment_info({
-    required this.bank_transfer,
-    required this.card,
-    required this.cash,
-    required this.$__typename,
-  });
-
-  factory Subscription$GetRestaurants$restaurant$payment_info.fromJson(
-      Map<String, dynamic> json) {
-    final l$bank_transfer = json['bank_transfer'];
-    final l$card = json['card'];
-    final l$cash = json['cash'];
-    final l$$__typename = json['__typename'];
-    return Subscription$GetRestaurants$restaurant$payment_info(
-      bank_transfer: (l$bank_transfer as bool),
-      card: (l$card as bool),
-      cash: (l$cash as bool),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final bool bank_transfer;
-
-  final bool card;
-
-  final bool cash;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$bank_transfer = bank_transfer;
-    _resultData['bank_transfer'] = l$bank_transfer;
-    final l$card = card;
-    _resultData['card'] = l$card;
-    final l$cash = cash;
-    _resultData['cash'] = l$cash;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$bank_transfer = bank_transfer;
-    final l$card = card;
-    final l$cash = cash;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$bank_transfer,
-      l$card,
-      l$cash,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Subscription$GetRestaurants$restaurant$payment_info) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$bank_transfer = bank_transfer;
-    final lOther$bank_transfer = other.bank_transfer;
-    if (l$bank_transfer != lOther$bank_transfer) {
-      return false;
-    }
-    final l$card = card;
-    final lOther$card = other.card;
-    if (l$card != lOther$card) {
-      return false;
-    }
-    final l$cash = cash;
-    final lOther$cash = other.cash;
-    if (l$cash != lOther$cash) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Subscription$GetRestaurants$restaurant$payment_info
-    on Subscription$GetRestaurants$restaurant$payment_info {
-  CopyWith$Subscription$GetRestaurants$restaurant$payment_info<
-          Subscription$GetRestaurants$restaurant$payment_info>
-      get copyWith =>
-          CopyWith$Subscription$GetRestaurants$restaurant$payment_info(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Subscription$GetRestaurants$restaurant$payment_info<
-    TRes> {
-  factory CopyWith$Subscription$GetRestaurants$restaurant$payment_info(
-    Subscription$GetRestaurants$restaurant$payment_info instance,
-    TRes Function(Subscription$GetRestaurants$restaurant$payment_info) then,
-  ) = _CopyWithImpl$Subscription$GetRestaurants$restaurant$payment_info;
-
-  factory CopyWith$Subscription$GetRestaurants$restaurant$payment_info.stub(
-          TRes res) =
-      _CopyWithStubImpl$Subscription$GetRestaurants$restaurant$payment_info;
-
-  TRes call({
-    bool? bank_transfer,
-    bool? card,
-    bool? cash,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Subscription$GetRestaurants$restaurant$payment_info<TRes>
-    implements
-        CopyWith$Subscription$GetRestaurants$restaurant$payment_info<TRes> {
-  _CopyWithImpl$Subscription$GetRestaurants$restaurant$payment_info(
-    this._instance,
-    this._then,
-  );
-
-  final Subscription$GetRestaurants$restaurant$payment_info _instance;
-
-  final TRes Function(Subscription$GetRestaurants$restaurant$payment_info)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? bank_transfer = _undefined,
-    Object? card = _undefined,
-    Object? cash = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Subscription$GetRestaurants$restaurant$payment_info(
-        bank_transfer: bank_transfer == _undefined || bank_transfer == null
-            ? _instance.bank_transfer
-            : (bank_transfer as bool),
-        card: card == _undefined || card == null
-            ? _instance.card
-            : (card as bool),
-        cash: cash == _undefined || cash == null
-            ? _instance.cash
-            : (cash as bool),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Subscription$GetRestaurants$restaurant$payment_info<
-        TRes>
-    implements
-        CopyWith$Subscription$GetRestaurants$restaurant$payment_info<TRes> {
-  _CopyWithStubImpl$Subscription$GetRestaurants$restaurant$payment_info(
-      this._res);
-
-  TRes _res;
-
-  call({
-    bool? bank_transfer,
-    bool? card,
-    bool? cash,
     String? $__typename,
   }) =>
       _res;

@@ -19,7 +19,6 @@ query getRestaurants {
     self_delivery
     open_status
     schedule
-    payment_info_id
   }
 }
 
@@ -45,6 +44,8 @@ query getOneRestaurant($id: Int!) {
     location_gps
     location_text
     self_delivery
+    accepted_payments
+    stripe_info
     name
     description {
       translations {
@@ -70,6 +71,11 @@ query getRestaurantSchedule($id: Int!) {
 query getRestaurantAprroved($id: Int!) {
   restaurant_by_pk(id: $id) {
     approved
+  }
+}query getRestaurantPaymentInfo($id: Int!) {
+  restaurant_by_pk(id: $id) {
+       stripe_info
+    accepted_payments
   }
 }
 
@@ -139,11 +145,7 @@ subscription GetRestaurants {
         value
       }
     }
-    payment_info {
-      bank_transfer
-      card
-      cash
-    }
+  
   }
 }
 

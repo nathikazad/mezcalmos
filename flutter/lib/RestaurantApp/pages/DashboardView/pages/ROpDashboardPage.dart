@@ -128,9 +128,12 @@ class ROpDashboardPage extends StatelessWidget {
               _divider(),
               _navigationLink(
                   onClick: () async {
-                    await pageController.animateToPage(3,
-                        duration: Duration(milliseconds: 1),
-                        curve: Curves.easeIn);
+                    viewController.tabsViewViewController?.showTabs.value =
+                        true;
+                    navigateToServicePayments(
+                        ServiceProviderId:
+                            viewController.restaurant.value!.restaurantId,
+                        serviceProviderType: ServiceProviderType.Restaurant);
                   },
                   icon: Icons.account_balance,
                   titleWidget: Text(
