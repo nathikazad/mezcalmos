@@ -154,14 +154,15 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
 }
 
 Future<int> create_customer_cart({int? restaurant_id}) async {
-  mezDbgPrint("[JJ] Called :: create_customer_cart!");
+  mezDbgPrint(
+      "[🗿🗿🗿🗿🗿🗿🗿] Called :: create_customer_cart! =======>${Get.find<AuthController>().hasuraUserId!}");
   final QueryResult<Mutation$create_customer_cart> res =
       await _hasuraDb.graphQLClient.mutate$create_customer_cart(
     Options$Mutation$create_customer_cart(
       fetchPolicy: FetchPolicy.noCache,
       variables: Variables$Mutation$create_customer_cart(
         cart: Input$restaurant_cart_insert_input(
-          customer_id: Get.find<AuthController>().hasuraUserId,
+          customer_id: Get.find<AuthController>().hasuraUserId!,
           restaurant_id: restaurant_id,
         ),
       ),
@@ -353,9 +354,10 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
         });
         _cartEvent.addItem(data);
       });
+      return _cartEvent;
+    } else {
+      return null;
     }
-
-    return _cartEvent;
   });
 }
 

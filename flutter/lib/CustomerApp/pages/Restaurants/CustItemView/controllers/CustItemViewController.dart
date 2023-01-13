@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 // import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
@@ -56,9 +55,7 @@ class CustItemViewController {
     currentMode = mode;
     itemRestaurantId = restaurantId;
     currentItemId = itemId;
-    if (cart.value == null) {
-      await create_customer_cart();
-    }
+
     // check and update cart restaurant id to current item restaurant if no cart items are there
     if (shouldUpdateRestaurantId()) {
       await cartController.setCartRestaurantId(restaurantId!);
