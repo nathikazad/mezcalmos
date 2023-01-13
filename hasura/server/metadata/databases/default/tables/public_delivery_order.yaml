@@ -108,7 +108,6 @@ select_permissions:
         - id
         - service_provider_id
         - service_provider_review_by_driver_id
-        - stripe_payment_id
         - delivery_cost
         - package_cost
         - dropoff_address
@@ -173,7 +172,6 @@ select_permissions:
         - service_provider_review_by_driver_id
         - service_provider_type
         - status
-        - stripe_payment_id
         - trip_distance
         - trip_duration
         - trip_polyline
@@ -196,7 +194,6 @@ select_permissions:
         - chat_with_service_provider_id
         - chat_with_customer_id
         - payment_type
-        - stripe_payment_id
         - estimated_package_ready_time
         - actual_package_ready_time
         - estimated_arrival_at_pickup_time
@@ -241,7 +238,6 @@ select_permissions:
         - id
         - service_provider_id
         - service_provider_review_by_driver_id
-        - stripe_payment_id
         - delivery_cost
         - package_cost
         - dropoff_address
@@ -285,7 +281,6 @@ select_permissions:
         - id
         - service_provider_id
         - service_provider_review_by_driver_id
-        - stripe_payment_id
         - delivery_cost
         - package_cost
         - dropoff_address
