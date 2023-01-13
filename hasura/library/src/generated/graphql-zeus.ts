@@ -2085,7 +2085,6 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:true,
-	stripe_payment_id?:true,
 	/** in meters */
 	trip_distance?:true,
 	/** in seconds */
@@ -2157,7 +2156,6 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	package_cost?:true,
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
-	stripe_payment_id?:true,
 	/** in meters */
 	trip_distance?:true,
 	/** in seconds */
@@ -2178,7 +2176,6 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"],
 	/** in meters */
 	trip_distance?:ValueTypes["order_by"],
 	/** in seconds */
@@ -2237,7 +2234,6 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	service_provider_review_by_driver_id?:ValueTypes["Int_comparison_exp"],
 	service_provider_type?:ValueTypes["String_comparison_exp"],
 	status?:ValueTypes["String_comparison_exp"],
-	stripe_payment_id?:ValueTypes["Int_comparison_exp"],
 	trip_distance?:ValueTypes["Int_comparison_exp"],
 	trip_duration?:ValueTypes["Int_comparison_exp"],
 	trip_polyline?:ValueTypes["String_comparison_exp"]
@@ -2258,7 +2254,6 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	package_cost?:ValueTypes["money"],
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -2318,7 +2313,6 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:string,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -2363,7 +2357,6 @@ cancelledByServiceProvider */
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:true,
-	stripe_payment_id?:true,
 	/** in meters */
 	trip_distance?:true,
 	/** in seconds */
@@ -2409,7 +2402,6 @@ cancelledByServiceProvider */
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"],
 	/** in meters */
 	trip_distance?:ValueTypes["order_by"],
 	/** in seconds */
@@ -2454,7 +2446,6 @@ cancelledByServiceProvider */
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:true,
-	stripe_payment_id?:true,
 	/** in meters */
 	trip_distance?:true,
 	/** in seconds */
@@ -2500,7 +2491,6 @@ cancelledByServiceProvider */
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"],
 	/** in meters */
 	trip_distance?:ValueTypes["order_by"],
 	/** in seconds */
@@ -2577,7 +2567,6 @@ cancelledByServiceProvider */
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
 	service_provider_type?:ValueTypes["order_by"],
 	status?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"],
 	trip_distance?:ValueTypes["order_by"],
 	trip_duration?:ValueTypes["order_by"],
 	trip_polyline?:ValueTypes["order_by"]
@@ -2980,7 +2969,6 @@ count?: [{	columns?:ValueTypes["delivery_order_public_select_column"][],	distinc
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:string,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -3001,7 +2989,6 @@ cancelledByServiceProvider */
 	package_cost?:true,
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
-	stripe_payment_id?:true,
 	/** in meters */
 	trip_distance?:true,
 	/** in seconds */
@@ -3022,7 +3009,6 @@ cancelledByServiceProvider */
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"],
 	/** in meters */
 	trip_distance?:ValueTypes["order_by"],
 	/** in seconds */
@@ -3042,7 +3028,6 @@ cancelledByServiceProvider */
 	package_cost?:true,
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
-	stripe_payment_id?:true,
 	/** in meters */
 	trip_distance?:true,
 	/** in seconds */
@@ -3063,7 +3048,6 @@ cancelledByServiceProvider */
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"],
 	/** in meters */
 	trip_distance?:ValueTypes["order_by"],
 	/** in seconds */
@@ -3083,7 +3067,6 @@ cancelledByServiceProvider */
 	package_cost?:true,
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
-	stripe_payment_id?:true,
 	/** in meters */
 	trip_distance?:true,
 	/** in seconds */
@@ -3104,7 +3087,6 @@ cancelledByServiceProvider */
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"],
 	/** in meters */
 	trip_distance?:ValueTypes["order_by"],
 	/** in seconds */
@@ -3158,7 +3140,6 @@ cancelledByServiceProvider */
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:string,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -3179,7 +3160,6 @@ cancelledByServiceProvider */
 	package_cost?:true,
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
-	stripe_payment_id?:true,
 	/** in meters */
 	trip_distance?:true,
 	/** in seconds */
@@ -3200,7 +3180,6 @@ cancelledByServiceProvider */
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"],
 	/** in meters */
 	trip_distance?:ValueTypes["order_by"],
 	/** in seconds */
@@ -3229,7 +3208,6 @@ cancelledByServiceProvider */
 	package_cost?:true,
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
-	stripe_payment_id?:true,
 	/** in meters */
 	trip_distance?:true,
 	/** in seconds */
@@ -3250,7 +3228,6 @@ cancelledByServiceProvider */
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"],
 	/** in meters */
 	trip_distance?:ValueTypes["order_by"],
 	/** in seconds */
@@ -3270,7 +3247,6 @@ cancelledByServiceProvider */
 	package_cost?:true,
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
-	stripe_payment_id?:true,
 	/** in meters */
 	trip_distance?:true,
 	/** in seconds */
@@ -3291,7 +3267,6 @@ cancelledByServiceProvider */
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"],
 	/** in meters */
 	trip_distance?:ValueTypes["order_by"],
 	/** in seconds */
@@ -3311,7 +3286,6 @@ cancelledByServiceProvider */
 	package_cost?:true,
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
-	stripe_payment_id?:true,
 	/** in meters */
 	trip_distance?:true,
 	/** in seconds */
@@ -3332,7 +3306,6 @@ cancelledByServiceProvider */
 	package_cost?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	stripe_payment_id?:ValueTypes["order_by"],
 	/** in meters */
 	trip_distance?:ValueTypes["order_by"],
 	/** in seconds */
@@ -3715,12 +3688,6 @@ delete_saved_location_by_pk?: [{	id:number},ValueTypes["saved_location"]],
 delete_service_link?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["service_link_bool_exp"]},ValueTypes["service_link_mutation_response"]],
 delete_service_link_by_pk?: [{	id:number},ValueTypes["service_link"]],
-delete_service_provider_payment_info?: [{	/** filter the rows which have to be deleted */
-	where:ValueTypes["service_provider_payment_info_bool_exp"]},ValueTypes["service_provider_payment_info_mutation_response"]],
-delete_service_provider_payment_info_by_pk?: [{	id:number},ValueTypes["service_provider_payment_info"]],
-delete_stripe_info?: [{	/** filter the rows which have to be deleted */
-	where:ValueTypes["stripe_info_bool_exp"]},ValueTypes["stripe_info_mutation_response"]],
-delete_stripe_info_by_pk?: [{	id:number},ValueTypes["stripe_info"]],
 delete_subscriber?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["subscriber_bool_exp"]},ValueTypes["subscriber_mutation_response"]],
 delete_subscriber_by_pk?: [{	id:number},ValueTypes["subscriber"]],
@@ -3904,18 +3871,6 @@ insert_service_link?: [{	/** the rows to be inserted */
 insert_service_link_one?: [{	/** the row to be inserted */
 	object:ValueTypes["service_link_insert_input"],	/** upsert condition */
 	on_conflict?:ValueTypes["service_link_on_conflict"]},ValueTypes["service_link"]],
-insert_service_provider_payment_info?: [{	/** the rows to be inserted */
-	objects:ValueTypes["service_provider_payment_info_insert_input"][],	/** upsert condition */
-	on_conflict?:ValueTypes["service_provider_payment_info_on_conflict"]},ValueTypes["service_provider_payment_info_mutation_response"]],
-insert_service_provider_payment_info_one?: [{	/** the row to be inserted */
-	object:ValueTypes["service_provider_payment_info_insert_input"],	/** upsert condition */
-	on_conflict?:ValueTypes["service_provider_payment_info_on_conflict"]},ValueTypes["service_provider_payment_info"]],
-insert_stripe_info?: [{	/** the rows to be inserted */
-	objects:ValueTypes["stripe_info_insert_input"][],	/** upsert condition */
-	on_conflict?:ValueTypes["stripe_info_on_conflict"]},ValueTypes["stripe_info_mutation_response"]],
-insert_stripe_info_one?: [{	/** the row to be inserted */
-	object:ValueTypes["stripe_info_insert_input"],	/** upsert condition */
-	on_conflict?:ValueTypes["stripe_info_on_conflict"]},ValueTypes["stripe_info"]],
 insert_subscriber?: [{	/** the rows to be inserted */
 	objects:ValueTypes["subscriber_insert_input"][],	/** upsert condition */
 	on_conflict?:ValueTypes["subscriber_on_conflict"]},ValueTypes["subscriber_mutation_response"]],
@@ -4258,24 +4213,6 @@ update_service_link_by_pk?: [{	/** increments the numeric columns with given val
 	_set?:ValueTypes["service_link_set_input"],	pk_columns:ValueTypes["service_link_pk_columns_input"]},ValueTypes["service_link"]],
 update_service_link_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["service_link_updates"][]},ValueTypes["service_link_mutation_response"]],
-update_service_provider_payment_info?: [{	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["service_provider_payment_info_inc_input"],	/** sets the columns of the filtered rows to the given values */
-	_set?:ValueTypes["service_provider_payment_info_set_input"],	/** filter the rows which have to be updated */
-	where:ValueTypes["service_provider_payment_info_bool_exp"]},ValueTypes["service_provider_payment_info_mutation_response"]],
-update_service_provider_payment_info_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["service_provider_payment_info_inc_input"],	/** sets the columns of the filtered rows to the given values */
-	_set?:ValueTypes["service_provider_payment_info_set_input"],	pk_columns:ValueTypes["service_provider_payment_info_pk_columns_input"]},ValueTypes["service_provider_payment_info"]],
-update_service_provider_payment_info_many?: [{	/** updates to execute, in order */
-	updates:ValueTypes["service_provider_payment_info_updates"][]},ValueTypes["service_provider_payment_info_mutation_response"]],
-update_stripe_info?: [{	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["stripe_info_inc_input"],	/** sets the columns of the filtered rows to the given values */
-	_set?:ValueTypes["stripe_info_set_input"],	/** filter the rows which have to be updated */
-	where:ValueTypes["stripe_info_bool_exp"]},ValueTypes["stripe_info_mutation_response"]],
-update_stripe_info_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["stripe_info_inc_input"],	/** sets the columns of the filtered rows to the given values */
-	_set?:ValueTypes["stripe_info_set_input"],	pk_columns:ValueTypes["stripe_info_pk_columns_input"]},ValueTypes["stripe_info"]],
-update_stripe_info_many?: [{	/** updates to execute, in order */
-	updates:ValueTypes["stripe_info_updates"][]},ValueTypes["stripe_info_mutation_response"]],
 update_subscriber?: [{	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["subscriber_inc_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["subscriber_set_input"],	/** filter the rows which have to be updated */
@@ -5119,32 +5056,6 @@ service_link_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["service_link_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["service_link_bool_exp"]},ValueTypes["service_link_aggregate"]],
 service_link_by_pk?: [{	id:number},ValueTypes["service_link"]],
-service_provider_payment_info?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["service_provider_payment_info_select_column"][],	/** limit the number of rows returned */
-	limit?:number,	/** skip the first n rows. Use only with order_by */
-	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["service_provider_payment_info_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["service_provider_payment_info_bool_exp"]},ValueTypes["service_provider_payment_info"]],
-service_provider_payment_info_aggregate?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["service_provider_payment_info_select_column"][],	/** limit the number of rows returned */
-	limit?:number,	/** skip the first n rows. Use only with order_by */
-	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["service_provider_payment_info_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["service_provider_payment_info_bool_exp"]},ValueTypes["service_provider_payment_info_aggregate"]],
-service_provider_payment_info_by_pk?: [{	id:number},ValueTypes["service_provider_payment_info"]],
-stripe_info?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["stripe_info_select_column"][],	/** limit the number of rows returned */
-	limit?:number,	/** skip the first n rows. Use only with order_by */
-	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["stripe_info_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["stripe_info_bool_exp"]},ValueTypes["stripe_info"]],
-stripe_info_aggregate?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["stripe_info_select_column"][],	/** limit the number of rows returned */
-	limit?:number,	/** skip the first n rows. Use only with order_by */
-	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["stripe_info_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["stripe_info_bool_exp"]},ValueTypes["stripe_info_aggregate"]],
-stripe_info_by_pk?: [{	id:number},ValueTypes["stripe_info"]],
 subscriber?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["subscriber_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -5279,8 +5190,6 @@ orders_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["restaurant_order_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["restaurant_order_bool_exp"]},ValueTypes["restaurant_order_aggregate"]],
-	/** An object relationship */
-	payment_info?:ValueTypes["service_provider_payment_info"],
 	payment_info_id?:true,
 restaurant_operators?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["restaurant_operator_select_column"][],	/** limit the number of rows returned */
@@ -5377,7 +5286,6 @@ count?: [{	columns?:ValueTypes["restaurant_select_column"][],	distinct?:boolean}
 	open_status?:ValueTypes["String_comparison_exp"],
 	orders?:ValueTypes["restaurant_order_bool_exp"],
 	orders_aggregate?:ValueTypes["restaurant_order_aggregate_bool_exp"],
-	payment_info?:ValueTypes["service_provider_payment_info_bool_exp"],
 	payment_info_id?:ValueTypes["Int_comparison_exp"],
 	restaurant_operators?:ValueTypes["restaurant_operator_bool_exp"],
 	restaurant_operators_aggregate?:ValueTypes["restaurant_operator_aggregate_bool_exp"],
@@ -6699,7 +6607,6 @@ end). throws an error if top level container is not an array */
 	/** open, closed_temporarily, closed_indefinitely */
 	open_status?:string,
 	orders?:ValueTypes["restaurant_order_arr_rel_insert_input"],
-	payment_info?:ValueTypes["service_provider_payment_info_obj_rel_insert_input"],
 	payment_info_id?:number,
 	restaurant_operators?:ValueTypes["restaurant_operator_arr_rel_insert_input"],
 	reviews?:ValueTypes["review_arr_rel_insert_input"],
@@ -8874,7 +8781,6 @@ count?: [{	columns?:ValueTypes["restaurant_order_select_column"][],	distinct?:bo
 	name?:ValueTypes["order_by"],
 	open_status?:ValueTypes["order_by"],
 	orders_aggregate?:ValueTypes["restaurant_order_aggregate_order_by"],
-	payment_info?:ValueTypes["service_provider_payment_info_order_by"],
 	payment_info_id?:ValueTypes["order_by"],
 	restaurant_operators_aggregate?:ValueTypes["restaurant_operator_aggregate_order_by"],
 	reviews_aggregate?:ValueTypes["review_aggregate_order_by"],
@@ -10971,207 +10877,6 @@ count?: [{	columns?:ValueTypes["service_link_select_column"][],	distinct?:boolea
 	service_provider_id?:true,
 		__typename?: true
 }>;
-	/** columns and relationships of "service_provider_payment_info" */
-["service_provider_payment_info"]: AliasType<{
-	bank_transfer?:true,
-	card?:true,
-	cash?:true,
-	id?:true,
-	/** An object relationship */
-	restaurant?:ValueTypes["restaurant"],
-	service_provider_type?:true,
-	/** An object relationship */
-	stripe_info?:ValueTypes["stripe_info"],
-	stripe_info_id?:true,
-		__typename?: true
-}>;
-	/** aggregated selection of "service_provider_payment_info" */
-["service_provider_payment_info_aggregate"]: AliasType<{
-	aggregate?:ValueTypes["service_provider_payment_info_aggregate_fields"],
-	nodes?:ValueTypes["service_provider_payment_info"],
-		__typename?: true
-}>;
-	/** aggregate fields of "service_provider_payment_info" */
-["service_provider_payment_info_aggregate_fields"]: AliasType<{
-	avg?:ValueTypes["service_provider_payment_info_avg_fields"],
-count?: [{	columns?:ValueTypes["service_provider_payment_info_select_column"][],	distinct?:boolean},true],
-	max?:ValueTypes["service_provider_payment_info_max_fields"],
-	min?:ValueTypes["service_provider_payment_info_min_fields"],
-	stddev?:ValueTypes["service_provider_payment_info_stddev_fields"],
-	stddev_pop?:ValueTypes["service_provider_payment_info_stddev_pop_fields"],
-	stddev_samp?:ValueTypes["service_provider_payment_info_stddev_samp_fields"],
-	sum?:ValueTypes["service_provider_payment_info_sum_fields"],
-	var_pop?:ValueTypes["service_provider_payment_info_var_pop_fields"],
-	var_samp?:ValueTypes["service_provider_payment_info_var_samp_fields"],
-	variance?:ValueTypes["service_provider_payment_info_variance_fields"],
-		__typename?: true
-}>;
-	/** aggregate avg on columns */
-["service_provider_payment_info_avg_fields"]: AliasType<{
-	id?:true,
-	stripe_info_id?:true,
-		__typename?: true
-}>;
-	/** Boolean expression to filter rows from the table
-"service_provider_payment_info". All fields are combined with a logical 'AND'. */
-["service_provider_payment_info_bool_exp"]: {
-	_and?:ValueTypes["service_provider_payment_info_bool_exp"][],
-	_not?:ValueTypes["service_provider_payment_info_bool_exp"],
-	_or?:ValueTypes["service_provider_payment_info_bool_exp"][],
-	bank_transfer?:ValueTypes["Boolean_comparison_exp"],
-	card?:ValueTypes["Boolean_comparison_exp"],
-	cash?:ValueTypes["Boolean_comparison_exp"],
-	id?:ValueTypes["Int_comparison_exp"],
-	restaurant?:ValueTypes["restaurant_bool_exp"],
-	service_provider_type?:ValueTypes["String_comparison_exp"],
-	stripe_info?:ValueTypes["stripe_info_bool_exp"],
-	stripe_info_id?:ValueTypes["Int_comparison_exp"]
-};
-	/** unique or primary key constraints on table "service_provider_payment_info" */
-["service_provider_payment_info_constraint"]:service_provider_payment_info_constraint;
-	/** input type for incrementing numeric columns in table "service_provider_payment_info" */
-["service_provider_payment_info_inc_input"]: {
-	id?:number,
-	stripe_info_id?:number
-};
-	/** input type for inserting data into table "service_provider_payment_info" */
-["service_provider_payment_info_insert_input"]: {
-	bank_transfer?:boolean,
-	card?:boolean,
-	cash?:boolean,
-	id?:number,
-	restaurant?:ValueTypes["restaurant_obj_rel_insert_input"],
-	service_provider_type?:string,
-	stripe_info?:ValueTypes["stripe_info_obj_rel_insert_input"],
-	stripe_info_id?:number
-};
-	/** aggregate max on columns */
-["service_provider_payment_info_max_fields"]: AliasType<{
-	id?:true,
-	service_provider_type?:true,
-	stripe_info_id?:true,
-		__typename?: true
-}>;
-	/** aggregate min on columns */
-["service_provider_payment_info_min_fields"]: AliasType<{
-	id?:true,
-	service_provider_type?:true,
-	stripe_info_id?:true,
-		__typename?: true
-}>;
-	/** response of any mutation on the table "service_provider_payment_info" */
-["service_provider_payment_info_mutation_response"]: AliasType<{
-	/** number of rows affected by the mutation */
-	affected_rows?:true,
-	/** data from the rows affected by the mutation */
-	returning?:ValueTypes["service_provider_payment_info"],
-		__typename?: true
-}>;
-	/** input type for inserting object relation for remote table "service_provider_payment_info" */
-["service_provider_payment_info_obj_rel_insert_input"]: {
-	data:ValueTypes["service_provider_payment_info_insert_input"],
-	/** upsert condition */
-	on_conflict?:ValueTypes["service_provider_payment_info_on_conflict"]
-};
-	/** on_conflict condition type for table "service_provider_payment_info" */
-["service_provider_payment_info_on_conflict"]: {
-	constraint:ValueTypes["service_provider_payment_info_constraint"],
-	update_columns:ValueTypes["service_provider_payment_info_update_column"][],
-	where?:ValueTypes["service_provider_payment_info_bool_exp"]
-};
-	/** Ordering options when selecting data from "service_provider_payment_info". */
-["service_provider_payment_info_order_by"]: {
-	bank_transfer?:ValueTypes["order_by"],
-	card?:ValueTypes["order_by"],
-	cash?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
-	restaurant?:ValueTypes["restaurant_order_by"],
-	service_provider_type?:ValueTypes["order_by"],
-	stripe_info?:ValueTypes["stripe_info_order_by"],
-	stripe_info_id?:ValueTypes["order_by"]
-};
-	/** primary key columns input for table: service_provider_payment_info */
-["service_provider_payment_info_pk_columns_input"]: {
-	id:number
-};
-	/** select columns of table "service_provider_payment_info" */
-["service_provider_payment_info_select_column"]:service_provider_payment_info_select_column;
-	/** input type for updating data in table "service_provider_payment_info" */
-["service_provider_payment_info_set_input"]: {
-	bank_transfer?:boolean,
-	card?:boolean,
-	cash?:boolean,
-	id?:number,
-	service_provider_type?:string,
-	stripe_info_id?:number
-};
-	/** aggregate stddev on columns */
-["service_provider_payment_info_stddev_fields"]: AliasType<{
-	id?:true,
-	stripe_info_id?:true,
-		__typename?: true
-}>;
-	/** aggregate stddev_pop on columns */
-["service_provider_payment_info_stddev_pop_fields"]: AliasType<{
-	id?:true,
-	stripe_info_id?:true,
-		__typename?: true
-}>;
-	/** aggregate stddev_samp on columns */
-["service_provider_payment_info_stddev_samp_fields"]: AliasType<{
-	id?:true,
-	stripe_info_id?:true,
-		__typename?: true
-}>;
-	/** Streaming cursor of the table "service_provider_payment_info" */
-["service_provider_payment_info_stream_cursor_input"]: {
-	/** Stream column input with initial value */
-	initial_value:ValueTypes["service_provider_payment_info_stream_cursor_value_input"],
-	/** cursor ordering */
-	ordering?:ValueTypes["cursor_ordering"]
-};
-	/** Initial value of the column from where the streaming should start */
-["service_provider_payment_info_stream_cursor_value_input"]: {
-	bank_transfer?:boolean,
-	card?:boolean,
-	cash?:boolean,
-	id?:number,
-	service_provider_type?:string,
-	stripe_info_id?:number
-};
-	/** aggregate sum on columns */
-["service_provider_payment_info_sum_fields"]: AliasType<{
-	id?:true,
-	stripe_info_id?:true,
-		__typename?: true
-}>;
-	/** update columns of table "service_provider_payment_info" */
-["service_provider_payment_info_update_column"]:service_provider_payment_info_update_column;
-	["service_provider_payment_info_updates"]: {
-	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["service_provider_payment_info_inc_input"],
-	/** sets the columns of the filtered rows to the given values */
-	_set?:ValueTypes["service_provider_payment_info_set_input"],
-	where:ValueTypes["service_provider_payment_info_bool_exp"]
-};
-	/** aggregate var_pop on columns */
-["service_provider_payment_info_var_pop_fields"]: AliasType<{
-	id?:true,
-	stripe_info_id?:true,
-		__typename?: true
-}>;
-	/** aggregate var_samp on columns */
-["service_provider_payment_info_var_samp_fields"]: AliasType<{
-	id?:true,
-	stripe_info_id?:true,
-		__typename?: true
-}>;
-	/** aggregate variance on columns */
-["service_provider_payment_info_variance_fields"]: AliasType<{
-	id?:true,
-	stripe_info_id?:true,
-		__typename?: true
-}>;
 	["st_d_within_geography_input"]: {
 	distance:number,
 	from:ValueTypes["geography"],
@@ -11213,205 +10918,6 @@ count?: [{	columns?:ValueTypes["service_provider_payment_info_select_column"][],
 	/** does the column match the given SQL regular expression */
 	_similar?:string
 };
-	/** columns and relationships of "stripe_info" */
-["stripe_info"]: AliasType<{
-	charges_enabled?:true,
-	details_submitted?:true,
-	id?:true,
-	pass_fees_to_customer?:true,
-	payouts_enabled?:true,
-requirements?: [{	/** JSON select path */
-	path?:string},true],
-	/** An object relationship */
-	service_provider_payment_info?:ValueTypes["service_provider_payment_info"],
-	stripe_id?:true,
-	stripe_status?:true,
-		__typename?: true
-}>;
-	/** aggregated selection of "stripe_info" */
-["stripe_info_aggregate"]: AliasType<{
-	aggregate?:ValueTypes["stripe_info_aggregate_fields"],
-	nodes?:ValueTypes["stripe_info"],
-		__typename?: true
-}>;
-	/** aggregate fields of "stripe_info" */
-["stripe_info_aggregate_fields"]: AliasType<{
-	avg?:ValueTypes["stripe_info_avg_fields"],
-count?: [{	columns?:ValueTypes["stripe_info_select_column"][],	distinct?:boolean},true],
-	max?:ValueTypes["stripe_info_max_fields"],
-	min?:ValueTypes["stripe_info_min_fields"],
-	stddev?:ValueTypes["stripe_info_stddev_fields"],
-	stddev_pop?:ValueTypes["stripe_info_stddev_pop_fields"],
-	stddev_samp?:ValueTypes["stripe_info_stddev_samp_fields"],
-	sum?:ValueTypes["stripe_info_sum_fields"],
-	var_pop?:ValueTypes["stripe_info_var_pop_fields"],
-	var_samp?:ValueTypes["stripe_info_var_samp_fields"],
-	variance?:ValueTypes["stripe_info_variance_fields"],
-		__typename?: true
-}>;
-	/** aggregate avg on columns */
-["stripe_info_avg_fields"]: AliasType<{
-	id?:true,
-		__typename?: true
-}>;
-	/** Boolean expression to filter rows from the table "stripe_info". All fields are combined with a logical 'AND'. */
-["stripe_info_bool_exp"]: {
-	_and?:ValueTypes["stripe_info_bool_exp"][],
-	_not?:ValueTypes["stripe_info_bool_exp"],
-	_or?:ValueTypes["stripe_info_bool_exp"][],
-	charges_enabled?:ValueTypes["Boolean_comparison_exp"],
-	details_submitted?:ValueTypes["Boolean_comparison_exp"],
-	id?:ValueTypes["Int_comparison_exp"],
-	pass_fees_to_customer?:ValueTypes["Boolean_comparison_exp"],
-	payouts_enabled?:ValueTypes["Boolean_comparison_exp"],
-	requirements?:ValueTypes["json_comparison_exp"],
-	service_provider_payment_info?:ValueTypes["service_provider_payment_info_bool_exp"],
-	stripe_id?:ValueTypes["String_comparison_exp"],
-	stripe_status?:ValueTypes["String_comparison_exp"]
-};
-	/** unique or primary key constraints on table "stripe_info" */
-["stripe_info_constraint"]:stripe_info_constraint;
-	/** input type for incrementing numeric columns in table "stripe_info" */
-["stripe_info_inc_input"]: {
-	id?:number
-};
-	/** input type for inserting data into table "stripe_info" */
-["stripe_info_insert_input"]: {
-	charges_enabled?:boolean,
-	details_submitted?:boolean,
-	id?:number,
-	pass_fees_to_customer?:boolean,
-	payouts_enabled?:boolean,
-	requirements?:ValueTypes["json"],
-	service_provider_payment_info?:ValueTypes["service_provider_payment_info_obj_rel_insert_input"],
-	stripe_id?:string,
-	stripe_status?:string
-};
-	/** aggregate max on columns */
-["stripe_info_max_fields"]: AliasType<{
-	id?:true,
-	stripe_id?:true,
-	stripe_status?:true,
-		__typename?: true
-}>;
-	/** aggregate min on columns */
-["stripe_info_min_fields"]: AliasType<{
-	id?:true,
-	stripe_id?:true,
-	stripe_status?:true,
-		__typename?: true
-}>;
-	/** response of any mutation on the table "stripe_info" */
-["stripe_info_mutation_response"]: AliasType<{
-	/** number of rows affected by the mutation */
-	affected_rows?:true,
-	/** data from the rows affected by the mutation */
-	returning?:ValueTypes["stripe_info"],
-		__typename?: true
-}>;
-	/** input type for inserting object relation for remote table "stripe_info" */
-["stripe_info_obj_rel_insert_input"]: {
-	data:ValueTypes["stripe_info_insert_input"],
-	/** upsert condition */
-	on_conflict?:ValueTypes["stripe_info_on_conflict"]
-};
-	/** on_conflict condition type for table "stripe_info" */
-["stripe_info_on_conflict"]: {
-	constraint:ValueTypes["stripe_info_constraint"],
-	update_columns:ValueTypes["stripe_info_update_column"][],
-	where?:ValueTypes["stripe_info_bool_exp"]
-};
-	/** Ordering options when selecting data from "stripe_info". */
-["stripe_info_order_by"]: {
-	charges_enabled?:ValueTypes["order_by"],
-	details_submitted?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
-	pass_fees_to_customer?:ValueTypes["order_by"],
-	payouts_enabled?:ValueTypes["order_by"],
-	requirements?:ValueTypes["order_by"],
-	service_provider_payment_info?:ValueTypes["service_provider_payment_info_order_by"],
-	stripe_id?:ValueTypes["order_by"],
-	stripe_status?:ValueTypes["order_by"]
-};
-	/** primary key columns input for table: stripe_info */
-["stripe_info_pk_columns_input"]: {
-	id:number
-};
-	/** select columns of table "stripe_info" */
-["stripe_info_select_column"]:stripe_info_select_column;
-	/** input type for updating data in table "stripe_info" */
-["stripe_info_set_input"]: {
-	charges_enabled?:boolean,
-	details_submitted?:boolean,
-	id?:number,
-	pass_fees_to_customer?:boolean,
-	payouts_enabled?:boolean,
-	requirements?:ValueTypes["json"],
-	stripe_id?:string,
-	stripe_status?:string
-};
-	/** aggregate stddev on columns */
-["stripe_info_stddev_fields"]: AliasType<{
-	id?:true,
-		__typename?: true
-}>;
-	/** aggregate stddev_pop on columns */
-["stripe_info_stddev_pop_fields"]: AliasType<{
-	id?:true,
-		__typename?: true
-}>;
-	/** aggregate stddev_samp on columns */
-["stripe_info_stddev_samp_fields"]: AliasType<{
-	id?:true,
-		__typename?: true
-}>;
-	/** Streaming cursor of the table "stripe_info" */
-["stripe_info_stream_cursor_input"]: {
-	/** Stream column input with initial value */
-	initial_value:ValueTypes["stripe_info_stream_cursor_value_input"],
-	/** cursor ordering */
-	ordering?:ValueTypes["cursor_ordering"]
-};
-	/** Initial value of the column from where the streaming should start */
-["stripe_info_stream_cursor_value_input"]: {
-	charges_enabled?:boolean,
-	details_submitted?:boolean,
-	id?:number,
-	pass_fees_to_customer?:boolean,
-	payouts_enabled?:boolean,
-	requirements?:ValueTypes["json"],
-	stripe_id?:string,
-	stripe_status?:string
-};
-	/** aggregate sum on columns */
-["stripe_info_sum_fields"]: AliasType<{
-	id?:true,
-		__typename?: true
-}>;
-	/** update columns of table "stripe_info" */
-["stripe_info_update_column"]:stripe_info_update_column;
-	["stripe_info_updates"]: {
-	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["stripe_info_inc_input"],
-	/** sets the columns of the filtered rows to the given values */
-	_set?:ValueTypes["stripe_info_set_input"],
-	where:ValueTypes["stripe_info_bool_exp"]
-};
-	/** aggregate var_pop on columns */
-["stripe_info_var_pop_fields"]: AliasType<{
-	id?:true,
-		__typename?: true
-}>;
-	/** aggregate var_samp on columns */
-["stripe_info_var_samp_fields"]: AliasType<{
-	id?:true,
-		__typename?: true
-}>;
-	/** aggregate variance on columns */
-["stripe_info_variance_fields"]: AliasType<{
-	id?:true,
-		__typename?: true
-}>;
 	/** columns and relationships of "subscriber" */
 ["subscriber"]: AliasType<{
 	/** An object relationship */
@@ -12085,40 +11591,6 @@ service_link_stream?: [{	/** maximum number of rows returned in a single batch *
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["service_link_stream_cursor_input"][],	/** filter the rows returned */
 	where?:ValueTypes["service_link_bool_exp"]},ValueTypes["service_link"]],
-service_provider_payment_info?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["service_provider_payment_info_select_column"][],	/** limit the number of rows returned */
-	limit?:number,	/** skip the first n rows. Use only with order_by */
-	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["service_provider_payment_info_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["service_provider_payment_info_bool_exp"]},ValueTypes["service_provider_payment_info"]],
-service_provider_payment_info_aggregate?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["service_provider_payment_info_select_column"][],	/** limit the number of rows returned */
-	limit?:number,	/** skip the first n rows. Use only with order_by */
-	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["service_provider_payment_info_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["service_provider_payment_info_bool_exp"]},ValueTypes["service_provider_payment_info_aggregate"]],
-service_provider_payment_info_by_pk?: [{	id:number},ValueTypes["service_provider_payment_info"]],
-service_provider_payment_info_stream?: [{	/** maximum number of rows returned in a single batch */
-	batch_size:number,	/** cursor to stream the results returned by the query */
-	cursor?:ValueTypes["service_provider_payment_info_stream_cursor_input"][],	/** filter the rows returned */
-	where?:ValueTypes["service_provider_payment_info_bool_exp"]},ValueTypes["service_provider_payment_info"]],
-stripe_info?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["stripe_info_select_column"][],	/** limit the number of rows returned */
-	limit?:number,	/** skip the first n rows. Use only with order_by */
-	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["stripe_info_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["stripe_info_bool_exp"]},ValueTypes["stripe_info"]],
-stripe_info_aggregate?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["stripe_info_select_column"][],	/** limit the number of rows returned */
-	limit?:number,	/** skip the first n rows. Use only with order_by */
-	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["stripe_info_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["stripe_info_bool_exp"]},ValueTypes["stripe_info_aggregate"]],
-stripe_info_by_pk?: [{	id:number},ValueTypes["stripe_info"]],
-stripe_info_stream?: [{	/** maximum number of rows returned in a single batch */
-	batch_size:number,	/** cursor to stream the results returned by the query */
-	cursor?:ValueTypes["stripe_info_stream_cursor_input"][],	/** filter the rows returned */
-	where?:ValueTypes["stripe_info_bool_exp"]},ValueTypes["stripe_info"]],
 subscriber?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["subscriber_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -15115,7 +14587,6 @@ the end). throws an error if top level container is not an array */
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:string,
-			stripe_payment_id?:number,
 			/** in meters */
 	trip_distance?:number,
 			/** in seconds */
@@ -15187,7 +14658,6 @@ cancelledByServiceProvider */
 			package_cost?:number,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number,
 			/** in meters */
 	trip_distance?:number,
 			/** in seconds */
@@ -15207,7 +14677,6 @@ cancelledByServiceProvider */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"],
 	/** in meters */
 	trip_distance?:PartialObjects["order_by"],
 	/** in seconds */
@@ -15266,7 +14735,6 @@ cancelledByServiceProvider */
 	service_provider_review_by_driver_id?:PartialObjects["Int_comparison_exp"],
 	service_provider_type?:PartialObjects["String_comparison_exp"],
 	status?:PartialObjects["String_comparison_exp"],
-	stripe_payment_id?:PartialObjects["Int_comparison_exp"],
 	trip_distance?:PartialObjects["Int_comparison_exp"],
 	trip_duration?:PartialObjects["Int_comparison_exp"],
 	trip_polyline?:PartialObjects["String_comparison_exp"]
@@ -15287,7 +14755,6 @@ cancelledByServiceProvider */
 	package_cost?:PartialObjects["money"],
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -15347,7 +14814,6 @@ cancelledByServiceProvider */
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:string,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -15393,7 +14859,6 @@ cancelledByServiceProvider */
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:string,
-			stripe_payment_id?:number,
 			/** in meters */
 	trip_distance?:number,
 			/** in seconds */
@@ -15438,7 +14903,6 @@ cancelledByServiceProvider */
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"],
 	/** in meters */
 	trip_distance?:PartialObjects["order_by"],
 	/** in seconds */
@@ -15484,7 +14948,6 @@ cancelledByServiceProvider */
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:string,
-			stripe_payment_id?:number,
 			/** in meters */
 	trip_distance?:number,
 			/** in seconds */
@@ -15529,7 +14992,6 @@ cancelledByServiceProvider */
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"],
 	/** in meters */
 	trip_distance?:PartialObjects["order_by"],
 	/** in seconds */
@@ -15606,7 +15068,6 @@ cancelledByServiceProvider */
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
 	service_provider_type?:PartialObjects["order_by"],
 	status?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"],
 	trip_distance?:PartialObjects["order_by"],
 	trip_duration?:PartialObjects["order_by"],
 	trip_polyline?:PartialObjects["order_by"]
@@ -16009,7 +15470,6 @@ cancelledByServiceProvider */
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:string,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -16031,7 +15491,6 @@ cancelledByServiceProvider */
 			package_cost?:number,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number,
 			/** in meters */
 	trip_distance?:number,
 			/** in seconds */
@@ -16051,7 +15510,6 @@ cancelledByServiceProvider */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"],
 	/** in meters */
 	trip_distance?:PartialObjects["order_by"],
 	/** in seconds */
@@ -16072,7 +15530,6 @@ cancelledByServiceProvider */
 			package_cost?:number,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number,
 			/** in meters */
 	trip_distance?:number,
 			/** in seconds */
@@ -16092,7 +15549,6 @@ cancelledByServiceProvider */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"],
 	/** in meters */
 	trip_distance?:PartialObjects["order_by"],
 	/** in seconds */
@@ -16113,7 +15569,6 @@ cancelledByServiceProvider */
 			package_cost?:number,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number,
 			/** in meters */
 	trip_distance?:number,
 			/** in seconds */
@@ -16133,7 +15588,6 @@ cancelledByServiceProvider */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"],
 	/** in meters */
 	trip_distance?:PartialObjects["order_by"],
 	/** in seconds */
@@ -16187,7 +15641,6 @@ cancelledByServiceProvider */
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:string,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -16209,7 +15662,6 @@ cancelledByServiceProvider */
 			package_cost?:PartialObjects["money"],
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number,
 			/** in meters */
 	trip_distance?:number,
 			/** in seconds */
@@ -16229,7 +15681,6 @@ cancelledByServiceProvider */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"],
 	/** in meters */
 	trip_distance?:PartialObjects["order_by"],
 	/** in seconds */
@@ -16259,7 +15710,6 @@ cancelledByServiceProvider */
 			package_cost?:number,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number,
 			/** in meters */
 	trip_distance?:number,
 			/** in seconds */
@@ -16279,7 +15729,6 @@ cancelledByServiceProvider */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"],
 	/** in meters */
 	trip_distance?:PartialObjects["order_by"],
 	/** in seconds */
@@ -16300,7 +15749,6 @@ cancelledByServiceProvider */
 			package_cost?:number,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number,
 			/** in meters */
 	trip_distance?:number,
 			/** in seconds */
@@ -16320,7 +15768,6 @@ cancelledByServiceProvider */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"],
 	/** in meters */
 	trip_distance?:PartialObjects["order_by"],
 	/** in seconds */
@@ -16341,7 +15788,6 @@ cancelledByServiceProvider */
 			package_cost?:number,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			stripe_payment_id?:number,
 			/** in meters */
 	trip_distance?:number,
 			/** in seconds */
@@ -16361,7 +15807,6 @@ cancelledByServiceProvider */
 	package_cost?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	stripe_payment_id?:PartialObjects["order_by"],
 	/** in meters */
 	trip_distance?:PartialObjects["order_by"],
 	/** in seconds */
@@ -16771,14 +16216,6 @@ cancelledByServiceProvider */
 	delete_service_link?:PartialObjects["service_link_mutation_response"],
 			/** delete single row from the table: "service_link" */
 	delete_service_link_by_pk?:PartialObjects["service_link"],
-			/** delete data from the table: "service_provider_payment_info" */
-	delete_service_provider_payment_info?:PartialObjects["service_provider_payment_info_mutation_response"],
-			/** delete single row from the table: "service_provider_payment_info" */
-	delete_service_provider_payment_info_by_pk?:PartialObjects["service_provider_payment_info"],
-			/** delete data from the table: "stripe_info" */
-	delete_stripe_info?:PartialObjects["stripe_info_mutation_response"],
-			/** delete single row from the table: "stripe_info" */
-	delete_stripe_info_by_pk?:PartialObjects["stripe_info"],
 			/** delete data from the table: "subscriber" */
 	delete_subscriber?:PartialObjects["subscriber_mutation_response"],
 			/** delete single row from the table: "subscriber" */
@@ -16915,14 +16352,6 @@ cancelledByServiceProvider */
 	insert_service_link?:PartialObjects["service_link_mutation_response"],
 			/** insert a single row into the table: "service_link" */
 	insert_service_link_one?:PartialObjects["service_link"],
-			/** insert data into the table: "service_provider_payment_info" */
-	insert_service_provider_payment_info?:PartialObjects["service_provider_payment_info_mutation_response"],
-			/** insert a single row into the table: "service_provider_payment_info" */
-	insert_service_provider_payment_info_one?:PartialObjects["service_provider_payment_info"],
-			/** insert data into the table: "stripe_info" */
-	insert_stripe_info?:PartialObjects["stripe_info_mutation_response"],
-			/** insert a single row into the table: "stripe_info" */
-	insert_stripe_info_one?:PartialObjects["stripe_info"],
 			/** insert data into the table: "subscriber" */
 	insert_subscriber?:PartialObjects["subscriber_mutation_response"],
 			/** insert a single row into the table: "subscriber" */
@@ -17111,18 +16540,6 @@ cancelledByServiceProvider */
 	update_service_link_by_pk?:PartialObjects["service_link"],
 			/** update multiples rows of table: "service_link" */
 	update_service_link_many?:(PartialObjects["service_link_mutation_response"] | undefined)[],
-			/** update data of the table: "service_provider_payment_info" */
-	update_service_provider_payment_info?:PartialObjects["service_provider_payment_info_mutation_response"],
-			/** update single row of the table: "service_provider_payment_info" */
-	update_service_provider_payment_info_by_pk?:PartialObjects["service_provider_payment_info"],
-			/** update multiples rows of table: "service_provider_payment_info" */
-	update_service_provider_payment_info_many?:(PartialObjects["service_provider_payment_info_mutation_response"] | undefined)[],
-			/** update data of the table: "stripe_info" */
-	update_stripe_info?:PartialObjects["stripe_info_mutation_response"],
-			/** update single row of the table: "stripe_info" */
-	update_stripe_info_by_pk?:PartialObjects["stripe_info"],
-			/** update multiples rows of table: "stripe_info" */
-	update_stripe_info_many?:(PartialObjects["stripe_info_mutation_response"] | undefined)[],
 			/** update data of the table: "subscriber" */
 	update_subscriber?:PartialObjects["subscriber_mutation_response"],
 			/** update single row of the table: "subscriber" */
@@ -17752,18 +17169,6 @@ the end). throws an error if top level container is not an array */
 	service_link_aggregate?:PartialObjects["service_link_aggregate"],
 			/** fetch data from the table: "service_link" using primary key columns */
 	service_link_by_pk?:PartialObjects["service_link"],
-			/** fetch data from the table: "service_provider_payment_info" */
-	service_provider_payment_info?:PartialObjects["service_provider_payment_info"][],
-			/** fetch aggregated fields from the table: "service_provider_payment_info" */
-	service_provider_payment_info_aggregate?:PartialObjects["service_provider_payment_info_aggregate"],
-			/** fetch data from the table: "service_provider_payment_info" using primary key columns */
-	service_provider_payment_info_by_pk?:PartialObjects["service_provider_payment_info"],
-			/** fetch data from the table: "stripe_info" */
-	stripe_info?:PartialObjects["stripe_info"][],
-			/** fetch aggregated fields from the table: "stripe_info" */
-	stripe_info_aggregate?:PartialObjects["stripe_info_aggregate"],
-			/** fetch data from the table: "stripe_info" using primary key columns */
-	stripe_info_by_pk?:PartialObjects["stripe_info"],
 			/** fetch data from the table: "subscriber" */
 	subscriber?:PartialObjects["subscriber"][],
 			/** fetch aggregated fields from the table: "subscriber" */
@@ -17830,8 +17235,6 @@ the end). throws an error if top level container is not an array */
 	orders?:PartialObjects["restaurant_order"][],
 			/** An aggregate relationship */
 	orders_aggregate?:PartialObjects["restaurant_order_aggregate"],
-			/** An object relationship */
-	payment_info?:PartialObjects["service_provider_payment_info"],
 			payment_info_id?:number,
 			/** An array relationship */
 	restaurant_operators?:PartialObjects["restaurant_operator"][],
@@ -17905,7 +17308,6 @@ the end). throws an error if top level container is not an array */
 	open_status?:PartialObjects["String_comparison_exp"],
 	orders?:PartialObjects["restaurant_order_bool_exp"],
 	orders_aggregate?:PartialObjects["restaurant_order_aggregate_bool_exp"],
-	payment_info?:PartialObjects["service_provider_payment_info_bool_exp"],
 	payment_info_id?:PartialObjects["Int_comparison_exp"],
 	restaurant_operators?:PartialObjects["restaurant_operator_bool_exp"],
 	restaurant_operators_aggregate?:PartialObjects["restaurant_operator_aggregate_bool_exp"],
@@ -19203,7 +18605,6 @@ end). throws an error if top level container is not an array */
 	/** open, closed_temporarily, closed_indefinitely */
 	open_status?:string,
 	orders?:PartialObjects["restaurant_order_arr_rel_insert_input"],
-	payment_info?:PartialObjects["service_provider_payment_info_obj_rel_insert_input"],
 	payment_info_id?:number,
 	restaurant_operators?:PartialObjects["restaurant_operator_arr_rel_insert_input"],
 	reviews?:PartialObjects["review_arr_rel_insert_input"],
@@ -21329,7 +20730,6 @@ All fields are combined with a logical 'AND'. */
 	name?:PartialObjects["order_by"],
 	open_status?:PartialObjects["order_by"],
 	orders_aggregate?:PartialObjects["restaurant_order_aggregate_order_by"],
-	payment_info?:PartialObjects["service_provider_payment_info_order_by"],
 	payment_info_id?:PartialObjects["order_by"],
 	restaurant_operators_aggregate?:PartialObjects["restaurant_operator_aggregate_order_by"],
 	reviews_aggregate?:PartialObjects["review_aggregate_order_by"],
@@ -23417,207 +22817,6 @@ the end). throws an error if top level container is not an array */
 			id?:number,
 			service_provider_id?:number
 	},
-	/** columns and relationships of "service_provider_payment_info" */
-["service_provider_payment_info"]: {
-		__typename?: "service_provider_payment_info";
-			bank_transfer?:boolean,
-			card?:boolean,
-			cash?:boolean,
-			id?:number,
-			/** An object relationship */
-	restaurant?:PartialObjects["restaurant"],
-			service_provider_type?:string,
-			/** An object relationship */
-	stripe_info?:PartialObjects["stripe_info"],
-			stripe_info_id?:number
-	},
-	/** aggregated selection of "service_provider_payment_info" */
-["service_provider_payment_info_aggregate"]: {
-		__typename?: "service_provider_payment_info_aggregate";
-			aggregate?:PartialObjects["service_provider_payment_info_aggregate_fields"],
-			nodes?:PartialObjects["service_provider_payment_info"][]
-	},
-	/** aggregate fields of "service_provider_payment_info" */
-["service_provider_payment_info_aggregate_fields"]: {
-		__typename?: "service_provider_payment_info_aggregate_fields";
-			avg?:PartialObjects["service_provider_payment_info_avg_fields"],
-			count?:number,
-			max?:PartialObjects["service_provider_payment_info_max_fields"],
-			min?:PartialObjects["service_provider_payment_info_min_fields"],
-			stddev?:PartialObjects["service_provider_payment_info_stddev_fields"],
-			stddev_pop?:PartialObjects["service_provider_payment_info_stddev_pop_fields"],
-			stddev_samp?:PartialObjects["service_provider_payment_info_stddev_samp_fields"],
-			sum?:PartialObjects["service_provider_payment_info_sum_fields"],
-			var_pop?:PartialObjects["service_provider_payment_info_var_pop_fields"],
-			var_samp?:PartialObjects["service_provider_payment_info_var_samp_fields"],
-			variance?:PartialObjects["service_provider_payment_info_variance_fields"]
-	},
-	/** aggregate avg on columns */
-["service_provider_payment_info_avg_fields"]: {
-		__typename?: "service_provider_payment_info_avg_fields";
-			id?:number,
-			stripe_info_id?:number
-	},
-	/** Boolean expression to filter rows from the table
-"service_provider_payment_info". All fields are combined with a logical 'AND'. */
-["service_provider_payment_info_bool_exp"]: {
-	_and?:PartialObjects["service_provider_payment_info_bool_exp"][],
-	_not?:PartialObjects["service_provider_payment_info_bool_exp"],
-	_or?:PartialObjects["service_provider_payment_info_bool_exp"][],
-	bank_transfer?:PartialObjects["Boolean_comparison_exp"],
-	card?:PartialObjects["Boolean_comparison_exp"],
-	cash?:PartialObjects["Boolean_comparison_exp"],
-	id?:PartialObjects["Int_comparison_exp"],
-	restaurant?:PartialObjects["restaurant_bool_exp"],
-	service_provider_type?:PartialObjects["String_comparison_exp"],
-	stripe_info?:PartialObjects["stripe_info_bool_exp"],
-	stripe_info_id?:PartialObjects["Int_comparison_exp"]
-},
-	/** unique or primary key constraints on table "service_provider_payment_info" */
-["service_provider_payment_info_constraint"]:service_provider_payment_info_constraint,
-	/** input type for incrementing numeric columns in table "service_provider_payment_info" */
-["service_provider_payment_info_inc_input"]: {
-	id?:number,
-	stripe_info_id?:number
-},
-	/** input type for inserting data into table "service_provider_payment_info" */
-["service_provider_payment_info_insert_input"]: {
-	bank_transfer?:boolean,
-	card?:boolean,
-	cash?:boolean,
-	id?:number,
-	restaurant?:PartialObjects["restaurant_obj_rel_insert_input"],
-	service_provider_type?:string,
-	stripe_info?:PartialObjects["stripe_info_obj_rel_insert_input"],
-	stripe_info_id?:number
-},
-	/** aggregate max on columns */
-["service_provider_payment_info_max_fields"]: {
-		__typename?: "service_provider_payment_info_max_fields";
-			id?:number,
-			service_provider_type?:string,
-			stripe_info_id?:number
-	},
-	/** aggregate min on columns */
-["service_provider_payment_info_min_fields"]: {
-		__typename?: "service_provider_payment_info_min_fields";
-			id?:number,
-			service_provider_type?:string,
-			stripe_info_id?:number
-	},
-	/** response of any mutation on the table "service_provider_payment_info" */
-["service_provider_payment_info_mutation_response"]: {
-		__typename?: "service_provider_payment_info_mutation_response";
-			/** number of rows affected by the mutation */
-	affected_rows?:number,
-			/** data from the rows affected by the mutation */
-	returning?:PartialObjects["service_provider_payment_info"][]
-	},
-	/** input type for inserting object relation for remote table "service_provider_payment_info" */
-["service_provider_payment_info_obj_rel_insert_input"]: {
-	data:PartialObjects["service_provider_payment_info_insert_input"],
-	/** upsert condition */
-	on_conflict?:PartialObjects["service_provider_payment_info_on_conflict"]
-},
-	/** on_conflict condition type for table "service_provider_payment_info" */
-["service_provider_payment_info_on_conflict"]: {
-	constraint:PartialObjects["service_provider_payment_info_constraint"],
-	update_columns:PartialObjects["service_provider_payment_info_update_column"][],
-	where?:PartialObjects["service_provider_payment_info_bool_exp"]
-},
-	/** Ordering options when selecting data from "service_provider_payment_info". */
-["service_provider_payment_info_order_by"]: {
-	bank_transfer?:PartialObjects["order_by"],
-	card?:PartialObjects["order_by"],
-	cash?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
-	restaurant?:PartialObjects["restaurant_order_by"],
-	service_provider_type?:PartialObjects["order_by"],
-	stripe_info?:PartialObjects["stripe_info_order_by"],
-	stripe_info_id?:PartialObjects["order_by"]
-},
-	/** primary key columns input for table: service_provider_payment_info */
-["service_provider_payment_info_pk_columns_input"]: {
-	id:number
-},
-	/** select columns of table "service_provider_payment_info" */
-["service_provider_payment_info_select_column"]:service_provider_payment_info_select_column,
-	/** input type for updating data in table "service_provider_payment_info" */
-["service_provider_payment_info_set_input"]: {
-	bank_transfer?:boolean,
-	card?:boolean,
-	cash?:boolean,
-	id?:number,
-	service_provider_type?:string,
-	stripe_info_id?:number
-},
-	/** aggregate stddev on columns */
-["service_provider_payment_info_stddev_fields"]: {
-		__typename?: "service_provider_payment_info_stddev_fields";
-			id?:number,
-			stripe_info_id?:number
-	},
-	/** aggregate stddev_pop on columns */
-["service_provider_payment_info_stddev_pop_fields"]: {
-		__typename?: "service_provider_payment_info_stddev_pop_fields";
-			id?:number,
-			stripe_info_id?:number
-	},
-	/** aggregate stddev_samp on columns */
-["service_provider_payment_info_stddev_samp_fields"]: {
-		__typename?: "service_provider_payment_info_stddev_samp_fields";
-			id?:number,
-			stripe_info_id?:number
-	},
-	/** Streaming cursor of the table "service_provider_payment_info" */
-["service_provider_payment_info_stream_cursor_input"]: {
-	/** Stream column input with initial value */
-	initial_value:PartialObjects["service_provider_payment_info_stream_cursor_value_input"],
-	/** cursor ordering */
-	ordering?:PartialObjects["cursor_ordering"]
-},
-	/** Initial value of the column from where the streaming should start */
-["service_provider_payment_info_stream_cursor_value_input"]: {
-	bank_transfer?:boolean,
-	card?:boolean,
-	cash?:boolean,
-	id?:number,
-	service_provider_type?:string,
-	stripe_info_id?:number
-},
-	/** aggregate sum on columns */
-["service_provider_payment_info_sum_fields"]: {
-		__typename?: "service_provider_payment_info_sum_fields";
-			id?:number,
-			stripe_info_id?:number
-	},
-	/** update columns of table "service_provider_payment_info" */
-["service_provider_payment_info_update_column"]:service_provider_payment_info_update_column,
-	["service_provider_payment_info_updates"]: {
-	/** increments the numeric columns with given value of the filtered values */
-	_inc?:PartialObjects["service_provider_payment_info_inc_input"],
-	/** sets the columns of the filtered rows to the given values */
-	_set?:PartialObjects["service_provider_payment_info_set_input"],
-	where:PartialObjects["service_provider_payment_info_bool_exp"]
-},
-	/** aggregate var_pop on columns */
-["service_provider_payment_info_var_pop_fields"]: {
-		__typename?: "service_provider_payment_info_var_pop_fields";
-			id?:number,
-			stripe_info_id?:number
-	},
-	/** aggregate var_samp on columns */
-["service_provider_payment_info_var_samp_fields"]: {
-		__typename?: "service_provider_payment_info_var_samp_fields";
-			id?:number,
-			stripe_info_id?:number
-	},
-	/** aggregate variance on columns */
-["service_provider_payment_info_variance_fields"]: {
-		__typename?: "service_provider_payment_info_variance_fields";
-			id?:number,
-			stripe_info_id?:number
-	},
 	["st_d_within_geography_input"]: {
 	distance:number,
 	from:PartialObjects["geography"],
@@ -23659,204 +22858,6 @@ the end). throws an error if top level container is not an array */
 	/** does the column match the given SQL regular expression */
 	_similar?:string
 },
-	/** columns and relationships of "stripe_info" */
-["stripe_info"]: {
-		__typename?: "stripe_info";
-			charges_enabled?:boolean,
-			details_submitted?:boolean,
-			id?:number,
-			pass_fees_to_customer?:boolean,
-			payouts_enabled?:boolean,
-			requirements?:PartialObjects["json"],
-			/** An object relationship */
-	service_provider_payment_info?:PartialObjects["service_provider_payment_info"],
-			stripe_id?:string,
-			stripe_status?:string
-	},
-	/** aggregated selection of "stripe_info" */
-["stripe_info_aggregate"]: {
-		__typename?: "stripe_info_aggregate";
-			aggregate?:PartialObjects["stripe_info_aggregate_fields"],
-			nodes?:PartialObjects["stripe_info"][]
-	},
-	/** aggregate fields of "stripe_info" */
-["stripe_info_aggregate_fields"]: {
-		__typename?: "stripe_info_aggregate_fields";
-			avg?:PartialObjects["stripe_info_avg_fields"],
-			count?:number,
-			max?:PartialObjects["stripe_info_max_fields"],
-			min?:PartialObjects["stripe_info_min_fields"],
-			stddev?:PartialObjects["stripe_info_stddev_fields"],
-			stddev_pop?:PartialObjects["stripe_info_stddev_pop_fields"],
-			stddev_samp?:PartialObjects["stripe_info_stddev_samp_fields"],
-			sum?:PartialObjects["stripe_info_sum_fields"],
-			var_pop?:PartialObjects["stripe_info_var_pop_fields"],
-			var_samp?:PartialObjects["stripe_info_var_samp_fields"],
-			variance?:PartialObjects["stripe_info_variance_fields"]
-	},
-	/** aggregate avg on columns */
-["stripe_info_avg_fields"]: {
-		__typename?: "stripe_info_avg_fields";
-			id?:number
-	},
-	/** Boolean expression to filter rows from the table "stripe_info". All fields are combined with a logical 'AND'. */
-["stripe_info_bool_exp"]: {
-	_and?:PartialObjects["stripe_info_bool_exp"][],
-	_not?:PartialObjects["stripe_info_bool_exp"],
-	_or?:PartialObjects["stripe_info_bool_exp"][],
-	charges_enabled?:PartialObjects["Boolean_comparison_exp"],
-	details_submitted?:PartialObjects["Boolean_comparison_exp"],
-	id?:PartialObjects["Int_comparison_exp"],
-	pass_fees_to_customer?:PartialObjects["Boolean_comparison_exp"],
-	payouts_enabled?:PartialObjects["Boolean_comparison_exp"],
-	requirements?:PartialObjects["json_comparison_exp"],
-	service_provider_payment_info?:PartialObjects["service_provider_payment_info_bool_exp"],
-	stripe_id?:PartialObjects["String_comparison_exp"],
-	stripe_status?:PartialObjects["String_comparison_exp"]
-},
-	/** unique or primary key constraints on table "stripe_info" */
-["stripe_info_constraint"]:stripe_info_constraint,
-	/** input type for incrementing numeric columns in table "stripe_info" */
-["stripe_info_inc_input"]: {
-	id?:number
-},
-	/** input type for inserting data into table "stripe_info" */
-["stripe_info_insert_input"]: {
-	charges_enabled?:boolean,
-	details_submitted?:boolean,
-	id?:number,
-	pass_fees_to_customer?:boolean,
-	payouts_enabled?:boolean,
-	requirements?:PartialObjects["json"],
-	service_provider_payment_info?:PartialObjects["service_provider_payment_info_obj_rel_insert_input"],
-	stripe_id?:string,
-	stripe_status?:string
-},
-	/** aggregate max on columns */
-["stripe_info_max_fields"]: {
-		__typename?: "stripe_info_max_fields";
-			id?:number,
-			stripe_id?:string,
-			stripe_status?:string
-	},
-	/** aggregate min on columns */
-["stripe_info_min_fields"]: {
-		__typename?: "stripe_info_min_fields";
-			id?:number,
-			stripe_id?:string,
-			stripe_status?:string
-	},
-	/** response of any mutation on the table "stripe_info" */
-["stripe_info_mutation_response"]: {
-		__typename?: "stripe_info_mutation_response";
-			/** number of rows affected by the mutation */
-	affected_rows?:number,
-			/** data from the rows affected by the mutation */
-	returning?:PartialObjects["stripe_info"][]
-	},
-	/** input type for inserting object relation for remote table "stripe_info" */
-["stripe_info_obj_rel_insert_input"]: {
-	data:PartialObjects["stripe_info_insert_input"],
-	/** upsert condition */
-	on_conflict?:PartialObjects["stripe_info_on_conflict"]
-},
-	/** on_conflict condition type for table "stripe_info" */
-["stripe_info_on_conflict"]: {
-	constraint:PartialObjects["stripe_info_constraint"],
-	update_columns:PartialObjects["stripe_info_update_column"][],
-	where?:PartialObjects["stripe_info_bool_exp"]
-},
-	/** Ordering options when selecting data from "stripe_info". */
-["stripe_info_order_by"]: {
-	charges_enabled?:PartialObjects["order_by"],
-	details_submitted?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
-	pass_fees_to_customer?:PartialObjects["order_by"],
-	payouts_enabled?:PartialObjects["order_by"],
-	requirements?:PartialObjects["order_by"],
-	service_provider_payment_info?:PartialObjects["service_provider_payment_info_order_by"],
-	stripe_id?:PartialObjects["order_by"],
-	stripe_status?:PartialObjects["order_by"]
-},
-	/** primary key columns input for table: stripe_info */
-["stripe_info_pk_columns_input"]: {
-	id:number
-},
-	/** select columns of table "stripe_info" */
-["stripe_info_select_column"]:stripe_info_select_column,
-	/** input type for updating data in table "stripe_info" */
-["stripe_info_set_input"]: {
-	charges_enabled?:boolean,
-	details_submitted?:boolean,
-	id?:number,
-	pass_fees_to_customer?:boolean,
-	payouts_enabled?:boolean,
-	requirements?:PartialObjects["json"],
-	stripe_id?:string,
-	stripe_status?:string
-},
-	/** aggregate stddev on columns */
-["stripe_info_stddev_fields"]: {
-		__typename?: "stripe_info_stddev_fields";
-			id?:number
-	},
-	/** aggregate stddev_pop on columns */
-["stripe_info_stddev_pop_fields"]: {
-		__typename?: "stripe_info_stddev_pop_fields";
-			id?:number
-	},
-	/** aggregate stddev_samp on columns */
-["stripe_info_stddev_samp_fields"]: {
-		__typename?: "stripe_info_stddev_samp_fields";
-			id?:number
-	},
-	/** Streaming cursor of the table "stripe_info" */
-["stripe_info_stream_cursor_input"]: {
-	/** Stream column input with initial value */
-	initial_value:PartialObjects["stripe_info_stream_cursor_value_input"],
-	/** cursor ordering */
-	ordering?:PartialObjects["cursor_ordering"]
-},
-	/** Initial value of the column from where the streaming should start */
-["stripe_info_stream_cursor_value_input"]: {
-	charges_enabled?:boolean,
-	details_submitted?:boolean,
-	id?:number,
-	pass_fees_to_customer?:boolean,
-	payouts_enabled?:boolean,
-	requirements?:PartialObjects["json"],
-	stripe_id?:string,
-	stripe_status?:string
-},
-	/** aggregate sum on columns */
-["stripe_info_sum_fields"]: {
-		__typename?: "stripe_info_sum_fields";
-			id?:number
-	},
-	/** update columns of table "stripe_info" */
-["stripe_info_update_column"]:stripe_info_update_column,
-	["stripe_info_updates"]: {
-	/** increments the numeric columns with given value of the filtered values */
-	_inc?:PartialObjects["stripe_info_inc_input"],
-	/** sets the columns of the filtered rows to the given values */
-	_set?:PartialObjects["stripe_info_set_input"],
-	where:PartialObjects["stripe_info_bool_exp"]
-},
-	/** aggregate var_pop on columns */
-["stripe_info_var_pop_fields"]: {
-		__typename?: "stripe_info_var_pop_fields";
-			id?:number
-	},
-	/** aggregate var_samp on columns */
-["stripe_info_var_samp_fields"]: {
-		__typename?: "stripe_info_var_samp_fields";
-			id?:number
-	},
-	/** aggregate variance on columns */
-["stripe_info_variance_fields"]: {
-		__typename?: "stripe_info_variance_fields";
-			id?:number
-	},
 	/** columns and relationships of "subscriber" */
 ["subscriber"]: {
 		__typename?: "subscriber";
@@ -24277,22 +23278,6 @@ the end). throws an error if top level container is not an array */
 	service_link_by_pk?:PartialObjects["service_link"],
 			/** fetch data from the table in a streaming manner: "service_link" */
 	service_link_stream?:PartialObjects["service_link"][],
-			/** fetch data from the table: "service_provider_payment_info" */
-	service_provider_payment_info?:PartialObjects["service_provider_payment_info"][],
-			/** fetch aggregated fields from the table: "service_provider_payment_info" */
-	service_provider_payment_info_aggregate?:PartialObjects["service_provider_payment_info_aggregate"],
-			/** fetch data from the table: "service_provider_payment_info" using primary key columns */
-	service_provider_payment_info_by_pk?:PartialObjects["service_provider_payment_info"],
-			/** fetch data from the table in a streaming manner: "service_provider_payment_info" */
-	service_provider_payment_info_stream?:PartialObjects["service_provider_payment_info"][],
-			/** fetch data from the table: "stripe_info" */
-	stripe_info?:PartialObjects["stripe_info"][],
-			/** fetch aggregated fields from the table: "stripe_info" */
-	stripe_info_aggregate?:PartialObjects["stripe_info_aggregate"],
-			/** fetch data from the table: "stripe_info" using primary key columns */
-	stripe_info_by_pk?:PartialObjects["stripe_info"],
-			/** fetch data from the table in a streaming manner: "stripe_info" */
-	stripe_info_stream?:PartialObjects["stripe_info"][],
 			/** fetch data from the table: "subscriber" */
 	subscriber?:PartialObjects["subscriber"][],
 			/** fetch aggregated fields from the table: "subscriber" */
@@ -27615,7 +26600,6 @@ export type delivery_order = {
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status:string,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -27694,7 +26678,6 @@ export type delivery_order_avg_fields = {
 	package_cost?:number,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -27715,7 +26698,6 @@ export type delivery_order_avg_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by,
 	/** in meters */
 	trip_distance?:order_by,
 	/** in seconds */
@@ -27775,7 +26757,6 @@ export type delivery_order_bool_exp = {
 	service_provider_review_by_driver_id?:Int_comparison_exp,
 	service_provider_type?:String_comparison_exp,
 	status?:String_comparison_exp,
-	stripe_payment_id?:Int_comparison_exp,
 	trip_distance?:Int_comparison_exp,
 	trip_duration?:Int_comparison_exp,
 	trip_polyline?:String_comparison_exp
@@ -27800,7 +26781,6 @@ export type delivery_order_inc_input = {
 	package_cost?:money,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -27861,7 +26841,6 @@ export type delivery_order_insert_input = {
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:string,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -27908,7 +26887,6 @@ export type delivery_order_max_fields = {
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:string,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -27954,7 +26932,6 @@ export type delivery_order_max_order_by = {
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:order_by,
-	stripe_payment_id?:order_by,
 	/** in meters */
 	trip_distance?:order_by,
 	/** in seconds */
@@ -28001,7 +26978,6 @@ export type delivery_order_min_fields = {
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:string,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -28047,7 +27023,6 @@ export type delivery_order_min_order_by = {
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:order_by,
-	stripe_payment_id?:order_by,
 	/** in meters */
 	trip_distance?:order_by,
 	/** in seconds */
@@ -28128,7 +27103,6 @@ export type delivery_order_order_by = {
 	service_provider_review_by_driver_id?:order_by,
 	service_provider_type?:order_by,
 	status?:order_by,
-	stripe_payment_id?:order_by,
 	trip_distance?:order_by,
 	trip_duration?:order_by,
 	trip_polyline?:order_by
@@ -28569,7 +27543,6 @@ export enum delivery_order_select_column {
 	service_provider_review_by_driver_id = "service_provider_review_by_driver_id",
 	service_provider_type = "service_provider_type",
 	status = "status",
-	stripe_payment_id = "stripe_payment_id",
 	trip_distance = "trip_distance",
 	trip_duration = "trip_duration",
 	trip_polyline = "trip_polyline"
@@ -28616,7 +27589,6 @@ export type delivery_order_set_input = {
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:string,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -28639,7 +27611,6 @@ export type delivery_order_stddev_fields = {
 	package_cost?:number,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -28660,7 +27631,6 @@ export type delivery_order_stddev_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by,
 	/** in meters */
 	trip_distance?:order_by,
 	/** in seconds */
@@ -28682,7 +27652,6 @@ export type delivery_order_stddev_pop_fields = {
 	package_cost?:number,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -28703,7 +27672,6 @@ export type delivery_order_stddev_pop_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by,
 	/** in meters */
 	trip_distance?:order_by,
 	/** in seconds */
@@ -28725,7 +27693,6 @@ export type delivery_order_stddev_samp_fields = {
 	package_cost?:number,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -28746,7 +27713,6 @@ export type delivery_order_stddev_samp_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by,
 	/** in meters */
 	trip_distance?:order_by,
 	/** in seconds */
@@ -28802,7 +27768,6 @@ export type delivery_order_stream_cursor_value_input = {
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:string,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -28825,7 +27790,6 @@ export type delivery_order_sum_fields = {
 	package_cost?:money,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -28846,7 +27810,6 @@ export type delivery_order_sum_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by,
 	/** in meters */
 	trip_distance?:order_by,
 	/** in seconds */
@@ -28888,7 +27851,6 @@ export enum delivery_order_update_column {
 	service_provider_review_by_driver_id = "service_provider_review_by_driver_id",
 	service_provider_type = "service_provider_type",
 	status = "status",
-	stripe_payment_id = "stripe_payment_id",
 	trip_distance = "trip_distance",
 	trip_duration = "trip_duration",
 	trip_polyline = "trip_polyline"
@@ -28917,7 +27879,6 @@ export type delivery_order_var_pop_fields = {
 	package_cost?:number,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -28938,7 +27899,6 @@ export type delivery_order_var_pop_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by,
 	/** in meters */
 	trip_distance?:order_by,
 	/** in seconds */
@@ -28960,7 +27920,6 @@ export type delivery_order_var_samp_fields = {
 	package_cost?:number,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -28981,7 +27940,6 @@ export type delivery_order_var_samp_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by,
 	/** in meters */
 	trip_distance?:order_by,
 	/** in seconds */
@@ -29003,7 +27961,6 @@ export type delivery_order_variance_fields = {
 	package_cost?:number,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	stripe_payment_id?:number,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -29024,7 +27981,6 @@ export type delivery_order_variance_order_by = {
 	package_cost?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	stripe_payment_id?:order_by,
 	/** in meters */
 	trip_distance?:order_by,
 	/** in seconds */
@@ -29485,14 +28441,6 @@ export type mutation_root = {
 	delete_service_link?:service_link_mutation_response,
 	/** delete single row from the table: "service_link" */
 	delete_service_link_by_pk?:service_link,
-	/** delete data from the table: "service_provider_payment_info" */
-	delete_service_provider_payment_info?:service_provider_payment_info_mutation_response,
-	/** delete single row from the table: "service_provider_payment_info" */
-	delete_service_provider_payment_info_by_pk?:service_provider_payment_info,
-	/** delete data from the table: "stripe_info" */
-	delete_stripe_info?:stripe_info_mutation_response,
-	/** delete single row from the table: "stripe_info" */
-	delete_stripe_info_by_pk?:stripe_info,
 	/** delete data from the table: "subscriber" */
 	delete_subscriber?:subscriber_mutation_response,
 	/** delete single row from the table: "subscriber" */
@@ -29629,14 +28577,6 @@ export type mutation_root = {
 	insert_service_link?:service_link_mutation_response,
 	/** insert a single row into the table: "service_link" */
 	insert_service_link_one?:service_link,
-	/** insert data into the table: "service_provider_payment_info" */
-	insert_service_provider_payment_info?:service_provider_payment_info_mutation_response,
-	/** insert a single row into the table: "service_provider_payment_info" */
-	insert_service_provider_payment_info_one?:service_provider_payment_info,
-	/** insert data into the table: "stripe_info" */
-	insert_stripe_info?:stripe_info_mutation_response,
-	/** insert a single row into the table: "stripe_info" */
-	insert_stripe_info_one?:stripe_info,
 	/** insert data into the table: "subscriber" */
 	insert_subscriber?:subscriber_mutation_response,
 	/** insert a single row into the table: "subscriber" */
@@ -29825,18 +28765,6 @@ export type mutation_root = {
 	update_service_link_by_pk?:service_link,
 	/** update multiples rows of table: "service_link" */
 	update_service_link_many?:(service_link_mutation_response | undefined)[],
-	/** update data of the table: "service_provider_payment_info" */
-	update_service_provider_payment_info?:service_provider_payment_info_mutation_response,
-	/** update single row of the table: "service_provider_payment_info" */
-	update_service_provider_payment_info_by_pk?:service_provider_payment_info,
-	/** update multiples rows of table: "service_provider_payment_info" */
-	update_service_provider_payment_info_many?:(service_provider_payment_info_mutation_response | undefined)[],
-	/** update data of the table: "stripe_info" */
-	update_stripe_info?:stripe_info_mutation_response,
-	/** update single row of the table: "stripe_info" */
-	update_stripe_info_by_pk?:stripe_info,
-	/** update multiples rows of table: "stripe_info" */
-	update_stripe_info_many?:(stripe_info_mutation_response | undefined)[],
 	/** update data of the table: "subscriber" */
 	update_subscriber?:subscriber_mutation_response,
 	/** update single row of the table: "subscriber" */
@@ -30569,18 +29497,6 @@ export type query_root = {
 	service_link_aggregate:service_link_aggregate,
 	/** fetch data from the table: "service_link" using primary key columns */
 	service_link_by_pk?:service_link,
-	/** fetch data from the table: "service_provider_payment_info" */
-	service_provider_payment_info:service_provider_payment_info[],
-	/** fetch aggregated fields from the table: "service_provider_payment_info" */
-	service_provider_payment_info_aggregate:service_provider_payment_info_aggregate,
-	/** fetch data from the table: "service_provider_payment_info" using primary key columns */
-	service_provider_payment_info_by_pk?:service_provider_payment_info,
-	/** fetch data from the table: "stripe_info" */
-	stripe_info:stripe_info[],
-	/** fetch aggregated fields from the table: "stripe_info" */
-	stripe_info_aggregate:stripe_info_aggregate,
-	/** fetch data from the table: "stripe_info" using primary key columns */
-	stripe_info_by_pk?:stripe_info,
 	/** fetch data from the table: "subscriber" */
 	subscriber:subscriber[],
 	/** fetch aggregated fields from the table: "subscriber" */
@@ -30648,8 +29564,6 @@ export type restaurant = {
 	orders:restaurant_order[],
 	/** An aggregate relationship */
 	orders_aggregate:restaurant_order_aggregate,
-	/** An object relationship */
-	payment_info?:service_provider_payment_info,
 	payment_info_id?:number,
 	/** An array relationship */
 	restaurant_operators:restaurant_operator[],
@@ -30728,7 +29642,6 @@ export type restaurant_bool_exp = {
 	open_status?:String_comparison_exp,
 	orders?:restaurant_order_bool_exp,
 	orders_aggregate?:restaurant_order_aggregate_bool_exp,
-	payment_info?:service_provider_payment_info_bool_exp,
 	payment_info_id?:Int_comparison_exp,
 	restaurant_operators?:restaurant_operator_bool_exp,
 	restaurant_operators_aggregate?:restaurant_operator_aggregate_bool_exp,
@@ -32253,7 +31166,6 @@ export type restaurant_insert_input = {
 	/** open, closed_temporarily, closed_indefinitely */
 	open_status?:string,
 	orders?:restaurant_order_arr_rel_insert_input,
-	payment_info?:service_provider_payment_info_obj_rel_insert_input,
 	payment_info_id?:number,
 	restaurant_operators?:restaurant_operator_arr_rel_insert_input,
 	reviews?:review_arr_rel_insert_input,
@@ -34720,7 +33632,6 @@ export type restaurant_order_by = {
 	name?:order_by,
 	open_status?:order_by,
 	orders_aggregate?:restaurant_order_aggregate_order_by,
-	payment_info?:service_provider_payment_info_order_by,
 	payment_info_id?:order_by,
 	restaurant_operators_aggregate?:restaurant_operator_aggregate_order_by,
 	reviews_aggregate?:review_aggregate_order_by,
@@ -37227,252 +36138,6 @@ export type service_link_variance_fields = {
 	service_provider_id?:number
 }
 
-/** columns and relationships of "service_provider_payment_info" */
-export type service_provider_payment_info = {
-	__typename?: "service_provider_payment_info",
-	bank_transfer:boolean,
-	card:boolean,
-	cash:boolean,
-	id:number,
-	/** An object relationship */
-	restaurant?:restaurant,
-	service_provider_type:string,
-	/** An object relationship */
-	stripe_info?:stripe_info,
-	stripe_info_id?:number
-}
-
-/** aggregated selection of "service_provider_payment_info" */
-export type service_provider_payment_info_aggregate = {
-	__typename?: "service_provider_payment_info_aggregate",
-	aggregate?:service_provider_payment_info_aggregate_fields,
-	nodes:service_provider_payment_info[]
-}
-
-/** aggregate fields of "service_provider_payment_info" */
-export type service_provider_payment_info_aggregate_fields = {
-	__typename?: "service_provider_payment_info_aggregate_fields",
-	avg?:service_provider_payment_info_avg_fields,
-	count:number,
-	max?:service_provider_payment_info_max_fields,
-	min?:service_provider_payment_info_min_fields,
-	stddev?:service_provider_payment_info_stddev_fields,
-	stddev_pop?:service_provider_payment_info_stddev_pop_fields,
-	stddev_samp?:service_provider_payment_info_stddev_samp_fields,
-	sum?:service_provider_payment_info_sum_fields,
-	var_pop?:service_provider_payment_info_var_pop_fields,
-	var_samp?:service_provider_payment_info_var_samp_fields,
-	variance?:service_provider_payment_info_variance_fields
-}
-
-/** aggregate avg on columns */
-export type service_provider_payment_info_avg_fields = {
-	__typename?: "service_provider_payment_info_avg_fields",
-	id?:number,
-	stripe_info_id?:number
-}
-
-/** Boolean expression to filter rows from the table
-"service_provider_payment_info". All fields are combined with a logical 'AND'. */
-export type service_provider_payment_info_bool_exp = {
-		_and?:service_provider_payment_info_bool_exp[],
-	_not?:service_provider_payment_info_bool_exp,
-	_or?:service_provider_payment_info_bool_exp[],
-	bank_transfer?:Boolean_comparison_exp,
-	card?:Boolean_comparison_exp,
-	cash?:Boolean_comparison_exp,
-	id?:Int_comparison_exp,
-	restaurant?:restaurant_bool_exp,
-	service_provider_type?:String_comparison_exp,
-	stripe_info?:stripe_info_bool_exp,
-	stripe_info_id?:Int_comparison_exp
-}
-
-/** unique or primary key constraints on table "service_provider_payment_info" */
-export enum service_provider_payment_info_constraint {
-	service_provider_payment_info_pkey = "service_provider_payment_info_pkey",
-	service_provider_payment_info_stripe_info_id_key = "service_provider_payment_info_stripe_info_id_key"
-}
-
-/** input type for incrementing numeric columns in table "service_provider_payment_info" */
-export type service_provider_payment_info_inc_input = {
-		id?:number,
-	stripe_info_id?:number
-}
-
-/** input type for inserting data into table "service_provider_payment_info" */
-export type service_provider_payment_info_insert_input = {
-		bank_transfer?:boolean,
-	card?:boolean,
-	cash?:boolean,
-	id?:number,
-	restaurant?:restaurant_obj_rel_insert_input,
-	service_provider_type?:string,
-	stripe_info?:stripe_info_obj_rel_insert_input,
-	stripe_info_id?:number
-}
-
-/** aggregate max on columns */
-export type service_provider_payment_info_max_fields = {
-	__typename?: "service_provider_payment_info_max_fields",
-	id?:number,
-	service_provider_type?:string,
-	stripe_info_id?:number
-}
-
-/** aggregate min on columns */
-export type service_provider_payment_info_min_fields = {
-	__typename?: "service_provider_payment_info_min_fields",
-	id?:number,
-	service_provider_type?:string,
-	stripe_info_id?:number
-}
-
-/** response of any mutation on the table "service_provider_payment_info" */
-export type service_provider_payment_info_mutation_response = {
-	__typename?: "service_provider_payment_info_mutation_response",
-	/** number of rows affected by the mutation */
-	affected_rows:number,
-	/** data from the rows affected by the mutation */
-	returning:service_provider_payment_info[]
-}
-
-/** input type for inserting object relation for remote table "service_provider_payment_info" */
-export type service_provider_payment_info_obj_rel_insert_input = {
-		data:service_provider_payment_info_insert_input,
-	/** upsert condition */
-	on_conflict?:service_provider_payment_info_on_conflict
-}
-
-/** on_conflict condition type for table "service_provider_payment_info" */
-export type service_provider_payment_info_on_conflict = {
-		constraint:service_provider_payment_info_constraint,
-	update_columns:service_provider_payment_info_update_column[],
-	where?:service_provider_payment_info_bool_exp
-}
-
-/** Ordering options when selecting data from "service_provider_payment_info". */
-export type service_provider_payment_info_order_by = {
-		bank_transfer?:order_by,
-	card?:order_by,
-	cash?:order_by,
-	id?:order_by,
-	restaurant?:restaurant_order_by,
-	service_provider_type?:order_by,
-	stripe_info?:stripe_info_order_by,
-	stripe_info_id?:order_by
-}
-
-/** primary key columns input for table: service_provider_payment_info */
-export type service_provider_payment_info_pk_columns_input = {
-		id:number
-}
-
-/** select columns of table "service_provider_payment_info" */
-export enum service_provider_payment_info_select_column {
-	bank_transfer = "bank_transfer",
-	card = "card",
-	cash = "cash",
-	id = "id",
-	service_provider_type = "service_provider_type",
-	stripe_info_id = "stripe_info_id"
-}
-
-/** input type for updating data in table "service_provider_payment_info" */
-export type service_provider_payment_info_set_input = {
-		bank_transfer?:boolean,
-	card?:boolean,
-	cash?:boolean,
-	id?:number,
-	service_provider_type?:string,
-	stripe_info_id?:number
-}
-
-/** aggregate stddev on columns */
-export type service_provider_payment_info_stddev_fields = {
-	__typename?: "service_provider_payment_info_stddev_fields",
-	id?:number,
-	stripe_info_id?:number
-}
-
-/** aggregate stddev_pop on columns */
-export type service_provider_payment_info_stddev_pop_fields = {
-	__typename?: "service_provider_payment_info_stddev_pop_fields",
-	id?:number,
-	stripe_info_id?:number
-}
-
-/** aggregate stddev_samp on columns */
-export type service_provider_payment_info_stddev_samp_fields = {
-	__typename?: "service_provider_payment_info_stddev_samp_fields",
-	id?:number,
-	stripe_info_id?:number
-}
-
-/** Streaming cursor of the table "service_provider_payment_info" */
-export type service_provider_payment_info_stream_cursor_input = {
-		/** Stream column input with initial value */
-	initial_value:service_provider_payment_info_stream_cursor_value_input,
-	/** cursor ordering */
-	ordering?:cursor_ordering
-}
-
-/** Initial value of the column from where the streaming should start */
-export type service_provider_payment_info_stream_cursor_value_input = {
-		bank_transfer?:boolean,
-	card?:boolean,
-	cash?:boolean,
-	id?:number,
-	service_provider_type?:string,
-	stripe_info_id?:number
-}
-
-/** aggregate sum on columns */
-export type service_provider_payment_info_sum_fields = {
-	__typename?: "service_provider_payment_info_sum_fields",
-	id?:number,
-	stripe_info_id?:number
-}
-
-/** update columns of table "service_provider_payment_info" */
-export enum service_provider_payment_info_update_column {
-	bank_transfer = "bank_transfer",
-	card = "card",
-	cash = "cash",
-	id = "id",
-	service_provider_type = "service_provider_type",
-	stripe_info_id = "stripe_info_id"
-}
-
-export type service_provider_payment_info_updates = {
-		/** increments the numeric columns with given value of the filtered values */
-	_inc?:service_provider_payment_info_inc_input,
-	/** sets the columns of the filtered rows to the given values */
-	_set?:service_provider_payment_info_set_input,
-	where:service_provider_payment_info_bool_exp
-}
-
-/** aggregate var_pop on columns */
-export type service_provider_payment_info_var_pop_fields = {
-	__typename?: "service_provider_payment_info_var_pop_fields",
-	id?:number,
-	stripe_info_id?:number
-}
-
-/** aggregate var_samp on columns */
-export type service_provider_payment_info_var_samp_fields = {
-	__typename?: "service_provider_payment_info_var_samp_fields",
-	id?:number,
-	stripe_info_id?:number
-}
-
-/** aggregate variance on columns */
-export type service_provider_payment_info_variance_fields = {
-	__typename?: "service_provider_payment_info_variance_fields",
-	id?:number,
-	stripe_info_id?:number
-}
-
 export type st_d_within_geography_input = {
 		distance:number,
 	from:geography,
@@ -37515,253 +36180,6 @@ export type String_comparison_exp = {
 	_regex?:string,
 	/** does the column match the given SQL regular expression */
 	_similar?:string
-}
-
-/** columns and relationships of "stripe_info" */
-export type stripe_info = {
-	__typename?: "stripe_info",
-	charges_enabled:boolean,
-	details_submitted:boolean,
-	id:number,
-	pass_fees_to_customer:boolean,
-	payouts_enabled:boolean,
-	requirements?:json,
-	/** An object relationship */
-	service_provider_payment_info?:service_provider_payment_info,
-	stripe_id:string,
-	stripe_status:string
-}
-
-/** aggregated selection of "stripe_info" */
-export type stripe_info_aggregate = {
-	__typename?: "stripe_info_aggregate",
-	aggregate?:stripe_info_aggregate_fields,
-	nodes:stripe_info[]
-}
-
-/** aggregate fields of "stripe_info" */
-export type stripe_info_aggregate_fields = {
-	__typename?: "stripe_info_aggregate_fields",
-	avg?:stripe_info_avg_fields,
-	count:number,
-	max?:stripe_info_max_fields,
-	min?:stripe_info_min_fields,
-	stddev?:stripe_info_stddev_fields,
-	stddev_pop?:stripe_info_stddev_pop_fields,
-	stddev_samp?:stripe_info_stddev_samp_fields,
-	sum?:stripe_info_sum_fields,
-	var_pop?:stripe_info_var_pop_fields,
-	var_samp?:stripe_info_var_samp_fields,
-	variance?:stripe_info_variance_fields
-}
-
-/** aggregate avg on columns */
-export type stripe_info_avg_fields = {
-	__typename?: "stripe_info_avg_fields",
-	id?:number
-}
-
-/** Boolean expression to filter rows from the table "stripe_info". All fields are combined with a logical 'AND'. */
-export type stripe_info_bool_exp = {
-		_and?:stripe_info_bool_exp[],
-	_not?:stripe_info_bool_exp,
-	_or?:stripe_info_bool_exp[],
-	charges_enabled?:Boolean_comparison_exp,
-	details_submitted?:Boolean_comparison_exp,
-	id?:Int_comparison_exp,
-	pass_fees_to_customer?:Boolean_comparison_exp,
-	payouts_enabled?:Boolean_comparison_exp,
-	requirements?:json_comparison_exp,
-	service_provider_payment_info?:service_provider_payment_info_bool_exp,
-	stripe_id?:String_comparison_exp,
-	stripe_status?:String_comparison_exp
-}
-
-/** unique or primary key constraints on table "stripe_info" */
-export enum stripe_info_constraint {
-	stripe_info_pkey = "stripe_info_pkey",
-	stripe_info_stripe_id_key = "stripe_info_stripe_id_key"
-}
-
-/** input type for incrementing numeric columns in table "stripe_info" */
-export type stripe_info_inc_input = {
-		id?:number
-}
-
-/** input type for inserting data into table "stripe_info" */
-export type stripe_info_insert_input = {
-		charges_enabled?:boolean,
-	details_submitted?:boolean,
-	id?:number,
-	pass_fees_to_customer?:boolean,
-	payouts_enabled?:boolean,
-	requirements?:json,
-	service_provider_payment_info?:service_provider_payment_info_obj_rel_insert_input,
-	stripe_id?:string,
-	stripe_status?:string
-}
-
-/** aggregate max on columns */
-export type stripe_info_max_fields = {
-	__typename?: "stripe_info_max_fields",
-	id?:number,
-	stripe_id?:string,
-	stripe_status?:string
-}
-
-/** aggregate min on columns */
-export type stripe_info_min_fields = {
-	__typename?: "stripe_info_min_fields",
-	id?:number,
-	stripe_id?:string,
-	stripe_status?:string
-}
-
-/** response of any mutation on the table "stripe_info" */
-export type stripe_info_mutation_response = {
-	__typename?: "stripe_info_mutation_response",
-	/** number of rows affected by the mutation */
-	affected_rows:number,
-	/** data from the rows affected by the mutation */
-	returning:stripe_info[]
-}
-
-/** input type for inserting object relation for remote table "stripe_info" */
-export type stripe_info_obj_rel_insert_input = {
-		data:stripe_info_insert_input,
-	/** upsert condition */
-	on_conflict?:stripe_info_on_conflict
-}
-
-/** on_conflict condition type for table "stripe_info" */
-export type stripe_info_on_conflict = {
-		constraint:stripe_info_constraint,
-	update_columns:stripe_info_update_column[],
-	where?:stripe_info_bool_exp
-}
-
-/** Ordering options when selecting data from "stripe_info". */
-export type stripe_info_order_by = {
-		charges_enabled?:order_by,
-	details_submitted?:order_by,
-	id?:order_by,
-	pass_fees_to_customer?:order_by,
-	payouts_enabled?:order_by,
-	requirements?:order_by,
-	service_provider_payment_info?:service_provider_payment_info_order_by,
-	stripe_id?:order_by,
-	stripe_status?:order_by
-}
-
-/** primary key columns input for table: stripe_info */
-export type stripe_info_pk_columns_input = {
-		id:number
-}
-
-/** select columns of table "stripe_info" */
-export enum stripe_info_select_column {
-	charges_enabled = "charges_enabled",
-	details_submitted = "details_submitted",
-	id = "id",
-	pass_fees_to_customer = "pass_fees_to_customer",
-	payouts_enabled = "payouts_enabled",
-	requirements = "requirements",
-	stripe_id = "stripe_id",
-	stripe_status = "stripe_status"
-}
-
-/** input type for updating data in table "stripe_info" */
-export type stripe_info_set_input = {
-		charges_enabled?:boolean,
-	details_submitted?:boolean,
-	id?:number,
-	pass_fees_to_customer?:boolean,
-	payouts_enabled?:boolean,
-	requirements?:json,
-	stripe_id?:string,
-	stripe_status?:string
-}
-
-/** aggregate stddev on columns */
-export type stripe_info_stddev_fields = {
-	__typename?: "stripe_info_stddev_fields",
-	id?:number
-}
-
-/** aggregate stddev_pop on columns */
-export type stripe_info_stddev_pop_fields = {
-	__typename?: "stripe_info_stddev_pop_fields",
-	id?:number
-}
-
-/** aggregate stddev_samp on columns */
-export type stripe_info_stddev_samp_fields = {
-	__typename?: "stripe_info_stddev_samp_fields",
-	id?:number
-}
-
-/** Streaming cursor of the table "stripe_info" */
-export type stripe_info_stream_cursor_input = {
-		/** Stream column input with initial value */
-	initial_value:stripe_info_stream_cursor_value_input,
-	/** cursor ordering */
-	ordering?:cursor_ordering
-}
-
-/** Initial value of the column from where the streaming should start */
-export type stripe_info_stream_cursor_value_input = {
-		charges_enabled?:boolean,
-	details_submitted?:boolean,
-	id?:number,
-	pass_fees_to_customer?:boolean,
-	payouts_enabled?:boolean,
-	requirements?:json,
-	stripe_id?:string,
-	stripe_status?:string
-}
-
-/** aggregate sum on columns */
-export type stripe_info_sum_fields = {
-	__typename?: "stripe_info_sum_fields",
-	id?:number
-}
-
-/** update columns of table "stripe_info" */
-export enum stripe_info_update_column {
-	charges_enabled = "charges_enabled",
-	details_submitted = "details_submitted",
-	id = "id",
-	pass_fees_to_customer = "pass_fees_to_customer",
-	payouts_enabled = "payouts_enabled",
-	requirements = "requirements",
-	stripe_id = "stripe_id",
-	stripe_status = "stripe_status"
-}
-
-export type stripe_info_updates = {
-		/** increments the numeric columns with given value of the filtered values */
-	_inc?:stripe_info_inc_input,
-	/** sets the columns of the filtered rows to the given values */
-	_set?:stripe_info_set_input,
-	where:stripe_info_bool_exp
-}
-
-/** aggregate var_pop on columns */
-export type stripe_info_var_pop_fields = {
-	__typename?: "stripe_info_var_pop_fields",
-	id?:number
-}
-
-/** aggregate var_samp on columns */
-export type stripe_info_var_samp_fields = {
-	__typename?: "stripe_info_var_samp_fields",
-	id?:number
-}
-
-/** aggregate variance on columns */
-export type stripe_info_variance_fields = {
-	__typename?: "stripe_info_variance_fields",
-	id?:number
 }
 
 /** columns and relationships of "subscriber" */
@@ -38224,22 +36642,6 @@ export type subscription_root = {
 	service_link_by_pk?:service_link,
 	/** fetch data from the table in a streaming manner: "service_link" */
 	service_link_stream:service_link[],
-	/** fetch data from the table: "service_provider_payment_info" */
-	service_provider_payment_info:service_provider_payment_info[],
-	/** fetch aggregated fields from the table: "service_provider_payment_info" */
-	service_provider_payment_info_aggregate:service_provider_payment_info_aggregate,
-	/** fetch data from the table: "service_provider_payment_info" using primary key columns */
-	service_provider_payment_info_by_pk?:service_provider_payment_info,
-	/** fetch data from the table in a streaming manner: "service_provider_payment_info" */
-	service_provider_payment_info_stream:service_provider_payment_info[],
-	/** fetch data from the table: "stripe_info" */
-	stripe_info:stripe_info[],
-	/** fetch aggregated fields from the table: "stripe_info" */
-	stripe_info_aggregate:stripe_info_aggregate,
-	/** fetch data from the table: "stripe_info" using primary key columns */
-	stripe_info_by_pk?:stripe_info,
-	/** fetch data from the table in a streaming manner: "stripe_info" */
-	stripe_info_stream:stripe_info[],
 	/** fetch data from the table: "subscriber" */
 	subscriber:subscriber[],
 	/** fetch aggregated fields from the table: "subscriber" */
@@ -44066,12 +42468,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		stripe_payment_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		trip_distance:{
 			type:"order_by",
 			array:false,
@@ -44392,12 +42788,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		stripe_payment_id:{
-			type:"Int_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		trip_distance:{
 			type:"Int_comparison_exp",
 			array:false,
@@ -44486,12 +42876,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		service_provider_review_by_driver_id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_payment_id:{
 			type:"Int",
 			array:false,
 			arrayRequired:false,
@@ -44787,12 +43171,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		stripe_payment_id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		trip_distance:{
 			type:"Int",
 			array:false,
@@ -44993,12 +43371,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		stripe_payment_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		trip_distance:{
 			type:"order_by",
 			array:false,
@@ -45194,12 +43566,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		status:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_payment_id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -45542,12 +43908,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		status:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_payment_id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -46515,12 +44875,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		stripe_payment_id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		trip_distance:{
 			type:"Int",
 			array:false,
@@ -46613,12 +44967,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		stripe_payment_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		trip_distance:{
 			type:"order_by",
 			array:false,
@@ -46705,12 +45053,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		stripe_payment_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		trip_distance:{
 			type:"order_by",
 			array:false,
@@ -46792,12 +45134,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		service_provider_review_by_driver_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_payment_id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -47029,12 +45365,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		stripe_payment_id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		trip_distance:{
 			type:"Int",
 			array:false,
@@ -47122,12 +45452,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		service_provider_review_by_driver_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_payment_id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -47240,12 +45564,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		stripe_payment_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		trip_distance:{
 			type:"order_by",
 			array:false,
@@ -47332,12 +45650,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		stripe_payment_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		trip_distance:{
 			type:"order_by",
 			array:false,
@@ -47419,12 +45731,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		service_provider_review_by_driver_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_payment_id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -48624,38 +46930,6 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
-		delete_service_provider_payment_info:{
-			where:{
-				type:"service_provider_payment_info_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
-		delete_service_provider_payment_info_by_pk:{
-			id:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
-		delete_stripe_info:{
-			where:{
-				type:"stripe_info_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
-		delete_stripe_info_by_pk:{
-			id:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
 		delete_subscriber:{
 			where:{
 				type:"subscriber_bool_exp",
@@ -49513,62 +47787,6 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			on_conflict:{
 				type:"service_link_on_conflict",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		insert_service_provider_payment_info:{
-			objects:{
-				type:"service_provider_payment_info_insert_input",
-				array:true,
-				arrayRequired:true,
-				required:true
-			},
-			on_conflict:{
-				type:"service_provider_payment_info_on_conflict",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		insert_service_provider_payment_info_one:{
-			object:{
-				type:"service_provider_payment_info_insert_input",
-				array:false,
-				arrayRequired:false,
-				required:true
-			},
-			on_conflict:{
-				type:"service_provider_payment_info_on_conflict",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		insert_stripe_info:{
-			objects:{
-				type:"stripe_info_insert_input",
-				array:true,
-				arrayRequired:true,
-				required:true
-			},
-			on_conflict:{
-				type:"stripe_info_on_conflict",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		insert_stripe_info_one:{
-			object:{
-				type:"stripe_info_insert_input",
-				array:false,
-				arrayRequired:false,
-				required:true
-			},
-			on_conflict:{
-				type:"stripe_info_on_conflict",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -51341,102 +49559,6 @@ export const AllTypesProps: Record<string,any> = {
 		update_service_link_many:{
 			updates:{
 				type:"service_link_updates",
-				array:true,
-				arrayRequired:true,
-				required:true
-			}
-		},
-		update_service_provider_payment_info:{
-			_inc:{
-				type:"service_provider_payment_info_inc_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			_set:{
-				type:"service_provider_payment_info_set_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			where:{
-				type:"service_provider_payment_info_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
-		update_service_provider_payment_info_by_pk:{
-			_inc:{
-				type:"service_provider_payment_info_inc_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			_set:{
-				type:"service_provider_payment_info_set_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			pk_columns:{
-				type:"service_provider_payment_info_pk_columns_input",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
-		update_service_provider_payment_info_many:{
-			updates:{
-				type:"service_provider_payment_info_updates",
-				array:true,
-				arrayRequired:true,
-				required:true
-			}
-		},
-		update_stripe_info:{
-			_inc:{
-				type:"stripe_info_inc_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			_set:{
-				type:"stripe_info_set_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			where:{
-				type:"stripe_info_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
-		update_stripe_info_by_pk:{
-			_inc:{
-				type:"stripe_info_inc_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			_set:{
-				type:"stripe_info_set_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			pk_columns:{
-				type:"stripe_info_pk_columns_input",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
-		update_stripe_info_many:{
-			updates:{
-				type:"stripe_info_updates",
 				array:true,
 				arrayRequired:true,
 				required:true
@@ -54465,150 +52587,6 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
-		service_provider_payment_info:{
-			distinct_on:{
-				type:"service_provider_payment_info_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"service_provider_payment_info_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"service_provider_payment_info_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		service_provider_payment_info_aggregate:{
-			distinct_on:{
-				type:"service_provider_payment_info_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"service_provider_payment_info_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"service_provider_payment_info_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		service_provider_payment_info_by_pk:{
-			id:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
-		stripe_info:{
-			distinct_on:{
-				type:"stripe_info_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"stripe_info_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"stripe_info_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		stripe_info_aggregate:{
-			distinct_on:{
-				type:"stripe_info_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"stripe_info_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"stripe_info_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		stripe_info_by_pk:{
-			id:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
 		subscriber:{
 			distinct_on:{
 				type:"subscriber_select_column",
@@ -55585,12 +53563,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		orders_aggregate:{
 			type:"restaurant_order_aggregate_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		payment_info:{
-			type:"service_provider_payment_info_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -58838,12 +56810,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		orders:{
 			type:"restaurant_order_arr_rel_insert_input",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		payment_info:{
-			type:"service_provider_payment_info_obj_rel_insert_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -64503,12 +62469,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		payment_info:{
-			type:"service_provider_payment_info_order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		payment_info_id:{
 			type:"order_by",
 			array:false,
@@ -69754,359 +67714,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:true
 		}
 	},
-	service_provider_payment_info_aggregate_fields:{
-		count:{
-			columns:{
-				type:"service_provider_payment_info_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			distinct:{
-				type:"Boolean",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		}
-	},
-	service_provider_payment_info_bool_exp:{
-		_and:{
-			type:"service_provider_payment_info_bool_exp",
-			array:true,
-			arrayRequired:false,
-			required:true
-		},
-		_not:{
-			type:"service_provider_payment_info_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		_or:{
-			type:"service_provider_payment_info_bool_exp",
-			array:true,
-			arrayRequired:false,
-			required:true
-		},
-		bank_transfer:{
-			type:"Boolean_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		card:{
-			type:"Boolean_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		cash:{
-			type:"Boolean_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
-			type:"Int_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		restaurant:{
-			type:"restaurant_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		service_provider_type:{
-			type:"String_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_info:{
-			type:"stripe_info_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_info_id:{
-			type:"Int_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	service_provider_payment_info_constraint: "enum",
-	service_provider_payment_info_inc_input:{
-		id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_info_id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	service_provider_payment_info_insert_input:{
-		bank_transfer:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		card:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		cash:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		restaurant:{
-			type:"restaurant_obj_rel_insert_input",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		service_provider_type:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_info:{
-			type:"stripe_info_obj_rel_insert_input",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_info_id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	service_provider_payment_info_obj_rel_insert_input:{
-		data:{
-			type:"service_provider_payment_info_insert_input",
-			array:false,
-			arrayRequired:false,
-			required:true
-		},
-		on_conflict:{
-			type:"service_provider_payment_info_on_conflict",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	service_provider_payment_info_on_conflict:{
-		constraint:{
-			type:"service_provider_payment_info_constraint",
-			array:false,
-			arrayRequired:false,
-			required:true
-		},
-		update_columns:{
-			type:"service_provider_payment_info_update_column",
-			array:true,
-			arrayRequired:true,
-			required:true
-		},
-		where:{
-			type:"service_provider_payment_info_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	service_provider_payment_info_order_by:{
-		bank_transfer:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		card:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		cash:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		restaurant:{
-			type:"restaurant_order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		service_provider_type:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_info:{
-			type:"stripe_info_order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_info_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	service_provider_payment_info_pk_columns_input:{
-		id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:true
-		}
-	},
-	service_provider_payment_info_select_column: "enum",
-	service_provider_payment_info_set_input:{
-		bank_transfer:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		card:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		cash:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		service_provider_type:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_info_id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	service_provider_payment_info_stream_cursor_input:{
-		initial_value:{
-			type:"service_provider_payment_info_stream_cursor_value_input",
-			array:false,
-			arrayRequired:false,
-			required:true
-		},
-		ordering:{
-			type:"cursor_ordering",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	service_provider_payment_info_stream_cursor_value_input:{
-		bank_transfer:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		card:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		cash:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		service_provider_type:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_info_id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	service_provider_payment_info_update_column: "enum",
-	service_provider_payment_info_updates:{
-		_inc:{
-			type:"service_provider_payment_info_inc_input",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		_set:{
-			type:"service_provider_payment_info_set_input",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		where:{
-			type:"service_provider_payment_info_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:true
-		}
-	},
 	st_d_within_geography_input:{
 		distance:{
 			type:"Float",
@@ -70255,405 +67862,6 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
-		}
-	},
-	stripe_info:{
-		requirements:{
-			path:{
-				type:"String",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		}
-	},
-	stripe_info_aggregate_fields:{
-		count:{
-			columns:{
-				type:"stripe_info_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			distinct:{
-				type:"Boolean",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		}
-	},
-	stripe_info_bool_exp:{
-		_and:{
-			type:"stripe_info_bool_exp",
-			array:true,
-			arrayRequired:false,
-			required:true
-		},
-		_not:{
-			type:"stripe_info_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		_or:{
-			type:"stripe_info_bool_exp",
-			array:true,
-			arrayRequired:false,
-			required:true
-		},
-		charges_enabled:{
-			type:"Boolean_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		details_submitted:{
-			type:"Boolean_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
-			type:"Int_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		pass_fees_to_customer:{
-			type:"Boolean_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		payouts_enabled:{
-			type:"Boolean_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		requirements:{
-			type:"json_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		service_provider_payment_info:{
-			type:"service_provider_payment_info_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_id:{
-			type:"String_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_status:{
-			type:"String_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	stripe_info_constraint: "enum",
-	stripe_info_inc_input:{
-		id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	stripe_info_insert_input:{
-		charges_enabled:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		details_submitted:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		pass_fees_to_customer:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		payouts_enabled:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		requirements:{
-			type:"json",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		service_provider_payment_info:{
-			type:"service_provider_payment_info_obj_rel_insert_input",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_id:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_status:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	stripe_info_obj_rel_insert_input:{
-		data:{
-			type:"stripe_info_insert_input",
-			array:false,
-			arrayRequired:false,
-			required:true
-		},
-		on_conflict:{
-			type:"stripe_info_on_conflict",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	stripe_info_on_conflict:{
-		constraint:{
-			type:"stripe_info_constraint",
-			array:false,
-			arrayRequired:false,
-			required:true
-		},
-		update_columns:{
-			type:"stripe_info_update_column",
-			array:true,
-			arrayRequired:true,
-			required:true
-		},
-		where:{
-			type:"stripe_info_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	stripe_info_order_by:{
-		charges_enabled:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		details_submitted:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		pass_fees_to_customer:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		payouts_enabled:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		requirements:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		service_provider_payment_info:{
-			type:"service_provider_payment_info_order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_status:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	stripe_info_pk_columns_input:{
-		id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:true
-		}
-	},
-	stripe_info_select_column: "enum",
-	stripe_info_set_input:{
-		charges_enabled:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		details_submitted:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		pass_fees_to_customer:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		payouts_enabled:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		requirements:{
-			type:"json",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_id:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_status:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	stripe_info_stream_cursor_input:{
-		initial_value:{
-			type:"stripe_info_stream_cursor_value_input",
-			array:false,
-			arrayRequired:false,
-			required:true
-		},
-		ordering:{
-			type:"cursor_ordering",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	stripe_info_stream_cursor_value_input:{
-		charges_enabled:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		details_submitted:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		pass_fees_to_customer:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		payouts_enabled:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		requirements:{
-			type:"json",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_id:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_status:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	stripe_info_update_column: "enum",
-	stripe_info_updates:{
-		_inc:{
-			type:"stripe_info_inc_input",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		_set:{
-			type:"stripe_info_set_input",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		where:{
-			type:"stripe_info_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:true
 		}
 	},
 	subscriber_aggregate_fields:{
@@ -73520,190 +70728,6 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
-		service_provider_payment_info:{
-			distinct_on:{
-				type:"service_provider_payment_info_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"service_provider_payment_info_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"service_provider_payment_info_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		service_provider_payment_info_aggregate:{
-			distinct_on:{
-				type:"service_provider_payment_info_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"service_provider_payment_info_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"service_provider_payment_info_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		service_provider_payment_info_by_pk:{
-			id:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
-		service_provider_payment_info_stream:{
-			batch_size:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:true
-			},
-			cursor:{
-				type:"service_provider_payment_info_stream_cursor_input",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"service_provider_payment_info_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		stripe_info:{
-			distinct_on:{
-				type:"stripe_info_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"stripe_info_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"stripe_info_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		stripe_info_aggregate:{
-			distinct_on:{
-				type:"stripe_info_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"stripe_info_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"stripe_info_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		stripe_info_by_pk:{
-			id:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
-		stripe_info_stream:{
-			batch_size:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:true
-			},
-			cursor:{
-				type:"stripe_info_stream_cursor_input",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"stripe_info_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
 		subscriber:{
 			distinct_on:{
 				type:"subscriber_select_column",
@@ -76477,7 +73501,6 @@ export const ReturnTypes: Record<string,any> = {
 		service_provider_review_by_driver_id:"Int",
 		service_provider_type:"String",
 		status:"String",
-		stripe_payment_id:"Int",
 		trip_distance:"Int",
 		trip_duration:"Int",
 		trip_polyline:"String"
@@ -76512,7 +73535,6 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"Float",
 		service_provider_id:"Float",
 		service_provider_review_by_driver_id:"Float",
-		stripe_payment_id:"Float",
 		trip_distance:"Float",
 		trip_duration:"Float"
 	},
@@ -76547,7 +73569,6 @@ export const ReturnTypes: Record<string,any> = {
 		service_provider_review_by_driver_id:"Int",
 		service_provider_type:"String",
 		status:"String",
-		stripe_payment_id:"Int",
 		trip_distance:"Int",
 		trip_duration:"Int",
 		trip_polyline:"String"
@@ -76583,7 +73604,6 @@ export const ReturnTypes: Record<string,any> = {
 		service_provider_review_by_driver_id:"Int",
 		service_provider_type:"String",
 		status:"String",
-		stripe_payment_id:"Int",
 		trip_distance:"Int",
 		trip_duration:"Int",
 		trip_polyline:"String"
@@ -76780,7 +73800,6 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"Float",
 		service_provider_id:"Float",
 		service_provider_review_by_driver_id:"Float",
-		stripe_payment_id:"Float",
 		trip_distance:"Float",
 		trip_duration:"Float"
 	},
@@ -76797,7 +73816,6 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"Float",
 		service_provider_id:"Float",
 		service_provider_review_by_driver_id:"Float",
-		stripe_payment_id:"Float",
 		trip_distance:"Float",
 		trip_duration:"Float"
 	},
@@ -76814,7 +73832,6 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"Float",
 		service_provider_id:"Float",
 		service_provider_review_by_driver_id:"Float",
-		stripe_payment_id:"Float",
 		trip_distance:"Float",
 		trip_duration:"Float"
 	},
@@ -76831,7 +73848,6 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"money",
 		service_provider_id:"Int",
 		service_provider_review_by_driver_id:"Int",
-		stripe_payment_id:"Int",
 		trip_distance:"Int",
 		trip_duration:"Int"
 	},
@@ -76848,7 +73864,6 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"Float",
 		service_provider_id:"Float",
 		service_provider_review_by_driver_id:"Float",
-		stripe_payment_id:"Float",
 		trip_distance:"Float",
 		trip_duration:"Float"
 	},
@@ -76865,7 +73880,6 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"Float",
 		service_provider_id:"Float",
 		service_provider_review_by_driver_id:"Float",
-		stripe_payment_id:"Float",
 		trip_distance:"Float",
 		trip_duration:"Float"
 	},
@@ -76882,7 +73896,6 @@ export const ReturnTypes: Record<string,any> = {
 		package_cost:"Float",
 		service_provider_id:"Float",
 		service_provider_review_by_driver_id:"Float",
-		stripe_payment_id:"Float",
 		trip_distance:"Float",
 		trip_duration:"Float"
 	},
@@ -77000,10 +74013,6 @@ export const ReturnTypes: Record<string,any> = {
 		delete_saved_location_by_pk:"saved_location",
 		delete_service_link:"service_link_mutation_response",
 		delete_service_link_by_pk:"service_link",
-		delete_service_provider_payment_info:"service_provider_payment_info_mutation_response",
-		delete_service_provider_payment_info_by_pk:"service_provider_payment_info",
-		delete_stripe_info:"stripe_info_mutation_response",
-		delete_stripe_info_by_pk:"stripe_info",
 		delete_subscriber:"subscriber_mutation_response",
 		delete_subscriber_by_pk:"subscriber",
 		delete_topology_app_type:"topology_app_type_mutation_response",
@@ -77072,10 +74081,6 @@ export const ReturnTypes: Record<string,any> = {
 		insert_saved_location_one:"saved_location",
 		insert_service_link:"service_link_mutation_response",
 		insert_service_link_one:"service_link",
-		insert_service_provider_payment_info:"service_provider_payment_info_mutation_response",
-		insert_service_provider_payment_info_one:"service_provider_payment_info",
-		insert_stripe_info:"stripe_info_mutation_response",
-		insert_stripe_info_one:"stripe_info",
 		insert_subscriber:"subscriber_mutation_response",
 		insert_subscriber_one:"subscriber",
 		insert_topology_app_type:"topology_app_type_mutation_response",
@@ -77170,12 +74175,6 @@ export const ReturnTypes: Record<string,any> = {
 		update_service_link:"service_link_mutation_response",
 		update_service_link_by_pk:"service_link",
 		update_service_link_many:"service_link_mutation_response",
-		update_service_provider_payment_info:"service_provider_payment_info_mutation_response",
-		update_service_provider_payment_info_by_pk:"service_provider_payment_info",
-		update_service_provider_payment_info_many:"service_provider_payment_info_mutation_response",
-		update_stripe_info:"stripe_info_mutation_response",
-		update_stripe_info_by_pk:"stripe_info",
-		update_stripe_info_many:"stripe_info_mutation_response",
 		update_subscriber:"subscriber_mutation_response",
 		update_subscriber_by_pk:"subscriber",
 		update_subscriber_many:"subscriber_mutation_response",
@@ -77429,12 +74428,6 @@ export const ReturnTypes: Record<string,any> = {
 		service_link:"service_link",
 		service_link_aggregate:"service_link_aggregate",
 		service_link_by_pk:"service_link",
-		service_provider_payment_info:"service_provider_payment_info",
-		service_provider_payment_info_aggregate:"service_provider_payment_info_aggregate",
-		service_provider_payment_info_by_pk:"service_provider_payment_info",
-		stripe_info:"stripe_info",
-		stripe_info_aggregate:"stripe_info_aggregate",
-		stripe_info_by_pk:"stripe_info",
 		subscriber:"subscriber",
 		subscriber_aggregate:"subscriber_aggregate",
 		subscriber_by_pk:"subscriber",
@@ -77473,7 +74466,6 @@ export const ReturnTypes: Record<string,any> = {
 		open_status:"String",
 		orders:"restaurant_order",
 		orders_aggregate:"restaurant_order_aggregate",
-		payment_info:"service_provider_payment_info",
 		payment_info_id:"Int",
 		restaurant_operators:"restaurant_operator",
 		restaurant_operators_aggregate:"restaurant_operator_aggregate",
@@ -79167,145 +76159,6 @@ export const ReturnTypes: Record<string,any> = {
 		id:"Float",
 		service_provider_id:"Float"
 	},
-	service_provider_payment_info:{
-		bank_transfer:"Boolean",
-		card:"Boolean",
-		cash:"Boolean",
-		id:"Int",
-		restaurant:"restaurant",
-		service_provider_type:"String",
-		stripe_info:"stripe_info",
-		stripe_info_id:"Int"
-	},
-	service_provider_payment_info_aggregate:{
-		aggregate:"service_provider_payment_info_aggregate_fields",
-		nodes:"service_provider_payment_info"
-	},
-	service_provider_payment_info_aggregate_fields:{
-		avg:"service_provider_payment_info_avg_fields",
-		count:"Int",
-		max:"service_provider_payment_info_max_fields",
-		min:"service_provider_payment_info_min_fields",
-		stddev:"service_provider_payment_info_stddev_fields",
-		stddev_pop:"service_provider_payment_info_stddev_pop_fields",
-		stddev_samp:"service_provider_payment_info_stddev_samp_fields",
-		sum:"service_provider_payment_info_sum_fields",
-		var_pop:"service_provider_payment_info_var_pop_fields",
-		var_samp:"service_provider_payment_info_var_samp_fields",
-		variance:"service_provider_payment_info_variance_fields"
-	},
-	service_provider_payment_info_avg_fields:{
-		id:"Float",
-		stripe_info_id:"Float"
-	},
-	service_provider_payment_info_max_fields:{
-		id:"Int",
-		service_provider_type:"String",
-		stripe_info_id:"Int"
-	},
-	service_provider_payment_info_min_fields:{
-		id:"Int",
-		service_provider_type:"String",
-		stripe_info_id:"Int"
-	},
-	service_provider_payment_info_mutation_response:{
-		affected_rows:"Int",
-		returning:"service_provider_payment_info"
-	},
-	service_provider_payment_info_stddev_fields:{
-		id:"Float",
-		stripe_info_id:"Float"
-	},
-	service_provider_payment_info_stddev_pop_fields:{
-		id:"Float",
-		stripe_info_id:"Float"
-	},
-	service_provider_payment_info_stddev_samp_fields:{
-		id:"Float",
-		stripe_info_id:"Float"
-	},
-	service_provider_payment_info_sum_fields:{
-		id:"Int",
-		stripe_info_id:"Int"
-	},
-	service_provider_payment_info_var_pop_fields:{
-		id:"Float",
-		stripe_info_id:"Float"
-	},
-	service_provider_payment_info_var_samp_fields:{
-		id:"Float",
-		stripe_info_id:"Float"
-	},
-	service_provider_payment_info_variance_fields:{
-		id:"Float",
-		stripe_info_id:"Float"
-	},
-	stripe_info:{
-		charges_enabled:"Boolean",
-		details_submitted:"Boolean",
-		id:"Int",
-		pass_fees_to_customer:"Boolean",
-		payouts_enabled:"Boolean",
-		requirements:"json",
-		service_provider_payment_info:"service_provider_payment_info",
-		stripe_id:"String",
-		stripe_status:"String"
-	},
-	stripe_info_aggregate:{
-		aggregate:"stripe_info_aggregate_fields",
-		nodes:"stripe_info"
-	},
-	stripe_info_aggregate_fields:{
-		avg:"stripe_info_avg_fields",
-		count:"Int",
-		max:"stripe_info_max_fields",
-		min:"stripe_info_min_fields",
-		stddev:"stripe_info_stddev_fields",
-		stddev_pop:"stripe_info_stddev_pop_fields",
-		stddev_samp:"stripe_info_stddev_samp_fields",
-		sum:"stripe_info_sum_fields",
-		var_pop:"stripe_info_var_pop_fields",
-		var_samp:"stripe_info_var_samp_fields",
-		variance:"stripe_info_variance_fields"
-	},
-	stripe_info_avg_fields:{
-		id:"Float"
-	},
-	stripe_info_max_fields:{
-		id:"Int",
-		stripe_id:"String",
-		stripe_status:"String"
-	},
-	stripe_info_min_fields:{
-		id:"Int",
-		stripe_id:"String",
-		stripe_status:"String"
-	},
-	stripe_info_mutation_response:{
-		affected_rows:"Int",
-		returning:"stripe_info"
-	},
-	stripe_info_stddev_fields:{
-		id:"Float"
-	},
-	stripe_info_stddev_pop_fields:{
-		id:"Float"
-	},
-	stripe_info_stddev_samp_fields:{
-		id:"Float"
-	},
-	stripe_info_sum_fields:{
-		id:"Int"
-	},
-	stripe_info_var_pop_fields:{
-		id:"Float"
-	},
-	stripe_info_var_samp_fields:{
-		id:"Float"
-	},
-	stripe_info_variance_fields:{
-		id:"Float"
-	},
 	subscriber:{
 		customer:"customer",
 		customer_id:"Int",
@@ -79499,14 +76352,6 @@ export const ReturnTypes: Record<string,any> = {
 		service_link_aggregate:"service_link_aggregate",
 		service_link_by_pk:"service_link",
 		service_link_stream:"service_link",
-		service_provider_payment_info:"service_provider_payment_info",
-		service_provider_payment_info_aggregate:"service_provider_payment_info_aggregate",
-		service_provider_payment_info_by_pk:"service_provider_payment_info",
-		service_provider_payment_info_stream:"service_provider_payment_info",
-		stripe_info:"stripe_info",
-		stripe_info_aggregate:"stripe_info_aggregate",
-		stripe_info_by_pk:"stripe_info",
-		stripe_info_stream:"stripe_info",
 		subscriber:"subscriber",
 		subscriber_aggregate:"subscriber_aggregate",
 		subscriber_by_pk:"subscriber",
