@@ -1,4 +1,13 @@
 
+comment on column "public"."restaurant_order"."stripe_info" is NULL;
+
+comment on column "public"."restaurant"."accepted_payments" is NULL;
+
+comment on column "public"."customer"."stripe_info" is NULL;
+
+comment on column "public"."restaurant"."stripe_info" is E'{   id: string;   status: string;   chargeFeesOnCustomer : boolean | null;   chargesEnabled: boolean;   payoutsEnabled: boolean;   detailsSubmitted: boolean;   requirements?: Array<string> | null;   email: string | null; }';
+
+
 -- Could not auto-generate a down migration.
 -- Please write an appropriate down migration for the SQL below:
 -- DROP table "public"."stripe_info";
