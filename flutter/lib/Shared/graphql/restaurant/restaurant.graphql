@@ -72,9 +72,10 @@ query getRestaurantAprroved($id: Int!) {
   restaurant_by_pk(id: $id) {
     approved
   }
-}query getRestaurantPaymentInfo($id: Int!) {
+}
+query getRestaurantPaymentInfo($id: Int!) {
   restaurant_by_pk(id: $id) {
-       stripe_info
+    stripe_info
     accepted_payments
   }
 }
@@ -145,7 +146,6 @@ subscription GetRestaurants {
         value
       }
     }
-  
   }
 }
 

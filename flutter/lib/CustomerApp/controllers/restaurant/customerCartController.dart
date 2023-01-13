@@ -77,7 +77,7 @@ class CustomerCartController extends GetxController {
         cart.value = value;
         cart.value?.restaurant = value.restaurant;
       } else {
-        await create_customer_cart();
+        //   await create_customer_cart();
       }
     }
   }

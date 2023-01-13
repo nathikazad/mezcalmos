@@ -305,13 +305,6 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'payment_info_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -433,7 +426,6 @@ class Query$getRestaurants$restaurant {
     this.description,
     required this.self_delivery,
     required this.open_status,
-    this.payment_info_id,
     required this.$__typename,
   });
 
@@ -451,7 +443,6 @@ class Query$getRestaurants$restaurant {
     final l$description = json['description'];
     final l$self_delivery = json['self_delivery'];
     final l$open_status = json['open_status'];
-    final l$payment_info_id = json['payment_info_id'];
     final l$$__typename = json['__typename'];
     return Query$getRestaurants$restaurant(
       id: (l$id as int),
@@ -470,7 +461,6 @@ class Query$getRestaurants$restaurant {
               (l$description as Map<String, dynamic>)),
       self_delivery: (l$self_delivery as bool),
       open_status: (l$open_status as String),
-      payment_info_id: (l$payment_info_id as int?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -500,8 +490,6 @@ class Query$getRestaurants$restaurant {
   final bool self_delivery;
 
   final String open_status;
-
-  final int? payment_info_id;
 
   final String $__typename;
 
@@ -533,8 +521,6 @@ class Query$getRestaurants$restaurant {
     _resultData['self_delivery'] = l$self_delivery;
     final l$open_status = open_status;
     _resultData['open_status'] = l$open_status;
-    final l$payment_info_id = payment_info_id;
-    _resultData['payment_info_id'] = l$payment_info_id;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -555,7 +541,6 @@ class Query$getRestaurants$restaurant {
     final l$description = description;
     final l$self_delivery = self_delivery;
     final l$open_status = open_status;
-    final l$payment_info_id = payment_info_id;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
@@ -571,7 +556,6 @@ class Query$getRestaurants$restaurant {
       l$description,
       l$self_delivery,
       l$open_status,
-      l$payment_info_id,
       l$$__typename,
     ]);
   }
@@ -650,11 +634,6 @@ class Query$getRestaurants$restaurant {
     if (l$open_status != lOther$open_status) {
       return false;
     }
-    final l$payment_info_id = payment_info_id;
-    final lOther$payment_info_id = other.payment_info_id;
-    if (l$payment_info_id != lOther$payment_info_id) {
-      return false;
-    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -696,7 +675,6 @@ abstract class CopyWith$Query$getRestaurants$restaurant<TRes> {
     Query$getRestaurants$restaurant$description? description,
     bool? self_delivery,
     String? open_status,
-    int? payment_info_id,
     String? $__typename,
   });
   CopyWith$Query$getRestaurants$restaurant$description<TRes> get description;
@@ -729,7 +707,6 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
     Object? description = _undefined,
     Object? self_delivery = _undefined,
     Object? open_status = _undefined,
-    Object? payment_info_id = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getRestaurants$restaurant(
@@ -770,9 +747,6 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
-        payment_info_id: payment_info_id == _undefined
-            ? _instance.payment_info_id
-            : (payment_info_id as int?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -807,7 +781,6 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant<TRes>
     Query$getRestaurants$restaurant$description? description,
     bool? self_delivery,
     String? open_status,
-    int? payment_info_id,
     String? $__typename,
   }) =>
       _res;
