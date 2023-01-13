@@ -21,9 +21,9 @@ class CustomerCartController extends GetxController {
   StreamSubscription<Cart?>? cartStream;
   String? subscriptionId;
   @override
-  void onInit() {
+  Future<void> onInit() async {
     if (_auth.hasuraUserId != null) {
-      _initCart();
+      await _initCart();
     }
     super.onInit();
   }
@@ -36,11 +36,13 @@ class CustomerCartController extends GetxController {
           .listen((Cart? event) {
         if (event != null) {
           mezDbgPrint(
-              "Stream triggred from cart controller ✅✅✅✅✅✅✅✅✅ =====> ${event.toFirebaseFormattedJson()}");
+              "Stream triggred from cart controller ${_auth.hasuraUserId!} ✅✅✅✅✅✅✅✅✅ =====> ${event.toFirebaseFormattedJson()}");
           cart.value = event;
-
           cart.value?.restaurant = event.restaurant;
           _handlerRestaurantId();
+          cart.refresh();
+        } else {
+          cart.value = null;
           cart.refresh();
         }
       });
@@ -51,7 +53,9 @@ class CustomerCartController extends GetxController {
   }
 
   Future<void> _handlerRestaurantId() async {
-    if (cart.value?.restaurant == null && cart.value!.cartItems.isNotEmpty) {
+    if (cart.value != null &&
+        cart.value?.restaurant == null &&
+        cart.value!.cartItems.isNotEmpty) {
       await setCartRestaurantId(cart.value!.cartItems.first.restaurantId);
     }
   }
@@ -67,8 +71,10 @@ class CustomerCartController extends GetxController {
       final Cart? value = await get_customer_cart(
         customerId: _auth.hasuraUserId!,
       );
+      mezDbgPrint(
+          "Fetching cart with ===================>${_auth.hasuraUserId!}========>${value?.toFirebaseFormattedJson()}");
       if (value != null) {
-        cart.value = value ?? Cart();
+        cart.value = value;
         cart.value?.restaurant = value.restaurant;
       } else {
         await create_customer_cart();
@@ -80,7 +86,7 @@ class CustomerCartController extends GetxController {
     if (_auth.user?.hasuraId != null) {
       try {
         await clear_customer_cart(
-            customer_id: Get.find<AuthController>().user!.hasuraId);
+            customer_id: Get.find<AuthController>().hasuraUserId!);
       } catch (e, stk) {
         mezDbgPrint(e);
         mezDbgPrint(stk);
@@ -175,7 +181,9 @@ class CustomerCartController extends GetxController {
       mezDbgPrint("[+] -> payload :: $payload");
       final HttpsCallableResult<dynamic> response =
           await checkoutRestaurantCart.call(payload);
-      return ServerResponse.fromJson(response.data);
+      final ServerResponse res = ServerResponse.fromJson(response.data);
+
+      return res;
     } catch (e) {
       mezDbgPrint("error function");
       mezDbgPrint(e);

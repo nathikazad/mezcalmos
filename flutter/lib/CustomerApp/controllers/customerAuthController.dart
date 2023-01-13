@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.d
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
+import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
 import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
 import 'package:mezcalmos/Shared/graphql/saved_location/saved_location.dart';
@@ -67,14 +68,14 @@ class CustomerAuthController extends GetxController {
       mezDbgPrint("😉😉😉😉😉😉 setting notif token 😉😉😉😉😉");
       unawaited(saveNotificationToken());
     }
-    // ignore: always_specify_types, unawaited_futures
-    // get_customer_cart(customerId: _authController.hasuraUserId!).then((value) {
-    //   mezDbgPrint(
-    //       "Customer Auth controller -CART-LEN-  ${value?.cartItems.length}");
-    //   if (value == null) {
-    //     create_customer_cart();
-    //   }
-    // });
+    //  ignore: always_specify_types, unawaited_futures
+    get_customer_cart(customerId: _authController.hasuraUserId!).then((value) {
+      mezDbgPrint(
+          "Customer Auth controller -CART-LEN-  ${value?.cartItems.length}");
+      if (value == null) {
+        create_customer_cart();
+      }
+    });
   }
 
   Future<void> saveNotificationToken() async {
