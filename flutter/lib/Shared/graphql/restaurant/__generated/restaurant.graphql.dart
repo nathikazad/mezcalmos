@@ -5676,6 +5676,20 @@ const documentNodeMutationupdateRestaurantInfo = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'accepted_payments'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'stripe_info'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'name'),
             alias: null,
             arguments: [],
@@ -5876,6 +5890,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     required this.language_id,
     required this.location_gps,
     required this.location_text,
+    this.accepted_payments,
+    this.stripe_info,
     required this.name,
     this.schedule,
     this.description,
@@ -5892,6 +5908,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     final l$language_id = json['language_id'];
     final l$location_gps = json['location_gps'];
     final l$location_text = json['location_text'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$stripe_info = json['stripe_info'];
     final l$name = json['name'];
     final l$schedule = json['schedule'];
     final l$description = json['description'];
@@ -5905,6 +5923,9 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
       language_id: (l$language_id as String),
       location_gps: geographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
+      accepted_payments:
+          l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
+      stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       name: (l$name as String),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       description: l$description == null
@@ -5929,6 +5950,10 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
   final Geography location_gps;
 
   final String location_text;
+
+  final dynamic? accepted_payments;
+
+  final dynamic? stripe_info;
 
   final String name;
 
@@ -5957,6 +5982,12 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     _resultData['location_gps'] = geographyToJson(l$location_gps);
     final l$location_text = location_text;
     _resultData['location_text'] = l$location_text;
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] =
+        l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
+    final l$stripe_info = stripe_info;
+    _resultData['stripe_info'] =
+        l$stripe_info == null ? null : mapToJson(l$stripe_info);
     final l$name = name;
     _resultData['name'] = l$name;
     final l$schedule = schedule;
@@ -5979,6 +6010,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     final l$language_id = language_id;
     final l$location_gps = location_gps;
     final l$location_text = location_text;
+    final l$accepted_payments = accepted_payments;
+    final l$stripe_info = stripe_info;
     final l$name = name;
     final l$schedule = schedule;
     final l$description = description;
@@ -5992,6 +6025,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
       l$language_id,
       l$location_gps,
       l$location_text,
+      l$accepted_payments,
+      l$stripe_info,
       l$name,
       l$schedule,
       l$description,
@@ -6042,6 +6077,16 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     final l$location_text = location_text;
     final lOther$location_text = other.location_text;
     if (l$location_text != lOther$location_text) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$stripe_info = stripe_info;
+    final lOther$stripe_info = other.stripe_info;
+    if (l$stripe_info != lOther$stripe_info) {
       return false;
     }
     final l$name = name;
@@ -6103,6 +6148,8 @@ abstract class CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk<
     String? language_id,
     Geography? location_gps,
     String? location_text,
+    dynamic? accepted_payments,
+    dynamic? stripe_info,
     String? name,
     dynamic? schedule,
     Mutation$updateRestaurantInfo$update_restaurant_by_pk$description?
@@ -6137,6 +6184,8 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk<TRes>
     Object? language_id = _undefined,
     Object? location_gps = _undefined,
     Object? location_text = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? stripe_info = _undefined,
     Object? name = _undefined,
     Object? schedule = _undefined,
     Object? description = _undefined,
@@ -6163,6 +6212,12 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk<TRes>
         location_text: location_text == _undefined || location_text == null
             ? _instance.location_text
             : (location_text as String),
+        accepted_payments: accepted_payments == _undefined
+            ? _instance.accepted_payments
+            : (accepted_payments as dynamic?),
+        stripe_info: stripe_info == _undefined
+            ? _instance.stripe_info
+            : (stripe_info as dynamic?),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -6208,6 +6263,8 @@ class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk<
     String? language_id,
     Geography? location_gps,
     String? location_text,
+    dynamic? accepted_payments,
+    dynamic? stripe_info,
     String? name,
     dynamic? schedule,
     Mutation$updateRestaurantInfo$update_restaurant_by_pk$description?

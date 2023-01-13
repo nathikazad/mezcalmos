@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -298,19 +299,26 @@ String extractPaymentIdFromIntent(String a) {
 }
 
 Future<ServerResponse> onboardServiceProvider(
-    int serviceProviderId, ServiceProviderType orderType) async {
+    int serviceProviderId,
+    ServiceProviderType orderType,
+    Map<PaymentType, bool> acceptedPayments) async {
   return serviceProviderFunctions(
-      "setupServiceProvider", serviceProviderId, orderType);
+      "setupServiceProvider", serviceProviderId, orderType, acceptedPayments);
 }
 
 Future<ServerResponse> updateServiceProvider(
-    int serviceProviderId, ServiceProviderType orderType) async {
+    int serviceProviderId,
+    ServiceProviderType orderType,
+    Map<PaymentType, bool> acceptedPayments) async {
   return serviceProviderFunctions(
-      "updateServiceProvider", serviceProviderId, orderType);
+      "updateServiceProvider", serviceProviderId, orderType, acceptedPayments);
 }
 
-Future<ServerResponse> serviceProviderFunctions(String functionName,
-    int serviceProviderId, ServiceProviderType orderType) async {
+Future<ServerResponse> serviceProviderFunctions(
+    String functionName,
+    int serviceProviderId,
+    ServiceProviderType orderType,
+    Map<PaymentType, bool> acceptedPayments) async {
   final HttpsCallable cloudFunction =
       FirebaseFunctions.instance.httpsCallable('stripe-$functionName');
   try {

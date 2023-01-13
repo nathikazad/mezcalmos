@@ -112,6 +112,8 @@ mutation updateRestaurantInfo($id: Int!, $data: restaurant_set_input!) {
     language_id
     location_gps
     location_text
+    accepted_payments
+    stripe_info
     name
     schedule
     description {

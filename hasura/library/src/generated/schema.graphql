@@ -892,6 +892,15 @@ type customer {
     where: saved_location_bool_exp
   ): saved_location_aggregate!
   service_provider_type: String
+
+  """
+  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
+  Object) {         restaurant: {Record of restaurantIds and
+  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
+  card object: {             id: string,             last4?: string,            
+  brand?: string,             expMonth?: number,             expYear?: number,  
+            idsWithServiceProvider: same as above,         }     } }
+  """
   stripe_info(
     """JSON select path"""
     path: String
@@ -929,6 +938,14 @@ type customer_aggregate_fields {
 
 """append existing jsonb value of filtered columns with new jsonb value"""
 input customer_append_input {
+  """
+  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
+  Object) {         restaurant: {Record of restaurantIds and
+  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
+  card object: {             id: string,             last4?: string,            
+  brand?: string,             expMonth?: number,             expYear?: number,  
+            idsWithServiceProvider: same as above,         }     } }
+  """
   stripe_info: jsonb
 }
 
@@ -976,6 +993,14 @@ enum customer_constraint {
 delete the field or element with specified path (for JSON arrays, negative integers count from the end)
 """
 input customer_delete_at_path_input {
+  """
+  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
+  Object) {         restaurant: {Record of restaurantIds and
+  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
+  card object: {             id: string,             last4?: string,            
+  brand?: string,             expMonth?: number,             expYear?: number,  
+            idsWithServiceProvider: same as above,         }     } }
+  """
   stripe_info: [String!]
 }
 
@@ -984,6 +1009,14 @@ delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array
 """
 input customer_delete_elem_input {
+  """
+  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
+  Object) {         restaurant: {Record of restaurantIds and
+  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
+  card object: {             id: string,             last4?: string,            
+  brand?: string,             expMonth?: number,             expYear?: number,  
+            idsWithServiceProvider: same as above,         }     } }
+  """
   stripe_info: Int
 }
 
@@ -991,6 +1024,14 @@ input customer_delete_elem_input {
 delete key/value pair or string element. key/value pairs are matched based on their key value
 """
 input customer_delete_key_input {
+  """
+  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
+  Object) {         restaurant: {Record of restaurantIds and
+  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
+  card object: {             id: string,             last4?: string,            
+  brand?: string,             expMonth?: number,             expYear?: number,  
+            idsWithServiceProvider: same as above,         }     } }
+  """
   stripe_info: String
 }
 
@@ -1010,6 +1051,15 @@ input customer_insert_input {
   deliveries: delivery_order_arr_rel_insert_input
   saved_locations: saved_location_arr_rel_insert_input
   service_provider_type: String
+
+  """
+  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
+  Object) {         restaurant: {Record of restaurantIds and
+  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
+  card object: {             id: string,             last4?: string,            
+  brand?: string,             expMonth?: number,             expYear?: number,  
+            idsWithServiceProvider: same as above,         }     } }
+  """
   stripe_info: jsonb
   user: user_obj_rel_insert_input
   user_id: Int
@@ -1079,6 +1129,14 @@ input customer_pk_columns_input {
 
 """prepend existing jsonb value of filtered columns with new jsonb value"""
 input customer_prepend_input {
+  """
+  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
+  Object) {         restaurant: {Record of restaurantIds and
+  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
+  card object: {             id: string,             last4?: string,            
+  brand?: string,             expMonth?: number,             expYear?: number,  
+            idsWithServiceProvider: same as above,         }     } }
+  """
   stripe_info: jsonb
 }
 
@@ -1105,6 +1163,15 @@ input type for updating data in table "customer"
 input customer_set_input {
   app_version: String
   service_provider_type: String
+
+  """
+  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
+  Object) {         restaurant: {Record of restaurantIds and
+  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
+  card object: {             id: string,             last4?: string,            
+  brand?: string,             expMonth?: number,             expYear?: number,  
+            idsWithServiceProvider: same as above,         }     } }
+  """
   stripe_info: jsonb
   user_id: Int
 }
@@ -1139,6 +1206,15 @@ input customer_stream_cursor_input {
 input customer_stream_cursor_value_input {
   app_version: String
   service_provider_type: String
+
+  """
+  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
+  Object) {         restaurant: {Record of restaurantIds and
+  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
+  card object: {             id: string,             last4?: string,            
+  brand?: string,             expMonth?: number,             expYear?: number,  
+            idsWithServiceProvider: same as above,         }     } }
+  """
   stripe_info: jsonb
   user_id: Int
 }
@@ -9919,6 +9995,7 @@ type query_root {
 columns and relationships of "restaurant"
 """
 type restaurant {
+  """Record of PaymentType(cash, card, bank transfer) and boolean"""
   accepted_payments(
     """JSON select path"""
     path: String
@@ -10046,7 +10123,6 @@ type restaurant {
     """filter the rows returned"""
     where: restaurant_order_bool_exp
   ): restaurant_order_aggregate!
-  payment_info_id: Int
 
   """An array relationship"""
   restaurant_operators(
@@ -10145,6 +10221,12 @@ type restaurant {
     """filter the rows returned"""
     where: restaurant_item_bool_exp
   ): [restaurant_item!]
+
+  """
+  { id: string; status: string; chargeFeesOnCustomer: boolean | null;
+  chargesEnabled: boolean; payoutsEnabled: boolean; detailsSubmitted: boolean;
+  requirements: string[] | null; email: string | null }
+  """
   stripe_info(
     """JSON select path"""
     path: String
@@ -10178,8 +10260,15 @@ type restaurant_aggregate_fields {
 
 """append existing jsonb value of filtered columns with new jsonb value"""
 input restaurant_append_input {
+  """Record of PaymentType(cash, card, bank transfer) and boolean"""
   accepted_payments: jsonb
   schedule: jsonb
+
+  """
+  { id: string; status: string; chargeFeesOnCustomer: boolean | null;
+  chargesEnabled: boolean; payoutsEnabled: boolean; detailsSubmitted: boolean;
+  requirements: string[] | null; email: string | null }
+  """
   stripe_info: jsonb
 }
 
@@ -10187,7 +10276,6 @@ input restaurant_append_input {
 type restaurant_avg_fields {
   description_id: Float
   id: Float
-  payment_info_id: Float
 }
 
 """
@@ -10215,7 +10303,6 @@ input restaurant_bool_exp {
   open_status: String_comparison_exp
   orders: restaurant_order_bool_exp
   orders_aggregate: restaurant_order_aggregate_bool_exp
-  payment_info_id: Int_comparison_exp
   restaurant_operators: restaurant_operator_bool_exp
   restaurant_operators_aggregate: restaurant_operator_aggregate_bool_exp
   reviews: review_bool_exp
@@ -12043,11 +12130,6 @@ enum restaurant_constraint {
   restaurant_firebase_id_key
 
   """
-  unique or primary key constraint on columns "payment_info_id"
-  """
-  restaurant_payment_info_id_key
-
-  """
   unique or primary key constraint on columns "id"
   """
   restaurant_pkey
@@ -12057,8 +12139,15 @@ enum restaurant_constraint {
 delete the field or element with specified path (for JSON arrays, negative integers count from the end)
 """
 input restaurant_delete_at_path_input {
+  """Record of PaymentType(cash, card, bank transfer) and boolean"""
   accepted_payments: [String!]
   schedule: [String!]
+
+  """
+  { id: string; status: string; chargeFeesOnCustomer: boolean | null;
+  chargesEnabled: boolean; payoutsEnabled: boolean; detailsSubmitted: boolean;
+  requirements: string[] | null; email: string | null }
+  """
   stripe_info: [String!]
 }
 
@@ -12067,8 +12156,15 @@ delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array
 """
 input restaurant_delete_elem_input {
+  """Record of PaymentType(cash, card, bank transfer) and boolean"""
   accepted_payments: Int
   schedule: Int
+
+  """
+  { id: string; status: string; chargeFeesOnCustomer: boolean | null;
+  chargesEnabled: boolean; payoutsEnabled: boolean; detailsSubmitted: boolean;
+  requirements: string[] | null; email: string | null }
+  """
   stripe_info: Int
 }
 
@@ -12076,8 +12172,15 @@ input restaurant_delete_elem_input {
 delete key/value pair or string element. key/value pairs are matched based on their key value
 """
 input restaurant_delete_key_input {
+  """Record of PaymentType(cash, card, bank transfer) and boolean"""
   accepted_payments: String
   schedule: String
+
+  """
+  { id: string; status: string; chargeFeesOnCustomer: boolean | null;
+  chargesEnabled: boolean; payoutsEnabled: boolean; detailsSubmitted: boolean;
+  requirements: string[] | null; email: string | null }
+  """
   stripe_info: String
 }
 
@@ -12087,13 +12190,13 @@ input type for incrementing numeric columns in table "restaurant"
 input restaurant_inc_input {
   description_id: Int
   id: Int
-  payment_info_id: Int
 }
 
 """
 input type for inserting data into table "restaurant"
 """
 input restaurant_insert_input {
+  """Record of PaymentType(cash, card, bank transfer) and boolean"""
   accepted_payments: jsonb
   approved: Boolean
   categories: restaurant_category_arr_rel_insert_input
@@ -12111,12 +12214,17 @@ input restaurant_insert_input {
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
   orders: restaurant_order_arr_rel_insert_input
-  payment_info_id: Int
   restaurant_operators: restaurant_operator_arr_rel_insert_input
   reviews: review_arr_rel_insert_input
   schedule: jsonb
   self_delivery: Boolean
   service_provider_type: String
+
+  """
+  { id: string; status: string; chargeFeesOnCustomer: boolean | null;
+  chargesEnabled: boolean; payoutsEnabled: boolean; detailsSubmitted: boolean;
+  requirements: string[] | null; email: string | null }
+  """
   stripe_info: jsonb
 }
 
@@ -13302,7 +13410,6 @@ type restaurant_max_fields {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
-  payment_info_id: Int
   service_provider_type: String
 }
 
@@ -13318,7 +13425,6 @@ type restaurant_min_fields {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
-  payment_info_id: Int
   service_provider_type: String
 }
 
@@ -15058,6 +15164,13 @@ type restaurant_order {
   """
   status: String!
   stripe_fees: money!
+
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
   stripe_info(
     """JSON select path"""
     path: String
@@ -15127,6 +15240,12 @@ input restaurant_order_aggregate_order_by {
 
 """append existing jsonb value of filtered columns with new jsonb value"""
 input restaurant_order_append_input {
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
   stripe_info: jsonb
 }
 
@@ -15230,7 +15349,6 @@ input restaurant_order_by {
   name: order_by
   open_status: order_by
   orders_aggregate: restaurant_order_aggregate_order_by
-  payment_info_id: order_by
   restaurant_operators_aggregate: restaurant_operator_aggregate_order_by
   reviews_aggregate: review_aggregate_order_by
   schedule: order_by
@@ -15264,6 +15382,12 @@ enum restaurant_order_constraint {
 delete the field or element with specified path (for JSON arrays, negative integers count from the end)
 """
 input restaurant_order_delete_at_path_input {
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
   stripe_info: [String!]
 }
 
@@ -15272,6 +15396,12 @@ delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array
 """
 input restaurant_order_delete_elem_input {
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
   stripe_info: Int
 }
 
@@ -15279,6 +15409,12 @@ input restaurant_order_delete_elem_input {
 delete key/value pair or string element. key/value pairs are matched based on their key value
 """
 input restaurant_order_delete_key_input {
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
   stripe_info: String
 }
 
@@ -15332,6 +15468,13 @@ input restaurant_order_insert_input {
   """
   status: String
   stripe_fees: money
+
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
   stripe_info: jsonb
   tax: money
   to_location_address: String
@@ -16088,6 +16231,12 @@ input restaurant_order_pk_columns_input {
 
 """prepend existing jsonb value of filtered columns with new jsonb value"""
 input restaurant_order_prepend_input {
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
   stripe_info: jsonb
 }
 
@@ -16482,6 +16631,13 @@ input restaurant_order_set_input {
   """
   status: String
   stripe_fees: money
+
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
   stripe_info: jsonb
   tax: money
   to_location_address: String
@@ -16615,6 +16771,13 @@ input restaurant_order_stream_cursor_value_input {
   """
   status: String
   stripe_fees: money
+
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
   stripe_info: jsonb
   tax: money
   to_location_address: String
@@ -16856,8 +17019,15 @@ input restaurant_pk_columns_input {
 
 """prepend existing jsonb value of filtered columns with new jsonb value"""
 input restaurant_prepend_input {
+  """Record of PaymentType(cash, card, bank transfer) and boolean"""
   accepted_payments: jsonb
   schedule: jsonb
+
+  """
+  { id: string; status: string; chargeFeesOnCustomer: boolean | null;
+  chargesEnabled: boolean; payoutsEnabled: boolean; detailsSubmitted: boolean;
+  requirements: string[] | null; email: string | null }
+  """
   stripe_info: jsonb
 }
 
@@ -16899,9 +17069,6 @@ enum restaurant_select_column {
   open_status
 
   """column name"""
-  payment_info_id
-
-  """column name"""
   schedule
 
   """column name"""
@@ -16918,6 +17085,7 @@ enum restaurant_select_column {
 input type for updating data in table "restaurant"
 """
 input restaurant_set_input {
+  """Record of PaymentType(cash, card, bank transfer) and boolean"""
   accepted_payments: jsonb
   approved: Boolean
   description_id: Int
@@ -16931,10 +17099,15 @@ input restaurant_set_input {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
-  payment_info_id: Int
   schedule: jsonb
   self_delivery: Boolean
   service_provider_type: String
+
+  """
+  { id: string; status: string; chargeFeesOnCustomer: boolean | null;
+  chargesEnabled: boolean; payoutsEnabled: boolean; detailsSubmitted: boolean;
+  requirements: string[] | null; email: string | null }
+  """
   stripe_info: jsonb
 }
 
@@ -16942,21 +17115,18 @@ input restaurant_set_input {
 type restaurant_stddev_fields {
   description_id: Float
   id: Float
-  payment_info_id: Float
 }
 
 """aggregate stddev_pop on columns"""
 type restaurant_stddev_pop_fields {
   description_id: Float
   id: Float
-  payment_info_id: Float
 }
 
 """aggregate stddev_samp on columns"""
 type restaurant_stddev_samp_fields {
   description_id: Float
   id: Float
-  payment_info_id: Float
 }
 
 """
@@ -16972,6 +17142,7 @@ input restaurant_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input restaurant_stream_cursor_value_input {
+  """Record of PaymentType(cash, card, bank transfer) and boolean"""
   accepted_payments: jsonb
   approved: Boolean
   description_id: Int
@@ -16985,10 +17156,15 @@ input restaurant_stream_cursor_value_input {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
-  payment_info_id: Int
   schedule: jsonb
   self_delivery: Boolean
   service_provider_type: String
+
+  """
+  { id: string; status: string; chargeFeesOnCustomer: boolean | null;
+  chargesEnabled: boolean; payoutsEnabled: boolean; detailsSubmitted: boolean;
+  requirements: string[] | null; email: string | null }
+  """
   stripe_info: jsonb
 }
 
@@ -16996,7 +17172,6 @@ input restaurant_stream_cursor_value_input {
 type restaurant_sum_fields {
   description_id: Int
   id: Int
-  payment_info_id: Int
 }
 
 """
@@ -17035,9 +17210,6 @@ enum restaurant_update_column {
 
   """column name"""
   open_status
-
-  """column name"""
-  payment_info_id
 
   """column name"""
   schedule
@@ -17087,21 +17259,18 @@ input restaurant_updates {
 type restaurant_var_pop_fields {
   description_id: Float
   id: Float
-  payment_info_id: Float
 }
 
 """aggregate var_samp on columns"""
 type restaurant_var_samp_fields {
   description_id: Float
   id: Float
-  payment_info_id: Float
 }
 
 """aggregate variance on columns"""
 type restaurant_variance_fields {
   description_id: Float
   id: Float
-  payment_info_id: Float
 }
 
 """
