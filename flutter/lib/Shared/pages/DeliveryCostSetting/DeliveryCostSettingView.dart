@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
-import 'package:mezcalmos/Shared/pages/DeliveryCostSetting/controllers/DeliveryCostSettingViewController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/pages/DeliveryCostSetting/controllers/DeliveryCostSettingViewController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
@@ -15,9 +14,9 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpEditInfoView']['ROpEditInfoView'];
 
 class DeliveryCostSettingView extends StatefulWidget {
-  const DeliveryCostSettingView({Key? key, required this.editInfoController})
-      : super(key: key);
-  final ROpEditInfoController editInfoController;
+  const DeliveryCostSettingView({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<DeliveryCostSettingView> createState() =>
@@ -31,13 +30,16 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
   ServiceProviderType? serviceProviderType;
   @override
   void initState() {
+    serviceProviderId = int.tryParse(Get.parameters["serviceProviderId"]!);
+    serviceProviderType =
+        Get.arguments["serviceProviderType"] as ServiceProviderType;
 
-
-    
     // provide service provider id and service Provider type
     if (serviceProviderId != null && serviceProviderType != null) {
-  viewController.init(serviceProviderId: serviceProviderId!,serviceProviderType: serviceProviderType!);
-}
+      viewController.init(
+          serviceProviderId: serviceProviderId!,
+          serviceProviderType: serviceProviderType!);
+    }
 
     super.initState();
   }
@@ -51,7 +53,8 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,onClick: MezRouter.back,title: "Delivery Cost"),
+      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+          onClick: MezRouter.back, title: "Delivery Cost"),
       body: Column(
         children: [
           Expanded(
@@ -65,20 +68,28 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _costComponent(
-                            controller: viewController.freeKmRange,
-                            suffixTitle: 'Km',
-                            title: 'Free Delivery range'),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "Within this distance, the customer won’t be charged for the delivery.",
-                          style: Get.textTheme.bodyText2,
-                        ),
-                        Divider(
-                          height: 35,
-                        ),
+                        if (serviceProviderType != null &&
+                            serviceProviderType ==
+                                ServiceProviderType.Restaurant)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _costComponent(
+                                  controller: viewController.freeKmRange,
+                                  suffixTitle: 'Km',
+                                  title: 'Free Delivery range'),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "Within this distance, the customer won’t be charged for the delivery.",
+                                style: Get.textTheme.bodyText2,
+                              ),
+                              Divider(
+                                height: 35,
+                              ),
+                            ],
+                          ),
                         _costComponent(
                             controller: viewController.minCost,
                             suffixTitle: '\$',

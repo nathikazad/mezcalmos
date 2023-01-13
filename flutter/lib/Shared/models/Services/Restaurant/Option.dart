@@ -93,18 +93,18 @@ class Option {
     return selected;
   }
 
+  Map<String, dynamic> _parseChoices(List<Choice> choices) {
+    final Map<String, dynamic> _mappedChoices = <String, dynamic>{};
+    choices.forEach((Choice ch) {
+      _mappedChoices[ch.id.toString()] = ch.toJson();
+    });
+
+    return _mappedChoices;
+  }
+
   Map<String, dynamic> toJson() {
-    Map<String, dynamic> _parseChoices(List<Choice> choices) {
-      final Map<String, dynamic> _mappedChoices = <String, dynamic>{};
-      choices.forEach((Choice ch) {
-        _mappedChoices[ch.name[LanguageType.EN]!] = ch.toJson();
-      });
-
-      return _mappedChoices;
-    }
-
     return {
-      // "id": id,
+      "id": id,
       "name": name.toFirebaseFormat(),
       "optionType": optionType.toFirebaseFormatString(),
       "choices": _parseChoices(choices),

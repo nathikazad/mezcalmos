@@ -49,7 +49,7 @@ class ROpEditInfoController {
   final RxBool isAvailable = RxBool(false);
   final RxBool isApproved = RxBool(true);
 
-  RxDouble cuurentPage = RxDouble(0);
+  RxInt cuurentPage = RxInt(0);
 // LATE VARS
   late int restaurantId;
 

@@ -43,6 +43,7 @@ class DvOrderViewcontroller {
     try {
       order.value = await get_driver_order_by_id(orderId: orderId);
       if (order.value!.routeInformation != null) {
+        mezDbgPrint(order.value.toString());
         mapController.decodeAndAddPolyline(
             encodedPolylineString: order.value!.routeInformation!.polyline);
       }
@@ -117,6 +118,7 @@ class DvOrderViewcontroller {
           MezSnackbar("Error", "Order does not exist");
         });
       } else {
+        mezDbgPrint("InitiiiiiiiiiInitiiiiiiiiiInitiiiiiiiiiInitiiiiiiiii");
         initilizeMap(mapController, order, order.value!.serviceInfo);
       }
     });

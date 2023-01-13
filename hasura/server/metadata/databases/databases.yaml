@@ -6,6 +6,4 @@
         from_env: PG_DATABASE_URL
       isolation_level: read-committed
       use_prepared_statements: false
-  customization:
-    naming_convention: hasura-default
   tables: "!include default/tables/tables.yaml"

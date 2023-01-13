@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
@@ -10,8 +9,10 @@ class Item {
   int? id;
   int? nameId;
   int? descriptionId;
+  int? restaurantId;
   int? categoryId;
   bool available;
+  String? restaurantName;
   ItemType itemType;
   LanguageMap? description;
 
@@ -20,7 +21,7 @@ class Item {
   num cost = 0;
   List<Option> options;
   Category? category;
-  Restaurant? restaurant;
+
   String? linkUrl;
   DateTime? startsAt;
   DateTime? endsAt;
@@ -35,11 +36,13 @@ class Item {
       {this.id,
       this.nameId,
       this.descriptionId,
+      this.restaurantId,
       this.available = false,
       this.description,
       this.image,
       this.startsAt,
       this.categoryId,
+      this.restaurantName,
       this.endsAt,
       List<Option>? newOptions,
       required this.name,
@@ -100,16 +103,6 @@ class Item {
 
 //  }
   Map<String, dynamic> toJson() {
-    Map<String, dynamic> _parseOptionsListToFirebaseFormattedStriing(
-        List<Option> options) {
-      final Map<String, dynamic> _mappedOptions = <String, dynamic>{};
-      options.forEach((Option op) {
-        _mappedOptions[op.name[LanguageType.EN]!] = op.toJson();
-      });
-
-      return _mappedOptions;
-    }
-
     return <String, dynamic>{
       "id": id,
       "available": available,
@@ -119,15 +112,29 @@ class Item {
       "startsAt": startsAt?.toUtc().toString() ?? null,
       "endsAt": endsAt?.toUtc().toString() ?? null,
       "name": name.toFirebaseFormat(),
-      "options": _parseOptionsListToFirebaseFormattedStriing(
-          options), //options.map<List<Option>>((Option x) => <String, dynamic>{x.id: x.toJson()}),
+      "options":
+          parseOptionsListToJson(), //options.map<List<Option>>((Option x) => <String, dynamic>{x.id: x.toJson()}),
       "position": position
     };
   }
 
+  Map<String, dynamic> parseOptionsListToJson() {
+    final Map<String, dynamic> _mappedOptions = <String, dynamic>{};
+    options.forEach((Option op) {
+      _mappedOptions[op.id.toString()] = op.toJson();
+    });
+
+    return _mappedOptions;
+  }
+
   Option? findOption(int id) {
     if (options.length == 0) return null;
+
     return options.firstWhereOrNull((Option element) => element.id == id);
+  }
+
+  LanguageMap getOptionName(int id) {
+    return options.firstWhereOrNull((Option element) => element.id == id)!.name;
   }
 
   @override
@@ -178,7 +185,6 @@ class Item {
         cost.hashCode ^
         options.hashCode ^
         category.hashCode ^
-        restaurant.hashCode ^
         linkUrl.hashCode ^
         position.hashCode;
   }

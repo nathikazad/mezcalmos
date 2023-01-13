@@ -3,7 +3,7 @@
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class Choice {
-  String id;
+  int id;
   num cost = 0;
   Map<LanguageType, String> name;
   int? nameId;

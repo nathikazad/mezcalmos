@@ -14,8 +14,8 @@ import 'package:mezcalmos/RestaurantApp/pages/TabsView/ROpTabsView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/UnauthrizedOpView/UnauthrizedOpView.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/pages/PickDriverView/PickDriverView.dart';
+import 'package:mezcalmos/Shared/pages/RestaurantOrderView/RestaurantOrderView.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/widgets/Order/RestaurantOrderView/RestaurantOrderView.dart';
 
 // const String kCurrentOrdersListRoute = '/currentOrders';
 const String kCreateRestaurant = '/createRestuarant';
@@ -45,13 +45,13 @@ String getROpEditInfoRoute({required String restaurantId}) {
 }
 
 String getROpChoiceRoute(
-    {required String? choiceId,
+    {required int? choiceId,
     required String restaurantId,
     required int optionId}) {
   String route = kChoiceView.replaceFirst(":restaurantId", restaurantId);
   route = route.replaceFirst(":optionId", "$optionId");
   if (choiceId != null) {
-    route = route.replaceFirst(":choiceId", choiceId);
+    route = route.replaceFirst(":choiceId", "$choiceId");
   }
 
   return route;

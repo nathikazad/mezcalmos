@@ -49,8 +49,8 @@ async function checkDeliveryOrders() {
             }
         });
         mezAdmins.forEach((m) => {
-          if(!(readOperators && readOperators[m.userId]) && m.user) {
-            pushNotification(m.user.firebaseId, notification, m.notificationInfo, ParticipantType.MezAdmin);
+          if(!(readOperators && readOperators[m.id])) {
+            pushNotification(m.firebaseId, notification, m.notificationInfo, ParticipantType.MezAdmin);
           }
         })
     }

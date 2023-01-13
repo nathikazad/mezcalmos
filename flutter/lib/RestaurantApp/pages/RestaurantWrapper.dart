@@ -16,7 +16,6 @@ import 'package:mezcalmos/Shared/firebaseNodes/operatorNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
-import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -39,15 +38,13 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
   void initState() {
     mezDbgPrint("RestaurantWrapper::init state");
 
-    _setupNotifications();
-
     Future(() async {
       await rOpDeeplinkHandler.startDynamicLinkCheckRoutine();
       restaurantOpAuthController
           .setupRestaurantOperator()
           .then((_) => handleState());
     });
-
+    _setupNotifications();
     super.initState();
   }
 
@@ -68,6 +65,7 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
   void _setupNotifications() {
     if (Get.find<AuthController>().isUserSignedIn) {
       mezDbgPrint("Setup notifs listener 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 ");
+      _notificationsStreamListener?.cancel();
       _notificationsStreamListener = initializeShowNotificationsListener();
       Get.find<ForegroundNotificationsController>()
           .startListeningForNotificationsFromFirebase(

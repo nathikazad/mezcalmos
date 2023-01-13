@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/models/DeliveryOrder.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/TwoCirclesAvatars.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
@@ -256,10 +255,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         MessageButton(
           withPadding: false,
           onTap: onServiceMsgClick,
-          showRedDot: (order.chatWithServiceProviderId != null)
-              ? Get.find<OrderController>().hasNewMessageNotification(
-                  order.chatWithServiceProviderId!.toString())
-              : false,
+          chatId: order.chatWithServiceProviderId!,
         ),
       ],
     );
@@ -308,10 +304,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         MessageButton(
           withPadding: false,
           onTap: onCustomerMsgClick,
-          showRedDot: (order.chatWithCustomerId != null)
-              ? Get.find<OrderController>().hasNewMessageNotification(
-                  order.chatWithCustomerId.toString())
-              : false,
+          chatId: order.chatWithCustomerId,
         ),
       ],
     );

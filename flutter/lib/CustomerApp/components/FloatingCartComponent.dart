@@ -1,7 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -13,17 +13,19 @@ class FloatingCartComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Get.find<RestaurantController>().cart.value.cartItems.length > 0 &&
-              _authController.isUserSignedIn
+      () => _authController.isUserSignedIn &&
+              Get.find<CustomerCartController>().cart.value != null &&
+              Get.find<CustomerCartController>().cart.value!.cartItems.length >
+                  0
           ? FloatingActionButton(
               onPressed: () {
                 MezRouter.toNamed(kCartRoute);
               },
               child: Badge(
                 badgeContent: Text(
-                  Get.find<RestaurantController>()
+                  Get.find<CustomerCartController>()
                       .cart
-                      .value
+                      .value!
                       .cartItems
                       .length
                       .toStringAsFixed(0),

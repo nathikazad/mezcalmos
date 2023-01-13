@@ -81,6 +81,11 @@ object_relationships:
     using:
       foreign_key_constraint_on: service_provider_review_by_driver_id
 computed_fields:
+  - name: in_process
+    definition:
+      function:
+        name: delivery_in_process
+        schema: public
   - name: notification_token
     definition:
       function:
@@ -103,13 +108,13 @@ select_permissions:
         - id
         - service_provider_id
         - service_provider_review_by_driver_id
-        - stripe_payment_id
         - delivery_cost
         - package_cost
         - dropoff_address
+        - order_type
         - payment_type
         - pickup_address
-        - service_provider_type
+        - schedule_time
         - trip_polyline
         - actual_arrival_at_dropoff_time
         - actual_arrival_at_pickup_time
@@ -119,10 +124,15 @@ select_permissions:
         - estimated_arrival_at_dropoff_time
         - estimated_arrival_at_pickup_time
         - estimated_package_ready_time
+        - order_time
         - trip_distance
         - trip_duration
         - status
+        - service_provider_type
         - delivery_driver_type
+        - direction
+      computed_fields:
+        - in_process
       filter:
         customer_id:
           _eq: X-Hasura-User-Id
@@ -142,6 +152,7 @@ select_permissions:
         - delivery_cost
         - delivery_driver_id
         - delivery_driver_type
+        - direction
         - driver_review_by_customer_id
         - driver_review_by_service_provider_id
         - dropoff_address
@@ -151,18 +162,21 @@ select_permissions:
         - estimated_package_ready_time
         - id
         - order_time
+        - order_type
         - package_cost
         - payment_type
         - pickup_address
         - pickup_gps
+        - schedule_time
         - service_provider_id
         - service_provider_review_by_driver_id
         - service_provider_type
         - status
-        - stripe_payment_id
         - trip_distance
         - trip_duration
         - trip_polyline
+      computed_fields:
+        - in_process
       filter:
         delivery_driver:
           user_id:
@@ -180,7 +194,6 @@ select_permissions:
         - chat_with_service_provider_id
         - chat_with_customer_id
         - payment_type
-        - stripe_payment_id
         - estimated_package_ready_time
         - actual_package_ready_time
         - estimated_arrival_at_pickup_time
@@ -225,7 +238,6 @@ select_permissions:
         - id
         - service_provider_id
         - service_provider_review_by_driver_id
-        - stripe_payment_id
         - delivery_cost
         - package_cost
         - dropoff_address
@@ -269,13 +281,13 @@ select_permissions:
         - id
         - service_provider_id
         - service_provider_review_by_driver_id
-        - stripe_payment_id
         - delivery_cost
         - package_cost
         - dropoff_address
+        - order_type
         - payment_type
         - pickup_address
-        - service_provider_type
+        - schedule_time
         - trip_polyline
         - actual_arrival_at_dropoff_time
         - actual_arrival_at_pickup_time
@@ -285,10 +297,15 @@ select_permissions:
         - estimated_arrival_at_dropoff_time
         - estimated_arrival_at_pickup_time
         - estimated_package_ready_time
+        - order_time
         - trip_distance
         - trip_duration
         - status
+        - service_provider_type
         - delivery_driver_type
+        - direction
+      computed_fields:
+        - in_process
       filter:
         restaurant:
           restaurant_operators:

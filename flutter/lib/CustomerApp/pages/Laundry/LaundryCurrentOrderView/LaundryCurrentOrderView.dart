@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/CustomerLaundryEstTimes.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderDriverCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderFooterCard.dart';
@@ -12,6 +11,7 @@ import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Comp
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderStatusCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/OrderLaundryCard.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -27,7 +27,6 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Laundry']['LaundryCurrentOrderView']['LaundryCurrentOrderView'];
@@ -46,7 +45,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
 
   Rxn<LaundryOrder> order = Rxn<LaundryOrder>();
   StreamSubscription<Order?>? _orderListener;
-  final OrderController controller = Get.find<OrderController>();
+  //final OrderController controller = Get.find<OrderController>();
   final MGoogleMapController mapController = MGoogleMapController(
     enableMezSmartPointer: true,
   );
@@ -59,21 +58,21 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
       mezDbgPrint("Order id null from the parameters ######");
       MezRouter.back<void>();
     }
-    controller.clearOrderNotifications(int.tryParse(orderId));
-    order.value = controller.getOrder(int.parse(orderId)) as LaundryOrder?;
+    // controller.clearOrderNotifications(int.tryParse(orderId));
+    // order.value = controller.getOrder(int.parse(orderId)) as LaundryOrder?;
 
-    _orderListener = controller
-        .getOrderStream(int.parse(orderId))
-        .listen((Order? newOrderEvent) {
-      if (newOrderEvent != null) {
-        order.value = newOrderEvent as LaundryOrder?;
+    // _orderListener = controller
+    //     .getOrderStream(int.parse(orderId))
+    //     .listen((Order? newOrderEvent) {
+    //   if (newOrderEvent != null) {
+    //     order.value = newOrderEvent as LaundryOrder?;
 
-        if (order.value!.inProcess()) {
-          // @here
-          updateMapByPhase(order.value!.getCurrentPhase());
-        }
-      }
-    });
+    //     if (order.value!.inProcess()) {
+    //       // @here
+    //       updateMapByPhase(order.value!.getCurrentPhase());
+    //     }
+    //   }
+    // });
 
     waitForOrderIfNotLoaded().then((void value) {
       if (order.value == null) {

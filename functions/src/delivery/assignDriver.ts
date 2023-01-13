@@ -56,6 +56,7 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
       }
     } else {
       operator = await getRestaurantOperatorByUserId(userId);
+    
       if(operator.status != OperatorStatus.Authorized) {
         throw new HttpsError(
           "internal",

@@ -29,8 +29,6 @@
 - "!include public_saved_location.yaml"
 - "!include public_service_link.yaml"
 - "!include public_service_provider_customer_chat.yaml"
-- "!include public_service_provider_payment_info.yaml"
-- "!include public_stripe_info.yaml"
 - "!include public_subscriber.yaml"
 - "!include public_translation.yaml"
 - "!include public_translation_value.yaml"

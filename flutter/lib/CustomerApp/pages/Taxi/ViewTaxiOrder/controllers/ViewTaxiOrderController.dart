@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
@@ -18,7 +17,7 @@ class ViewTaxiOrderController {
   ViewTaxiOrderController({required this.animatedSliderController});
 
   /// OrderController
-  final OrderController controller = Get.find<OrderController>();
+  //final OrderController controller = Get.find<OrderController>();
 
   /// TaxiController
   final TaxiController taxiController =
@@ -49,20 +48,20 @@ class ViewTaxiOrderController {
   RxBool offersBtnClicked = false.obs;
 
   Future<bool> init(int orderId, {Function? orderCancelledCallback}) {
-    controller.clearOrderNotifications(orderId);
-    order.value = controller.getOrder(orderId) as TaxiOrder?;
+    // controller.clearOrderNotifications(orderId);
+    // order.value = controller.getOrder(orderId) as TaxiOrder?;
     if (order.value != null) {
       _handleCounterOffers(order.value!);
     }
-    _orderListener =
-        controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
-      if (newOrderEvent != null) {
-        mezDbgPrint("New customer iorder event");
-        order.value = newOrderEvent as TaxiOrder?;
-        _handleCounterOffers(order.value!);
-        processOrder(orderCancelledCallback);
-      }
-    });
+    // _orderListener =
+    //     controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
+    //   if (newOrderEvent != null) {
+    //     mezDbgPrint("New customer iorder event");
+    //     order.value = newOrderEvent as TaxiOrder?;
+    //     _handleCounterOffers(order.value!);
+    //     processOrder(orderCancelledCallback);
+    //   }
+    // });
 
     return waitForInitialization().then<bool>((bool orderLoaded) {
       if (orderLoaded) {

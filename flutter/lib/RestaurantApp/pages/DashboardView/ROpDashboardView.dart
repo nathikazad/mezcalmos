@@ -10,7 +10,6 @@ import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpSchedulePag
 import 'package:mezcalmos/RestaurantApp/pages/TabsView/controllers/ROpTabsViewViewController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/pages/ServiceDriversList/DriversListView.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -59,7 +58,7 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        return widget.canGoBack || _pageController.page == 0;
+        return widget.canGoBack || _pageController.page != 0;
       },
       child: Obx(() {
         if (editInfoController.restaurant.value != null) {
@@ -86,8 +85,8 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
                 ROpReviewsView(restId: restaurantID!),
 
                 // OperatorsListView(restaurantId: restaurantID!),
-                if (editInfoController.restaurant.value!.selfDelivery)
-                  DriversListView(),
+                // if (editInfoController.restaurant.value!.selfDelivery)
+                //   DriversListView(),
               ],
             ),
             // bottomNavigationBar: _editInfoSaveButton(),

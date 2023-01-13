@@ -2,12 +2,12 @@ import 'package:flutter/material.dart' as mat;
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
-dynamic _i18n() =>
-    Get.find<LanguageController>().strings["LaundryApp"]["notificationHandler"];
+dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
+    ['notificationHandler'];
 
 Notification restaurantNotificationHandler(String key, value) {
   final NotificationType notificationType =
@@ -19,7 +19,7 @@ Notification restaurantNotificationHandler(String key, value) {
           linkUrl: getROpOrderRoute(value["orderId"].toString()),
           body: '${_i18n()['newOrderBody']}',
           imgUrl:
-              'assets/images/shared/notifications/prepareOrderNotificationIcon.png', // needs to be changed
+              'assets/images/shared/notifications/readyOrderNotificationIcon.png', // needs to be changed
           title: '${_i18n()['newOrderTitle']}',
           timestamp: DateTime.parse(value['time']),
           notificationType: NotificationType.NewMessage,
@@ -48,9 +48,9 @@ Notification restaurantNotificationHandler(String key, value) {
     case NotificationType.NewMessage:
       return newMessageNotification(key, value);
     case NotificationType.OrderStatusChange:
-      return _laundryOpOrderChangesNotifier(key, value);
+      return _restaurantOpOrderChangesNotifier(key, value);
     default:
-      throw StateError("Invalid Notification Type");
+      throw StateError("Invalid Notification Type $value");
   }
 }
 
@@ -65,20 +65,20 @@ Notification restaurantNotificationHandler(String key, value) {
 //   }
 // }
 
-Notification _laundryOpOrderChangesNotifier(String key, value) {
-  final LaundryOrderStatus newOrdersStatus =
-      value['status'].toString().toLaundryOrderStatus();
-  final Map<String, dynamic> dynamicFields =
-      getLaundryOrderStatusFields(newOrdersStatus)!;
+Notification _restaurantOpOrderChangesNotifier(String key, value) {
+  final RestaurantOrderStatus newOrdersStatus =
+      value['status'].toString().toRestaurantOrderStatus();
+  final Map<String, dynamic>? dynamicFields =
+      _getRestaurantOrderStatusFields(newOrdersStatus);
 
   return Notification(
       id: key,
       linkUrl: getROpOrderRoute(value["orderId"].toString()),
       icon: mat.Icons.flatware,
       secondaryIcon: mat.Icons.close,
-      body: dynamicFields["body"],
-      imgUrl: dynamicFields["imgUrl"],
-      title: dynamicFields["title"],
+      body: dynamicFields?["body"],
+      imgUrl: dynamicFields?["imgUrl"],
+      title: dynamicFields?["title"],
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.OrderStatusChange,
       notificationAction:
@@ -86,91 +86,54 @@ Notification _laundryOpOrderChangesNotifier(String key, value) {
       variableParams: value);
 }
 
-Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
-  final LaundryOrderStatus newOrdersStatus =
-      value['status'].toString().toLaundryOrderStatus();
-  final Map<String, dynamic> dynamicFields =
-      getLaundryOrderStatusFields(newOrdersStatus)!;
-
-  return Notification(
-      id: key,
-      icon: mat.Icons.flatware,
-      secondaryIcon: mat.Icons.close,
-      linkUrl: getROpOrderRoute(value["orderId"].toString()),
-      body: dynamicFields["body"],
-      imgUrl: dynamicFields["imgUrl"],
-      title: dynamicFields["title"],
-      timestamp: DateTime.parse(value['time']),
-      notificationType: NotificationType.OrderStatusChange,
-      notificationAction:
-          (value["notificationAction"] as String).toNotificationAction(),
-      variableParams: value);
-}
-
-Map<String, dynamic>? getLaundryOrderStatusFields(
-    LaundryOrderStatus laundryOrderStatus) {
-  switch (laundryOrderStatus) {
-    // case LaundryOrderStatus.OtwPickupFromCustomer:
-    //   return <String, dynamic>{
-    //     "title": "${_i18n()["laundryOtwPickupTitle"]}",
-    //     "body": "${_i18n()["laundryOtwPickupBody"]}",
-    //     "imgUrl":
-    //         "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
-    //   };
-    // case LaundryOrderStatus.PickedUpFromCustomer:
-    //   return <String, dynamic>{
-    //     "title": "${_i18n()["laundryPickedTitle"]}",
-    //     "body": "${_i18n()["laundryPickedBody"]}",
-    //     "imgUrl":
-    //         "assets/images/shared/notifications/readyOrderNotificationIcon.png",
-    //   };
-    // case LaundryOrderStatus.AtLaundry:
-    //   return <String, dynamic>{
-    //     "title": "${_i18n()["laundryAtLaundryTitle"]}",
-    //     "body": "${_i18n()["laundryAtLaundryBody"]}",
-    //     "imgUrl": "assets/images/shared/notifications/atLaundry.png",
-    //   };
-    // case LaundryOrderStatus.ReadyForDelivery:
-    //   return <String, dynamic>{
-    //     "title": "${_i18n()["laundryReadyForDeliveryTitle"]}",
-    //     "body": "${_i18n()["laundryReadyForDeliveryBody"]}",
-    //     "imgUrl":
-    //         "assets/images/shared/notifications/readyOrderNotificationIcon.png",
-    //   };
-    // case LaundryOrderStatus.OtwPickupFromLaundry:
-    case LaundryOrderStatus.PickedUpFromLaundry:
-    //   return <String, dynamic>{
-    //     "title": "${_i18n()["laundryOtwDeliveryTitle"]}",
-    //     "body": "${_i18n()["laundryOtwDeliveryBody"]}",
-    //     "imgUrl":
-    //         "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
-    //   };
-    // case LaundryOrderStatus.Delivered:
-    //   return <String, dynamic>{
-    //     "title": "${_i18n()["laundryDeliveredTitle"]}",
-    //     "body": "${_i18n()["laundryDeliveredTitle"]}",
-    //     "imgUrl":
-    //         "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
-    //   };
-    case LaundryOrderStatus.CancelledByAdmin:
-    case LaundryOrderStatus.CancelledByCustomer:
+Map<String, dynamic>? _getRestaurantOrderStatusFields(
+    RestaurantOrderStatus restaurantOrderStatus) {
+  switch (restaurantOrderStatus) {
+    case RestaurantOrderStatus.CancelledByCustomer:
       return <String, dynamic>{
         "title": "${_i18n()["canceledOrderTitle"]}",
         "body": "${_i18n()["canceledOrderBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
+    // case RestaurantOrderStatus.Preparing:
+    //   return <String, dynamic>{
+    //     "title": "${_i18n()["preparingOrderTitle"]}",
+    //     "body": "${_i18n()["preparingOrderBody"]}",
+    //     "imgUrl":
+    //         "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
+    //   };
+    case RestaurantOrderStatus.Ready:
+      return <String, dynamic>{
+        "title": "${_i18n()["atPickupTitle"]}",
+        "body": "${_i18n()["atPickupTitleBody"]}",
+        "imgUrl":
+            "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
+      };
+    case RestaurantOrderStatus.OnTheWay:
+      return <String, dynamic>{
+        "title": "${_i18n()["onTheWayTitle"]}",
+        "body": "${_i18n()["onTheWayBody"]}",
+        "imgUrl": "assets/images/shared/notifications/onTheWay.png",
+      };
+    case RestaurantOrderStatus.Delivered:
+      return <String, dynamic>{
+        "title": "${_i18n()["deliveredTitle"]}",
+        "body": "${_i18n()["deliveredBody"]}",
+        "imgUrl": "assets/images/shared/notifications/delivered.png",
+      };
+
     default:
-      // do nothing
-      return null;
+    // do nothing
   }
+  return null;
 }
 
 Notification newMessageNotification(String key, value) {
   return Notification(
       id: key,
       linkUrl: getMessagesRoute(
-          chatId: value['chatId'],
+          chatId: int.parse(value['chatId']),
           orderLink: getROpOrderRoute(value['orderId'].toString())),
       body: value['message'],
       imgUrl: value['sender']['image'],

@@ -177,6 +177,8 @@ class Restaurant extends Service {
         .toList();
   }
 
+  int get restaurantId => info.hasuraId;
+
   List<Category> get getAvailableCategories {
     List<Category> categories = _categories
         .where((Category category) => category.id != kNoCategoryNode)
@@ -324,9 +326,7 @@ class Restaurant extends Service {
   }
 
   bool isOpen() {
-// TODO:544D-HASURA
-    return true;
-    // return state.isOpen && (schedule?.isOpen() ?? true);
+    return state.isOpen && (schedule?.isOpen() ?? true);
   }
 
   Restaurant copyWith({
