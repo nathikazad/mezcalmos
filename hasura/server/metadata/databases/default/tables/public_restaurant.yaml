@@ -5,9 +5,6 @@ object_relationships:
   - name: description
     using:
       foreign_key_constraint_on: description_id
-  - name: payment_info
-    using:
-      foreign_key_constraint_on: payment_info_id
 array_relationships:
   - name: categories
     using:
@@ -70,7 +67,6 @@ select_permissions:
         - location_text
         - name
         - open_status
-        - payment_info_id
         - schedule
         - self_delivery
       filter: {}
@@ -88,7 +84,6 @@ select_permissions:
         - location_text
         - name
         - open_status
-        - payment_info_id
         - schedule
         - self_delivery
         - service_provider_type
@@ -123,7 +118,6 @@ select_permissions:
         - location_text
         - name
         - open_status
-        - payment_info_id
         - schedule
         - service_provider_type
       filter:
@@ -148,7 +142,6 @@ select_permissions:
         - location_text
         - name
         - open_status
-        - payment_info_id
         - schedule
         - self_delivery
         - service_provider_type
@@ -192,7 +185,6 @@ update_permissions:
         - location_text
         - name
         - open_status
-        - payment_info_id
         - schedule
         - self_delivery
         - service_provider_type
