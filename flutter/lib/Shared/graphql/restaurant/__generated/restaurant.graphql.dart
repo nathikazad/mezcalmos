@@ -13413,7 +13413,7 @@ class Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user {
     this.phone,
     this.name,
     this.image,
-    this.language_id,
+    required this.language_id,
     required this.id,
     required this.firebase_id,
     required this.$__typename,
@@ -13432,7 +13432,7 @@ class Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user {
       phone: (l$phone as String?),
       name: (l$name as String?),
       image: (l$image as String?),
-      language_id: (l$language_id as String?),
+      language_id: (l$language_id as String),
       id: (l$id as int),
       firebase_id: (l$firebase_id as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -13445,7 +13445,7 @@ class Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user {
 
   final String? image;
 
-  final String? language_id;
+  final String language_id;
 
   final int id;
 
@@ -13610,9 +13610,9 @@ class _CopyWithImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_ope
         phone: phone == _undefined ? _instance.phone : (phone as String?),
         name: name == _undefined ? _instance.name : (name as String?),
         image: image == _undefined ? _instance.image : (image as String?),
-        language_id: language_id == _undefined
+        language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
-            : (language_id as String?),
+            : (language_id as String),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         firebase_id: firebase_id == _undefined || firebase_id == null
             ? _instance.firebase_id

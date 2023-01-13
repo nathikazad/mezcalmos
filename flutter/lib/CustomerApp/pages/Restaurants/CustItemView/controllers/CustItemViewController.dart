@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 // import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
@@ -22,12 +23,12 @@ class CustItemViewController {
   // state variables //
   Rxn<Restaurant> restaurant = Rxn();
   Rxn<CartItem> cartItem = Rxn<CartItem>();
-  Rxn<Cart> cart = Rxn<Cart>();
   late ViewItemScreenMode currentMode;
 // variables //
   int? itemRestaurantId;
   int? currentItemId;
   // getters //
+  Rxn<Cart> get cart => cartController.cart;
 
   /// hasData means the cartItem and restaurant values are not null
   bool get hasData => restaurant.value != null && cartItem.value != null;
@@ -55,7 +56,9 @@ class CustItemViewController {
     currentMode = mode;
     itemRestaurantId = restaurantId;
     currentItemId = itemId;
-
+    if (cart.value == null) {
+      await create_customer_cart();
+    }
     // check and update cart restaurant id to current item restaurant if no cart items are there
     if (shouldUpdateRestaurantId()) {
       await cartController.setCartRestaurantId(restaurantId!);
@@ -65,19 +68,32 @@ class CustItemViewController {
     if (canInitAddMode(mode, restaurantId, itemId)) {
       await _fetchRestaurant(restaurantId!);
       final Item? item = await get_one_item_by_id(itemId!);
-      cartItem.value = CartItem(item!, restaurantId);
+      cartItem.value = CartItem(
+        item: item!,
+        quantity: 1,
+        restaurantId: restaurantId,
+      );
     }
+
     // int edit mode
     else if (itemIdInCart != null) {
+      mezDbgPrint(
+          "INIT EDIT MODE ===========================✅=====>$itemIdInCart \n ${cart.value?.toFirebaseFormattedJson()} ");
       if (cart.value != null) {
-        cartItem.value =
-            CartItem.clone(cart.value!.cartItems.firstWhere((CartItem item) {
+        final CartItem _item =
+            cart.value!.cartItems.firstWhere((CartItem item) {
           return item.idInCart == itemIdInCart;
-        }));
-        await _fetchRestaurant(cart.value!.restaurant!.restaurantId);
+        });
+        cartItem.value = CartItem.clone(_item);
+        final Item? freshItem =
+            await get_one_item_by_id(cartItem.value!.item.id!);
+        cartItem.value!.item = freshItem!;
+        await _fetchRestaurant(cartItem.value!.restaurantId);
+
+        mezDbgPrint(
+            "Cloned item ✅ ============== >>>> ${cartItem.value?.toFirebaseFunctionFormattedJson()}");
       }
     }
-    cartItem.refresh();
   }
 
   Future<void> _fetchRestaurant(int restaurantId) async {
@@ -91,11 +107,12 @@ class CustItemViewController {
 
   // handling items and cart methods //
   Future<void> handleEditItem() async {
-    // todo
-    await cartController.updateCartItem(cartItem.value!.idInCart!);
+    mezDbgPrint(
+        "Handle Editting ===================>${cartItem.value!.idInCart!}");
+    await cartController.updateCartItem(cartItem.value!);
   }
 
-  Future<int> handleAddItem() async {
+  Future<int?> handleAddItem() async {
     // todo
     return await cartController.addCartItem(cartItem.value!);
   }
@@ -109,11 +126,12 @@ class CustItemViewController {
 
   bool shouldUpdateRestaurantId() {
     mezDbgPrint(
-        "shouldUpdateRestaurantId ====> $itemRestaurantId ======>>>>${cart.value?.restaurant?.restaurantId}");
-    return itemRestaurantId != null &&
-        cart.value != null &&
-        cart.value!.restaurant?.restaurantId != itemRestaurantId &&
-        cart.value!.cartItems.isEmpty;
+        "🥹🥹🥹🥹🥹v shouldUpdateRestaurantId ====> $itemRestaurantId ======>>>>${cart.value?.restaurant}");
+    return (itemRestaurantId != null && cart.value?.restaurant == null) ||
+        (itemRestaurantId != null &&
+            cart.value != null &&
+            cart.value!.restaurant?.restaurantId != itemRestaurantId &&
+            cart.value!.cartItems.isEmpty);
   }
 
   bool checkAddSpecialItemConflict() {
@@ -122,6 +140,8 @@ class CustItemViewController {
   }
 
   bool differentRestaurantIds() {
+    mezDbgPrint(
+        "different restaurant case =:==========>${cart.value!.restaurant}");
     return cart.value != null &&
         cart.value!.restaurant?.restaurantId != itemRestaurantId;
   }

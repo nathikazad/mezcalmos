@@ -62,10 +62,8 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
               .forEach((String key, value) {
             final List<Choice> choices = [];
             _restauItem.optionNames[key] = {
-              LanguageType.EN: value['name']
-                  [userLanguage.toFirebaseFormatString()],
-              LanguageType.ES: value['name']
-                  [userLanguage.toFirebaseFormatString()]
+              LanguageType.EN: value['optionName']["en"],
+              LanguageType.ES: value['optionName']["es"]
             };
 
             value['choices'].forEach((key, value) {
@@ -92,7 +90,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
 
       final RestaurantOrder res = RestaurantOrder(
         dropOffDriverChatId: orderData.delivery?.chat_with_service_provider_id,
-        chatId: orderData.chat_id!,
+        chatId: orderData.chat_id,
         orderId: orderData.id,
         notes: orderData.notes,
         estimatedFoodReadyTime: (orderData.estimated_food_ready_time != null)
@@ -143,7 +141,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
                 name: orderData.delivery!.delivery_driver!.user.name,
                 image: orderData.delivery!.delivery_driver!.user.image,
                 language: orderData.delivery!.delivery_driver!.user.language_id
-                    ?.toLanguageType())
+                    .toLanguageType())
             : null,
         scheduledTime: (orderData.scheduled_time != null)
             ? DateTime.tryParse(orderData.scheduled_time!)
@@ -203,12 +201,10 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
           "[544D] item.in_json ===> ${item.in_json['selected_options']}");
       (item.in_json['selected_options'] as Map<String, dynamic>)
           .forEach((String key, value) {
-        mezDbgPrint("KEy ===> $key");
-        mezDbgPrint("value ===> $value");
         final List<Choice> choices = [];
         _restauItem.optionNames[key] = {
-          LanguageType.EN: value['name'][userLanguage.toFirebaseFormatString()],
-          LanguageType.ES: value['name'][userLanguage.toFirebaseFormatString()]
+          LanguageType.EN: value['optionName']["en"],
+          LanguageType.ES: value['optionName']["es"]
         };
 
         value['choices'].forEach((key, value) {
@@ -226,14 +222,14 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
           );
         });
 
-        // _restauItem.chosenChoices[key] = choices;
+        _restauItem.chosenChoices[key] = choices;
       });
     }
     items.add(_restauItem);
   });
 
   final RestaurantOrder res = RestaurantOrder(
-    chatId: orderData.chat_id!,
+    chatId: orderData.chat_id,
     customerDropOffDriverChatId: orderData.delivery?.chat_with_customer_id,
     scheduledTime: (orderData.scheduled_time != null)
         ? DateTime.tryParse(orderData.scheduled_time!)
@@ -276,7 +272,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
             name: orderData.delivery!.delivery_driver!.user.name,
             image: orderData.delivery!.delivery_driver!.user.image,
             language: orderData.delivery!.delivery_driver!.user.language_id
-                ?.toLanguageType())
+                .toLanguageType())
         : null,
     review: (orderData.review != null)
         ? Review(

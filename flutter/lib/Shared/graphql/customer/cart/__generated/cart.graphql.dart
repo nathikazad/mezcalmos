@@ -2329,6 +2329,243 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
                         ]),
                       ),
                       FieldNode(
+                        name: NameNode(value: 'options'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'item_options'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: SelectionSetNode(selections: [
+                              FieldNode(
+                                name: NameNode(value: 'id'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'free_choice'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'cost_per_extra'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'option_type'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'position'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'maximum_choice'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'minimum_choice'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'name'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: SelectionSetNode(selections: [
+                                  FieldNode(
+                                    name: NameNode(value: 'id'),
+                                    alias: null,
+                                    arguments: [],
+                                    directives: [],
+                                    selectionSet: null,
+                                  ),
+                                  FieldNode(
+                                    name: NameNode(value: 'translations'),
+                                    alias: null,
+                                    arguments: [],
+                                    directives: [],
+                                    selectionSet: SelectionSetNode(selections: [
+                                      FieldNode(
+                                        name: NameNode(value: 'language_id'),
+                                        alias: null,
+                                        arguments: [],
+                                        directives: [],
+                                        selectionSet: null,
+                                      ),
+                                      FieldNode(
+                                        name: NameNode(value: 'value'),
+                                        alias: null,
+                                        arguments: [],
+                                        directives: [],
+                                        selectionSet: null,
+                                      ),
+                                      FieldNode(
+                                        name: NameNode(value: '__typename'),
+                                        alias: null,
+                                        arguments: [],
+                                        directives: [],
+                                        selectionSet: null,
+                                      ),
+                                    ]),
+                                  ),
+                                  FieldNode(
+                                    name: NameNode(value: '__typename'),
+                                    alias: null,
+                                    arguments: [],
+                                    directives: [],
+                                    selectionSet: null,
+                                  ),
+                                ]),
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'choices'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: SelectionSetNode(selections: [
+                                  FieldNode(
+                                    name: NameNode(value: 'option_choices'),
+                                    alias: null,
+                                    arguments: [],
+                                    directives: [],
+                                    selectionSet: SelectionSetNode(selections: [
+                                      FieldNode(
+                                        name: NameNode(value: 'available'),
+                                        alias: null,
+                                        arguments: [],
+                                        directives: [],
+                                        selectionSet: null,
+                                      ),
+                                      FieldNode(
+                                        name: NameNode(value: 'cost'),
+                                        alias: null,
+                                        arguments: [],
+                                        directives: [],
+                                        selectionSet: null,
+                                      ),
+                                      FieldNode(
+                                        name: NameNode(value: 'id'),
+                                        alias: null,
+                                        arguments: [],
+                                        directives: [],
+                                        selectionSet: null,
+                                      ),
+                                      FieldNode(
+                                        name: NameNode(value: 'name'),
+                                        alias: null,
+                                        arguments: [],
+                                        directives: [],
+                                        selectionSet:
+                                            SelectionSetNode(selections: [
+                                          FieldNode(
+                                            name: NameNode(value: 'id'),
+                                            alias: null,
+                                            arguments: [],
+                                            directives: [],
+                                            selectionSet: null,
+                                          ),
+                                          FieldNode(
+                                            name:
+                                                NameNode(value: 'translations'),
+                                            alias: null,
+                                            arguments: [],
+                                            directives: [],
+                                            selectionSet:
+                                                SelectionSetNode(selections: [
+                                              FieldNode(
+                                                name: NameNode(
+                                                    value: 'language_id'),
+                                                alias: null,
+                                                arguments: [],
+                                                directives: [],
+                                                selectionSet: null,
+                                              ),
+                                              FieldNode(
+                                                name: NameNode(value: 'value'),
+                                                alias: null,
+                                                arguments: [],
+                                                directives: [],
+                                                selectionSet: null,
+                                              ),
+                                              FieldNode(
+                                                name: NameNode(
+                                                    value: '__typename'),
+                                                alias: null,
+                                                arguments: [],
+                                                directives: [],
+                                                selectionSet: null,
+                                              ),
+                                            ]),
+                                          ),
+                                          FieldNode(
+                                            name: NameNode(value: '__typename'),
+                                            alias: null,
+                                            arguments: [],
+                                            directives: [],
+                                            selectionSet: null,
+                                          ),
+                                        ]),
+                                      ),
+                                      FieldNode(
+                                        name: NameNode(value: '__typename'),
+                                        alias: null,
+                                        arguments: [],
+                                        directives: [],
+                                        selectionSet: null,
+                                      ),
+                                    ]),
+                                  ),
+                                  FieldNode(
+                                    name: NameNode(value: '__typename'),
+                                    alias: null,
+                                    arguments: [],
+                                    directives: [],
+                                    selectionSet: null,
+                                  ),
+                                ]),
+                              ),
+                              FieldNode(
+                                name: NameNode(value: '__typename'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                            ]),
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
                         name: NameNode(value: 'position'),
                         alias: null,
                         arguments: [],
@@ -2416,6 +2653,13 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
                   ),
                   FieldNode(
                     name: NameNode(value: 'quantity'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'selected_options'),
                     alias: null,
                     arguments: [],
                     directives: [],
@@ -3643,6 +3887,7 @@ class Query$getCustomerCart$customer_by_pk$cart$items {
     required this.cost_per_one,
     this.note,
     required this.quantity,
+    required this.selected_options,
     required this.$__typename,
   });
 
@@ -3653,6 +3898,7 @@ class Query$getCustomerCart$customer_by_pk$cart$items {
     final l$cost_per_one = json['cost_per_one'];
     final l$note = json['note'];
     final l$quantity = json['quantity'];
+    final l$selected_options = json['selected_options'];
     final l$$__typename = json['__typename'];
     return Query$getCustomerCart$customer_by_pk$cart$items(
       id: (l$id as int),
@@ -3662,6 +3908,7 @@ class Query$getCustomerCart$customer_by_pk$cart$items {
       cost_per_one: moneyFromJson(l$cost_per_one),
       note: (l$note as String?),
       quantity: (l$quantity as int),
+      selected_options: mapFromJson(l$selected_options),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -3677,6 +3924,8 @@ class Query$getCustomerCart$customer_by_pk$cart$items {
 
   final int quantity;
 
+  final dynamic selected_options;
+
   final String $__typename;
 
   Map<String, dynamic> toJson() {
@@ -3691,6 +3940,8 @@ class Query$getCustomerCart$customer_by_pk$cart$items {
     _resultData['note'] = l$note;
     final l$quantity = quantity;
     _resultData['quantity'] = l$quantity;
+    final l$selected_options = selected_options;
+    _resultData['selected_options'] = mapToJson(l$selected_options);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -3703,6 +3954,7 @@ class Query$getCustomerCart$customer_by_pk$cart$items {
     final l$cost_per_one = cost_per_one;
     final l$note = note;
     final l$quantity = quantity;
+    final l$selected_options = selected_options;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
@@ -3710,6 +3962,7 @@ class Query$getCustomerCart$customer_by_pk$cart$items {
       l$cost_per_one,
       l$note,
       l$quantity,
+      l$selected_options,
       l$$__typename,
     ]);
   }
@@ -3748,6 +4001,11 @@ class Query$getCustomerCart$customer_by_pk$cart$items {
     if (l$quantity != lOther$quantity) {
       return false;
     }
+    final l$selected_options = selected_options;
+    final lOther$selected_options = other.selected_options;
+    if (l$selected_options != lOther$selected_options) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -3784,6 +4042,7 @@ abstract class CopyWith$Query$getCustomerCart$customer_by_pk$cart$items<TRes> {
     double? cost_per_one,
     String? note,
     int? quantity,
+    dynamic? selected_options,
     String? $__typename,
   });
   CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item<TRes>
@@ -3809,6 +4068,7 @@ class _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items<TRes>
     Object? cost_per_one = _undefined,
     Object? note = _undefined,
     Object? quantity = _undefined,
+    Object? selected_options = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getCustomerCart$customer_by_pk$cart$items(
@@ -3825,6 +4085,10 @@ class _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items<TRes>
         quantity: quantity == _undefined || quantity == null
             ? _instance.quantity
             : (quantity as int),
+        selected_options:
+            selected_options == _undefined || selected_options == null
+                ? _instance.selected_options
+                : (selected_options as dynamic),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -3850,6 +4114,7 @@ class _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items<TRes>
     double? cost_per_one,
     String? note,
     int? quantity,
+    dynamic? selected_options,
     String? $__typename,
   }) =>
       _res;
@@ -3865,6 +4130,7 @@ class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item {
     required this.item_type,
     required this.name,
     this.description,
+    required this.options,
     required this.position,
     this.category_id,
     required this.available,
@@ -3882,6 +4148,7 @@ class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item {
     final l$item_type = json['item_type'];
     final l$name = json['name'];
     final l$description = json['description'];
+    final l$options = json['options'];
     final l$position = json['position'];
     final l$category_id = json['category_id'];
     final l$available = json['available'];
@@ -3900,6 +4167,11 @@ class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item {
           ? null
           : Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$description
               .fromJson((l$description as Map<String, dynamic>)),
+      options: (l$options as List<dynamic>)
+          .map((e) =>
+              Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
       position: (l$position as int),
       category_id: (l$category_id as int?),
       available: (l$available as bool),
@@ -3921,6 +4193,10 @@ class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item {
 
   final Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$description?
       description;
+
+  final List<
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options>
+      options;
 
   final int position;
 
@@ -3950,6 +4226,8 @@ class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item {
     _resultData['name'] = l$name.toJson();
     final l$description = description;
     _resultData['description'] = l$description?.toJson();
+    final l$options = options;
+    _resultData['options'] = l$options.map((e) => e.toJson()).toList();
     final l$position = position;
     _resultData['position'] = l$position;
     final l$category_id = category_id;
@@ -3977,6 +4255,7 @@ class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item {
     final l$item_type = item_type;
     final l$name = name;
     final l$description = description;
+    final l$options = options;
     final l$position = position;
     final l$category_id = category_id;
     final l$available = available;
@@ -3991,6 +4270,7 @@ class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item {
       l$item_type,
       l$name,
       l$description,
+      Object.hashAll(l$options.map((v) => v)),
       l$position,
       l$category_id,
       l$available,
@@ -4032,6 +4312,18 @@ class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item {
     final lOther$description = other.description;
     if (l$description != lOther$description) {
       return false;
+    }
+    final l$options = options;
+    final lOther$options = other.options;
+    if (l$options.length != lOther$options.length) {
+      return false;
+    }
+    for (int i = 0; i < l$options.length; i++) {
+      final l$options$entry = l$options[i];
+      final lOther$options$entry = lOther$options[i];
+      if (l$options$entry != lOther$options$entry) {
+        return false;
+      }
     }
     final l$position = position;
     final lOther$position = other.position;
@@ -4112,6 +4404,8 @@ abstract class CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaura
     Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$name? name,
     Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$description?
         description,
+    List<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options>?
+        options,
     int? position,
     int? category_id,
     bool? available,
@@ -4126,6 +4420,12 @@ abstract class CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaura
       TRes> get name;
   CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$description<
       TRes> get description;
+  TRes options(
+      Iterable<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options> Function(
+              Iterable<
+                  CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options<
+                      Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options>>)
+          _fn);
 }
 
 class _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item<
@@ -4151,6 +4451,7 @@ class _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_i
     Object? item_type = _undefined,
     Object? name = _undefined,
     Object? description = _undefined,
+    Object? options = _undefined,
     Object? position = _undefined,
     Object? category_id = _undefined,
     Object? available = _undefined,
@@ -4174,6 +4475,10 @@ class _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_i
             ? _instance.description
             : (description
                 as Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$description?),
+        options: options == _undefined || options == null
+            ? _instance.options
+            : (options as List<
+                Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options>),
         position: position == _undefined || position == null
             ? _instance.position
             : (position as int),
@@ -4218,6 +4523,19 @@ class _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_i
         : CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$description(
             local$description, (e) => call(description: e));
   }
+
+  TRes options(
+          Iterable<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options> Function(
+                  Iterable<
+                      CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options<
+                          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options>>)
+              _fn) =>
+      call(
+          options: _fn(_instance.options.map((e) =>
+              CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options(
+                e,
+                (i) => i,
+              ))).toList());
 }
 
 class _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item<
@@ -4236,6 +4554,8 @@ class _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaura
     Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$name? name,
     Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$description?
         description,
+    List<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options>?
+        options,
     int? position,
     int? category_id,
     bool? available,
@@ -4257,6 +4577,7 @@ class _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaura
       get description =>
           CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$description
               .stub(_res);
+  options(_fn) => _res;
 }
 
 class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$name {
@@ -4939,6 +5260,1676 @@ class _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaura
         CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$description$translations<
             TRes> {
   _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$description$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options {
+  Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options({
+    required this.item_options,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options.fromJson(
+      Map<String, dynamic> json) {
+    final l$item_options = json['item_options'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options(
+      item_options: (l$item_options as List<dynamic>)
+          .map((e) =>
+              Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options>
+      item_options;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$item_options = item_options;
+    _resultData['item_options'] =
+        l$item_options.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$item_options = item_options;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$item_options.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$item_options = item_options;
+    final lOther$item_options = other.item_options;
+    if (l$item_options.length != lOther$item_options.length) {
+      return false;
+    }
+    for (int i = 0; i < l$item_options.length; i++) {
+      final l$item_options$entry = l$item_options[i];
+      final lOther$item_options$entry = lOther$item_options[i];
+      if (l$item_options$entry != lOther$item_options$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options
+    on Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options {
+  CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options<
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options>
+      get copyWith =>
+          CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options<
+    TRes> {
+  factory CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options(
+    Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options
+        instance,
+    TRes Function(
+            Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options)
+        then,
+  ) = _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options;
+
+  factory CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options;
+
+  TRes call({
+    List<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options>?
+        item_options,
+    String? $__typename,
+  });
+  TRes item_options(
+      Iterable<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options> Function(
+              Iterable<
+                  CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options<
+                      Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options<
+            TRes> {
+  _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options
+      _instance;
+
+  final TRes Function(
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? item_options = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options(
+        item_options: item_options == _undefined || item_options == null
+            ? _instance.item_options
+            : (item_options as List<
+                Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes item_options(
+          Iterable<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options> Function(
+                  Iterable<
+                      CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options<
+                          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options>>)
+              _fn) =>
+      call(
+          item_options: _fn(_instance.item_options.map((e) =>
+              CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options<
+            TRes> {
+  _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options>?
+        item_options,
+    String? $__typename,
+  }) =>
+      _res;
+  item_options(_fn) => _res;
+}
+
+class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options {
+  Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options({
+    required this.id,
+    required this.free_choice,
+    required this.cost_per_extra,
+    required this.option_type,
+    required this.position,
+    required this.maximum_choice,
+    required this.minimum_choice,
+    required this.name,
+    required this.choices,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$free_choice = json['free_choice'];
+    final l$cost_per_extra = json['cost_per_extra'];
+    final l$option_type = json['option_type'];
+    final l$position = json['position'];
+    final l$maximum_choice = json['maximum_choice'];
+    final l$minimum_choice = json['minimum_choice'];
+    final l$name = json['name'];
+    final l$choices = json['choices'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options(
+      id: (l$id as int),
+      free_choice: (l$free_choice as int),
+      cost_per_extra: moneyFromJson(l$cost_per_extra),
+      option_type: (l$option_type as String),
+      position: (l$position as int),
+      maximum_choice: (l$maximum_choice as int),
+      minimum_choice: (l$minimum_choice as int),
+      name:
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      choices: (l$choices as List<dynamic>)
+          .map((e) =>
+              Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final int free_choice;
+
+  final double cost_per_extra;
+
+  final String option_type;
+
+  final int position;
+
+  final int maximum_choice;
+
+  final int minimum_choice;
+
+  final Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name
+      name;
+
+  final List<
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices>
+      choices;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$free_choice = free_choice;
+    _resultData['free_choice'] = l$free_choice;
+    final l$cost_per_extra = cost_per_extra;
+    _resultData['cost_per_extra'] = moneyToJson(l$cost_per_extra);
+    final l$option_type = option_type;
+    _resultData['option_type'] = l$option_type;
+    final l$position = position;
+    _resultData['position'] = l$position;
+    final l$maximum_choice = maximum_choice;
+    _resultData['maximum_choice'] = l$maximum_choice;
+    final l$minimum_choice = minimum_choice;
+    _resultData['minimum_choice'] = l$minimum_choice;
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$choices = choices;
+    _resultData['choices'] = l$choices.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$free_choice = free_choice;
+    final l$cost_per_extra = cost_per_extra;
+    final l$option_type = option_type;
+    final l$position = position;
+    final l$maximum_choice = maximum_choice;
+    final l$minimum_choice = minimum_choice;
+    final l$name = name;
+    final l$choices = choices;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$free_choice,
+      l$cost_per_extra,
+      l$option_type,
+      l$position,
+      l$maximum_choice,
+      l$minimum_choice,
+      l$name,
+      Object.hashAll(l$choices.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$free_choice = free_choice;
+    final lOther$free_choice = other.free_choice;
+    if (l$free_choice != lOther$free_choice) {
+      return false;
+    }
+    final l$cost_per_extra = cost_per_extra;
+    final lOther$cost_per_extra = other.cost_per_extra;
+    if (l$cost_per_extra != lOther$cost_per_extra) {
+      return false;
+    }
+    final l$option_type = option_type;
+    final lOther$option_type = other.option_type;
+    if (l$option_type != lOther$option_type) {
+      return false;
+    }
+    final l$position = position;
+    final lOther$position = other.position;
+    if (l$position != lOther$position) {
+      return false;
+    }
+    final l$maximum_choice = maximum_choice;
+    final lOther$maximum_choice = other.maximum_choice;
+    if (l$maximum_choice != lOther$maximum_choice) {
+      return false;
+    }
+    final l$minimum_choice = minimum_choice;
+    final lOther$minimum_choice = other.minimum_choice;
+    if (l$minimum_choice != lOther$minimum_choice) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$choices = choices;
+    final lOther$choices = other.choices;
+    if (l$choices.length != lOther$choices.length) {
+      return false;
+    }
+    for (int i = 0; i < l$choices.length; i++) {
+      final l$choices$entry = l$choices[i];
+      final lOther$choices$entry = lOther$choices[i];
+      if (l$choices$entry != lOther$choices$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options
+    on Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options {
+  CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options<
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options>
+      get copyWith =>
+          CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options<
+    TRes> {
+  factory CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options(
+    Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options
+        instance,
+    TRes Function(
+            Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options)
+        then,
+  ) = _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options;
+
+  factory CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options;
+
+  TRes call({
+    int? id,
+    int? free_choice,
+    double? cost_per_extra,
+    String? option_type,
+    int? position,
+    int? maximum_choice,
+    int? minimum_choice,
+    Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name?
+        name,
+    List<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices>?
+        choices,
+    String? $__typename,
+  });
+  CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name<
+      TRes> get name;
+  TRes choices(
+      Iterable<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices> Function(
+              Iterable<
+                  CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices<
+                      Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options<
+            TRes> {
+  _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options
+      _instance;
+
+  final TRes Function(
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? free_choice = _undefined,
+    Object? cost_per_extra = _undefined,
+    Object? option_type = _undefined,
+    Object? position = _undefined,
+    Object? maximum_choice = _undefined,
+    Object? minimum_choice = _undefined,
+    Object? name = _undefined,
+    Object? choices = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        free_choice: free_choice == _undefined || free_choice == null
+            ? _instance.free_choice
+            : (free_choice as int),
+        cost_per_extra: cost_per_extra == _undefined || cost_per_extra == null
+            ? _instance.cost_per_extra
+            : (cost_per_extra as double),
+        option_type: option_type == _undefined || option_type == null
+            ? _instance.option_type
+            : (option_type as String),
+        position: position == _undefined || position == null
+            ? _instance.position
+            : (position as int),
+        maximum_choice: maximum_choice == _undefined || maximum_choice == null
+            ? _instance.maximum_choice
+            : (maximum_choice as int),
+        minimum_choice: minimum_choice == _undefined || minimum_choice == null
+            ? _instance.minimum_choice
+            : (minimum_choice as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name),
+        choices: choices == _undefined || choices == null
+            ? _instance.choices
+            : (choices as List<
+                Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name(
+        local$name, (e) => call(name: e));
+  }
+
+  TRes choices(
+          Iterable<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices> Function(
+                  Iterable<
+                      CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices<
+                          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices>>)
+              _fn) =>
+      call(
+          choices: _fn(_instance.choices.map((e) =>
+              CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options<
+            TRes> {
+  _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    int? free_choice,
+    double? cost_per_extra,
+    String? option_type,
+    int? position,
+    int? maximum_choice,
+    int? minimum_choice,
+    Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name?
+        name,
+    List<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices>?
+        choices,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name<
+          TRes>
+      get name =>
+          CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name
+              .stub(_res);
+  choices(_fn) => _res;
+}
+
+class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name {
+  Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name({
+    required this.id,
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name(
+      id: (l$id as int),
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final List<
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name
+    on Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name {
+  CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name<
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name>
+      get copyWith =>
+          CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name<
+    TRes> {
+  factory CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name(
+    Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name
+        instance,
+    TRes Function(
+            Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name)
+        then,
+  ) = _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name;
+
+  factory CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name;
+
+  TRes call({
+    int? id,
+    List<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations<
+                      Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name<
+            TRes> {
+  _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name
+      _instance;
+
+  final TRes Function(
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations<
+                          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name<
+            TRes> {
+  _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    List<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations {
+  Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations
+    on Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations {
+  CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations<
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations>
+      get copyWith =>
+          CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations<
+    TRes> {
+  factory CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations(
+    Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations
+        instance,
+    TRes Function(
+            Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations;
+
+  factory CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations
+      _instance;
+
+  final TRes Function(
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices {
+  Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices({
+    required this.option_choices,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices.fromJson(
+      Map<String, dynamic> json) {
+    final l$option_choices = json['option_choices'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices(
+      option_choices: (l$option_choices as List<dynamic>)
+          .map((e) =>
+              Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices>
+      option_choices;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$option_choices = option_choices;
+    _resultData['option_choices'] =
+        l$option_choices.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$option_choices = option_choices;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$option_choices.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$option_choices = option_choices;
+    final lOther$option_choices = other.option_choices;
+    if (l$option_choices.length != lOther$option_choices.length) {
+      return false;
+    }
+    for (int i = 0; i < l$option_choices.length; i++) {
+      final l$option_choices$entry = l$option_choices[i];
+      final lOther$option_choices$entry = lOther$option_choices[i];
+      if (l$option_choices$entry != lOther$option_choices$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices
+    on Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices {
+  CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices<
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices>
+      get copyWith =>
+          CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices<
+    TRes> {
+  factory CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices(
+    Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices
+        instance,
+    TRes Function(
+            Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices)
+        then,
+  ) = _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices;
+
+  factory CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices;
+
+  TRes call({
+    List<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices>?
+        option_choices,
+    String? $__typename,
+  });
+  TRes option_choices(
+      Iterable<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices> Function(
+              Iterable<
+                  CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices<
+                      Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices<
+            TRes> {
+  _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices
+      _instance;
+
+  final TRes Function(
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? option_choices = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices(
+        option_choices: option_choices == _undefined || option_choices == null
+            ? _instance.option_choices
+            : (option_choices as List<
+                Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes option_choices(
+          Iterable<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices> Function(
+                  Iterable<
+                      CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices<
+                          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices>>)
+              _fn) =>
+      call(
+          option_choices: _fn(_instance.option_choices.map((e) =>
+              CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices<
+            TRes> {
+  _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices>?
+        option_choices,
+    String? $__typename,
+  }) =>
+      _res;
+  option_choices(_fn) => _res;
+}
+
+class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices {
+  Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices({
+    required this.available,
+    required this.cost,
+    required this.id,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices.fromJson(
+      Map<String, dynamic> json) {
+    final l$available = json['available'];
+    final l$cost = json['cost'];
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices(
+      available: (l$available as bool),
+      cost: moneyFromJson(l$cost),
+      id: (l$id as int),
+      name:
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final bool available;
+
+  final double cost;
+
+  final int id;
+
+  final Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name
+      name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$available = available;
+    _resultData['available'] = l$available;
+    final l$cost = cost;
+    _resultData['cost'] = moneyToJson(l$cost);
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$available = available;
+    final l$cost = cost;
+    final l$id = id;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$available,
+      l$cost,
+      l$id,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$available = available;
+    final lOther$available = other.available;
+    if (l$available != lOther$available) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices
+    on Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices {
+  CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices<
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices>
+      get copyWith =>
+          CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices<
+    TRes> {
+  factory CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices(
+    Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices
+        instance,
+    TRes Function(
+            Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices)
+        then,
+  ) = _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices;
+
+  factory CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices;
+
+  TRes call({
+    bool? available,
+    double? cost,
+    int? id,
+    Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name?
+        name,
+    String? $__typename,
+  });
+  CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices<
+            TRes> {
+  _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices
+      _instance;
+
+  final TRes Function(
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? available = _undefined,
+    Object? cost = _undefined,
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices(
+        available: available == _undefined || available == null
+            ? _instance.available
+            : (available as bool),
+        cost: cost == _undefined || cost == null
+            ? _instance.cost
+            : (cost as double),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices<
+            TRes> {
+  _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices(
+      this._res);
+
+  TRes _res;
+
+  call({
+    bool? available,
+    double? cost,
+    int? id,
+    Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name?
+        name,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name<
+          TRes>
+      get name =>
+          CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name
+              .stub(_res);
+}
+
+class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name {
+  Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name({
+    required this.id,
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name(
+      id: (l$id as int),
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final List<
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name
+    on Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name {
+  CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name<
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name>
+      get copyWith =>
+          CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name<
+    TRes> {
+  factory CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name(
+    Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name
+        instance,
+    TRes Function(
+            Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name)
+        then,
+  ) = _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name;
+
+  factory CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name;
+
+  TRes call({
+    int? id,
+    List<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations<
+                      Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name<
+            TRes> {
+  _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name
+      _instance;
+
+  final TRes Function(
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations<
+                          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name<
+            TRes> {
+  _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    List<Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations {
+  Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations
+    on Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations {
+  CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations<
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations>
+      get copyWith =>
+          CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations<
+    TRes> {
+  factory CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations(
+    Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations
+        instance,
+    TRes Function(
+            Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations;
+
+  factory CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations
+      _instance;
+
+  final TRes Function(
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations(
       this._res);
 
   TRes _res;
@@ -5960,7 +7951,251 @@ const documentNodeSubscriptionlisten_on_customer_cart =
                     directives: [],
                     selectionSet: SelectionSetNode(selections: [
                       FieldNode(
+                        name: NameNode(value: 'options'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'item_options'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: SelectionSetNode(selections: [
+                              FieldNode(
+                                name: NameNode(value: 'id'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'free_choice'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'cost_per_extra'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'option_type'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'position'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'maximum_choice'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'minimum_choice'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'name'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: SelectionSetNode(selections: [
+                                  FieldNode(
+                                    name: NameNode(value: 'id'),
+                                    alias: null,
+                                    arguments: [],
+                                    directives: [],
+                                    selectionSet: null,
+                                  ),
+                                  FieldNode(
+                                    name: NameNode(value: 'translations'),
+                                    alias: null,
+                                    arguments: [],
+                                    directives: [],
+                                    selectionSet: SelectionSetNode(selections: [
+                                      FieldNode(
+                                        name: NameNode(value: 'language_id'),
+                                        alias: null,
+                                        arguments: [],
+                                        directives: [],
+                                        selectionSet: null,
+                                      ),
+                                      FieldNode(
+                                        name: NameNode(value: 'value'),
+                                        alias: null,
+                                        arguments: [],
+                                        directives: [],
+                                        selectionSet: null,
+                                      ),
+                                      FieldNode(
+                                        name: NameNode(value: '__typename'),
+                                        alias: null,
+                                        arguments: [],
+                                        directives: [],
+                                        selectionSet: null,
+                                      ),
+                                    ]),
+                                  ),
+                                  FieldNode(
+                                    name: NameNode(value: '__typename'),
+                                    alias: null,
+                                    arguments: [],
+                                    directives: [],
+                                    selectionSet: null,
+                                  ),
+                                ]),
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'choices'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: SelectionSetNode(selections: [
+                                  FieldNode(
+                                    name: NameNode(value: 'option_choices'),
+                                    alias: null,
+                                    arguments: [],
+                                    directives: [],
+                                    selectionSet: SelectionSetNode(selections: [
+                                      FieldNode(
+                                        name: NameNode(value: 'available'),
+                                        alias: null,
+                                        arguments: [],
+                                        directives: [],
+                                        selectionSet: null,
+                                      ),
+                                      FieldNode(
+                                        name: NameNode(value: 'cost'),
+                                        alias: null,
+                                        arguments: [],
+                                        directives: [],
+                                        selectionSet: null,
+                                      ),
+                                      FieldNode(
+                                        name: NameNode(value: 'id'),
+                                        alias: null,
+                                        arguments: [],
+                                        directives: [],
+                                        selectionSet: null,
+                                      ),
+                                      FieldNode(
+                                        name: NameNode(value: 'name'),
+                                        alias: null,
+                                        arguments: [],
+                                        directives: [],
+                                        selectionSet:
+                                            SelectionSetNode(selections: [
+                                          FieldNode(
+                                            name: NameNode(value: 'id'),
+                                            alias: null,
+                                            arguments: [],
+                                            directives: [],
+                                            selectionSet: null,
+                                          ),
+                                          FieldNode(
+                                            name:
+                                                NameNode(value: 'translations'),
+                                            alias: null,
+                                            arguments: [],
+                                            directives: [],
+                                            selectionSet:
+                                                SelectionSetNode(selections: [
+                                              FieldNode(
+                                                name: NameNode(
+                                                    value: 'language_id'),
+                                                alias: null,
+                                                arguments: [],
+                                                directives: [],
+                                                selectionSet: null,
+                                              ),
+                                              FieldNode(
+                                                name: NameNode(value: 'value'),
+                                                alias: null,
+                                                arguments: [],
+                                                directives: [],
+                                                selectionSet: null,
+                                              ),
+                                              FieldNode(
+                                                name: NameNode(
+                                                    value: '__typename'),
+                                                alias: null,
+                                                arguments: [],
+                                                directives: [],
+                                                selectionSet: null,
+                                              ),
+                                            ]),
+                                          ),
+                                          FieldNode(
+                                            name: NameNode(value: '__typename'),
+                                            alias: null,
+                                            arguments: [],
+                                            directives: [],
+                                            selectionSet: null,
+                                          ),
+                                        ]),
+                                      ),
+                                      FieldNode(
+                                        name: NameNode(value: '__typename'),
+                                        alias: null,
+                                        arguments: [],
+                                        directives: [],
+                                        selectionSet: null,
+                                      ),
+                                    ]),
+                                  ),
+                                  FieldNode(
+                                    name: NameNode(value: '__typename'),
+                                    alias: null,
+                                    arguments: [],
+                                    directives: [],
+                                    selectionSet: null,
+                                  ),
+                                ]),
+                              ),
+                              FieldNode(
+                                name: NameNode(value: '__typename'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                            ]),
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
                         name: NameNode(value: 'item_type'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'id'),
                         alias: null,
                         arguments: [],
                         directives: [],
@@ -6142,6 +8377,13 @@ const documentNodeSubscriptionlisten_on_customer_cart =
                   ),
                   FieldNode(
                     name: NameNode(value: 'quantity'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'selected_options'),
                     alias: null,
                     arguments: [],
                     directives: [],
@@ -7407,6 +9649,7 @@ class Subscription$listen_on_customer_cart$customer_by_pk$cart$items {
     required this.id,
     this.note,
     required this.quantity,
+    required this.selected_options,
     required this.$__typename,
   });
 
@@ -7417,6 +9660,7 @@ class Subscription$listen_on_customer_cart$customer_by_pk$cart$items {
     final l$id = json['id'];
     final l$note = json['note'];
     final l$quantity = json['quantity'];
+    final l$selected_options = json['selected_options'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_customer_cart$customer_by_pk$cart$items(
       restaurant_item:
@@ -7426,6 +9670,7 @@ class Subscription$listen_on_customer_cart$customer_by_pk$cart$items {
       id: (l$id as int),
       note: (l$note as String?),
       quantity: (l$quantity as int),
+      selected_options: mapFromJson(l$selected_options),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -7441,6 +9686,8 @@ class Subscription$listen_on_customer_cart$customer_by_pk$cart$items {
 
   final int quantity;
 
+  final dynamic selected_options;
+
   final String $__typename;
 
   Map<String, dynamic> toJson() {
@@ -7455,6 +9702,8 @@ class Subscription$listen_on_customer_cart$customer_by_pk$cart$items {
     _resultData['note'] = l$note;
     final l$quantity = quantity;
     _resultData['quantity'] = l$quantity;
+    final l$selected_options = selected_options;
+    _resultData['selected_options'] = mapToJson(l$selected_options);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -7467,6 +9716,7 @@ class Subscription$listen_on_customer_cart$customer_by_pk$cart$items {
     final l$id = id;
     final l$note = note;
     final l$quantity = quantity;
+    final l$selected_options = selected_options;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$restaurant_item,
@@ -7474,6 +9724,7 @@ class Subscription$listen_on_customer_cart$customer_by_pk$cart$items {
       l$id,
       l$note,
       l$quantity,
+      l$selected_options,
       l$$__typename,
     ]);
   }
@@ -7511,6 +9762,11 @@ class Subscription$listen_on_customer_cart$customer_by_pk$cart$items {
     final l$quantity = quantity;
     final lOther$quantity = other.quantity;
     if (l$quantity != lOther$quantity) {
+      return false;
+    }
+    final l$selected_options = selected_options;
+    final lOther$selected_options = other.selected_options;
+    if (l$selected_options != lOther$selected_options) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -7553,6 +9809,7 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart
     int? id,
     String? note,
     int? quantity,
+    dynamic? selected_options,
     String? $__typename,
   });
   CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item<
@@ -7583,6 +9840,7 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$ite
     Object? id = _undefined,
     Object? note = _undefined,
     Object? quantity = _undefined,
+    Object? selected_options = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Subscription$listen_on_customer_cart$customer_by_pk$cart$items(
@@ -7599,6 +9857,10 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$ite
         quantity: quantity == _undefined || quantity == null
             ? _instance.quantity
             : (quantity as int),
+        selected_options:
+            selected_options == _undefined || selected_options == null
+                ? _instance.selected_options
+                : (selected_options as dynamic),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -7628,6 +9890,7 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart
     int? id,
     String? note,
     int? quantity,
+    dynamic? selected_options,
     String? $__typename,
   }) =>
       _res;
@@ -7640,7 +9903,9 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart
 
 class Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item {
   Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item({
+    required this.options,
     required this.item_type,
+    required this.id,
     required this.name,
     this.description,
     required this.position,
@@ -7656,7 +9921,9 @@ class Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_
 
   factory Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item.fromJson(
       Map<String, dynamic> json) {
+    final l$options = json['options'];
     final l$item_type = json['item_type'];
+    final l$id = json['id'];
     final l$name = json['name'];
     final l$description = json['description'];
     final l$position = json['position'];
@@ -7669,7 +9936,13 @@ class Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_
     final l$cost = json['cost'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item(
+      options: (l$options as List<dynamic>)
+          .map((e) =>
+              Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
       item_type: (l$item_type as String),
+      id: (l$id as int),
       name:
           Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$name
               .fromJson((l$name as Map<String, dynamic>)),
@@ -7689,7 +9962,13 @@ class Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_
     );
   }
 
+  final List<
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options>
+      options;
+
   final String item_type;
+
+  final int id;
 
   final Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$name
       name;
@@ -7717,8 +9996,12 @@ class Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$options = options;
+    _resultData['options'] = l$options.map((e) => e.toJson()).toList();
     final l$item_type = item_type;
     _resultData['item_type'] = l$item_type;
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$name = name;
     _resultData['name'] = l$name.toJson();
     final l$description = description;
@@ -7746,7 +10029,9 @@ class Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_
 
   @override
   int get hashCode {
+    final l$options = options;
     final l$item_type = item_type;
+    final l$id = id;
     final l$name = name;
     final l$description = description;
     final l$position = position;
@@ -7759,7 +10044,9 @@ class Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_
     final l$cost = cost;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      Object.hashAll(l$options.map((v) => v)),
       l$item_type,
+      l$id,
       l$name,
       l$description,
       l$position,
@@ -7784,9 +10071,26 @@ class Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_
         runtimeType != other.runtimeType) {
       return false;
     }
+    final l$options = options;
+    final lOther$options = other.options;
+    if (l$options.length != lOther$options.length) {
+      return false;
+    }
+    for (int i = 0; i < l$options.length; i++) {
+      final l$options$entry = l$options[i];
+      final lOther$options$entry = lOther$options[i];
+      if (l$options$entry != lOther$options$entry) {
+        return false;
+      }
+    }
     final l$item_type = item_type;
     final lOther$item_type = other.item_type;
     if (l$item_type != lOther$item_type) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$name = name;
@@ -7874,7 +10178,10 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart
       _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item;
 
   TRes call({
+    List<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options>?
+        options,
     String? item_type,
+    int? id,
     Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$name?
         name,
     Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$description?
@@ -7889,6 +10196,12 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart
     double? cost,
     String? $__typename,
   });
+  TRes options(
+      Iterable<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options> Function(
+              Iterable<
+                  CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options<
+                      Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options>>)
+          _fn);
   CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$name<
       TRes> get name;
   CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$description<
@@ -7915,7 +10228,9 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$ite
   static const _undefined = {};
 
   TRes call({
+    Object? options = _undefined,
     Object? item_type = _undefined,
+    Object? id = _undefined,
     Object? name = _undefined,
     Object? description = _undefined,
     Object? position = _undefined,
@@ -7930,9 +10245,14 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$ite
   }) =>
       _then(
           Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item(
+        options: options == _undefined || options == null
+            ? _instance.options
+            : (options as List<
+                Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options>),
         item_type: item_type == _undefined || item_type == null
             ? _instance.item_type
             : (item_type as String),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
             : (name
@@ -7969,6 +10289,18 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$ite
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  TRes options(
+          Iterable<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options> Function(
+                  Iterable<
+                      CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options<
+                          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options>>)
+              _fn) =>
+      call(
+          options: _fn(_instance.options.map((e) =>
+              CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options(
+                e,
+                (i) => i,
+              ))).toList());
   CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$name<
       TRes> get name {
     final local$name = _instance.name;
@@ -7998,7 +10330,10 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart
   TRes _res;
 
   call({
+    List<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options>?
+        options,
     String? item_type,
+    int? id,
     Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$name?
         name,
     Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$description?
@@ -8014,6 +10349,7 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart
     String? $__typename,
   }) =>
       _res;
+  options(_fn) => _res;
   CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$name<
           TRes>
       get name =>
@@ -8024,6 +10360,1676 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart
       get description =>
           CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$description
               .stub(_res);
+}
+
+class Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options {
+  Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options({
+    required this.item_options,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options.fromJson(
+      Map<String, dynamic> json) {
+    final l$item_options = json['item_options'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options(
+      item_options: (l$item_options as List<dynamic>)
+          .map((e) =>
+              Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options>
+      item_options;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$item_options = item_options;
+    _resultData['item_options'] =
+        l$item_options.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$item_options = item_options;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$item_options.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$item_options = item_options;
+    final lOther$item_options = other.item_options;
+    if (l$item_options.length != lOther$item_options.length) {
+      return false;
+    }
+    for (int i = 0; i < l$item_options.length; i++) {
+      final l$item_options$entry = l$item_options[i];
+      final lOther$item_options$entry = lOther$item_options[i];
+      if (l$item_options$entry != lOther$item_options$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options
+    on Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options {
+  CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options<
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options(
+    Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options
+        instance,
+    TRes Function(
+            Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options;
+
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options;
+
+  TRes call({
+    List<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options>?
+        item_options,
+    String? $__typename,
+  });
+  TRes item_options(
+      Iterable<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options> Function(
+              Iterable<
+                  CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options<
+                      Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options>>)
+          _fn);
+}
+
+class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? item_options = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options(
+        item_options: item_options == _undefined || item_options == null
+            ? _instance.item_options
+            : (item_options as List<
+                Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes item_options(
+          Iterable<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options> Function(
+                  Iterable<
+                      CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options<
+                          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options>>)
+              _fn) =>
+      call(
+          item_options: _fn(_instance.item_options.map((e) =>
+              CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options>?
+        item_options,
+    String? $__typename,
+  }) =>
+      _res;
+  item_options(_fn) => _res;
+}
+
+class Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options {
+  Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options({
+    required this.id,
+    required this.free_choice,
+    required this.cost_per_extra,
+    required this.option_type,
+    required this.position,
+    required this.maximum_choice,
+    required this.minimum_choice,
+    required this.name,
+    required this.choices,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$free_choice = json['free_choice'];
+    final l$cost_per_extra = json['cost_per_extra'];
+    final l$option_type = json['option_type'];
+    final l$position = json['position'];
+    final l$maximum_choice = json['maximum_choice'];
+    final l$minimum_choice = json['minimum_choice'];
+    final l$name = json['name'];
+    final l$choices = json['choices'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options(
+      id: (l$id as int),
+      free_choice: (l$free_choice as int),
+      cost_per_extra: moneyFromJson(l$cost_per_extra),
+      option_type: (l$option_type as String),
+      position: (l$position as int),
+      maximum_choice: (l$maximum_choice as int),
+      minimum_choice: (l$minimum_choice as int),
+      name:
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      choices: (l$choices as List<dynamic>)
+          .map((e) =>
+              Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final int free_choice;
+
+  final double cost_per_extra;
+
+  final String option_type;
+
+  final int position;
+
+  final int maximum_choice;
+
+  final int minimum_choice;
+
+  final Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name
+      name;
+
+  final List<
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices>
+      choices;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$free_choice = free_choice;
+    _resultData['free_choice'] = l$free_choice;
+    final l$cost_per_extra = cost_per_extra;
+    _resultData['cost_per_extra'] = moneyToJson(l$cost_per_extra);
+    final l$option_type = option_type;
+    _resultData['option_type'] = l$option_type;
+    final l$position = position;
+    _resultData['position'] = l$position;
+    final l$maximum_choice = maximum_choice;
+    _resultData['maximum_choice'] = l$maximum_choice;
+    final l$minimum_choice = minimum_choice;
+    _resultData['minimum_choice'] = l$minimum_choice;
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$choices = choices;
+    _resultData['choices'] = l$choices.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$free_choice = free_choice;
+    final l$cost_per_extra = cost_per_extra;
+    final l$option_type = option_type;
+    final l$position = position;
+    final l$maximum_choice = maximum_choice;
+    final l$minimum_choice = minimum_choice;
+    final l$name = name;
+    final l$choices = choices;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$free_choice,
+      l$cost_per_extra,
+      l$option_type,
+      l$position,
+      l$maximum_choice,
+      l$minimum_choice,
+      l$name,
+      Object.hashAll(l$choices.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$free_choice = free_choice;
+    final lOther$free_choice = other.free_choice;
+    if (l$free_choice != lOther$free_choice) {
+      return false;
+    }
+    final l$cost_per_extra = cost_per_extra;
+    final lOther$cost_per_extra = other.cost_per_extra;
+    if (l$cost_per_extra != lOther$cost_per_extra) {
+      return false;
+    }
+    final l$option_type = option_type;
+    final lOther$option_type = other.option_type;
+    if (l$option_type != lOther$option_type) {
+      return false;
+    }
+    final l$position = position;
+    final lOther$position = other.position;
+    if (l$position != lOther$position) {
+      return false;
+    }
+    final l$maximum_choice = maximum_choice;
+    final lOther$maximum_choice = other.maximum_choice;
+    if (l$maximum_choice != lOther$maximum_choice) {
+      return false;
+    }
+    final l$minimum_choice = minimum_choice;
+    final lOther$minimum_choice = other.minimum_choice;
+    if (l$minimum_choice != lOther$minimum_choice) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$choices = choices;
+    final lOther$choices = other.choices;
+    if (l$choices.length != lOther$choices.length) {
+      return false;
+    }
+    for (int i = 0; i < l$choices.length; i++) {
+      final l$choices$entry = l$choices[i];
+      final lOther$choices$entry = lOther$choices[i];
+      if (l$choices$entry != lOther$choices$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options
+    on Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options {
+  CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options<
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options(
+    Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options
+        instance,
+    TRes Function(
+            Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options;
+
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options;
+
+  TRes call({
+    int? id,
+    int? free_choice,
+    double? cost_per_extra,
+    String? option_type,
+    int? position,
+    int? maximum_choice,
+    int? minimum_choice,
+    Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name?
+        name,
+    List<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices>?
+        choices,
+    String? $__typename,
+  });
+  CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name<
+      TRes> get name;
+  TRes choices(
+      Iterable<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices> Function(
+              Iterable<
+                  CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices<
+                      Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices>>)
+          _fn);
+}
+
+class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? free_choice = _undefined,
+    Object? cost_per_extra = _undefined,
+    Object? option_type = _undefined,
+    Object? position = _undefined,
+    Object? maximum_choice = _undefined,
+    Object? minimum_choice = _undefined,
+    Object? name = _undefined,
+    Object? choices = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        free_choice: free_choice == _undefined || free_choice == null
+            ? _instance.free_choice
+            : (free_choice as int),
+        cost_per_extra: cost_per_extra == _undefined || cost_per_extra == null
+            ? _instance.cost_per_extra
+            : (cost_per_extra as double),
+        option_type: option_type == _undefined || option_type == null
+            ? _instance.option_type
+            : (option_type as String),
+        position: position == _undefined || position == null
+            ? _instance.position
+            : (position as int),
+        maximum_choice: maximum_choice == _undefined || maximum_choice == null
+            ? _instance.maximum_choice
+            : (maximum_choice as int),
+        minimum_choice: minimum_choice == _undefined || minimum_choice == null
+            ? _instance.minimum_choice
+            : (minimum_choice as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name),
+        choices: choices == _undefined || choices == null
+            ? _instance.choices
+            : (choices as List<
+                Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name(
+        local$name, (e) => call(name: e));
+  }
+
+  TRes choices(
+          Iterable<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices> Function(
+                  Iterable<
+                      CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices<
+                          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices>>)
+              _fn) =>
+      call(
+          choices: _fn(_instance.choices.map((e) =>
+              CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    int? free_choice,
+    double? cost_per_extra,
+    String? option_type,
+    int? position,
+    int? maximum_choice,
+    int? minimum_choice,
+    Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name?
+        name,
+    List<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices>?
+        choices,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name<
+          TRes>
+      get name =>
+          CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name
+              .stub(_res);
+  choices(_fn) => _res;
+}
+
+class Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name {
+  Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name({
+    required this.id,
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name(
+      id: (l$id as int),
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final List<
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name
+    on Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name {
+  CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name<
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name(
+    Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name
+        instance,
+    TRes Function(
+            Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name;
+
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name;
+
+  TRes call({
+    int? id,
+    List<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations> Function(
+              Iterable<
+                  CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations<
+                      Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations> Function(
+                  Iterable<
+                      CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations<
+                          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    List<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations {
+  Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations
+    on Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations {
+  CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations<
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations(
+    Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations
+        instance,
+    TRes Function(
+            Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations;
+
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices {
+  Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices({
+    required this.option_choices,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices.fromJson(
+      Map<String, dynamic> json) {
+    final l$option_choices = json['option_choices'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices(
+      option_choices: (l$option_choices as List<dynamic>)
+          .map((e) =>
+              Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices>
+      option_choices;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$option_choices = option_choices;
+    _resultData['option_choices'] =
+        l$option_choices.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$option_choices = option_choices;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$option_choices.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$option_choices = option_choices;
+    final lOther$option_choices = other.option_choices;
+    if (l$option_choices.length != lOther$option_choices.length) {
+      return false;
+    }
+    for (int i = 0; i < l$option_choices.length; i++) {
+      final l$option_choices$entry = l$option_choices[i];
+      final lOther$option_choices$entry = lOther$option_choices[i];
+      if (l$option_choices$entry != lOther$option_choices$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices
+    on Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices {
+  CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices<
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices(
+    Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices
+        instance,
+    TRes Function(
+            Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices;
+
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices;
+
+  TRes call({
+    List<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices>?
+        option_choices,
+    String? $__typename,
+  });
+  TRes option_choices(
+      Iterable<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices> Function(
+              Iterable<
+                  CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices<
+                      Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices>>)
+          _fn);
+}
+
+class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? option_choices = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices(
+        option_choices: option_choices == _undefined || option_choices == null
+            ? _instance.option_choices
+            : (option_choices as List<
+                Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes option_choices(
+          Iterable<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices> Function(
+                  Iterable<
+                      CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices<
+                          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices>>)
+              _fn) =>
+      call(
+          option_choices: _fn(_instance.option_choices.map((e) =>
+              CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices>?
+        option_choices,
+    String? $__typename,
+  }) =>
+      _res;
+  option_choices(_fn) => _res;
+}
+
+class Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices {
+  Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices({
+    required this.available,
+    required this.cost,
+    required this.id,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices.fromJson(
+      Map<String, dynamic> json) {
+    final l$available = json['available'];
+    final l$cost = json['cost'];
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices(
+      available: (l$available as bool),
+      cost: moneyFromJson(l$cost),
+      id: (l$id as int),
+      name:
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final bool available;
+
+  final double cost;
+
+  final int id;
+
+  final Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name
+      name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$available = available;
+    _resultData['available'] = l$available;
+    final l$cost = cost;
+    _resultData['cost'] = moneyToJson(l$cost);
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$available = available;
+    final l$cost = cost;
+    final l$id = id;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$available,
+      l$cost,
+      l$id,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$available = available;
+    final lOther$available = other.available;
+    if (l$available != lOther$available) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices
+    on Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices {
+  CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices<
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices(
+    Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices
+        instance,
+    TRes Function(
+            Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices;
+
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices;
+
+  TRes call({
+    bool? available,
+    double? cost,
+    int? id,
+    Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name?
+        name,
+    String? $__typename,
+  });
+  CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? available = _undefined,
+    Object? cost = _undefined,
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices(
+        available: available == _undefined || available == null
+            ? _instance.available
+            : (available as bool),
+        cost: cost == _undefined || cost == null
+            ? _instance.cost
+            : (cost as double),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices(
+      this._res);
+
+  TRes _res;
+
+  call({
+    bool? available,
+    double? cost,
+    int? id,
+    Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name?
+        name,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name<
+          TRes>
+      get name =>
+          CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name
+              .stub(_res);
+}
+
+class Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name {
+  Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name({
+    required this.id,
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name(
+      id: (l$id as int),
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final List<
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name
+    on Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name {
+  CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name<
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name(
+    Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name
+        instance,
+    TRes Function(
+            Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name;
+
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name;
+
+  TRes call({
+    int? id,
+    List<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations> Function(
+              Iterable<
+                  CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations<
+                      Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations> Function(
+                  Iterable<
+                      CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations<
+                          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    List<Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations {
+  Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations
+    on Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations {
+  CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations<
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations(
+    Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations
+        instance,
+    TRes Function(
+            Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations;
+
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options$item_options$choices$option_choices$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$name {

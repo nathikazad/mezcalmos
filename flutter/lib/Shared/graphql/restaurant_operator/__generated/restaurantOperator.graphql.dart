@@ -735,7 +735,7 @@ class Query$getOperatorByUserId$restaurant_operator$user {
   Query$getOperatorByUserId$restaurant_operator$user({
     required this.firebase_id,
     this.image,
-    this.language_id,
+    required this.language_id,
     this.name,
     required this.$__typename,
   });
@@ -750,7 +750,7 @@ class Query$getOperatorByUserId$restaurant_operator$user {
     return Query$getOperatorByUserId$restaurant_operator$user(
       firebase_id: (l$firebase_id as String),
       image: (l$image as String?),
-      language_id: (l$language_id as String?),
+      language_id: (l$language_id as String),
       name: (l$name as String?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -760,7 +760,7 @@ class Query$getOperatorByUserId$restaurant_operator$user {
 
   final String? image;
 
-  final String? language_id;
+  final String language_id;
 
   final String? name;
 
@@ -892,9 +892,9 @@ class _CopyWithImpl$Query$getOperatorByUserId$restaurant_operator$user<TRes>
             ? _instance.firebase_id
             : (firebase_id as String),
         image: image == _undefined ? _instance.image : (image as String?),
-        language_id: language_id == _undefined
+        language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
-            : (language_id as String?),
+            : (language_id as String),
         name: name == _undefined ? _instance.name : (name as String?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename

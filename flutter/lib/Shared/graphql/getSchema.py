@@ -1,19 +1,30 @@
 #!/usr/bin/env python3
-
+# python3 getSchema.py dl-stage-schema
+# OR
+# python3 getSchema.py dl-local-schema
 import os
-output = os.popen('npm list -g graphqurl').read()
-if 'graphqurl' not in output:
-  print('graphqurl not installed')
-  os.system('npm install -g graphqurl')
-else:
-  print('graphqurl installed')
-if os.path.exists("schema.graphql"): 
-  os.remove("schema.graphql")
-if os.path.exists("schema.graphql.dart"):
-  os.remove("schema.graphql.dart")
-# os.system('gq http://localhost:8080/v1/graphql -H "X-Hasura-Admin-Secret: myadminsecretkey" --introspect > schema.graphql')
-os.system('gq https://mez-staging.hasura.app/v1/graphql -H "X-Hasura-Admin-Secret: 0a2XRBPGpw7obsGPP3NXijEQVJEtF6AZ2Jhj0DgUO7PlMvnXOimr6bHHMGDPxFf9" --introspect > schema.graphql')
-os.system('flutter pub run build_runner build --delete-conflicting-outputs')
+import sys
+
+if(len(sys.argv) > 1):
+  output = os.popen('npm list -g zeus').read()
+  if 'zeus' not in output:
+    print('zeus not installed')
+    os.system('npm install -g zeus')
+  else:
+    print('zeus installed')
+  if os.path.exists("schema.graphql"): 
+    os.remove("schema.graphql")
+  if os.path.exists("schema.graphql.dart"):
+    os.remove("schema.graphql.dart")
+  os.chdir('../../../../hasura/library')
+  if(sys.argv[1] == 'dl-local-schema'):
+    os.system('npm run generate-gql-client')
+  else:
+    os.system('npm run generate-gql-client-staging')
+    
+  os.chdir('../../flutter/lib/Shared/graphql')
+  os.system('cp ../../../../hasura/library/src/generated/schema.graphql ./')
+  os.system('flutter pub run build_runner build --delete-conflicting-outputs')
 
 
 toBeReplaced = """class Input$jsonb_cast_exp {

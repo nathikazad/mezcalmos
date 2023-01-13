@@ -30,10 +30,10 @@ class ItemOptionCard extends StatefulWidget {
 
 class _ItemOptionCardState extends State<ItemOptionCard> {
   LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
-  late int optionId;
+  late String optionId;
   @override
   void initState() {
-    optionId = widget.option.id;
+    optionId = widget.option.id.toString();
     if (!widget.editMode) {
       assignDefaultChoice();
       assignMinimumChoices();
@@ -232,20 +232,24 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
 
   void handleChoiceCheckBox(Choice choice) {
     mezDbgPrint(widget.option.maximumChoice);
-    if (widget.cartItem.value!.chosenChoices[optionId]!.contains(choice)) {
-      removeChoice(choice);
-    } else if (widget.cartItem.value!.chosenChoices[optionId]!.length <
-        widget.option.maximumChoice) {
-      addNewChoice(choice);
-    } else if (widget.cartItem.value!.chosenChoices[optionId]!.length ==
-        widget.option.maximumChoice) {
-      addLastChoice(choice);
+    if (widget.cartItem.value!.chosenChoices[optionId] != null) {
+      if (widget.cartItem.value!.chosenChoices[optionId]?.contains(choice) ==
+          true) {
+        removeChoice(choice);
+      } else if (widget.cartItem.value!.chosenChoices[optionId]!.length <
+          widget.option.maximumChoice) {
+        addNewChoice(choice);
+      } else if (widget.cartItem.value!.chosenChoices[optionId]!.length ==
+          widget.option.maximumChoice) {
+        addLastChoice(choice);
+      }
+      widget.cartItem.refresh();
+    } else {
+      //   widget.cartItem.value!.chosenChoices[optionId] = choice.toJson();
     }
-    widget.cartItem.refresh();
   }
 
   void addLastChoice(Choice choice) {
-    mezDbgPrint("Adding for last timee ========>");
     widget.cartItem.value!.chosenChoices[optionId]!.removeLast();
     widget.cartItem.value!.setNewChoices(
         optionId: optionId,
@@ -253,7 +257,6 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
   }
 
   void addNewChoice(Choice choice) {
-    mezDbgPrint("Adding for first time ========>");
     widget.cartItem.value!.setNewChoices(
         optionId: optionId,
         newChoices: widget.cartItem.value!.chosenChoices[optionId]! + [choice]);

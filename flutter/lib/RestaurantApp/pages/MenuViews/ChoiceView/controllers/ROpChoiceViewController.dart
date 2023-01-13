@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,7 +8,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/graphql/item/option/choice/hsChoice.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
@@ -57,7 +58,7 @@ class ROpChoiceViewController {
   /// if the edit mode is false it will generate a random id
   Choice _contructChoice() {
     return Choice(
-      id: editMode.isTrue ? choice.value!.id : getRandomString(5),
+      id: editMode.isTrue ? choice.value!.id : Random().nextInt(5),
       name: {
         primaryLang.value: prChoiceName.text,
         secondaryLang.value: scChoiceName.text,
@@ -102,8 +103,8 @@ class ROpChoiceViewController {
             langType: key, value: value, translationId: choice.value!.nameId!);
       });
     }
-    final bool response = await update_choice_by_id(
-        int.parse(choice.value!.id), _contructChoice());
+    final bool response =
+        await update_choice_by_id(choice.value!.id, _contructChoice());
     if (response) {
       Get.snackbar('Saved', 'Choice has been saved successfuly',
           backgroundColor: Colors.black,
@@ -140,12 +141,8 @@ class ROpChoiceViewController {
   }
 
   Future<bool?> deleteChoice() async {
-    if (int.tryParse(choice.value!.id) != null) {
-      final bool result =
-          await delete_choice_by_id(choiceId: int.parse(choice.value!.id));
-      result ? MezRouter.back() : null;
-      return result;
-    }
-    return null;
+    final bool result = await delete_choice_by_id(choiceId: choice.value!.id);
+    result ? MezRouter.back() : null;
+    return result;
   }
 }

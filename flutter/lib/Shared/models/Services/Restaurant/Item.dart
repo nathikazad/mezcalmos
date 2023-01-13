@@ -121,7 +121,7 @@ class Item {
   Map<String, dynamic> parseOptionsListToJson() {
     final Map<String, dynamic> _mappedOptions = <String, dynamic>{};
     options.forEach((Option op) {
-      _mappedOptions[op.name[LanguageType.EN]!] = op.toJson();
+      _mappedOptions[op.id.toString()] = op.toJson();
     });
 
     return _mappedOptions;
@@ -129,7 +129,12 @@ class Item {
 
   Option? findOption(int id) {
     if (options.length == 0) return null;
+
     return options.firstWhereOrNull((Option element) => element.id == id);
+  }
+
+  LanguageMap getOptionName(int id) {
+    return options.firstWhereOrNull((Option element) => element.id == id)!.name;
   }
 
   @override

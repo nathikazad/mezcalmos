@@ -24,7 +24,6 @@ mutation set_cart_restaurant_id($restaurant_id: Int!, $customer_id: Int!) {
     _set: { restaurant_id: $restaurant_id }
   ) {
     restaurant_id
-     
   }
 }
 
@@ -69,6 +68,38 @@ query getCustomerCart($customer_id: Int!) {
               value
             }
           }
+          options {
+            item_options {
+              id
+              free_choice
+              cost_per_extra
+              option_type
+              position
+              maximum_choice
+              minimum_choice
+              name {
+                id
+                translations {
+                  language_id
+                  value
+                }
+              }
+              choices {
+                option_choices {
+                  available
+                  cost
+                  id
+                  name {
+                    id
+                    translations {
+                      language_id
+                      value
+                    }
+                  }
+                }
+              }
+            }
+          }
           position
           category_id
           available
@@ -82,6 +113,7 @@ query getCustomerCart($customer_id: Int!) {
         id
         note
         quantity
+        selected_options
       }
     }
   }
@@ -90,7 +122,6 @@ query getCustomerCart($customer_id: Int!) {
 # Create a customer Cart
 mutation create_customer_cart($cart: restaurant_cart_insert_input!) {
   insert_restaurant_cart_one(object: $cart) {
-   
     customer_id
     restaurant_id
   }
@@ -123,7 +154,40 @@ subscription listen_on_customer_cart($customer_id: Int!) {
       }
       items {
         restaurant_item {
+          options {
+            item_options {
+              id
+              free_choice
+              cost_per_extra
+              option_type
+              position
+              maximum_choice
+              minimum_choice
+              name {
+                id
+                translations {
+                  language_id
+                  value
+                }
+              }
+              choices {
+                option_choices {
+                  available
+                  cost
+                  id
+                  name {
+                    id
+                    translations {
+                      language_id
+                      value
+                    }
+                  }
+                }
+              }
+            }
+          }
           item_type
+          id
           name {
             translations {
               language_id
@@ -149,6 +213,7 @@ subscription listen_on_customer_cart($customer_id: Int!) {
         id
         note
         quantity
+        selected_options
       }
     }
   }
@@ -159,15 +224,16 @@ mutation clearCart($customer_id: Int!) {
   delete_restaurant_cart_item(where: { customer_id: { _eq: $customer_id } }) {
     affected_rows
   }
+}
+
+mutation updateRestaurantCartItem(
+  $itemId: Int!
+  $itemData: restaurant_cart_item_set_input
+) {
+  update_restaurant_cart_item_by_pk(
+    pk_columns: { id: $itemId }
+    _set: $itemData
+  ) {
+    id
   }
-
-
-
-
-
-
-
-
-mutation updateRestaurantCartItem($itemId: Int!,$itemData : restaurant_cart_item_set_input) {
-  update_restaurant_cart_item_by_pk(pk_columns: {id: $itemId},_set:$itemData){id}
 }

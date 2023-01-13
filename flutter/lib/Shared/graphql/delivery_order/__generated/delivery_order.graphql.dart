@@ -2369,7 +2369,7 @@ class Query$get_driver_order$delivery_order_by_pk$customer$user {
     required this.id,
     this.image,
     this.name,
-    this.language_id,
+    required this.language_id,
     required this.$__typename,
   });
 
@@ -2384,7 +2384,7 @@ class Query$get_driver_order$delivery_order_by_pk$customer$user {
       id: (l$id as int),
       image: (l$image as String?),
       name: (l$name as String?),
-      language_id: (l$language_id as String?),
+      language_id: (l$language_id as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -2395,7 +2395,7 @@ class Query$get_driver_order$delivery_order_by_pk$customer$user {
 
   final String? name;
 
-  final String? language_id;
+  final String language_id;
 
   final String $__typename;
 
@@ -2528,9 +2528,9 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$customer$user<
         id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined ? _instance.image : (image as String?),
         name: name == _undefined ? _instance.name : (name as String?),
-        language_id: language_id == _undefined
+        language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
-            : (language_id as String?),
+            : (language_id as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -4960,7 +4960,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$customer$user {
     required this.id,
     this.image,
     this.name,
-    this.language_id,
+    required this.language_id,
     required this.$__typename,
   });
 
@@ -4975,7 +4975,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$customer$user {
       id: (l$id as int),
       image: (l$image as String?),
       name: (l$name as String?),
-      language_id: (l$language_id as String?),
+      language_id: (l$language_id as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -4986,7 +4986,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$customer$user {
 
   final String? name;
 
-  final String? language_id;
+  final String language_id;
 
   final String $__typename;
 
@@ -5125,9 +5125,9 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$cus
         id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined ? _instance.image : (image as String?),
         name: name == _undefined ? _instance.name : (name as String?),
-        language_id: language_id == _undefined
+        language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
-            : (language_id as String?),
+            : (language_id as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),

@@ -832,7 +832,7 @@ class Query$getDriversByUserId$delivery_driver$user {
     this.image,
     this.name,
     required this.firebase_id,
-    this.language_id,
+    required this.language_id,
     required this.$__typename,
   });
 
@@ -849,7 +849,7 @@ class Query$getDriversByUserId$delivery_driver$user {
       image: (l$image as String?),
       name: (l$name as String?),
       firebase_id: (l$firebase_id as String),
-      language_id: (l$language_id as String?),
+      language_id: (l$language_id as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -862,7 +862,7 @@ class Query$getDriversByUserId$delivery_driver$user {
 
   final String firebase_id;
 
-  final String? language_id;
+  final String language_id;
 
   final String $__typename;
 
@@ -1002,9 +1002,9 @@ class _CopyWithImpl$Query$getDriversByUserId$delivery_driver$user<TRes>
         firebase_id: firebase_id == _undefined || firebase_id == null
             ? _instance.firebase_id
             : (firebase_id as String),
-        language_id: language_id == _undefined
+        language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
-            : (language_id as String?),
+            : (language_id as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -1857,7 +1857,7 @@ class Query$getDriversByServiceId$delivery_driver$user {
     this.image,
     this.name,
     required this.firebase_id,
-    this.language_id,
+    required this.language_id,
     required this.$__typename,
   });
 
@@ -1874,7 +1874,7 @@ class Query$getDriversByServiceId$delivery_driver$user {
       image: (l$image as String?),
       name: (l$name as String?),
       firebase_id: (l$firebase_id as String),
-      language_id: (l$language_id as String?),
+      language_id: (l$language_id as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -1887,7 +1887,7 @@ class Query$getDriversByServiceId$delivery_driver$user {
 
   final String firebase_id;
 
-  final String? language_id;
+  final String language_id;
 
   final String $__typename;
 
@@ -2027,9 +2027,9 @@ class _CopyWithImpl$Query$getDriversByServiceId$delivery_driver$user<TRes>
         firebase_id: firebase_id == _undefined || firebase_id == null
             ? _instance.firebase_id
             : (firebase_id as String),
-        language_id: language_id == _undefined
+        language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
-            : (language_id as String?),
+            : (language_id as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),

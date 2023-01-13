@@ -30,7 +30,7 @@ class CustomerCartController extends GetxController {
 
   Future<void> _initCart() async {
     await fetchCart();
-
+    await _handlerRestaurantId();
     subscriptionId = _hasuraDb.createSubscription(start: () {
       cartStream = listen_on_customer_cart(customer_id: _auth.hasuraUserId!)
           .listen((Cart? event) {
@@ -38,7 +38,9 @@ class CustomerCartController extends GetxController {
           mezDbgPrint(
               "Stream triggred from cart controller ✅✅✅✅✅✅✅✅✅ =====> ${event.toFirebaseFormattedJson()}");
           cart.value = event;
+
           cart.value?.restaurant = event.restaurant;
+          _handlerRestaurantId();
           cart.refresh();
         }
       });
@@ -46,6 +48,12 @@ class CustomerCartController extends GetxController {
       cartStream?.cancel();
       cartStream = null;
     });
+  }
+
+  Future<void> _handlerRestaurantId() async {
+    if (cart.value?.restaurant == null && cart.value!.cartItems.isNotEmpty) {
+      await setCartRestaurantId(cart.value!.cartItems.first.restaurantId);
+    }
   }
 
   @override
@@ -57,10 +65,14 @@ class CustomerCartController extends GetxController {
   Future<void> fetchCart() async {
     if (_auth.hasuraUserId != null) {
       final Cart? value = await get_customer_cart(
-        customerId: _auth.user!.hasuraId,
+        customerId: _auth.hasuraUserId!,
       );
-      cart.value = value ?? Cart();
-      cart.value?.restaurant = value?.restaurant;
+      if (value != null) {
+        cart.value = value ?? Cart();
+        cart.value?.restaurant = value.restaurant;
+      } else {
+        await create_customer_cart();
+      }
     }
   }
 
@@ -76,14 +88,9 @@ class CustomerCartController extends GetxController {
     }
   }
 
-  Future<bool> updateCartItem(int cartItemId) async {
-    final CartItem? cartItem = cart.value!.cartItems
-        .firstWhereOrNull((CartItem element) => element.idInCart == cartItemId);
-    if (cartItem != null) {
-      await update_cart_item(cartItem: cartItem, id: cartItemId);
-      return true;
-    } else
-      return false;
+  Future<bool> updateCartItem(CartItem cartItem) async {
+    await update_cart_item(cartItem: cartItem, id: cartItem.idInCart!);
+    return true;
   }
 
   Future<bool> deleteCartItem(int cartItemId) async {
@@ -96,25 +103,37 @@ class CustomerCartController extends GetxController {
       return false;
   }
 
-  Future<int> addCartItem(CartItem cartItem) async {
+  Future<int?> addCartItem(CartItem cartItem) async {
     if (cart.value != null &&
         cart.value!.cartItems.isNotEmpty &&
         cart.value!.restaurant?.restaurantId != cartItem.restaurantId) {
       await clearCart();
       await setCartRestaurantId(cartItem.restaurantId);
     }
-    final int res = await add_item_to_cart(
-      cartItem: cartItem,
-    );
-    return res;
+    try {
+      final int res = await add_item_to_cart(
+        cartItem: cartItem,
+      );
+      return res;
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
+    return null;
   }
 
-  Future<int> setCartRestaurantId(int restaurantId) async {
-    final int res = await set_cart_restaurant_id(
-      customer_id: _auth.hasuraUserId!,
-      restaurant_id: restaurantId,
-    );
-    return res;
+  Future<int?> setCartRestaurantId(int restaurantId) async {
+    try {
+      final int res = await set_cart_restaurant_id(
+        customer_id: _auth.hasuraUserId!,
+        restaurant_id: restaurantId,
+      );
+      return res;
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
+    return null;
   }
 
   Future<ServerResponse> checkout({String? stripePaymentId}) async {

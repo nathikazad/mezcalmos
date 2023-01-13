@@ -399,8 +399,7 @@ class CustCartViewController {
     final CartItem? _item = cart.incrementItem(itemId, quantity);
     mezDbgPrint("[bb] Item -==> $_item");
     if (_item != null && saveToDb == true) {
-      cartController.updateCartItem(itemId);
-      _cartRxn.refresh();
+      cartController.updateCartItem(_item);
       return _item;
     }
 
@@ -413,10 +412,6 @@ class CustCartViewController {
     } else {
       return true;
     }
-  }
-
-  void refrechCart() {
-    _cartRxn.refresh();
   }
 }
 

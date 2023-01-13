@@ -254,7 +254,7 @@ List<Choice> _convertChoices(
       (Query$getItemById$restaurant_item_by_pk$options$item_options$choices$option_choices
           oneChoice) {
     return Choice(
-        id: oneChoice.id.toString(),
+        id: oneChoice.id,
         nameId: oneChoice.name.id,
         name: toLanguageMap(translations: oneChoice.name.translations),
         cost: oneChoice.cost);

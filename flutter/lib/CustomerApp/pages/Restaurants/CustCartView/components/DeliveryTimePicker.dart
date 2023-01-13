@@ -194,11 +194,11 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
           }).then((DateTime? value) {
         if (value != null) {
           widget.viewCartController.cart.deliveryTime = value;
-          widget.viewCartController.refrechCart();
         }
       });
     } else {
-      mezDbgPrint("[OPS] Restaurant have no schedule!");
+      mezDbgPrint(
+          "[OPS] Restaurant have no schedule!=>${widget.viewCartController.cart.restaurant?.toJson()}}");
     }
   }
 
