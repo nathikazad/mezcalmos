@@ -34,8 +34,12 @@ class ServicePaymentsViewController {
   Future<void> init({required int serviceProviderId}) async {
     this.serviceProviderId = serviceProviderId;
     // get payment info //
-    _paymentInfo.value =
-        await get_restaurant_payment_info(serviceProviderId: serviceProviderId);
+    await _fetchPayment(withCache: true);
+  }
+
+  Future<void> _fetchPayment({bool withCache = true}) async {
+    _paymentInfo.value = await get_restaurant_payment_info(
+        serviceProviderId: serviceProviderId, withCache: withCache);
   }
 
   void checkStripe() {
@@ -86,6 +90,9 @@ class ServicePaymentsViewController {
             paymentInfo!.acceptedPayments)
         .then((ServerResponse value) {
       _checkStripeDetails();
+      if (value.success) {
+        _fetchPayment(withCache: false);
+      }
     });
   }
 
@@ -98,7 +105,19 @@ class ServicePaymentsViewController {
     }
   }
 
-  Future<void> switchChargeFees(bool v) async {}
+  Future<void> switchChargeFees(bool v) async {
+    try {
+      await update_restaurant_payment_info(
+          id: serviceProviderId,
+          paymentInfo: paymentInfo!.copyWith(
+              stripe: paymentInfo!.stripe!.copyWith(chargeFeesOnCustomer: v)));
+      await _fetchPayment(withCache: false);
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
+  }
+
   void initWebView() {
     webViewController.setJavaScriptMode(JavaScriptMode.unrestricted);
     webViewController.setBackgroundColor(const Color(0x00000000));

@@ -451,10 +451,12 @@ Future<ServiceStatus> update_restaurant_status(
 }
 
 Future<PaymentInfo?> get_restaurant_payment_info(
-    {required int serviceProviderId}) async {
+    {required int serviceProviderId, bool withCache = true}) async {
   final QueryResult<Query$getRestaurantPaymentInfo> res = await _db
       .graphQLClient
       .query$getRestaurantPaymentInfo(Options$Query$getRestaurantPaymentInfo(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
           variables:
               Variables$Query$getRestaurantPaymentInfo(id: serviceProviderId)));
   if (res.parsedData?.restaurant_by_pk == null) {
@@ -514,6 +516,7 @@ Future<PaymentInfo> update_restaurant_payment_info(
         id: id,
         data: Input$restaurant_set_input(
           accepted_payments: paymentInfo.getAcceptedPaymentsJson(),
+          stripe_info: paymentInfo.stripe?.toJson(),
         ),
       ),
     ),
