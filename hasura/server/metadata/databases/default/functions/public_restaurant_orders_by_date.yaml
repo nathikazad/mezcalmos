@@ -1,0 +1,3 @@
+function:
+  name: restaurant_orders_by_date
+  schema: public

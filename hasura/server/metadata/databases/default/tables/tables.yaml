@@ -10,6 +10,7 @@
 - "!include public_direct_chat.yaml"
 - "!include public_mez_admin.yaml"
 - "!include public_mez_admin_chat.yaml"
+- "!include public_mez_json.yaml"
 - "!include public_notification_info.yaml"
 - "!include public_post.yaml"
 - "!include public_restaurant.yaml"
