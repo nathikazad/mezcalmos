@@ -140,7 +140,14 @@ Future<Restaurant?> get_restaurant_by_id(
         "✅✅✅✅ Hasura querry success, data : ${response.parsedData?.restaurant_by_pk?.toJson()} ");
     final Query$getOneRestaurant$restaurant_by_pk? data =
         response.parsedData?.restaurant_by_pk!;
-
+    final PaymentInfo paymentInfo = PaymentInfo();
+    if (data?.accepted_payments != null) {
+      paymentInfo.acceptedPayments =
+          parseAcceptedPayments(data!.accepted_payments);
+    }
+    if (data?.stripe_info != null) {
+      paymentInfo.stripe = parseServiceStripeInfo(data!.stripe_info);
+    }
     if (data != null) {
       mezDbgPrint(
           "response data ====> ${response.data} 🍔🍔🍔 Restaurant data ${data.schedule}");
@@ -165,10 +172,7 @@ Future<Restaurant?> get_restaurant_by_id(
                   Location.fromHasura(data.location_gps, data.location_text)),
           schedule:
               data.schedule != null ? Schedule.fromData(data.schedule) : null,
-          paymentInfo: PaymentInfo(
-              acceptedPayments:
-                  parseAcceptedPayments(data.accepted_payments),
-              stripe: parseServiceStripeInfo(data.stripe_info)),
+          paymentInfo: paymentInfo,
           selfDelivery: data.self_delivery,
           restaurantState:
               ServiceState(data.open_status.toServiceStatus(), data.approved),
@@ -446,10 +450,30 @@ Future<ServiceStatus> update_restaurant_status(
   }
 }
 
-// Future<PaymentInfo?> get_restaurant_payment_info({required int serviceProviderId})async{
-//   var res = await _db.graphQLClient.
-
-// }
+Future<PaymentInfo?> get_restaurant_payment_info(
+    {required int serviceProviderId, bool withCache = true}) async {
+  final QueryResult<Query$getRestaurantPaymentInfo> res = await _db
+      .graphQLClient
+      .query$getRestaurantPaymentInfo(Options$Query$getRestaurantPaymentInfo(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables:
+              Variables$Query$getRestaurantPaymentInfo(id: serviceProviderId)));
+  if (res.parsedData?.restaurant_by_pk == null) {
+    throw Exception(
+        "🛑 Exception 🛑 Getting payment info for $serviceProviderId ===>${res.exception}");
+  }
+  mezDbgPrint(
+      "✅  payment data ====================> ${res.parsedData?.toJson()}");
+  final Query$getRestaurantPaymentInfo$restaurant_by_pk data =
+      res.parsedData!.restaurant_by_pk!;
+  if (data.accepted_payments != null && data.accepted_payments != null) {
+    return PaymentInfo(
+        acceptedPayments: parseAcceptedPayments(data.accepted_payments),
+        stripe: parseServiceStripeInfo(data.stripe_info));
+  }
+  return PaymentInfo();
+}
 
 // helpers //
 Map<PaymentType, bool> parseAcceptedPayments(data) {
@@ -463,18 +487,50 @@ Map<PaymentType, bool> parseAcceptedPayments(data) {
 StripeInfo? parseServiceStripeInfo(data) {
   StripeInfo? stripe;
 
-  final List<String> requis = [];
-  data["requirements"]?.forEach((req) {
-    requis.add(req.toString());
-  });
-  stripe = StripeInfo(
-      id: data["id"],
-      status: data["status"].toString().toStripeStatus(),
-      payoutsEnabled: data["payoutsEnabled"] ?? false,
-      detailsSubmitted: data["detailsSubmitted"] ?? false,
-      chargesEnabled: data["chargesEnabled"] ?? false,
-      chargeFeesOnCustomer: data["chargeFeesOnCustomer"] ?? true,
-      email: data["email"],
-      requirements: requis);
-  return stripe;
+  if (data != null) {
+    final List<String> requis = [];
+    data["requirements"]?.forEach((req) {
+      requis.add(req.toString());
+    });
+    stripe = StripeInfo(
+        id: data["id"],
+        status: data["status"].toString().toStripeStatus(),
+        payoutsEnabled: data["payoutsEnabled"] ?? false,
+        detailsSubmitted: data["detailsSubmitted"] ?? false,
+        chargesEnabled: data["chargesEnabled"] ?? false,
+        chargeFeesOnCustomer: data["chargeFeesOnCustomer"] ?? true,
+        email: data["email"],
+        requirements: requis);
+    return stripe;
+  }
+  return null;
+}
+
+Future<PaymentInfo> update_restaurant_payment_info(
+    {required int id, required PaymentInfo paymentInfo}) async {
+  final QueryResult<Mutation$updateRestaurantInfo> response =
+      await _db.graphQLClient.mutate$updateRestaurantInfo(
+    Options$Mutation$updateRestaurantInfo(
+      fetchPolicy: FetchPolicy.networkOnly,
+      variables: Variables$Mutation$updateRestaurantInfo(
+        id: id,
+        data: Input$restaurant_set_input(
+          accepted_payments: paymentInfo.getAcceptedPaymentsJson(),
+          stripe_info: paymentInfo.stripe?.toJson(),
+        ),
+      ),
+    ),
+  );
+  if (response.parsedData?.update_restaurant_by_pk == null) {
+    throw Exception("🚨🚨🚨 Hasura mutation exception =>${response.exception}");
+  } else {
+    mezDbgPrint(
+        "✅✅✅ Hasura mutation success => ${response.parsedData?.update_restaurant_by_pk?.accepted_payments}");
+  }
+  final Mutation$updateRestaurantInfo$update_restaurant_by_pk data =
+      response.parsedData!.update_restaurant_by_pk!;
+  return PaymentInfo(
+    acceptedPayments: parseAcceptedPayments(data.accepted_payments),
+    stripe: parseServiceStripeInfo(data.stripe_info),
+  );
 }

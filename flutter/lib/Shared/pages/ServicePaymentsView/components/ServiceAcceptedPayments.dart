@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/pages/ServicePaymentsView/controllers/ServicePaymentsViewController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/pages/ServicePaymentsView/controllers/ServicePaymentsViewController.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpEditInfoView']['components']['ROpAcceptedPayments'];
@@ -75,51 +74,51 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
             height: 7,
             thickness: 0.3,
           ),
-          Container(
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: Text(
-                    'Bank Transfer',
-                    style: Get.textTheme.bodyText1,
-                  ),
-                ),
-                // SizedBox(
-                //   width: 8,
-                // ),
-                if (widget.viewController.isBankTrue)
-                  MezIconButton(
-                      onTap: () async {
-                        await handleBank();
-                      },
-                      iconSize: 20,
-                      icon: Icons.edit),
-                const SizedBox(
-                  width: 5,
-                ),
-                Checkbox(
-                    shape: CircleBorder(),
-                    activeColor: primaryBlueColor,
-                    value: widget.viewController.isBankTrue,
-                    onChanged: (bool? v) async {
-                      if (!widget.viewController.isBankTrue) {
-                        await handleBank();
-                      } else {
-                        await widget.viewController.removeBank();
-                      }
-                    }),
-              ],
-            ),
-          ),
-          Divider(
-            endIndent: 10,
-            indent: 5,
-            height: 7,
-            thickness: 0.3,
-          ),
+          // Container(
+          //   child: Row(
+          //     mainAxisSize: MainAxisSize.max,
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       Flexible(
+          //         fit: FlexFit.tight,
+          //         child: Text(
+          //           'Bank Transfer',
+          //           style: Get.textTheme.bodyText1,
+          //         ),
+          //       ),
+          //       // SizedBox(
+          //       //   width: 8,
+          //       // ),
+          //       if (widget.viewController.isBankTrue)
+          //         MezIconButton(
+          //             onTap: () async {
+          //               await handleBank();
+          //             },
+          //             iconSize: 20,
+          //             icon: Icons.edit),
+          //       const SizedBox(
+          //         width: 5,
+          //       ),
+          //       Checkbox(
+          //           shape: CircleBorder(),
+          //           activeColor: primaryBlueColor,
+          //           value: widget.viewController.isBankTrue,
+          //           onChanged: (bool? v) async {
+          //             if (!widget.viewController.isBankTrue) {
+          //               await handleBank();
+          //             } else {
+          //               await widget.viewController.removeBank();
+          //             }
+          //           }),
+          //     ],
+          //   ),
+          // ),
+          // Divider(
+          //   endIndent: 10,
+          //   indent: 5,
+          //   height: 7,
+          //   thickness: 0.3,
+          // ),
           Container(
             child: Row(
               mainAxisSize: MainAxisSize.max,
@@ -218,7 +217,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
           //     }),
           if (widget.viewController.showFeesOption)
             Container(
-              //     margin: const EdgeInsets.all(5),
+              margin: const EdgeInsets.all(5),
               child: Row(
                 children: [
                   Flexible(

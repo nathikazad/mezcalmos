@@ -305,13 +305,6 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'payment_info_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -433,7 +426,6 @@ class Query$getRestaurants$restaurant {
     this.description,
     required this.self_delivery,
     required this.open_status,
-    this.payment_info_id,
     required this.$__typename,
   });
 
@@ -451,7 +443,6 @@ class Query$getRestaurants$restaurant {
     final l$description = json['description'];
     final l$self_delivery = json['self_delivery'];
     final l$open_status = json['open_status'];
-    final l$payment_info_id = json['payment_info_id'];
     final l$$__typename = json['__typename'];
     return Query$getRestaurants$restaurant(
       id: (l$id as int),
@@ -470,7 +461,6 @@ class Query$getRestaurants$restaurant {
               (l$description as Map<String, dynamic>)),
       self_delivery: (l$self_delivery as bool),
       open_status: (l$open_status as String),
-      payment_info_id: (l$payment_info_id as int?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -500,8 +490,6 @@ class Query$getRestaurants$restaurant {
   final bool self_delivery;
 
   final String open_status;
-
-  final int? payment_info_id;
 
   final String $__typename;
 
@@ -533,8 +521,6 @@ class Query$getRestaurants$restaurant {
     _resultData['self_delivery'] = l$self_delivery;
     final l$open_status = open_status;
     _resultData['open_status'] = l$open_status;
-    final l$payment_info_id = payment_info_id;
-    _resultData['payment_info_id'] = l$payment_info_id;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -555,7 +541,6 @@ class Query$getRestaurants$restaurant {
     final l$description = description;
     final l$self_delivery = self_delivery;
     final l$open_status = open_status;
-    final l$payment_info_id = payment_info_id;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
@@ -571,7 +556,6 @@ class Query$getRestaurants$restaurant {
       l$description,
       l$self_delivery,
       l$open_status,
-      l$payment_info_id,
       l$$__typename,
     ]);
   }
@@ -650,11 +634,6 @@ class Query$getRestaurants$restaurant {
     if (l$open_status != lOther$open_status) {
       return false;
     }
-    final l$payment_info_id = payment_info_id;
-    final lOther$payment_info_id = other.payment_info_id;
-    if (l$payment_info_id != lOther$payment_info_id) {
-      return false;
-    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -696,7 +675,6 @@ abstract class CopyWith$Query$getRestaurants$restaurant<TRes> {
     Query$getRestaurants$restaurant$description? description,
     bool? self_delivery,
     String? open_status,
-    int? payment_info_id,
     String? $__typename,
   });
   CopyWith$Query$getRestaurants$restaurant$description<TRes> get description;
@@ -729,7 +707,6 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
     Object? description = _undefined,
     Object? self_delivery = _undefined,
     Object? open_status = _undefined,
-    Object? payment_info_id = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getRestaurants$restaurant(
@@ -770,9 +747,6 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
-        payment_info_id: payment_info_id == _undefined
-            ? _instance.payment_info_id
-            : (payment_info_id as int?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -807,7 +781,6 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant<TRes>
     Query$getRestaurants$restaurant$description? description,
     bool? self_delivery,
     String? open_status,
-    int? payment_info_id,
     String? $__typename,
   }) =>
       _res;
@@ -5703,6 +5676,20 @@ const documentNodeMutationupdateRestaurantInfo = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'accepted_payments'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'stripe_info'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'name'),
             alias: null,
             arguments: [],
@@ -5903,6 +5890,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     required this.language_id,
     required this.location_gps,
     required this.location_text,
+    this.accepted_payments,
+    this.stripe_info,
     required this.name,
     this.schedule,
     this.description,
@@ -5919,6 +5908,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     final l$language_id = json['language_id'];
     final l$location_gps = json['location_gps'];
     final l$location_text = json['location_text'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$stripe_info = json['stripe_info'];
     final l$name = json['name'];
     final l$schedule = json['schedule'];
     final l$description = json['description'];
@@ -5932,6 +5923,9 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
       language_id: (l$language_id as String),
       location_gps: geographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
+      accepted_payments:
+          l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
+      stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       name: (l$name as String),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       description: l$description == null
@@ -5956,6 +5950,10 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
   final Geography location_gps;
 
   final String location_text;
+
+  final dynamic? accepted_payments;
+
+  final dynamic? stripe_info;
 
   final String name;
 
@@ -5984,6 +5982,12 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     _resultData['location_gps'] = geographyToJson(l$location_gps);
     final l$location_text = location_text;
     _resultData['location_text'] = l$location_text;
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] =
+        l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
+    final l$stripe_info = stripe_info;
+    _resultData['stripe_info'] =
+        l$stripe_info == null ? null : mapToJson(l$stripe_info);
     final l$name = name;
     _resultData['name'] = l$name;
     final l$schedule = schedule;
@@ -6006,6 +6010,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     final l$language_id = language_id;
     final l$location_gps = location_gps;
     final l$location_text = location_text;
+    final l$accepted_payments = accepted_payments;
+    final l$stripe_info = stripe_info;
     final l$name = name;
     final l$schedule = schedule;
     final l$description = description;
@@ -6019,6 +6025,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
       l$language_id,
       l$location_gps,
       l$location_text,
+      l$accepted_payments,
+      l$stripe_info,
       l$name,
       l$schedule,
       l$description,
@@ -6069,6 +6077,16 @@ class Mutation$updateRestaurantInfo$update_restaurant_by_pk {
     final l$location_text = location_text;
     final lOther$location_text = other.location_text;
     if (l$location_text != lOther$location_text) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$stripe_info = stripe_info;
+    final lOther$stripe_info = other.stripe_info;
+    if (l$stripe_info != lOther$stripe_info) {
       return false;
     }
     final l$name = name;
@@ -6130,6 +6148,8 @@ abstract class CopyWith$Mutation$updateRestaurantInfo$update_restaurant_by_pk<
     String? language_id,
     Geography? location_gps,
     String? location_text,
+    dynamic? accepted_payments,
+    dynamic? stripe_info,
     String? name,
     dynamic? schedule,
     Mutation$updateRestaurantInfo$update_restaurant_by_pk$description?
@@ -6164,6 +6184,8 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk<TRes>
     Object? language_id = _undefined,
     Object? location_gps = _undefined,
     Object? location_text = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? stripe_info = _undefined,
     Object? name = _undefined,
     Object? schedule = _undefined,
     Object? description = _undefined,
@@ -6190,6 +6212,12 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk<TRes>
         location_text: location_text == _undefined || location_text == null
             ? _instance.location_text
             : (location_text as String),
+        accepted_payments: accepted_payments == _undefined
+            ? _instance.accepted_payments
+            : (accepted_payments as dynamic?),
+        stripe_info: stripe_info == _undefined
+            ? _instance.stripe_info
+            : (stripe_info as dynamic?),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -6235,6 +6263,8 @@ class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_by_pk<
     String? language_id,
     Geography? location_gps,
     String? location_text,
+    dynamic? accepted_payments,
+    dynamic? stripe_info,
     String? name,
     dynamic? schedule,
     Mutation$updateRestaurantInfo$update_restaurant_by_pk$description?

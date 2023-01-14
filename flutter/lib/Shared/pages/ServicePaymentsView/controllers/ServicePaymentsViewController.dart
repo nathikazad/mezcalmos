@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class ServicePaymentsViewController {
   // instances //
+  WebViewController webViewController = WebViewController();
 
   // state variables //
 
@@ -15,6 +19,7 @@ class ServicePaymentsViewController {
   final RxBool showSetupStripe = RxBool(false);
   final RxBool showStripe = RxBool(false);
   final RxBool setupClicked = RxBool(false);
+  final RxBool showLinarProgress = RxBool(false);
   RxString currentUrl = RxString("");
   // text inputs //
   final TextEditingController bankName = TextEditingController();
@@ -29,20 +34,35 @@ class ServicePaymentsViewController {
   Future<void> init({required int serviceProviderId}) async {
     this.serviceProviderId = serviceProviderId;
     // get payment info //
+    await _fetchPayment(withCache: true);
+  }
+
+  Future<void> _fetchPayment({bool withCache = true}) async {
+    _paymentInfo.value = await get_restaurant_payment_info(
+        serviceProviderId: serviceProviderId, withCache: withCache);
   }
 
   void checkStripe() {
     if (_paymentInfo.value?.stripe != null &&
         _paymentInfo.value?.acceptedPayments[PaymentType.Card] == true) {
-      updateServiceProvider(serviceProviderId, ServiceProviderType.Restaurant)
+      updateServiceProvider(serviceProviderId, ServiceProviderType.Restaurant,
+              paymentInfo!.acceptedPayments)
           .then((ServerResponse value) {
         _checkStripeDetails();
       });
     }
   }
 
-  void handleCardCheckBoxClick(bool v) {
-    //  restaurantInfoController.setCardPayment(v);
+  Future<void> handleCardCheckBoxClick(bool v) async {
+    _paymentInfo.value?.acceptedPayments[PaymentType.Card] = v;
+    mezDbgPrint("PAYMENT CARD ======>${paymentInfo?.acceptedPayments}");
+    try {
+      _paymentInfo.value = await update_restaurant_payment_info(
+          id: serviceProviderId, paymentInfo: paymentInfo!);
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
   }
 
   void handleStripeUrlChanges(String url) {
@@ -54,7 +74,8 @@ class ServicePaymentsViewController {
   }
 
   void _reauthUrlHandler() {
-    onboardServiceProvider(serviceProviderId, ServiceProviderType.Restaurant)
+    onboardServiceProvider(serviceProviderId, ServiceProviderType.Restaurant,
+            paymentInfo!.acceptedPayments)
         .then((ServerResponse value) {
       if (value.success) {
         stripeUrl = value.data["url"];
@@ -65,9 +86,13 @@ class ServicePaymentsViewController {
 
   void _returnUrlHandler() {
     showStripe.value = false;
-    updateServiceProvider(serviceProviderId, ServiceProviderType.Restaurant)
+    updateServiceProvider(serviceProviderId, ServiceProviderType.Restaurant,
+            paymentInfo!.acceptedPayments)
         .then((ServerResponse value) {
       _checkStripeDetails();
+      if (value.success) {
+        _fetchPayment(withCache: false);
+      }
     });
   }
 
@@ -81,16 +106,50 @@ class ServicePaymentsViewController {
   }
 
   Future<void> switchChargeFees(bool v) async {
-    // await restaurantInfoController.switchFeesOption(v);
+    try {
+      await update_restaurant_payment_info(
+          id: serviceProviderId,
+          paymentInfo: paymentInfo!.copyWith(
+              stripe: paymentInfo!.stripe!.copyWith(chargeFeesOnCustomer: v)));
+      await _fetchPayment(withCache: false);
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
+  }
+
+  void initWebView() {
+    webViewController.setJavaScriptMode(JavaScriptMode.unrestricted);
+    webViewController.setBackgroundColor(const Color(0x00000000));
+    webViewController.setNavigationDelegate(
+      NavigationDelegate(
+        onProgress: (int progress) {
+          showLinarProgress.value = true;
+        },
+        onPageStarted: (String url) {
+          showLinarProgress.value = true;
+          currentUrl.value = url;
+          mezDbgPrint("🌍 Started with url ======>$url");
+          handleStripeUrlChanges(url);
+        },
+        onPageFinished: (String url) {
+          showLinarProgress.value = false;
+        },
+        onWebResourceError: (WebResourceError error) {},
+      ),
+    );
+    webViewController.loadRequest(Uri.parse(stripeUrl!));
   }
 
   void showPaymentSetup() {
     setupClicked.value = true;
-    onboardServiceProvider(serviceProviderId, ServiceProviderType.Restaurant)
+    onboardServiceProvider(serviceProviderId, ServiceProviderType.Restaurant,
+            paymentInfo!.acceptedPayments)
         .then((ServerResponse value) {
       if (value.success) {
         stripeUrl = value.data["url"];
         showStripe.value = true;
+        initWebView();
       } else {
         Get.snackbar("Error", value.errorMessage ?? "Error");
       }
