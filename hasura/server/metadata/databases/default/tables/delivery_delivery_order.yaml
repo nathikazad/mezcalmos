@@ -1,6 +1,6 @@
 table:
   name: delivery_order
-  schema: public
+  schema: delivery
 object_relationships:
   - name: chat_with_customer
     using:
@@ -23,7 +23,7 @@ object_relationships:
         insertion_order: null
         remote_table:
           name: delivery_company
-          schema: public
+          schema: delivery
   - name: delivery_driver
     using:
       manual_configuration:
@@ -33,7 +33,7 @@ object_relationships:
         insertion_order: null
         remote_table:
           name: delivery_driver
-          schema: public
+          schema: delivery
   - name: delivery_operator
     using:
       manual_configuration:
@@ -43,7 +43,7 @@ object_relationships:
         insertion_order: null
         remote_table:
           name: delivery_operator
-          schema: public
+          schema: delivery
   - name: driver_review_by_customer
     using:
       foreign_key_constraint_on: driver_review_by_customer_id
@@ -59,7 +59,7 @@ object_relationships:
         insertion_order: null
         remote_table:
           name: restaurant
-          schema: public
+          schema: restaurant
   - name: restaurant_operator
     using:
       manual_configuration:
@@ -69,14 +69,14 @@ object_relationships:
         insertion_order: null
         remote_table:
           name: restaurant_operator
-          schema: public
+          schema: restaurant
   - name: restaurant_order
     using:
       foreign_key_constraint_on:
         column: delivery_id
         table:
           name: restaurant_order
-          schema: public
+          schema: restaurant
   - name: service_provider_review_by_driver
     using:
       foreign_key_constraint_on: service_provider_review_by_driver_id

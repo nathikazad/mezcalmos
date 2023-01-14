@@ -1,6 +1,6 @@
 table:
-  name: translation
-  schema: public
+  name: delivery_cost
+  schema: delivery
 object_relationships:
   - name: restaurant
     using:
@@ -12,29 +12,7 @@ object_relationships:
         remote_table:
           name: restaurant
           schema: restaurant
-array_relationships:
-  - name: translations
-    using:
-      foreign_key_constraint_on:
-        column: translation_id
-        table:
-          name: translation_value
-          schema: public
 insert_permissions:
-  - role: mez_admin
-    permission:
-      check:
-        _exists:
-          _table:
-            name: mez_admin
-            schema: public
-          _where:
-            user_id:
-              _eq: X-Hasura-User-Id
-      columns:
-        - id
-        - service_provider_id
-        - service_provider_type
   - role: restaurant_operator
     permission:
       check:
@@ -43,7 +21,10 @@ insert_permissions:
             user_id:
               _eq: X-Hasura-User-Id
       columns:
-        - id
+        - cost_per_km
+        - free_delivery_km_range
+        - free_delivery_minimum_cost
+        - minimum_cost
         - service_provider_id
         - service_provider_type
 select_permissions:
@@ -52,51 +33,62 @@ select_permissions:
       columns:
         - id
         - service_provider_id
+        - cost_per_km
+        - free_delivery_minimum_cost
+        - minimum_cost
+        - free_delivery_km_range
         - service_provider_type
       filter: {}
   - role: customer
     permission:
       columns:
+        - cost_per_km
+        - free_delivery_km_range
+        - free_delivery_minimum_cost
         - id
-        - service_provider_id
-        - service_provider_type
-      filter: {}
-  - role: delivery_driver
-    permission:
-      columns:
-        - id
+        - minimum_cost
         - service_provider_id
         - service_provider_type
       filter: {}
   - role: mez_admin
     permission:
       columns:
+        - cost_per_km
+        - free_delivery_km_range
+        - free_delivery_minimum_cost
         - id
+        - minimum_cost
         - service_provider_id
         - service_provider_type
-      filter: {}
-  - role: restaurant_operator
-    permission:
-      columns:
-        - id
-        - service_provider_id
-        - service_provider_type
-      filter: {}
-delete_permissions:
-  - role: mez_admin
-    permission:
       filter:
-        _exists:
-          _table:
-            name: mez_admin
-            schema: public
-          _where:
-            user_id:
-              _eq: X-Hasura-User-Id
+        service_provider_id:
+          _eq: X-Hasura-User-Id
   - role: restaurant_operator
     permission:
+      columns:
+        - cost_per_km
+        - free_delivery_km_range
+        - free_delivery_minimum_cost
+        - id
+        - minimum_cost
+        - service_provider_id
+        - service_provider_type
       filter:
         restaurant:
           restaurant_operators:
             user_id:
               _eq: X-Hasura-User-Id
+update_permissions:
+  - role: restaurant_operator
+    permission:
+      columns:
+        - cost_per_km
+        - free_delivery_km_range
+        - free_delivery_minimum_cost
+        - minimum_cost
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null

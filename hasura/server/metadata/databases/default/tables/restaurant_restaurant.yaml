@@ -1,6 +1,6 @@
 table:
   name: restaurant
-  schema: public
+  schema: restaurant
 object_relationships:
   - name: description
     using:
@@ -12,7 +12,7 @@ array_relationships:
         column: restaurant_id
         table:
           name: restaurant_category
-          schema: public
+          schema: restaurant
   - name: delivery_drivers
     using:
       manual_configuration:
@@ -36,7 +36,7 @@ array_relationships:
         column: restaurant_id
         table:
           name: restaurant_operator
-          schema: public
+          schema: restaurant
   - name: reviews
     using:
       manual_configuration:

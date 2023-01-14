@@ -1,6 +1,6 @@
 table:
   name: restaurant_choice
-  schema: public
+  schema: restaurant
 object_relationships:
   - name: name
     using:

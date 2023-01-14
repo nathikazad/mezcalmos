@@ -1,6 +1,6 @@
 table:
   name: restaurant_cart
-  schema: public
+  schema: restaurant
 object_relationships:
   - name: customer
     using:
@@ -15,7 +15,7 @@ array_relationships:
         column: customer_id
         table:
           name: restaurant_cart_item
-          schema: public
+          schema: restaurant
 computed_fields:
   - name: cost
     definition:

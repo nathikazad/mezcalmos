@@ -1,6 +1,6 @@
 table:
   name: restaurant_order_public
-  schema: public
+  schema: restaurant
 array_relationships:
   - name: restaurant_operators
     using:

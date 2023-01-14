@@ -1,6 +1,6 @@
 table:
   name: post
-  schema: public
+  schema: service_provider
 object_relationships:
   - name: restaurant
     using:

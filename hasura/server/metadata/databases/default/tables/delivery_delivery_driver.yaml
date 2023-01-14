@@ -1,6 +1,6 @@
 table:
   name: delivery_driver
-  schema: public
+  schema: delivery
 object_relationships:
   - name: delivery_company
     using:
@@ -11,7 +11,7 @@ object_relationships:
         insertion_order: null
         remote_table:
           name: delivery_company
-          schema: public
+          schema: delivery
   - name: restaurant
     using:
       manual_configuration:
@@ -21,7 +21,7 @@ object_relationships:
         insertion_order: null
         remote_table:
           name: restaurant
-          schema: public
+          schema: restaurant
   - name: user
     using:
       foreign_key_constraint_on: user_id

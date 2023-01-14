@@ -1,22 +1,19 @@
 table:
-  name: restaurant_choice
-  schema: public
+  name: restaurant_option_choice_map
+  schema: restaurant
 object_relationships:
-  - name: name
-    using:
-      foreign_key_constraint_on: name_id
   - name: restaurant
     using:
       foreign_key_constraint_on: restaurant_id
 array_relationships:
-  - name: options
+  - name: option_choices
     using:
       manual_configuration:
         column_mapping:
-          id: choice_id
+          choice_id: id
         insertion_order: null
         remote_table:
-          name: restaurant_option_choice_map
+          name: restaurant_choice
           schema: restaurant
 insert_permissions:
   - role: mez_admin
@@ -30,92 +27,56 @@ insert_permissions:
             user_id:
               _eq: X-Hasura-User-Id
       columns:
-        - available
-        - cost
-        - name_id
+        - choice_id
+        - option_id
         - restaurant_id
   - role: restaurant_operator
     permission:
-      check: {}
+      check:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
       columns:
-        - available
-        - cost
-        - name_id
+        - choice_id
+        - option_id
         - restaurant_id
 select_permissions:
   - role: anonymous
     permission:
       columns:
-        - available
-        - id
-        - name_id
+        - option_id
+        - choice_id
         - restaurant_id
-        - cost
       filter: {}
   - role: customer
     permission:
       columns:
-        - available
-        - id
-        - name_id
+        - option_id
+        - choice_id
         - restaurant_id
-        - cost
       filter: {}
   - role: delivery_driver
     permission:
       columns:
-        - available
-        - id
-        - name_id
+        - option_id
+        - choice_id
         - restaurant_id
-        - cost
       filter: {}
   - role: mez_admin
     permission:
       columns:
-        - available
-        - id
-        - name_id
+        - option_id
+        - choice_id
         - restaurant_id
-        - cost
       filter: {}
   - role: restaurant_operator
     permission:
       columns:
-        - available
-        - id
-        - name_id
+        - option_id
+        - choice_id
         - restaurant_id
-        - cost
       filter: {}
-update_permissions:
-  - role: mez_admin
-    permission:
-      columns:
-        - available
-        - cost
-        - name_id
-      filter:
-        _exists:
-          _table:
-            name: mez_admin
-            schema: public
-          _where:
-            user_id:
-              _eq: X-Hasura-User-Id
-      check: null
-  - role: restaurant_operator
-    permission:
-      columns:
-        - available
-        - cost
-        - name_id
-      filter:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
-      check: null
 delete_permissions:
   - role: mez_admin
     permission:

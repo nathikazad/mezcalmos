@@ -1,6 +1,6 @@
 table:
   name: restaurant_order
-  schema: public
+  schema: restaurant
 object_relationships:
   - name: chat
     using:
@@ -24,7 +24,7 @@ array_relationships:
         column: restaurant_order_id
         table:
           name: restaurant_order_item
-          schema: public
+          schema: restaurant
 computed_fields:
   - name: in_process
     definition:

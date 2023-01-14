@@ -1,6 +1,6 @@
 table:
   name: customer
-  schema: public
+  schema: customer
 object_relationships:
   - name: cart
     using:
@@ -8,7 +8,7 @@ object_relationships:
         column: customer_id
         table:
           name: restaurant_cart
-          schema: public
+          schema: restaurant
   - name: user
     using:
       foreign_key_constraint_on: user_id
@@ -19,14 +19,14 @@ array_relationships:
         column: customer_id
         table:
           name: delivery_order
-          schema: public
+          schema: delivery
   - name: saved_locations
     using:
       foreign_key_constraint_on:
         column: customer_id
         table:
           name: saved_location
-          schema: public
+          schema: customer
 computed_fields:
   - name: notification_token
     definition:
