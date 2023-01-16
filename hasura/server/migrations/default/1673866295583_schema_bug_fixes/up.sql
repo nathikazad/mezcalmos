@@ -5,7 +5,6 @@ alter table "delivery"."delivery_cost" rename to "cost";
 
 alter table "delivery"."delivery_operator" rename to "operator";
 
--- DROP FUNCTION public.deliop_notification_token;
 CREATE OR REPLACE FUNCTION public.deliop_notification_token(delivery_operator_row delivery.operator)
  RETURNS character varying
  LANGUAGE sql
@@ -27,23 +26,8 @@ CREATE OR REPLACE FUNCTION public.delivery_in_process(order_row delivery.order)
  STABLE
 AS $function$
     SELECT order_row.status = 'orderReceived' OR order_row.status = 'packageReady' OR order_row.status = 'atPickup' OR order_row.status = 'onTheWayToDropoff' OR order_row.status = 'atDropoff'
-$function$
+$function$;
 
--- CREATE OR REPLACE FUNCTION public.delivery_notification_token(delivery_row delivery.order)
---  RETURNS character varying
---  LANGUAGE sql
---  STABLE
--- AS $function$
---     SELECT token
---     FROM notification_info n
---     WHERE n.user_id = (
---     CASE
---         WHEN delivery_row.deliverer_app_type_id = 'restaurant' THEN (SELECT user_id FROM restaurant_operator r WHERE r.id = delivery_row.deliverer_id)
---         ELSE (SELECT user_id FROM deliverer WHERE deliverer.id = delivery_row.deliverer_id)
---     END
---     )
---     AND n.app_type_id = delivery_row.deliverer_app_type_id;
--- $function$;
 
 alter table "delivery"."delivery_driver" rename to "driver";
 
@@ -58,6 +42,8 @@ AS $function$
     AND n.app_type_id = 'delivery';
 $function$;
 
+alter table "restaurant"."restaurant_cart" rename to "cart";
+
 alter table "restaurant"."restaurant_cart_item" rename to "cart_item";
 
 CREATE OR REPLACE FUNCTION public.cost(cart_row restaurant.cart)
@@ -68,11 +54,7 @@ AS $function$
     SELECT SUM(quantity * cost_per_one)
     FROM restaurant.cart_item
     WHERE customer_id = cart_row.customer_id;
-$function$
--- SELECT schema_name
--- FROM information_schema.schemata;
-
--- SELECT * FROM restaurant.cart;
+$function$;
 
 alter table "restaurant"."restaurant_category" rename to "category";
 
@@ -102,3 +84,5 @@ $function$;
 alter table "restaurant"."restaurant_order_item" rename to "order_item";
 
 alter view "restaurant"."restaurant_order_public" rename to "order_public";
+
+alter table "restaurant"."restaurant_order" rename to "order";
