@@ -21,20 +21,20 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["cards"]["SavedCardsListView"];
 
 //
-class SavedCardsListView extends StatefulWidget {
-  const SavedCardsListView({Key? key}) : super(key: key);
+class CustCardsListView extends StatefulWidget {
+  const CustCardsListView({Key? key}) : super(key: key);
 
   @override
-  State<SavedCardsListView> createState() => _SavedCardsListViewState();
+  State<CustCardsListView> createState() => _CustCardsListViewState();
 }
 
-class _SavedCardsListViewState extends State<SavedCardsListView> {
+class _CustCardsListViewState extends State<CustCardsListView> {
   CustomerAuthController controller = Get.find<CustomerAuthController>();
   StreamSubscription? cardsStream;
   RxList<CreditCard> cards = RxList([]);
   @override
   void initState() {
-    cards.value = controller.customer!.savedCards;
+    //   cards.value = controller.customer!.savedCards;
     // TODO: hasura-ch
     // cardsStream = controller.customer?.listen((Customer? event) {
     //   if (event != null) {
