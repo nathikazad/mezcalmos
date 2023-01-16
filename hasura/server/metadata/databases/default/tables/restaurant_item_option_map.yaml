@@ -1,20 +1,26 @@
 table:
-  name: restaurant_option_choice_map
-  schema: public
+  name: item_option_map
+  schema: restaurant
 object_relationships:
   - name: restaurant
     using:
-      foreign_key_constraint_on: restaurant_id
+      manual_configuration:
+        column_mapping:
+          restaurant_id: id
+        insertion_order: null
+        remote_table:
+          name: restaurant
+          schema: restaurant
 array_relationships:
-  - name: option_choices
+  - name: item_options
     using:
       manual_configuration:
         column_mapping:
-          choice_id: id
+          option_id: id
         insertion_order: null
         remote_table:
-          name: restaurant_choice
-          schema: public
+          name: option
+          schema: restaurant
 insert_permissions:
   - role: mez_admin
     permission:
@@ -27,7 +33,7 @@ insert_permissions:
             user_id:
               _eq: X-Hasura-User-Id
       columns:
-        - choice_id
+        - item_id
         - option_id
         - restaurant_id
   - role: restaurant_operator
@@ -38,43 +44,43 @@ insert_permissions:
             user_id:
               _eq: X-Hasura-User-Id
       columns:
-        - choice_id
+        - item_id
         - option_id
         - restaurant_id
 select_permissions:
   - role: anonymous
     permission:
       columns:
+        - item_id
         - option_id
-        - choice_id
         - restaurant_id
       filter: {}
   - role: customer
     permission:
       columns:
+        - item_id
         - option_id
-        - choice_id
         - restaurant_id
       filter: {}
   - role: delivery_driver
     permission:
       columns:
+        - item_id
         - option_id
-        - choice_id
         - restaurant_id
       filter: {}
   - role: mez_admin
     permission:
       columns:
+        - item_id
         - option_id
-        - choice_id
         - restaurant_id
       filter: {}
   - role: restaurant_operator
     permission:
       columns:
+        - item_id
         - option_id
-        - choice_id
         - restaurant_id
       filter: {}
 delete_permissions:

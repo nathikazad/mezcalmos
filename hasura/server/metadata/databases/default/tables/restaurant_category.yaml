@@ -1,7 +1,10 @@
 table:
-  name: restaurant_option
+  name: category
   schema: restaurant
 object_relationships:
+  - name: description
+    using:
+      foreign_key_constraint_on: description_id
   - name: name
     using:
       foreign_key_constraint_on: name_id
@@ -9,21 +12,12 @@ object_relationships:
     using:
       foreign_key_constraint_on: restaurant_id
 array_relationships:
-  - name: choices
-    using:
-      foreign_key_constraint_on:
-        column: option_id
-        table:
-          name: restaurant_option_choice_map
-          schema: restaurant
   - name: items
     using:
-      manual_configuration:
-        column_mapping:
-          id: option_id
-        insertion_order: null
-        remote_table:
-          name: restaurant_item_option_map
+      foreign_key_constraint_on:
+        column: category_id
+        table:
+          name: item
           schema: restaurant
 insert_permissions:
   - role: mez_admin
@@ -37,14 +31,12 @@ insert_permissions:
             user_id:
               _eq: X-Hasura-User-Id
       columns:
-        - cost_per_extra
-        - free_choice
-        - maximum_choice
-        - minimum_choice
+        - description_id
+        - id
         - name_id
-        - option_type
         - position
         - restaurant_id
+        - schedule_id
   - role: restaurant_operator
     permission:
       check:
@@ -53,91 +45,71 @@ insert_permissions:
             user_id:
               _eq: X-Hasura-User-Id
       columns:
-        - cost_per_extra
-        - free_choice
-        - maximum_choice
-        - minimum_choice
+        - description_id
+        - id
         - name_id
-        - option_type
         - position
         - restaurant_id
+        - schedule_id
 select_permissions:
   - role: anonymous
     permission:
       columns:
-        - cost_per_extra
-        - free_choice
+        - description_id
         - id
-        - maximum_choice
-        - minimum_choice
         - name_id
-        - option_type
         - position
         - restaurant_id
+        - schedule_id
       filter: {}
   - role: customer
     permission:
       columns:
-        - cost_per_extra
-        - free_choice
+        - description_id
         - id
-        - maximum_choice
-        - minimum_choice
         - name_id
-        - option_type
         - position
         - restaurant_id
+        - schedule_id
       filter: {}
   - role: delivery_driver
     permission:
       columns:
-        - cost_per_extra
-        - free_choice
+        - description_id
         - id
-        - maximum_choice
-        - minimum_choice
         - name_id
-        - option_type
         - position
         - restaurant_id
+        - schedule_id
       filter: {}
   - role: mez_admin
     permission:
       columns:
-        - cost_per_extra
-        - free_choice
+        - description_id
         - id
-        - maximum_choice
-        - minimum_choice
         - name_id
-        - option_type
         - position
         - restaurant_id
+        - schedule_id
       filter: {}
   - role: restaurant_operator
     permission:
       columns:
-        - cost_per_extra
-        - free_choice
+        - description_id
         - id
-        - maximum_choice
-        - minimum_choice
         - name_id
-        - option_type
         - position
         - restaurant_id
+        - schedule_id
       filter: {}
 update_permissions:
   - role: mez_admin
     permission:
       columns:
-        - cost_per_extra
-        - free_choice
-        - maximum_choice
-        - minimum_choice
+        - description_id
         - name_id
-        - option_type
         - position
+        - schedule_id
       filter:
         _exists:
           _table:
@@ -150,17 +122,14 @@ update_permissions:
   - role: restaurant_operator
     permission:
       columns:
-        - cost_per_extra
-        - free_choice
-        - maximum_choice
-        - minimum_choice
+        - description_id
         - name_id
-        - option_type
         - position
+        - schedule_id
       filter:
         restaurant:
           restaurant_operators:
-            user_id:
+            id:
               _eq: X-Hasura-User-Id
       check: null
 delete_permissions:

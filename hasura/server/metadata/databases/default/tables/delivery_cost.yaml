@@ -1,5 +1,5 @@
 table:
-  name: delivery_cost
+  name: cost
   schema: delivery
 object_relationships:
   - name: restaurant

@@ -1,33 +1,30 @@
 table:
-  name: restaurant_item
-  schema: public
+  name: option
+  schema: restaurant
 object_relationships:
-  - name: category
-    using:
-      foreign_key_constraint_on: category_id
-  - name: description
-    using:
-      foreign_key_constraint_on: description_id
   - name: name
     using:
       foreign_key_constraint_on: name_id
   - name: restaurant
     using:
-      manual_configuration:
-        column_mapping:
-          restaurant_id: id
-        insertion_order: null
-        remote_table:
-          name: restaurant
-          schema: restaurant
+      foreign_key_constraint_on: restaurant_id
 array_relationships:
-  - name: options
+  - name: choices
     using:
       foreign_key_constraint_on:
-        column: item_id
+        column: option_id
         table:
-          name: restaurant_item_option_map
-          schema: public
+          name: option_choice_map
+          schema: restaurant
+  - name: items
+    using:
+      manual_configuration:
+        column_mapping:
+          id: option_id
+        insertion_order: null
+        remote_table:
+          name: item_option_map
+          schema: restaurant
 insert_permissions:
   - role: mez_admin
     permission:
@@ -40,17 +37,14 @@ insert_permissions:
             user_id:
               _eq: X-Hasura-User-Id
       columns:
-        - archived
-        - available
-        - category_id
-        - cost
-        - description_id
-        - item_type
+        - cost_per_extra
+        - free_choice
+        - maximum_choice
+        - minimum_choice
         - name_id
+        - option_type
         - position
         - restaurant_id
-        - special_period_end
-        - special_period_start
   - role: restaurant_operator
     permission:
       check:
@@ -59,116 +53,91 @@ insert_permissions:
             user_id:
               _eq: X-Hasura-User-Id
       columns:
-        - available
-        - category_id
-        - cost
-        - description_id
-        - item_type
+        - cost_per_extra
+        - free_choice
+        - maximum_choice
+        - minimum_choice
         - name_id
+        - option_type
         - position
         - restaurant_id
-        - special_period_end
-        - special_period_start
 select_permissions:
   - role: anonymous
     permission:
       columns:
-        - archived
-        - available
-        - category_id
-        - cost
-        - description_id
+        - cost_per_extra
+        - free_choice
         - id
-        - image
-        - item_type
+        - maximum_choice
+        - minimum_choice
         - name_id
+        - option_type
         - position
         - restaurant_id
-        - special_period_end
-        - special_period_start
       filter: {}
   - role: customer
     permission:
       columns:
-        - archived
-        - available
-        - category_id
-        - cost
-        - description_id
+        - cost_per_extra
+        - free_choice
         - id
-        - image
-        - item_type
+        - maximum_choice
+        - minimum_choice
         - name_id
+        - option_type
         - position
         - restaurant_id
-        - special_period_end
-        - special_period_start
       filter: {}
   - role: delivery_driver
     permission:
       columns:
-        - archived
-        - available
-        - category_id
-        - cost
-        - description_id
+        - cost_per_extra
+        - free_choice
         - id
-        - image
-        - item_type
+        - maximum_choice
+        - minimum_choice
         - name_id
+        - option_type
         - position
         - restaurant_id
-        - special_period_end
-        - special_period_start
       filter: {}
   - role: mez_admin
     permission:
       columns:
-        - archived
-        - available
-        - category_id
-        - cost
-        - description_id
+        - cost_per_extra
+        - free_choice
         - id
-        - image
-        - item_type
+        - maximum_choice
+        - minimum_choice
         - name_id
+        - option_type
         - position
         - restaurant_id
-        - special_period_end
-        - special_period_start
       filter: {}
   - role: restaurant_operator
     permission:
       columns:
-        - archived
-        - available
-        - category_id
-        - cost
-        - description_id
+        - cost_per_extra
+        - free_choice
         - id
-        - image
-        - item_type
+        - maximum_choice
+        - minimum_choice
         - name_id
+        - option_type
         - position
         - restaurant_id
-        - special_period_end
-        - special_period_start
       filter: {}
 update_permissions:
   - role: mez_admin
     permission:
       columns:
-        - archived
-        - available
-        - category_id
-        - cost
-        - description_id
-        - image
+        - cost_per_extra
+        - free_choice
+        - maximum_choice
+        - minimum_choice
         - name_id
+        - option_type
         - position
-        - special_period_end
-        - special_period_start
       filter:
         _exists:
           _table:
@@ -181,17 +150,13 @@ update_permissions:
   - role: restaurant_operator
     permission:
       columns:
-        - archived
-        - available
-        - category_id
-        - cost
-        - description_id
-        - image
+        - cost_per_extra
+        - free_choice
+        - maximum_choice
+        - minimum_choice
         - name_id
+        - option_type
         - position
-        - restaurant_id
-        - special_period_end
-        - special_period_start
       filter:
         restaurant:
           restaurant_operators:

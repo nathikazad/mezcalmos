@@ -1,5 +1,5 @@
 table:
-  name: delivery_driver
+  name: driver
   schema: delivery
 object_relationships:
   - name: delivery_company
@@ -10,7 +10,7 @@ object_relationships:
           delivery_company_type: service_provider_type
         insertion_order: null
         remote_table:
-          name: delivery_company
+          name: company
           schema: delivery
   - name: restaurant
     using:

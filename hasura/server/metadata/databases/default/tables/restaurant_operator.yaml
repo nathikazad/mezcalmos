@@ -1,6 +1,6 @@
 table:
-  name: restaurant_operator
-  schema: public
+  name: operator
+  schema: restaurant
 object_relationships:
   - name: restaurant
     using:

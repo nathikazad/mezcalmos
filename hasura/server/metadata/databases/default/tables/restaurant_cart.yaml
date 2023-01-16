@@ -1,13 +1,27 @@
 table:
-  name: restaurant_cart_item
-  schema: public
+  name: cart
+  schema: restaurant
 object_relationships:
-  - name: restaurant_cart
+  - name: customer
     using:
       foreign_key_constraint_on: customer_id
-  - name: restaurant_item
+  - name: restaurant
     using:
-      foreign_key_constraint_on: restaurant_item_id
+      foreign_key_constraint_on: restaurant_id
+array_relationships:
+  - name: items
+    using:
+      foreign_key_constraint_on:
+        column: customer_id
+        table:
+          name: cart_item
+          schema: restaurant
+computed_fields:
+  - name: cost
+    definition:
+      function:
+        name: cost
+        schema: public
 insert_permissions:
   - role: customer
     permission:
@@ -16,23 +30,15 @@ insert_permissions:
           _eq: X-Hasura-User-Id
       columns:
         - customer_id
-        - id
-        - quantity
-        - restaurant_item_id
-        - cost_per_one
-        - note
-        - selected_options
+        - restaurant_id
 select_permissions:
   - role: customer
     permission:
       columns:
         - customer_id
-        - id
-        - quantity
-        - restaurant_item_id
-        - cost_per_one
-        - note
-        - selected_options
+        - restaurant_id
+      computed_fields:
+        - cost
       filter:
         customer_id:
           _eq: X-Hasura-User-Id
@@ -40,16 +46,11 @@ update_permissions:
   - role: customer
     permission:
       columns:
-        - cost_per_one
-        - note
-        - quantity
-        - selected_options
+        - restaurant_id
       filter:
         customer_id:
           _eq: X-Hasura-User-Id
-      check:
-        customer_id:
-          _eq: X-Hasura-User-Id
+      check: null
 delete_permissions:
   - role: customer
     permission:

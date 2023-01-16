@@ -1,5 +1,5 @@
 table:
-  name: restaurant_order
+  name: order
   schema: restaurant
 object_relationships:
   - name: chat
@@ -23,7 +23,7 @@ array_relationships:
       foreign_key_constraint_on:
         column: restaurant_order_id
         table:
-          name: restaurant_order_item
+          name: order_item
           schema: restaurant
 computed_fields:
   - name: in_process

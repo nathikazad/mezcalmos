@@ -11,7 +11,7 @@ array_relationships:
       foreign_key_constraint_on:
         column: restaurant_id
         table:
-          name: restaurant_category
+          name: category
           schema: restaurant
   - name: delivery_drivers
     using:
@@ -21,21 +21,21 @@ array_relationships:
           service_provider_type: delivery_company_type
         insertion_order: null
         remote_table:
-          name: delivery_driver
+          name: driver
           schema: delivery
   - name: orders
     using:
       foreign_key_constraint_on:
         column: restaurant_id
         table:
-          name: restaurant_order
+          name: order
           schema: restaurant
   - name: restaurant_operators
     using:
       foreign_key_constraint_on:
         column: restaurant_id
         table:
-          name: restaurant_operator
+          name: operator
           schema: restaurant
   - name: reviews
     using:
