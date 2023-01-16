@@ -26,7 +26,7 @@ export async function insertCustomers(data: any) {
     customers = customers.filter((c: any) => c.user_id)
 
     let response = await chain.mutation({
-        insert_customer: [{
+        insert_customer_customer: [{
             objects: customers
             // [{
             //     user_id: ,

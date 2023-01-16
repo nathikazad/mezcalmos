@@ -6,7 +6,7 @@ export async function updateCustomerStripe(customer: CustomerInfo) {
     let chain = getHasura();
     
     let response = await chain.mutation({
-        update_customer_by_pk: [{
+        update_customer_customer_by_pk: [{
             pk_columns: {
                 user_id: customer.id
             },
@@ -17,7 +17,7 @@ export async function updateCustomerStripe(customer: CustomerInfo) {
             stripe_info:[{}, true]
         }]
     });
-    if(!(response.update_customer_by_pk)) {
+    if(!(response.update_customer_customer_by_pk)) {
         throw new HttpsError(
           "internal",
           "customer update error"

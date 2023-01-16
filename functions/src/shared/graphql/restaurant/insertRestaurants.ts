@@ -279,7 +279,7 @@ export async function insertRestaurants(data: any) {
     //     }, {}]
     // })
   let response = await chain.mutation({
-    insert_restaurant: [{
+    insert_restaurant_restaurant: [{
         objects: restaurants
         // [{
         //     id: 

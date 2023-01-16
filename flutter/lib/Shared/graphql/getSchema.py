@@ -6,10 +6,10 @@ import os
 import sys
 
 if(len(sys.argv) > 1):
-  output = os.popen('npm list -g zeus').read()
+  output = os.popen('npm list -g graphql-zeus').read()
   if 'zeus' not in output:
     print('zeus not installed')
-    os.system('npm install -g zeus')
+    os.system('npm install -g graphql-zeus@2.8.6')
   else:
     print('zeus installed')
   if os.path.exists("schema.graphql"): 

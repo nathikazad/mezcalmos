@@ -6,7 +6,7 @@ import { OpenStatus, OperatorStatus, Restaurant, RestaurantOperator } from "../.
 export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
   let chain = getHasura();
   let response = await chain.query({
-    restaurant_by_pk: [{
+    restaurant_restaurant_by_pk: [{
       id: restaurantId
       
     }, {
@@ -44,14 +44,14 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
     }],
   });
 
-  if(response.restaurant_by_pk == null) {
+  if(response.restaurant_restaurant_by_pk == null) {
     throw new HttpsError(
       "internal",
       "No restaurant with that id found"
     );
   }
 
-  let restaurantOperators: RestaurantOperator[] = response.restaurant_by_pk.restaurant_operators.map((r): RestaurantOperator => {
+  let restaurantOperators: RestaurantOperator[] = response.restaurant_restaurant_by_pk.restaurant_operators.map((r): RestaurantOperator => {
     return {
       id: r.id,
       userId: r.user_id,
@@ -74,26 +74,26 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
   });
 
   let restaurant: Restaurant = {
-    restaurantId: response.restaurant_by_pk.id,
-    name: response.restaurant_by_pk.name,
-    image: response.restaurant_by_pk.image,
-    selfDelivery:response.restaurant_by_pk.self_delivery,
+    restaurantId: response.restaurant_restaurant_by_pk.id,
+    name: response.restaurant_restaurant_by_pk.name,
+    image: response.restaurant_restaurant_by_pk.image,
+    selfDelivery:response.restaurant_restaurant_by_pk.self_delivery,
 
     
     location: {
-      address: response.restaurant_by_pk.location_text,
-      lat : response.restaurant_by_pk.location_gps.coordinates[1],
-      lng: response.restaurant_by_pk.location_gps.coordinates[0]
+      address: response.restaurant_restaurant_by_pk.location_text,
+      lat : response.restaurant_restaurant_by_pk.location_gps.coordinates[1],
+      lng: response.restaurant_restaurant_by_pk.location_gps.coordinates[0]
     },
-    description: response.restaurant_by_pk.description?.translations.reduce((prev:Record<any, any>, current) => {
+    description: response.restaurant_restaurant_by_pk.description?.translations.reduce((prev:Record<any, any>, current) => {
       prev[current.language_id] = current.value;
       return prev;
     }, {}),
     // schedule: response.restaurant_by_pk.schedule,
-    openStatus: response.restaurant_by_pk.open_status as OpenStatus,
-    approved: response.restaurant_by_pk.approved,
-    stripeInfo: JSON.parse(response.restaurant_by_pk.stripe_info),
-    acceptedPayments: JSON.parse(response.restaurant_by_pk.accepted_payments),
+    openStatus: response.restaurant_restaurant_by_pk.open_status as OpenStatus,
+    approved: response.restaurant_restaurant_by_pk.approved,
+    stripeInfo: JSON.parse(response.restaurant_restaurant_by_pk.stripe_info),
+    acceptedPayments: JSON.parse(response.restaurant_restaurant_by_pk.accepted_payments),
     restaurantOperators
   }
 
