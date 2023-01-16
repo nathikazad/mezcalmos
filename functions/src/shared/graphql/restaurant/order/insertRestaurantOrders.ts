@@ -5,7 +5,7 @@ export async function insertRestaurantOrders(data: any) {
 
     let orders = data.map(async (o: any) => {
         let response = await chain.query({
-            customer: [{
+            customer_customer: [{
                 where: {
                     user: {
                         firebase_id: {
@@ -16,7 +16,7 @@ export async function insertRestaurantOrders(data: any) {
             }, {
                 user_id: true
             }],
-            restaurant: [{
+            restaurant_restaurant: [{
                 where: {
                     firebase_id: {
                         _eq: o.restaurantFirebaseId
@@ -26,7 +26,7 @@ export async function insertRestaurantOrders(data: any) {
                 id: true,
             }]
         });
-        if(!(response.restaurant[0]))
+        if(!(response.restaurant_restaurant[0]))
             return {
                 restaurant_id: undefined
             }
@@ -35,7 +35,7 @@ export async function insertRestaurantOrders(data: any) {
                 restaurant_item: [{
                     where: {
                         restaurant_id: {
-                            _eq: response.restaurant[0].id
+                            _eq: response.restaurant_restaurant[0].id
                         },
                         name: {
                             translations: {
@@ -64,10 +64,10 @@ export async function insertRestaurantOrders(data: any) {
         })
         items = await Promise.all(items)
         items = items.filter((i: any) => i.restaurant_item_id)
-        if(response.customer[0]) {
+        if(response.customer_customer[0]) {
             return {
-                customer_id: response.customer[0].user_id,
-                restaurant_id:  response.restaurant[0].id,
+                customer_id: response.customer_customer[0].user_id,
+                restaurant_id:  response.restaurant_restaurant[0].id,
                 payment_type: o.paymentType,
                 to_location_gps: o.toLocationGps,
                 to_location_address: o.toLocationAddress,
@@ -87,9 +87,9 @@ export async function insertRestaurantOrders(data: any) {
                         rating: o.review.rating,
                         note: o.review.comment,
                         from_entity_type: "customer",
-                        from_entity_id: response.customer[0].user_id,
+                        from_entity_id: response.customer_customer[0].user_id,
                         to_entity_type: "restaurant",
-                        to_entity_id: response.restaurant[0].id,
+                        to_entity_id: response.restaurant_restaurant[0].id,
                         created_at: o.review.createdAt
                     }
                 }: undefined
@@ -116,7 +116,7 @@ export async function insertRestaurantOrders(data: any) {
                         user_id: response1.user[0].id
                     }
                 },
-                restaurant_id: response.restaurant[0].id,
+                restaurant_id: response.restaurant_restaurant[0].id,
                 payment_type: o.paymentType,
                 to_location_gps: o.toLocationGps,
                 to_location_address: o.toLocationAddress,
@@ -138,7 +138,7 @@ export async function insertRestaurantOrders(data: any) {
                         from_entity_type: "customer",
                         from_entity_id: response1.user[0].id,
                         to_entity_type: "restaurant",
-                        to_entity_id: response.restaurant[0].id,
+                        to_entity_id: response.restaurant_restaurant[0].id,
                         created_at: o.review.createdAt
                     }
                 }: undefined
