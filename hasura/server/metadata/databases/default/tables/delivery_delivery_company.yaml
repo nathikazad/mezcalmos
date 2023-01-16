@@ -1,6 +1,6 @@
 table:
   name: delivery_company
-  schema: public
+  schema: delivery
 object_relationships:
   - name: description
     using:
@@ -22,4 +22,4 @@ array_relationships:
         column: delivery_company_id
         table:
           name: delivery_operator
-          schema: public
+          schema: delivery

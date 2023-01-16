@@ -1,6 +1,6 @@
 table:
   name: subscriber
-  schema: public
+  schema: service_provider
 object_relationships:
   - name: customer
     using:
