@@ -1,6 +1,6 @@
 table:
-  name: delivery_operator
-  schema: public
+  name: operator
+  schema: delivery
 object_relationships:
   - name: user
     using:

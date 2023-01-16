@@ -1,5 +1,5 @@
 table:
-  name: restaurant_order_public
+  name: order_public
   schema: restaurant
 array_relationships:
   - name: restaurant_operators
@@ -9,7 +9,7 @@ array_relationships:
           restaurant_id: restaurant_id
         insertion_order: null
         remote_table:
-          name: restaurant_operator
+          name: operator
           schema: restaurant
 select_permissions:
   - role: anonymous

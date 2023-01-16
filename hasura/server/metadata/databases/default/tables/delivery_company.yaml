@@ -1,6 +1,6 @@
 table:
-  name: delivery_company
-  schema: public
+  name: company
+  schema: delivery
 object_relationships:
   - name: description
     using:
@@ -14,12 +14,12 @@ array_relationships:
           service_provider_type: delivery_company_type
         insertion_order: null
         remote_table:
-          name: delivery_driver
+          name: driver
           schema: delivery
   - name: delivery_operators
     using:
       foreign_key_constraint_on:
         column: delivery_company_id
         table:
-          name: delivery_operator
-          schema: public
+          name: operator
+          schema: delivery

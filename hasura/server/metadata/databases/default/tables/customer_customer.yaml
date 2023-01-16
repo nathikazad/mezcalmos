@@ -7,7 +7,7 @@ object_relationships:
       foreign_key_constraint_on:
         column: customer_id
         table:
-          name: restaurant_cart
+          name: cart
           schema: restaurant
   - name: user
     using:
@@ -18,7 +18,7 @@ array_relationships:
       foreign_key_constraint_on:
         column: customer_id
         table:
-          name: delivery_order
+          name: order
           schema: delivery
   - name: saved_locations
     using:
