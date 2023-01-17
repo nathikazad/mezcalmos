@@ -214,7 +214,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
         SizedBox(
           width: 5,
         ),
-        if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
+        if (Get.find<AuthController>().isUserSignedIn == false) _noUserButton(),
         if (Get.find<AuthController>().isUserSignedIn)
           _notificationAppBarIcon(),
         if (Get.find<AuthController>().isUserSignedIn && showPastOrders)

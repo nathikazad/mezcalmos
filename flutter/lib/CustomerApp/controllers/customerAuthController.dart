@@ -117,7 +117,7 @@ class CustomerAuthController extends GetxController {
   }
 
   void setAsDefaultLocation(SavedLocation newDefaultLocation) {
-    newDefaultLocation.defaultLocation = true;
+    newDefaultLocation.defaultLocation = !newDefaultLocation.defaultLocation;
     update_saved_location(savedLocation: newDefaultLocation);
   }
 
