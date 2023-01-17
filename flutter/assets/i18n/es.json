@@ -204,13 +204,6 @@
                             "addLocationDialogButton": "OK",
                             "editLocationDialogButton": "EDITAR",
                             "addLocationDialogSkip": "Omitir"
-                        },
-                        "ViewCartBody": {
-                            "notesTitle": "Notas",
-                            "notes": "Escribe tus notas aquí",
-                            "deliveryLocation": "Lugar de entrega",
-                            "deliveryType": "Tipo de entrega",
-                            "paymentMethod": "Método de pago"
                         }
                     },
                     "ViewCartScreen": {
@@ -221,7 +214,12 @@
                         "notAvailable": "Su restaurante está cerrado",
                         "orderNow": "ORDENAR AHORA",
                         "scheduleOrder": "programar pedido",
-                        "errorText": "Lo siento, todavía no apoyamos tu área"
+                        "errorText": "Lo siento, todavía no apoyamos tu área",
+                        "notesTitle": "Notas",
+                        "notes": "Escribe tus notas aquí",
+                        "deliveryLocation": "Lugar de entrega",
+                        "deliveryType": "Tipo de entrega",
+                        "paymentMethod": "Método de pago"
                     }
                 },
                 "ViewItemScreen": {
@@ -1905,6 +1903,7 @@
             },
 
             "ROpOrderView": {
+                "schTitle" : "Programado para",
                 "cancelOrder": "Cancelar orden",
                 "orderItems": "Encargar artículos",
                 "components": {
@@ -1943,6 +1942,7 @@
                         "deliveryMinTimes": "Tiempo de entrega bajo 5 minutos"
                     },
                     "ROpDriverCard": {
+                        "driver" : "Conductor",
                         "noDriver": "No hay controlador asignado todavía",
                         "set": "Colocar",
                         "selfDelivery": "Autoentrega",

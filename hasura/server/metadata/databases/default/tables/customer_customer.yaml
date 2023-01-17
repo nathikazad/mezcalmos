@@ -46,8 +46,10 @@ select_permissions:
   - role: customer
     permission:
       columns:
-        - user_id
         - app_version
+        - service_provider_type
+        - stripe_info
+        - user_id
       computed_fields:
         - notification_token
       filter:

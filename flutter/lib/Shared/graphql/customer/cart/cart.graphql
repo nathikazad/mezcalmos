@@ -108,6 +108,7 @@ query getCustomerCart($customer_id: Int!) {
           position
           category_id
           available
+          image
           restaurant_id
           special_period_end
           special_period_start
@@ -194,6 +195,7 @@ subscription listen_on_customer_cart($customer_id: Int!) {
             }
           }
           item_type
+          image
           id
           name {
             translations {

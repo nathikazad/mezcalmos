@@ -41,7 +41,7 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 25),
       child: Container(
         margin: const EdgeInsets.all(8),
         child: Row(
@@ -347,11 +347,15 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
 
   Future<void> _setOrderEstTime(DateTime value) async {
     isClicked.value = true;
-    if (value.difference(widget.order.orderTime).inMinutes.abs() > 5 &&
+
+    if (value.difference(widget.order.orderTime.toLocal()).inMinutes.abs() >
+            5 &&
         value.difference(DateTime.now().toLocal()).inMinutes.abs() > 5) {
       try {
         await set_food_est_ready_time(
-            orderId: widget.order.orderId, time: value);
+            orderId: widget.order.orderId,
+            deliveryOrderId: widget.order.deliveryOrderId!,
+            time: value);
       } catch (e, stk) {
         mezDbgPrint(e);
         mezDbgPrint(stk);

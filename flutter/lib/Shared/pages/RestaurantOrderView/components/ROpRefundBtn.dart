@@ -36,7 +36,7 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 25),
       child: (showRefundBtn())
           ? MezButton(
               label: "${_i18n()["refundCustomer"]}",

@@ -40,89 +40,101 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 20),
-      child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(8),
-          child: (widget.order.dropoffDriver != null)
-              ? Row(children: [
-                  Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      CircleAvatar(
-                          radius: 25,
-                          backgroundImage: CachedNetworkImageProvider(
-                              widget.order.dropoffDriver!.image)),
-                      Positioned(
-                        right: -30,
-                        bottom: 3,
-                        child: Container(
-                          alignment: Alignment.centerRight,
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                              color: primaryBlueColor, shape: BoxShape.circle),
-                          child: Icon(
-                            Icons.delivery_dining,
-                            size: 32,
-                            color: Colors.white,
+    return Container(
+      margin: const EdgeInsets.only(bottom: 25),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '${_i18n()["driver"]}',
+            style: Get.textTheme.bodyText1,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Card(
+            child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(8),
+                child: (widget.order.dropoffDriver != null)
+                    ? Row(children: [
+                        Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            CircleAvatar(
+                                radius: 25,
+                                backgroundImage: CachedNetworkImageProvider(
+                                    widget.order.dropoffDriver!.image)),
+                            Positioned(
+                              right: -30,
+                              bottom: 3,
+                              child: Container(
+                                alignment: Alignment.centerRight,
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                    color: primaryBlueColor,
+                                    shape: BoxShape.circle),
+                                child: Icon(
+                                  Icons.delivery_dining,
+                                  size: 32,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.order.dropoffDriver!.name,
+                                style: Get.textTheme.bodyText1,
+                              ),
+                            ],
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    width: 40,
-                  ),
-                  Flexible(
-                    fit: FlexFit.tight,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.order.dropoffDriver!.name,
-                          style: Get.textTheme.bodyText1,
-                        ),
-                        Text(
-                          (widget.order.selfDelivery)
-                              ? '${_i18n()["selfDelivery"]}'
-                              : '${_i18n()["forwarded"]}',
-                          style: Get.textTheme.bodyText2,
-                        ),
-                      ],
-                    ),
-                  ),
-                  if (widget.order.inProcess() &&
-                      widget.order.dropoffDriver != null)
-                    MezIconButton(
-                      onTap: () async {
-                        final bool? forwardToMezCalmos =
-                            await MezRouter.toNamed(getROpPickDriverRoute(
-                                serviceProviderId: widget.order.restaurantId,
-                                orderId:
-                                    widget.order.deliveryOrderId!)) as bool?;
-                        if (forwardToMezCalmos != null &&
-                            forwardToMezCalmos == false) {
-                          showSet.value = false;
-                        }
-                      },
-                      icon: Icons.edit,
-                    ),
-                  if (widget.order.serviceProviderDropOffDriverChatId != null)
-                    MessageButton(
-                      onTap: () {
-                        MezRouter.toNamed(getMessagesRoute(
+                        if (widget.order.inProcess() &&
+                            widget.order.dropoffDriver != null)
+                          MezIconButton(
+                            onTap: () async {
+                              final bool? forwardToMezCalmos =
+                                  await MezRouter.toNamed(getROpPickDriverRoute(
+                                      serviceProviderId:
+                                          widget.order.restaurantId,
+                                      orderId: widget
+                                          .order.deliveryOrderId!)) as bool?;
+                              if (forwardToMezCalmos != null &&
+                                  forwardToMezCalmos == false) {
+                                showSet.value = false;
+                              }
+                            },
+                            icon: Icons.edit,
+                          ),
+                        if (widget.order.serviceProviderDropOffDriverChatId !=
+                            null)
+                          MessageButton(
+                            onTap: () {
+                              MezRouter.toNamed(getMessagesRoute(
+                                  chatId: widget.order
+                                      .serviceProviderDropOffDriverChatId!,
+                                  recipientType: ParticipantType.DeliveryDriver,
+                                  orderId: widget.order.orderId));
+                            },
                             chatId: widget
                                 .order.serviceProviderDropOffDriverChatId!,
-                            recipientType: ParticipantType.DeliveryDriver,
-                            orderId: widget.order.orderId));
-                      },
-                      chatId: widget.order.serviceProviderDropOffDriverChatId!,
-                    ),
-                ])
-              : (widget.order.selfDelivery)
-                  ? _selfDeliveryWidget()
-                  : _noDriverYet()),
+                          ),
+                      ])
+                    : (widget.order.selfDelivery)
+                        ? _selfDeliveryWidget()
+                        : _noDriverYet()),
+          ),
+        ],
+      ),
     );
   }
 

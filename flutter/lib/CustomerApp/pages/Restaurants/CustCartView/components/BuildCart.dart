@@ -22,9 +22,7 @@ class CartItemsHeader extends StatelessWidget {
     final TextTheme txt = Theme.of(context).textTheme;
     return Column(
       children: <Widget>[
-        const SizedBox(height: 15),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Row(
             children: <Widget>[
               Expanded(

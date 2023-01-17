@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/graphql/order/__generated/restaurant_order.grap
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
@@ -158,6 +159,10 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
       );
 
       res.items = items;
+      if (orderData.stripe_info != null) {
+        res.stripePaymentInfo =
+            StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
+      }
       return res;
     }
     return null;
@@ -314,6 +319,10 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
   );
 
   res.items = items;
+  if (orderData.stripe_info != null) {
+    res.stripePaymentInfo =
+        StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
+  }
   return res;
 }
 

@@ -2608,6 +2608,13 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
                         selectionSet: null,
                       ),
                       FieldNode(
+                        name: NameNode(value: 'image'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
                         name: NameNode(value: 'restaurant_id'),
                         alias: null,
                         arguments: [],
@@ -4228,6 +4235,7 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$items$restaurant_item {
     required this.position,
     this.category_id,
     required this.available,
+    this.image,
     required this.restaurant_id,
     this.special_period_end,
     this.special_period_start,
@@ -4246,6 +4254,7 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$items$restaurant_item {
     final l$position = json['position'];
     final l$category_id = json['category_id'];
     final l$available = json['available'];
+    final l$image = json['image'];
     final l$restaurant_id = json['restaurant_id'];
     final l$special_period_end = json['special_period_end'];
     final l$special_period_start = json['special_period_start'];
@@ -4270,6 +4279,7 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$items$restaurant_item {
       position: (l$position as int),
       category_id: (l$category_id as int?),
       available: (l$available as bool),
+      image: (l$image as String?),
       restaurant_id: (l$restaurant_id as int),
       special_period_end: (l$special_period_end as String?),
       special_period_start: (l$special_period_start as String?),
@@ -4298,6 +4308,8 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$items$restaurant_item {
   final int? category_id;
 
   final bool available;
+
+  final String? image;
 
   final int restaurant_id;
 
@@ -4329,6 +4341,8 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$items$restaurant_item {
     _resultData['category_id'] = l$category_id;
     final l$available = available;
     _resultData['available'] = l$available;
+    final l$image = image;
+    _resultData['image'] = l$image;
     final l$restaurant_id = restaurant_id;
     _resultData['restaurant_id'] = l$restaurant_id;
     final l$special_period_end = special_period_end;
@@ -4354,6 +4368,7 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$items$restaurant_item {
     final l$position = position;
     final l$category_id = category_id;
     final l$available = available;
+    final l$image = image;
     final l$restaurant_id = restaurant_id;
     final l$special_period_end = special_period_end;
     final l$special_period_start = special_period_start;
@@ -4369,6 +4384,7 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$items$restaurant_item {
       l$position,
       l$category_id,
       l$available,
+      l$image,
       l$restaurant_id,
       l$special_period_end,
       l$special_period_start,
@@ -4433,6 +4449,11 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$items$restaurant_item {
     final l$available = available;
     final lOther$available = other.available;
     if (l$available != lOther$available) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
       return false;
     }
     final l$restaurant_id = restaurant_id;
@@ -4506,6 +4527,7 @@ abstract class CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$items
     int? position,
     int? category_id,
     bool? available,
+    String? image,
     int? restaurant_id,
     String? special_period_end,
     String? special_period_start,
@@ -4553,6 +4575,7 @@ class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$items$res
     Object? position = _undefined,
     Object? category_id = _undefined,
     Object? available = _undefined,
+    Object? image = _undefined,
     Object? restaurant_id = _undefined,
     Object? special_period_end = _undefined,
     Object? special_period_start = _undefined,
@@ -4587,6 +4610,7 @@ class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$items$res
         available: available == _undefined || available == null
             ? _instance.available
             : (available as bool),
+        image: image == _undefined ? _instance.image : (image as String?),
         restaurant_id: restaurant_id == _undefined || restaurant_id == null
             ? _instance.restaurant_id
             : (restaurant_id as int),
@@ -4659,6 +4683,7 @@ class _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$items
     int? position,
     int? category_id,
     bool? available,
+    String? image,
     int? restaurant_id,
     String? special_period_end,
     String? special_period_start,
@@ -8314,6 +8339,13 @@ const documentNodeSubscriptionlisten_on_customer_cart =
                         selectionSet: null,
                       ),
                       FieldNode(
+                        name: NameNode(value: 'image'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
                         name: NameNode(value: 'id'),
                         alias: null,
                         arguments: [],
@@ -10083,6 +10115,7 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items$re
   Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items$restaurant_item({
     required this.options,
     required this.item_type,
+    this.image,
     required this.id,
     required this.name,
     this.description,
@@ -10101,6 +10134,7 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items$re
       Map<String, dynamic> json) {
     final l$options = json['options'];
     final l$item_type = json['item_type'];
+    final l$image = json['image'];
     final l$id = json['id'];
     final l$name = json['name'];
     final l$description = json['description'];
@@ -10120,6 +10154,7 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items$re
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
       item_type: (l$item_type as String),
+      image: (l$image as String?),
       id: (l$id as int),
       name:
           Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items$restaurant_item$name
@@ -10145,6 +10180,8 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items$re
       options;
 
   final String item_type;
+
+  final String? image;
 
   final int id;
 
@@ -10178,6 +10215,8 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items$re
     _resultData['options'] = l$options.map((e) => e.toJson()).toList();
     final l$item_type = item_type;
     _resultData['item_type'] = l$item_type;
+    final l$image = image;
+    _resultData['image'] = l$image;
     final l$id = id;
     _resultData['id'] = l$id;
     final l$name = name;
@@ -10209,6 +10248,7 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items$re
   int get hashCode {
     final l$options = options;
     final l$item_type = item_type;
+    final l$image = image;
     final l$id = id;
     final l$name = name;
     final l$description = description;
@@ -10224,6 +10264,7 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items$re
     return Object.hashAll([
       Object.hashAll(l$options.map((v) => v)),
       l$item_type,
+      l$image,
       l$id,
       l$name,
       l$description,
@@ -10264,6 +10305,11 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items$re
     final l$item_type = item_type;
     final lOther$item_type = other.item_type;
     if (l$item_type != lOther$item_type) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
       return false;
     }
     final l$id = id;
@@ -10359,6 +10405,7 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$customer_customer_b
     List<Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items$restaurant_item$options>?
         options,
     String? item_type,
+    String? image,
     int? id,
     Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items$restaurant_item$name?
         name,
@@ -10408,6 +10455,7 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk
   TRes call({
     Object? options = _undefined,
     Object? item_type = _undefined,
+    Object? image = _undefined,
     Object? id = _undefined,
     Object? name = _undefined,
     Object? description = _undefined,
@@ -10430,6 +10478,7 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk
         item_type: item_type == _undefined || item_type == null
             ? _instance.item_type
             : (item_type as String),
+        image: image == _undefined ? _instance.image : (image as String?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
@@ -10511,6 +10560,7 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_b
     List<Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items$restaurant_item$options>?
         options,
     String? item_type,
+    String? image,
     int? id,
     Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items$restaurant_item$name?
         name,

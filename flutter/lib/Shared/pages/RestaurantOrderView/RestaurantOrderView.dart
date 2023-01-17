@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -73,6 +74,8 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                 ROpOrderStatusCard(order: viewController.order.value!),
 
                 ROpOrderHandleButton(viewController: viewController),
+                if (viewController.order.value!.scheduledTime != null)
+                  _getScheduleTime(),
                 ROpOrderEstTime(order: viewController.order.value!),
                 if (viewController.order.value?.selfDelivery ?? false)
                   ROpEstDeliveryTime(order: viewController.order.value!),
@@ -83,11 +86,11 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                 RestaurantOrderDeliveryTimeCard(
                     order: viewController.order.value!),
                 Container(
-                    margin: const EdgeInsets.only(bottom: 20),
+                    margin: const EdgeInsets.only(bottom: 25),
                     child: OrderDeliveryLocation(
                         order: viewController.order.value!)),
                 Container(
-                    margin: const EdgeInsets.only(bottom: 20),
+                    margin: const EdgeInsets.only(bottom: 25),
                     child:
                         OrderPaymentMethod(order: viewController.order.value!)),
                 if (viewController.order.value!.review != null)
@@ -110,29 +113,31 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                 ROpOrderNote(orderNote: viewController.order.value!.notes),
                 OrderSummaryCard(
                   order: viewController.order.value!,
-                  margin: const EdgeInsets.only(bottom: 20),
+                  margin: const EdgeInsets.only(bottom: 25),
                 ),
 
                 // ROpRefundButton(
                 //   order: viewController.order.value!,
                 // ),
                 if (viewController.order.value!.inProcess())
-                  TextButton(
-                      style: TextButton.styleFrom(
-                          foregroundColor: Colors.red,
-                          backgroundColor: offRedColor),
-                      onPressed: () {
-                        showConfirmationDialog(context, onYesClick: () async {
-                          await viewController
-                              .cancelOrder()
-                              .then((ServerResponse value) => MezRouter.back());
-                        });
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.all(8),
-                        child: Text('${_i18n()["cancelOrder"]}'),
-                      ))
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: TextButton(
+                        style: TextButton.styleFrom(
+                            foregroundColor: Colors.red,
+                            backgroundColor: offRedColor),
+                        onPressed: () {
+                          showConfirmationDialog(context, onYesClick: () async {
+                            await viewController.cancelOrder().then(
+                                (ServerResponse value) => MezRouter.back());
+                          });
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.all(8),
+                          child: Text('${_i18n()["cancelOrder"]}'),
+                        )),
+                  )
               ],
             ),
           );
@@ -147,7 +152,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
 
   Widget _orderItemsList() {
     return Container(
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 25),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -175,7 +180,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
     if (viewController.order.value!.inDeliveryPhase())
       return Container(
         height: 350,
-        margin: const EdgeInsets.only(bottom: 20),
+        margin: const EdgeInsets.only(bottom: 25),
         child: MGoogleMap(
           mGoogleMapController: viewController.mGoogleMapController,
           padding: EdgeInsets.all(20),
@@ -185,5 +190,52 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
       );
     else
       return SizedBox();
+  }
+
+  Widget _getScheduleTime() {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 25),
+      child: Container(
+        margin: const EdgeInsets.all(8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 20,
+              child: Icon(
+                Icons.schedule_send,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Flexible(
+              flex: 8,
+              fit: FlexFit.tight,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${_i18n()["schTitle"]}',
+                    style: Get.theme.textTheme.bodyText1,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  if (viewController.order.value?.scheduledTime != null)
+                    Text(
+                      "${DateFormat("dd MMMM, hh:mm a ").format(viewController.order.value!.scheduledTime!.toLocal())}",
+                      style: Get.theme.textTheme.bodyText2,
+                    ),
+                ],
+              ),
+            ),
+            Spacer(),
+          ],
+        ),
+      ),
+    );
   }
 }

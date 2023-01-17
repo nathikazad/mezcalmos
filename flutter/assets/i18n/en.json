@@ -198,16 +198,16 @@
                             "addLocationDialogButton": "OK",
                             "editLocationDialogButton": "EDIT",
                             "addLocationDialogSkip": "Skip"
-                        },
-                        "ViewCartBody": {
-                            "notesTitle": "Notes",
-                            "notes": "Write your notes here",
-                            "deliveryLocation": "Delivery Location",
-                            "deliveryType": "Delivery type",
-                            "paymentMethod": "Payment method"
                         }
+                       
+                     
                     },
                     "ViewCartScreen": {
+                        "notesTitle": "Notes",
+                        "notes": "Write your notes here",
+                        "deliveryLocation": "Delivery Location",
+                        "deliveryType": "Delivery type",
+                        "paymentMethod": "Payment method",
                         "ops": "Oops",
                         "restaurantClosed": "Restuarnt is closed now",
                         "distanceError": "Distance between you and restaurat is more than 15km!",
@@ -1801,6 +1801,7 @@
                 "noRevDesc": "Once you receive feedback it will be displayed here."
             },
             "ROpOrderView": {
+                "schTitle" : "Scheduled for",
                 "cancelOrder": "Cancel order",
                 "orderItems": "Order Items",
                 "components": {
@@ -1838,6 +1839,7 @@
                         "deliveryMinTimes": "Minimum 5 miutes delivery time"
                     },
                     "ROpDriverCard": {
+                        "driver" :"Driver",
                         "noDriver": "No driver assigned yet",
                         "set": "Set",
                         "selfDelivery": "Self delivery",

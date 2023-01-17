@@ -289,6 +289,7 @@ class CustCartViewController {
               paymentAmount: cart.totalCost,
               card: card.value!);
           break;
+        
       }
     }
     return stripePaymentId;

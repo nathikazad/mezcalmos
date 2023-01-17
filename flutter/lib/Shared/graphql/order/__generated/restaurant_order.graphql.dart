@@ -315,6 +315,13 @@ const documentNodeSubscriptionlisten_on_restaurant_order_by_id =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'stripe_info'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'restaurant'),
             alias: null,
             arguments: [],
@@ -1187,6 +1194,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     required this.id,
     this.notes,
     this.scheduled_time,
+    this.stripe_info,
     required this.restaurant,
     required this.items,
     required this.payment_type,
@@ -1218,6 +1226,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$id = json['id'];
     final l$notes = json['notes'];
     final l$scheduled_time = json['scheduled_time'];
+    final l$stripe_info = json['stripe_info'];
     final l$restaurant = json['restaurant'];
     final l$items = json['items'];
     final l$payment_type = json['payment_type'];
@@ -1246,6 +1255,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
       id: (l$id as int),
       notes: (l$notes as String?),
       scheduled_time: (l$scheduled_time as String?),
+      stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       restaurant:
           Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$restaurant
               .fromJson((l$restaurant as Map<String, dynamic>)),
@@ -1294,6 +1304,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
   final String? notes;
 
   final String? scheduled_time;
+
+  final dynamic? stripe_info;
 
   final Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$restaurant
       restaurant;
@@ -1357,6 +1369,9 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     _resultData['notes'] = l$notes;
     final l$scheduled_time = scheduled_time;
     _resultData['scheduled_time'] = l$scheduled_time;
+    final l$stripe_info = stripe_info;
+    _resultData['stripe_info'] =
+        l$stripe_info == null ? null : mapToJson(l$stripe_info);
     final l$restaurant = restaurant;
     _resultData['restaurant'] = l$restaurant.toJson();
     final l$items = items;
@@ -1416,6 +1431,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$id = id;
     final l$notes = notes;
     final l$scheduled_time = scheduled_time;
+    final l$stripe_info = stripe_info;
     final l$restaurant = restaurant;
     final l$items = items;
     final l$payment_type = payment_type;
@@ -1444,6 +1460,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
       l$id,
       l$notes,
       l$scheduled_time,
+      l$stripe_info,
       l$restaurant,
       Object.hashAll(l$items.map((v) => v)),
       l$payment_type,
@@ -1494,6 +1511,11 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$scheduled_time = scheduled_time;
     final lOther$scheduled_time = other.scheduled_time;
     if (l$scheduled_time != lOther$scheduled_time) {
+      return false;
+    }
+    final l$stripe_info = stripe_info;
+    final lOther$stripe_info = other.stripe_info;
+    if (l$stripe_info != lOther$stripe_info) {
       return false;
     }
     final l$restaurant = restaurant;
@@ -1656,6 +1678,7 @@ abstract class CopyWith$Subscription$listen_on_restaurant_order_by_id$restaurant
     int? id,
     String? notes,
     String? scheduled_time,
+    dynamic? stripe_info,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$restaurant?
         restaurant,
     List<Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items>?
@@ -1725,6 +1748,7 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
     Object? id = _undefined,
     Object? notes = _undefined,
     Object? scheduled_time = _undefined,
+    Object? stripe_info = _undefined,
     Object? restaurant = _undefined,
     Object? items = _undefined,
     Object? payment_type = _undefined,
@@ -1757,6 +1781,9 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
         scheduled_time: scheduled_time == _undefined
             ? _instance.scheduled_time
             : (scheduled_time as String?),
+        stripe_info: stripe_info == _undefined
+            ? _instance.stripe_info
+            : (stripe_info as dynamic?),
         restaurant: restaurant == _undefined || restaurant == null
             ? _instance.restaurant
             : (restaurant
@@ -1894,6 +1921,7 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
     int? id,
     String? notes,
     String? scheduled_time,
+    dynamic? stripe_info,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$restaurant?
         restaurant,
     List<Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items>?
@@ -5729,6 +5757,13 @@ const documentNodeQueryget_restaurant_order_by_id = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'stripe_info'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'restaurant'),
             alias: null,
             arguments: [],
@@ -6638,6 +6673,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     required this.id,
     this.notes,
     this.scheduled_time,
+    this.stripe_info,
     required this.restaurant,
     required this.items,
     required this.payment_type,
@@ -6669,6 +6705,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     final l$id = json['id'];
     final l$notes = json['notes'];
     final l$scheduled_time = json['scheduled_time'];
+    final l$stripe_info = json['stripe_info'];
     final l$restaurant = json['restaurant'];
     final l$items = json['items'];
     final l$payment_type = json['payment_type'];
@@ -6697,6 +6734,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
       id: (l$id as int),
       notes: (l$notes as String?),
       scheduled_time: (l$scheduled_time as String?),
+      stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       restaurant:
           Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant
               .fromJson((l$restaurant as Map<String, dynamic>)),
@@ -6744,6 +6782,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
   final String? notes;
 
   final String? scheduled_time;
+
+  final dynamic? stripe_info;
 
   final Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant
       restaurant;
@@ -6805,6 +6845,9 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     _resultData['notes'] = l$notes;
     final l$scheduled_time = scheduled_time;
     _resultData['scheduled_time'] = l$scheduled_time;
+    final l$stripe_info = stripe_info;
+    _resultData['stripe_info'] =
+        l$stripe_info == null ? null : mapToJson(l$stripe_info);
     final l$restaurant = restaurant;
     _resultData['restaurant'] = l$restaurant.toJson();
     final l$items = items;
@@ -6864,6 +6907,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     final l$id = id;
     final l$notes = notes;
     final l$scheduled_time = scheduled_time;
+    final l$stripe_info = stripe_info;
     final l$restaurant = restaurant;
     final l$items = items;
     final l$payment_type = payment_type;
@@ -6892,6 +6936,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
       l$id,
       l$notes,
       l$scheduled_time,
+      l$stripe_info,
       l$restaurant,
       Object.hashAll(l$items.map((v) => v)),
       l$payment_type,
@@ -6941,6 +6986,11 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     final l$scheduled_time = scheduled_time;
     final lOther$scheduled_time = other.scheduled_time;
     if (l$scheduled_time != lOther$scheduled_time) {
+      return false;
+    }
+    final l$stripe_info = stripe_info;
+    final lOther$stripe_info = other.stripe_info;
+    if (l$stripe_info != lOther$stripe_info) {
       return false;
     }
     final l$restaurant = restaurant;
@@ -7100,6 +7150,7 @@ abstract class CopyWith$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
     int? id,
     String? notes,
     String? scheduled_time,
+    dynamic? stripe_info,
     Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant?
         restaurant,
     List<Query$get_restaurant_order_by_id$restaurant_order_by_pk$items>? items,
@@ -7162,6 +7213,7 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
     Object? id = _undefined,
     Object? notes = _undefined,
     Object? scheduled_time = _undefined,
+    Object? stripe_info = _undefined,
     Object? restaurant = _undefined,
     Object? items = _undefined,
     Object? payment_type = _undefined,
@@ -7193,6 +7245,9 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
         scheduled_time: scheduled_time == _undefined
             ? _instance.scheduled_time
             : (scheduled_time as String?),
+        stripe_info: stripe_info == _undefined
+            ? _instance.stripe_info
+            : (stripe_info as dynamic?),
         restaurant: restaurant == _undefined || restaurant == null
             ? _instance.restaurant
             : (restaurant
@@ -7329,6 +7384,7 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
     int? id,
     String? notes,
     String? scheduled_time,
+    dynamic? stripe_info,
     Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant?
         restaurant,
     List<Query$get_restaurant_order_by_id$restaurant_order_by_pk$items>? items,
@@ -14095,10 +14151,12 @@ class _CopyWithStubImpl$Query$get_restaurant_past_orders$restaurant_order$custom
 class Variables$Mutation$setRestaurantOrderEstFoodReadyTime {
   factory Variables$Mutation$setRestaurantOrderEstFoodReadyTime({
     required int orderId,
+    required int deliveryOrderId,
     required String time,
   }) =>
       Variables$Mutation$setRestaurantOrderEstFoodReadyTime._({
         r'orderId': orderId,
+        r'deliveryOrderId': deliveryOrderId,
         r'time': time,
       });
 
@@ -14109,6 +14167,8 @@ class Variables$Mutation$setRestaurantOrderEstFoodReadyTime {
     final result$data = <String, dynamic>{};
     final l$orderId = data['orderId'];
     result$data['orderId'] = (l$orderId as int);
+    final l$deliveryOrderId = data['deliveryOrderId'];
+    result$data['deliveryOrderId'] = (l$deliveryOrderId as int);
     final l$time = data['time'];
     result$data['time'] = (l$time as String);
     return Variables$Mutation$setRestaurantOrderEstFoodReadyTime._(result$data);
@@ -14117,11 +14177,14 @@ class Variables$Mutation$setRestaurantOrderEstFoodReadyTime {
   Map<String, dynamic> _$data;
 
   int get orderId => (_$data['orderId'] as int);
+  int get deliveryOrderId => (_$data['deliveryOrderId'] as int);
   String get time => (_$data['time'] as String);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$orderId = orderId;
     result$data['orderId'] = l$orderId;
+    final l$deliveryOrderId = deliveryOrderId;
+    result$data['deliveryOrderId'] = l$deliveryOrderId;
     final l$time = time;
     result$data['time'] = l$time;
     return result$data;
@@ -14148,6 +14211,11 @@ class Variables$Mutation$setRestaurantOrderEstFoodReadyTime {
     if (l$orderId != lOther$orderId) {
       return false;
     }
+    final l$deliveryOrderId = deliveryOrderId;
+    final lOther$deliveryOrderId = other.deliveryOrderId;
+    if (l$deliveryOrderId != lOther$deliveryOrderId) {
+      return false;
+    }
     final l$time = time;
     final lOther$time = other.time;
     if (l$time != lOther$time) {
@@ -14159,9 +14227,11 @@ class Variables$Mutation$setRestaurantOrderEstFoodReadyTime {
   @override
   int get hashCode {
     final l$orderId = orderId;
+    final l$deliveryOrderId = deliveryOrderId;
     final l$time = time;
     return Object.hashAll([
       l$orderId,
+      l$deliveryOrderId,
       l$time,
     ]);
   }
@@ -14180,6 +14250,7 @@ abstract class CopyWith$Variables$Mutation$setRestaurantOrderEstFoodReadyTime<
 
   TRes call({
     int? orderId,
+    int? deliveryOrderId,
     String? time,
   });
 }
@@ -14201,12 +14272,15 @@ class _CopyWithImpl$Variables$Mutation$setRestaurantOrderEstFoodReadyTime<TRes>
 
   TRes call({
     Object? orderId = _undefined,
+    Object? deliveryOrderId = _undefined,
     Object? time = _undefined,
   }) =>
       _then(Variables$Mutation$setRestaurantOrderEstFoodReadyTime._({
         ..._instance._$data,
         if (orderId != _undefined && orderId != null)
           'orderId': (orderId as int),
+        if (deliveryOrderId != _undefined && deliveryOrderId != null)
+          'deliveryOrderId': (deliveryOrderId as int),
         if (time != _undefined && time != null) 'time': (time as String),
       }));
 }
@@ -14222,6 +14296,7 @@ class _CopyWithStubImpl$Variables$Mutation$setRestaurantOrderEstFoodReadyTime<
 
   call({
     int? orderId,
+    int? deliveryOrderId,
     String? time,
   }) =>
       _res;
@@ -14230,6 +14305,7 @@ class _CopyWithStubImpl$Variables$Mutation$setRestaurantOrderEstFoodReadyTime<
 class Mutation$setRestaurantOrderEstFoodReadyTime {
   Mutation$setRestaurantOrderEstFoodReadyTime({
     this.update_restaurant_order_by_pk,
+    this.update_delivery_order_by_pk,
     required this.$__typename,
   });
 
@@ -14237,6 +14313,7 @@ class Mutation$setRestaurantOrderEstFoodReadyTime {
       Map<String, dynamic> json) {
     final l$update_restaurant_order_by_pk =
         json['update_restaurant_order_by_pk'];
+    final l$update_delivery_order_by_pk = json['update_delivery_order_by_pk'];
     final l$$__typename = json['__typename'];
     return Mutation$setRestaurantOrderEstFoodReadyTime(
       update_restaurant_order_by_pk: l$update_restaurant_order_by_pk == null
@@ -14244,12 +14321,20 @@ class Mutation$setRestaurantOrderEstFoodReadyTime {
           : Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk
               .fromJson(
                   (l$update_restaurant_order_by_pk as Map<String, dynamic>)),
+      update_delivery_order_by_pk: l$update_delivery_order_by_pk == null
+          ? null
+          : Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk
+              .fromJson(
+                  (l$update_delivery_order_by_pk as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk?
       update_restaurant_order_by_pk;
+
+  final Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk?
+      update_delivery_order_by_pk;
 
   final String $__typename;
 
@@ -14258,6 +14343,9 @@ class Mutation$setRestaurantOrderEstFoodReadyTime {
     final l$update_restaurant_order_by_pk = update_restaurant_order_by_pk;
     _resultData['update_restaurant_order_by_pk'] =
         l$update_restaurant_order_by_pk?.toJson();
+    final l$update_delivery_order_by_pk = update_delivery_order_by_pk;
+    _resultData['update_delivery_order_by_pk'] =
+        l$update_delivery_order_by_pk?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -14266,9 +14354,11 @@ class Mutation$setRestaurantOrderEstFoodReadyTime {
   @override
   int get hashCode {
     final l$update_restaurant_order_by_pk = update_restaurant_order_by_pk;
+    final l$update_delivery_order_by_pk = update_delivery_order_by_pk;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$update_restaurant_order_by_pk,
+      l$update_delivery_order_by_pk,
       l$$__typename,
     ]);
   }
@@ -14287,6 +14377,12 @@ class Mutation$setRestaurantOrderEstFoodReadyTime {
         other.update_restaurant_order_by_pk;
     if (l$update_restaurant_order_by_pk !=
         lOther$update_restaurant_order_by_pk) {
+      return false;
+    }
+    final l$update_delivery_order_by_pk = update_delivery_order_by_pk;
+    final lOther$update_delivery_order_by_pk =
+        other.update_delivery_order_by_pk;
+    if (l$update_delivery_order_by_pk != lOther$update_delivery_order_by_pk) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -14320,10 +14416,14 @@ abstract class CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime<TRes> {
   TRes call({
     Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk?
         update_restaurant_order_by_pk,
+    Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk?
+        update_delivery_order_by_pk,
     String? $__typename,
   });
   CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk<
       TRes> get update_restaurant_order_by_pk;
+  CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk<
+      TRes> get update_delivery_order_by_pk;
 }
 
 class _CopyWithImpl$Mutation$setRestaurantOrderEstFoodReadyTime<TRes>
@@ -14341,6 +14441,7 @@ class _CopyWithImpl$Mutation$setRestaurantOrderEstFoodReadyTime<TRes>
 
   TRes call({
     Object? update_restaurant_order_by_pk = _undefined,
+    Object? update_delivery_order_by_pk = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$setRestaurantOrderEstFoodReadyTime(
@@ -14349,6 +14450,10 @@ class _CopyWithImpl$Mutation$setRestaurantOrderEstFoodReadyTime<TRes>
             ? _instance.update_restaurant_order_by_pk
             : (update_restaurant_order_by_pk
                 as Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk?),
+        update_delivery_order_by_pk: update_delivery_order_by_pk == _undefined
+            ? _instance.update_delivery_order_by_pk
+            : (update_delivery_order_by_pk
+                as Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -14364,6 +14469,18 @@ class _CopyWithImpl$Mutation$setRestaurantOrderEstFoodReadyTime<TRes>
             local$update_restaurant_order_by_pk,
             (e) => call(update_restaurant_order_by_pk: e));
   }
+
+  CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk<
+      TRes> get update_delivery_order_by_pk {
+    final local$update_delivery_order_by_pk =
+        _instance.update_delivery_order_by_pk;
+    return local$update_delivery_order_by_pk == null
+        ? CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk(
+            local$update_delivery_order_by_pk,
+            (e) => call(update_delivery_order_by_pk: e));
+  }
 }
 
 class _CopyWithStubImpl$Mutation$setRestaurantOrderEstFoodReadyTime<TRes>
@@ -14375,6 +14492,8 @@ class _CopyWithStubImpl$Mutation$setRestaurantOrderEstFoodReadyTime<TRes>
   call({
     Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk?
         update_restaurant_order_by_pk,
+    Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk?
+        update_delivery_order_by_pk,
     String? $__typename,
   }) =>
       _res;
@@ -14382,6 +14501,11 @@ class _CopyWithStubImpl$Mutation$setRestaurantOrderEstFoodReadyTime<TRes>
           TRes>
       get update_restaurant_order_by_pk =>
           CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_restaurant_order_by_pk
+              .stub(_res);
+  CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk<
+          TRes>
+      get update_delivery_order_by_pk =>
+          CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk
               .stub(_res);
 }
 
@@ -14393,6 +14517,15 @@ const documentNodeMutationsetRestaurantOrderEstFoodReadyTime =
     variableDefinitions: [
       VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'orderId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'deliveryOrderId')),
         type: NamedTypeNode(
           name: NameNode(value: 'Int'),
           isNonNull: true,
@@ -14439,6 +14572,47 @@ const documentNodeMutationsetRestaurantOrderEstFoodReadyTime =
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
             name: NameNode(value: 'estimated_food_ready_time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      FieldNode(
+        name: NameNode(value: 'update_delivery_order_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'deliveryOrderId')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'estimated_package_ready_time'),
+                value: VariableNode(name: NameNode(value: 'time')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'estimated_package_ready_time'),
             alias: null,
             arguments: [],
             directives: [],
@@ -14703,6 +14877,153 @@ class _CopyWithStubImpl$Mutation$setRestaurantOrderEstFoodReadyTime$update_resta
 
   call({
     String? estimated_food_ready_time,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk {
+  Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk({
+    this.estimated_package_ready_time,
+    required this.$__typename,
+  });
+
+  factory Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$estimated_package_ready_time = json['estimated_package_ready_time'];
+    final l$$__typename = json['__typename'];
+    return Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk(
+      estimated_package_ready_time: (l$estimated_package_ready_time as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? estimated_package_ready_time;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$estimated_package_ready_time = estimated_package_ready_time;
+    _resultData['estimated_package_ready_time'] =
+        l$estimated_package_ready_time;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$estimated_package_ready_time = estimated_package_ready_time;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$estimated_package_ready_time,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$estimated_package_ready_time = estimated_package_ready_time;
+    final lOther$estimated_package_ready_time =
+        other.estimated_package_ready_time;
+    if (l$estimated_package_ready_time != lOther$estimated_package_ready_time) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk
+    on Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk {
+  CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk<
+          Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk(
+    Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk
+        instance,
+    TRes Function(
+            Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk;
+
+  factory CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk;
+
+  TRes call({
+    String? estimated_package_ready_time,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk
+      _instance;
+
+  final TRes Function(
+          Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? estimated_package_ready_time = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk(
+        estimated_package_ready_time: estimated_package_ready_time == _undefined
+            ? _instance.estimated_package_ready_time
+            : (estimated_package_ready_time as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$setRestaurantOrderEstFoodReadyTime$update_delivery_order_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? estimated_package_ready_time,
     String? $__typename,
   }) =>
       _res;
