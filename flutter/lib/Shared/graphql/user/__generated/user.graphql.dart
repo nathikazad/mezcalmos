@@ -485,7 +485,7 @@ class Query$getUserByFirebaseId$user {
     this.image,
     this.email,
     this.phone,
-    this.language_id,
+    required this.language_id,
     required this.deleted,
     required this.$__typename,
   });
@@ -507,7 +507,7 @@ class Query$getUserByFirebaseId$user {
       image: (l$image as String?),
       email: (l$email as String?),
       phone: (l$phone as String?),
-      language_id: (l$language_id as String?),
+      language_id: (l$language_id as String),
       deleted: (l$deleted as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -525,7 +525,7 @@ class Query$getUserByFirebaseId$user {
 
   final String? phone;
 
-  final String? language_id;
+  final String language_id;
 
   final bool deleted;
 
@@ -700,9 +700,9 @@ class _CopyWithImpl$Query$getUserByFirebaseId$user<TRes>
         image: image == _undefined ? _instance.image : (image as String?),
         email: email == _undefined ? _instance.email : (email as String?),
         phone: phone == _undefined ? _instance.phone : (phone as String?),
-        language_id: language_id == _undefined
+        language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
-            : (language_id as String?),
+            : (language_id as String),
         deleted: deleted == _undefined || deleted == null
             ? _instance.deleted
             : (deleted as bool),
@@ -1165,7 +1165,7 @@ class Query$getUserById$user_by_pk {
     this.image,
     this.email,
     this.phone,
-    this.language_id,
+    required this.language_id,
     required this.$__typename,
   });
 
@@ -1185,7 +1185,7 @@ class Query$getUserById$user_by_pk {
       image: (l$image as String?),
       email: (l$email as String?),
       phone: (l$phone as String?),
-      language_id: (l$language_id as String?),
+      language_id: (l$language_id as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -1202,7 +1202,7 @@ class Query$getUserById$user_by_pk {
 
   final String? phone;
 
-  final String? language_id;
+  final String language_id;
 
   final String $__typename;
 
@@ -1366,9 +1366,9 @@ class _CopyWithImpl$Query$getUserById$user_by_pk<TRes>
         image: image == _undefined ? _instance.image : (image as String?),
         email: email == _undefined ? _instance.email : (email as String?),
         phone: phone == _undefined ? _instance.phone : (phone as String?),
-        language_id: language_id == _undefined
+        language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
-            : (language_id as String?),
+            : (language_id as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -3503,7 +3503,7 @@ extension ClientExtension$Mutation$changeUserLanguage on graphql.GraphQLClient {
 
 class Mutation$changeUserLanguage$update_user_by_pk {
   Mutation$changeUserLanguage$update_user_by_pk({
-    this.language_id,
+    required this.language_id,
     required this.$__typename,
   });
 
@@ -3512,12 +3512,12 @@ class Mutation$changeUserLanguage$update_user_by_pk {
     final l$language_id = json['language_id'];
     final l$$__typename = json['__typename'];
     return Mutation$changeUserLanguage$update_user_by_pk(
-      language_id: (l$language_id as String?),
+      language_id: (l$language_id as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final String? language_id;
+  final String language_id;
 
   final String $__typename;
 
@@ -3607,9 +3607,9 @@ class _CopyWithImpl$Mutation$changeUserLanguage$update_user_by_pk<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$changeUserLanguage$update_user_by_pk(
-        language_id: language_id == _undefined
+        language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
-            : (language_id as String?),
+            : (language_id as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),

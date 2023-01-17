@@ -1207,7 +1207,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     required this.tax,
     this.total_cost,
     this.items_cost,
-    this.chat_id,
+    required this.chat_id,
     required this.delivery_cost,
     this.delivery,
     required this.$__typename,
@@ -1279,7 +1279,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
       tax: moneyFromJson(l$tax),
       total_cost: l$total_cost == null ? null : moneyFromJson(l$total_cost),
       items_cost: l$items_cost == null ? null : moneyFromJson(l$items_cost),
-      chat_id: (l$chat_id as int?),
+      chat_id: (l$chat_id as int),
       delivery_cost: moneyFromJson(l$delivery_cost),
       delivery: l$delivery == null
           ? null
@@ -1340,7 +1340,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
 
   final double? items_cost;
 
-  final int? chat_id;
+  final int chat_id;
 
   final double delivery_cost;
 
@@ -1819,7 +1819,9 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
         items_cost: items_cost == _undefined
             ? _instance.items_cost
             : (items_cost as double?),
-        chat_id: chat_id == _undefined ? _instance.chat_id : (chat_id as int?),
+        chat_id: chat_id == _undefined || chat_id == null
+            ? _instance.chat_id
+            : (chat_id as int),
         delivery_cost: delivery_cost == _undefined || delivery_cost == null
             ? _instance.delivery_cost
             : (delivery_cost as double),
@@ -5218,7 +5220,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     this.image,
     this.name,
     required this.firebase_id,
-    this.language_id,
+    required this.language_id,
     required this.$__typename,
   });
 
@@ -5235,7 +5237,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
       image: (l$image as String?),
       name: (l$name as String?),
       firebase_id: (l$firebase_id as String),
-      language_id: (l$language_id as String?),
+      language_id: (l$language_id as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -5248,7 +5250,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
 
   final String firebase_id;
 
-  final String? language_id;
+  final String language_id;
 
   final String $__typename;
 
@@ -5401,9 +5403,9 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
         firebase_id: firebase_id == _undefined || firebase_id == null
             ? _instance.firebase_id
             : (firebase_id as String),
-        language_id: language_id == _undefined
+        language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
-            : (language_id as String?),
+            : (language_id as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -6655,7 +6657,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     required this.tax,
     this.total_cost,
     this.items_cost,
-    this.chat_id,
+    required this.chat_id,
     required this.customer,
     required this.delivery_cost,
     this.delivery,
@@ -6725,7 +6727,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
       tax: moneyFromJson(l$tax),
       total_cost: l$total_cost == null ? null : moneyFromJson(l$total_cost),
       items_cost: l$items_cost == null ? null : moneyFromJson(l$items_cost),
-      chat_id: (l$chat_id as int?),
+      chat_id: (l$chat_id as int),
       customer: Query$get_restaurant_order_by_id$restaurant_order_by_pk$customer
           .fromJson((l$customer as Map<String, dynamic>)),
       delivery_cost: moneyFromJson(l$delivery_cost),
@@ -6783,7 +6785,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
 
   final double? items_cost;
 
-  final int? chat_id;
+  final int chat_id;
 
   final Query$get_restaurant_order_by_id$restaurant_order_by_pk$customer
       customer;
@@ -7249,7 +7251,9 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
         items_cost: items_cost == _undefined
             ? _instance.items_cost
             : (items_cost as double?),
-        chat_id: chat_id == _undefined ? _instance.chat_id : (chat_id as int?),
+        chat_id: chat_id == _undefined || chat_id == null
+            ? _instance.chat_id
+            : (chat_id as int),
         customer: customer == _undefined || customer == null
             ? _instance.customer
             : (customer
@@ -10645,7 +10649,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_
     this.image,
     this.name,
     required this.firebase_id,
-    this.language_id,
+    required this.language_id,
     required this.$__typename,
   });
 
@@ -10662,7 +10666,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_
       image: (l$image as String?),
       name: (l$name as String?),
       firebase_id: (l$firebase_id as String),
-      language_id: (l$language_id as String?),
+      language_id: (l$language_id as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -10675,7 +10679,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_
 
   final String firebase_id;
 
-  final String? language_id;
+  final String language_id;
 
   final String $__typename;
 
@@ -10828,9 +10832,9 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$deli
         firebase_id: firebase_id == _undefined || firebase_id == null
             ? _instance.firebase_id
             : (firebase_id as String),
-        language_id: language_id == _undefined
+        language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
-            : (language_id as String?),
+            : (language_id as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),

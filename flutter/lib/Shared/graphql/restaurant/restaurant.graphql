@@ -19,7 +19,7 @@ query getRestaurants {
     self_delivery
     open_status
     schedule
-    payment_info_id
+    
   }
 }
 
@@ -139,11 +139,7 @@ subscription GetRestaurants {
         value
       }
     }
-    payment_info {
-      bank_transfer
-      card
-      cash
-    }
+    
   }
 }
 

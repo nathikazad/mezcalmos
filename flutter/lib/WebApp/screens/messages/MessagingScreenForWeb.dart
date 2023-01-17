@@ -12,9 +12,9 @@ import 'package:intl/intl.dart' as intl;
 import 'package:mezcalmos/Shared/constants/global.dart';
 // import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
 import 'package:mezcalmos/Shared/controllers/AuthController.dart';
-import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
+// import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/restaurantNodes.dart';
+// import 'package:mezcalmos/Shared/firebaseNodes/restaurantNodes.dart';
 // import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
@@ -55,9 +55,9 @@ class _MessagingScreenForWebState extends State<MessagingScreenForWeb> {
             launchMode: typeMode.toLaunchMode(),
             func: () async {
               if (Get.find<AuthController>().fireAuthUser?.uid != null) {
-                await Get.put<ForegroundNotificationsController>(
-                    ForegroundNotificationsController(),
-                    permanent: true);
+                // await Get.put<ForegroundNotificationsController>(
+                //     ForegroundNotificationsController(),
+                //     permanent: true);
                 await Future.delayed(Duration(seconds: 2));
               }
             }),

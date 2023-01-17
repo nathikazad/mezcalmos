@@ -247,15 +247,15 @@ Future<void> acceptPaymentWithApplePay(
     await Stripe.instance.applySettings();
     // 1. Present Apple Pay sheet
     await Stripe.instance.presentApplePay(
-      params: ApplePayPresentParams(
+      ApplePayPresentParams(
+        country: 'MX',
+        currency: 'MXN',
         cartItems: [
           ApplePayCartSummaryItem.immediate(
             label: merchantName,
             amount: paymentAmount.toString(),
-          ),
+          )
         ],
-        country: 'MX',
-        currency: 'MXN',
       ),
     );
     await Stripe.instance.confirmApplePayPayment(clientSecret);
@@ -407,8 +407,7 @@ class _CardFormState extends State<CardForm> {
       await Stripe.instance.applySettings();
       final PaymentMethod paymentMethod = await Stripe.instance
           .createPaymentMethod(
-              params: PaymentMethodParams.card(
-                  paymentMethodData: PaymentMethodData()));
+              PaymentMethodParams.card(paymentMethodData: PaymentMethodData()));
       mezDbgPrint("payment method from stripe =========>$paymentMethod");
       final ServerResponse serverResponse =
           await addCard(paymentMethod: paymentMethod.id);

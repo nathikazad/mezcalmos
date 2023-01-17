@@ -305,13 +305,6 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'payment_info_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -433,7 +426,6 @@ class Query$getRestaurants$restaurant {
     this.description,
     required this.self_delivery,
     required this.open_status,
-    this.payment_info_id,
     required this.$__typename,
   });
 
@@ -451,7 +443,6 @@ class Query$getRestaurants$restaurant {
     final l$description = json['description'];
     final l$self_delivery = json['self_delivery'];
     final l$open_status = json['open_status'];
-    final l$payment_info_id = json['payment_info_id'];
     final l$$__typename = json['__typename'];
     return Query$getRestaurants$restaurant(
       id: (l$id as int),
@@ -470,7 +461,6 @@ class Query$getRestaurants$restaurant {
               (l$description as Map<String, dynamic>)),
       self_delivery: (l$self_delivery as bool),
       open_status: (l$open_status as String),
-      payment_info_id: (l$payment_info_id as int?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -500,8 +490,6 @@ class Query$getRestaurants$restaurant {
   final bool self_delivery;
 
   final String open_status;
-
-  final int? payment_info_id;
 
   final String $__typename;
 
@@ -533,8 +521,6 @@ class Query$getRestaurants$restaurant {
     _resultData['self_delivery'] = l$self_delivery;
     final l$open_status = open_status;
     _resultData['open_status'] = l$open_status;
-    final l$payment_info_id = payment_info_id;
-    _resultData['payment_info_id'] = l$payment_info_id;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -555,7 +541,6 @@ class Query$getRestaurants$restaurant {
     final l$description = description;
     final l$self_delivery = self_delivery;
     final l$open_status = open_status;
-    final l$payment_info_id = payment_info_id;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
@@ -571,7 +556,6 @@ class Query$getRestaurants$restaurant {
       l$description,
       l$self_delivery,
       l$open_status,
-      l$payment_info_id,
       l$$__typename,
     ]);
   }
@@ -650,11 +634,6 @@ class Query$getRestaurants$restaurant {
     if (l$open_status != lOther$open_status) {
       return false;
     }
-    final l$payment_info_id = payment_info_id;
-    final lOther$payment_info_id = other.payment_info_id;
-    if (l$payment_info_id != lOther$payment_info_id) {
-      return false;
-    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -696,7 +675,6 @@ abstract class CopyWith$Query$getRestaurants$restaurant<TRes> {
     Query$getRestaurants$restaurant$description? description,
     bool? self_delivery,
     String? open_status,
-    int? payment_info_id,
     String? $__typename,
   });
   CopyWith$Query$getRestaurants$restaurant$description<TRes> get description;
@@ -729,7 +707,6 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
     Object? description = _undefined,
     Object? self_delivery = _undefined,
     Object? open_status = _undefined,
-    Object? payment_info_id = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getRestaurants$restaurant(
@@ -770,9 +747,6 @@ class _CopyWithImpl$Query$getRestaurants$restaurant<TRes>
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
-        payment_info_id: payment_info_id == _undefined
-            ? _instance.payment_info_id
-            : (payment_info_id as int?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -807,7 +781,6 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant<TRes>
     Query$getRestaurants$restaurant$description? description,
     bool? self_delivery,
     String? open_status,
-    int? payment_info_id,
     String? $__typename,
   }) =>
       _res;
@@ -7979,42 +7952,6 @@ const documentNodeSubscriptionGetRestaurants = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
-            name: NameNode(value: 'payment_info'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'bank_transfer'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'card'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'cash'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
-          ),
-          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -8112,7 +8049,6 @@ class Subscription$GetRestaurants$restaurant {
     required this.image,
     this.schedule,
     this.description,
-    this.payment_info,
     required this.$__typename,
   });
 
@@ -8126,7 +8062,6 @@ class Subscription$GetRestaurants$restaurant {
     final l$image = json['image'];
     final l$schedule = json['schedule'];
     final l$description = json['description'];
-    final l$payment_info = json['payment_info'];
     final l$$__typename = json['__typename'];
     return Subscription$GetRestaurants$restaurant(
       id: (l$id as int),
@@ -8140,10 +8075,6 @@ class Subscription$GetRestaurants$restaurant {
           ? null
           : Subscription$GetRestaurants$restaurant$description.fromJson(
               (l$description as Map<String, dynamic>)),
-      payment_info: l$payment_info == null
-          ? null
-          : Subscription$GetRestaurants$restaurant$payment_info.fromJson(
-              (l$payment_info as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -8163,8 +8094,6 @@ class Subscription$GetRestaurants$restaurant {
   final dynamic? schedule;
 
   final Subscription$GetRestaurants$restaurant$description? description;
-
-  final Subscription$GetRestaurants$restaurant$payment_info? payment_info;
 
   final String $__typename;
 
@@ -8186,8 +8115,6 @@ class Subscription$GetRestaurants$restaurant {
     _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$description = description;
     _resultData['description'] = l$description?.toJson();
-    final l$payment_info = payment_info;
-    _resultData['payment_info'] = l$payment_info?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -8203,7 +8130,6 @@ class Subscription$GetRestaurants$restaurant {
     final l$image = image;
     final l$schedule = schedule;
     final l$description = description;
-    final l$payment_info = payment_info;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
@@ -8214,7 +8140,6 @@ class Subscription$GetRestaurants$restaurant {
       l$image,
       l$schedule,
       l$description,
-      l$payment_info,
       l$$__typename,
     ]);
   }
@@ -8268,11 +8193,6 @@ class Subscription$GetRestaurants$restaurant {
     if (l$description != lOther$description) {
       return false;
     }
-    final l$payment_info = payment_info;
-    final lOther$payment_info = other.payment_info;
-    if (l$payment_info != lOther$payment_info) {
-      return false;
-    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -8310,13 +8230,10 @@ abstract class CopyWith$Subscription$GetRestaurants$restaurant<TRes> {
     String? image,
     dynamic? schedule,
     Subscription$GetRestaurants$restaurant$description? description,
-    Subscription$GetRestaurants$restaurant$payment_info? payment_info,
     String? $__typename,
   });
   CopyWith$Subscription$GetRestaurants$restaurant$description<TRes>
       get description;
-  CopyWith$Subscription$GetRestaurants$restaurant$payment_info<TRes>
-      get payment_info;
 }
 
 class _CopyWithImpl$Subscription$GetRestaurants$restaurant<TRes>
@@ -8341,7 +8258,6 @@ class _CopyWithImpl$Subscription$GetRestaurants$restaurant<TRes>
     Object? image = _undefined,
     Object? schedule = _undefined,
     Object? description = _undefined,
-    Object? payment_info = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Subscription$GetRestaurants$restaurant(
@@ -8368,10 +8284,6 @@ class _CopyWithImpl$Subscription$GetRestaurants$restaurant<TRes>
             ? _instance.description
             : (description
                 as Subscription$GetRestaurants$restaurant$description?),
-        payment_info: payment_info == _undefined
-            ? _instance.payment_info
-            : (payment_info
-                as Subscription$GetRestaurants$restaurant$payment_info?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -8384,16 +8296,6 @@ class _CopyWithImpl$Subscription$GetRestaurants$restaurant<TRes>
             _then(_instance))
         : CopyWith$Subscription$GetRestaurants$restaurant$description(
             local$description, (e) => call(description: e));
-  }
-
-  CopyWith$Subscription$GetRestaurants$restaurant$payment_info<TRes>
-      get payment_info {
-    final local$payment_info = _instance.payment_info;
-    return local$payment_info == null
-        ? CopyWith$Subscription$GetRestaurants$restaurant$payment_info.stub(
-            _then(_instance))
-        : CopyWith$Subscription$GetRestaurants$restaurant$payment_info(
-            local$payment_info, (e) => call(payment_info: e));
   }
 }
 
@@ -8412,17 +8314,12 @@ class _CopyWithStubImpl$Subscription$GetRestaurants$restaurant<TRes>
     String? image,
     dynamic? schedule,
     Subscription$GetRestaurants$restaurant$description? description,
-    Subscription$GetRestaurants$restaurant$payment_info? payment_info,
     String? $__typename,
   }) =>
       _res;
   CopyWith$Subscription$GetRestaurants$restaurant$description<TRes>
       get description =>
           CopyWith$Subscription$GetRestaurants$restaurant$description.stub(
-              _res);
-  CopyWith$Subscription$GetRestaurants$restaurant$payment_info<TRes>
-      get payment_info =>
-          CopyWith$Subscription$GetRestaurants$restaurant$payment_info.stub(
               _res);
 }
 
@@ -8751,181 +8648,6 @@ class _CopyWithStubImpl$Subscription$GetRestaurants$restaurant$description$trans
   call({
     String? language_id,
     String? value,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
-class Subscription$GetRestaurants$restaurant$payment_info {
-  Subscription$GetRestaurants$restaurant$payment_info({
-    required this.bank_transfer,
-    required this.card,
-    required this.cash,
-    required this.$__typename,
-  });
-
-  factory Subscription$GetRestaurants$restaurant$payment_info.fromJson(
-      Map<String, dynamic> json) {
-    final l$bank_transfer = json['bank_transfer'];
-    final l$card = json['card'];
-    final l$cash = json['cash'];
-    final l$$__typename = json['__typename'];
-    return Subscription$GetRestaurants$restaurant$payment_info(
-      bank_transfer: (l$bank_transfer as bool),
-      card: (l$card as bool),
-      cash: (l$cash as bool),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final bool bank_transfer;
-
-  final bool card;
-
-  final bool cash;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$bank_transfer = bank_transfer;
-    _resultData['bank_transfer'] = l$bank_transfer;
-    final l$card = card;
-    _resultData['card'] = l$card;
-    final l$cash = cash;
-    _resultData['cash'] = l$cash;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$bank_transfer = bank_transfer;
-    final l$card = card;
-    final l$cash = cash;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$bank_transfer,
-      l$card,
-      l$cash,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Subscription$GetRestaurants$restaurant$payment_info) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$bank_transfer = bank_transfer;
-    final lOther$bank_transfer = other.bank_transfer;
-    if (l$bank_transfer != lOther$bank_transfer) {
-      return false;
-    }
-    final l$card = card;
-    final lOther$card = other.card;
-    if (l$card != lOther$card) {
-      return false;
-    }
-    final l$cash = cash;
-    final lOther$cash = other.cash;
-    if (l$cash != lOther$cash) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Subscription$GetRestaurants$restaurant$payment_info
-    on Subscription$GetRestaurants$restaurant$payment_info {
-  CopyWith$Subscription$GetRestaurants$restaurant$payment_info<
-          Subscription$GetRestaurants$restaurant$payment_info>
-      get copyWith =>
-          CopyWith$Subscription$GetRestaurants$restaurant$payment_info(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Subscription$GetRestaurants$restaurant$payment_info<
-    TRes> {
-  factory CopyWith$Subscription$GetRestaurants$restaurant$payment_info(
-    Subscription$GetRestaurants$restaurant$payment_info instance,
-    TRes Function(Subscription$GetRestaurants$restaurant$payment_info) then,
-  ) = _CopyWithImpl$Subscription$GetRestaurants$restaurant$payment_info;
-
-  factory CopyWith$Subscription$GetRestaurants$restaurant$payment_info.stub(
-          TRes res) =
-      _CopyWithStubImpl$Subscription$GetRestaurants$restaurant$payment_info;
-
-  TRes call({
-    bool? bank_transfer,
-    bool? card,
-    bool? cash,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Subscription$GetRestaurants$restaurant$payment_info<TRes>
-    implements
-        CopyWith$Subscription$GetRestaurants$restaurant$payment_info<TRes> {
-  _CopyWithImpl$Subscription$GetRestaurants$restaurant$payment_info(
-    this._instance,
-    this._then,
-  );
-
-  final Subscription$GetRestaurants$restaurant$payment_info _instance;
-
-  final TRes Function(Subscription$GetRestaurants$restaurant$payment_info)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? bank_transfer = _undefined,
-    Object? card = _undefined,
-    Object? cash = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Subscription$GetRestaurants$restaurant$payment_info(
-        bank_transfer: bank_transfer == _undefined || bank_transfer == null
-            ? _instance.bank_transfer
-            : (bank_transfer as bool),
-        card: card == _undefined || card == null
-            ? _instance.card
-            : (card as bool),
-        cash: cash == _undefined || cash == null
-            ? _instance.cash
-            : (cash as bool),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Subscription$GetRestaurants$restaurant$payment_info<
-        TRes>
-    implements
-        CopyWith$Subscription$GetRestaurants$restaurant$payment_info<TRes> {
-  _CopyWithStubImpl$Subscription$GetRestaurants$restaurant$payment_info(
-      this._res);
-
-  TRes _res;
-
-  call({
-    bool? bank_transfer,
-    bool? card,
-    bool? cash,
     String? $__typename,
   }) =>
       _res;
@@ -13413,7 +13135,7 @@ class Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user {
     this.phone,
     this.name,
     this.image,
-    this.language_id,
+    required this.language_id,
     required this.id,
     required this.firebase_id,
     required this.$__typename,
@@ -13432,7 +13154,7 @@ class Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user {
       phone: (l$phone as String?),
       name: (l$name as String?),
       image: (l$image as String?),
-      language_id: (l$language_id as String?),
+      language_id: (l$language_id as String),
       id: (l$id as int),
       firebase_id: (l$firebase_id as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -13445,7 +13167,7 @@ class Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators$user {
 
   final String? image;
 
-  final String? language_id;
+  final String language_id;
 
   final int id;
 
@@ -13610,9 +13332,9 @@ class _CopyWithImpl$Query$getRestaurantOperators$restaurant_by_pk$restaurant_ope
         phone: phone == _undefined ? _instance.phone : (phone as String?),
         name: name == _undefined ? _instance.name : (name as String?),
         image: image == _undefined ? _instance.image : (image as String?),
-        language_id: language_id == _undefined
+        language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
-            : (language_id as String?),
+            : (language_id as String),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         firebase_id: firebase_id == _undefined || firebase_id == null
             ? _instance.firebase_id

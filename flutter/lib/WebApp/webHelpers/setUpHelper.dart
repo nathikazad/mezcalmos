@@ -5,25 +5,19 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreen/controllers/ListRestaurantController.dart';
+// import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/AuthController.dart';
-import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
+// import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/WebApp/authHooks.dart';
 import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/values/constants.dart';
-
-import '../../CustomerApp/controllers/orderController.dart';
 
 Function signInCallback = AuthHooks.onSignInHook;
 Function signOutCallback = AuthHooks.onSignOutHook;
@@ -51,33 +45,15 @@ Future<bool> putControllers() async {
   areAllIntilized.add(true);
 //  }
   // if (!Get.isRegistered<AuthController>()) {
-  await Get.put<RestaurantsInfoController>(
-    RestaurantsInfoController(),
-    permanent: true,
-  );
+
   await Get.put<AuthController>(
     AuthController(signInCallback, signOutCallback),
     permanent: true,
   );
-  await Get.put<RestaurantsInfoController>(
-    RestaurantsInfoController(),
-    permanent: true,
-  );
-  //  if (!Get.isRegistered<RestaurantsInfoController>()) {
+
   mezDbgPrint(
       "]]]]]]]]]] the RestaurantsInfoController is intailized ]]]]]]]]]]]]");
   areAllIntilized.add(true);
-  //  }
-  // if (!Get.isRegistered<RestaurantController>()) {
-  //   await Get.put(RestaurantController(), permanent: true);
-  //   mezDbgPrint(
-  //       "]]]]]]]]]] the RestaurantController is intailized ]]]]]]]]]]]]");
-  //   areAllIntilized.add(true);
-  // }
-
-  //   mezDbgPrint("]]]]]]]]]] the authController is intailized ]]]]]]]]]]]]");
-  //   areAllIntilized.add(true);
-  // }
 
   if (!Get.isRegistered<AppLifeCycleController>()) {
     await Get.put<AppLifeCycleController>(
@@ -88,43 +64,37 @@ Future<bool> putControllers() async {
         "]]]]]]]]]] the AppLifeCycleController is intailized ]]]]]]]]]]]]");
     areAllIntilized.add(true);
   }
-  if (!Get.isRegistered<LaundryController>()) {
-    await Get.put<LaundryController>(
-      LaundryController(),
-      permanent: true,
-    );
-    mezDbgPrint("]]]]]]]]]] the LaundryController is intailized ]]]]]]]]]]]]");
-    areAllIntilized.add(true);
-  }
+  // if (!Get.isRegistered<LaundryController>()) {
+  //   await Get.put<LaundryController>(
+  //     LaundryController(),
+  //     permanent: true,
+  //   );
+  //   mezDbgPrint("]]]]]]]]]] the LaundryController is intailized ]]]]]]]]]]]]");
+  //   areAllIntilized.add(true);
+  // }
 
-  if (!Get.isRegistered<MezWebSideBarController>()) {
-    await Get.put<MezWebSideBarController>(
-      MezWebSideBarController(),
-      permanent: true,
-    );
-    if (!Get.isRegistered<ForegroundNotificationsController>()) {
-      await Get.put<ForegroundNotificationsController>(
-          ForegroundNotificationsController(isWebVersion: true),
-          permanent: true);
-    }
-    mezDbgPrint(
-        "]]]]]]]]]] the MezWebSideBarController is intailized ]]]]]]]]]]]]");
-    areAllIntilized.add(true);
-  }
+  // if (!Get.isRegistered<MezWebSideBarController>()) {
+  //   await Get.put<MezWebSideBarController>(
+  //     MezWebSideBarController(),
+  //     permanent: true,
+  //   );
+  // if (!Get.isRegistered<ForegroundNotificationsController>()) {
+  //   await Get.put<ForegroundNotificationsController>(
+  //       ForegroundNotificationsController(isWebVersion: true),
+  //       permanent: true);
+  // }
+  //   mezDbgPrint(
+  //       "]]]]]]]]]] the MezWebSideBarController is intailized ]]]]]]]]]]]]");
+  //   areAllIntilized.add(true);
+  // }
 
-  if (Get.find<AuthController>().isUserSignedIn) {
-    await AuthHooks.onSignInHook().then((value) {
-      mezDbgPrint(
-          "]]]]]]]]]] the MezWebSideBarController is intailized ]]]]]]]]]]]]");
-      areAllIntilized.add(true);
-    });
-  }
-  if (!Get.isRegistered<ListRestaurantsController>()) {
-    await Get.put<ListRestaurantsController>(
-      ListRestaurantsController(),
-    );
-    areAllIntilized.add(true);
-  }
+  // if (Get.find<AuthController>().isUserSignedIn) {
+  //   await AuthHooks.onSignInHook().then((value) {
+  //     mezDbgPrint(
+  //         "]]]]]]]]]] the MezWebSideBarController is intailized ]]]]]]]]]]]]");
+  //     areAllIntilized.add(true);
+  //   });
+  // }
 
   x.complete(areAllIntilized);
   var isItailized = false;

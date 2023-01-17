@@ -535,7 +535,8 @@ class _AppBarWedgetForDesktopState extends State<AppBarWedgetForDesktop>
                     ),
                     Obx(
                       () => Text(
-                        "Cart${Get.find<RestaurantController>().cart.value.cartItems.length > 0 ? " (${Get.find<RestaurantController>().cart.value.cartItems.length})" : ""}",
+                        "test",
+                        // "Cart${Get.find<RestaurantController>().cart.value.cartItems.length > 0 ? " (${Get.find<RestaurantController>().cart.value.cartItems.length})" : ""}",
                         style: txt.copyWith(color: Colors.white),
                       ),
                     ),

@@ -1,17 +1,18 @@
 import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/CustomerApp/pages/Cards/CardsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/PickLocationView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/CustomerOrdersListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/LaundriesListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/LaundryCurrentOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/LaundryOrderRequestView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/SingleLaundry/SingleLaundryScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreen/ListRestaurantsScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/ViewCartScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/ViewRestaurantOrderScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/CustomerRestaurantView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/CustItemView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/CustomerApp/pages/SavedLocations/SavedLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/RequestTaxiScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/ViewTaxiOrderScreen.dart';
@@ -83,11 +84,11 @@ class XRouter {
         // restaurant Routes
         GetPage(
           name: kOrdersRoute,
-          page: () => ListOrdersScreen(),
+          page: () => CustomerOrdersListView(),
         ),
         GetPage(
           name: kRestaurantsRoute,
-          page: () => ListRestaurantsScreen(),
+          page: () => CustRestaurantListView(),
         ),
         GetPage(
           name: kRestaurantRoute,
@@ -98,7 +99,7 @@ class XRouter {
         ),
         GetPage(
           name: kViewRestaurantItemRoute,
-          page: () => ViewItemScreen(
+          page: () => CustItemView(
             viewItemScreenMode: ViewItemScreenMode.AddItemMode,
           ),
           transitionDuration: Duration(milliseconds: 500),
@@ -106,15 +107,15 @@ class XRouter {
         ),
         GetPage(
           name: kCartItemRoute,
-          page: () => ViewItemScreen(
-              viewItemScreenMode: ViewItemScreenMode.EditItemMode),
+          page: () =>
+              CustItemView(viewItemScreenMode: ViewItemScreenMode.EditItemMode),
           transitionDuration: Duration(milliseconds: 500),
           transition: Transition.rightToLeft,
         ),
         GetPage(
           name: kCartItemRoute,
-          page: () => ViewItemScreen(
-              viewItemScreenMode: ViewItemScreenMode.EditItemMode),
+          page: () =>
+              CustItemView(viewItemScreenMode: ViewItemScreenMode.EditItemMode),
           transitionDuration: Duration(milliseconds: 500),
           transition: Transition.rightToLeft,
         ),

@@ -38,9 +38,7 @@ select_permissions:
         - minimum_cost
         - service_provider_id
         - service_provider_type
-      filter:
-        service_provider_id:
-          _eq: X-Hasura-User-Id
+      filter: {}
   - role: mez_admin
     permission:
       columns:

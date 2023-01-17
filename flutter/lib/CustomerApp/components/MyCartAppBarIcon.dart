@@ -2,7 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -22,7 +22,9 @@ class MyCartAppBarIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => _authController.isUserSignedIn &&
-              Get.find<RestaurantController>().cart.value.cartItems.length > 0
+              Get.find<CustomerCartController>().cart.value != null &&
+              Get.find<CustomerCartController>().cart.value!.cartItems.length >
+                  0
           ? Padding(
               padding: const EdgeInsets.only(right: 5.0, bottom: 8.0),
               child: IconButton(
@@ -32,9 +34,9 @@ class MyCartAppBarIcon extends StatelessWidget {
                 icon: Badge(
                   padding: EdgeInsets.all(6),
                   badgeContent: Text(
-                    Get.find<RestaurantController>()
+                    Get.find<CustomerCartController>()
                         .cart
-                        .value
+                        .value!
                         .cartItems
                         .length
                         .toStringAsFixed(0),

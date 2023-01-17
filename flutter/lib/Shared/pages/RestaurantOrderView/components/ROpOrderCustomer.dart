@@ -66,9 +66,9 @@ class ROpOrderCustomer extends StatelessWidget {
                   MessageButton(
                     onTap: () {
                       MezRouter.toNamed(getMessagesRoute(
-                          chatId: order.chatId,
+                          chatId: order.chatId.toString(),
                           recipientType: ParticipantType.DeliveryDriver,
-                          orderId: order.orderId));
+                          orderId: order.orderId.toString()));
                     },
                     chatId: order.chatId,
                   ),

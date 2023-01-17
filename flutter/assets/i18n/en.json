@@ -2096,6 +2096,18 @@
                     }
                 }
             }
+        },
+        "notificationHandler" : {
+            "onTheWayTitle": "On the Way",
+            "onTheWayBody": "Your order is on the way",
+            "deliveredTitle": "Delivered",
+            "deliveredBody": "Your order has been delivered",
+            "newOrderTitle": "Order received",
+            "newOrderBody": "You got a new order",
+            "canceledOrderTitle": "Order cancelled",
+            "canceledOrderBody": "Your order has been cancelled",
+            "atPickupTitle" : "Driver is here",
+            "atPickupBody" : "Your driver arrived at pickup location"
         }
     },
     

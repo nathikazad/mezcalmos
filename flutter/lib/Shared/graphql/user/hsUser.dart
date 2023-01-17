@@ -25,7 +25,7 @@ Future<UserInfo> get_user_by_hasura_id({required int hasuraId}) async {
       hasuraId: hasuraId,
       firebaseId: data.firebase_id,
       name: data.name,
-      language: data.language_id.toLanguageType(),
+      language: data.language_id?.toLanguageType(),
       image: data.image,
     );
   }

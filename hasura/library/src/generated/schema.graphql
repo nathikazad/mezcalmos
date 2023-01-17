@@ -81,7 +81,7 @@ type chat {
   messages(
     """JSON select path"""
     path: String
-  ): jsonb
+  ): jsonb!
 }
 
 """
@@ -131,6 +131,7 @@ input chat_bool_exp {
   agora_info: jsonb_comparison_exp
   chat_info: jsonb_comparison_exp
   chat_participants: chat_participant_bool_exp
+  chat_participants_aggregate: chat_participant_aggregate_bool_exp
   creation_time: timestamptz_comparison_exp
   id: Int_comparison_exp
   messages: jsonb_comparison_exp
@@ -270,6 +271,17 @@ aggregated selection of "chat_participant"
 type chat_participant_aggregate {
   aggregate: chat_participant_aggregate_fields
   nodes: [chat_participant!]!
+}
+
+input chat_participant_aggregate_bool_exp {
+  count: chat_participant_aggregate_bool_exp_count
+}
+
+input chat_participant_aggregate_bool_exp_count {
+  arguments: [chat_participant_select_column!]
+  distinct: Boolean
+  filter: chat_participant_bool_exp
+  predicate: Int_comparison_exp!
 }
 
 """
@@ -880,6 +892,15 @@ type customer {
     where: saved_location_bool_exp
   ): saved_location_aggregate!
   service_provider_type: String
+
+  """
+  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
+  Object) {         restaurant: {Record of restaurantIds and
+  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
+  card object: {             id: string,             last4?: string,            
+  brand?: string,             expMonth?: number,             expYear?: number,  
+            idsWithServiceProvider: same as above,         }     } }
+  """
   stripe_info(
     """JSON select path"""
     path: String
@@ -917,6 +938,14 @@ type customer_aggregate_fields {
 
 """append existing jsonb value of filtered columns with new jsonb value"""
 input customer_append_input {
+  """
+  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
+  Object) {         restaurant: {Record of restaurantIds and
+  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
+  card object: {             id: string,             last4?: string,            
+  brand?: string,             expMonth?: number,             expYear?: number,  
+            idsWithServiceProvider: same as above,         }     } }
+  """
   stripe_info: jsonb
 }
 
@@ -935,8 +964,10 @@ input customer_bool_exp {
   app_version: String_comparison_exp
   cart: restaurant_cart_bool_exp
   deliveries: delivery_order_bool_exp
+  deliveries_aggregate: delivery_order_aggregate_bool_exp
   notification_token: String_comparison_exp
   saved_locations: saved_location_bool_exp
+  saved_locations_aggregate: saved_location_aggregate_bool_exp
   service_provider_type: String_comparison_exp
   stripe_info: jsonb_comparison_exp
   user: user_bool_exp
@@ -962,6 +993,14 @@ enum customer_constraint {
 delete the field or element with specified path (for JSON arrays, negative integers count from the end)
 """
 input customer_delete_at_path_input {
+  """
+  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
+  Object) {         restaurant: {Record of restaurantIds and
+  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
+  card object: {             id: string,             last4?: string,            
+  brand?: string,             expMonth?: number,             expYear?: number,  
+            idsWithServiceProvider: same as above,         }     } }
+  """
   stripe_info: [String!]
 }
 
@@ -970,6 +1009,14 @@ delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array
 """
 input customer_delete_elem_input {
+  """
+  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
+  Object) {         restaurant: {Record of restaurantIds and
+  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
+  card object: {             id: string,             last4?: string,            
+  brand?: string,             expMonth?: number,             expYear?: number,  
+            idsWithServiceProvider: same as above,         }     } }
+  """
   stripe_info: Int
 }
 
@@ -977,6 +1024,14 @@ input customer_delete_elem_input {
 delete key/value pair or string element. key/value pairs are matched based on their key value
 """
 input customer_delete_key_input {
+  """
+  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
+  Object) {         restaurant: {Record of restaurantIds and
+  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
+  card object: {             id: string,             last4?: string,            
+  brand?: string,             expMonth?: number,             expYear?: number,  
+            idsWithServiceProvider: same as above,         }     } }
+  """
   stripe_info: String
 }
 
@@ -996,6 +1051,15 @@ input customer_insert_input {
   deliveries: delivery_order_arr_rel_insert_input
   saved_locations: saved_location_arr_rel_insert_input
   service_provider_type: String
+
+  """
+  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
+  Object) {         restaurant: {Record of restaurantIds and
+  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
+  card object: {             id: string,             last4?: string,            
+  brand?: string,             expMonth?: number,             expYear?: number,  
+            idsWithServiceProvider: same as above,         }     } }
+  """
   stripe_info: jsonb
   user: user_obj_rel_insert_input
   user_id: Int
@@ -1065,6 +1129,14 @@ input customer_pk_columns_input {
 
 """prepend existing jsonb value of filtered columns with new jsonb value"""
 input customer_prepend_input {
+  """
+  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
+  Object) {         restaurant: {Record of restaurantIds and
+  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
+  card object: {             id: string,             last4?: string,            
+  brand?: string,             expMonth?: number,             expYear?: number,  
+            idsWithServiceProvider: same as above,         }     } }
+  """
   stripe_info: jsonb
 }
 
@@ -1091,6 +1163,15 @@ input type for updating data in table "customer"
 input customer_set_input {
   app_version: String
   service_provider_type: String
+
+  """
+  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
+  Object) {         restaurant: {Record of restaurantIds and
+  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
+  card object: {             id: string,             last4?: string,            
+  brand?: string,             expMonth?: number,             expYear?: number,  
+            idsWithServiceProvider: same as above,         }     } }
+  """
   stripe_info: jsonb
   user_id: Int
 }
@@ -1125,6 +1206,15 @@ input customer_stream_cursor_input {
 input customer_stream_cursor_value_input {
   app_version: String
   service_provider_type: String
+
+  """
+  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
+  Object) {         restaurant: {Record of restaurantIds and
+  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
+  card object: {             id: string,             last4?: string,            
+  brand?: string,             expMonth?: number,             expYear?: number,  
+            idsWithServiceProvider: same as above,         }     } }
+  """
   stripe_info: jsonb
   user_id: Int
 }
@@ -1325,7 +1415,9 @@ input delivery_company_bool_exp {
   _or: [delivery_company_bool_exp!]
   approved: Boolean_comparison_exp
   delivery_drivers: delivery_driver_bool_exp
+  delivery_drivers_aggregate: delivery_driver_aggregate_bool_exp
   delivery_operators: delivery_operator_bool_exp
+  delivery_operators_aggregate: delivery_operator_aggregate_bool_exp
   description: translation_bool_exp
   description_id: Int_comparison_exp
   id: Int_comparison_exp
@@ -1954,6 +2046,33 @@ type delivery_driver_aggregate {
   nodes: [delivery_driver!]!
 }
 
+input delivery_driver_aggregate_bool_exp {
+  bool_and: delivery_driver_aggregate_bool_exp_bool_and
+  bool_or: delivery_driver_aggregate_bool_exp_bool_or
+  count: delivery_driver_aggregate_bool_exp_count
+}
+
+input delivery_driver_aggregate_bool_exp_bool_and {
+  arguments: delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns!
+  distinct: Boolean
+  filter: delivery_driver_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input delivery_driver_aggregate_bool_exp_bool_or {
+  arguments: delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns!
+  distinct: Boolean
+  filter: delivery_driver_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input delivery_driver_aggregate_bool_exp_count {
+  arguments: [delivery_driver_select_column!]
+  distinct: Boolean
+  filter: delivery_driver_bool_exp
+  predicate: Int_comparison_exp!
+}
+
 """
 aggregate fields of "delivery_driver"
 """
@@ -2254,6 +2373,22 @@ enum delivery_driver_select_column {
 }
 
 """
+select "delivery_driver_aggregate_bool_exp_bool_and_arguments_columns" columns of table "delivery_driver"
+"""
+enum delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns {
+  """column name"""
+  online
+}
+
+"""
+select "delivery_driver_aggregate_bool_exp_bool_or_arguments_columns" columns of table "delivery_driver"
+"""
+enum delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns {
+  """column name"""
+  online
+}
+
+"""
 input type for updating data in table "delivery_driver"
 """
 input delivery_driver_set_input {
@@ -2506,6 +2641,33 @@ type delivery_operator_aggregate {
   nodes: [delivery_operator!]!
 }
 
+input delivery_operator_aggregate_bool_exp {
+  bool_and: delivery_operator_aggregate_bool_exp_bool_and
+  bool_or: delivery_operator_aggregate_bool_exp_bool_or
+  count: delivery_operator_aggregate_bool_exp_count
+}
+
+input delivery_operator_aggregate_bool_exp_bool_and {
+  arguments: delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_and_arguments_columns!
+  distinct: Boolean
+  filter: delivery_operator_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input delivery_operator_aggregate_bool_exp_bool_or {
+  arguments: delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_or_arguments_columns!
+  distinct: Boolean
+  filter: delivery_operator_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input delivery_operator_aggregate_bool_exp_count {
+  arguments: [delivery_operator_select_column!]
+  distinct: Boolean
+  filter: delivery_operator_bool_exp
+  predicate: Int_comparison_exp!
+}
+
 """
 aggregate fields of "delivery_operator"
 """
@@ -2744,6 +2906,22 @@ enum delivery_operator_select_column {
 
   """column name"""
   user_id
+}
+
+"""
+select "delivery_operator_aggregate_bool_exp_bool_and_arguments_columns" columns of table "delivery_operator"
+"""
+enum delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_and_arguments_columns {
+  """column name"""
+  owner
+}
+
+"""
+select "delivery_operator_aggregate_bool_exp_bool_or_arguments_columns" columns of table "delivery_operator"
+"""
+enum delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_or_arguments_columns {
+  """column name"""
+  owner
 }
 
 """
@@ -2992,6 +3170,11 @@ type delivery_order {
   id: Int!
 
   """
+  A computed field, executes function "delivery_in_process"
+  """
+  in_process: Boolean
+
+  """
   A computed field, executes function "delivery_notification_token"
   """
   notification_token: String
@@ -3026,7 +3209,6 @@ type delivery_order {
   cancelledByServiceProvider
   """
   status: String!
-  stripe_payment_id: Int
 
   """in meters"""
   trip_distance: Int
@@ -3042,6 +3224,17 @@ aggregated selection of "delivery_order"
 type delivery_order_aggregate {
   aggregate: delivery_order_aggregate_fields
   nodes: [delivery_order!]!
+}
+
+input delivery_order_aggregate_bool_exp {
+  count: delivery_order_aggregate_bool_exp_count
+}
+
+input delivery_order_aggregate_bool_exp_count {
+  arguments: [delivery_order_select_column!]
+  distinct: Boolean
+  filter: delivery_order_bool_exp
+  predicate: Int_comparison_exp!
 }
 
 """
@@ -3102,7 +3295,6 @@ type delivery_order_avg_fields {
   package_cost: Float
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
-  stripe_payment_id: Float
 
   """in meters"""
   trip_distance: Float
@@ -3127,7 +3319,6 @@ input delivery_order_avg_order_by {
   package_cost: order_by
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
-  stripe_payment_id: order_by
 
   """in meters"""
   trip_distance: order_by
@@ -3174,6 +3365,7 @@ input delivery_order_bool_exp {
   estimated_arrival_at_pickup_time: timestamptz_comparison_exp
   estimated_package_ready_time: timestamptz_comparison_exp
   id: Int_comparison_exp
+  in_process: Boolean_comparison_exp
   notification_token: String_comparison_exp
   order_time: timestamptz_comparison_exp
   order_type: String_comparison_exp
@@ -3190,7 +3382,6 @@ input delivery_order_bool_exp {
   service_provider_review_by_driver_id: Int_comparison_exp
   service_provider_type: String_comparison_exp
   status: String_comparison_exp
-  stripe_payment_id: Int_comparison_exp
   trip_distance: Int_comparison_exp
   trip_duration: Int_comparison_exp
   trip_polyline: String_comparison_exp
@@ -3222,7 +3413,6 @@ input delivery_order_inc_input {
   package_cost: money
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
-  stripe_payment_id: Int
 
   """in meters"""
   trip_distance: Int
@@ -3293,7 +3483,6 @@ input delivery_order_insert_input {
   cancelledByServiceProvider
   """
   status: String
-  stripe_payment_id: Int
 
   """in meters"""
   trip_distance: Int
@@ -3347,7 +3536,6 @@ type delivery_order_max_fields {
   cancelledByServiceProvider
   """
   status: String
-  stripe_payment_id: Int
 
   """in meters"""
   trip_distance: Int
@@ -3403,7 +3591,6 @@ input delivery_order_max_order_by {
   cancelledByServiceProvider
   """
   status: order_by
-  stripe_payment_id: order_by
 
   """in meters"""
   trip_distance: order_by
@@ -3457,7 +3644,6 @@ type delivery_order_min_fields {
   cancelledByServiceProvider
   """
   status: String
-  stripe_payment_id: Int
 
   """in meters"""
   trip_distance: Int
@@ -3513,7 +3699,6 @@ input delivery_order_min_order_by {
   cancelledByServiceProvider
   """
   status: order_by
-  stripe_payment_id: order_by
 
   """in meters"""
   trip_distance: order_by
@@ -3586,6 +3771,7 @@ input delivery_order_order_by {
   estimated_arrival_at_pickup_time: order_by
   estimated_package_ready_time: order_by
   id: order_by
+  in_process: order_by
   notification_token: order_by
   order_time: order_by
   order_type: order_by
@@ -3602,7 +3788,6 @@ input delivery_order_order_by {
   service_provider_review_by_driver_id: order_by
   service_provider_type: order_by
   status: order_by
-  stripe_payment_id: order_by
   trip_distance: order_by
   trip_duration: order_by
   trip_polyline: order_by
@@ -4160,9 +4345,6 @@ enum delivery_order_select_column {
   status
 
   """column name"""
-  stripe_payment_id
-
-  """column name"""
   trip_distance
 
   """column name"""
@@ -4221,7 +4403,6 @@ input delivery_order_set_input {
   cancelledByServiceProvider
   """
   status: String
-  stripe_payment_id: Int
 
   """in meters"""
   trip_distance: Int
@@ -4245,7 +4426,6 @@ type delivery_order_stddev_fields {
   package_cost: Float
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
-  stripe_payment_id: Float
 
   """in meters"""
   trip_distance: Float
@@ -4270,7 +4450,6 @@ input delivery_order_stddev_order_by {
   package_cost: order_by
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
-  stripe_payment_id: order_by
 
   """in meters"""
   trip_distance: order_by
@@ -4293,7 +4472,6 @@ type delivery_order_stddev_pop_fields {
   package_cost: Float
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
-  stripe_payment_id: Float
 
   """in meters"""
   trip_distance: Float
@@ -4318,7 +4496,6 @@ input delivery_order_stddev_pop_order_by {
   package_cost: order_by
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
-  stripe_payment_id: order_by
 
   """in meters"""
   trip_distance: order_by
@@ -4341,7 +4518,6 @@ type delivery_order_stddev_samp_fields {
   package_cost: Float
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
-  stripe_payment_id: Float
 
   """in meters"""
   trip_distance: Float
@@ -4366,7 +4542,6 @@ input delivery_order_stddev_samp_order_by {
   package_cost: order_by
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
-  stripe_payment_id: order_by
 
   """in meters"""
   trip_distance: order_by
@@ -4433,7 +4608,6 @@ input delivery_order_stream_cursor_value_input {
   cancelledByServiceProvider
   """
   status: String
-  stripe_payment_id: Int
 
   """in meters"""
   trip_distance: Int
@@ -4457,7 +4631,6 @@ type delivery_order_sum_fields {
   package_cost: money
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
-  stripe_payment_id: Int
 
   """in meters"""
   trip_distance: Int
@@ -4482,7 +4655,6 @@ input delivery_order_sum_order_by {
   package_cost: order_by
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
-  stripe_payment_id: order_by
 
   """in meters"""
   trip_distance: order_by
@@ -4595,9 +4767,6 @@ enum delivery_order_update_column {
   status
 
   """column name"""
-  stripe_payment_id
-
-  """column name"""
   trip_distance
 
   """column name"""
@@ -4630,7 +4799,6 @@ type delivery_order_var_pop_fields {
   package_cost: Float
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
-  stripe_payment_id: Float
 
   """in meters"""
   trip_distance: Float
@@ -4655,7 +4823,6 @@ input delivery_order_var_pop_order_by {
   package_cost: order_by
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
-  stripe_payment_id: order_by
 
   """in meters"""
   trip_distance: order_by
@@ -4678,7 +4845,6 @@ type delivery_order_var_samp_fields {
   package_cost: Float
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
-  stripe_payment_id: Float
 
   """in meters"""
   trip_distance: Float
@@ -4703,7 +4869,6 @@ input delivery_order_var_samp_order_by {
   package_cost: order_by
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
-  stripe_payment_id: order_by
 
   """in meters"""
   trip_distance: order_by
@@ -4726,7 +4891,6 @@ type delivery_order_variance_fields {
   package_cost: Float
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
-  stripe_payment_id: Float
 
   """in meters"""
   trip_distance: Float
@@ -4751,7 +4915,6 @@ input delivery_order_variance_order_by {
   package_cost: order_by
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
-  stripe_payment_id: order_by
 
   """in meters"""
   trip_distance: order_by
@@ -5524,32 +5687,6 @@ type mutation_root {
   delete_service_link_by_pk(id: Int!): service_link
 
   """
-  delete data from the table: "service_provider_payment_info"
-  """
-  delete_service_provider_payment_info(
-    """filter the rows which have to be deleted"""
-    where: service_provider_payment_info_bool_exp!
-  ): service_provider_payment_info_mutation_response
-
-  """
-  delete single row from the table: "service_provider_payment_info"
-  """
-  delete_service_provider_payment_info_by_pk(id: Int!): service_provider_payment_info
-
-  """
-  delete data from the table: "stripe_info"
-  """
-  delete_stripe_info(
-    """filter the rows which have to be deleted"""
-    where: stripe_info_bool_exp!
-  ): stripe_info_mutation_response
-
-  """
-  delete single row from the table: "stripe_info"
-  """
-  delete_stripe_info_by_pk(id: Int!): stripe_info
-
-  """
   delete data from the table: "subscriber"
   """
   delete_subscriber(
@@ -6233,50 +6370,6 @@ type mutation_root {
     """upsert condition"""
     on_conflict: service_link_on_conflict
   ): service_link
-
-  """
-  insert data into the table: "service_provider_payment_info"
-  """
-  insert_service_provider_payment_info(
-    """the rows to be inserted"""
-    objects: [service_provider_payment_info_insert_input!]!
-
-    """upsert condition"""
-    on_conflict: service_provider_payment_info_on_conflict
-  ): service_provider_payment_info_mutation_response
-
-  """
-  insert a single row into the table: "service_provider_payment_info"
-  """
-  insert_service_provider_payment_info_one(
-    """the row to be inserted"""
-    object: service_provider_payment_info_insert_input!
-
-    """upsert condition"""
-    on_conflict: service_provider_payment_info_on_conflict
-  ): service_provider_payment_info
-
-  """
-  insert data into the table: "stripe_info"
-  """
-  insert_stripe_info(
-    """the rows to be inserted"""
-    objects: [stripe_info_insert_input!]!
-
-    """upsert condition"""
-    on_conflict: stripe_info_on_conflict
-  ): stripe_info_mutation_response
-
-  """
-  insert a single row into the table: "stripe_info"
-  """
-  insert_stripe_info_one(
-    """the row to be inserted"""
-    object: stripe_info_insert_input!
-
-    """upsert condition"""
-    on_conflict: stripe_info_on_conflict
-  ): stripe_info
 
   """
   insert data into the table: "subscriber"
@@ -7557,74 +7650,6 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [service_link_updates!]!
   ): [service_link_mutation_response]
-
-  """
-  update data of the table: "service_provider_payment_info"
-  """
-  update_service_provider_payment_info(
-    """increments the numeric columns with given value of the filtered values"""
-    _inc: service_provider_payment_info_inc_input
-
-    """sets the columns of the filtered rows to the given values"""
-    _set: service_provider_payment_info_set_input
-
-    """filter the rows which have to be updated"""
-    where: service_provider_payment_info_bool_exp!
-  ): service_provider_payment_info_mutation_response
-
-  """
-  update single row of the table: "service_provider_payment_info"
-  """
-  update_service_provider_payment_info_by_pk(
-    """increments the numeric columns with given value of the filtered values"""
-    _inc: service_provider_payment_info_inc_input
-
-    """sets the columns of the filtered rows to the given values"""
-    _set: service_provider_payment_info_set_input
-    pk_columns: service_provider_payment_info_pk_columns_input!
-  ): service_provider_payment_info
-
-  """
-  update multiples rows of table: "service_provider_payment_info"
-  """
-  update_service_provider_payment_info_many(
-    """updates to execute, in order"""
-    updates: [service_provider_payment_info_updates!]!
-  ): [service_provider_payment_info_mutation_response]
-
-  """
-  update data of the table: "stripe_info"
-  """
-  update_stripe_info(
-    """increments the numeric columns with given value of the filtered values"""
-    _inc: stripe_info_inc_input
-
-    """sets the columns of the filtered rows to the given values"""
-    _set: stripe_info_set_input
-
-    """filter the rows which have to be updated"""
-    where: stripe_info_bool_exp!
-  ): stripe_info_mutation_response
-
-  """
-  update single row of the table: "stripe_info"
-  """
-  update_stripe_info_by_pk(
-    """increments the numeric columns with given value of the filtered values"""
-    _inc: stripe_info_inc_input
-
-    """sets the columns of the filtered rows to the given values"""
-    _set: stripe_info_set_input
-    pk_columns: stripe_info_pk_columns_input!
-  ): stripe_info
-
-  """
-  update multiples rows of table: "stripe_info"
-  """
-  update_stripe_info_many(
-    """updates to execute, in order"""
-    updates: [stripe_info_updates!]!
-  ): [stripe_info_mutation_response]
 
   """
   update data of the table: "subscriber"
@@ -9699,94 +9724,6 @@ type query_root {
   service_link_by_pk(id: Int!): service_link
 
   """
-  fetch data from the table: "service_provider_payment_info"
-  """
-  service_provider_payment_info(
-    """distinct select on columns"""
-    distinct_on: [service_provider_payment_info_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [service_provider_payment_info_order_by!]
-
-    """filter the rows returned"""
-    where: service_provider_payment_info_bool_exp
-  ): [service_provider_payment_info!]!
-
-  """
-  fetch aggregated fields from the table: "service_provider_payment_info"
-  """
-  service_provider_payment_info_aggregate(
-    """distinct select on columns"""
-    distinct_on: [service_provider_payment_info_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [service_provider_payment_info_order_by!]
-
-    """filter the rows returned"""
-    where: service_provider_payment_info_bool_exp
-  ): service_provider_payment_info_aggregate!
-
-  """
-  fetch data from the table: "service_provider_payment_info" using primary key columns
-  """
-  service_provider_payment_info_by_pk(id: Int!): service_provider_payment_info
-
-  """
-  fetch data from the table: "stripe_info"
-  """
-  stripe_info(
-    """distinct select on columns"""
-    distinct_on: [stripe_info_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [stripe_info_order_by!]
-
-    """filter the rows returned"""
-    where: stripe_info_bool_exp
-  ): [stripe_info!]!
-
-  """
-  fetch aggregated fields from the table: "stripe_info"
-  """
-  stripe_info_aggregate(
-    """distinct select on columns"""
-    distinct_on: [stripe_info_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [stripe_info_order_by!]
-
-    """filter the rows returned"""
-    where: stripe_info_bool_exp
-  ): stripe_info_aggregate!
-
-  """fetch data from the table: "stripe_info" using primary key columns"""
-  stripe_info_by_pk(id: Int!): stripe_info
-
-  """
   fetch data from the table: "subscriber"
   """
   subscriber(
@@ -10058,6 +9995,7 @@ type query_root {
 columns and relationships of "restaurant"
 """
 type restaurant {
+  """Record of PaymentType(cash, card, bank transfer) and boolean"""
   accepted_payments(
     """JSON select path"""
     path: String
@@ -10186,10 +10124,6 @@ type restaurant {
     where: restaurant_order_bool_exp
   ): restaurant_order_aggregate!
 
-  """An object relationship"""
-  payment_info: service_provider_payment_info
-  payment_info_id: Int
-
   """An array relationship"""
   restaurant_operators(
     """distinct select on columns"""
@@ -10287,6 +10221,12 @@ type restaurant {
     """filter the rows returned"""
     where: restaurant_item_bool_exp
   ): [restaurant_item!]
+
+  """
+  { id: string; status: string; chargeFeesOnCustomer: boolean | null;
+  chargesEnabled: boolean; payoutsEnabled: boolean; detailsSubmitted: boolean;
+  requirements: string[] | null; email: string | null }
+  """
   stripe_info(
     """JSON select path"""
     path: String
@@ -10320,8 +10260,15 @@ type restaurant_aggregate_fields {
 
 """append existing jsonb value of filtered columns with new jsonb value"""
 input restaurant_append_input {
+  """Record of PaymentType(cash, card, bank transfer) and boolean"""
   accepted_payments: jsonb
   schedule: jsonb
+
+  """
+  { id: string; status: string; chargeFeesOnCustomer: boolean | null;
+  chargesEnabled: boolean; payoutsEnabled: boolean; detailsSubmitted: boolean;
+  requirements: string[] | null; email: string | null }
+  """
   stripe_info: jsonb
 }
 
@@ -10329,7 +10276,6 @@ input restaurant_append_input {
 type restaurant_avg_fields {
   description_id: Float
   id: Float
-  payment_info_id: Float
 }
 
 """
@@ -10342,7 +10288,9 @@ input restaurant_bool_exp {
   accepted_payments: jsonb_comparison_exp
   approved: Boolean_comparison_exp
   categories: restaurant_category_bool_exp
+  categories_aggregate: restaurant_category_aggregate_bool_exp
   delivery_drivers: delivery_driver_bool_exp
+  delivery_drivers_aggregate: delivery_driver_aggregate_bool_exp
   description: translation_bool_exp
   description_id: Int_comparison_exp
   firebase_id: String_comparison_exp
@@ -10354,10 +10302,11 @@ input restaurant_bool_exp {
   name: String_comparison_exp
   open_status: String_comparison_exp
   orders: restaurant_order_bool_exp
-  payment_info: service_provider_payment_info_bool_exp
-  payment_info_id: Int_comparison_exp
+  orders_aggregate: restaurant_order_aggregate_bool_exp
   restaurant_operators: restaurant_operator_bool_exp
+  restaurant_operators_aggregate: restaurant_operator_aggregate_bool_exp
   reviews: review_bool_exp
+  reviews_aggregate: review_aggregate_bool_exp
   schedule: jsonb_comparison_exp
   self_delivery: Boolean_comparison_exp
   service_provider_type: String_comparison_exp
@@ -10461,6 +10410,7 @@ input restaurant_cart_bool_exp {
   customer: customer_bool_exp
   customer_id: Int_comparison_exp
   items: restaurant_cart_item_bool_exp
+  items_aggregate: restaurant_cart_item_aggregate_bool_exp
   restaurant: restaurant_bool_exp
   restaurant_id: Int_comparison_exp
 }
@@ -10524,6 +10474,17 @@ aggregated selection of "restaurant_cart_item"
 type restaurant_cart_item_aggregate {
   aggregate: restaurant_cart_item_aggregate_fields
   nodes: [restaurant_cart_item!]!
+}
+
+input restaurant_cart_item_aggregate_bool_exp {
+  count: restaurant_cart_item_aggregate_bool_exp_count
+}
+
+input restaurant_cart_item_aggregate_bool_exp_count {
+  arguments: [restaurant_cart_item_select_column!]
+  distinct: Boolean
+  filter: restaurant_cart_item_bool_exp
+  predicate: Int_comparison_exp!
 }
 
 """
@@ -11192,6 +11153,17 @@ type restaurant_category_aggregate {
   nodes: [restaurant_category!]!
 }
 
+input restaurant_category_aggregate_bool_exp {
+  count: restaurant_category_aggregate_bool_exp_count
+}
+
+input restaurant_category_aggregate_bool_exp_count {
+  arguments: [restaurant_category_select_column!]
+  distinct: Boolean
+  filter: restaurant_category_bool_exp
+  predicate: Int_comparison_exp!
+}
+
 """
 aggregate fields of "restaurant_category"
 """
@@ -11269,6 +11241,7 @@ input restaurant_category_bool_exp {
   description_id: Int_comparison_exp
   id: Int_comparison_exp
   items: restaurant_item_bool_exp
+  items_aggregate: restaurant_item_aggregate_bool_exp
   name: translation_bool_exp
   name_id: Int_comparison_exp
   position: Int_comparison_exp
@@ -11711,6 +11684,33 @@ type restaurant_choice_aggregate {
   nodes: [restaurant_choice!]!
 }
 
+input restaurant_choice_aggregate_bool_exp {
+  bool_and: restaurant_choice_aggregate_bool_exp_bool_and
+  bool_or: restaurant_choice_aggregate_bool_exp_bool_or
+  count: restaurant_choice_aggregate_bool_exp_count
+}
+
+input restaurant_choice_aggregate_bool_exp_bool_and {
+  arguments: restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_and_arguments_columns!
+  distinct: Boolean
+  filter: restaurant_choice_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input restaurant_choice_aggregate_bool_exp_bool_or {
+  arguments: restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_or_arguments_columns!
+  distinct: Boolean
+  filter: restaurant_choice_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input restaurant_choice_aggregate_bool_exp_count {
+  arguments: [restaurant_choice_select_column!]
+  distinct: Boolean
+  filter: restaurant_choice_bool_exp
+  predicate: Int_comparison_exp!
+}
+
 """
 aggregate fields of "restaurant_choice"
 """
@@ -11786,6 +11786,7 @@ input restaurant_choice_bool_exp {
   name: translation_bool_exp
   name_id: Int_comparison_exp
   options: restaurant_option_choice_map_bool_exp
+  options_aggregate: restaurant_option_choice_map_aggregate_bool_exp
   restaurant: restaurant_bool_exp
   restaurant_id: Int_comparison_exp
 }
@@ -11915,6 +11916,22 @@ enum restaurant_choice_select_column {
 
   """column name"""
   restaurant_id
+}
+
+"""
+select "restaurant_choice_aggregate_bool_exp_bool_and_arguments_columns" columns of table "restaurant_choice"
+"""
+enum restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_and_arguments_columns {
+  """column name"""
+  available
+}
+
+"""
+select "restaurant_choice_aggregate_bool_exp_bool_or_arguments_columns" columns of table "restaurant_choice"
+"""
+enum restaurant_choice_select_column_restaurant_choice_aggregate_bool_exp_bool_or_arguments_columns {
+  """column name"""
+  available
 }
 
 """
@@ -12113,11 +12130,6 @@ enum restaurant_constraint {
   restaurant_firebase_id_key
 
   """
-  unique or primary key constraint on columns "payment_info_id"
-  """
-  restaurant_payment_info_id_key
-
-  """
   unique or primary key constraint on columns "id"
   """
   restaurant_pkey
@@ -12127,8 +12139,15 @@ enum restaurant_constraint {
 delete the field or element with specified path (for JSON arrays, negative integers count from the end)
 """
 input restaurant_delete_at_path_input {
+  """Record of PaymentType(cash, card, bank transfer) and boolean"""
   accepted_payments: [String!]
   schedule: [String!]
+
+  """
+  { id: string; status: string; chargeFeesOnCustomer: boolean | null;
+  chargesEnabled: boolean; payoutsEnabled: boolean; detailsSubmitted: boolean;
+  requirements: string[] | null; email: string | null }
+  """
   stripe_info: [String!]
 }
 
@@ -12137,8 +12156,15 @@ delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array
 """
 input restaurant_delete_elem_input {
+  """Record of PaymentType(cash, card, bank transfer) and boolean"""
   accepted_payments: Int
   schedule: Int
+
+  """
+  { id: string; status: string; chargeFeesOnCustomer: boolean | null;
+  chargesEnabled: boolean; payoutsEnabled: boolean; detailsSubmitted: boolean;
+  requirements: string[] | null; email: string | null }
+  """
   stripe_info: Int
 }
 
@@ -12146,8 +12172,15 @@ input restaurant_delete_elem_input {
 delete key/value pair or string element. key/value pairs are matched based on their key value
 """
 input restaurant_delete_key_input {
+  """Record of PaymentType(cash, card, bank transfer) and boolean"""
   accepted_payments: String
   schedule: String
+
+  """
+  { id: string; status: string; chargeFeesOnCustomer: boolean | null;
+  chargesEnabled: boolean; payoutsEnabled: boolean; detailsSubmitted: boolean;
+  requirements: string[] | null; email: string | null }
+  """
   stripe_info: String
 }
 
@@ -12157,13 +12190,13 @@ input type for incrementing numeric columns in table "restaurant"
 input restaurant_inc_input {
   description_id: Int
   id: Int
-  payment_info_id: Int
 }
 
 """
 input type for inserting data into table "restaurant"
 """
 input restaurant_insert_input {
+  """Record of PaymentType(cash, card, bank transfer) and boolean"""
   accepted_payments: jsonb
   approved: Boolean
   categories: restaurant_category_arr_rel_insert_input
@@ -12181,13 +12214,17 @@ input restaurant_insert_input {
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
   orders: restaurant_order_arr_rel_insert_input
-  payment_info: service_provider_payment_info_obj_rel_insert_input
-  payment_info_id: Int
   restaurant_operators: restaurant_operator_arr_rel_insert_input
   reviews: review_arr_rel_insert_input
   schedule: jsonb
   self_delivery: Boolean
   service_provider_type: String
+
+  """
+  { id: string; status: string; chargeFeesOnCustomer: boolean | null;
+  chargesEnabled: boolean; payoutsEnabled: boolean; detailsSubmitted: boolean;
+  requirements: string[] | null; email: string | null }
+  """
   stripe_info: jsonb
 }
 
@@ -12266,6 +12303,33 @@ aggregated selection of "restaurant_item"
 type restaurant_item_aggregate {
   aggregate: restaurant_item_aggregate_fields
   nodes: [restaurant_item!]!
+}
+
+input restaurant_item_aggregate_bool_exp {
+  bool_and: restaurant_item_aggregate_bool_exp_bool_and
+  bool_or: restaurant_item_aggregate_bool_exp_bool_or
+  count: restaurant_item_aggregate_bool_exp_count
+}
+
+input restaurant_item_aggregate_bool_exp_bool_and {
+  arguments: restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_and_arguments_columns!
+  distinct: Boolean
+  filter: restaurant_item_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input restaurant_item_aggregate_bool_exp_bool_or {
+  arguments: restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_or_arguments_columns!
+  distinct: Boolean
+  filter: restaurant_item_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input restaurant_item_aggregate_bool_exp_count {
+  arguments: [restaurant_item_select_column!]
+  distinct: Boolean
+  filter: restaurant_item_bool_exp
+  predicate: Int_comparison_exp!
 }
 
 """
@@ -12356,6 +12420,7 @@ input restaurant_item_bool_exp {
   name: translation_bool_exp
   name_id: Int_comparison_exp
   options: restaurant_item_option_map_bool_exp
+  options_aggregate: restaurant_item_option_map_aggregate_bool_exp
   position: Int_comparison_exp
   restaurant: restaurant_bool_exp
   restaurant_id: Int_comparison_exp
@@ -12571,6 +12636,17 @@ type restaurant_item_option_map_aggregate {
   nodes: [restaurant_item_option_map!]!
 }
 
+input restaurant_item_option_map_aggregate_bool_exp {
+  count: restaurant_item_option_map_aggregate_bool_exp_count
+}
+
+input restaurant_item_option_map_aggregate_bool_exp_count {
+  arguments: [restaurant_item_option_map_select_column!]
+  distinct: Boolean
+  filter: restaurant_item_option_map_bool_exp
+  predicate: Int_comparison_exp!
+}
+
 """
 aggregate fields of "restaurant_item_option_map"
 """
@@ -12643,6 +12719,7 @@ input restaurant_item_option_map_bool_exp {
   id: Int_comparison_exp
   item_id: Int_comparison_exp
   item_options: restaurant_option_bool_exp
+  item_options_aggregate: restaurant_option_aggregate_bool_exp
   option_id: Int_comparison_exp
   restaurant: restaurant_bool_exp
   restaurant_id: Int_comparison_exp
@@ -13028,6 +13105,28 @@ enum restaurant_item_select_column {
 }
 
 """
+select "restaurant_item_aggregate_bool_exp_bool_and_arguments_columns" columns of table "restaurant_item"
+"""
+enum restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_and_arguments_columns {
+  """column name"""
+  archived
+
+  """column name"""
+  available
+}
+
+"""
+select "restaurant_item_aggregate_bool_exp_bool_or_arguments_columns" columns of table "restaurant_item"
+"""
+enum restaurant_item_select_column_restaurant_item_aggregate_bool_exp_bool_or_arguments_columns {
+  """column name"""
+  archived
+
+  """column name"""
+  available
+}
+
+"""
 input type for updating data in table "restaurant_item"
 """
 input restaurant_item_set_input {
@@ -13311,7 +13410,6 @@ type restaurant_max_fields {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
-  payment_info_id: Int
   service_provider_type: String
 }
 
@@ -13327,7 +13425,6 @@ type restaurant_min_fields {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
-  payment_info_id: Int
   service_provider_type: String
 }
 
@@ -13394,6 +13491,33 @@ aggregated selection of "restaurant_operator"
 type restaurant_operator_aggregate {
   aggregate: restaurant_operator_aggregate_fields
   nodes: [restaurant_operator!]!
+}
+
+input restaurant_operator_aggregate_bool_exp {
+  bool_and: restaurant_operator_aggregate_bool_exp_bool_and
+  bool_or: restaurant_operator_aggregate_bool_exp_bool_or
+  count: restaurant_operator_aggregate_bool_exp_count
+}
+
+input restaurant_operator_aggregate_bool_exp_bool_and {
+  arguments: restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_and_arguments_columns!
+  distinct: Boolean
+  filter: restaurant_operator_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input restaurant_operator_aggregate_bool_exp_bool_or {
+  arguments: restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_or_arguments_columns!
+  distinct: Boolean
+  filter: restaurant_operator_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input restaurant_operator_aggregate_bool_exp_count {
+  arguments: [restaurant_operator_select_column!]
+  distinct: Boolean
+  filter: restaurant_operator_bool_exp
+  predicate: Int_comparison_exp!
 }
 
 """
@@ -13647,6 +13771,22 @@ enum restaurant_operator_select_column {
 
   """column name"""
   user_id
+}
+
+"""
+select "restaurant_operator_aggregate_bool_exp_bool_and_arguments_columns" columns of table "restaurant_operator"
+"""
+enum restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_and_arguments_columns {
+  """column name"""
+  owner
+}
+
+"""
+select "restaurant_operator_aggregate_bool_exp_bool_or_arguments_columns" columns of table "restaurant_operator"
+"""
+enum restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_or_arguments_columns {
+  """column name"""
+  owner
 }
 
 """
@@ -13940,6 +14080,17 @@ type restaurant_option_aggregate {
   nodes: [restaurant_option!]!
 }
 
+input restaurant_option_aggregate_bool_exp {
+  count: restaurant_option_aggregate_bool_exp_count
+}
+
+input restaurant_option_aggregate_bool_exp_count {
+  arguments: [restaurant_option_select_column!]
+  distinct: Boolean
+  filter: restaurant_option_bool_exp
+  predicate: Int_comparison_exp!
+}
+
 """
 aggregate fields of "restaurant_option"
 """
@@ -14018,10 +14169,12 @@ input restaurant_option_bool_exp {
   _not: restaurant_option_bool_exp
   _or: [restaurant_option_bool_exp!]
   choices: restaurant_option_choice_map_bool_exp
+  choices_aggregate: restaurant_option_choice_map_aggregate_bool_exp
   cost_per_extra: money_comparison_exp
   free_choice: Int_comparison_exp
   id: Int_comparison_exp
   items: restaurant_item_option_map_bool_exp
+  items_aggregate: restaurant_item_option_map_aggregate_bool_exp
   maximum_choice: Int_comparison_exp
   minimum_choice: Int_comparison_exp
   name: translation_bool_exp
@@ -14087,6 +14240,17 @@ aggregated selection of "restaurant_option_choice_map"
 type restaurant_option_choice_map_aggregate {
   aggregate: restaurant_option_choice_map_aggregate_fields
   nodes: [restaurant_option_choice_map!]!
+}
+
+input restaurant_option_choice_map_aggregate_bool_exp {
+  count: restaurant_option_choice_map_aggregate_bool_exp_count
+}
+
+input restaurant_option_choice_map_aggregate_bool_exp_count {
+  arguments: [restaurant_option_choice_map_select_column!]
+  distinct: Boolean
+  filter: restaurant_option_choice_map_bool_exp
+  predicate: Int_comparison_exp!
 }
 
 """
@@ -14162,6 +14326,7 @@ input restaurant_option_choice_map_bool_exp {
   choice_id: Int_comparison_exp
   id: Int_comparison_exp
   option_choices: restaurant_choice_bool_exp
+  option_choices_aggregate: restaurant_choice_aggregate_bool_exp
   option_id: Int_comparison_exp
   restaurant: restaurant_bool_exp
   restaurant_id: Int_comparison_exp
@@ -14918,8 +15083,8 @@ type restaurant_order {
   cancellation_time: timestamptz
 
   """An object relationship"""
-  chat: chat
-  chat_id: Int
+  chat: chat!
+  chat_id: Int!
 
   """An object relationship"""
   customer: customer!
@@ -14999,6 +15164,13 @@ type restaurant_order {
   """
   status: String!
   stripe_fees: money!
+
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
   stripe_info(
     """JSON select path"""
     path: String
@@ -15019,6 +15191,17 @@ aggregated selection of "restaurant_order"
 type restaurant_order_aggregate {
   aggregate: restaurant_order_aggregate_fields
   nodes: [restaurant_order!]!
+}
+
+input restaurant_order_aggregate_bool_exp {
+  count: restaurant_order_aggregate_bool_exp_count
+}
+
+input restaurant_order_aggregate_bool_exp_count {
+  arguments: [restaurant_order_select_column!]
+  distinct: Boolean
+  filter: restaurant_order_bool_exp
+  predicate: Int_comparison_exp!
 }
 
 """
@@ -15057,6 +15240,12 @@ input restaurant_order_aggregate_order_by {
 
 """append existing jsonb value of filtered columns with new jsonb value"""
 input restaurant_order_append_input {
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
   stripe_info: jsonb
 }
 
@@ -15122,6 +15311,7 @@ input restaurant_order_bool_exp {
   id: Int_comparison_exp
   in_process: Boolean_comparison_exp
   items: restaurant_order_item_bool_exp
+  items_aggregate: restaurant_order_item_aggregate_bool_exp
   items_cost: money_comparison_exp
   notes: String_comparison_exp
   order_time: timestamptz_comparison_exp
@@ -15159,8 +15349,6 @@ input restaurant_order_by {
   name: order_by
   open_status: order_by
   orders_aggregate: restaurant_order_aggregate_order_by
-  payment_info: service_provider_payment_info_order_by
-  payment_info_id: order_by
   restaurant_operators_aggregate: restaurant_operator_aggregate_order_by
   reviews_aggregate: review_aggregate_order_by
   schedule: order_by
@@ -15194,6 +15382,12 @@ enum restaurant_order_constraint {
 delete the field or element with specified path (for JSON arrays, negative integers count from the end)
 """
 input restaurant_order_delete_at_path_input {
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
   stripe_info: [String!]
 }
 
@@ -15202,6 +15396,12 @@ delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array
 """
 input restaurant_order_delete_elem_input {
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
   stripe_info: Int
 }
 
@@ -15209,6 +15409,12 @@ input restaurant_order_delete_elem_input {
 delete key/value pair or string element. key/value pairs are matched based on their key value
 """
 input restaurant_order_delete_key_input {
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
   stripe_info: String
 }
 
@@ -15262,6 +15468,13 @@ input restaurant_order_insert_input {
   """
   status: String
   stripe_fees: money
+
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
   stripe_info: jsonb
   tax: money
   to_location_address: String
@@ -15296,6 +15509,33 @@ aggregated selection of "restaurant_order_item"
 type restaurant_order_item_aggregate {
   aggregate: restaurant_order_item_aggregate_fields
   nodes: [restaurant_order_item!]!
+}
+
+input restaurant_order_item_aggregate_bool_exp {
+  bool_and: restaurant_order_item_aggregate_bool_exp_bool_and
+  bool_or: restaurant_order_item_aggregate_bool_exp_bool_or
+  count: restaurant_order_item_aggregate_bool_exp_count
+}
+
+input restaurant_order_item_aggregate_bool_exp_bool_and {
+  arguments: restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_and_arguments_columns!
+  distinct: Boolean
+  filter: restaurant_order_item_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input restaurant_order_item_aggregate_bool_exp_bool_or {
+  arguments: restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_or_arguments_columns!
+  distinct: Boolean
+  filter: restaurant_order_item_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input restaurant_order_item_aggregate_bool_exp_count {
+  arguments: [restaurant_order_item_select_column!]
+  distinct: Boolean
+  filter: restaurant_order_item_bool_exp
+  predicate: Int_comparison_exp!
 }
 
 """
@@ -15539,6 +15779,22 @@ enum restaurant_order_item_select_column {
   """column name"""
   review_id
 
+  """column name"""
+  unavailable
+}
+
+"""
+select "restaurant_order_item_aggregate_bool_exp_bool_and_arguments_columns" columns of table "restaurant_order_item"
+"""
+enum restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_and_arguments_columns {
+  """column name"""
+  unavailable
+}
+
+"""
+select "restaurant_order_item_aggregate_bool_exp_bool_or_arguments_columns" columns of table "restaurant_order_item"
+"""
+enum restaurant_order_item_select_column_restaurant_order_item_aggregate_bool_exp_bool_or_arguments_columns {
   """column name"""
   unavailable
 }
@@ -15975,6 +16231,12 @@ input restaurant_order_pk_columns_input {
 
 """prepend existing jsonb value of filtered columns with new jsonb value"""
 input restaurant_order_prepend_input {
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
   stripe_info: jsonb
 }
 
@@ -16072,6 +16334,7 @@ input restaurant_order_public_bool_exp {
   order_time: timestamptz_comparison_exp
   restaurant_id: Int_comparison_exp
   restaurant_operators: restaurant_operator_bool_exp
+  restaurant_operators_aggregate: restaurant_operator_aggregate_bool_exp
   review_id: Int_comparison_exp
   status: String_comparison_exp
 }
@@ -16368,6 +16631,13 @@ input restaurant_order_set_input {
   """
   status: String
   stripe_fees: money
+
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
   stripe_info: jsonb
   tax: money
   to_location_address: String
@@ -16501,6 +16771,13 @@ input restaurant_order_stream_cursor_value_input {
   """
   status: String
   stripe_fees: money
+
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
   stripe_info: jsonb
   tax: money
   to_location_address: String
@@ -16742,8 +17019,15 @@ input restaurant_pk_columns_input {
 
 """prepend existing jsonb value of filtered columns with new jsonb value"""
 input restaurant_prepend_input {
+  """Record of PaymentType(cash, card, bank transfer) and boolean"""
   accepted_payments: jsonb
   schedule: jsonb
+
+  """
+  { id: string; status: string; chargeFeesOnCustomer: boolean | null;
+  chargesEnabled: boolean; payoutsEnabled: boolean; detailsSubmitted: boolean;
+  requirements: string[] | null; email: string | null }
+  """
   stripe_info: jsonb
 }
 
@@ -16785,9 +17069,6 @@ enum restaurant_select_column {
   open_status
 
   """column name"""
-  payment_info_id
-
-  """column name"""
   schedule
 
   """column name"""
@@ -16804,6 +17085,7 @@ enum restaurant_select_column {
 input type for updating data in table "restaurant"
 """
 input restaurant_set_input {
+  """Record of PaymentType(cash, card, bank transfer) and boolean"""
   accepted_payments: jsonb
   approved: Boolean
   description_id: Int
@@ -16817,10 +17099,15 @@ input restaurant_set_input {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
-  payment_info_id: Int
   schedule: jsonb
   self_delivery: Boolean
   service_provider_type: String
+
+  """
+  { id: string; status: string; chargeFeesOnCustomer: boolean | null;
+  chargesEnabled: boolean; payoutsEnabled: boolean; detailsSubmitted: boolean;
+  requirements: string[] | null; email: string | null }
+  """
   stripe_info: jsonb
 }
 
@@ -16828,21 +17115,18 @@ input restaurant_set_input {
 type restaurant_stddev_fields {
   description_id: Float
   id: Float
-  payment_info_id: Float
 }
 
 """aggregate stddev_pop on columns"""
 type restaurant_stddev_pop_fields {
   description_id: Float
   id: Float
-  payment_info_id: Float
 }
 
 """aggregate stddev_samp on columns"""
 type restaurant_stddev_samp_fields {
   description_id: Float
   id: Float
-  payment_info_id: Float
 }
 
 """
@@ -16858,6 +17142,7 @@ input restaurant_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input restaurant_stream_cursor_value_input {
+  """Record of PaymentType(cash, card, bank transfer) and boolean"""
   accepted_payments: jsonb
   approved: Boolean
   description_id: Int
@@ -16871,10 +17156,15 @@ input restaurant_stream_cursor_value_input {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
-  payment_info_id: Int
   schedule: jsonb
   self_delivery: Boolean
   service_provider_type: String
+
+  """
+  { id: string; status: string; chargeFeesOnCustomer: boolean | null;
+  chargesEnabled: boolean; payoutsEnabled: boolean; detailsSubmitted: boolean;
+  requirements: string[] | null; email: string | null }
+  """
   stripe_info: jsonb
 }
 
@@ -16882,7 +17172,6 @@ input restaurant_stream_cursor_value_input {
 type restaurant_sum_fields {
   description_id: Int
   id: Int
-  payment_info_id: Int
 }
 
 """
@@ -16921,9 +17210,6 @@ enum restaurant_update_column {
 
   """column name"""
   open_status
-
-  """column name"""
-  payment_info_id
 
   """column name"""
   schedule
@@ -16973,21 +17259,18 @@ input restaurant_updates {
 type restaurant_var_pop_fields {
   description_id: Float
   id: Float
-  payment_info_id: Float
 }
 
 """aggregate var_samp on columns"""
 type restaurant_var_samp_fields {
   description_id: Float
   id: Float
-  payment_info_id: Float
 }
 
 """aggregate variance on columns"""
 type restaurant_variance_fields {
   description_id: Float
   id: Float
-  payment_info_id: Float
 }
 
 """
@@ -17013,6 +17296,17 @@ aggregated selection of "review"
 type review_aggregate {
   aggregate: review_aggregate_fields
   nodes: [review!]!
+}
+
+input review_aggregate_bool_exp {
+  count: review_aggregate_bool_exp_count
+}
+
+input review_aggregate_bool_exp_count {
+  arguments: [review_select_column!]
+  distinct: Boolean
+  filter: review_bool_exp
+  predicate: Int_comparison_exp!
 }
 
 """
@@ -17478,6 +17772,33 @@ type saved_location_aggregate {
   nodes: [saved_location!]!
 }
 
+input saved_location_aggregate_bool_exp {
+  bool_and: saved_location_aggregate_bool_exp_bool_and
+  bool_or: saved_location_aggregate_bool_exp_bool_or
+  count: saved_location_aggregate_bool_exp_count
+}
+
+input saved_location_aggregate_bool_exp_bool_and {
+  arguments: saved_location_select_column_saved_location_aggregate_bool_exp_bool_and_arguments_columns!
+  distinct: Boolean
+  filter: saved_location_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input saved_location_aggregate_bool_exp_bool_or {
+  arguments: saved_location_select_column_saved_location_aggregate_bool_exp_bool_or_arguments_columns!
+  distinct: Boolean
+  filter: saved_location_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input saved_location_aggregate_bool_exp_count {
+  arguments: [saved_location_select_column!]
+  distinct: Boolean
+  filter: saved_location_bool_exp
+  predicate: Int_comparison_exp!
+}
+
 """
 aggregate fields of "saved_location"
 """
@@ -17673,6 +17994,22 @@ enum saved_location_select_column {
 
   """column name"""
   name
+}
+
+"""
+select "saved_location_aggregate_bool_exp_bool_and_arguments_columns" columns of table "saved_location"
+"""
+enum saved_location_select_column_saved_location_aggregate_bool_exp_bool_and_arguments_columns {
+  """column name"""
+  default
+}
+
+"""
+select "saved_location_aggregate_bool_exp_bool_or_arguments_columns" columns of table "saved_location"
+"""
+enum saved_location_select_column_saved_location_aggregate_bool_exp_bool_or_arguments_columns {
+  """column name"""
+  default
 }
 
 """
@@ -18164,303 +18501,6 @@ type service_link_variance_fields {
   service_provider_id: Float
 }
 
-"""
-columns and relationships of "service_provider_payment_info"
-"""
-type service_provider_payment_info {
-  bank_transfer: Boolean!
-  card: Boolean!
-  cash: Boolean!
-  id: Int!
-
-  """An object relationship"""
-  restaurant: restaurant
-  service_provider_type: String!
-
-  """An object relationship"""
-  stripe_info: stripe_info
-  stripe_info_id: Int
-}
-
-"""
-aggregated selection of "service_provider_payment_info"
-"""
-type service_provider_payment_info_aggregate {
-  aggregate: service_provider_payment_info_aggregate_fields
-  nodes: [service_provider_payment_info!]!
-}
-
-"""
-aggregate fields of "service_provider_payment_info"
-"""
-type service_provider_payment_info_aggregate_fields {
-  avg: service_provider_payment_info_avg_fields
-  count(columns: [service_provider_payment_info_select_column!], distinct: Boolean): Int!
-  max: service_provider_payment_info_max_fields
-  min: service_provider_payment_info_min_fields
-  stddev: service_provider_payment_info_stddev_fields
-  stddev_pop: service_provider_payment_info_stddev_pop_fields
-  stddev_samp: service_provider_payment_info_stddev_samp_fields
-  sum: service_provider_payment_info_sum_fields
-  var_pop: service_provider_payment_info_var_pop_fields
-  var_samp: service_provider_payment_info_var_samp_fields
-  variance: service_provider_payment_info_variance_fields
-}
-
-"""aggregate avg on columns"""
-type service_provider_payment_info_avg_fields {
-  id: Float
-  stripe_info_id: Float
-}
-
-"""
-Boolean expression to filter rows from the table
-"service_provider_payment_info". All fields are combined with a logical 'AND'.
-"""
-input service_provider_payment_info_bool_exp {
-  _and: [service_provider_payment_info_bool_exp!]
-  _not: service_provider_payment_info_bool_exp
-  _or: [service_provider_payment_info_bool_exp!]
-  bank_transfer: Boolean_comparison_exp
-  card: Boolean_comparison_exp
-  cash: Boolean_comparison_exp
-  id: Int_comparison_exp
-  restaurant: restaurant_bool_exp
-  service_provider_type: String_comparison_exp
-  stripe_info: stripe_info_bool_exp
-  stripe_info_id: Int_comparison_exp
-}
-
-"""
-unique or primary key constraints on table "service_provider_payment_info"
-"""
-enum service_provider_payment_info_constraint {
-  """
-  unique or primary key constraint on columns "id"
-  """
-  service_provider_payment_info_pkey
-
-  """
-  unique or primary key constraint on columns "stripe_info_id"
-  """
-  service_provider_payment_info_stripe_info_id_key
-}
-
-"""
-input type for incrementing numeric columns in table "service_provider_payment_info"
-"""
-input service_provider_payment_info_inc_input {
-  id: Int
-  stripe_info_id: Int
-}
-
-"""
-input type for inserting data into table "service_provider_payment_info"
-"""
-input service_provider_payment_info_insert_input {
-  bank_transfer: Boolean
-  card: Boolean
-  cash: Boolean
-  id: Int
-  restaurant: restaurant_obj_rel_insert_input
-  service_provider_type: String
-  stripe_info: stripe_info_obj_rel_insert_input
-  stripe_info_id: Int
-}
-
-"""aggregate max on columns"""
-type service_provider_payment_info_max_fields {
-  id: Int
-  service_provider_type: String
-  stripe_info_id: Int
-}
-
-"""aggregate min on columns"""
-type service_provider_payment_info_min_fields {
-  id: Int
-  service_provider_type: String
-  stripe_info_id: Int
-}
-
-"""
-response of any mutation on the table "service_provider_payment_info"
-"""
-type service_provider_payment_info_mutation_response {
-  """number of rows affected by the mutation"""
-  affected_rows: Int!
-
-  """data from the rows affected by the mutation"""
-  returning: [service_provider_payment_info!]!
-}
-
-"""
-input type for inserting object relation for remote table "service_provider_payment_info"
-"""
-input service_provider_payment_info_obj_rel_insert_input {
-  data: service_provider_payment_info_insert_input!
-
-  """upsert condition"""
-  on_conflict: service_provider_payment_info_on_conflict
-}
-
-"""
-on_conflict condition type for table "service_provider_payment_info"
-"""
-input service_provider_payment_info_on_conflict {
-  constraint: service_provider_payment_info_constraint!
-  update_columns: [service_provider_payment_info_update_column!]! = []
-  where: service_provider_payment_info_bool_exp
-}
-
-"""
-Ordering options when selecting data from "service_provider_payment_info".
-"""
-input service_provider_payment_info_order_by {
-  bank_transfer: order_by
-  card: order_by
-  cash: order_by
-  id: order_by
-  restaurant: restaurant_order_by
-  service_provider_type: order_by
-  stripe_info: stripe_info_order_by
-  stripe_info_id: order_by
-}
-
-"""primary key columns input for table: service_provider_payment_info"""
-input service_provider_payment_info_pk_columns_input {
-  id: Int!
-}
-
-"""
-select columns of table "service_provider_payment_info"
-"""
-enum service_provider_payment_info_select_column {
-  """column name"""
-  bank_transfer
-
-  """column name"""
-  card
-
-  """column name"""
-  cash
-
-  """column name"""
-  id
-
-  """column name"""
-  service_provider_type
-
-  """column name"""
-  stripe_info_id
-}
-
-"""
-input type for updating data in table "service_provider_payment_info"
-"""
-input service_provider_payment_info_set_input {
-  bank_transfer: Boolean
-  card: Boolean
-  cash: Boolean
-  id: Int
-  service_provider_type: String
-  stripe_info_id: Int
-}
-
-"""aggregate stddev on columns"""
-type service_provider_payment_info_stddev_fields {
-  id: Float
-  stripe_info_id: Float
-}
-
-"""aggregate stddev_pop on columns"""
-type service_provider_payment_info_stddev_pop_fields {
-  id: Float
-  stripe_info_id: Float
-}
-
-"""aggregate stddev_samp on columns"""
-type service_provider_payment_info_stddev_samp_fields {
-  id: Float
-  stripe_info_id: Float
-}
-
-"""
-Streaming cursor of the table "service_provider_payment_info"
-"""
-input service_provider_payment_info_stream_cursor_input {
-  """Stream column input with initial value"""
-  initial_value: service_provider_payment_info_stream_cursor_value_input!
-
-  """cursor ordering"""
-  ordering: cursor_ordering
-}
-
-"""Initial value of the column from where the streaming should start"""
-input service_provider_payment_info_stream_cursor_value_input {
-  bank_transfer: Boolean
-  card: Boolean
-  cash: Boolean
-  id: Int
-  service_provider_type: String
-  stripe_info_id: Int
-}
-
-"""aggregate sum on columns"""
-type service_provider_payment_info_sum_fields {
-  id: Int
-  stripe_info_id: Int
-}
-
-"""
-update columns of table "service_provider_payment_info"
-"""
-enum service_provider_payment_info_update_column {
-  """column name"""
-  bank_transfer
-
-  """column name"""
-  card
-
-  """column name"""
-  cash
-
-  """column name"""
-  id
-
-  """column name"""
-  service_provider_type
-
-  """column name"""
-  stripe_info_id
-}
-
-input service_provider_payment_info_updates {
-  """increments the numeric columns with given value of the filtered values"""
-  _inc: service_provider_payment_info_inc_input
-
-  """sets the columns of the filtered rows to the given values"""
-  _set: service_provider_payment_info_set_input
-  where: service_provider_payment_info_bool_exp!
-}
-
-"""aggregate var_pop on columns"""
-type service_provider_payment_info_var_pop_fields {
-  id: Float
-  stripe_info_id: Float
-}
-
-"""aggregate var_samp on columns"""
-type service_provider_payment_info_var_samp_fields {
-  id: Float
-  stripe_info_id: Float
-}
-
-"""aggregate variance on columns"""
-type service_provider_payment_info_variance_fields {
-  id: Float
-  stripe_info_id: Float
-}
-
 input st_d_within_geography_input {
   distance: Float!
   from: geography!
@@ -18523,312 +18563,6 @@ input String_comparison_exp {
 
   """does the column match the given SQL regular expression"""
   _similar: String
-}
-
-"""
-columns and relationships of "stripe_info"
-"""
-type stripe_info {
-  charges_enabled: Boolean!
-  details_submitted: Boolean!
-  id: Int!
-  pass_fees_to_customer: Boolean!
-  payouts_enabled: Boolean!
-  requirements(
-    """JSON select path"""
-    path: String
-  ): json
-
-  """An object relationship"""
-  service_provider_payment_info: service_provider_payment_info
-  stripe_id: String!
-  stripe_status: String!
-}
-
-"""
-aggregated selection of "stripe_info"
-"""
-type stripe_info_aggregate {
-  aggregate: stripe_info_aggregate_fields
-  nodes: [stripe_info!]!
-}
-
-"""
-aggregate fields of "stripe_info"
-"""
-type stripe_info_aggregate_fields {
-  avg: stripe_info_avg_fields
-  count(columns: [stripe_info_select_column!], distinct: Boolean): Int!
-  max: stripe_info_max_fields
-  min: stripe_info_min_fields
-  stddev: stripe_info_stddev_fields
-  stddev_pop: stripe_info_stddev_pop_fields
-  stddev_samp: stripe_info_stddev_samp_fields
-  sum: stripe_info_sum_fields
-  var_pop: stripe_info_var_pop_fields
-  var_samp: stripe_info_var_samp_fields
-  variance: stripe_info_variance_fields
-}
-
-"""aggregate avg on columns"""
-type stripe_info_avg_fields {
-  id: Float
-}
-
-"""
-Boolean expression to filter rows from the table "stripe_info". All fields are combined with a logical 'AND'.
-"""
-input stripe_info_bool_exp {
-  _and: [stripe_info_bool_exp!]
-  _not: stripe_info_bool_exp
-  _or: [stripe_info_bool_exp!]
-  charges_enabled: Boolean_comparison_exp
-  details_submitted: Boolean_comparison_exp
-  id: Int_comparison_exp
-  pass_fees_to_customer: Boolean_comparison_exp
-  payouts_enabled: Boolean_comparison_exp
-  requirements: json_comparison_exp
-  service_provider_payment_info: service_provider_payment_info_bool_exp
-  stripe_id: String_comparison_exp
-  stripe_status: String_comparison_exp
-}
-
-"""
-unique or primary key constraints on table "stripe_info"
-"""
-enum stripe_info_constraint {
-  """
-  unique or primary key constraint on columns "id"
-  """
-  stripe_info_pkey
-
-  """
-  unique or primary key constraint on columns "stripe_id"
-  """
-  stripe_info_stripe_id_key
-}
-
-"""
-input type for incrementing numeric columns in table "stripe_info"
-"""
-input stripe_info_inc_input {
-  id: Int
-}
-
-"""
-input type for inserting data into table "stripe_info"
-"""
-input stripe_info_insert_input {
-  charges_enabled: Boolean
-  details_submitted: Boolean
-  id: Int
-  pass_fees_to_customer: Boolean
-  payouts_enabled: Boolean
-  requirements: json
-  service_provider_payment_info: service_provider_payment_info_obj_rel_insert_input
-  stripe_id: String
-  stripe_status: String
-}
-
-"""aggregate max on columns"""
-type stripe_info_max_fields {
-  id: Int
-  stripe_id: String
-  stripe_status: String
-}
-
-"""aggregate min on columns"""
-type stripe_info_min_fields {
-  id: Int
-  stripe_id: String
-  stripe_status: String
-}
-
-"""
-response of any mutation on the table "stripe_info"
-"""
-type stripe_info_mutation_response {
-  """number of rows affected by the mutation"""
-  affected_rows: Int!
-
-  """data from the rows affected by the mutation"""
-  returning: [stripe_info!]!
-}
-
-"""
-input type for inserting object relation for remote table "stripe_info"
-"""
-input stripe_info_obj_rel_insert_input {
-  data: stripe_info_insert_input!
-
-  """upsert condition"""
-  on_conflict: stripe_info_on_conflict
-}
-
-"""
-on_conflict condition type for table "stripe_info"
-"""
-input stripe_info_on_conflict {
-  constraint: stripe_info_constraint!
-  update_columns: [stripe_info_update_column!]! = []
-  where: stripe_info_bool_exp
-}
-
-"""Ordering options when selecting data from "stripe_info"."""
-input stripe_info_order_by {
-  charges_enabled: order_by
-  details_submitted: order_by
-  id: order_by
-  pass_fees_to_customer: order_by
-  payouts_enabled: order_by
-  requirements: order_by
-  service_provider_payment_info: service_provider_payment_info_order_by
-  stripe_id: order_by
-  stripe_status: order_by
-}
-
-"""primary key columns input for table: stripe_info"""
-input stripe_info_pk_columns_input {
-  id: Int!
-}
-
-"""
-select columns of table "stripe_info"
-"""
-enum stripe_info_select_column {
-  """column name"""
-  charges_enabled
-
-  """column name"""
-  details_submitted
-
-  """column name"""
-  id
-
-  """column name"""
-  pass_fees_to_customer
-
-  """column name"""
-  payouts_enabled
-
-  """column name"""
-  requirements
-
-  """column name"""
-  stripe_id
-
-  """column name"""
-  stripe_status
-}
-
-"""
-input type for updating data in table "stripe_info"
-"""
-input stripe_info_set_input {
-  charges_enabled: Boolean
-  details_submitted: Boolean
-  id: Int
-  pass_fees_to_customer: Boolean
-  payouts_enabled: Boolean
-  requirements: json
-  stripe_id: String
-  stripe_status: String
-}
-
-"""aggregate stddev on columns"""
-type stripe_info_stddev_fields {
-  id: Float
-}
-
-"""aggregate stddev_pop on columns"""
-type stripe_info_stddev_pop_fields {
-  id: Float
-}
-
-"""aggregate stddev_samp on columns"""
-type stripe_info_stddev_samp_fields {
-  id: Float
-}
-
-"""
-Streaming cursor of the table "stripe_info"
-"""
-input stripe_info_stream_cursor_input {
-  """Stream column input with initial value"""
-  initial_value: stripe_info_stream_cursor_value_input!
-
-  """cursor ordering"""
-  ordering: cursor_ordering
-}
-
-"""Initial value of the column from where the streaming should start"""
-input stripe_info_stream_cursor_value_input {
-  charges_enabled: Boolean
-  details_submitted: Boolean
-  id: Int
-  pass_fees_to_customer: Boolean
-  payouts_enabled: Boolean
-  requirements: json
-  stripe_id: String
-  stripe_status: String
-}
-
-"""aggregate sum on columns"""
-type stripe_info_sum_fields {
-  id: Int
-}
-
-"""
-update columns of table "stripe_info"
-"""
-enum stripe_info_update_column {
-  """column name"""
-  charges_enabled
-
-  """column name"""
-  details_submitted
-
-  """column name"""
-  id
-
-  """column name"""
-  pass_fees_to_customer
-
-  """column name"""
-  payouts_enabled
-
-  """column name"""
-  requirements
-
-  """column name"""
-  stripe_id
-
-  """column name"""
-  stripe_status
-}
-
-input stripe_info_updates {
-  """increments the numeric columns with given value of the filtered values"""
-  _inc: stripe_info_inc_input
-
-  """sets the columns of the filtered rows to the given values"""
-  _set: stripe_info_set_input
-  where: stripe_info_bool_exp!
-}
-
-"""aggregate var_pop on columns"""
-type stripe_info_var_pop_fields {
-  id: Float
-}
-
-"""aggregate var_samp on columns"""
-type stripe_info_var_samp_fields {
-  id: Float
-}
-
-"""aggregate variance on columns"""
-type stripe_info_variance_fields {
-  id: Float
 }
 
 """
@@ -19197,7 +18931,7 @@ type subscription_root {
   chat_participant_by_pk(id: Int!): chat_participant
 
   """
-  fetch data from the table in a streaming manner : "chat_participant"
+  fetch data from the table in a streaming manner: "chat_participant"
   """
   chat_participant_stream(
     """maximum number of rows returned in a single batch"""
@@ -19211,7 +18945,7 @@ type subscription_root {
   ): [chat_participant!]!
 
   """
-  fetch data from the table in a streaming manner : "chat"
+  fetch data from the table in a streaming manner: "chat"
   """
   chat_stream(
     """maximum number of rows returned in a single batch"""
@@ -19268,7 +19002,7 @@ type subscription_root {
   customer_by_pk(user_id: Int!): customer
 
   """
-  fetch data from the table in a streaming manner : "customer"
+  fetch data from the table in a streaming manner: "customer"
   """
   customer_stream(
     """maximum number of rows returned in a single batch"""
@@ -19327,7 +19061,7 @@ type subscription_root {
   delivery_company_by_pk(id: Int!): delivery_company
 
   """
-  fetch data from the table in a streaming manner : "delivery_company"
+  fetch data from the table in a streaming manner: "delivery_company"
   """
   delivery_company_stream(
     """maximum number of rows returned in a single batch"""
@@ -19384,7 +19118,7 @@ type subscription_root {
   delivery_cost_by_pk(id: Int!): delivery_cost
 
   """
-  fetch data from the table in a streaming manner : "delivery_cost"
+  fetch data from the table in a streaming manner: "delivery_cost"
   """
   delivery_cost_stream(
     """maximum number of rows returned in a single batch"""
@@ -19441,7 +19175,7 @@ type subscription_root {
   delivery_driver_by_pk(id: Int!): delivery_driver
 
   """
-  fetch data from the table in a streaming manner : "delivery_driver"
+  fetch data from the table in a streaming manner: "delivery_driver"
   """
   delivery_driver_stream(
     """maximum number of rows returned in a single batch"""
@@ -19500,7 +19234,7 @@ type subscription_root {
   delivery_operator_by_pk(id: Int!): delivery_operator
 
   """
-  fetch data from the table in a streaming manner : "delivery_operator"
+  fetch data from the table in a streaming manner: "delivery_operator"
   """
   delivery_operator_stream(
     """maximum number of rows returned in a single batch"""
@@ -19597,7 +19331,7 @@ type subscription_root {
   ): delivery_order_public_aggregate!
 
   """
-  fetch data from the table in a streaming manner : "delivery_order_public"
+  fetch data from the table in a streaming manner: "delivery_order_public"
   """
   delivery_order_public_stream(
     """maximum number of rows returned in a single batch"""
@@ -19611,7 +19345,7 @@ type subscription_root {
   ): [delivery_order_public!]!
 
   """
-  fetch data from the table in a streaming manner : "delivery_order"
+  fetch data from the table in a streaming manner: "delivery_order"
   """
   delivery_order_stream(
     """maximum number of rows returned in a single batch"""
@@ -19668,7 +19402,7 @@ type subscription_root {
   mez_admin_by_pk(user_id: Int!): mez_admin
 
   """
-  fetch data from the table in a streaming manner : "mez_admin"
+  fetch data from the table in a streaming manner: "mez_admin"
   """
   mez_admin_stream(
     """maximum number of rows returned in a single batch"""
@@ -19727,7 +19461,7 @@ type subscription_root {
   notification_info_by_pk(id: Int!): notification_info
 
   """
-  fetch data from the table in a streaming manner : "notification_info"
+  fetch data from the table in a streaming manner: "notification_info"
   """
   notification_info_stream(
     """maximum number of rows returned in a single batch"""
@@ -19784,7 +19518,7 @@ type subscription_root {
   post_by_pk(id: Int!): post
 
   """
-  fetch data from the table in a streaming manner : "post"
+  fetch data from the table in a streaming manner: "post"
   """
   post_stream(
     """maximum number of rows returned in a single batch"""
@@ -19929,7 +19663,7 @@ type subscription_root {
   restaurant_cart_item_by_pk(id: Int!): restaurant_cart_item
 
   """
-  fetch data from the table in a streaming manner : "restaurant_cart_item"
+  fetch data from the table in a streaming manner: "restaurant_cart_item"
   """
   restaurant_cart_item_stream(
     """maximum number of rows returned in a single batch"""
@@ -19943,7 +19677,7 @@ type subscription_root {
   ): [restaurant_cart_item!]!
 
   """
-  fetch data from the table in a streaming manner : "restaurant_cart"
+  fetch data from the table in a streaming manner: "restaurant_cart"
   """
   restaurant_cart_stream(
     """maximum number of rows returned in a single batch"""
@@ -20002,7 +19736,7 @@ type subscription_root {
   restaurant_category_by_pk(id: Int!): restaurant_category
 
   """
-  fetch data from the table in a streaming manner : "restaurant_category"
+  fetch data from the table in a streaming manner: "restaurant_category"
   """
   restaurant_category_stream(
     """maximum number of rows returned in a single batch"""
@@ -20061,7 +19795,7 @@ type subscription_root {
   restaurant_choice_by_pk(id: Int!): restaurant_choice
 
   """
-  fetch data from the table in a streaming manner : "restaurant_choice"
+  fetch data from the table in a streaming manner: "restaurant_choice"
   """
   restaurant_choice_stream(
     """maximum number of rows returned in a single batch"""
@@ -20163,7 +19897,7 @@ type subscription_root {
   restaurant_item_option_map_by_pk(id: Int!): restaurant_item_option_map
 
   """
-  fetch data from the table in a streaming manner : "restaurant_item_option_map"
+  fetch data from the table in a streaming manner: "restaurant_item_option_map"
   """
   restaurant_item_option_map_stream(
     """maximum number of rows returned in a single batch"""
@@ -20177,7 +19911,7 @@ type subscription_root {
   ): [restaurant_item_option_map!]!
 
   """
-  fetch data from the table in a streaming manner : "restaurant_item"
+  fetch data from the table in a streaming manner: "restaurant_item"
   """
   restaurant_item_stream(
     """maximum number of rows returned in a single batch"""
@@ -20236,7 +19970,7 @@ type subscription_root {
   restaurant_operator_by_pk(id: Int!): restaurant_operator
 
   """
-  fetch data from the table in a streaming manner : "restaurant_operator"
+  fetch data from the table in a streaming manner: "restaurant_operator"
   """
   restaurant_operator_stream(
     """maximum number of rows returned in a single batch"""
@@ -20340,7 +20074,7 @@ type subscription_root {
   restaurant_option_choice_map_by_pk(id: Int!): restaurant_option_choice_map
 
   """
-  fetch data from the table in a streaming manner : "restaurant_option_choice_map"
+  fetch data from the table in a streaming manner: "restaurant_option_choice_map"
   """
   restaurant_option_choice_map_stream(
     """maximum number of rows returned in a single batch"""
@@ -20354,7 +20088,7 @@ type subscription_root {
   ): [restaurant_option_choice_map!]!
 
   """
-  fetch data from the table in a streaming manner : "restaurant_option"
+  fetch data from the table in a streaming manner: "restaurant_option"
   """
   restaurant_option_stream(
     """maximum number of rows returned in a single batch"""
@@ -20458,7 +20192,7 @@ type subscription_root {
   restaurant_order_item_by_pk(id: Int!): restaurant_order_item
 
   """
-  fetch data from the table in a streaming manner : "restaurant_order_item"
+  fetch data from the table in a streaming manner: "restaurant_order_item"
   """
   restaurant_order_item_stream(
     """maximum number of rows returned in a single batch"""
@@ -20512,7 +20246,7 @@ type subscription_root {
   ): restaurant_order_public_aggregate!
 
   """
-  fetch data from the table in a streaming manner : "restaurant_order_public"
+  fetch data from the table in a streaming manner: "restaurant_order_public"
   """
   restaurant_order_public_stream(
     """maximum number of rows returned in a single batch"""
@@ -20526,7 +20260,7 @@ type subscription_root {
   ): [restaurant_order_public!]!
 
   """
-  fetch data from the table in a streaming manner : "restaurant_order"
+  fetch data from the table in a streaming manner: "restaurant_order"
   """
   restaurant_order_stream(
     """maximum number of rows returned in a single batch"""
@@ -20540,7 +20274,7 @@ type subscription_root {
   ): [restaurant_order!]!
 
   """
-  fetch data from the table in a streaming manner : "restaurant"
+  fetch data from the table in a streaming manner: "restaurant"
   """
   restaurant_stream(
     """maximum number of rows returned in a single batch"""
@@ -20597,7 +20331,7 @@ type subscription_root {
   review_by_pk(id: Int!): review
 
   """
-  fetch data from the table in a streaming manner : "review"
+  fetch data from the table in a streaming manner: "review"
   """
   review_stream(
     """maximum number of rows returned in a single batch"""
@@ -20654,7 +20388,7 @@ type subscription_root {
   saved_location_by_pk(id: Int!): saved_location
 
   """
-  fetch data from the table in a streaming manner : "saved_location"
+  fetch data from the table in a streaming manner: "saved_location"
   """
   saved_location_stream(
     """maximum number of rows returned in a single batch"""
@@ -20711,7 +20445,7 @@ type subscription_root {
   service_link_by_pk(id: Int!): service_link
 
   """
-  fetch data from the table in a streaming manner : "service_link"
+  fetch data from the table in a streaming manner: "service_link"
   """
   service_link_stream(
     """maximum number of rows returned in a single batch"""
@@ -20723,122 +20457,6 @@ type subscription_root {
     """filter the rows returned"""
     where: service_link_bool_exp
   ): [service_link!]!
-
-  """
-  fetch data from the table: "service_provider_payment_info"
-  """
-  service_provider_payment_info(
-    """distinct select on columns"""
-    distinct_on: [service_provider_payment_info_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [service_provider_payment_info_order_by!]
-
-    """filter the rows returned"""
-    where: service_provider_payment_info_bool_exp
-  ): [service_provider_payment_info!]!
-
-  """
-  fetch aggregated fields from the table: "service_provider_payment_info"
-  """
-  service_provider_payment_info_aggregate(
-    """distinct select on columns"""
-    distinct_on: [service_provider_payment_info_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [service_provider_payment_info_order_by!]
-
-    """filter the rows returned"""
-    where: service_provider_payment_info_bool_exp
-  ): service_provider_payment_info_aggregate!
-
-  """
-  fetch data from the table: "service_provider_payment_info" using primary key columns
-  """
-  service_provider_payment_info_by_pk(id: Int!): service_provider_payment_info
-
-  """
-  fetch data from the table in a streaming manner : "service_provider_payment_info"
-  """
-  service_provider_payment_info_stream(
-    """maximum number of rows returned in a single batch"""
-    batch_size: Int!
-
-    """cursor to stream the results returned by the query"""
-    cursor: [service_provider_payment_info_stream_cursor_input]!
-
-    """filter the rows returned"""
-    where: service_provider_payment_info_bool_exp
-  ): [service_provider_payment_info!]!
-
-  """
-  fetch data from the table: "stripe_info"
-  """
-  stripe_info(
-    """distinct select on columns"""
-    distinct_on: [stripe_info_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [stripe_info_order_by!]
-
-    """filter the rows returned"""
-    where: stripe_info_bool_exp
-  ): [stripe_info!]!
-
-  """
-  fetch aggregated fields from the table: "stripe_info"
-  """
-  stripe_info_aggregate(
-    """distinct select on columns"""
-    distinct_on: [stripe_info_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [stripe_info_order_by!]
-
-    """filter the rows returned"""
-    where: stripe_info_bool_exp
-  ): stripe_info_aggregate!
-
-  """fetch data from the table: "stripe_info" using primary key columns"""
-  stripe_info_by_pk(id: Int!): stripe_info
-
-  """
-  fetch data from the table in a streaming manner : "stripe_info"
-  """
-  stripe_info_stream(
-    """maximum number of rows returned in a single batch"""
-    batch_size: Int!
-
-    """cursor to stream the results returned by the query"""
-    cursor: [stripe_info_stream_cursor_input]!
-
-    """filter the rows returned"""
-    where: stripe_info_bool_exp
-  ): [stripe_info!]!
 
   """
   fetch data from the table: "subscriber"
@@ -20884,7 +20502,7 @@ type subscription_root {
   subscriber_by_pk(id: Int!): subscriber
 
   """
-  fetch data from the table in a streaming manner : "subscriber"
+  fetch data from the table in a streaming manner: "subscriber"
   """
   subscriber_stream(
     """maximum number of rows returned in a single batch"""
@@ -20946,7 +20564,7 @@ type subscription_root {
   ): topology_app_type
 
   """
-  fetch data from the table in a streaming manner : "topology.app_type"
+  fetch data from the table in a streaming manner: "topology.app_type"
   """
   topology_app_type_stream(
     """maximum number of rows returned in a single batch"""
@@ -21005,7 +20623,7 @@ type subscription_root {
   topology_language_by_pk(id: String!): topology_language
 
   """
-  fetch data from the table in a streaming manner : "topology.language"
+  fetch data from the table in a streaming manner: "topology.language"
   """
   topology_language_stream(
     """maximum number of rows returned in a single batch"""
@@ -21062,7 +20680,7 @@ type subscription_root {
   translation_by_pk(id: Int!): translation
 
   """
-  fetch data from the table in a streaming manner : "translation"
+  fetch data from the table in a streaming manner: "translation"
   """
   translation_stream(
     """maximum number of rows returned in a single batch"""
@@ -21121,7 +20739,7 @@ type subscription_root {
   translation_value_by_pk(language_id: String!, translation_id: Int!): translation_value
 
   """
-  fetch data from the table in a streaming manner : "translation_value"
+  fetch data from the table in a streaming manner: "translation_value"
   """
   translation_value_stream(
     """maximum number of rows returned in a single batch"""
@@ -21178,7 +20796,7 @@ type subscription_root {
   user_by_pk(id: Int!): user
 
   """
-  fetch data from the table in a streaming manner : "user"
+  fetch data from the table in a streaming manner: "user"
   """
   user_stream(
     """maximum number of rows returned in a single batch"""
@@ -21299,7 +20917,7 @@ input topology_app_type_order_by {
   id: order_by
 }
 
-"""primary key columns input for table: topology_app_type"""
+"""primary key columns input for table: topology.app_type"""
 input topology_app_type_pk_columns_input {
   """customer, delivery, restaurant, admin"""
   id: String!
@@ -21448,7 +21066,7 @@ input topology_language_order_by {
   id: order_by
 }
 
-"""primary key columns input for table: topology_language"""
+"""primary key columns input for table: topology.language"""
 input topology_language_pk_columns_input {
   id: String!
 }
@@ -21589,6 +21207,7 @@ input translation_bool_exp {
   service_provider_id: Int_comparison_exp
   service_provider_type: String_comparison_exp
   translations: translation_value_bool_exp
+  translations_aggregate: translation_value_aggregate_bool_exp
 }
 
 """
@@ -21786,6 +21405,17 @@ aggregated selection of "translation_value"
 type translation_value_aggregate {
   aggregate: translation_value_aggregate_fields
   nodes: [translation_value!]!
+}
+
+input translation_value_aggregate_bool_exp {
+  count: translation_value_aggregate_bool_exp_count
+}
+
+input translation_value_aggregate_bool_exp_count {
+  arguments: [translation_value_select_column!]
+  distinct: Boolean
+  filter: translation_value_bool_exp
+  predicate: Int_comparison_exp!
 }
 
 """

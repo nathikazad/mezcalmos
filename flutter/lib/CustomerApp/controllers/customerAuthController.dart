@@ -1,12 +1,13 @@
 import 'dart:async';
 
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
+// import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
@@ -20,18 +21,22 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
 
 class CustomerAuthController extends GetxController {
+  CustomerAuthController({this.isWebVersion});
+  bool? isWebVersion = false;
   Rxn<Customer> _customer = Rxn<Customer>();
 
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
-  BackgroundNotificationsController _notificationsController =
-      Get.find<BackgroundNotificationsController>();
+  //late BackgroundNotificationsController _notificationsController;
 
   Customer? get customer => _customer.value;
 
   @override
   Future<void> onInit() async {
     super.onInit();
+    if (isWebVersion == false) {
+      // _notificationsController = Get.find<BackgroundNotificationsController>();
+    }
 
     if (_authController.fireAuthUser?.uid != null) {
       // ignore: unawaited_futures
@@ -62,14 +67,16 @@ class CustomerAuthController extends GetxController {
     await set_customer_app_version(
         version: _appVersion, customer_id: _authController.hasuraUserId!);
     // setting device notification
-    final String? deviceNotificationToken =
-        await _notificationsController.getToken();
-    if (deviceNotificationToken != null) {
-      mezDbgPrint("😉😉😉😉😉😉 setting notif token 😉😉😉😉😉");
-      unawaited(saveNotificationToken());
+    if (isWebVersion == false) {
+      // final String? deviceNotificationToken =
+      //     await _notificationsController.getToken();
+      // if (deviceNotificationToken != null) {
+      //   mezDbgPrint("😉😉😉😉😉😉 setting notif token 😉😉😉😉😉");
+      //   unawaited(saveNotificationToken());
+      // }
     }
     // ignore: always_specify_types, unawaited_futures
-    getCustomerCart(customerId: _authController.hasuraUserId!).then((value) {
+    get_customer_cart(customerId: _authController.hasuraUserId!).then((value) {
       mezDbgPrint(
           "Customer Auth controller -CART-LEN-  ${value?.cartItems.length}");
       if (value == null) {
@@ -78,37 +85,35 @@ class CustomerAuthController extends GetxController {
     });
   }
 
-  Future<void> saveNotificationToken() async {
-    final String? deviceNotificationToken =
-        await _notificationsController.getToken();
-    final NotificationInfo? notifInfo =
-        await get_notif_info(userId: _authController.hasuraUserId!);
- 
-    try {
-      if (notifInfo != null &&
-          deviceNotificationToken != null &&
-          notifInfo.token != deviceNotificationToken) {
- 
-        // ignore: unawaited_futures
-        update_notif_info(
-            notificationInfo: NotificationInfo(
-                userId: _authController.hasuraUserId!,
-                appType: "customer",
-                id: notifInfo.id,
-                token: deviceNotificationToken));
-      } else if (deviceNotificationToken != null && notifInfo == null) {
-       
-        // ignore: unawaited_futures
-        insert_notif_info(
-            userId: _authController.hasuraUserId!,
-            token: deviceNotificationToken,
-            appType: "customer");
-      }
-    } catch (e, stk) {
-      mezDbgPrint(e);
-      mezDbgPrint(stk);
-    }
-  }
+  // Future<void> saveNotificationToken() async {
+  //   final String? deviceNotificationToken =
+  //       await _notificationsController.getToken();
+  //   final NotificationInfo? notifInfo =
+  //       await get_notif_info(userId: _authController.hasuraUserId!);
+
+  //   try {
+  //     if (notifInfo != null &&
+  //         deviceNotificationToken != null &&
+  //         notifInfo.token != deviceNotificationToken) {
+  //       // ignore: unawaited_futures
+  //       update_notif_info(
+  //           notificationInfo: NotificationInfo(
+  //               userId: _authController.hasuraUserId!,
+  //               appType: "customer",
+  //               id: notifInfo.id,
+  //               token: deviceNotificationToken));
+  //     } else if (deviceNotificationToken != null && notifInfo == null) {
+  //       // ignore: unawaited_futures
+  //       insert_notif_info(
+  //           userId: _authController.hasuraUserId!,
+  //           token: deviceNotificationToken,
+  //           appType: "customer");
+  //     }
+  //   } catch (e, stk) {
+  //     mezDbgPrint(e);
+  //     mezDbgPrint(stk);
+  //   }
+  // }
 
   void saveNewLocation(SavedLocation savedLocation) {
     add_saved_location(

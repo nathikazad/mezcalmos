@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/WebApp/screens/Laundries/laundryListView/components/laundryListViewCardForDesktopComponent.dart';
-import 'package:mezcalmos/WebApp/screens/Restaurants/resturentListView/components/restaurantCardForDesktopAndTablet.dart';
+import 'package:mezcalmos/WebApp/screens/Restaurants/CustWebRstaurantsList/components/restaurantCardForDesktopAndTablet.dart';
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 import 'package:mezcalmos/WebApp/webHelpers/StringHelper.dart';
 
